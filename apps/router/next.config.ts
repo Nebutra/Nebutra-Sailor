@@ -23,6 +23,9 @@ const nextConfig: NextConfig = {
     "@nebutra/auth",
     "@nebutra/i18n",
   ],
+  async rewrites() {
+    return [{ source: "/v1/:path*", destination: "/api/v1/:path*" }];
+  },
   experimental: {
     // No source maps for the server bundle — Turbopack emits them, webpack
     // does not, and nobody chose them. Measured on sailor-docs: 138 MB of maps

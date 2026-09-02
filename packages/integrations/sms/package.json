@@ -24,6 +24,11 @@
       "types": "./dist/providers/tencent.d.ts",
       "import": "./dist/providers/tencent.js",
       "default": "./dist/providers/tencent.js"
+    },
+    "./twilio-verify": {
+      "types": "./dist/providers/twilio-verify.d.ts",
+      "import": "./dist/providers/twilio-verify.js",
+      "default": "./dist/providers/twilio-verify.js"
     }
   },
   "scripts": {

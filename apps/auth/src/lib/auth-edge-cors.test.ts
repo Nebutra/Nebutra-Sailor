@@ -4,6 +4,7 @@ import { applyEdgeAuthCors, isFirstPartyAuthOrigin } from "./auth-edge-cors";
 describe("isFirstPartyAuthOrigin", () => {
   it("allows product hosts that share the session cookie", () => {
     expect(isFirstPartyAuthOrigin("https://forge.nebutra.com")).toBe(true);
+    expect(isFirstPartyAuthOrigin("https://kuanlan.nebutra.com")).toBe(true);
     expect(isFirstPartyAuthOrigin("https://router.nebutra.com")).toBe(true);
     expect(isFirstPartyAuthOrigin("https://app.nebutra.com")).toBe(true);
     expect(isFirstPartyAuthOrigin("https://nebutra.com")).toBe(true);

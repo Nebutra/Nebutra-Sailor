@@ -9,8 +9,8 @@ import {
 import { DEFAULT_BRAND } from "../../scripts/brand-types";
 
 /**
- * Contract lock for carina.nebutra.com — product docs on ECS (A record),
- * nginx static root. Owner topology 2026-07-30 (same pattern as pebble).
+ * Contract lock for carina.nebutra.com — product docs on Fly (static nginx
+ * Machine in sin). ECS rsync stays rollback-only.
  */
 describe("carina domain closure", () => {
   it("brand SSOT carries carina.nebutra.com", () => {
@@ -20,46 +20,54 @@ describe("carina domain closure", () => {
     expect(getBrandPublicUrls().carinaUrl).toBe("https://carina.nebutra.com");
   });
 
-  it("topology lists carina as an ECS surface (not Vercel)", () => {
+  it("topology does not list carina as an ECS surface", () => {
     const raw = readFileSync("infra/ops/dns/topology.defaults.yaml", "utf-8");
-    expect(raw).toMatch(/ecs_surfaces:.*\[.*carina/);
+    const ecsLine = raw.split("\n").find((l) => l.startsWith("ecs_surfaces:"));
+    expect(ecsLine ?? "").not.toMatch(/carina/);
     expect(raw).toMatch(/^\s*carina,/m);
-    // vercel_surfaces must not claim carina
     const vercelLine = raw.split("\n").find((l) => l.startsWith("vercel_surfaces:"));
     expect(vercelLine ?? "").not.toMatch(/carina/);
   });
 
-  it("DOMAINS.md documents ECS A topology and no parallel origin", () => {
+  it("DOMAINS.md documents Fly and no parallel origin", () => {
     const domains = readFileSync("docs/DOMAINS.md", "utf-8");
     expect(domains).toContain("carina.nebutra.com");
-    expect(domains).toContain("106.15.4.31");
-    expect(domains).toContain("deploy-carina-ecs");
+    expect(domains).toContain("deploy-carina-fly");
     expect(domains).toMatch(/api\.carina\.\*/);
     expect(domains).toContain("Nebutra/carina");
-    expect(domains).toMatch(/A.*carina|carina.*ECS/i);
+    expect(domains).toMatch(/Fly|fly\.dev/i);
   });
 
-  it("nginx vhost + deploy script + workflow exist", () => {
-    const conf = join(process.cwd(), "infra/runtime/nginx/conf.d/carina.nebutra.com.conf");
-    const script = join(process.cwd(), "infra/ops/scripts/deploy-carina-docs-ecs.sh");
-    const deployWf = join(process.cwd(), ".github/workflows/deploy-carina-ecs.yml");
-    const mainNginx = join(process.cwd(), "infra/runtime/nginx/nginx-ecs-current.conf");
+  it("Fly nginx + deploy workflow exist; ECS files stay as rollback", () => {
+    const flyConf = join(process.cwd(), "infra/fly/carina.nginx.conf");
+    const flyToml = join(process.cwd(), "infra/fly/carina.toml");
+    const flyWf = join(process.cwd(), ".github/workflows/deploy-carina-fly.yml");
+    const ecsConf = join(process.cwd(), "infra/runtime/nginx/conf.d/carina.nebutra.com.conf");
+    const ecsScript = join(process.cwd(), "infra/ops/scripts/deploy-carina-docs-ecs.sh");
+    const ecsWf = join(process.cwd(), ".github/workflows/deploy-carina-ecs.yml");
 
-    expect(existsSync(conf), conf).toBe(true);
-    expect(existsSync(script), script).toBe(true);
-    expect(existsSync(deployWf), deployWf).toBe(true);
+    expect(existsSync(flyConf), flyConf).toBe(true);
+    expect(existsSync(flyToml), flyToml).toBe(true);
+    expect(existsSync(flyWf), flyWf).toBe(true);
+    expect(existsSync(ecsConf), ecsConf).toBe(true);
+    expect(existsSync(ecsScript), ecsScript).toBe(true);
+    expect(existsSync(ecsWf), ecsWf).toBe(true);
 
-    const confBody = readFileSync(conf, "utf-8");
-    expect(confBody).toContain("server_name carina.nebutra.com");
-    expect(confBody).toContain("/var/www/nebutra/carina/current");
-    expect(confBody).not.toMatch(/return 301 https:\/\/nebutra\.com/);
+    const flyBody = readFileSync(flyConf, "utf-8");
+    expect(flyBody).toContain("listen 8080");
+    expect(flyBody).not.toMatch(/return 301 https:\/\/nebutra\.com/);
 
-    const main = readFileSync(mainNginx, "utf-8");
-    expect(main).toContain("carina.nebutra.com.conf");
+    const toml = readFileSync(flyToml, "utf-8");
+    expect(toml).toContain('app = "nebutra-carina"');
+    expect(toml).toContain('primary_region = "sin"');
 
-    const deploy = readFileSync(deployWf, "utf-8");
+    const deploy = readFileSync(flyWf, "utf-8");
     expect(deploy).toContain("Nebutra/carina");
-    expect(deploy).toContain("deploy-carina-docs-ecs.sh");
-    expect(deploy).toContain("ECS_SSH_PRIVATE_KEY");
+    expect(deploy).toContain("nebutra-carina");
+    expect(deploy).toContain("/var/www/nebutra/carina/current");
+    expect(deploy).toContain("FLY_API_TOKEN");
+
+    const ecsDeploy = readFileSync(ecsWf, "utf-8");
+    expect(ecsDeploy).toContain("rollback-carina-ecs");
   });
 });

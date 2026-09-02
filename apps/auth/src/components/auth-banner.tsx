@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { loadBootLogCatalog } from "@nebutra/i18n/boot-log";
 import { getLocale, getTranslations } from "next-intl/server";
 import { bootLogDensity, bootLogSpan, pickBootLogRotation } from "@/content/boot-log";
@@ -62,7 +63,7 @@ export async function AuthBanner({ className }: { className?: string }) {
           {/* Plain img: next/image SVG optimizer is unreliable on standalone ECS */}
           {/* biome-ignore lint/performance/noImgElement: SVG brand mark in public/brand */}
           <img
-            src="/brand/logo-color.svg"
+            src={publicAssetUrl("brand/logo/logo-color.svg")}
             alt={t("logoAlt")}
             width={72}
             height={72}

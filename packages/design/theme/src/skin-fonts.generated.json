@@ -1,4 +1,13 @@
 {
+  "cosmos": [
+    "var(--font-inter)",
+    "Inter",
+    "var(--font-noto-sans-sc",
+    "Noto Sans SC\")",
+    "PingFang SC",
+    "var(--font-jetbrains-mono)",
+    "JetBrains Mono"
+  ],
   "gsap": [
     "var(--font-reg-inter-tight)",
     "Mori",
@@ -6,7 +15,6 @@
     "DM Sans",
     "var(--font-noto-sans-sc",
     "Noto Sans SC\")",
-    "Noto Sans SC",
     "PingFang SC"
   ],
   "linear": [
@@ -15,7 +23,6 @@
     "Inter",
     "var(--font-noto-sans-sc",
     "Noto Sans SC\")",
-    "Noto Sans SC",
     "PingFang SC",
     "var(--font-jetbrains-mono)",
     "Berkeley Mono",
@@ -27,7 +34,6 @@
     "Inter",
     "var(--font-noto-sans-sc",
     "Noto Sans SC\")",
-    "Noto Sans SC",
     "PingFang SC"
   ],
   "raycast": [
@@ -35,7 +41,6 @@
     "Inter",
     "var(--font-noto-sans-sc",
     "Noto Sans SC\")",
-    "Noto Sans SC",
     "PingFang SC",
     "var(--font-geist-mono)",
     "Geist Mono",
@@ -49,7 +54,6 @@
     "Inter",
     "var(--font-noto-sans-sc",
     "Noto Sans SC\")",
-    "Noto Sans SC",
     "PingFang SC"
   ],
   "vanta": [
@@ -58,7 +62,6 @@
     "Inter",
     "var(--font-noto-sans-sc",
     "Noto Sans SC\")",
-    "Noto Sans SC",
     "PingFang SC",
     "var(--font-reg-source-serif-4)",
     "Reckless",
@@ -71,7 +74,6 @@
     "Geist",
     "var(--font-noto-sans-sc",
     "Noto Sans SC\")",
-    "Noto Sans SC",
     "PingFang SC",
     "var(--font-geist-mono)",
     "Geist Mono",

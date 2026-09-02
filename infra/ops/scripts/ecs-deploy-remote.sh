@@ -26,7 +26,7 @@ DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
 # invocation deploys, and the control plane should move only when someone names
 # it — it reads across every tenant, so an accidental redeploy is not the same
 # kind of event as one for a product app.
-APPS="${APPS:-landing web api idp auth design pebble sailor-docs router forge}"
+APPS="${APPS:-landing web api idp auth design pebble sailor-docs router kuanlan forge}"
 # Keep 2 releases per app for one-step rollback. Pre/post prune only touch
 # THAT app's releases/ dir (never other apps). Override with VM_KEEP_RELEASES
 # / ECS_KEEP_RELEASES on small disks if needed.
@@ -82,6 +82,8 @@ DEPLOY_RUNTIME_KEYS=(
   SANITY_API_TOKEN NEXT_PUBLIC_SANITY_PROJECT_ID NEXT_PUBLIC_SANITY_DATASET
   NEXT_PUBLIC_SANITY_API_VERSION SANITY_WEBHOOK_SECRET
   GOOGLE_SITE_VERIFICATION BING_SITE_VERIFICATION INDEXNOW_KEY INDEXNOW_HOST
+  CLOUDFLARE_ACCOUNT_ID ROUTER_API_KEY IMAGE2_BASE_URL IMAGE2_MODEL
+  NEXT_PUBLIC_R2_PUBLIC_URL NEW_API_BASE_URL NEW_API_ACCESS_TOKEN
 )
 capture_deploy_runtime_env "${DEPLOY_RUNTIME_KEYS[@]}"
 
@@ -89,8 +91,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*|*idp*|*auth*|*design*|*pebble*|*sailor-docs*|*router*|*forge*|*admin*) : ;;
-  *) fail "APPS must contain at least one of: landing web api idp auth design pebble sailor-docs router forge admin (got: $APPS)" ;;
+  *landing*|*web*|*api*|*idp*|*auth*|*design*|*pebble*|*sailor-docs*|*router*|*kuanlan*|*forge*|*admin*) : ;;
+  *) fail "APPS must contain at least one of: landing web api idp auth design pebble sailor-docs router kuanlan forge admin (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"
@@ -466,6 +468,51 @@ persist_api_mvp_runtime_env() {
   replace_env_assignment "$env_file" CACHE_BACKEND "$CACHE_BACKEND"
 }
 
+persist_router_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  persist_runtime_keys "$app_root" "router supply" \
+    NEW_API_BASE_URL NEW_API_ACCESS_TOKEN NEBUTRA_NEW_API_URL NEBUTRA_NEW_API_TOKEN
+  if [ -z "$(runtime_env_value NEW_API_BASE_URL)" ]; then
+    replace_env_assignment "$env_file" NEW_API_BASE_URL "http://127.0.0.1:3301/v1"
+  fi
+}
+
+persist_kuanlan_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+
+  NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://kuanlan.nebutra.com}"
+  NEXT_PUBLIC_AUTH_URL="${NEXT_PUBLIC_AUTH_URL:-https://auth.nebutra.com}"
+  NEXT_PUBLIC_AUTH_PROVIDER="${NEXT_PUBLIC_AUTH_PROVIDER:-better-auth}"
+  BETTER_AUTH_URL="${BETTER_AUTH_URL:-https://auth.nebutra.com}"
+  IMAGE2_BASE_URL="${IMAGE2_BASE_URL:-https://router.nebutra.com/v1}"
+  IMAGE2_MODEL="${IMAGE2_MODEL:-gpt-image-2}"
+  R2_PUBLIC_URL="${R2_PUBLIC_URL:-https://cdn.nebutra.com}"
+  NEXT_PUBLIC_R2_PUBLIC_URL="${NEXT_PUBLIC_R2_PUBLIC_URL:-$R2_PUBLIC_URL}"
+  R2_BUCKET_ASSETS="${R2_BUCKET_ASSETS:-nebutra-assets}"
+  R2_BUCKET_UPLOADS="${R2_BUCKET_UPLOADS:-nebutra-uploads}"
+
+  persist_runtime_keys "$app_root" "kuanlan consume" \
+    CLOUDFLARE_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_ENDPOINT \
+    R2_PUBLIC_URL R2_BUCKET_ASSETS R2_BUCKET_UPLOADS \
+    ROUTER_API_KEY IMAGE2_BASE_URL IMAGE2_MODEL \
+    NEXT_PUBLIC_R2_PUBLIC_URL NEXT_PUBLIC_SITE_URL \
+    NEXT_PUBLIC_AUTH_URL NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_URL BETTER_AUTH_SECRET \
+    AUTH_PROVIDER AUTH_COOKIE_DOMAIN
+
+  replace_env_assignment "$env_file" NEXT_PUBLIC_SITE_URL "$NEXT_PUBLIC_SITE_URL"
+  replace_env_assignment "$env_file" NEXT_PUBLIC_AUTH_URL "$NEXT_PUBLIC_AUTH_URL"
+  replace_env_assignment "$env_file" NEXT_PUBLIC_AUTH_PROVIDER "$NEXT_PUBLIC_AUTH_PROVIDER"
+  replace_env_assignment "$env_file" BETTER_AUTH_URL "$BETTER_AUTH_URL"
+  replace_env_assignment "$env_file" IMAGE2_BASE_URL "$IMAGE2_BASE_URL"
+  replace_env_assignment "$env_file" IMAGE2_MODEL "$IMAGE2_MODEL"
+  replace_env_assignment "$env_file" R2_PUBLIC_URL "$R2_PUBLIC_URL"
+  replace_env_assignment "$env_file" NEXT_PUBLIC_R2_PUBLIC_URL "$NEXT_PUBLIC_R2_PUBLIC_URL"
+  replace_env_assignment "$env_file" R2_BUCKET_ASSETS "$R2_BUCKET_ASSETS"
+  replace_env_assignment "$env_file" R2_BUCKET_UPLOADS "$R2_BUCKET_UPLOADS"
+}
+
 persist_idp_runtime_env() {
   local app_root="$1"
 
@@ -710,7 +757,7 @@ load_runtime_env() {
     AUTH_PROVIDER="${AUTH_PROVIDER:-better-auth}"
     # CORS trust for product RPs that call getSession() cross-origin (forge/router/app).
     BETTER_AUTH_TRUSTED_ORIGINS="${BETTER_AUTH_TRUSTED_ORIGINS:-https://forge.nebutra.com,https://router.nebutra.com,https://app.nebutra.com,https://nebutra.com,https://www.nebutra.com}"
-    AUTH_RETURN_ALLOWED_HOSTS="${AUTH_RETURN_ALLOWED_HOSTS:-forge.nebutra.com,router.nebutra.com,app.nebutra.com,nebutra.com,www.nebutra.com,auth.nebutra.com}"
+    AUTH_RETURN_ALLOWED_HOSTS="${AUTH_RETURN_ALLOWED_HOSTS:-forge.nebutra.com,router.nebutra.com,app.nebutra.com,nebutra.com,www.nebutra.com,auth.nebutra.com,kuanlan.nebutra.com}"
 
     local missing=()
     [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
@@ -848,6 +895,16 @@ load_runtime_env() {
     refresh_bootstrapped_api_database_url "$app_root"
     persist_redis_runtime_env "$app_root"
     persist_api_mvp_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
+  if [ "$app" = "router" ]; then
+    persist_router_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
+  if [ "$app" = "kuanlan" ]; then
+    persist_kuanlan_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 }
@@ -1451,6 +1508,9 @@ ensure_carina_codeploy() {
     router)
       wait_for_local_http "router" "$pm2_name" "http://127.0.0.1:3106/" "^(200|301|302|307)$" "router.nebutra.com"
       ;;
+    kuanlan)
+      wait_for_local_http "kuanlan" "$pm2_name" "http://127.0.0.1:3120/" "^(200|301|302|307)$" "kuanlan.nebutra.com"
+      ;;
     forge)
       wait_for_local_http "forge" "$pm2_name" "http://127.0.0.1:3105/" "^(200|301|302|307)$" "forge.nebutra.com"
       # Hard-correct: md-to-pdf needs Chromium on the product host.
@@ -1501,6 +1561,7 @@ pm2_name_for_app() {
     pebble)       printf '%s\n' "pebble" ;;
     sailor-docs)  printf '%s\n' "sailor-docs" ;;
     router)       printf '%s\n' "router" ;;
+    kuanlan)      printf '%s\n' "kuanlan" ;;
     forge)        printf '%s\n' "forge" ;;
     admin)        printf '%s\n' "admin" ;;
     *)            fail "unknown app: $1" ;;
@@ -1761,7 +1822,7 @@ verify_nginx_web_origin() {
 
 run_selected_apps() {
   local action="$1" app pm2_name
-  for app in api landing web idp auth design pebble sailor-docs router forge admin; do
+  for app in api landing web idp auth design pebble sailor-docs router kuanlan forge admin; do
     case " $APPS " in
       *" $app "*) : ;;
       *) continue ;;
@@ -1779,7 +1840,7 @@ if [ "$MODE" = "rollback" ]; then
   exit 0
 fi
 
-for app in api landing web idp auth design pebble sailor-docs router forge admin; do
+for app in api landing web idp auth design pebble sailor-docs router kuanlan forge admin; do
   case " $APPS " in
     *" $app "*) : ;;
     *) continue ;;
@@ -1795,6 +1856,7 @@ for app in api landing web idp auth design pebble sailor-docs router forge admin
     pebble)       deploy_one pebble      pebble       ;;
     sailor-docs)  deploy_one sailor-docs sailor-docs  ;;
     router)       deploy_one router      router       ;;
+    kuanlan)      deploy_one kuanlan     kuanlan      ;;
     forge)        deploy_one forge       forge        ;;
     admin)        deploy_one admin       admin        ;;
     *)            fail "unknown app: $app"            ;;

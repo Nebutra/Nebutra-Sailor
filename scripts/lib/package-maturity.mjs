@@ -30,6 +30,7 @@ const CORE_APP_DIRS = new Set([
 const LABS_APP_DIRS = new Set([
   "apps/design",
   "apps/forge",
+  "apps/kuanlan",
   "apps/pebble",
   "apps/router",
   "apps/sleptons",

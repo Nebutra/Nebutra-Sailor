@@ -213,7 +213,10 @@ tests/load/
 # Product deploy targets + Nebutra DNS ops (secrets / account-bound)
 .github/workflows/deploy-auth-vercel.yml
 .github/workflows/deploy-carina-ecs.yml
+.github/workflows/deploy-carina-fly.yml
 .github/workflows/deploy-carina-vercel.yml
+.github/workflows/deploy-new-api-fly.yml
+.github/workflows/deploy-dns-leak-fly.yml
 .github/workflows/deploy-gateway.yml
 .github/workflows/deploy-landing-vercel.yml
 .github/workflows/deploy-origin-ecs.yml

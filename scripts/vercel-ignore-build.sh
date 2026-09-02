@@ -23,15 +23,22 @@
 #   The old rule rebuilt every Vercel project on any package change and burned
 #   Hobby's ~100 deployments/day. Scope is intentional and per-app.
 #
-# Keep Git connected only for surfaces you want auto-deployed (typically
-# landing + kuanlan). web/auth/api production is ECS — optional on Vercel.
-# kuanlan stays Git-linked while it is launching: skip when the app dir is
-# missing so empty monorepo pushes do not burn a failed build. Do not Unlink.
+# landing builds on GitHub and ships prebuilt via deploy-landing-vercel.yml, so
+# its Git integration is off. web/auth/api production is not Vercel.
+# kuanlan stays Git-linked as a leftover project; production is Fly Singapore
+# (is_fly_primary=1) — skip Vercel auto-deploy unless opted in. Do not Unlink.
 
 set -euo pipefail
 
 APP_DIR="${1:?Usage: $0 <app-dir>  e.g. apps/web}"
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+# The repository root is this script's parent directory. It used to be
+# `git rev-parse --show-toplevel || pwd`; Vercel runs the Ignored Build Step
+# inside the project's Root Directory (apps/<name>) where that git call fails,
+# so REPO_ROOT became apps/<name>, "$REPO_ROOT/apps/<name>" did not exist, and
+# the unknown-directory branch below built every deployment — production and
+# every branch preview, on every project, from the day this file landed.
+# Every Vercel build log carried the line "→ Building to avoid a false skip."
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 COMMIT_REF="${VERCEL_GIT_COMMIT_REF:-}"
 AUTHOR_LOGIN="${VERCEL_GIT_COMMIT_AUTHOR_LOGIN:-}"
 COMMIT_MSG="$(git -C "$REPO_ROOT" log -1 --pretty=%B 2>/dev/null || true)"
@@ -39,12 +46,12 @@ COMMIT_MSG="$(git -C "$REPO_ROOT" log -1 --pretty=%B 2>/dev/null || true)"
 echo "Repo root: $REPO_ROOT"
 echo "App scope root: $APP_DIR"
 
-# Launching product: the Vercel project is already Git-linked. Skip when the
-# app is not on this SHA. A leftover local directory without package.json
-# does not count as shipped.
+# Leftover Vercel project: skip when the app dir is missing so empty
+# monorepo pushes do not burn a failed build. When the app is present,
+# Fly-primary skip below owns the decision.
 if [ "$APP_DIR" = "apps/kuanlan" ] && [ ! -f "$REPO_ROOT/apps/kuanlan/package.json" ]; then
   echo "apps/kuanlan is not in this tree yet — skip."
-  echo "Keep the Git connection. Unpause / deploy when the app lands on main."
+  echo "Keep the Git connection. Production is Fly, not Vercel."
   exit 0
 fi
 
@@ -60,21 +67,23 @@ if [[ "$COMMIT_REF" == dependabot/* ]] || [[ "$AUTHOR_LOGIN" == "dependabot[bot]
   exit 0
 fi
 
-if [[ -n "$COMMIT_REF" && "$COMMIT_REF" != "main" ]]; then
-  echo "Non-main ref '$COMMIT_REF' — skip (main only)."
-  exit 0
-fi
-
 if [[ "${VERCEL_FORCE_BUILD:-}" == "1" ]] || [[ "$COMMIT_MSG" == *"[vercel-force]"* ]]; then
   echo "Force build requested — building."
   exit 1
 fi
 
-# --- ECS-primary surfaces: production is not Vercel; skip unless opted in ---
-# Opt-in: VERCEL_ALLOW_ECS_OPTIONAL=1 on the Vercel project, or commit tag.
+if [[ -n "$COMMIT_REF" && "$COMMIT_REF" != "main" ]]; then
+  echo "Non-main ref '$COMMIT_REF' — skip (main only)."
+  exit 0
+fi
+
+# --- ECS / Fly-primary surfaces: production is not Vercel; skip unless opted in ---
+# Opt-in: VERCEL_ALLOW_ECS_OPTIONAL=1 / VERCEL_ALLOW_FLY_OPTIONAL=1, or commit tag.
 is_ecs_optional=0
+is_fly_primary=0
 case "$APP_DIR" in
   apps/web|apps/auth|backends/gateway) is_ecs_optional=1 ;;
+  apps/kuanlan) is_fly_primary=1 ;;
 esac
 
 if [[ "$is_ecs_optional" -eq 1 ]]; then
@@ -85,6 +94,16 @@ if [[ "$is_ecs_optional" -eq 1 ]]; then
     exit 0
   fi
   echo "ECS-optional app allowed for this push."
+fi
+
+if [[ "$is_fly_primary" -eq 1 ]]; then
+  tag="[vercel:${APP_DIR}]"
+  if [[ "${VERCEL_ALLOW_FLY_OPTIONAL:-}" != "1" && "$COMMIT_MSG" != *"$tag"* && "$COMMIT_MSG" != *"[vercel:fly-optional]"* ]]; then
+    echo "Fly-primary app ($APP_DIR) — skip Vercel auto-deploy."
+    echo "  Opt in: set VERCEL_ALLOW_FLY_OPTIONAL=1 on the project, or commit with $tag"
+    exit 0
+  fi
+  echo "Fly-optional app allowed for this push."
 fi
 
 # --- Per-app path scopes (app + direct @nebutra workspace packages) ---
@@ -197,17 +216,11 @@ packages/design/design-tokens
 EOF
       ;;
     apps/kuanlan)
-      # Keep in sync with apps/kuanlan/package.json workspace deps when the
-      # app lands. Do not add this path to the ECS-optional skip list.
+      # Keep in sync with apps/kuanlan/package.json workspace deps.
+      # Do not add this path to the ECS-optional skip list.
       cat <<'EOF'
 apps/kuanlan
-packages/design/brand
-packages/design/icons
-packages/design/tokens
-packages/design/ui
-packages/design/design-tokens
-packages/iam/auth
-packages/platform/i18n
+packages/integrations/storage
 EOF
       ;;
     apps/web)

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { DEFAULT_ALIASES, parseAliasTableJson, resolveAliases } from "./alias";
-import { chatCompletionsUrl } from "./engines";
+import { chatCompletionsUrl, openaiCompatibleUrl } from "./engines";
 import { proxyChatCompletions } from "./proxy";
 import { resolveUpstreamChain, toOpenAiModelList } from "./resolve";
 
@@ -18,6 +18,7 @@ describe("alias table", () => {
     expect(list.data.some((m) => m.id === "gpt-5.6-luna")).toBe(true);
     expect(list.data.some((m) => m.id === "claude-sonnet-5")).toBe(true);
     expect(list.data.some((m) => m.id === "gemini-3.6-flash")).toBe(true);
+    expect(list.data.some((m) => m.id === "gpt-image-2")).toBe(true);
     // retired product lines must not be the default catalog face
     expect(list.data.some((m) => m.id === "gpt-4o-mini")).toBe(false);
     expect(list.data.some((m) => m.id === "gpt-5.4-mini")).toBe(false);
@@ -33,6 +34,20 @@ describe("chatCompletionsUrl", () => {
     );
     expect(chatCompletionsUrl("http://127.0.0.1:3001/v1/")).toBe(
       "http://127.0.0.1:3001/v1/chat/completions",
+    );
+  });
+});
+
+describe("openaiCompatibleUrl", () => {
+  it("copies the 302.ai / OpenAI path onto a New-API base", () => {
+    expect(openaiCompatibleUrl("http://127.0.0.1:3001", ["images", "edits"])).toBe(
+      "http://127.0.0.1:3001/v1/images/edits",
+    );
+    expect(openaiCompatibleUrl("http://127.0.0.1:3001/v1", ["images", "generations"], "?n=1")).toBe(
+      "http://127.0.0.1:3001/v1/images/generations?n=1",
+    );
+    expect(openaiCompatibleUrl("http://127.0.0.1:3001/v1/", ["models"])).toBe(
+      "http://127.0.0.1:3001/v1/models",
     );
   });
 });

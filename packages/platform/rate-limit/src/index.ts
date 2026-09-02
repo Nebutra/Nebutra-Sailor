@@ -16,6 +16,8 @@ export {
   PLAN_LIMITS,
   type RateLimitResult,
   RedisTokenBucket,
+  type RedisTokenBucketClient,
+  TOKEN_BUCKET_SCRIPT,
   TokenBucket,
   type TokenBucketConfig,
 } from "./tokenBucket";

@@ -17,6 +17,11 @@ interface CloudflareEnv {
   GOOGLE_CLIENT_SECRET?: string;
   GITHUB_CLIENT_ID?: string;
   GITHUB_CLIENT_SECRET?: string;
+  TWILIO_ACCOUNT_SID?: string;
+  TWILIO_AUTH_TOKEN?: string;
+  TWILIO_VERIFY_SERVICE_SID?: string;
+  TURNSTILE_SECRET?: string;
+  TURNSTILE_SECRET_KEY?: string;
   AUTH_COOKIE_DOMAIN?: string;
   NEXT_PUBLIC_AUTH_URL?: string;
   NEXT_PUBLIC_APP_URL?: string;
@@ -30,5 +35,11 @@ declare namespace NodeJS {
     ACCESS_GATE_MODE?: string;
     NEXT_PUBLIC_ACCESS_GATE_MODE?: string;
     NEXT_PUBLIC_WECHAT_APP_ID?: string;
+    AUTH_ENABLED_PHONE_PROVIDERS?: string;
+    TWILIO_ACCOUNT_SID?: string;
+    TWILIO_AUTH_TOKEN?: string;
+    TWILIO_VERIFY_SERVICE_SID?: string;
+    TURNSTILE_SECRET?: string;
+    TURNSTILE_SECRET_KEY?: string;
   }
 }

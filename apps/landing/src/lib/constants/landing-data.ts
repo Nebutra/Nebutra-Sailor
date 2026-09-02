@@ -206,12 +206,13 @@ const packageGroups = [
 ] as const;
 
 /**
- * First-party product surfaces (forge, pebble, router, sleptons, typelens)
- * ship from this monorepo but are not Sailor kit apps. Keep them off the
- * landing explorer — they have their own origins.
+ * First-party product surfaces (forge, kuanlan, pebble, router, sleptons,
+ * typelens) ship from this monorepo but are not Sailor kit apps. Keep them
+ * off the landing explorer — they have their own origins.
  */
 export const SAILOR_EXCLUDED_PRODUCT_APPS = [
   "forge",
+  "kuanlan",
   "pebble",
   "router",
   "sleptons",

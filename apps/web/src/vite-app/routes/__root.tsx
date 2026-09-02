@@ -1,5 +1,6 @@
 import { useAuthContext } from "@nebutra/auth/react/context";
 import { brand } from "@nebutra/brand/metadata";
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { SidebarProvider } from "@/components/navigation/sidebar-context";
@@ -56,7 +57,7 @@ function ProductShell() {
               aria-label="Open product home"
             >
               <img
-                src="/brand/logo-horizontal-en.svg"
+                src={publicAssetUrl("brand/logo/logo-horizontal-en.svg")}
                 alt={brand.name}
                 className="h-5 w-auto"
                 draggable={false}

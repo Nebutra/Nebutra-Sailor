@@ -1,8 +1,13 @@
 "use client";
 
 import { LogomarkSVG, WordmarkEnSVG } from "@nebutra/brand";
+import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { MagicCard } from "@nebutra/ui/primitives";
 import Image from "next/image";
+
+function brandLogoSrc(file: string): string {
+  return publicAssetUrl(`brand/logo/${file}`);
+}
 
 export function LogoShowcase() {
   return (
@@ -20,7 +25,7 @@ export function LogoShowcase() {
           >
             <div className="h-40 w-full flex items-center justify-center p-8 bg-zinc-50 dark:bg-black relative">
               <Image
-                src="/logo/logo-color.svg"
+                src={brandLogoSrc("logo-color.svg")}
                 alt="Nebutra Color Logo"
                 className="h-full w-full object-contain relative z-10 drop-shadow-sm"
                 fill
@@ -42,7 +47,7 @@ export function LogoShowcase() {
           >
             <div className="h-40 w-full flex items-center justify-center p-8 bg-[#0a0a0a] relative">
               <Image
-                src="/logo/logo-inverse.svg"
+                src={brandLogoSrc("logo-inverse.svg")}
                 alt="Nebutra Inverse Logo"
                 className="h-full w-full object-contain relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.08)]"
                 fill
@@ -62,7 +67,7 @@ export function LogoShowcase() {
           >
             <div className="h-40 w-full flex items-center justify-center p-8 bg-zinc-100 dark:bg-zinc-900 border-b border-border">
               <Image
-                src="/logo/logo-mono.svg"
+                src={brandLogoSrc("logo-mono.svg")}
                 alt="Nebutra Mono Logo"
                 className="h-full w-full object-contain relative z-10 opacity-80"
                 fill
@@ -90,7 +95,7 @@ export function LogoShowcase() {
           >
             <div className="h-32 w-full flex items-center justify-center p-6 bg-card">
               <Image
-                src="/logo/logo-en.svg"
+                src={brandLogoSrc("logo-en.svg")}
                 alt="Nebutra EN Logo"
                 className="h-full w-full object-contain"
                 fill
@@ -110,7 +115,7 @@ export function LogoShowcase() {
           >
             <div className="h-32 w-full flex items-center justify-center p-6 bg-card">
               <Image
-                src="/logo/logo-zh.svg"
+                src={brandLogoSrc("logo-zh.svg")}
                 alt="Nebutra ZH Logo"
                 className="h-full w-full object-contain"
                 fill
@@ -130,7 +135,7 @@ export function LogoShowcase() {
           >
             <div className="h-32 w-full flex items-center justify-center p-6 bg-card">
               <Image
-                src="/logo/logo-zh-en.svg"
+                src={brandLogoSrc("logo-zh-en.svg")}
                 alt="Nebutra ZH-EN Logo"
                 className="h-full w-full object-contain"
                 fill
@@ -158,7 +163,7 @@ export function LogoShowcase() {
           >
             <div className="h-24 w-full flex items-center justify-center p-4">
               <Image
-                src="/logo/logo-horizontal-en.svg"
+                src={brandLogoSrc("logo-horizontal-en.svg")}
                 alt="Horizontal EN Logo"
                 className="h-full w-[80%] object-contain"
                 fill
@@ -177,7 +182,7 @@ export function LogoShowcase() {
           >
             <div className="h-24 w-full flex items-center justify-center p-4">
               <Image
-                src="/logo/logo-horizontal-zh.svg"
+                src={brandLogoSrc("logo-horizontal-zh.svg")}
                 alt="Horizontal ZH Logo"
                 className="h-full w-[80%] object-contain"
                 fill
@@ -196,7 +201,7 @@ export function LogoShowcase() {
           >
             <div className="h-32 w-full flex items-center justify-center p-4 border-b border-border">
               <Image
-                src="/logo/logo-vertical-en.svg"
+                src={brandLogoSrc("logo-vertical-en.svg")}
                 alt="Vertical EN Logo"
                 className="h-full w-[60%] object-contain"
                 fill
@@ -215,7 +220,7 @@ export function LogoShowcase() {
           >
             <div className="h-32 w-full flex items-center justify-center p-4 border-b border-border">
               <Image
-                src="/logo/logo-vertical-zh.svg"
+                src={brandLogoSrc("logo-vertical-zh.svg")}
                 alt="Vertical ZH Logo"
                 className="h-full w-[60%] object-contain"
                 fill

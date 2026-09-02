@@ -2,9 +2,12 @@ name: Deploy origin apps to Fly
 
 # Replaces the Aliyun ECS PM2 product edges with Fly Machines (Singapore).
 # The Hono api-gateway is a different image — see deploy-fly-gateway.yml.
-# Landing, gateway-edge, auth-edge, SSO, and leak DNS stay where they are.
+# Landing, gateway-edge, and auth-edge stay where they are.
 # The auth Next UI runs as a private origin behind auth-edge; its product DNS
 # must never be cut over directly to Fly.
+# SSO / admin / docs ship as Next Machines here. Carina, New-API, and
+# leak DNS are separate Fly apps (deploy-carina-fly.yml,
+# deploy-new-api-fly.yml, deploy-dns-leak-fly.yml).
 # This workflow deploys Machines; DNS cutover is a separate workflow_dispatch
 # input so a failed image cannot take production down.
 #
@@ -15,7 +18,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: forge router web pebble design auth gateway cache). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin."
+        description: "Apps to deploy (space-separated: forge router web pebble design auth kuanlan idp admin sailor-docs gateway cache carina new-api dns-leak). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api / dns-leak are the remaining ECS leftovers."
         required: false
         default: ""
       cutover:
@@ -32,6 +35,10 @@ on:
       - "apps/pebble/**"
       - "apps/design/**"
       - "apps/auth/**"
+      - "apps/kuanlan/**"
+      - "apps/idp/**"
+      - "apps/admin/**"
+      - "apps/sailor-docs/**"
       - "packages/ai/forge-runtime/**"
       - "packages/platform/router-supply/**"
       - "packages/design/**"
@@ -54,6 +61,9 @@ jobs:
       apps: ${{ steps.resolve.outputs.apps }}
       want_gateway: ${{ steps.resolve.outputs.want_gateway }}
       want_cache: ${{ steps.resolve.outputs.want_cache }}
+      want_carina: ${{ steps.resolve.outputs.want_carina }}
+      want_new_api: ${{ steps.resolve.outputs.want_new_api }}
+      want_dns_leak: ${{ steps.resolve.outputs.want_dns_leak }}
     steps:
       - id: resolve
         env:
@@ -69,9 +79,13 @@ jobs:
             {"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","build_command":"build","fly_app":"nebutra-pebble","host":"pebble","site":"https://pebble.nebutra.com"},
             {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
             {"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","build_command":"build","fly_app":"nebutra-auth","host":"","site":"https://auth.nebutra.com"},
+            {"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","build_command":"build","fly_app":"nebutra-kuanlan","host":"kuanlan","site":"https://kuanlan.nebutra.com"},
+            {"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","build_command":"build","fly_app":"nebutra-idp","host":"sso","site":"https://sso.nebutra.com"},
+            {"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","build_command":"build","fly_app":"nebutra-admin","host":"admin","site":"https://admin.nebutra.com"},
+            {"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","build_command":"build:vm","fly_app":"nebutra-docs","host":"docs","site":"https://docs.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
-          known = {row["app"] for row in all_apps} | {"gateway", "cache"}
+          known = {row["app"] for row in all_apps} | {"gateway", "cache", "carina", "new-api", "dns-leak"}
           missing = set(wanted) - known
           if missing:
               raise SystemExit(f"unknown apps: {sorted(missing)}")
@@ -83,6 +97,9 @@ jobs:
               fh.write("\nEOF\n")
               fh.write(f"want_gateway={'true' if 'gateway' in wanted else 'false'}\n")
               fh.write(f"want_cache={'true' if ('cache' in wanted or 'gateway' in wanted) else 'false'}\n")
+              fh.write(f"want_carina={'true' if 'carina' in wanted else 'false'}\n")
+              fh.write(f"want_new_api={'true' if 'new-api' in wanted else 'false'}\n")
+              fh.write(f"want_dns_leak={'true' if 'dns-leak' in wanted else 'false'}\n")
           PY
 
   deploy:
@@ -138,6 +155,8 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
           NEXT_OUTPUT: standalone
           NEXT_PUBLIC_SITE_URL: ${{ matrix.site }}
+          NEXT_PUBLIC_DOCS_ORIGIN_URL: ${{ matrix.site }}
+          OIDC_ISSUER: "https://sso.nebutra.com"
           NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
@@ -201,6 +220,33 @@ jobs:
           flyctl secrets unset HOSTNAME PORT HOST -a "${{ matrix.fly_app }}" --stage \
             || echo "no leftover bind secrets"
           flyctl secrets set HOSTNAME=0.0.0.0 PORT=8080 -a "${{ matrix.fly_app }}" --stage
+
+      - name: Set kuanlan consume secrets
+        if: matrix.app == 'kuanlan'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          ROUTER_API_KEY: ${{ secrets.KUANLAN_ROUTER_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+        run: |
+          set -euo pipefail
+          args=()
+          [ -n "${ROUTER_API_KEY:-}" ] && args+=(ROUTER_API_KEY="$ROUTER_API_KEY")
+          [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] && args+=(CLOUDFLARE_ACCOUNT_ID="$CLOUDFLARE_ACCOUNT_ID")
+          [ -n "${R2_ACCESS_KEY_ID:-}" ] && args+=(R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID")
+          [ -n "${R2_SECRET_ACCESS_KEY:-}" ] && args+=(R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY")
+          [ -n "${BETTER_AUTH_SECRET:-}" ] && args+=(BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET")
+          args+=(NEXT_PUBLIC_AUTH_URL="https://auth.nebutra.com")
+          args+=(BETTER_AUTH_URL="https://auth.nebutra.com")
+          args+=(NEXT_PUBLIC_AUTH_PROVIDER="better-auth")
+          args+=(NEXT_PUBLIC_SITE_URL="https://kuanlan.nebutra.com")
+          if [ "${#args[@]}" -eq 0 ]; then
+            echo "::warning::No GitHub kuanlan secrets — relying on VM .env import."
+            exit 0
+          fi
+          flyctl secrets set "${args[@]}" -a nebutra-kuanlan --stage
 
       - name: Deploy Machine
         env:
@@ -423,3 +469,368 @@ jobs:
             UPSTASH_REDIS_URL="$UPSTASH_REDIS_REST_URL" \
             UPSTASH_REDIS_TOKEN="$UPSTASH_REDIS_REST_TOKEN" \
             -a nebutra-gateway
+
+  deploy-carina:
+    name: Fly carina static
+    needs: matrix
+    if: needs.matrix.outputs.want_carina == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token)."
+            exit 1
+          fi
+
+      - name: Checkout Sailor
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-carina' in names else 1)"; then
+            echo "app nebutra-carina exists"
+          else
+            flyctl apps create nebutra-carina --machines --org "$org" --yes
+          fi
+
+      - name: Stage live dist from the VM
+        env:
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          # Live site is the Nebutra/carina apps/docs dist already on the box.
+          STAGE="$RUNNER_TEMP/stage-carina"
+          rm -rf "$STAGE"
+          mkdir -p "$STAGE/html"
+          if [ -n "${VM_HOST:-}" ] && [ -n "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+            printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+            ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+              "${VM_USER}@${VM_HOST}" \
+              "tar -C /var/www/nebutra/carina/current -czf - ." \
+              > "$RUNNER_TEMP/carina-dist.tgz"
+            rm -f "$RUNNER_TEMP/vm_key"
+            tar -C "$STAGE/html" -xzf "$RUNNER_TEMP/carina-dist.tgz"
+            rm -f "$RUNNER_TEMP/carina-dist.tgz"
+          fi
+          if [ ! -f "$STAGE/html/index.html" ]; then
+            echo "::error::No live carina dist on the VM. Fix Nebutra/carina main build, then retry."
+            exit 1
+          fi
+          cp infra/fly/Dockerfile.carina "$STAGE/Dockerfile"
+          cp infra/fly/carina.nginx.conf "$STAGE/nginx.conf"
+          echo "STAGE=$STAGE" >> "$GITHUB_ENV"
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy "$STAGE" \
+            --config "$GITHUB_WORKSPACE/infra/fly/carina.toml" \
+            --dockerfile "$STAGE/Dockerfile" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Smoke Fly URL
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          url="https://nebutra-carina.fly.dev/"
+          llms="https://nebutra-carina.fly.dev/llms.txt"
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$url" || echo 000)
+            lcode=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$llms" || echo 000)
+            echo "try $i home=$code llms=$lcode"
+            if [ "$code" = "200" ] && [ "$lcode" = "200" ]; then
+              exit 0
+            fi
+            sleep 10
+          done
+          flyctl status -a nebutra-carina || true
+          flyctl logs -a nebutra-carina --no-tail || true
+          echo "::error::$url is not healthy. DNS will not cut over."
+          exit 1
+
+      - name: Cut over Cloudflare DNS
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          HOST: carina
+          FLY_APP: nebutra-carina
+        run: bash infra/ops/scripts/point-host-dns-fly.sh
+
+  deploy-new-api:
+    name: Fly new-api private
+    needs: matrix
+    if: needs.matrix.outputs.want_new_api == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token)."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app and volume
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-new-api' in names else 1)"; then
+            echo "app nebutra-new-api exists"
+          else
+            flyctl apps create nebutra-new-api --machines --org "$org" --yes
+          fi
+          if flyctl volumes list -a nebutra-new-api --json | python3 -c 'import json,sys; vols=json.load(sys.stdin); sys.exit(0 if any((v.get("Name") or v.get("name"))=="new_api_data" for v in vols) else 1)'; then
+            echo "volume new_api_data exists"
+          else
+            flyctl volumes create new_api_data -a nebutra-new-api --region sin --size 3 --yes
+          fi
+          flyctl ips list -a nebutra-new-api --json | python3 -c '
+          import json, sys, subprocess
+          for ip in json.load(sys.stdin):
+              addr = ip.get("Address") or ip.get("address") or ""
+              kind = (ip.get("Type") or ip.get("type") or "").lower()
+              if not addr:
+                  continue
+              if "private" in kind or "privatenetwork" in kind or addr.startswith("fdaa:"):
+                  continue
+              print("releasing public", addr)
+              subprocess.check_call(["flyctl", "ips", "release", addr, "-a", "nebutra-new-api"])
+          '
+
+      - name: Import SESSION_SECRET from VM
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            echo "::warning::No VM SSH — set SESSION_SECRET on nebutra-new-api by hand."
+            exit 0
+          fi
+          install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+          printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+          secret=""
+          if ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+            "${VM_USER}@${VM_HOST}" "test -f /var/www/nebutra/new-api/session.secret"; then
+            secret="$(ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+              "${VM_USER}@${VM_HOST}" "cat /var/www/nebutra/new-api/session.secret")"
+          fi
+          rm -f "$RUNNER_TEMP/vm_key"
+          if [ -z "$secret" ]; then
+            echo "::warning::No session.secret on VM — New-API will generate its own."
+            exit 0
+          fi
+          flyctl secrets set SESSION_SECRET="$secret" -a nebutra-new-api --stage
+          unset secret
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy \
+            --config "$GITHUB_WORKSPACE/infra/fly/new-api.toml" \
+            --image calciumion/new-api:v0.8.7.4 \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Copy VM /data onto the volume
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
+          VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
+          VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
+            echo "::error::Need VM SSH to copy New-API data."
+            exit 1
+          fi
+          install -m 600 /dev/null "$RUNNER_TEMP/vm_key"
+          printf '%s\n' "$VM_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/vm_key"
+          ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
+            "${VM_USER}@${VM_HOST}" \
+            "tar -C /var/www/nebutra/new-api/data -czf - ." \
+            > "$RUNNER_TEMP/new-api-data.tgz"
+          rm -f "$RUNNER_TEMP/vm_key"
+          test -s "$RUNNER_TEMP/new-api-data.tgz"
+          flyctl ssh sftp put -a nebutra-new-api \
+            "$RUNNER_TEMP/new-api-data.tgz" /tmp/new-api-data.tgz
+          flyctl ssh console -a nebutra-new-api --pty=false -C \
+            "sh -c 'tar -C /data -x -z -f /tmp/new-api-data.tgz && rm -f /tmp/new-api-data.tgz && ls /data'"
+          rm -f "$RUNNER_TEMP/new-api-data.tgz"
+          flyctl apps restart nebutra-new-api
+
+      - name: Smoke 6PN from this org
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            if flyctl ssh console -a nebutra-new-api --pty=false -C \
+              "sh -c 'wget -qO- --timeout=5 http://127.0.0.1:3000/api/status || wget -qO- --timeout=5 http://127.0.0.1:3000/ || true'" \
+              | tee "$RUNNER_TEMP/new-api-smoke.txt" | grep -q .; then
+              echo "new-api answered on try $i"
+              exit 0
+            fi
+            sleep 8
+          done
+          flyctl status -a nebutra-new-api || true
+          flyctl logs -a nebutra-new-api --no-tail || true
+          echo "::error::nebutra-new-api did not answer on :3000"
+          exit 1
+
+      - name: Point Fly router at 6PN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          flyctl secrets set \
+            NEW_API_BASE_URL=http://nebutra-new-api.internal:3000/v1 \
+            -a nebutra-router
+          echo "router now consumes New-API over 6PN"
+
+  deploy-dns-leak:
+    name: Fly dns-leak
+    needs: matrix
+    if: needs.matrix.outputs.want_dns_leak == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token)."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-dns-leak' in names else 1)"; then
+            echo "app nebutra-dns-leak exists"
+          else
+            flyctl apps create nebutra-dns-leak --machines --org "$org" --yes
+          fi
+
+      - name: Allocate dedicated IPv4
+        id: ip
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          pick_v4() {
+            python3 -c '
+          import json, re, sys
+          raw = json.load(sys.stdin)
+          rows = raw if isinstance(raw, list) else raw.get("ips") or raw.get("Addresses") or raw.get("data") or []
+          for ip in rows:
+              addr = ip.get("Address") or ip.get("address") or ip.get("IP") or ip.get("ip") or ""
+              kind = str(ip.get("Type") or ip.get("type") or "").lower()
+              if re.match(r"^\d{1,3}(\.\d{1,3}){3}$", addr) and "shared" not in kind:
+                  print(addr)
+                  break
+          '
+          }
+          ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | pick_v4)"
+          if [ -z "$ns_ip" ]; then
+            flyctl ips allocate-v4 -a nebutra-dns-leak --yes
+            ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | pick_v4)"
+          fi
+          test -n "$ns_ip"
+          echo "ns_ip=$ns_ip" >> "$GITHUB_OUTPUT"
+          echo "dedicated IPv4 $ns_ip"
+          flyctl secrets set FORGE_DNS_LEAK_NS_IP="$ns_ip" -a nebutra-dns-leak --stage
+
+      - name: Assemble image context
+        run: |
+          set -euo pipefail
+          STAGE="$RUNNER_TEMP/stage-dns-leak"
+          rm -rf "$STAGE"
+          mkdir -p "$STAGE/src"
+          cp packages/ai/forge-dns-leak/package.json "$STAGE/"
+          cp -R packages/ai/forge-dns-leak/src/. "$STAGE/src/"
+          cp infra/fly/Dockerfile.dns-leak "$STAGE/Dockerfile"
+          echo "STAGE=$STAGE" >> "$GITHUB_ENV"
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy "$STAGE" \
+            --config "$GITHUB_WORKSPACE/infra/fly/dns-leak.toml" \
+            --dockerfile "$STAGE/Dockerfile" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Smoke control API on the Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            if flyctl ssh console -a nebutra-dns-leak --pty=false -C \
+              "sh -c 'wget -qO- --timeout=5 http://127.0.0.1:3953/health'" \
+              | tee "$RUNNER_TEMP/leak-health.txt" | grep -q '"ok":true'; then
+              echo "control API healthy on try $i"
+              exit 0
+            fi
+            sleep 8
+          done
+          flyctl status -a nebutra-dns-leak || true
+          flyctl logs -a nebutra-dns-leak --no-tail || true
+          echo "::error::leak control API did not answer"
+          exit 1
+
+      - name: Point Forge at 6PN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl secrets set \
+            FORGE_DNS_LEAK_URL=http://nebutra-dns-leak.internal:3953 \
+            -a nebutra-forge

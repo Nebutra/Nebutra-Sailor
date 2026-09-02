@@ -107,6 +107,39 @@ describe("/api/organizations", () => {
     expect(response.headers.get("set-cookie")).toContain("nebutra_active_org=org_alpha");
   });
 
+  it("allows Better Auth organization creation while its lazy capability probe is pending", async () => {
+    process.env.AUTH_PROVIDER = "better-auth";
+    process.env.NEXT_PUBLIC_AUTH_PROVIDER = "better-auth";
+
+    const createOrganizationMock = vi.fn().mockResolvedValue({
+      id: "org_lazy",
+      name: "Lazy Labs",
+      slug: "lazy-labs",
+      plan: "FREE",
+      createdAt: new Date("2026-09-01T00:00:00.000Z"),
+    });
+    createAuthMock.mockResolvedValue({
+      capabilities: { organizations: false },
+      getSession: vi.fn().mockResolvedValue({
+        userId: "user_lazy",
+        expiresAt: new Date("2026-09-01T01:00:00.000Z"),
+      }),
+      createOrganization: createOrganizationMock,
+    });
+
+    const { POST } = await loadRoute();
+    const response = await POST(
+      new Request("https://app.nebutra.com/api/organizations", {
+        method: "POST",
+        body: JSON.stringify({ name: "Lazy Labs", slug: "lazy-labs" }),
+        headers: { "content-type": "application/json" },
+      }),
+    );
+
+    expect(response.status).toBe(201);
+    expect(createOrganizationMock).toHaveBeenCalledOnce();
+  });
+
   it("passes request context when listing better-auth organizations", async () => {
     const getUserOrganizationsMock = vi.fn().mockResolvedValue([
       {
@@ -171,6 +204,7 @@ describe("/api/organizations", () => {
     expect(createAuthMock).toHaveBeenCalledWith({ provider: "nextauth" });
     expect(response.status).toBe(404);
     await expect(response.json()).resolves.toEqual({
+      code: "ORGANIZATIONS_NOT_ENABLED",
       error: "Organizations are not enabled for this provider.",
     });
   });
