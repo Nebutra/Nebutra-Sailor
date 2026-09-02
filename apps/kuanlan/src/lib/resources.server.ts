@@ -35,6 +35,7 @@ export async function persistIdPhotoMoment(
     id?: string;
     userId: string;
     skuId: string;
+    sizeId?: string;
     print: Buffer;
     source: Buffer;
     sourceType: string;
@@ -51,7 +52,12 @@ export async function persistIdPhotoMoment(
     id,
     part: "source",
   });
-  const metadata = { skuId: input.skuId, app: RESOURCE_APP, userId: input.userId };
+  const metadata = {
+    skuId: input.skuId,
+    ...(input.sizeId ? { sizeId: input.sizeId } : {}),
+    app: RESOURCE_APP,
+    userId: input.userId,
+  };
 
   const stored = await put(key, input.print, {
     bucket: "uploads",

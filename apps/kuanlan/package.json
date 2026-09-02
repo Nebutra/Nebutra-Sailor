@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "samples:compose": "tsx scripts/compose-sku-samples.ts",
+    "samples:shoot": "tsx scripts/shoot-sku-sample.ts",
     "assets:seed": "tsx scripts/seed-catalog-assets.ts"
   },
   "dependencies": {

@@ -22,7 +22,9 @@ export default async function CreatePage({
     listGarmentSkus().find((item) => Boolean(query) && query.includes(item.title));
   const wantsIdPhoto = /证照|护照|签证|一寸|二寸|领英|职业|灰蓝|质感|美式/.test(query);
   const parent = idPhotoParentTile();
-  const specs = listIdPhotoCreateTiles().filter((sku) => !garment || sku.garmentId === garment.id);
+  const specs = listIdPhotoCreateTiles({ excludeParent: !garment }).filter(
+    (sku) => !garment || sku.garmentId === garment.id,
+  );
 
   return (
     <div className="shell">
@@ -89,7 +91,7 @@ export default async function CreatePage({
                     {sku.title} · {sku.subtitle}
                   </span>
                   <span className="tile-sub">
-                    {sku.widthMm} × {sku.heightMm} mm
+                    {sku.sizes.map((size) => size.label).join(" / ")}
                   </span>
                 </figcaption>
               </figure>

@@ -1,4 +1,4 @@
-import { getEnabledSku, SkuUnavailableError } from "@/catalog/skus";
+import { resolveIdPhotoPrint, SkuUnavailableError } from "@/catalog/skus";
 import { getSessionFromRequest } from "@/lib/auth";
 import {
   Image2UnavailableError,
@@ -54,6 +54,7 @@ export async function POST(request: Request) {
 
   const form = await request.formData();
   const skuId = String(form.get("skuId") ?? "");
+  const sizeId = String(form.get("sizeId") ?? "");
   const file = form.get("file");
 
   if (!(file instanceof File) || file.size === 0) {
@@ -65,18 +66,19 @@ export async function POST(request: Request) {
 
   try {
     const { composeIdPhoto } = await import("@/lib/id-photo");
-    const sku = getEnabledSku(skuId);
+    const print = resolveIdPhotoPrint(skuId, sizeId || undefined);
     const source = Buffer.from(await file.arrayBuffer());
     const shot = await shootWithImage2({
       image: source,
-      prompt: idPhotoShootBrief(sku),
-      size: image2SizeForSku(sku),
+      prompt: idPhotoShootBrief(print),
+      size: image2SizeForSku(print),
       mimeType: file.type,
     });
-    const result = await composeIdPhoto({ source: shot, sku });
+    const result = await composeIdPhoto({ source: shot, sku: print });
     const stored = await persistIdPhotoMoment({
       userId: session.userId,
-      skuId: sku.id,
+      skuId: print.id,
+      sizeId: print.sizeId,
       print: result.png,
       source,
       sourceType: file.type,
@@ -85,7 +87,8 @@ export async function POST(request: Request) {
     return Response.json(
       {
         id: stored.id,
-        skuId: sku.id,
+        skuId: print.id,
+        sizeId: print.sizeId,
         key: stored.key,
         url: stored.url,
         width: result.width,

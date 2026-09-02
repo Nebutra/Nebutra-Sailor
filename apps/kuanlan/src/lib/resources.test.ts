@@ -28,8 +28,10 @@ describe("resource keys", () => {
   it("places 领证照 samples under the public skus prefix", () => {
     expect(skuSampleKey("cn-2in-white")).toBe("kuanlan/skus/cn-2in-white.jpg");
     expect(skuSampleSrc("visa-us")).toBe("https://cdn.nebutra.com/kuanlan/skus/visa-us.jpg");
+    expect(skuSampleSrc("id-white")).toBe("https://cdn.nebutra.com/kuanlan/skus/cn-1in-white.jpg");
+    expect(skuSampleSrc("id-blue")).toBe("https://cdn.nebutra.com/kuanlan/skus/cn-2in-blue.jpg");
     expect(skuSampleSrc("linkedin-studio")).toBe(
-      "https://cdn.nebutra.com/kuanlan/skus/linkedin-studio.jpg?v=2",
+      "https://cdn.nebutra.com/kuanlan/skus/linkedin-studio.jpg?v=incamera",
     );
     expect(() => skuSampleSrc("../secret")).toThrow(InvalidResourceKeyError);
   });
