@@ -298,6 +298,7 @@ tests/architecture/nebutra/
 .github/workflows/ops-sync-auth-vercel-db.yml
 .github/workflows/ops-vm-reclaim.yml
 .github/workflows/ops-vm-triage.yml
+.github/workflows/ops-kuanlan-r2-uploads.yml
 .github/workflows/point-design-dns.yml
 .github/workflows/point-kuanlan-dns.yml
 .github/workflows/point-leak-dns.yml
