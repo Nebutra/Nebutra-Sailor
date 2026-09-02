@@ -17,6 +17,7 @@
   <br />
   <p>
     <a href="https://nebutra.com"><strong>Website</strong></a> · 
+    <a href="https://forge.nebutra.com"><strong>Forge</strong></a> · 
     <a href="#-introduction"><strong>Introduction</strong></a> · 
     <a href="#-tech-stack"><strong>Tech Stack</strong></a> · 
     <a href="#-getting-started"><strong>Quick Start</strong></a> · 
@@ -599,7 +600,6 @@ Each component has its own README with setup instructions and API documentation:
 <td><strong>Infrastructure</strong></td>
 <td>
   <a href="infra/runtime/docker/">Docker</a> · 
-  <a href="infra/iac/k8s/">Kubernetes</a> · 
   <a href="infra/iac/terraform/">Terraform</a> · 
   <a href="workflows/inngest/">Inngest</a> · 
   <a href="workflows/n8n/">n8n</a> · 
@@ -637,6 +637,8 @@ npm install -g nebutra
 ### nebutra.com
 
 [`nebutra.com`](https://nebutra.com) is the public product surface for Nebutra Sailor and the place where we dogfood the platform ourselves. We will use it to publish product updates, commercial licensing, hosted capabilities, launch workflows, and real examples built on this monorepo.
+
+The public tool station lives at [`forge.nebutra.com`](https://forge.nebutra.com) — codecs, text, hashing, documents, and image tools, with the same implementations available over API / MCP.
 
 <br />
 

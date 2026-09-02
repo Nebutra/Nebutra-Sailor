@@ -70,6 +70,10 @@ outside a shrink-only residue list. Adding a Nebutra host, IP or account id to
 a file that ships fails that test; the fix is to move the file into one of the
 three homes, not to widen the residue list.
 
+When a shipped doc has to point at instance content (a runbook, an instance
+test, a stripped script or deploy kit), mark the link "(source repo only)" so a
+template consumer knows the target is absent by design, not by accident.
+
 ## What is preserved
 
 - Every `packages/*` primitive (UI, tokens, queue, search, metering, vault, …)

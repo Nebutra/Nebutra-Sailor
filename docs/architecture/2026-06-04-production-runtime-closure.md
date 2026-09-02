@@ -6,7 +6,7 @@
 - **Related**:
   - `docs/plans/2026-06-04-deployment-responsibility-split-design.md`
   - `packages/ops/preset/src/deploy-target.ts`
-  - `tests/architecture/deployment-runtime-closure.test.ts`
+  - `tests/architecture/deployment-runtime-closure.test.ts` (source repo only — stripped from the Sailor template)
 
 ---
 

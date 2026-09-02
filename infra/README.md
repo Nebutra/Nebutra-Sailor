@@ -53,6 +53,10 @@ terraform apply -var-file="environments/prod/terraform.tfvars"
 
 ### Kubernetes
 
+Source repo only: `infra/iac/k8s/` is a dormant deploy kit outside the default
+topology (ADR 2026-06-04) and is stripped from the Sailor template, as is
+`infra/iac/railway/` (see `TEMPLATE.md`, "Instance vs product").
+
 ```bash
 # Preview manifests
 kubectl kustomize infra/iac/k8s/overlays/prod

@@ -1,7 +1,7 @@
 name: Deploy Web (Vercel)
 
 # Optional edge host for app.nebutra.com. Production DNS still prefers ECS
-# (see docs/ops/web-auth-vercel-cutover.md). CLI deploy is emergency-only:
+# (see docs/ops/nebutra/web-auth-vercel-cutover.md). CLI deploy is emergency-only:
 # workflow_dispatch. Do not auto-push — Git integration plus this workflow
 # double-billed the Pro meter. Git auto-deploy should stay off on nebutra-web.
 #

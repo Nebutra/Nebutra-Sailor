@@ -63,8 +63,8 @@ Complete navigation to all project documentation.
 | [infra](../infra/README.md)                               | Infrastructure overview              |
 | [iac/cloudflare](../infra/iac/cloudflare/README.md)       | Cloudflare configuration             |
 | [iac/cloudflare/r2](../infra/iac/cloudflare/r2/README.md) | R2 object storage                    |
-| [iac/k8s](../infra/iac/k8s/README.md)                     | Kubernetes manifests                 |
-| [iac/railway](../infra/iac/railway/README.md)             | Railway deployment                   |
+| [iac/k8s](../infra/iac/k8s/README.md)                     | Kubernetes manifests (source repo only — dormant kit, not shipped in the template) |
+| [iac/railway](../infra/iac/railway/README.md)             | Railway deployment (source repo only — dormant kit, not shipped in the template) |
 | [iac/terraform](../infra/iac/terraform/README.md)         | IaC definitions                      |
 | [runtime/docker](../infra/runtime/docker/README.md)       | Docker base images & compose configs |
 | [runtime/nginx](../infra/runtime/nginx/README.md)         | Nginx reverse proxy                  |
@@ -116,9 +116,9 @@ Complete navigation to all project documentation.
 | Document                            | Description          |
 | ----------------------------------- | -------------------- |
 | [DOMAINS](./DOMAINS.md)             | Domain configuration (includes `open.nebutra.com`) |
-| [Vercel spend](./ops/nebutra/vercel-spend.md) | Repo-owned ignore + Git flags; kuanlan stays linked |
+| [Vercel spend](./ops/nebutra/vercel-spend.md) | Repo-owned ignore + Git flags; kuanlan stays linked (source repo only) |
 | [Fly / China origin](./architecture/2026-08-31-fly-global-china-ecs-origin.md) | Fly sin product edges; ECS issuer / leak / rollback |
 | [Nebutra-instance runbooks](./ops/nebutra/README.md) | Bills, cutovers, hosts of Nebutra's own deployment — stripped from the template |
-| [Fly origin runbook](./ops/nebutra/fly-origin.md) | FLY_API_TOKEN → deploy-fly.yml → optional DNS cutover |
+| [Fly origin runbook](./ops/nebutra/fly-origin.md) | FLY_API_TOKEN → deploy-fly.yml → optional DNS cutover (source repo only) |
 | [changelog](../CHANGELOG.md)        | Version history      |
 | [Alibaba Cloud ECS](./阿里云ECS部署指南.md) | ECS deployment guide |
