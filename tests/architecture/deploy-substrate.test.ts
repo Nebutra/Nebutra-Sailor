@@ -119,7 +119,7 @@ describe("Deploy substrate governance", () => {
   it("no workflow deploys to Kubernetes on an automatic trigger", () => {
     // The trigger extractor must actually see something, or the loop below is
     // vacuously green.
-    expect(triggers(read("deploy-web-vercel.yml"))).toContain("workflow_dispatch");
+    expect(triggers(read("deploy-vercel.yml"))).toContain("workflow_dispatch");
     expect(triggers(read("ci.yml")).length).toBeGreaterThan(0);
 
     expect(
