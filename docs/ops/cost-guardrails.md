@@ -78,8 +78,12 @@ everything on the request path is not.
 | Where | Commands | Since |
 | --- | --- | --- |
 | Edge Worker, every `api.nebutra.com` request | ~~INCR+EXPIRE = 2~~ → **0** | 2026-09-02: the per-IP flood limit is Cloudflare's rate limiting binding (`[[ratelimits]]` in `wrangler.edge.toml`), not metered, no Redis credentials at the edge |
-| Origin, authenticated `/api/v1/*` | rate limit GET+SET = 2, metering INCR+EXPIRE = 2 | see `backends/gateway/src/middlewares/` |
+| Origin, authenticated `/api/v1/*` | ~~rate limit GET+SET = 2, metering INCR+EXPIRE = 2~~ → **2** | 2026-09-02: the token bucket is one atomic EVAL (`packages/platform/rate-limit`), and metering sets EXPIRE only on the increment that creates the month key |
 | Origin, each AI completion | +5 (api-key, balance ×2, pricing, spend EVAL) + 1 DEL, +2 EVAL per circuit-breaker call, +1 QStash message | `packages/platform/gateway-core` |
+
+Upstash documents that PING and INFO are free and that every other command is
+counted, but not how EVAL is metered. Read `total_commands_processed` before
+and after a deploy that changes the script paths rather than assuming.
 
 The edge line was the expensive one: it ran for scanners and bots as much as
 for customers, and each call was also a round trip to Redis's region before
