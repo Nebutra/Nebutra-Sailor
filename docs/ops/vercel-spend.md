@@ -52,10 +52,12 @@ project-level settings below apply to every branch and are the real lock:
 | `docs` | `standard` | script (CLI-only, not Git-linked) |
 | `nebutra-kuanlan` | `standard` | script — the only project meant to Git-deploy |
 
-Set them with `PATCH /v9/projects/{id}` (`resourceConfig.buildMachineType`,
-`commandForIgnoringBuildStep`) or in the dashboard. Re-check
-`resourceConfig.buildMachineSelection` after any long build: `elastic` means
-Vercel may promote the machine again.
+Applied 2026-09-02 with `PATCH /v9/projects/{id}` (`resourceConfig.buildMachineType`,
+`commandForIgnoringBuildStep`). Setting `buildMachineType` explicitly flips
+`resourceConfig.buildMachineSelection` from `elastic` to `fixed` (the only two
+values the API accepts), so landing, web and docs can no longer be promoted
+by a long build. `nebutra-auth` and `nebutra-kuanlan` were never changed and
+remain `elastic`; set their type once if they ever start building again.
 
 ## Why the bill moves
 
