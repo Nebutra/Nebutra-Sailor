@@ -103,6 +103,51 @@ export class WebhookEventRepository {
   }
 
   /**
+   * Atomically re-lease an existing, retryable inbox row.
+   *
+   * The row's `createdAt` is the lease timestamp: a recent row with no
+   * `errorMessage` is held by an in-flight worker. A row is retryable when
+   * it is not processed AND (a previous attempt recorded an error OR the
+   * lease is older than `inFlightMs`, i.e. the holder crashed).
+   *
+   * This is one UPDATE whose WHERE encodes that predicate and whose SET
+   * re-stamps the lease (`createdAt = now`, `errorMessage = null`). Under
+   * READ COMMITTED a concurrent retrier blocks on the row lock, re-evaluates
+   * the WHERE against the re-stamped row, and updates 0 rows — so of N
+   * concurrent retries exactly one wins. Compare {@link claim}, which is the
+   * same idea for the first delivery via the unique constraint.
+   *
+   * Returns the re-leased row, or `null` when the lease was lost (another
+   * retrier won, or the row was processed meanwhile).
+   */
+  async lease(
+    provider: string,
+    eventId: string,
+    now: Date,
+    inFlightMs: number,
+  ): Promise<WebhookEvent | null> {
+    const { count } = await this.prisma.webhookEvent.updateMany({
+      where: {
+        provider,
+        eventId,
+        processedAt: null,
+        OR: [
+          { errorMessage: { not: null } },
+          { createdAt: { lt: new Date(now.getTime() - inFlightMs) } },
+        ],
+      },
+      data: {
+        createdAt: now,
+        errorMessage: null,
+      },
+    });
+    if (count === 0) {
+      return null;
+    }
+    return this.findByProviderAndEventId(provider, eventId);
+  }
+
+  /**
    * Insert or update a webhook event record.
    *
    * On conflict (same provider + eventId), the payload and eventType are
