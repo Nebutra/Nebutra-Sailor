@@ -239,12 +239,21 @@ function readSailorVersion(): { version: string; converged: boolean } {
  */
 function clearChangesetFixedGroup(targetDir: string): void {
   const configPath = path.join(targetDir, ".changeset/config.json");
-  if (!fs.existsSync(configPath)) {
-    // Fail loud: a missing config means .changeset/ stopped shipping, which
-    // is a boundary change someone should have made on purpose.
-    throw new Error(".changeset/config.json missing from template output. Refusing to push.");
+  // Read directly and branch on ENOENT rather than existsSync-then-read: the
+  // latter is a check-then-use race (the file can vanish between the check
+  // and the read), which CodeQL flags as a TOCTOU file system race.
+  let raw: string;
+  try {
+    raw = fs.readFileSync(configPath, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      // Fail loud: a missing config means .changeset/ stopped shipping, which
+      // is a boundary change someone should have made on purpose.
+      throw new Error(".changeset/config.json missing from template output. Refusing to push.");
+    }
+    throw error;
   }
-  const config = JSON.parse(fs.readFileSync(configPath, "utf8")) as { fixed?: unknown };
+  const config = JSON.parse(raw) as { fixed?: unknown };
   config.fixed = [];
   fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
 }
