@@ -91,6 +91,7 @@ export async function POST(request: Request) {
         sizeId: print.sizeId,
         key: stored.key,
         url: stored.url,
+        sourceUrl: stored.sourceUrl,
         width: result.width,
         height: result.height,
         dpi: result.dpi,

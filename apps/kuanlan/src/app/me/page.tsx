@@ -1,10 +1,12 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { AuthGate } from "@/components/AuthGate";
+import { MomentCard } from "@/components/MomentCard";
 import { QuietPage } from "@/components/QuietPage";
 import { getServerSession } from "@/lib/auth";
-import { type IdPhotoMomentPage, momentLabel } from "@/lib/moments";
+import type { IdPhotoMomentPage } from "@/lib/moments";
 import { ResourceStoreUnavailableError } from "@/lib/resources";
 import { listIdPhotoMoments } from "@/lib/resources.server";
+import { momentShootHref, SHOOT_PATH } from "@/lib/shoot";
 import { formatDay, formatDayTime } from "@/lib/when";
 
 /** How many Moments the page previews — and therefore how many heads it reads. */
@@ -28,7 +30,7 @@ export default async function MePage() {
     return (
       <QuietPage active="/me" title="先让观澜认识你。" line="进入之后，拍过的才会留在 Moments。">
         <div className="hero-actions">
-          <AuthGate variant="cta" />
+          <AuthGate variant="cta" returnPath="/me" />
         </div>
       </QuietPage>
     );
@@ -92,21 +94,13 @@ export default async function MePage() {
           </dl>
 
           <h2 className="section-title">最近拍的</h2>
-          <ul className="sku-grid">
-            {page.moments.map((moment) => {
-              const label = momentLabel(moment);
-              return (
-                <li key={moment.id}>
-                  <a className="sku-card" href={moment.url}>
-                    <img src={moment.url} alt={label} />
-                    <span className="sku-name">{label}</span>
-                  </a>
-                </li>
-              );
-            })}
+          <ul className="moment-grid">
+            {page.moments.map((moment) => (
+              <MomentCard key={moment.id} moment={moment} />
+            ))}
           </ul>
           <div className="hero-actions">
-            <a className="pill pill-ink" href="/create">
+            <a className="pill pill-ink" href={momentShootHref(page.moments[0] ?? {})}>
               再拍一会儿
             </a>
             <a className="pill pill-ghost" href="/moments">
@@ -118,7 +112,7 @@ export default async function MePage() {
         <>
           {storeDown ? null : <p className="note">还没有留下的一张。从领证照开始最快。</p>}
           <div className="hero-actions">
-            <a className="pill pill-ink" href="/create/id-photo">
+            <a className="pill pill-ink" href={SHOOT_PATH}>
               拍第一张
             </a>
           </div>

@@ -16,7 +16,9 @@ describe("wardrobe", () => {
     expect(pieces.map((piece) => piece.id)).toEqual(["blazer", "knit", "oxford"]);
     expect(pieces.every((piece) => piece.kind === "garment")).toBe(true);
     expect(pieces.every((piece) => piece.skuId === piece.id)).toBe(true);
-    expect(pieces.every((piece) => piece.href === `/create?piece=${piece.id}`)).toBe(true);
+    expect(pieces.every((piece) => piece.href === `/create?view=garment&piece=${piece.id}`)).toBe(
+      true,
+    );
     expect(
       pieces.every((piece) => piece.sample.startsWith("https://cdn.nebutra.com/kuanlan/wardrobe/")),
     ).toBe(true);

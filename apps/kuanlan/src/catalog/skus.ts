@@ -477,7 +477,7 @@ export function toPublicGarment(sku: GarmentSku) {
     sample: wardrobeSampleSrc(sealed.id),
     widthPx: GARMENT_STILL.width,
     heightPx: GARMENT_STILL.height,
-    href: `/create?piece=${sealed.id}`,
+    href: `/create?view=garment&piece=${sealed.id}`,
   };
 }
 
@@ -526,7 +526,7 @@ export function listIdPhotoCreateTiles(options?: { excludeParent?: boolean }) {
       const pub = toPublicIdPhoto(sku);
       return {
         ...pub,
-        href: `/create/id-photo?sku=${sku.id}`,
+        href: `/create/id-photo?sku=${sku.id}&size=${pub.sizeId}`,
       };
     });
 }

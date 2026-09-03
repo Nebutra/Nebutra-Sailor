@@ -1,58 +1,82 @@
 import Image from "next/image";
 import Link from "next/link";
-import { idPhotoParentTile, listGarmentSkus, listIdPhotoCreateTiles } from "@/catalog/skus";
+import { idPhotoParentTile, listIdPhotoCreateTiles } from "@/catalog/skus";
+import { listWardrobePieces } from "@/catalog/wardrobe";
 import { SiteNav } from "@/components/SiteNav";
 import { ORBIT_TILES, orbitSrc } from "@/lib/orbit";
+import {
+  type CreateView,
+  createFilterHref,
+  isCreateView,
+  parseCreateView,
+  resolveCreateQuery,
+} from "@/lib/shoot";
 
-const FILTERS = [
-  { id: "all", label: "全部", href: "/create" },
-  { id: "garment", label: "衣服", href: "/wardrobe" },
-  { id: "id-photo", label: "领证照", href: "/create/id-photo" },
-] as const;
+function filters(query: { view?: CreateView; q?: string; piece?: string }) {
+  return [
+    { id: "all" as const, label: "全部", href: createFilterHref({ q: query.q, view: "all" }) },
+    {
+      id: "garment" as const,
+      label: "衣服",
+      href: createFilterHref({ ...query, view: "garment" }),
+    },
+    {
+      id: "id-photo" as const,
+      label: "领证照",
+      href: createFilterHref({ ...query, view: "id-photo" }),
+    },
+  ];
+}
 
 export default async function CreatePage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; piece?: string }>;
+  searchParams: Promise<{ q?: string; piece?: string; view?: string }>;
 }) {
-  const { q, piece: pieceId } = await searchParams;
+  const { q, piece: pieceId, view: viewParam } = await searchParams;
   const query = q?.trim() ?? "";
-  const garment =
-    listGarmentSkus().find((item) => item.id === pieceId) ??
-    listGarmentSkus().find((item) => Boolean(query) && query.includes(item.title));
-  const wantsIdPhoto = /证照|护照|签证|一寸|二寸|领英|职业|灰蓝|质感|美式/.test(query);
+  const resolved = resolveCreateQuery(query);
+  const explicitView = isCreateView(viewParam);
+  const view = explicitView ? parseCreateView(viewParam) : (resolved.view ?? "all");
+  const piece = pieceId || (explicitView && view === "all" ? undefined : resolved.piece);
+  const garments = listWardrobePieces();
+  const garment = garments.find((item) => item.id === piece);
   const parent = idPhotoParentTile();
-  const specs = listIdPhotoCreateTiles({ excludeParent: !garment }).filter(
-    (sku) => !garment || sku.garmentId === garment.id,
-  );
+  const specs = listIdPhotoCreateTiles({ excludeParent: !garment }).filter((sku) => {
+    if (garment && sku.garmentId !== garment.id) return false;
+    if (resolved.sizeId && !sku.sizes.some((size) => size.id === resolved.sizeId)) return false;
+    return true;
+  });
+  const showClothes = view === "garment" && !garment;
+  const showParent = view !== "garment" && !garment;
+  const showSpecs = view !== "garment" || Boolean(garment);
+  const showLater = view === "all" && !garment && !query;
+  const lede = garment
+    ? `${garment.title}。现在可以这样拍。`
+    : query
+      ? `按“${query}”看这些。`
+      : "告诉观澜，你想拍什么。";
 
   return (
     <div className="shell">
       <SiteNav active="/create" query={query} />
       <main className="explore">
         <h1>今天想怎么拍？</h1>
-        <p className="lede">
-          {garment
-            ? `${garment.title}。现在可以这样拍。`
-            : query
-              ? `“${query}”`
-              : "告诉观澜，你想拍什么。"}
-          {wantsIdPhoto && !garment ? " 这一刻，先从领证照开始。" : ""}
-        </p>
+        <p className="lede">{lede}</p>
         <div className="filters">
-          {FILTERS.map((filter) => (
+          {filters({ view, q: query || undefined, piece }).map((filter) => (
             <Link
               key={filter.id}
               className="pill"
               href={filter.href}
-              data-active={filter.id === (garment ? "garment" : wantsIdPhoto ? "id-photo" : "all")}
+              data-active={filter.id === view}
             >
               {filter.label}
             </Link>
           ))}
         </div>
-        <div className="masonry">
-          {garment ? null : (
+        <div className="masonry" data-ground={showClothes ? "smoke" : undefined}>
+          {showParent ? (
             <Link className="masonry-item" href={parent.href} data-live="true" data-kind="id-photo">
               <figure>
                 <Image
@@ -68,38 +92,64 @@ export default async function CreatePage({
                 </figcaption>
               </figure>
             </Link>
-          )}
-          {specs.map((sku) => (
-            <Link
-              key={sku.id}
-              className="masonry-item"
-              href={sku.href}
-              data-live="true"
-              data-kind="id-photo"
-              data-sku={sku.id}
-            >
-              <figure>
-                <Image
-                  className="tile-photo"
-                  src={sku.sample}
-                  alt={`${sku.title}${sku.subtitle}样例`}
-                  width={sku.widthPx}
-                  height={sku.heightPx}
-                />
-                <figcaption>
-                  <span className="tile-title">
-                    {sku.title} · {sku.subtitle}
-                  </span>
-                  <span className="tile-sub">
-                    {sku.sizes.map((size) => size.label).join(" / ")}
-                  </span>
-                </figcaption>
-              </figure>
-            </Link>
-          ))}
-          {wantsIdPhoto || garment
-            ? null
-            : ORBIT_TILES.filter((tile) => tile.href !== "/create/id-photo").map((tile) => (
+          ) : null}
+          {showClothes
+            ? garments.map((item) => (
+                <Link
+                  key={item.id}
+                  className="masonry-item"
+                  href={item.href}
+                  data-live="true"
+                  data-wardrobe={item.id}
+                >
+                  <figure>
+                    <Image
+                      className="tile-photo tile-photo-garment"
+                      src={item.sample}
+                      alt={item.title}
+                      width={item.widthPx}
+                      height={item.heightPx}
+                    />
+                    <figcaption>
+                      <span className="tile-title">{item.title}</span>
+                      <span className="tile-sub">{item.line}</span>
+                    </figcaption>
+                  </figure>
+                </Link>
+              ))
+            : null}
+          {showSpecs
+            ? specs.map((sku) => (
+                <Link
+                  key={sku.id}
+                  className="masonry-item"
+                  href={sku.href}
+                  data-live="true"
+                  data-kind="id-photo"
+                  data-sku={sku.id}
+                >
+                  <figure>
+                    <Image
+                      className="tile-photo"
+                      src={sku.sample}
+                      alt={`${sku.title}${sku.subtitle}样例`}
+                      width={sku.widthPx}
+                      height={sku.heightPx}
+                    />
+                    <figcaption>
+                      <span className="tile-title">
+                        {sku.title} · {sku.subtitle}
+                      </span>
+                      <span className="tile-sub">
+                        {sku.sizes.map((size) => size.label).join(" / ")}
+                      </span>
+                    </figcaption>
+                  </figure>
+                </Link>
+              ))
+            : null}
+          {showLater
+            ? ORBIT_TILES.filter((tile) => tile.href !== "/create/id-photo").map((tile) => (
                 <Link
                   key={tile.name}
                   className="masonry-item"
@@ -120,7 +170,8 @@ export default async function CreatePage({
                     </figcaption>
                   </figure>
                 </Link>
-              ))}
+              ))
+            : null}
         </div>
       </main>
     </div>

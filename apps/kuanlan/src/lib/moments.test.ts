@@ -70,6 +70,8 @@ describe("moments page", () => {
       "utf8",
     );
     expect(page).toContain("这一刻还存不进去。");
-    expect(page).not.toContain("throw error");
+    expect(page).toContain("ResourceStoreUnavailableError");
+    expect(page).toContain("MomentCard");
+    expect(page).not.toContain("sku-card");
   });
 });

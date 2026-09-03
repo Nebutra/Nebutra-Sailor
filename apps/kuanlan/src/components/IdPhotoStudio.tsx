@@ -1,65 +1,81 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { listIdPhotoSkus, parseIdPhotoRef, toPublicIdPhoto } from "@/catalog/skus";
-
-type Status = "idle" | "shooting" | "ready" | "error";
+import { buildAuthCenterSignInUrl } from "@nebutra/auth/client";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useReducer, useState } from "react";
+import { listIdPhotoSkus, toPublicIdPhoto } from "@/catalog/skus";
+import { createFilterHref, openShoot, parseShootSearch, reduceShoot, shootHref } from "@/lib/shoot";
+import { clearShootSource, restoreShootSource, stashShootSource } from "@/lib/shoot-source";
 
 export function IdPhotoStudio({
   initialSkuId,
   initialSizeId,
+  initialQuery,
 }: {
   initialSkuId?: string;
   initialSizeId?: string;
+  initialQuery?: string;
 }) {
+  const router = useRouter();
   const skus = useMemo(() => listIdPhotoSkus().map((sku) => toPublicIdPhoto(sku)), []);
-  const initial = parseIdPhotoRef(initialSkuId, initialSizeId);
-  const [skuId, setSkuId] = useState(
-    () => (skus.some((sku) => sku.id === initial.skuId) ? initial.skuId : skus[0]?.id) ?? "",
-  );
-  const [sizeId, setSizeId] = useState(() => {
-    const sku = skus.find((item) => item.id === (initial.skuId || skus[0]?.id));
-    return initial.sizeId && sku?.sizes.some((size) => size.id === initial.sizeId)
-      ? initial.sizeId
-      : (sku?.sizeId ?? "");
-  });
+  const initial = parseShootSearch({ sku: initialSkuId, size: initialSizeId });
+  const [shoot, dispatch] = useReducer(reduceShoot, initial, openShoot);
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
-  const [status, setStatus] = useState<Status>("idle");
-  const [note, setNote] = useState("");
-  const [needsSignIn, setNeedsSignIn] = useState(false);
 
-  const selected = skus.find((sku) => sku.id === skuId);
-  const selectedSize = selected?.sizes.find((size) => size.id === sizeId) ?? selected?.sizes[0];
+  const selected = skus.find((sku) => sku.id === shoot.skuId);
+  const selectedSize =
+    selected?.sizes.find((size) => size.id === shoot.sizeId) ?? selected?.sizes[0];
+
+  useEffect(() => {
+    const href = shootHref({ skuId: shoot.skuId, sizeId: shoot.sizeId }, { q: initialQuery });
+    if (`${window.location.pathname}${window.location.search}` !== href) {
+      router.replace(href, { scroll: false });
+    }
+  }, [initialQuery, router, shoot.skuId, shoot.sizeId]);
+
+  useEffect(() => {
+    let alive = true;
+    void restoreShootSource().then((stashed) => {
+      if (!alive || !stashed) return;
+      setFile(stashed);
+      dispatch({ type: "source", preview: URL.createObjectURL(stashed) });
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   useEffect(() => {
     return () => {
-      if (preview) URL.revokeObjectURL(preview);
+      if (shoot.sourceUrl?.startsWith("blob:")) URL.revokeObjectURL(shoot.sourceUrl);
     };
-  }, [preview]);
+  }, [shoot.sourceUrl]);
 
   function onPick(next: File | null) {
+    if (shoot.sourceUrl?.startsWith("blob:")) URL.revokeObjectURL(shoot.sourceUrl);
     setFile(next);
-    setResultUrl(null);
-    setStatus("idle");
-    setNote("");
-    setNeedsSignIn(false);
-    setPreview(next ? URL.createObjectURL(next) : null);
+    if (next) {
+      void stashShootSource(next);
+      dispatch({ type: "source", preview: URL.createObjectURL(next) });
+      return;
+    }
+    void clearShootSource();
+    dispatch({ type: "clear-source" });
   }
 
-  async function shoot() {
-    if (!file || !skuId || !selectedSize) {
-      setStatus("error");
-      setNote("先选一张本人照片。");
+  function chooseSpec(skuId: string, sizeId: string) {
+    dispatch({ type: "spec", skuId, sizeId });
+  }
+
+  async function shootNow() {
+    if (!file || !shoot.skuId || !selectedSize) {
+      dispatch({ type: "failed" });
       return;
     }
 
-    setStatus("shooting");
-    setNote("");
-    setNeedsSignIn(false);
+    dispatch({ type: "shoot" });
     const body = new FormData();
-    body.set("skuId", skuId);
+    body.set("skuId", shoot.skuId);
     body.set("sizeId", selectedSize.id);
     body.set("file", file);
 
@@ -69,35 +85,30 @@ export function IdPhotoStudio({
         body,
       });
       if (!response.ok) {
-        setStatus("error");
-        setNeedsSignIn(response.status === 401);
-        setNote(
-          response.status === 401
-            ? "先让观澜认识你。"
-            : response.status === 404
-              ? "这一规格暂时不开放。"
-              : response.status === 503
-                ? "这一刻还存不进去。"
-                : "这张照片观澜看不清。",
-        );
+        dispatch({ type: "http", status: response.status });
         return;
       }
-      const moment = (await response.json()) as { url?: string };
+      const moment = (await response.json()) as { url?: string; id?: string; sourceUrl?: string };
       if (!moment.url) {
-        setStatus("error");
-        setNote("这一刻没留下。再试一次。");
+        dispatch({ type: "failed" });
         return;
       }
-      setResultUrl(moment.url);
-      setStatus("ready");
+      void clearShootSource();
+      dispatch({ type: "kept", url: moment.url, id: moment.id });
     } catch {
-      setStatus("error");
-      setNote("这一刻没留下。再试一次。");
+      dispatch({ type: "failed" });
     }
   }
 
+  const [signInHref, setSignInHref] = useState<string>();
+  useEffect(() => {
+    const path = shootHref({ skuId: shoot.skuId, sizeId: shoot.sizeId }, { q: initialQuery });
+    setSignInHref(buildAuthCenterSignInUrl(`${window.location.origin}${path}`));
+  }, [initialQuery, shoot.skuId, shoot.sizeId]);
+  const emptyFail = shoot.phase === "failed" && !file;
+
   return (
-    <div>
+    <div data-shoot={shoot.phase}>
       <ul className="sku-grid">
         {skus.map((sku) => (
           <li key={sku.id}>
@@ -105,15 +116,9 @@ export function IdPhotoStudio({
               type="button"
               className="sku-card"
               data-sku={sku.id}
-              data-active={sku.id === skuId}
-              aria-pressed={sku.id === skuId}
-              onClick={() => {
-                setSkuId(sku.id);
-                setSizeId(sku.sizeId);
-                setResultUrl(null);
-                setStatus("idle");
-                setNeedsSignIn(false);
-              }}
+              data-active={sku.id === shoot.skuId}
+              aria-pressed={sku.id === shoot.skuId}
+              onClick={() => chooseSpec(sku.id, sku.sizeId)}
             >
               <span className="sku-still">
                 <img
@@ -122,7 +127,9 @@ export function IdPhotoStudio({
                   width={sku.widthPx}
                   height={sku.heightPx}
                 />
-                {preview ? <img className="sku-source" src={preview} alt="" aria-hidden /> : null}
+                {shoot.sourceUrl ? (
+                  <img className="sku-source" src={shoot.sourceUrl} alt="" aria-hidden />
+                ) : null}
               </span>
               <span className="sku-name">
                 {sku.title} · {sku.subtitle}
@@ -144,11 +151,7 @@ export function IdPhotoStudio({
                 data-size={size.id}
                 data-active={size.id === selectedSize.id}
                 aria-pressed={size.id === selectedSize.id}
-                onClick={() => {
-                  setSizeId(size.id);
-                  setResultUrl(null);
-                  setStatus("idle");
-                }}
+                onClick={() => chooseSpec(selected.id, size.id)}
               >
                 {size.label}
               </button>
@@ -160,14 +163,16 @@ export function IdPhotoStudio({
             {selected.garmentId ? (
               <>
                 {" · "}
-                <a href="/wardrobe">衣柜</a>
+                <a href={createFilterHref({ view: "garment", piece: selected.garmentId })}>
+                  这件衣服
+                </a>
               </>
             ) : null}
           </p>
         </>
       ) : null}
 
-      <label className="upload">
+      <label className="upload" data-has-file={file ? "true" : undefined}>
         <input
           data-allow-native
           type="file"
@@ -181,50 +186,46 @@ export function IdPhotoStudio({
         <button
           type="button"
           className="pill pill-ink"
-          onClick={shoot}
-          disabled={status === "shooting"}
+          onClick={() => void shootNow()}
+          disabled={shoot.phase === "shooting"}
         >
-          {status === "shooting" ? "在拍…" : "开拍"}
+          {shoot.phase === "shooting" ? "在拍…" : "开拍"}
         </button>
-        {resultUrl ? (
+        {shoot.resultUrl ? (
           <>
             <a
               className="pill pill-ghost"
-              href={resultUrl}
-              download={`kuanlan-${skuId}-${selectedSize?.id ?? "print"}.png`}
+              href={shoot.resultUrl}
+              download={`kuanlan-${shoot.skuId}-${selectedSize?.id ?? "print"}.png`}
             >
               留下这一张
             </a>
-            <button
-              type="button"
-              className="pill"
-              onClick={() => {
-                setResultUrl(null);
-                setStatus("idle");
-              }}
-            >
+            <button type="button" className="pill" onClick={() => dispatch({ type: "again" })}>
               再拍一会儿
             </button>
           </>
         ) : null}
       </div>
 
-      {status === "ready" ? <p className="note">这一组，拍好了。</p> : null}
-      {note ? (
-        <p className="note" data-tone={status === "error" ? "error" : undefined}>
-          {note}
-          {needsSignIn ? (
+      {shoot.note || emptyFail ? (
+        <p className="note" data-tone={shoot.phase === "kept" ? undefined : "error"}>
+          {emptyFail ? "先选一张本人照片。" : shoot.note}
+          {shoot.phase === "needs-sign-in" && signInHref ? (
             <>
               {" "}
-              <a href="/me">进入</a>
+              <a href={signInHref}>进入</a>
             </>
           ) : null}
         </p>
       ) : null}
 
-      <div className="studio-frame">
-        {preview ? <img className="portrait" src={preview} alt="上传的本人照片" /> : null}
-        {resultUrl ? <img className="portrait" src={resultUrl} alt="拍好的一张" /> : null}
+      <div className="studio-frame" data-phase={shoot.phase}>
+        {shoot.phase === "kept" && shoot.resultUrl ? (
+          <img className="portrait" src={shoot.resultUrl} alt="拍好的一张" />
+        ) : null}
+        {shoot.sourceUrl ? (
+          <img className="portrait" src={shoot.sourceUrl} alt="上传的本人照片" data-role="source" />
+        ) : null}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { buildAuthCenterSignInUrl } from "@nebutra/auth";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { type ShootRef, shootHref } from "@/lib/shoot";
 
 export function kuanlanOrigin(env: Record<string, string | undefined> = process.env): string {
   return (
@@ -14,4 +15,11 @@ export function kuanlanSignInUrl(
 ): string {
   const path = returnPath.startsWith("/") ? returnPath : `/${returnPath}`;
   return buildAuthCenterSignInUrl(`${kuanlanOrigin(env)}${path}`, env);
+}
+
+export function shootSignInHref(
+  ref: ShootRef,
+  env: Record<string, string | undefined> = process.env,
+): string {
+  return kuanlanSignInUrl(shootHref(ref), env);
 }

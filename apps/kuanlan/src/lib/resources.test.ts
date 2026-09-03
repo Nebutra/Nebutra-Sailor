@@ -135,6 +135,7 @@ describe("R2 configuration", () => {
       key: "kuanlan/moments/id-photo/user_1/shot-1.png",
       url: "https://signed.example/kuanlan/moments/id-photo/user_1/shot-1.png",
       sourceKey: "kuanlan/moments/id-photo/user_1/shot-1.source",
+      sourceUrl: "https://signed.example/kuanlan/moments/id-photo/user_1/shot-1.source",
     });
     expect(upload).toHaveBeenCalledTimes(2);
     expect(upload.mock.calls[0]?.[0]).toBe("kuanlan/moments/id-photo/user_1/shot-1.png");
@@ -197,6 +198,8 @@ describe("R2 configuration", () => {
     expect(total).toBe(2);
     expect(moments.map((m) => m.id)).toEqual(["shot-2", "shot-1"]);
     expect(moments[0]?.url).toBe(`https://signed.example/${prefix}shot-2.png`);
+    expect(moments[0]?.sourceUrl).toBeUndefined();
+    expect(moments[1]?.sourceUrl).toBe(`https://signed.example/${prefix}shot-1.source`);
   });
 
   it("orders newest first, and puts prints with no time last", async () => {

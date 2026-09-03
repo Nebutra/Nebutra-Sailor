@@ -576,7 +576,8 @@ a.auth-link:hover {
 }
 
 .sku-card:hover .sku-source,
-.sku-card:focus-visible .sku-source {
+.sku-card:focus-visible .sku-source,
+.sku-card[data-active="true"] .sku-source {
   opacity: 1;
 }
 
@@ -584,9 +585,50 @@ a.auth-link:hover {
   border-color: var(--canvas);
 }
 
-.sku-name {
+.sku-name,
+.moment-name {
   font-size: 14px;
   font-weight: 500;
+}
+
+.moment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  align-items: start;
+  gap: 12px;
+  margin: 28px 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.moment-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.moment-still {
+  position: relative;
+  display: block;
+}
+
+.moment-card img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--tile);
+  background: var(--pill);
+}
+
+.moment-card img.moment-source {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 32%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 1px solid var(--pill);
+  border-radius: calc(var(--tile) - 4px);
 }
 
 .upload {
@@ -602,6 +644,10 @@ a.auth-link:hover {
   cursor: pointer;
 }
 
+.upload[data-has-file="true"] {
+  min-height: 48px;
+}
+
 .upload input {
   position: absolute;
   width: 1px;
@@ -615,6 +661,10 @@ a.auth-link:hover {
   grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
   gap: 16px;
   margin-top: 24px;
+}
+
+.studio-frame[data-phase="kept"] {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 160px);
 }
 
 .portrait {

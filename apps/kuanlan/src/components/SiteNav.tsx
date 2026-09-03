@@ -5,11 +5,11 @@ import { SearchBar } from "@/components/SearchBar";
 import { BRAND } from "@/lib/brand";
 
 const LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/create", label: "Create" },
-  { href: "/wardrobe", label: "Wardrobe" },
+  { href: "/", label: "首页" },
+  { href: "/create", label: "今天拍" },
+  { href: "/wardrobe", label: "衣柜" },
   { href: "/moments", label: "Moments" },
-  { href: "/me", label: "Me" },
+  { href: "/me", label: "我" },
 ] as const;
 
 /**
@@ -45,7 +45,7 @@ export function SiteNav({
         <SearchBar defaultValue={query} />
         <div className="navpill-right">
           <AuthGate />
-          <Link className="pill pill-ink" href="/create">
+          <Link className="pill pill-ink" href="/create/id-photo">
             开拍
           </Link>
         </div>

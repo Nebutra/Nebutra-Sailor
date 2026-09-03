@@ -199,8 +199,11 @@ describe("image2 consume", () => {
     );
     expect(studio).not.toMatch(/idPhotoShootBrief|@\/lib\/image2|api\.302|ROUTER_API_KEY/);
     expect(studio).toContain("/api/moments/id-photo");
-    expect(studio).toContain("401");
-    expect(studio).toContain("先让观澜认识你");
+    expect(studio).toContain('type: "http"');
+    expect(studio).toContain("needs-sign-in");
+    const shoot = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "./shoot.ts"), "utf8");
+    expect(shoot).toContain("status === 401");
+    expect(shoot).toContain("先让观澜认识你");
     expect(studio).toContain("skuId");
     expect(studio).toContain("sizeId");
     expect(studio).toContain("data-size");
@@ -208,8 +211,14 @@ describe("image2 consume", () => {
     expect(studio).toContain("sku.sample");
     expect(studio).toContain("sku-card");
     expect(studio).toContain("sku-source");
-    expect(studio).toMatch(/preview \?[\s\S]*sku-source/);
-    expect(studio).toContain("/wardrobe");
+    expect(studio).toContain("shoot.sourceUrl");
+    expect(studio).toContain("reduceShoot");
+    expect(studio).toContain("shootHref");
+    expect(studio).toContain("buildAuthCenterSignInUrl");
+    expect(studio).toContain("createFilterHref");
+    expect(studio).toContain("这件衣服");
+    expect(studio).not.toContain('href="/wardrobe"');
+    expect(studio).not.toContain("@/lib/auth-urls");
     expect(studio).not.toContain('className="sku-row"');
 
     const css = readFileSync(
@@ -220,5 +229,6 @@ describe("image2 consume", () => {
     expect(css).toMatch(/img\.sku-source[\s\S]*?opacity:\s*0/);
     expect(css).toContain(".sku-card:hover .sku-source");
     expect(css).toContain(".sku-card:focus-visible .sku-source");
+    expect(css).toContain('.sku-card[data-active="true"] .sku-source');
   });
 });

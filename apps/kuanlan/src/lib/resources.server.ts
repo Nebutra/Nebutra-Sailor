@@ -55,7 +55,7 @@ export async function persistIdPhotoMoment(
     sourceType: string;
   },
   put: PutObject = upload,
-): Promise<{ id: string; key: string; url: string; sourceKey: string }> {
+): Promise<{ id: string; key: string; url: string; sourceKey: string; sourceUrl: string }> {
   requireR2();
 
   try {
@@ -79,7 +79,7 @@ export async function persistIdPhotoMoment(
       contentType: "image/png",
       metadata,
     });
-    await put(sourceKey, input.source, {
+    const storedSource = await put(sourceKey, input.source, {
       bucket: "uploads",
       contentType: portraitContentType(input.sourceType),
       metadata,
@@ -90,6 +90,7 @@ export async function persistIdPhotoMoment(
       key: stored.key,
       url: stored.url,
       sourceKey,
+      sourceUrl: storedSource.url,
     };
   } catch (error) {
     unavailableFrom(error);
@@ -131,6 +132,7 @@ export async function listIdPhotoMoments(
 
   try {
     const entries = await (io.list ?? listDetailed)(prefix, "uploads");
+    const listed = new Set(entries.map((entry) => entry.key));
     const sign = io.sign ?? ((key: string) => getSignedDownloadUrl(key, { bucket: "uploads" }));
     const readHead = io.head ?? ((key: string) => head(key, "uploads"));
 
@@ -147,12 +149,23 @@ export async function listIdPhotoMoments(
     const page = options.limit != null ? ordered.slice(0, options.limit) : ordered;
     const moments: IdPhotoMoment[] = await Promise.all(
       page.map(async (moment) => {
-        const [url, meta] = await Promise.all([sign(moment.key), readHead(moment.key)]);
+        const sourceKey = momentObjectKey({
+          kind: "id-photo",
+          userId,
+          id: moment.id,
+          part: "source",
+        });
+        const [url, meta, sourceUrl] = await Promise.all([
+          sign(moment.key),
+          readHead(moment.key),
+          listed.has(sourceKey) ? sign(sourceKey) : Promise.resolve(undefined),
+        ]);
         const skuId = metaValue(meta?.metadata, "skuId");
         const sizeId = metaValue(meta?.metadata, "sizeId");
         return {
           ...moment,
           url,
+          ...(sourceUrl ? { sourceUrl } : {}),
           ...(skuId ? { skuId } : {}),
           ...(sizeId ? { sizeId } : {}),
         };

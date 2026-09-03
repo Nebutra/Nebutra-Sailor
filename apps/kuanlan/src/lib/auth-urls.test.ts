@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { kuanlanOrigin, kuanlanSignInUrl } from "./auth-urls";
+import { kuanlanOrigin, kuanlanSignInUrl, shootSignInHref } from "./auth-urls";
 
 describe("kuanlan auth center URLs", () => {
   const env = {
@@ -21,6 +21,13 @@ describe("kuanlan auth center URLs", () => {
     expect(href).not.toContain("workspace");
   });
 
+  it("sends studio 进入 back into this shoot, not /me", () => {
+    const href = shootSignInHref({ skuId: "linkedin-smoke", sizeId: "linkedin" }, env);
+    expect(href).toContain("auth.nebutra.com/sign-in");
+    expect(href).toContain(encodeURIComponent("/create/id-photo?sku=linkedin-smoke&size=linkedin"));
+    expect(href).not.toContain("%2Fme");
+  });
+
   it("keeps the chrome on auth.nebutra.com", () => {
     const nav = readFileSync(
       join(dirname(fileURLToPath(import.meta.url)), "../components/SiteNav.tsx"),
@@ -35,7 +42,22 @@ describe("kuanlan auth center URLs", () => {
       "utf8",
     );
 
+    const gate = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../components/AuthGate.tsx"),
+      "utf8",
+    );
+    const home = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../app/page.tsx"),
+      "utf8",
+    );
     expect(nav).toContain("AuthGate");
+    expect(nav).toContain('label: "首页"');
+    expect(nav).toContain('label: "今天拍"');
+    expect(nav).toContain('href="/create/id-photo"');
+    expect(home).toContain('href="/create/id-photo"');
+    expect(home).toContain("看看灵感");
+    expect(gate).toContain("returnPath");
+    expect(gate).not.toContain('kuanlanSignInUrl("/me")');
     expect(actions).toContain("进入");
     expect(actions).toContain("离开");
     expect(actions).toContain("signInHref");

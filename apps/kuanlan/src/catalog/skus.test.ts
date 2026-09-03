@@ -192,6 +192,7 @@ describe("catalog", () => {
     expect(tiles.some((tile) => tile.id === "id-blue")).toBe(true);
     expect(tiles.some((tile) => tile.id === "cn-1in-white")).toBe(false);
     expect(tiles.every((tile) => tile.href.startsWith("/create/id-photo?sku="))).toBe(true);
+    expect(tiles.every((tile) => tile.href.includes("&size="))).toBe(true);
     expect(tiles.every((tile) => tile.sizes.length >= 1)).toBe(true);
 
     const children = listIdPhotoCreateTiles({ excludeParent: true });
@@ -217,7 +218,12 @@ describe("catalog", () => {
     expect(page).toContain("piece?");
     expect(page).toContain("pieceId");
     expect(page).toContain('label: "衣服"');
-    expect(page).toContain("质感|美式");
+    expect(page).toContain("createFilterHref");
+    expect(page).toContain("resolveCreateQuery");
+    expect(page).toContain("view:");
+    expect(page).toContain("viewParam");
+    expect(page).not.toContain('href: "/wardrobe"');
+    expect(page).not.toContain("质感|美式");
     expect(page).not.toContain("远方");
     expect(page).not.toMatch(/感觉(?!还在后面)/);
   });

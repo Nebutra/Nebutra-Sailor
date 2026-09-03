@@ -4,6 +4,8 @@ export type IdPhotoMoment = {
   id: string;
   key: string;
   url: string;
+  /** Signed original, when the store still has the source part. */
+  sourceUrl?: string;
   /** From the object's last-modified time. Absent if the store did not report one. */
   shotAt?: Date;
   skuId?: string;

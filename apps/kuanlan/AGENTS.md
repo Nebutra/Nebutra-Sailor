@@ -21,6 +21,7 @@ It does not own shared Nebutra UI chrome or a new `packages/ai/*` package. Exact
 ## Source Of Truth
 
 - `PRODUCT.md` — product + brand contract for this surface
+- `src/lib/shoot.ts` — one 领证照 session (spec + source + result + phase). Do not add Zustand.
 - `src/catalog/skus.ts` — operator SKU control plane (`enabled` is the switch)
 - Cloudflare R2 — resource store (`nebutra-assets` public catalog, `nebutra-uploads` Moments). The Fly S3 token must List/Get/Put `nebutra-uploads`; the shared GitHub `R2_*` seeder is assets-only. Mint via `ops-kuanlan-r2-uploads.yml`.
 - Cosmos Brand Package — `packages/design/tokens/brands/cosmos/` (`brand.json` is the
