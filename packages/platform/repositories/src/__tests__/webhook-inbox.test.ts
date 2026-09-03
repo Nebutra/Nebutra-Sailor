@@ -63,15 +63,23 @@ describe("acceptWebhookEvent", () => {
     payload: { id: "evt_1" },
   };
 
+  const conflict = () =>
+    new Prisma.PrismaClientKnownRequestError("conflict", {
+      code: "P2002",
+      clientVersion: "test",
+    });
+
   let create: ReturnType<typeof vi.fn>;
   let findUnique: ReturnType<typeof vi.fn>;
+  let updateMany: ReturnType<typeof vi.fn>;
   let repo: WebhookEventRepository;
 
   beforeEach(() => {
     create = vi.fn();
     findUnique = vi.fn();
+    updateMany = vi.fn();
     repo = new WebhookEventRepository({
-      webhookEvent: { create, findUnique },
+      webhookEvent: { create, findUnique, updateMany },
     } as never);
   });
 
@@ -86,33 +94,75 @@ describe("acceptWebhookEvent", () => {
   });
 
   it("does not treat a unique conflict as processed", async () => {
-    create.mockRejectedValueOnce(
-      new Prisma.PrismaClientKnownRequestError("conflict", {
-        code: "P2002",
-        clientVersion: "test",
-      }),
-    );
+    create.mockRejectedValueOnce(conflict());
     findUnique.mockResolvedValueOnce(
       event({ processedAt: null, errorMessage: "previous worker died" }),
     );
+    updateMany.mockResolvedValueOnce({ count: 1 });
+    findUnique.mockResolvedValueOnce(event({ processedAt: null, errorMessage: null }));
 
     await expect(acceptWebhookEvent(repo, data)).resolves.toMatchObject({
       outcome: "process",
     });
   });
 
-  it("skips only a processed duplicate", async () => {
-    create.mockRejectedValueOnce(
-      new Prisma.PrismaClientKnownRequestError("conflict", {
-        code: "P2002",
-        clientVersion: "test",
-      }),
-    );
+  it("re-leases a retryable row with a single compare-and-set", async () => {
+    const now = new Date("2026-08-27T00:01:00.000Z");
+    create.mockRejectedValueOnce(conflict());
+    findUnique.mockResolvedValueOnce(event({ errorMessage: "handler exploded" }));
+    updateMany.mockResolvedValueOnce({ count: 1 });
+    const released = event({ errorMessage: null, createdAt: now });
+    findUnique.mockResolvedValueOnce(released);
+
+    await expect(acceptWebhookEvent(repo, data, now)).resolves.toEqual({
+      outcome: "process",
+      event: released,
+    });
+    expect(updateMany).toHaveBeenCalledTimes(1);
+    expect(updateMany).toHaveBeenCalledWith({
+      where: {
+        provider: "stripe",
+        eventId: "evt_1",
+        processedAt: null,
+        OR: [
+          { errorMessage: { not: null } },
+          { createdAt: { lt: new Date(now.getTime() - WEBHOOK_IN_FLIGHT_MS) } },
+        ],
+      },
+      data: { createdAt: now, errorMessage: null },
+    });
+  });
+
+  it("reports in_flight when a concurrent retrier wins the re-lease", async () => {
+    create.mockRejectedValueOnce(conflict());
+    findUnique.mockResolvedValueOnce(event({ errorMessage: "handler exploded" }));
+    updateMany.mockResolvedValueOnce({ count: 0 });
+    findUnique.mockResolvedValueOnce(event({ errorMessage: null, createdAt: new Date() }));
+
+    await expect(acceptWebhookEvent(repo, data)).resolves.toEqual({
+      outcome: "in_flight",
+    });
+  });
+
+  it("reports skip_processed when the row was processed between the read and the re-lease", async () => {
+    create.mockRejectedValueOnce(conflict());
+    findUnique.mockResolvedValueOnce(event({ errorMessage: "handler exploded" }));
+    updateMany.mockResolvedValueOnce({ count: 0 });
     findUnique.mockResolvedValueOnce(event({ processedAt: new Date() }));
 
     await expect(acceptWebhookEvent(repo, data)).resolves.toEqual({
       outcome: "skip_processed",
     });
+  });
+
+  it("skips only a processed duplicate", async () => {
+    create.mockRejectedValueOnce(conflict());
+    findUnique.mockResolvedValueOnce(event({ processedAt: new Date() }));
+
+    await expect(acceptWebhookEvent(repo, data)).resolves.toEqual({
+      outcome: "skip_processed",
+    });
+    expect(updateMany).not.toHaveBeenCalled();
   });
 
   it("replays a clock-driven invoice.paid after the first handler crashes", async () => {
@@ -121,27 +171,20 @@ describe("acceptWebhookEvent", () => {
       processedAt: null,
       errorMessage: "clock advance handler crashed",
     });
-    create.mockRejectedValueOnce(
-      new Prisma.PrismaClientKnownRequestError("conflict", {
-        code: "P2002",
-        clientVersion: "test",
-      }),
-    );
+    create.mockRejectedValueOnce(conflict());
     findUnique.mockResolvedValueOnce(crashed);
+    updateMany.mockResolvedValueOnce({ count: 1 });
+    const released = { ...crashed, errorMessage: null };
+    findUnique.mockResolvedValueOnce(released);
 
     await expect(acceptWebhookEvent(repo, data)).resolves.toEqual({
       outcome: "process",
-      event: crashed,
+      event: released,
     });
   });
 
   it("asks the provider to retry while another worker is in-flight", async () => {
-    create.mockRejectedValueOnce(
-      new Prisma.PrismaClientKnownRequestError("conflict", {
-        code: "P2002",
-        clientVersion: "test",
-      }),
-    );
+    create.mockRejectedValueOnce(conflict());
     findUnique.mockResolvedValueOnce(
       event({
         processedAt: null,
@@ -153,5 +196,7 @@ describe("acceptWebhookEvent", () => {
     await expect(acceptWebhookEvent(repo, data)).resolves.toEqual({
       outcome: "in_flight",
     });
+    // A held lease is never re-stamped by a duplicate delivery.
+    expect(updateMany).not.toHaveBeenCalled();
   });
 });

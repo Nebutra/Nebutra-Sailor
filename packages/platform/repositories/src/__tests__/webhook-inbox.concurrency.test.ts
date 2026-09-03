@@ -1,0 +1,318 @@
+/**
+ * Concurrency contract for the webhook inbox lease.
+ *
+ * N identical deliveries of the SAME `(provider, eventId)` race through
+ * `acceptWebhookEvent` at once. Exactly one may run the handler; the rest
+ * must observe "already leased / processed" without side effects.
+ *
+ * The store is an in-memory model of the `webhook_events` table that keeps
+ * the two properties the lease relies on:
+ *   - the `(provider, eventId)` unique constraint (`create` throws P2002), and
+ *   - `updateMany` evaluates its WHERE and applies its SET in one tick, like a
+ *     single UPDATE statement under Postgres READ COMMITTED.
+ * Every call yields to the event loop first so callers interleave like real I/O.
+ */
+
+import { Prisma, type WebhookEvent } from "@nebutra/db";
+import { describe, expect, it } from "vitest";
+import { WebhookEventRepository } from "../webhook-event.repository";
+import { acceptWebhookEvent, WEBHOOK_IN_FLIGHT_MS } from "../webhook-inbox";
+
+const CONCURRENCY = 8;
+
+const io = (): Promise<void> => new Promise((resolve) => setImmediate(resolve));
+
+function p2002(): Prisma.PrismaClientKnownRequestError {
+  return new Prisma.PrismaClientKnownRequestError("Unique constraint failed", {
+    code: "P2002",
+    clientVersion: "test",
+  });
+}
+
+type Scalar = string | number | boolean | Date | null;
+type Where = Record<string, unknown>;
+
+function eq(a: unknown, b: unknown): boolean {
+  if (a instanceof Date || b instanceof Date) {
+    return a instanceof Date && b instanceof Date && a.getTime() === b.getTime();
+  }
+  return a === b;
+}
+
+function lt(a: unknown, b: unknown): boolean {
+  if (a instanceof Date && b instanceof Date) return a.getTime() < b.getTime();
+  if (typeof a === "number" && typeof b === "number") return a < b;
+  return false;
+}
+
+function matches(row: WebhookEvent, where: Where): boolean {
+  for (const [field, cond] of Object.entries(where)) {
+    if (field === "OR") {
+      if (!(cond as Where[]).some((c) => matches(row, c))) return false;
+      continue;
+    }
+    if (field === "AND") {
+      if (!(cond as Where[]).every((c) => matches(row, c))) return false;
+      continue;
+    }
+    const value = (row as unknown as Record<string, Scalar>)[field];
+    if (cond === null || typeof cond !== "object" || cond instanceof Date) {
+      if (!eq(value, cond)) return false;
+      continue;
+    }
+    for (const [op, arg] of Object.entries(cond as Record<string, unknown>)) {
+      switch (op) {
+        case "equals":
+          if (!eq(value, arg)) return false;
+          break;
+        case "not":
+          if (eq(value, arg)) return false;
+          break;
+        case "lt":
+          if (!lt(value, arg)) return false;
+          break;
+        case "gte":
+          if (lt(value, arg)) return false;
+          break;
+        default:
+          throw new Error(`in-memory webhook_events: unsupported operator "${op}"`);
+      }
+    }
+  }
+  return true;
+}
+
+function applySet(row: WebhookEvent, data: Record<string, unknown>): void {
+  const target = row as unknown as Record<string, unknown>;
+  for (const [field, value] of Object.entries(data)) {
+    if (value && typeof value === "object" && !(value instanceof Date) && "increment" in value) {
+      target[field] = (target[field] as number) + (value.increment as number);
+    } else {
+      target[field] = value;
+    }
+  }
+}
+
+/** In-memory `webhook_events` with the unique constraint and atomic statements. */
+class InMemoryWebhookEvents {
+  private readonly rows = new Map<string, WebhookEvent>();
+  private seq = 0;
+  /** Row insertion clock, injectable so lease-expiry tests are deterministic. */
+  clock: () => Date = () => new Date();
+
+  /** `provider` is a VarChar(20) identifier ("stripe", "clerk"), so "|" never occurs in it. */
+  private key(provider: string, eventId: string): string {
+    return `${provider}|${eventId}`;
+  }
+
+  private lookup(where: Where): WebhookEvent | undefined {
+    const compound = where.provider_eventId as { provider: string; eventId: string } | undefined;
+    if (compound) return this.rows.get(this.key(compound.provider, compound.eventId));
+    if (typeof where.id === "string") {
+      for (const row of this.rows.values()) if (row.id === where.id) return row;
+    }
+    return undefined;
+  }
+
+  seed(row: WebhookEvent): void {
+    this.rows.set(this.key(row.provider, row.eventId), { ...row });
+  }
+
+  snapshot(provider: string, eventId: string): WebhookEvent | undefined {
+    const row = this.rows.get(this.key(provider, eventId));
+    return row ? { ...row } : undefined;
+  }
+
+  async create({ data }: { data: Record<string, unknown> }): Promise<WebhookEvent> {
+    await io();
+    const provider = data.provider as string;
+    const eventId = data.eventId as string;
+    const k = this.key(provider, eventId);
+    if (this.rows.has(k)) throw p2002();
+    const row: WebhookEvent = {
+      id: `row_${++this.seq}`,
+      provider,
+      eventId,
+      eventType: data.eventType as string,
+      payload: data.payload as WebhookEvent["payload"],
+      processedAt: null,
+      errorMessage: null,
+      retryCount: 0,
+      createdAt: this.clock(),
+    };
+    this.rows.set(k, row);
+    return { ...row };
+  }
+
+  async findUnique({ where }: { where: Where }): Promise<WebhookEvent | null> {
+    await io();
+    const row = this.lookup(where);
+    return row ? { ...row } : null;
+  }
+
+  async update({
+    where,
+    data,
+  }: {
+    where: Where;
+    data: Record<string, unknown>;
+  }): Promise<WebhookEvent> {
+    await io();
+    const row = this.lookup(where);
+    if (!row) {
+      throw new Prisma.PrismaClientKnownRequestError("Record not found", {
+        code: "P2025",
+        clientVersion: "test",
+      });
+    }
+    applySet(row, data);
+    return { ...row };
+  }
+
+  async updateMany({
+    where,
+    data,
+  }: {
+    where: Where;
+    data: Record<string, unknown>;
+  }): Promise<{ count: number }> {
+    await io();
+    // One statement: no await between evaluating WHERE and applying SET.
+    let count = 0;
+    for (const row of this.rows.values()) {
+      if (matches(row, where)) {
+        applySet(row, data);
+        count += 1;
+      }
+    }
+    return { count };
+  }
+}
+
+function makeRepo(): { repo: WebhookEventRepository; table: InMemoryWebhookEvents } {
+  const table = new InMemoryWebhookEvents();
+  const repo = new WebhookEventRepository({ webhookEvent: table } as never);
+  return { repo, table };
+}
+
+const delivery = {
+  provider: "stripe",
+  eventId: "evt_dup",
+  eventType: "invoice.paid",
+  payload: { id: "evt_dup" },
+};
+
+/**
+ * One webhook delivery as the route handlers run it: accept → handler side
+ * effect → markProcessed. Only a "process" outcome may reach the handler.
+ */
+async function deliver(
+  repo: WebhookEventRepository,
+  sideEffects: { count: number },
+  now?: Date,
+): Promise<"process" | "skip_processed" | "in_flight"> {
+  const accepted = await acceptWebhookEvent(repo, delivery, now);
+  if (accepted.outcome !== "process") return accepted.outcome;
+  await io(); // the handler does I/O of its own
+  sideEffects.count += 1;
+  await repo.markProcessed(delivery.provider, delivery.eventId);
+  return "process";
+}
+
+async function deliverConcurrently(
+  repo: WebhookEventRepository,
+  now?: Date,
+): Promise<{ sideEffects: number; outcomes: Record<string, number> }> {
+  const sideEffects = { count: 0 };
+  const results = await Promise.all(
+    Array.from({ length: CONCURRENCY }, () => deliver(repo, sideEffects, now)),
+  );
+  const outcomes: Record<string, number> = {};
+  for (const outcome of results) outcomes[outcome] = (outcomes[outcome] ?? 0) + 1;
+  return { sideEffects: sideEffects.count, outcomes };
+}
+
+describe("webhook inbox lease under concurrent identical deliveries", () => {
+  it("first delivery: exactly one of N concurrent inserts runs the handler", async () => {
+    const { repo, table } = makeRepo();
+
+    const { sideEffects, outcomes } = await deliverConcurrently(repo);
+
+    expect(sideEffects).toBe(1);
+    expect(outcomes).toEqual({ process: 1, in_flight: CONCURRENCY - 1 });
+    expect(table.snapshot("stripe", "evt_dup")?.processedAt).toBeInstanceOf(Date);
+  });
+
+  it("retry after a failed attempt: exactly one of N concurrent retries runs the handler", async () => {
+    const { repo, table } = makeRepo();
+    const now = new Date();
+    table.seed({
+      id: "row_failed",
+      provider: "stripe",
+      eventId: "evt_dup",
+      eventType: "invoice.paid",
+      payload: { id: "evt_dup" },
+      processedAt: null,
+      errorMessage: "handler exploded",
+      retryCount: 1,
+      createdAt: new Date(now.getTime() - 5_000),
+    });
+
+    const { sideEffects, outcomes } = await deliverConcurrently(repo, now);
+
+    expect(sideEffects).toBe(1);
+    // Losers must NOT be acknowledged as processed while the winner is still running.
+    expect(outcomes).toEqual({ process: 1, in_flight: CONCURRENCY - 1 });
+  });
+
+  it("retry after a crashed attempt: exactly one of N concurrent retries runs the handler", async () => {
+    const { repo, table } = makeRepo();
+    const now = new Date();
+    table.seed({
+      id: "row_stale",
+      provider: "stripe",
+      eventId: "evt_dup",
+      eventType: "invoice.paid",
+      payload: { id: "evt_dup" },
+      processedAt: null,
+      errorMessage: null,
+      retryCount: 0,
+      createdAt: new Date(now.getTime() - WEBHOOK_IN_FLIGHT_MS - 1_000),
+    });
+
+    const { sideEffects, outcomes } = await deliverConcurrently(repo, now);
+
+    expect(sideEffects).toBe(1);
+    expect(outcomes).toEqual({ process: 1, in_flight: CONCURRENCY - 1 });
+  });
+
+  it("lease is released on success: later deliveries skip without a handler run", async () => {
+    const { repo } = makeRepo();
+    await deliverConcurrently(repo);
+
+    const again = await deliverConcurrently(repo);
+
+    expect(again.sideEffects).toBe(0);
+    expect(again.outcomes).toEqual({ skip_processed: CONCURRENCY });
+  });
+
+  it("lease expires on crash: held inside the window, re-leasable after it", async () => {
+    const { repo, table } = makeRepo();
+    const t0 = new Date();
+    table.clock = () => t0;
+
+    // The first worker claims the row and dies without markProcessed/markFailed.
+    const first = await acceptWebhookEvent(repo, delivery, t0);
+    expect(first.outcome).toBe("process");
+
+    const inside = new Date(t0.getTime() + WEBHOOK_IN_FLIGHT_MS - 1);
+    await expect(acceptWebhookEvent(repo, delivery, inside)).resolves.toEqual({
+      outcome: "in_flight",
+    });
+
+    const after = new Date(t0.getTime() + WEBHOOK_IN_FLIGHT_MS + 1_000);
+    const { sideEffects, outcomes } = await deliverConcurrently(repo, after);
+    expect(sideEffects).toBe(1);
+    expect(outcomes).toEqual({ process: 1, in_flight: CONCURRENCY - 1 });
+  });
+});
