@@ -1,6 +1,26 @@
 import { logger } from "@nebutra/logger";
+import {
+  resolveRlsRole,
+  TENANT_SESSION_EXPRESSION,
+  type TenantSessionExecutor,
+  tenantSessionOperations,
+} from "./rls-session";
 import type { IsolationStrategy } from "./types";
 import { TenantIsolationError } from "./types";
+
+// The tenant session core is the single implementation behind `withRls` here
+// and `withTenantContext` in `@nebutra/db/rls`. Re-exported so consumers of
+// `@nebutra/tenant/isolation` reach it without a second entry point.
+export {
+  applyTenantSession,
+  isValidDbRole,
+  resolveRlsRole,
+  TENANT_SESSION_EXPRESSION,
+  TENANT_SESSION_SETTING,
+  type TenantSessionExecutor,
+  type TenantSessionOptions,
+  tenantSessionOperations,
+} from "./rls-session";
 
 // =============================================================================
 // Lightweight Prisma-compatible types (avoids hard dependency on "@prisma/client")
@@ -36,7 +56,9 @@ export interface RlsPolicySqlOptions {
 
 const DEFAULT_TENANT_COLUMN = "tenant_id";
 const DEFAULT_POLICY_PREFIX = "tenant_isolation";
-const DEFAULT_TENANT_EXPRESSION = "current_setting('app.current_tenant_id', true)";
+// Same key the session core writes with set_config — policies and wrappers
+// cannot disagree about which setting carries the tenant.
+const DEFAULT_TENANT_EXPRESSION = TENANT_SESSION_EXPRESSION;
 
 function assertNonEmptyIdentifier(value: string, label: string): void {
   if (typeof value !== "string" || value.trim().length === 0 || value.includes("\0")) {
@@ -176,11 +198,6 @@ export function generateRlsPolicySql(options: RlsPolicySqlOptions): string {
  * // SQL: SELECT * FROM users WHERE current_setting('app.current_tenant_id') = user.tenant_id
  * ```
  */
-function resolveRlsRole(): string | null {
-  const role = process.env.APP_DB_ROLE;
-  return role && /^[a-z_][a-z0-9_]*$/.test(role) ? role : null;
-}
-
 export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string): P {
   const extendClient = prisma.$extends;
   const runTransaction = prisma.$transaction;
@@ -207,8 +224,20 @@ export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string)
     );
   }
 
+  // Prisma's `$executeRaw*` and `$transaction` are prototype methods that read
+  // `this`, so the session core is handed bound adapters rather than the
+  // detached functions captured above for the capability checks.
+  const executeRawUnsafe = prisma.$executeRawUnsafe;
+  const executor: TenantSessionExecutor = {
+    $executeRaw: (query, ...values) => executeRaw.call(prisma, query, ...values),
+    $executeRawUnsafe:
+      typeof executeRawUnsafe === "function"
+        ? (query) => executeRawUnsafe.call(prisma, query)
+        : undefined,
+  };
+
   try {
-    const extended = extendClient({
+    const extended = extendClient.call(prisma, {
       query: {
         async $allOperations({
           args,
@@ -217,13 +246,11 @@ export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string)
           args: unknown;
           query: (a: unknown) => Promise<unknown>;
         }) {
-          const ops: unknown[] = [];
-          if (rlsRole && typeof prisma.$executeRawUnsafe === "function") {
-            ops.push(prisma.$executeRawUnsafe(`SET LOCAL ROLE "${rlsRole}"`));
-          }
-          ops.push(executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`);
+          // One batch transaction: role switch (if configured) → tenant
+          // setting → the model query, all on the same connection.
+          const ops: unknown[] = tenantSessionOperations(executor, tenantId, { role: rlsRole });
           ops.push(query(args));
-          const results = (await runTransaction(ops)) as unknown[];
+          const results = (await runTransaction.call(prisma, ops)) as unknown[];
           logger.debug("RLS context set", { tenantId });
           return results[results.length - 1];
         },

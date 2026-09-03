@@ -19,6 +19,18 @@ client, and the shared database runtime used across the monorepo.
 - Seed entrypoints: `prisma/seed.ts` and `scripts/seed-model-configs.ts`
 - Public package surface: `src/index.ts`
 - Shared client and tenancy boundaries: `src/client.ts`, `src/rls.ts`, `src/pool.ts`
+- `src/rls.ts` (`withTenantContext` / `withAdminContext`) does not write the
+  tenant-session SQL itself: it runs `applyTenantSession` from
+  `@nebutra/tenant/isolation`, the same core `withRls` uses. Keep it that way
+  (closure P1.2); `tests/architecture/tenant-cutover-contract.test.ts` and
+  `src/rls.test.ts` fail if a copy of `set_config(...)` appears in `rls.ts`.
+- `getTenantDb` in `src/client.ts` still carries its own copy of those
+  statements — `SET LOCAL ROLE` (from `RLS_ROLE`, frozen at module load), then
+  `SET LOCAL statement_timeout`, then `set_config(...)` — and the contract test
+  pins those literals today. That is the P1.2 follow-up: route it through
+  `tenantSessionOperations`, keeping the `statement_timeout` between the role
+  switch and `set_config`, and swap the literal pins for delegation asserts.
+  Until then it is the one copy outside the core; do not add another.
 
 If behavior is derived from the schema, change the schema first and regenerate
 the client in the same change.

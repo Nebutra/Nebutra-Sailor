@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
+    "@nebutra/tenant": "workspace:*",
     "@nebutra/vault": "workspace:*",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "catalog:",
