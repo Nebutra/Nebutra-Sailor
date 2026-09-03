@@ -70,6 +70,17 @@ function isStringArray(value) {
   return Array.isArray(value) && value.every((item) => typeof item === "string" && item.length > 0);
 }
 
+// The keys a github.branchProtection[] rule may carry. `$comment` is the JSON
+// Schema convention for an annotation and is never compared.
+const BRANCH_RULE_FIELDS = new Set([
+  "$comment",
+  "branch",
+  "requiredStatusChecks",
+  "strict",
+  "enforceAdmins",
+  "requiredApprovingReviewCount",
+]);
+
 /**
  * Returns a list of human-readable problems; empty means the document is usable.
  * Deliberately lenient: every provider section is optional, every check inside
@@ -189,6 +200,12 @@ export function validateExpectations(doc) {
               problems.push(
                 `${at}.requiredApprovingReviewCount must be null or a non-negative integer`,
               );
+            }
+            // Every other section is lenient about keys it does not know. Here
+            // a misspelled key is not a type error, it is a field that is never
+            // reported: a guardrail removed with a green run. So it is named.
+            for (const key of Object.keys(rule)) {
+              if (!BRANCH_RULE_FIELDS.has(key)) problems.push(`${at}.${key} is not a known field`);
             }
           });
         }
@@ -694,11 +711,24 @@ export function compareBranchProtection(target, rule, protection) {
   }
 
   if (rule.strict !== undefined) {
-    let actual = "(no required status checks)";
+    // GitHub keeps `strict` inside the status-checks block, so a branch that
+    // requires no checks has no strict setting at all. That is the default,
+    // `false`, and `requiredStatusChecks: []` with `strict: false` is one
+    // consistent state, not drift. Only a block without a boolean is unknown.
+    let actual = false;
     if (statusChecks) {
       actual = typeof statusChecks.strict === "boolean" ? statusChecks.strict : "(unset)";
     }
-    results.push(compare("github", target, `${prefix} strict`, rule.strict, actual));
+    results.push(
+      compare(
+        "github",
+        target,
+        `${prefix} strict`,
+        rule.strict,
+        actual,
+        statusChecks ? "" : "no required status checks",
+      ),
+    );
   }
 
   if (rule.enforceAdmins !== undefined) {
@@ -724,6 +754,27 @@ export function compareBranchProtection(target, rule, protection) {
   }
 
   return results;
+}
+
+// What GitHub tells a token that lacks administration:read: 403 "Resource not
+// accessible by integration" (an installation token — the Actions GITHUB_TOKEN
+// is one), 403 "Resource not accessible by personal access token", 404 "Not
+// Found" (a classic token: the protection is not disclosed) or 403 "Must have
+// admin rights to Repository". Any other 401/403/404 is still `skipped`, but a
+// rejected credential or a rate limit names itself, so nobody is sent to mint
+// a scope they may already hold.
+const NEEDS_ADMIN_READ = /^resource not accessible\b|^not found\.?$|^must have admin rights\b/i;
+
+function protectionSkipReason(result) {
+  const detail = apiErrorMessage(result);
+  if (result.status === 401) {
+    return `token cannot read branch protection: credential rejected (${detail})`;
+  }
+  const message = String(result.body?.message ?? "").trim();
+  if (NEEDS_ADMIN_READ.test(message)) {
+    return `token cannot read branch protection, needs administration:read (${detail})`;
+  }
+  return `token cannot read branch protection (${detail})`;
 }
 
 async function checkGithubBranchProtection(spec, ctx, target) {
@@ -752,14 +803,7 @@ async function checkGithubBranchProtection(spec, ctx, target) {
       continue;
     }
     if (result.status === 401 || result.status === 403 || result.status === 404) {
-      results.push(
-        skipped(
-          "github",
-          target,
-          check,
-          `token cannot read branch protection, needs administration:read (${apiErrorMessage(result)})`,
-        ),
-      );
+      results.push(skipped("github", target, check, protectionSkipReason(result)));
       continue;
     }
     if (!result.ok || !isPlainObject(result.body)) {

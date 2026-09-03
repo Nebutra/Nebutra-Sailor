@@ -1,7 +1,8 @@
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, onTestFinished } from "vitest";
 
 // scripts/ops/platform-reconcile.mjs is the read-only engine that compares an
 // expectations file (ops/<brand>/platform-expected.json) with what Vercel, Fly,
@@ -193,6 +194,23 @@ function liveProtection(): Record<string, unknown> {
   };
 }
 
+// The rule for main as GitHub reported it on 2026-09-03. It is not in
+// ops/nebutra/platform-expected.json yet: the daily run holds no token that can
+// read protection, and under --strict a skipped row is a red run (see the
+// workflow tests). The engine tests add it to the Nebutra declaration
+// themselves so every kind is exercised at once.
+const MAIN_RULE: BranchRule = {
+  branch: "main",
+  requiredStatusChecks: [...LIVE_CONTEXTS],
+  strict: false,
+  enforceAdmins: false,
+  requiredApprovingReviewCount: null,
+};
+
+function withMainRule(doc: Declaration): Declaration {
+  return { ...doc, github: { ...doc.github, branchProtection: [MAIN_RULE] } };
+}
+
 function greenWorld(): World {
   const fixed = { buildMachineType: "standard", buildMachineSelection: "fixed" };
   const link = { type: "github", org: "Nebutra", repo: "Nebutra-Sailor" };
@@ -328,7 +346,7 @@ describe("platform-reconcile: expectations files", () => {
     const doc = loadExpectations(nebutraPath) as {
       vercel: { projects: Array<Record<string, unknown>> };
       fly: { apps: Array<{ name: string; secretsPresent: string[]; secretsAbsent: string[] }> };
-      github: { repo: string; variables: Record<string, string>; branchProtection: BranchRule[] };
+      github: { repo: string; variables: Record<string, string>; branchProtection?: BranchRule[] };
       cloudflare: {
         workers: Array<{ name: string; bindings: Array<{ name: string; type?: string }> }>;
       };
@@ -373,18 +391,8 @@ describe("platform-reconcile: expectations files", () => {
       DEPLOY_TARGET_SAILOR_DOCS: "fly",
       DEPLOY_TARGET_GATEWAY: "cloudflare-workers",
     });
-    // The bar that decides "CI is green" for main, as GitHub reported it on
-    // 2026-09-03. Raising it is an owner decision made here first, then in
-    // Settings → Branches; this test pins what is declared, not what should be.
-    expect(doc.github.branchProtection).toEqual([
-      expect.objectContaining({
-        branch: "main",
-        requiredStatusChecks: LIVE_CONTEXTS,
-        strict: false,
-        enforceAdmins: false,
-        requiredApprovingReviewCount: null,
-      }),
-    ]);
+    // The branch rule for main is pinned by the workflow tests below: it may
+    // only be declared once the daily run holds a token that can read it.
 
     const edge = doc.cloudflare.workers.find((w) => w.name === "nebutra-gateway-edge");
     expect(edge?.bindings).toEqual([{ name: "IP_LIMITER", type: "ratelimit" }]);
@@ -480,6 +488,26 @@ describe("platform-reconcile: expectations files", () => {
         },
       }),
     ).toEqual([]);
+    // A misspelled key is not a type error, it is a field that is never
+    // reported: a guardrail removed with a green run. So it is named.
+    expect(
+      validateExpectations({
+        version: 1,
+        github: {
+          branchProtection: [{ branch: "main", requiredStatusCheck: ["Test"], enforceAdmin: true }],
+        },
+      }),
+    ).toEqual([
+      "github.branchProtection[0].requiredStatusCheck is not a known field",
+      "github.branchProtection[0].enforceAdmin is not a known field",
+    ]);
+    // `$comment` is an annotation, never compared.
+    expect(
+      validateExpectations({
+        version: 1,
+        github: { branchProtection: [{ $comment: "why", branch: "main", strict: false }] },
+      }),
+    ).toEqual([]);
   });
 });
 
@@ -487,7 +515,7 @@ describe("platform-reconcile: engine", () => {
   it("reports every declared check as ok when the providers agree", async () => {
     const { reconcile, loadExpectations, exitCodeFor, renderTable } = await loadEngine();
     const providers = fakeProviders(greenWorld());
-    const declaration = loadExpectations(nebutraPath) as Declaration;
+    const declaration = withMainRule(loadExpectations(nebutraPath) as Declaration);
     const { results, summary } = await reconcile(declaration, {
       env: { ...TOKENS, PLATFORM_RECONCILE_GITHUB_VARS: GITHUB_VARS },
       fetch: providers.fetch,
@@ -582,7 +610,7 @@ describe("platform-reconcile: engine", () => {
     world.bindings = [{ type: "plain_text", name: "ORIGIN_URL" }];
 
     const providers = fakeProviders(world);
-    const { results, summary } = await reconcile(loadExpectations(nebutraPath), {
+    const { results, summary } = await reconcile(withMainRule(loadExpectations(nebutraPath)), {
       env: {
         ...TOKENS,
         PLATFORM_RECONCILE_GITHUB_VARS: JSON.stringify({ DEPLOY_TARGET_SAILOR_DOCS: "vercel" }),
@@ -695,7 +723,7 @@ describe("platform-reconcile: engine", () => {
       value: SECRET_VALUE,
     };
     const providers = fakeProviders(world);
-    const { results, summary } = await reconcile(loadExpectations(nebutraPath), {
+    const { results, summary } = await reconcile(withMainRule(loadExpectations(nebutraPath)), {
       env: { ...TOKENS, PLATFORM_RECONCILE_GITHUB_VARS: GITHUB_VARS },
       fetch: providers.fetch,
       exec: providers.exec,
@@ -722,7 +750,7 @@ describe("platform-reconcile: engine", () => {
   it("skips a provider cleanly when its token is missing and fails only under --strict", async () => {
     const { reconcile, loadExpectations, exitCodeFor, STATUS } = await loadEngine();
     let touched = 0;
-    const declaration = loadExpectations(nebutraPath) as Declaration;
+    const declaration = withMainRule(loadExpectations(nebutraPath) as Declaration);
     const { results, summary } = await reconcile(declaration, {
       env: {},
       fetch: async () => {
@@ -761,7 +789,7 @@ describe("platform-reconcile: engine", () => {
 
   it("reports a token that lacks scope as skipped with the reason, not as a pass", async () => {
     const { reconcile, loadExpectations, STATUS } = await loadEngine();
-    const declaration = loadExpectations(nebutraPath) as Declaration;
+    const declaration = withMainRule(loadExpectations(nebutraPath) as Declaration);
     const world = greenWorld();
     world.vercelStatus = 403;
     world.cloudflareStatus = 403;
@@ -855,7 +883,7 @@ describe("platform-reconcile: engine", () => {
 
   it("exposes a CLI that validates its arguments and prints the table", async () => {
     const { main, loadExpectations } = await loadEngine();
-    const declaration = loadExpectations(nebutraPath) as Declaration;
+    const declaration = withMainRule(loadExpectations(nebutraPath) as Declaration);
     const out: string[] = [];
     const err: string[] = [];
     const stdout = (text: string) => out.push(text);
@@ -871,9 +899,16 @@ describe("platform-reconcile: engine", () => {
     expect(await main([join(root, "package.json")], { stdout, stderr })).toBe(2);
     expect(err.join("")).toContain("not a valid expectations file");
 
+    // The Nebutra file carries no branch rule yet; the CLI reads a copy that
+    // does, so the file → validator → table path covers every kind.
+    const dir = mkdtempSync(join(tmpdir(), "platform-reconcile-"));
+    onTestFinished(() => rmSync(dir, { recursive: true, force: true }));
+    const withRulePath = join(dir, "platform-expected.json");
+    writeFileSync(withRulePath, JSON.stringify(declaration));
+
     out.length = 0;
     err.length = 0;
-    const code = await main([nebutraPath, "--only=github"], {
+    const code = await main([withRulePath, "--only=github"], {
       env: { PLATFORM_RECONCILE_GITHUB_VARS: GITHUB_VARS, GH_TOKEN: TOKENS.GH_TOKEN },
       fetch: fakeProviders(greenWorld()).fetch,
       stdout,
@@ -1021,9 +1056,25 @@ describe("platform-reconcile: branch protection", () => {
       expected: "(none)",
       actual: "(none)",
     });
-    expect(
-      find(compareBranchProtection(repo, rule, none), "github", repo, "branch main strict"),
-    ).toMatchObject({ status: STATUS.drift, actual: "(no required status checks)" });
+    // Without a checks block GitHub has no strict setting: that is the default
+    // `false`, consistent with `strict: false`, and drift only for `strict: true`.
+    const strictOf = (rules: BranchRule, protection: Record<string, unknown>) =>
+      find(compareBranchProtection(repo, rules, protection), "github", repo, "branch main strict");
+    expect(strictOf(rule, none)).toMatchObject({
+      status: STATUS.ok,
+      expected: "false",
+      actual: "false",
+      detail: "no required status checks",
+    });
+    expect(strictOf({ branch: "main", strict: true }, none)).toMatchObject({
+      status: STATUS.drift,
+      expected: "true",
+      actual: "false",
+    });
+    // A block that exists but carries no boolean is the one unknown state.
+    const blank = liveProtection();
+    blank.required_status_checks = { contexts: [] };
+    expect(strictOf(rule, blank)).toMatchObject({ status: STATUS.drift, actual: "(unset)" });
   });
 
   it("reports only the fields a rule declares", async () => {
@@ -1056,14 +1107,22 @@ describe("platform-reconcile: branch protection", () => {
     expect(exitCodeFor(summary)).toBe(1);
   });
 
-  it("skips with the reason when the token cannot see the protection, and never errors", async () => {
+  it("skips, naming the cause, when the token cannot see the protection, and never errors", async () => {
     const { reconcile, exitCodeFor, STATUS } = await loadEngine();
-    const denied: Array<[number, string]> = [
-      [403, "Resource not accessible by integration"],
-      [404, "Not Found"],
-      [401, "Bad credentials"],
+    // What GitHub tells a token without administration:read, then a rejected
+    // or missing credential, then a rate limit. Every one is skipped, but only
+    // the first group is told to go and get the scope; the others would send
+    // the operator to the wrong fix.
+    const denied: Array<[number, string, RegExp]> = [
+      [403, "Resource not accessible by integration", /needs administration:read/],
+      [403, "Resource not accessible by personal access token", /needs administration:read/],
+      [403, "Must have admin rights to Repository.", /needs administration:read/],
+      [404, "Not Found", /needs administration:read/],
+      [401, "Bad credentials", /credential rejected/],
+      [401, "Requires authentication", /credential rejected/],
+      [403, "API rate limit exceeded for 203.0.113.9.", /protection \(HTTP 403/],
     ];
-    for (const [status, message] of denied) {
+    for (const [status, message, cause] of denied) {
       const world = greenWorld();
       world.githubStatus = status;
       world.githubBody = { message };
@@ -1072,9 +1131,13 @@ describe("platform-reconcile: branch protection", () => {
         fetch: fakeProviders(world).fetch,
       });
       const row = protectionOf(results);
-      expect(row.status, `HTTP ${status}`).toBe(STATUS.skipped);
-      expect(row.detail).toContain("needs administration:read");
-      expect(row.detail).toContain(`HTTP ${status}: ${message}`);
+      const label = `HTTP ${status} ${message}`;
+      expect(row.status, label).toBe(STATUS.skipped);
+      expect(row.detail, label).toMatch(cause);
+      expect(row.detail, label).toContain(`HTTP ${status}: ${message}`);
+      if (!cause.test("needs administration:read")) {
+        expect(row.detail, label).not.toContain("administration:read");
+      }
       expect(summary).toMatchObject({ skipped: 1, error: 0, drift: 0, total: 1 });
       expect(exitCodeFor(summary)).toBe(0);
       expect(exitCodeFor(summary, { strict: true })).toBe(1);
@@ -1222,7 +1285,23 @@ describe("platform-reconcile: daily workflow and docs", () => {
     // Repository variables reach the engine from the workflow's own context, so
     // the job needs no token that can read the Variables API.
     expect(workflow).toMatch(/^\s+PLATFORM_RECONCILE_GITHUB_VARS: \$\{\{ toJSON\(vars\) \}\}$/m);
-    expect(workflow).not.toContain("GH_TOKEN");
+    // The Actions token is never handed to the engine: variables need no
+    // token, and it cannot hold the administration:read that protection needs.
+    expect(workflow).not.toMatch(/GH_TOKEN: \$\{\{ (secrets\.GITHUB_TOKEN|github\.token) \}\}/);
+  });
+
+  it("declares a Nebutra branch rule only once the daily run holds a token that can read it", () => {
+    // Protection needs administration:read, which the Actions GITHUB_TOKEN
+    // cannot carry. A rule declared before a fine-grained token reaches the
+    // Reconcile step is `skipped` on every schedule and, under --strict, a red
+    // run every day — which buries real drift in every other row. The rule and
+    // the token land together, never the rule first.
+    const declaration = JSON.parse(readFileSync(nebutraPath, "utf8")) as Declaration;
+    const handsOverToken = /^\s+GH_TOKEN: \$\{\{ secrets\.[A-Z][A-Z0-9_]* \}\}$/m.test(workflow);
+    expect(
+      declaredBranches(declaration) === 0 || handsOverToken,
+      "ops/nebutra/platform-expected.json declares github.branchProtection but the Reconcile step of .github/workflows/platform-reconcile.yml passes no GH_TOKEN secret",
+    ).toBe(true);
   });
 
   it("is documented where the other guardrails are", () => {
@@ -1235,6 +1314,7 @@ describe("platform-reconcile: daily workflow and docs", () => {
     expect(readme).toContain("PLATFORM_RECONCILE_GITHUB_VARS");
     expect(readme).toContain("### github.branchProtection[]");
     expect(readme).toContain("administration:read");
+    expect(readme).toContain("PLATFORM_RECONCILE_GH_TOKEN");
     expect(guardrails).toContain("branches/{branch}/protection");
   });
 });

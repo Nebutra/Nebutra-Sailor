@@ -161,6 +161,32 @@ Raising the bar — adding `Lint & Typecheck`, `Test`, a review count — is a
 decision made by editing this list and then changing Settings → Branches to
 match. The engine reports the difference; it never changes either side.
 
+For Nebutra the rule for `main` is **not declared yet**, on purpose: the daily
+run holds no token that can read protection, so the row would be `skipped` on
+every schedule and, under `--strict`, a red run every day — which buries real
+drift in every other row. The rule and the token land in one change:
+
+1. Mint a fine-grained personal access token scoped to this repository with
+   *Administration: read* and nothing else, and store it as the repository
+   secret `PLATFORM_RECONCILE_GH_TOKEN`.
+2. Add `GH_TOKEN: ${{ secrets.PLATFORM_RECONCILE_GH_TOKEN }}` to the `env` of
+   the Reconcile step in `.github/workflows/platform-reconcile.yml`.
+3. Add the rule to `ops/nebutra/platform-expected.json`, with the contexts
+   GitHub reported on 2026-09-03:
+
+   ```json
+   {
+     "branch": "main",
+     "requiredStatusChecks": ["CodeQL Analysis (javascript-typescript)", "CodeQL Analysis (python)"],
+     "strict": false,
+     "enforceAdmins": false,
+     "requiredApprovingReviewCount": null
+   }
+   ```
+
+`tests/architecture/platform-reconcile.test.ts` fails a declaration that
+arrives without the workflow line.
+
 ### cloudflare.workers[]
 
 `bindings[]` names a binding that must exist on the deployed Worker; `type` is
