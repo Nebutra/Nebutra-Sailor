@@ -74,12 +74,12 @@ const IDENTIFIERS = {
   "nebutra.com": /\bnebutra\\?\.com\b/i, // the zone and every subdomain of it
   "api.nebutra.com": /\bapi\\?\.nebutra\\?\.com\b/i, // the gateway host, counted on its own
   "nebutra-*.fly.dev": /\bnebutra-[\w-]*\\?\.fly\\?\.dev\b/i, // Fly apps in Nebutra's org
-  "nebutra-gateway": /\bnebutra-gateway\b/, // Fly app, `-edge` Worker, `-secret` env
-  "nebutra-auth": /\bnebutra-auth\b/,
-  "nebutra-web": /\bnebutra-web\b/, // `\b` keeps the nebutra-web3 container name out
-  "106.15.4.31": /\b106\\?\.15\\?\.4\\?\.31\b/, // the ECS origin
-  team_c6eOa4: /\bteam_c6eOa4/, // the Vercel team id (prefix — the full id is longer)
-  "next-seagull": /\bnext-seagull\b/,
+  "nebutra-gateway": /\bnebutra-gateway\b/i, // Fly app, `-edge` Worker, `-secret` env
+  "nebutra-auth": /\bnebutra-auth\b/i,
+  "nebutra-web": /\bnebutra-web\b/i, // `\b` keeps the nebutra-web3 container name out
+  "106.15.4.31": /\b106\\?\.15\\?\.4\\?\.31\b/, // the ECS origin — numeric, case-insensitivity is a no-op
+  team_c6eOa4: /\bteam_c6eOa4/i, // the Vercel team id (prefix — the full id is longer)
+  "next-seagull": /\bnext-seagull\b/i,
   "Nebutra/Nebutra-Sailor": /\bNebutra\/Nebutra-Sailor\b/i, // the source-repo slug
 } satisfies Record<string, RegExp>;
 type Identifier = keyof typeof IDENTIFIERS;
