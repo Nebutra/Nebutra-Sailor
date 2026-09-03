@@ -59,7 +59,10 @@ permissions:
   contents: read
 
 concurrency:
-  group: golden-e2e-${{ github.ref }}
+  # Keyed by event too: a workflow_dispatch or push-to-main run must not
+  # cancel an in-progress nightly cron run (and lose its report) on the same
+  # ref — it should queue behind it instead.
+  group: golden-e2e-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 env:
@@ -173,7 +176,6 @@ jobs:
           DATABASE_URL: ${{ secrets.E2E_DATABASE_URL || 'postgresql://localhost/dev_placeholder' }}
           BETTER_AUTH_SECRET: ${{ secrets.E2E_AUTH_SECRET || 'placeholder_secret_32_chars_long_xx' }}
           NEXTAUTH_SECRET: ${{ secrets.E2E_AUTH_SECRET || 'placeholder_secret_32_chars_long_xx' }}
-          CLERK_SECRET_KEY: "sk_test_placeholder"
           UPSTASH_REDIS_REST_URL: "https://placeholder.upstash.io"
           UPSTASH_REDIS_REST_TOKEN: "placeholder_token"
 
