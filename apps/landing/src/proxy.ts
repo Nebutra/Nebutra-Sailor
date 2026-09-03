@@ -15,6 +15,7 @@ import { shouldBounceSignedInVisitorToApp } from "./lib/session-home-redirect";
 
 const intlMiddleware = createMiddleware(routing);
 const STATUS_HOST = brand.domains.status;
+const OPEN_HOST = brand.domains.open;
 
 /**
  * Cross-subdomain "user is signed in somewhere" hint.
@@ -83,6 +84,9 @@ function isHostAllowed(host: string | undefined): boolean {
     brand.domains.app,
     brand.domains.status,
     brand.domains.docs,
+    // open.nebutra.com is a host alias of this app (DOMAINS.md); without it the
+    // allowlist answered 421 to the Open Platform catalog.
+    brand.domains.open,
   ]
     .filter(Boolean)
     .map(
@@ -187,14 +191,17 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(redirect);
   }
 
-  if (
-    host === STATUS_HOST &&
-    (pathname === "/" || routing.locales.some((l) => pathname === `/${l}`))
-  ) {
+  // Host aliases whose root is a section of this app: status → /status,
+  // open → /open. Keep the locale prefix when the visitor already carries one.
+  const hostAliasSection =
+    host === STATUS_HOST ? "status" : host === OPEN_HOST ? "open" : undefined;
+  if (hostAliasSection && (pathname === "/" || routing.locales.some((l) => pathname === `/${l}`))) {
     const rewriteUrl = request.nextUrl.clone();
     const locale = routing.locales.find((l) => pathname === `/${l}`);
     rewriteUrl.pathname =
-      locale && locale !== routing.defaultLocale ? `/${locale}/status` : "/status";
+      locale && locale !== routing.defaultLocale
+        ? `/${locale}/${hostAliasSection}`
+        : `/${hostAliasSection}`;
     request = new NextRequest(rewriteUrl, { headers: request.headers });
   }
 
