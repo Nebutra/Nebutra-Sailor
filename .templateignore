@@ -355,3 +355,7 @@ tests/architecture/template-boundary.test.ts
 # The residue baseline names every identifier it pins — shipping it would make
 # it a carrier of each one.
 tests/architecture/template-residue.baseline.json
+# Reads sync-template.yml and TEMPLATE.md (both stripped above) and asserts the
+# source repo's changesets fixed group; the mirror ships `fixed: []` on purpose
+# (scripts/template-build.ts clears it — the mirror never publishes).
+tests/architecture/sailor-version.test.ts

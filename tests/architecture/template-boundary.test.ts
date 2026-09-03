@@ -12,6 +12,8 @@ import { tmpdir } from "node:os";
 import { basename, dirname, join, relative } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+import { getSailorStatus } from "../../scripts/sailor-version.mjs";
+
 /**
  * Nebutra-Sailor is two things in one tree: the source of the public Sailor
  * template (mirrored to Nebutra/Sailor-Template by sync-template.yml) and the
@@ -383,6 +385,41 @@ describe("template boundary — .templateignore declares it", () => {
 });
 
 describe("template boundary — the built template", () => {
+  it("stamps the sailor version and its convergence into the marker, so the mirror tag and the tree agree", () => {
+    const marker = JSON.parse(readFileSync(join(out, ".sailor-template.json"), "utf8"));
+    const status = getSailorStatus(REPO_ROOT);
+    expect(marker.type).toBe("sailor-template-mirror");
+    expect(marker.sailorVersion).toBe(status.version);
+    // sync-template.yml tags v<x> only when this is true; a string "false"
+    // would pass a truthiness check, so the type is pinned.
+    expect(typeof marker.sailorVersionConverged).toBe("boolean");
+    expect(marker.sailorVersionConverged).toBe(status.converged);
+  });
+
+  it("ships an empty changesets fixed group, so a scaffold that prunes a member can still run `pnpm changeset`", () => {
+    const source = JSON.parse(readFileSync(join(REPO_ROOT, ".changeset/config.json"), "utf8"));
+    const shipped = JSON.parse(readFileSync(join(out, ".changeset/config.json"), "utf8"));
+    // The source carries the lockstep; the proof is that the build removed it.
+    expect(source.fixed).toHaveLength(1);
+    expect(source.fixed[0].length).toBeGreaterThan(30);
+    expect(shipped.fixed).toEqual([]);
+    // Nothing else about the config changes.
+    const { fixed: _sourceFixed, ...sourceRest } = source;
+    const { fixed: _shippedFixed, ...shippedRest } = shipped;
+    expect(shippedRest).toEqual(sourceRest);
+  });
+
+  it("ships no test that reads what the template strips", () => {
+    const sourceOnly = [
+      "tests/architecture/sailor-version.test.ts",
+      "tests/architecture/template-boundary.test.ts",
+      ".github/workflows/sync-template.yml",
+      "TEMPLATE.md",
+    ];
+    const leaked = sourceOnly.filter((p) => existsSync(join(out, p)));
+    expect(leaked, `source-only files in the built template: ${leaked.join(", ")}`).toEqual([]);
+  });
+
   it("has none of the instance directories", () => {
     const leaked = INSTANCE_DIRECTORIES.filter((dir) => existsSync(join(out, dir)));
     expect(
