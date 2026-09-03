@@ -99,6 +99,12 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("  push:\n    branches: [main]");
     expect(workflow).toContain("  schedule:");
     expect(workflow).toContain("  workflow_dispatch:");
+    // `schedule` and `push` to main share refs/heads/main, so only PR runs may
+    // cancel each other — or the weekly cron would cancel a commit's proof.
+    expect(workflow).toContain("group: $" + "{{ github.workflow }}-$" + "{{ github.ref }}");
+    expect(workflow).toContain(
+      "cancel-in-progress: $" + "{{ github.event_name == 'pull_request' }}",
+    );
     expect(workflow).toContain("uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803");
     expect(workflow).toContain("uses: ./.github/actions/setup-node-pnpm");
     expect(workflow).toContain('node-version: "22"');

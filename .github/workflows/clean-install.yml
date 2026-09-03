@@ -3,11 +3,12 @@ name: Clean Clone Install
 # Closure phase, P0 item 3 (docs/architecture/2026-08-27-closure-phase.md):
 # from a fresh clone, one `pnpm install --frozen-lockfile` must succeed with no
 # manual repair — and, item 4, without a warning about a CLI bin that points at
-# a missing dist. Every other workflow restores a pnpm store cache before it
-# installs, so a lockfile or bin regression can hide behind a warm cache for
-# weeks. This job restores nothing: no actions/cache, no setup-node store
-# cache, no Turbo remote cache. It is the proof, not the fast path — ci.yml
-# stays the fast path.
+# a missing dist. Only bins pnpm actually links are covered: a workspace `bin`
+# that no manifest depends on is never linked, so it is never warned about.
+# Every other workflow restores a pnpm store cache before it installs, so a
+# lockfile or bin regression can hide behind a warm cache for weeks. This job
+# restores nothing: no actions/cache, no setup-node store cache, no Turbo
+# remote cache. It is the proof, not the fast path — ci.yml stays the fast path.
 
 on:
   pull_request:
@@ -21,8 +22,11 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: clean-install-${{ github.head_ref || github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Cancel only PR runs. `schedule` and `push` to main both resolve to
+  # refs/heads/main, so a weekly cron firing mid-run would otherwise cancel
+  # that commit's proof (status "cancelled", not green), and vice versa.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
