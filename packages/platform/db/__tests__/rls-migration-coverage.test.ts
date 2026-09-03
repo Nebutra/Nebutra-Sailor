@@ -70,16 +70,34 @@ function extractTablePolicySql(table: string): string {
   return [alterMatch[0], ...policyMatches.map((m) => m[0])].join("\n");
 }
 
-type Shape = "standard" | "id" | "org" | "cofounder" | "transfer";
+type Shape =
+  | "standard"
+  | "standardNullableTenant"
+  | "id"
+  | "org"
+  | "cofounder"
+  | "transfer"
+  | "allowAll";
 
 interface TableCase {
   table: string;
   shape: Shape;
 }
 
+// user_skills, connectors, and code_redemptions have a nullable tenant_id in
+// schema.prisma (personal/tenant-less rows are a real, populated case, not a
+// hypothetical) — throwawayTableDdl gives these three a nullable column
+// instead of the NOT NULL every other standard table gets, and the dedicated
+// "NULL tenant_id" describe block below exercises that exact case: RLS
+// predicates compare with `=`, so NULL never matches current_org_id() for
+// ANY caller, including one presenting what would otherwise be that row's
+// own tenant — a NULL-tenant row is bypass-only once RLS is enforced.
+const NULLABLE_TENANT_TABLES = new Set(["user_skills", "connectors", "code_redemptions"]);
+
 // The 34 uniform tables from the migration (32 tenant_id + tenants [id] +
 // organization_invitations [organization_id]) plus the 2 non-standard ones
-// that split SELECT from write. Mirrors the migration's table list exactly —
+// that split SELECT from write, plus auth_sessions (RLS enabled, allow-all —
+// see its own describe block). Mirrors the migration's table list exactly —
 // see the PR description for how this list was derived from schema.prisma.
 const STANDARD_TABLES = [
   "access_invite_codes",
@@ -117,17 +135,25 @@ const STANDARD_TABLES = [
 ];
 
 const TABLE_CASES: TableCase[] = [
-  ...STANDARD_TABLES.map((table): TableCase => ({ table, shape: "standard" })),
+  ...STANDARD_TABLES.map(
+    (table): TableCase => ({
+      table,
+      shape: NULLABLE_TENANT_TABLES.has(table) ? "standardNullableTenant" : "standard",
+    }),
+  ),
   { table: "tenants", shape: "id" },
   { table: "organization_invitations", shape: "org" },
   { table: "cofounder_profiles", shape: "cofounder" },
   { table: "tenant_transfer_journals", shape: "transfer" },
+  { table: "auth_sessions", shape: "allowAll" },
 ];
 
 function throwawayTableDdl(t: TableCase): string {
   switch (t.shape) {
     case "standard":
       return `CREATE TABLE "${t.table}" (id text PRIMARY KEY, tenant_id text NOT NULL, body text NOT NULL);`;
+    case "standardNullableTenant":
+      return `CREATE TABLE "${t.table}" (id text PRIMARY KEY, tenant_id text, body text NOT NULL);`;
     case "id":
       return `CREATE TABLE "${t.table}" (id text PRIMARY KEY, body text NOT NULL);`;
     case "org":
@@ -136,6 +162,8 @@ function throwawayTableDdl(t: TableCase): string {
       return `CREATE TABLE "${t.table}" (id text PRIMARY KEY, tenant_id text NOT NULL, is_active boolean NOT NULL DEFAULT false, body text NOT NULL);`;
     case "transfer":
       return `CREATE TABLE "${t.table}" (id text PRIMARY KEY, from_tenant_id text NOT NULL, to_tenant_id text, body text NOT NULL);`;
+    case "allowAll":
+      return `CREATE TABLE "${t.table}" (id text PRIMARY KEY, active_organization_id text, body text NOT NULL);`;
   }
 }
 
@@ -161,7 +189,13 @@ describe.each(availableBackends("rls_coverage"))("RLS migration coverage ($name)
   });
 
   describe.each(
-    TABLE_CASES.filter((t) => t.shape === "standard" || t.shape === "id" || t.shape === "org"),
+    TABLE_CASES.filter(
+      (t) =>
+        t.shape === "standard" ||
+        t.shape === "standardNullableTenant" ||
+        t.shape === "id" ||
+        t.shape === "org",
+    ),
   )("$table", ({ table, shape }) => {
     const tenantCol = shape === "id" ? "id" : shape === "org" ? "organization_id" : "tenant_id";
     const tenantA = `tenant_a_${table}`;
@@ -373,6 +407,96 @@ describe.each(availableBackends("rls_coverage"))("RLS migration coverage ($name)
         `SELECT body FROM "${table}" WHERE id = 'ttj_bc'`,
       );
       expect(afterRollback[0]?.body).toBe("b-sends-to-c");
+    });
+  });
+
+  describe("auth_sessions (RLS enabled, allow-all — not tenant-filtered)", () => {
+    const table = "auth_sessions";
+    const rowA = "auth_sessions_row_a";
+    const rowB = "auth_sessions_row_b";
+
+    beforeAll(async () => {
+      await db.exec("RESET ROLE");
+      await db.exec(`
+        INSERT INTO "${table}" (id, active_organization_id, body) VALUES
+          ('${rowA}', 'org_a', 'session-a'),
+          ('${rowB}', NULL, 'session-b')
+      `);
+    });
+
+    it("any tenant context sees every session row, not just rows for its own org", async () => {
+      await becomeTenant(db, role, "org_unrelated");
+      const visible = await db.query<{ id: string }>(
+        `SELECT id FROM "${table}" WHERE id IN ('${rowA}', '${rowB}') ORDER BY id`,
+      );
+      expect(visible).toEqual([{ id: rowA }, { id: rowB }]);
+    });
+
+    it("empty tenant context also sees every row — RLS is on, but nothing here narrows by tenant", async () => {
+      await becomeTenant(db, role, "");
+      const visible = await db.query<{ id: string }>(
+        `SELECT id FROM "${table}" WHERE id IN ('${rowA}', '${rowB}') ORDER BY id`,
+      );
+      expect(visible).toEqual([{ id: rowA }, { id: rowB }]);
+    });
+
+    it("a non-owner tenant context can still update a session row — allow-all extends to writes by design", async () => {
+      await becomeTenant(db, role, "org_unrelated");
+      await db.exec(`UPDATE "${table}" SET body = 'switched-active-org' WHERE id = '${rowA}'`);
+      await db.exec("RESET ROLE");
+      const row = await db.query<{ body: string }>(
+        `SELECT body FROM "${table}" WHERE id = '${rowA}'`,
+      );
+      expect(row[0]?.body).toBe("switched-active-org");
+    });
+
+    it("can insert a session row from any tenant context, including none", async () => {
+      await becomeTenant(db, role, "");
+      await db.exec(
+        `INSERT INTO "${table}" (id, active_organization_id, body) VALUES ('auth_sessions_row_c', 'org_c', 'session-c')`,
+      );
+      await db.exec("RESET ROLE");
+      const row = await db.query<{ id: string }>(
+        `SELECT id FROM "${table}" WHERE id = 'auth_sessions_row_c'`,
+      );
+      expect(row).toHaveLength(1);
+    });
+  });
+
+  describe.each([...NULLABLE_TENANT_TABLES])("%s: NULL tenant_id row", (table) => {
+    const rowId = `${table}_null_tenant_row`;
+
+    beforeAll(async () => {
+      await db.exec("RESET ROLE");
+      await db.exec(
+        `INSERT INTO "${table}" (id, tenant_id, body) VALUES ('${rowId}', NULL, 'personal-row')`,
+      );
+    });
+
+    it("owner/superuser bypass still sees it", async () => {
+      await db.exec("RESET ROLE");
+      const rows = await db.query<{ id: string }>(
+        `SELECT id FROM "${table}" WHERE id = '${rowId}'`,
+      );
+      expect(rows).toHaveLength(1);
+    });
+
+    it("is invisible to every non-bypass caller regardless of tenant context — NULL never equals current_org_id()", async () => {
+      await becomeTenant(db, role, `some_unrelated_tenant_${table}`);
+      const visible = await db.query<{ id: string }>(
+        `SELECT id FROM "${table}" WHERE id = '${rowId}'`,
+      );
+      expect(visible).toEqual([]);
+    });
+
+    it("is not writable by any non-bypass caller either", async () => {
+      await becomeTenant(db, role, `some_unrelated_tenant_${table}`);
+      await db.exec(`UPDATE "${table}" SET body = 'mutated' WHERE id = '${rowId}'`);
+      await db.exec("RESET ROLE");
+      const row = await db.query<{ body: string }>(
+        `SELECT body FROM "${table}" WHERE id = '${rowId}'`,
+      );
+      expect(row[0]?.body).toBe("personal-row");
     });
   });
 });

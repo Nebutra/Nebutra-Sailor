@@ -8,9 +8,10 @@
 -- atelier_canvas, and platform_staff (deny-all). Every other table that
 -- carries a direct tenantId/organizationId column — a majority of
 -- schema.prisma — has never had RLS enabled through the migration history at
--- all. This migration closes that gap for the 34 tables below (32 keyed on
+-- all. This migration closes that gap for the 35 tables below (32 keyed on
 -- tenant_id, one on organization_id, one — tenants — on its own id, since a
--- Tenant row IS the isolation boundary).
+-- Tenant row IS the isolation boundary, and one — auth_sessions — RLS
+-- enabled but deliberately not tenant-filtered; see its own section below).
 --
 -- Convention (matches 20260313/20260520, not infra/data/database/policies/
 -- rls.sql — see rationale below):
@@ -25,6 +26,10 @@
 --     migration made it explicit and this migration keeps doing that.
 --   • cofounder_profiles and tenant_transfer_journals split SELECT from
 --     write, matching their non-standard sharing rules (see comments below).
+--   • auth_sessions carries activeOrganizationId — the literal tenantId/
+--     organizationId inclusion criterion — but gets RLS enabled with an
+--     allow-all policy, not a tenant-filtered one; see its own section below
+--     for why.
 --
 -- Why not infra/data/database/policies/rls.sql's convention: that file
 -- already has correct, reviewed policies for every one of these tables (plus
@@ -508,6 +513,39 @@ CREATE POLICY "organization_invitations_tenant" ON "organization_invitations"
   AS PERMISSIVE FOR ALL
   USING ("organization_id" = current_org_id())
   WITH CHECK ("organization_id" = current_org_id());
+
+-- ── Auth bootstrap table — RLS enabled, deliberately NOT tenant-filtered ──────
+--
+-- auth_sessions carries activeOrganizationId (Better Auth's organization
+-- plugin populates it when the user calls setActiveOrganization(); the
+-- tenant bridge middleware reads it off the row to call runWithTenant()).
+-- That column matches this migration's own inclusion criterion, but a
+-- tenant-restrictive USING clause here would be actively wrong: the whole
+-- point of this table is to let the app find the caller's session and, from
+-- it, learn which tenant to switch into — before app.current_tenant_id has
+-- any value to filter by. Gating it on current_org_id() would make session
+-- bootstrap (and therefore every login) query zero rows.
+--
+-- This mirrors infra/data/database/policies/rls.sql's own "auth_sessions_rls"
+-- policy, which is also USING (true) for the same reason. RLS is still
+-- enabled (not skipped) for defense-in-depth: a role with no policy that
+-- applies to it sees nothing at all, so this stays an explicit, reviewed
+-- allow-all rather than a silent gap in coverage. Same connection/role
+-- caveat as everywhere else in this migration — enforcement (such as it is
+-- here, i.e. none beyond "RLS is on") only starts once APP_DB_ROLE points a
+-- non-bypass role at the app's transactions (P1.3).
+ALTER TABLE "auth_sessions" ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "auth_sessions_bypass" ON "auth_sessions"
+  AS PERMISSIVE FOR ALL
+  TO postgres
+  USING (true)
+  WITH CHECK (true);
+
+CREATE POLICY "auth_sessions_allow_all" ON "auth_sessions"
+  AS PERMISSIVE FOR ALL
+  USING (true)
+  WITH CHECK (true);
 
 -- ── Non-standard tables — split SELECT from write ─────────────────────────────
 
