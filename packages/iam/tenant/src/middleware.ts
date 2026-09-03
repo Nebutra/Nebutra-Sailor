@@ -1,8 +1,8 @@
 import { logger } from "@nebutra/logger";
-import { runWithTenant } from "./context";
-import { fromHeader, fromJwtClaim, fromPath, fromSubdomain } from "./resolvers";
-import type { TenantConfig, TenantResolver } from "./types";
-import { TenantRequiredError } from "./types";
+import { runWithTenant } from "./context.js";
+import { fromHeader, fromJwtClaim, fromPath, fromSubdomain } from "./resolvers.js";
+import type { TenantConfig, TenantResolver } from "./types.js";
+import { TenantRequiredError } from "./types.js";
 
 // =============================================================================
 // Lightweight Hono-compatible types (avoids hard dependency on "hono")

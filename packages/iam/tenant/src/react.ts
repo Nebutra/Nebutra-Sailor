@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useContext } from "react";
-import type { TenantContext } from "./types";
-import { TenantRequiredError } from "./types";
+import type { TenantContext } from "./types.js";
+import { TenantRequiredError } from "./types.js";
 
 // =============================================================================
 // React Context for Tenant — Client-side multi-tenancy

@@ -35,7 +35,7 @@
  * a client extension).
  */
 
-import { TenantIsolationError } from "./types";
+import { TenantIsolationError } from "./types.js";
 
 /** PostgreSQL session setting the RLS policies compare `tenant_id` against. */
 export const TENANT_SESSION_SETTING = "app.current_tenant_id";

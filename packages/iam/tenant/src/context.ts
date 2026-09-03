@@ -1,7 +1,7 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 import { logger } from "@nebutra/logger";
-import type { TenantContext } from "./types";
-import { TenantRequiredError } from "./types";
+import type { TenantContext } from "./types.js";
+import { TenantRequiredError } from "./types.js";
 
 /**
  * AsyncLocalStorage-based tenant context — request-scoped, zero-copy across async boundaries.

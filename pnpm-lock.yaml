@@ -1834,6 +1834,9 @@ importers:
       '@nebutra/startup-os':
         specifier: workspace:*
         version: link:../../packages/ai/startup-os
+      '@nebutra/tenant':
+        specifier: workspace:*
+        version: link:../../packages/iam/tenant
       '@nebutra/uploads':
         specifier: workspace:*
         version: link:../../packages/integrations/uploads
