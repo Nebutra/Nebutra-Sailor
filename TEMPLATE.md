@@ -65,10 +65,16 @@ replacement does not rewrite Fly app names.
 
 `tests/architecture/template-boundary.test.ts` builds the template with
 `scripts/template-build.ts` and asserts the output has none of those
-directories, none of those workflows or manifests, and no instance identifier
-outside a shrink-only residue list. Adding a Nebutra host, IP or account id to
-a file that ships fails that test; the fix is to move the file into one of the
-three homes, not to widen the residue list.
+directories, none of those workflows or manifests, and no Nebutra identifier
+(`nebutra.com` and its subdomains, `nebutra-gateway` / `-auth` / `-web`,
+`nebutra-*.fly.dev`, the ECS IP, the Vercel team id, the GitHub slug) in any
+shipped file outside `tests/architecture/template-residue.baseline.json`. That
+baseline was generated once from the build and may only shrink: a new carrier
+fails, and so does an entry that no longer matches. Adding a Nebutra host, IP
+or account id to a file that ships fails that test; the fix is to move the
+file into one of the three homes or list it in `.templateignore`, not to add a
+baseline entry. The one rule-based exemption is the source-repo slug in
+`package.json` `repository` / `bugs` / `homepage` and `.changeset/config.json`.
 
 When a shipped doc has to point at instance content (a runbook, an instance
 test, a stripped script or deploy kit), mark the link "(source repo only)" so a
