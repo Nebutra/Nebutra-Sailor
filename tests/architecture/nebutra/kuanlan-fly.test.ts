@@ -24,6 +24,12 @@ describe("kuanlan Fly origin", () => {
     const consume = fly.slice(fly.indexOf("Set kuanlan consume secrets"));
     expect(consume).toContain("R2_KUANLAN_ACCESS_KEY_ID");
     expect(consume.includes("secrets.R2_ACCESS_KEY_ID")).toBe(false);
+    const imported = fly.slice(
+      fly.indexOf("Import ECS env if present"),
+      fly.indexOf("Set kuanlan consume secrets"),
+    );
+    expect(imported).toContain("SKIP_IMPORT_KEYS");
+    expect(imported).toContain("R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY");
 
     const mint = readFileSync(
       resolve(ROOT, ".github/workflows/ops-kuanlan-r2-uploads.yml"),

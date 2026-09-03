@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { listIdPhotoSkus, parseIdPhotoRef, toPublicIdPhoto } from "@/catalog/skus";
 
 type Status = "idle" | "shooting" | "ready" | "error";
@@ -32,6 +32,12 @@ export function IdPhotoStudio({
 
   const selected = skus.find((sku) => sku.id === skuId);
   const selectedSize = selected?.sizes.find((size) => size.id === sizeId) ?? selected?.sizes[0];
+
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
 
   function onPick(next: File | null) {
     setFile(next);
@@ -109,12 +115,15 @@ export function IdPhotoStudio({
                 setNeedsSignIn(false);
               }}
             >
-              <img
-                src={sku.sample}
-                alt={`${sku.title}${sku.subtitle}样例`}
-                width={sku.widthPx}
-                height={sku.heightPx}
-              />
+              <span className="sku-still">
+                <img
+                  src={sku.sample}
+                  alt={`${sku.title}${sku.subtitle}样例`}
+                  width={sku.widthPx}
+                  height={sku.heightPx}
+                />
+                {preview ? <img className="sku-source" src={preview} alt="" aria-hidden /> : null}
+              </span>
               <span className="sku-name">
                 {sku.title} · {sku.subtitle}
               </span>

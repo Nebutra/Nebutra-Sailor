@@ -253,17 +253,6 @@ a.auth-link:hover {
   transform: rotate(40deg);
 }
 
-/* Monochrome on purpose. This was acid-lime — Linear's accent, which arrived
-   here with the wrong token file and is the one thing Cosmos's don't-list names
-   outright: no accent colours in interface chrome. */
-.search-spark {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--ink);
-  flex: none;
-}
-
 /* 16px, not a capsule. Cosmos: "tight, pill-like but squared at the radius" —
    9999px belongs to the floating nav bar alone. The transparent border keeps
    every variant on one box model so the outlined secondary matches the filled
@@ -559,11 +548,40 @@ a.auth-link:hover {
   color: var(--canvas);
 }
 
+.sku-still {
+  position: relative;
+  display: block;
+}
+
 .sku-card img {
   width: 100%;
   height: auto;
   border-radius: var(--tile);
   background: var(--pill);
+}
+
+.sku-card img.sku-source {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 32%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 1px solid var(--pill);
+  border-radius: calc(var(--tile) - 4px);
+  background: var(--pill);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sku-card:hover .sku-source,
+.sku-card:focus-visible .sku-source {
+  opacity: 1;
+}
+
+.sku-card[data-active="true"] .sku-source {
+  border-color: var(--canvas);
 }
 
 .sku-name {

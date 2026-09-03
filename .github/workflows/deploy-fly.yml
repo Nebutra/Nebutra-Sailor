@@ -182,6 +182,9 @@ jobs:
           VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
           VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
           VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          # kuanlan Moments list nebutra-uploads. The VM .env still carries the
+          # assets-only seeder; importing it overwrites the uploads token.
+          SKIP_IMPORT_KEYS: ${{ matrix.app == 'kuanlan' && 'R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY' || '' }}
         run: |
           set -euo pipefail
           if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
@@ -199,8 +202,9 @@ jobs:
             ssh -i "$RUNNER_TEMP/vm_key" -o StrictHostKeyChecking=accept-new \
               "${VM_USER}@${VM_HOST}" "cat $env_path" \
               | python3 -c '
-          import sys
+          import os, sys
           skip = {"HOSTNAME", "PORT", "HOST", "PWD"}
+          skip.update(k for k in os.environ.get("SKIP_IMPORT_KEYS", "").split() if k)
           for line in sys.stdin:
               raw = line.strip()
               if not raw or raw.startswith("#"):
