@@ -1,4 +1,5 @@
 import { AuthGate } from "@/components/AuthGate";
+import { MomentTile } from "@/components/MomentTile";
 import { QuietPage } from "@/components/QuietPage";
 import { getServerSession } from "@/lib/auth";
 import { momentLabel } from "@/lib/moments";
@@ -35,19 +36,15 @@ export default async function MomentsPage() {
     return (
       <QuietPage active="/moments" title="Moments" line="拍过的瞬间，最近的在前面。">
         <ul className="sku-grid">
-          {moments.map((moment) => {
-            const label = momentLabel(moment);
-            const day = formatDay(moment.shotAt);
-            return (
-              <li key={moment.id}>
-                <a className="sku-card" href={moment.url}>
-                  <img src={moment.url} alt={label} />
-                  <span className="sku-name">{label}</span>
-                  {day ? <span className="tile-sub">{day}</span> : null}
-                </a>
-              </li>
-            );
-          })}
+          {moments.map((moment) => (
+            <MomentTile
+              key={moment.id}
+              id={moment.id}
+              url={moment.url}
+              label={momentLabel(moment)}
+              day={formatDay(moment.shotAt)}
+            />
+          ))}
         </ul>
       </QuietPage>
     );

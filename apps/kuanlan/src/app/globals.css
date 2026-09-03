@@ -634,6 +634,45 @@ a.auth-link:hover {
   color: hsl(var(--destructive));
 }
 
+.tile-actions {
+  display: flex;
+  gap: 14px;
+  padding: 8px 4px 0;
+}
+
+.link-quiet,
+.link-danger {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.link-quiet {
+  color: var(--mute);
+}
+
+.link-quiet:hover {
+  color: var(--ink);
+}
+
+.link-danger {
+  color: hsl(var(--destructive));
+}
+
+.link-quiet:disabled,
+.link-danger:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tile-sub[data-tone="error"] {
+  color: hsl(var(--destructive));
+  padding: 0 4px;
+}
+
 /* ── /me ────────────────────────────────────────────────────────────────
    Paper White on Linen, one 16px radius, a 1px Ink hairline and no shadow —
    the only depth Cosmos allows is the step between the two surfaces. */

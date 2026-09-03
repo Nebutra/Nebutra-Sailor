@@ -65,6 +65,10 @@ export default async function MePage() {
             <dt>从哪里进来</dt>
             <dd>{authHost}</dd>
           </div>
+          <div className="field-row">
+            <dt>观澜留下什么</dt>
+            <dd>只有拍好的那张。你上传的原图用完即弃，不留存。</dd>
+          </div>
           {expires ? (
             <div className="field-row">
               <dt>这次会话到</dt>
