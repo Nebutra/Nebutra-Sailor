@@ -3,18 +3,17 @@
  * tenant's rows, even when it knows the primary key.
  *
  * PGlite runs this in CI. Set RLS_ATTACK_DATABASE_URL (or a localhost
- * DATABASE_URL) to replay the same SQL against real PostgreSQL.
+ * DATABASE_URL) to replay the same SQL against real PostgreSQL — see the
+ * `test` job in .github/workflows/ci.yml, which now runs a Postgres service
+ * for exactly this file and rls-migration-coverage.test.ts.
  */
-import { PGlite } from "@electric-sql/pglite";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-
-interface SqlClient {
-  kind: string;
-  role?: string;
-  exec(sql: string): Promise<void>;
-  query<T extends Record<string, unknown>>(sql: string, params?: unknown[]): Promise<T[]>;
-  close(): Promise<void>;
-}
+import {
+  availableBackends,
+  becomeTenant,
+  randomRoleName,
+  type SqlClient,
+} from "./support/rls-sql-client";
 
 function setupSql(role: string): string {
   return `
@@ -38,65 +37,6 @@ function setupSql(role: string): string {
 `;
 }
 
-async function createPgliteClient(): Promise<SqlClient> {
-  const db = new PGlite();
-  return {
-    kind: "pglite",
-    async exec(sql) {
-      await db.exec(sql);
-    },
-    async query<T extends Record<string, unknown>>(sql: string, params: unknown[] = []) {
-      const result = await db.query<T>(sql, params);
-      return result.rows;
-    },
-    async close() {
-      await db.close();
-    },
-  };
-}
-
-async function createPostgresClient(connectionString: string): Promise<SqlClient> {
-  const { Client } = await import("pg");
-  const client = new Client({ connectionString });
-  await client.connect();
-  const schema = `rls_attack_${Date.now().toString(36)}`;
-  await client.query(`CREATE SCHEMA ${schema}`);
-  await client.query(`SET search_path TO ${schema}, public`);
-  const handle: SqlClient = {
-    kind: "postgresql",
-    async exec(sql) {
-      await client.query(sql);
-    },
-    async query<T extends Record<string, unknown>>(sql: string, params: unknown[] = []) {
-      const result = await client.query(sql, params);
-      return result.rows as T[];
-    },
-    async close() {
-      await client.query("RESET ROLE");
-      await client.query(`DROP SCHEMA IF EXISTS ${schema} CASCADE`);
-      if (handle.role) {
-        await client.query(`DROP ROLE IF EXISTS ${handle.role}`);
-      }
-      await client.end();
-    },
-  };
-  return handle;
-}
-
-function localhostDatabaseUrl(): string | undefined {
-  const explicit = process.env.RLS_ATTACK_DATABASE_URL;
-  if (explicit) return explicit;
-  const url = process.env.DATABASE_URL;
-  if (!url?.startsWith("postgres")) return undefined;
-  if (!/localhost|127\.0\.0\.1/u.test(url)) return undefined;
-  return url;
-}
-
-async function becomeTenant(db: SqlClient, role: string, tenantId: string): Promise<void> {
-  await db.exec(`SET ROLE ${role}`);
-  await db.query(`SELECT set_config('app.current_tenant_id', $1, false)`, [tenantId]);
-}
-
 async function seedTenants(db: SqlClient): Promise<void> {
   await db.exec("RESET ROLE");
   await db.exec(`
@@ -106,24 +46,12 @@ async function seedTenants(db: SqlClient): Promise<void> {
   `);
 }
 
-const backends: Array<{ name: string; open: () => Promise<SqlClient> }> = [
-  { name: "pglite", open: createPgliteClient },
-];
-
-const postgresUrl = localhostDatabaseUrl();
-if (postgresUrl) {
-  backends.push({
-    name: "postgresql",
-    open: () => createPostgresClient(postgresUrl),
-  });
-}
-
-describe.each(backends)("dual-tenant RLS attack ($name)", ({ open }) => {
+describe.each(availableBackends())("dual-tenant RLS attack ($name)", ({ open }) => {
   let db: SqlClient;
   let role: string;
 
   beforeEach(() => {
-    role = `app_tenant_${Math.random().toString(36).slice(2, 10)}`;
+    role = randomRoleName("app_tenant");
   });
 
   afterEach(async () => {

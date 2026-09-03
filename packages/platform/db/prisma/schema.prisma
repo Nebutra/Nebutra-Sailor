@@ -279,6 +279,7 @@ model TenantTransferJournal {
 
   @@index([toOrganizationId, status])
   @@index([fromTenantId])
+  @@index([toTenantId])
   @@map("tenant_transfer_journals")
   @@schema("public")
 }
@@ -1924,6 +1925,7 @@ model UserSkill {
 
   @@unique([userId, skillId])
   @@index([userId, enabled])
+  @@index([tenantId])
   @@map("user_skills")
   @@schema("public")
 }
@@ -1948,6 +1950,7 @@ model Connector {
   tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: SetNull)
 
   @@index([userId, isActive, lastUsedAt(sort: Desc)])
+  @@index([tenantId])
   @@map("connectors")
   @@schema("public")
 }
@@ -2119,6 +2122,7 @@ model CodeRedemption {
 
   @@unique([codeId, userId])
   @@index([userId, redeemedAt(sort: Desc)])
+  @@index([tenantId])
   @@map("code_redemptions")
   @@schema("public")
 }
