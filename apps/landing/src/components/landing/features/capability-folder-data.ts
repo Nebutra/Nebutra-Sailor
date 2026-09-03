@@ -378,8 +378,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 8,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 100,
-      testFiles: 36,
+      sourceFiles: 101,
+      testFiles: 37,
       readmes: 8,
     },
     title: copy("Identity, Access & Tenant Trust", "身份、访问与租户信任"),

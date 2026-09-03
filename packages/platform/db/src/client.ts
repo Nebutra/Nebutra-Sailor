@@ -343,6 +343,13 @@ export function getTenantDb(tenantId: string): PrismaClient {
     query: {
       $allModels: {
         async $allOperations({ args, query }) {
+          // P1.2 follow-up: route through tenantSessionOperations
+          // (`@nebutra/tenant/isolation`) so this stops being a second copy of
+          // the SET LOCAL ROLE + set_config statements `withRls` and
+          // `withTenantContext` already share; keep `SET LOCAL statement_timeout`
+          // between the role switch and set_config. Until then, `RLS_ROLE` here
+          // is frozen at module load — the drift P1.2 removed from `rls.ts`.
+          //
           // `STATEMENT_TIMEOUT_MS` is a validated non-negative integer, so it is
           // safe to interpolate into the SET LOCAL (which cannot be bind-parameterized).
           if (RLS_ROLE) {
