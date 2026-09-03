@@ -26,6 +26,16 @@
  * `packages/iam/tenant/src/rls-session.ts`). This module only adds the
  * missing verification on top of that copy; it does not change what gets
  * sent to Postgres.
+ *
+ * `assertRlsRoleUsable` throws a plain `Error`, not `@nebutra/tenant`'s
+ * `TenantIsolationError` — deliberately, for the same reason this file avoids
+ * importing `@nebutra/tenant`: that class only exists in `@nebutra/tenant`'s
+ * *built* `dist` output (its package exports resolve to `dist/*.js`), and
+ * importing it here would reattach the build-step dependency this module is
+ * written to avoid. A caller that specifically catches `TenantIsolationError`
+ * (e.g. `withRls`/`withTenantContext`'s callers) will not catch this one even
+ * though it is the same class of tenant-isolation failure; match on the error
+ * message (`[db] APP_DB_ROLE`) instead, or catch `Error` generically.
  */
 
 /** The subset of Prisma's client the `SET LOCAL ROLE` probe needs. */
