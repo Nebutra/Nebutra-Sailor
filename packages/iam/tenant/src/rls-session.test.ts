@@ -4,6 +4,7 @@ import {
   applyTenantSession,
   isValidDbRole,
   resolveRlsRole,
+  resolveRlsRoleOrThrow,
   TENANT_SESSION_EXPRESSION,
   TENANT_SESSION_SETTING,
   type TenantSessionExecutor,
@@ -161,16 +162,56 @@ describe("tenant session core", () => {
     expect(order).toEqual(["set_role", "set_config"]);
   });
 
-  // Pre-merge `withRls` parity: an executor without `$executeRawUnsafe` cannot
-  // switch role, and today that is skipped rather than refused. This is NOT the
-  // desired contract — it is the gap closure item P1.3 closes (by throwing
-  // `TenantIsolationError`). The test pins the current behaviour so the P1.3
-  // PR has to flip it deliberately rather than change it in passing.
-  it("P1.3 gap: currently skips the role switch when the executor cannot run unsafe SQL", () => {
+  // Closure P1.3: an executor without `$executeRawUnsafe` cannot switch role,
+  // and skipping the switch would run the query after it as the connection's
+  // own (possibly BYPASSRLS) role instead of the one APP_DB_ROLE configured.
+  // This used to be silently skipped (pre-merge `withRls` parity) — pinned
+  // here as the regression case now that it refuses instead.
+  it("closure P1.3: refuses the query instead of skipping the role switch when the executor cannot run unsafe SQL", () => {
     const { executor, statements } = recordingExecutor({ unsafe: false });
 
-    tenantSessionOperations(executor, "org_1", { role: "app_user" });
+    const attempt = () => tenantSessionOperations(executor, "org_1", { role: "app_user" });
+    expect(attempt).toThrow(TenantIsolationError);
+    expect(attempt).toThrow(/cannot run \$executeRawUnsafe/);
+    expect(statements).toEqual([]);
+  });
 
-    expect(statements).toEqual([SET_TENANT]);
+  // Closure P1.3: `resolveRlsRole` stays permissive (null on invalid) for
+  // callers that want it, but the entry point every tenant-scoped code path
+  // resolves the role through — `resolveRlsRoleOrThrow`, and therefore
+  // `tenantSessionOperations`/`applyTenantSession` called without an
+  // explicit `role` — must refuse instead.
+  it("closure P1.3: resolveRlsRoleOrThrow refuses an unusable APP_DB_ROLE instead of silently dropping it", () => {
+    const invalid = 'app_user"; DROP ROLE postgres; --';
+
+    expect(resolveRlsRoleOrThrow({ APP_DB_ROLE: "app_user" })).toBe("app_user");
+    expect(resolveRlsRoleOrThrow({})).toBeNull();
+    expect(resolveRlsRoleOrThrow({ APP_DB_ROLE: "" })).toBeNull();
+    // The permissive resolver is unchanged — same invalid value, no throw.
+    expect(resolveRlsRole({ APP_DB_ROLE: invalid })).toBeNull();
+
+    const rejectInvalid = () => resolveRlsRoleOrThrow({ APP_DB_ROLE: invalid });
+    expect(rejectInvalid).toThrow(TenantIsolationError);
+    expect(rejectInvalid).toThrow(/bare SQL identifier/);
+  });
+
+  // Closure P1.3 — the failing case: on origin/main (before this PR),
+  // tenantSessionOperations/applyTenantSession called with no explicit
+  // `role` resolve APP_DB_ROLE via the permissive `resolveRlsRole`, so an
+  // invalid value is silently treated as "no role configured" and the query
+  // runs with only `set_config` — no role switch, no refusal. Regression
+  // case: it must throw instead, before issuing any statement.
+  it("closure P1.3: an invalid APP_DB_ROLE refuses the query instead of silently running without the role switch", async () => {
+    process.env.APP_DB_ROLE = 'app_user"; DROP ROLE postgres; --';
+
+    const sync = recordingExecutor();
+    expect(() => tenantSessionOperations(sync.executor, "org_1")).toThrow(TenantIsolationError);
+    expect(sync.statements).toEqual([]);
+
+    const async_ = recordingExecutor();
+    await expect(applyTenantSession(async_.executor, "org_1")).rejects.toThrow(
+      TenantIsolationError,
+    );
+    expect(async_.statements).toEqual([]);
   });
 });
