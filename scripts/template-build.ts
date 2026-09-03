@@ -18,7 +18,7 @@
  * The mirror repo is consumed by create-sailor when `SAILOR_TEMPLATE_REPO` is
  * set (default: nebutra/sailor-template). See packages/ops/create-sailor/src/utils/git.ts.
  */
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import ignore from "ignore";
@@ -191,6 +191,74 @@ function pruneEmptyDirs(dir: string): boolean {
 }
 
 /**
+ * The sailor version — the one number every publishable core + runtime
+ * package carries (TEMPLATE.md "Sailor version"). scripts/sailor-version.mjs
+ * owns the rule; this asks it rather than re-deriving it, so the marker, the
+ * mirror tag and the changesets group cannot disagree. `converged` is false
+ * until the first lockstep release: before that only one package is at the
+ * number, and sync-template.yml must not tag the mirror `v<x>` for a tree
+ * that does not carry `x` throughout.
+ */
+function readSailorVersion(): { version: string; converged: boolean } {
+  const printed = execFileSync(
+    process.execPath,
+    [path.join(REPO_ROOT, "scripts/sailor-version.mjs"), "--json"],
+    { cwd: REPO_ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] },
+  ).trim();
+  let parsed: { version?: unknown; converged?: unknown };
+  try {
+    parsed = JSON.parse(printed);
+  } catch {
+    throw new Error(
+      `scripts/sailor-version.mjs --json printed "${printed}", not JSON. Refusing to stamp the marker.`,
+    );
+  }
+  const { version, converged } = parsed;
+  if (typeof version !== "string" || !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(version)) {
+    throw new Error(
+      `scripts/sailor-version.mjs reported version "${String(version)}", not a version. Refusing to stamp the marker.`,
+    );
+  }
+  if (typeof converged !== "boolean") {
+    throw new Error(
+      `scripts/sailor-version.mjs reported converged=${String(converged)}, not a boolean. Refusing to stamp the marker.`,
+    );
+  }
+  return { version, converged };
+}
+
+/**
+ * The mirror never publishes (release.yml is stripped), so the source repo's
+ * changesets `fixed` group — the sailor-version lockstep — means nothing
+ * there, and it would break scaffolds: `.changeset/` ships verbatim while
+ * create-sailor prunes group members on request (`--no-webhooks` deletes
+ * packages/integrations/webhooks), and @changesets/config rejects a `fixed`
+ * name that matches no workspace package on the first `pnpm changeset`.
+ * The number itself still travels in the marker (`sailorVersion`) and the
+ * mirror tag. Every other key of the config is left as it is.
+ */
+function clearChangesetFixedGroup(targetDir: string): void {
+  const configPath = path.join(targetDir, ".changeset/config.json");
+  // Read directly and branch on ENOENT rather than existsSync-then-read: the
+  // latter is a check-then-use race (the file can vanish between the check
+  // and the read), which CodeQL flags as a TOCTOU file system race.
+  let raw: string;
+  try {
+    raw = fs.readFileSync(configPath, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      // Fail loud: a missing config means .changeset/ stopped shipping, which
+      // is a boundary change someone should have made on purpose.
+      throw new Error(".changeset/config.json missing from template output. Refusing to push.");
+    }
+    throw error;
+  }
+  const config = JSON.parse(raw) as { fixed?: unknown };
+  config.fixed = [];
+  fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+}
+
+/**
  * Inject the license model into the mirror repo so consumers cloning
  * directly (without create-sailor) still see the same legal guardrails.
  */
@@ -256,9 +324,14 @@ function injectLicenseAndMarker(targetDir: string): void {
   fs.writeFileSync(path.join(targetDir, "NOTICE.md"), notice);
 
   // 4. Marker file — lets tools detect "this is a pre-stripped mirror".
+  //    sailorVersion is what sync-template.yml tags the mirror with (v<x>),
+  //    and only when sailorVersionConverged is true.
+  const sailor = readSailorVersion();
   const marker = {
     type: "sailor-template-mirror",
     sourceRepo: "Nebutra/Nebutra-Sailor",
+    sailorVersion: sailor.version,
+    sailorVersionConverged: sailor.converged,
     syncedAt: new Date().toISOString(),
     license: {
       open: "AGPL-3.0",
@@ -312,6 +385,10 @@ function main(): void {
   process.stdout.write("Step 4/5: injecting license & template marker…\n");
   injectLicenseAndMarker(out);
   process.stdout.write("  injected LICENSE, LICENSE-COMMERCIAL.md, NOTICE.md, .sailor-template\n");
+  clearChangesetFixedGroup(out);
+  process.stdout.write(
+    "  emptied .changeset/config.json fixed group (the mirror never publishes)\n",
+  );
 
   if (args.git) {
     process.stdout.write("Step 5/5: initializing git repo…\n");
