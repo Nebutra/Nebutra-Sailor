@@ -296,6 +296,11 @@ GitHub Actions workflows live in `.github/workflows/`. The load-bearing ones:
   `docker-build-push.yml` were retired on 2026-09-02, so `deploy-origin-ecs` is
   `workflow_dispatch`-only until an image publish returns, and `infra/iac/k8s/`
   is experimental, not exercised by CI.
+- `golden-e2e.yml` — golden-path suite (`e2e/golden`, closure P1.5) against
+  production builds of `apps/web` + `apps/landing`. Nightly, manual, and main
+  pushes touching the golden surface — not a PR gate. Runs the public spec with
+  no secrets; the session-gated specs need `E2E_SESSION_COOKIE_VALUE`,
+  `E2E_DATABASE_URL`, `E2E_AUTH_SECRET` (header of the workflow has the details).
 - `security-scan.yml` — CodeQL + dependency scanning
 - `chromatic.yml` — Storybook visual regression
 - `lighthouse-dashboard.yml` — Performance monitoring
