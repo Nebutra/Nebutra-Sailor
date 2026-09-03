@@ -71,7 +71,11 @@ import { startupOsRoutes } from "./routes/startup-os/index.js";
 import { statusRoutes } from "./routes/system/status.js";
 import { taskRoutes } from "./routes/tasks/index.js";
 import { uploadRoutes } from "./routes/uploads/index.js";
-import { getAuthWebhookRoutes, stripeWebhookRoutes } from "./routes/webhooks/index.js";
+import {
+  chinaPayWebhookRoutes,
+  getAuthWebhookRoutes,
+  stripeWebhookRoutes,
+} from "./routes/webhooks/index.js";
 import { workflowRoutes } from "./routes/workflows/index.js";
 
 initOtel({ serviceName: "api-gateway" });
@@ -325,6 +329,7 @@ app.route("/api/v1/admin", adminRoutes);
 
 // Webhook routes (raw body — bypass rate limiting)
 app.route("/api/webhooks", stripeWebhookRoutes);
+app.route("/api/webhooks", chinaPayWebhookRoutes);
 // Auth webhook routes (provider-agnostic) — initialized during startup
 const authWebhookRoutes = await getAuthWebhookRoutes();
 app.route("/api/webhooks", authWebhookRoutes);
