@@ -399,6 +399,19 @@ const WEBHOOK_VERIFICATION: Readonly<
   // `501: {` responses entry alone does not match — the return statement must.
   "webhooks/better-auth-webhooks.ts": (_r, f) =>
     /\breturn\s+c\.json\(\s*\{[^}]*\}\s*,\s*501\s*,?\s*\)/.test(f.masked),
+  // Two routes, two different providers, two different verifications — keyed
+  // on the route's own path since the file-level check above isn't granular
+  // enough. WeChat Pay APIv3: platform-certificate RSA signature + AEAD_AES_256_GCM
+  // decrypt. Alipay: RSA2 signature over the sorted form fields.
+  "webhooks/chinapay.ts": (r, f) => {
+    if (r.path === "/chinapay/wechat") {
+      return /\bverifyAndDecryptWechatNotification\s*\(/.test(f.masked);
+    }
+    if (r.path === "/chinapay/alipay") {
+      return /\bverifyAlipayNotification\s*\(/.test(f.masked);
+    }
+    return false;
+  },
 };
 
 const STRUCTURAL_EXEMPTIONS: readonly Exemption[] = [
