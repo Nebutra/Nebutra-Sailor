@@ -372,6 +372,14 @@ interface TenantConfig {
 
 - `withRls(prisma, tenantId)` — Apply RLS extension to Prisma
 - `generateRlsPolicySql(options)` — Generate deterministic PostgreSQL RLS policy SQL
+- `applyTenantSession(tx, tenantId, options?)` / `tenantSessionOperations(prisma, tenantId, options?)` —
+  The tenant session core: the transaction-local `SET LOCAL ROLE` (from `APP_DB_ROLE`) and
+  `set_config('app.current_tenant_id', …, true)` statements. `withRls` runs it as a batch
+  transaction; `withTenantContext` in `@nebutra/db/rls` runs it inside an interactive
+  transaction. One implementation, two shapes — do not write these statements elsewhere.
+- `resolveRlsRole(env?)` / `isValidDbRole(role)` — `APP_DB_ROLE` resolved as a bare SQL identifier
+- `TENANT_SESSION_SETTING` / `TENANT_SESSION_EXPRESSION` — the setting key the policies read and
+  the wrappers write
 - `getTenantSchema(tenantId)` — Get schema name for schema-per-tenant
 - `getTenantDatabaseUrl(tenantId, baseUrl?)` — Get DB URL for database-per-tenant
 - `TenantAwarePrismaClient` — Wrapper class for tenant isolation

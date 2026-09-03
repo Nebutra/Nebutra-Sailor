@@ -14,20 +14,20 @@
  *     return tx.content.findMany();
  *   });
  *
- * The session variable is transaction-local (`true` as third arg to
- * set_config), so it is automatically cleared when the transaction ends —
- * no risk of context leaking across requests.
+ * The statements that scope the transaction — the optional role switch to a
+ * non-BYPASSRLS role (`APP_DB_ROLE`) and the transaction-local write of
+ * `app.current_tenant_id` — are not written here. They come from the tenant
+ * session core in `@nebutra/tenant/isolation`, the same implementation
+ * `withRls(prisma, tenantId)` runs, so the two wrappers cannot drift apart
+ * (closure P1.2). This file is the interactive-transaction shape of that core;
+ * `withRls` is the client-extension shape.
+ *
+ * The session variable is transaction-local, so it is automatically cleared
+ * when the transaction ends — no risk of context leaking across requests.
  */
 
+import { applyTenantSession } from "@nebutra/tenant/isolation";
 import type { PrismaClient } from "#prisma-client";
-
-// Optional non-bypassrls role to assume for tenant-scoped transactions — e.g.
-// "app_user" on Supabase, whose `postgres` connection role bypasses RLS. Env-driven
-// so other backends opt in; validated as a bare SQL identifier (cannot be bound).
-const RLS_ROLE = (() => {
-  const r = process.env.APP_DB_ROLE;
-  return r && /^[a-z_][a-z0-9_]*$/.test(r) ? r : null;
-})();
 
 type InteractiveTransaction = Omit<
   PrismaClient,
@@ -39,6 +39,10 @@ type InteractiveTransaction = Omit<
  * `tenantId` for the duration of the transaction.
  *
  * All tenant-scoped RLS policies compare `tenant_id` to this value.
+ *
+ * When `APP_DB_ROLE` names a non-BYPASSRLS role (e.g. `app_user` on Supabase,
+ * whose `postgres` connection role bypasses RLS) the transaction assumes it
+ * first, so the policies actually apply. The role is resolved at call time.
  */
 export async function withTenantContext<T>(
   prisma: PrismaClient,
@@ -46,13 +50,7 @@ export async function withTenantContext<T>(
   callback: (tx: InteractiveTransaction) => Promise<T>,
 ): Promise<T> {
   return prisma.$transaction(async (tx) => {
-    // Assume the non-bypassrls role (when configured) so RLS actually applies on
-    // backends whose connection role bypasses it (e.g. Supabase `postgres`).
-    if (RLS_ROLE) {
-      await tx.$executeRawUnsafe(`SET LOCAL ROLE "${RLS_ROLE}"`);
-    }
-    // transaction-local: cleared automatically when tx commits or rolls back
-    await tx.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`;
+    await applyTenantSession(tx, tenantId);
     return callback(tx);
   });
 }
@@ -75,7 +73,8 @@ export async function withAdminContext<T>(
   return prisma.$transaction(async (tx) => {
     // Empty string → no tenant filter; policies with TO postgres bypass RLS.
     // This is a no-op for normal app roles but documents the intent clearly.
-    await tx.$executeRaw`SELECT set_config('app.current_tenant_id', '', true)`;
+    // `role: null` — never assume APP_DB_ROLE here: the point is to stay owner.
+    await applyTenantSession(tx, "", { role: null });
     return callback(tx);
   });
 }

@@ -19,6 +19,11 @@ client, and the shared database runtime used across the monorepo.
 - Seed entrypoints: `prisma/seed.ts` and `scripts/seed-model-configs.ts`
 - Public package surface: `src/index.ts`
 - Shared client and tenancy boundaries: `src/client.ts`, `src/rls.ts`, `src/pool.ts`
+- `src/rls.ts` (`withTenantContext` / `withAdminContext`) does not write the
+  tenant-session SQL itself: it runs `applyTenantSession` from
+  `@nebutra/tenant/isolation`, the same core `withRls` uses. Keep it that way
+  (closure P1.2); `tests/architecture/tenant-cutover-contract.test.ts` and
+  `src/rls.test.ts` fail if a second copy of `set_config(...)` appears here.
 
 If behavior is derived from the schema, change the schema first and regenerate
 the client in the same change.

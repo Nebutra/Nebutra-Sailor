@@ -33,6 +33,13 @@ boundary, not the place for app-specific organization UX or billing policy.
   `withRls` owns shared-schema RLS setup,
   `getTenantSchema` owns schema naming,
   `getTenantDatabaseUrl` owns database-per-tenant URL derivation.
+- `src/rls-session.ts` is the single tenant session core: the
+  `app.current_tenant_id` setting key, the `APP_DB_ROLE` validation, and the
+  `SET LOCAL ROLE` + `set_config(..., true)` statement plan. `withRls` here and
+  `withTenantContext` in `@nebutra/db/rls` both run it; never write those
+  statements in a second place (closure P1.2, pinned by
+  `tests/architecture/tenant-cutover-contract.test.ts`). The module has no
+  runtime imports so `@nebutra/db` can depend on it without a cycle.
 - Respect the package's current foundation status. Schema-per-tenant
   migrations, JWT/subdomain flows, and full isolation automation are not fully
   shipped; do not document or assume stronger guarantees than the code has.

@@ -34,8 +34,41 @@ describe("Tenant cutover contract", () => {
 
     expect(rls).toContain("export async function withTenantContext<T>");
     expect(rls).toContain("tenantId: string");
-    expect(rls).toContain("set_config('app.current_tenant_id', $" + "{tenantId}, true)");
+    expect(rls).toContain("applyTenantSession(tx, tenantId)");
     expect(rls).not.toContain("All tenant-scoped RLS policies compare `organization_id`");
+  });
+
+  it("keeps one implementation of the tenant session behind withRls and withTenantContext", async () => {
+    const [session, isolation, rls, dbPackage] = await Promise.all([
+      readFile(join(process.cwd(), "packages/iam/tenant/src/rls-session.ts"), "utf8"),
+      readFile(join(process.cwd(), "packages/iam/tenant/src/isolation.ts"), "utf8"),
+      readFile(join(process.cwd(), "packages/platform/db/src/rls.ts"), "utf8"),
+      readFile(join(process.cwd(), "packages/platform/db/package.json"), "utf8"),
+    ]);
+
+    // The statements live in exactly one file (closure P1.2).
+    expect(session).toContain('export const TENANT_SESSION_SETTING = "app.current_tenant_id";');
+    expect(session).toContain("set_config('app.current_tenant_id', $" + "{tenantId}, true)");
+    expect(session).toContain('SET LOCAL ROLE "$' + '{role}"');
+
+    // Both wrappers delegate instead of carrying their own copy.
+    expect(isolation).toContain('from "./rls-session"');
+    expect(isolation).toContain("tenantSessionOperations(executor, tenantId, { role: rlsRole })");
+    expect(isolation).not.toContain("set_config(");
+    expect(isolation).not.toContain("SET LOCAL ROLE");
+    expect(rls).toContain('from "@nebutra/tenant/isolation"');
+    expect(rls).toContain("applyTenantSession(tx, tenantId)");
+    expect(rls).not.toContain("set_config(");
+    expect(rls).not.toContain("SET LOCAL ROLE");
+    expect(rls).not.toContain("process.env.APP_DB_ROLE");
+
+    // Dependency direction: db → tenant. tenant stays free of @nebutra/db.
+    expect(JSON.parse(dbPackage).dependencies["@nebutra/tenant"]).toBe("workspace:*");
+    const tenantPackage = JSON.parse(
+      await readFile(join(process.cwd(), "packages/iam/tenant/package.json"), "utf8"),
+    );
+    expect(tenantPackage.dependencies["@nebutra/db"]).toBeUndefined();
+    expect(tenantPackage.devDependencies?.["@nebutra/db"]).toBeUndefined();
   });
 
   it("keeps gateway request isolation keyed by canonical tenantId", async () => {

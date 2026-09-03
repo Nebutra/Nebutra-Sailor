@@ -4860,6 +4860,9 @@ importers:
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../logger
+      '@nebutra/tenant':
+        specifier: workspace:*
+        version: link:../../iam/tenant
       '@nebutra/vault':
         specifier: workspace:*
         version: link:../../iam/vault
