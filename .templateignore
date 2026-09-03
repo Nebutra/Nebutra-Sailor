@@ -71,6 +71,7 @@ apps/web/src/lib/__tests__/audit-remediation.test.ts
 # only in the monorepo — customers get web + landing + idp + mail-preview.
 # ---------------------------------------------------------------------------
 apps/sleptons/
+apps/kuanlan/
 apps/tsekaluk-dev/
 apps/docs-hub/
 apps/studio/
