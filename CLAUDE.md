@@ -1080,7 +1080,7 @@ Status: as of 2026-05-12, after a follow-up audit, `backends/python/` contains o
 Default production topology:
 
 ```text
-Vercel frontends -> Cloudflare Workers gateway -> ECS Origin -> Supabase / Upstash / R2 or OSS
+Vercel frontends -> Cloudflare Workers gateway -> ECS Origin -> PlanetScale Postgres / Upstash / R2 or OSS
 ```
 
 This default is provider-switchable, not provider-locked. Use the per-service
