@@ -217,5 +217,8 @@ describe("image2 consume", () => {
       "utf8",
     );
     expect(css).toContain(".sku-source");
+    expect(css).toMatch(/img\.sku-source[\s\S]*?opacity:\s*0/);
+    expect(css).toContain(".sku-card:hover .sku-source");
+    expect(css).toContain(".sku-card:focus-visible .sku-source");
   });
 });

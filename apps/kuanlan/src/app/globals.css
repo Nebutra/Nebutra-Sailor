@@ -571,6 +571,13 @@ a.auth-link:hover {
   border: 1px solid var(--pill);
   border-radius: calc(var(--tile) - 4px);
   background: var(--pill);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sku-card:hover .sku-source,
+.sku-card:focus-visible .sku-source {
+  opacity: 1;
 }
 
 .sku-card[data-active="true"] .sku-source {
