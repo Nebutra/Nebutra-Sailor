@@ -5793,6 +5793,111 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/webhooks/chinapay/wechat": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * WeChat Pay APIv3 payment notification
+     * @description Verifies the platform-certificate signature, decrypts the AEAD_AES_256_GCM resource, and credits the purchase. 2xx only after the inbox row is marked processed.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            [key: string]: unknown;
+          };
+        };
+      };
+      responses: {
+        /** @description Per the WeChat Pay v3 contract: {code:'SUCCESS'} on success, {code:'FAIL'} to trigger a retry. */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              code: string;
+              message: string;
+            };
+          };
+        };
+        /** @description Invalid signature or headers */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              code: string;
+              message: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/webhooks/chinapay/alipay": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Alipay async payment notification
+     * @description Verifies the RSA2 signature and credits the purchase. Responds 'success' or 'failure' per Alipay's contract, not JSON.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/x-www-form-urlencoded": {
+            [key: string]: string;
+          };
+        };
+      };
+      responses: {
+        /** @description 'success' or 'failure' */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "text/plain": string;
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/webhooks/clerk": {
     parameters: {
       query?: never;

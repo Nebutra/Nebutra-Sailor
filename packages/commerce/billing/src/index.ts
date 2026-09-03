@@ -79,13 +79,32 @@ export {
   handleCreditPurchaseWebhook,
   resolveBillingProviderReadiness,
 } from "./checkout/index";
-// China Payment (Alipay + WeChat Pay via aggregator)
+// China Payment (official WeChat Pay APIv3 + Alipay Open Platform, no aggregator)
 export {
+  ALIPAY_NOTIFY_SUCCESS_BODIES,
+  type AlipayConfig,
+  type AlipayNotificationFields,
+  type ChinaPayMethod,
+  type ChinaPayOrder,
+  createAlipayPrecreateOrder,
   createChinaPayOrder,
-  getChinaPayConfig,
-  initChinaPay,
+  createWechatNativeOrder,
+  ensurePem,
+  getAlipayConfig,
+  getWechatPayConfig,
+  initAlipay,
+  initWechatPay,
+  queryAlipayOrder,
   queryChinaPayOrder,
-  verifyChinaPayWebhook,
+  queryWechatOrder,
+  resetChinaPayConfig,
+  verifyAlipayNotification,
+  verifyAndDecryptWechatNotification,
+  WECHAT_NOTIFY_FAIL,
+  WECHAT_NOTIFY_OK,
+  type WechatNotificationHeaders,
+  type WechatPayConfig,
+  type WechatPaymentResource,
 } from "./chinapay/index";
 // Plan Config (Database-driven)
 export {

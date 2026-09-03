@@ -9469,6 +9469,96 @@
         }
       }
     },
+    "/api/webhooks/chinapay/wechat": {
+      "post": {
+        "tags": ["Webhooks"],
+        "summary": "WeChat Pay APIv3 payment notification",
+        "description": "Verifies the platform-certificate signature, decrypts the AEAD_AES_256_GCM resource, and credits the purchase. 2xx only after the inbox row is marked processed.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Per the WeChat Pay v3 contract: {code:'SUCCESS'} on success, {code:'FAIL'} to trigger a retry.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "message"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid signature or headers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["code", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/webhooks/chinapay/alipay": {
+      "post": {
+        "tags": ["Webhooks"],
+        "summary": "Alipay async payment notification",
+        "description": "Verifies the RSA2 signature and credits the purchase. Responds 'success' or 'failure' per Alipay's contract, not JSON.",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "'success' or 'failure'",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/webhooks/clerk": {
       "post": {
         "tags": ["Webhooks"],
