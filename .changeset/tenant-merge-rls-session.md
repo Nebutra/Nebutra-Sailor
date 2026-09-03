@@ -11,8 +11,8 @@ One implementation behind `withRls` and `withTenantContext` (closure P1.2).
 setting key, the `APP_DB_ROLE` validation, and the transaction-local `SET LOCAL ROLE`
 + `set_config(..., true)` statements. `withRls` runs it as a batch transaction;
 `withTenantContext` / `withAdminContext` in `@nebutra/db/rls` run it inside an interactive
-transaction. Both public wrappers keep their signatures. The `role` option is new: an
-explicit invalid value throws `TenantIsolationError`.
+transaction. Both public wrappers keep their signatures. An explicit invalid `role` option
+now throws `TenantIsolationError` (was a bare `Error`).
 
 Not yet routed through the core: `getTenantDb` in `@nebutra/db` (`src/client.ts`) still
 carries its own copy of the statements; a follow-up moves it onto `tenantSessionOperations`.
