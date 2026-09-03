@@ -1,0 +1,268 @@
+name: Golden E2E
+
+# Closure P1.5 (docs/architecture/2026-08-27-closure-phase.md): one money-path
+# E2E — checkout → webhook → upgrade → cancel → refund. This workflow is the CI
+# home for that path. It runs the golden-path Playwright suite (e2e/golden,
+# e2e/playwright.golden.config.ts — no managed webServer) against PRODUCTION
+# builds of apps/web and apps/landing served on the runner, so a green run is
+# evidence about the app that ships, not about a dev server.
+#
+# It is not a pull-request gate: the two `next build`s cost ~15 minutes and the
+# money path must not block unrelated PRs. ci.yml keeps the smoke suite as the
+# PR gate; this runs nightly, on demand, and on pushes to main that touch the
+# golden surface.
+#
+# What runs, and on what:
+#   always (no secrets)     e2e/golden/legal-pages.spec.ts         apps/landing
+#   with the E2E session    e2e/golden/billing-choose-plan.spec.ts apps/web
+#   secrets below           e2e/golden/api-keys.spec.ts            apps/web
+#   not runnable in CI yet  e2e/golden/auth-completion.spec.ts     needs an email
+#                             capture (E2E_EMAIL_CAPTURE) and a one-off reset token
+#                           e2e/golden/onboarding-wizard.spec.ts   needs sign-up
+#                             enablement against a disposable auth DB
+#
+# The session-gated steps test HAVE_E2E_SESSION, folded from the secrets below.
+# When they are absent the job still runs the public spec, prints a warning
+# naming the missing secrets, and writes the same to the job summary — it never
+# skips silently. When they are present, a spec that Playwright skipped anyway
+# (fixture said "not configured") fails the job, so a half-configured secret
+# set cannot pass as green.
+#
+# Secrets (Settings → Secrets and variables → Actions → Secrets). Use a
+# disposable E2E auth database — never production values:
+#   E2E_SESSION_COOKIE_VALUE  session cookie for a seeded E2E user, signed with
+#                             E2E_AUTH_SECRET (better-auth: "<token>.<signature>")
+#   E2E_DATABASE_URL          PostgreSQL URL holding that user + session
+#   E2E_AUTH_SECRET           the auth signing secret of that E2E instance
+#                             (exported as BETTER_AUTH_SECRET / NEXTAUTH_SECRET)
+# Variables (optional):
+#   GOLDEN_E2E_AUTH_PROVIDER  better-auth (default) | nextauth. Clerk's __session
+#                             is a short-lived JWT and cannot be a static secret.
+#   E2E_SESSION_COOKIE_NAME   override of the fixture's per-provider default
+#                             (e2e/fixtures/auth.ts)
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # nightly 03:00 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "e2e/golden/**"
+      - "e2e/fixtures/**"
+      - "e2e/playwright.golden.config.ts"
+      - "apps/web/**"
+      - "packages/commerce/billing/**"
+      - ".github/workflows/golden-e2e.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  # Keyed by event too: a workflow_dispatch or push-to-main run must not
+  # cancel an in-progress nightly cron run (and lose its report) on the same
+  # ref — it should queue behind it instead.
+  group: golden-e2e-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  npm_config_verify_deps_before_run: "false"
+  NEXT_TELEMETRY_DISABLED: "1"
+  # Same ports as the ci.yml smoke job; the golden config has no webServer, so
+  # the "Start" step below serves the built apps on them.
+  E2E_LANDING_PORT: "3100"
+  E2E_WEB_PORT: "3101"
+  LANDING_BASE_URL: "http://127.0.0.1:3100"
+  APP_BASE_URL: "http://127.0.0.1:3101"
+  API_BASE_URL: "http://127.0.0.1:3102"
+
+jobs:
+  golden:
+    name: Golden path (production apps/web + apps/landing)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # The secrets context is not available in a job-level `if`, so secret
+      # presence is folded into a plain env value here and the gated steps
+      # test that instead.
+      HAVE_E2E_SESSION: ${{ secrets.E2E_SESSION_COOKIE_VALUE != '' && secrets.E2E_DATABASE_URL != '' && secrets.E2E_AUTH_SECRET != '' }}
+      E2E_AUTH_PROVIDER: ${{ vars.GOLDEN_E2E_AUTH_PROVIDER || 'better-auth' }}
+      SESSION_SPECS: e2e/golden/billing-choose-plan.spec.ts e2e/golden/api-keys.spec.ts
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Preflight Playwright runtime
+        run: pnpm check:e2e-env
+        env:
+          AUTH_PROVIDER: ${{ env.E2E_AUTH_PROVIDER }}
+          NEXT_PUBLIC_AUTH_PROVIDER: ${{ env.E2E_AUTH_PROVIDER }}
+
+      # Production builds. `build` on apps/landing is `next build`; on apps/web
+      # the Next build is the `build:next` task (`build` there is the Vite shell
+      # under migration, and the golden routes live in the Next app). Both go
+      # through turbo so the workspace package closure is built first.
+      # NEXT_PUBLIC_* values are inlined at build time, so the local URLs and
+      # the auth provider must be fixed here, not at `next start`.
+      - name: Build apps/landing and apps/web (production)
+        run: |
+          pnpm turbo run build --filter=@nebutra/landing
+          pnpm turbo run build:next --filter=@nebutra/web
+        env:
+          SKIP_ENV_VALIDATION: "true"
+          E2E_SKIP_CMS: "1"
+          AUTH_PROVIDER: ${{ env.E2E_AUTH_PROVIDER }}
+          NEXT_PUBLIC_AUTH_PROVIDER: ${{ env.E2E_AUTH_PROVIDER }}
+          NEXT_PUBLIC_SITE_URL: ${{ env.LANDING_BASE_URL }}
+          NEXT_PUBLIC_APP_URL: ${{ env.APP_BASE_URL }}
+          NEXT_PUBLIC_API_URL: ${{ env.API_BASE_URL }}
+          NEXT_PUBLIC_API_GATEWAY_URL: ${{ env.API_BASE_URL }}
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
+
+      # Runtime secrets are real only when the E2E session secrets exist;
+      # otherwise the same placeholders the smoke webServer uses, so the public
+      # spec (which never touches apps/web) still has a healthy pair of servers.
+      # apps/web has `output: "standalone"`, so `next start` logs a warning that
+      # it "does not work" with that setting; it serves the build regardless
+      # (verified: health + golden routes answer), and the standalone server
+      # would need .next/static and public/ copied in by hand.
+      - name: Start apps/landing and apps/web
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/golden-e2e
+
+          nohup pnpm --filter @nebutra/landing exec next start --port "$E2E_LANDING_PORT" \
+            > artifacts/golden-e2e/landing.log 2>&1 &
+          nohup pnpm --filter @nebutra/web exec next start --port "$E2E_WEB_PORT" \
+            > artifacts/golden-e2e/web.log 2>&1 &
+
+          for url in "$LANDING_BASE_URL/api/e2e/health" "$APP_BASE_URL/api/e2e/health"; do
+            for attempt in $(seq 1 60); do
+              if curl -fsS "$url" > /dev/null 2>&1; then
+                echo "ready: $url"
+                break
+              fi
+              if [ "$attempt" -eq 60 ]; then
+                echo "::error::$url did not become healthy; see artifacts/golden-e2e/*.log"
+                exit 1
+              fi
+              sleep 2
+            done
+          done
+        env:
+          SKIP_ENV_VALIDATION: "true"
+          E2E_SKIP_CMS: "1"
+          AUTH_PROVIDER: ${{ env.E2E_AUTH_PROVIDER }}
+          NEXT_PUBLIC_AUTH_PROVIDER: ${{ env.E2E_AUTH_PROVIDER }}
+          DATABASE_URL: ${{ secrets.E2E_DATABASE_URL || 'postgresql://localhost/dev_placeholder' }}
+          BETTER_AUTH_SECRET: ${{ secrets.E2E_AUTH_SECRET || 'placeholder_secret_32_chars_long_xx' }}
+          NEXTAUTH_SECRET: ${{ secrets.E2E_AUTH_SECRET || 'placeholder_secret_32_chars_long_xx' }}
+          UPSTASH_REDIS_REST_URL: "https://placeholder.upstash.io"
+          UPSTASH_REDIS_REST_TOKEN: "placeholder_token"
+
+      - name: Golden — public specs (no secrets)
+        run: pnpm exec playwright test --config=e2e/playwright.golden.config.ts e2e/golden/legal-pages.spec.ts
+        env:
+          CI: "true"
+          PLAYWRIGHT_HTML_OUTPUT_DIR: playwright-report/public
+
+      - name: Golden — session-gated specs
+        if: env.HAVE_E2E_SESSION == 'true'
+        run: |
+          # shellcheck disable=SC2086 — SESSION_SPECS is a deliberate word list
+          pnpm exec playwright test --config=e2e/playwright.golden.config.ts \
+            --reporter=github,html,json $SESSION_SPECS
+        env:
+          CI: "true"
+          PLAYWRIGHT_HTML_OUTPUT_DIR: playwright-report/session
+          PLAYWRIGHT_JSON_OUTPUT_FILE: artifacts/golden-e2e/session.json
+          E2E_LIVE: "1"
+          DATABASE_URL: ${{ secrets.E2E_DATABASE_URL }}
+          BETTER_AUTH_SECRET: ${{ secrets.E2E_AUTH_SECRET }}
+          NEXTAUTH_SECRET: ${{ secrets.E2E_AUTH_SECRET }}
+          E2E_SESSION_COOKIE_VALUE: ${{ secrets.E2E_SESSION_COOKIE_VALUE }}
+          E2E_SESSION_COOKIE_NAME: ${{ vars.E2E_SESSION_COOKIE_NAME }}
+
+      # The fixture skips a spec (with a reason) when its env is incomplete.
+      # With the secrets present that is a misconfiguration, not a pass.
+      - name: Fail if a session-gated spec was skipped
+        if: env.HAVE_E2E_SESSION == 'true'
+        run: |
+          node <<'NODE'
+          const fs = require("node:fs");
+          const report = JSON.parse(fs.readFileSync("artifacts/golden-e2e/session.json", "utf8"));
+          const skipped = [];
+          let total = 0;
+          const walk = (suite, trail) => {
+            for (const spec of suite.specs ?? []) {
+              total += 1;
+              const statuses = (spec.tests ?? []).map((t) => t.status);
+              if (statuses.length > 0 && statuses.every((s) => s === "skipped")) {
+                const reason = spec.tests
+                  .flatMap((t) => t.annotations ?? [])
+                  .find((a) => a.type === "skip")?.description;
+                skipped.push(`${[...trail, spec.title].join(" › ")}${reason ? ` — ${reason}` : ""}`);
+              }
+            }
+            for (const child of suite.suites ?? []) walk(child, [...trail, child.title]);
+          };
+          for (const suite of report.suites ?? []) walk(suite, [suite.title]);
+          if (total === 0) {
+            console.error("::error::session-gated run executed zero specs");
+            process.exit(1);
+          }
+          if (skipped.length > 0) {
+            console.error("::error::E2E session secrets are set but these specs were skipped by the fixture:");
+            for (const line of skipped) console.error(`  - ${line}`);
+            process.exit(1);
+          }
+          console.log(`session-gated specs executed: ${total}, skipped: 0`);
+          NODE
+
+      - name: Session-gated specs not run
+        if: env.HAVE_E2E_SESSION != 'true'
+        run: |
+          echo "::warning::Golden E2E ran only the public spec. Set E2E_SESSION_COOKIE_VALUE, E2E_DATABASE_URL and E2E_AUTH_SECRET (repository secrets) to also run: $SESSION_SPECS"
+          {
+            echo "## Golden E2E"
+            echo
+            echo "| Spec | Result |"
+            echo "| --- | --- |"
+            echo "| e2e/golden/legal-pages.spec.ts | ran (public) |"
+            for spec in $SESSION_SPECS; do
+              echo "| $spec | **not run** — E2E session secrets absent |"
+            done
+            echo
+            echo "Required secrets: \`E2E_SESSION_COOKIE_VALUE\`, \`E2E_DATABASE_URL\`, \`E2E_AUTH_SECRET\` (see the header of .github/workflows/golden-e2e.yml)."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: golden-e2e-report-${{ github.run_id }}
+          path: |
+            playwright-report/
+            e2e/test-results/
+            artifacts/golden-e2e/
+          if-no-files-found: warn
+          retention-days: 14

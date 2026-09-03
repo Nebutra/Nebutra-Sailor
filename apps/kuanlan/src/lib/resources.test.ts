@@ -99,13 +99,11 @@ describe("R2 configuration", () => {
         userId: "user_1",
         skuId: "cn-1in-white",
         print: Buffer.from("png"),
-        source: Buffer.from("jpg"),
-        sourceType: "image/jpeg",
       }),
     ).rejects.toBeInstanceOf(ResourceStoreUnavailableError);
   });
 
-  it("writes the print and source to the uploads bucket", async () => {
+  it("writes the print, and only the print, to the uploads bucket", async () => {
     process.env.CLOUDFLARE_ACCOUNT_ID = "account";
     process.env.R2_ACCESS_KEY_ID = "key";
     process.env.R2_SECRET_ACCESS_KEY = "secret";
@@ -124,8 +122,6 @@ describe("R2 configuration", () => {
         userId: "user_1",
         skuId: "cn-1in-white",
         print: Buffer.from("png"),
-        source: Buffer.from("jpg"),
-        sourceType: "image/jpeg",
       },
       upload,
     );
@@ -134,20 +130,18 @@ describe("R2 configuration", () => {
       id: "shot-1",
       key: "kuanlan/moments/id-photo/user_1/shot-1.png",
       url: "https://signed.example/kuanlan/moments/id-photo/user_1/shot-1.png",
-      sourceKey: "kuanlan/moments/id-photo/user_1/shot-1.source",
     });
-    expect(upload).toHaveBeenCalledTimes(2);
+    // One object, not two. The uploaded portrait is never written.
+    expect(upload).toHaveBeenCalledTimes(1);
     expect(upload.mock.calls[0]?.[0]).toBe("kuanlan/moments/id-photo/user_1/shot-1.png");
     expect(upload.mock.calls[0]?.[2]).toMatchObject({
       bucket: "uploads",
       contentType: "image/png",
       metadata: { skuId: "cn-1in-white", app: "kuanlan", userId: "user_1" },
     });
-    expect(upload.mock.calls[1]?.[0]).toBe("kuanlan/moments/id-photo/user_1/shot-1.source");
-    expect(upload.mock.calls[1]?.[2]).toMatchObject({
-      bucket: "uploads",
-      contentType: "image/jpeg",
-    });
+    // Nothing follows it: no `.source`, and therefore no face photograph kept
+    // for a reader that never existed.
+    expect(upload.mock.calls[1]).toBeUndefined();
   });
 
   function configureR2() {
@@ -163,6 +157,43 @@ describe("R2 configuration", () => {
     ...(iso ? { lastModified: new Date(iso) } : {}),
   });
   const sign = async (key: string) => `https://signed.example/${key}`;
+
+  it("deletes the print and the original that used to sit beside it", async () => {
+    configureR2();
+
+    const dropped: string[] = [];
+    const { deleteIdPhotoMoment } = await import("./resources.server");
+    await deleteIdPhotoMoment("user_1", "shot-1", {
+      remove: async (key) => {
+        dropped.push(key);
+      },
+    });
+
+    expect(dropped.sort()).toEqual([
+      "kuanlan/moments/id-photo/user_1/shot-1.png",
+      "kuanlan/moments/id-photo/user_1/shot-1.source",
+    ]);
+  });
+
+  it("cannot be pointed at another person's shelf", async () => {
+    configureR2();
+
+    const { deleteIdPhotoMoment } = await import("./resources.server");
+    await expect(
+      deleteIdPhotoMoment("user_1", "../user_2/shot-1", { remove: async () => {} }),
+    ).rejects.toMatchObject({ name: "InvalidResourceKeyError" });
+  });
+
+  it("refuses to delete when the store is unconfigured rather than pretending", async () => {
+    delete process.env.CLOUDFLARE_ACCOUNT_ID;
+    delete process.env.R2_ACCESS_KEY_ID;
+    delete process.env.R2_SECRET_ACCESS_KEY;
+
+    const { deleteIdPhotoMoment } = await import("./resources.server");
+    await expect(
+      deleteIdPhotoMoment("user_1", "shot-1", { remove: async () => {} }),
+    ).rejects.toMatchObject({ name: "ResourceStoreUnavailableError" });
+  });
 
   it("fails closed when the store is unconfigured, so /me can degrade to identity only", async () => {
     // `= undefined` would set the string "undefined", which is truthy — the
@@ -264,8 +295,6 @@ describe("R2 configuration", () => {
         userId: "../escape",
         skuId: "cn-1in-white",
         print: Buffer.from("png"),
-        source: Buffer.from("jpg"),
-        sourceType: "image/jpeg",
       }),
     ).rejects.toMatchObject({ name: "InvalidResourceKeyError" });
   });
@@ -285,8 +314,6 @@ describe("R2 configuration", () => {
           userId: "user_1",
           skuId: "cn-1in-white",
           print: Buffer.from("png"),
-          source: Buffer.from("jpg"),
-          sourceType: "image/jpeg",
         },
         async () => {
           throw denied;

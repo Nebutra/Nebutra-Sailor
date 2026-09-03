@@ -65,10 +65,21 @@ replacement does not rewrite Fly app names.
 
 `tests/architecture/template-boundary.test.ts` builds the template with
 `scripts/template-build.ts` and asserts the output has none of those
-directories, none of those workflows or manifests, and no instance identifier
-outside a shrink-only residue list. Adding a Nebutra host, IP or account id to
-a file that ships fails that test; the fix is to move the file into one of the
-three homes, not to widen the residue list.
+directories, none of those workflows or manifests, and no Nebutra identifier
+(`nebutra.com` and its subdomains, `nebutra-gateway` / `-auth` / `-web`,
+`nebutra-*.fly.dev`, the ECS IP, the Vercel team id, the GitHub slug) in any
+shipped file outside `tests/architecture/template-residue.baseline.json`. The
+hosts and the IP count in their regex-escaped form too (`api\.nebutra\.com`
+inside a URL matcher). That baseline was generated once from the build and may
+only shrink: a new carrier fails, and so does an entry that no longer matches.
+Adding a Nebutra host, IP or account id to a file that ships fails that test;
+the fix is to move the file into one of the three homes or list it in
+`.templateignore`, not to add a baseline entry. The one rule-based exemption is
+the source-repo slug in `package.json` `repository` / `bugs` / `homepage` and
+`.changeset/config.json`. Text files over 1 MiB are outside the scan — today
+that is `pnpm-lock.yaml` alone, pinned in the test so a new one has to be
+classified. Local runs skip gitignored files (they never reach the mirror,
+which CI builds from a clean checkout); CI is authoritative.
 
 When a shipped doc has to point at instance content (a runbook, an instance
 test, a stripped script or deploy kit), mark the link "(source repo only)" so a
@@ -89,6 +100,55 @@ template consumer knows the target is absent by design, not by accident.
 
 > **Contract:** Sailor-Template is a *skeleton monorepo*, not a fork of every
 > Nebutra product surface. Product apps stay in `Nebutra-Sailor` only.
+
+## Sailor version
+
+The core and runtime graph — every publishable package whose `nebutra.graph`
+is `core` or `runtime` — publishes in lockstep as one **sailor version**.
+`.changeset/config.json` lists those packages in a single `fixed` group, so
+`changeset version` moves all of them to the same number whenever any one of
+them carries a changeset. Labs packages and the unscoped CLIs (`create-sailor`,
+`nebutra`) keep their own versions: they have their own publish identity and
+cadence, and must not drag the graph with them.
+
+`scripts/sailor-version.mjs` owns the group; the config file is a projection
+of it:
+
+```bash
+node scripts/sailor-version.mjs            # current sailor version (highest in the group)
+node scripts/sailor-version.mjs --group    # the packages, one per line
+node scripts/sailor-version.mjs --check    # exit 1 when config.json's fixed group drifts
+node scripts/sailor-version.mjs --write    # regenerate the fixed group
+```
+
+`tests/architecture/sailor-version.test.ts` runs the check, so a new core or
+runtime package must join the group before it merges — or declare a different
+`nebutra.graph`, if the classification is what is wrong. The test is
+source-only (`.templateignore` lists it): it reads `sync-template.yml` and
+this file, and the mirror's config does not carry the group — see below.
+
+Until the first lockstep release the group is not *converged*: the sailor
+version is the highest number in the group, and only the package that carries
+it is actually at that number (`node scripts/sailor-version.mjs --json` says
+`"converged": false`). `changeset version` then moves every member to one
+number, and from there on they stay together.
+
+The template build stamps both into `.sailor-template.json`, as
+`sailorVersion` and `sailorVersionConverged`. `sync-template.yml` tags the
+mirror `v<sailorVersion>` on the first sync at which the marker says
+converged, and never before — so no `v<x>` tag exists for the pre-lockstep
+snapshot, and the first tag is the first lockstep release. The tag is never
+moved: later syncs at the same version keep it where it is, and
+`source-<sha>` still marks every sync individually.
+`SAILOR_TEMPLATE_REF=v<sailorVersion>` therefore scaffolds from the first
+tree in which every core and runtime package carries that version.
+
+The mirror itself does **not** carry the `fixed` group: the template build
+rewrites `.changeset/config.json` there with `fixed: []`. The mirror never
+publishes (`release.yml` is stripped), and a scaffold may prune group
+members (`create-sailor --no-webhooks` deletes `packages/integrations/webhooks`),
+which `@changesets/config` would reject on the first `pnpm changeset` if the
+name were still listed. The number travels in the marker and the tag instead.
 
 ## Adding new Nebutra business code
 

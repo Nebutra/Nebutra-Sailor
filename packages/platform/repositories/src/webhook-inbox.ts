@@ -40,6 +40,13 @@ export function decideWebhookInbox(
 /**
  * Claim or resume a webhook inbox row. Callers must process synchronously
  * and only acknowledge the provider after `markProcessed`.
+ *
+ * Both paths that return `process` are single compare-and-set statements,
+ * so N concurrent identical deliveries yield exactly one `process`:
+ * - first delivery: `claim` (INSERT guarded by the unique constraint);
+ * - retry of a failed or crashed attempt: `lease` (UPDATE guarded by the
+ *   retryable predicate), which re-stamps `createdAt` so the losers and any
+ *   later retries observe `in_flight` until the winner finishes or expires.
  */
 export async function acceptWebhookEvent(
   repo: WebhookEventRepository,
@@ -65,5 +72,20 @@ export async function acceptWebhookEvent(
   if (decision === "in_flight") {
     return { outcome: "in_flight" };
   }
-  return { outcome: "process", event: existing };
+
+  // Retryable per our read — but the read is not the lease. Acquire it with
+  // one CAS so a concurrent retrier that read the same state cannot also run.
+  const leased = await repo.lease(data.provider, data.eventId, now, WEBHOOK_IN_FLIGHT_MS);
+  if (leased) {
+    return { outcome: "process", event: leased };
+  }
+
+  // Lost the race between the read and the CAS: someone else re-leased it,
+  // or finished it. Report which, so the provider is acknowledged only for a
+  // processed row.
+  const current = await repo.findByProviderAndEventId(data.provider, data.eventId);
+  if (current?.processedAt != null) {
+    return { outcome: "skip_processed" };
+  }
+  return { outcome: "in_flight" };
 }

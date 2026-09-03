@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { listIdPhotoSkus, parseIdPhotoRef, toPublicIdPhoto } from "@/catalog/skus";
 
 type Status = "idle" | "shooting" | "ready" | "error";
@@ -28,10 +28,17 @@ export function IdPhotoStudio({
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [note, setNote] = useState("");
+  const [remainingToday, setRemainingToday] = useState<number | null>(null);
   const [needsSignIn, setNeedsSignIn] = useState(false);
 
   const selected = skus.find((sku) => sku.id === skuId);
   const selectedSize = selected?.sizes.find((size) => size.id === sizeId) ?? selected?.sizes[0];
+
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
 
   function onPick(next: File | null) {
     setFile(next);
@@ -65,6 +72,13 @@ export function IdPhotoStudio({
       if (!response.ok) {
         setStatus("error");
         setNeedsSignIn(response.status === 401);
+        if (response.status === 429) {
+          const refused = (await response.json().catch(() => ({}))) as { scope?: string };
+          setNote(
+            refused.scope === "daily" ? "今天先拍到这儿。明天还有。" : "拍得有点快。等一会儿再来。",
+          );
+          return;
+        }
         setNote(
           response.status === 401
             ? "先让观澜认识你。"
@@ -76,13 +90,14 @@ export function IdPhotoStudio({
         );
         return;
       }
-      const moment = (await response.json()) as { url?: string };
+      const moment = (await response.json()) as { url?: string; remainingToday?: number };
       if (!moment.url) {
         setStatus("error");
         setNote("这一刻没留下。再试一次。");
         return;
       }
       setResultUrl(moment.url);
+      setRemainingToday(typeof moment.remainingToday === "number" ? moment.remainingToday : null);
       setStatus("ready");
     } catch {
       setStatus("error");
@@ -109,12 +124,15 @@ export function IdPhotoStudio({
                 setNeedsSignIn(false);
               }}
             >
-              <img
-                src={sku.sample}
-                alt={`${sku.title}${sku.subtitle}样例`}
-                width={sku.widthPx}
-                height={sku.heightPx}
-              />
+              <span className="sku-still">
+                <img
+                  src={sku.sample}
+                  alt={`${sku.title}${sku.subtitle}样例`}
+                  width={sku.widthPx}
+                  height={sku.heightPx}
+                />
+                {preview ? <img className="sku-source" src={preview} alt="" aria-hidden /> : null}
+              </span>
               <span className="sku-name">
                 {sku.title} · {sku.subtitle}
               </span>
@@ -200,7 +218,14 @@ export function IdPhotoStudio({
         ) : null}
       </div>
 
-      {status === "ready" ? <p className="note">这一组，拍好了。</p> : null}
+      {status === "ready" ? (
+        <p className="note">
+          这一组，拍好了。
+          {remainingToday !== null && remainingToday <= 5
+            ? ` 今天还能拍 ${remainingToday} 张。`
+            : ""}
+        </p>
+      ) : null}
       {note ? (
         <p className="note" data-tone={status === "error" ? "error" : undefined}>
           {note}

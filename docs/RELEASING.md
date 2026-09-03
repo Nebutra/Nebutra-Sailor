@@ -93,6 +93,16 @@ The **build/test release graph** is a different cut: `nebutra.graph` of
 `core` or `runtime`. Labs stay in the workspace but are excluded from
 `pnpm build:release` / `pnpm test:release`. See `docs/package-status.md`.
 
+That cut also has **one version**. `.changeset/config.json` lists every
+publishable `core` / `runtime` package in a single `fixed` group, so
+`changeset version` moves all of them to the same number — the *sailor
+version* — whenever any one of them has a changeset. `create-sailor`,
+`nebutra` and labs packages version on their own. `node scripts/sailor-version.mjs`
+prints the current number, `--group` the members, `--check` fails on drift
+(`tests/architecture/sailor-version.test.ts` runs it), and `--write`
+regenerates the group. The template mirror is tagged `v<sailor version>`;
+see `TEMPLATE.md` → "Sailor version".
+
 Unscoped CLIs stay unscoped on purpose (`npm create sailor`, `npx nebutra`). They are listed in `config/npm-publish-identity.json` and must have a GitHub Actions trusted publisher on npmjs.com:
 
 - Organization or user: `Nebutra`

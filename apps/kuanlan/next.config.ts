@@ -7,7 +7,14 @@ const useStandalone =
 
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),
-  transpilePackages: ["@nebutra/auth", "@nebutra/brand", "@nebutra/fonts", "@nebutra/storage"],
+  transpilePackages: [
+    "@nebutra/auth",
+    "@nebutra/brand",
+    "@nebutra/fonts",
+    "@nebutra/logger",
+    "@nebutra/rate-limit",
+    "@nebutra/storage",
+  ],
   serverExternalPackages: ["sharp"],
   images: {
     remotePatterns: [

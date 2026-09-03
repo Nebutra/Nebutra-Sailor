@@ -91,6 +91,21 @@ describe("release surface governance", () => {
     expect(offenders).toEqual([]);
   });
 
+  it("gates tags, attestation and the mirror on the combined publish state", () => {
+    const workflow = readFileSync(join(process.cwd(), ".github/workflows/release.yml"), "utf-8");
+    // The unscoped CLIs publish outside `changeset publish`; a CLI-only
+    // release must still tag, attest and mirror.
+    expect(workflow).toContain("id: publish_state");
+    expect(workflow).toContain("published: ${{ steps.publish_state.outputs.published }}");
+    expect(workflow).not.toContain("if: steps.changesets.outputs.published == 'true'");
+    expect(workflow).toContain("artifacts/release/unscoped-published.json");
+    const script = readFileSync(
+      join(process.cwd(), "scripts/publish-unscoped-packages.mjs"),
+      "utf-8",
+    );
+    expect(script).toContain("artifacts/release/unscoped-published.json");
+  });
+
   it("lists every unscoped publishable package for trusted publishing", () => {
     const identity = getNpmPublishIdentityDiagnostics();
 

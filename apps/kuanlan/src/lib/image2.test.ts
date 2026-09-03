@@ -207,7 +207,18 @@ describe("image2 consume", () => {
     expect(studio).not.toContain('data-sku="cn-1in-white"');
     expect(studio).toContain("sku.sample");
     expect(studio).toContain("sku-card");
+    expect(studio).toContain("sku-source");
+    expect(studio).toMatch(/preview \?[\s\S]*sku-source/);
     expect(studio).toContain("/wardrobe");
     expect(studio).not.toContain('className="sku-row"');
+
+    const css = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../app/globals.css"),
+      "utf8",
+    );
+    expect(css).toContain(".sku-source");
+    expect(css).toMatch(/img\.sku-source[\s\S]*?opacity:\s*0/);
+    expect(css).toContain(".sku-card:hover .sku-source");
+    expect(css).toContain(".sku-card:focus-visible .sku-source");
   });
 });

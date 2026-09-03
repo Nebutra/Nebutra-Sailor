@@ -71,6 +71,7 @@ apps/web/src/lib/__tests__/audit-remediation.test.ts
 # only in the monorepo — customers get web + landing + idp + mail-preview.
 # ---------------------------------------------------------------------------
 apps/sleptons/
+apps/kuanlan/
 apps/tsekaluk-dev/
 apps/docs-hub/
 apps/studio/
@@ -193,8 +194,8 @@ tests/load/
 # lighthouse dashboard, k6 load test, npm package-registry governance, release
 # (changeset publish), visual-acceptance baselines, Nebutra UI governance, and
 # the Nebutra container-registry push.
-# The template KEEPS the generic, secret-free workflows: ci, codeql,
-# secrets-scan, security-scan, dependency-review, dependabot-automerge,
+# The template KEEPS the generic, secret-free workflows: ci, clean-install,
+# codeql, secrets-scan, security-scan, dependency-review, dependabot-automerge,
 # scorecard, labeler, stale, dead-code.
 # ---------------------------------------------------------------------------
 .github/workflows/deploy-ecs.yml
@@ -213,6 +214,10 @@ tests/load/
 .github/workflows/visual-acceptance.yml
 .github/workflows/ui-governance.yml
 .github/workflows/docker-build-push.yml
+# Golden-path E2E (closure P1.5): its public spec asserts the landing legal
+# pages + cookie banner stripped above, and its gated specs need a seeded E2E
+# session. In a scaffold it would be red on every sync.
+.github/workflows/golden-e2e.yml
 # Product deploy targets + Nebutra DNS ops (secrets / account-bound)
 .github/workflows/deploy-carina-ecs.yml
 .github/workflows/deploy-carina-fly.yml
@@ -347,3 +352,10 @@ scripts/redeploy-web-auth-vercel.mjs
 tests/architecture/deploy-substrate.test.ts
 tests/architecture/deployment-runtime-closure.test.ts
 tests/architecture/template-boundary.test.ts
+# The residue baseline names every identifier it pins — shipping it would make
+# it a carrier of each one.
+tests/architecture/template-residue.baseline.json
+# Reads sync-template.yml and TEMPLATE.md (both stripped above) and asserts the
+# source repo's changesets fixed group; the mirror ships `fixed: []` on purpose
+# (scripts/template-build.ts clears it — the mirror never publishes).
+tests/architecture/sailor-version.test.ts

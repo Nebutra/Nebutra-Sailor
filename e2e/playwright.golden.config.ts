@@ -11,6 +11,9 @@
  *   pnpm exec playwright test --config=e2e/playwright.golden.config.ts --list
  *   APP_BASE_URL=http://localhost:3000 pnpm exec playwright test --config=e2e/playwright.golden.config.ts
  *
+ * CI: .github/workflows/golden-e2e.yml builds both apps for production, serves
+ * them on the runner, and runs this suite nightly / on main pushes.
+ *
  * Auth-gated specs skip unless the target is explicitly configured. Typical
  * env for a real test tenant:
  *   E2E_LIVE=1

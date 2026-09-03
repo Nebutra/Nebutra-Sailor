@@ -1,40 +1,18 @@
 import { CheckCircle } from "@nebutra/icons";
 import { AuroraBackground, Badge, Button, Card } from "@nebutra/ui/primitives";
-import { headers } from "next/headers";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { createAppSignUpUrl } from "@/lib/app-url";
-import { getExchangeRate } from "@/lib/pricing/exchange-rates";
 
 /**
- * Team support subscription, USD/year. Mirrors LICENSE-COMMERCIAL.md §2 —
- * update both together.
+ * All three tiers read their price from the catalog strings, which mirror
+ * LICENSE-COMMERCIAL.md §2 (Team is a fixed USD 2,000 / year) — update both
+ * together. Team used to be the only tier converted live through the visitor's
+ * geo-IP currency and a fetched FX rate, which put "¥318,178" next to two USD
+ * tiers for anyone whose IP resolved outside the US.
  */
-const TEAM_PRICE_USD = 2000;
-
-export async function PricingSection({
-  hideHeader = false,
-  currency,
-}: {
-  hideHeader?: boolean;
-  currency?: string;
-} = {}) {
+export async function PricingSection({ hideHeader = false }: { hideHeader?: boolean } = {}) {
   const t = await getTranslations("microLanding.pricing");
   type PricingTranslationKey = Parameters<typeof t>[0];
-  const locale = await getLocale();
-
-  let resolvedCurrency = currency;
-  if (!resolvedCurrency) {
-    const headersList = await headers();
-    resolvedCurrency = headersList.get("x-user-currency") || "USD";
-  }
-
-  const exchangeRate = await getExchangeRate(resolvedCurrency);
-
-  const formatter = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: resolvedCurrency,
-    maximumFractionDigits: 0,
-  });
 
   const TIERS = [
     {
@@ -49,7 +27,7 @@ export async function PricingSection({
       ctaHref: createAppSignUpUrl("/choose-plan"),
       highlighted: true,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
-      dynamicPrice: formatter.format(TEAM_PRICE_USD * exchangeRate),
+      dynamicPrice: t("team.price"), // "$2,000"
     },
     {
       key: "enterprise",

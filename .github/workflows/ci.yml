@@ -719,6 +719,28 @@ jobs:
     timeout-minutes: 20
     needs: [detect-changes, lint-typecheck]
     if: needs.detect-changes.outputs.template != 'true'
+    # packages/platform/db/__tests__/rls-*.test.ts always run their assertions
+    # against PGlite; when RLS_ATTACK_DATABASE_URL is set, they replay the
+    # identical SQL against a real PostgreSQL (RLS is a Postgres-only feature
+    # PGlite only approximates). This service existed only for the db-check
+    # job below, so those two files have never actually exercised their
+    # postgresql backend in CI. It is used only when the affected-package
+    # filter below includes @nebutra/db; otherwise this container starts and
+    # sits idle for the job's duration.
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: rls_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d rls_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -757,6 +779,7 @@ jobs:
           pnpm turbo test "${filters[@]}"
         env:
           CI: true
+          RLS_ATTACK_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/rls_test
 
   coverage:
     name: Coverage Gate

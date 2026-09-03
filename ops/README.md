@@ -3,8 +3,9 @@
 Some production settings live only in a provider dashboard: which build machine
 Vercel picked, whether an env var is flagged Sensitive, which secrets a Fly app
 carries, what a Cloudflare Worker is bound to, which deploy target a GitHub
-variable selects. Git cannot see them, so a change there is invisible until it
-costs money or breaks a deploy.
+variable selects, which status checks a pull request must pass before it can
+merge. Git cannot see them, so a change there is invisible until it costs
+money, breaks a deploy, or lets a red build into `main`.
 
 This directory declares those settings per brand. A read-only engine compares
 the declaration with what each provider reports and exits non-zero on drift.
@@ -35,7 +36,8 @@ node scripts/ops/platform-reconcile.mjs ops/<brand>/platform-expected.json --onl
 | --- | --- | --- |
 | `VERCEL_TOKEN` + `VERCEL_ORG_ID` (or `VERCEL_TEAM_ID`) | Vercel projects and env types | Vercel rows are `skipped` |
 | `FLY_API_TOKEN` + `flyctl` on PATH | `flyctl secrets list --json` | Fly rows are `skipped` |
-| `PLATFORM_RECONCILE_GITHUB_VARS` (JSON object) or an authenticated `gh` | GitHub repository variables | GitHub rows are `skipped` |
+| `PLATFORM_RECONCILE_GITHUB_VARS` (JSON object) or an authenticated `gh` | GitHub repository variables | GitHub variable rows are `skipped` |
+| `GH_TOKEN` or `GITHUB_TOKEN` with `administration:read`, or an authenticated `gh` | GitHub branch protection via `GET /repos/{owner}/{repo}/branches/{branch}/protection` | branch-protection rows are `skipped` |
 | `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` | Worker bindings via `GET /workers/scripts/{name}/settings` | Cloudflare rows are `skipped` |
 
 Every row ends in one of four states:
@@ -60,8 +62,9 @@ and appends the table to the job summary.
   in the dashboard or the CLI — the engine only says where.
 - Print a secret value. Fly returns names and digests; only names are kept.
   Vercel env entries are read for `key`, `type` and `target`; the `value` field
-  is never touched. GitHub variables are configuration, not secrets, by
-  GitHub's own definition, and their values are compared and printed.
+  is never touched. GitHub variables and branch protection are configuration,
+  not secrets, by GitHub's own definition, and their values are compared and
+  printed.
 
 ## Schema
 
@@ -90,7 +93,16 @@ target is optional. Declare what has bitten you and grow the file from there.
   },
   "github": {
     "repo": "owner/name  (optional; GITHUB_REPOSITORY otherwise)",
-    "variables": { "DEPLOY_TARGET_GATEWAY": "cloudflare-workers" }
+    "variables": { "DEPLOY_TARGET_GATEWAY": "cloudflare-workers" },
+    "branchProtection": [
+      {
+        "branch": "main",
+        "requiredStatusChecks": ["Lint & Typecheck", "Test"],
+        "strict": false,
+        "enforceAdmins": false,
+        "requiredApprovingReviewCount": null
+      }
+    ]
   },
   "cloudflare": {
     "accountId": "(optional; CLOUDFLARE_ACCOUNT_ID otherwise)",
@@ -123,6 +135,59 @@ Name → expected value. In the workflow the engine reads the variables from
 `PLATFORM_RECONCILE_GITHUB_VARS`, which the workflow fills with `toJSON(vars)`,
 so no token needs permission on the Variables API. Locally it shells out to
 `gh variable get <name> -R <repo>`.
+
+### github.branchProtection[]
+
+One entry per protected branch. Every field but `branch` is optional; a field
+the declaration leaves out is not reported. Read from
+`GET /repos/{owner}/{repo}/branches/{branch}/protection` with `GH_TOKEN` or
+`GITHUB_TOKEN` when one is set, else through `gh api` and whatever login it
+holds.
+
+| Key | Compared with | Why declare it |
+| --- | --- | --- |
+| `requiredStatusChecks[]` | `required_status_checks.contexts` ∪ `checks[].context`, as a set | This list is what "CI is green" means for the branch. A check removed here lets a red build merge; a check added that no workflow produces blocks every merge. Order does not matter; the row's detail names what is `missing` and what is `extra`. |
+| `strict` | `required_status_checks.strict` | GitHub's "Require branches to be up to date before merging". |
+| `enforceAdmins` | `enforce_admins.enabled` | Whether the rules above also bind administrators. |
+| `requiredApprovingReviewCount` | `required_pull_request_reviews.required_approving_review_count`, or `null` when no review is required | A solo maintainer declares `null`; a team declares its number. Reported as `none` or the count. |
+
+A branch whose protection was removed altogether reports `drift` (`protected` /
+`not protected`). A token that cannot see the protection reports `skipped` with
+the reason: the endpoint needs `administration:read`, which the Actions
+`GITHUB_TOKEN` cannot hold, so the scheduled run needs a fine-grained token in
+`GH_TOKEN` or reports the row as skipped — and, under `--strict`, fails.
+
+Raising the bar — adding `Lint & Typecheck`, `Test`, a review count — is a
+decision made by editing this list and then changing Settings → Branches to
+match. The engine reports the difference; it never changes either side.
+
+For Nebutra the rule for `main` is **not declared yet**, on purpose: the daily
+run holds no token that can read protection, so the row would be `skipped` on
+every schedule and, under `--strict`, a red run every day — which buries real
+drift in every other row. Tracked in
+[#514](https://github.com/Nebutra/Nebutra-Sailor/issues/514). The rule and the
+token land in one change:
+
+1. Mint a fine-grained personal access token scoped to this repository with
+   *Administration: read* and nothing else, and store it as the repository
+   secret `PLATFORM_RECONCILE_GH_TOKEN`.
+2. Add `GH_TOKEN: ${{ secrets.PLATFORM_RECONCILE_GH_TOKEN }}` to the `env` of
+   the Reconcile step in `.github/workflows/platform-reconcile.yml`.
+3. Add the rule to `ops/nebutra/platform-expected.json`, with the contexts
+   GitHub reported on 2026-09-03:
+
+   ```json
+   {
+     "branch": "main",
+     "requiredStatusChecks": ["CodeQL Analysis (javascript-typescript)", "CodeQL Analysis (python)"],
+     "strict": false,
+     "enforceAdmins": false,
+     "requiredApprovingReviewCount": null
+   }
+   ```
+
+`tests/architecture/platform-reconcile.test.ts` fails a declaration that
+arrives without the workflow line.
 
 ### cloudflare.workers[]
 
