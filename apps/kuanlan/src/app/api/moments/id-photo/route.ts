@@ -7,7 +7,11 @@ import {
   shootWithImage2,
 } from "@/lib/image2";
 import { InvalidResourceKeyError, ResourceStoreUnavailableError } from "@/lib/resources";
-import { listIdPhotoMoments, persistIdPhotoMoment } from "@/lib/resources.server";
+import {
+  deleteIdPhotoMoment,
+  listIdPhotoMoments,
+  persistIdPhotoMoment,
+} from "@/lib/resources.server";
 import { spendShootAllowance } from "@/lib/shoot-limit";
 
 // Keep this number here so GET / unsigned POST never load sharp.
@@ -97,8 +101,6 @@ export async function POST(request: Request) {
       skuId: print.id,
       sizeId: print.sizeId,
       print: result.png,
-      source,
-      sourceType: file.type,
     });
 
     return Response.json(
@@ -131,6 +133,37 @@ export async function POST(request: Request) {
       return signInRequired();
     }
     if (error instanceof ResourceStoreUnavailableError || error instanceof Image2UnavailableError) {
+      return Response.json({ error: "unavailable" }, { status: 503 });
+    }
+    return Response.json({ error: "unavailable" }, { status: 500 });
+  }
+}
+
+/**
+ * Take a Moment off the shelf, for good.
+ *
+ * The id is the only thing the caller supplies; the prefix comes from the
+ * session, so this can only ever reach the caller's own shelf.
+ */
+export async function DELETE(request: Request) {
+  const session = await getSessionFromRequest(request);
+  if (!session?.userId) {
+    return signInRequired();
+  }
+
+  const id = new URL(request.url).searchParams.get("id")?.trim() ?? "";
+
+  try {
+    await deleteIdPhotoMoment(session.userId, id);
+    return new Response(null, {
+      status: 204,
+      headers: { "Cache-Control": "no-store" },
+    });
+  } catch (error) {
+    if (error instanceof InvalidResourceKeyError) {
+      return Response.json({ error: "not_found" }, { status: 404 });
+    }
+    if (error instanceof ResourceStoreUnavailableError) {
       return Response.json({ error: "unavailable" }, { status: 503 });
     }
     return Response.json({ error: "unavailable" }, { status: 500 });
