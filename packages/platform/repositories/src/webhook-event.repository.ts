@@ -117,6 +117,14 @@ export class WebhookEventRepository {
    * concurrent retries exactly one wins. Compare {@link claim}, which is the
    * same idea for the first delivery via the unique constraint.
    *
+   * Re-stamping is visible to the other readers of these two columns, which
+   * therefore reflect the latest attempt rather than the first receipt:
+   * {@link findPaginated} orders by `createdAt`, and the apps/web deliveries
+   * panel (`api/webhooks/[id]/deliveries`) shows `createdAt` as the delivery
+   * time and derives its status from `errorMessage` — so a row it rendered
+   * "failed" reads "retrying" while a re-leased attempt runs, until
+   * {@link markFailed} or {@link markProcessed} settles it.
+   *
    * Returns the re-leased row, or `null` when the lease was lost (another
    * retrier won, or the row was processed meanwhile).
    */
