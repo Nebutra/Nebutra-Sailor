@@ -32,7 +32,16 @@
     "repo": "your-org/{PRODUCT_NAME}",
     "variables": {
       "DEPLOY_TARGET_GATEWAY": "cloudflare-workers"
-    }
+    },
+    "branchProtection": [
+      {
+        "branch": "main",
+        "requiredStatusChecks": ["Lint & Typecheck", "Test"],
+        "strict": false,
+        "enforceAdmins": false,
+        "requiredApprovingReviewCount": null
+      }
+    ]
   },
   "cloudflare": {
     "workers": [
