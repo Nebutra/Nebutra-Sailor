@@ -18,7 +18,7 @@
  * The mirror repo is consumed by create-sailor when `SAILOR_TEMPLATE_REPO` is
  * set (default: nebutra/sailor-template). See packages/ops/create-sailor/src/utils/git.ts.
  */
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import ignore from "ignore";
@@ -191,6 +191,26 @@ function pruneEmptyDirs(dir: string): boolean {
 }
 
 /**
+ * The sailor version — the one number every publishable core + runtime
+ * package carries (TEMPLATE.md "Sailor version"). scripts/sailor-version.mjs
+ * owns the rule; this asks it rather than re-deriving it, so the marker, the
+ * mirror tag and the changesets group cannot disagree.
+ */
+function readSailorVersion(): string {
+  const printed = execFileSync(
+    process.execPath,
+    [path.join(REPO_ROOT, "scripts/sailor-version.mjs")],
+    { cwd: REPO_ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] },
+  ).trim();
+  if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(printed)) {
+    throw new Error(
+      `scripts/sailor-version.mjs printed "${printed}", not a version. Refusing to stamp the marker.`,
+    );
+  }
+  return printed;
+}
+
+/**
  * Inject the license model into the mirror repo so consumers cloning
  * directly (without create-sailor) still see the same legal guardrails.
  */
@@ -256,9 +276,11 @@ function injectLicenseAndMarker(targetDir: string): void {
   fs.writeFileSync(path.join(targetDir, "NOTICE.md"), notice);
 
   // 4. Marker file — lets tools detect "this is a pre-stripped mirror".
+  //    sailorVersion is what sync-template.yml tags the mirror with (v<x>).
   const marker = {
     type: "sailor-template-mirror",
     sourceRepo: "Nebutra/Nebutra-Sailor",
+    sailorVersion: readSailorVersion(),
     syncedAt: new Date().toISOString(),
     license: {
       open: "AGPL-3.0",

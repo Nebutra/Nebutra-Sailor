@@ -49,6 +49,25 @@ jobs:
       - name: Build template
         run: pnpm tsx scripts/template-build.ts --out=/tmp/sailor-template
 
+      - name: Resolve sailor version
+        id: sailor
+        # template-build stamps scripts/sailor-version.mjs's answer into the
+        # marker. Read it back from the built artifact, not from the source
+        # tree, so the tag pushed below can never disagree with what the
+        # mirror says about itself.
+        run: |
+          set -euo pipefail
+          version="$(node -p 'JSON.parse(require("node:fs").readFileSync("/tmp/sailor-template/.sailor-template.json", "utf8")).sailorVersion')"
+          case "$version" in
+            [0-9]*.[0-9]*.[0-9]*) ;;
+            *)
+              echo "::error::.sailor-template.json carries no usable sailorVersion (got '${version}')"
+              exit 1
+              ;;
+          esac
+          echo "sailor_version=${version}" >> "$GITHUB_OUTPUT"
+          echo "Sailor version: ${version}"
+
       - name: Package template bundle
         run: |
           tar -czf /tmp/sailor-template.tar.gz -C /tmp/sailor-template .
@@ -79,6 +98,7 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
         env:
           SRC_SHA: ${{ github.sha }}
+          SAILOR_VERSION: ${{ steps.sailor.outputs.sailor_version }}
           GIT_SSH_COMMAND: "ssh -i ~/.ssh/sailor_template -o IdentitiesOnly=yes"
         run: |
           set -euo pipefail
@@ -94,6 +114,24 @@ jobs:
           git push -qf origin main
           git tag -a "${TEMPLATE_TAG}" -m "Template snapshot for ${SRC_SHA}"
           git push -q origin "refs/tags/${TEMPLATE_TAG}"
+
+          # One tag per sailor version — the lockstep number of the core +
+          # runtime graph (TEMPLATE.md "Sailor version"). Created by the first
+          # sync that carries the version and never moved afterwards, so
+          # v<x> stays a stable ref while main and source-<sha> advance.
+          SAILOR_TAG="v${SAILOR_VERSION}"
+          if git ls-remote --exit-code --tags origin "refs/tags/${SAILOR_TAG}" >/dev/null; then
+            echo "Tag ${SAILOR_TAG} already exists on the mirror; leaving it in place"
+          else
+            rc=$?
+            if [ "$rc" -ne 2 ]; then
+              echo "::error::git ls-remote failed (exit ${rc}) while looking for ${SAILOR_TAG}"
+              exit "$rc"
+            fi
+            git tag -a "${SAILOR_TAG}" -m "Sailor ${SAILOR_VERSION} (source ${SRC_SHA})"
+            git push -q origin "refs/tags/${SAILOR_TAG}"
+            echo "Tagged ${SAILOR_TAG}"
+          fi
 
       - name: Upload template bundle
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -116,5 +154,6 @@ jobs:
             echo "- Source SHA: \`${{ github.sha }}\`"
             echo "- File count: $(find /tmp/sailor-template -type f | wc -l)"
             echo "- Immutable tag: \`source-${{ github.sha }}\`"
+            echo "- Sailor version tag: \`v${{ steps.sailor.outputs.sailor_version }}\` (created on first sync at this version)"
             echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}"
           } >> "$GITHUB_STEP_SUMMARY"

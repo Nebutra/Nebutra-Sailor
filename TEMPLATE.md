@@ -101,6 +101,37 @@ template consumer knows the target is absent by design, not by accident.
 > **Contract:** Sailor-Template is a *skeleton monorepo*, not a fork of every
 > Nebutra product surface. Product apps stay in `Nebutra-Sailor` only.
 
+## Sailor version
+
+The core and runtime graph — every publishable package whose `nebutra.graph`
+is `core` or `runtime` — publishes in lockstep as one **sailor version**.
+`.changeset/config.json` lists those packages in a single `fixed` group, so
+`changeset version` moves all of them to the same number whenever any one of
+them carries a changeset. Labs packages and the unscoped CLIs (`create-sailor`,
+`nebutra`) keep their own versions: they have their own publish identity and
+cadence, and must not drag the graph with them.
+
+`scripts/sailor-version.mjs` owns the group; the config file is a projection
+of it:
+
+```bash
+node scripts/sailor-version.mjs            # current sailor version (highest in the group)
+node scripts/sailor-version.mjs --group    # the packages, one per line
+node scripts/sailor-version.mjs --check    # exit 1 when config.json's fixed group drifts
+node scripts/sailor-version.mjs --write    # regenerate the fixed group
+```
+
+`tests/architecture/sailor-version.test.ts` runs the check, so a new core or
+runtime package must join the group before it merges — or declare a different
+`nebutra.graph`, if the classification is what is wrong.
+
+The template build stamps the same number into `.sailor-template.json` as
+`sailorVersion`, and `sync-template.yml` tags the mirror `v<sailorVersion>`
+on the first sync that carries that version. The tag is never moved: later
+syncs at the same version keep it where it is, and `source-<sha>` still marks
+every sync individually. `SAILOR_TEMPLATE_REF=v<sailorVersion>` therefore
+scaffolds from the tree that first carried those package versions.
+
 ## Adding new Nebutra business code
 
 When you add new Nebutra-owned business code (a new landing section, a new

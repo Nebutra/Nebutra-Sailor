@@ -12,6 +12,8 @@ import { tmpdir } from "node:os";
 import { basename, dirname, join, relative } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+import { getSailorVersion } from "../../scripts/sailor-version.mjs";
+
 /**
  * Nebutra-Sailor is two things in one tree: the source of the public Sailor
  * template (mirrored to Nebutra/Sailor-Template by sync-template.yml) and the
@@ -383,6 +385,12 @@ describe("template boundary — .templateignore declares it", () => {
 });
 
 describe("template boundary — the built template", () => {
+  it("stamps the sailor version into the marker, so the mirror tag and the tree agree", () => {
+    const marker = JSON.parse(readFileSync(join(out, ".sailor-template.json"), "utf8"));
+    expect(marker.type).toBe("sailor-template-mirror");
+    expect(marker.sailorVersion).toBe(getSailorVersion(REPO_ROOT));
+  });
+
   it("has none of the instance directories", () => {
     const leaked = INSTANCE_DIRECTORIES.filter((dir) => existsSync(join(out, dir)));
     expect(
