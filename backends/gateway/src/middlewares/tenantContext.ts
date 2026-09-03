@@ -2,6 +2,11 @@ import { verifyServiceToken } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import type { PermissionContext, Role } from "@nebutra/permissions";
+// Only the AsyncLocalStorage run/get primitive is consumed here — @nebutra/tenant
+// also exports a `requireTenant` name (a type-assertion helper), which collides
+// with this file's own `requireTenant` route guard below, so the import list is
+// kept to exactly what's used rather than a namespace/star import.
+import { runWithTenant } from "@nebutra/tenant";
 import type { Context, Next } from "hono";
 import { getAuthProvider } from "../config/env.js";
 
@@ -218,6 +223,33 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   // `@nebutra/db` (or `getSystemDb()` for admin / webhook flows that lack a
   // tenant context). This forces every Prisma call site to state its tenant
   // scope up front, which prevents accidental cross-tenant leaks.
+
+  // Publish the resolved tenant through @nebutra/tenant's AsyncLocalStorage
+  // primitive so any downstream module — route handler, service, repository —
+  // can call `getCurrentTenant()` / `getCurrentTenantId()` without threading
+  // the Hono `Context` through every call site. This is additive: `c.get("tenant")`
+  // above remains the source of truth for every existing guard in this file
+  // (`requireAuth`, `requireTenant`, `requireOrganization`, `requireRole`) and
+  // for `tenantToPermissionContext`, none of which are changed here. Only
+  // requests that resolved a canonical tenantId (organization) get wrapped —
+  // @nebutra/tenant's TenantContext requires a non-empty `id`, and unresolved /
+  // public requests should keep failing `getCurrentTenant()` with
+  // `TenantRequiredError`, exactly as that package documents.
+  if (tenant.tenantId) {
+    await runWithTenant(
+      {
+        id: tenant.tenantId,
+        metadata: {
+          userId: tenant.userId,
+          role: tenant.role,
+          tenantKind: tenant.tenantKind,
+          plan: tenant.plan,
+        },
+      },
+      () => next(),
+    );
+    return;
+  }
 
   await next();
 }

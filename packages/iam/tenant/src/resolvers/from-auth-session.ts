@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { TenantResolver } from "../types";
+import type { TenantResolver } from "../types.js";
 
 // =============================================================================
 // Auth-Session Tenant Resolver (Wave 2, Phase 2.1)

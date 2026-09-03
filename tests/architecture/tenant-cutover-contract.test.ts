@@ -59,7 +59,7 @@ describe("Tenant cutover contract", () => {
     expect(session).toContain('SET LOCAL ROLE "$' + '{role}"');
 
     // Both wrappers delegate instead of carrying their own copy.
-    expect(isolation).toContain('from "./rls-session"');
+    expect(isolation).toContain('from "./rls-session.js"');
     expect(isolation).toContain("tenantSessionOperations(executor, tenantId, { role: rlsRole })");
     expect(isolation).not.toContain("set_config(");
     expect(isolation).not.toContain("SET LOCAL ROLE");

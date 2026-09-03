@@ -58,6 +58,7 @@
     "@nebutra/search": "workspace:*",
     "@nebutra/sms": "workspace:*",
     "@nebutra/startup-os": "workspace:*",
+    "@nebutra/tenant": "workspace:*",
     "@nebutra/uploads": "workspace:*",
     "@nebutra/vault": "workspace:*",
     "@nebutra/workflow-runtime": "workspace:*",
