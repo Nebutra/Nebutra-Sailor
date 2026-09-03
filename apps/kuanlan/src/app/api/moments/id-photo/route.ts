@@ -6,6 +6,7 @@ import {
   image2SizeForSku,
   shootWithImage2,
 } from "@/lib/image2";
+import { shootLog } from "@/lib/log";
 import { InvalidResourceKeyError, ResourceStoreUnavailableError } from "@/lib/resources";
 import {
   deleteIdPhotoMoment,
@@ -30,6 +31,8 @@ export async function GET(request: Request) {
     return signInRequired();
   }
 
+  const log = shootLog(session.userId);
+
   try {
     const { moments, total } = await listIdPhotoMoments(session.userId);
     return Response.json(
@@ -42,11 +45,14 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     if (error instanceof InvalidResourceKeyError) {
+      log.warn("moments list rejected", { reason: "invalid_key" });
       return signInRequired();
     }
     if (error instanceof ResourceStoreUnavailableError) {
+      log.error("moments list failed on the store", error);
       return Response.json({ error: "unavailable" }, { status: 503 });
     }
+    log.error("moments list failed", error);
     return Response.json({ error: "unavailable" }, { status: 500 });
   }
 }
@@ -59,8 +65,15 @@ export async function POST(request: Request) {
 
   // Ahead of reading the body: a refused shot should not cost us a 12 MB buffer,
   // and nothing below this line is free once it starts.
+  const started = Date.now();
+  const log = shootLog(session.userId);
+
   const allowance = await spendShootAllowance(session.userId);
   if (!allowance.allowed) {
+    // At info, not warn: a ceiling doing its job is the system working. It
+    // still has to be countable, because a ceiling nobody ever hits is set
+    // wrong, and so is one everybody hits.
+    log.info("shoot refused by ceiling", { scope: allowance.scope });
     return Response.json(
       { error: "shoot_limit", scope: allowance.scope },
       {
@@ -78,29 +91,47 @@ export async function POST(request: Request) {
   const sizeId = String(form.get("sizeId") ?? "");
   const file = form.get("file");
 
+  const shot = shootLog(session.userId, skuId, sizeId);
+
   if (!(file instanceof File) || file.size === 0) {
+    shot.info("shoot rejected", { reason: "portrait_required" });
     return Response.json({ error: "portrait_required" }, { status: 400 });
   }
   if (file.size > MAX_PORTRAIT_BYTES) {
+    shot.info("shoot rejected", { reason: "portrait_too_large", bytes: file.size });
     return Response.json({ error: "portrait_too_large" }, { status: 413 });
   }
 
+  // `step` is the whole point of these lines: when a shoot dies, this is the
+  // difference between "it broke" and "the router timed out after 40s".
+  let step: "resolve" | "router" | "compose" | "store" = "resolve";
   try {
     const { composeIdPhoto } = await import("@/lib/id-photo");
     const print = resolveIdPhotoPrint(skuId, sizeId || undefined);
     const source = Buffer.from(await file.arrayBuffer());
-    const shot = await shootWithImage2({
+
+    step = "router";
+    const frame = await shootWithImage2({
       image: source,
       prompt: idPhotoShootBrief(print),
       size: image2SizeForSku(print),
       mimeType: file.type,
     });
-    const result = await composeIdPhoto({ source: shot, sku: print });
+
+    step = "compose";
+    const result = await composeIdPhoto({ source: frame, sku: print });
+
+    step = "store";
     const stored = await persistIdPhotoMoment({
       userId: session.userId,
       skuId: print.id,
       sizeId: print.sizeId,
       print: result.png,
+    });
+
+    shot.info("shoot done", {
+      ms: Date.now() - started,
+      remainingToday: allowance.remaining,
     });
 
     return Response.json(
@@ -123,18 +154,26 @@ export async function POST(request: Request) {
       },
     );
   } catch (error) {
+    const ms = Date.now() - started;
     if (error instanceof SkuUnavailableError) {
+      shot.info("shoot rejected", { reason: "sku_unavailable", ms });
       return Response.json({ error: "sku_unavailable" }, { status: 404 });
     }
     if (error instanceof Error && error.name === "InvalidPortraitError") {
+      shot.info("shoot rejected", { reason: "portrait_unreadable", ms });
       return Response.json({ error: "portrait_unreadable" }, { status: 400 });
     }
     if (error instanceof InvalidResourceKeyError) {
+      shot.warn("shoot rejected", { reason: "invalid_key", step, ms });
       return signInRequired();
     }
     if (error instanceof ResourceStoreUnavailableError || error instanceof Image2UnavailableError) {
+      // A dependency is down. Someone should know, so this is an error even
+      // though the caller gets an orderly 503.
+      shot.error("shoot failed on a dependency", error, { step, ms });
       return Response.json({ error: "unavailable" }, { status: 503 });
     }
+    shot.error("shoot failed", error, { step, ms });
     return Response.json({ error: "unavailable" }, { status: 500 });
   }
 }
@@ -152,20 +191,26 @@ export async function DELETE(request: Request) {
   }
 
   const id = new URL(request.url).searchParams.get("id")?.trim() ?? "";
+  const log = shootLog(session.userId);
 
   try {
     await deleteIdPhotoMoment(session.userId, id);
+    // Deletion is the one operation someone may later need proof of.
+    log.info("moment deleted", { momentId: id });
     return new Response(null, {
       status: 204,
       headers: { "Cache-Control": "no-store" },
     });
   } catch (error) {
     if (error instanceof InvalidResourceKeyError) {
+      log.info("moment delete rejected", { reason: "invalid_key", momentId: id });
       return Response.json({ error: "not_found" }, { status: 404 });
     }
     if (error instanceof ResourceStoreUnavailableError) {
+      log.error("moment delete failed on the store", error, { momentId: id });
       return Response.json({ error: "unavailable" }, { status: 503 });
     }
+    log.error("moment delete failed", error, { momentId: id });
     return Response.json({ error: "unavailable" }, { status: 500 });
   }
 }

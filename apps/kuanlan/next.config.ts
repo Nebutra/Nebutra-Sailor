@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     "@nebutra/auth",
     "@nebutra/brand",
     "@nebutra/fonts",
+    "@nebutra/logger",
     "@nebutra/rate-limit",
     "@nebutra/storage",
   ],

@@ -24,7 +24,8 @@ export function SiteNav({
   active,
   query,
 }: {
-  active: (typeof LINKS)[number]["href"];
+  /** Omitted where no tab is the current one — 404, for instance. */
+  active?: (typeof LINKS)[number]["href"];
   query?: string;
 }) {
   return (

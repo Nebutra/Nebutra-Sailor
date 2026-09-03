@@ -26,6 +26,7 @@
     "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/fonts": "workspace:*",
+    "@nebutra/logger": "workspace:*",
     "@nebutra/rate-limit": "workspace:*",
     "@nebutra/storage": "workspace:*",
     "@nebutra/tokens": "workspace:*",
