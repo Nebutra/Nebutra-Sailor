@@ -380,6 +380,12 @@ interface TenantConfig {
   restating the statements. (`getTenantDb` in `@nebutra/db` still carries its own copy
   until the P1.2 follow-up routes it through `tenantSessionOperations`.)
 - `resolveRlsRole(env?)` / `isValidDbRole(role)` — `APP_DB_ROLE` resolved as a bare SQL identifier
+  (permissive: `null` on invalid)
+- `resolveRlsRoleOrThrow(env?)` — the same resolution, but throws `TenantIsolationError` when
+  `APP_DB_ROLE` is set to something that is not a bare SQL identifier, instead of returning
+  `null`. `applyTenantSession`/`tenantSessionOperations` resolve the role through this when no
+  explicit `role` option is given, and so does `withRls` (closure P1.3 — an unusable
+  `APP_DB_ROLE` refuses to run rather than silently dropping the role switch)
 - `TENANT_SESSION_SETTING` / `TENANT_SESSION_EXPRESSION` — the setting key the policies read and
   the wrappers write
 - `getTenantSchema(tenantId)` — Get schema name for schema-per-tenant

@@ -104,6 +104,26 @@ describe("withRls", () => {
     ).toThrow(/APP_DB_ROLE/);
   });
 
+  // Closure P1.3 — the failing case: on origin/main, `withRls` resolved
+  // APP_DB_ROLE with the permissive `resolveRlsRole`, so an invalid value
+  // silently became "no role configured" and the query ran unisolated (or,
+  // in production, tripped the separate "APP_DB_ROLE is required" check only
+  // because a valid role happens to look identical to none being set at
+  // all). Regression case: refuse before ever touching `$extends`.
+  it("closure P1.3: refuses an APP_DB_ROLE that is not a bare SQL identifier", () => {
+    process.env.NODE_ENV = "test";
+    process.env.APP_DB_ROLE = 'app_user"; DROP ROLE postgres; --';
+    const prisma = {
+      $extends: vi.fn(),
+      $transaction: vi.fn(),
+      $executeRaw: vi.fn(),
+    };
+
+    expect(() => withRls(prisma as never, "org_1")).toThrow(TenantIsolationError);
+    expect(() => withRls(prisma as never, "org_1")).toThrow(/bare SQL identifier/);
+    expect(prisma.$extends).not.toHaveBeenCalled();
+  });
+
   it("applies tenant context inside a transaction when the client is capable", async () => {
     process.env.NODE_ENV = "test";
     delete process.env.APP_DB_ROLE;
