@@ -1,7 +1,9 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { AuthGate } from "@/components/AuthGate";
+import { ConsentControl } from "@/components/ConsentControl";
 import { QuietPage } from "@/components/QuietPage";
 import { getServerSession } from "@/lib/auth";
+import { readFaceConsent } from "@/lib/consent.server";
 import { type IdPhotoMomentPage, momentLabel } from "@/lib/moments";
 import { ResourceStoreUnavailableError } from "@/lib/resources";
 import { listIdPhotoMoments } from "@/lib/resources.server";
@@ -36,9 +38,18 @@ export default async function MePage() {
 
   // The store being down costs the page its Moments, not the whole account.
   let page: IdPhotoMomentPage = { moments: [], total: 0 };
+  let consentedAt: string | null = null;
   let storeDown = false;
   try {
-    page = await listIdPhotoMoments(session.userId, {}, { limit: PREVIEW });
+    const [moments, consent] = await Promise.all([
+      listIdPhotoMoments(session.userId, {}, { limit: PREVIEW }),
+      readFaceConsent(session.userId),
+    ]);
+    page = moments;
+    consentedAt =
+      consent?.consentGiven && !consent.withdrawnAt
+        ? formatDay(new Date(consent.consentedAt))
+        : null;
   } catch (error) {
     if (!(error instanceof ResourceStoreUnavailableError)) throw error;
     storeDown = true;
@@ -69,6 +80,12 @@ export default async function MePage() {
             <dt>观澜留下什么</dt>
             <dd>只有拍好的那张。你上传的原图用完即弃，不留存。</dd>
           </div>
+          {storeDown ? null : (
+            <div className="field-row">
+              <dt>用照片开拍</dt>
+              <ConsentControl consentedAt={consentedAt} />
+            </div>
+          )}
           {expires ? (
             <div className="field-row">
               <dt>这次会话到</dt>

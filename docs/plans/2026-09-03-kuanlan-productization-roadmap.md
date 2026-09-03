@@ -177,7 +177,7 @@ worker
 
 | 项 | 落点 |
 |---|---|
-| 人脸单独同意 | `UserConsent` + `LegalDocument`；首次开拍前的独立告知，版本化、可撤回 |
+| 人脸单独同意 | **已完成，但落点改了**：`UserConsent` 需要数据库，而 `nebutra-kuanlan` 的 Fly 密钥里没有 `DATABASE_URL`。同意是闸门——没有它就不能开拍——所以"等数据库"等于把这道合规闸门无限期悬空。改为写进 R2（`kuanlan/consent/{userId}.json`），字段与 `UserConsent` 一一对应，接上数据库后回填成行。见 `src/lib/consent.ts` |
 | Moment 可删除 | 删除即同时删 `{id}.png` 和 `{id}.source`；`/me` 上给入口 |
 | 明确保留期 | 写进条款并真的执行（到期清理原图） |
 | 每用户配额 + 限流 | `@nebutra/rate-limit` + `@nebutra/metering`；先用保守常量，不必先接计费 |
