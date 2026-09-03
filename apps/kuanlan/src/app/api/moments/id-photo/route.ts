@@ -8,6 +8,7 @@ import {
 } from "@/lib/image2";
 import { InvalidResourceKeyError, ResourceStoreUnavailableError } from "@/lib/resources";
 import { listIdPhotoMoments, persistIdPhotoMoment } from "@/lib/resources.server";
+import { spendShootAllowance } from "@/lib/shoot-limit";
 
 // Keep this number here so GET / unsigned POST never load sharp.
 const MAX_PORTRAIT_BYTES = 12 * 1024 * 1024;
@@ -52,6 +53,22 @@ export async function POST(request: Request) {
     return signInRequired();
   }
 
+  // Ahead of reading the body: a refused shot should not cost us a 12 MB buffer,
+  // and nothing below this line is free once it starts.
+  const allowance = await spendShootAllowance(session.userId);
+  if (!allowance.allowed) {
+    return Response.json(
+      { error: "shoot_limit", scope: allowance.scope },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(allowance.retryAfter ?? 60),
+          "Cache-Control": "no-store",
+        },
+      },
+    );
+  }
+
   const form = await request.formData();
   const skuId = String(form.get("skuId") ?? "");
   const sizeId = String(form.get("sizeId") ?? "");
@@ -94,6 +111,7 @@ export async function POST(request: Request) {
         width: result.width,
         height: result.height,
         dpi: result.dpi,
+        remainingToday: allowance.remaining,
       },
       {
         status: 200,
