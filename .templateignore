@@ -214,6 +214,10 @@ tests/load/
 .github/workflows/visual-acceptance.yml
 .github/workflows/ui-governance.yml
 .github/workflows/docker-build-push.yml
+# Golden-path E2E (closure P1.5): its public spec asserts the landing legal
+# pages + cookie banner stripped above, and its gated specs need a seeded E2E
+# session. In a scaffold it would be red on every sync.
+.github/workflows/golden-e2e.yml
 # Product deploy targets + Nebutra DNS ops (secrets / account-bound)
 .github/workflows/deploy-carina-ecs.yml
 .github/workflows/deploy-carina-fly.yml
