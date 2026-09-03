@@ -7,7 +7,7 @@
  * publishing. Locally it uses the operator's npm login.
  */
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -117,3 +117,18 @@ for (const entry of pending) {
 console.log(
   `[unscoped-publish] ${dryRun ? "dry-ran" : "published"} ${pending.length} unscoped package(s)`,
 );
+
+// changesets/action only reports `published=true` for packages that
+// `changeset publish` itself pushed. The unscoped CLIs go out here, before it,
+// so the workflow reads this marker to decide whether to tag, attest and mirror.
+if (!dryRun) {
+  mkdirSync("artifacts/release", { recursive: true });
+  writeFileSync(
+    "artifacts/release/unscoped-published.json",
+    `${JSON.stringify(
+      pending.map((entry) => ({ name: entry.name, version: entry.version })),
+      null,
+      2,
+    )}\n`,
+  );
+}
