@@ -1,5 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
-import { Star, User } from "@nebutra/icons";
+import { StarFill, User } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
@@ -108,7 +108,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
                 <div className="flex flex-col items-center sm:items-start gap-1">
                   <div className="flex text-amber-500">
                     {RATING_STARS.map((star) => (
-                      <Star key={star.id} className="h-4 w-4 fill-current" />
+                      <StarFill key={star.id} className="h-4 w-4" />
                     ))}
                   </div>
                   <p className="text-sm text-muted-foreground font-medium">

@@ -42,6 +42,8 @@ function rewriteMarkdownRequest(request: Parameters<typeof i18nProxy>[0]) {
 }
 
 export const config = {
-  // Matcher ignoring `/_next/`, `/api/`, and static assets like `/logo/`
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|logo).*)"],
+  // Matcher ignoring `/_next/`, `/api/`, static assets like `/logo/`, and the
+  // locale-less `/llms.txt` family — the i18n redirect used to send them to
+  // `/en/llms.txt`, which 404s and made the status page report docs as down.
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|logo|llms).*)"],
 };
