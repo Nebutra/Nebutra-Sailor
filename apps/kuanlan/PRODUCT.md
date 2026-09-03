@@ -19,7 +19,10 @@ KUANLAN 围绕「我如何出现、如何被看见」工作。它不是变美工
 3. 领证照（领英灰蓝/浅灰/质感蓝棚底职业照）+ 证件照（白底/蓝底）。一寸/二寸/护照/美签是尺寸，不是单独 SKU
 4. 资源落在 Cloudflare R2。公开 stills（orbit / 开拍样例 / 衣柜）在 `nebutra-assets`，经 `https://cdn.nebutra.com/kuanlan/…` 消费。Moment 写入 `nebutra-uploads`。`public/` 只做种子，不给浏览器当源。
    **只留下拍好的那张。** 用户上传的原图送去开拍之后即弃，不写入任何桶。Moment 由用户自己删除，删除同时清掉早期版本留下的原图。
-5. 开拍：本应用后端封装 SKU 系统提示词，再打 `https://router.nebutra.com/v1` 的 `gpt-image-2`（New-API 中转 302.ai），最后由 sharp 裁到规格像素
+5. 开拍前要先单独同意「用我的照片开拍」。告知在 `src/lib/consent.ts`，带版本；
+   改了措辞就换版本号，所有人重新问一次。可以随时在「我」里撤回，撤回后不能再开拍，
+   已经拍过的不受影响。
+6. 开拍：本应用后端封装 SKU 系统提示词，再打 `https://router.nebutra.com/v1` 的 `gpt-image-2`（New-API 中转 302.ai），最后由 sharp 裁到规格像素
 
 Wardrobe 挂的是件 SKU（西装 / 针织 / 衬衫），只出衣服不出人像。件静物在烟底上一次拍成，不见衣架，不用 CV 抠边。开拍 SKU 可以引用一件衣服；领证照是其中一条已开放的开拍路径，不是衣柜的理由。不假装已经认识用户自己的衣柜。进入走 `auth.nebutra.com`，回来停在观澜；开拍和 Moments 挂在这笔会话上。
 

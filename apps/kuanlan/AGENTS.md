@@ -39,6 +39,16 @@ Do not treat `.next/` or `public/` as consumption truth. Browser stills come fro
 - Garment SKUs carry a cut spec: size, color, material, and centimetre measures (衣长 / 裤长 / 胸围 / 袖长 / 肩宽 / 腰围 / 臀围). Omit a measure when it does not apply. Do not invent bottoms just to fill 裤长.
 - Every SKU carries `origin` + `brand`. Platform-listed rows seal to `KUANLAN©️`. User-uploaded rows (not open) keep their own brand. Do not invent upload or VLM. Do not put the brand mark into shoot briefs.
 - Disabled SKUs fail closed. Public list and compose both require `enabled: true`.
+- No shoot without current, explicit consent to put a face through a model.
+  `src/lib/consent.ts` holds the notice and its version; bump `FACE_NOTICE_VERSION`
+  when the wording changes in substance and everyone is asked again. The record
+  lives at `kuanlan/consent/{userId}.json` on `nebutra-uploads` and mirrors the
+  platform's `UserConsent` field for field, so it becomes a row when this app
+  reaches a database. Withdrawal stamps the record; it never deletes it, because
+  a consent log that erases itself is no longer evidence. The gate is on the
+  route, not only in the studio, and it fails closed when the store cannot be
+  read — a face goes to a third party either way, so "we could not check" is
+  not a reason to proceed.
 - Keep the print, never the portrait it was made from. The uploaded original goes to
   the model and is then dropped; it is not written to any bucket. Deleting a Moment
   removes the print and any `.source` left by the version that used to store one.
