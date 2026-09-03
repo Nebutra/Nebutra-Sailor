@@ -4,9 +4,9 @@ import {
   TENANT_SESSION_EXPRESSION,
   type TenantSessionExecutor,
   tenantSessionOperations,
-} from "./rls-session";
-import type { IsolationStrategy } from "./types";
-import { TenantIsolationError } from "./types";
+} from "./rls-session.js";
+import type { IsolationStrategy } from "./types.js";
+import { TenantIsolationError } from "./types.js";
 
 // The tenant session core is the single implementation behind `withRls` here
 // and `withTenantContext` in `@nebutra/db/rls`. Re-exported so consumers of
@@ -21,7 +21,7 @@ export {
   type TenantSessionExecutor,
   type TenantSessionOptions,
   tenantSessionOperations,
-} from "./rls-session";
+} from "./rls-session.js";
 
 // =============================================================================
 // Lightweight Prisma-compatible types (avoids hard dependency on "@prisma/client")
