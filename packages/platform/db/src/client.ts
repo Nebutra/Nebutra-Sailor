@@ -1,4 +1,5 @@
 import { logger } from "@nebutra/logger";
+import { isValidDbRole } from "@nebutra/tenant/isolation";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
 // Resolved by the "#prisma-client" condition in package.json: workerd gets the
@@ -7,15 +8,28 @@ import pg from "pg";
 // where it calls fileURLToPath at load and fails startup validation.
 import { PrismaClient } from "#prisma-client";
 import { decryptRecordsWithLimit } from "./decrypt-concurrency";
+import { createRlsRoleVerifier } from "./rls-role";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-const RLS_ROLE = (() => {
-  const role = process.env.APP_DB_ROLE;
-  return role && /^[a-z_][a-z0-9_]*$/.test(role) ? role : null;
-})();
+// `RAW_APP_DB_ROLE` keeps the unvalidated value around so an invalid one is
+// never silently indistinguishable from "unset" — see `verifyRlsRole` below
+// (closure P1.3). `isValidDbRole` is the same check `@nebutra/tenant`'s
+// tenant session core validates `APP_DB_ROLE` with, so this stays the one
+// other copy tests/architecture/tenant-cutover-contract.test.ts pins, not a
+// second regex that could drift from it.
+const RAW_APP_DB_ROLE = process.env.APP_DB_ROLE;
+const RLS_ROLE = RAW_APP_DB_ROLE && isValidDbRole(RAW_APP_DB_ROLE) ? RAW_APP_DB_ROLE : null;
+
+// Verified once — on the first tenant-scoped query — and cached for the
+// process lifetime. Closure P1.3: an APP_DB_ROLE that is set but unusable
+// (not a bare identifier, or a role Postgres refuses to grant) must refuse
+// the query instead of getTenantDb() silently running it without RLS. See
+// rls-role.ts for the two cases this closes and why it stays free of
+// `#prisma-client` (so it is unit-testable without a package build).
+const verifyRlsRole = createRlsRoleVerifier(RAW_APP_DB_ROLE, RLS_ROLE);
 
 // PostgreSQL statement_timeout (ms) — prevents runaway queries from holding
 // locks or exhausting the pool. Applied transaction-locally via
@@ -314,6 +328,11 @@ const baseClient: PrismaClient = new Proxy({} as PrismaClient, {
  * compatibility organization sessions, or trusted service-token claims — never
  * from client-controlled input.
  *
+ * When `APP_DB_ROLE` is set, the first query verifies (and caches) that the
+ * role is both a valid identifier and one Postgres actually grants; either
+ * failure throws instead of running the query without the role switch
+ * (closure P1.3 — see `rls-role.ts`).
+ *
  * @example
  * ```ts
  * import { getTenantDb } from "@nebutra/db";
@@ -343,6 +362,12 @@ export function getTenantDb(tenantId: string): PrismaClient {
     query: {
       $allModels: {
         async $allOperations({ args, query }) {
+          // Closure P1.3 — first use only; cached for every query after.
+          // Throws before anything below runs if APP_DB_ROLE is set but
+          // unusable, instead of this extension silently taking the
+          // `else` branch (no role switch) below.
+          await verifyRlsRole(client);
+
           // P1.2 follow-up: route through tenantSessionOperations
           // (`@nebutra/tenant/isolation`) so this stops being a second copy of
           // the SET LOCAL ROLE + set_config statements `withRls` and
