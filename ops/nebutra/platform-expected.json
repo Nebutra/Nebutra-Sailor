@@ -50,7 +50,7 @@
     ]
   },
   "github": {
-    "$comment": "No branchProtection rule for main yet: the daily run holds no token that can read protection (the Actions GITHUB_TOKEN cannot carry administration:read) and under --strict a skipped row is a red run. The rule lands in the same change as GH_TOKEN in .github/workflows/platform-reconcile.yml — recipe in ops/README.md.",
+    "$comment": "No branchProtection rule for main yet: the daily run holds no token that can read protection (the Actions GITHUB_TOKEN cannot carry administration:read) and under --strict a skipped row is a red run. The rule lands in the same change as GH_TOKEN in .github/workflows/platform-reconcile.yml — recipe in ops/README.md, tracked in https://github.com/Nebutra/Nebutra-Sailor/issues/514.",
     "repo": "Nebutra/Nebutra-Sailor",
     "variables": {
       "DEPLOY_TARGET_SAILOR_DOCS": "fly",

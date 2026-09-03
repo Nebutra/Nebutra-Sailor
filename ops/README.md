@@ -164,7 +164,9 @@ match. The engine reports the difference; it never changes either side.
 For Nebutra the rule for `main` is **not declared yet**, on purpose: the daily
 run holds no token that can read protection, so the row would be `skipped` on
 every schedule and, under `--strict`, a red run every day — which buries real
-drift in every other row. The rule and the token land in one change:
+drift in every other row. Tracked in
+[#514](https://github.com/Nebutra/Nebutra-Sailor/issues/514). The rule and the
+token land in one change:
 
 1. Mint a fine-grained personal access token scoped to this repository with
    *Administration: read* and nothing else, and store it as the repository
