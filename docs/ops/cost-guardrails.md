@@ -164,7 +164,7 @@ the engine asks each provider what it currently holds:
 | --- | --- | --- |
 | Vercel | build machine type, project-level Ignored Build Step, whether a Git link exists, env keys that must not be Sensitive on a target | `GET /v9/projects/{name}`, `GET /v10/projects/{name}/env` |
 | Fly | secret names that must exist, secret names that must not | `flyctl secrets list --json` |
-| GitHub | repository variable values (deploy target selectors) | the workflow's own `vars` context, or `gh variable get` |
+| GitHub | repository variable values (deploy target selectors); per-branch protection — required status checks, up-to-date rule, admin enforcement, review count | the workflow's own `vars` context, or `gh variable get`; `GET /repos/{owner}/{repo}/branches/{branch}/protection` with `GH_TOKEN` or `gh api` |
 | Cloudflare | a named Worker binding, optionally its type | `GET /workers/scripts/{name}/settings` |
 
 One row per expectation, four states: `ok`, `drift`, `skipped` (no token, tool
@@ -178,8 +178,11 @@ notifies the author of the last commit that touched the workflow's cron line
 
 The engine prints names and types, never values: Fly digests are dropped on
 parse, the `value` field of a Vercel env entry is never read, and GitHub
-variables are non-secret configuration by definition. Fixing drift stays a
-human decision in the dashboard or the CLI; the check only says where.
+variables and branch protection are non-secret configuration by definition.
+Fixing drift stays a human decision in the dashboard or the CLI; the check only
+says where. The required status checks on `main` are the clearest case: the
+declaration is the bar, and raising it is done by editing the list and then the
+GitHub setting, never by the engine.
 
 To add a guardrail, add a line to the declaration. The scaffold ships the same
 schema as `infra/ops/platform-expected.example.json`.

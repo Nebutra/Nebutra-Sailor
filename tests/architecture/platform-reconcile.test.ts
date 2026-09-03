@@ -38,9 +38,22 @@ type Declaration = {
     }>;
   };
   fly?: { apps: Array<{ name: string; secretsPresent?: string[]; secretsAbsent?: string[] }> };
-  github?: { repo?: string; variables?: Record<string, string> };
+  github?: { repo?: string; variables?: Record<string, string>; branchProtection?: BranchRule[] };
   cloudflare?: { workers: Array<{ name: string; bindings: Array<{ name: string }> }> };
 };
+type BranchRule = {
+  branch: string;
+  requiredStatusChecks?: string[];
+  strict?: boolean;
+  enforceAdmins?: boolean;
+  requiredApprovingReviewCount?: number | null;
+};
+const PROTECTION_FIELDS = [
+  "requiredStatusChecks",
+  "strict",
+  "enforceAdmins",
+  "requiredApprovingReviewCount",
+] as const;
 
 // When every provider answers, the engine emits one row per declared
 // expectation. Counting them from the declaration keeps these tests from
@@ -57,12 +70,26 @@ function declaredChecks(doc: Declaration): number {
     count += (app.secretsPresent?.length ?? 0) + (app.secretsAbsent?.length ?? 0);
   }
   count += declaredVariables(doc);
+  count += declaredProtectionChecks(doc);
   for (const worker of doc.cloudflare?.workers ?? []) count += worker.bindings.length;
   return count;
 }
 
 function declaredVariables(doc: Declaration): number {
   return Object.keys(doc.github?.variables ?? {}).length;
+}
+
+function declaredBranches(doc: Declaration): number {
+  return (doc.github?.branchProtection ?? []).length;
+}
+
+// One row per declared field of each branch rule, once the protection could be read.
+function declaredProtectionChecks(doc: Declaration): number {
+  let count = 0;
+  for (const rule of doc.github?.branchProtection ?? []) {
+    count += PROTECTION_FIELDS.filter((field) => rule[field] !== undefined).length;
+  }
+  return count;
 }
 type ExecResult = { ok: boolean; stdout: string; stderr: string; missing: boolean };
 type FakeResponse = { ok: boolean; status: number; json: () => Promise<unknown> };
@@ -80,6 +107,11 @@ type Engine = {
       only?: string[];
     },
   ) => Promise<{ results: Row[]; summary: Summary }>;
+  compareBranchProtection: (
+    target: string,
+    rule: BranchRule,
+    protection: Record<string, unknown>,
+  ) => Row[];
   renderTable: (results: Row[]) => string;
   renderMarkdown: (results: Row[], summary: Summary) => string;
   summarize: (results: Row[]) => Summary;
@@ -107,6 +139,7 @@ const TOKENS = {
   FLY_API_TOKEN: "fly-token-must-never-print",
   CLOUDFLARE_API_TOKEN: "cf-token-must-never-print",
   CLOUDFLARE_ACCOUNT_ID: "acct_fixture",
+  GH_TOKEN: "gh-token-must-never-print",
 };
 const SECRET_VALUE = "sk_live_value_must_never_print";
 const DIGEST = "digest_must_never_print";
@@ -126,10 +159,39 @@ type World = {
   envs: Record<string, unknown[]>;
   flySecrets: string[];
   bindings: Array<Record<string, unknown>>;
+  protection: Record<string, unknown>;
   vercelStatus?: number;
   cloudflareStatus?: number;
   cloudflareBody?: unknown;
+  githubStatus?: number;
+  githubBody?: unknown;
 };
+
+const LIVE_CONTEXTS = ["CodeQL Analysis (javascript-typescript)", "CodeQL Analysis (python)"];
+
+// The body GET /repos/Nebutra/Nebutra-Sailor/branches/main/protection returned
+// on 2026-09-03, trimmed to the fields the engine reads plus the ones it must
+// ignore. There is no required_pull_request_reviews block: no review is
+// required, which the declaration spells `null`.
+function liveProtection(): Record<string, unknown> {
+  return {
+    url: "https://api.github.com/repos/Nebutra/Nebutra-Sailor/branches/main/protection",
+    required_status_checks: {
+      strict: false,
+      contexts: [...LIVE_CONTEXTS],
+      checks: LIVE_CONTEXTS.map((context) => ({ context, app_id: 15368 })),
+    },
+    required_signatures: { enabled: false },
+    enforce_admins: { enabled: false },
+    required_linear_history: { enabled: false },
+    allow_force_pushes: { enabled: true },
+    allow_deletions: { enabled: false },
+    block_creations: { enabled: false },
+    required_conversation_resolution: { enabled: false },
+    lock_branch: { enabled: false },
+    allow_fork_syncing: { enabled: false },
+  };
+}
 
 function greenWorld(): World {
   const fixed = { buildMachineType: "standard", buildMachineSelection: "fixed" };
@@ -175,6 +237,7 @@ function greenWorld(): World {
       { type: "ratelimit", name: "IP_LIMITER", namespace_id: "2609" },
       { type: "plain_text", name: "ORIGIN_URL", text: "https://origin" },
     ],
+    protection: liveProtection(),
   };
 }
 
@@ -219,6 +282,15 @@ function fakeProviders(world: World) {
         errors: [{ code: 10007, message: "script not found" }],
       });
     }
+    if (parsed.hostname === "api.github.com") {
+      if (world.githubStatus) {
+        return response(world.githubStatus, world.githubBody ?? { message: "Not Found" });
+      }
+      if (parsed.pathname === "/repos/Nebutra/Nebutra-Sailor/branches/main/protection") {
+        return response(200, world.protection);
+      }
+      return response(404, { message: "Not Found" });
+    }
     return response(500, { error: { message: `unexpected host ${parsed.hostname}` } });
   };
 
@@ -256,7 +328,7 @@ describe("platform-reconcile: expectations files", () => {
     const doc = loadExpectations(nebutraPath) as {
       vercel: { projects: Array<Record<string, unknown>> };
       fly: { apps: Array<{ name: string; secretsPresent: string[]; secretsAbsent: string[] }> };
-      github: { repo: string; variables: Record<string, string> };
+      github: { repo: string; variables: Record<string, string>; branchProtection: BranchRule[] };
       cloudflare: {
         workers: Array<{ name: string; bindings: Array<{ name: string; type?: string }> }>;
       };
@@ -301,6 +373,18 @@ describe("platform-reconcile: expectations files", () => {
       DEPLOY_TARGET_SAILOR_DOCS: "fly",
       DEPLOY_TARGET_GATEWAY: "cloudflare-workers",
     });
+    // The bar that decides "CI is green" for main, as GitHub reported it on
+    // 2026-09-03. Raising it is an owner decision made here first, then in
+    // Settings → Branches; this test pins what is declared, not what should be.
+    expect(doc.github.branchProtection).toEqual([
+      expect.objectContaining({
+        branch: "main",
+        requiredStatusChecks: LIVE_CONTEXTS,
+        strict: false,
+        enforceAdmins: false,
+        requiredApprovingReviewCount: null,
+      }),
+    ]);
 
     const edge = doc.cloudflare.workers.find((w) => w.name === "nebutra-gateway-edge");
     expect(edge?.bindings).toEqual([{ name: "IP_LIMITER", type: "ratelimit" }]);
@@ -321,6 +405,16 @@ describe("platform-reconcile: expectations files", () => {
     // {PRODUCT_NAME}; the file must validate in the shape a scaffold receives.
     const scaffolded = raw.split("{PRODUCT_NAME}").join("acme");
     expect(validateExpectations(JSON.parse(scaffolded))).toEqual([]);
+    const example = JSON.parse(scaffolded) as Declaration;
+    expect(example.github?.branchProtection).toEqual([
+      {
+        branch: "main",
+        requiredStatusChecks: ["Lint & Typecheck", "Test"],
+        strict: false,
+        enforceAdmins: false,
+        requiredApprovingReviewCount: null,
+      },
+    ]);
   });
 
   it("rejects malformed declarations with a named path", async () => {
@@ -345,6 +439,47 @@ describe("platform-reconcile: expectations files", () => {
     expect(
       validateExpectations({ version: 1, cloudflare: { workers: [{ name: "w" }] } }),
     ).toContain("cloudflare.workers[0].bindings must be an array");
+
+    expect(validateExpectations({ version: 1, github: { branchProtection: {} } })).toContain(
+      "github.branchProtection must be an array",
+    );
+    expect(validateExpectations({ version: 1, github: { branchProtection: [{}] } })).toContain(
+      "github.branchProtection[0].branch must be a non-empty string",
+    );
+    const malformed = validateExpectations({
+      version: 1,
+      github: {
+        branchProtection: [
+          {
+            branch: "main",
+            requiredStatusChecks: "Test",
+            strict: "yes",
+            enforceAdmins: 1,
+            requiredApprovingReviewCount: -1,
+          },
+          { branch: "release", requiredApprovingReviewCount: 1.5 },
+        ],
+      },
+    });
+    expect(malformed).toEqual([
+      "github.branchProtection[0].requiredStatusChecks must be a list of status-check contexts",
+      "github.branchProtection[0].strict must be a boolean",
+      "github.branchProtection[0].enforceAdmins must be a boolean",
+      "github.branchProtection[0].requiredApprovingReviewCount must be null or a non-negative integer",
+      "github.branchProtection[1].requiredApprovingReviewCount must be null or a non-negative integer",
+    ]);
+    // `null` means "no review required" and an empty list means "no required
+    // checks": both are real expectations, not omissions.
+    expect(
+      validateExpectations({
+        version: 1,
+        github: {
+          branchProtection: [
+            { branch: "main", requiredStatusChecks: [], requiredApprovingReviewCount: null },
+          ],
+        },
+      }),
+    ).toEqual([]);
   });
 });
 
@@ -376,6 +511,13 @@ describe("platform-reconcile: engine", () => {
     expect(
       find(results, "github", "Nebutra/Nebutra-Sailor", "variable DEPLOY_TARGET_GATEWAY").actual,
     ).toBe("cloudflare-workers");
+    expect(
+      find(results, "github", "Nebutra/Nebutra-Sailor", "branch main requiredStatusChecks").actual,
+    ).toBe(LIVE_CONTEXTS.join(", "));
+    expect(
+      find(results, "github", "Nebutra/Nebutra-Sailor", "branch main requiredApprovingReviewCount")
+        .actual,
+    ).toBe("none");
     expect(find(results, "cloudflare", "nebutra-gateway-edge", "binding IP_LIMITER").actual).toBe(
       "ratelimit",
     );
@@ -395,6 +537,16 @@ describe("platform-reconcile: engine", () => {
     expect(cloudflareCalls.map((call) => call.url)).toEqual([
       "https://api.cloudflare.com/client/v4/accounts/acct_fixture/workers/scripts/nebutra-gateway-edge/settings",
     ]);
+    // With a token in the environment the protection is read over HTTP, once
+    // per declared branch, and `gh` is never shelled out to for it.
+    const githubCalls = providers.calls.filter((call) =>
+      call.url.startsWith("https://api.github.com/"),
+    );
+    expect(githubCalls.map((call) => call.url)).toEqual([
+      "https://api.github.com/repos/Nebutra/Nebutra-Sailor/branches/main/protection",
+    ]);
+    expect(githubCalls[0].headers.authorization).toBe(`Bearer ${TOKENS.GH_TOKEN}`);
+    expect(githubCalls[0].headers.accept).toBe("application/vnd.github+json");
     expect(providers.execCalls).toEqual([
       { command: "flyctl", args: ["secrets", "list", "-a", "nebutra-gateway", "--json"] },
     ]);
@@ -558,6 +710,7 @@ describe("platform-reconcile: engine", () => {
       TOKENS.VERCEL_TOKEN,
       TOKENS.FLY_API_TOKEN,
       TOKENS.CLOUDFLARE_API_TOKEN,
+      TOKENS.GH_TOKEN,
       SECRET_VALUE,
       DIGEST,
     ]) {
@@ -595,9 +748,12 @@ describe("platform-reconcile: engine", () => {
     expect(
       find(results, "github", "Nebutra/Nebutra-Sailor", "variable DEPLOY_TARGET_GATEWAY").detail,
     ).toBe("skipped: gh is not installed");
+    expect(find(results, "github", "Nebutra/Nebutra-Sailor", "branch main protection").detail).toBe(
+      "skipped: gh is not installed",
+    );
     // Without a token no provider is contacted; only the local `gh` probe ran,
-    // once per declared variable.
-    expect(touched).toBe(declaredVariables(declaration));
+    // once per declared variable and once per declared branch.
+    expect(touched).toBe(declaredVariables(declaration) + declaredBranches(declaration));
     expect(summary.skipped).toBe(summary.total);
     expect(exitCodeFor(summary)).toBe(0);
     expect(exitCodeFor(summary, { strict: true })).toBe(1);
@@ -613,6 +769,9 @@ describe("platform-reconcile: engine", () => {
       success: false,
       errors: [{ code: 10000, message: "Authentication error" }],
     };
+    // What the Actions GITHUB_TOKEN gets: it cannot hold administration:read.
+    world.githubStatus = 403;
+    world.githubBody = { message: "Resource not accessible by integration" };
     const providers = fakeProviders(world);
     const { results, summary } = await reconcile(declaration, {
       env: { ...TOKENS, PLATFORM_RECONCILE_GITHUB_VARS: GITHUB_VARS },
@@ -632,9 +791,14 @@ describe("platform-reconcile: engine", () => {
     expect(find(results, "fly", "nebutra-gateway", "secrets").detail).toBe(
       "skipped: flyctl is not installed",
     );
+    const protection = find(results, "github", "Nebutra/Nebutra-Sailor", "branch main protection");
+    expect(protection.status).toBe(STATUS.skipped);
+    expect(protection.detail).toContain("needs administration:read");
+    expect(protection.detail).toContain("HTTP 403: Resource not accessible by integration");
     // The GitHub variables, which need no provider token, are still verified.
     expect(summary.ok).toBe(declaredVariables(declaration));
     expect(summary.drift).toBe(0);
+    expect(summary.error).toBe(0);
   });
 
   it("falls back to gh variable get when the workflow did not hand over vars", async () => {
@@ -710,15 +874,17 @@ describe("platform-reconcile: engine", () => {
     out.length = 0;
     err.length = 0;
     const code = await main([nebutraPath, "--only=github"], {
-      env: { PLATFORM_RECONCILE_GITHUB_VARS: GITHUB_VARS },
+      env: { PLATFORM_RECONCILE_GITHUB_VARS: GITHUB_VARS, GH_TOKEN: TOKENS.GH_TOKEN },
+      fetch: fakeProviders(greenWorld()).fetch,
       stdout,
       stderr,
     });
     expect(code).toBe(0);
     const printed = out.join("");
     expect(printed).toContain("variable DEPLOY_TARGET_GATEWAY");
+    expect(printed).toContain("branch main requiredStatusChecks");
     expect(printed).toContain(
-      `${declaredVariables(declaration)} ok · 0 drift · 0 skipped · 0 error`,
+      `${declaredVariables(declaration) + declaredProtectionChecks(declaration)} ok · 0 drift · 0 skipped · 0 error`,
     );
     expect(printed).not.toContain("vercel");
 
@@ -733,6 +899,294 @@ describe("platform-reconcile: engine", () => {
     const parsed = JSON.parse(out.join("")) as { summary: Summary; results: Row[] };
     expect(parsed.summary.skipped).toBe(parsed.summary.total);
     expect(err.join("")).toContain("strict: skipped checks count as failures");
+  });
+});
+
+describe("platform-reconcile: branch protection", () => {
+  const repo = "Nebutra/Nebutra-Sailor";
+  const rule: BranchRule = {
+    branch: "main",
+    requiredStatusChecks: [...LIVE_CONTEXTS],
+    strict: false,
+    enforceAdmins: false,
+    requiredApprovingReviewCount: null,
+  };
+  const declaration = { version: 1, github: { repo, branchProtection: [rule] } };
+  const protectionOf = (rows: Row[]) => find(rows, "github", repo, "branch main protection");
+
+  it("reports every declared field as ok against the live protection shape", async () => {
+    const { compareBranchProtection } = await loadEngine();
+    const rows = compareBranchProtection(repo, rule, liveProtection());
+    expect(rows.map((r) => [r.check, r.status, r.expected, r.actual, r.detail])).toEqual([
+      [
+        "branch main requiredStatusChecks",
+        "ok",
+        LIVE_CONTEXTS.join(", "),
+        LIVE_CONTEXTS.join(", "),
+        "",
+      ],
+      ["branch main strict", "ok", "false", "false", ""],
+      ["branch main enforceAdmins", "ok", "false", "false", ""],
+      ["branch main requiredApprovingReviewCount", "ok", "none", "none", ""],
+    ]);
+  });
+
+  it("flags a check removed, a check added, and every flipped switch", async () => {
+    const { compareBranchProtection, STATUS, summarize, exitCodeFor } = await loadEngine();
+    const protection = liveProtection();
+    // Someone dropped the python check, added Test, required up-to-date
+    // branches, bound admins, and asked for one review.
+    protection.required_status_checks = {
+      strict: true,
+      contexts: ["CodeQL Analysis (javascript-typescript)", "Test"],
+      checks: [
+        { context: "CodeQL Analysis (javascript-typescript)", app_id: 15368 },
+        { context: "Test", app_id: null },
+      ],
+    };
+    protection.enforce_admins = { enabled: true };
+    protection.required_pull_request_reviews = {
+      dismiss_stale_reviews: false,
+      required_approving_review_count: 1,
+    };
+
+    const rows = compareBranchProtection(repo, rule, protection);
+    expect(find(rows, "github", repo, "branch main requiredStatusChecks")).toMatchObject({
+      status: STATUS.drift,
+      expected: LIVE_CONTEXTS.join(", "),
+      actual: "CodeQL Analysis (javascript-typescript), Test",
+      detail: "missing: CodeQL Analysis (python); extra: Test",
+    });
+    expect(find(rows, "github", repo, "branch main strict")).toMatchObject({
+      status: STATUS.drift,
+      expected: "false",
+      actual: "true",
+    });
+    expect(find(rows, "github", repo, "branch main enforceAdmins")).toMatchObject({
+      status: STATUS.drift,
+      expected: "false",
+      actual: "true",
+    });
+    expect(find(rows, "github", repo, "branch main requiredApprovingReviewCount")).toMatchObject({
+      status: STATUS.drift,
+      expected: "none",
+      actual: "1",
+    });
+    expect(rows.every((r) => r.status === STATUS.drift)).toBe(true);
+    expect(exitCodeFor(summarize(rows))).toBe(1);
+  });
+
+  it("compares required checks as a set, from contexts or checks[].context alike", async () => {
+    const { compareBranchProtection, STATUS } = await loadEngine();
+    const only = (protection: Record<string, unknown>, rules: BranchRule = rule) =>
+      find(
+        compareBranchProtection(repo, rules, protection),
+        "github",
+        repo,
+        "branch main requiredStatusChecks",
+      );
+
+    // Order is not drift.
+    const reversed = liveProtection();
+    reversed.required_status_checks = {
+      strict: false,
+      contexts: [...LIVE_CONTEXTS].reverse(),
+      checks: [...LIVE_CONTEXTS].reverse().map((context) => ({ context, app_id: 15368 })),
+    };
+    expect(only(reversed).status).toBe(STATUS.ok);
+
+    // A newer API that drops the deprecated `contexts` list still reads.
+    const checksOnly = liveProtection();
+    checksOnly.required_status_checks = {
+      strict: false,
+      checks: LIVE_CONTEXTS.map((context) => ({ context, app_id: 15368 })),
+    };
+    expect(only(checksOnly).status).toBe(STATUS.ok);
+
+    // An older API that only has `contexts` still reads.
+    const contextsOnly = liveProtection();
+    contextsOnly.required_status_checks = { strict: false, contexts: [...LIVE_CONTEXTS] };
+    expect(only(contextsOnly).status).toBe(STATUS.ok);
+
+    // No required-status-checks block at all: no checks are required.
+    const none = liveProtection();
+    delete none.required_status_checks;
+    expect(only(none)).toMatchObject({
+      status: STATUS.drift,
+      actual: "(none)",
+      detail: `missing: ${LIVE_CONTEXTS.join(", ")}`,
+    });
+    expect(only(none, { branch: "main", requiredStatusChecks: [] })).toMatchObject({
+      status: STATUS.ok,
+      expected: "(none)",
+      actual: "(none)",
+    });
+    expect(
+      find(compareBranchProtection(repo, rule, none), "github", repo, "branch main strict"),
+    ).toMatchObject({ status: STATUS.drift, actual: "(no required status checks)" });
+  });
+
+  it("reports only the fields a rule declares", async () => {
+    const { compareBranchProtection } = await loadEngine();
+    const rows = compareBranchProtection(
+      repo,
+      { branch: "main", requiredApprovingReviewCount: 2 },
+      liveProtection(),
+    );
+    expect(rows.map((r) => [r.check, r.status, r.expected, r.actual])).toEqual([
+      ["branch main requiredApprovingReviewCount", "drift", "2", "none"],
+    ]);
+  });
+
+  it("treats a branch whose protection was removed as drift, not as a missing token", async () => {
+    const { reconcile, exitCodeFor, STATUS } = await loadEngine();
+    const world = greenWorld();
+    world.githubStatus = 404;
+    world.githubBody = { message: "Branch not protected", status: "404" };
+    const { results, summary } = await reconcile(declaration, {
+      env: { GH_TOKEN: TOKENS.GH_TOKEN },
+      fetch: fakeProviders(world).fetch,
+    });
+    expect(protectionOf(results)).toMatchObject({
+      status: STATUS.drift,
+      expected: "protected",
+      actual: "not protected",
+    });
+    expect(summary.total).toBe(1);
+    expect(exitCodeFor(summary)).toBe(1);
+  });
+
+  it("skips with the reason when the token cannot see the protection, and never errors", async () => {
+    const { reconcile, exitCodeFor, STATUS } = await loadEngine();
+    const denied: Array<[number, string]> = [
+      [403, "Resource not accessible by integration"],
+      [404, "Not Found"],
+      [401, "Bad credentials"],
+    ];
+    for (const [status, message] of denied) {
+      const world = greenWorld();
+      world.githubStatus = status;
+      world.githubBody = { message };
+      const { results, summary } = await reconcile(declaration, {
+        env: { GH_TOKEN: TOKENS.GH_TOKEN },
+        fetch: fakeProviders(world).fetch,
+      });
+      const row = protectionOf(results);
+      expect(row.status, `HTTP ${status}`).toBe(STATUS.skipped);
+      expect(row.detail).toContain("needs administration:read");
+      expect(row.detail).toContain(`HTTP ${status}: ${message}`);
+      expect(summary).toMatchObject({ skipped: 1, error: 0, drift: 0, total: 1 });
+      expect(exitCodeFor(summary)).toBe(0);
+      expect(exitCodeFor(summary, { strict: true })).toBe(1);
+    }
+  });
+
+  it("falls back to gh api, and reads its stdout body and stderr status, when no token is set", async () => {
+    const { reconcile, STATUS } = await loadEngine();
+    const execCalls: string[][] = [];
+    const gh =
+      (result: ExecResult) =>
+      (command: string, args: string[]): ExecResult => {
+        execCalls.push([command, ...args]);
+        return result;
+      };
+    const run = (exec: (command: string, args: string[]) => ExecResult) =>
+      reconcile(declaration, {
+        env: {},
+        exec,
+        fetch: async () => {
+          throw new Error("must not fetch without a token");
+        },
+      });
+
+    const green = await run(
+      gh({ ok: true, stdout: JSON.stringify(liveProtection()), stderr: "", missing: false }),
+    );
+    expect(execCalls).toEqual([
+      ["gh", "api", "repos/Nebutra/Nebutra-Sailor/branches/main/protection"],
+    ]);
+    expect(green.summary).toMatchObject({ ok: 4, total: 4 });
+
+    const unprotected = await run(
+      gh({
+        ok: false,
+        stdout: '{"message":"Branch not protected","status":"404"}',
+        stderr: "gh: Branch not protected (HTTP 404)\n",
+        missing: false,
+      }),
+    );
+    expect(protectionOf(unprotected.results)).toMatchObject({
+      status: STATUS.drift,
+      actual: "not protected",
+    });
+
+    // gh reports the status on stderr even when stdout carries no JSON.
+    const hidden = await run(
+      gh({ ok: false, stdout: "", stderr: "gh: Not Found (HTTP 404)\n", missing: false }),
+    );
+    expect(protectionOf(hidden.results).status).toBe(STATUS.skipped);
+    expect(protectionOf(hidden.results).detail).toContain("HTTP 404: Not Found");
+
+    const loggedOut = await run(
+      gh({
+        ok: false,
+        stdout: "",
+        stderr:
+          "gh: To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN environment variable.",
+        missing: false,
+      }),
+    );
+    expect(protectionOf(loggedOut.results)).toMatchObject({ status: STATUS.skipped });
+    expect(protectionOf(loggedOut.results).detail).toContain("gh is not authenticated");
+
+    const absent = await run(
+      gh({ ok: false, stdout: "", stderr: "gh: command not found", missing: true }),
+    );
+    expect(protectionOf(absent.results).detail).toBe("skipped: gh is not installed");
+  });
+
+  it("treats an unreachable GitHub or an unparseable answer as an error", async () => {
+    const { reconcile, exitCodeFor, STATUS } = await loadEngine();
+    const down = await reconcile(declaration, {
+      env: { GH_TOKEN: TOKENS.GH_TOKEN },
+      fetch: async () => {
+        throw new Error("ECONNRESET");
+      },
+    });
+    expect(protectionOf(down.results).status).toBe(STATUS.error);
+    expect(protectionOf(down.results).detail).toContain("ECONNRESET");
+    expect(exitCodeFor(down.summary)).toBe(1);
+
+    const world = greenWorld();
+    world.githubStatus = 500;
+    world.githubBody = { message: "Server Error" };
+    const broken = await reconcile(declaration, {
+      env: { GH_TOKEN: TOKENS.GH_TOKEN },
+      fetch: fakeProviders(world).fetch,
+    });
+    expect(protectionOf(broken.results)).toMatchObject({ status: STATUS.error });
+    expect(protectionOf(broken.results).detail).toContain("HTTP 500");
+  });
+
+  it("percent-encodes a branch name that contains a slash", async () => {
+    const { reconcile } = await loadEngine();
+    const urls: string[] = [];
+    await reconcile(
+      {
+        version: 1,
+        github: { repo: "acme/widgets", branchProtection: [{ branch: "release/1.x" }] },
+      },
+      {
+        env: { GITHUB_TOKEN: TOKENS.GH_TOKEN },
+        fetch: async (url: string) => {
+          urls.push(url);
+          return response(200, liveProtection());
+        },
+      },
+    );
+    expect(urls).toEqual([
+      "https://api.github.com/repos/acme/widgets/branches/release%2F1.x/protection",
+    ]);
   });
 });
 
@@ -779,5 +1233,8 @@ describe("platform-reconcile: daily workflow and docs", () => {
     expect(readme).toContain("envNotSensitive");
     expect(readme).toContain("secretsAbsent");
     expect(readme).toContain("PLATFORM_RECONCILE_GITHUB_VARS");
+    expect(readme).toContain("### github.branchProtection[]");
+    expect(readme).toContain("administration:read");
+    expect(guardrails).toContain("branches/{branch}/protection");
   });
 });

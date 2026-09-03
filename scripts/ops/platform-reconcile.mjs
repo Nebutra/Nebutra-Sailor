@@ -21,8 +21,8 @@
 //
 // It reads only. It never prints a secret value: Fly returns names and
 // digests and only names are kept; Vercel env entries are inspected for `type`
-// and `target` and the `value` field is never read; GitHub variables are
-// configuration, not secrets, by GitHub's own definition.
+// and `target` and the `value` field is never read; GitHub variables and
+// branch protection are configuration, not secrets, by GitHub's own definition.
 //
 // Run:  node scripts/ops/platform-reconcile.mjs ops/<brand>/platform-expected.json [--strict] [--json] [--only=vercel,fly]
 // Env:  VERCEL_TOKEN + VERCEL_ORG_ID (or VERCEL_TEAM_ID)
@@ -32,6 +32,13 @@
 //                                workflow passes `toJSON(vars)` so no token has
 //                                to be able to read Actions variables; without
 //                                it the engine shells out to `gh variable get`.
+//       GH_TOKEN or GITHUB_TOKEN  branch protection, read from
+//                                GET /repos/{owner}/{repo}/branches/{branch}/protection.
+//                                Needs administration:read, which the Actions
+//                                GITHUB_TOKEN cannot hold; without a token the
+//                                engine shells out to `gh api`, which carries
+//                                its own login. A token that cannot see the
+//                                protection reports `skipped`, never `error`.
 // No dependencies beyond Node 22: fetch for HTTP, child_process for flyctl/gh.
 
 import { execFileSync } from "node:child_process";
@@ -50,6 +57,7 @@ export const PROVIDERS = Object.freeze(["vercel", "fly", "github", "cloudflare"]
 
 const VERCEL_API = "https://api.vercel.com";
 const CLOUDFLARE_API = "https://api.cloudflare.com/client/v4";
+const GITHUB_API = "https://api.github.com";
 
 // ---------------------------------------------------------------------------
 // Expectations
@@ -148,6 +156,41 @@ export function validateExpectations(doc) {
             if (typeof value !== "string")
               problems.push(`github.variables.${name} must be a string`);
           }
+        }
+      }
+      if (github.branchProtection !== undefined) {
+        if (!Array.isArray(github.branchProtection)) {
+          problems.push("github.branchProtection must be an array");
+        } else {
+          github.branchProtection.forEach((rule, index) => {
+            const at = `github.branchProtection[${index}]`;
+            if (!isPlainObject(rule) || typeof rule.branch !== "string" || !rule.branch) {
+              problems.push(`${at}.branch must be a non-empty string`);
+              return;
+            }
+            if (
+              rule.requiredStatusChecks !== undefined &&
+              !isStringArray(rule.requiredStatusChecks)
+            ) {
+              problems.push(`${at}.requiredStatusChecks must be a list of status-check contexts`);
+            }
+            if (rule.strict !== undefined && typeof rule.strict !== "boolean") {
+              problems.push(`${at}.strict must be a boolean`);
+            }
+            if (rule.enforceAdmins !== undefined && typeof rule.enforceAdmins !== "boolean") {
+              problems.push(`${at}.enforceAdmins must be a boolean`);
+            }
+            const reviews = rule.requiredApprovingReviewCount;
+            if (
+              reviews !== undefined &&
+              reviews !== null &&
+              !(Number.isInteger(reviews) && reviews >= 0)
+            ) {
+              problems.push(
+                `${at}.requiredApprovingReviewCount must be null or a non-negative integer`,
+              );
+            }
+          });
         }
       }
     }
@@ -519,10 +562,9 @@ function githubVariableSource(spec, ctx) {
   };
 }
 
-function checkGithub(spec, ctx) {
+function checkGithubVariables(spec, ctx, target) {
   const variables = Object.entries(spec?.variables ?? {});
   if (variables.length === 0) return [];
-  const target = spec.repo ?? ctx.env.GITHUB_REPOSITORY ?? "(current repo)";
   const source = githubVariableSource(spec, ctx);
   if (source.kind === "error") {
     return variables.map(([name]) => failed("github", target, `variable ${name}`, source.reason));
@@ -545,6 +587,196 @@ function checkGithub(spec, ctx) {
     );
   }
   return results;
+}
+
+// ---------------------------------------------------------------------------
+// GitHub — branch protection
+//
+// The required status checks on `main` are the one setting that decides what
+// "CI is green" means, and they live only in Settings → Branches. The
+// declaration names the bar; the engine reads
+// GET /repos/{owner}/{repo}/branches/{branch}/protection and reports each
+// declared field. Raising or lowering the bar is a decision made by editing
+// the declaration and then the GitHub setting — never by this engine.
+
+function githubToken(ctx) {
+  return ctx.env.GH_TOKEN || ctx.env.GITHUB_TOKEN || "";
+}
+
+// One GET, through fetch when a token is in the environment and through
+// `gh api` (which carries its own login) otherwise. Both return the shape
+// getJson does, or `{ skip }` when nothing could be asked, so the
+// interpretation below has a single source.
+async function githubProtection(ctx, repo, branch) {
+  const path = `repos/${repo}/branches/${encodeURIComponent(branch)}/protection`;
+  const token = githubToken(ctx);
+  if (token) {
+    return getJson(ctx, `${GITHUB_API}/${path}`, {
+      authorization: `Bearer ${token}`,
+      accept: "application/vnd.github+json",
+      "x-github-api-version": "2022-11-28",
+    });
+  }
+  const run = ctx.exec("gh", ["api", path], ctx.env);
+  if (run.missing) return { skip: "gh is not installed" };
+  let body = null;
+  try {
+    body = JSON.parse(run.stdout);
+  } catch {
+    body = null;
+  }
+  if (run.ok) {
+    return { ok: true, status: 200, body, error: body ? "" : "gh api did not return JSON" };
+  }
+  // On a non-2xx `gh api` prints the response body on stdout and
+  // "gh: <message> (HTTP <status>)" on stderr.
+  const stderr = firstLine(run.stderr);
+  const status = Number(/\(HTTP (\d{3})\)/.exec(stderr)?.[1] ?? 0);
+  if (status) {
+    const message = stderr.replace(/^gh:\s*/, "").replace(/\s*\(HTTP \d{3}\)$/, "");
+    return { ok: false, status, body: isPlainObject(body) ? body : { message }, error: "" };
+  }
+  if (/auth|token|login/i.test(stderr)) return { skip: `gh is not authenticated (${stderr})` };
+  return { ok: false, status: 0, body: null, error: stderr || "gh api failed" };
+}
+
+function listOrNone(list) {
+  return list.length > 0 ? list.join(", ") : "(none)";
+}
+
+function reviewCount(value) {
+  return value === null ? "none" : String(value);
+}
+
+/**
+ * Pure comparison of one branch-protection expectation with the body of
+ * GET /repos/{owner}/{repo}/branches/{branch}/protection. One row per
+ * declared field; a field the declaration leaves out is not reported.
+ */
+export function compareBranchProtection(target, rule, protection) {
+  const results = [];
+  const prefix = `branch ${rule.branch}`;
+  const statusChecks = isPlainObject(protection.required_status_checks)
+    ? protection.required_status_checks
+    : null;
+
+  if (rule.requiredStatusChecks !== undefined) {
+    const expected = [...new Set(rule.requiredStatusChecks)].sort();
+    // `contexts` is the older list and `checks[].context` the current one;
+    // GitHub returns both today and may stop returning the first.
+    const reported = [
+      ...(Array.isArray(statusChecks?.contexts) ? statusChecks.contexts : []),
+      ...(Array.isArray(statusChecks?.checks)
+        ? statusChecks.checks.map((check) => check?.context)
+        : []),
+    ].filter((context) => typeof context === "string" && context.length > 0);
+    const actualSet = new Set(reported);
+    const actual = [...actualSet].sort();
+    const missing = expected.filter((context) => !actualSet.has(context));
+    const extra = actual.filter((context) => !expected.includes(context));
+    const detail = [
+      missing.length > 0 ? `missing: ${missing.join(", ")}` : "",
+      extra.length > 0 ? `extra: ${extra.join(", ")}` : "",
+    ]
+      .filter(Boolean)
+      .join("; ");
+    results.push(
+      row(
+        "github",
+        target,
+        `${prefix} requiredStatusChecks`,
+        missing.length === 0 && extra.length === 0 ? STATUS.ok : STATUS.drift,
+        listOrNone(expected),
+        listOrNone(actual),
+        detail,
+      ),
+    );
+  }
+
+  if (rule.strict !== undefined) {
+    let actual = "(no required status checks)";
+    if (statusChecks) {
+      actual = typeof statusChecks.strict === "boolean" ? statusChecks.strict : "(unset)";
+    }
+    results.push(compare("github", target, `${prefix} strict`, rule.strict, actual));
+  }
+
+  if (rule.enforceAdmins !== undefined) {
+    const enabled = protection.enforce_admins?.enabled;
+    const actual = typeof enabled === "boolean" ? enabled : "(unset)";
+    results.push(compare("github", target, `${prefix} enforceAdmins`, rule.enforceAdmins, actual));
+  }
+
+  if (rule.requiredApprovingReviewCount !== undefined) {
+    const reviews = protection.required_pull_request_reviews;
+    const actual = isPlainObject(reviews)
+      ? Number(reviews.required_approving_review_count ?? 0)
+      : null;
+    results.push(
+      compare(
+        "github",
+        target,
+        `${prefix} requiredApprovingReviewCount`,
+        reviewCount(rule.requiredApprovingReviewCount),
+        reviewCount(actual),
+      ),
+    );
+  }
+
+  return results;
+}
+
+async function checkGithubBranchProtection(spec, ctx, target) {
+  const rules = spec?.branchProtection ?? [];
+  if (rules.length === 0) return [];
+  const repo = spec.repo ?? ctx.env.GITHUB_REPOSITORY ?? "";
+  const results = [];
+  for (const rule of rules) {
+    const check = `branch ${rule.branch} protection`;
+    if (!repo) {
+      results.push(skipped("github", target, check, "no github.repo and no GITHUB_REPOSITORY"));
+      continue;
+    }
+    const result = await githubProtection(ctx, repo, rule.branch);
+    if (result.skip) {
+      results.push(skipped("github", target, check, result.skip));
+      continue;
+    }
+    // Only a reader allowed to see the protection gets these messages, so
+    // they mean the branch changed, not the token.
+    const gone = /^branch not (protected|found)$/i.exec(String(result.body?.message ?? ""));
+    if (result.status === 404 && gone) {
+      results.push(
+        row("github", target, check, STATUS.drift, "protected", `not ${gone[1].toLowerCase()}`),
+      );
+      continue;
+    }
+    if (result.status === 401 || result.status === 403 || result.status === 404) {
+      results.push(
+        skipped(
+          "github",
+          target,
+          check,
+          `token cannot read branch protection, needs administration:read (${apiErrorMessage(result)})`,
+        ),
+      );
+      continue;
+    }
+    if (!result.ok || !isPlainObject(result.body)) {
+      results.push(failed("github", target, check, apiErrorMessage(result)));
+      continue;
+    }
+    results.push(...compareBranchProtection(target, rule, result.body));
+  }
+  return results;
+}
+
+async function checkGithub(spec, ctx) {
+  const target = spec?.repo ?? ctx.env.GITHUB_REPOSITORY ?? "(current repo)";
+  return [
+    ...checkGithubVariables(spec, ctx, target),
+    ...(await checkGithubBranchProtection(spec, ctx, target)),
+  ];
 }
 
 // ---------------------------------------------------------------------------
@@ -616,7 +848,7 @@ export async function reconcile(expectations, options = {}) {
   const results = [];
   if (wants("vercel")) results.push(...(await checkVercel(expectations.vercel, ctx)));
   if (wants("fly")) results.push(...checkFly(expectations.fly, ctx));
-  if (wants("github")) results.push(...checkGithub(expectations.github, ctx));
+  if (wants("github")) results.push(...(await checkGithub(expectations.github, ctx)));
   if (wants("cloudflare")) results.push(...(await checkCloudflare(expectations.cloudflare, ctx)));
 
   return { results, summary: summarize(results) };

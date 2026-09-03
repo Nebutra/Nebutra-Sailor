@@ -54,7 +54,20 @@
     "variables": {
       "DEPLOY_TARGET_SAILOR_DOCS": "fly",
       "DEPLOY_TARGET_GATEWAY": "cloudflare-workers"
-    }
+    },
+    "branchProtection": [
+      {
+        "$comment": "The bar that decides 'CI is green' for main, as GitHub reported it on 2026-09-03. Raising it (Lint & Typecheck, Test, ...) is an owner decision: edit this list, then change Settings → Branches to match.",
+        "branch": "main",
+        "requiredStatusChecks": [
+          "CodeQL Analysis (javascript-typescript)",
+          "CodeQL Analysis (python)"
+        ],
+        "strict": false,
+        "enforceAdmins": false,
+        "requiredApprovingReviewCount": null
+      }
+    ]
   },
   "cloudflare": {
     "workers": [
