@@ -193,8 +193,8 @@ tests/load/
 # lighthouse dashboard, k6 load test, npm package-registry governance, release
 # (changeset publish), visual-acceptance baselines, Nebutra UI governance, and
 # the Nebutra container-registry push.
-# The template KEEPS the generic, secret-free workflows: ci, codeql,
-# secrets-scan, security-scan, dependency-review, dependabot-automerge,
+# The template KEEPS the generic, secret-free workflows: ci, clean-install,
+# codeql, secrets-scan, security-scan, dependency-review, dependabot-automerge,
 # scorecard, labeler, stale, dead-code.
 # ---------------------------------------------------------------------------
 .github/workflows/deploy-ecs.yml

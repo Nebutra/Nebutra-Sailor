@@ -86,6 +86,51 @@ describe("ci harness dependency closure", () => {
     }
   });
 
+  it("proves the frozen install from a clean clone with nothing warm", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/clean-install.yml"),
+      "utf8",
+    );
+
+    // Closure-phase P0 items 3 and 4 (docs/architecture/2026-08-27-closure-phase.md):
+    // one cold `pnpm install --frozen-lockfile`, no warning about a bin or dist.
+    expect(workflow).toContain("permissions:\n  contents: read");
+    expect(workflow).toContain("  pull_request:\n    branches: [main]");
+    expect(workflow).toContain("  push:\n    branches: [main]");
+    expect(workflow).toContain("  schedule:");
+    expect(workflow).toContain("  workflow_dispatch:");
+    expect(workflow).toContain("uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803");
+    expect(workflow).toContain("uses: ./.github/actions/setup-node-pnpm");
+    expect(workflow).toContain('node-version: "22"');
+    // Nothing warm: no setup-node store cache, no actions/cache, no Turbo
+    // remote cache. The shared action's install is off so the one below is
+    // the only install and its output is the one captured.
+    expect(workflow).toContain('cache: ""');
+    expect(workflow).toContain('install: "false"');
+    expect(workflow).not.toContain("actions/cache@");
+    expect(workflow).not.toMatch(/TURBO_(TOKEN|TEAM|REMOTE)/);
+    expect(workflow.match(/^\s*pnpm install --frozen-lockfile\b/gm)).toHaveLength(1);
+    expect(workflow).toContain('pnpm install --frozen-lockfile 2>&1 | tee "$log"');
+    expect(workflow).toContain("status=$" + "{PIPESTATUS[0]}");
+    // A cold install prints benign WARN lines that name package URLs (slow
+    // tarball, ECONNRESET retry), so the match needs pnpm's missing-bin
+    // wording or a bin/dist mention together with a missing-ness phrase.
+    expect(workflow).toContain(
+      'grep -nE "WARN.*(Failed to create bin|(\\bbin\\b|\\bdist\\b).*(doesn.t exist|does not exist|not found|missing|ENOENT))" "$log"',
+    );
+    // The smoke reads every manifest in the workspace; it does not build.
+    expect(workflow).toContain("pnpm verify:release-surface");
+    expect(workflow).toContain("node scripts/print-release-filters.mjs >/dev/null");
+    expect(workflow).not.toContain("pnpm turbo");
+    // Every remote action is pinned to a commit and labelled with its version.
+    const remoteUses = [...workflow.matchAll(/^\s*(?:- )?uses:\s*([^./\s]\S*)(.*)$/gm)];
+    expect(remoteUses.length).toBeGreaterThan(0);
+    for (const [, ref, rest] of remoteUses) {
+      expect(ref, `${ref} is not pinned to a commit SHA`).toMatch(/@[0-9a-f]{40}$/);
+      expect(rest.trim(), `${ref} carries no version comment`).toMatch(/^# v\d/);
+    }
+  });
+
   it("keeps visual acceptance scoped and parallelizable", async () => {
     const workflow = await readFile(
       join(process.cwd(), ".github/workflows/visual-acceptance.yml"),

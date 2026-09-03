@@ -110,6 +110,7 @@ const INSTANCE_WORKFLOW_NAME_PATTERN =
 /** Secret-free workflows a scaffolded project should keep. */
 const GENERIC_WORKFLOWS = [
   "ci.yml",
+  "clean-install.yml",
   "codeql.yml",
   "dead-code.yml",
   "dependabot-automerge.yml",

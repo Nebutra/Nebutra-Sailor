@@ -52,6 +52,7 @@ const MUST_PRESERVE = [
   "docs/ops/cost-guardrails.md",
   "docs/ops/cloudflare-ci-token.md",
   ".github/workflows/ci.yml",
+  ".github/workflows/clean-install.yml",
   "tests/architecture/dependency-flow.test.ts",
 ];
 
