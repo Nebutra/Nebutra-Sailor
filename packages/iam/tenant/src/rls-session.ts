@@ -13,6 +13,16 @@
  * here — rather than once per wrapper — is closure item P1.2: two copies of a
  * security invariant drift, one copy cannot.
  *
+ * Closure P1.3: an `APP_DB_ROLE` that is configured but unusable must refuse
+ * to run rather than quietly drop the role switch and execute as the
+ * connection's own (possibly BYPASSRLS) role. Two shapes of "unusable" are
+ * handled here — `resolveSessionRole` refuses a value that fails
+ * `isValidDbRole`, and `planTenantSession` refuses when the executor cannot
+ * run `$executeRawUnsafe` at all, so the role switch has nowhere to go.
+ * Neither case matters to `getTenantDb` in `@nebutra/db` (`src/client.ts`):
+ * it still carries its own copy of the RLS statements, closes the same gap
+ * with its own verification (`rls-role.ts`), and is unaffected either way.
+ *
  * Not yet routed through here: `getTenantDb` in `@nebutra/db` (`src/client.ts`)
  * still carries its own copy of these statements, with a
  * `SET LOCAL statement_timeout` between the role switch and `set_config`. The
@@ -65,6 +75,39 @@ export function resolveRlsRole(
 }
 
 /**
+ * Resolve `APP_DB_ROLE` the way `resolveRlsRole` does, but fail closed:
+ * when it is set to something that is not a bare SQL identifier, throw
+ * `TenantIsolationError` instead of silently returning `null`.
+ *
+ * Closure P1.3 — `resolveRlsRole`'s null-on-invalid contract is what let an
+ * unusable `APP_DB_ROLE` disable RLS silently: every caller that treated
+ * `null` as "no role configured" ran the query as the connection's own
+ * (possibly BYPASSRLS) role instead of refusing. `resolveRlsRole` keeps that
+ * permissive contract for callers that genuinely want it (diagnostics,
+ * tooling); every tenant-scoped code path resolves the role through this
+ * function instead.
+ *
+ * @throws TenantIsolationError when `APP_DB_ROLE` is set but not a bare SQL
+ *   identifier.
+ */
+export function resolveRlsRoleOrThrow(
+  env: { APP_DB_ROLE?: string | undefined } = process.env,
+): string | null {
+  const role = env.APP_DB_ROLE;
+  if (role === undefined || role === "") return null;
+  if (!isValidDbRole(role)) {
+    throw new TenantIsolationError(
+      `APP_DB_ROLE is set to ${JSON.stringify(role)}, which is not a bare SQL identifier ` +
+        "(expected /^[a-z_][a-z0-9_]*$/). Refusing to run tenant-scoped queries: an invalid " +
+        "role would otherwise be skipped silently, running the query as the connection's own " +
+        "(possibly BYPASSRLS) role instead of under row-level security.",
+      "shared_schema",
+    );
+  }
+  return role;
+}
+
+/**
  * The subset of a Prisma client (or interactive-transaction client) the tenant
  * session needs. `$executeRaw` is tagged-template only so `tenantId` is always
  * bound as a parameter; `$executeRawUnsafe` carries the role switch, whose
@@ -79,7 +122,7 @@ export interface TenantSessionOptions {
   /**
    * Role to assume before scoping the transaction.
    *
-   * - `undefined` (default): resolve from `APP_DB_ROLE` via `resolveRlsRole()`
+   * - `undefined` (default): resolve from `APP_DB_ROLE` via `resolveRlsRoleOrThrow()`
    * - `null`: never switch role (admin / migration paths that must run as owner)
    * - a string: use this validated identifier
    */
@@ -90,7 +133,9 @@ type TenantSessionStatement = () => PromiseLike<number>;
 
 function resolveSessionRole(options: TenantSessionOptions): string | null {
   if (options.role === undefined) {
-    return resolveRlsRole();
+    // Closure P1.3: fail closed on an unusable APP_DB_ROLE instead of the
+    // permissive `resolveRlsRole()` silently treating it as unset.
+    return resolveRlsRoleOrThrow();
   }
   if (options.role === null) {
     return null;
@@ -113,9 +158,11 @@ function resolveSessionRole(options: TenantSessionOptions): string | null {
  *   2. `SELECT set_config('app.current_tenant_id', $1, true)` — transaction-local
  *      (`true`), so it is cleared when the transaction commits or rolls back.
  *
- * A role is skipped when the executor cannot run `$executeRawUnsafe`. That
- * mirrors the pre-merge `withRls` behaviour; closure item P1.3 turns it into a
- * refusal in its own PR.
+ * A role is refused, not skipped, when the executor cannot run
+ * `$executeRawUnsafe`: closure P1.3 turned the pre-merge `withRls` behaviour
+ * (silently skip the role switch) into a refusal, since skipping it here
+ * means the query after it runs as the connection's own role instead of the
+ * one `APP_DB_ROLE` configured.
  */
 function planTenantSession(
   executor: TenantSessionExecutor,
@@ -123,9 +170,18 @@ function planTenantSession(
   role: string | null,
 ): TenantSessionStatement[] {
   const plan: TenantSessionStatement[] = [];
-  const switchRole = executor.$executeRawUnsafe;
 
-  if (role && typeof switchRole === "function") {
+  if (role) {
+    const switchRole = executor.$executeRawUnsafe;
+    if (typeof switchRole !== "function") {
+      throw new TenantIsolationError(
+        `APP_DB_ROLE is set to ${JSON.stringify(role)}, but this executor cannot run ` +
+          "$executeRawUnsafe to SET LOCAL ROLE. Refusing to run tenant-scoped queries: " +
+          "skipping the role switch would run them as the connection's own (possibly " +
+          "BYPASSRLS) role instead of under row-level security.",
+        "shared_schema",
+      );
+    }
     // `role` matched DB_ROLE_PATTERN, so it is safe to interpolate — SET LOCAL
     // ROLE cannot take a bind parameter.
     plan.push(() => switchRole.call(executor, `SET LOCAL ROLE "${role}"`));

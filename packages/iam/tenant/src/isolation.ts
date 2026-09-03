@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
 import {
-  resolveRlsRole,
+  resolveRlsRoleOrThrow,
   TENANT_SESSION_EXPRESSION,
   type TenantSessionExecutor,
   tenantSessionOperations,
@@ -15,6 +15,7 @@ export {
   applyTenantSession,
   isValidDbRole,
   resolveRlsRole,
+  resolveRlsRoleOrThrow,
   TENANT_SESSION_EXPRESSION,
   TENANT_SESSION_SETTING,
   type TenantSessionExecutor,
@@ -216,7 +217,9 @@ export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string)
     );
   }
 
-  const rlsRole = resolveRlsRole();
+  // Closure P1.3: an unusable APP_DB_ROLE (not a bare SQL identifier) throws
+  // here instead of resolving to null and silently running without RLS.
+  const rlsRole = resolveRlsRoleOrThrow();
   if (process.env.NODE_ENV === "production" && !rlsRole) {
     throw new TenantIsolationError(
       "APP_DB_ROLE is required in production so withRls cannot run as a BYPASSRLS owner",

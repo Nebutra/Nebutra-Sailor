@@ -18,7 +18,8 @@ client, and the shared database runtime used across the monorepo.
 - Migration history: `prisma/migrations/`
 - Seed entrypoints: `prisma/seed.ts` and `scripts/seed-model-configs.ts`
 - Public package surface: `src/index.ts`
-- Shared client and tenancy boundaries: `src/client.ts`, `src/rls.ts`, `src/pool.ts`
+- Shared client and tenancy boundaries: `src/client.ts`, `src/rls.ts`,
+  `src/rls-role.ts`, `src/pool.ts`
 - `src/rls.ts` (`withTenantContext` / `withAdminContext`) does not write the
   tenant-session SQL itself: it runs `applyTenantSession` from
   `@nebutra/tenant/isolation`, the same core `withRls` uses. Keep it that way
@@ -31,6 +32,17 @@ client, and the shared database runtime used across the monorepo.
   `tenantSessionOperations`, keeping the `statement_timeout` between the role
   switch and `set_config`, and swap the literal pins for delegation asserts.
   Until then it is the one copy outside the core; do not add another.
+- `src/rls-role.ts` (closure P1.3) verifies that an `APP_DB_ROLE` set on
+  `client.ts` is actually usable — a bare SQL identifier *and* a role
+  Postgres grants — before `getTenantDb()` trusts it, throwing instead of
+  letting an unusable role fall through to running the query without the
+  role switch. Verified once per process (`createRlsRoleVerifier`) and
+  deliberately free of any `@nebutra/*` or Prisma import so it stays unit
+  testable (`src/rls-role.test.ts`) without a package build. The equivalent
+  gap in the tenant session core itself (`resolveRlsRoleOrThrow`,
+  `planTenantSession` in `packages/iam/tenant/src/rls-session.ts`) is what
+  `withRls` and `withTenantContext` run through; `rls-role.ts` exists only
+  because `client.ts` has not yet been routed onto that core (see above).
 
 If behavior is derived from the schema, change the schema first and regenerate
 the client in the same change.

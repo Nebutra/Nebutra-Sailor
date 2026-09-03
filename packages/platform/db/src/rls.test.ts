@@ -155,16 +155,16 @@ describe("withTenantContext and withRls share one tenant session", () => {
     expect(viaRls).toEqual(viaTenantContext);
   });
 
-  it("ignores an APP_DB_ROLE that is not a bare identifier on both paths", async () => {
+  // Closure P1.3 — the failing case: before this PR, an invalid APP_DB_ROLE
+  // was silently ignored on both paths (see git history for the assertion
+  // this replaced: `expectedStatements("org_1", null)` — no role switch, no
+  // refusal, the query ran as the connection's own possibly-BYPASSRLS role).
+  // Regression case: both paths must refuse instead of running unisolated.
+  it("refuses an APP_DB_ROLE that is not a bare identifier on both paths", async () => {
     process.env.APP_DB_ROLE = 'app_user"; DROP ROLE postgres; --';
 
-    const [viaTenantContext, viaRls] = await Promise.all([
-      statementsFromWithTenantContext("org_1"),
-      statementsFromWithRls("org_1"),
-    ]);
-
-    expect(viaTenantContext).toEqual(expectedStatements("org_1", null));
-    expect(viaRls).toEqual(viaTenantContext);
+    await expect(statementsFromWithTenantContext("org_1")).rejects.toThrow(/bare SQL identifier/);
+    await expect(statementsFromWithRls("org_1")).rejects.toThrow(/bare SQL identifier/);
   });
 
   it("binds tenantId as a parameter on both paths", async () => {
