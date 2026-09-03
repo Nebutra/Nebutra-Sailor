@@ -39,6 +39,10 @@ Do not treat `.next/` or `public/` as consumption truth. Browser stills come fro
 - Garment SKUs carry a cut spec: size, color, material, and centimetre measures (衣长 / 裤长 / 胸围 / 袖长 / 肩宽 / 腰围 / 臀围). Omit a measure when it does not apply. Do not invent bottoms just to fill 裤长.
 - Every SKU carries `origin` + `brand`. Platform-listed rows seal to `KUANLAN©️`. User-uploaded rows (not open) keep their own brand. Do not invent upload or VLM. Do not put the brand mark into shoot briefs.
 - Disabled SKUs fail closed. Public list and compose both require `enabled: true`.
+- Keep the print, never the portrait it was made from. The uploaded original goes to
+  the model and is then dropped; it is not written to any bucket. Deleting a Moment
+  removes the print and any `.source` left by the version that used to store one.
+  Do not reintroduce that write — it had no reader for its whole life.
 - Resource writes fail closed without `CLOUDFLARE_ACCOUNT_ID` + `R2_ACCESS_KEY_ID` + `R2_SECRET_ACCESS_KEY`. Do not fall back to disk or response blobs.
 - 开拍 consume fails closed without `ROUTER_API_KEY` (router.nebutra.com product key). Default model is `gpt-image-2` at `https://router.nebutra.com/v1`. Do not put a 302.ai key in this app.
 - File inputs use `data-allow-native`. No native `<select>`.
