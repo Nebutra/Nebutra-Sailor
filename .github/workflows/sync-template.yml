@@ -54,7 +54,9 @@ jobs:
         # template-build stamps scripts/sailor-version.mjs's answer into the
         # marker. Read it back from the built artifact, not from the source
         # tree, so the tag pushed below can never disagree with what the
-        # mirror says about itself.
+        # mirror says about itself. `sailorVersionConverged` is false until
+        # the first lockstep release moves every group member to the number;
+        # the tag step below tags only once it is true.
         run: |
           set -euo pipefail
           version="$(node -p 'JSON.parse(require("node:fs").readFileSync("/tmp/sailor-template/.sailor-template.json", "utf8")).sailorVersion')"
@@ -65,8 +67,17 @@ jobs:
               exit 1
               ;;
           esac
+          converged="$(node -p 'String(JSON.parse(require("node:fs").readFileSync("/tmp/sailor-template/.sailor-template.json", "utf8")).sailorVersionConverged)')"
+          case "$converged" in
+            true|false) ;;
+            *)
+              echo "::error::.sailor-template.json carries no usable sailorVersionConverged (got '${converged}')"
+              exit 1
+              ;;
+          esac
           echo "sailor_version=${version}" >> "$GITHUB_OUTPUT"
-          echo "Sailor version: ${version}"
+          echo "sailor_converged=${converged}" >> "$GITHUB_OUTPUT"
+          echo "Sailor version: ${version} (converged: ${converged})"
 
       - name: Package template bundle
         run: |
@@ -95,10 +106,12 @@ jobs:
           ssh-keyscan -t ed25519,rsa github.com >> ~/.ssh/known_hosts 2>/dev/null
 
       - name: Push to Sailor-Template (via SSH deploy key)
+        id: push
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
         env:
           SRC_SHA: ${{ github.sha }}
           SAILOR_VERSION: ${{ steps.sailor.outputs.sailor_version }}
+          SAILOR_CONVERGED: ${{ steps.sailor.outputs.sailor_converged }}
           GIT_SSH_COMMAND: "ssh -i ~/.ssh/sailor_template -o IdentitiesOnly=yes"
         run: |
           set -euo pipefail
@@ -117,20 +130,30 @@ jobs:
 
           # One tag per sailor version — the lockstep number of the core +
           # runtime graph (TEMPLATE.md "Sailor version"). Created by the first
-          # sync that carries the version and never moved afterwards, so
-          # v<x> stays a stable ref while main and source-<sha> advance.
+          # sync at which every group member carries the version, and never
+          # moved afterwards, so v<x> stays a stable ref while main and
+          # source-<sha> advance. Until the first lockstep release only one
+          # package is at the number, and a v<x> tag would name a tree that
+          # is not at x — so no tag until the marker says converged.
           SAILOR_TAG="v${SAILOR_VERSION}"
-          if git ls-remote --exit-code --tags origin "refs/tags/${SAILOR_TAG}" >/dev/null; then
-            echo "Tag ${SAILOR_TAG} already exists on the mirror; leaving it in place"
+          if [ "${SAILOR_CONVERGED}" != "true" ]; then
+            echo "Group has not converged on ${SAILOR_VERSION} yet (first lockstep release pending); not tagging ${SAILOR_TAG}"
+            echo "sailor_tag=${SAILOR_TAG} not created — group not converged" >> "$GITHUB_OUTPUT"
           else
-            rc=$?
-            if [ "$rc" -ne 2 ]; then
-              echo "::error::git ls-remote failed (exit ${rc}) while looking for ${SAILOR_TAG}"
-              exit "$rc"
+            if git ls-remote --exit-code --tags origin "refs/tags/${SAILOR_TAG}" >/dev/null; then
+              echo "Tag ${SAILOR_TAG} already exists on the mirror; leaving it in place"
+              echo "sailor_tag=${SAILOR_TAG} already existed — left in place" >> "$GITHUB_OUTPUT"
+            else
+              rc=$?
+              if [ "$rc" -ne 2 ]; then
+                echo "::error::git ls-remote failed (exit ${rc}) while looking for ${SAILOR_TAG}"
+                exit "$rc"
+              fi
+              git tag -a "${SAILOR_TAG}" -m "Sailor ${SAILOR_VERSION} (source ${SRC_SHA})"
+              git push -q origin "refs/tags/${SAILOR_TAG}"
+              echo "Tagged ${SAILOR_TAG}"
+              echo "sailor_tag=${SAILOR_TAG} created" >> "$GITHUB_OUTPUT"
             fi
-            git tag -a "${SAILOR_TAG}" -m "Sailor ${SAILOR_VERSION} (source ${SRC_SHA})"
-            git push -q origin "refs/tags/${SAILOR_TAG}"
-            echo "Tagged ${SAILOR_TAG}"
           fi
 
       - name: Upload template bundle
@@ -154,6 +177,7 @@ jobs:
             echo "- Source SHA: \`${{ github.sha }}\`"
             echo "- File count: $(find /tmp/sailor-template -type f | wc -l)"
             echo "- Immutable tag: \`source-${{ github.sha }}\`"
-            echo "- Sailor version tag: \`v${{ steps.sailor.outputs.sailor_version }}\` (created on first sync at this version)"
+            echo "- Sailor version: \`${{ steps.sailor.outputs.sailor_version }}\` (converged: ${{ steps.sailor.outputs.sailor_converged }})"
+            echo "- Sailor version tag: ${{ steps.push.outputs.sailor_tag || 'not pushed (dry run)' }}"
             echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}"
           } >> "$GITHUB_STEP_SUMMARY"

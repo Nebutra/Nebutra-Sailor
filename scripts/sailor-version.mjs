@@ -12,7 +12,11 @@
  *
  * Changesets converges a fixed group on the highest version currently in it
  * (@changesets/assemble-release-plan `matchFixedConstraint`), so until the
- * first lockstep release the sailor version is simply that maximum.
+ * first lockstep release the sailor version is simply that maximum, and the
+ * group is not yet *converged*: only the package that carries the maximum is
+ * actually at that number. `--json` reports both, and the template build
+ * stamps them into the mirror's marker so sync-template.yml tags the mirror
+ * `v<x>` only once every member really is at `x`.
  *
  * This script is the source of the group. The config file is a projection of
  * it, and tests/architecture/sailor-version.test.ts fails when they disagree,
@@ -23,6 +27,7 @@
  *   node scripts/sailor-version.mjs --group    # print the group, one name per line
  *   node scripts/sailor-version.mjs --check    # exit 1 when config.json's fixed group drifts
  *   node scripts/sailor-version.mjs --write    # rewrite config.json's fixed group
+ *   node scripts/sailor-version.mjs --json     # { version, converged, packages } for tooling
  */
 import { readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -118,6 +123,26 @@ export function getSailorVersion(root = process.cwd()) {
     });
 }
 
+/**
+ * True once every member carries the sailor version — i.e. after the first
+ * lockstep release. Before that, `v<sailorVersion>` would name a tree in which
+ * only one package is at that number, so the mirror is not tagged.
+ */
+export function isSailorGroupConverged(root = process.cwd()) {
+  return getSailorStatus(root).converged;
+}
+
+/** What tooling (scripts/template-build.ts) reads: one JSON object, one line. */
+export function getSailorStatus(root = process.cwd()) {
+  const group = computeSailorGroup(root);
+  const version = getSailorVersion(root);
+  return {
+    version,
+    converged: group.every((item) => item.version === version),
+    packages: group.length,
+  };
+}
+
 export function readChangesetConfig(root = process.cwd()) {
   return JSON.parse(readFileSync(join(root, CHANGESET_CONFIG), "utf8"));
 }
@@ -197,12 +222,13 @@ export function writeSailorGroup(root = process.cwd()) {
 
 function usage() {
   return [
-    "Usage: node scripts/sailor-version.mjs [--group | --check | --write]",
+    "Usage: node scripts/sailor-version.mjs [--group | --check | --write | --json]",
     "",
     "  (no flag)  print the current sailor version — the highest version in the group",
     "  --group    print the fixed group (publishable core + runtime packages), one per line",
     "  --check    exit 1 when .changeset/config.json's fixed group differs from the group",
     "  --write    rewrite .changeset/config.json's fixed group",
+    "  --json     print { version, converged, packages } as one JSON line",
     "",
   ].join("\n");
 }
@@ -213,8 +239,9 @@ export function main(argv = process.argv.slice(2), root = process.cwd()) {
     process.stdout.write(usage());
     return 0;
   }
-  const modes = ["--group", "--check", "--write"].filter((flag) => flags.has(flag));
-  const unknown = argv.filter((arg) => !["--group", "--check", "--write"].includes(arg));
+  const MODES = ["--group", "--check", "--write", "--json"];
+  const modes = MODES.filter((flag) => flags.has(flag));
+  const unknown = argv.filter((arg) => !MODES.includes(arg));
   if (unknown.length > 0 || modes.length > 1) {
     process.stderr.write(usage());
     return 2;
@@ -233,14 +260,22 @@ export function main(argv = process.argv.slice(2), root = process.cwd()) {
     return 0;
   }
 
+  if (modes[0] === "--json") {
+    process.stdout.write(`${JSON.stringify(getSailorStatus(root))}\n`);
+    return 0;
+  }
+
   if (modes[0] === "--check") {
     const result = checkSailorGroup(root);
     if (!result.ok) {
       process.stderr.write(`${formatDrift(result)}\n`);
       return 1;
     }
+    const behind = result.group.filter((item) => item.version !== result.version).length;
+    const convergence =
+      behind === 0 ? "converged" : `${behind} still behind — the next lockstep release moves them`;
     process.stdout.write(
-      `[sailor-version] fixed group matches: ${result.group.length} packages at sailor version ${result.version}\n`,
+      `[sailor-version] fixed group matches: ${result.group.length} packages at sailor version ${result.version} (${convergence})\n`,
     );
     return 0;
   }

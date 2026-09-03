@@ -10,7 +10,9 @@ import {
   checkSailorGroup,
   compareVersions,
   computeSailorGroup,
+  getSailorStatus,
   getSailorVersion,
+  isSailorGroupConverged,
 } from "../../scripts/sailor-version.mjs";
 
 /**
@@ -24,6 +26,11 @@ import {
  * The first block asserts the repo's config against the computed group. The
  * second runs the CLI against a throwaway workspace whose config drifts on
  * purpose, so the guard is seen failing before it is trusted to pass.
+ *
+ * Source-only: this file reads sync-template.yml and TEMPLATE.md, which the
+ * template strips, and asserts the source repo's fixed group, which the mirror
+ * deliberately does not carry (scripts/template-build.ts empties it). It is
+ * listed in .templateignore, and the last block checks that it stays listed.
  */
 
 const REPO_ROOT = join(import.meta.dirname, "../..");
@@ -107,6 +114,18 @@ describe("sailor version — the repo's fixed group", () => {
     const printed = runScript(REPO_ROOT, "--group").stdout.trim().split("\n");
     expect(printed).toEqual(result.group.map((item) => item.name));
     expect(runScript(REPO_ROOT, "--check").status).toBe(0);
+  });
+
+  it("reports convergence as a fact about every member, not just the highest one", () => {
+    const status = getSailorStatus(REPO_ROOT);
+    const version = getSailorVersion(REPO_ROOT);
+    expect(status.version).toBe(version);
+    expect(status.packages).toBe(result.group.length);
+    // False until the first lockstep release moves all 41 to one number; true
+    // from then on. Either way it must be the truth about the whole group.
+    expect(status.converged).toBe(result.group.every((item) => item.version === version));
+    expect(isSailorGroupConverged(REPO_ROOT)).toBe(status.converged);
+    expect(JSON.parse(runScript(REPO_ROOT, "--json").stdout)).toEqual(status);
   });
 });
 
@@ -234,7 +253,30 @@ describe("sailor version — the guard fails on drift (fixture workspace)", () =
     expect(config.linked).toEqual([]);
     const run = runScript(root, "--check");
     expect(run.status, run.stderr).toBe(0);
-    expect(run.stdout).toContain("2 packages at sailor version 0.10.0");
+    expect(run.stdout).toContain("2 packages at sailor version 0.10.0 (1 still behind");
+  });
+
+  it("is not converged while one member lags, and is once every member carries the version", () => {
+    expect(isSailorGroupConverged(root)).toBe(false);
+    expect(JSON.parse(runScript(root, "--json").stdout)).toEqual({
+      version: "0.10.0",
+      converged: false,
+      packages: 2,
+    });
+
+    // The first lockstep release: changesets moves alpha up to the group's number.
+    writePackage(
+      "packages/x/alpha",
+      { name: "@probe/alpha", version: "0.10.0" },
+      { graph: "core", status: "foundation" },
+    );
+    expect(isSailorGroupConverged(root)).toBe(true);
+    expect(JSON.parse(runScript(root, "--json").stdout)).toEqual({
+      version: "0.10.0",
+      converged: true,
+      packages: 2,
+    });
+    expect(runScript(root, "--check").stdout).toContain("at sailor version 0.10.0 (converged)");
   });
 });
 
@@ -242,28 +284,58 @@ describe("sailor version — the mirror carries it", () => {
   const workflow = readFileSync(join(REPO_ROOT, ".github/workflows/sync-template.yml"), "utf8");
   const build = readFileSync(join(REPO_ROOT, "scripts/template-build.ts"), "utf8");
 
-  it("template-build stamps sailorVersion into the marker from scripts/sailor-version.mjs", () => {
+  it("template-build stamps sailorVersion and sailorVersionConverged into the marker from the script", () => {
     expect(build).toContain("scripts/sailor-version.mjs");
-    expect(build).toMatch(/sailorVersion/);
+    expect(build).toContain('"--json"');
+    expect(build).toMatch(/sailorVersion: sailor\.version/);
+    expect(build).toMatch(/sailorVersionConverged: sailor\.converged/);
   });
 
-  it("sync-template tags the mirror v<sailorVersion> only when the tag is absent, keeping source-<sha>", () => {
+  it("template-build empties the mirror's fixed group, since the mirror never publishes and scaffolds prune members", () => {
+    expect(build).toMatch(/config\.fixed = \[\]/);
+    expect(build).toContain("clearChangesetFixedGroup(out)");
+  });
+
+  it("sync-template tags the mirror v<sailorVersion> only once converged and only when absent, keeping source-<sha>", () => {
     expect(workflow).toContain('TEMPLATE_TAG="source-$' + '{SRC_SHA}"');
     expect(workflow).toContain(".sailorVersion");
+    expect(workflow).toContain(".sailorVersionConverged");
     expect(workflow).toContain('SAILOR_TAG="v$' + '{SAILOR_VERSION}"');
-    expect(workflow).toMatch(
+    // The convergence gate sits in front of the tag lookup: no tag for a
+    // tree in which only one package carries the number.
+    const gate = workflow.indexOf('if [ "$' + '{SAILOR_CONVERGED}" != "true" ]; then');
+    const lookup = workflow.search(
       /git ls-remote --exit-code --tags origin "refs\/tags\/\$\{SAILOR_TAG\}"/,
     );
+    expect(gate).toBeGreaterThan(-1);
+    expect(lookup).toBeGreaterThan(gate);
     expect(workflow).toContain('git push -q origin "refs/tags/$' + '{SAILOR_TAG}"');
     // Never a forced tag push: a tag that exists is left where it is.
     expect(workflow).not.toMatch(/push[^\n]*--force[^\n]*refs\/tags\/\$\{SAILOR_TAG\}/);
     expect(workflow).not.toMatch(/git tag -[a-z]*f/);
   });
 
-  it("TEMPLATE.md explains the lockstep and the tag", () => {
+  it("sync-template reports the tag outcome from the push step, not unconditionally", () => {
+    // A workflow_dispatch dry run skips the push step; the summary must not
+    // claim a tag was created. The outcome is a step output, empty when skipped.
+    expect(workflow).toContain("steps.push.outputs.sailor_tag");
+    expect(workflow).not.toContain("(created on first sync at this version)");
+    expect(workflow).toMatch(/^\s+id: push$/m);
+  });
+
+  it("TEMPLATE.md explains the lockstep, the convergence gate and the emptied mirror group", () => {
     const doc = readFileSync(join(REPO_ROOT, "TEMPLATE.md"), "utf8");
     expect(doc).toMatch(/^## Sailor version$/m);
     expect(doc).toContain("scripts/sailor-version.mjs");
     expect(doc).toContain("sailorVersion");
+    expect(doc).toContain("sailorVersionConverged");
+    expect(doc).toContain("`fixed: []`");
+  });
+
+  it("stays out of the template: this file reads what the template strips", () => {
+    const ignore = readFileSync(join(REPO_ROOT, ".templateignore"), "utf8").split("\n");
+    expect(ignore).toContain("tests/architecture/sailor-version.test.ts");
+    expect(ignore).toContain(".github/workflows/sync-template.yml");
+    expect(ignore).toContain("TEMPLATE.md");
   });
 });

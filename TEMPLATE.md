@@ -123,14 +123,32 @@ node scripts/sailor-version.mjs --write    # regenerate the fixed group
 
 `tests/architecture/sailor-version.test.ts` runs the check, so a new core or
 runtime package must join the group before it merges — or declare a different
-`nebutra.graph`, if the classification is what is wrong.
+`nebutra.graph`, if the classification is what is wrong. The test is
+source-only (`.templateignore` lists it): it reads `sync-template.yml` and
+this file, and the mirror's config does not carry the group — see below.
 
-The template build stamps the same number into `.sailor-template.json` as
-`sailorVersion`, and `sync-template.yml` tags the mirror `v<sailorVersion>`
-on the first sync that carries that version. The tag is never moved: later
-syncs at the same version keep it where it is, and `source-<sha>` still marks
-every sync individually. `SAILOR_TEMPLATE_REF=v<sailorVersion>` therefore
-scaffolds from the tree that first carried those package versions.
+Until the first lockstep release the group is not *converged*: the sailor
+version is the highest number in the group, and only the package that carries
+it is actually at that number (`node scripts/sailor-version.mjs --json` says
+`"converged": false`). `changeset version` then moves every member to one
+number, and from there on they stay together.
+
+The template build stamps both into `.sailor-template.json`, as
+`sailorVersion` and `sailorVersionConverged`. `sync-template.yml` tags the
+mirror `v<sailorVersion>` on the first sync at which the marker says
+converged, and never before — so no `v<x>` tag exists for the pre-lockstep
+snapshot, and the first tag is the first lockstep release. The tag is never
+moved: later syncs at the same version keep it where it is, and
+`source-<sha>` still marks every sync individually.
+`SAILOR_TEMPLATE_REF=v<sailorVersion>` therefore scaffolds from the first
+tree in which every core and runtime package carries that version.
+
+The mirror itself does **not** carry the `fixed` group: the template build
+rewrites `.changeset/config.json` there with `fixed: []`. The mirror never
+publishes (`release.yml` is stripped), and a scaffold may prune group
+members (`create-sailor --no-webhooks` deletes `packages/integrations/webhooks`),
+which `@changesets/config` would reject on the first `pnpm changeset` if the
+name were still listed. The number travels in the marker and the tag instead.
 
 ## Adding new Nebutra business code
 
