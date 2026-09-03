@@ -352,3 +352,6 @@ scripts/redeploy-web-auth-vercel.mjs
 tests/architecture/deploy-substrate.test.ts
 tests/architecture/deployment-runtime-closure.test.ts
 tests/architecture/template-boundary.test.ts
+# The residue baseline names every identifier it pins — shipping it would make
+# it a carrier of each one.
+tests/architecture/template-residue.baseline.json
