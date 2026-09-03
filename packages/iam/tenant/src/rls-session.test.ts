@@ -9,6 +9,7 @@ import {
   type TenantSessionExecutor,
   tenantSessionOperations,
 } from "./rls-session";
+import { TenantIsolationError } from "./types";
 
 interface Statement {
   sql: string;
@@ -108,7 +109,7 @@ describe("tenant session core", () => {
     expect(statements[0]?.sql).not.toContain("org_2");
   });
 
-  it("only accepts a bare SQL identifier as the role", () => {
+  it("only accepts a bare SQL identifier as the role", async () => {
     expect(isValidDbRole("app_user")).toBe(true);
     expect(isValidDbRole("_role1")).toBe(true);
     expect(isValidDbRole("App_User")).toBe(false);
@@ -121,8 +122,15 @@ describe("tenant session core", () => {
     expect(resolveRlsRole({})).toBeNull();
 
     const { executor, statements } = recordingExecutor();
-    expect(() => tenantSessionOperations(executor, "org_1", { role: 'app"user' })).toThrow(
-      /bare SQL identifier/,
+    const rejectRole = () => tenantSessionOperations(executor, "org_1", { role: 'app"user' });
+    expect(rejectRole).toThrow(TenantIsolationError);
+    expect(rejectRole).toThrow(/bare SQL identifier/);
+    expect(statements).toEqual([]);
+
+    // Same refusal type on the interactive shape, so direct callers of either
+    // entry point see the package's own error rather than a bare Error.
+    await expect(applyTenantSession(executor, "org_1", { role: "App_User" })).rejects.toThrow(
+      TenantIsolationError,
     );
     expect(statements).toEqual([]);
   });
@@ -154,10 +162,11 @@ describe("tenant session core", () => {
   });
 
   // Pre-merge `withRls` parity: an executor without `$executeRawUnsafe` cannot
-  // switch role, and today that is skipped rather than refused. Closure item
-  // P1.3 turns this into a refusal in its own PR; this test pins the current
-  // contract so that change is visible when it lands.
-  it("skips the role switch when the executor cannot run unsafe SQL", () => {
+  // switch role, and today that is skipped rather than refused. This is NOT the
+  // desired contract — it is the gap closure item P1.3 closes (by throwing
+  // `TenantIsolationError`). The test pins the current behaviour so the P1.3
+  // PR has to flip it deliberately rather than change it in passing.
+  it("P1.3 gap: currently skips the role switch when the executor cannot run unsafe SQL", () => {
     const { executor, statements } = recordingExecutor({ unsafe: false });
 
     tenantSessionOperations(executor, "org_1", { role: "app_user" });

@@ -376,7 +376,9 @@ interface TenantConfig {
   The tenant session core: the transaction-local `SET LOCAL ROLE` (from `APP_DB_ROLE`) and
   `set_config('app.current_tenant_id', …, true)` statements. `withRls` runs it as a batch
   transaction; `withTenantContext` in `@nebutra/db/rls` runs it inside an interactive
-  transaction. One implementation, two shapes — do not write these statements elsewhere.
+  transaction. One implementation, two shapes — new wrappers run the core rather than
+  restating the statements. (`getTenantDb` in `@nebutra/db` still carries its own copy
+  until the P1.2 follow-up routes it through `tenantSessionOperations`.)
 - `resolveRlsRole(env?)` / `isValidDbRole(role)` — `APP_DB_ROLE` resolved as a bare SQL identifier
 - `TENANT_SESSION_SETTING` / `TENANT_SESSION_EXPRESSION` — the setting key the policies read and
   the wrappers write

@@ -1,23 +1,31 @@
 /**
- * Tenant session core — the ONE place that knows how a PostgreSQL transaction
- * is scoped to a tenant for row-level security.
- *
- * Both public wrappers issue exactly the statements this module produces:
+ * Tenant session core — how a PostgreSQL transaction is scoped to a tenant for
+ * row-level security, shared by both public wrappers:
  *
  *   - `withRls(prisma, tenantId)`              (`@nebutra/tenant/isolation`)
  *   - `withTenantContext(prisma, tenantId, cb)` (`@nebutra/db/rls`)
  *
- * The RLS policies (`generateRlsPolicySql`, migration `20260313000000_enable_rls`)
- * read `current_setting('app.current_tenant_id', true)`; the wrappers write the
- * same key through `set_config(..., true)`, so the value is transaction-local
- * and cannot leak across pooled connections. Keeping the key and the statements
- * here — rather than once per package — is closure item P1.2: two copies of a
+ * Both issue exactly the statements this module produces. The RLS policies
+ * (`generateRlsPolicySql`, migration `20260313000000_enable_rls`) read
+ * `current_setting('app.current_tenant_id', true)`; the wrappers write the same
+ * key through `set_config(..., true)`, so the value is transaction-local and
+ * cannot leak across pooled connections. Keeping the key and the statements
+ * here — rather than once per wrapper — is closure item P1.2: two copies of a
  * security invariant drift, one copy cannot.
  *
- * This module deliberately has no runtime imports: `@nebutra/db` consumes it,
- * and it must stay usable from any Prisma-like executor (interactive
- * transaction, batch transaction, or a client extension).
+ * Not yet routed through here: `getTenantDb` in `@nebutra/db` (`src/client.ts`)
+ * still carries its own copy of these statements, with a
+ * `SET LOCAL statement_timeout` between the role switch and `set_config`. The
+ * P1.2 follow-up moves it onto `tenantSessionOperations`; until then that copy
+ * is the one other place these statements exist, and it must not gain siblings.
+ *
+ * This module imports nothing outside `@nebutra/tenant` (only `./types`, whose
+ * sole dependency is zod): `@nebutra/db` consumes it, and it must stay usable
+ * from any Prisma-like executor (interactive transaction, batch transaction, or
+ * a client extension).
  */
+
+import { TenantIsolationError } from "./types";
 
 /** PostgreSQL session setting the RLS policies compare `tenant_id` against. */
 export const TENANT_SESSION_SETTING = "app.current_tenant_id";
@@ -88,8 +96,9 @@ function resolveSessionRole(options: TenantSessionOptions): string | null {
     return null;
   }
   if (!isValidDbRole(options.role)) {
-    throw new Error(
+    throw new TenantIsolationError(
       `Tenant session role must be a bare SQL identifier (got ${JSON.stringify(options.role)})`,
+      "shared_schema",
     );
   }
   return options.role;

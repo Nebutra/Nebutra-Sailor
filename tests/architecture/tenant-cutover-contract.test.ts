@@ -21,6 +21,11 @@ describe("Tenant cutover contract", () => {
 
     expect(client).toContain("export function getTenantDb(tenantId: string): PrismaClient");
     expect(client).toContain("requires a non-empty tenantId");
+    // `getTenantDb` still carries its own copy of the tenant-session statements
+    // (with `SET LOCAL statement_timeout` in between). The P1.2 follow-up routes
+    // it through `tenantSessionOperations` and replaces these literal pins with
+    // the delegation assertions used for `rls.ts` below.
+    expect(client).toContain("P1.2 follow-up: route through tenantSessionOperations");
     expect(client).toContain("const RLS_ROLE =");
     expect(client).toContain("process.env.APP_DB_ROLE");
     expect(client).toContain('client.$executeRawUnsafe(`SET LOCAL ROLE "$' + '{RLS_ROLE}"`)');
@@ -38,7 +43,7 @@ describe("Tenant cutover contract", () => {
     expect(rls).not.toContain("All tenant-scoped RLS policies compare `organization_id`");
   });
 
-  it("keeps one implementation of the tenant session behind withRls and withTenantContext", async () => {
+  it("runs withRls and withTenantContext through the shared tenant session core", async () => {
     const [session, isolation, rls, dbPackage] = await Promise.all([
       readFile(join(process.cwd(), "packages/iam/tenant/src/rls-session.ts"), "utf8"),
       readFile(join(process.cwd(), "packages/iam/tenant/src/isolation.ts"), "utf8"),
@@ -46,7 +51,9 @@ describe("Tenant cutover contract", () => {
       readFile(join(process.cwd(), "packages/platform/db/package.json"), "utf8"),
     ]);
 
-    // The statements live in exactly one file (closure P1.2).
+    // The core owns the statements both wrappers run (closure P1.2). The only
+    // other copy is `getTenantDb` in `packages/platform/db/src/client.ts`,
+    // pinned above until the P1.2 follow-up routes it through the core.
     expect(session).toContain('export const TENANT_SESSION_SETTING = "app.current_tenant_id";');
     expect(session).toContain("set_config('app.current_tenant_id', $" + "{tenantId}, true)");
     expect(session).toContain('SET LOCAL ROLE "$' + '{role}"');
