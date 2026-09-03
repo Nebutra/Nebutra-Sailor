@@ -17,7 +17,6 @@ export function SearchBar({
         aria-label="告诉观澜"
         autoComplete="off"
       />
-      <span className="search-spark" aria-hidden />
     </form>
   );
 }
