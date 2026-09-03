@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { listIdPhotoSkus, parseIdPhotoRef, toPublicIdPhoto } from "@/catalog/skus";
+import { FaceNotice } from "@/components/FaceNotice";
+import type { ConsentGap } from "@/lib/consent";
 
 type Status = "idle" | "shooting" | "ready" | "error";
 
@@ -29,6 +31,8 @@ export function IdPhotoStudio({
   const [status, setStatus] = useState<Status>("idle");
   const [note, setNote] = useState("");
   const [remainingToday, setRemainingToday] = useState<number | null>(null);
+  const [consentGap, setConsentGap] = useState<ConsentGap | null>(null);
+  const [agreeing, setAgreeing] = useState(false);
   const [needsSignIn, setNeedsSignIn] = useState(false);
 
   const selected = skus.find((sku) => sku.id === skuId);
@@ -46,7 +50,29 @@ export function IdPhotoStudio({
     setStatus("idle");
     setNote("");
     setNeedsSignIn(false);
+    setConsentGap(null);
     setPreview(next ? URL.createObjectURL(next) : null);
+  }
+
+  async function agree() {
+    setAgreeing(true);
+    try {
+      const response = await fetch("/api/consent/face", { method: "POST" });
+      if (!response.ok) {
+        setAgreeing(false);
+        setStatus("error");
+        setNote("这一刻记不下来。再试一次。");
+        return;
+      }
+      setConsentGap(null);
+      setAgreeing(false);
+      // They already asked to shoot; the notice interrupted it. Carry on.
+      await shoot();
+    } catch {
+      setAgreeing(false);
+      setStatus("error");
+      setNote("这一刻记不下来。再试一次。");
+    }
   }
 
   async function shoot() {
@@ -72,6 +98,13 @@ export function IdPhotoStudio({
       if (!response.ok) {
         setStatus("error");
         setNeedsSignIn(response.status === 401);
+        if (response.status === 403) {
+          const refused = (await response.json().catch(() => ({}))) as { gap?: ConsentGap };
+          // Not an error state: nothing went wrong, we just have not asked yet.
+          setStatus("idle");
+          setConsentGap(refused.gap ?? "never");
+          return;
+        }
         if (response.status === 429) {
           const refused = (await response.json().catch(() => ({}))) as { scope?: string };
           setNote(
@@ -217,6 +250,8 @@ export function IdPhotoStudio({
           </>
         ) : null}
       </div>
+
+      {consentGap ? <FaceNotice gap={consentGap} busy={agreeing} onAgree={agree} /> : null}
 
       {status === "ready" ? (
         <p className="note">

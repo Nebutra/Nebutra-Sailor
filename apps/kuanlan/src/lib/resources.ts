@@ -65,6 +65,20 @@ export function wardrobeSampleSrc(id: string, base?: string): string {
   return `${publicAssetUrl(wardrobeSampleKey(id), base)}?v=incamera`;
 }
 
+/**
+ * Where one person's face-processing consent lives.
+ *
+ * Private bucket, one object per person, keyed by the same validated user id
+ * the Moments prefix uses — so a caller can no more read someone else's consent
+ * than they can delete someone else's Moment.
+ */
+export function consentObjectKey(userId: string): string {
+  if (!MOMENT_ID.test(userId)) {
+    throw new InvalidResourceKeyError("user_id");
+  }
+  return `${RESOURCE_ROOT}/consent/${userId}.json`;
+}
+
 export function momentUserPrefix(userId: string): string {
   if (!MOMENT_ID.test(userId)) {
     throw new InvalidResourceKeyError("user_id");

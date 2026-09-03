@@ -1,5 +1,7 @@
 import { resolveIdPhotoPrint, SkuUnavailableError } from "@/catalog/skus";
 import { getSessionFromRequest } from "@/lib/auth";
+import { consentGap } from "@/lib/consent";
+import { readFaceConsent } from "@/lib/consent.server";
 import {
   Image2UnavailableError,
   idPhotoShootBrief,
@@ -67,6 +69,26 @@ export async function POST(request: Request) {
   // and nothing below this line is free once it starts.
   const started = Date.now();
   const log = shootLog(session.userId);
+
+  // Consent is asked before the ceiling on purpose: being turned away for a
+  // notice you have not read should not also cost you one of today's shots.
+  let gap: ReturnType<typeof consentGap>;
+  try {
+    gap = consentGap(await readFaceConsent(session.userId));
+  } catch (error) {
+    // The store is the only place consent lives. If it cannot be read we do not
+    // know whether this person agreed, and a face goes to a third party either
+    // way — so this refuses rather than assumes.
+    log.error("consent unreadable; refusing the shoot", error);
+    return Response.json({ error: "unavailable" }, { status: 503 });
+  }
+  if (gap) {
+    log.info("shoot refused for consent", { gap });
+    return Response.json(
+      { error: "consent_required", gap },
+      { status: 403, headers: { "Cache-Control": "no-store" } },
+    );
+  }
 
   const allowance = await spendShootAllowance(session.userId);
   if (!allowance.allowed) {
