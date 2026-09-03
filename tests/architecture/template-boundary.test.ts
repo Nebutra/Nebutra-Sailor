@@ -42,8 +42,19 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
  * an entry: package.json `repository` / `bugs` / `homepage` and
  * .changeset/config.json may point at the source repo — see slugScanText.
  *
- * The scan walks whatever the build copied, so an untracked local file that
- * carries an identifier fails here exactly as it would ship in the mirror.
+ * Host identifiers also match their regex-escaped form (`api\.nebutra\.com`),
+ * the shape a URL matcher takes in shipped source: apps/web/sentry.client.config.ts
+ * pointed Sentry trace headers at Nebutra's API that way, and the plain
+ * literals never saw it.
+ *
+ * Local runs scan whatever the build copied from disk, minus the files
+ * `git check-ignore` reports: the mirror is built by CI from a clean checkout,
+ * so a gitignored local file (a scratch note, a *.tsbuildinfo, an
+ * apps/web/.env.development) never ships and must not fail here. An untracked
+ * file that is not ignored is scanned — it ships the moment it is committed.
+ * CI is authoritative. Text files over MAX_SCAN_BYTES are left unread and
+ * reported, not dropped: KNOWN_OVERSIZED pins the lockfile as the one such
+ * file, so the blind spot is declared rather than silent.
  */
 
 const REPO_ROOT = join(import.meta.dirname, "../..");
@@ -54,17 +65,19 @@ const BASELINE_PATH = join(REPO_ROOT, BASELINE_REL);
 /**
  * Every literal that is true for Nebutra's deployment or its source repo and
  * for no other scaffold. Keys name the identifier in the baseline file; values
- * are tested against each shipped text file. No `g` flags — `test()` on a
- * global regex keeps `lastIndex` between calls.
+ * are tested against each shipped text file. Dotted hosts and the IP accept
+ * an optional backslash before each dot (`\\?\.`), so the escaped form inside
+ * a regex literal counts too. No `g` flags — `test()` on a global regex keeps
+ * `lastIndex` between calls.
  */
 const IDENTIFIERS = {
-  "nebutra.com": /\bnebutra\.com\b/i, // the zone and every subdomain of it
-  "api.nebutra.com": /\bapi\.nebutra\.com\b/i, // the gateway host, counted on its own
-  "nebutra-*.fly.dev": /\bnebutra-[\w-]*\.fly\.dev\b/i, // Fly apps in Nebutra's org
+  "nebutra.com": /\bnebutra\\?\.com\b/i, // the zone and every subdomain of it
+  "api.nebutra.com": /\bapi\\?\.nebutra\\?\.com\b/i, // the gateway host, counted on its own
+  "nebutra-*.fly.dev": /\bnebutra-[\w-]*\\?\.fly\\?\.dev\b/i, // Fly apps in Nebutra's org
   "nebutra-gateway": /\bnebutra-gateway\b/, // Fly app, `-edge` Worker, `-secret` env
   "nebutra-auth": /\bnebutra-auth\b/,
   "nebutra-web": /\bnebutra-web\b/, // `\b` keeps the nebutra-web3 container name out
-  "106.15.4.31": /\b106\.15\.4\.31\b/, // the ECS origin
+  "106.15.4.31": /\b106\\?\.15\\?\.4\\?\.31\b/, // the ECS origin
   team_c6eOa4: /\bteam_c6eOa4/, // the Vercel team id (prefix — the full id is longer)
   "next-seagull": /\bnext-seagull\b/,
   "Nebutra/Nebutra-Sailor": /\bNebutra\/Nebutra-Sailor\b/i, // the source-repo slug
@@ -160,39 +173,80 @@ const PRODUCT_SURVIVORS = [
   "tests/architecture/doc-claims-drift.test.ts",
 ];
 
+/**
+ * Shipped text files above MAX_SCAN_BYTES, which the scan leaves unread. The
+ * lockfile is the only one today — and the one place a git dependency on the
+ * source repo or a Nebutra-hosted registry URL would land, so it sits outside
+ * the ratchet by the size cap, on record here. A new one must be classified:
+ * add it here or .templateignore it.
+ */
+const KNOWN_OVERSIZED = ["pnpm-lock.yaml"];
+
 /** identifier → the shipped files (posix paths from the template root) that carry it. */
 type Residue = Record<Identifier, Set<string>>;
 /** The same shape on disk: identifier → sorted, duplicate-free path list. */
 type Baseline = Record<Identifier, string[]>;
+/** What one pass found: carriers per identifier, plus the text files the size cap left unread. */
+type Scan = { residue: Residue; oversized: string[] };
 
 let out = "";
 let residue: Residue;
+let oversized: string[] = [];
 
-function walkFiles(root: string, visit: (abs: string, rel: string) => void): void {
+/** Every regular file under `root`, with its posix path relative to `root`. */
+function listFiles(root: string): { abs: string; rel: string }[] {
+  const files: { abs: string; rel: string }[] = [];
   const walk = (dir: string) => {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
       const abs = join(dir, entry.name);
       if (entry.isDirectory()) walk(abs);
-      else if (entry.isFile()) visit(abs, relative(root, abs).split("\\").join("/"));
+      else if (entry.isFile()) files.push({ abs, rel: relative(root, abs).split("\\").join("/") });
     }
   };
   walk(root);
+  return files;
 }
 
 /** Files above this are skipped: nothing that size is a workflow, manifest, doc or source file. */
 const MAX_SCAN_BYTES = 1024 * 1024;
 
-function readText(abs: string): string | null {
+/** A file's text, or why the scan leaves it unread. */
+type Contents = { text: string } | { skip: "binary" | "oversized" | "unreadable" };
+
+function readContents(abs: string): Contents {
   // Read first, then bound: a stat-then-read pair is a check/use race (CodeQL js/file-system-race).
   let buf: Buffer;
   try {
     buf = readFileSync(abs);
   } catch {
-    return null;
+    return { skip: "unreadable" };
   }
-  if (buf.length > MAX_SCAN_BYTES) return null;
-  if (buf.subarray(0, 8192).includes(0)) return null; // binary
-  return buf.toString("utf8");
+  if (buf.subarray(0, 8192).includes(0)) return { skip: "binary" };
+  if (buf.length > MAX_SCAN_BYTES) return { skip: "oversized" };
+  return { text: buf.toString("utf8") };
+}
+
+/**
+ * The subset of `rels` (paths from the repo root) that .gitignore rules cover.
+ * The built template is a straight copy of the source tree, so a template
+ * path is a source path. Tracked files are never reported; build-injected
+ * ones (NOTICE.md, .sailor-template.json) match no rule. If git is missing
+ * or exits non-zero — exit 1 is "nothing ignored" — everything is scanned,
+ * the strict direction.
+ */
+function gitIgnored(rels: string[]): ReadonlySet<string> {
+  if (rels.length === 0) return new Set();
+  try {
+    const stdout = execFileSync("git", ["check-ignore", "--stdin", "-z"], {
+      cwd: REPO_ROOT,
+      input: rels.join("\0"),
+      stdio: ["pipe", "pipe", "ignore"],
+      maxBuffer: 64 * 1024 * 1024,
+    });
+    return new Set(stdout.toString("utf8").split("\0").filter(Boolean));
+  } catch {
+    return new Set();
+  }
 }
 
 /**
@@ -220,19 +274,34 @@ function emptyResidue(): Residue {
   return Object.fromEntries(IDENTIFIER_NAMES.map((id) => [id, new Set<string>()])) as Residue;
 }
 
-/** One pass over `root`: every text file is read once and tested against every identifier. */
-function scanResidue(root: string): Residue {
+/**
+ * One pass over `root`: every text file is read once and tested against every
+ * identifier. `skipRels` sees the whole path list first and names the files to
+ * leave unread (the gitignored ones, for the real build).
+ */
+function scanResidue(
+  root: string,
+  skipRels: (rels: string[]) => ReadonlySet<string> = () => new Set(),
+): Scan {
   const found = emptyResidue();
-  if (!existsSync(root)) return found;
-  walkFiles(root, (abs, rel) => {
-    const text = readText(abs);
-    if (text === null) return;
+  const large: string[] = [];
+  if (!existsSync(root)) return { residue: found, oversized: large };
+  const files = listFiles(root);
+  const skip = skipRels(files.map((f) => f.rel));
+  for (const { abs, rel } of files) {
+    if (skip.has(rel)) continue;
+    const contents = readContents(abs);
+    if ("skip" in contents) {
+      if (contents.skip === "oversized") large.push(rel);
+      continue;
+    }
     for (const id of IDENTIFIER_NAMES) {
-      const haystack = id === "Nebutra/Nebutra-Sailor" ? slugScanText(rel, text) : text;
+      const haystack =
+        id === "Nebutra/Nebutra-Sailor" ? slugScanText(rel, contents.text) : contents.text;
       if (haystack !== null && IDENTIFIERS[id].test(haystack)) found[id].add(rel);
     }
-  });
-  return found;
+  }
+  return { residue: found, oversized: large.sort() };
 }
 
 function readBaseline(): Baseline {
@@ -268,7 +337,7 @@ beforeAll(() => {
   if (!existsSync(join(out, ".sailor-template.json"))) {
     throw new Error(`template build produced no .sailor-template.json marker in ${out}`);
   }
-  residue = scanResidue(out);
+  ({ residue, oversized } = scanResidue(out, gitIgnored));
 }, BUILD_TIMEOUT_MS);
 
 afterAll(() => {
@@ -419,6 +488,14 @@ describe("template boundary — residue baseline (shrink-only)", () => {
         `the list may only shrink:\n${fixed.join("\n")}`,
     ).toEqual([]);
   });
+
+  it("leaves only the lockfile unread for size — anything else over 1 MiB must be classified", () => {
+    expect(
+      oversized,
+      `shipped text files over ${MAX_SCAN_BYTES} bytes are outside the ratchet; ` +
+        "add each to KNOWN_OVERSIZED or .templateignore it",
+    ).toEqual(KNOWN_OVERSIZED);
+  });
 });
 
 describe("template boundary — residue scanner rules", () => {
@@ -436,6 +513,12 @@ describe("template boundary — residue scanner rules", () => {
     write("docs/zone.md", "mail is user@nebutra.com; docs at docs.nebutra.com");
     write("docs/fly.md", "app nebutra-gateway-edge, origin nebutra-web.fly.dev, ip 106.15.4.31");
     write("docs/near-miss.md", "nebutra-web3 nebutra.community 106.15.4.310 @nebutra/webhooks");
+    // The regex-escaped host, as sentry.client.config.ts wrote it — and the escaped near-misses.
+    write("src/sentry.ts", "tracePropagationTargets: [/^https:\\/\\/api\\.nebutra\\.com/]");
+    write(
+      "src/matchers.ts",
+      "/nebutra-web\\.fly\\.dev$/ /^106\\.15\\.4\\.31$/ /nebutra\\.community/",
+    );
     write(
       "package.json",
       JSON.stringify({
@@ -469,28 +552,52 @@ describe("template boundary — residue scanner rules", () => {
     if (fixture) rmSync(fixture, { recursive: true, force: true });
   });
 
-  it("reports each identifier's carriers, subdomains included, and nothing adjacent", () => {
-    const found = scanResidue(fixture);
-    expect([...found["api.nebutra.com"]]).toEqual(["docs/host.md"]);
-    expect([...found["nebutra.com"]].sort()).toEqual(["docs/host.md", "docs/zone.md"]);
+  it("reports each identifier's carriers, subdomains and escaped forms included, and nothing adjacent", () => {
+    const found = scanResidue(fixture).residue;
+    expect([...found["api.nebutra.com"]].sort()).toEqual(["docs/host.md", "src/sentry.ts"]);
+    expect([...found["nebutra.com"]].sort()).toEqual([
+      "docs/host.md",
+      "docs/zone.md",
+      "src/sentry.ts",
+    ]);
     expect([...found["nebutra-gateway"]]).toEqual(["docs/fly.md"]);
-    expect([...found["nebutra-*.fly.dev"]]).toEqual(["docs/fly.md"]);
-    expect([...found["nebutra-web"]]).toEqual(["docs/fly.md"]);
-    expect([...found["106.15.4.31"]]).toEqual(["docs/fly.md"]);
+    expect([...found["nebutra-*.fly.dev"]].sort()).toEqual(["docs/fly.md", "src/matchers.ts"]);
+    expect([...found["nebutra-web"]].sort()).toEqual(["docs/fly.md", "src/matchers.ts"]);
+    expect([...found["106.15.4.31"]].sort()).toEqual(["docs/fly.md", "src/matchers.ts"]);
     expect([...found["nebutra-auth"]]).toEqual([]);
     expect([...found.team_c6eOa4]).toEqual([]);
     expect([...found["next-seagull"]]).toEqual([]);
   });
 
-  it("skips binary files and files over 1 MiB", () => {
-    const found = scanResidue(fixture);
-    const all = new Set(IDENTIFIER_NAMES.flatMap((id) => [...found[id]]));
+  it("skips binary files, and reports rather than hides the text files over 1 MiB", () => {
+    const scan = scanResidue(fixture);
+    const all = new Set(IDENTIFIER_NAMES.flatMap((id) => [...scan.residue[id]]));
     expect(all.has("assets/blob.bin")).toBe(false);
     expect(all.has("assets/huge.txt")).toBe(false);
+    expect(scan.oversized).toEqual(["assets/huge.txt"]);
+  });
+
+  it("leaves unread whatever the caller names, so a gitignored local file cannot fail the build scan", () => {
+    const found = scanResidue(fixture, (rels) => {
+      expect(rels).toContain("docs/host.md");
+      return new Set(["docs/host.md"]);
+    }).residue;
+    expect([...found["api.nebutra.com"]]).toEqual(["src/sentry.ts"]);
+  });
+
+  it("asks git which source paths are ignored — tracked and build-injected paths never are", () => {
+    const ignored = gitIgnored([
+      "apps/web/.env.local", // apps/web/.gitignore: `.env*`
+      "apps/web/tsconfig.tsbuildinfo", // apps/web/.gitignore: `*.tsbuildinfo`
+      "package.json", // tracked
+      "NOTICE.md", // injected by the build, absent from the source tree
+      ".sailor-template.json",
+    ]);
+    expect([...ignored].sort()).toEqual(["apps/web/.env.local", "apps/web/tsconfig.tsbuildinfo"]);
   });
 
   it("lets package.json repository/bugs/homepage and .changeset/config.json carry the slug, nothing else", () => {
-    const found = scanResidue(fixture);
+    const found = scanResidue(fixture).residue;
     expect([...found["Nebutra/Nebutra-Sailor"]].sort()).toEqual([
       "apps/x/package.json", // slug in `description` still counts
       "docs/slug.md",

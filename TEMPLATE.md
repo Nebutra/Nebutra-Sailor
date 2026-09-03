@@ -68,13 +68,18 @@ replacement does not rewrite Fly app names.
 directories, none of those workflows or manifests, and no Nebutra identifier
 (`nebutra.com` and its subdomains, `nebutra-gateway` / `-auth` / `-web`,
 `nebutra-*.fly.dev`, the ECS IP, the Vercel team id, the GitHub slug) in any
-shipped file outside `tests/architecture/template-residue.baseline.json`. That
-baseline was generated once from the build and may only shrink: a new carrier
-fails, and so does an entry that no longer matches. Adding a Nebutra host, IP
-or account id to a file that ships fails that test; the fix is to move the
-file into one of the three homes or list it in `.templateignore`, not to add a
-baseline entry. The one rule-based exemption is the source-repo slug in
-`package.json` `repository` / `bugs` / `homepage` and `.changeset/config.json`.
+shipped file outside `tests/architecture/template-residue.baseline.json`. The
+hosts and the IP count in their regex-escaped form too (`api\.nebutra\.com`
+inside a URL matcher). That baseline was generated once from the build and may
+only shrink: a new carrier fails, and so does an entry that no longer matches.
+Adding a Nebutra host, IP or account id to a file that ships fails that test;
+the fix is to move the file into one of the three homes or list it in
+`.templateignore`, not to add a baseline entry. The one rule-based exemption is
+the source-repo slug in `package.json` `repository` / `bugs` / `homepage` and
+`.changeset/config.json`. Text files over 1 MiB are outside the scan — today
+that is `pnpm-lock.yaml` alone, pinned in the test so a new one has to be
+classified. Local runs skip gitignored files (they never reach the mirror,
+which CI builds from a clean checkout); CI is authoritative.
 
 When a shipped doc has to point at instance content (a runbook, an instance
 test, a stripped script or deploy kit), mark the link "(source repo only)" so a
