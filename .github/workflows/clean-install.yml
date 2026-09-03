@@ -1,0 +1,100 @@
+name: Clean Clone Install
+
+# Closure phase, P0 item 3 (docs/architecture/2026-08-27-closure-phase.md):
+# from a fresh clone, one `pnpm install --frozen-lockfile` must succeed with no
+# manual repair — and, item 4, without a warning about a CLI bin that points at
+# a missing dist. Only bins pnpm actually links are covered: a workspace `bin`
+# that no manifest depends on is never linked, so it is never warned about.
+# Every other workflow restores a pnpm store cache before it installs, so a
+# lockfile or bin regression can hide behind a warm cache for weeks. This job
+# restores nothing: no actions/cache, no setup-node store cache, no Turbo
+# remote cache. It is the proof, not the fast path — ci.yml stays the fast path.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    # Weekly, with no diff to blame: catches registry-side drift (a yanked
+    # tarball, a changed integrity) that only a cold install can see.
+    - cron: "41 5 * * 1" # Monday 05:41 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Cancel only PR runs. `schedule` and `push` to main both resolve to
+  # refs/heads/main, so a weekly cron firing mid-run would otherwise cancel
+  # that commit's proof (status "cancelled", not green), and vice versa.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  frozen-install:
+    name: Frozen install from a clean clone
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Keep the captured install log grep-able.
+      NO_COLOR: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      # The shared action installs pnpm at package.json#packageManager and
+      # Node 22; ci-harness-closure keeps every workflow on it. `cache: ""`
+      # turns setup-node's pnpm store cache off, and `install: "false"` leaves
+      # the install to the step below, which is the one under test.
+      - name: Setup Node.js and pnpm (no cache)
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: "22"
+          cache: ""
+          install: "false"
+
+      - name: Assert nothing is warm
+        run: |
+          node --version
+          pnpm --version
+          if [ -e node_modules ]; then
+            echo "::error::node_modules exists before the install — the checkout is not clean"
+            exit 1
+          fi
+          store="$(pnpm store path)"
+          if [ -d "$store" ] && [ -n "$(ls -A "$store")" ]; then
+            echo "::error::pnpm store at $store is already populated — the install would not be cold"
+            exit 1
+          fi
+          echo "cold: no node_modules, nothing in the store at $store"
+
+      - name: Frozen install (once, output captured)
+        run: |
+          log="$RUNNER_TEMP/pnpm-install.log"
+          set +e
+          pnpm install --frozen-lockfile 2>&1 | tee "$log"
+          status=${PIPESTATUS[0]}
+          set -e
+          if [ "$status" -ne 0 ]; then
+            echo "::error::frozen install exited $status on a clean clone (closure-phase P0 item 3)"
+            exit "$status"
+          fi
+          # A bin that points at an unbuilt dist installs "successfully" and
+          # fails at first use; pnpm only warns. Treat the warning as the
+          # failure it is. A cold install also prints benign WARN lines that
+          # name package URLs (slow tarball, ECONNRESET retry), so the match
+          # needs pnpm's missing-bin wording, or a bin/dist mention together
+          # with a missing-ness phrase — not the bare word.
+          if grep -nE "WARN.*(Failed to create bin|(\bbin\b|\bdist\b).*(doesn.t exist|does not exist|not found|missing|ENOENT))" "$log"; then
+            echo "::error::install warned about a CLI bin or dist that does not exist on a clean clone (closure-phase P0 item 4)"
+            exit 1
+          fi
+          echo "frozen install clean: no bin/dist warnings in $(wc -l < "$log") lines of output"
+
+      # Not a build: proves the workspace graph resolves from what the install
+      # alone produced. Both read every package manifest in the workspace.
+      - name: Smoke — the workspace resolves
+        run: |
+          pnpm verify:release-surface
+          node scripts/print-release-filters.mjs >/dev/null
