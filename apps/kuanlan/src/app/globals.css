@@ -548,11 +548,33 @@ a.auth-link:hover {
   color: var(--canvas);
 }
 
+.sku-still {
+  position: relative;
+  display: block;
+}
+
 .sku-card img {
   width: 100%;
   height: auto;
   border-radius: var(--tile);
   background: var(--pill);
+}
+
+.sku-card img.sku-source {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 32%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 1px solid var(--pill);
+  border-radius: calc(var(--tile) - 4px);
+  background: var(--pill);
+}
+
+.sku-card[data-active="true"] .sku-source {
+  border-color: var(--canvas);
 }
 
 .sku-name {
