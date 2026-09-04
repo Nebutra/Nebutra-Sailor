@@ -263,7 +263,13 @@ jobs:
   license-check:
     name: License Compliance
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    # 5 was sized for a smaller production graph and started timing out — the
+    # job was being cancelled by its own budget rather than reporting a
+    # licence. `license-checker` walks every production dependency, and that
+    # set grew when apps picked up @nebutra/logger, whose OpenTelemetry chain
+    # is a regular dependency rather than a dev one. The step also npx-installs
+    # license-checker itself on every run before it can start.
+    timeout-minutes: 12
     needs: detect-changes
     # Useful on both source and template; cheap enough to always run after profile detect.
     steps:
