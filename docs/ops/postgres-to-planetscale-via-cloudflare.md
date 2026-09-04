@@ -86,6 +86,31 @@ already carry the pre-2026-03 baseline — i.e. the existing Supabase one.
 This sequence was validated end to end on a virgin PostgreSQL 17.8 with
 `vector 0.8.1` — the same extension version PlanetScale ships.
 
+## Adding the `app_user` role after the cutover already happened
+
+The cutover above is done — production has run on this PlanetScale database
+since #515 — but `app_user` was never created there and `APP_DB_ROLE` was
+never set (closure P1.3). `provision-fresh-database.sh` cannot fix that: it
+refuses any target that already has tables. Use its companion instead, which
+skips schema creation, is idempotent, and does not touch `DATABASE_URL`:
+
+```bash
+export APP_DB_PASSWORD="$(openssl rand -base64 24)"   # keep this; it is the role's own credential
+scripts/provision-rls-role-existing-database.sh \
+  "<PlanetScale admin url>" \
+  "<current DATABASE_URL value>"
+```
+
+It creates `app_user` (`NOSUPERUSER NOBYPASSRLS`), (re-)applies
+`infra/data/database/policies/rls.sql` and `cost-guardrails.sql`, grants the
+*current* connecting role membership in `app_user` (`SET LOCAL ROLE` requires
+that membership — packages/iam/tenant/src/rls-session.ts issues it once per
+tenant-scoped transaction), and runs the same probe-tenant isolation
+self-check as the fresh-database script, plus one more: that `SET LOCAL ROLE`
+from the current role actually succeeds. `DATABASE_URL` does not change.
+Once it passes, the only production change is setting `APP_DB_ROLE=app_user`
+where the gateway runs.
+
 ## Cut over
 
 1. `wrangler hyperdrive create nebutra-prod --connection-string="<admin url>"`.
