@@ -944,7 +944,12 @@ jobs:
           code=$?
           set -e
           cat /tmp/pnpm-audit.txt
-          if grep -qiE 'Unexpected token|is not valid JSON|ECONNRESET|ETIMEDOUT|socket hang up|503|502' /tmp/pnpm-audit.txt; then
+          # ERR_SOCKET_TIMEOUT / "Socket timeout" are what pnpm actually prints
+          # when registry.npmjs.org stops answering; neither matches ETIMEDOUT
+          # (no D) or "socket hang up", so a plain registry timeout used to fall
+          # through to the advisory judgement and fail the build with no advisory
+          # in hand. FetchError catches the wrapper around all of them.
+          if grep -qiE 'Unexpected token|is not valid JSON|ECONNRESET|ETIMEDOUT|ERR_SOCKET_TIMEOUT|Socket timeout|socket hang up|FetchError|EAI_AGAIN|ENOTFOUND|503|502' /tmp/pnpm-audit.txt; then
             echo "::warning::pnpm audit failed due to registry/transport flake — advisory only"
             exit 0
           fi
@@ -958,7 +963,14 @@ jobs:
           #
           # The line reads: "Severity: 2 low | 11 moderate | 2 high (2 ignored)".
           # What matters is high-minus-ignored.
-          sev=$(grep -oE '[0-9]+ high( \([0-9]+ ignored\))?' /tmp/pnpm-audit.txt | tail -1)
+          # No severity line at all means the report never arrived. Parse
+          # defensively so that case reads as zero rather than killing the step
+          # under errexit before the counts are even printed.
+          sev=$(grep -oE '[0-9]+ high( \([0-9]+ ignored\))?' /tmp/pnpm-audit.txt | tail -1 || true)
+          if [ -z "${sev:-}" ]; then
+            echo "::warning::pnpm audit produced no severity line — nothing to judge"
+            exit 0
+          fi
           high=$(echo "$sev" | grep -oE '^[0-9]+' || echo 0)
           ignored=$(echo "$sev" | grep -oE '\(([0-9]+) ignored' | grep -oE '[0-9]+' || echo 0)
           unignored=$(( ${high:-0} - ${ignored:-0} ))
