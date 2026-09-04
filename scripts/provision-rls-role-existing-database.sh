@@ -161,12 +161,12 @@ say "Done"
 cat <<EOF
 DATABASE_URL is unchanged — the connection identity does not need to move.
 Set only this where the application runs (e.g. \`fly secrets set\` on
-nebutra-gateway):
+whichever app hosts the gateway):
 
   APP_DB_ROLE=$APP_ROLE
 
 Every tenant-scoped transaction will then SET LOCAL ROLE "$APP_ROLE" before
 running, which is what actually turns the RLS policies from inert to
-enforced. Confirm with: fly logs -a nebutra-gateway | grep -i app_db_role
+enforced. Confirm with: fly logs -a <app> | grep -i app_db_role
 (should show nothing) after deploying.
 EOF
