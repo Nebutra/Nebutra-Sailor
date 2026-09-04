@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/tts",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Provider-agnostic text-to-speech / narration synthesis. Zero-config deterministic mock default; ElevenLabs/OpenAI/Volces adapters wired via the shared provider-factory pattern.",
   "private": false,
   "license": "MIT",

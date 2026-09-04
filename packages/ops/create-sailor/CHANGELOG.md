@@ -1,5 +1,11 @@
 # create-sailor
 
+## 1.10.1
+
+### Patch Changes
+
+- [`08c23c3`](https://github.com/Nebutra/Nebutra-Sailor/commit/08c23c373364f59dc979a486739a991259238c7f) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - `templates/infra/ops/platform-expected.example.json` gains `github.branchProtection[]` — the required status checks, up-to-date rule, admin enforcement and review count a protected branch must carry — so `scripts/ops/platform-reconcile.mjs` reports when the bar that decides "CI is green" changes in the GitHub UI. Read from `GET /repos/{owner}/{repo}/branches/{branch}/protection`; a token without `administration:read` reports the row as skipped, never as an error.
+
 ## 1.10.0
 
 ### Minor Changes

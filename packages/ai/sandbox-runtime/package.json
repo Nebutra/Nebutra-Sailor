@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/sandbox-runtime",
-  "version": "0.1.4",
+  "version": "2.0.0",
   "description": "Unified sandbox runtime router for local and remote execution providers",
   "private": false,
   "license": "MIT",

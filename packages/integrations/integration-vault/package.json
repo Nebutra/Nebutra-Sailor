@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/integration-vault",
-  "version": "0.1.3",
+  "version": "2.0.0",
   "description": "Tenant-scoped SaaS OAuth and credential vault for tool calling",
   "private": false,
   "license": "MIT",

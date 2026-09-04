@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/billing",
-  "version": "0.1.4",
+  "version": "2.0.0",
   "description": "Billing & Monetization infrastructure for Nebutra - Stripe integration, subscriptions, usage, credits",
   "private": false,
   "license": "MIT",
@@ -16,7 +16,7 @@
     ],
     "gaps": [
       "Provider adapters need credentials before they do anything: STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET, POLAR_ACCESS_TOKEN, LEMONSQUEEZY_API_KEY, CHINAPAY_APP_SECRET",
-      "Persistence is host-owned \u2014 the package ships no prisma/ schema and reads the client through @nebutra/db",
+      "Persistence is host-owned — the package ships no prisma/ schema and reads the client through @nebutra/db",
       "No UI surface: checkout, portal and invoice screens are the consuming app's"
     ]
   },

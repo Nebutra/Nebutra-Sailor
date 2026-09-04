@@ -1,5 +1,22 @@
 # @nebutra/brand-genesis
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/video-pipeline@0.1.4
+  - @nebutra/capability-kit@2.0.0
+  - @nebutra/errors@2.0.0
+  - @nebutra/event-log@2.0.0
+  - @nebutra/3d-pipeline@0.1.4
+  - @nebutra/audio-pipeline@0.1.4
+  - @nebutra/content-store@0.1.5
+  - @nebutra/image-pipeline@0.1.4
+  - @nebutra/play-loader@0.1.4
+  - @nebutra/voice-realtime@0.1.4
+  - @nebutra/generation-context@0.1.4
+
 ## 0.2.2
 
 ### Patch Changes

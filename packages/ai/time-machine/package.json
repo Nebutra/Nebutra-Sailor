@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/time-machine",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Chronos product surface for timeline browsing, branching, comparison, and rollback previews",
   "private": false,
   "license": "MIT",

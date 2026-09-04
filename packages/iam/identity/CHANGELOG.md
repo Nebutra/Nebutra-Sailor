@@ -1,5 +1,12 @@
 # @nebutra/identity
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/contracts@2.0.0
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,5 +1,41 @@
 # @nebutra/web
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`0ea06f4`](https://github.com/Nebutra/Nebutra-Sailor/commit/0ea06f4b7ca492d20911a3d68a8c4da16c680dc0), [`6162a58`](https://github.com/Nebutra/Nebutra-Sailor/commit/6162a585df12b3cd924092d2db15e61f6af2f61e), [`025abf8`](https://github.com/Nebutra/Nebutra-Sailor/commit/025abf8b94aad96ffe56f50632a094782a30b968)]:
+  - @nebutra/db@0.1.3
+  - @nebutra/brand@2.0.0
+  - @nebutra/startup-os@0.1.2
+  - @nebutra/auth@1.0.0
+  - @nebutra/feature-flags@0.1.4
+  - @nebutra/repositories@0.0.4
+  - @nebutra/ui@2.0.0
+  - @nebutra/email@2.0.0
+  - @nebutra/analytics@0.0.5
+  - @nebutra/i18n@2.0.0
+  - @nebutra/reel@2.0.0
+  - @nebutra/agent-runtime@2.0.0
+  - @nebutra/agents@2.0.0
+  - @nebutra/audit@2.0.0
+  - @nebutra/billing@2.0.0
+  - @nebutra/design-sync@2.0.0
+  - @nebutra/design-tokens@2.0.0
+  - @nebutra/fonts@2.0.0
+  - @nebutra/icons@2.0.0
+  - @nebutra/logger@2.0.0
+  - @nebutra/metering@2.0.0
+  - @nebutra/notifications@2.0.0
+  - @nebutra/queue@2.0.0
+  - @nebutra/theme@2.0.0
+  - @nebutra/tokens@2.0.0
+  - @nebutra/uploads@2.0.0
+  - @nebutra/webhooks@2.0.0
+  - @nebutra/atelier-canvas@2.0.0
+  - @nebutra/cinema@0.2.4
+  - @nebutra/preset@0.1.3
+
 ## 0.1.3
 
 ### Patch Changes

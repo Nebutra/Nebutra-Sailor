@@ -1,13 +1,13 @@
 {
   "name": "@nebutra/pebble-site",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "nebutra": {
     "status": "wip",
     "graph": "labs",
     "productionReady": false
   },
-  "description": "Pebble brand front \u2014 landing, download, static feeds; no product API",
+  "description": "Pebble brand front — landing, download, static feeds; no product API",
   "scripts": {
     "dev": "next dev --port 3017",
     "build": "next build",

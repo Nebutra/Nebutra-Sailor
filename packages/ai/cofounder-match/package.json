@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/cofounder-match",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Behavior-verified cofounder profile, matching, and mutual-consent introduction surface",
   "private": false,
   "license": "MIT",

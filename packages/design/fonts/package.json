@@ -1,8 +1,8 @@
 {
   "name": "@nebutra/fonts",
-  "version": "0.1.1",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Self-hosted OSS font registry \u2014 build-time next/font faces + a name\u2192CSS-var resolver so theme / DESIGN.md fonts render with zero runtime external requests",
+  "description": "Self-hosted OSS font registry — build-time next/font faces + a name→CSS-var resolver so theme / DESIGN.md fonts render with zero runtime external requests",
   "private": false,
   "nebutra": {
     "graph": "core",
@@ -13,7 +13,7 @@
     "category": "design",
     "summary": "Self-hosted OSS font registry for next/font + CSS-var resolution",
     "gaps": [
-      "First intentional public publish not yet cut \u2014 workspace-only until release surface includes fonts"
+      "First intentional public publish not yet cut — workspace-only until release surface includes fonts"
     ]
   },
   "license": "MIT",

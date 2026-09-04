@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/errors",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "Unified error handling and API error responses",
   "private": false,
   "nebutra": {

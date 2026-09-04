@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/play-marketplace",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Local registry, publishing, install, metrics, and billing handoff surface for SKILL.md Plays",
   "private": false,
   "license": "MIT",
