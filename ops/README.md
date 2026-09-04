@@ -161,33 +161,28 @@ Raising the bar — adding `Lint & Typecheck`, `Test`, a review count — is a
 decision made by editing this list and then changing Settings → Branches to
 match. The engine reports the difference; it never changes either side.
 
-For Nebutra the rule for `main` is **not declared yet**, on purpose: the daily
-run holds no token that can read protection, so the row would be `skipped` on
-every schedule and, under `--strict`, a red run every day — which buries real
-drift in every other row. Tracked in
-[#514](https://github.com/Nebutra/Nebutra-Sailor/issues/514). The rule and the
-token land in one change:
+For Nebutra the rule for `main` is declared in `ops/nebutra/platform-expected.json`
+and the `Reconcile` step already reads `GH_TOKEN: ${{ secrets.PLATFORM_RECONCILE_GH_TOKEN }}`
+(`.github/workflows/platform-reconcile.yml`) — `tests/architecture/platform-reconcile.test.ts`
+fails a declaration that arrives without that workflow line, so the two can
+only land together. The one thing that has to happen outside this repo,
+because GitHub does not expose fine-grained PAT creation over any API — a
+human has to click through the web UI once:
 
-1. Mint a fine-grained personal access token scoped to this repository with
-   *Administration: read* and nothing else, and store it as the repository
-   secret `PLATFORM_RECONCILE_GH_TOKEN`.
-2. Add `GH_TOKEN: ${{ secrets.PLATFORM_RECONCILE_GH_TOKEN }}` to the `env` of
-   the Reconcile step in `.github/workflows/platform-reconcile.yml`.
-3. Add the rule to `ops/nebutra/platform-expected.json`, with the contexts
-   GitHub reported on 2026-09-03:
+1. [github.com/settings/personal-access-tokens/new](https://github.com/settings/personal-access-tokens/new) →
+   Resource owner: `Nebutra` → Repository access: **Only select repositories** →
+   `Nebutra-Sailor` → Repository permissions → **Administration: Read-only**
+   (leave every other permission at its default, No access) → Generate token.
+2. `gh secret set PLATFORM_RECONCILE_GH_TOKEN --repo Nebutra/Nebutra-Sailor`,
+   paste the token, Enter.
 
-   ```json
-   {
-     "branch": "main",
-     "requiredStatusChecks": ["CodeQL Analysis (javascript-typescript)", "CodeQL Analysis (python)"],
-     "strict": false,
-     "enforceAdmins": false,
-     "requiredApprovingReviewCount": null
-   }
-   ```
-
-`tests/architecture/platform-reconcile.test.ts` fails a declaration that
-arrives without the workflow line.
+Until that secret exists, `GH_TOKEN` evaluates to an empty string and the
+reconcile script falls back to the ambient `GITHUB_TOKEN`, which cannot read
+branch protection — the four `branchProtection` rows report `skipped`, and
+because `--strict` treats any skip as a run failure
+(`scripts/ops/platform-reconcile.mjs`'s `exitCodeFor`), the daily schedule
+goes red until the secret is set. That is expected for the gap between this
+PR merging and step 2 above running, not a bug. [#514](https://github.com/Nebutra/Nebutra-Sailor/issues/514).
 
 ### cloudflare.workers[]
 

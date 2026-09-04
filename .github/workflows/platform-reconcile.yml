@@ -48,4 +48,8 @@ jobs:
           # The workflow already sees every repository variable. Hand them to the
           # engine so no token has to hold the Variables API permission.
           PLATFORM_RECONCILE_GITHUB_VARS: ${{ toJSON(vars) }}
+          # Branch protection is an administration:read read — the automatic
+          # GITHUB_TOKEN cannot carry it. A fine-grained PAT scoped to this repo
+          # with Administration: read and nothing else. See ops/README.md.
+          GH_TOKEN: ${{ secrets.PLATFORM_RECONCILE_GH_TOKEN }}
         run: node scripts/ops/platform-reconcile.mjs ops/nebutra/platform-expected.json --strict
