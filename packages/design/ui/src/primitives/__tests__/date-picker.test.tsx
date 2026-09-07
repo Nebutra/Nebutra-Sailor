@@ -15,6 +15,11 @@ import { DatePicker, parseIsoDate, toIsoDate } from "../date-picker";
  *  4. the calendar is ours — real buttons in the document, not an OS panel.
  */
 
+// First calendar mount in jsdom (react-day-picker + popover) regularly passes
+// 5 s on a loaded CI runner while staying well under 1 s locally. Timed out
+// twice on #541 and once on main (run 34097637525) on 2026-09-07.
+const CALENDAR_TIMEOUT_MS = 20_000;
+
 describe("ISO helpers", () => {
   it("round-trips the wire format", () => {
     const parsed = parseIsoDate("2026-08-24");
@@ -84,29 +89,37 @@ describe("DatePicker", () => {
     expect(field).toHaveValue("2026-08-24");
   });
 
-  it("opens a calendar rendered in the document, not an OS panel", async () => {
-    const user = userEvent.setup();
-    render(<DatePicker id="dp" label="Start date" value="2026-08-24" />);
+  it(
+    "opens a calendar rendered in the document, not an OS panel",
+    async () => {
+      const user = userEvent.setup();
+      render(<DatePicker id="dp" label="Start date" value="2026-08-24" />);
 
-    await user.click(screen.getByRole("button", { name: "Open calendar" }));
+      await user.click(screen.getByRole("button", { name: "Open calendar" }));
 
-    expect(await screen.findByRole("grid")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /24/ })).toBeInTheDocument();
-  });
+      expect(await screen.findByRole("grid")).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /24/ })).toBeInTheDocument();
+    },
+    CALENDAR_TIMEOUT_MS,
+  );
 
-  it("commits the ISO value for the day picked in the calendar", async () => {
-    const user = userEvent.setup();
-    const onValueChange = vi.fn();
-    render(
-      <DatePicker id="dp" label="Start date" value="2026-08-24" onValueChange={onValueChange} />,
-    );
+  it(
+    "commits the ISO value for the day picked in the calendar",
+    async () => {
+      const user = userEvent.setup();
+      const onValueChange = vi.fn();
+      render(
+        <DatePicker id="dp" label="Start date" value="2026-08-24" onValueChange={onValueChange} />,
+      );
 
-    await user.click(screen.getByRole("button", { name: "Open calendar" }));
-    await screen.findByRole("grid");
-    await user.click(screen.getByRole("button", { name: /^Saturday, August 15/ }));
+      await user.click(screen.getByRole("button", { name: "Open calendar" }));
+      await screen.findByRole("grid");
+      await user.click(screen.getByRole("button", { name: /^Saturday, August 15/ }));
 
-    expect(onValueChange).toHaveBeenCalledWith("2026-08-15");
-  });
+      expect(onValueChange).toHaveBeenCalledWith("2026-08-15");
+    },
+    CALENDAR_TIMEOUT_MS,
+  );
 
   it("refuses days outside min/max", async () => {
     const user = userEvent.setup();
