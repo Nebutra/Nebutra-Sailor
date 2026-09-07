@@ -2,6 +2,7 @@ import { resolveIdPhotoPrint, SkuUnavailableError } from "@/catalog/skus";
 import { getSessionFromRequest } from "@/lib/auth";
 import { consentGap } from "@/lib/consent";
 import { readFaceConsent } from "@/lib/consent.server";
+import { DbUnavailableError, tenantDbFor } from "@/lib/db";
 import {
   Image2UnavailableError,
   idPhotoShootBrief,
@@ -16,6 +17,7 @@ import {
   persistIdPhotoMoment,
 } from "@/lib/resources.server";
 import { spendShootAllowance } from "@/lib/shoot-limit";
+import { failShoot, openShoot, sha256, shootIdempotencyKey, succeedShoot } from "@/lib/shoots";
 
 // Keep this number here so GET / unsigned POST never load sharp.
 const MAX_PORTRAIT_BYTES = 12 * 1024 * 1024;
@@ -127,10 +129,61 @@ export async function POST(request: Request) {
   // `step` is the whole point of these lines: when a shoot dies, this is the
   // difference between "it broke" and "the router timed out after 40s".
   let step: "resolve" | "router" | "compose" | "store" = "resolve";
+  let taskId: string | null = null;
+  let scoped: Awaited<ReturnType<typeof tenantDbFor>> | null = null;
   try {
     const { composeIdPhoto } = await import("@/lib/id-photo");
     const print = resolveIdPhotoPrint(skuId, sizeId || undefined);
     const source = Buffer.from(await file.arrayBuffer());
+
+    // The row is the truth from here on. No row, no shoot: if the database
+    // cannot record it, the model is not called — recording is what makes a
+    // shoot countable, refundable and deletable later.
+    scoped = await tenantDbFor(session.userId);
+    const idempotencyKey = shootIdempotencyKey({
+      userId: session.userId,
+      skuId: print.id,
+      sizeId: print.sizeId,
+      sourceHash: sha256(source),
+    });
+    const opened = await openShoot(scoped.db, {
+      tenantId: scoped.tenant.tenantId,
+      userId: session.userId,
+      idempotencyKey,
+      payload: { skuId: print.id, sizeId: print.sizeId, sourceHash: sha256(source) },
+    });
+    if (opened.reused) {
+      // The same person, spec and portrait already have a row. A finished one
+      // is handed straight back; one still running says so rather than
+      // starting a second model call beside it.
+      if (opened.row.status === "SUCCEEDED" && opened.row.result) {
+        shot.info("shoot reused", { taskId: opened.row.id });
+        const url = await import("@nebutra/storage").then((m) =>
+          m.getSignedDownloadUrl(opened.row.result?.key ?? "", { bucket: "uploads" }),
+        );
+        return Response.json(
+          {
+            id: opened.row.id,
+            skuId: print.id,
+            sizeId: print.sizeId,
+            key: opened.row.result.key,
+            url,
+            width: opened.row.result.width,
+            height: opened.row.result.height,
+            dpi: opened.row.result.dpi,
+            remainingToday: allowance.remaining,
+            reused: true,
+          },
+          { status: 200, headers: { "Cache-Control": "no-store" } },
+        );
+      }
+      shot.info("shoot already running", { taskId: opened.row.id });
+      return Response.json(
+        { error: "shoot_in_progress", id: opened.row.id },
+        { status: 409, headers: { "Cache-Control": "no-store" } },
+      );
+    }
+    taskId = opened.row.id;
 
     step = "router";
     const frame = await shootWithImage2({
@@ -145,10 +198,17 @@ export async function POST(request: Request) {
 
     step = "store";
     const stored = await persistIdPhotoMoment({
+      id: taskId,
       userId: session.userId,
       skuId: print.id,
       sizeId: print.sizeId,
       print: result.png,
+    });
+    await succeedShoot(scoped.db, taskId, {
+      key: stored.key,
+      width: result.width,
+      height: result.height,
+      dpi: result.dpi,
     });
 
     shot.info("shoot done", {
@@ -177,6 +237,19 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     const ms = Date.now() - started;
+    if (taskId && scoped) {
+      // Best effort: the failure is already being reported to the caller
+      // below, and a second failure while recording the first must not mask it.
+      await failShoot(scoped.db, taskId, {
+        step,
+        name: error instanceof Error ? error.name : "Error",
+        message: error instanceof Error ? error.message.slice(0, 500) : String(error),
+      }).catch((recordError) => shot.error("could not record the failure", recordError));
+    }
+    if (error instanceof DbUnavailableError) {
+      shot.error("shoot refused: no database", error, { step, ms });
+      return Response.json({ error: "unavailable" }, { status: 503 });
+    }
     if (error instanceof SkuUnavailableError) {
       shot.info("shoot rejected", { reason: "sku_unavailable", ms });
       return Response.json({ error: "sku_unavailable" }, { status: 404 });
