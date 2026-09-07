@@ -39,7 +39,8 @@ export type ShootResult = {
 };
 
 export type ShootFailure = {
-  step: "resolve" | "router" | "compose" | "store";
+  /** Where it died. `reserve` is the ledger saying no, before any model call. */
+  step: "resolve" | "reserve" | "router" | "compose" | "store";
   name: string;
   message: string;
 };

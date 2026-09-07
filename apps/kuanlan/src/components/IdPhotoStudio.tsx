@@ -32,6 +32,7 @@ export function IdPhotoStudio({
   const [note, setNote] = useState("");
   const [remainingToday, setRemainingToday] = useState<number | null>(null);
   const [consentGap, setConsentGap] = useState<ConsentGap | null>(null);
+  const [credits, setCredits] = useState<{ balance: number; price: number } | null>(null);
   const [agreeing, setAgreeing] = useState(false);
   const [needsSignIn, setNeedsSignIn] = useState(false);
 
@@ -43,6 +44,21 @@ export function IdPhotoStudio({
       if (preview) URL.revokeObjectURL(preview);
     };
   }, [preview]);
+
+  useEffect(() => {
+    let live = true;
+    fetch("/api/credits")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((c: { balance?: number; price?: number } | null) => {
+        if (live && c && typeof c.balance === "number" && typeof c.price === "number") {
+          setCredits({ balance: c.balance, price: c.price });
+        }
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, []);
 
   function onPick(next: File | null) {
     setFile(next);
@@ -105,6 +121,17 @@ export function IdPhotoStudio({
           setConsentGap(refused.gap ?? "never");
           return;
         }
+        if (response.status === 402) {
+          const short = (await response.json().catch(() => ({}))) as {
+            balance?: number;
+            price?: number;
+          };
+          if (typeof short.balance === "number" && typeof short.price === "number") {
+            setCredits({ balance: short.balance, price: short.price });
+          }
+          setNote("额度不够这一张了。");
+          return;
+        }
         if (response.status === 429) {
           const refused = (await response.json().catch(() => ({}))) as { scope?: string };
           setNote(
@@ -123,7 +150,15 @@ export function IdPhotoStudio({
         );
         return;
       }
-      const moment = (await response.json()) as { url?: string; remainingToday?: number };
+      const moment = (await response.json()) as {
+        url?: string;
+        remainingToday?: number;
+        balance?: number;
+        price?: number;
+      };
+      if (typeof moment.balance === "number" && typeof moment.price === "number") {
+        setCredits({ balance: moment.balance, price: moment.price });
+      }
       if (!moment.url) {
         setStatus("error");
         setNote("这一刻没留下。再试一次。");
@@ -226,7 +261,7 @@ export function IdPhotoStudio({
           onClick={shoot}
           disabled={status === "shooting"}
         >
-          {status === "shooting" ? "在拍…" : "开拍"}
+          {status === "shooting" ? "在拍…" : credits ? `开拍 · ${credits.price}` : "开拍"}
         </button>
         {resultUrl ? (
           <>
@@ -250,6 +285,12 @@ export function IdPhotoStudio({
           </>
         ) : null}
       </div>
+
+      {credits ? (
+        <p className="note">
+          还有 {credits.balance} credit。{credits.balance < credits.price ? " 这一张不够了。" : ""}
+        </p>
+      ) : null}
 
       {consentGap ? <FaceNotice gap={consentGap} busy={agreeing} onAgree={agree} /> : null}
 

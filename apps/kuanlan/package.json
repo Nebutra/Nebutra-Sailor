@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@nebutra/auth": "workspace:*",
+    "@nebutra/billing": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/db": "workspace:*",
     "@nebutra/fonts": "workspace:*",
