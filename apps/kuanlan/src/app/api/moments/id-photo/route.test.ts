@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getSessionFromRequest } from "@/lib/auth";
+// Static import: vi.mock is hoisted above it, and the route module's cold load
+// (well over 1 s, regularly past 5 s on a loaded CI runner) then happens at
+// collection time instead of inside the first test's 5 s budget.
+import { GET, POST } from "./route";
 
 vi.mock("@/lib/auth", () => ({
   getSessionFromRequest: vi.fn(),
@@ -16,7 +20,6 @@ describe("id-photo moment routes", () => {
   });
 
   it("refuses to shoot or list without a session", async () => {
-    const { GET, POST } = await import("./route");
     vi.mocked(getSessionFromRequest).mockResolvedValue(null);
 
     const list = await GET(new Request("http://localhost/api/moments/id-photo"));
