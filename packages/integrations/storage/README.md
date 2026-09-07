@@ -109,3 +109,21 @@ Files are automatically scoped by tenant:
 ## Related
 
 - [API Gateway](../../../backends/gateway/)
+
+## Endpoint override
+
+R2 by default. Set `R2_ENDPOINT` to point the client at any S3-compatible
+endpoint instead — MinIO in a local container, a staging bucket on another
+host — without real R2 credentials:
+
+```env
+R2_ENDPOINT="http://127.0.0.1:9000"
+CLOUDFLARE_ACCOUNT_ID="local"
+R2_ACCESS_KEY_ID="minio"
+R2_SECRET_ACCESS_KEY="minio12345"
+```
+
+When set, requests use path-style addressing (`host/bucket/key`), which is what
+a bare `http://localhost:9000` needs; unset, virtual-host style against
+`https://<account>.r2.cloudflarestorage.com` as before. This is the same
+`R2_ENDPOINT` that `@nebutra/config` declares and `@nebutra/uploads` honours.
