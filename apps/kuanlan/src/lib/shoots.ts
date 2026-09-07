@@ -39,8 +39,12 @@ export type ShootResult = {
 };
 
 export type ShootFailure = {
-  /** Where it died. `reserve` is the ledger saying no, before any model call. */
-  step: "resolve" | "reserve" | "router" | "compose" | "store";
+  /**
+   * Where it died. `reserve` is the ledger saying no, before any model call.
+   * `runner` is the detached worker itself — a row found RUNNING long past any
+   * plausible shoot, whose process is gone.
+   */
+  step: "resolve" | "reserve" | "router" | "compose" | "store" | "runner";
   name: string;
   message: string;
 };
@@ -53,7 +57,10 @@ export type ShootRow = {
   payload: ShootPayload;
   result: ShootResult | null;
   error: ShootFailure | null;
+  /** 0–100. The worker ticks it at each step; the poll hands it to the studio. */
+  progress: number;
   createdAt: Date;
+  startedAt: Date | null;
   completedAt: Date | null;
 };
 
@@ -92,7 +99,9 @@ function toRow(task: {
   payload: unknown;
   result: unknown;
   error: unknown;
+  progress?: number | null;
   createdAt: Date;
+  startedAt?: Date | null;
   completedAt: Date | null;
 }): ShootRow {
   return {
@@ -101,9 +110,56 @@ function toRow(task: {
     payload: task.payload as ShootPayload,
     result: (task.result as ShootResult | null) ?? null,
     error: (task.error as ShootFailure | null) ?? null,
+    progress: task.status === "SUCCEEDED" ? 100 : (task.progress ?? 0),
     createdAt: task.createdAt,
+    startedAt: task.startedAt ?? null,
     completedAt: task.completedAt,
   };
+}
+
+/** The worker has the row. Progress ticks come from the runner from here. */
+export async function markShootRunning(db: ShootStore, taskId: string): Promise<ShootRow> {
+  const updated = await db.task.update({
+    where: { id: taskId },
+    data: { status: "RUNNING", startedAt: new Date(), progress: 5 },
+  });
+  return toRow(updated);
+}
+
+export async function setShootProgress(
+  db: ShootStore,
+  taskId: string,
+  progress: number,
+): Promise<void> {
+  await db.task.update({ where: { id: taskId }, data: { progress } });
+}
+
+/**
+ * One row, and only if it belongs to this tenant — the poll endpoint takes an
+ * id from the URL, and the tenant in the where-clause is what stops one person
+ * watching another's shoot.
+ */
+export async function getShoot(
+  db: ShootStore,
+  tenantId: string,
+  taskId: string,
+): Promise<ShootRow | null> {
+  const row = await db.task.findFirst({ where: { id: taskId, tenantId, type: SHOOT_TASK_TYPE } });
+  return row ? toRow(row) : null;
+}
+
+/**
+ * A shoot that has been in flight longer than any shoot takes has lost its
+ * worker: the machine restarted, or the detached task died without reaching
+ * the catch that records failures. The row stays RUNNING forever unless
+ * something notices. This is what notices.
+ */
+export const STALE_AFTER_MS = 5 * 60_000;
+
+export function isShootStale(row: ShootRow, now: number = Date.now()): boolean {
+  if (row.status !== "QUEUED" && row.status !== "RUNNING") return false;
+  const since = (row.startedAt ?? row.createdAt).getTime();
+  return now - since > STALE_AFTER_MS;
 }
 
 /**
@@ -140,22 +196,21 @@ export async function openShoot(
     return { row: toRow(existing), reused: true };
   }
 
-  // Still synchronous at this point in the roadmap: the row is RUNNING from
-  // the moment it exists, because the request that created it is the worker.
-  // B2 introduces QUEUED as a real state.
+  // QUEUED is a real state now: the request that opens the row answers at
+  // once, and the work runs after the response is on its way. `startedAt` is
+  // set by `markShootRunning` when the worker actually picks it up.
   const created = await db.task.create({
     data: {
       id: crypto.randomUUID(),
       tenantId: input.tenantId,
       userId: input.userId,
       type: SHOOT_TASK_TYPE,
-      status: "RUNNING",
+      status: "QUEUED",
       priority: "NORMAL",
       progress: 0,
       payload: input.payload as unknown as Prisma.InputJsonValue,
       idempotencyKey: input.idempotencyKey,
       queueName: "ai",
-      startedAt: new Date(),
     },
   });
   return { row: toRow(created), reused: false };
