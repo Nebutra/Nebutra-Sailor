@@ -10,12 +10,16 @@ const nextConfig: NextConfig = {
   transpilePackages: [
     "@nebutra/auth",
     "@nebutra/brand",
+    "@nebutra/db",
     "@nebutra/fonts",
     "@nebutra/logger",
     "@nebutra/rate-limit",
     "@nebutra/storage",
   ],
-  serverExternalPackages: ["sharp"],
+  // Prisma and its pg driver adapter are Node-only; keep them out of the
+  // client bundle and let output-file tracing carry them as externals — the
+  // same recipe apps/web ships to Fly with.
+  serverExternalPackages: ["sharp", "@prisma/client", "@prisma/adapter-pg", "pg"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: brand.domains.cdn, pathname: "/kuanlan/**" },
