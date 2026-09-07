@@ -1,22 +1,19 @@
 import {
   getSignedDownloadUrl,
-  head,
-  listDetailed,
-  type ObjectEntry,
-  type ObjectHead,
   remove,
   type UploadOptions,
   type UploadResult,
   upload,
 } from "@nebutra/storage";
-import { type IdPhotoMoment, type IdPhotoMomentPage, sortMomentsNewestFirst } from "./moments";
+import { tenantDbFor } from "./db";
+import type { IdPhotoMoment, IdPhotoMomentPage } from "./moments";
 import {
   InvalidResourceKeyError,
   isR2Configured,
   momentObjectKey,
-  momentUserPrefix,
   ResourceStoreUnavailableError,
 } from "./resources";
+import { listShoots, type ShootStore } from "./shoots";
 
 export type PutObject = (
   key: string,
@@ -87,26 +84,6 @@ export async function persistIdPhotoMoment(
 }
 
 /**
- * Object metadata comes back with lower-cased keys.
- *
- * S3 metadata names are case-insensitive and the SDK normalises them on read, so
- * the `skuId` written at upload is `skuid` coming out. Reading only the camelCase
- * form silently yields undefined and every Moment loses its caption.
- */
-function metaValue(metadata: Record<string, string> | undefined, name: string): string | undefined {
-  if (!metadata) return undefined;
-  return metadata[name] ?? metadata[name.toLowerCase()];
-}
-
-/**
- * A user's Moments, newest first.
- *
- * `limit` bounds the head requests, not the count: ordering and `total` come out
- * of the single listing for free, and only the entries actually rendered pay a
- * HeadObject to read back their SKU. Pass it wherever the surface shows a
- * preview rather than the whole grid.
- */
-/**
  * Remove a Moment: the print, and the original written before that write was
  * dropped.
  *
@@ -134,57 +111,57 @@ export async function deleteIdPhotoMoment(
   }
 }
 
+/**
+ * A person's Moments, newest first — read from `Task` rows, not the bucket.
+ *
+ * The bucket is now an artifact store. It used to be the truth, which meant a
+ * listing could not tell a finished shoot from a failed one, came back in key
+ * order (UUIDs, so arbitrary), and needed one HeadObject per Moment just to
+ * learn its SKU. All of that is a column now: `payload` carries the SKU and
+ * size, `createdAt` carries the order, and `status` carries the difference
+ * between done and not. The only R2 call left is signing the URL, which is a
+ * local computation.
+ *
+ * `limit` bounds the page; `total` counts every finished shoot.
+ */
 export async function listIdPhotoMoments(
   userId: string,
   io: {
-    list?: (prefix: string, bucket?: "uploads") => Promise<ObjectEntry[]>;
+    db?: ShootStore;
+    tenantId?: string;
     sign?: (key: string) => Promise<string>;
-    head?: (key: string) => Promise<ObjectHead | null>;
   } = {},
   options: { limit?: number } = {},
 ): Promise<IdPhotoMomentPage> {
   requireR2();
 
-  const prefix = momentUserPrefix(userId);
+  const scoped =
+    io.db && io.tenantId ? { db: io.db, tenantId: io.tenantId } : await scopedFor(userId);
+  const sign = io.sign ?? ((key: string) => getSignedDownloadUrl(key, { bucket: "uploads" }));
 
-  try {
-    const entries = await (io.list ?? listDetailed)(prefix, "uploads");
-    const sign = io.sign ?? ((key: string) => getSignedDownloadUrl(key, { bucket: "uploads" }));
-    const readHead = io.head ?? ((key: string) => head(key, "uploads"));
+  const { rows, total } = await listShoots(scoped.db, scoped.tenantId, options);
 
-    const ordered = sortMomentsNewestFirst(
-      entries
-        .filter((entry) => entry.key.endsWith(".png"))
-        .map((entry) => ({
-          id: entry.key.slice(prefix.length).replace(/\.png$/, ""),
-          key: entry.key,
-          ...(entry.lastModified ? { shotAt: entry.lastModified } : {}),
-        })),
-    );
+  const moments: IdPhotoMoment[] = await Promise.all(
+    rows.map(async (row) => ({
+      id: row.id,
+      key: row.result?.key ?? "",
+      url: row.result?.key ? await sign(row.result.key) : "",
+      shotAt: row.completedAt ?? row.createdAt,
+      skuId: row.payload.skuId,
+      sizeId: row.payload.sizeId,
+    })),
+  );
 
-    const page = options.limit != null ? ordered.slice(0, options.limit) : ordered;
-    const moments: IdPhotoMoment[] = await Promise.all(
-      page.map(async (moment) => {
-        const [url, meta] = await Promise.all([sign(moment.key), readHead(moment.key)]);
-        const skuId = metaValue(meta?.metadata, "skuId");
-        const sizeId = metaValue(meta?.metadata, "sizeId");
-        return {
-          ...moment,
-          url,
-          ...(skuId ? { skuId } : {}),
-          ...(sizeId ? { sizeId } : {}),
-        };
-      }),
-    );
+  return {
+    moments,
+    total,
+    ...(rows[0] ? { latestAt: rows[0].completedAt ?? rows[0].createdAt } : {}),
+  };
+}
 
-    return {
-      moments,
-      total: ordered.length,
-      ...(ordered[0]?.shotAt ? { latestAt: ordered[0].shotAt } : {}),
-    };
-  } catch (error) {
-    unavailableFrom(error);
-  }
+async function scopedFor(userId: string): Promise<{ db: ShootStore; tenantId: string }> {
+  const { db, tenant } = await tenantDbFor(userId);
+  return { db, tenantId: tenant.tenantId };
 }
 
 const RESOURCE_APP = "kuanlan";
