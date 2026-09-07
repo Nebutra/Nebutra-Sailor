@@ -1242,6 +1242,23 @@
         "cta": "Lihat arsitektur penagihan"
       }
     },
+    "productDemo": {
+      "badge": "Demo produk",
+      "title": "Lihat platform ini beraksi.",
+      "description": "Tiga permukaan yang dikirim setiap SaaS AI sejak hari pertama — analitik, penagihan, dan ruang kerja — berjalan di atas inti bertipe yang sama.",
+      "analytics": {
+        "label": "Analitik",
+        "desc": "Dari penyerapan peristiwa hingga dasbor, dengan kueri terbatas per tenant dan tanpa kode perekat."
+      },
+      "billing": {
+        "label": "Penagihan",
+        "desc": "Langganan, hak akses, dan pengukuran pemakaian yang terhubung ke penyedia pilihan Anda."
+      },
+      "workspaces": {
+        "label": "Ruang kerja",
+        "desc": "Organisasi multi-tenant, undangan, dan peran dengan keamanan tingkat baris secara bawaan."
+      }
+    },
     "workflow": {
       "badge": "Kecepatan",
       "title": "Dari nol ke produksi dalam waktu singkat.",

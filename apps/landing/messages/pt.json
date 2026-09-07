@@ -1242,6 +1242,23 @@
         "cta": "Ver arquitetura de cobrança"
       }
     },
+    "productDemo": {
+      "badge": "Demo do produto",
+      "title": "Veja a plataforma em ação.",
+      "description": "Três superfícies que todo SaaS de IA entrega desde o primeiro dia — analytics, cobrança e workspaces — sobre o mesmo núcleo tipado.",
+      "analytics": {
+        "label": "Analytics",
+        "desc": "Da ingestão de eventos ao painel, com consultas restritas ao tenant e sem código de cola."
+      },
+      "billing": {
+        "label": "Cobrança",
+        "desc": "Assinaturas, direitos e medição de uso conectados ao provedor da sua escolha."
+      },
+      "workspaces": {
+        "label": "Workspaces",
+        "desc": "Organizações multi-tenant, convites e papéis com segurança em nível de linha por padrão."
+      }
+    },
     "workflow": {
       "badge": "Velocidade",
       "title": "Do zero à produção em tempo recorde.",

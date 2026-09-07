@@ -1242,6 +1242,23 @@
         "cta": "Zobacz architekturę rozliczeń"
       }
     },
+    "productDemo": {
+      "badge": "Demo produktu",
+      "title": "Zobacz platformę w działaniu.",
+      "description": "Trzy powierzchnie, które każdy SaaS AI dostarcza od pierwszego dnia — analityka, rozliczenia i przestrzenie robocze — na tym samym typowanym rdzeniu.",
+      "analytics": {
+        "label": "Analityka",
+        "desc": "Od pobierania zdarzeń po pulpit, z zapytaniami ograniczonymi do tenanta i bez kodu spajającego."
+      },
+      "billing": {
+        "label": "Rozliczenia",
+        "desc": "Subskrypcje, uprawnienia i pomiar zużycia podłączone do wybranego dostawcy."
+      },
+      "workspaces": {
+        "label": "Przestrzenie robocze",
+        "desc": "Organizacje multi-tenant, zaproszenia i role z zabezpieczeniami na poziomie wierszy domyślnie."
+      }
+    },
     "workflow": {
       "badge": "Szybkość",
       "title": "Od zera do produkcji w rekordowym czasie.",

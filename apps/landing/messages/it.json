@@ -1242,6 +1242,23 @@
         "cta": "Visualizza l'architettura di fatturazione"
       }
     },
+    "productDemo": {
+      "badge": "Demo del prodotto",
+      "title": "Guarda la piattaforma in azione.",
+      "description": "Tre superfici che ogni SaaS AI rilascia dal primo giorno — analytics, fatturazione e workspace — sullo stesso core tipizzato.",
+      "analytics": {
+        "label": "Analytics",
+        "desc": "Dall'ingestione degli eventi alla dashboard, con query limitate al tenant e senza codice di raccordo."
+      },
+      "billing": {
+        "label": "Fatturazione",
+        "desc": "Abbonamenti, diritti e misurazione dell'uso collegati al provider che preferisci."
+      },
+      "workspaces": {
+        "label": "Workspace",
+        "desc": "Organizzazioni multi-tenant, inviti e ruoli con row-level security di default."
+      }
+    },
     "workflow": {
       "badge": "Velocità",
       "title": "Da zero alla produzione in tempi record.",
