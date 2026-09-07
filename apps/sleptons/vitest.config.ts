@@ -10,6 +10,13 @@ export default defineConfig({
     setupFiles: ["./src/__tests__/setup.ts"],
   },
   resolve: {
-    alias: { "@": path.resolve(__dirname, "./src") },
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      // contracts is consumed from dist in builds; tests resolve source directly
+      "@nebutra/contracts/sleptons": path.resolve(
+        __dirname,
+        "../../packages/commerce/contracts/src/sleptons.ts",
+      ),
+    },
   },
 });

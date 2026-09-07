@@ -328,6 +328,7 @@ export type SleptonsaMemberProfileWhereInput = {
   products?: Prisma.SleptonsProductListRelationFilter
   following?: Prisma.SleptonsConnectionListRelationFilter
   followers?: Prisma.SleptonsConnectionListRelationFilter
+  resume?: Prisma.XOR<Prisma.SleptonsResumeNullableScalarRelationFilter, Prisma.SleptonsResumeWhereInput> | null
 }
 
 export type SleptonsaMemberProfileOrderByWithRelationInput = {
@@ -355,6 +356,7 @@ export type SleptonsaMemberProfileOrderByWithRelationInput = {
   products?: Prisma.SleptonsProductOrderByRelationAggregateInput
   following?: Prisma.SleptonsConnectionOrderByRelationAggregateInput
   followers?: Prisma.SleptonsConnectionOrderByRelationAggregateInput
+  resume?: Prisma.SleptonsResumeOrderByWithRelationInput
 }
 
 export type SleptonsaMemberProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -385,6 +387,7 @@ export type SleptonsaMemberProfileWhereUniqueInput = Prisma.AtLeast<{
   products?: Prisma.SleptonsProductListRelationFilter
   following?: Prisma.SleptonsConnectionListRelationFilter
   followers?: Prisma.SleptonsConnectionListRelationFilter
+  resume?: Prisma.XOR<Prisma.SleptonsResumeNullableScalarRelationFilter, Prisma.SleptonsResumeWhereInput> | null
 }, "id" | "member_number" | "user_id" | "license_id" | "slug">
 
 export type SleptonsaMemberProfileOrderByWithAggregationInput = {
@@ -465,6 +468,7 @@ export type SleptonsaMemberProfileCreateInput = {
   products?: Prisma.SleptonsProductCreateNestedManyWithoutMemberInput
   following?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowerInput
   followers?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowingInput
+  resume?: Prisma.SleptonsResumeCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileUncheckedCreateInput = {
@@ -491,6 +495,7 @@ export type SleptonsaMemberProfileUncheckedCreateInput = {
   products?: Prisma.SleptonsProductUncheckedCreateNestedManyWithoutMemberInput
   following?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowerInput
   followers?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowingInput
+  resume?: Prisma.SleptonsResumeUncheckedCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileUpdateInput = {
@@ -516,6 +521,7 @@ export type SleptonsaMemberProfileUpdateInput = {
   products?: Prisma.SleptonsProductUpdateManyWithoutMemberNestedInput
   following?: Prisma.SleptonsConnectionUpdateManyWithoutFollowerNestedInput
   followers?: Prisma.SleptonsConnectionUpdateManyWithoutFollowingNestedInput
+  resume?: Prisma.SleptonsResumeUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileUncheckedUpdateInput = {
@@ -542,6 +548,7 @@ export type SleptonsaMemberProfileUncheckedUpdateInput = {
   products?: Prisma.SleptonsProductUncheckedUpdateManyWithoutMemberNestedInput
   following?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowerNestedInput
   followers?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowingNestedInput
+  resume?: Prisma.SleptonsResumeUncheckedUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileCreateManyInput = {
@@ -788,6 +795,20 @@ export type SleptonsaMemberProfileUpdateOneRequiredWithoutFollowersNestedInput =
   update?: Prisma.XOR<Prisma.XOR<Prisma.SleptonsaMemberProfileUpdateToOneWithWhereWithoutFollowersInput, Prisma.SleptonsaMemberProfileUpdateWithoutFollowersInput>, Prisma.SleptonsaMemberProfileUncheckedUpdateWithoutFollowersInput>
 }
 
+export type SleptonsaMemberProfileCreateNestedOneWithoutResumeInput = {
+  create?: Prisma.XOR<Prisma.SleptonsaMemberProfileCreateWithoutResumeInput, Prisma.SleptonsaMemberProfileUncheckedCreateWithoutResumeInput>
+  connectOrCreate?: Prisma.SleptonsaMemberProfileCreateOrConnectWithoutResumeInput
+  connect?: Prisma.SleptonsaMemberProfileWhereUniqueInput
+}
+
+export type SleptonsaMemberProfileUpdateOneRequiredWithoutResumeNestedInput = {
+  create?: Prisma.XOR<Prisma.SleptonsaMemberProfileCreateWithoutResumeInput, Prisma.SleptonsaMemberProfileUncheckedCreateWithoutResumeInput>
+  connectOrCreate?: Prisma.SleptonsaMemberProfileCreateOrConnectWithoutResumeInput
+  upsert?: Prisma.SleptonsaMemberProfileUpsertWithoutResumeInput
+  connect?: Prisma.SleptonsaMemberProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SleptonsaMemberProfileUpdateToOneWithWhereWithoutResumeInput, Prisma.SleptonsaMemberProfileUpdateWithoutResumeInput>, Prisma.SleptonsaMemberProfileUncheckedUpdateWithoutResumeInput>
+}
+
 export type SleptonsaMemberProfileCreateWithoutLicenseInput = {
   id?: string
   member_number?: number
@@ -811,6 +832,7 @@ export type SleptonsaMemberProfileCreateWithoutLicenseInput = {
   products?: Prisma.SleptonsProductCreateNestedManyWithoutMemberInput
   following?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowerInput
   followers?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowingInput
+  resume?: Prisma.SleptonsResumeCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileUncheckedCreateWithoutLicenseInput = {
@@ -836,6 +858,7 @@ export type SleptonsaMemberProfileUncheckedCreateWithoutLicenseInput = {
   products?: Prisma.SleptonsProductUncheckedCreateNestedManyWithoutMemberInput
   following?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowerInput
   followers?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowingInput
+  resume?: Prisma.SleptonsResumeUncheckedCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileCreateOrConnectWithoutLicenseInput = {
@@ -876,6 +899,7 @@ export type SleptonsaMemberProfileUpdateWithoutLicenseInput = {
   products?: Prisma.SleptonsProductUpdateManyWithoutMemberNestedInput
   following?: Prisma.SleptonsConnectionUpdateManyWithoutFollowerNestedInput
   followers?: Prisma.SleptonsConnectionUpdateManyWithoutFollowingNestedInput
+  resume?: Prisma.SleptonsResumeUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileUncheckedUpdateWithoutLicenseInput = {
@@ -901,6 +925,7 @@ export type SleptonsaMemberProfileUncheckedUpdateWithoutLicenseInput = {
   products?: Prisma.SleptonsProductUncheckedUpdateManyWithoutMemberNestedInput
   following?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowerNestedInput
   followers?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowingNestedInput
+  resume?: Prisma.SleptonsResumeUncheckedUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileCreateWithoutProductsInput = {
@@ -926,6 +951,7 @@ export type SleptonsaMemberProfileCreateWithoutProductsInput = {
   license: Prisma.LicenseCreateNestedOneWithoutSleptonsProfileInput
   following?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowerInput
   followers?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowingInput
+  resume?: Prisma.SleptonsResumeCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileUncheckedCreateWithoutProductsInput = {
@@ -951,6 +977,7 @@ export type SleptonsaMemberProfileUncheckedCreateWithoutProductsInput = {
   updated_at?: Date | string
   following?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowerInput
   followers?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowingInput
+  resume?: Prisma.SleptonsResumeUncheckedCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileCreateOrConnectWithoutProductsInput = {
@@ -991,6 +1018,7 @@ export type SleptonsaMemberProfileUpdateWithoutProductsInput = {
   license?: Prisma.LicenseUpdateOneRequiredWithoutSleptonsProfileNestedInput
   following?: Prisma.SleptonsConnectionUpdateManyWithoutFollowerNestedInput
   followers?: Prisma.SleptonsConnectionUpdateManyWithoutFollowingNestedInput
+  resume?: Prisma.SleptonsResumeUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileUncheckedUpdateWithoutProductsInput = {
@@ -1016,6 +1044,7 @@ export type SleptonsaMemberProfileUncheckedUpdateWithoutProductsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   following?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowerNestedInput
   followers?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowingNestedInput
+  resume?: Prisma.SleptonsResumeUncheckedUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileCreateWithoutFollowingInput = {
@@ -1041,6 +1070,7 @@ export type SleptonsaMemberProfileCreateWithoutFollowingInput = {
   license: Prisma.LicenseCreateNestedOneWithoutSleptonsProfileInput
   products?: Prisma.SleptonsProductCreateNestedManyWithoutMemberInput
   followers?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowingInput
+  resume?: Prisma.SleptonsResumeCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileUncheckedCreateWithoutFollowingInput = {
@@ -1066,6 +1096,7 @@ export type SleptonsaMemberProfileUncheckedCreateWithoutFollowingInput = {
   updated_at?: Date | string
   products?: Prisma.SleptonsProductUncheckedCreateNestedManyWithoutMemberInput
   followers?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowingInput
+  resume?: Prisma.SleptonsResumeUncheckedCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileCreateOrConnectWithoutFollowingInput = {
@@ -1096,6 +1127,7 @@ export type SleptonsaMemberProfileCreateWithoutFollowersInput = {
   license: Prisma.LicenseCreateNestedOneWithoutSleptonsProfileInput
   products?: Prisma.SleptonsProductCreateNestedManyWithoutMemberInput
   following?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowerInput
+  resume?: Prisma.SleptonsResumeCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileUncheckedCreateWithoutFollowersInput = {
@@ -1121,6 +1153,7 @@ export type SleptonsaMemberProfileUncheckedCreateWithoutFollowersInput = {
   updated_at?: Date | string
   products?: Prisma.SleptonsProductUncheckedCreateNestedManyWithoutMemberInput
   following?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowerInput
+  resume?: Prisma.SleptonsResumeUncheckedCreateNestedOneWithoutMemberInput
 }
 
 export type SleptonsaMemberProfileCreateOrConnectWithoutFollowersInput = {
@@ -1161,6 +1194,7 @@ export type SleptonsaMemberProfileUpdateWithoutFollowingInput = {
   license?: Prisma.LicenseUpdateOneRequiredWithoutSleptonsProfileNestedInput
   products?: Prisma.SleptonsProductUpdateManyWithoutMemberNestedInput
   followers?: Prisma.SleptonsConnectionUpdateManyWithoutFollowingNestedInput
+  resume?: Prisma.SleptonsResumeUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileUncheckedUpdateWithoutFollowingInput = {
@@ -1186,6 +1220,7 @@ export type SleptonsaMemberProfileUncheckedUpdateWithoutFollowingInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.SleptonsProductUncheckedUpdateManyWithoutMemberNestedInput
   followers?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowingNestedInput
+  resume?: Prisma.SleptonsResumeUncheckedUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileUpsertWithoutFollowersInput = {
@@ -1221,6 +1256,7 @@ export type SleptonsaMemberProfileUpdateWithoutFollowersInput = {
   license?: Prisma.LicenseUpdateOneRequiredWithoutSleptonsProfileNestedInput
   products?: Prisma.SleptonsProductUpdateManyWithoutMemberNestedInput
   following?: Prisma.SleptonsConnectionUpdateManyWithoutFollowerNestedInput
+  resume?: Prisma.SleptonsResumeUpdateOneWithoutMemberNestedInput
 }
 
 export type SleptonsaMemberProfileUncheckedUpdateWithoutFollowersInput = {
@@ -1246,6 +1282,126 @@ export type SleptonsaMemberProfileUncheckedUpdateWithoutFollowersInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.SleptonsProductUncheckedUpdateManyWithoutMemberNestedInput
   following?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowerNestedInput
+  resume?: Prisma.SleptonsResumeUncheckedUpdateOneWithoutMemberNestedInput
+}
+
+export type SleptonsaMemberProfileCreateWithoutResumeInput = {
+  id?: string
+  member_number?: number
+  user_id: string
+  slug: string
+  display_name: string
+  bio?: string | null
+  avatar_url?: string | null
+  product_name?: string | null
+  product_url?: string | null
+  product_tagline?: string | null
+  tech_stack?: Prisma.SleptonsaMemberProfileCreatetech_stackInput | string[]
+  looking_for?: Prisma.SleptonsaMemberProfileCreatelooking_forInput | string[]
+  tier?: $Enums.SleptonsTier
+  is_public?: boolean
+  github_handle?: string | null
+  github_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  github_refreshed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  license: Prisma.LicenseCreateNestedOneWithoutSleptonsProfileInput
+  products?: Prisma.SleptonsProductCreateNestedManyWithoutMemberInput
+  following?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.SleptonsConnectionCreateNestedManyWithoutFollowingInput
+}
+
+export type SleptonsaMemberProfileUncheckedCreateWithoutResumeInput = {
+  id?: string
+  member_number?: number
+  user_id: string
+  license_id: string
+  slug: string
+  display_name: string
+  bio?: string | null
+  avatar_url?: string | null
+  product_name?: string | null
+  product_url?: string | null
+  product_tagline?: string | null
+  tech_stack?: Prisma.SleptonsaMemberProfileCreatetech_stackInput | string[]
+  looking_for?: Prisma.SleptonsaMemberProfileCreatelooking_forInput | string[]
+  tier?: $Enums.SleptonsTier
+  is_public?: boolean
+  github_handle?: string | null
+  github_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  github_refreshed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  products?: Prisma.SleptonsProductUncheckedCreateNestedManyWithoutMemberInput
+  following?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowerInput
+  followers?: Prisma.SleptonsConnectionUncheckedCreateNestedManyWithoutFollowingInput
+}
+
+export type SleptonsaMemberProfileCreateOrConnectWithoutResumeInput = {
+  where: Prisma.SleptonsaMemberProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.SleptonsaMemberProfileCreateWithoutResumeInput, Prisma.SleptonsaMemberProfileUncheckedCreateWithoutResumeInput>
+}
+
+export type SleptonsaMemberProfileUpsertWithoutResumeInput = {
+  update: Prisma.XOR<Prisma.SleptonsaMemberProfileUpdateWithoutResumeInput, Prisma.SleptonsaMemberProfileUncheckedUpdateWithoutResumeInput>
+  create: Prisma.XOR<Prisma.SleptonsaMemberProfileCreateWithoutResumeInput, Prisma.SleptonsaMemberProfileUncheckedCreateWithoutResumeInput>
+  where?: Prisma.SleptonsaMemberProfileWhereInput
+}
+
+export type SleptonsaMemberProfileUpdateToOneWithWhereWithoutResumeInput = {
+  where?: Prisma.SleptonsaMemberProfileWhereInput
+  data: Prisma.XOR<Prisma.SleptonsaMemberProfileUpdateWithoutResumeInput, Prisma.SleptonsaMemberProfileUncheckedUpdateWithoutResumeInput>
+}
+
+export type SleptonsaMemberProfileUpdateWithoutResumeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tech_stack?: Prisma.SleptonsaMemberProfileUpdatetech_stackInput | string[]
+  looking_for?: Prisma.SleptonsaMemberProfileUpdatelooking_forInput | string[]
+  tier?: Prisma.EnumSleptonsTierFieldUpdateOperationsInput | $Enums.SleptonsTier
+  is_public?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  github_handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  github_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  github_refreshed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  license?: Prisma.LicenseUpdateOneRequiredWithoutSleptonsProfileNestedInput
+  products?: Prisma.SleptonsProductUpdateManyWithoutMemberNestedInput
+  following?: Prisma.SleptonsConnectionUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.SleptonsConnectionUpdateManyWithoutFollowingNestedInput
+}
+
+export type SleptonsaMemberProfileUncheckedUpdateWithoutResumeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  member_number?: Prisma.IntFieldUpdateOperationsInput | number
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  license_id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  product_tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tech_stack?: Prisma.SleptonsaMemberProfileUpdatetech_stackInput | string[]
+  looking_for?: Prisma.SleptonsaMemberProfileUpdatelooking_forInput | string[]
+  tier?: Prisma.EnumSleptonsTierFieldUpdateOperationsInput | $Enums.SleptonsTier
+  is_public?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  github_handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  github_data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  github_refreshed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.SleptonsProductUncheckedUpdateManyWithoutMemberNestedInput
+  following?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowerNestedInput
+  followers?: Prisma.SleptonsConnectionUncheckedUpdateManyWithoutFollowingNestedInput
 }
 
 
@@ -1322,6 +1478,7 @@ export type SleptonsaMemberProfileSelect<ExtArgs extends runtime.Types.Extension
   products?: boolean | Prisma.SleptonsaMemberProfile$productsArgs<ExtArgs>
   following?: boolean | Prisma.SleptonsaMemberProfile$followingArgs<ExtArgs>
   followers?: boolean | Prisma.SleptonsaMemberProfile$followersArgs<ExtArgs>
+  resume?: boolean | Prisma.SleptonsaMemberProfile$resumeArgs<ExtArgs>
   _count?: boolean | Prisma.SleptonsaMemberProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sleptonsaMemberProfile"]>
 
@@ -1402,6 +1559,7 @@ export type SleptonsaMemberProfileInclude<ExtArgs extends runtime.Types.Extensio
   products?: boolean | Prisma.SleptonsaMemberProfile$productsArgs<ExtArgs>
   following?: boolean | Prisma.SleptonsaMemberProfile$followingArgs<ExtArgs>
   followers?: boolean | Prisma.SleptonsaMemberProfile$followersArgs<ExtArgs>
+  resume?: boolean | Prisma.SleptonsaMemberProfile$resumeArgs<ExtArgs>
   _count?: boolean | Prisma.SleptonsaMemberProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SleptonsaMemberProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1418,6 +1576,7 @@ export type $SleptonsaMemberProfilePayload<ExtArgs extends runtime.Types.Extensi
     products: Prisma.$SleptonsProductPayload<ExtArgs>[]
     following: Prisma.$SleptonsConnectionPayload<ExtArgs>[]
     followers: Prisma.$SleptonsConnectionPayload<ExtArgs>[]
+    resume: Prisma.$SleptonsResumePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1838,6 +1997,7 @@ export interface Prisma__SleptonsaMemberProfileClient<T, Null = never, ExtArgs e
   products<T extends Prisma.SleptonsaMemberProfile$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SleptonsaMemberProfile$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SleptonsProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   following<T extends Prisma.SleptonsaMemberProfile$followingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SleptonsaMemberProfile$followingArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SleptonsConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   followers<T extends Prisma.SleptonsaMemberProfile$followersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SleptonsaMemberProfile$followersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SleptonsConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  resume<T extends Prisma.SleptonsaMemberProfile$resumeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SleptonsaMemberProfile$resumeArgs<ExtArgs>>): Prisma.Prisma__SleptonsResumeClient<runtime.Types.Result.GetResult<Prisma.$SleptonsResumePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2352,6 +2512,25 @@ export type SleptonsaMemberProfile$followersArgs<ExtArgs extends runtime.Types.E
   take?: number
   skip?: number
   distinct?: Prisma.SleptonsConnectionScalarFieldEnum | Prisma.SleptonsConnectionScalarFieldEnum[]
+}
+
+/**
+ * SleptonsaMemberProfile.resume
+ */
+export type SleptonsaMemberProfile$resumeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SleptonsResume
+   */
+  select?: Prisma.SleptonsResumeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SleptonsResume
+   */
+  omit?: Prisma.SleptonsResumeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SleptonsResumeInclude<ExtArgs> | null
+  where?: Prisma.SleptonsResumeWhereInput
 }
 
 /**

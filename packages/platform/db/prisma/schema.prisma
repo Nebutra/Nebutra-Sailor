@@ -1672,12 +1672,12 @@ enum OAuthClientStatus {
 
 // Third-party applications registered in Nebutra's ecosystem
 model OAuthClient {
-  id               String            @id @default(cuid())
-  clientId         String            @unique @map("client_id")
+  id                   String            @id @default(cuid())
+  clientId             String            @unique @map("client_id")
   /// Argon2/bcrypt hash — verifies a secret the caller already holds. One-way,
   /// so it cannot answer "what is this client's secret", which is what the
   /// token endpoint needs when the client authenticates with client_secret_basic.
-  clientSecretHash String?           @map("client_secret_hash")
+  clientSecretHash     String?           @map("client_secret_hash")
   /// @nebutra/vault EncryptedSecret envelope, for confidential clients whose
   /// secret must be RETRIEVABLE rather than merely verifiable.
   ///
@@ -1692,15 +1692,15 @@ model OAuthClient {
   /// KMS (or derived via local HKDF in development), so the database alone does
   /// not yield the secret. Both fields are kept — the hash for paths that only
   /// verify, this for the token endpoint.
-  clientSecretEnvelope Json?         @map("client_secret_envelope")
-  type             OAuthClientType   @default(CONFIDENTIAL)
-  status           OAuthClientStatus @default(ACTIVE)
-  name             String
-  description      String?           @db.Text
-  logoUrl          String?           @map("logo_url")
-  websiteUrl       String?           @map("website_url")
-  privacyPolicyUrl String?           @map("privacy_policy_url")
-  tosUrl           String?           @map("tos_url")
+  clientSecretEnvelope Json?             @map("client_secret_envelope")
+  type                 OAuthClientType   @default(CONFIDENTIAL)
+  status               OAuthClientStatus @default(ACTIVE)
+  name                 String
+  description          String?           @db.Text
+  logoUrl              String?           @map("logo_url")
+  websiteUrl           String?           @map("website_url")
+  privacyPolicyUrl     String?           @map("privacy_policy_url")
+  tosUrl               String?           @map("tos_url")
 
   // OAuth configuration
   redirectUris            String[] @map("redirect_uris")
@@ -2379,6 +2379,7 @@ model SleptonsaMemberProfile {
   products  SleptonsProduct[]
   following SleptonsConnection[] @relation("follower")
   followers SleptonsConnection[] @relation("following")
+  resume    SleptonsResume?
 
   @@index([tier, is_public])
   @@index([created_at])
@@ -2432,6 +2433,37 @@ model SleptonsConnection {
 
   @@id([follower_id, following_id])
   @@map("sleptons_connections")
+  @@schema("public")
+}
+
+model SleptonsResume {
+  id               String     @id @default(cuid())
+  member_id        String     @unique @map("member_id")
+  content          Json
+  schema_version   Int        @default(1) @map("schema_version")
+  headline         String?    @db.VarChar(120)
+  skills_flat      String[]   @map("skills_flat")
+  highlights       String[]
+  years_active     Int?       @map("years_active")
+  completeness     Int        @default(0)
+  is_public        Boolean    @default(false) @map("is_public")
+  language         ResumeLang @default(MIX)
+  last_exported_at DateTime?  @map("last_exported_at")
+  created_at       DateTime   @default(now()) @map("created_at")
+  updated_at       DateTime   @updatedAt @map("updated_at")
+
+  member SleptonsaMemberProfile @relation(fields: [member_id], references: [id], onDelete: Cascade)
+
+  @@index([is_public, completeness])
+  @@map("sleptons_resumes")
+  @@schema("public")
+}
+
+enum ResumeLang {
+  ZH
+  EN
+  MIX
+
   @@schema("public")
 }
 

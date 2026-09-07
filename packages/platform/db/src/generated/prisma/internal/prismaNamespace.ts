@@ -462,6 +462,7 @@ export const ModelName = {
   SleptonsProduct: 'SleptonsProduct',
   SleptonsUpvote: 'SleptonsUpvote',
   SleptonsConnection: 'SleptonsConnection',
+  SleptonsResume: 'SleptonsResume',
   BAOrganization: 'BAOrganization',
   BAMember: 'BAMember',
   BAInvitation: 'BAInvitation',
@@ -486,7 +487,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6246,6 +6247,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SleptonsResume: {
+      payload: Prisma.$SleptonsResumePayload<ExtArgs>
+      fields: Prisma.SleptonsResumeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SleptonsResumeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SleptonsResumeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>
+        }
+        findFirst: {
+          args: Prisma.SleptonsResumeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SleptonsResumeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>
+        }
+        findMany: {
+          args: Prisma.SleptonsResumeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>[]
+        }
+        create: {
+          args: Prisma.SleptonsResumeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>
+        }
+        createMany: {
+          args: Prisma.SleptonsResumeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SleptonsResumeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>[]
+        }
+        delete: {
+          args: Prisma.SleptonsResumeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>
+        }
+        update: {
+          args: Prisma.SleptonsResumeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>
+        }
+        deleteMany: {
+          args: Prisma.SleptonsResumeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SleptonsResumeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SleptonsResumeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>[]
+        }
+        upsert: {
+          args: Prisma.SleptonsResumeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SleptonsResumePayload>
+        }
+        aggregate: {
+          args: Prisma.SleptonsResumeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSleptonsResume>
+        }
+        groupBy: {
+          args: Prisma.SleptonsResumeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsResumeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SleptonsResumeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SleptonsResumeCountAggregateOutputType> | number
+        }
+      }
+    }
     BAOrganization: {
       payload: Prisma.$BAOrganizationPayload<ExtArgs>
       fields: Prisma.BAOrganizationFieldRefs
@@ -8301,6 +8376,26 @@ export const SleptonsConnectionScalarFieldEnum = {
 export type SleptonsConnectionScalarFieldEnum = (typeof SleptonsConnectionScalarFieldEnum)[keyof typeof SleptonsConnectionScalarFieldEnum]
 
 
+export const SleptonsResumeScalarFieldEnum = {
+  id: 'id',
+  member_id: 'member_id',
+  content: 'content',
+  schema_version: 'schema_version',
+  headline: 'headline',
+  skills_flat: 'skills_flat',
+  highlights: 'highlights',
+  years_active: 'years_active',
+  completeness: 'completeness',
+  is_public: 'is_public',
+  language: 'language',
+  last_exported_at: 'last_exported_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SleptonsResumeScalarFieldEnum = (typeof SleptonsResumeScalarFieldEnum)[keyof typeof SleptonsResumeScalarFieldEnum]
+
+
 export const BAOrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -9096,6 +9191,20 @@ export type ListEnumProductStageFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'ResumeLang'
+ */
+export type EnumResumeLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResumeLang'>
+    
+
+
+/**
+ * Reference to a field of type 'ResumeLang[]'
+ */
+export type ListEnumResumeLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResumeLang[]'>
+    
+
+
+/**
  * Reference to a field of type 'PebbleDiagnosticStatus'
  */
 export type EnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PebbleDiagnosticStatus'>
@@ -9323,6 +9432,7 @@ export type GlobalOmitConfig = {
   sleptonsProduct?: Prisma.SleptonsProductOmit
   sleptonsUpvote?: Prisma.SleptonsUpvoteOmit
   sleptonsConnection?: Prisma.SleptonsConnectionOmit
+  sleptonsResume?: Prisma.SleptonsResumeOmit
   bAOrganization?: Prisma.BAOrganizationOmit
   bAMember?: Prisma.BAMemberOmit
   bAInvitation?: Prisma.BAInvitationOmit
