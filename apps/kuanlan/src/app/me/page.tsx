@@ -4,6 +4,8 @@ import { ConsentControl } from "@/components/ConsentControl";
 import { QuietPage } from "@/components/QuietPage";
 import { getServerSession } from "@/lib/auth";
 import { readFaceConsent } from "@/lib/consent.server";
+import { creditBalance, shootPriceCredits } from "@/lib/credits";
+import { DbUnavailableError, tenantDbFor } from "@/lib/db";
 import { type IdPhotoMomentPage, momentLabel } from "@/lib/moments";
 import { ResourceStoreUnavailableError } from "@/lib/resources";
 import { listIdPhotoMoments } from "@/lib/resources.server";
@@ -39,6 +41,7 @@ export default async function MePage() {
   // The store being down costs the page its Moments, not the whole account.
   let page: IdPhotoMomentPage = { moments: [], total: 0 };
   let consentedAt: string | null = null;
+  let credits: { balance: number; price: number } | null = null;
   let storeDown = false;
   try {
     const [moments, consent] = await Promise.all([
@@ -53,6 +56,15 @@ export default async function MePage() {
   } catch (error) {
     if (!(error instanceof ResourceStoreUnavailableError)) throw error;
     storeDown = true;
+  }
+
+  // The ledger is its own dependency; losing it costs the page a number, not
+  // the account.
+  try {
+    const { tenant } = await tenantDbFor(session.userId);
+    credits = { balance: await creditBalance(tenant.tenantId), price: shootPriceCredits() };
+  } catch (error) {
+    if (!(error instanceof DbUnavailableError)) throw error;
   }
 
   const authHost = getBrandOrigin("auth").replace(/^https?:\/\//, "");
@@ -104,6 +116,12 @@ export default async function MePage() {
               <dd className="ledger-figure">{page.total}</dd>
               <dt>留下的 Moment</dt>
             </div>
+            {credits ? (
+              <div className="ledger-item">
+                <dd className="ledger-figure">{credits.balance}</dd>
+                <dt>还能用的 credit · 每张 {credits.price}</dt>
+              </div>
+            ) : null}
             {latest ? (
               <div className="ledger-item">
                 <dd className="ledger-figure ledger-figure-sm">{latest}</dd>

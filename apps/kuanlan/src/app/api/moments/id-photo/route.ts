@@ -2,6 +2,14 @@ import { resolveIdPhotoPrint, SkuUnavailableError } from "@/catalog/skus";
 import { getSessionFromRequest } from "@/lib/auth";
 import { consentGap } from "@/lib/consent";
 import { readFaceConsent } from "@/lib/consent.server";
+import {
+  creditBalance,
+  ensureWelcomeCredits,
+  InsufficientCreditsError,
+  refundShootCredits,
+  reserveShootCredits,
+  shootPriceCredits,
+} from "@/lib/credits";
 import { DbUnavailableError, tenantDbFor } from "@/lib/db";
 import {
   Image2UnavailableError,
@@ -128,8 +136,9 @@ export async function POST(request: Request) {
 
   // `step` is the whole point of these lines: when a shoot dies, this is the
   // difference between "it broke" and "the router timed out after 40s".
-  let step: "resolve" | "router" | "compose" | "store" = "resolve";
+  let step: "resolve" | "reserve" | "router" | "compose" | "store" = "resolve";
   let taskId: string | null = null;
+  let reserved = false;
   let scoped: Awaited<ReturnType<typeof tenantDbFor>> | null = null;
   try {
     const { composeIdPhoto } = await import("@/lib/id-photo");
@@ -172,6 +181,8 @@ export async function POST(request: Request) {
             height: opened.row.result.height,
             dpi: opened.row.result.dpi,
             remainingToday: allowance.remaining,
+            price: shootPriceCredits(),
+            balance: await creditBalance(scoped.tenant.tenantId),
             reused: true,
           },
           { status: 200, headers: { "Cache-Control": "no-store" } },
@@ -184,6 +195,36 @@ export async function POST(request: Request) {
       );
     }
     taskId = opened.row.id;
+
+    // Money before the model. A new person is welcomed first — idempotent, one
+    // type-filtered ledger read — and then the price of this shoot is taken
+    // against the Task id, atomically, so two shoots racing for the last
+    // credits cannot both be admitted. If the ledger says no, the row closes
+    // as FAILED with that reason and nothing is generated.
+    step = "reserve";
+    await ensureWelcomeCredits(scoped.tenant.tenantId);
+    let reservation: Awaited<ReturnType<typeof reserveShootCredits>>;
+    try {
+      reservation = await reserveShootCredits(scoped.tenant.tenantId, taskId);
+    } catch (error) {
+      if (error instanceof InsufficientCreditsError) {
+        await failShoot(scoped.db, taskId, {
+          step: "reserve",
+          name: error.name,
+          message: `balance ${error.balance} < price ${error.price}`,
+        });
+        shot.info("shoot refused: insufficient credits", {
+          balance: error.balance,
+          price: error.price,
+        });
+        return Response.json(
+          { error: "insufficient_credits", balance: error.balance, price: error.price },
+          { status: 402, headers: { "Cache-Control": "no-store" } },
+        );
+      }
+      throw error;
+    }
+    reserved = true;
 
     step = "router";
     const frame = await shootWithImage2({
@@ -227,6 +268,8 @@ export async function POST(request: Request) {
         height: result.height,
         dpi: result.dpi,
         remainingToday: allowance.remaining,
+        price: shootPriceCredits(),
+        balance: reservation.balanceAfter,
       },
       {
         status: 200,
@@ -245,6 +288,18 @@ export async function POST(request: Request) {
         name: error instanceof Error ? error.name : "Error",
         message: error instanceof Error ? error.message.slice(0, 500) : String(error),
       }).catch((recordError) => shot.error("could not record the failure", recordError));
+
+      // No output, no charge. Reserved and then died anywhere past the ledger —
+      // router, compose, store — means the person paid for nothing. The refund
+      // is keyed on the Task id and refuses to run twice, so a retry of this
+      // very path cannot pay them back a second time.
+      if (reserved) {
+        await refundShootCredits(scoped.tenant.tenantId, taskId, `shoot failed at ${step}`)
+          .then((r) =>
+            shot.info("shoot refunded", { refunded: r.refunded, balance: r.balanceAfter }),
+          )
+          .catch((refundError) => shot.error("could not refund the shoot", refundError));
+      }
     }
     if (error instanceof DbUnavailableError) {
       shot.error("shoot refused: no database", error, { step, ms });
