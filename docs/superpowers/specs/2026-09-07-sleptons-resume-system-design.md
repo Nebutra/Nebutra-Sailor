@@ -352,7 +352,7 @@ Ported = re-written into the Sleptons structure with `@nebutra/*` imports; **nev
 | Milestone | Deliverable | Gate |
 |---|---|---|
 | **R0 — Schema & import** ✅ 2026-09-07 | Prisma model + migration, contracts schema, `derive.ts`, `mapCviseProfileToResumeV1`, `GET/PUT /api/resume` | 39 unit tests green (contracts 6, sleptons 33); `typecheck`/`lint` clean for both packages. Migration not yet applied to any DB. |
-| **R1 — Editor & render** | split-screen editor, 11 section steps, renderers, autosave to gateway, private preview, MD/JSON export | e2e `e2e/sleptons/resume-edit.spec.ts` |
+| **R1 — Editor & render** · cut 1 ✅ 2026-09-07 | **Done:** data-driven section registry (`features/resume/editor/sections.ts`, 16 sections, guard test against the contract), pure reducer, debounced autosave (3 s, 422 → per-field issues), `FieldControl`/`SectionForm`/`ResumeEditor` on `@nebutra/ui/primitives`, compact live preview, `/resume/edit` page, Clerk `proxy.ts` (was missing — R0's `auth()` would have thrown at runtime). **Left:** full document renderer with print/ATS modes (port of CVise `components/resume/*`), MD/JSON export, `preferences` UI, section-level PATCH, e2e `e2e/sleptons/resume-edit.spec.ts` | 48 unit tests green; typecheck/lint clean |
 | **R2 — Public & PDF** | public page with visibility rules, Playwright PDF + DOCX via queue, card highlights strip | Lighthouse ≥ 90 on public page; PDF byte-identical across two runs |
 | **R3 — AI assist** | three gateway AI routes, suggestion panel, tier rate limits | prompt regression fixtures; cost per action logged to metering |
 | **R4 — Matching input** | résumé text in embedding pipeline (M2 dependency) | A/B on match acceptance |
