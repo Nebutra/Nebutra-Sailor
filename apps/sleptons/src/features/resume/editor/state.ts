@@ -17,7 +17,8 @@ export type EditorAction =
   | { type: "removeItem"; section: ListSectionKey; index: number }
   | { type: "moveItem"; section: ListSectionKey; index: number; direction: -1 | 1 }
   | { type: "setSkills"; category: ResumeSkillCategory; values: string[] }
-  | { type: "setInterests"; values: string[] };
+  | { type: "setInterests"; values: string[] }
+  | { type: "setPreference"; key: string; value: unknown };
 
 export function emptyContent(name = ""): EditorContent {
   return { basic: { name }, objective: {} };
@@ -93,6 +94,12 @@ export function resumeReducer(state: EditorContent, action: EditorAction): Edito
 
     case "setInterests":
       return { ...state, interests: normalise(action.values) as string[] | undefined };
+
+    case "setPreference":
+      return {
+        ...state,
+        preferences: { ...(state.preferences ?? {}), [action.key]: action.value },
+      };
 
     default:
       return state;
