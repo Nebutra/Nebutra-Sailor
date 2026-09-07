@@ -7,6 +7,8 @@ import type { ConsentGap } from "@/lib/consent";
 
 type Status = "idle" | "shooting" | "ready" | "error";
 
+const PENDING_KEY = "kuanlan.pendingShoot";
+
 export function IdPhotoStudio({
   initialSkuId,
   initialSizeId,
@@ -35,6 +37,7 @@ export function IdPhotoStudio({
   const [credits, setCredits] = useState<{ balance: number; price: number } | null>(null);
   const [agreeing, setAgreeing] = useState(false);
   const [needsSignIn, setNeedsSignIn] = useState(false);
+  const [pendingId, setPendingId] = useState<string | null>(null);
 
   const selected = skus.find((sku) => sku.id === skuId);
   const selectedSize = selected?.sizes.find((size) => size.id === sizeId) ?? selected?.sizes[0];
@@ -59,6 +62,85 @@ export function IdPhotoStudio({
       live = false;
     };
   }, []);
+
+  // A shoot outlives the page. If one was in flight when this page was last
+  // closed, pick it back up and keep watching the row.
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(PENDING_KEY);
+      if (saved) {
+        setPendingId(saved);
+        setStatus("shooting");
+      }
+    } catch {}
+  }, []);
+
+  // Watch the row. 2 s while the worker is running, backing off to 5 s after
+  // the first half minute; paused entirely while the tab is hidden. The poll
+  // reads the row and nothing else, so this is the whole client state model.
+  useEffect(() => {
+    if (!pendingId) return;
+    let live = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const startedAt = Date.now();
+
+    const settle = (next: Status, message: string, url?: string) => {
+      try {
+        window.localStorage.removeItem(PENDING_KEY);
+      } catch {}
+      setPendingId(null);
+      if (url) setResultUrl(url);
+      setStatus(next);
+      setNote(message);
+    };
+
+    const tick = async () => {
+      if (!live) return;
+      if (document.hidden) {
+        timer = setTimeout(tick, 5000);
+        return;
+      }
+      try {
+        const response = await fetch(`/api/moments/id-photo/${encodeURIComponent(pendingId)}`);
+        if (response.status === 404) return settle("error", "这一刻没留下。再试一次。");
+        if (!response.ok) {
+          timer = setTimeout(tick, 5000);
+          return;
+        }
+        const row = (await response.json()) as {
+          status: string;
+          result: { url: string } | null;
+          error: { step: string } | null;
+        };
+        if (row.status === "SUCCEEDED" && row.result?.url) {
+          return settle("ready", "", row.result.url);
+        }
+        if (row.status === "FAILED" || row.status === "CANCELLED") {
+          const step = row.error?.step;
+          return settle(
+            "error",
+            step === "compose"
+              ? "这张照片观澜看不清。钱已退回。"
+              : step === "store"
+                ? "这一刻还存不进去。钱已退回。"
+                : step === "runner"
+                  ? "拍太久了，先停下。钱已退回。"
+                  : "这一刻没拍成。钱已退回。",
+          );
+        }
+        const elapsed = Date.now() - startedAt;
+        timer = setTimeout(tick, elapsed < 30_000 ? 2000 : 5000);
+      } catch {
+        timer = setTimeout(tick, 5000);
+      }
+    };
+
+    tick();
+    return () => {
+      live = false;
+      if (timer) clearTimeout(timer);
+    };
+  }, [pendingId]);
 
   function onPick(next: File | null) {
     setFile(next);
@@ -151,6 +233,8 @@ export function IdPhotoStudio({
         return;
       }
       const moment = (await response.json()) as {
+        id?: string;
+        status?: string;
         url?: string;
         remainingToday?: number;
         balance?: number;
@@ -159,14 +243,25 @@ export function IdPhotoStudio({
       if (typeof moment.balance === "number" && typeof moment.price === "number") {
         setCredits({ balance: moment.balance, price: moment.price });
       }
-      if (!moment.url) {
-        setStatus("error");
-        setNote("这一刻没留下。再试一次。");
+      setRemainingToday(typeof moment.remainingToday === "number" ? moment.remainingToday : null);
+
+      // A finished row came straight back (the same shoot, already done).
+      if (moment.url) {
+        setResultUrl(moment.url);
+        setStatus("ready");
         return;
       }
-      setResultUrl(moment.url);
-      setRemainingToday(typeof moment.remainingToday === "number" ? moment.remainingToday : null);
-      setStatus("ready");
+      // Otherwise it is queued: remember it, and the watcher above takes over.
+      if (moment.id) {
+        try {
+          window.localStorage.setItem(PENDING_KEY, moment.id);
+        } catch {}
+        setNote("在拍。可以先去别处，拍好会留在 Moments。");
+        setPendingId(moment.id);
+        return;
+      }
+      setStatus("error");
+      setNote("这一刻没留下。再试一次。");
     } catch {
       setStatus("error");
       setNote("这一刻没留下。再试一次。");

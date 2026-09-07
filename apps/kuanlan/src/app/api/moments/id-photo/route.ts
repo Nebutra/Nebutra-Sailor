@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { resolveIdPhotoPrint, SkuUnavailableError } from "@/catalog/skus";
 import { getSessionFromRequest } from "@/lib/auth";
 import { consentGap } from "@/lib/consent";
@@ -11,21 +12,13 @@ import {
   shootPriceCredits,
 } from "@/lib/credits";
 import { DbUnavailableError, tenantDbFor } from "@/lib/db";
-import {
-  Image2UnavailableError,
-  idPhotoShootBrief,
-  image2SizeForSku,
-  shootWithImage2,
-} from "@/lib/image2";
+import { Image2UnavailableError } from "@/lib/image2";
 import { shootLog } from "@/lib/log";
 import { InvalidResourceKeyError, ResourceStoreUnavailableError } from "@/lib/resources";
-import {
-  deleteIdPhotoMoment,
-  listIdPhotoMoments,
-  persistIdPhotoMoment,
-} from "@/lib/resources.server";
+import { deleteIdPhotoMoment, listIdPhotoMoments } from "@/lib/resources.server";
 import { spendShootAllowance } from "@/lib/shoot-limit";
-import { failShoot, openShoot, sha256, shootIdempotencyKey, succeedShoot } from "@/lib/shoots";
+import { runShoot } from "@/lib/shoot-runner";
+import { failShoot, openShoot, sha256, shootIdempotencyKey } from "@/lib/shoots";
 
 // Keep this number here so GET / unsigned POST never load sharp.
 const MAX_PORTRAIT_BYTES = 12 * 1024 * 1024;
@@ -141,7 +134,6 @@ export async function POST(request: Request) {
   let reserved = false;
   let scoped: Awaited<ReturnType<typeof tenantDbFor>> | null = null;
   try {
-    const { composeIdPhoto } = await import("@/lib/id-photo");
     const print = resolveIdPhotoPrint(skuId, sizeId || undefined);
     const source = Buffer.from(await file.arrayBuffer());
 
@@ -188,10 +180,11 @@ export async function POST(request: Request) {
           { status: 200, headers: { "Cache-Control": "no-store" } },
         );
       }
-      shot.info("shoot already running", { taskId: opened.row.id });
+      // Already in flight for this exact request: same id, same poll.
+      shot.info("shoot already in flight", { taskId: opened.row.id, status: opened.row.status });
       return Response.json(
-        { error: "shoot_in_progress", id: opened.row.id },
-        { status: 409, headers: { "Cache-Control": "no-store" } },
+        { id: opened.row.id, status: opened.row.status, reused: true },
+        { status: 202, headers: { "Cache-Control": "no-store" } },
       );
     }
     taskId = opened.row.id;
@@ -226,57 +219,33 @@ export async function POST(request: Request) {
     }
     reserved = true;
 
-    step = "router";
-    const frame = await shootWithImage2({
-      image: source,
-      prompt: idPhotoShootBrief(print),
-      size: image2SizeForSku(print),
-      mimeType: file.type,
-    });
-
-    step = "compose";
-    const result = await composeIdPhoto({ source: frame, sku: print });
-
-    step = "store";
-    const stored = await persistIdPhotoMoment({
-      id: taskId,
+    // Everything expensive happens after this response is on its way. The
+    // row is QUEUED; the worker flips it to RUNNING when it picks it up, and
+    // the studio watches the row. Closing the tab changes nothing.
+    const worker = {
+      db: scoped.db,
+      tenantId: scoped.tenant.tenantId,
       userId: session.userId,
-      skuId: print.id,
-      sizeId: print.sizeId,
-      print: result.png,
-    });
-    await succeedShoot(scoped.db, taskId, {
-      key: stored.key,
-      width: result.width,
-      height: result.height,
-      dpi: result.dpi,
-    });
+      taskId,
+      print,
+      source,
+      mimeType: file.type,
+      log: shot,
+    };
+    after(() => runShoot(worker));
 
-    shot.info("shoot done", {
-      ms: Date.now() - started,
-      remainingToday: allowance.remaining,
-    });
-
+    shot.info("shoot queued", { taskId, ms: Date.now() - started });
     return Response.json(
       {
-        id: stored.id,
+        id: taskId,
+        status: "QUEUED",
         skuId: print.id,
         sizeId: print.sizeId,
-        key: stored.key,
-        url: stored.url,
-        width: result.width,
-        height: result.height,
-        dpi: result.dpi,
         remainingToday: allowance.remaining,
         price: shootPriceCredits(),
         balance: reservation.balanceAfter,
       },
-      {
-        status: 200,
-        headers: {
-          "Cache-Control": "no-store",
-        },
-      },
+      { status: 202, headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
     const ms = Date.now() - started;

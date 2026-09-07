@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   failShoot,
+  getShoot,
+  isShootStale,
   listShoots,
+  markShootRunning,
   openShoot,
   SHOOT_TASK_TYPE,
   type ShootStore,
@@ -30,7 +33,8 @@ function fakeStore(seed: Row[] = []) {
               (r) =>
                 r.tenantId === where.tenantId &&
                 r.type === where.type &&
-                r.idempotencyKey === where.idempotencyKey &&
+                (where.id === undefined || r.id === where.id) &&
+                (where.idempotencyKey === undefined || r.idempotencyKey === where.idempotencyKey) &&
                 (!statuses || statuses.includes(r.status)),
             )
             .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0] ?? null
@@ -106,7 +110,7 @@ describe("idempotency key", () => {
 });
 
 describe("opening a shoot", () => {
-  it("creates a RUNNING row with the payload and the key", async () => {
+  it("creates a QUEUED row with the payload and the key, and no start time yet", async () => {
     const { store, rows } = fakeStore();
     const { row, reused } = await openShoot(store, {
       tenantId: "t1",
@@ -116,15 +120,15 @@ describe("opening a shoot", () => {
     });
 
     expect(reused).toBe(false);
-    expect(row.status).toBe("RUNNING");
+    expect(row.status).toBe("QUEUED");
     expect(row.payload).toEqual(payload);
     expect(rows[0]).toMatchObject({
       tenantId: "t1",
       userId: "u1",
       type: SHOOT_TASK_TYPE,
       idempotencyKey: "k1",
-      startedAt: expect.any(Date),
     });
+    expect(rows[0]?.startedAt).toBeUndefined();
   });
 
   it("hands back the open row on a second identical submit instead of creating another", async () => {
@@ -275,5 +279,51 @@ describe("listing shoots", () => {
 
     expect(total).toBe(3);
     expect(rows).toHaveLength(1);
+  });
+});
+
+describe("the row as the only channel", () => {
+  it("marks a row running with a start time the worker can be judged against", async () => {
+    const { store } = fakeStore();
+    const { row } = await openShoot(store, {
+      tenantId: "t1",
+      userId: "u1",
+      idempotencyKey: "k",
+      payload,
+    });
+    const running = await markShootRunning(store, row.id);
+    expect(running.status).toBe("RUNNING");
+    expect(running.startedAt).toBeInstanceOf(Date);
+  });
+
+  it("only hands a row to the tenant that owns it", async () => {
+    const { store } = fakeStore();
+    const { row } = await openShoot(store, {
+      tenantId: "t1",
+      userId: "u1",
+      idempotencyKey: "k",
+      payload,
+    });
+    expect(await getShoot(store, "t1", row.id)).not.toBeNull();
+    expect(await getShoot(store, "t2", row.id)).toBeNull();
+  });
+
+  it("calls a shoot stale only when it is in flight and long past any plausible run", () => {
+    const base = {
+      id: "x",
+      payload,
+      result: null,
+      error: null,
+      progress: 0,
+      createdAt: new Date(0),
+      startedAt: new Date(0),
+      completedAt: null,
+    };
+    const later = 6 * 60_000;
+    expect(isShootStale({ ...base, status: "RUNNING" }, later)).toBe(true);
+    expect(isShootStale({ ...base, status: "QUEUED", startedAt: null }, later)).toBe(true);
+    expect(isShootStale({ ...base, status: "RUNNING" }, 60_000)).toBe(false);
+    expect(isShootStale({ ...base, status: "SUCCEEDED" }, later)).toBe(false);
+    expect(isShootStale({ ...base, status: "FAILED" }, later)).toBe(false);
   });
 });
