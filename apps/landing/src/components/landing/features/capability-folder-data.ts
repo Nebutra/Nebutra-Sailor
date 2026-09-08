@@ -228,7 +228,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 21,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 307,
+      sourceFiles: 309,
       testFiles: 53,
       readmes: 15,
     },
@@ -770,8 +770,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 9,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 92,
-      testFiles: 27,
+      sourceFiles: 93,
+      testFiles: 28,
       readmes: 9,
     },
     title: copy("Commercial System of Record", "商业系统记录源"),

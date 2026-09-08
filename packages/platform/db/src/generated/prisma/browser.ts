@@ -418,6 +418,11 @@ export type SleptonsUpvote = Prisma.SleptonsUpvoteModel
  */
 export type SleptonsConnection = Prisma.SleptonsConnectionModel
 /**
+ * Model SleptonsResume
+ * 
+ */
+export type SleptonsResume = Prisma.SleptonsResumeModel
+/**
  * Model BAOrganization
  * @conditional(auth=betterauth)
  */

@@ -377,6 +377,15 @@ export const LicenseType = {
 export type LicenseType = (typeof LicenseType)[keyof typeof LicenseType]
 
 
+export const ResumeLang = {
+  ZH: 'ZH',
+  EN: 'EN',
+  MIX: 'MIX'
+} as const
+
+export type ResumeLang = (typeof ResumeLang)[keyof typeof ResumeLang]
+
+
 export const PebbleDiagnosticStatus = {
   PENDING_UPLOAD: 'PENDING_UPLOAD',
   STORED: 'STORED',
