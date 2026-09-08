@@ -81,10 +81,14 @@ jobs:
             const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: url.hostname.endsWith("localhost") ? undefined : { rejectUnauthorized: false } });
             await client.connect();
             const { rows: [h] } = await client.query("select to_regclass(\x27public._prisma_migrations\x27) is not null as has_history");
-            let applied = 0, last = "";
+            let applied = 0, last = "", failed = [];
             if (h.has_history) {
               const { rows: [a] } = await client.query("select count(*)::int as n, coalesce(max(migration_name), \x27\x27) as last from _prisma_migrations where finished_at is not null");
               applied = a.n; last = a.last;
+              // A migration that started, errored and was never resolved. Prisma
+              // refuses to deploy past it until it is marked rolled back.
+              const { rows: f } = await client.query("select migration_name from _prisma_migrations where finished_at is null and rolled_back_at is null order by started_at");
+              failed = f.map((row) => row.migration_name);
             }
             const { rows: [t] } = await client.query("select count(*)::int as n from pg_tables where schemaname = \x27public\x27");
             const { rows: [r] } = await client.query("select bool_or(rolname = \x27postgres\x27) as postgres, bool_or(rolname = \x27app_user\x27) as app_user from pg_roles");
@@ -92,7 +96,8 @@ jobs:
             await client.end();
             const out = process.env.GITHUB_OUTPUT;
             const fs = await import("node:fs");
-            fs.appendFileSync(out, `has_history=${h.has_history}\napplied=${applied}\nlast=${last}\ntables=${t.n}\nhost=${url.hostname}:${url.port || 5432}\n`);
+            fs.appendFileSync(out, `has_history=${h.has_history}\napplied=${applied}\nlast=${last}\ntables=${t.n}\nhost=${url.hostname}:${url.port || 5432}\nfailed=${failed.join(" ")}\n`);
+            if (failed.length) console.log(`failed, unresolved: ${failed.join(" ")}`);
             console.log(`host ${url.hostname}:${url.port || 5432}  public tables ${t.n}  migration history ${h.has_history ? applied + " applied, last " + last : "none"}`);
             console.log(`roles: postgres=${r.postgres} app_user=${r.app_user}  policies: ${p.n}`);
           '
@@ -125,6 +130,22 @@ jobs:
             pnpm exec prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --script || true
           fi
 
+      - name: Clear a failed migration so deploy can retry it
+        # Postgres runs each migration file in one transaction, so a migration
+        # that errored left nothing behind. Prisma still records it as failed
+        # and stops every later deploy at it. Mark it rolled back and deploy
+        # applies it again — from the current file, which is where the fix is.
+        if: ${{ !inputs.dry_run && steps.mode.outputs.mode == 'deploy' && steps.inspect.outputs.failed != '' }}
+        working-directory: packages/platform/db
+        env:
+          FAILED: ${{ steps.inspect.outputs.failed }}
+        run: |
+          set -euo pipefail
+          for m in $FAILED; do
+            echo "marking $m rolled back"
+            pnpm exec prisma migrate resolve --rolled-back "$m"
+          done
+
       - name: Apply
         if: ${{ !inputs.dry_run }}
         working-directory: packages/platform/db
@@ -147,6 +168,7 @@ jobs:
           LAST_BEFORE: ${{ steps.inspect.outputs.last }}
           TABLES: ${{ steps.inspect.outputs.tables }}
           DRY: ${{ inputs.dry_run }}
+          FAILED: ${{ steps.inspect.outputs.failed }}
           OUTCOME: ${{ job.status }}
         run: |
           {
@@ -159,4 +181,5 @@ jobs:
             echo "| Mode | \`$MODE\` |"
             echo "| History before | $([ -n "$LAST_BEFORE" ] && echo "$APPLIED_BEFORE applied, last \`$LAST_BEFORE\`" || echo "none — shaped by db push") |"
             echo "| Dry run | $DRY |"
+            [ -n "${FAILED:-}" ] && echo "| Failed before this run | \`$FAILED\` — marked rolled back, then retried |"
           } >> "$GITHUB_STEP_SUMMARY"

@@ -71,6 +71,18 @@ CREATE INDEX IF NOT EXISTS "code_redemptions_tenant_id_idx" ON "code_redemptions
 -- below also filters on to_tenant_id (the receiving side of a transfer).
 CREATE INDEX IF NOT EXISTS "tenant_transfer_journals_to_tenant_id_idx" ON "tenant_transfer_journals" ("to_tenant_id");
 
+-- The helper every policy below calls. 20260313_enable_rls defines it, and
+-- production's history says 20260313 was applied — but the first real
+-- `migrate deploy` there failed with "function current_org_id() does not
+-- exist": that history was recorded against a database shaped by db push, not
+-- by running the files. Defining it here again is idempotent and costs
+-- nothing where it already exists; it makes this migration true on its own.
+CREATE OR REPLACE FUNCTION current_org_id() RETURNS text
+  LANGUAGE sql STABLE
+AS $$
+  SELECT COALESCE(current_setting('app.current_tenant_id', true), '')
+$$;
+
 -- Idempotency (2026-09-08): every CREATE POLICY below is preceded by
 -- DROP POLICY IF EXISTS. This migration had never reached production — the
 -- history there stopped at 20260730 — while infra/data/database/policies/
