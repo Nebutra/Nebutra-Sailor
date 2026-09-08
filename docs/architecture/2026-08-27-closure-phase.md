@@ -1,7 +1,7 @@
 # Closure Phase — Converge, Do Not Expand
 
 - **Date**: 2026-08-27
-- **Status**: Accepted
+- **Status**: Superseded by [Product Intelligence Phase (2026-09-08)](./2026-09-08-product-intelligence-phase.md). The expansion ban is rescinded; the repo-trust rules carry over there.
 - **Owner**: tseka_luk
 - **Related**:
   - [docs/package-status.md](../package-status.md)
@@ -148,3 +148,23 @@ Phase exit:
 - Deleting or freezing Labs
 - A “unify the architecture” rewrite
 - An official Release before P0 is green
+
+## Exceptions
+
+Recorded here so the rule above stays the rule. Each entry names the owner's
+decision, the boundary, and what it must not do.
+
+### 2026-09-08 — `apps/para` (PARA frontend shell)
+
+- **Decision**: owner (tseka_luk) chose to land the PARA product shell inside
+  this monorepo as `apps/para` rather than a separate repository.
+- **What it is**: a `labs` / `wip` Next.js app on mock data — Home, Projects,
+  Workspace with a canvas skeleton and contextual drawers. No backend, no auth,
+  no generation, no deploy target.
+- **Boundary**: it consumes existing packages (`@nebutra/ui`, `@nebutra/tokens`,
+  `@nebutra/icons`, `@nebutra/fonts`, `@nebutra/brand`) and adds **no** new
+  workspace packages, infra categories, or abstraction layers. It is not part of
+  the golden path and carries no external promise.
+- **Ratchet**: any backend, auth, billing, or generation wiring for PARA must
+  reuse the canonical implementations in this repo and be reviewed against the
+  closure rules; it may not spawn PARA-only copies of them.

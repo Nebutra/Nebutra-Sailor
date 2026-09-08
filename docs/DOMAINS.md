@@ -152,7 +152,7 @@ PM2 release / preflight gotchas (sibling wipe, webpack `build:vm`, explicit `app
 
 ## DNS records (reference)
 
-Hostnames dogfood `brand.domains` (`pnpm brand:apply`). Zone files: `pnpm dns:render` → `infra/ops/dns/`. See [brand-hardcode-governance.md](./architecture/brand-hardcode-governance.md).
+Hostnames dogfood `brand.domains` (`pnpm brand:apply`). Zone files: `pnpm dns:render` → `infra/ops/dns/`. See [brand-hardcode-governance.md](./design-system/brand-hardcode-governance.md).
 
 
 ```
