@@ -216,6 +216,9 @@ export type TenantWhereInput = {
   automationRuns?: Prisma.AutomationRunListRelationFilter
   workflowDefinitions?: Prisma.WorkflowDefinitionListRelationFilter
   workflowRuns?: Prisma.WorkflowRunListRelationFilter
+  paraProjects?: Prisma.ParaProjectListRelationFilter
+  paraWorkspaces?: Prisma.ParaWorkspaceListRelationFilter
+  paraAssets?: Prisma.ParaAssetListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
   oauthClients?: Prisma.OAuthClientListRelationFilter
   orders?: Prisma.OrderListRelationFilter
@@ -263,6 +266,9 @@ export type TenantOrderByWithRelationInput = {
   automationRuns?: Prisma.AutomationRunOrderByRelationAggregateInput
   workflowDefinitions?: Prisma.WorkflowDefinitionOrderByRelationAggregateInput
   workflowRuns?: Prisma.WorkflowRunOrderByRelationAggregateInput
+  paraProjects?: Prisma.ParaProjectOrderByRelationAggregateInput
+  paraWorkspaces?: Prisma.ParaWorkspaceOrderByRelationAggregateInput
+  paraAssets?: Prisma.ParaAssetOrderByRelationAggregateInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
   oauthClients?: Prisma.OAuthClientOrderByRelationAggregateInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
@@ -313,6 +319,9 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   automationRuns?: Prisma.AutomationRunListRelationFilter
   workflowDefinitions?: Prisma.WorkflowDefinitionListRelationFilter
   workflowRuns?: Prisma.WorkflowRunListRelationFilter
+  paraProjects?: Prisma.ParaProjectListRelationFilter
+  paraWorkspaces?: Prisma.ParaWorkspaceListRelationFilter
+  paraAssets?: Prisma.ParaAssetListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
   oauthClients?: Prisma.OAuthClientListRelationFilter
   orders?: Prisma.OrderListRelationFilter
@@ -382,6 +391,9 @@ export type TenantCreateInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -427,6 +439,9 @@ export type TenantUncheckedCreateInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -472,6 +487,9 @@ export type TenantUpdateInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -517,6 +535,9 @@ export type TenantUncheckedUpdateInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -810,6 +831,48 @@ export type TenantUpdateOneRequiredWithoutAutomationRunsNestedInput = {
   upsert?: Prisma.TenantUpsertWithoutAutomationRunsInput
   connect?: Prisma.TenantWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutAutomationRunsInput, Prisma.TenantUpdateWithoutAutomationRunsInput>, Prisma.TenantUncheckedUpdateWithoutAutomationRunsInput>
+}
+
+export type TenantCreateNestedOneWithoutParaProjectsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutParaProjectsInput, Prisma.TenantUncheckedCreateWithoutParaProjectsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutParaProjectsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutParaProjectsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutParaProjectsInput, Prisma.TenantUncheckedCreateWithoutParaProjectsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutParaProjectsInput
+  upsert?: Prisma.TenantUpsertWithoutParaProjectsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutParaProjectsInput, Prisma.TenantUpdateWithoutParaProjectsInput>, Prisma.TenantUncheckedUpdateWithoutParaProjectsInput>
+}
+
+export type TenantCreateNestedOneWithoutParaWorkspacesInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutParaWorkspacesInput, Prisma.TenantUncheckedCreateWithoutParaWorkspacesInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutParaWorkspacesInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutParaWorkspacesNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutParaWorkspacesInput, Prisma.TenantUncheckedCreateWithoutParaWorkspacesInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutParaWorkspacesInput
+  upsert?: Prisma.TenantUpsertWithoutParaWorkspacesInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutParaWorkspacesInput, Prisma.TenantUpdateWithoutParaWorkspacesInput>, Prisma.TenantUncheckedUpdateWithoutParaWorkspacesInput>
+}
+
+export type TenantCreateNestedOneWithoutParaAssetsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutParaAssetsInput, Prisma.TenantUncheckedCreateWithoutParaAssetsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutParaAssetsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutParaAssetsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutParaAssetsInput, Prisma.TenantUncheckedCreateWithoutParaAssetsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutParaAssetsInput
+  upsert?: Prisma.TenantUpsertWithoutParaAssetsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutParaAssetsInput, Prisma.TenantUpdateWithoutParaAssetsInput>, Prisma.TenantUncheckedUpdateWithoutParaAssetsInput>
 }
 
 export type TenantCreateNestedOneWithoutWorkflowDefinitionsInput = {
@@ -1215,6 +1278,9 @@ export type TenantCreateWithoutOrganizationInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -1259,6 +1325,9 @@ export type TenantUncheckedCreateWithoutOrganizationInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -1319,6 +1388,9 @@ export type TenantUpdateWithoutOrganizationInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -1363,6 +1435,9 @@ export type TenantUncheckedUpdateWithoutOrganizationInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -1408,6 +1483,9 @@ export type TenantCreateWithoutTransferJournalsOutInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -1452,6 +1530,9 @@ export type TenantUncheckedCreateWithoutTransferJournalsOutInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -1501,6 +1582,9 @@ export type TenantCreateWithoutTransferJournalsInInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -1545,6 +1629,9 @@ export type TenantUncheckedCreateWithoutTransferJournalsInInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -1605,6 +1692,9 @@ export type TenantUpdateWithoutTransferJournalsOutInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -1649,6 +1739,9 @@ export type TenantUncheckedUpdateWithoutTransferJournalsOutInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -1704,6 +1797,9 @@ export type TenantUpdateWithoutTransferJournalsInInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -1748,6 +1844,9 @@ export type TenantUncheckedUpdateWithoutTransferJournalsInInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -1791,6 +1890,9 @@ export type TenantCreateWithoutApiKeysInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -1835,6 +1937,9 @@ export type TenantUncheckedCreateWithoutApiKeysInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -1895,6 +2000,9 @@ export type TenantUpdateWithoutApiKeysInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -1939,6 +2047,9 @@ export type TenantUncheckedUpdateWithoutApiKeysInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -1983,6 +2094,9 @@ export type TenantCreateWithoutUserInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -2027,6 +2141,9 @@ export type TenantUncheckedCreateWithoutUserInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -2087,6 +2204,9 @@ export type TenantUpdateWithoutUserInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -2131,6 +2251,9 @@ export type TenantUncheckedUpdateWithoutUserInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -2175,6 +2298,9 @@ export type TenantCreateWithoutContentsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -2219,6 +2345,9 @@ export type TenantUncheckedCreateWithoutContentsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -2279,6 +2408,9 @@ export type TenantUpdateWithoutContentsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -2323,6 +2455,9 @@ export type TenantUncheckedUpdateWithoutContentsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -2368,6 +2503,9 @@ export type TenantCreateWithoutProductsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -2412,6 +2550,9 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -2472,6 +2613,9 @@ export type TenantUpdateWithoutProductsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -2516,6 +2660,9 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -2560,6 +2707,9 @@ export type TenantCreateWithoutOrdersInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
@@ -2604,6 +2754,9 @@ export type TenantUncheckedCreateWithoutOrdersInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
@@ -2664,6 +2817,9 @@ export type TenantUpdateWithoutOrdersInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
@@ -2708,6 +2864,9 @@ export type TenantUncheckedUpdateWithoutOrdersInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
@@ -2751,6 +2910,9 @@ export type TenantCreateWithoutIntegrationsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -2795,6 +2957,9 @@ export type TenantUncheckedCreateWithoutIntegrationsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -2855,6 +3020,9 @@ export type TenantUpdateWithoutIntegrationsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -2899,6 +3067,9 @@ export type TenantUncheckedUpdateWithoutIntegrationsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -2943,6 +3114,9 @@ export type TenantCreateWithoutTenantProviderKeysInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -2987,6 +3161,9 @@ export type TenantUncheckedCreateWithoutTenantProviderKeysInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -3047,6 +3224,9 @@ export type TenantUpdateWithoutTenantProviderKeysInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -3091,6 +3271,9 @@ export type TenantUncheckedUpdateWithoutTenantProviderKeysInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -3135,6 +3318,9 @@ export type TenantCreateWithoutAutomationsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -3179,6 +3365,9 @@ export type TenantUncheckedCreateWithoutAutomationsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -3239,6 +3428,9 @@ export type TenantUpdateWithoutAutomationsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -3283,6 +3475,9 @@ export type TenantUncheckedUpdateWithoutAutomationsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -3327,6 +3522,9 @@ export type TenantCreateWithoutAutomationRunsInput = {
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -3371,6 +3569,9 @@ export type TenantUncheckedCreateWithoutAutomationRunsInput = {
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -3431,6 +3632,9 @@ export type TenantUpdateWithoutAutomationRunsInput = {
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -3475,6 +3679,621 @@ export type TenantUncheckedUpdateWithoutAutomationRunsInput = {
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantCreateWithoutParaProjectsInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantUncheckedCreateWithoutParaProjectsInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantCreateOrConnectWithoutParaProjectsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutParaProjectsInput, Prisma.TenantUncheckedCreateWithoutParaProjectsInput>
+}
+
+export type TenantUpsertWithoutParaProjectsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutParaProjectsInput, Prisma.TenantUncheckedUpdateWithoutParaProjectsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutParaProjectsInput, Prisma.TenantUncheckedCreateWithoutParaProjectsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutParaProjectsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutParaProjectsInput, Prisma.TenantUncheckedUpdateWithoutParaProjectsInput>
+}
+
+export type TenantUpdateWithoutParaProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutParaProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantCreateWithoutParaWorkspacesInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantUncheckedCreateWithoutParaWorkspacesInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantCreateOrConnectWithoutParaWorkspacesInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutParaWorkspacesInput, Prisma.TenantUncheckedCreateWithoutParaWorkspacesInput>
+}
+
+export type TenantUpsertWithoutParaWorkspacesInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutParaWorkspacesInput, Prisma.TenantUncheckedUpdateWithoutParaWorkspacesInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutParaWorkspacesInput, Prisma.TenantUncheckedCreateWithoutParaWorkspacesInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutParaWorkspacesInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutParaWorkspacesInput, Prisma.TenantUncheckedUpdateWithoutParaWorkspacesInput>
+}
+
+export type TenantUpdateWithoutParaWorkspacesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutParaWorkspacesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantCreateWithoutParaAssetsInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantUncheckedCreateWithoutParaAssetsInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantCreateOrConnectWithoutParaAssetsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutParaAssetsInput, Prisma.TenantUncheckedCreateWithoutParaAssetsInput>
+}
+
+export type TenantUpsertWithoutParaAssetsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutParaAssetsInput, Prisma.TenantUncheckedUpdateWithoutParaAssetsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutParaAssetsInput, Prisma.TenantUncheckedCreateWithoutParaAssetsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutParaAssetsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutParaAssetsInput, Prisma.TenantUncheckedUpdateWithoutParaAssetsInput>
+}
+
+export type TenantUpdateWithoutParaAssetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutParaAssetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -3519,6 +4338,9 @@ export type TenantCreateWithoutWorkflowDefinitionsInput = {
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -3563,6 +4385,9 @@ export type TenantUncheckedCreateWithoutWorkflowDefinitionsInput = {
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -3623,6 +4448,9 @@ export type TenantUpdateWithoutWorkflowDefinitionsInput = {
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -3667,6 +4495,9 @@ export type TenantUncheckedUpdateWithoutWorkflowDefinitionsInput = {
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -3711,6 +4542,9 @@ export type TenantCreateWithoutWorkflowRunsInput = {
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -3755,6 +4589,9 @@ export type TenantUncheckedCreateWithoutWorkflowRunsInput = {
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -3815,6 +4652,9 @@ export type TenantUpdateWithoutWorkflowRunsInput = {
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -3859,6 +4699,9 @@ export type TenantUncheckedUpdateWithoutWorkflowRunsInput = {
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -3904,6 +4747,9 @@ export type TenantCreateWithoutRequestLogsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -3948,6 +4794,9 @@ export type TenantUncheckedCreateWithoutRequestLogsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -4008,6 +4857,9 @@ export type TenantUpdateWithoutRequestLogsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -4052,6 +4904,9 @@ export type TenantUncheckedUpdateWithoutRequestLogsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -4095,6 +4950,9 @@ export type TenantCreateWithoutCustomerPlanVersionsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -4139,6 +4997,9 @@ export type TenantUncheckedCreateWithoutCustomerPlanVersionsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -4199,6 +5060,9 @@ export type TenantUpdateWithoutCustomerPlanVersionsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -4243,6 +5107,9 @@ export type TenantUncheckedUpdateWithoutCustomerPlanVersionsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -4287,6 +5154,9 @@ export type TenantCreateWithoutCustomerFeatureOverridesInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -4331,6 +5201,9 @@ export type TenantUncheckedCreateWithoutCustomerFeatureOverridesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -4391,6 +5264,9 @@ export type TenantUpdateWithoutCustomerFeatureOverridesInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -4435,6 +5311,9 @@ export type TenantUncheckedUpdateWithoutCustomerFeatureOverridesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -4479,6 +5358,9 @@ export type TenantCreateWithoutCustomerUsageLimitsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -4523,6 +5405,9 @@ export type TenantUncheckedCreateWithoutCustomerUsageLimitsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -4583,6 +5468,9 @@ export type TenantUpdateWithoutCustomerUsageLimitsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -4627,6 +5515,9 @@ export type TenantUncheckedUpdateWithoutCustomerUsageLimitsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -4672,6 +5563,9 @@ export type TenantCreateWithoutSubscriptionsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -4716,6 +5610,9 @@ export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -4776,6 +5673,9 @@ export type TenantUpdateWithoutSubscriptionsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -4820,6 +5720,9 @@ export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -4864,6 +5767,9 @@ export type TenantCreateWithoutInvoicesInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
@@ -4908,6 +5814,9 @@ export type TenantUncheckedCreateWithoutInvoicesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
@@ -4968,6 +5877,9 @@ export type TenantUpdateWithoutInvoicesInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
@@ -5012,6 +5924,9 @@ export type TenantUncheckedUpdateWithoutInvoicesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
@@ -5056,6 +5971,9 @@ export type TenantCreateWithoutPaymentsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -5100,6 +6018,9 @@ export type TenantUncheckedCreateWithoutPaymentsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -5160,6 +6081,9 @@ export type TenantUpdateWithoutPaymentsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -5204,6 +6128,9 @@ export type TenantUncheckedUpdateWithoutPaymentsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -5248,6 +6175,9 @@ export type TenantCreateWithoutPaymentMethodsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -5292,6 +6222,9 @@ export type TenantUncheckedCreateWithoutPaymentMethodsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -5352,6 +6285,9 @@ export type TenantUpdateWithoutPaymentMethodsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -5396,6 +6332,9 @@ export type TenantUncheckedUpdateWithoutPaymentMethodsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -5440,6 +6379,9 @@ export type TenantCreateWithoutUsageLedgerEntriesInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -5484,6 +6426,9 @@ export type TenantUncheckedCreateWithoutUsageLedgerEntriesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -5544,6 +6489,9 @@ export type TenantUpdateWithoutUsageLedgerEntriesInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -5588,6 +6536,9 @@ export type TenantUncheckedUpdateWithoutUsageLedgerEntriesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -5631,6 +6582,9 @@ export type TenantCreateWithoutCreditBalancesInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -5675,6 +6629,9 @@ export type TenantUncheckedCreateWithoutCreditBalancesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -5735,6 +6692,9 @@ export type TenantUpdateWithoutCreditBalancesInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -5779,6 +6739,9 @@ export type TenantUncheckedUpdateWithoutCreditBalancesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -5824,6 +6787,9 @@ export type TenantCreateWithoutStripeCustomersInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -5868,6 +6834,9 @@ export type TenantUncheckedCreateWithoutStripeCustomersInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -5928,6 +6897,9 @@ export type TenantUpdateWithoutStripeCustomersInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -5972,6 +6944,9 @@ export type TenantUncheckedUpdateWithoutStripeCustomersInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -6015,6 +6990,9 @@ export type TenantCreateWithoutAuditLogsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -6059,6 +7037,9 @@ export type TenantUncheckedCreateWithoutAuditLogsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -6119,6 +7100,9 @@ export type TenantUpdateWithoutAuditLogsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -6163,6 +7147,9 @@ export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -6208,6 +7195,9 @@ export type TenantCreateWithoutUserConsentsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -6252,6 +7242,9 @@ export type TenantUncheckedCreateWithoutUserConsentsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -6312,6 +7305,9 @@ export type TenantUpdateWithoutUserConsentsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -6356,6 +7352,9 @@ export type TenantUncheckedUpdateWithoutUserConsentsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -6400,6 +7399,9 @@ export type TenantCreateWithoutTasksInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -6444,6 +7446,9 @@ export type TenantUncheckedCreateWithoutTasksInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -6504,6 +7509,9 @@ export type TenantUpdateWithoutTasksInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -6548,6 +7556,9 @@ export type TenantUncheckedUpdateWithoutTasksInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -6592,6 +7603,9 @@ export type TenantCreateWithoutUploadsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -6636,6 +7650,9 @@ export type TenantUncheckedCreateWithoutUploadsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -6696,6 +7713,9 @@ export type TenantUpdateWithoutUploadsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -6740,6 +7760,9 @@ export type TenantUncheckedUpdateWithoutUploadsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -6784,6 +7807,9 @@ export type TenantCreateWithoutOauthClientsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
@@ -6828,6 +7854,9 @@ export type TenantUncheckedCreateWithoutOauthClientsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
@@ -6888,6 +7917,9 @@ export type TenantUpdateWithoutOauthClientsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
@@ -6932,6 +7964,9 @@ export type TenantUncheckedUpdateWithoutOauthClientsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
@@ -6975,6 +8010,9 @@ export type TenantCreateWithoutChatSessionsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -7019,6 +8057,9 @@ export type TenantUncheckedCreateWithoutChatSessionsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -7079,6 +8120,9 @@ export type TenantUpdateWithoutChatSessionsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -7123,6 +8167,9 @@ export type TenantUncheckedUpdateWithoutChatSessionsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -7168,6 +8215,9 @@ export type TenantCreateWithoutThreadsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -7212,6 +8262,9 @@ export type TenantUncheckedCreateWithoutThreadsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -7272,6 +8325,9 @@ export type TenantUpdateWithoutThreadsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -7316,6 +8372,9 @@ export type TenantUncheckedUpdateWithoutThreadsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -7360,6 +8419,9 @@ export type TenantCreateWithoutUserSkillsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -7404,6 +8466,9 @@ export type TenantUncheckedCreateWithoutUserSkillsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -7464,6 +8529,9 @@ export type TenantUpdateWithoutUserSkillsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -7508,6 +8576,9 @@ export type TenantUncheckedUpdateWithoutUserSkillsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -7551,6 +8622,9 @@ export type TenantCreateWithoutConnectorsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -7595,6 +8669,9 @@ export type TenantUncheckedCreateWithoutConnectorsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -7655,6 +8732,9 @@ export type TenantUpdateWithoutConnectorsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -7699,6 +8779,9 @@ export type TenantUncheckedUpdateWithoutConnectorsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -7743,6 +8826,9 @@ export type TenantCreateWithoutCofounderProfileInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -7787,6 +8873,9 @@ export type TenantUncheckedCreateWithoutCofounderProfileInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -7847,6 +8936,9 @@ export type TenantUpdateWithoutCofounderProfileInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -7891,6 +8983,9 @@ export type TenantUncheckedUpdateWithoutCofounderProfileInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -7935,6 +9030,9 @@ export type TenantCreateWithoutCodeRedemptionsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -7979,6 +9077,9 @@ export type TenantUncheckedCreateWithoutCodeRedemptionsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -8039,6 +9140,9 @@ export type TenantUpdateWithoutCodeRedemptionsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -8083,6 +9187,9 @@ export type TenantUncheckedUpdateWithoutCodeRedemptionsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -8127,6 +9234,9 @@ export type TenantCreateWithoutFeedbackReportsInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -8171,6 +9281,9 @@ export type TenantUncheckedCreateWithoutFeedbackReportsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -8231,6 +9344,9 @@ export type TenantUpdateWithoutFeedbackReportsInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -8275,6 +9391,9 @@ export type TenantUncheckedUpdateWithoutFeedbackReportsInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -8319,6 +9438,9 @@ export type TenantCreateWithoutAtelierCanvasesInput = {
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
@@ -8363,6 +9485,9 @@ export type TenantUncheckedCreateWithoutAtelierCanvasesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
   workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
@@ -8423,6 +9548,9 @@ export type TenantUpdateWithoutAtelierCanvasesInput = {
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
@@ -8467,6 +9595,9 @@ export type TenantUncheckedUpdateWithoutAtelierCanvasesInput = {
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
   workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
@@ -8510,6 +9641,9 @@ export type TenantCountOutputType = {
   automationRuns: number
   workflowDefinitions: number
   workflowRuns: number
+  paraProjects: number
+  paraWorkspaces: number
+  paraAssets: number
   invoices: number
   oauthClients: number
   orders: number
@@ -8548,6 +9682,9 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   automationRuns?: boolean | TenantCountOutputTypeCountAutomationRunsArgs
   workflowDefinitions?: boolean | TenantCountOutputTypeCountWorkflowDefinitionsArgs
   workflowRuns?: boolean | TenantCountOutputTypeCountWorkflowRunsArgs
+  paraProjects?: boolean | TenantCountOutputTypeCountParaProjectsArgs
+  paraWorkspaces?: boolean | TenantCountOutputTypeCountParaWorkspacesArgs
+  paraAssets?: boolean | TenantCountOutputTypeCountParaAssetsArgs
   invoices?: boolean | TenantCountOutputTypeCountInvoicesArgs
   oauthClients?: boolean | TenantCountOutputTypeCountOauthClientsArgs
   orders?: boolean | TenantCountOutputTypeCountOrdersArgs
@@ -8706,6 +9843,27 @@ export type TenantCountOutputTypeCountWorkflowRunsArgs<ExtArgs extends runtime.T
 /**
  * TenantCountOutputType without action
  */
+export type TenantCountOutputTypeCountParaProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ParaProjectWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountParaWorkspacesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ParaWorkspaceWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountParaAssetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ParaAssetWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
 export type TenantCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InvoiceWhereInput
 }
@@ -8851,6 +10009,9 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   automationRuns?: boolean | Prisma.Tenant$automationRunsArgs<ExtArgs>
   workflowDefinitions?: boolean | Prisma.Tenant$workflowDefinitionsArgs<ExtArgs>
   workflowRuns?: boolean | Prisma.Tenant$workflowRunsArgs<ExtArgs>
+  paraProjects?: boolean | Prisma.Tenant$paraProjectsArgs<ExtArgs>
+  paraWorkspaces?: boolean | Prisma.Tenant$paraWorkspacesArgs<ExtArgs>
+  paraAssets?: boolean | Prisma.Tenant$paraAssetsArgs<ExtArgs>
   invoices?: boolean | Prisma.Tenant$invoicesArgs<ExtArgs>
   oauthClients?: boolean | Prisma.Tenant$oauthClientsArgs<ExtArgs>
   orders?: boolean | Prisma.Tenant$ordersArgs<ExtArgs>
@@ -8925,6 +10086,9 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   automationRuns?: boolean | Prisma.Tenant$automationRunsArgs<ExtArgs>
   workflowDefinitions?: boolean | Prisma.Tenant$workflowDefinitionsArgs<ExtArgs>
   workflowRuns?: boolean | Prisma.Tenant$workflowRunsArgs<ExtArgs>
+  paraProjects?: boolean | Prisma.Tenant$paraProjectsArgs<ExtArgs>
+  paraWorkspaces?: boolean | Prisma.Tenant$paraWorkspacesArgs<ExtArgs>
+  paraAssets?: boolean | Prisma.Tenant$paraAssetsArgs<ExtArgs>
   invoices?: boolean | Prisma.Tenant$invoicesArgs<ExtArgs>
   oauthClients?: boolean | Prisma.Tenant$oauthClientsArgs<ExtArgs>
   orders?: boolean | Prisma.Tenant$ordersArgs<ExtArgs>
@@ -8977,6 +10141,9 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     automationRuns: Prisma.$AutomationRunPayload<ExtArgs>[]
     workflowDefinitions: Prisma.$WorkflowDefinitionPayload<ExtArgs>[]
     workflowRuns: Prisma.$WorkflowRunPayload<ExtArgs>[]
+    paraProjects: Prisma.$ParaProjectPayload<ExtArgs>[]
+    paraWorkspaces: Prisma.$ParaWorkspacePayload<ExtArgs>[]
+    paraAssets: Prisma.$ParaAssetPayload<ExtArgs>[]
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
     oauthClients: Prisma.$OAuthClientPayload<ExtArgs>[]
     orders: Prisma.$OrderPayload<ExtArgs>[]
@@ -9417,6 +10584,9 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   automationRuns<T extends Prisma.Tenant$automationRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$automationRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   workflowDefinitions<T extends Prisma.Tenant$workflowDefinitionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$workflowDefinitionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkflowDefinitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   workflowRuns<T extends Prisma.Tenant$workflowRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$workflowRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkflowRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  paraProjects<T extends Prisma.Tenant$paraProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$paraProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParaProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  paraWorkspaces<T extends Prisma.Tenant$paraWorkspacesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$paraWorkspacesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParaWorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  paraAssets<T extends Prisma.Tenant$paraAssetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$paraAssetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParaAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invoices<T extends Prisma.Tenant$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   oauthClients<T extends Prisma.Tenant$oauthClientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$oauthClientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orders<T extends Prisma.Tenant$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -10351,6 +11521,78 @@ export type Tenant$workflowRunsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.WorkflowRunScalarFieldEnum | Prisma.WorkflowRunScalarFieldEnum[]
+}
+
+/**
+ * Tenant.paraProjects
+ */
+export type Tenant$paraProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ParaProject
+   */
+  select?: Prisma.ParaProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ParaProject
+   */
+  omit?: Prisma.ParaProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ParaProjectInclude<ExtArgs> | null
+  where?: Prisma.ParaProjectWhereInput
+  orderBy?: Prisma.ParaProjectOrderByWithRelationInput | Prisma.ParaProjectOrderByWithRelationInput[]
+  cursor?: Prisma.ParaProjectWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ParaProjectScalarFieldEnum | Prisma.ParaProjectScalarFieldEnum[]
+}
+
+/**
+ * Tenant.paraWorkspaces
+ */
+export type Tenant$paraWorkspacesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ParaWorkspace
+   */
+  select?: Prisma.ParaWorkspaceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ParaWorkspace
+   */
+  omit?: Prisma.ParaWorkspaceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ParaWorkspaceInclude<ExtArgs> | null
+  where?: Prisma.ParaWorkspaceWhereInput
+  orderBy?: Prisma.ParaWorkspaceOrderByWithRelationInput | Prisma.ParaWorkspaceOrderByWithRelationInput[]
+  cursor?: Prisma.ParaWorkspaceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ParaWorkspaceScalarFieldEnum | Prisma.ParaWorkspaceScalarFieldEnum[]
+}
+
+/**
+ * Tenant.paraAssets
+ */
+export type Tenant$paraAssetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ParaAsset
+   */
+  select?: Prisma.ParaAssetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ParaAsset
+   */
+  omit?: Prisma.ParaAssetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ParaAssetInclude<ExtArgs> | null
+  where?: Prisma.ParaAssetWhereInput
+  orderBy?: Prisma.ParaAssetOrderByWithRelationInput | Prisma.ParaAssetOrderByWithRelationInput[]
+  cursor?: Prisma.ParaAssetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ParaAssetScalarFieldEnum | Prisma.ParaAssetScalarFieldEnum[]
 }
 
 /**

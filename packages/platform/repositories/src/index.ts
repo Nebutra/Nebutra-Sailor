@@ -29,6 +29,19 @@ export type { UpsertMemberData } from "./organization-member.repository";
 // OrganizationMember
 export { OrganizationMemberRepository } from "./organization-member.repository";
 export type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
+// ── PARA (apps/para) ─────────────────────────────────────────────────────────
+export {
+  type CreateParaAssetData,
+  getParaAssetRepository,
+  type ListParaAssetsParams,
+  ParaAssetRepository,
+} from "./para-asset.repository";
+export {
+  DocumentVersionConflictError,
+  getParaWorkspaceRepository,
+  ParaWorkspaceRepository,
+  type PutDocumentResult,
+} from "./para-workspace.repository";
 export type {
   OpenTicketData,
   RecordFeedbackData,

@@ -542,6 +542,57 @@ export type EnumAutomationRunStatusWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
 }
 
+export type EnumParaAssetTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetType | Prisma.EnumParaAssetTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetType[] | Prisma.ListEnumParaAssetTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetType[] | Prisma.ListEnumParaAssetTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetTypeFilter<$PrismaModel> | $Enums.ParaAssetType
+}
+
+export type EnumParaAssetOriginFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetOrigin | Prisma.EnumParaAssetOriginFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetOrigin[] | Prisma.ListEnumParaAssetOriginFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetOrigin[] | Prisma.ListEnumParaAssetOriginFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetOriginFilter<$PrismaModel> | $Enums.ParaAssetOrigin
+}
+
+export type EnumParaAssetScopeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetScope | Prisma.EnumParaAssetScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetScope[] | Prisma.ListEnumParaAssetScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetScope[] | Prisma.ListEnumParaAssetScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel> | $Enums.ParaAssetScope
+}
+
+export type EnumParaAssetTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetType | Prisma.EnumParaAssetTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetType[] | Prisma.ListEnumParaAssetTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetType[] | Prisma.ListEnumParaAssetTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetTypeWithAggregatesFilter<$PrismaModel> | $Enums.ParaAssetType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaAssetTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaAssetTypeFilter<$PrismaModel>
+}
+
+export type EnumParaAssetOriginWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetOrigin | Prisma.EnumParaAssetOriginFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetOrigin[] | Prisma.ListEnumParaAssetOriginFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetOrigin[] | Prisma.ListEnumParaAssetOriginFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetOriginWithAggregatesFilter<$PrismaModel> | $Enums.ParaAssetOrigin
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaAssetOriginFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaAssetOriginFilter<$PrismaModel>
+}
+
+export type EnumParaAssetScopeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetScope | Prisma.EnumParaAssetScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetScope[] | Prisma.ListEnumParaAssetScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetScope[] | Prisma.ListEnumParaAssetScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetScopeWithAggregatesFilter<$PrismaModel> | $Enums.ParaAssetScope
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel>
+}
+
 export type EnumWorkflowStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.WorkflowStatus | Prisma.EnumWorkflowStatusFieldRefInput<$PrismaModel>
   in?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
@@ -1550,6 +1601,57 @@ export type NestedEnumAutomationRunStatusWithAggregatesFilter<$PrismaModel = nev
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumParaAssetTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetType | Prisma.EnumParaAssetTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetType[] | Prisma.ListEnumParaAssetTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetType[] | Prisma.ListEnumParaAssetTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetTypeFilter<$PrismaModel> | $Enums.ParaAssetType
+}
+
+export type NestedEnumParaAssetOriginFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetOrigin | Prisma.EnumParaAssetOriginFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetOrigin[] | Prisma.ListEnumParaAssetOriginFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetOrigin[] | Prisma.ListEnumParaAssetOriginFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetOriginFilter<$PrismaModel> | $Enums.ParaAssetOrigin
+}
+
+export type NestedEnumParaAssetScopeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetScope | Prisma.EnumParaAssetScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetScope[] | Prisma.ListEnumParaAssetScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetScope[] | Prisma.ListEnumParaAssetScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel> | $Enums.ParaAssetScope
+}
+
+export type NestedEnumParaAssetTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetType | Prisma.EnumParaAssetTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetType[] | Prisma.ListEnumParaAssetTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetType[] | Prisma.ListEnumParaAssetTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetTypeWithAggregatesFilter<$PrismaModel> | $Enums.ParaAssetType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaAssetTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaAssetTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumParaAssetOriginWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetOrigin | Prisma.EnumParaAssetOriginFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetOrigin[] | Prisma.ListEnumParaAssetOriginFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetOrigin[] | Prisma.ListEnumParaAssetOriginFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetOriginWithAggregatesFilter<$PrismaModel> | $Enums.ParaAssetOrigin
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaAssetOriginFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaAssetOriginFilter<$PrismaModel>
+}
+
+export type NestedEnumParaAssetScopeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAssetScope | Prisma.EnumParaAssetScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAssetScope[] | Prisma.ListEnumParaAssetScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAssetScope[] | Prisma.ListEnumParaAssetScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAssetScopeWithAggregatesFilter<$PrismaModel> | $Enums.ParaAssetScope
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel>
 }
 
 export type NestedEnumWorkflowStatusFilter<$PrismaModel = never> = {

@@ -27,3 +27,11 @@ Thesis: **Build the shell first. Hide complexity until the user asks for it.**
 State ownership: URL → Next router · remote data → TanStack Query (mock adapters) ·
 workspace document → `stores/editor-store` (zustand) · UI → `stores/ui-store` · jobs → `stores/jobs-store`.
 
+
+## Gateway mode (M3)
+
+Set `NEXT_PUBLIC_PARA_API_URL` (e.g. `http://localhost:3002`) to replace the mock adapters with
+`backends/gateway` `/api/v1/para`: projects, workspaces, embedded document with `If-Match` autosave,
+assets, and jobs through the origin task envelope (`/api/v1/tasks`) with SSE progress. The browser
+needs a gateway session (same Better Auth cookie apps/web uses). Unset, the shell runs standalone on mock data.
+Migration: `pnpm --filter @nebutra/db db:migrate` (adds `para_projects`, `para_workspaces`, `para_assets` with RLS).

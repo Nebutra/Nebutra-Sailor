@@ -30,6 +30,12 @@ export type {
   // Multi-Tenant Core
   Organization,
   OrganizationMember,
+  ParaAsset,
+  ParaAssetOrigin,
+  ParaAssetScope,
+  ParaAssetType,
+  ParaProject,
+  ParaWorkspace,
   // Pebble support intake (not tenant-scoped — anonymous desktop clients)
   PebbleDiagnosticStatus,
   PebbleDiagnosticTicket,

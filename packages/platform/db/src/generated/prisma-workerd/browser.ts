@@ -123,6 +123,21 @@ export type Automation = Prisma.AutomationModel
  */
 export type AutomationRun = Prisma.AutomationRunModel
 /**
+ * Model ParaProject
+ * 
+ */
+export type ParaProject = Prisma.ParaProjectModel
+/**
+ * Model ParaWorkspace
+ * 
+ */
+export type ParaWorkspace = Prisma.ParaWorkspaceModel
+/**
+ * Model ParaAsset
+ * 
+ */
+export type ParaAsset = Prisma.ParaAssetModel
+/**
  * Model WorkflowDefinition
  * 
  */

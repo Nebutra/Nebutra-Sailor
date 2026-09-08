@@ -218,6 +218,31 @@ export const WorkflowRunStatus = {
 export type WorkflowRunStatus = (typeof WorkflowRunStatus)[keyof typeof WorkflowRunStatus]
 
 
+export const ParaAssetType = {
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  AUDIO: 'AUDIO'
+} as const
+
+export type ParaAssetType = (typeof ParaAssetType)[keyof typeof ParaAssetType]
+
+
+export const ParaAssetOrigin = {
+  UPLOAD: 'UPLOAD',
+  GENERATED: 'GENERATED'
+} as const
+
+export type ParaAssetOrigin = (typeof ParaAssetOrigin)[keyof typeof ParaAssetOrigin]
+
+
+export const ParaAssetScope = {
+  ACCOUNT: 'ACCOUNT',
+  TEAM: 'TEAM'
+} as const
+
+export type ParaAssetScope = (typeof ParaAssetScope)[keyof typeof ParaAssetScope]
+
+
 export const AIProvider = {
   OPENAI: 'OPENAI',
   ANTHROPIC: 'ANTHROPIC',

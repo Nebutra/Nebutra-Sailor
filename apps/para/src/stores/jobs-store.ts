@@ -1,17 +1,19 @@
 import { create } from "zustand";
 import type { Job } from "@/domain/types";
+import { gatewayApi, isGatewayMode } from "@/lib/gateway-api";
 import { assets } from "@/mock/data";
 import { useEditorStore } from "./editor-store";
 
 /**
  * Job = node (A). This store mirrors the node's task state for the top-bar indicator and popover;
  * the node is always the primary status surface. Module-level so jobs survive route changes (A).
- * Completed jobs are not "jobs" any more — their outputs live in Library › Generated.
+ * Mock mode runs a local scheduler; gateway mode POSTs to /api/v1/para/jobs and follows SSE events.
  */
 interface JobsState {
   jobs: Job[];
   enqueue: (nodeId: string, label: string, estimated?: number) => string;
   cancel: (jobId: string) => void;
+  upsert: (job: Job) => void;
   tick: () => void;
 }
 
@@ -19,6 +21,14 @@ const ACTIVE = new Set(["queued", "running"]);
 
 export const useJobsStore = create<JobsState>((set, get) => ({
   jobs: [],
+
+  upsert: (job) => {
+    const jobs = get().jobs;
+    const i = jobs.findIndex(
+      (j) => j.id === job.id || (j.nodeId === job.nodeId && ACTIVE.has(j.status)),
+    );
+    set({ jobs: i >= 0 ? jobs.map((j, k) => (k === i ? { ...j, ...job } : j)) : [...jobs, job] });
+  },
 
   enqueue: (nodeId, label, estimated) => {
     const id = `j-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 5)}`;
@@ -33,9 +43,37 @@ export const useJobsStore = create<JobsState>((set, get) => ({
       ...(estimated !== undefined ? { cost: { estimated, currency: "credits" } } : {}),
     };
     set({ jobs: [...get().jobs, job] });
-    useEditorStore
-      .getState()
-      .setNodeStatus(nodeId, "queued", { queuePosition: queued + 1, jobId: id });
+    const editor = useEditorStore.getState();
+    editor.setNodeStatus(nodeId, "queued", { queuePosition: queued + 1, jobId: id });
+
+    if (isGatewayMode) {
+      const node = editor.document?.nodes[nodeId];
+      const workspaceId = editor.documentId;
+      if (!node || !workspaceId) return id;
+      const generator = node.generator ?? { mode: node.type === "text" ? "text" : node.type };
+      void import("@/lib/job-stream").then(({ followJob }) =>
+        gatewayApi
+          .createJob({ workspaceId, nodeId, generator })
+          .then((created) => {
+            const real = { ...created, label, ...(job.cost ? { cost: job.cost } : {}) };
+            set({ jobs: get().jobs.map((j) => (j.id === id ? real : j)) });
+            useEditorStore.getState().setNodeStatus(nodeId, real.status, {
+              jobId: real.id,
+              ...(real.queuePosition !== undefined ? { queuePosition: real.queuePosition } : {}),
+            });
+            followJob(real);
+          })
+          .catch((e: unknown) => {
+            // Pre-admission rejection (credits, quota, origin down): terminal on the node, shown inline.
+            const message = e instanceof Error ? e.message : "Generation was rejected";
+            const error = { type: "rejected", message, retryable: true };
+            set({
+              jobs: get().jobs.map((j) => (j.id === id ? { ...j, status: "failed", error } : j)),
+            });
+            useEditorStore.getState().failNode(nodeId, error);
+          }),
+      );
+    }
     return id;
   },
 
@@ -43,6 +81,10 @@ export const useJobsStore = create<JobsState>((set, get) => ({
   cancel: (jobId) => {
     const job = get().jobs.find((j) => j.id === jobId);
     if (!job || !ACTIVE.has(job.status)) return;
+    if (isGatewayMode && !jobId.startsWith("j-")) {
+      void gatewayApi.cancelJob(jobId).then((j) => get().upsert({ ...j, label: job.label }));
+      return;
+    }
     const error = {
       type: "cancelled",
       message: job.status === "queued" ? "Cancelled" : "Stopped",
@@ -52,8 +94,9 @@ export const useJobsStore = create<JobsState>((set, get) => ({
     useEditorStore.getState().failNode(job.nodeId, error);
   },
 
-  /** Mock scheduler: one running job at a time, ~2.5 s per job. */
+  /** Mock scheduler only: one running job at a time, ~2.5 s per job. */
   tick: () => {
+    if (isGatewayMode) return;
     const editor = useEditorStore.getState();
     const jobs = get().jobs.map((j) => ({ ...j }));
     let running = jobs.find((j) => j.status === "running");

@@ -232,6 +232,9 @@ model Tenant {
   automationRuns           AutomationRun[]
   workflowDefinitions      WorkflowDefinition[]
   workflowRuns             WorkflowRun[]
+  paraProjects             ParaProject[]
+  paraWorkspaces           ParaWorkspace[]
+  paraAssets               ParaAsset[]
   invoices                 Invoice[]
   oauthClients             OAuthClient[]
   orders                   Order[]
@@ -727,6 +730,90 @@ enum WorkflowRunStatus {
   SUCCEEDED
   FAILED
 
+  @@schema("public")
+}
+
+// =============================================================================
+// PARA — canvas of generator nodes (apps/para). Product-intelligence phase, 2026-09-08.
+// Document is embedded per workspace; documentVersion is the optimistic-concurrency token.
+// =============================================================================
+
+enum ParaAssetType {
+  IMAGE
+  VIDEO
+  AUDIO
+
+  @@schema("public")
+}
+
+enum ParaAssetOrigin {
+  UPLOAD
+  GENERATED
+
+  @@schema("public")
+}
+
+enum ParaAssetScope {
+  ACCOUNT
+  TEAM
+
+  @@schema("public")
+}
+
+model ParaProject {
+  id        String   @id @default(cuid())
+  tenantId  String   @map("tenant_id")
+  name      String   @db.VarChar(200)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tenant     Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workspaces ParaWorkspace[]
+
+  @@index([tenantId, updatedAt(sort: Desc)])
+  @@map("para_projects")
+  @@schema("public")
+}
+
+model ParaWorkspace {
+  id              String   @id @default(cuid())
+  tenantId        String   @map("tenant_id")
+  projectId       String   @map("project_id")
+  name            String   @db.VarChar(200)
+  // WorkspaceDocument {version, nodes, edges, viewport} — capped at 1 MB by the route.
+  document        Json     @default("{}")
+  documentVersion Int      @default(1) @map("document_version")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  tenant  Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  project ParaProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, projectId, updatedAt(sort: Desc)])
+  @@map("para_workspaces")
+  @@schema("public")
+}
+
+model ParaAsset {
+  id          String          @id @default(cuid())
+  tenantId    String          @map("tenant_id")
+  type        ParaAssetType
+  origin      ParaAssetOrigin
+  scope       ParaAssetScope  @default(ACCOUNT)
+  url         String          @db.VarChar(2048)
+  label       String          @db.VarChar(200)
+  aspect      String          @default("16:9") @db.VarChar(8)
+  jobId       String?         @map("job_id") @db.VarChar(160)
+  workspaceId String?         @map("workspace_id")
+  projectId   String?         @map("project_id")
+  favorite    Boolean         @default(false)
+  createdAt   DateTime        @default(now()) @map("created_at")
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, origin, createdAt(sort: Desc)])
+  @@index([tenantId, workspaceId])
+  @@map("para_assets")
   @@schema("public")
 }
 
