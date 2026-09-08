@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingRoot: monorepoRoot,
   transpilePackages: [
+    "@nebutra/health",
     "@nebutra/fonts",
     "@nebutra/brand",
     "@nebutra/ui",
@@ -17,6 +18,8 @@ const nextConfig: NextConfig = {
     "@nebutra/icons",
     "@nebutra/permissions",
     "@nebutra/preset",
+    "@nebutra/contracts",
+    "@nebutra/auth",
   ],
   turbopack: {
     root: monorepoRoot,

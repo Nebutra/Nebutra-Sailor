@@ -1,75 +1,133 @@
 import { brand } from "@nebutra/brand/metadata";
-import { PageHeader } from "@nebutra/ui/layout";
-import { DashboardPanel } from "@nebutra/ui/patterns";
-import { SupplySyncButton } from "@/components/supply-sync-button";
+import { type AdminManifest, roleAtLeast } from "@nebutra/contracts/admin";
+import { ActionButton } from "@/components/action-button";
+import { PageTitle, Panel } from "@/components/panel";
+import { ResourceTable } from "@/components/resource-table";
+import { SignalStrip } from "@/components/signal-strip";
+import { ContractError, loadManifest } from "@/lib/contract-client";
 import { requireStaff } from "@/lib/staff";
-import { probeEngines } from "@/lib/supply";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Supply" };
 
+const ROUTER = "@nebutra/router";
+
 /**
- * Supply desk. The two Router supply engines live on private Fly Machines;
- * this page is the only door. Account pool = CLIProxyAPI's own management UI,
- * proxied at /management.html with the management key injected, so staff sign
- * in through Cloudflare Access and never handle an engine secret.
+ * Supply — rendered from the router's manifest. This page knows nothing about
+ * CLIProxyAPI or New-API; it draws whatever the product's supply domain
+ * declares. The only product-specific thing here is the slot link, and even
+ * that comes from the manifest.
  */
 export default async function SupplyPage() {
-  await requireStaff();
-  const engines = await probeEngines();
-  const byId = Object.fromEntries(engines.map((e) => [e.id, e]));
+  const staff = await requireStaff();
+  const caller = { userId: staff.userId, role: staff.role };
+
+  let manifest: AdminManifest | null = null;
+  let loadError: { code: string; message: string } | null = null;
+  try {
+    manifest = await loadManifest(ROUTER);
+  } catch (e) {
+    loadError =
+      e instanceof ContractError
+        ? { code: e.code, message: e.message }
+        : { code: "internal", message: e instanceof Error ? e.message : "failed" };
+  }
+  const domain = manifest?.domains.find((d) => d.id === "supply") ?? null;
+
+  if (!manifest || !domain) {
+    return (
+      <>
+        <PageTitle title="Supply" />
+        <Panel title="Router manifest">
+          <p className="px-4 py-4 text-[hsl(var(--destructive-strong))] text-sm">
+            {loadError ? (
+              <>
+                <span className="font-mono text-xs">{loadError.code}</span> · {loadError.message}
+              </>
+            ) : (
+              "The router manifest declares no supply domain."
+            )}
+          </p>
+        </Panel>
+      </>
+    );
+  }
+
+  const allowed = (role: Parameters<typeof roleAtLeast>[1]) => roleAtLeast(staff.role, role);
+  const domainActions = domain.actions.filter((a) => !a.resource && allowed(a.role));
+  const actionsById = new Map(domain.actions.map((a) => [a.id, a]));
 
   return (
-    <div className="mx-auto max-w-[1400px] px-4 py-10 md:px-6">
-      <PageHeader
+    <>
+      <PageTitle
         title="Supply"
-        description={`Router 供给引擎。API-key 渠道和账号号池都在 New-API 后面汇成一条 ${brand.domains.router}/v1。`}
+        subtitle={`API-key 渠道和账号号池都在 New-API 后面汇成一条 ${brand.domains.router}/v1。`}
+        actions={
+          <>
+            {domain.slot ? (
+              <a
+                href="/management.html"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-8 items-center rounded-md border border-border bg-card px-3 font-medium text-sm hover:bg-muted"
+              >
+                打开号池管理台
+              </a>
+            ) : null}
+            {domainActions.map((action) => (
+              <ActionButton
+                key={action.id}
+                serviceId={ROUTER}
+                actionId={action.id}
+                verb={action.verb}
+                description={action.description}
+                destructive={action.destructive}
+                variant="ink"
+                className="h-8 text-sm"
+              />
+            ))}
+          </>
+        }
       />
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <DashboardPanel
-          title="账号号池 · CLIProxyAPI"
-          description="ChatGPT / Codex、Google（Antigravity）、Claude 账号在这里登录。登录完成后点同步，模型即刻上架。"
-        >
-          <dl className="mb-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
-            <dt className="text-neutral-10">状态</dt>
-            <dd className={byId.cliproxyapi?.reachable ? "text-success" : "text-destructive"}>
-              {byId.cliproxyapi?.reachable ? "在线" : "不可达"} · {byId.cliproxyapi?.detail}
-            </dd>
-          </dl>
-          <div className="flex flex-wrap items-center gap-3">
-            <a
-              href="/management.html"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-8 items-center rounded-[var(--radius-md)] bg-primary px-3 font-medium text-primary-foreground text-sm"
-            >
-              打开号池管理台
-            </a>
-            <SupplySyncButton />
-          </div>
-          <ol className="mt-4 list-decimal space-y-1 pl-5 text-neutral-11 text-xs">
-            <li>管理台里选 OAuth 登录：Codex 用设备码；Google / Claude 会给一个链接。</li>
-            <li>在本机浏览器打开链接并授权。跳到 localhost 打不开是正常的。</li>
-            <li>把地址栏那条 localhost 回调 URL 贴回管理台，账号即入池。</li>
-            <li>回到这里点同步，New-API 渠道的模型列表跟着更新。</li>
-          </ol>
-        </DashboardPanel>
+      <SignalStrip manifest={manifest} domain={domain} caller={caller} />
 
-        <DashboardPanel
-          title="渠道中枢 · New-API"
-          description="官方 API key 与号池都是它的渠道；客户 key 与计费在 Router 控制面，不在这里。"
-        >
-          <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
-            <dt className="text-neutral-10">状态</dt>
-            <dd className={byId["new-api"]?.reachable ? "text-success" : "text-destructive"}>
-              {byId["new-api"]?.reachable ? "在线" : "不可达"} · {byId["new-api"]?.detail}
-            </dd>
-            <dt className="text-neutral-10">号池渠道</dt>
-            <dd className="font-mono">cliproxyapi · type OpenAI · priority 0</dd>
-          </dl>
-        </DashboardPanel>
-      </div>
-    </div>
+      {domain.resources.map((resource) => {
+        const resourceActions = [
+          ...resource.actions,
+          ...domain.actions.filter((a) => a.resource === resource.id).map((a) => a.id),
+        ]
+          .filter((id, i, all) => all.indexOf(id) === i)
+          .map((id) => actionsById.get(id))
+          .filter((a): a is NonNullable<typeof a> => !!a && allowed(a.role));
+        return (
+          <Panel
+            key={resource.id}
+            title={resource.label}
+            aside={resourceActions.map((action) => (
+              <ActionButton
+                key={action.id}
+                serviceId={ROUTER}
+                actionId={action.id}
+                verb={action.verb}
+                description={action.description}
+                destructive={action.destructive}
+                variant={action.destructive ? "outline" : "ink"}
+              />
+            ))}
+          >
+            <ResourceTable manifest={manifest} resource={resource} caller={caller} />
+          </Panel>
+        );
+      })}
+
+      {domain.slot ? (
+        <p className="text-muted-foreground text-xs leading-4">
+          号池登录：管理台里选 OAuth 登录（Codex 用设备码；Google / Claude
+          给一个链接），在本机浏览器授权，把 localhost 回调 URL 贴回管理台。账号入池后点 Sync
+          channel，New-API 渠道的模型列表跟着更新。
+        </p>
+      ) : null}
+    </>
   );
 }

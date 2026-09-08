@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
   ...(process.env.NEXT_OUTPUT === "standalone" ? { output: "standalone" as const } : {}),
   outputFileTracingRoot: monorepoRoot,
   transpilePackages: [
+    "@nebutra/health",
     "@nebutra/fonts",
     "@nebutra/ui",
     "@nebutra/tokens",

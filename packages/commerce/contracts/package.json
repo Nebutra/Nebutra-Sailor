@@ -33,6 +33,10 @@
       "import": "./dist/notifications.js",
       "types": "./dist/notifications.d.ts"
     },
+    "./admin": {
+      "import": "./dist/admin.js",
+      "types": "./dist/admin.d.ts"
+    },
     "./sleptons": {
       "import": "./dist/sleptons.js",
       "types": "./dist/sleptons.d.ts"

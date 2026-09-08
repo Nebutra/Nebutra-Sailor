@@ -28,6 +28,7 @@
     "@nebutra/brand": "workspace:*",
     "@nebutra/db": "workspace:*",
     "@nebutra/fonts": "workspace:*",
+    "@nebutra/health": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/rate-limit": "workspace:*",
     "@nebutra/repositories": "workspace:*",

@@ -27,6 +27,7 @@
     "@nebutra/brand": "workspace:*",
     "@nebutra/china-compliance": "workspace:*",
     "@nebutra/db": "workspace:*",
+    "@nebutra/health": "workspace:*",
     "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/logger": "workspace:*",

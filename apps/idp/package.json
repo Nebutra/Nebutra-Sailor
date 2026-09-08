@@ -15,6 +15,7 @@
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/health": "workspace:*",
     "@nebutra/oauth": "workspace:*",
     "@nebutra/contracts": "workspace:*",
     "@nebutra/db": "workspace:*",

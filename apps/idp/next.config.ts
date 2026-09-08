@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
 
   // Transpile workspace packages
   transpilePackages: [
+    "@nebutra/health",
     "@nebutra/oauth",
     "@nebutra/contracts",
     "@nebutra/db",

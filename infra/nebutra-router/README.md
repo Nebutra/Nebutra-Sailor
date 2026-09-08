@@ -109,6 +109,17 @@ and expire in minutes, so never paste them into chat or tickets.
 Production (Fly): `FLY_APP=nebutra-cliproxyapi scripts/cliproxy-login.sh codex`.
 Auth JSON is on the `cliproxy_auths` volume and survives redeploys.
 
+### Secrets by Machine (after the admin contract)
+
+| Machine | Secrets |
+|---|---|
+| `nebutra-router` | `SERVICE_SECRET`, `CLIPROXY_API_KEY`, `CLIPROXY_MANAGEMENT_KEY`, `NEW_API_ROOT_PASSWORD`, `NEW_API_ACCESS_TOKEN`, `NEW_API_BASE_URL` |
+| `nebutra-admin` | `SERVICE_SECRET` (same value), `CLIPROXY_MANAGEMENT_KEY` (management-UI proxy only) |
+| `nebutra-cliproxyapi` | rendered `config.yaml` (api-key + management secret) |
+
+The channel sync now runs as a contract action on router (`channel.sync`,
+plan → apply); the admin app only renders and audits.
+
 ### Register as a New-API channel
 
 ```bash

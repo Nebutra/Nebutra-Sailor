@@ -261,15 +261,24 @@ importers:
 
   apps/admin:
     dependencies:
+      '@nebutra/auth':
+        specifier: workspace:*
+        version: link:../../packages/iam/auth
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/contracts':
+        specifier: workspace:*
+        version: link:../../packages/commerce/contracts
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -279,6 +288,9 @@ importers:
       '@nebutra/preset':
         specifier: workspace:*
         version: link:../../packages/ops/preset
+      '@nebutra/theme':
+        specifier: workspace:*
+        version: link:../../packages/design/theme
       '@nebutra/tokens':
         specifier: workspace:*
         version: link:../../packages/design/tokens
@@ -349,6 +361,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
@@ -440,6 +455,9 @@ importers:
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -504,6 +522,9 @@ importers:
       '@nebutra/forge-runtime':
         specifier: workspace:*
         version: link:../../packages/ai/forge-runtime
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
@@ -577,6 +598,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/oauth':
         specifier: workspace:*
         version: link:../../packages/iam/oauth
@@ -647,6 +671,9 @@ importers:
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../packages/platform/logger
@@ -944,6 +971,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       next:
         specifier: ^16.2.11
         version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -978,18 +1008,27 @@ importers:
       '@nebutra/ai-providers':
         specifier: workspace:*
         version: link:../../packages/ai/ai-providers
+      '@nebutra/audit':
+        specifier: workspace:*
+        version: link:../../packages/iam/audit
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/contracts':
+        specifier: workspace:*
+        version: link:../../packages/commerce/contracts
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
@@ -1078,6 +1117,9 @@ importers:
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -1551,6 +1593,9 @@ importers:
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n

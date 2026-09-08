@@ -1,0 +1,21 @@
+import { err, gateStaff, json } from "@/lib/admin/service-token";
+import { SupplyConfigError } from "@/lib/supply/clients";
+import { listEngines } from "@/lib/supply/domain";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export async function GET(request: Request) {
+  const gate = await gateStaff(request);
+  if (!gate.ok) return json(gate.body, gate.status);
+  try {
+    return json(await listEngines());
+  } catch (error) {
+    if (error instanceof SupplyConfigError)
+      return json(err("upstream_unavailable", error.message), 503);
+    return json(
+      err("upstream_unavailable", error instanceof Error ? error.message : "probe failed"),
+      502,
+    );
+  }
+}
