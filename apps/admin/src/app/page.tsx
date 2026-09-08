@@ -1,101 +1,168 @@
-import { brand } from "@nebutra/brand/metadata";
-import { PageHeader } from "@nebutra/ui/layout";
-import { DashboardPanel } from "@nebutra/ui/patterns";
-import { FleetMatrix } from "@/components/fleet-matrix";
-import { type FleetMetric, FleetMetrics } from "@/components/fleet-metrics";
-import { buildFleet, unclaimedHosts } from "@/lib/fleet";
+import { roleAtLeast } from "@nebutra/contracts/admin";
+import Link from "next/link";
+import { ActionButton } from "@/components/action-button";
+import { FleetStrip } from "@/components/fleet-strip";
+import { PageTitle, Panel } from "@/components/panel";
+import { StatusDot } from "@/components/status-dot";
+import { cachedFleet, cachedInbox } from "@/lib/console-data";
+import { environmentLabel, relativeTime, type StatusTone } from "@/lib/format";
+import type { InboxItem } from "@/lib/inbox";
+import { requireStaff } from "@/lib/staff";
+
+export const dynamic = "force-dynamic";
+export const metadata = { title: "Inbox" };
 
 /**
- * Fleet — configuration state of the ecosystem.
- *
- * Phase 1 of the control plane. Every value on this page comes from repo
- * configuration (`brand.domains`, `DEPLOY_TARGET_*`, the PM2 ecosystem config),
- * so it is accurate about what the ecosystem is *supposed* to be and silent
- * about what it is actually doing. Live health probing is Phase 2 — see
- * docs/plans/2026-07-28-nebutra-admin-control-plane-design.md §5.1.
+ * Inbox — the first page answers "is anything wrong?" An item exists only
+ * while a product's signal is raised; nothing here is filler. Empty is the
+ * good state.
  */
+const SEVERITY_TONE: Record<InboxItem["reading"]["severity"], StatusTone> = {
+  critical: "bad",
+  warn: "warn",
+  info: "ok",
+};
 
-export default function FleetPage() {
-  const rows = buildFleet();
-  const unclaimed = unclaimedHosts();
-  const drifting = rows.filter((row) => row.targetMatchesRuntime === false);
-  const hosted = rows.filter((row) => Boolean(row.host));
-  const onEcs = rows.filter((row) => row.runtime === "ecs-pm2");
+function serviceIdFor(item: InboxItem): string {
+  return item.manifest.product === "router"
+    ? "@nebutra/router"
+    : `@nebutra/${item.manifest.product}`;
+}
 
-  const metrics: FleetMetric[] = [
-    {
-      label: "Services",
-      value: String(rows.length),
-      detail: "Apps and backends tracked in the inventory",
-      icon: "globe",
-      tone: "blue",
-    },
-    {
-      label: "Public hosts",
-      value: String(hosted.length),
-      detail: "Services owning a hostname in the domain SSOT",
-      icon: "cloud",
-      tone: "neutral",
-    },
-    {
-      label: "On ECS origin",
-      value: String(onEcs.length),
-      detail: "PM2 processes on the shared VM",
-      icon: "servers",
-      tone: "green",
-    },
-    {
-      label: "Target drift",
-      value: String(drifting.length),
-      detail: "Deploy target disagrees with where the service runs",
-      icon: "warning",
-      tone: drifting.length > 0 ? "amber" : "neutral",
-    },
-  ];
+function InboxRow({ item, role, now }: { item: InboxItem; role: string; now: number }) {
+  const unknown = item.reading.status === "unknown";
+  const action =
+    item.action &&
+    !unknown &&
+    roleAtLeast(role as Parameters<typeof roleAtLeast>[0], item.action.role)
+      ? item.action
+      : null;
+  return (
+    <li className="flex items-center gap-3.5 border-border border-b px-4 py-3.5 last:border-b-0">
+      <StatusDot tone={unknown ? "unknown" : SEVERITY_TONE[item.reading.severity]} />
+      <div className="min-w-0 flex-1">
+        <div className="font-medium text-sm leading-5">
+          {item.reading.title ?? item.signal.label}
+        </div>
+        <div className="text-muted-foreground text-xs leading-[18px]">
+          {item.reading.detail ?? (unknown ? "probe failed" : item.signal.label)}
+        </div>
+      </div>
+      <span className="rounded-full bg-muted px-2 text-[11px] text-muted-foreground leading-4">
+        {item.productLabel}
+      </span>
+      <span className="whitespace-nowrap text-muted-foreground text-xs">
+        {relativeTime(item.reading.probedAt, now)}
+      </span>
+      {action ? (
+        <ActionButton
+          serviceId={serviceIdFor(item)}
+          actionId={action.id}
+          verb={action.verb}
+          description={action.description}
+          destructive={action.destructive}
+          variant="ink"
+        />
+      ) : null}
+    </li>
+  );
+}
+
+export default async function InboxPage() {
+  const staff = await requireStaff();
+  const caller = { userId: staff.userId, role: staff.role };
+  const [inbox, fleet] = await Promise.all([cachedInbox(caller), cachedFleet()]);
+  const now = Date.now();
+  const strip = [...fleet]
+    .sort((a, b) => Number(b.health !== null) - Number(a.health !== null))
+    .slice(0, 8);
+  const drift = fleet.filter((r) => r.targetMatchesRuntime === false).length;
+  const latestProbe = fleet
+    .map((r) => r.probedAt)
+    .filter((p): p is string => !!p)
+    .sort()
+    .at(-1);
+  const today = new Date(now).toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "short",
+  });
 
   return (
-    <div className="mx-auto max-w-[1400px] px-4 py-10 md:px-6">
-      <PageHeader
+    <>
+      <PageTitle title="Inbox" subtitle={`${today} · ${environmentLabel()}`} />
+
+      <Panel
+        title="Needs attention"
+        count={inbox.items.length}
+        aside={
+          <span className="text-muted-foreground text-xs">
+            probed {relativeTime(inbox.probedAt, now)}
+          </span>
+        }
+      >
+        {inbox.items.length === 0 ? (
+          <p className="px-4 py-6 text-muted-foreground text-sm">
+            Nothing needs you. Next probe in 30 s.
+          </p>
+        ) : (
+          <ul>
+            {inbox.items.map((item) => (
+              <InboxRow key={item.key} item={item} role={staff.role} now={now} />
+            ))}
+          </ul>
+        )}
+      </Panel>
+
+      {inbox.unknown.length > 0 ? (
+        <Panel
+          title="Unknown"
+          count={inbox.unknown.length}
+          description="Signals whose probe failed. Not green, not red — not known."
+        >
+          <ul>
+            {inbox.unknown.map((item) => (
+              <InboxRow key={item.key} item={item} role={staff.role} now={now} />
+            ))}
+          </ul>
+        </Panel>
+      ) : null}
+
+      {inbox.failures.length > 0 ? (
+        <Panel title="Unreachable products" count={inbox.failures.length}>
+          <ul>
+            {inbox.failures.map((f) => (
+              <li
+                key={f.serviceId}
+                className="flex items-center gap-3.5 border-border border-b px-4 py-3 last:border-b-0"
+              >
+                <StatusDot tone="bad" />
+                <span className="font-mono text-sm">{f.serviceId}</span>
+                <span className="min-w-0 flex-1 truncate text-muted-foreground text-xs">
+                  {f.error}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      ) : null}
+
+      <Panel
         title="Fleet"
-        description={`Configuration state of the ${brand.name} ecosystem. Nothing on this page is probed — live health lands in Phase 2.`}
-      />
-
-      <FleetMetrics metrics={metrics} />
-
-      <DashboardPanel
-        className="mt-6"
-        title="Service matrix"
-        description="Host, runtime, and configured deploy target per service."
+        count={`${fleet.length}${drift ? ` · ${drift} drift` : ""}`}
+        aside={
+          <>
+            <span className="text-muted-foreground text-xs">
+              {latestProbe ? `probed ${relativeTime(latestProbe, now)}` : "not probed"}
+            </span>
+            <Link href="/fleet" className="text-muted-foreground text-xs hover:text-foreground">
+              All {fleet.length} services →
+            </Link>
+          </>
+        }
       >
-        <FleetMatrix rows={rows} />
-      </DashboardPanel>
-
-      <DashboardPanel
-        className="mt-6"
-        title="Supply"
-        description="Router 供给引擎：账号号池与渠道中枢，私网 Machine，只从这里进。"
-      >
-        <a href="/supply" className="text-primary text-sm underline-offset-4 hover:underline">
-          打开 Supply 台 →
-        </a>
-      </DashboardPanel>
-
-      <DashboardPanel
-        className="mt-6"
-        title="Unclaimed hosts"
-        description="Hostnames in the domain SSOT that no service in this repo owns. Infrastructure hosts and external brand fronts are expected here."
-      >
-        <ul className="flex flex-wrap gap-1.5">
-          {unclaimed.map((host) => (
-            <li
-              key={host}
-              className="rounded-[var(--radius-sm)] bg-neutral-2 px-2 py-1 font-mono text-neutral-11 text-xs"
-            >
-              {host}
-            </li>
-          ))}
-        </ul>
-      </DashboardPanel>
-    </div>
+        <FleetStrip rows={strip} />
+      </Panel>
+    </>
   );
 }

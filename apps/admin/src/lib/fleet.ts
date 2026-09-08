@@ -39,8 +39,23 @@ export interface FleetServiceDefinition {
    * target-switchable (the permanent OIDC issuer, Sanity-hosted Studio).
    */
   readonly deployService?: string;
+  /**
+   * Path of the service's `HealthCheckResult` endpoint (`@nebutra/health`),
+   * probed by the Fleet page. `null` means the service has no health endpoint
+   * and the UI must say so rather than render a green dot.
+   */
+  readonly health: string | null;
+  /**
+   * Path of the product's admin manifest (`nebutra.admin/v1`). Only products
+   * that own an admin domain declare one; the platform admin renders them
+   * from the manifest and never imports their code.
+   */
+  readonly manifest?: string;
   readonly note?: string;
 }
+
+/** Every Fly-hosted Next app serves `GET /api/health` via `nextHealthRoute()`. */
+export const DEFAULT_HEALTH_PATH = "/api/health";
 
 export const FLEET: readonly FleetServiceDefinition[] = [
   {
@@ -51,6 +66,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3001,
     runtime: "vercel",
     deployService: "landing",
+    health: null,
     note: "Marketing site. ECS process exists as manual fallback only.",
   },
   {
@@ -61,6 +77,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3000,
     runtime: "ecs-pm2",
     deployService: "web",
+    health: DEFAULT_HEALTH_PATH,
     note: "Product dashboard. Vercel project ready; DNS still ECS.",
   },
   {
@@ -71,6 +88,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3101,
     runtime: "ecs-pm2",
     deployService: "auth",
+    health: DEFAULT_HEALTH_PATH,
     note: "Session authority for every relying party.",
   },
   {
@@ -80,6 +98,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     pm2Name: "idp",
     port: 3100,
     runtime: "ecs-pm2",
+    health: DEFAULT_HEALTH_PATH,
     note: "Permanent OIDC issuer — not target-switchable.",
   },
   {
@@ -90,6 +109,9 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3002,
     runtime: "ecs-pm2",
     deployService: "gateway",
+    // Hono, not Next: mounted at /misc/health. Shares status/version/timestamp
+    // with HealthCheckResult but reports `dependencies` instead of `checks`.
+    health: "/misc/health",
     note: "Shared API. Each product owns /<product>/v1/*.",
   },
   {
@@ -97,16 +119,19 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     label: "Carina Daemon",
     pm2Name: "carina-daemon",
     runtime: "ecs-pm2",
+    health: null,
     note: "Track-B kernel on the gateway host. Socket-only; no HTTP PORT.",
   },
   {
     id: "@nebutra/router",
     label: "Router",
     domainKey: "router",
+    manifest: "/.well-known/nebutra-admin.json",
     pm2Name: "router",
     port: 3106,
     runtime: "ecs-pm2",
     deployService: "router",
+    health: DEFAULT_HEALTH_PATH,
     note: "Model fabric edge. Supply engines stay internal.",
   },
   {
@@ -116,6 +141,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     pm2Name: "pebble",
     port: 3017,
     runtime: "ecs-pm2",
+    health: DEFAULT_HEALTH_PATH,
     // No deployService on purpose. pebble runs under PM2 and the smoke step
     // references it, but it is not in DEPLOYABLE_SERVICES and not dispatchable
     // by name — claiming a pipeline it does not have would make this inventory
@@ -130,6 +156,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3105,
     runtime: "ecs-pm2",
     deployService: "forge",
+    health: DEFAULT_HEALTH_PATH,
     note: "Tool station + Agent tool API.",
   },
   {
@@ -137,6 +164,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     label: "Forge DNS Leak",
     pm2Name: "forge-dns-leak",
     runtime: "ecs-pm2",
+    health: null,
     note: "Authoritative leak zone + localhost control API :3953. No PORT env.",
   },
   {
@@ -147,6 +175,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3108,
     runtime: "ecs-pm2",
     deployService: "admin",
+    health: DEFAULT_HEALTH_PATH,
     note: "This control plane. Staff-only, behind Cloudflare Access.",
   },
   {
@@ -157,6 +186,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3005,
     runtime: "cloudflare-worker",
     deployService: "sailor-docs",
+    health: DEFAULT_HEALTH_PATH,
     note: "OpenNext Worker preferred; ECS is emergency-only.",
   },
   {
@@ -167,6 +197,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     port: 3109,
     runtime: "ecs-pm2",
     deployService: "design-docs",
+    health: DEFAULT_HEALTH_PATH,
     note: "Replaced design-docs at the design hostname. Deploy service id is still design-docs.",
   },
   {
@@ -176,6 +207,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     pm2Name: "kuanlan",
     port: 3120,
     runtime: "ecs-pm2",
+    health: DEFAULT_HEALTH_PATH,
     note: "观澜. Production is Fly Singapore; ECS PM2 is rollback only.",
   },
   {
@@ -183,6 +215,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     label: "Type Lens",
     runtime: "vercel",
     deployService: "typelens",
+    health: null,
     note: "Host not yet in the domain SSOT.",
   },
   {
@@ -190,12 +223,14 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     label: "Studio",
     domainKey: "studio",
     runtime: "sanity-hosted",
+    health: null,
     note: "Canonical host is nebutra.sanity.studio.",
   },
   {
     id: "@nebutra/sleptons",
     label: "Sleptons",
     runtime: "unpublished",
+    health: null,
   },
 ];
 

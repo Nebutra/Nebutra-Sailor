@@ -11,6 +11,7 @@ const useStandalone =
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),
   transpilePackages: [
+    "@nebutra/health",
     "@nebutra/fonts",
     "@lobehub/icons",
     "@nebutra/ai-providers",
@@ -23,6 +24,8 @@ const nextConfig: NextConfig = {
     "@nebutra/auth",
     "@nebutra/i18n",
     "@nebutra/repositories",
+    "@nebutra/contracts",
+    "@nebutra/audit",
   ],
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg"],
   async rewrites() {

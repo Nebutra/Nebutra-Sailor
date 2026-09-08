@@ -237,6 +237,48 @@ export async function runHealthChecks(
 }
 
 // ============================================
+// Next.js App Router route handler
+// ============================================
+
+export interface NextHealthRouteOptions {
+  /** Service name reported in the payload (e.g. "router", "admin"). */
+  service: string;
+  /** Overrides `npm_package_version` when provided; `undefined` is accepted so callers can pass env values directly. */
+  version?: string | undefined;
+  checkers?: HealthChecker[];
+}
+
+/** `HealthCheckResult` plus the service that produced it. */
+export type ServiceHealthResult = HealthCheckResult & { service: string };
+
+/**
+ * Builds a `GET` handler for a Next.js `app/api/health/route.ts`.
+ *
+ * Returns a standard `Response` (no Next types) so the same shape is served by
+ * every Next app and can be probed by the admin Fleet page. 200 for healthy or
+ * degraded, 503 for unhealthy; never cached.
+ */
+export function nextHealthRoute(options: NextHealthRouteOptions): () => Promise<Response> {
+  const { service, version, checkers: routeCheckers = [] } = options;
+
+  return async () => {
+    const result = await runHealthChecks(routeCheckers);
+    const body: ServiceHealthResult = { service, ...result };
+    if (version) {
+      body.version = version;
+    }
+
+    return new Response(JSON.stringify(body), {
+      status: result.status === "unhealthy" ? 503 : 200,
+      headers: {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "no-store",
+      },
+    });
+  };
+}
+
+// ============================================
 // Hono/Express Middleware
 // ============================================
 

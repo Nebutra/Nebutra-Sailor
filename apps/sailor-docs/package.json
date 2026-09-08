@@ -32,6 +32,7 @@
     "@nebutra/brand": "workspace:*",
     "@nebutra/docs-shared": "workspace:*",
     "@nebutra/fonts": "workspace:*",
+    "@nebutra/health": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",

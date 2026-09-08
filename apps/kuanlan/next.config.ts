@@ -8,6 +8,7 @@ const useStandalone =
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),
   transpilePackages: [
+    "@nebutra/health",
     "@nebutra/auth",
     "@nebutra/brand",
     "@nebutra/fonts",

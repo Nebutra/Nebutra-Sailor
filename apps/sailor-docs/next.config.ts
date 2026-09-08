@@ -77,6 +77,7 @@ const nextConfig: NextConfig = {
       }
     : {}),
   transpilePackages: [
+    "@nebutra/health",
     "@nebutra/fonts",
     "@nebutra/ui",
     "@nebutra/tokens",

@@ -60,4 +60,40 @@ else:
 login = req("POST", "/api/user/login", {"username": "root", "password": password})
 if login.get("success") is False:
     sys.exit("login as root failed: %s" % login.get("message"))
-print("login ok, root id =", (login.get("data") or {}).get("id"))
+root_id = str((login.get("data") or {}).get("id") or 1)
+print("login ok, root id =", root_id)
+
+# Mint (or reuse) the internal user token the Router edge uses upstream
+# (NEW_API_ACCESS_TOKEN). Never shown to customers.
+TOKEN_NAME = os.environ.get("ROUTER_TOKEN_NAME", "router-edge")
+
+
+def admin(method, path, body=None):
+    data = None if body is None else json.dumps(body).encode()
+    headers = {"Content-Type": "application/json", "New-Api-User": root_id}
+    request = urllib.request.Request(base + path, data=data, headers=headers, method=method)
+    with opener.open(request, timeout=20) as response:
+        raw = response.read().decode()
+        return json.loads(raw) if raw else {}
+
+
+existing = admin("GET", "/api/token/?p=0&size=100")
+items = existing.get("data")
+if isinstance(items, dict):
+    items = items.get("items") or []
+for item in items or []:
+    if item.get("name") == TOKEN_NAME and item.get("key"):
+        print("NEW_API_ACCESS_TOKEN=sk-%s" % item["key"] if not str(item["key"]).startswith("sk-") else "NEW_API_ACCESS_TOKEN=%s" % item["key"])
+        break
+else:
+    created = admin("POST", "/api/token/", {"name": TOKEN_NAME, "remain_quota": -1, "unlimited_quota": True, "expired_time": -1})
+    if created.get("success") is False:
+        sys.exit("token create failed: %s" % created.get("message"))
+    again = admin("GET", "/api/token/?p=0&size=100")
+    items = again.get("data")
+    if isinstance(items, dict):
+        items = items.get("items") or []
+    key = next((i.get("key") for i in items or [] if i.get("name") == TOKEN_NAME), "")
+    if not key:
+        sys.exit("token created but key not returned; copy it from New-API → Tokens")
+    print("NEW_API_ACCESS_TOKEN=%s" % (key if str(key).startswith("sk-") else "sk-" + key))

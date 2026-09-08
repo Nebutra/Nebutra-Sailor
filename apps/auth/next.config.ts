@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),
   outputFileTracingRoot: monorepoRoot,
   transpilePackages: [
+    "@nebutra/health",
     "@nebutra/access-gate",
     "@nebutra/auth",
     "@nebutra/brand",

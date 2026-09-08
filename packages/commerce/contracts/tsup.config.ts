@@ -7,6 +7,7 @@ export default defineConfig({
     "src/billing.ts",
     "src/events.ts",
     "src/notifications.ts",
+    "src/admin.ts",
   ],
   format: ["esm"],
   dts: true,

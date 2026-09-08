@@ -23,6 +23,7 @@
     "@nebutra/design-tokens": "workspace:*",
     "@nebutra/docs-shared": "workspace:*",
     "@nebutra/fonts": "workspace:*",
+    "@nebutra/health": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/theme": "workspace:*",
     "@nebutra/tokens": "workspace:*",

@@ -78,3 +78,23 @@ Supply engines stay in `infra/nebutra-router`; this app is the product shell.
 # Optional: shorter catalog TTL while developing
 MODEL_CATALOG_TTL_MS=60000 pnpm --filter @nebutra/router dev
 ```
+
+## Admin contract (`nebutra.admin/v1`)
+
+Router owns its **supply** admin domain and exposes it to the platform admin
+through the Admin Contract (`@nebutra/contracts/admin`,
+docs/plans/2026-09-08-admin-of-admins-model.md). `admin.nebutra.com` renders
+it from the manifest and never imports router code.
+
+| Path | Guard | What |
+|---|---|---|
+| `GET /.well-known/nebutra-admin.json` | public | manifest: resources · actions · signals · policies (urls and schemas only) |
+| `GET /api/admin/v1/supply/engines` | staff token | CLIProxyAPI + New-API reachability, latency |
+| `GET /api/admin/v1/supply/accounts` | staff token | account pool from CLIProxyAPI auth files, normalised status |
+| `GET /api/admin/v1/supply/shelf` | staff token | what New-API sells ∩ what CLIProxyAPI serves, with `pending-sync` |
+| `POST /api/admin/v1/supply/actions/channel.sync` | `platform_operator` | `{mode:"plan"}` → diff; `{mode:"apply", planId}` → upsert channel + audit event |
+| `GET /api/admin/v1/supply/signals/{engine.down,channel.drift,account.expired}` | staff token | `SignalReading` with `probedAt`; `unknown` when the probe itself fails |
+
+**Staff token**: `x-service-token` (HS256 over `SERVICE_SECRET`, `signServiceToken` from `@nebutra/auth`) whose claims match `x-user-id` and `x-role`; the role must be on the staff ladder. Plans expire after 10 minutes and are single-use.
+
+Env on the router Machine: `SERVICE_SECRET`, `CLIPROXY_API_KEY`, `CLIPROXY_MANAGEMENT_KEY`, `NEW_API_ROOT_PASSWORD`, `NEW_API_ACCESS_TOKEN` (shelf read), optional `CLIPROXY_INTERNAL_URL` / `NEW_API_INTERNAL_URL` (default 6PN hosts).
