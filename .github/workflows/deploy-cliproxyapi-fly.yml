@@ -105,15 +105,19 @@ jobs:
           CLIPROXY_API_KEY: ${{ secrets.CLIPROXY_API_KEY }}
         run: |
           set -euo pipefail
+          # The image ships no wget/curl; probe over flyctl proxy (WireGuard) from the runner.
+          flyctl proxy 18317:8317 -a nebutra-cliproxyapi >/dev/null 2>&1 &
+          sleep 6
           for i in 1 2 3 4 5 6; do
-            if flyctl ssh console -a nebutra-cliproxyapi --pty=false -C \
-              "wget -qO- --timeout=5 --header='Authorization: Bearer ${CLIPROXY_API_KEY}' http://127.0.0.1:8317/v1/models" \
-              | grep -q '"data"'; then
+            if curl -fsS --max-time 5 -H "Authorization: Bearer ${CLIPROXY_API_KEY}" \
+              http://127.0.0.1:18317/v1/models | grep -q '"data"'; then
               echo "cliproxyapi answered on try $i"
+              kill %1 2>/dev/null || true
               exit 0
             fi
             sleep 8
           done
+          kill %1 2>/dev/null || true
           flyctl logs -a nebutra-cliproxyapi --no-tail || true
           echo "::error::nebutra-cliproxyapi did not answer on :8317"
           exit 1
