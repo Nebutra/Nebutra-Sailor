@@ -25,7 +25,24 @@ Public OpenAI-compatible edge (302.ai contract): `https://router.nebutra.com/v1`
 | POST | `/v1/images/generations` | same body as 302.ai |
 | POST | `/v1/images/edits` | multipart `image` + `prompt` + `model` + `size` |
 
-Use a **router product key** (New-API user token). The 302.ai channel key stays in New-API.
+| POST | `/v1/responses` | Responses API (Codex CLI, Agents SDK) |
+| POST | `/v1/messages` | Anthropic Messages — `x-api-key` accepted (Claude Code, Anthropic SDK) |
+| POST | `/v1/embeddings` | embeddings |
+
+One key, every protocol. Supply behind New-API is either an API-key channel
+(302.ai, official keys) or the CLIProxyAPI account relay (ChatGPT / Google /
+Claude accounts) — the customer cannot tell and does not choose. See
+`infra/nebutra-router/README.md`.
+
+### Key store
+
+| `ROUTER_KEY_STORE` | Customer holds | Edge does |
+|---|---|---|
+| unset / `newapi-token` (default) | a New-API user token | forwards it untouched (legacy) |
+| `nebutra` | a Nebutra key (`sk-sailor-…`, shared `APIKey` table with app + gateway) | validates by hash, swaps in `NEW_API_ACCESS_TOKEN`, writes a usage ledger row per request, `/keys` revoke takes effect immediately |
+
+`nebutra` mode needs `DATABASE_URL` and `NEW_API_ACCESS_TOKEN`. The customer key
+never reaches New-API; the New-API token never reaches customers.
 
 ## Model list maintenance (302-style sellable shelf)
 

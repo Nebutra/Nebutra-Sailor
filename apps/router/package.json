@@ -31,7 +31,10 @@
     "zod": "catalog:",
     "@lobehub/icons": "^5.0.1",
     "@nebutra/ai-providers": "workspace:*",
-    "@nebutra/auth": "workspace:*"
+    "@nebutra/auth": "workspace:*",
+    "@nebutra/db": "workspace:*",
+    "@nebutra/repositories": "workspace:*",
+    "@nebutra/logger": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",

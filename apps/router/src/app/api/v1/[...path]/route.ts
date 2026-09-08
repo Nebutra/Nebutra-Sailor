@@ -3,6 +3,8 @@ import {
   proxyOpenAiCompatible,
   RouterSupplyUnavailableError,
 } from "@/lib/openai-edge";
+import { getKeyResolver } from "@/lib/router-keys";
+import { recordRouterUsage } from "@/lib/usage-ledger";
 
 export const runtime = "nodejs";
 export const maxDuration = 180;
@@ -12,7 +14,10 @@ type RouteContext = { params: Promise<{ path: string[] }> };
 async function handle(request: Request, context: RouteContext): Promise<Response> {
   const { path } = await context.params;
   try {
-    return await proxyOpenAiCompatible(request, path);
+    const resolveKey = getKeyResolver();
+    return await proxyOpenAiCompatible(request, path, {
+      ...(resolveKey ? { resolveKey, onUsage: recordRouterUsage } : {}),
+    });
   } catch (error) {
     if (error instanceof RouterSupplyUnavailableError) {
       return openaiError(503, "router_unconfigured");

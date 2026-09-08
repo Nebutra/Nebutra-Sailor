@@ -62,6 +62,22 @@ services:
     volumes:
       - new_api_data:/data
 
+  # CLIProxyAPI — OAuth / CLI account reverse proxy (B-class supply)
+  # Registered in New-API as an OpenAI-type channel (scripts/seed-newapi-channel-cliproxy.py).
+  # Image tag: see versions.lock. Auth JSON persists in cliproxy_auths.
+  cliproxyapi:
+    image: eceasy/cli-proxy-api:v7.2.154
+    restart: unless-stopped
+    ports:
+      # Localhost only — New-API talks to it over the compose network.
+      - "127.0.0.1:3003:8317"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./config/cliproxyapi.yaml:/CLIProxyAPI/config.yaml:ro
+      - cliproxy_auths:/root/.cli-proxy-api
+      - cliproxy_logs:/CLIProxyAPI/logs
+
   # Sub2API — subscription / account pool (B-class supply)
   # Optional: comment out if image unavailable; Router can run New-API only.
   # Replace image when your registry pin is finalized (see versions.lock).
@@ -81,3 +97,5 @@ volumes:
   router_pg:
   new_api_data:
   sub2api_data:
+  cliproxy_auths:
+  cliproxy_logs:

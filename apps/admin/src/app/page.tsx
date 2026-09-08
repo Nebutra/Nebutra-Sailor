@@ -72,6 +72,16 @@ export default function FleetPage() {
 
       <DashboardPanel
         className="mt-6"
+        title="Supply"
+        description="Router 供给引擎：账号号池与渠道中枢，私网 Machine，只从这里进。"
+      >
+        <a href="/supply" className="text-primary text-sm underline-offset-4 hover:underline">
+          打开 Supply 台 →
+        </a>
+      </DashboardPanel>
+
+      <DashboardPanel
+        className="mt-6"
         title="Unclaimed hosts"
         description="Hostnames in the domain SSOT that no service in this repo owns. Infrastructure hosts and external brand fronts are expected here."
       >

@@ -23,7 +23,7 @@
 | `pebble.nebutra.com` | `apps/pebble` + external repo `Nebutra/pebble` | **Pebble brand front** — landing / download / feeds on ECS; product API on shared gateway |
 | `carina.nebutra.com` | (external repo `Nebutra/carina` → `apps/docs`) | **Carina product docs** — Astro + Starlight static site. No backend of its own. |
 
-> Router/Forge: product hosts; supply engines (New-API, Sub2API) stay **internal** — see `infra/nebutra-router/`.
+> Router/Forge: product hosts; supply engines (New-API, CLIProxyAPI, Sub2API) stay **internal** — see `infra/nebutra-router/`.
 
 ### Open Platform — catalog on landing, console on app
 

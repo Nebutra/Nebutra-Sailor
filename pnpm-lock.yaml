@@ -981,6 +981,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../packages/platform/db
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
@@ -990,9 +993,15 @@ importers:
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
+      '@nebutra/logger':
+        specifier: workspace:*
+        version: link:../../packages/platform/logger
       '@nebutra/prepaid-wallet':
         specifier: workspace:*
         version: link:../../packages/platform/prepaid-wallet
+      '@nebutra/repositories':
+        specifier: workspace:*
+        version: link:../../packages/platform/repositories
       '@nebutra/router-supply':
         specifier: workspace:*
         version: link:../../packages/platform/router-supply
