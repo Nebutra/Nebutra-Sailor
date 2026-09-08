@@ -15,6 +15,16 @@ sub2api:
     B-class account/subscription relay. Compose profile "sub2api".
     Pin a digest in production; "latest" is for lab only.
 
+cliproxyapi:
+  image: eceasy/cli-proxy-api
+  tag: v7.2.154
+  role: account-relay
+  notes: >
+    B-class OAuth / CLI account reverse proxy (ChatGPT-Codex, Google via
+    Antigravity, Claude, Kimi, xAI). Registered in New-API as an OpenAI-type
+    channel; never a second Router upstream. Auth JSON lives on a volume.
+    Management API stays off. Bump with the login runbook re-tested.
+
 redis:
   image: redis
   tag: 7.4-alpine

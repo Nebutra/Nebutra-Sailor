@@ -22,7 +22,9 @@ const nextConfig: NextConfig = {
     "@nebutra/router-supply",
     "@nebutra/auth",
     "@nebutra/i18n",
+    "@nebutra/repositories",
   ],
+  serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg"],
   async rewrites() {
     return [{ source: "/v1/:path*", destination: "/api/v1/:path*" }];
   },

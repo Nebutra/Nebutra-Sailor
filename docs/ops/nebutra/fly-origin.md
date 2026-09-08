@@ -12,7 +12,9 @@ Landing and Cloudflare Workers (gateway-edge + auth-edge) stay put.
 `sso` / `admin` / `docs` ship as Fly Next Machines. Carina is a static
 nginx Machine (`deploy-carina-fly.yml`). New-API is a private Machine
 with no public IP (`deploy-new-api-fly.yml`); Router reaches it at
-`http://nebutra-new-api.internal:3000/v1`. Leak DNS is UDP/TCP 53 on a
+`http://nebutra-new-api.internal:3000/v1`. CLIProxyAPI (account relay) is
+another private Machine (`deploy-cliproxyapi-fly.yml`); New-API reaches it at
+`http://nebutra-cliproxyapi.internal:8317` as an OpenAI-type channel. Leak DNS is UDP/TCP 53 on a
 dedicated IPv4 (`deploy-dns-leak-fly.yml`); glue A stays DNS-only.
 Shanghai ECS is China-forward / rollback only. `deploy-ecs.yml` remains
 the rollback.

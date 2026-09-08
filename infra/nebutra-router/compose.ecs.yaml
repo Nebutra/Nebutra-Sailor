@@ -13,3 +13,18 @@ services:
       SESSION_SECRET: ${NEW_API_SESSION_SECRET:?set NEW_API_SESSION_SECRET}
     volumes:
       - /var/www/nebutra/new-api/data:/data
+
+  # CLIProxyAPI — OAuth / CLI account relay. Lab box only; Fly is production
+  # (infra/fly/cliproxyapi.toml). Localhost only; New-API reaches it via
+  # host.docker.internal or the compose network.
+  cliproxyapi:
+    image: eceasy/cli-proxy-api:v7.2.154
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3303:8317"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /var/www/nebutra/cliproxyapi/config.yaml:/CLIProxyAPI/config.yaml:ro
+      - /var/www/nebutra/cliproxyapi/auths:/root/.cli-proxy-api
+      - /var/www/nebutra/cliproxyapi/logs:/CLIProxyAPI/logs
