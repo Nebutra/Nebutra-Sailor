@@ -62,6 +62,7 @@ instead of preserving stale docs.
 
 - Health result, endpoint, or probe changes:
   `pnpm --filter @nebutra/health typecheck`
-- Because this package currently has no package-local tests, verify the
-  narrowest downstream consumer or route that exercises the changed health
-  semantics when behavior changes are non-trivial.
+- `pnpm --filter @nebutra/health test` — package-local vitest suite covers
+  `runHealthChecks` and `nextHealthRoute` (status → HTTP code, headers).
+- For non-trivial semantic changes also verify the narrowest downstream
+  consumer or route (an app's `/api/health`, the admin Fleet probe).
