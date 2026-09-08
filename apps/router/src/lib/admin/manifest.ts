@@ -46,6 +46,19 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
             { key: "lastUsed", label: "Last used", kind: "time" },
             { key: "requests", label: "Req · recent", kind: "number", align: "end" },
           ],
+          actions: ["account.login"],
+        },
+        {
+          id: "login",
+          label: "Sign-ins in progress",
+          list: `${V1}/logins`,
+          columns: [
+            { key: "providerLabel", label: "Provider" },
+            { key: "status", label: "Status", kind: "badge" },
+            { key: "detail", label: "Detail" },
+            { key: "startedAt", label: "Started", kind: "time" },
+          ],
+          actions: ["account.login.callback"],
         },
         {
           id: "shelf",
@@ -60,6 +73,44 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
         },
       ],
       actions: [
+        {
+          id: "account.login",
+          verb: "Add account",
+          resource: "account",
+          role: "platform_operator",
+          url: `${V1}/actions/account.login`,
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["provider"],
+            properties: {
+              provider: { type: "string", enum: ["codex", "antigravity", "anthropic"] },
+            },
+          },
+          description:
+            "Start an OAuth sign-in for a subscription account; returns the URL to approve on your own device.",
+        },
+        {
+          id: "account.login.callback",
+          verb: "Paste callback",
+          resource: "login",
+          role: "platform_operator",
+          url: `${V1}/actions/account.login.callback`,
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["redirectUrl"],
+            properties: {
+              redirectUrl: {
+                type: "string",
+                description: "The localhost URL the provider redirected to",
+              },
+            },
+          },
+          description: "Complete a sign-in by replaying the provider's localhost callback URL.",
+        },
         {
           id: "channel.sync",
           verb: "Sync channel",

@@ -1,22 +1,27 @@
 import { brand } from "@nebutra/brand/metadata";
-import { type AdminManifest, roleAtLeast } from "@nebutra/contracts/admin";
+import { type AdminManifest, type ResourceList, roleAtLeast } from "@nebutra/contracts/admin";
 import { ActionButton } from "@/components/action-button";
+import { AddAccountDialog } from "@/components/add-account-dialog";
 import { PageTitle, Panel } from "@/components/panel";
 import { ResourceTable } from "@/components/resource-table";
 import { SignalStrip } from "@/components/signal-strip";
-import { ContractError, loadManifest } from "@/lib/contract-client";
+import { ContractError, listResource, loadManifest } from "@/lib/contract-client";
+import { needsInput } from "@/lib/login-flow";
 import { requireStaff } from "@/lib/staff";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Supply" };
 
 const ROUTER = "@nebutra/router";
+/** Resources that only exist while something is in flight; hidden when empty. */
+const TRANSIENT_RESOURCES = new Set(["login"]);
 
 /**
  * Supply — rendered from the router's manifest. This page knows nothing about
  * CLIProxyAPI or New-API; it draws whatever the product's supply domain
- * declares. The only product-specific thing here is the slot link, and even
- * that comes from the manifest.
+ * declares. The only product-specific things here are the Add-account flow
+ * (a bespoke surface over `account.login` / `account.login.callback`) and the
+ * slot link, and even the slot comes from the manifest.
  */
 export default async function SupplyPage() {
   const staff = await requireStaff();
@@ -54,8 +59,38 @@ export default async function SupplyPage() {
   }
 
   const allowed = (role: Parameters<typeof roleAtLeast>[1]) => roleAtLeast(staff.role, role);
-  const domainActions = domain.actions.filter((a) => !a.resource && allowed(a.role));
   const actionsById = new Map(domain.actions.map((a) => [a.id, a]));
+  // Generic buttons cannot supply an input; those actions get bespoke surfaces.
+  const generic = (a: NonNullable<ReturnType<typeof actionsById.get>>) =>
+    allowed(a.role) && !needsInput(a);
+  const domainActions = domain.actions.filter((a) => !a.resource && generic(a));
+  const loginAction = actionsById.get("account.login");
+  const canAddAccount = !!loginAction && allowed(loginAction.role);
+  const syncAction = actionsById.get("channel.sync");
+  const syncForDialog =
+    syncAction && allowed(syncAction.role)
+      ? { id: syncAction.id, verb: syncAction.verb, description: syncAction.description }
+      : undefined;
+
+  // Transient resources are fetched up front so an empty one renders nothing.
+  const prefetched = new Map<string, ResourceList>();
+  await Promise.all(
+    domain.resources
+      .filter((r) => TRANSIENT_RESOURCES.has(r.id))
+      .map(async (r) => {
+        try {
+          prefetched.set(r.id, await listResource(manifest, r.list, caller));
+        } catch {
+          // Unreachable transient list: nothing in flight to show, and the
+          // other resources will surface the failure on their own rows.
+        }
+      }),
+  );
+  const visibleResources = domain.resources.filter((r) => {
+    if (!TRANSIENT_RESOURCES.has(r.id)) return true;
+    const list = prefetched.get(r.id);
+    return !!list && list.total > 0;
+  });
 
   return (
     <>
@@ -64,16 +99,6 @@ export default async function SupplyPage() {
         subtitle={`API-key 渠道和账号号池都在 New-API 后面汇成一条 ${brand.domains.router}/v1。`}
         actions={
           <>
-            {domain.slot ? (
-              <a
-                href="/management.html"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex h-8 items-center rounded-md border border-border bg-card px-3 font-medium text-sm hover:bg-muted"
-              >
-                打开号池管理台
-              </a>
-            ) : null}
             {domainActions.map((action) => (
               <ActionButton
                 key={action.id}
@@ -86,20 +111,23 @@ export default async function SupplyPage() {
                 className="h-8 text-sm"
               />
             ))}
+            {canAddAccount ? (
+              <AddAccountDialog serviceId={ROUTER} syncAction={syncForDialog} />
+            ) : null}
           </>
         }
       />
 
       <SignalStrip manifest={manifest} domain={domain} caller={caller} />
 
-      {domain.resources.map((resource) => {
+      {visibleResources.map((resource) => {
         const resourceActions = [
           ...resource.actions,
           ...domain.actions.filter((a) => a.resource === resource.id).map((a) => a.id),
         ]
           .filter((id, i, all) => all.indexOf(id) === i)
           .map((id) => actionsById.get(id))
-          .filter((a): a is NonNullable<typeof a> => !!a && allowed(a.role));
+          .filter((a): a is NonNullable<typeof a> => !!a && generic(a));
         return (
           <Panel
             key={resource.id}
@@ -116,16 +144,26 @@ export default async function SupplyPage() {
               />
             ))}
           >
-            <ResourceTable manifest={manifest} resource={resource} caller={caller} />
+            <ResourceTable
+              manifest={manifest}
+              resource={resource}
+              caller={caller}
+              prefetched={prefetched.get(resource.id)}
+            />
           </Panel>
         );
       })}
 
       {domain.slot ? (
         <p className="text-muted-foreground text-xs leading-4">
-          号池登录：管理台里选 OAuth 登录（Codex 用设备码；Google / Claude
-          给一个链接），在本机浏览器授权，把 localhost 回调 URL 贴回管理台。账号入池后点 Sync
-          channel，New-API 渠道的模型列表跟着更新。
+          <a
+            href="/management.html"
+            target="_blank"
+            rel="noreferrer"
+            className="underline-offset-4 hover:text-foreground hover:underline"
+          >
+            高级：引擎原生控制台
+          </a>
         </p>
       ) : null}
     </>
