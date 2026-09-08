@@ -1,4 +1,4 @@
-import type { AdminManifest, AdminResource } from "@nebutra/contracts/admin";
+import type { AdminManifest, AdminResource, ResourceList } from "@nebutra/contracts/admin";
 import { cn } from "@nebutra/ui/utils";
 import { type ContractCaller, ContractError, listResource } from "@/lib/contract-client";
 import { cellText, relativeTime, statusTone } from "@/lib/format";
@@ -71,10 +71,13 @@ export async function ResourceTable({
   manifest,
   resource,
   caller,
+  prefetched,
 }: {
   manifest: AdminManifest;
   resource: AdminResource;
   caller: ContractCaller;
+  /** A list the page already fetched (to decide whether to render at all). */
+  prefetched?: ResourceList | undefined;
 }) {
   const now = Date.now();
   let items: Row[] = [];
@@ -82,7 +85,7 @@ export async function ResourceTable({
   let total = 0;
   let error: { code: string; message: string } | null = null;
   try {
-    const list = await listResource(manifest, resource.list, caller);
+    const list = prefetched ?? (await listResource(manifest, resource.list, caller));
     items = list.items;
     total = list.total;
     probedAt = list.probedAt;

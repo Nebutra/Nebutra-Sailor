@@ -1,5 +1,7 @@
 import "server-only";
 
+import { brand } from "@nebutra/brand/metadata";
+
 import { requireStaff } from "./staff";
 
 /**
@@ -64,9 +66,39 @@ export async function proxyToCliProxy(
   outgoing.delete("content-encoding");
   outgoing.delete("transfer-encoding");
   outgoing.delete("content-security-policy");
+  outgoing.delete("content-length");
+
+  if (targetPath === "/management.html" && response.ok) {
+    const html = rebrandManagementConsole(await response.text());
+    outgoing.set("content-type", "text/html; charset=utf-8");
+    return new Response(html, { status: response.status, headers: outgoing });
+  }
   return new Response(response.body as BodyInit | null, {
     status: response.status,
     statusText: response.statusText,
     headers: outgoing,
   });
+}
+
+/**
+ * Transitional skin for the engine's bundled console. It stays reachable as
+ * the "advanced" entry, but it must not present itself as a separate product
+ * with its own login: the proxy already injects the management key, so the
+ * console's key prompt accepts any value — say so where the prompt appears.
+ * Everyday account work happens in /supply; see AddAccountDialog.
+ */
+export function rebrandManagementConsole(html: string): string {
+  const note = [
+    '<style id="nebutra-skin">',
+    "  :root { color-scheme: light dark; }",
+    "  #nebutra-note { position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;",
+    "    font: 12px/18px system-ui, sans-serif; padding: 6px 12px; text-align: center;",
+    "    background: #171717; color: #fff; }",
+    "  body { padding-top: 30px !important; }",
+    "</style>",
+    `<div id="nebutra-note">${brand.name} Admin · 引擎原生控制台（高级）。鉴权已由 ${brand.name} 代理注入，登录框可填任意值。日常操作请回到 /supply。</div>`,
+  ].join("\n");
+  return html
+    .replace(/<title>[^<]*<\/title>/i, `<title>${brand.name} Admin · 引擎控制台</title>`)
+    .replace(/<body([^>]*)>/i, (_m, attrs: string) => `<body${attrs}>${note}`);
 }

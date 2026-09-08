@@ -3,6 +3,7 @@ import { ROUTER_ADMIN_MANIFEST } from "@/lib/admin/manifest";
 import { err, gateStaff, json } from "@/lib/admin/service-token";
 import { SupplyConfigError } from "@/lib/supply/clients";
 import { applyChannelSync, planChannelSync } from "@/lib/supply/domain";
+import { completeLogin, isLoginProvider, startLogin } from "@/lib/supply/login";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -33,6 +34,21 @@ export async function POST(request: Request, context: RouteContext) {
       if ("expired" in result)
         return json(err("plan_expired", "Plan expired or unknown — plan again."), 409);
       return json(result);
+    }
+    if (id === "account.login") {
+      const provider = parsed.data.input.provider;
+      if (!isLoginProvider(provider))
+        return json(
+          err("invalid_input", "input.provider must be codex | antigravity | anthropic."),
+          400,
+        );
+      return json(await startLogin(provider, gate.caller, request));
+    }
+    if (id === "account.login.callback") {
+      const redirectUrl = parsed.data.input.redirectUrl;
+      if (typeof redirectUrl !== "string" || !redirectUrl)
+        return json(err("invalid_input", "input.redirectUrl is required."), 400);
+      return json(await completeLogin(redirectUrl, gate.caller, request));
     }
     return json(err("not_found", `Action ${id} has no handler.`), 404);
   } catch (error) {

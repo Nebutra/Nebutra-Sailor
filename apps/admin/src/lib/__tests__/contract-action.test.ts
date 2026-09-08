@@ -34,6 +34,22 @@ const manifest = {
           plan: true,
           destructive: false,
         },
+        {
+          id: "account.login",
+          verb: "Add account",
+          resource: "account",
+          role: "platform_operator",
+          url: "/api/admin/v1/supply/actions/account.login",
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["provider"],
+            properties: {
+              provider: { type: "string", enum: ["codex", "antigravity", "anthropic"] },
+            },
+          },
+        },
       ],
     },
   ],
@@ -109,6 +125,38 @@ describe("contract action route", () => {
     });
     expect(res.status).toBe(409);
     expect(await res.json()).toMatchObject({ error: { code: "plan_required" } });
+    expect(applyAction).not.toHaveBeenCalled();
+  });
+
+  it("forwards the caller's input on an unplanned apply", async () => {
+    staff.role = "platform_operator";
+    const res = await handleContractAction({
+      serviceId: "@nebutra/router",
+      actionId: "account.login",
+      mode: "apply",
+      input: { provider: "codex" },
+    });
+    expect(res.status).toBe(200);
+    expect(planAction).not.toHaveBeenCalled();
+    expect(applyAction).toHaveBeenCalledWith(
+      manifest,
+      "/api/admin/v1/supply/actions/account.login",
+      { provider: "codex" },
+      undefined,
+      { userId: "u1", role: "platform_operator" },
+    );
+  });
+
+  it("refuses account.login for support tier without contacting the router", async () => {
+    staff.role = "platform_support";
+    const res = await handleContractAction({
+      serviceId: "@nebutra/router",
+      actionId: "account.login",
+      mode: "apply",
+      input: { provider: "codex" },
+    });
+    expect(res.status).toBe(403);
+    expect(await res.json()).toMatchObject({ error: { code: "forbidden" } });
     expect(applyAction).not.toHaveBeenCalled();
   });
 

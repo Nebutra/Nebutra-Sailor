@@ -69,13 +69,18 @@ describe("router admin manifest", () => {
   it("is a valid nebutra.admin/v1 document with a supply domain", () => {
     const parsed = AdminManifestSchema.parse(ROUTER_ADMIN_MANIFEST);
     const supply = parsed.domains.find((d) => d.id === "supply");
-    expect(supply?.actions.map((a) => a.id)).toEqual(["channel.sync"]);
+    expect(supply?.actions.map((a) => a.id)).toEqual([
+      "account.login",
+      "account.login.callback",
+      "channel.sync",
+    ]);
     expect(supply?.signals.map((s) => s.id)).toEqual([
       "engine.down",
       "channel.drift",
       "account.expired",
     ]);
-    expect(supply?.actions[0]?.role).toBe("platform_operator");
+    expect(supply?.actions.every((a) => a.role === "platform_operator")).toBe(true);
+    expect(supply?.resources.map((r) => r.id)).toEqual(["engine", "account", "login", "shelf"]);
   });
 });
 
