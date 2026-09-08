@@ -1,0 +1,49 @@
+{
+  "id": "seko.canvas.image-submitted",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "generator-panel",
+    "selectedEntity": "image-node",
+    "majorControls": [
+      "node label 图片",
+      "排队中，请稍候",
+      "会员加速",
+      "toolbar 全景/多角度/九宫格/画面切分/打光/故事推演/对口型/消除笔/图片超清/···/合成视频/download",
+      "generator panel retains prompt",
+      "credits 109"
+    ]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "generator-panel",
+  "jobState": "queued",
+  "agentState": "composing",
+  "visibleControls": [
+    "node label 图片",
+    "排队中，请稍候",
+    "会员加速",
+    "toolbar 全景/多角度/九宫格/画面切分/打光/故事推演/对口型/消除笔/图片超清/···/合成视频/download",
+    "generator panel retains prompt",
+    "credits 109"
+  ],
+  "disclosure": {
+    "appeared": ["queued placeholder", "会员加速 upsell", "node toolbar"],
+    "disappeared": ["空白节点 label", "上传 pill"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image-submitted.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Credits 110→109 at submit with no confirmation dialog; node id changed from uuid to snowflake; toolbar for image nodes appears before the result exists."
+    }
+  ]
+}

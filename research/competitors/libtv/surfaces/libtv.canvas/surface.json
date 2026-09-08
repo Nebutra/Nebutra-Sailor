@@ -1,0 +1,395 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "libtv.canvas",
+  "competitor": "libtv",
+  "route": "https://www.liblib.tv/canvas?spaceId=<spaceId>&projectId=<projectId>",
+  "name": "LibTV 画布 (node canvas workspace)",
+  "category": "canvas",
+  "layout": {
+    "persistentPanels": [
+      "top bar (project name input, 画布 switcher, 工作流/故事板 mode toggle, sync status, collab presence, 发布与分享, credits, team avatar, Agent toggle)",
+      "bottom dock (添加节点 / 移动 / 工具箱 / 素材库 / 角色库 / 生成历史 / 快捷键 / 教程)",
+      "bottom-left (资产管理 toggle, minimap, hide-edges, grid-snap, zoom %)",
+      "right Agent drawer (resizable, mantine Drawer, closed-by-default on reload in our session)"
+    ],
+    "chromeRatio": 0.08,
+    "workSurfaceRatio": 0.92
+  },
+  "navigation": [
+    {
+      "label": "LibTV logo menu (未命名工作区 ▾)",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "画布 1 ▾ (canvas switcher: 画布 list, 新建画布, 使用教程, 联系客服, 联系销售, 关注公众号)",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "工作流 (workflow/node view)",
+      "type": "tab",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "故事板 (storyboard view)",
+      "type": "tab",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "工作流 (node graph)",
+      "default": true,
+      "changesUrl": false,
+      "persistsState": true,
+      "scope": "canvas"
+    },
+    {
+      "name": "故事板 (type-grouped board: 文本/图片/视频 columns, dnd)",
+      "default": false,
+      "changesUrl": false,
+      "persistsState": true,
+      "scope": "canvas"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "添加节点 (+)",
+      "type": "popover-trigger",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "双击画布 自由生成节点 (double-click pane opens same 添加节点 popover)",
+      "type": "contextual-action",
+      "location": "canvas-node",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "empty-state quick starts: 故事脚本生成 / 角色三视图 / 全能参考生视频 SD2.5 / 音频生视频 SD2.5",
+      "type": "secondary-button",
+      "location": "floating",
+      "visibleWhen": "canvas.empty"
+    },
+    {
+      "label": "node ▶ 生成 (per-node send/generate arrow)",
+      "type": "primary-button",
+      "location": "canvas-node",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Agent (打开 Agent)",
+      "type": "drawer-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "发布与分享",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    { "label": "移动", "type": "icon-button", "location": "bottom-dock" },
+    {
+      "label": "打开工具箱 (团队工具箱 / 我的工具箱 / 工具箱模板说明)",
+      "type": "drawer-trigger",
+      "location": "bottom-dock"
+    },
+    { "label": "素材库", "type": "drawer-trigger", "location": "bottom-dock" },
+    { "label": "角色库", "type": "drawer-trigger", "location": "bottom-dock" },
+    { "label": "生成历史", "type": "drawer-trigger", "location": "bottom-dock" },
+    {
+      "label": "快捷键",
+      "type": "icon-button",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    { "label": "教程", "type": "icon-button", "location": "bottom-dock", "visibleWhen": "always" },
+    {
+      "label": "资产管理 (left node/asset side panel)",
+      "type": "drawer-trigger",
+      "location": "bottom-dock"
+    },
+    {
+      "label": "切换小地图 / 隐藏节点连线 / 网格吸附 / 缩放选项 100%",
+      "type": "icon-button",
+      "location": "bottom-dock"
+    },
+    {
+      "label": "协作者：1 人 (presence, 邀请协作)",
+      "type": "popover-trigger",
+      "location": "top-right"
+    },
+    { "label": "积分超市 / 开通会员 / 积分 0 / 团队", "type": "link", "location": "top-right" },
+    {
+      "label": "node context menu: 优化工作流布局 / 复制节点 ⌘C / 创建副本 ⌘D / 粘贴 ⌘V / 删除 ⌘⌫ / 复制到剪贴板",
+      "type": "context-menu",
+      "location": "canvas-node",
+      "visibleWhen": "right-click"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "add-node-popover",
+      "kind": "popover",
+      "trigger": "添加节点 button or double-click pane",
+      "dismiss": "Escape / click outside",
+      "modal": false,
+      "width": "~160px",
+      "contentOwnership": "node type catalogue (文本/图片/视频/智能剪辑 Beta/导演台 NEW/逐帧拉片 SD2.5/音频/脚本›/素材库›) + 添加资源 (上传 / 从生成历史选择 / dropzone)"
+    },
+    {
+      "id": "toolbox-panel",
+      "kind": "drawer",
+      "trigger": "打开工具箱",
+      "dismiss": "close x",
+      "modal": false,
+      "contentOwnership": "team/my tool templates (团队工具箱 / 我的工具箱, 按成员筛选, sample '周星驰经典名场面')"
+    },
+    {
+      "id": "character-library-modal",
+      "kind": "modal",
+      "trigger": "角色库 (dock) or 角色库 chip inside a video node",
+      "dismiss": "close x",
+      "modal": true,
+      "width": "~1300px",
+      "contentOwnership": "preset archetype characters (甜妹/清新少女, 霸总/精英大佬, 古风男主 …) each with 全身图 / 面部特写 / 表情九宫格 / 人物呈现板; 应用至画布; 角色筛选; 最近使用"
+    },
+    {
+      "id": "generation-history-panel",
+      "kind": "drawer",
+      "trigger": "生成历史",
+      "dismiss": "close",
+      "modal": false,
+      "contentOwnership": "history scoped 本画布 / 全部画布, type counts 图片/视频/音频, 按成员筛选, 所有评级 (rating filter), 时间倒序, 批量操作, thumbnail size slider"
+    },
+    {
+      "id": "asset-mgmt-side-panel",
+      "kind": "inspector",
+      "trigger": "资产管理",
+      "dismiss": "收起节点侧栏",
+      "modal": false,
+      "width": "resizable (调整工作区面板宽度)",
+      "contentOwnership": "tabs 画布 / 资产; node list with 搜索节点, 筛选：全部, 所有评级, 展示设置; count 共 N 节点"
+    },
+    {
+      "id": "canvas-switcher",
+      "kind": "popover",
+      "trigger": "画布 1 ▾",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "canvases inside the workspace + 新建画布 + help links"
+    },
+    {
+      "id": "publish-share-popover",
+      "kind": "popover",
+      "trigger": "发布与分享",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "在LibTV上发布 (publish work AND creation process) / 分享链接 (viewers can view and copy the canvas)"
+    },
+    {
+      "id": "collab-presence",
+      "kind": "popover",
+      "trigger": "协作者：1 人",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "online collaborators + 邀请协作"
+    },
+    {
+      "id": "agent-drawer",
+      "kind": "drawer",
+      "trigger": "Agent button (auto-opens on 新建项目)",
+      "dismiss": "关闭",
+      "modal": false,
+      "width": "resizable (调整 AI 助手面板宽度)",
+      "contentOwnership": "conversation (新对话 / 历史对话), skill suggestions (从 Skill 出发，抵达成片), composer with 添加附件 / 选择模型 / Skill / 生成模式, Agent 设置, CLI & Skill"
+    },
+    {
+      "id": "agent-settings-modal",
+      "kind": "modal",
+      "trigger": "Agent 设置",
+      "dismiss": "完成",
+      "modal": true,
+      "contentOwnership": "协作模式: 自动生成图片/视频 toggle (agent may spend credits without per-step confirm), 积分预算管理 + 提醒阈值 1000; 人像安全协议 notice; 通知设置 (浏览器通知, 通知声音); free-tier note 非会员每天免费对话 3 轮"
+    },
+    {
+      "id": "agent-model-picker",
+      "kind": "popover",
+      "trigger": "选择模型 (composer)",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "radio 图片/视频; image models (Lib Image, General image Pro/V2, Seedream 5.0 Pro, Style Image V8.2/V8.1/V7); video models (Seedance 2.5, Seedance 2.0 VIP, Minimax H3, Seedance 2.0 Fast VIP, Wan 3.0 Prime, Wan 3.0, Kling O3, Kling 3.0 …); 添加模型 inserts a model chip into the prompt"
+    },
+    {
+      "id": "agent-attach-menu",
+      "kind": "popover",
+      "trigger": "添加附件",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "本地上传 / 素材库添加"
+    },
+    {
+      "id": "agent-history-popover",
+      "kind": "popover",
+      "trigger": "历史对话",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "conversation list (暂无历史对话)"
+    },
+    {
+      "id": "node-config-popover",
+      "kind": "popover",
+      "trigger": "node chip '16:9 · 720P · 5s · 1个'",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "比例 (Auto/16:9/4:3/1:1/3:4/9:16/21:9), 清晰度 (480P/720P/1080P/4K), 视频时长 slider 4–15s, 生成音频 开启/关闭, 生成数量 1/2/4"
+    },
+    {
+      "id": "node-fx-picker",
+      "kind": "modal",
+      "trigger": "特效 chip on video node",
+      "dismiss": "close / minimize",
+      "modal": true,
+      "contentOwnership": "特效广场 / 我的收藏 / 最近使用; community-authored effects with author + usage count + 商用 badge (小蜜蜂运镜, 穿云而入, 飞跃地平线 …); note '当前节点已使用风格，模型不可切换'"
+    },
+    {
+      "id": "node-context-menu",
+      "kind": "context-menu",
+      "trigger": "right-click node",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "layout + clipboard + delete"
+    },
+    {
+      "id": "creation-process-viewer",
+      "kind": "modal",
+      "trigger": "查看创作过程 on a TV Show card (home)",
+      "dismiss": "关闭 x",
+      "modal": true,
+      "width": "full-screen",
+      "contentOwnership": "read-only copy of another creator's canvas (只读模式) with 工作流/故事板 toggle, minimap, zoom, and 复制项目"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.new-project.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08",
+      "note": "empty canvas after 新建项目"
+    },
+    {
+      "file": "evidence/libtv.canvas.dock-toolbox.webp",
+      "note": "添加节点 popover + 工具箱 panel"
+    },
+    { "file": "evidence/libtv.canvas.dock-character-lib.webp", "note": "角色库 modal" },
+    { "file": "evidence/libtv.canvas.dock-gen-history.webp", "note": "生成历史 panel" },
+    { "file": "evidence/libtv.canvas.asset-mgmt.webp", "note": "资产管理 side panel" },
+    { "file": "evidence/libtv.canvas.storyboard-mode.webp", "note": "故事板 mode" },
+    { "file": "evidence/libtv.canvas.agent-drawer.webp", "note": "Agent drawer" },
+    { "file": "evidence/libtv.canvas.agent-settings.webp", "note": "Agent 设置 modal" },
+    { "file": "evidence/libtv.canvas.agent-model-picker.webp", "note": "Agent model picker" },
+    {
+      "file": "evidence/libtv.canvas.node-video-ref.webp",
+      "note": "全能参考生视频 template: image node + video node"
+    },
+    {
+      "file": "evidence/libtv.canvas.node-config-popover.webp",
+      "note": "video node config popover"
+    },
+    { "file": "evidence/libtv.canvas.node-fx-chip.webp", "note": "特效 picker" },
+    { "file": "evidence/libtv.canvas.node-context-menu.webp", "note": "node context menu" },
+    { "file": "evidence/libtv.canvas.node-smart-edit.webp", "note": "智能剪辑 node" },
+    {
+      "file": "evidence/libtv.canvas.template-virtual-studio.webp",
+      "note": "导演台 template project"
+    },
+    {
+      "file": "evidence/libtv.canvas.template-shot-breakdown.webp",
+      "note": "逐帧拉片 template project"
+    },
+    { "file": "evidence/libtv.canvas.publish-share.webp", "note": "发布与分享 popover" },
+    { "file": "evidence/libtv.canvas.collab.webp", "note": "collab presence" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "The canvas is a React Flow node graph (data-testid rf__wrapper / rf__node-*). Node type prefixes seen: i (image), v (video, also used by 智能剪辑), n (导演台), g (group), a (audio)."
+    },
+    {
+      "tier": "O",
+      "text": "Unit of work: 工作区/项目 (spaceId + projectId in URL) → contains one or more 画布 (canvas switcher with 新建画布) → contains nodes. Project title is an inline editable input (未命名工作区 / 未命名项目)."
+    },
+    {
+      "tier": "O",
+      "text": "Persistence: header shows 同步中 → 已同步 after every mutation; nodes created from the empty-state template survived a full page reload (2 nodes after reload)."
+    },
+    {
+      "tier": "O",
+      "text": "Clicking 新建项目 in the LibTV sidebar creates a new project immediately (no dialog) and lands in /canvas with spaceId+projectId and the Agent drawer open in 新对话 state."
+    },
+    {
+      "tier": "O",
+      "text": "Home tool cards (Seedance 2.5, Wan 3.0, Minimax H3 Max, 导演台, 逐帧拉片, 片段重拍) open /canvas?sourceSpaceId=…&sourceProjectUuid=… which clones a template project into a NEW project in the user's workspace (URL rewrites to fresh spaceId/projectId; node titles carry the suffix '- 副本')."
+    },
+    {
+      "tier": "O",
+      "text": "Professional tools are therefore NOT separate pages: 导演台 is a node type (n) with an inline '打开导演台' button ('在3D空间中搭建场景并进行多视角截图') and a downstream '导演台 2 动画导出' video node; 逐帧拉片 is a canvas template made of group nodes (分镜组01/02/03, 动态｜运镜动作参考, 音乐｜BGM参考片段) containing shot image nodes (S07…S12 with camera/angle titles) and motion video nodes (M01…M03, 1920×1080); 智能剪辑 is a v-node with presets 讲解视频/批量广告/口播视频/素材混剪 and config 16:9·720P·30s."
+    },
+    {
+      "tier": "U",
+      "text": "Clicking 打开导演台 produced no observable overlay/URL in the bridge session (twice). Whether it opens a WebGL editor, a new tab, or requires membership is unknown."
+    },
+    {
+      "tier": "O",
+      "text": "Video node parameter disclosure has three tiers: (1) always visible chips 参考 / 标记 / 特效 / 角色库 / 运镜, reference thumbnails, prompt (描述你想要生成的画面内容，@引用素材), model '2.0', mode '全能参考', compact config string '16:9 · 720P · 5s · 1个'; (2) config popover on click (比例/清晰度/时长 4–15s/生成音频/数量 1·2·4); (3) 高级设置 group: 联网搜索, 自动校验素材, 智能引用 AutoLink."
+    },
+    {
+      "tier": "O",
+      "text": "Generation history is a canvas-side panel (not a separate page): scope radio 本画布 / 全部画布, type counters 图片/视频/音频, 按成员筛选, 所有评级 (per-result rating exists as a filter), 时间倒序, 批量操作."
+    },
+    {
+      "tier": "O",
+      "text": "Reusable identities: 角色库 offers platform-preset archetype characters (甜妹/清新少女, 霸总/精英大佬, 古风男主 …) each shipped as 全身图 + 面部特写 + 表情九宫格 + 人物呈现板 and applied via 应用至画布; the same 角色库 is reachable as a chip inside the video node. 素材库 and 工具箱 (团队工具箱 / 我的工具箱) are team-scoped libraries."
+    },
+    {
+      "tier": "O",
+      "text": "Agent is a right-docked drawer bound to the canvas; composer supports @ 引用工作流/节点/资源, model chips (添加模型), Skill chips, 生成模式 menu, attachments (image/video/audio/pdf/txt/md/doc). Adding a node from the empty state auto-inserted a node chip ('视频 · 点击定位到画布节点') into the composer."
+    },
+    {
+      "tier": "O",
+      "text": "Agent 设置 → 协作模式 has '自动生成图片/视频: 开启后，Agent 可直接消耗积分，提交图片/视频生成，无需逐次确认' and '积分预算管理' with 提醒阈值 (default 1000) — i.e. an explicit approval-vs-autonomy switch and per-project credit budget."
+    },
+    {
+      "tier": "O",
+      "text": "Sharing has two distinct verbs: 在LibTV上发布 ('发布你的作品和创作过程') and 分享链接 ('拥有此链接的人可以查看并复制你的画布'). Community cards expose 查看创作过程 which opens the creator's canvas read-only with 复制项目."
+    },
+    {
+      "tier": "O",
+      "text": "故事板 mode is a second view of the same canvas: content grouped by node type (文本/图片/视频 columns) with drag-and-drop, plus generated storyboard text nodes rendered as h3 sections (e.g. '📋 15秒详细分镜表 (Storyboard)') in the read-only viewer."
+    },
+    {
+      "tier": "I2",
+      "text": "Selection: clicking a node produced no DOM change other than sync status; node toolbars (chips, prompt, config) are always rendered on the node, so LibTV does not use a selection-driven inspector — the node itself is the inspector. Right-click yields a clipboard/layout context menu."
+    },
+    {
+      "tier": "O",
+      "text": "Credits (积分) are shared with liblib.art (0 in both headers); membership upsell (开通会员 限时 42 折) is persistent chrome in the canvas top bar. Some models are labelled VIP (Seedance 2.0 VIP, Seedance 2.0 Fast VIP)."
+    },
+    {
+      "tier": "U",
+      "text": "快捷键 and 教程 dock buttons produced no in-page overlay in the bridge; likely external links or a blocked new tab."
+    },
+    {
+      "tier": "U",
+      "text": "脚本 and 素材库 entries in 添加节点 are submenus (›); their contents were not captured."
+    }
+  ]
+}

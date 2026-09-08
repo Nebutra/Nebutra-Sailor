@@ -1,0 +1,38 @@
+{
+  "id": "tapnow.canvas.add-nodes",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Add Nodes",
+    "overlay": "add-nodes",
+    "selectedEntity": "none"
+  },
+  "visibleControls": [
+    "Text",
+    "Image",
+    "Video",
+    "Audio",
+    "3D",
+    "Timeline Editor (Beta)",
+    "3D Studio",
+    "Image Editor",
+    "Upload"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.dock.add-node.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "cmdk palette; items carry data-testid canvas-dockbar-add-<type>-node-btn."
+    }
+  ],
+  "disclosure": {
+    "appeared": ["node type list"],
+    "disappeared": []
+  },
+  "openOverlay": "add-nodes"
+}

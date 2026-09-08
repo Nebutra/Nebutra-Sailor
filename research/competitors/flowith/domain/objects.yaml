@@ -1,0 +1,55 @@
+# flowith domain objects — every line tiered
+objects:
+  Flow:
+    tier: O
+    route: /conv/<uuid>
+    notes: Unit of work. Created on first Send from /blank (before any node). Has title (auto from first prompt, editable via title menu — U), thumbnail, last-edit, share link + view permission, comments, node tree, viewport zoom. Listed in sidebar History and /flows.
+  RootNode:
+    tier: O
+    notes: Invisible node whose id == flow uuid; every flow has exactly one.
+  Node:
+    tier: O
+    kinds:
+      prompt: "user text; footer 'Me' + date; toolbar colour tags · Copy · Delete"
+      answer: "model output (markdown); footer model id + date; toolbar colour · Rerun · Copy · Edit(paid) · Delete"
+      image: "asset (Supabase storage); footer model id + date; toolbar Crop · Upscale · Background Removal · Vary · Rerun · Copy · Download · Delete"
+      video-prompt: "prompt node whose footer is a video model id (kling-text-to-video)"
+      step-label: "agent subtask sentence (small bar); toolbar Rerun · Edit · Delete"
+      document: "agent-produced doc with h1/h2 and version string (1.0.0, 2.1.0)"
+      sandbox-preview: "lazy 'Load sandbox preview' of a generated website (flo.fun)"
+      follow-up-draft: "prompt node created by Follow Up carrying 'Follow-up with N nodes'"
+      free-text / upload: "manual nodes from dock + (Text | Upload) — not created (U on shape)"
+    common: colour tag (gray/green/yellow/blue/pink), Add-node handle, Follow Up (Branch node), selectable as composer token, comment thread bubble
+  Edge:
+    tier: O
+    notes: dashed parent→child line; React Flow edge; selectable/deletable per a11y text ("press delete to remove it") — deletion not tried.
+  Group:
+    tier: O
+    notes: named container ('Group 1', 'Edit group name') holding parallel agent result nodes.
+  ComposerToken:
+    tier: O
+    notes: reference to a node (or a lineage 'Follow-up with N nodes') inserted into the composer by selection; removable; governs context of next generation ('Quote first').
+  Job:
+    tier: I2
+    notes: no standalone object visible; materialises as the answer node's lifecycle (placeholder → content | failure card). Persisted.
+  Comment:
+    tier: O
+    notes: attached to a node; count badge; created via Comment mode.
+  MediaItem:
+    tier: O
+    notes: generation or upload; account gallery by day (/gallery) with Starred + type filter; flow-scoped drawer in canvas (I2 on scope).
+  KnowledgeGarden:
+    tier: O
+    notes: account-level knowledge bases (projects) with files; shareable; marketplace (/community). The reusable/shareable identity object of the product (I2).
+  Composer:
+    tier: U
+    notes: 'New Composer' menu item; tutorial text calls it a versatile composition tool; shape unknown.
+  Project:
+    tier: U
+    notes: sidebar group with 'Create project' (name only); relation to flows unknown.
+  Credit:
+    tier: O
+    notes: single 'cr.' balance + per-model Free Gens + Unlimited Pack; model catalog prices in internal credits (raw/global-models.txt).
+  Model:
+    tier: O
+    notes: 70 in client catalog; fields media (text|image|video), tier t1/t2, price, suitableChatModes, supportedInputTypes; per-mode preferred model remembered client-side.

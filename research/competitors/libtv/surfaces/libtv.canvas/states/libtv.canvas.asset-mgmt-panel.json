@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.asset-mgmt-panel",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "asset-mgmt-side-panel",
+    "selectedEntity": "none",
+    "majorControls": ["画布/资产 tabs", "node list"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "asset-mgmt-side-panel",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "未命名工作区",
+    "画布 1 ▾",
+    "画布",
+    "资产",
+    "搜索节点",
+    "筛选：全部",
+    "所有评级",
+    "展示设置",
+    "画布暂无节点",
+    "共 0 节点",
+    "收起节点侧栏",
+    "调整工作区面板宽度"
+  ],
+  "disclosure": {
+    "appeared": ["left inspector"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.asset-mgmt.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Node list doubles as the layer/outliner panel; rating filter present here too."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "fal.model.playground.nb2-edit",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/nano-banana-2/edit",
+    "heading": "fal-ai/nano-banana-2/edit",
+    "activeTab": "Playground",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Prompt",
+    "Aspect Ratio",
+    "Image URLs: upload dropzone + 'Add image from URL or paste' + sample thumbnails with Remove",
+    "Resolution",
+    "Limit Generations switch",
+    "More",
+    "Reset",
+    "Run",
+    "cost line per image + $1 = 12 runs + resolution multipliers"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.nb2-edit.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Image-to-image variant surfaces file inputs (image/*, .zip) and 'Type to reference inputs. @ to reference entities.'"
+    }
+  ]
+}

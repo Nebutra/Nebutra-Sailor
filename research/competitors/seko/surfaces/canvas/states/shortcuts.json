@@ -1,0 +1,49 @@
+{
+  "id": "seko.canvas.shortcuts",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "shortcuts-panel",
+    "selectedEntity": "none",
+    "majorControls": [
+      "复制 ⌘C",
+      "粘贴 ⌘V",
+      "撤销 ⌘Z",
+      "重做 ⇧⌘Z",
+      "删除",
+      "框选多选",
+      "菜单 (right-click)",
+      "放大/缩小/适应画布",
+      "移动画布",
+      "创建分组/取消分组"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "shortcuts-panel",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": [
+    "复制 ⌘C",
+    "粘贴 ⌘V",
+    "撤销 ⌘Z",
+    "重做 ⇧⌘Z",
+    "删除",
+    "框选多选",
+    "菜单 (right-click)",
+    "放大/缩小/适应画布",
+    "移动画布",
+    "创建分组/取消分组"
+  ],
+  "disclosure": { "appeared": ["panel"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.shortcuts-dialog.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Undo/redo and grouping exist on the canvas." }]
+}

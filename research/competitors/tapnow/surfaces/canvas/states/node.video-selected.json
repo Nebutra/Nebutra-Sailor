@@ -1,0 +1,40 @@
+{
+  "id": "tapnow.canvas.node.video-selected",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Untitled",
+    "overlay": "none",
+    "selectedEntity": "node:video"
+  },
+  "visibleControls": [
+    "Upload",
+    "Point to Edit",
+    "First Frame",
+    "Last Frame",
+    "Reference",
+    "prompt",
+    "Seedance 2.0 Mini",
+    "Frames · 16:9 · 480p · 5s",
+    "1×",
+    "Generate",
+    "cost 30"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.video.model-menu.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.video.params-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Video params popover includes 'Generate method: Frames | Omni Reference' and 'Generate Audio On/Off'."
+    }
+  ],
+  "selectedEntity": "node:video"
+}

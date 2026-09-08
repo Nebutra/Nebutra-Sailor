@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.answer-node-selected",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "node-toolbar",
+    "selectedEntity": "answer-node f1300255",
+    "majorControls": [
+      "logo menu",
+      "flow title + flow switcher",
+      "Share",
+      "Comment (mode toggle)",
+      "Minimize",
+      "Organize Nodes"
+    ]
+  },
+  "selectedEntity": "answer-node f1300255",
+  "activeTab": "",
+  "openOverlay": "node-toolbar",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "logo menu",
+    "flow title + flow switcher",
+    "Share",
+    "Comment (mode toggle)",
+    "Minimize",
+    "Organize Nodes",
+    "zoom % (menu)",
+    "Composer (menu)",
+    "dock: Free Node",
+    "dock: Search Node",
+    "dock: Media History",
+    "dock: Knowledge Garden",
+    "credit balance 0",
+    "bottom composer",
+    "toast: 0% credits remaining",
+    "toolbar: colour dots",
+    "Rerun",
+    "Copy Content",
+    "Edit (tooltip 'Click to Edit... Shortcut: E')",
+    "Delete",
+    "Add node",
+    "Follow Up (F)",
+    "composer token 'Hello! Thank you for'",
+    "MAX toggle"
+  ],
+  "disclosure": {
+    "appeared": ["Rerun", "Edit"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.answer-node-selected.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Answer node toolbar adds Rerun and Edit."
+    },
+    {
+      "tier": "O",
+      "text": "Tooltip on Edit: 'Click to Edit. Modify this node anytime. Shortcut: E'."
+    }
+  ]
+}

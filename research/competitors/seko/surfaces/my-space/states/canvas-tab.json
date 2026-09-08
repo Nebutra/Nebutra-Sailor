@@ -1,0 +1,31 @@
+{
+  "id": "seko.my-space.canvas-tab",
+  "surfaceId": "seko.my-space",
+  "fingerprint": {
+    "route": "/my-space?tab=canvas",
+    "heading": "我的空间",
+    "activeTab": "画布",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["virtuoso grid"]
+  },
+  "activeTab": "画布",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["tabs", "virtualised canvas grid"],
+  "disclosure": { "appeared": ["canvas grid"], "disappeared": ["search", "category filters"] },
+  "evidence": [
+    {
+      "file": "evidence/myspace.canvas-tab.webp",
+      "url": "https://seko.sensetime.com/my-space?tab=canvas",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "No search/filter for canvases; list is a virtualised grid (empty at first visit, before any canvas was opened)."
+    }
+  ]
+}

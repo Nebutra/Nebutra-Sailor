@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.default",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["添加节点", "empty-state quick starts", "Agent", "发布与分享"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "未命名工作区 (input)",
+    "画布 1 ▾",
+    "工作流",
+    "故事板",
+    "已同步",
+    "协作者：1 人",
+    "发布与分享",
+    "积分超市",
+    "开通会员",
+    "积分 0",
+    "团队",
+    "打开 Agent",
+    "添加节点",
+    "移动",
+    "打开工具箱",
+    "素材库",
+    "角色库",
+    "生成历史",
+    "快捷键",
+    "教程",
+    "双击画布 自由生成节点",
+    "故事脚本生成",
+    "角色三视图",
+    "全能参考生视频 SD 2.5",
+    "音频生视频 SD 2.5",
+    "资产管理",
+    "切换小地图",
+    "隐藏节点连线",
+    "网格吸附",
+    "缩放选项 100 %",
+    "选择文件上传 dropzone"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.new-project.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Created by 新建项目 with zero dialogs; Agent drawer opened automatically in 新对话."
+    },
+    {
+      "tier": "O",
+      "text": "Chrome is ~8% of the viewport; the rest is the pane."
+    }
+  ]
+}

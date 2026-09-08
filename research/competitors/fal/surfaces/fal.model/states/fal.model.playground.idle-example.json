@@ -1,0 +1,47 @@
+{
+  "id": "fal.model.playground.idle-example",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell",
+    "heading": "fal-ai/flux/schnell",
+    "activeTab": "Playground",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["Run", "More", "Preview|JSON"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Prompt textarea (sample)",
+    "@ to reference entities",
+    "Additional Settings: More",
+    "Reset",
+    "Run ⌘↵",
+    "Form ▾",
+    "Result: Idle",
+    "Preview|JSON",
+    "sample image",
+    "Download",
+    "cost line",
+    "Readme"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Result column pre-filled with a sample output; status chip 'Idle'."
+    }
+  ]
+}

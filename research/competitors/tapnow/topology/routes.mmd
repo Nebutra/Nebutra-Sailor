@@ -1,0 +1,33 @@
+%% TapNow routes — O unless marked. Public: www.tapnow.ai ; App: app.tapnow.ai (owner session logged in)
+flowchart LR
+  subgraph www["www.tapnow.ai (public)"]
+    H["/ home (hero + live RF demo)"]
+    M["/manifesto"]
+    D["/download (desktop app)"]
+    E["/enterprise"]
+    P0["/pricing → redirects to app"]
+  end
+  subgraph app["app.tapnow.ai (authenticated)"]
+    AH["/home (agent launcher)"]
+    WS["/canvas/projects  [?scope=team]"]
+    CV["/canvas/<project-uuid>  (canvas + agent panel)"]
+    AR["/home/challenge (Arena)"]
+    PR["/pricing"]
+    CS["/contact-sales (I1, link only)"]
+    EV["/event/<id> (I1, links from www)"]
+    CM["/community → redirects /home"]
+  end
+  H -- "Get started for free (navToTap, new tab)" --> AH
+  H --> M
+  H --> D
+  H --> E
+  H --> P0 --> PR
+  E --> CS
+  AH -- Workspace --> WS
+  AH -- Arena --> AR
+  AH -- Pricing --> PR
+  AH -- "Open project / skill card (creates project)" --> CV
+  WS -- "project card" --> CV
+  CV -- "Back to Workspace" --> WS
+  CV -- "Tapies balance / Usage → Settings modal (no route)" --> CV
+  CV -- "Community (opens outside tab, U)" --> CM

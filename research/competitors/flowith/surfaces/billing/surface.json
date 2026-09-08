@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.billing",
+  "competitor": "flowith",
+  "route": "(modal) + /notifications",
+  "name": "Upgrade modal (plans) + Notifications route",
+  "category": "settings",
+  "layout": {
+    "persistentPanels": ["modal"],
+    "chromeRatio": 0.1,
+    "workSurfaceRatio": 0.9
+  },
+  "navigation": [],
+  "tabs": [
+    {
+      "name": "Monthly"
+    },
+    {
+      "name": "Yearly · Unlimited Mode",
+      "default": true
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "Continue (per plan) — NOT pressed",
+      "type": "primary-button",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Close Pricing Modal",
+      "type": "icon-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/billing.upgrade-modal.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/home.notifications.webp",
+      "url": "https://flowith.io/notifications",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Plans (yearly view): Starter $0 — 300 cr./mo (≈4 Nano Banana Pro generations), 'Your Current Plan'; Pro $17.91/mo — 20,000 cr. + $4 Free Gens (=250 Nano Banana Pro / 2,200 GPT Image 2); Ultimate $44.91 — 50,000 cr. + $38 Free Gens + Unlimited Pack; Infinite $399.92 — 500,000 cr. + $188 Free Gens + Unlimited Pack. 'Free Gens' are per-model quotas (e.g. Seedance 2.5 up to 5/50/250)."
+    },
+    {
+      "tier": "O",
+      "text": "Credit model is a single 'cr.' balance plus per-model free-generation quotas plus an 'Unlimited Pack/Mode' for top models on higher tiers. The composer's 'Unlimited Mode' toggle is the client-side face of that pack."
+    },
+    {
+      "tier": "O",
+      "text": "Client-cached model catalog (localStorage global_models, 70 models) lists per-model prices in credits: text models per token (e.g. GPT 4.1 prompt 2 / completion 8; Claude Fable 5 10/50), image models flat (Seedream 5.0 Pro 45,000; Nano Banana Pro 80,000; Z Image Turbo 5,000), video flat (Kling 3.0 4K 2,100,000; Veo 3.1 Fast 600,000). Units are internal credits, not 'cr.' — the exchange rate is not shown (U). Chat modes in the catalog: 0 chat, 1, 2 image, 4, 5, 9 video, 10."
+    },
+    {
+      "tier": "O",
+      "text": "The upgrade modal auto-opened on entering a flow with 0 credits; the '0% credits remaining, upgrade here' toast is persistent on every canvas."
+    },
+    {
+      "tier": "O",
+      "text": "/notifications is a full route listing account notifications."
+    }
+  ]
+}

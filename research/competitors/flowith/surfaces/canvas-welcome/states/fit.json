@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.fit",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "logo menu",
+      "flow title + flow switcher",
+      "Share",
+      "Comment (mode toggle)",
+      "Minimize",
+      "Organize Nodes"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "logo menu",
+    "flow title + flow switcher",
+    "Share",
+    "Comment (mode toggle)",
+    "Minimize",
+    "Organize Nodes",
+    "zoom % (menu)",
+    "Composer (menu)",
+    "dock: Free Node",
+    "dock: Search Node",
+    "dock: Media History",
+    "dock: Knowledge Garden",
+    "credit balance 0",
+    "bottom composer",
+    "toast: 0% credits remaining"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.fit.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Zoom to Fit shows the whole tree at 25%: 4 root prompts -> answers, a fan-out of 8 media prompts -> 8 image nodes, side branches about Knowledge Garden / Composer."
+    },
+    {
+      "tier": "O",
+      "text": "The flow opened with the sidebar auto-collapsed; canvas takes the whole viewport."
+    }
+  ]
+}

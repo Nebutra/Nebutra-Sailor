@@ -1,0 +1,23 @@
+{
+  "id": "tapnow.www-pages.manifesto",
+  "surfaceId": "tapnow.www-pages",
+  "fingerprint": {
+    "route": "/manifesto",
+    "heading": "The TapNow Manifesto",
+    "overlay": "none",
+    "selectedEntity": "none"
+  },
+  "visibleControls": ["header nav"],
+  "evidence": [
+    {
+      "file": "evidence/www.manifesto.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Node/Wire/Group/Canvas vocabulary is the explicit product ontology."
+    }
+  ]
+}

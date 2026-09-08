@@ -1,0 +1,48 @@
+{
+  "id": "tapnow.peripheral",
+  "competitor": "tapnow",
+  "route": "https://app.tapnow.ai/{home/challenge,pricing,community}",
+  "name": "Arena, Pricing, Community (P4 enumerate)",
+  "category": "other",
+  "primaryActions": [
+    {
+      "label": "Subscribe",
+      "type": "primary-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Join the Contest",
+      "type": "link",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/app.arena.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/app.pricing.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/app.community.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Arena = /home/challenge: 'Active Events | Event Archive'; hackathons and competitions with cash + Tapies prizes (48Hour Comedy Hackathon, Global AI Art Hackathon, TapNow × MiniMax MV competition, Golden Dolphin Award, MetaMorph, Rome AI Film Festival, SIGGRAPH Asia, LiXiang Hackathon). 'TapTV Arena' branding."
+    },
+    {
+      "tier": "O",
+      "text": "/pricing: Monthly 15% / Quarterly 40% / Annual 50% off / Enterprise; BASIC $7.5 (1500 Tapies, 750 images / 250s video / 1,127s voice / 9,202s music, 4 concurrent tasks, up to 100 team members, 'Agent one-click work tools', 'Pro Skills from top institutions', 'Reusable personal Skills'); PRO $45 (6000 Tapies, top-up +10%, 3,000 images / 1,000s video, unlimited Seedance 2.0 Mini 3d / Seedream 5 Pro 14d)."
+    },
+    {
+      "tier": "O",
+      "text": "/community redirects to /home; community (TapTV) is not a route inside app.tapnow.ai in this session (U where 'Community' header button opens)."
+    }
+  ]
+}

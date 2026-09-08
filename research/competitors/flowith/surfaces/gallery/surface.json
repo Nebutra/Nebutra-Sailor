@@ -1,0 +1,81 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.gallery",
+  "competitor": "flowith",
+  "route": "/gallery?entry_source=sidebar",
+  "name": "Media History (account gallery)",
+  "category": "library",
+  "layout": {
+    "persistentPanels": ["left sidebar"],
+    "chromeRatio": 0.2,
+    "workSurfaceRatio": 0.8
+  },
+  "navigation": [],
+  "tabs": [
+    {
+      "name": "Generations",
+      "default": true,
+      "changesUrl": false
+    },
+    {
+      "name": "Uploads",
+      "changesUrl": false
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "day strip (buttons per date, e.g. 'Sep 8, 2026')",
+      "type": "tab",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "date picker menu",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Search File",
+      "type": "input",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Starred filter",
+      "type": "secondary-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Type filter 'All Types'",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/media-history.default.webp",
+      "url": "https://flowith.io/gallery?entry_source=sidebar",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Media History from the sidebar is a route (/gallery) organised by calendar day with Generations/Uploads tabs, Starred and Type filters — account scope."
+    },
+    {
+      "tier": "I2",
+      "text": "The same Generations/Uploads/Starred/Type control set appears inside a flow's dock drawer, filtered to that flow."
+    },
+    {
+      "tier": "U",
+      "text": "Card actions (reuse in flow, download, star) — no media on this account's recent days."
+    }
+  ]
+}

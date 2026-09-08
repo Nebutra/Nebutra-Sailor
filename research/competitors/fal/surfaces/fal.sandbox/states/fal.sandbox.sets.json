@@ -1,0 +1,40 @@
+{
+  "id": "fal.sandbox.sets",
+  "surfaceId": "fal.sandbox",
+  "fingerprint": {
+    "route": "/sandbox",
+    "heading": "Select Model Set",
+    "activeTab": "Advanced",
+    "overlay": "model-sets",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Advanced",
+  "openOverlay": "model-sets",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Edit Sets",
+    "State of the Art (Default, 5 models)",
+    "Fast Open Source (4 models)",
+    "Cancel",
+    "Select Set"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/sandbox.sets.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Sets modal lists member model ids; Select Set disabled until a set is chosen."
+    }
+  ]
+}

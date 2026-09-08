@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research/schema/state.schema.json",
+  "title": "ProductState",
+  "type": "object",
+  "required": ["id", "surfaceId", "fingerprint", "visibleControls", "evidence"],
+  "properties": {
+    "id": { "type": "string", "description": "surfaceId.state, e.g. tapnow.canvas.asset-selected" },
+    "surfaceId": { "type": "string" },
+    "fingerprint": {
+      "type": "object",
+      "required": ["route", "heading", "overlay", "selectedEntity"],
+      "properties": {
+        "route": { "type": "string" },
+        "heading": { "type": "string" },
+        "activeTab": { "type": "string" },
+        "overlay": { "type": "string" },
+        "selectedEntity": { "type": "string" },
+        "majorControls": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "selectedEntity": { "type": "string" },
+    "activeTab": { "type": "string" },
+    "openOverlay": { "type": "string" },
+    "jobState": {
+      "enum": [
+        "none",
+        "submitted",
+        "queued",
+        "running",
+        "streaming",
+        "completed",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "agentState": {
+      "enum": ["none", "composing", "planning", "awaiting-approval", "running", "done", "failed"]
+    },
+    "visibleControls": { "type": "array", "items": { "type": "string" } },
+    "disclosure": {
+      "type": "object",
+      "description": "what became visible at this state vs its parent",
+      "properties": {
+        "appeared": { "type": "array", "items": { "type": "string" } },
+        "disappeared": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file"],
+        "properties": {
+          "file": { "type": "string" },
+          "url": { "type": "string" },
+          "capturedAt": { "type": "string" }
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tier", "text"],
+        "properties": { "tier": { "enum": ["O", "I2", "I1", "U"] }, "text": { "type": "string" } }
+      }
+    }
+  }
+}

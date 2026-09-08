@@ -1,0 +1,28 @@
+{
+  "id": "lovart.home.skill-popover",
+  "surfaceId": "lovart.home",
+  "fingerprint": {
+    "route": "/zh/home",
+    "heading": "Skill",
+    "overlay": "skill-popover",
+    "selectedEntity": "none"
+  },
+  "openOverlay": "skill-popover",
+  "agentState": "composing",
+  "visibleControls": [
+    "category chips: Video, Social Media, E-Commerce, Branding, Marketing, Studio",
+    "19 skill rows (title + one-line description): Seedance 2.0 视频创作, 一镜到底视频, 无人机运镜视频, 分镜故事板, Instagram Post, 广告创意, 一键跨平台适配, YouTube 封面图, 设计指引, 小红书封面, 亚马逊产品套图, UGC：生活化上身图, AI 造型师：高转化模特图, 网页变灵感, Logo 与品牌, 产品营销组图, Logo 设计, 营销宣传册, 室内设计"
+  ],
+  "disclosure": { "appeared": ["skill list"], "disappeared": [] },
+  "evidence": [{ "file": "evidence/home.book-popover.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Full list saved in raw/home.skill-popover.txt. Skills describe multi-output workflows ('一键生成 8 张…', '六种输出类型'), i.e. agent recipes."
+    },
+    {
+      "tier": "U",
+      "text": "Whether selecting a skill inserts a template into the textbox or switches the agent mode — not clicked (would arm a generation)."
+    }
+  ]
+}

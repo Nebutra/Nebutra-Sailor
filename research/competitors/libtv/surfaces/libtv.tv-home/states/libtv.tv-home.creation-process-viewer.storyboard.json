@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.tv-home.creation-process-viewer.storyboard",
+  "surfaceId": "libtv.tv-home",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/",
+    "heading": "火旺丨回家 - LibTV",
+    "activeTab": "故事板",
+    "overlay": "creation-process-viewer",
+    "selectedEntity": "project:火旺丨回家",
+    "majorControls": ["文本/图片/视频 columns"]
+  },
+  "selectedEntity": "project:火旺丨回家",
+  "activeTab": "故事板",
+  "openOverlay": "creation-process-viewer",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "文本 column with generated storyboard sections (📋 15秒详细分镜表 (Storyboard) …)",
+    "图片 column + 放大图片",
+    "视频 column + 放大视频",
+    "工作流",
+    "关闭"
+  ],
+  "disclosure": {
+    "appeared": ["type-grouped board"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.tvshow.detail-storyboard.webp",
+      "url": "https://www.liblib.tv/",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "故事板 is a projection of the same nodes grouped by type; storyboard text nodes render markdown-like h3 sections."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "lovart.canvas.history",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "画布历史",
+    "overlay": "canvas-history",
+    "selectedEntity": "snapshot:latest"
+  },
+  "openOverlay": "canvas-history",
+  "visibleControls": [
+    "× close",
+    "snapshot rows: '11 分钟前 保存 · 20:28 · 11 个元素 · 16 KB' …",
+    "恢复 on the highlighted row",
+    "preview of the selected snapshot"
+  ],
+  "evidence": [{ "file": "evidence/canvas.canvas-history.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Snapshots are whole-canvas, tagged 保存 (save) or 打开 (open), and restorable; two snapshots reflected my transient generator nodes (13 → 11 elements)."
+    },
+    {
+      "tier": "I2",
+      "text": "Local (browser) history — testid local-history-close-button; no per-image version stack."
+    }
+  ]
+}

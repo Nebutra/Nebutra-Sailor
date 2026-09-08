@@ -1,0 +1,29 @@
+{
+  "id": "fal.agent",
+  "competitor": "fal",
+  "overlays": [],
+  "secondaryActions": [],
+  "navigation": [],
+  "tabs": [],
+  "route": "/agent",
+  "name": "fal Agent (marketing, Early Access)",
+  "category": "agent",
+  "primaryActions": [
+    {
+      "label": "Get in touch",
+      "type": "link"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/agent.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Marketing page only: project-scoped persistent memory, Starter $50 / Pro $200 / Max $1000 per month credit bundles, API/CLI/MCP 'coming soon'. No agent UI reachable without add-on."
+    }
+  ]
+}

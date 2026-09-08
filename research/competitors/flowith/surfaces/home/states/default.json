@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.home.default",
+  "surfaceId": "flowith.home",
+  "fingerprint": {
+    "route": "/blank",
+    "heading": "Flow with ideas",
+    "activeTab": "Chat",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "composer: Chat · GPT 4.1 (model picker)",
+      "attach (text/code accept)",
+      "settings gear",
+      "batch 1 x",
+      "sidebar: New Flow",
+      "sidebar: Flow Library"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Chat",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "composer: Chat · GPT 4.1 (model picker)",
+    "attach (text/code accept)",
+    "settings gear",
+    "batch 1 x",
+    "sidebar: New Flow",
+    "sidebar: Flow Library",
+    "sidebar: Media History",
+    "sidebar: Knowledge Garden",
+    "sidebar: Knowledge Market",
+    "sidebar: Projects + Create new project",
+    "sidebar: History list + Sort by",
+    "account menu (Tseka Luk · FREE)",
+    "Get more credits",
+    "Notifications",
+    "credit balance 0",
+    "composer textbox",
+    "Send",
+    "mode chips Chat/Image/Video/Slides/Website/Neo Agent",
+    "Apps rail",
+    "template gallery + category filter"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/home.default.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Default composer mode is Chat with GPT 4.1; placeholder 'Every great idea starts with a single thought...'."
+    },
+    {
+      "tier": "O",
+      "text": "Credit balance reads 0; account badge FREE; persistent top banner upsells 'Unlimited Generation'."
+    },
+    {
+      "tier": "O",
+      "text": "History list shows flows with 'Last edit' dates; the newest flow later appeared here with a title auto-derived from its first prompt."
+    }
+  ]
+}

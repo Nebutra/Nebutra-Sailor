@@ -1,0 +1,47 @@
+{
+  "id": "tapnow.canvas.image-editor",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Image Editor",
+    "overlay": "image-editor",
+    "selectedEntity": "none"
+  },
+  "visibleControls": [
+    "custom (size)",
+    "Download",
+    "Save",
+    "Close",
+    "Images in Canvas | Linked Images",
+    "Image History",
+    "Basic Shapes | SVG Shapes",
+    "select",
+    "palette",
+    "rectangle",
+    "arrow",
+    "pencil",
+    "Add Text",
+    "Upload Image",
+    "Undo",
+    "Redo",
+    "Reset view",
+    "Image generation",
+    "Enter prompt for image generation",
+    "Number of generations",
+    "Generate",
+    "layer up/down"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.overview.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Professional raster editor is a fullscreen overlay in the same tab, entered from an Image Editor node; 'Save and Back To Canvas' returns."
+    }
+  ],
+  "openOverlay": "image-editor"
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.knowledge-market.default",
+  "surfaceId": "flowith.knowledge-market",
+  "fingerprint": {
+    "route": "/community",
+    "heading": "Featured Knowledge Gardens",
+    "activeTab": "knowledge-garden",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "sidebar nav (New Flow · Flow Library · Media History · Knowledge Garden · Knowledge Market · Projects · History)",
+      "account",
+      "credits",
+      "Notifications",
+      "tabs: knowledge-garden | oracle",
+      "featured cards x7"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "knowledge-garden",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "sidebar nav (New Flow · Flow Library · Media History · Knowledge Garden · Knowledge Market · Projects · History)",
+    "account",
+    "credits",
+    "Notifications",
+    "tabs: knowledge-garden | oracle",
+    "featured cards x7",
+    "All Knowledge Gardens",
+    "Search gardens..."
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/knowledge-market.oracle.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Community gallery of knowledge bases."
+    }
+  ]
+}

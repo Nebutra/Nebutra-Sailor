@@ -1,0 +1,29 @@
+{
+  "id": "fal.dashboard.webhooks",
+  "surfaceId": "fal.dashboard",
+  "fingerprint": {
+    "route": "/dashboard/webhooks",
+    "heading": "Webhooks",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["Settings side-nav", "Documentation", "table: Request / URL / Status / At"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/dashboard.webhooks.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": []
+}

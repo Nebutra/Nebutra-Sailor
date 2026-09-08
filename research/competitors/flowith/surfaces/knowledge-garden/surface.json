@@ -1,0 +1,77 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.knowledge-garden",
+  "competitor": "flowith",
+  "route": "(modal over any route)",
+  "name": "Knowledge Garden (own knowledge bases)",
+  "category": "library",
+  "layout": {
+    "persistentPanels": ["modal: left project list + right Knowledge Base panel"],
+    "chromeRatio": 0.15,
+    "workSurfaceRatio": 0.85
+  },
+  "navigation": [],
+  "tabs": [],
+  "primaryActions": [
+    {
+      "label": "+ Add new knowledge base",
+      "type": "icon-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Search File",
+      "type": "input",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Share",
+      "type": "secondary-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "... menu",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Add Chrome Extension",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "empty"
+    },
+    {
+      "label": "Toggle sidebar",
+      "type": "icon-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.knowledge-dock.webp",
+      "capturedAt": "2026-09-08",
+      "note": "opened from the canvas dock"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Opens as a modal from both the sidebar and the canvas dock; shows 'No projects for now' and an empty Knowledge Base with a Chrome-extension capture prompt."
+    },
+    {
+      "tier": "I2",
+      "text": "Account-scoped; a garden is the persistent, shareable context object (the tutorial answers were 'based on the provided knowledge base')."
+    },
+    {
+      "tier": "U",
+      "text": "Ingestion formats, how a garden is attached to a flow/run."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "fromState": "tapnow.workspace.private",
+    "action": {
+      "type": "hover",
+      "control": "project card ⋯"
+    },
+    "toState": "tapnow.workspace.card-menu",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/app.workspace.project-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.workspace.private",
+    "action": {
+      "type": "click",
+      "control": "Team Projects"
+    },
+    "toState": "tapnow.workspace.team",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/app.workspace.team.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["url.changed ?scope=team"]
+  },
+  {
+    "fromState": "tapnow.workspace.private",
+    "action": {
+      "type": "click",
+      "control": "project card"
+    },
+    "toState": "tapnow.canvas.default",
+    "tier": "I2",
+    "evidence": [],
+    "sideEffects": ["url.changed /canvas/<uuid>"]
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "id": "seko.canvas.audio-tab",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "generator-panel",
+    "selectedEntity": "image-node",
+    "majorControls": ["prompt", "Mureka V9", "✦3", "send"]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "generator-panel",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["prompt", "Mureka V9", "✦3", "send"],
+  "disclosure": { "appeared": ["audio model chip"], "disappeared": ["首帧/尾帧"] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.audio-tab.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Audio generation uses Mureka V9 at ✦3." }]
+}

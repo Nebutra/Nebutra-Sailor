@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.image-vary-menu",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "vary-dialog",
+    "selectedEntity": "image-node 966cc910",
+    "majorControls": [
+      "Batch 1X (2X/4X disabled)",
+      "General Ratio: Original 16:9 9:16 1:1 3:4 4:3 3:2 2:3",
+      "Top Model: Nano Banana 2 · Seedream 5.0 Pro · Nano Banana Pro · GPT Image 2 · Grok Image 2.0 · Flux 2",
+      "cost line",
+      "Cancel",
+      "Run"
+    ]
+  },
+  "selectedEntity": "image-node 966cc910",
+  "activeTab": "",
+  "openOverlay": "vary-dialog",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Batch 1X (2X/4X disabled)",
+    "General Ratio: Original 16:9 9:16 1:1 3:4 4:3 3:2 2:3",
+    "Top Model: Nano Banana 2 · Seedream 5.0 Pro · Nano Banana Pro · GPT Image 2 · Grok Image 2.0 · Flux 2",
+    "cost line",
+    "Cancel",
+    "Run"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.image-vary-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Vary is a node-anchored re-generation form; cost preview is a text line, no credit number."
+    },
+    {
+      "tier": "O",
+      "text": "On Free only Seedream 5.0 Pro is unlocked among the top models; batch >1 locked."
+    }
+  ]
+}

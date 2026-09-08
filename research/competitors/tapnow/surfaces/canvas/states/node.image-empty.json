@@ -1,0 +1,44 @@
+{
+  "id": "tapnow.canvas.node.image-empty",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Untitled",
+    "overlay": "none",
+    "selectedEntity": "node:image(empty)",
+    "majorControls": ["Upload", "Point to Edit", "generation bar"]
+  },
+  "visibleControls": [
+    "Upload",
+    "Point to Edit",
+    "Reference",
+    "prompt",
+    "Seedream 5.0 Lite",
+    "1:1·2K",
+    "1×",
+    "Generate (disabled until prompt)",
+    "cost 5"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image.prompt-filled.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.image.model-menu.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.image.ratio-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Cost shown inline (5 Tapies) before generation; no confirmation dialog."
+    }
+  ],
+  "jobState": "none",
+  "selectedEntity": "node:image"
+}

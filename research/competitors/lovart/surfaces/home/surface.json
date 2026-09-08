@@ -1,0 +1,219 @@
+{
+  "id": "lovart.home",
+  "competitor": "lovart",
+  "route": "/zh/home",
+  "name": "首页 (Home — agent prompt launcher + recent projects + inspiration feed)",
+  "category": "home",
+  "layout": {
+    "persistentPanels": [
+      "left icon rail (新建项目 / 首页 / 项目 / 品牌套件 / ? help)",
+      "top-right account strip (试用 Lovart 新版本, ⚡credits + 升级, avatar)",
+      "promo countdown banner (dismissable? not tested)"
+    ],
+    "chromeRatio": 0.12,
+    "workSurfaceRatio": 0.88
+  },
+  "navigation": [
+    {
+      "label": "新建项目 (New project)",
+      "type": "link",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    { "label": "首页 (Home)", "type": "link", "location": "left-rail", "visibleWhen": "always" },
+    {
+      "label": "项目 (Projects)",
+      "type": "link",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "品牌套件 (Brand kit)",
+      "type": "link",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "? (help popover: 使用指南 / 联系我们 / 最新动态)",
+      "type": "popover-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "试用 Lovart 新版本 (Try new version)",
+      "type": "secondary-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "⚡70 | 升级 (credits + Upgrade → paywall)",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "avatar (account menu)",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "灵感发现 filter chips: 全部 / 品牌设计 / 海报与广告 / 插画 / UI设计 / 角色设计 / 影片与分镜 / 产品设计 / 建筑设计",
+      "default": true,
+      "changesUrl": false,
+      "scope": "inspiration grid"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "agent-message-input (让 Lovart … rotating placeholder) + send ↑",
+      "type": "input",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "新建项目 card (+)",
+      "type": "primary-button",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "+ (上传文件 / 联网搜索 toggle)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "book icon → Skill picker",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "bulb icon → thinking mode toggle (agent-thinking-mode-button)",
+      "type": "icon-button",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "cube icon → 模型偏好 (model preference)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "model/skill quick chips: GPT Image 2 · Seedance 2.0 · Nano Banana Pro · Design · Branding · E-Commerce · Video",
+      "type": "tab",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "最近项目 → 查看全部",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "project card (opens /canvas?projectId=… in NEW TAB)",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "home.plus-popover",
+      "kind": "popover",
+      "trigger": "+ button in prompt box",
+      "dismiss": "Escape / outside click",
+      "modal": false,
+      "width": "~250px",
+      "contentOwnership": "attachments (上传文件) + web search toggle (联网搜索)"
+    },
+    {
+      "id": "home.skill-popover",
+      "kind": "popover",
+      "trigger": "book icon in prompt box",
+      "dismiss": "Escape",
+      "modal": false,
+      "width": "~400px",
+      "contentOwnership": "Skill catalog: category chips (Video / Social Media / E-Commerce / Branding / Marketing / Studio) + 19 skills with descriptions"
+    },
+    {
+      "id": "home.model-popover",
+      "kind": "popover",
+      "trigger": "cube icon in prompt box",
+      "dismiss": "Escape",
+      "modal": false,
+      "width": "~300px",
+      "contentOwnership": "模型偏好: 自动 toggle + Image/Video/3D anchors; 22 image models, 20 video models (most 会员专属), 1 3D (Tripo); each with ETA seconds"
+    },
+    {
+      "id": "home.help-popover",
+      "kind": "popover",
+      "trigger": "? in left rail",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "使用指南 / 联系我们 / 最新动态"
+    },
+    {
+      "id": "paywall",
+      "kind": "modal",
+      "trigger": "升级 / 立即升级 (NOT opened — safety boundary)",
+      "modal": true,
+      "contentOwnership": "U"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/home.webp",
+      "url": "https://www.lovart.ai/zh/home",
+      "capturedAt": "2026-09-08"
+    },
+    { "file": "evidence/home.plus-popover.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/home.book-popover.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/home.settings-popover.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Home is a prompt-first launcher: the agent input is the hero; recent projects and an inspiration grid sit below. No canvas is shown on home."
+    },
+    {
+      "tier": "O",
+      "text": "The same agent composer (testids agent-message-input / agent-input-bottom-more-button / agent-thinking-mode-button / agent-custom-settings-button / agent-send-button) reappears verbatim inside the canvas right panel — one composer component, two hosts."
+    },
+    {
+      "tier": "O",
+      "text": "Model preference popover lists 22 image, 20 video, 1 3D model with an ETA badge (10s–600s) and a 会员专属 (members-only) tag on most video models; 自动 toggle lets the agent pick."
+    },
+    {
+      "tier": "O",
+      "text": "Skill catalog has 6 categories and 19 named skills (e.g. Logo 设计, 分镜故事板, 一键跨平台适配, 室内设计). Skills are prompt-level recipes, selected from the composer, not tools on the canvas."
+    },
+    {
+      "tier": "O",
+      "text": "Clicking the Design chip rewrites the placeholder suggestions (e.g. 'Design a Bauhaus-inspired poster.'); chips are prompt presets, not model selectors, except GPT Image 2 / Seedance 2.0 / Nano Banana Pro which are model names."
+    },
+    {
+      "tier": "O",
+      "text": "Project cards open the canvas via window.open('/canvas?projectId=<32-hex>') — a new browser tab, not in-app navigation. Canvas route drops the /zh locale prefix."
+    },
+    {
+      "tier": "O",
+      "text": "Credits balance (⚡70) is shown in the top strip next to 升级; account is on the non-member tier (video models marked 会员专属)."
+    },
+    {
+      "tier": "I2",
+      "text": "Submitting a prompt from home creates a new project and opens the canvas with the agent running (placeholder copy + 新建项目 link both point to /canvas?newProject=true). Not executed from home to keep credit spend inside the scratch project."
+    },
+    {
+      "tier": "U",
+      "text": "Whether the countdown promo banner can be dismissed; what 试用 Lovart 新版本 switches (likely a separate app shell) — not entered."
+    }
+  ]
+}

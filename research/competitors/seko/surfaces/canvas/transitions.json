@@ -1,0 +1,256 @@
+[
+  {
+    "fromState": "seko.explore.home",
+    "action": { "type": "navigate", "control": "/infinite-canvas" },
+    "toState": "seko.canvas.blank",
+    "sideEffects": ["canvas.created", "url.changed:?canvasId=…", "my-space 画布 card created"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.blank.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.blank",
+    "action": { "type": "click", "control": "+ rail" },
+    "toState": "seko.canvas.add-menu",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.add-menu.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.add-menu",
+    "action": { "type": "click", "control": "新建空白节点" },
+    "toState": "seko.canvas.blank-node",
+    "sideEffects": ["node.created (client uuid)", "node.selected", "generator panel opened"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.blank-node.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.blank-node",
+    "action": { "type": "click", "control": "model chip 即梦 5.0 Pro" },
+    "toState": "seko.canvas.image-model-picker",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.image-model-picker.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.blank-node",
+    "action": { "type": "click", "control": "ratio chip 16:9 · 2K" },
+    "toState": "seko.canvas.image-ratio-picker",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.image-ratio-picker.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-ratio-picker",
+    "action": { "type": "click", "control": "1K" },
+    "toState": "seko.canvas.blank-node",
+    "sideEffects": ["cost chip 7→4"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.image-ratio-picker.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-model-picker",
+    "action": { "type": "click", "control": "Seko Image" },
+    "toState": "seko.canvas.blank-node",
+    "sideEffects": ["cost chip 4→1"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.at-reference-picker.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.blank-node",
+    "action": { "type": "click", "control": "@ chip" },
+    "toState": "seko.canvas.at-reference-picker",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.at-reference-picker.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.blank-node",
+    "action": { "type": "submit", "control": "send (✦1)" },
+    "toState": "seko.canvas.image-submitted",
+    "sideEffects": [
+      "job.created",
+      "credits 110→109 (no confirm)",
+      "node.converted in place (id uuid→snowflake, label 空白节点→图片)",
+      "node toolbar appeared"
+    ],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.image-submitted.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-submitted",
+    "action": { "type": "navigate", "control": "wait ~60s" },
+    "toState": "seko.canvas.image-completed",
+    "sideEffects": ["artifact.created in node", "generation history entry (I2)"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.image-completed.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-completed",
+    "action": { "type": "click", "control": "··· in node toolbar" },
+    "toState": "seko.canvas.image-overflow-menu",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.image-overflow-menu.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-completed",
+    "action": { "type": "click", "control": "tab 视频生成" },
+    "toState": "seko.canvas.video-tab",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.video-tab.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.video-tab",
+    "action": { "type": "click", "control": "model chip Vidu Q2" },
+    "toState": "seko.canvas.video-model-picker",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.video-model-picker.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-completed",
+    "action": { "type": "click", "control": "tab 音频生成" },
+    "toState": "seko.canvas.audio-tab",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.audio-tab.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-completed",
+    "action": { "type": "click", "control": "画面切分" },
+    "toState": "seko.canvas.action-split",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.action-split.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-completed",
+    "action": { "type": "click", "control": "故事推演" },
+    "toState": "seko.canvas.action-story-deduce",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.action-story-deduce.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-completed",
+    "action": { "type": "click", "control": "图片超清" },
+    "toState": "seko.canvas.action-upscale",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.action-upscale.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-completed",
+    "action": { "type": "click", "control": "合成视频" },
+    "toState": "seko.canvas.action-compose-video",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.action-compose-video.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.image-completed",
+    "action": { "type": "click", "control": "多角度" },
+    "toState": "seko.canvas.action-multiangle",
+    "sideEffects": ["agent composer gained 图片 attachment chip", "url gained &nodeId"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.action-multiangle.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.action-multiangle",
+    "action": { "type": "submit", "control": "multi-angle submit (✦1)" },
+    "toState": "seko.canvas.multiangle-submitted",
+    "sideEffects": [
+      "job.created",
+      "credits 109→108",
+      "node.created (多角度) to the right",
+      "edge.created source→derived"
+    ],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.node.multiangle-submitted.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.multiangle-submitted",
+    "action": { "type": "navigate", "control": "/my-space?tab=canvas then reopen canvasId URL" },
+    "toState": "seko.canvas.reloaded",
+    "sideEffects": ["state fully restored", "job completed while away"],
+    "tier": "O",
+    "evidence": [
+      { "file": "evidence/canvas.reloaded.webp" },
+      { "file": "evidence/myspace.canvas-tab-populated.webp" }
+    ]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "rail 资产库" },
+    "toState": "seko.canvas.rail-asset-library",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.rail-panel-47.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "rail 主体库" },
+    "toState": "seko.canvas.rail-subject-library",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.subject-library-modal.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.rail-subject-library",
+    "action": { "type": "click", "control": "添加新主体" },
+    "toState": "seko.canvas.subject-create-form",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.subject-create-form.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "rail 特效模版" },
+    "toState": "seko.canvas.rail-templates",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.rail-panel-52.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "打开导航菜单" },
+    "toState": "seko.canvas.nav-drawer",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.nav-drawer.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "share icon" },
+    "toState": "seko.canvas.publish-dialog",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.share-popover.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "tab 编辑器" },
+    "toState": "seko.canvas.reloaded",
+    "sideEffects": ["none — tab inert on image-only canvas"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/editor.initial.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "快捷键" },
+    "toState": "seko.canvas.shortcuts",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.shortcuts-dialog.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "对话历史" },
+    "toState": "seko.canvas.agent-history",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.agent-history.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "添加附件或画布引用" },
+    "toState": "seko.canvas.agent-attach",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.agent-attach.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "选择 Skill" },
+    "toState": "seko.canvas.agent-skill",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.agent-skill.webp" }]
+  },
+  {
+    "fromState": "seko.canvas.reloaded",
+    "action": { "type": "click", "control": "选择模型" },
+    "toState": "seko.canvas.agent-model",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.agent-model.webp" }]
+  }
+]

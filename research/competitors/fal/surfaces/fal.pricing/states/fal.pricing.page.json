@@ -1,0 +1,29 @@
+{
+  "id": "fal.pricing.page",
+  "surfaceId": "fal.pricing",
+  "fingerprint": {
+    "route": "/pricing",
+    "heading": "Fast, reliable, and cost-efficient.",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["GPU table", "Video models table", "Image models table", "Enterprise form"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/pricing.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": []
+}

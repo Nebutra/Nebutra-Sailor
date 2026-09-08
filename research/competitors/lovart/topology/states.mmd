@@ -1,0 +1,28 @@
+%% State graph of the canvas surface (fingerprinted states only)
+stateDiagram-v2
+  [*] --> idle
+  idle --> image_selected: click c-image
+  image_selected --> more_menu: ···
+  image_selected --> quick_edit: Tab / 快捷编辑
+  image_selected --> context_menu: right-click
+  more_menu --> crop: 裁剪
+  more_menu --> paywall: 调整 (free tier)
+  image_selected --> paywall: download → 导出完成
+  crop --> image_selected: 取消 / 完成
+  quick_edit --> idle: Esc / click empty
+  idle --> text_selected: click text
+  idle --> group_selected: click group
+  idle --> multi_selected: marquee
+  idle --> generator_image: 图像生成器
+  idle --> generator_video: 视频生成器
+  generator_image --> generator_running: ⚡Generate (pre-charge)
+  generator_running --> idle: c-task → c-image
+  idle --> agent_running: composer send
+  agent_running --> agent_done: c-task → c-image (+agentMeta)
+  agent_done --> idle: deselect
+  idle --> layers_drawer: 图层
+  idle --> files_drawer: 生成文件
+  idle --> canvas_history: logo menu 画布历史
+  idle --> agent_collapsed: |→
+  agent_collapsed --> idle: 对话
+  paywall --> idle: ×

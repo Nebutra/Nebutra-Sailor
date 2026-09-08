@@ -1,0 +1,50 @@
+[
+  {
+    "fromState": "fal.sandbox.default",
+    "action": {
+      "type": "click",
+      "control": "5 models"
+    },
+    "toState": "fal.sandbox.model-picker",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/sandbox.models.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "fal.sandbox.default",
+    "action": {
+      "type": "click",
+      "control": "Advanced input"
+    },
+    "toState": "fal.sandbox.advanced-input",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/sandbox.advanced.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "fal.sandbox.advanced-input",
+    "action": {
+      "type": "click",
+      "control": "Sets"
+    },
+    "toState": "fal.sandbox.sets",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/sandbox.sets.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

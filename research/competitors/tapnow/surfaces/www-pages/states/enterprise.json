@@ -1,0 +1,23 @@
+{
+  "id": "tapnow.www-pages.enterprise",
+  "surfaceId": "tapnow.www-pages",
+  "fingerprint": {
+    "route": "/enterprise",
+    "heading": "Creative OS, from brief to delivery.",
+    "overlay": "none",
+    "selectedEntity": "none"
+  },
+  "visibleControls": ["Contact sales"],
+  "evidence": [
+    {
+      "file": "evidence/www.enterprise.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Org admin surface: workspaces, members, credits, usage."
+    }
+  ]
+}

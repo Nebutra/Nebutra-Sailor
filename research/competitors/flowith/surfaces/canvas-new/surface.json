@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.canvas-new",
+  "competitor": "flowith",
+  "route": "/conv/<flow-uuid>",
+  "name": "Flow canvas — freshly created flow 'PARA research scratch' (generation lifecycle probe)",
+  "category": "canvas",
+  "layout": {
+    "persistentPanels": ["title bar", "left dock", "bottom composer"],
+    "chromeRatio": 0.12,
+    "workSurfaceRatio": 0.88
+  },
+  "navigation": [],
+  "tabs": [],
+  "primaryActions": [
+    {
+      "label": "bottom composer (Chat · GPT 4.1 inherited from home) + Send",
+      "type": "input",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "failed answer node: Delete only",
+      "type": "context-toolbar",
+      "location": "canvas-node",
+      "visibleWhen": "failed-node.selected"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "node-toolbar",
+      "kind": "context-toolbar",
+      "trigger": "click node",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Delete + Add node + Follow Up"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.new.sent-t8.webp",
+      "capturedAt": "2026-09-08",
+      "note": "prompt node + credit-exhausted answer node"
+    },
+    {
+      "file": "evidence/canvas.new.after-send-2.webp",
+      "capturedAt": "2026-09-08",
+      "note": "first send from /blank created an empty flow"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Submitting the home composer navigated to a new /conv/<uuid> ('Untitled Flow', 94% zoom) containing only the invisible root node; the first prompt did not land (the earlier type call had not verified). The flow object nonetheless existed and appeared in History."
+    },
+    {
+      "tier": "O",
+      "text": "Sending from the in-flow composer immediately created two nodes: the prompt node ('Me · Just now') and an empty answer placeholder node (job submitted). ~6 s later the placeholder rendered an in-node card 'Need a refill? You've utilized all your credits, upgrade to keep your workflow moving. 0 Credits [View pricing]'."
+    },
+    {
+      "tier": "O",
+      "text": "The flow title changed from 'Untitled Flow' to the first prompt text automatically."
+    },
+    {
+      "tier": "O",
+      "text": "After reload the prompt node and the failed placeholder node were still present (job outcome is persisted as a node). The failed node's toolbar offers Delete only — no Rerun/Retry."
+    },
+    {
+      "tier": "O",
+      "text": "The in-flow composer opened in Chat · GPT 4.1 (last-used home mode); the tutorial flow's composer opened in Neo Agent — the mode follows the flow's last use (I2)."
+    },
+    {
+      "tier": "I2",
+      "text": "Job lifecycle as observed: submitted -> placeholder node (running) -> terminal state rendered in-node (here failed/credit-blocked). Successful text runs presumably stream into the same node (tutorial answer nodes are the completed form)."
+    },
+    {
+      "tier": "U",
+      "text": "Whether a running job survives navigation away (could not run a real job with 0 credits); whether the user can keep editing while a run streams; cancel affordance."
+    }
+  ]
+}

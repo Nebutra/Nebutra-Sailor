@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.storyboard-mode",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "故事板",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["文本/图片/视频 columns"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "故事板",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "文本 (暂无 文本)",
+    "图片 (暂无 图片, 放大图片)",
+    "视频 (暂无 视频, 放大视频)",
+    "dnd (DndDescribedBy)",
+    "调整 AI 助手面板宽度"
+  ],
+  "disclosure": {
+    "appeared": ["board columns"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.storyboard-mode.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Mode toggle does not change URL."
+    }
+  ]
+}

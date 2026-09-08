@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.video-node-default",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "none",
+    "selectedEntity": "node:视频 (v)",
+    "majorControls": [
+      "参考/标记/特效/角色库/运镜",
+      "prompt",
+      "model 2.0",
+      "全能参考",
+      "16:9 · 720P · 5s · 1个",
+      "高级设置",
+      "▶"
+    ]
+  },
+  "selectedEntity": "node:视频 (v)",
+  "activeTab": "工作流",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "首帧 image node 1536 × 2048 (AI生成 badge, upload input)",
+    "edge 首帧 → 视频",
+    "视频 node: 参考",
+    "标记",
+    "特效",
+    "角色库",
+    "运镜",
+    "reference thumb 1",
+    "prompt 描述你想要生成的画面内容，@引用素材",
+    "model chip 2.0",
+    "mode 全能参考",
+    "config 16:9 · 720P · 5s · 1个",
+    "高级设置: 联网搜索 / 自动校验素材 / 智能引用 AutoLink",
+    "send ▶",
+    "+ handles left/right",
+    "tooltip 新功能：支持真人"
+  ],
+  "disclosure": {
+    "appeared": ["two linked nodes", "composer chip 视频 · 点击定位到画布节点"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.node-video-ref.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Template = image node wired to a video node; all controls live on the node card."
+    },
+    {
+      "tier": "O",
+      "text": "Sync status flipped 待同步/同步中 → 已同步 after creation."
+    }
+  ]
+}

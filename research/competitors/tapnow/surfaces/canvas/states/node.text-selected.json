@@ -1,0 +1,54 @@
+{
+  "id": "tapnow.canvas.node.text-selected",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Untitled",
+    "overlay": "none",
+    "selectedEntity": "node:text",
+    "majorControls": ["rich-text toolbar", "generation bar"]
+  },
+  "visibleControls": [
+    "title input",
+    "Background Color",
+    "H1",
+    "H2",
+    "H3",
+    "Paragraph",
+    "Bold",
+    "Italic",
+    "Bullet List",
+    "Ordered List",
+    "Divider",
+    "Pin",
+    "Copy All",
+    "Save to Library",
+    "Fullscreen",
+    "Reference",
+    "prompt",
+    "Gemini 3.1 Flash Lite",
+    "1×",
+    "Generate"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.text-selected.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.text.model-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Text node is both a rich-text doc and an LLM generator."
+    }
+  ],
+  "disclosure": {
+    "appeared": ["node toolbar", "title input", "generation bar", "composer context chips"],
+    "disappeared": []
+  },
+  "selectedEntity": "node:text"
+}

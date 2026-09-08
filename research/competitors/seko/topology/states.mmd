@@ -1,0 +1,40 @@
+graph TD
+  subgraph explore
+    eh[explore.home] --> eha[explore.hero-agent mode]
+  end
+  subgraph my-space
+    ms[story-tab] --> mc[canvas-tab] --> ma[avatar-tab]
+    mc --> mcp[canvas-tab-populated]
+  end
+  subgraph canvas
+    cb[blank] --> cam[add-menu] --> cbn[blank-node]
+    cbn --> cmp[image-model-picker]
+    cbn --> crp[image-ratio-picker]
+    cbn --> cat[at-reference-picker]
+    cbn -->|submit ✦1, no confirm| cis[image-submitted queued]
+    cis -->|~60s| cic[image-completed]
+    cic --> com[image-overflow-menu]
+    cic --> cvt[video-tab] --> cvm[video-model-picker]
+    cic --> cau[audio-tab]
+    cic --> csp[action-split]
+    cic --> csd[action-story-deduce ✦10]
+    cic --> cup[action-upscale ✦6]
+    cic --> ccv[action-compose-video]
+    cic --> cma[action-multiangle ✦1]
+    cma -->|submit| cms[multiangle-submitted: new node + edge]
+    cms -->|leave + reopen URL| crl[reloaded: all restored]
+    crl --> ral[rail-asset-library]
+    crl --> rsl[rail-subject-library] --> scf[subject-create-form]
+    crl --> rtp[rail-templates]
+    crl --> nav[nav-drawer]
+    crl --> pub[publish-dialog]
+    crl --> sc[shortcuts]
+    crl --> ah[agent-history]
+    crl --> aa[agent-attach]
+    crl --> ask[agent-skill]
+    crl --> amd[agent-model]
+    crl -->|text request| arp[agent reply with tool log]
+  end
+  eh --> cb
+  eh --> ms
+  mcp --> crl

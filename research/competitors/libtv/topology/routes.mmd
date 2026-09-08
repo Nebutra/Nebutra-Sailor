@@ -1,0 +1,33 @@
+%% LibLib / LibTV — route topology (O unless noted). Two origins bridged by cross-storage-hub.html.
+flowchart LR
+  subgraph ART["www.liblib.art (community + tools)"]
+    A0["/inspiration (home feed)"]
+    A1["/ai-tool/image-generator"]
+    A2["/ai-tool/video-generator"]
+    A3["/sd (WebUI)"]
+    A4["/comfy (ComfyUI)"]
+    A5["/pretrain (train LoRA)"]
+    A6["/lib3 (AI 应用)"]
+    A7["/asset"]
+    A8["/modelinfo/:uuid?versionUuid"]
+    A9["/imageinfo/:uuid"]
+    A10["creator.liblib.art (创作中心)"]
+  end
+  subgraph TV["www.liblib.tv (LibTV professional tool)"]
+    T0["/ (home: launchers + Agent composer + TV Show feed)"]
+    T1["/skill (LibTV Agent marketplace)"]
+    T2["/canvas?spaceId&projectId"]
+    T3["/canvas?newProject=true&createWorkspace=true"]
+    T4["/canvas?sourceSpaceId&sourceProjectUuid[&model]"]
+  end
+  A0 -->|创作 ▾| A1 & A2 & A3 & A4 & A5 & A6
+  A0 --> A7 & A8 & A9
+  A0 -->|前往LibTV创作| T0
+  A9 -->|做同款 ?fillimgid| A1
+  A8 -->|去WebUI使用 (I2)| A3
+  T0 -->|新建画布创作| T3
+  T0 -->|tool cards| T4
+  T0 -->|新建项目| T2
+  T0 -->|LibTV Agent| T1
+  T3 -->|creates project| T2
+  T4 -->|clones template → new project| T2

@@ -1,0 +1,27 @@
+%% flowith canvas state machine (O = observed transitions)
+stateDiagram-v2
+  [*] --> home.default
+  home.default --> home.mode_image: chip Image
+  home.default --> home.mode_video: chip Video
+  home.default --> home.mode_neo_agent: chip Neo Agent
+  home.default --> canvas.fit: open flow (sidebar auto-collapses)
+  home.default --> canvas.new.empty: Send (flow created)
+  canvas.new.empty --> canvas.new.sent_t2: Send → prompt node + answer placeholder (job submitted)
+  canvas.new.sent_t2 --> canvas.new.sent_t8: job terminal → in-node card (failed: credits)
+  canvas.new.sent_t8 --> canvas.new.reloaded: reload (nodes persist)
+  canvas.fit --> canvas.node_selected: click node → toolbar + composer token
+  canvas.node_selected --> canvas.vary: image › Vary
+  canvas.node_selected --> canvas.follow_up: Follow Up → lineage highlight + draft node + token
+  canvas.node_selected --> canvas.edit_gated: Edit → 'Upgrade to unlock'
+  canvas.fit --> canvas.search_node: dock search (modal)
+  canvas.fit --> canvas.media_dock: dock history (drawer)
+  canvas.fit --> canvas.knowledge_modal: dock knowledge (modal)
+  canvas.fit --> canvas.share: Share (dialog)
+  canvas.fit --> canvas.comment_mode: Comment (mode)
+  canvas.fit --> canvas.minimized: Minimize
+  canvas.fit --> canvas.pane_menu: right-click pane
+  canvas.fit --> billing.upgrade_modal: auto (0 credits)
+  billing.upgrade_modal --> canvas.fit: Close
+  note right of canvas.node_selected
+    agent run (canvas-quant): prompt → step-label → Group(parallel) → chain of step-label→doc nodes → sandbox node
+  end note

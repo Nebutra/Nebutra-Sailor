@@ -1,0 +1,45 @@
+%% TapNow surfaces (Route ≠ Surface). Overlays hang off the surface that owns them.
+flowchart TB
+  WWW["tapnow.www-home\n(marketing, live RF demo)"]
+  WWWP["tapnow.www-pages\n(manifesto · download · enterprise)"]
+  HOME["tapnow.app-home\n(agent launcher · skills · templates)"]
+  WSP["tapnow.workspace\n(Private | Team projects)"]
+  CANVAS["tapnow.canvas\n(node graph, dock, header)"]
+  AGENT["tapnow.agent\n(right panel, project-scoped chats)"]
+  PERI["tapnow.peripheral\n(Arena · Pricing · Settings)"]
+
+  WWW --> WWWP
+  WWW -- "Get started" --> HOME
+  HOME --> WSP --> CANVAS
+  HOME -- "skill card → new project" --> CANVAS
+  CANVAS === AGENT
+  HOME --> PERI
+  CANVAS -- "Tapies / Usage" --> PERI
+
+  subgraph canvasOverlays["canvas overlays"]
+    AN[add-nodes palette]
+    NS[node search]
+    LIB[library drawer]
+    AIC[AI Character Library]
+    HIS[history drawer]
+    SHR[share menu]
+    SET[settings modal]
+    IE[image editor fullscreen]
+    SW[canvas switcher]
+    CTX[context menus]
+    NODE[node toolbar + generation bar\n(on select)]
+    TOOLS[in-node tools:\nChange Angle · Relight · Redraw]
+  end
+  CANVAS --> AN & NS & LIB & HIS & SHR & SET & IE & SW & CTX & NODE
+  LIB --> AIC
+  NODE --> TOOLS
+
+  subgraph agentOverlays["agent overlays"]
+    CFM[confirm-mode menu\nAsk / Act]
+    LLM[LLM menu (plan-gated)]
+    CH[chat history]
+    APR[approval card\ncost · model · params]
+    LOG[action log\n"Completed N actions"]
+  end
+  AGENT --> CFM & LLM & CH & APR & LOG
+  APR -- "Confirm" --> CANVAS

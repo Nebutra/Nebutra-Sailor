@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-community.asset",
+  "surfaceId": "libtv.art-community",
+  "fingerprint": {
+    "route": "https://www.liblib.art/asset",
+    "heading": "资产",
+    "activeTab": "个人资产",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["团队中心/个人资产", "date range", "我的收藏"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "个人资产",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["团队中心", "个人资产", "开始日期 / 结束日期", "我的收藏"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-asset.webp",
+      "url": "https://www.liblib.art/asset",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Flat asset list; no project container."
+    }
+  ]
+}

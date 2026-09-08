@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-community.image-detail",
+  "surfaceId": "libtv.art-community",
+  "fingerprint": {
+    "route": "https://www.liblib.art/imageinfo/18fc4df8a94149969b4276814d467edb",
+    "heading": "AI绘画-全能图片模型Pro",
+    "activeTab": "none",
+    "overlay": "none",
+    "selectedEntity": "image:18fc4df8",
+    "majorControls": ["做同款", "图生视频", "生成参数"]
+  },
+  "selectedEntity": "image:18fc4df8",
+  "activeTab": "none",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "author + 关注",
+    "生成参数",
+    "model links: 一键通用电商详情页生成｜多模块高转化版_1.0 (模板), 全能图片模型Pro_官方版",
+    "图生视频",
+    "做同款 → /ai-tool/image-generator?fillimgid=275219625740865536"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-imageinfo.default.webp",
+      "url": "https://www.liblib.art/imageinfo/18fc4df8a94149969b4276814d467edb",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "做同款 opens the generator prefilled from the post (window.open with fillimgid)."
+    }
+  ]
+}

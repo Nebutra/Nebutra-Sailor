@@ -1,0 +1,45 @@
+{
+  "id": "tapnow.agent.awaiting-approval",
+  "surfaceId": "tapnow.agent",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Ceramic Teacup Ad",
+    "overlay": "approval-card",
+    "selectedEntity": "none",
+    "majorControls": ["Cancel", "Confirm"]
+  },
+  "visibleControls": [
+    "Completed 7 actions",
+    "Image Generation",
+    "~5 Tapies",
+    "prompt",
+    "Image ref chip",
+    "Expand",
+    "Nano Banana 2 Lite",
+    "1:1",
+    "1K",
+    "1×",
+    "Act",
+    "Cancel",
+    "Confirm"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.agent.approval.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.agent.actions-expanded.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Cost estimate and full generation spec shown before spend; params rendered as buttons (I2: editable pre-confirm)."
+    }
+  ],
+  "jobState": "none",
+  "agentState": "awaiting-approval",
+  "openOverlay": "approval-card"
+}

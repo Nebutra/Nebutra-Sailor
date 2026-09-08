@@ -1,0 +1,18 @@
+[
+  {
+    "fromState": "libtv.tv-skill.default",
+    "action": {
+      "type": "click",
+      "control": "skill card"
+    },
+    "toState": "libtv.tv-skill.detail",
+    "sideEffects": ["overlay.opened"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.skill.detail.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

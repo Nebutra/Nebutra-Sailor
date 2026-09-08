@@ -1,0 +1,46 @@
+{
+  "id": "lovart.canvas.generator-image",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Image Generator",
+    "overlay": "generator-composer",
+    "selectedEntity": "c-generator"
+  },
+  "selectedEntity": "c-generator 'Image Generator' 1024 × 1024",
+  "openOverlay": "generator-composer",
+  "jobState": "none",
+  "visibleControls": [
+    "prompt textbox",
+    "generator-size-button '中 · auto · 1 张'",
+    "generator-model-button 'GPT Image 2'",
+    "generator-generate-button ⚡15"
+  ],
+  "disclosure": {
+    "appeared": ["placeholder node on canvas", "composer beneath node"],
+    "disappeared": []
+  },
+  "evidence": [
+    { "file": "evidence/canvas.dock.generate-menu-image.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.generator-image.size-popover.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.generator-image.model-popover.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "图像设置: 质量 自动/高/中/低 · 尺寸 W/H · 宽高比 1:1 3:2 2:3 4:3 3:4 9:16 1:1(2k) 16:9(2k) 9:16(2k) 16:9(4k) 9:16(4k) auto · 生成数量 1–10 张."
+    },
+    {
+      "tier": "O",
+      "text": "Model list (22): Nano Banana Pro / 2 / 2 Lite, GPT Image 2 / 1.5 / GPT Image, Seedream 5.0 Pro / Lite / 4.5 / 4, Luma Uni-1 / Max, Flux 2 Pro / Max, Nano Banana, Qwen-Image 3.0 / Pro, Midjourney, Ideogram 4 / Ideogram / P-Image, Recraft V3."
+    },
+    {
+      "tier": "O",
+      "text": "Shape record: type c-generator, generatorName 'openai/gpt-image-2', ratio auto, quality medium, count 1, configWidth/Height 1024 — the generator node carries its own config; the result image (c-image) does not."
+    },
+    {
+      "tier": "O",
+      "text": "Nodes were removed via editor.deleteShapes after inspection (no generation run here)."
+    }
+  ]
+}

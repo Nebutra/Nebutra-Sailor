@@ -1,0 +1,29 @@
+{
+  "id": "seko.canvas.rail-templates",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "template-modal",
+    "selectedEntity": "none",
+    "majorControls": ["全部/世界杯/Seedance2.0/图片模板/电商广告", "search", "template cards"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "template-modal",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["全部/世界杯/Seedance2.0/图片模板/电商广告", "search", "template cards"],
+  "disclosure": { "appeared": ["modal"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.rail-panel-52.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    { "tier": "O", "text": "特效模版 are campaign/effect presets (World Cup posters etc.)." }
+  ]
+}

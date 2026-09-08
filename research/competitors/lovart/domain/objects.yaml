@@ -1,0 +1,50 @@
+# Domain objects observed in Lovart (tier per entry)
+objects:
+  - name: Project
+    tier: O
+    identity: "projectId (new: 12-char, e.g. 2pabxcoqfb40; legacy: 32-hex)"
+    fields: [title (editable input, default Untitled), updatedAt (更新于), cover mosaic (up to 4 shapes), brandKit ref (无 / kit)]
+    contains: [Canvas document (one page observed), Conversations (历史对话 list), Generated files (生成文件)]
+    surfaces: [projects, home.recent, canvas]
+  - name: Canvas shape (tldraw record)
+    tier: O
+    types:
+      c-image: { props: [name 'Image N' | agent name | '图片 N', w, h, url, originalUrl, radius, agentMeta?, genType?, generatorTaskId?], meta: [source:'ai', threadId, actionId, groupId, agentName, toolCallId, rootTaskId] }
+      c-generator: { props: [title 'Image Generator', name '图像生成器 N', generatorName 'openai/gpt-image-2', ratio, quality, count, configWidth, configHeight, isAdaptiveSize] }
+      c-video-generator: { props: [generatorName 'seedance/seedance-2-0', duration, resolution, referenceMode, generateAudio, useWebSearch] }
+      c-task: { note: "transient placeholder while a job runs; shows prompt pill / 生成中" }
+      text: { props: [richText with fontFamily/fontSize/fontWeight/fillPaint/stroke, font, size, textAlign, autoSize] }
+      group: {}
+  - name: Conversation (thread)
+    tier: O
+    identity: threadId (uuid)
+    fields: [auto title = first prompt, messages (user bubble, step cards with model badge, assistant text), 点赞/点踩, share]
+    scope: per project; 新建对话 starts another thread in the same project
+  - name: Agent action / job
+    tier: O
+    fields: [actionId, toolCallId, rootTaskId, model badge, step label 生成中, elapsed/ETA row, stop button]
+  - name: Generator task
+    tier: O
+    fields: [generatorTaskId, pre-charged credits, no chat trace]
+  - name: Skill
+    tier: O
+    fields: [category (Video / Social Media / E-Commerce / Branding / Marketing / Studio), name, one-line description]
+    count: 19
+  - name: Model
+    tier: O
+    fields: [name, description, ETA badge, 会员专属 flag, quality tiers (GPT Image 2 Auto/Low/Medium/High)]
+    count: { image: 22, video: 20, "3d": 1 }
+  - name: Brand kit
+    tier: O
+    identity: account-level list (Beta); sections Logo / 字体 / 颜色 / 设计指南 / 图像 / 品牌指南
+    attach: project-name chevron on canvas (品牌套件: 无 / kit)
+  - name: Canvas snapshot (画布历史)
+    tier: O
+    fields: [relative time, tag 保存|打开, HH:MM, element count, size KB, 恢复]
+    storage: browser-local (I2)
+  - name: Generated file
+    tier: O
+    fields: [slug name e.g. banana_taped_to_wall]
+  - name: Credits
+    tier: O
+    fields: [balance ⚡N in top bar, free 70/day, per-op price badges, plans Starter/Basic/Pro/Ultimate]

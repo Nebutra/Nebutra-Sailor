@@ -1,0 +1,35 @@
+{
+  "id": "tapnow.workspace.private",
+  "surfaceId": "tapnow.workspace",
+  "fingerprint": {
+    "route": "/canvas/projects",
+    "heading": "Private",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "activeTab": "Private",
+    "majorControls": ["New Project", "Search", "Show All", "Grid/List"]
+  },
+  "visibleControls": [
+    "Private",
+    "Team Projects",
+    "Search",
+    "Show All",
+    "Grid view",
+    "List view",
+    "New Project",
+    "project cards"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/app.workspace.private.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "One project 'Untitled · Edited 2 months ago' in Private."
+    }
+  ],
+  "activeTab": "Private"
+}

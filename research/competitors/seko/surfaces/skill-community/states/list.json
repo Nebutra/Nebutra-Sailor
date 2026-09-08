@@ -1,0 +1,31 @@
+{
+  "id": "seko.skill-community.list",
+  "surfaceId": "seko.skill-community",
+  "fingerprint": {
+    "route": "/skill-community",
+    "heading": "技能社区",
+    "activeTab": "官方精选",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["8 category buttons", "search", "card grid"]
+  },
+  "activeTab": "官方精选",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["search", "8 category buttons", "12+ skill cards with 点赞 + use count"],
+  "disclosure": { "appeared": [], "disappeared": [] },
+  "evidence": [
+    {
+      "file": "evidence/skills.list.webp",
+      "url": "https://seko.sensetime.com/skill-community",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Cards show two counters (likes, uses); top skill 山音编剧大师2.0 has 26k uses."
+    }
+  ]
+}

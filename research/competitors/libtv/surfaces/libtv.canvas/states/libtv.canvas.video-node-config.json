@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.video-node-config",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "node-config-popover",
+    "selectedEntity": "node:视频 (v)",
+    "majorControls": ["比例", "清晰度", "视频时长", "生成音频", "生成数量"]
+  },
+  "selectedEntity": "node:视频 (v)",
+  "activeTab": "工作流",
+  "openOverlay": "node-config-popover",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "Auto",
+    "16:9",
+    "4:3",
+    "1:1",
+    "3:4",
+    "9:16",
+    "21:9",
+    "480P",
+    "720P",
+    "1080P",
+    "4K",
+    "slider 4–15 s (5)",
+    "生成音频 开启/关闭",
+    "1个/2个/4个",
+    "hint 点击这里，可切换生成模型"
+  ],
+  "disclosure": {
+    "appeared": ["popover"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.node-config-popover.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Second-tier parameters; batch count max 4."
+    }
+  ]
+}

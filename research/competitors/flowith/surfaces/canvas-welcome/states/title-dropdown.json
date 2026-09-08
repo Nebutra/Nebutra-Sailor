@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.title-dropdown",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "flow-switcher",
+    "selectedEntity": "none",
+    "majorControls": ["Search flow name", "flow list (8 flows)", "new flow button"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "flow-switcher",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["Search flow name", "flow list (8 flows)", "new flow button"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.title-dropdown.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Title dropdown is a flow switcher: hop between flows without leaving the canvas."
+    }
+  ]
+}

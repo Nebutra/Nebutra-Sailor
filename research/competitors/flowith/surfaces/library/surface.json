@@ -1,0 +1,74 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.library",
+  "competitor": "flowith",
+  "route": "/flows",
+  "name": "Flow Library ('All Flow')",
+  "category": "library",
+  "layout": {
+    "persistentPanels": ["left sidebar"],
+    "chromeRatio": 0.2,
+    "workSurfaceRatio": 0.8
+  },
+  "navigation": [],
+  "tabs": [],
+  "primaryActions": [
+    {
+      "label": "flow rows (open flow)",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "'All Flow' heading menu (scope/filter)",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Search Flow Name",
+      "type": "input",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "sort menu + two view toggles",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "library.view-menu",
+      "kind": "popover",
+      "trigger": "'All Flow' caret",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "not captured"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/library.default.webp",
+      "url": "https://flowith.io/flows",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Flow Library is a flat list of flows (title, thumbnail, last edit) with name search and sort; the newly created flow appears at the top with its auto title."
+    },
+    {
+      "tier": "O",
+      "text": "Sidebar 'History' shows the same list; 'Projects' is a separate collapsible group (empty)."
+    },
+    {
+      "tier": "U",
+      "text": "Menu contents of 'All Flow' and sort; bulk actions; folders."
+    }
+  ]
+}

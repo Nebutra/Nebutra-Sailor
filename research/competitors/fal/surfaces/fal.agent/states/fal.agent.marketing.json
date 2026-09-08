@@ -1,0 +1,29 @@
+{
+  "id": "fal.agent.marketing",
+  "surfaceId": "fal.agent",
+  "fingerprint": {
+    "route": "/agent",
+    "heading": "Your creative partner across every top image and video model.",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["tier cards", "Get in touch"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/agent.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": []
+}

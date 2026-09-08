@@ -1,0 +1,38 @@
+{
+  "id": "fal.docs.media-expiration",
+  "surfaceId": "fal.docs",
+  "fingerprint": {
+    "route": "/docs/documentation/model-apis/media-expiration",
+    "heading": "Data Retention & Storage",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "X-Fal-Object-Lifecycle-Preference",
+    "X-Fal-Store-IO: 0",
+    "delete via Platform API"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/docs.media-expiration.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Payload JSON 30 days default (powers history); CDN media configurable; deletion only after completion."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-community.lib3-app",
+  "surfaceId": "libtv.art-community",
+  "fingerprint": {
+    "route": "https://www.liblib.art/lib3",
+    "heading": "flux高清放大-在线生图",
+    "activeTab": "none",
+    "overlay": "none",
+    "selectedEntity": "app:flux高清放大",
+    "majorControls": ["加载图像", "一键生成"]
+  },
+  "selectedEntity": "app:flux高清放大",
+  "activeTab": "none",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["加载图像", "图像按像素缩放 slider 0.01–16 (8)", "一键生成", "限免8次"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-lib3.webp",
+      "url": "https://www.liblib.art/lib3",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "AI 应用 = packaged ComfyUI workflow with a minimal form."
+    }
+  ]
+}

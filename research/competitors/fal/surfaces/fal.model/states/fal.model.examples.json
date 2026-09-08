@@ -1,0 +1,37 @@
+{
+  "id": "fal.model.examples",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell/examples",
+    "heading": "Prompt examples",
+    "activeTab": "Examples",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Examples",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "example cards (image, request id, status, age, prompt)",
+    "share link per card"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.examples.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Cards are real historical requests; clicking loads them via ?share=."
+    }
+  ]
+}

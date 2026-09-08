@@ -1,0 +1,25 @@
+# Density / chrome estimates at 1440×900 (O, approximate)
+surfaces:
+  libtv.canvas:
+    persistentPanels: [top bar 48px, bottom dock ~56px floating, bottom-left status row, Agent drawer (optional, resizable ~420px), 资产管理 side panel (optional, resizable)]
+    chromeRatio: 0.08
+    workSurfaceRatio: 0.92
+    withAgentDrawer: { chromeRatio: 0.35, workSurfaceRatio: 0.65 }
+    commerceChrome: [开通会员 限时 42 折, 积分 0, 积分超市]
+  libtv.tv-home:
+    persistentPanels: [promo banner ~40px, collapsible left rail 64/220px, header 56px]
+    chromeRatio: 0.18
+    workSurfaceRatio: 0.82
+  libtv.tv-skill:
+    chromeRatio: 0.18
+    workSurfaceRatio: 0.82
+  libtv.art-generator:
+    persistentPanels: [left nav rail, header search, promo banner, right 灵感库 strip]
+    chromeRatio: 0.25
+    workSurfaceRatio: 0.75
+  libtv.art-community:
+    chromeRatio: 0.2
+    workSurfaceRatio: 0.8
+  creation-process-viewer:
+    chromeRatio: 0.05
+    workSurfaceRatio: 0.95

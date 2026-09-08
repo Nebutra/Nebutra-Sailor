@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../schema/manifest.schema.json
+slug: fal
+name: fal.ai
+category: model-infra
+targets:
+  - { url: "https://fal.ai", track: public, verified: true, note: "gallery, model API tabs, docs, pricing — public without login" }
+  - { url: "https://fal.ai/models/fal-ai/flux/schnell", track: authenticated, verified: true, note: "playground/requests/analytics/sandbox/dashboard need login; owner's Chrome session was already authenticated, no credentials entered" }
+access:
+  account: free
+  owner_assisted: true
+  credit_budget: "$0.00 available (out of credits) — 1 Run attempt made, rejected 403 before queueing; nothing purchased"
+status: core_done
+coverage: { route: 0.8, surface: 0.85, interaction: 0.6, state: 0.7, core_loop: 0.6 }
+last_explored: 2026-09-08
+notes:
+  login_required: "playground + history + sandbox + dashboard: yes (OAuth GitHub/Google/SSO); gallery + API docs + docs + pricing: no"
+  blocked: "funded run lifecycle UI (queue position / logs / cancel), Sandbox post-run layout — needs credits or card verification (not done)"

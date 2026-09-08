@@ -1,0 +1,27 @@
+{
+  "id": "seko.canvas.agent-attach",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "agent-attach",
+    "selectedEntity": "none",
+    "majorControls": ["上传附件", "从画布上选择"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "agent-attach",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["上传附件", "从画布上选择"],
+  "disclosure": { "appeared": ["popover"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.agent-attach.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Agent can reference canvas nodes explicitly." }]
+}

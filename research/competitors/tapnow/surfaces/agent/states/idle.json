@@ -1,0 +1,40 @@
+{
+  "id": "tapnow.agent.idle",
+  "surfaceId": "tapnow.agent",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "What are we making today?",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["suggestion cards", "composer"]
+  },
+  "visibleControls": [
+    "New chat",
+    "Chat history",
+    "Side panel",
+    "Usage",
+    "Collapse chat",
+    "New card",
+    "Memory card",
+    "Refresh suggestions",
+    "+",
+    "hand",
+    "Ask",
+    "Auto",
+    "mic",
+    "Send"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.default.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Suggestion cards vary per project (e.g. 'Create a custom Skill from my preferences' on the cloned skill project)."
+    }
+  ],
+  "agentState": "composing"
+}

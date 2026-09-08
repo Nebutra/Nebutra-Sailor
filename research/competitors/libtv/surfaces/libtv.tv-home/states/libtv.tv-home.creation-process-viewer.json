@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.tv-home.creation-process-viewer",
+  "surfaceId": "libtv.tv-home",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/",
+    "heading": "火旺丨回家 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "creation-process-viewer",
+    "selectedEntity": "project:火旺丨回家",
+    "majorControls": ["只读模式", "复制项目", "工作流/故事板", "关闭"]
+  },
+  "selectedEntity": "project:火旺丨回家",
+  "activeTab": "工作流",
+  "openOverlay": "creation-process-viewer",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "工作流",
+    "故事板",
+    "复制项目",
+    "关闭",
+    "切换小地图",
+    "缩放选项 12 %",
+    "node groups 资产 / 分镜 / 视频"
+  ],
+  "disclosure": {
+    "appeared": ["full-screen read-only canvas overlay"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.tvshow.detail.webp",
+      "url": "https://www.liblib.tv/",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "URL does not change; <title> changes to the project name. Graph shows ~40 asset image nodes, a 分镜 text-card group and a 视频 group linked by edges."
+    },
+    {
+      "tier": "O",
+      "text": "Banner: 只读模式，如需创建请点击 复制项目."
+    }
+  ]
+}

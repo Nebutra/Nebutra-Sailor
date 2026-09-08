@@ -1,0 +1,63 @@
+{
+  "id": "seko.canvas.blank-node",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "generator-panel",
+    "selectedEntity": "blank-node",
+    "majorControls": [
+      "node 空白节点",
+      "floating 上传 above node",
+      "tabs 文本生成/图片生成/视频生成/音频生成",
+      "上传",
+      "选择",
+      "prompt textbox",
+      "model chip 即梦 5.0 Pro",
+      "16:9 · 2K",
+      "@",
+      "1张",
+      "✦7",
+      "send",
+      "expand"
+    ]
+  },
+  "selectedEntity": "blank-node",
+  "activeTab": "画布",
+  "openOverlay": "generator-panel",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "node 空白节点",
+    "floating 上传 above node",
+    "tabs 文本生成/图片生成/视频生成/音频生成",
+    "上传",
+    "选择",
+    "prompt textbox",
+    "model chip 即梦 5.0 Pro",
+    "16:9 · 2K",
+    "@",
+    "1张",
+    "✦7",
+    "send",
+    "expand"
+  ],
+  "disclosure": {
+    "appeared": ["generator panel under node", "上传 pill above node", "empty-canvas hero gone"],
+    "disappeared": ["quick chips", "hero"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.blank-node.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Blank node defaults to 图片生成 with 即梦 5.0 Pro 16:9 2K ✦7 for 1 image."
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "fromState": "libtv.art-generator.image-default",
+    "action": {
+      "type": "click",
+      "control": "智能图片V2"
+    },
+    "toState": "libtv.art-generator.image-model-picker",
+    "sideEffects": ["overlay.opened"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-image-gen.base-model-picker.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-generator.image-default",
+    "action": {
+      "type": "click",
+      "control": "1:1 | 1 张"
+    },
+    "toState": "libtv.art-generator.image-config",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-image-gen.settings-popover.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-generator.image-default",
+    "action": {
+      "type": "click",
+      "control": "视频生成 radio"
+    },
+    "toState": "libtv.art-generator.video-default",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-video-gen.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-generator.video-default",
+    "action": {
+      "type": "click",
+      "control": "智能比例 | 720p | 5s | 有配音"
+    },
+    "toState": "libtv.art-generator.video-config",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-video-gen.settings-popover.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

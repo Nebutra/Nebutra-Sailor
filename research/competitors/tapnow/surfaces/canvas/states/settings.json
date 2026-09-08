@@ -1,0 +1,46 @@
+{
+  "id": "tapnow.canvas.settings",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Settings",
+    "overlay": "settings",
+    "selectedEntity": "none"
+  },
+  "visibleControls": [
+    "Subscriptions",
+    "Model Mart",
+    "Buy Credit",
+    "Team Entitlements",
+    "Reward Center",
+    "Billing Records",
+    "Usage Dashboard",
+    "Personal Settings",
+    "Team Settings",
+    "Changelog",
+    "User Guide",
+    "Agent Tutorial",
+    "Sign Out"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.settings.subscriptions.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.settings.usage.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Usage Dashboard splits 'Total Usage' vs 'Agent Usage'; 'Subscribe to unlock Agent Tapies' → agent has a separate credit pool."
+    },
+    {
+      "tier": "O",
+      "text": "Plan gating: BASIC $7.5/mo yearly, 1500 Tapies, $1=100 Tapies; PRO $45/mo yearly, 6000 Tapies."
+    }
+  ],
+  "openOverlay": "settings"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "lovart.canvas.new-project",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?newProject=true → /canvas?projectId=2pabxcoqfb40",
+    "heading": "Untitled",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["empty-canvas hint", "agent panel"]
+  },
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "empty hint '输入你的想法开始创作，或按 C 开始对话'",
+    "title input (readonly until dblclick; maxlength 120)",
+    "same dock / panel as populated canvas"
+  ],
+  "evidence": [
+    { "file": "evidence/scratch.new.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/scratch.model-pref-selected.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "newProject=true immediately creates a project and rewrites the URL to /canvas?projectId=<12-char id> — new ids are short, older ones are 32-hex."
+    },
+    {
+      "tier": "O",
+      "text": "Rename = edit the title input in the top bar (renamed to 'PARA research scratch'; persisted and visible in /zh/projects)."
+    },
+    {
+      "tier": "O",
+      "text": "Choosing a model in 模型偏好 turns the 自动 toggle off and marks the row with a check."
+    }
+  ]
+}

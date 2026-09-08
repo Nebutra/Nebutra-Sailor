@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.prompt-node-selected",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "node-toolbar",
+    "selectedEntity": "prompt-node 7b870c6a",
+    "majorControls": [
+      "logo menu",
+      "flow title + flow switcher",
+      "Share",
+      "Comment (mode toggle)",
+      "Minimize",
+      "Organize Nodes"
+    ]
+  },
+  "selectedEntity": "prompt-node 7b870c6a",
+  "activeTab": "",
+  "openOverlay": "node-toolbar",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "logo menu",
+    "flow title + flow switcher",
+    "Share",
+    "Comment (mode toggle)",
+    "Minimize",
+    "Organize Nodes",
+    "zoom % (menu)",
+    "Composer (menu)",
+    "dock: Free Node",
+    "dock: Search Node",
+    "dock: Media History",
+    "dock: Knowledge Garden",
+    "credit balance 0",
+    "bottom composer",
+    "toast: 0% credits remaining",
+    "toolbar: gray/green/yellow/blue/pink",
+    "Copy Content",
+    "Delete",
+    "Add node",
+    "Follow Up (F)",
+    "composer token 'Focus node Hey, welcome...'",
+    "composer mode strip"
+  ],
+  "disclosure": {
+    "appeared": ["node toolbar", "composer token", "mode strip"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.prompt-node-selected.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Prompt ('Me') node toolbar has no Rerun/Edit."
+    },
+    {
+      "tier": "O",
+      "text": "Composer expanded: node token + mode strip + 'Switch back to creation modes'."
+    }
+  ]
+}

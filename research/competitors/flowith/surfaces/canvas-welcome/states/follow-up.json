@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.follow-up",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "vary-dialog",
+    "selectedEntity": "image-node 966cc910 + 6 ancestors highlighted",
+    "majorControls": [
+      "composer: Image · Seedream 5.0 Pro",
+      "Style +",
+      "token 'Follow-up with 6 nodes'",
+      "1:1",
+      "1K",
+      "Unlimited Mode lock"
+    ]
+  },
+  "selectedEntity": "image-node 966cc910 + 6 ancestors highlighted",
+  "activeTab": "",
+  "openOverlay": "vary-dialog",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "composer: Image · Seedream 5.0 Pro",
+    "Style +",
+    "token 'Follow-up with 6 nodes'",
+    "1:1",
+    "1K",
+    "Unlimited Mode lock",
+    "1x",
+    "Send"
+  ],
+  "disclosure": {
+    "appeared": ["lineage highlight", "Follow-up token", "new draft node"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.follow-up.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Follow Up highlighted the ancestor chain (purple outline on 6 nodes), switched the composer to Image mode, inserted a lineage token."
+    },
+    {
+      "tier": "O",
+      "text": "A new small prompt node 'Follow-up with 6 nodes' appeared under the image node and persisted after reload."
+    }
+  ]
+}

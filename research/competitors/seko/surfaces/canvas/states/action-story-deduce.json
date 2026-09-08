@@ -1,0 +1,46 @@
+{
+  "id": "seko.canvas.action-story-deduce",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "story-deduce-popover",
+    "selectedEntity": "image-node",
+    "majorControls": [
+      "向后推演",
+      "向前推演",
+      "offset −5s…+5s",
+      "画面比例",
+      "图片模型 专业/通用",
+      "生成 ✦10"
+    ]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "story-deduce-popover",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": [
+    "向后推演",
+    "向前推演",
+    "offset −5s…+5s",
+    "画面比例",
+    "图片模型 专业/通用",
+    "生成 ✦10"
+  ],
+  "disclosure": { "appeared": ["popover"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.action-story-deduce.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "故事推演 predicts the frame N seconds before/after the image — a shot-continuity tool priced ✦10."
+    }
+  ]
+}

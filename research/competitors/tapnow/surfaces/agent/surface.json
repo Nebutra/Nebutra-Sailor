@@ -1,0 +1,170 @@
+{
+  "id": "tapnow.agent",
+  "competitor": "tapnow",
+  "route": "https://app.tapnow.ai/canvas/<project-uuid> (right panel)",
+  "name": "Agent panel (project-scoped chat)",
+  "category": "agent",
+  "layout": {
+    "persistentPanels": [
+      "panel header (Side panel, New chat ▾, Usage, Chat history, Collapse chat)",
+      "message list",
+      "composer"
+    ],
+    "chromeRatio": 0.2,
+    "workSurfaceRatio": 0.8
+  },
+  "primaryActions": [
+    {
+      "label": "Send",
+      "type": "primary-button",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Confirm (approval card)",
+      "type": "primary-button",
+      "location": "floating",
+      "visibleWhen": "agentState:awaiting-approval"
+    },
+    {
+      "label": "Cancel (approval card)",
+      "type": "secondary-button",
+      "location": "floating",
+      "visibleWhen": "agentState:awaiting-approval"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Add (+)",
+      "type": "popover-trigger",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "hand icon",
+      "type": "icon-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Ask / Act (confirm mode)",
+      "type": "popover-trigger",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Auto (LLM)",
+      "type": "popover-trigger",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Voice input",
+      "type": "icon-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "suggestion cards New/Memory",
+      "type": "contextual-action",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Refresh suggestions",
+      "type": "icon-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Copy / Good response / Bad response / Fork conversation",
+      "type": "icon-button",
+      "visibleWhen": "message.hover"
+    },
+    {
+      "label": "Completed N actions",
+      "type": "popover-trigger",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Use apps to extend Agent capabilities",
+      "type": "link",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "confirm-mode-menu",
+      "kind": "popover",
+      "trigger": "Ask/Act button",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Ask before acting | Act without asking"
+    },
+    {
+      "id": "chat-history",
+      "kind": "popover",
+      "trigger": "Chat history",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Add new chat + sessions list"
+    },
+    {
+      "id": "approval-card",
+      "kind": "inspector",
+      "trigger": "agent proposes a paid action",
+      "dismiss": "Confirm / Cancel",
+      "modal": false,
+      "contentOwnership": "action type, cost estimate, prompt, model, ratio, res, count"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.agent.confirm-mode.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.agent.done.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.agent.approval.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.agent.actions-expanded.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.agent.generated.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Confirm modes: 'Ask before acting — TapNow pauses so you can approve each action' vs 'Act without asking — TapNow works without asking for approval'."
+    },
+    {
+      "tier": "O",
+      "text": "Text-only request → response in ~1s ('Worked for 1s'), chat auto-titled 'Ceramic Teacup Ad', no canvas mutation."
+    },
+    {
+      "tier": "O",
+      "text": "Paid request (one image) in Ask mode → 'Completed 7 actions' log, then approval card: 'Image Generation | ~5 Tapies | <prompt> | Nano Banana 2 Lite | 1:1 | 1K | 1× | Act' with Cancel/Confirm."
+    },
+    {
+      "tier": "O",
+      "text": "Confirm → 'Confirmed' → 'Thinking...' → new node 'Generate Image' appears on canvas with 1 edge from the reference image node → 'Processing... · Ns' (≈60s) → 'Editing 1 file' → final message with node mention chips; total 'Worked for 2m25s'."
+    },
+    {
+      "tier": "O",
+      "text": "Action log: 'Read TapNow canvas operation Skill', 'Read generation.md', 'Ran 1 command · Check available models', 'Describe nano-banana-2-lite model', 'Describe seedream-5-lite model', 'Get node details', 'Looked at 1 item', 'Submit generation task', 'Generate Image'. → agent is a tool-using LLM reading skill docs and issuing canvas commands; generation submitted as async task."
+    },
+    {
+      "tier": "O",
+      "text": "Model locked per session: 'The model can't be changed once a session has started. Start a new chat to use a different model.'"
+    },
+    {
+      "tier": "O",
+      "text": "Selected canvas nodes appear as context chips in the composer ('select nodes for context'); desktop copy: '@ add references or use plugins'."
+    },
+    {
+      "tier": "U",
+      "text": "Whether the user can keep editing the canvas while the agent runs (not tested); whether multiple agent sessions run concurrently."
+    }
+  ]
+}

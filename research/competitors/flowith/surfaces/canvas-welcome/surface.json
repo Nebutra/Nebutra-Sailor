@@ -1,0 +1,321 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.canvas-welcome",
+  "competitor": "flowith",
+  "route": "/conv/<flow-uuid>",
+  "name": "Flow canvas (existing tutorial flow 'Welcome to flowith 2.0')",
+  "category": "canvas",
+  "layout": {
+    "persistentPanels": [
+      "title bar (logo menu · title/flow switcher · Share · Comment · Minimize | Organize · zoom · Composer)",
+      "left dock (Free Node · Search Node · Media History · Knowledge Garden) + credit badge",
+      "bottom floating composer"
+    ],
+    "chromeRatio": 0.12,
+    "workSurfaceRatio": 0.88
+  },
+  "navigation": [
+    {
+      "label": "Logo menu: Back To Homepage · Theme (Notebook) · General Setting · Product Docs · Report Bugs · Join us",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Flow switcher (title): 'Search flow name' + list of all flows",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Minimize (collapses title bar to icons)",
+      "type": "icon-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [],
+  "primaryActions": [
+    {
+      "label": "Bottom composer textbox + Send",
+      "type": "input",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Mode strip in composer (Chat/Image/Video/Slides/Website/Auto-Neo Agent) + 'Switch back to creation modes'",
+      "type": "tab",
+      "location": "bottom-dock",
+      "visibleWhen": "composer.expanded"
+    },
+    {
+      "label": "Free Node -> Text | Upload",
+      "type": "popover-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Node toolbar (text answer): 5 colour dots · Rerun · Copy Content · Edit (E) · Delete",
+      "type": "context-toolbar",
+      "location": "canvas-node",
+      "visibleWhen": "node.selected"
+    },
+    {
+      "label": "Node toolbar (prompt/'Me'): 5 colour dots · Copy Content · Delete",
+      "type": "context-toolbar",
+      "location": "canvas-node",
+      "visibleWhen": "prompt-node.selected"
+    },
+    {
+      "label": "Node toolbar (image): Crop · Upscale · Background Removal · Vary · Rerun · Copy Content · Download · Delete",
+      "type": "context-toolbar",
+      "location": "canvas-node",
+      "visibleWhen": "image-node.selected"
+    },
+    {
+      "label": "Add node (+ handle on node edge)",
+      "type": "contextual-action",
+      "location": "canvas-node",
+      "visibleWhen": "node.selected"
+    },
+    {
+      "label": "Follow Up (F) = 'Branch node'",
+      "type": "contextual-action",
+      "location": "canvas-node",
+      "visibleWhen": "node.selected"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Share -> 'Share this flow' dialog",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Comment mode",
+      "type": "icon-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Organize Nodes (Cmd O)",
+      "type": "icon-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Zoom menu: Zoom In · Zoom Out · Zoom to Fit · Zoom to Selected · Zoom to Top · Zoom to Bottom",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Composer menu -> New Composer (submenu)",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Search Node (in-flow search modal: All/Text/Media + Export)",
+      "type": "icon-button",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Pane right-click: Paste · Organize Nodes · zoom commands",
+      "type": "context-menu",
+      "location": "floating",
+      "visibleWhen": "right-click on pane"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "node-toolbar",
+      "kind": "context-toolbar",
+      "trigger": "click node",
+      "dismiss": "click pane / Escape",
+      "modal": false,
+      "contentOwnership": "node colour tag + type-dependent node actions + Add node + Follow Up"
+    },
+    {
+      "id": "vary-dialog",
+      "kind": "popover",
+      "trigger": "image toolbar -> Vary",
+      "dismiss": "Cancel (Escape does not close)",
+      "modal": false,
+      "width": "~300px",
+      "contentOwnership": "mini generation form: Batch 1X/2X/4X · General Ratio · Top Model list · cost line · Cancel/Run"
+    },
+    {
+      "id": "upscale-menu",
+      "kind": "popover",
+      "trigger": "image toolbar -> Upscale",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "upscale options (contents not captured)"
+    },
+    {
+      "id": "free-node-menu",
+      "kind": "popover",
+      "trigger": "dock +",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Text | Upload"
+    },
+    {
+      "id": "search-node",
+      "kind": "modal",
+      "trigger": "dock search",
+      "dismiss": "Escape",
+      "modal": true,
+      "contentOwnership": "in-flow search over nodes: All 33 · Text 25 · Media 8 · Export"
+    },
+    {
+      "id": "media-history-dock",
+      "kind": "drawer",
+      "trigger": "dock history icon",
+      "dismiss": "click icon again",
+      "modal": false,
+      "width": "~350px",
+      "contentOwnership": "Generations | Uploads · Search File · Starred · Type filter (empty here)"
+    },
+    {
+      "id": "knowledge-garden-modal",
+      "kind": "modal",
+      "trigger": "dock knowledge icon",
+      "dismiss": "Close X",
+      "modal": true,
+      "contentOwnership": "account Knowledge Garden: projects list + Knowledge Base search + Share + Add Chrome Extension"
+    },
+    {
+      "id": "share-dialog",
+      "kind": "modal",
+      "trigger": "Share",
+      "dismiss": "Close/Escape",
+      "modal": true,
+      "contentOwnership": "link switch 'Anyone with this link' · permission 'can view' · Copy Link · member list"
+    },
+    {
+      "id": "flow-switcher",
+      "kind": "popover",
+      "trigger": "title caret",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "search + all flows list"
+    },
+    {
+      "id": "logo-menu",
+      "kind": "popover",
+      "trigger": "logo",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Back To Homepage · Theme · General Setting · Product Docs · Report Bugs · socials"
+    },
+    {
+      "id": "zoom-menu",
+      "kind": "popover",
+      "trigger": "zoom %",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "zoom commands with shortcuts"
+    },
+    {
+      "id": "pane-context-menu",
+      "kind": "context-menu",
+      "trigger": "right-click pane",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Paste · Organize Nodes · zoom commands"
+    },
+    {
+      "id": "upgrade-modal",
+      "kind": "modal",
+      "trigger": "auto-shown on entry with 0 credits / 'upgrade here'",
+      "dismiss": "Close Pricing Modal X",
+      "modal": true,
+      "contentOwnership": "plan matrix (see surfaces/billing)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.fit.webp",
+      "url": "https://flowith.io/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+      "capturedAt": "2026-09-08",
+      "note": "whole tree at 25%"
+    },
+    {
+      "file": "evidence/canvas.welcome.answer-node-selected.webp",
+      "capturedAt": "2026-09-08",
+      "note": "text node toolbar + Follow Up + composer token"
+    },
+    {
+      "file": "evidence/canvas.welcome.image-node-selected.webp",
+      "capturedAt": "2026-09-08",
+      "note": "image node toolbar"
+    },
+    {
+      "file": "evidence/canvas.welcome.follow-up.webp",
+      "capturedAt": "2026-09-08",
+      "note": "lineage highlight + Vary dialog"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Canvas is React Flow (data-testid rf__wrapper, rf__node-<uuid>, React Flow a11y descriptions). Route is /conv/<uuid>; an invisible root node carries the same uuid as the flow."
+    },
+    {
+      "tier": "O",
+      "text": "Node kinds seen: prompt node (text, footer 'Me' + date), answer node (rich markdown, footer = model id e.g. claude-3.5-sonnet / gpt-4o, + date), image node (footer = model e.g. recraft-v3), video-prompt node (kling-text-to-video), comment bubble attached to a node with a count, Follow-up draft prompt node. Edges are dashed parent->child lines; a prompt fans out to several parallel answers (branching tree)."
+    },
+    {
+      "tier": "O",
+      "text": "Selecting a node shows the toolbar AND inserts the node into the bottom composer as a removable token ('Focus node ...'). Multiple selections accumulate tokens. Settings names this 'Node Interaction Mode: Quote first'."
+    },
+    {
+      "tier": "O",
+      "text": "Toolbar is type-specific: answer = colour tags · Rerun · Copy Content · Edit(E) · Delete; prompt = colour tags · Copy Content · Delete; image = Crop · Upscale · Background Removal · Vary · Rerun · Copy Content · Download · Delete. All get an Add-node handle and Follow Up (F) = 'Branch node'."
+    },
+    {
+      "tier": "O",
+      "text": "Follow Up on an image node highlighted its six ancestors, switched the composer to Image mode, inserted a 'Follow-up with 6 nodes' token and created a new prompt node ('Me · Just now') that survived reload (33 -> 34 nodes)."
+    },
+    {
+      "tier": "O",
+      "text": "Vary opens a mini generation form (batch 1X only on Free; ratio; top-model list with most models locked; cost line '1 Generation with 1:1 ratio in Seedream 5.0 Pro'; Cancel/Run). Not run."
+    },
+    {
+      "tier": "O",
+      "text": "Edit on a text node surfaced 'Upgrade to unlock' - node content editing is gated on Free."
+    },
+    {
+      "tier": "O",
+      "text": "Comment is a mode: 'Move the mouse to the node and click to add comment'; existing threads render as a bubble with a count on the node."
+    },
+    {
+      "tier": "O",
+      "text": "Share dialog: link switch (already on for this tutorial flow), permission 'can view', Copy Link, owner row. Nothing changed."
+    },
+    {
+      "tier": "O",
+      "text": "Search Node is flow-scoped (All 33 / Text 25 / Media 8) with Export; the in-flow Media History dock was empty although the flow contains images."
+    },
+    {
+      "tier": "O",
+      "text": "Zoom (25%) and the new node persisted across a hard reload; assets are Supabase storage URLs."
+    },
+    {
+      "tier": "I2",
+      "text": "Media History dock lists generations made in this flow (tutorial images were imported, hence empty); sidebar Media History (/gallery) is account-scoped with a day strip."
+    },
+    {
+      "tier": "I1",
+      "text": "'Add node' (+ on node edge) is a React Flow connection handle; clicking it only re-added the composer token."
+    },
+    {
+      "tier": "U",
+      "text": "No node-level right-click menu observed; Upscale menu contents; Organize Nodes effect (not run on the owner's flow); multi-select; drag semantics; Composer semantics."
+    }
+  ]
+}

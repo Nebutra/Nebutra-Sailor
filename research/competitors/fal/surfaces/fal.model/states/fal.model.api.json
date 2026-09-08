@@ -1,0 +1,38 @@
+{
+  "id": "fal.model.api",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell/api",
+    "heading": "fal-ai/flux/schnell — API",
+    "activeTab": "API",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "API",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "TOC: Calling the API / Authentication / Queue / Files / Schema",
+    "code blocks (JS/Python/curl)",
+    "Schema input/output tables"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.api.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Public without login. Documents subscribe(), queue.submit/status/result, webhookUrl, files (data URI / hosted URL / fal.storage.upload), full input/output schema with defaults and enums."
+    }
+  ]
+}

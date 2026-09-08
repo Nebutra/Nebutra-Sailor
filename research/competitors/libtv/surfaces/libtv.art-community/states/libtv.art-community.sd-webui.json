@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-community.sd-webui",
+  "surfaceId": "libtv.art-community",
+  "fingerprint": {
+    "route": "https://www.liblib.art/sd",
+    "heading": "在线webUI",
+    "activeTab": "文生图",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["checkpoint/VAE", "sampler", "steps/size/CFG", "开始生图"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "文生图",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "基础算法_F.1.safetensors",
+    "VAE list",
+    "Clip Skip 1–12",
+    "商用规则",
+    "tabs 文生图 / 图生图 / 后期处理 / 超清放大 / Inpaint Anything / PNG图片信息 / WD1.4 标签器",
+    "生图 / 模型 side tabs",
+    "预设",
+    "sampler Euler…LCM",
+    "Sampling Steps 1–60",
+    "面部修复",
+    "高分辨率修复",
+    "Width/Height 128–1536",
+    "Number of images",
+    "CFG scale",
+    "开始生图"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-sd.webp",
+      "url": "https://www.liblib.art/sd",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Full A1111-style parameter surface; this is the 'advanced-only' tier of the LibLib ecosystem."
+    }
+  ]
+}

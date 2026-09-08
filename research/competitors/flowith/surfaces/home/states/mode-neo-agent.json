@@ -1,0 +1,68 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.home.mode-neo-agent",
+  "surfaceId": "flowith.home",
+  "fingerprint": {
+    "route": "/blank",
+    "heading": "Flow with ideas",
+    "activeTab": "Neo Agent",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "composer: Auto · Neo Agent",
+      "MAX toggle",
+      "attach",
+      "settings gear",
+      "Send",
+      "sidebar: New Flow"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Neo Agent",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "composer: Auto · Neo Agent",
+    "MAX toggle",
+    "attach",
+    "settings gear",
+    "Send",
+    "sidebar: New Flow",
+    "sidebar: Flow Library",
+    "sidebar: Media History",
+    "sidebar: Knowledge Garden",
+    "sidebar: Knowledge Market",
+    "sidebar: Projects + Create new project",
+    "sidebar: History list + Sort by",
+    "account menu (Tseka Luk · FREE)",
+    "Get more credits",
+    "Notifications",
+    "credit balance 0",
+    "composer textbox",
+    "Send",
+    "mode chips Chat/Image/Video/Slides/Website/Neo Agent",
+    "Apps rail",
+    "template gallery + category filter"
+  ],
+  "disclosure": {
+    "appeared": ["MAX toggle", "Auto · Neo Agent"],
+    "disappeared": ["batch 1 x"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/home.mode-neo-agent.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Neo Agent mode: placeholder becomes 'Describe a complex task for the Agent to handle...', model slot reads 'Auto · Neo Agent', and a MAX toggle appears; no batch count."
+    },
+    {
+      "tier": "I2",
+      "text": "'Auto' is an output-format choice — inside a flow the same control expands to Auto / Text / Image / Video / Slides / Website (see canvas-welcome.answer-node-selected)."
+    }
+  ]
+}

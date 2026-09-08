@@ -1,0 +1,27 @@
+{
+  "id": "seko.canvas.add-menu",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "add-popover",
+    "selectedEntity": "none",
+    "majorControls": ["新建空白节点", "上传本地文件"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "add-popover",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": ["新建空白节点", "上传本地文件"],
+  "disclosure": { "appeared": ["popover with 2 items"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.add-menu.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "+ has exactly two entries." }]
+}

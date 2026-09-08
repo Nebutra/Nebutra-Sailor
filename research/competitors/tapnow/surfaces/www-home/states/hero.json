@@ -1,0 +1,35 @@
+{
+  "id": "tapnow.www-home.hero",
+  "surfaceId": "tapnow.www-home",
+  "fingerprint": {
+    "route": "/",
+    "heading": "Your Creative OS",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["Get started for free", "Download App", "demo canvas"]
+  },
+  "visibleControls": [
+    "header nav",
+    "Get started for free",
+    "Download App",
+    "demo canvas nodes",
+    "demo tool rail",
+    "cookie OKAY"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/home.hero.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Marketing hero with live demo canvas; 'Community' header item is a button with no dropdown content observed (U)."
+    },
+    {
+      "tier": "I1",
+      "text": "Product screenshots in marketing sections are marketing evidence only, not the live product."
+    }
+  ]
+}

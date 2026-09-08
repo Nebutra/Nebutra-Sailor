@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.zoom-menu",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "zoom-menu",
+    "selectedEntity": "none",
+    "majorControls": [
+      "Zoom In",
+      "Zoom Out",
+      "Zoom to Fit",
+      "Zoom to Selected",
+      "Zoom to Top",
+      "Zoom to Bottom"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "zoom-menu",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Zoom In",
+    "Zoom Out",
+    "Zoom to Fit",
+    "Zoom to Selected",
+    "Zoom to Top",
+    "Zoom to Bottom"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.zoom-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Zoom menu doubles as keyboard cheat-sheet; top/bottom navigation suggests long vertical flows are normal."
+    }
+  ]
+}

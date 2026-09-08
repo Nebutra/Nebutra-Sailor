@@ -1,0 +1,54 @@
+{
+  "id": "tapnow.canvas.node.image-generated",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Untitled",
+    "overlay": "none",
+    "selectedEntity": "node:image(result)",
+    "majorControls": ["9-icon toolbar", "generation bar"]
+  },
+  "visibleControls": [
+    "Crop",
+    "Change Angle",
+    "Redraw",
+    "Relight",
+    "View All",
+    "Pin",
+    "Save to Library",
+    "Download",
+    "Full Screen",
+    "Reference",
+    "prompt (kept)",
+    "model",
+    "params",
+    "1×",
+    "Generate"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image.generated.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.image.generated-selected.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Result replaces the placeholder inside the same node; prompt and settings persist for regeneration."
+    }
+  ],
+  "disclosure": {
+    "appeared": [
+      "edit tools Crop/Change Angle/Redraw/Relight/View All",
+      "Save to Library",
+      "Download"
+    ],
+    "disappeared": ["Upload", "Point to Edit"]
+  },
+  "jobState": "completed",
+  "selectedEntity": "node:image"
+}

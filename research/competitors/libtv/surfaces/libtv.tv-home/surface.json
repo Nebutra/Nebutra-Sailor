@@ -1,0 +1,168 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "libtv.tv-home",
+  "competitor": "libtv",
+  "route": "https://www.liblib.tv/",
+  "name": "LibTV 首页 (professional video tool home)",
+  "category": "home",
+  "layout": {
+    "persistentPanels": [
+      "promo banner (活动剩余 countdown, Seedance 2.5 discount, 限时抢购, closable)",
+      "left sidebar (collapsible: 新建项目, 首页, 项目, LibTV Agent, 创作者挑战赛, promo, 帮助)",
+      "top header (Blender 插件, 积分超市, 开通会员 限时 45/42 折, credits, avatar N, 团队 or 注册/登录)"
+    ],
+    "chromeRatio": 0.18,
+    "workSurfaceRatio": 0.82
+  },
+  "navigation": [
+    {
+      "label": "新建项目",
+      "type": "primary-button",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    { "label": "首页", "type": "link", "location": "left-rail" },
+    {
+      "label": "项目 (recent projects section on home: 最近项目 + 查看全部)",
+      "type": "link",
+      "location": "left-rail"
+    },
+    { "label": "LibTV Agent → /skill", "type": "link", "location": "left-rail" },
+    { "label": "创作者挑战赛", "type": "link", "location": "left-rail" },
+    { "label": "帮助", "type": "popover-trigger", "location": "left-rail" },
+    {
+      "label": "前往LibTV创作 (entry from liblib.art nav → https://www.liblib.tv/)",
+      "type": "link",
+      "location": "top-left"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "TV Show category chips: 全部 / 一场戏的诞生 / 无畏契约觉醒计划 / 精选画布 / 专业影视 / 短剧漫剧 / 商业广告 / 动漫游戏 / 教育生活 / TV工具箱",
+      "default": true,
+      "changesUrl": false,
+      "scope": "community feed"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "新建画布创作 → /canvas?newProject=true&createWorkspace=true",
+      "type": "primary-button",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Seedance 2.5 多参创作 (音视频直出30s) → /canvas?sourceSpaceId=4626566&sourceProjectUuid=…",
+      "type": "secondary-button",
+      "location": "floating"
+    },
+    {
+      "label": "Wan 3.0 全新上线 (改写视频画面、剧情、环境) → template canvas",
+      "type": "secondary-button",
+      "location": "floating"
+    },
+    {
+      "label": "Minimax H3 Max 极速生成 → template canvas",
+      "type": "secondary-button",
+      "location": "floating"
+    },
+    {
+      "label": "导演台 独家 (3D 虚拟场景，精准控制空间) → template canvas entryItemKey=virtual-studio",
+      "type": "secondary-button",
+      "location": "floating"
+    },
+    {
+      "label": "逐帧拉片 独家 (传视频，逐帧拉片快捷参考) → template canvas entryItemKey=shot-breakdown&model=star-video2.5",
+      "type": "secondary-button",
+      "location": "floating"
+    },
+    {
+      "label": "片段重拍 (精准修改视频片段) → template canvas entryItemKey=segment-remake",
+      "type": "secondary-button",
+      "location": "floating"
+    },
+    {
+      "label": "LibTV Agent composer (说出你的创意，或者从一个 skill 开始创作) with 添加附件 / 选择模型 / Skill / 生成模式 / 发送",
+      "type": "input",
+      "location": "floating"
+    },
+    {
+      "label": "Skill quick chips: POP MV 音乐MV / 是枝裕和电影美学 专业影视 / 真人感美妆UGC产品测评 商业广告 / 全部Skill",
+      "type": "popover-trigger",
+      "location": "floating"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "查看创作过程 (on every TV Show card, hover-revealed)",
+      "type": "contextual-action",
+      "location": "canvas-node",
+      "visibleWhen": "hover"
+    },
+    { "label": "TV Show search (请输入搜索内容)", "type": "input", "location": "floating" },
+    {
+      "label": "最近项目 cards (未命名, 2026-09-08) + 查看全部",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "logged-in"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "creation-process-viewer",
+      "kind": "modal",
+      "trigger": "查看创作过程",
+      "dismiss": "关闭",
+      "modal": true,
+      "width": "full-screen",
+      "contentOwnership": "read-only canvas of the published project (只读模式，如需创建请点击 复制项目); 工作流/故事板 toggle; minimap/zoom"
+    },
+    {
+      "id": "skill-detail-popover",
+      "kind": "popover",
+      "trigger": "使用 Skill … chip (aria-haspopup=dialog)",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "skill preview / apply"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/libtv.tv-home.default.webp",
+      "url": "https://www.liblib.tv/",
+      "capturedAt": "2026-09-08"
+    },
+    { "file": "evidence/libtv.tv-projects.webp", "note": "logged-in home with 最近项目" },
+    {
+      "file": "evidence/libtv.tvshow.detail.webp",
+      "note": "查看创作过程 read-only viewer (火旺丨回家)"
+    },
+    { "file": "evidence/libtv.tvshow.detail-storyboard.webp", "note": "viewer in 故事板 mode" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "LibTV is a separate origin (www.liblib.tv) reached from liblib.art via the nav pill 前往LibTV创作. Its <title> is 'LibTV - 专业视频创作工具'. Auth is bridged across the two origins with an iframe cross-storage-hub.html (liblib.art ↔ liblib.tv) — the header can render 注册/登录 before hydration while the canvas shows the logged-in user."
+    },
+    {
+      "tier": "O",
+      "text": "The 'professional tool entry' is a home page of template launchers + a persistent Agent composer; every launcher resolves to the same /canvas surface (new or cloned project). There is no separate professional-tool page, modal or mode — the canvas IS the professional tool and templates parametrize it."
+    },
+    {
+      "tier": "O",
+      "text": "Home feed 'TV Show' lists published projects with author, badge (先锋), title; each exposes 查看创作过程 which opens the full node graph read-only with 复制项目 — the community→creation loop is 'publish process → viewer copies project into own workspace'."
+    },
+    {
+      "tier": "O",
+      "text": "Recent projects appear on home (最近项目) rather than a dedicated /projects route; the sidebar 项目 item did not change the URL in our session."
+    },
+    {
+      "tier": "O",
+      "text": "Sidebar entry LibTV Agent navigates to /skill (skill marketplace + composer)."
+    },
+    {
+      "tier": "U",
+      "text": "创作者挑战赛 and Blender 插件 clicks produced no in-page change (probably external / new tab)."
+    }
+  ]
+}

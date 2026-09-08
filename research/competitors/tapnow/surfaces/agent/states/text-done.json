@@ -1,0 +1,32 @@
+{
+  "id": "tapnow.agent.text-done",
+  "surfaceId": "tapnow.agent",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Ceramic Teacup Ad",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["message actions"]
+  },
+  "visibleControls": [
+    "Copy",
+    "Worked for 1s",
+    "Good response",
+    "Bad response",
+    "Fork conversation",
+    "Use apps to extend Agent capabilities"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.agent.done.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Fork conversation = branching chats."
+    }
+  ],
+  "agentState": "done"
+}

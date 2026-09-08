@@ -1,0 +1,71 @@
+{
+  "id": "seko.my-space",
+  "competitor": "seko",
+  "route": "/my-space?tab=story|canvas|avatar",
+  "name": "我的空间 (My Space)",
+  "category": "library",
+  "layout": {
+    "persistentPanels": ["left-rail", "top-bar"],
+    "chromeRatio": 0.15,
+    "workSurfaceRatio": 0.85
+  },
+  "tabs": [
+    { "name": "故事", "default": true, "changesUrl": true, "scope": "story projects (策划案)" },
+    { "name": "画布", "changesUrl": true, "scope": "infinite canvases" },
+    { "name": "数字人", "changesUrl": true, "scope": "avatar videos" }
+  ],
+  "primaryActions": [
+    {
+      "label": "story card / canvas card (open)",
+      "type": "link",
+      "location": "grid",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "search 输入策划案名称搜索",
+      "type": "input",
+      "location": "top",
+      "visibleWhen": "tab:故事"
+    },
+    {
+      "label": "category filter 全部/出海短剧/短剧漫剧/音乐MV/知识分享",
+      "type": "tab",
+      "location": "top",
+      "visibleWhen": "tab:故事"
+    }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/myspace.list.webp",
+      "url": "https://seko.sensetime.com/my-space",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/myspace.canvas-tab.webp",
+      "url": "https://seko.sensetime.com/my-space?tab=canvas",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/myspace.avatar-tab.webp",
+      "url": "https://seko.sensetime.com/my-space?tab=avatar",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Three top-level work-object types live here: 故事 (searched by 策划案 name = planning case), 画布 (canvas), 数字人 (avatar video). Tab is reflected in the URL (?tab=canvas / ?tab=avatar)."
+    },
+    {
+      "tier": "O",
+      "text": "Empty state text: 你还没有创作任何内容，快来制作你的第一个精彩视频吧！ — no create button on this surface; creation starts from /explore or the canvas route."
+    },
+    {
+      "tier": "I2",
+      "text": "The 故事 category filters mirror the home-page genre presets, so a Story is created with a genre attribute."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+stateDiagram-v2
+  [*] --> idle_example : open model page
+  idle_example --> advanced : More
+  advanced --> idle_example : Less
+  idle_example --> confirm_example : Run (unedited sample)
+  confirm_example --> idle_example : Edit my input
+  confirm_example --> starting : Run anyway
+  starting --> error_no_credits : 403 exhausted balance (observed)
+  starting --> in_queue : documented IN_QUEUE(position)
+  in_queue --> in_progress : documented IN_PROGRESS(logs)
+  in_progress --> completed : documented COMPLETED
+  in_queue --> cancelled : cancel (documented, immediate)
+  in_progress --> cancelled : cancel (documented, best-effort)
+  completed --> share_result : Share / Examples card
+  share_result --> next_model : Edit / Upscale / Make Video (?fromOutput)
+  error_no_credits --> credits_popover : Add credits

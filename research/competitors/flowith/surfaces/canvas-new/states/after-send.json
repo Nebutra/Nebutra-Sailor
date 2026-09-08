@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-new.after-send",
+  "surfaceId": "flowith.canvas-new",
+  "fingerprint": {
+    "route": "/conv/9ea63957-02f8-4f94-a495-84901cf200d7",
+    "heading": "Untitled Flow",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "title (auto)",
+      "flow switcher",
+      "Share",
+      "Comment",
+      "Minimize",
+      "Organize Nodes"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "title (auto)",
+    "flow switcher",
+    "Share",
+    "Comment",
+    "Minimize",
+    "Organize Nodes",
+    "zoom %",
+    "Composer",
+    "dock: Free Node / Search Node / Media History / Knowledge Garden",
+    "credit badge 0",
+    "bottom composer Chat · GPT 4.1",
+    "toast 0% credits"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.new.after-send-2.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Right after Send from /blank: url changed, 'Untitled Flow', canvas empty."
+    }
+  ]
+}

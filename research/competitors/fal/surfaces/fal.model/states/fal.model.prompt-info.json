@@ -1,0 +1,34 @@
+{
+  "id": "fal.model.prompt-info",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell",
+    "heading": "fal-ai/flux/schnell",
+    "activeTab": "Playground",
+    "overlay": "param-info",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "param-info",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["popover: 'The prompt to generate an image from.'"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/pg.promptinfo.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "(i) popovers reuse the schema description string."
+    }
+  ]
+}

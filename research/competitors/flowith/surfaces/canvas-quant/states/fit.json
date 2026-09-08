@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-quant.fit",
+  "surfaceId": "flowith.canvas-quant",
+  "fingerprint": {
+    "route": "/conv/3e48cb10-e17f-4309-8e07-32364045ad9a",
+    "heading": "Quant System PRD",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["prompt node", "first step label", "fan-out research nodes"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "done",
+  "visibleControls": ["prompt node", "first step label", "fan-out research nodes"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.quant.fit.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "83% view: prompt → step label → six parallel result nodes."
+    }
+  ]
+}

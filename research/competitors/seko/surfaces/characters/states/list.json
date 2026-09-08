@@ -1,0 +1,32 @@
+{
+  "id": "seko.characters.list",
+  "surfaceId": "seko.characters",
+  "fingerprint": {
+    "route": "/characters",
+    "heading": "主体库",
+    "activeTab": "个人添加",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["添加新主体", "批量上传主体", "类别", "search"]
+  },
+  "activeTab": "个人添加",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "tabs 个人添加/公共主体",
+    "类别 combobox",
+    "search",
+    "批量上传主体",
+    "添加新主体 tile"
+  ],
+  "disclosure": { "appeared": [], "disappeared": [] },
+  "evidence": [
+    {
+      "file": "evidence/characters.list.webp",
+      "url": "https://seko.sensetime.com/characters",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Personal tab empty; only the create tile." }]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "lovart.canvas.multi-selected",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "overlay": "multi-toolbar",
+    "selectedEntity": "c-image×2"
+  },
+  "openOverlay": "multi-toolbar",
+  "visibleControls": [
+    "自动整理",
+    "创建编组",
+    "合并图层",
+    "align ▾",
+    "arrange ▾",
+    "download ▾ (下载 / 导出 PSD)",
+    "composer chips Image 139 · Image 140"
+  ],
+  "evidence": [
+    { "file": "evidence/canvas.multi-selected.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.multi-selected.download-menu.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Multi-selection has no AI ops in the bar; AI work on several images goes through the composer chips. PSD export is offered for multi-select."
+    }
+  ]
+}

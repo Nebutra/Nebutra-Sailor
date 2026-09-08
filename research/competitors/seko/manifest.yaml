@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../schema/manifest.schema.json
+slug: seko
+name: Seko
+category: creative-os
+targets:
+  - { url: "https://seko.sensetime.com", track: public, verified: true, note: "SenseTime Seko" }
+access:
+  account: paid
+  owner_assisted: true
+  credit_budget: "110 credits on 2026-09-08; agent spent 2 (Seko Image 1K ✦1 + 多角度 ✦1); credits are per-job ✦ chips, video priced per second (Seedance 2.5 普惠版 9积分/秒); 开通会员 = queue priority"
+status: core_done
+coverage: { route: 0.85, surface: 0.7, interaction: 0.55, state: 0.6, core_loop: 0.75 }
+last_explored: "2026-09-08"

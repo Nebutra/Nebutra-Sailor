@@ -1,0 +1,120 @@
+[
+  {
+    "fromState": "flowith.home.default",
+    "action": {
+      "type": "click",
+      "control": "mode chip Image"
+    },
+    "toState": "flowith.home.mode-image",
+    "sideEffects": ["composer.mode=image", "attach.accept=image"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/home.mode-image.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.home.default",
+    "action": {
+      "type": "click",
+      "control": "mode chip Video"
+    },
+    "toState": "flowith.home.mode-video",
+    "sideEffects": ["composer.mode=video"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/home.mode-video.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.home.default",
+    "action": {
+      "type": "click",
+      "control": "mode chip Neo Agent"
+    },
+    "toState": "flowith.home.mode-neo-agent",
+    "sideEffects": ["composer.mode=agent"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/home.mode-neo-agent.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.home.default",
+    "action": {
+      "type": "click",
+      "control": "account button"
+    },
+    "toState": "flowith.home.account-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/home.account-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.home.default",
+    "action": {
+      "type": "click",
+      "control": "Create new project"
+    },
+    "toState": "flowith.home.create-project",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/home.create-project.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.home.default",
+    "action": {
+      "type": "click",
+      "control": "History item (flow)"
+    },
+    "toState": "flowith.home.canvas-welcome.fit",
+    "sideEffects": ["url.changed:/conv/<uuid>", "sidebar.collapsed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.fit.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.home.default",
+    "action": {
+      "type": "submit",
+      "control": "composer Send (Chat, typed prompt)"
+    },
+    "toState": "flowith.home.canvas-new.after-send",
+    "sideEffects": [
+      "flow.created",
+      "url.changed:/conv/<uuid>",
+      "node.created:prompt",
+      "node.created:answer-placeholder",
+      "job.created"
+    ],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.new.sent-t8.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

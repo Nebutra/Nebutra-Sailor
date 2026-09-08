@@ -1,0 +1,33 @@
+{
+  "id": "fal.workflows",
+  "competitor": "fal",
+  "overlays": [],
+  "secondaryActions": [],
+  "navigation": [],
+  "tabs": [],
+  "route": "/workflows",
+  "name": "Workflows",
+  "category": "workspace",
+  "primaryActions": [
+    {
+      "label": "Create",
+      "type": "primary-button"
+    },
+    {
+      "label": "Templates",
+      "type": "link"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/workflows.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Empty list + template gallery (depth-to-seedance, fan-cam, kling-multi-shot-creator, fal VTON, Weather). Enumerated only (P4)."
+    }
+  ]
+}

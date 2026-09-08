@@ -1,0 +1,42 @@
+{
+  "id": "fal.explore.gallery",
+  "surfaceId": "fal.explore",
+  "fingerprint": {
+    "route": "/explore",
+    "heading": "Explore",
+    "activeTab": "all",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "all",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "hero carousel (7 slides)",
+    "Try it now!",
+    "See docs",
+    "Search models...",
+    "Try: chips",
+    "Trending section",
+    "model cards"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/explore.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Public without login."
+    }
+  ]
+}

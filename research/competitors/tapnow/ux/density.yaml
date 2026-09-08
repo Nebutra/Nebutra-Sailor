@@ -1,0 +1,35 @@
+# TapNow density — measured on 1040×797 CSS viewport (owner's Chrome), tier O; ratios are estimates (I2)
+surfaces:
+  app-home:
+    persistent_panels: [top nav, promo pill]
+    visible_primary_buttons: [Send, New Project]
+    tabs: [Home, Workspace, Arena]
+    chrome_ratio: 0.10
+    notes: "composer-first; ~12 skill cards + 12 template cards below the fold"
+  workspace:
+    persistent_panels: [top nav, toolbar (search/filter/view/new)]
+    visible_primary_buttons: [New Project]
+    tabs: [Private, Team Projects]
+    chrome_ratio: 0.15
+  canvas:
+    persistent_panels:
+      - header-left (logo, canvas title, switcher) ~230px
+      - header-centre (Tapies, Community, Share)
+      - left dock rail ~48px
+      - bottom-left controls
+      - right agent panel ~470/1440px (≈33%), collapsible
+    visible_primary_buttons: [Send (agent), Generate (only when a node is selected)]
+    tabs: []
+    chrome_ratio: 0.42
+    work_surface_ratio: 0.58
+    notes: "With agent panel collapsed chrome drops to ≈0.10 (I2). Drawers (Library/History ~330px) replace the dock rail rather than stacking."
+  agent-panel:
+    persistent_panels: [header row, composer]
+    visible_primary_buttons: [Send, Confirm/Cancel when awaiting approval]
+    chrome_ratio: 0.20
+  image-editor-overlay:
+    persistent_panels: [top bar, left rail, bottom tool strip, bottom composer]
+    visible_primary_buttons: [Generate, Save]
+    chrome_ratio: 0.35
+    notes: "600×600 raster canvas centred"
+node_default_sizes_px: {text: "250×250", image: "250×250", video: "444×250", audio: "444×250", threed: "375×250"}

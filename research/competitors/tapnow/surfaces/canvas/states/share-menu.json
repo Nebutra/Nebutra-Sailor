@@ -1,0 +1,24 @@
+{
+  "id": "tapnow.canvas.share-menu",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Untitled",
+    "overlay": "share-menu",
+    "selectedEntity": "none"
+  },
+  "visibleControls": ["Publish to TapTV", "Share by link", "Move to team projects"],
+  "evidence": [
+    {
+      "file": "evidence/canvas.header.share.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Link share exposes the project as a copyable template."
+    }
+  ],
+  "openOverlay": "share-menu"
+}

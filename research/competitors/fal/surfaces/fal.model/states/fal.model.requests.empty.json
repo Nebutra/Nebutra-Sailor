@@ -1,0 +1,41 @@
+{
+  "id": "fal.model.requests.empty",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell/requests",
+    "heading": "Request history",
+    "activeTab": "Requests",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Requests",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Search by request ID...",
+    "Status: All statuses",
+    "Show preview switch",
+    "Compact|List|Grid",
+    "Pagination",
+    "No requests alert"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.requests.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "History is scoped to model × account. Empty for this account."
+    }
+  ]
+}
