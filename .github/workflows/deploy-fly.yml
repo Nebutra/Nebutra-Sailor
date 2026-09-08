@@ -184,7 +184,10 @@ jobs:
           VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
           # kuanlan Moments list nebutra-uploads. The VM .env still carries the
           # assets-only seeder; importing it overwrites the uploads token.
-          SKIP_IMPORT_KEYS: ${{ matrix.app == 'kuanlan' && 'R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY' || '' }}
+          # router / admin: the VM .env predates Fly — its NEW_API_BASE_URL is the
+          # ECS localhost port and it knows nothing of the admin contract secrets.
+          # Those are Fly-native; importing over them broke supply after every deploy.
+          SKIP_IMPORT_KEYS: ${{ matrix.app == 'kuanlan' && 'R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY' || matrix.app == 'router' && 'NEW_API_BASE_URL NEW_API_ACCESS_TOKEN SERVICE_SECRET CLIPROXY_API_KEY CLIPROXY_MANAGEMENT_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'admin' && 'SERVICE_SECRET CLIPROXY_MANAGEMENT_KEY CLIPROXY_API_KEY NEW_API_ROOT_PASSWORD' || '' }}
         run: |
           set -euo pipefail
           if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
