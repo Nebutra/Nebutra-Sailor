@@ -181,5 +181,7 @@ jobs:
             echo "| Mode | \`$MODE\` |"
             echo "| History before | $([ -n "$LAST_BEFORE" ] && echo "$APPLIED_BEFORE applied, last \`$LAST_BEFORE\`" || echo "none — shaped by db push") |"
             echo "| Dry run | $DRY |"
-            [ -n "${FAILED:-}" ] && echo "| Failed before this run | \`$FAILED\` — marked rolled back, then retried |"
+            if [ -n "${FAILED:-}" ]; then
+              echo "| Failed before this run | \`$FAILED\` — marked rolled back, then retried |"
+            fi
           } >> "$GITHUB_STEP_SUMMARY"
