@@ -1,0 +1,61 @@
+/* PARA shell — quiet by default. Chrome stays thin; the work surface owns the viewport. */
+
+:root {
+  --para-topbar-h: 46px;
+  --para-dock-h: 44px;
+  --para-drawer-w: 300px;
+  --para-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html,
+body {
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+.para-surface {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.para-node {
+  will-change: transform;
+}
+
+.para-drawer-enter {
+  animation: para-drawer-in 220ms var(--para-ease);
+}
+
+@keyframes para-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--para-drawer-from, 0));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.para-rise {
+  animation: para-rise 260ms var(--para-ease);
+}
+
+@keyframes para-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .para-drawer-enter,
+  .para-rise {
+    animation: none;
+  }
+}

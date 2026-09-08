@@ -1,0 +1,6 @@
+/* PARA CSS entry (Tailwind v4). Preset first, then app @source, then shell rules in a separate file. */
+@import "@nebutra/ui/styles/preset.css";
+
+@source "../**/*.{ts,tsx}";
+
+@import "../styles/shell.css";
