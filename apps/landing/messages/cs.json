@@ -1242,6 +1242,23 @@
         "cta": "Zobrazit architekturu fakturace"
       }
     },
+    "productDemo": {
+      "badge": "Ukázka produktu",
+      "title": "Podívejte se na platformu v akci.",
+      "description": "Tři plochy, které každé AI SaaS dodává hned první den — analytika, fakturace a pracovní prostory — běží na stejném typovaném jádru.",
+      "analytics": {
+        "label": "Analytika",
+        "desc": "Od příjmu událostí po dashboard s dotazy omezenými na tenanta a bez lepicího kódu."
+      },
+      "billing": {
+        "label": "Fakturace",
+        "desc": "Předplatné, oprávnění a měření využití napojené na poskytovatele podle vašeho výběru."
+      },
+      "workspaces": {
+        "label": "Pracovní prostory",
+        "desc": "Multi-tenant organizace, pozvánky a role se zabezpečením na úrovni řádků ve výchozím nastavení."
+      }
+    },
     "workflow": {
       "badge": "Rychlost",
       "title": "Od nuly k produkci v rekordním čase.",

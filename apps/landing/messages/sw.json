@@ -1242,6 +1242,23 @@
         "cta": "Tazama muundo wa bililingi"
       }
     },
+    "productDemo": {
+      "badge": "Onyesho la bidhaa",
+      "title": "Tazama jukwaa likifanya kazi.",
+      "description": "Nyuso tatu ambazo kila SaaS ya AI hutoa tangu siku ya kwanza — uchanganuzi, malipo na nafasi za kazi — zikiendeshwa kwenye kiini kimoja chenye aina.",
+      "analytics": {
+        "label": "Uchanganuzi",
+        "desc": "Kutoka upokeaji wa matukio hadi dashibodi, kwa hoja zilizowekewa mipaka ya mpangaji na bila msimbo wa kuunganisha."
+      },
+      "billing": {
+        "label": "Malipo",
+        "desc": "Usajili, haki na upimaji wa matumizi vilivyounganishwa na mtoa huduma unayemchagua."
+      },
+      "workspaces": {
+        "label": "Nafasi za kazi",
+        "desc": "Mashirika ya wapangaji wengi, mialiko na majukumu yenye usalama wa kiwango cha safu kwa chaguo-msingi."
+      }
+    },
     "workflow": {
       "badge": "Kasi",
       "title": "Kutoka sifuri hadi uzalishaji kwa muda wa rekodi.",

@@ -1242,6 +1242,23 @@
         "cta": "Faturalandırma mimarisini gör"
       }
     },
+    "productDemo": {
+      "badge": "Ürün demosu",
+      "title": "Platformu çalışırken görün.",
+      "description": "Her yapay zekâ SaaS'ının ilk günden sunduğu üç yüzey — analitik, faturalama ve çalışma alanları — aynı tipli çekirdek üzerinde çalışır.",
+      "analytics": {
+        "label": "Analitik",
+        "desc": "Olay alımından panoya, kiracıya göre sınırlanmış sorgularla ve yapıştırma kodu olmadan."
+      },
+      "billing": {
+        "label": "Faturalama",
+        "desc": "Abonelikler, yetkiler ve kullanım ölçümü, seçtiğiniz sağlayıcıya bağlı."
+      },
+      "workspaces": {
+        "label": "Çalışma alanları",
+        "desc": "Çok kiracılı kuruluşlar, davetler ve roller, varsayılan olarak satır düzeyi güvenlikle."
+      }
+    },
     "workflow": {
       "badge": "Hız",
       "title": "Sıfırdan üretime rekor sürede.",
