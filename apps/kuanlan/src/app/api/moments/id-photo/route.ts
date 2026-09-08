@@ -140,7 +140,7 @@ export async function POST(request: Request) {
     // The row is the truth from here on. No row, no shoot: if the database
     // cannot record it, the model is not called — recording is what makes a
     // shoot countable, refundable and deletable later.
-    scoped = await tenantDbFor(session.userId);
+    scoped = await tenantDbFor(session);
     const idempotencyKey = shootIdempotencyKey({
       userId: session.userId,
       skuId: print.id,

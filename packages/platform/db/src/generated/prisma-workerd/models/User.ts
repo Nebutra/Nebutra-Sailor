@@ -161,8 +161,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
-  clerkId: string
-  email: string
+  clerkId: string | null
+  email: string | null
   name: string | null
   avatarUrl: string | null
   createdAt: Date
@@ -192,8 +192,8 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
-  clerkId?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
+  clerkId?: Prisma.StringNullableFilter<"User"> | string | null
+  email?: Prisma.StringNullableFilter<"User"> | string | null
   name?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -209,8 +209,8 @@ export type UserWhereInput = {
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  clerkId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  clerkId?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -246,8 +246,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  clerkId?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  clerkId?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -262,8 +262,8 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  clerkId?: Prisma.StringWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  clerkId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -272,8 +272,8 @@ export type UserScalarWhereWithAggregatesInput = {
 
 export type UserCreateInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -289,8 +289,8 @@ export type UserCreateInput = {
 
 export type UserUncheckedCreateInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -306,8 +306,8 @@ export type UserUncheckedCreateInput = {
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -323,8 +323,8 @@ export type UserUpdateInput = {
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -340,8 +340,8 @@ export type UserUncheckedUpdateInput = {
 
 export type UserCreateManyInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -350,8 +350,8 @@ export type UserCreateManyInput = {
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,8 +360,8 @@ export type UserUpdateManyMutationInput = {
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -510,8 +510,8 @@ export type UserUpdateOneRequiredWithoutPlatformStaffNestedInput = {
 
 export type UserCreateWithoutTenantInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -526,8 +526,8 @@ export type UserCreateWithoutTenantInput = {
 
 export type UserUncheckedCreateWithoutTenantInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -558,8 +558,8 @@ export type UserUpdateToOneWithWhereWithoutTenantInput = {
 
 export type UserUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -574,8 +574,8 @@ export type UserUpdateWithoutTenantInput = {
 
 export type UserUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -590,8 +590,8 @@ export type UserUncheckedUpdateWithoutTenantInput = {
 
 export type UserCreateWithoutOrganizationsInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -606,8 +606,8 @@ export type UserCreateWithoutOrganizationsInput = {
 
 export type UserUncheckedCreateWithoutOrganizationsInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -638,8 +638,8 @@ export type UserUpdateToOneWithWhereWithoutOrganizationsInput = {
 
 export type UserUpdateWithoutOrganizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -654,8 +654,8 @@ export type UserUpdateWithoutOrganizationsInput = {
 
 export type UserUncheckedUpdateWithoutOrganizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -670,8 +670,8 @@ export type UserUncheckedUpdateWithoutOrganizationsInput = {
 
 export type UserCreateWithoutContentsInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -686,8 +686,8 @@ export type UserCreateWithoutContentsInput = {
 
 export type UserUncheckedCreateWithoutContentsInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -718,8 +718,8 @@ export type UserUpdateToOneWithWhereWithoutContentsInput = {
 
 export type UserUpdateWithoutContentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -734,8 +734,8 @@ export type UserUpdateWithoutContentsInput = {
 
 export type UserUncheckedUpdateWithoutContentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -750,8 +750,8 @@ export type UserUncheckedUpdateWithoutContentsInput = {
 
 export type UserCreateWithoutOrdersInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -766,8 +766,8 @@ export type UserCreateWithoutOrdersInput = {
 
 export type UserUncheckedCreateWithoutOrdersInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -798,8 +798,8 @@ export type UserUpdateToOneWithWhereWithoutOrdersInput = {
 
 export type UserUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -814,8 +814,8 @@ export type UserUpdateWithoutOrdersInput = {
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -830,8 +830,8 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
 
 export type UserCreateWithoutOauthAuthorizationsInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -846,8 +846,8 @@ export type UserCreateWithoutOauthAuthorizationsInput = {
 
 export type UserUncheckedCreateWithoutOauthAuthorizationsInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -878,8 +878,8 @@ export type UserUpdateToOneWithWhereWithoutOauthAuthorizationsInput = {
 
 export type UserUpdateWithoutOauthAuthorizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -894,8 +894,8 @@ export type UserUpdateWithoutOauthAuthorizationsInput = {
 
 export type UserUncheckedUpdateWithoutOauthAuthorizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -910,8 +910,8 @@ export type UserUncheckedUpdateWithoutOauthAuthorizationsInput = {
 
 export type UserCreateWithoutThreadsInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -926,8 +926,8 @@ export type UserCreateWithoutThreadsInput = {
 
 export type UserUncheckedCreateWithoutThreadsInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -958,8 +958,8 @@ export type UserUpdateToOneWithWhereWithoutThreadsInput = {
 
 export type UserUpdateWithoutThreadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -974,8 +974,8 @@ export type UserUpdateWithoutThreadsInput = {
 
 export type UserUncheckedUpdateWithoutThreadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -990,8 +990,8 @@ export type UserUncheckedUpdateWithoutThreadsInput = {
 
 export type UserCreateWithoutPlatformStaffInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -1006,8 +1006,8 @@ export type UserCreateWithoutPlatformStaffInput = {
 
 export type UserUncheckedCreateWithoutPlatformStaffInput = {
   id?: string
-  clerkId: string
-  email: string
+  clerkId?: string | null
+  email?: string | null
   name?: string | null
   avatarUrl?: string | null
   createdAt?: Date | string
@@ -1038,8 +1038,8 @@ export type UserUpdateToOneWithWhereWithoutPlatformStaffInput = {
 
 export type UserUpdateWithoutPlatformStaffInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1054,8 +1054,8 @@ export type UserUpdateWithoutPlatformStaffInput = {
 
 export type UserUncheckedUpdateWithoutPlatformStaffInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1210,8 +1210,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    clerkId: string
-    email: string
+    clerkId: string | null
+    email: string | null
     name: string | null
     avatarUrl: string | null
     createdAt: Date

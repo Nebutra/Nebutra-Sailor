@@ -63,7 +63,7 @@ export async function PATCH(request: Request) {
     // `language` is currently a UI-side preference (NEXT_LOCALE cookie) — it is
     // accepted by this endpoint for forward-compatibility once the User schema
     // gains a `language` column.
-    let updated: { id: string; name: string | null; email: string } | undefined;
+    let updated: { id: string; name: string | null; email: string | null } | undefined;
     if (Object.keys(updates).length > 0) {
       updated = await db.user.update({
         where: { id: authState.userId },

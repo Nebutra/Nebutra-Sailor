@@ -160,7 +160,7 @@ export async function listIdPhotoMoments(
 }
 
 async function scopedFor(userId: string): Promise<{ db: ShootStore; tenantId: string }> {
-  const { db, tenant } = await tenantDbFor(userId);
+  const { db, tenant } = await tenantDbFor({ userId });
   return { db, tenantId: tenant.tenantId };
 }
 

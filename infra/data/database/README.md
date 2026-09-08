@@ -16,8 +16,35 @@ infra/iac/terraform/          → Cloud infrastructure provisioning
 pnpm db:generate    # Generate Prisma client
 pnpm db:migrate     # Run migrations
 pnpm db:push        # Push schema (dev only)
+
+# Production: Actions → "Ops — apply pending database migrations" → Run.
+# It picks migrate deploy or db push from the database's own history and
+# never accepts data loss on your behalf.
 pnpm db:studio      # Open Prisma Studio
 ```
+
+## Identity mirror (`users` ↔ `auth_users`)
+
+Two user tables exist on purpose. `auth_users` belongs to Better Auth, which
+owns sign-up, sessions and credentials. `users` is the platform's own row —
+thirteen foreign keys reference it (tenants, consents, skills, …). Until
+2026-09 only the Clerk webhook wrote `users`, so anyone who signed up through
+Better Auth had no row, and the first `INSERT` that referenced them failed on
+`tenants_user_id_fkey`.
+
+The bridge is `UserRepository.ensureFromIdentity` in `@nebutra/repositories`:
+one upsert, `users.id = auth_users.id`, so a session's `userId` can be stored
+directly. Two callers, both in `@nebutra/auth`'s `identity-mirror.ts`:
+
+| Path | When | For whom |
+|---|---|---|
+| `databaseHooks.user.create.after` | at sign-up | everyone from now on |
+| `ensureUserRecordForSession(prisma, session)` | before a write that references `users` | anyone who signed up before the hook |
+
+The lazy path is what makes a backfill unnecessary: call it and the row is
+there. A mirrored identity has no Clerk id and, for a phone-only account, no
+email — both columns are nullable since `20260907000000_users_identity_mirror`
+and stay unique (Postgres allows any number of `NULL`s under a unique index).
 
 ## Row Level Security (RLS)
 
