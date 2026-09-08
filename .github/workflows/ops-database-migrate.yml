@@ -87,11 +87,14 @@ jobs:
               applied = a.n; last = a.last;
             }
             const { rows: [t] } = await client.query("select count(*)::int as n from pg_tables where schemaname = \x27public\x27");
+            const { rows: [r] } = await client.query("select bool_or(rolname = \x27postgres\x27) as postgres, bool_or(rolname = \x27app_user\x27) as app_user from pg_roles");
+            const { rows: [p] } = await client.query("select count(*)::int as n from pg_policies where schemaname = \x27public\x27");
             await client.end();
             const out = process.env.GITHUB_OUTPUT;
             const fs = await import("node:fs");
             fs.appendFileSync(out, `has_history=${h.has_history}\napplied=${applied}\nlast=${last}\ntables=${t.n}\nhost=${url.hostname}:${url.port || 5432}\n`);
             console.log(`host ${url.hostname}:${url.port || 5432}  public tables ${t.n}  migration history ${h.has_history ? applied + " applied, last " + last : "none"}`);
+            console.log(`roles: postgres=${r.postgres} app_user=${r.app_user}  policies: ${p.n}`);
           '
 
       - name: Decide how
