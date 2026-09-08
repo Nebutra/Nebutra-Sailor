@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { PageHeader } from "@nebutra/ui/layout";
 import { DashboardPanel } from "@nebutra/ui/patterns";
 import { SupplySyncButton } from "@/components/supply-sync-button";
@@ -22,7 +23,7 @@ export default async function SupplyPage() {
     <div className="mx-auto max-w-[1400px] px-4 py-10 md:px-6">
       <PageHeader
         title="Supply"
-        description="Router 供给引擎。API-key 渠道和账号号池都在 New-API 后面汇成一条 router.nebutra.com/v1。"
+        description={`Router 供给引擎。API-key 渠道和账号号池都在 New-API 后面汇成一条 ${brand.domains.router}/v1。`}
       />
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">

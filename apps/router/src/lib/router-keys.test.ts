@@ -3,10 +3,10 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 vi.mock("@nebutra/db", () => ({ getSystemDb: () => ({}) }));
 
-const { createNebutraKeyResolver } = await import("./router-keys");
+const { createProductKeyResolver } = await import("./router-keys");
 const { hashApiKeyPlaintext } = await import("@nebutra/repositories");
 
-describe("createNebutraKeyResolver", () => {
+describe("createProductKeyResolver", () => {
   const active = {
     id: "key_1",
     tenantId: "tenant_1",
@@ -26,7 +26,7 @@ describe("createNebutraKeyResolver", () => {
       findActiveByHash: vi.fn().mockResolvedValue(active),
       touchLastUsed: vi.fn().mockResolvedValue(undefined),
     };
-    const resolve = createNebutraKeyResolver(repo, () => clock);
+    const resolve = createProductKeyResolver(repo, () => clock);
 
     expect(await resolve("sk-sailor-plain")).toEqual({
       keyId: "key_1",

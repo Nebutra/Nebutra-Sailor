@@ -7,7 +7,7 @@ import type { EdgeIdentity, KeyResolver } from "./openai-edge";
 /**
  * Which credential the /v1 edge expects.
  *
- * - `nebutra`      — a Nebutra-issued key (shared APIKey table); the edge swaps
+ * - `nebutra`      — a product-issued key (shared APIKey table); the edge swaps
  *                    it for NEW_API_ACCESS_TOKEN upstream. Production target.
  * - `newapi-token` — legacy: the customer holds a New-API user token and the
  *                    edge forwards it untouched. Default until keys migrate.
@@ -32,7 +32,7 @@ const CACHE_CAP = 2_000;
  * Revocation in this process is immediate (see {@link invalidateKeyCache});
  * across instances it lags by at most POSITIVE_TTL_MS.
  */
-export function createNebutraKeyResolver(
+export function createProductKeyResolver(
   repo: Pick<ApiKeyRepository, "findActiveByHash" | "touchLastUsed">,
   now: () => number = Date.now,
 ): KeyResolver & { invalidate: (keyHash?: string) => void } {
@@ -68,14 +68,14 @@ export function createNebutraKeyResolver(
 }
 
 const g = globalThis as unknown as {
-  __routerKeyResolver?: ReturnType<typeof createNebutraKeyResolver>;
+  __routerKeyResolver?: ReturnType<typeof createProductKeyResolver>;
 };
 
 /** Process-wide resolver in `nebutra` mode; `undefined` in legacy mode. */
 export function getKeyResolver(): KeyResolver | undefined {
   if (routerKeyStoreMode() !== "nebutra") return undefined;
   if (!g.__routerKeyResolver) {
-    g.__routerKeyResolver = createNebutraKeyResolver(new ApiKeyRepository(getSystemDb()));
+    g.__routerKeyResolver = createProductKeyResolver(new ApiKeyRepository(getSystemDb()));
   }
   return g.__routerKeyResolver;
 }
