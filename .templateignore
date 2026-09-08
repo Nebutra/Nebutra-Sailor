@@ -222,6 +222,7 @@ tests/load/
 .github/workflows/deploy-carina-ecs.yml
 .github/workflows/deploy-carina-fly.yml
 .github/workflows/deploy-new-api-fly.yml
+.github/workflows/deploy-cliproxyapi-fly.yml
 .github/workflows/deploy-dns-leak-fly.yml
 .github/workflows/deploy-gateway.yml
 .github/workflows/deploy-origin-ecs.yml
@@ -316,6 +317,7 @@ tests/architecture/nebutra/
 infra/fly/admin.toml
 infra/fly/auth.toml
 infra/fly/carina.toml
+infra/fly/cliproxyapi.toml
 infra/fly/design.toml
 infra/fly/dns-leak.toml
 infra/fly/forge.toml
