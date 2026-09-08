@@ -71,15 +71,37 @@ CREATE INDEX IF NOT EXISTS "code_redemptions_tenant_id_idx" ON "code_redemptions
 -- below also filters on to_tenant_id (the receiving side of a transfer).
 CREATE INDEX IF NOT EXISTS "tenant_transfer_journals_to_tenant_id_idx" ON "tenant_transfer_journals" ("to_tenant_id");
 
+-- The helper every policy below calls. 20260313_enable_rls defines it, and
+-- production's history says 20260313 was applied — but the first real
+-- `migrate deploy` there failed with "function current_org_id() does not
+-- exist": that history was recorded against a database shaped by db push, not
+-- by running the files. Defining it here again is idempotent and costs
+-- nothing where it already exists; it makes this migration true on its own.
+CREATE OR REPLACE FUNCTION current_org_id() RETURNS text
+  LANGUAGE sql STABLE
+AS $$
+  SELECT COALESCE(current_setting('app.current_tenant_id', true), '')
+$$;
+
+-- Idempotency (2026-09-08): every CREATE POLICY below is preceded by
+-- DROP POLICY IF EXISTS. This migration had never reached production — the
+-- history there stopped at 20260730 — while infra/data/database/policies/
+-- rls.sql had, and four of its policy names (cofounder_profiles_select/write,
+-- tenant_transfer_journals_select/write) are the same as the ones here, so a
+-- plain CREATE would have failed midway on the first `migrate deploy`. The
+-- drop makes the chain the owner of those four names; the definitions are
+-- equivalent (see the rationale above). Re-running the file is now a no-op.
 -- ── Standard tenant_id / organization_id / id tables ──────────────────────────
 ALTER TABLE "access_invite_codes" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "access_invite_codes_bypass" ON "access_invite_codes";
 CREATE POLICY "access_invite_codes_bypass" ON "access_invite_codes"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "access_invite_codes_tenant" ON "access_invite_codes";
 CREATE POLICY "access_invite_codes_tenant" ON "access_invite_codes"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -87,12 +109,14 @@ CREATE POLICY "access_invite_codes_tenant" ON "access_invite_codes"
 
 ALTER TABLE "access_invite_redemptions" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "access_invite_redemptions_bypass" ON "access_invite_redemptions";
 CREATE POLICY "access_invite_redemptions_bypass" ON "access_invite_redemptions"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "access_invite_redemptions_tenant" ON "access_invite_redemptions";
 CREATE POLICY "access_invite_redemptions_tenant" ON "access_invite_redemptions"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -100,12 +124,14 @@ CREATE POLICY "access_invite_redemptions_tenant" ON "access_invite_redemptions"
 
 ALTER TABLE "agent_rollout_lines" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "agent_rollout_lines_bypass" ON "agent_rollout_lines";
 CREATE POLICY "agent_rollout_lines_bypass" ON "agent_rollout_lines"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "agent_rollout_lines_tenant" ON "agent_rollout_lines";
 CREATE POLICY "agent_rollout_lines_tenant" ON "agent_rollout_lines"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -113,12 +139,14 @@ CREATE POLICY "agent_rollout_lines_tenant" ON "agent_rollout_lines"
 
 ALTER TABLE "ai_request_logs" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "ai_request_logs_bypass" ON "ai_request_logs";
 CREATE POLICY "ai_request_logs_bypass" ON "ai_request_logs"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "ai_request_logs_tenant" ON "ai_request_logs";
 CREATE POLICY "ai_request_logs_tenant" ON "ai_request_logs"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -126,12 +154,14 @@ CREATE POLICY "ai_request_logs_tenant" ON "ai_request_logs"
 
 ALTER TABLE "audit_logs" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "audit_logs_bypass" ON "audit_logs";
 CREATE POLICY "audit_logs_bypass" ON "audit_logs"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "audit_logs_tenant" ON "audit_logs";
 CREATE POLICY "audit_logs_tenant" ON "audit_logs"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -139,12 +169,14 @@ CREATE POLICY "audit_logs_tenant" ON "audit_logs"
 
 ALTER TABLE "automation_runs" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "automation_runs_bypass" ON "automation_runs";
 CREATE POLICY "automation_runs_bypass" ON "automation_runs"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "automation_runs_tenant" ON "automation_runs";
 CREATE POLICY "automation_runs_tenant" ON "automation_runs"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -152,12 +184,14 @@ CREATE POLICY "automation_runs_tenant" ON "automation_runs"
 
 ALTER TABLE "automations" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "automations_bypass" ON "automations";
 CREATE POLICY "automations_bypass" ON "automations"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "automations_tenant" ON "automations";
 CREATE POLICY "automations_tenant" ON "automations"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -165,12 +199,14 @@ CREATE POLICY "automations_tenant" ON "automations"
 
 ALTER TABLE "chat_sessions" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "chat_sessions_bypass" ON "chat_sessions";
 CREATE POLICY "chat_sessions_bypass" ON "chat_sessions"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "chat_sessions_tenant" ON "chat_sessions";
 CREATE POLICY "chat_sessions_tenant" ON "chat_sessions"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -178,12 +214,14 @@ CREATE POLICY "chat_sessions_tenant" ON "chat_sessions"
 
 ALTER TABLE "code_redemptions" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "code_redemptions_bypass" ON "code_redemptions";
 CREATE POLICY "code_redemptions_bypass" ON "code_redemptions"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "code_redemptions_tenant" ON "code_redemptions";
 CREATE POLICY "code_redemptions_tenant" ON "code_redemptions"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -191,12 +229,14 @@ CREATE POLICY "code_redemptions_tenant" ON "code_redemptions"
 
 ALTER TABLE "connectors" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "connectors_bypass" ON "connectors";
 CREATE POLICY "connectors_bypass" ON "connectors"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "connectors_tenant" ON "connectors";
 CREATE POLICY "connectors_tenant" ON "connectors"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -204,12 +244,14 @@ CREATE POLICY "connectors_tenant" ON "connectors"
 
 ALTER TABLE "credit_balances" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "credit_balances_bypass" ON "credit_balances";
 CREATE POLICY "credit_balances_bypass" ON "credit_balances"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "credit_balances_tenant" ON "credit_balances";
 CREATE POLICY "credit_balances_tenant" ON "credit_balances"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -217,12 +259,14 @@ CREATE POLICY "credit_balances_tenant" ON "credit_balances"
 
 ALTER TABLE "customer_feature_overrides" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "customer_feature_overrides_bypass" ON "customer_feature_overrides";
 CREATE POLICY "customer_feature_overrides_bypass" ON "customer_feature_overrides"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "customer_feature_overrides_tenant" ON "customer_feature_overrides";
 CREATE POLICY "customer_feature_overrides_tenant" ON "customer_feature_overrides"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -230,12 +274,14 @@ CREATE POLICY "customer_feature_overrides_tenant" ON "customer_feature_overrides
 
 ALTER TABLE "customer_plan_versions" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "customer_plan_versions_bypass" ON "customer_plan_versions";
 CREATE POLICY "customer_plan_versions_bypass" ON "customer_plan_versions"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "customer_plan_versions_tenant" ON "customer_plan_versions";
 CREATE POLICY "customer_plan_versions_tenant" ON "customer_plan_versions"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -243,12 +289,14 @@ CREATE POLICY "customer_plan_versions_tenant" ON "customer_plan_versions"
 
 ALTER TABLE "customer_usage_limits" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "customer_usage_limits_bypass" ON "customer_usage_limits";
 CREATE POLICY "customer_usage_limits_bypass" ON "customer_usage_limits"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "customer_usage_limits_tenant" ON "customer_usage_limits";
 CREATE POLICY "customer_usage_limits_tenant" ON "customer_usage_limits"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -256,12 +304,14 @@ CREATE POLICY "customer_usage_limits_tenant" ON "customer_usage_limits"
 
 ALTER TABLE "feedback_reports" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "feedback_reports_bypass" ON "feedback_reports";
 CREATE POLICY "feedback_reports_bypass" ON "feedback_reports"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "feedback_reports_tenant" ON "feedback_reports";
 CREATE POLICY "feedback_reports_tenant" ON "feedback_reports"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -269,12 +319,14 @@ CREATE POLICY "feedback_reports_tenant" ON "feedback_reports"
 
 ALTER TABLE "invoices" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "invoices_bypass" ON "invoices";
 CREATE POLICY "invoices_bypass" ON "invoices"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "invoices_tenant" ON "invoices";
 CREATE POLICY "invoices_tenant" ON "invoices"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -282,12 +334,14 @@ CREATE POLICY "invoices_tenant" ON "invoices"
 
 ALTER TABLE "notification_preferences" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "notification_preferences_bypass" ON "notification_preferences";
 CREATE POLICY "notification_preferences_bypass" ON "notification_preferences"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "notification_preferences_tenant" ON "notification_preferences";
 CREATE POLICY "notification_preferences_tenant" ON "notification_preferences"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -295,12 +349,14 @@ CREATE POLICY "notification_preferences_tenant" ON "notification_preferences"
 
 ALTER TABLE "notifications" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "notifications_bypass" ON "notifications";
 CREATE POLICY "notifications_bypass" ON "notifications"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "notifications_tenant" ON "notifications";
 CREATE POLICY "notifications_tenant" ON "notifications"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -308,12 +364,14 @@ CREATE POLICY "notifications_tenant" ON "notifications"
 
 ALTER TABLE "oauth_clients" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "oauth_clients_bypass" ON "oauth_clients";
 CREATE POLICY "oauth_clients_bypass" ON "oauth_clients"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "oauth_clients_tenant" ON "oauth_clients";
 CREATE POLICY "oauth_clients_tenant" ON "oauth_clients"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -321,12 +379,14 @@ CREATE POLICY "oauth_clients_tenant" ON "oauth_clients"
 
 ALTER TABLE "payment_methods" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "payment_methods_bypass" ON "payment_methods";
 CREATE POLICY "payment_methods_bypass" ON "payment_methods"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "payment_methods_tenant" ON "payment_methods";
 CREATE POLICY "payment_methods_tenant" ON "payment_methods"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -334,12 +394,14 @@ CREATE POLICY "payment_methods_tenant" ON "payment_methods"
 
 ALTER TABLE "payments" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "payments_bypass" ON "payments";
 CREATE POLICY "payments_bypass" ON "payments"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "payments_tenant" ON "payments";
 CREATE POLICY "payments_tenant" ON "payments"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -347,12 +409,14 @@ CREATE POLICY "payments_tenant" ON "payments"
 
 ALTER TABLE "stripe_customers" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "stripe_customers_bypass" ON "stripe_customers";
 CREATE POLICY "stripe_customers_bypass" ON "stripe_customers"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "stripe_customers_tenant" ON "stripe_customers";
 CREATE POLICY "stripe_customers_tenant" ON "stripe_customers"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -360,12 +424,14 @@ CREATE POLICY "stripe_customers_tenant" ON "stripe_customers"
 
 ALTER TABLE "subscriptions" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "subscriptions_bypass" ON "subscriptions";
 CREATE POLICY "subscriptions_bypass" ON "subscriptions"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "subscriptions_tenant" ON "subscriptions";
 CREATE POLICY "subscriptions_tenant" ON "subscriptions"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -373,12 +439,14 @@ CREATE POLICY "subscriptions_tenant" ON "subscriptions"
 
 ALTER TABLE "tasks" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "tasks_bypass" ON "tasks";
 CREATE POLICY "tasks_bypass" ON "tasks"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "tasks_tenant" ON "tasks";
 CREATE POLICY "tasks_tenant" ON "tasks"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -386,12 +454,14 @@ CREATE POLICY "tasks_tenant" ON "tasks"
 
 ALTER TABLE "tenant_provider_keys" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "tenant_provider_keys_bypass" ON "tenant_provider_keys";
 CREATE POLICY "tenant_provider_keys_bypass" ON "tenant_provider_keys"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "tenant_provider_keys_tenant" ON "tenant_provider_keys";
 CREATE POLICY "tenant_provider_keys_tenant" ON "tenant_provider_keys"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -399,12 +469,14 @@ CREATE POLICY "tenant_provider_keys_tenant" ON "tenant_provider_keys"
 
 ALTER TABLE "threads" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "threads_bypass" ON "threads";
 CREATE POLICY "threads_bypass" ON "threads"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "threads_tenant" ON "threads";
 CREATE POLICY "threads_tenant" ON "threads"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -412,12 +484,14 @@ CREATE POLICY "threads_tenant" ON "threads"
 
 ALTER TABLE "uploads" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "uploads_bypass" ON "uploads";
 CREATE POLICY "uploads_bypass" ON "uploads"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "uploads_tenant" ON "uploads";
 CREATE POLICY "uploads_tenant" ON "uploads"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -425,12 +499,14 @@ CREATE POLICY "uploads_tenant" ON "uploads"
 
 ALTER TABLE "usage_ledger_entries" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "usage_ledger_entries_bypass" ON "usage_ledger_entries";
 CREATE POLICY "usage_ledger_entries_bypass" ON "usage_ledger_entries"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "usage_ledger_entries_tenant" ON "usage_ledger_entries";
 CREATE POLICY "usage_ledger_entries_tenant" ON "usage_ledger_entries"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -438,12 +514,14 @@ CREATE POLICY "usage_ledger_entries_tenant" ON "usage_ledger_entries"
 
 ALTER TABLE "user_consents" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "user_consents_bypass" ON "user_consents";
 CREATE POLICY "user_consents_bypass" ON "user_consents"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "user_consents_tenant" ON "user_consents";
 CREATE POLICY "user_consents_tenant" ON "user_consents"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -451,12 +529,14 @@ CREATE POLICY "user_consents_tenant" ON "user_consents"
 
 ALTER TABLE "user_skills" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "user_skills_bypass" ON "user_skills";
 CREATE POLICY "user_skills_bypass" ON "user_skills"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "user_skills_tenant" ON "user_skills";
 CREATE POLICY "user_skills_tenant" ON "user_skills"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -464,12 +544,14 @@ CREATE POLICY "user_skills_tenant" ON "user_skills"
 
 ALTER TABLE "workflow_definitions" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "workflow_definitions_bypass" ON "workflow_definitions";
 CREATE POLICY "workflow_definitions_bypass" ON "workflow_definitions"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "workflow_definitions_tenant" ON "workflow_definitions";
 CREATE POLICY "workflow_definitions_tenant" ON "workflow_definitions"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -477,12 +559,14 @@ CREATE POLICY "workflow_definitions_tenant" ON "workflow_definitions"
 
 ALTER TABLE "workflow_runs" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "workflow_runs_bypass" ON "workflow_runs";
 CREATE POLICY "workflow_runs_bypass" ON "workflow_runs"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "workflow_runs_tenant" ON "workflow_runs";
 CREATE POLICY "workflow_runs_tenant" ON "workflow_runs"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -490,12 +574,14 @@ CREATE POLICY "workflow_runs_tenant" ON "workflow_runs"
 
 ALTER TABLE "tenants" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "tenants_bypass" ON "tenants";
 CREATE POLICY "tenants_bypass" ON "tenants"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "tenants_tenant" ON "tenants";
 CREATE POLICY "tenants_tenant" ON "tenants"
   AS PERMISSIVE FOR ALL
   USING ("id" = current_org_id())
@@ -503,12 +589,14 @@ CREATE POLICY "tenants_tenant" ON "tenants"
 
 ALTER TABLE "organization_invitations" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "organization_invitations_bypass" ON "organization_invitations";
 CREATE POLICY "organization_invitations_bypass" ON "organization_invitations"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "organization_invitations_tenant" ON "organization_invitations";
 CREATE POLICY "organization_invitations_tenant" ON "organization_invitations"
   AS PERMISSIVE FOR ALL
   USING ("organization_id" = current_org_id())
@@ -536,12 +624,14 @@ CREATE POLICY "organization_invitations_tenant" ON "organization_invitations"
 -- non-bypass role at the app's transactions (P1.3).
 ALTER TABLE "auth_sessions" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "auth_sessions_bypass" ON "auth_sessions";
 CREATE POLICY "auth_sessions_bypass" ON "auth_sessions"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "auth_sessions_allow_all" ON "auth_sessions";
 CREATE POLICY "auth_sessions_allow_all" ON "auth_sessions"
   AS PERMISSIVE FOR ALL
   USING (true)
@@ -557,16 +647,19 @@ CREATE POLICY "auth_sessions_allow_all" ON "auth_sessions"
 -- infra/data/database/policies/rls.sql's cofounder_profiles_select/_write.
 ALTER TABLE "cofounder_profiles" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "cofounder_profiles_bypass" ON "cofounder_profiles";
 CREATE POLICY "cofounder_profiles_bypass" ON "cofounder_profiles"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "cofounder_profiles_select" ON "cofounder_profiles";
 CREATE POLICY "cofounder_profiles_select" ON "cofounder_profiles"
   AS PERMISSIVE FOR SELECT
   USING ("is_active" = true OR "tenant_id" = current_org_id());
 
+DROP POLICY IF EXISTS "cofounder_profiles_write" ON "cofounder_profiles";
 CREATE POLICY "cofounder_profiles_write" ON "cofounder_profiles"
   AS PERMISSIVE FOR ALL
   USING ("tenant_id" = current_org_id())
@@ -579,16 +672,19 @@ CREATE POLICY "cofounder_profiles_write" ON "cofounder_profiles"
 -- being scoped to the sender.
 ALTER TABLE "tenant_transfer_journals" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "tenant_transfer_journals_bypass" ON "tenant_transfer_journals";
 CREATE POLICY "tenant_transfer_journals_bypass" ON "tenant_transfer_journals"
   AS PERMISSIVE FOR ALL
   TO postgres
   USING (true)
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "tenant_transfer_journals_select" ON "tenant_transfer_journals";
 CREATE POLICY "tenant_transfer_journals_select" ON "tenant_transfer_journals"
   AS PERMISSIVE FOR SELECT
   USING ("from_tenant_id" = current_org_id() OR "to_tenant_id" = current_org_id());
 
+DROP POLICY IF EXISTS "tenant_transfer_journals_write" ON "tenant_transfer_journals";
 CREATE POLICY "tenant_transfer_journals_write" ON "tenant_transfer_journals"
   AS PERMISSIVE FOR ALL
   USING ("from_tenant_id" = current_org_id())

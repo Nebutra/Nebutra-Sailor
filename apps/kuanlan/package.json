@@ -2,7 +2,7 @@
   "name": "@nebutra/kuanlan",
   "version": "0.1.0",
   "private": true,
-  "description": "KUANLAN 观澜 — AI personal presence platform",
+  "description": "KUANLAN \u89c2\u6f9c \u2014 AI personal presence platform",
   "nebutra": {
     "status": "wip",
     "graph": "labs",
@@ -24,11 +24,14 @@
   },
   "dependencies": {
     "@nebutra/auth": "workspace:*",
+    "@nebutra/billing": "workspace:*",
     "@nebutra/brand": "workspace:*",
+    "@nebutra/db": "workspace:*",
     "@nebutra/fonts": "workspace:*",
     "@nebutra/health": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/rate-limit": "workspace:*",
+    "@nebutra/repositories": "workspace:*",
     "@nebutra/storage": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "next": "catalog:",

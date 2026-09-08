@@ -11,7 +11,7 @@ const DIRECTORY_DENSITY = { "--table-cell-padding-x": "1rem", "--table-cell-padd
 export interface AdminUserSearchResult {
   id: string;
   name: string;
-  email: string;
+  email: string | null;
   organizationName?: string | null;
   emailVerified?: boolean | null;
 }
@@ -144,7 +144,7 @@ export function AdminDirectoryPanel({
             kind: "user",
             id: user.id,
             label: user.name,
-            meta: user.email,
+            meta: user.email ?? "No email",
             detail: user.organizationName ?? "No organization",
             editHref: `/admin/users/${encodeURIComponent(user.id)}`,
             emailVerified: user.emailVerified ?? false,

@@ -1,0 +1,187 @@
+name: Ops — apply pending database migrations
+# One button. Applies whatever is in packages/platform/db/prisma/migrations and
+# not yet in the database behind the repository's DATABASE_URL secret.
+#
+# Two ways in, and the database itself picks:
+#   - it has a `_prisma_migrations` table  → `prisma migrate deploy`: applies
+#     the pending files in order and records each one;
+#   - it has none                           → it was shaped by `db push`, and
+#     `migrate deploy` would replay history from zero into tables that already
+#     exist. So it is `db push` again: the live schema is diffed against
+#     schema.prisma and only the difference is applied. It refuses on its own
+#     when a step would lose data — there is deliberately no
+#     `--accept-data-loss` here; that decision is a person's, at a keyboard.
+# `mode` overrides the choice. `dry_run` shows the plan and stops.
+#
+# DDL wants a direct connection: a transaction-pooling PgBouncer can reject the
+# advisory lock migrate takes. If a DIRECT_URL secret exists it is used for this
+# job; otherwise DATABASE_URL is, and the summary says so.
+#
+# Prints hosts, never connection strings.
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "auto = let the database decide; deploy = prisma migrate deploy; push = prisma db push"
+        type: choice
+        options: [auto, deploy, push]
+        default: auto
+      dry_run:
+        description: "Show what would change and stop"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-database-migrate
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    name: Apply pending migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # DIRECT_URL wins when it exists; both names are set because
+      # prisma.config.ts reads DATABASE_URL for the datasource and
+      # DIRECT_URL ?? DATABASE_URL for migrate.
+      DATABASE_URL: ${{ secrets.DIRECT_URL || secrets.DATABASE_URL }}
+      DIRECT_URL: ${{ secrets.DIRECT_URL || secrets.DATABASE_URL }}
+      USING_DIRECT_URL: ${{ secrets.DIRECT_URL != '' }}
+    steps:
+      - name: Require a database URL
+        run: |
+          set -euo pipefail
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "::error::Neither DIRECT_URL nor DATABASE_URL is set as a repository secret, so there is no database to migrate."
+            {
+              echo "### No database"
+              echo
+              echo "Set \`DATABASE_URL\` (and ideally \`DIRECT_URL\`, the non-pooled port) at **Settings → Secrets and variables → Actions**, then run this again."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Look at the database
+        id: inspect
+        working-directory: packages/platform/db
+        run: |
+          set -euo pipefail
+          node --input-type=module -e '
+            import pg from "pg";
+            const url = new URL(process.env.DATABASE_URL);
+            const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: url.hostname.endsWith("localhost") ? undefined : { rejectUnauthorized: false } });
+            await client.connect();
+            const { rows: [h] } = await client.query("select to_regclass(\x27public._prisma_migrations\x27) is not null as has_history");
+            let applied = 0, last = "", failed = [];
+            if (h.has_history) {
+              const { rows: [a] } = await client.query("select count(*)::int as n, coalesce(max(migration_name), \x27\x27) as last from _prisma_migrations where finished_at is not null");
+              applied = a.n; last = a.last;
+              // A migration that started, errored and was never resolved. Prisma
+              // refuses to deploy past it until it is marked rolled back.
+              const { rows: f } = await client.query("select migration_name from _prisma_migrations where finished_at is null and rolled_back_at is null order by started_at");
+              failed = f.map((row) => row.migration_name);
+            }
+            const { rows: [t] } = await client.query("select count(*)::int as n from pg_tables where schemaname = \x27public\x27");
+            const { rows: [r] } = await client.query("select bool_or(rolname = \x27postgres\x27) as postgres, bool_or(rolname = \x27app_user\x27) as app_user from pg_roles");
+            const { rows: [p] } = await client.query("select count(*)::int as n from pg_policies where schemaname = \x27public\x27");
+            await client.end();
+            const out = process.env.GITHUB_OUTPUT;
+            const fs = await import("node:fs");
+            fs.appendFileSync(out, `has_history=${h.has_history}\napplied=${applied}\nlast=${last}\ntables=${t.n}\nhost=${url.hostname}:${url.port || 5432}\nfailed=${failed.join(" ")}\n`);
+            if (failed.length) console.log(`failed, unresolved: ${failed.join(" ")}`);
+            console.log(`host ${url.hostname}:${url.port || 5432}  public tables ${t.n}  migration history ${h.has_history ? applied + " applied, last " + last : "none"}`);
+            console.log(`roles: postgres=${r.postgres} app_user=${r.app_user}  policies: ${p.n}`);
+          '
+
+      - name: Decide how
+        id: mode
+        env:
+          REQUESTED: ${{ inputs.mode }}
+          HAS_HISTORY: ${{ steps.inspect.outputs.has_history }}
+        run: |
+          set -euo pipefail
+          mode="$REQUESTED"
+          if [ "$mode" = "auto" ]; then
+            if [ "$HAS_HISTORY" = "true" ]; then mode=deploy; else mode=push; fi
+          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "mode: $mode (requested $REQUESTED, history: $HAS_HISTORY)"
+
+      - name: Show the plan
+        working-directory: packages/platform/db
+        env:
+          MODE: ${{ steps.mode.outputs.mode }}
+        run: |
+          set -euo pipefail
+          if [ "$MODE" = "deploy" ]; then
+            # Exits non-zero when something is pending — that is the point.
+            pnpm exec prisma migrate status || true
+          else
+            echo "SQL db push would run:"
+            pnpm exec prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --script || true
+          fi
+
+      - name: Clear a failed migration so deploy can retry it
+        # Postgres runs each migration file in one transaction, so a migration
+        # that errored left nothing behind. Prisma still records it as failed
+        # and stops every later deploy at it. Mark it rolled back and deploy
+        # applies it again — from the current file, which is where the fix is.
+        if: ${{ !inputs.dry_run && steps.mode.outputs.mode == 'deploy' && steps.inspect.outputs.failed != '' }}
+        working-directory: packages/platform/db
+        env:
+          FAILED: ${{ steps.inspect.outputs.failed }}
+        run: |
+          set -euo pipefail
+          for m in $FAILED; do
+            echo "marking $m rolled back"
+            pnpm exec prisma migrate resolve --rolled-back "$m"
+          done
+
+      - name: Apply
+        if: ${{ !inputs.dry_run }}
+        working-directory: packages/platform/db
+        env:
+          MODE: ${{ steps.mode.outputs.mode }}
+        run: |
+          set -euo pipefail
+          if [ "$MODE" = "deploy" ]; then
+            pnpm exec prisma migrate deploy
+          else
+            pnpm exec prisma db push
+          fi
+
+      - name: Say what happened
+        if: always()
+        env:
+          MODE: ${{ steps.mode.outputs.mode }}
+          HOST: ${{ steps.inspect.outputs.host }}
+          APPLIED_BEFORE: ${{ steps.inspect.outputs.applied }}
+          LAST_BEFORE: ${{ steps.inspect.outputs.last }}
+          TABLES: ${{ steps.inspect.outputs.tables }}
+          DRY: ${{ inputs.dry_run }}
+          FAILED: ${{ steps.inspect.outputs.failed }}
+          OUTCOME: ${{ job.status }}
+        run: |
+          {
+            echo "### Database migrations — $OUTCOME"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Database | \`$HOST\` ($TABLES public tables) |"
+            echo "| Connection | $([ "$USING_DIRECT_URL" = "true" ] && echo "DIRECT_URL" || echo "DATABASE_URL — set a DIRECT_URL secret if migrate complains about advisory locks through PgBouncer") |"
+            echo "| Mode | \`$MODE\` |"
+            echo "| History before | $([ -n "$LAST_BEFORE" ] && echo "$APPLIED_BEFORE applied, last \`$LAST_BEFORE\`" || echo "none — shaped by db push") |"
+            echo "| Dry run | $DRY |"
+            if [ -n "${FAILED:-}" ]; then
+              echo "| Failed before this run | \`$FAILED\` — marked rolled back, then retried |"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

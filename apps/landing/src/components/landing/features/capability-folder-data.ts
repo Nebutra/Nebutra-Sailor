@@ -228,8 +228,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 21,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 307,
-      testFiles: 53,
+      sourceFiles: 310,
+      testFiles: 55,
       readmes: 15,
     },
     title: copy("Platform Control Plane", "平台控制平面"),
@@ -378,8 +378,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 8,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 101,
-      testFiles: 37,
+      sourceFiles: 102,
+      testFiles: 38,
       readmes: 8,
     },
     title: copy("Identity, Access & Tenant Trust", "身份、访问与租户信任"),
@@ -770,8 +770,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 9,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 92,
-      testFiles: 27,
+      sourceFiles: 93,
+      testFiles: 28,
       readmes: 9,
     },
     title: copy("Commercial System of Record", "商业系统记录源"),

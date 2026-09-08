@@ -194,13 +194,13 @@ worker
 
 | 项 | 落点 |
 |---|---|
-| 个人租户 | 登录回调里保证 personal tenant 存在 |
-| 异步化 | `Task` + `@nebutra/queue`；开拍改为立刻返回 taskId |
-| 幂等 | `Task.idempotencyKey` |
-| 积分 | `@nebutra/billing` 的 credits；余额常驻界面，开拍前显示单价 |
-| 失败退款 | `refundCredits({ relatedId: taskId })` + 调用方去重 |
-| 成本账 | `UsageLedgerEntry` 记供给侧成本，和扣费对账 |
-| 真相迁移 | `listIdPhotoMoments` 从查桶改为查 `Task` |
+| 个人租户 | **已完成**。观澜是 RP、没有登录回调，改为首次需要租户的动作时 `ensurePersonalTenant` 一次 upsert（`Tenant.kind=INDIVIDUAL`、`userId @unique`，schema 早已为此准备）。走 `getSystemDb()`——租户存在之前无从按租户限定，之后一律 `tenantDbFor` |
+| 异步化 | **已完成，但不用队列**。`@nebutra/queue` 在生产拒绝 in-memory provider，且它是对的：只活在进程里的任务重启即丢，而已扣费再丢正是这一层要防的。QStash/Redis 都需要新密钥。改为 `Task` 行是持久真相 + `after()` 在响应后同进程执行 + 轮询端点读取时做过期扫描（RUNNING 超 5 分钟 → FAILED + 退款，自愈不用 cron）。将来接 QStash/Redis 只换执行层，行契约不动 |
+| 幂等 | **已完成，有一处已知窗口**。`Task.idempotencyKey` 没有唯一索引（加索引是平台迁移，本 app 不跑），所以是 find-then-create：同一请求在一次 DB 往返内重复提交可能双建，代价是一张重复照片，远好于之前无上限的失败。唯一索引记为平台层后续 |
+| 积分 | **已完成**。`configureBillingTenantDb(getTenantDb)` 一行接线；扣费在 `deductCredits` 的事务里原子完成，补上了 cost-guardrails 里"缓存窗口内并发超支"那个洞。欢迎赠额走 FREE 档 1500，幂等标记只能挂在 `description` 上（`addBonusCredits` 不带 relatedId），那串字不能随手改。每日刷新需要调度器，记为后续 |
+| 失败退款 | **已完成**。退款前按 `type: REFUND` 在账本源头过滤查 relatedId，不是拉 50 条内存过滤——长历史用户不会被退两次 |
+| 成本账 | **未做**。供给侧真实成本（302.ai 单价）本 app 拿不到；`UsageLedgerEntry` 留到有可靠成本源时再写，不用估算数占位 |
+| 真相迁移 | **已完成**。桶降级为产物存储；`payload` 带 SKU/尺寸，逐张 `HeadObject` 的 N 次往返直接消失，签 URL 是唯一剩下的 R2 调用。R2 key 就是 task id |
 
 **验收**：关掉页面再回来，在跑的那张还在跑；失败的那张钱回来了；
 后台能回答「这个用户拍了几张、花了多少、我们成本多少」。

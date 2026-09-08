@@ -1242,6 +1242,23 @@
         "cta": "Bekijk factureringsarchitectuur"
       }
     },
+    "productDemo": {
+      "badge": "Productdemo",
+      "title": "Zie het platform in actie.",
+      "description": "Drie oppervlakken die elke AI-SaaS vanaf dag één levert — analytics, facturatie en werkruimten — op dezelfde getypeerde kern.",
+      "analytics": {
+        "label": "Analytics",
+        "desc": "Van event-inname tot dashboard met tenant-gebonden query's en zonder lijmcode."
+      },
+      "billing": {
+        "label": "Facturatie",
+        "desc": "Abonnementen, rechten en gebruiksmeting gekoppeld aan de provider van uw keuze."
+      },
+      "workspaces": {
+        "label": "Werkruimten",
+        "desc": "Multi-tenant organisaties, uitnodigingen en rollen met rijniveau-beveiliging als standaard."
+      }
+    },
     "workflow": {
       "badge": "Snelheid",
       "title": "Van nul tot productie in recordtijd.",

@@ -1242,6 +1242,23 @@
         "cta": "Xem kiến trúc thanh toán"
       }
     },
+    "productDemo": {
+      "badge": "Bản demo sản phẩm",
+      "title": "Xem nền tảng vận hành.",
+      "description": "Ba bề mặt mà mọi SaaS AI đều có từ ngày đầu — phân tích, thanh toán và không gian làm việc — chạy trên cùng một lõi có kiểu.",
+      "analytics": {
+        "label": "Phân tích",
+        "desc": "Từ tiếp nhận sự kiện đến bảng điều khiển, với truy vấn giới hạn theo tenant và không cần mã kết dính."
+      },
+      "billing": {
+        "label": "Thanh toán",
+        "desc": "Gói đăng ký, quyền sử dụng và đo lường mức dùng được nối với nhà cung cấp bạn chọn."
+      },
+      "workspaces": {
+        "label": "Không gian làm việc",
+        "desc": "Tổ chức đa tenant, lời mời và vai trò với bảo mật cấp hàng theo mặc định."
+      }
+    },
     "workflow": {
       "badge": "Tốc độ",
       "title": "Từ con số 0 đến sản xuất trong thời gian kỷ lục.",

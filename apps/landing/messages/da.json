@@ -1242,6 +1242,23 @@
         "cta": "Se faktureringsarkitektur"
       }
     },
+    "productDemo": {
+      "badge": "Produktdemo",
+      "title": "Se platformen i bevægelse.",
+      "description": "Tre flader, som enhver AI-SaaS leverer fra dag ét — analyse, fakturering og arbejdsområder — kørende på den samme typede kerne.",
+      "analytics": {
+        "label": "Analyse",
+        "desc": "Fra event-indtag til dashboard med tenant-afgrænsede forespørgsler og ingen limkode."
+      },
+      "billing": {
+        "label": "Fakturering",
+        "desc": "Abonnementer, rettigheder og forbrugsmåling koblet til den udbyder, du vælger."
+      },
+      "workspaces": {
+        "label": "Arbejdsområder",
+        "desc": "Multi-tenant-organisationer, invitationer og roller med rækkeniveau-sikkerhed som standard."
+      }
+    },
     "workflow": {
       "badge": "Hastighed",
       "title": "Fra nul til produktion på rekordtid.",

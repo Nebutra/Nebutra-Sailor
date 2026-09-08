@@ -1242,6 +1242,23 @@
         "cta": "Számlázási architektúra megtekintése"
       }
     },
+    "productDemo": {
+      "badge": "Termékbemutató",
+      "title": "Nézze meg a platformot működés közben.",
+      "description": "Három felület, amelyet minden AI SaaS az első naptól szállít — analitika, számlázás és munkaterek — ugyanazon a típusos magon.",
+      "analytics": {
+        "label": "Analitika",
+        "desc": "Az eseménybefogadástól az irányítópultig, bérlőre szűkített lekérdezésekkel és ragasztókód nélkül."
+      },
+      "billing": {
+        "label": "Számlázás",
+        "desc": "Előfizetések, jogosultságok és használatmérés a választott szolgáltatóhoz kötve."
+      },
+      "workspaces": {
+        "label": "Munkaterek",
+        "desc": "Több bérlős szervezetek, meghívók és szerepkörök alapértelmezett sorszintű biztonsággal."
+      }
+    },
     "workflow": {
       "badge": "Sebesség",
       "title": "Nulláról éles környezetbe rekordidő alatt.",

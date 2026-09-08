@@ -1242,6 +1242,23 @@
         "cta": "Lihat seni bina bilan"
       }
     },
+    "productDemo": {
+      "badge": "Demo produk",
+      "title": "Lihat platform ini beraksi.",
+      "description": "Tiga permukaan yang dihantar setiap SaaS AI sejak hari pertama — analitik, pengebilan dan ruang kerja — berjalan di atas teras bertaip yang sama.",
+      "analytics": {
+        "label": "Analitik",
+        "desc": "Daripada pengambilan acara ke papan pemuka, dengan pertanyaan terhad kepada penyewa dan tanpa kod pelekat."
+      },
+      "billing": {
+        "label": "Pengebilan",
+        "desc": "Langganan, kelayakan dan pengukuran penggunaan yang disambungkan kepada pembekal pilihan anda."
+      },
+      "workspaces": {
+        "label": "Ruang kerja",
+        "desc": "Organisasi berbilang penyewa, jemputan dan peranan dengan keselamatan peringkat baris secara lalai."
+      }
+    },
     "workflow": {
       "badge": "Kelajuan",
       "title": "Dari sifar ke pengeluaran dalam masa rekod.",

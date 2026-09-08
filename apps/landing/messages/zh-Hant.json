@@ -137,7 +137,7 @@
     "links": {
       "product": "产品",
       "features": "功能特性",
-      "forge": "Forge 工具站",
+      "forge": "Forge",
       "pricing": "定价方案",
       "about": "关于我们",
       "showcase": "案例展示",
@@ -1240,6 +1240,23 @@
         "title": "多供应商计费基础设施",
         "desc": "按量计费系统、订阅 Webhook 事件分发以及完全自助化的客户门户。",
         "cta": "了解计费中间件架构"
+      }
+    },
+    "productDemo": {
+      "badge": "產品示範",
+      "title": "看看平台實際運作。",
+      "description": "每個 AI SaaS 第一天就要交付的三個介面——分析、計費、工作區——都跑在同一個強型別核心上。",
+      "analytics": {
+        "label": "分析",
+        "desc": "從事件擷取到儀表板，查詢天然依租戶隔離，沒有膠水程式碼。"
+      },
+      "billing": {
+        "label": "計費",
+        "desc": "訂閱、權益與用量計量，串接你選擇的支付服務商。"
+      },
+      "workspaces": {
+        "label": "工作區",
+        "desc": "多租戶組織、邀請與角色，預設啟用資料列層級安全。"
       }
     },
     "workflow": {

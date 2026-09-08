@@ -8,6 +8,7 @@ export default defineConfig({
     "src/events.ts",
     "src/notifications.ts",
     "src/admin.ts",
+    "src/sleptons.ts",
   ],
   format: ["esm"],
   dts: true,

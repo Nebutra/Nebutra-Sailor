@@ -1,21 +1,24 @@
+import { after } from "next/server";
 import { resolveIdPhotoPrint, SkuUnavailableError } from "@/catalog/skus";
 import { getSessionFromRequest } from "@/lib/auth";
 import { consentGap } from "@/lib/consent";
 import { readFaceConsent } from "@/lib/consent.server";
 import {
-  Image2UnavailableError,
-  idPhotoShootBrief,
-  image2SizeForSku,
-  shootWithImage2,
-} from "@/lib/image2";
+  creditBalance,
+  ensureWelcomeCredits,
+  InsufficientCreditsError,
+  refundShootCredits,
+  reserveShootCredits,
+  shootPriceCredits,
+} from "@/lib/credits";
+import { DbUnavailableError, tenantDbFor } from "@/lib/db";
+import { Image2UnavailableError } from "@/lib/image2";
 import { shootLog } from "@/lib/log";
 import { InvalidResourceKeyError, ResourceStoreUnavailableError } from "@/lib/resources";
-import {
-  deleteIdPhotoMoment,
-  listIdPhotoMoments,
-  persistIdPhotoMoment,
-} from "@/lib/resources.server";
+import { deleteIdPhotoMoment, listIdPhotoMoments } from "@/lib/resources.server";
 import { spendShootAllowance } from "@/lib/shoot-limit";
+import { runShoot } from "@/lib/shoot-runner";
+import { failShoot, openShoot, sha256, shootIdempotencyKey } from "@/lib/shoots";
 
 // Keep this number here so GET / unsigned POST never load sharp.
 const MAX_PORTRAIT_BYTES = 12 * 1024 * 1024;
@@ -126,57 +129,151 @@ export async function POST(request: Request) {
 
   // `step` is the whole point of these lines: when a shoot dies, this is the
   // difference between "it broke" and "the router timed out after 40s".
-  let step: "resolve" | "router" | "compose" | "store" = "resolve";
+  let step: "resolve" | "reserve" | "router" | "compose" | "store" = "resolve";
+  let taskId: string | null = null;
+  let reserved = false;
+  let scoped: Awaited<ReturnType<typeof tenantDbFor>> | null = null;
   try {
-    const { composeIdPhoto } = await import("@/lib/id-photo");
     const print = resolveIdPhotoPrint(skuId, sizeId || undefined);
     const source = Buffer.from(await file.arrayBuffer());
 
-    step = "router";
-    const frame = await shootWithImage2({
-      image: source,
-      prompt: idPhotoShootBrief(print),
-      size: image2SizeForSku(print),
-      mimeType: file.type,
-    });
-
-    step = "compose";
-    const result = await composeIdPhoto({ source: frame, sku: print });
-
-    step = "store";
-    const stored = await persistIdPhotoMoment({
+    // The row is the truth from here on. No row, no shoot: if the database
+    // cannot record it, the model is not called — recording is what makes a
+    // shoot countable, refundable and deletable later.
+    scoped = await tenantDbFor(session);
+    const idempotencyKey = shootIdempotencyKey({
       userId: session.userId,
       skuId: print.id,
       sizeId: print.sizeId,
-      print: result.png,
+      sourceHash: sha256(source),
     });
-
-    shot.info("shoot done", {
-      ms: Date.now() - started,
-      remainingToday: allowance.remaining,
+    const opened = await openShoot(scoped.db, {
+      tenantId: scoped.tenant.tenantId,
+      userId: session.userId,
+      idempotencyKey,
+      payload: { skuId: print.id, sizeId: print.sizeId, sourceHash: sha256(source) },
     });
+    if (opened.reused) {
+      // The same person, spec and portrait already have a row. A finished one
+      // is handed straight back; one still running says so rather than
+      // starting a second model call beside it.
+      if (opened.row.status === "SUCCEEDED" && opened.row.result) {
+        shot.info("shoot reused", { taskId: opened.row.id });
+        const url = await import("@nebutra/storage").then((m) =>
+          m.getSignedDownloadUrl(opened.row.result?.key ?? "", { bucket: "uploads" }),
+        );
+        return Response.json(
+          {
+            id: opened.row.id,
+            skuId: print.id,
+            sizeId: print.sizeId,
+            key: opened.row.result.key,
+            url,
+            width: opened.row.result.width,
+            height: opened.row.result.height,
+            dpi: opened.row.result.dpi,
+            remainingToday: allowance.remaining,
+            price: shootPriceCredits(),
+            balance: await creditBalance(scoped.tenant.tenantId),
+            reused: true,
+          },
+          { status: 200, headers: { "Cache-Control": "no-store" } },
+        );
+      }
+      // Already in flight for this exact request: same id, same poll.
+      shot.info("shoot already in flight", { taskId: opened.row.id, status: opened.row.status });
+      return Response.json(
+        { id: opened.row.id, status: opened.row.status, reused: true },
+        { status: 202, headers: { "Cache-Control": "no-store" } },
+      );
+    }
+    taskId = opened.row.id;
 
+    // Money before the model. A new person is welcomed first — idempotent, one
+    // type-filtered ledger read — and then the price of this shoot is taken
+    // against the Task id, atomically, so two shoots racing for the last
+    // credits cannot both be admitted. If the ledger says no, the row closes
+    // as FAILED with that reason and nothing is generated.
+    step = "reserve";
+    await ensureWelcomeCredits(scoped.tenant.tenantId);
+    let reservation: Awaited<ReturnType<typeof reserveShootCredits>>;
+    try {
+      reservation = await reserveShootCredits(scoped.tenant.tenantId, taskId);
+    } catch (error) {
+      if (error instanceof InsufficientCreditsError) {
+        await failShoot(scoped.db, taskId, {
+          step: "reserve",
+          name: error.name,
+          message: `balance ${error.balance} < price ${error.price}`,
+        });
+        shot.info("shoot refused: insufficient credits", {
+          balance: error.balance,
+          price: error.price,
+        });
+        return Response.json(
+          { error: "insufficient_credits", balance: error.balance, price: error.price },
+          { status: 402, headers: { "Cache-Control": "no-store" } },
+        );
+      }
+      throw error;
+    }
+    reserved = true;
+
+    // Everything expensive happens after this response is on its way. The
+    // row is QUEUED; the worker flips it to RUNNING when it picks it up, and
+    // the studio watches the row. Closing the tab changes nothing.
+    const worker = {
+      db: scoped.db,
+      tenantId: scoped.tenant.tenantId,
+      userId: session.userId,
+      taskId,
+      print,
+      source,
+      mimeType: file.type,
+      log: shot,
+    };
+    after(() => runShoot(worker));
+
+    shot.info("shoot queued", { taskId, ms: Date.now() - started });
     return Response.json(
       {
-        id: stored.id,
+        id: taskId,
+        status: "QUEUED",
         skuId: print.id,
         sizeId: print.sizeId,
-        key: stored.key,
-        url: stored.url,
-        width: result.width,
-        height: result.height,
-        dpi: result.dpi,
         remainingToday: allowance.remaining,
+        price: shootPriceCredits(),
+        balance: reservation.balanceAfter,
       },
-      {
-        status: 200,
-        headers: {
-          "Cache-Control": "no-store",
-        },
-      },
+      { status: 202, headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
     const ms = Date.now() - started;
+    if (taskId && scoped) {
+      // Best effort: the failure is already being reported to the caller
+      // below, and a second failure while recording the first must not mask it.
+      await failShoot(scoped.db, taskId, {
+        step,
+        name: error instanceof Error ? error.name : "Error",
+        message: error instanceof Error ? error.message.slice(0, 500) : String(error),
+      }).catch((recordError) => shot.error("could not record the failure", recordError));
+
+      // No output, no charge. Reserved and then died anywhere past the ledger —
+      // router, compose, store — means the person paid for nothing. The refund
+      // is keyed on the Task id and refuses to run twice, so a retry of this
+      // very path cannot pay them back a second time.
+      if (reserved) {
+        await refundShootCredits(scoped.tenant.tenantId, taskId, `shoot failed at ${step}`)
+          .then((r) =>
+            shot.info("shoot refunded", { refunded: r.refunded, balance: r.balanceAfter }),
+          )
+          .catch((refundError) => shot.error("could not refund the shoot", refundError));
+      }
+    }
+    if (error instanceof DbUnavailableError) {
+      shot.error("shoot refused: no database", error, { step, ms });
+      return Response.json({ error: "unavailable" }, { status: 503 });
+    }
     if (error instanceof SkuUnavailableError) {
       shot.info("shoot rejected", { reason: "sku_unavailable", ms });
       return Response.json({ error: "sku_unavailable" }, { status: 404 });

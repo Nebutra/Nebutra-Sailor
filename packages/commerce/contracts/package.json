@@ -36,6 +36,10 @@
     "./admin": {
       "import": "./dist/admin.js",
       "types": "./dist/admin.d.ts"
+    },
+    "./sleptons": {
+      "import": "./dist/sleptons.js",
+      "types": "./dist/sleptons.d.ts"
     }
   },
   "scripts": {

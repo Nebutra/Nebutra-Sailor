@@ -150,49 +150,87 @@ describe("R2 configuration", () => {
     process.env.R2_SECRET_ACCESS_KEY = "secret";
   }
 
-  const prefix = "kuanlan/moments/id-photo/user_1/";
-  const entry = (name: string, iso?: string) => ({
-    key: `${prefix}${name}`,
-    size: 1,
-    ...(iso ? { lastModified: new Date(iso) } : {}),
-  });
   const sign = async (key: string) => `https://signed.example/${key}`;
 
-  it("deletes the print and the original that used to sit beside it", async () => {
+  /** `prisma.task` shaped only as far as the listing reaches. */
+  function taskStore(rows: Array<Record<string, unknown>>) {
+    const finished = rows.filter((r) => r.status === "SUCCEEDED");
+    return {
+      task: {
+        findMany: async ({ take }: { take?: number }) => {
+          const sorted = [...finished].sort(
+            (a, b) => (b.createdAt as Date).getTime() - (a.createdAt as Date).getTime(),
+          );
+          return take != null ? sorted.slice(0, take) : sorted;
+        },
+        count: async () => finished.length,
+      },
+    } as never;
+  }
+
+  const row = (id: string, iso: string, status = "SUCCEEDED") => ({
+    id,
+    status,
+    payload: { skuId: "linkedin-smoke", sizeId: "linkedin", sourceHash: "h" },
+    result:
+      status === "SUCCEEDED" ? { key: `${prefixOf(id)}`, width: 1, height: 1, dpi: 300 } : null,
+    error: null,
+    createdAt: new Date(iso),
+    completedAt: status === "SUCCEEDED" ? new Date(iso) : null,
+  });
+  const prefixOf = (id: string) => `kuanlan/moments/id-photo/user_1/${id}.png`;
+
+  it("reads Moments from Task rows, newest first, with the SKU on each", async () => {
     configureR2();
 
-    const dropped: string[] = [];
-    const { deleteIdPhotoMoment } = await import("./resources.server");
-    await deleteIdPhotoMoment("user_1", "shot-1", {
-      remove: async (key) => {
-        dropped.push(key);
-      },
+    const { listIdPhotoMoments } = await import("./resources.server");
+    const { moments, total, latestAt } = await listIdPhotoMoments("user_1", {
+      db: taskStore([
+        row("old", "2026-08-01T00:00:00Z"),
+        row("new", "2026-08-09T00:00:00Z"),
+        row("broken", "2026-08-05T00:00:00Z", "FAILED"),
+      ]),
+      tenantId: "t1",
+      sign,
     });
 
-    expect(dropped.sort()).toEqual([
-      "kuanlan/moments/id-photo/user_1/shot-1.png",
-      "kuanlan/moments/id-photo/user_1/shot-1.source",
-    ]);
+    // The failed one is not a Moment. Nothing was ever written for it.
+    expect(total).toBe(2);
+    expect(moments.map((m) => m.id)).toEqual(["new", "old"]);
+    expect(moments[0]).toMatchObject({
+      skuId: "linkedin-smoke",
+      sizeId: "linkedin",
+      url: `https://signed.example/${prefixOf("new")}`,
+    });
+    expect(latestAt?.toISOString()).toBe("2026-08-09T00:00:00.000Z");
   });
 
-  it("cannot be pointed at another person's shelf", async () => {
+  it("bounds the page while still counting everything, with no per-Moment store read", async () => {
     configureR2();
 
-    const { deleteIdPhotoMoment } = await import("./resources.server");
-    await expect(
-      deleteIdPhotoMoment("user_1", "../user_2/shot-1", { remove: async () => {} }),
-    ).rejects.toMatchObject({ name: "InvalidResourceKeyError" });
-  });
+    const signed: string[] = [];
+    const { listIdPhotoMoments } = await import("./resources.server");
+    const { moments, total } = await listIdPhotoMoments(
+      "user_1",
+      {
+        db: taskStore([
+          row("a", "2026-08-01T00:00:00Z"),
+          row("b", "2026-08-02T00:00:00Z"),
+          row("c", "2026-08-03T00:00:00Z"),
+        ]),
+        tenantId: "t1",
+        sign: async (key) => {
+          signed.push(key);
+          return `https://signed.example/${key}`;
+        },
+      },
+      { limit: 1 },
+    );
 
-  it("refuses to delete when the store is unconfigured rather than pretending", async () => {
-    delete process.env.CLOUDFLARE_ACCOUNT_ID;
-    delete process.env.R2_ACCESS_KEY_ID;
-    delete process.env.R2_SECRET_ACCESS_KEY;
-
-    const { deleteIdPhotoMoment } = await import("./resources.server");
-    await expect(
-      deleteIdPhotoMoment("user_1", "shot-1", { remove: async () => {} }),
-    ).rejects.toMatchObject({ name: "ResourceStoreUnavailableError" });
+    expect(total).toBe(3);
+    expect(moments.map((m) => m.id)).toEqual(["c"]);
+    // Signing is the only R2 touch left, and only for the page shown.
+    expect(signed).toEqual([prefixOf("c")]);
   });
 
   it("fails closed when the store is unconfigured, so /me can degrade to identity only", async () => {
@@ -209,81 +247,6 @@ describe("R2 configuration", () => {
     await expect(listIdPhotoMoments("user_1")).rejects.toMatchObject({
       name: "ResourceStoreUnavailableError",
     });
-  });
-
-  it("lists only that person's prints", async () => {
-    configureR2();
-
-    const { listIdPhotoMoments } = await import("./resources.server");
-    const { moments, total } = await listIdPhotoMoments("user_1", {
-      list: async () => [
-        entry("shot-1.png", "2026-08-01T00:00:00Z"),
-        entry("shot-1.source", "2026-08-01T00:00:00Z"),
-        entry("shot-2.png", "2026-08-02T00:00:00Z"),
-      ],
-      sign,
-      head: async () => null,
-    });
-
-    expect(total).toBe(2);
-    expect(moments.map((m) => m.id)).toEqual(["shot-2", "shot-1"]);
-    expect(moments[0]?.url).toBe(`https://signed.example/${prefix}shot-2.png`);
-  });
-
-  it("orders newest first, and puts prints with no time last", async () => {
-    configureR2();
-
-    const { listIdPhotoMoments } = await import("./resources.server");
-    const { moments, latestAt } = await listIdPhotoMoments("user_1", {
-      // Deliberately not in time order: R2 lists lexicographically, and moment
-      // ids are UUIDs, so the store's own order carries no meaning.
-      list: async () => [
-        entry("b.png", "2026-08-01T00:00:00Z"),
-        entry("undated.png"),
-        entry("a.png", "2026-08-09T00:00:00Z"),
-      ],
-      sign,
-      head: async () => null,
-    });
-
-    expect(moments.map((m) => m.id)).toEqual(["a", "b", "undated"]);
-    expect(latestAt?.toISOString()).toBe("2026-08-09T00:00:00.000Z");
-  });
-
-  it("reads the SKU back from metadata, whatever case the store returns it in", async () => {
-    configureR2();
-
-    const { listIdPhotoMoments } = await import("./resources.server");
-    const { moments } = await listIdPhotoMoments("user_1", {
-      list: async () => [entry("shot-1.png", "2026-08-01T00:00:00Z")],
-      sign,
-      // S3 normalises metadata names to lower case on read.
-      head: async (key) => ({
-        key,
-        size: 1,
-        metadata: { skuid: "linkedin-smoke", sizeid: "linkedin" },
-      }),
-    });
-
-    expect(moments[0]).toMatchObject({ skuId: "linkedin-smoke", sizeId: "linkedin" });
-  });
-
-  it("maps an AccessDenied list into ResourceStoreUnavailableError so Moments can fail closed", async () => {
-    configureR2();
-
-    const { listIdPhotoMoments } = await import("./resources.server");
-    const denied = Object.assign(new Error("Access Denied"), {
-      name: "AccessDenied",
-      Code: "AccessDenied",
-    });
-
-    await expect(
-      listIdPhotoMoments("user_1", {
-        list: async () => {
-          throw denied;
-        },
-      }),
-    ).rejects.toMatchObject({ name: "ResourceStoreUnavailableError" });
   });
 
   it("keeps a bad user id as InvalidResourceKeyError, not a store outage", async () => {
@@ -320,32 +283,5 @@ describe("R2 configuration", () => {
         },
       ),
     ).rejects.toMatchObject({ name: "ResourceStoreUnavailableError" });
-  });
-
-  it("bounds head reads to the page while still counting everything", async () => {
-    configureR2();
-
-    const heads: string[] = [];
-    const { listIdPhotoMoments } = await import("./resources.server");
-    const { moments, total } = await listIdPhotoMoments(
-      "user_1",
-      {
-        list: async () => [
-          entry("a.png", "2026-08-01T00:00:00Z"),
-          entry("b.png", "2026-08-02T00:00:00Z"),
-          entry("c.png", "2026-08-03T00:00:00Z"),
-        ],
-        sign,
-        head: async (key) => {
-          heads.push(key);
-          return null;
-        },
-      },
-      { limit: 1 },
-    );
-
-    expect(total).toBe(3);
-    expect(moments.map((m) => m.id)).toEqual(["c"]);
-    expect(heads).toEqual([`${prefix}c.png`]);
   });
 });

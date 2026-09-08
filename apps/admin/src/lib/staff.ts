@@ -91,7 +91,10 @@ export async function getStaffContext(): Promise<StaffContext | null> {
   const role = normalizePlatformStaffRole(grant.role);
   if (!role) return null;
 
-  return { userId: user.id, email: user.email, role };
+  // `users.email` is nullable since the identity mirror (a phone-only account
+  // has none), but this user was resolved *by* email, so the one we searched
+  // with is the one to report when the row carries nothing.
+  return { userId: user.id, email: user.email ?? identity.email, role };
 }
 
 /**

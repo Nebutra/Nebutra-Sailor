@@ -1242,6 +1242,23 @@
         "cta": "See billing architecture"
       }
     },
+    "productDemo": {
+      "badge": "Product demo",
+      "title": "See the platform in motion.",
+      "description": "Three surfaces every AI SaaS ships on day one — analytics, billing and workspaces — running on the same typed core.",
+      "analytics": {
+        "label": "Analytics",
+        "desc": "Event ingestion to dashboard with tenant-scoped queries and no glue code."
+      },
+      "billing": {
+        "label": "Billing",
+        "desc": "Subscriptions, entitlements and usage metering wired to your provider of choice."
+      },
+      "workspaces": {
+        "label": "Workspaces",
+        "desc": "Multi-tenant organisations, invitations and roles with row-level security by default."
+      }
+    },
     "workflow": {
       "badge": "Velocity",
       "title": "From zero to production in record time.",

@@ -73,6 +73,7 @@
     "@nebutra/audit": "workspace:*",
     "@nebutra/email": "workspace:*",
     "@nebutra/logger": "workspace:*",
+    "@nebutra/repositories": "workspace:*",
     "@simplewebauthn/server": "^13.3.0",
     "better-auth": "^1.6.13",
     "jose": "^6.2.0"

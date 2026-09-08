@@ -1,0 +1,133 @@
+name: Ops — give kuanlan its database URL
+
+# One button. Copies the repository's DATABASE_URL secret onto the
+# nebutra-kuanlan Fly app so 观澜 can reach PlanetScale Postgres.
+#
+# Why a button and not just the deploy: deploy-fly.yml now carries DATABASE_URL
+# on every kuanlan deploy, but that only helps on the next deploy. This runs on
+# demand, says what the app has right now, and tells you what to fix when the
+# repository secret itself is the thing that is missing.
+#
+# Prints hosts, never connection strings. The value never leaves GitHub's
+# secret store except into Fly's.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply_now:
+        description: "Restart the machine so it takes effect immediately (otherwise it waits for the next deploy)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  set:
+    name: Set DATABASE_URL on nebutra-kuanlan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Repository secret FLY_API_TOKEN is missing. It is the same deploy token deploy-fly.yml uses."
+            exit 1
+          fi
+
+      - name: Require the DATABASE_URL secret
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "::error::The repository secret DATABASE_URL is empty, so there is nothing to copy."
+            {
+              echo "### Nothing to copy"
+              echo
+              echo "The repository secret \`DATABASE_URL\` is empty."
+              echo
+              echo "Set it once at **Settings → Secrets and variables → Actions**, then run this again."
+              echo "The value is the PlanetScale **PgBouncer** connection string — port \`6432\`."
+              echo "\`docs/ops/nebutra/ecs-mvp-env.md\` documents where production keeps it."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "DATABASE_URL secret is present."
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Report what the app has now
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "### Before" >> "$GITHUB_STEP_SUMMARY"
+          if flyctl secrets list -a nebutra-kuanlan | grep -q '^ DATABASE_URL'; then
+            echo "\`nebutra-kuanlan\` already has a \`DATABASE_URL\`; this run replaces it." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "\`nebutra-kuanlan\` has no \`DATABASE_URL\`." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Set it
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          APPLY_NOW: ${{ inputs.apply_now }}
+        run: |
+          set -euo pipefail
+
+          # A role name, not a secret. @nebutra/db issues SET LOCAL ROLE with it
+          # inside every tenant transaction.
+          if [ "$APPLY_NOW" = "true" ]; then
+            flyctl secrets set \
+              DATABASE_URL="$DATABASE_URL" \
+              APP_DB_ROLE="app_user" \
+              -a nebutra-kuanlan
+          else
+            flyctl secrets set \
+              DATABASE_URL="$DATABASE_URL" \
+              APP_DB_ROLE="app_user" \
+              -a nebutra-kuanlan --stage
+          fi
+
+      - name: Confirm, and say where it points
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          APPLY_NOW: ${{ inputs.apply_now }}
+        run: |
+          set -euo pipefail
+
+          host=$(python3 - <<'PY'
+          import os, urllib.parse
+          try:
+              u = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+              print(f"{u.hostname or '?'}:{u.port or '(default)'}")
+          except Exception:
+              print("(unparseable)")
+          PY
+          )
+
+          echo "### After" >> "$GITHUB_STEP_SUMMARY"
+          flyctl secrets list -a nebutra-kuanlan | grep -E '^ (DATABASE_URL|APP_DB_ROLE)' \
+            | sed 's/^/    /' >> "$GITHUB_STEP_SUMMARY" || true
+          {
+            echo
+            echo "Points at \`$host\` — host and port only; the credential is not printed anywhere."
+            if [ "$APPLY_NOW" = "true" ]; then
+              echo
+              echo "Applied now, so the machine restarted. One thing that resets with it: the"
+              echo "in-process shoot ceiling in \`src/lib/shoot-limit.ts\`, which hands everyone a"
+              echo "fresh daily allowance. Harmless here, and the reason that module says to move"
+              echo "to \`RedisTokenBucket\` once 观澜 runs on more than one machine."
+            else
+              echo
+              echo "Staged — it lands on the next deploy of \`nebutra-kuanlan\`."
+            fi
+            echo
+            echo "Nothing in 观澜 reads this yet. It is the prerequisite for P1 in"
+            echo "\`docs/plans/2026-09-03-kuanlan-productization-roadmap.md\`."
+          } >> "$GITHUB_STEP_SUMMARY"
