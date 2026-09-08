@@ -32,7 +32,7 @@ export async function GET(request: Request, ctx: { params: Promise<{ id: string 
   const log = shootLog(session.userId);
 
   try {
-    const { db, tenant } = await tenantDbFor(session.userId);
+    const { db, tenant } = await tenantDbFor(session);
     let row = await getShoot(db, tenant.tenantId, id);
     if (!row) {
       return Response.json({ error: "not_found" }, { status: 404, headers: noStore });

@@ -57,7 +57,7 @@ export async function POST(request: Request) {
         { status: 404 },
       );
     }
-    if (currentUser.email.toLowerCase() === newEmail) {
+    if (currentUser.email?.toLowerCase() === newEmail) {
       return NextResponse.json(
         { error: "New email must differ from the current one.", code: "EMAIL_UNCHANGED" },
         { status: 400 },

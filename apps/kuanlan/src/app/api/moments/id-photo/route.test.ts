@@ -14,6 +14,40 @@ vi.mock("@/lib/resources.server", () => ({
   listIdPhotoMoments: vi.fn(),
 }));
 
+// The route's imports reach Prisma, the billing ledger, the S3 client and the
+// image pipeline. None of that is under test here, and loading it made a test
+// of one 401 take seconds — past CI's budget on a slow runner. Errors stay
+// real classes so `instanceof` in the route keeps meaning something.
+vi.mock("@/lib/db", () => ({
+  DbUnavailableError: class DbUnavailableError extends Error {},
+  tenantDbFor: vi.fn(),
+}));
+
+vi.mock("@/lib/credits", () => ({
+  creditBalance: vi.fn(),
+  ensureWelcomeCredits: vi.fn(),
+  InsufficientCreditsError: class InsufficientCreditsError extends Error {},
+  refundShootCredits: vi.fn(),
+  reserveShootCredits: vi.fn(),
+  shootPriceCredits: vi.fn(),
+}));
+
+vi.mock("@/lib/consent.server", () => ({
+  readFaceConsent: vi.fn(),
+}));
+
+vi.mock("@/lib/shoot-runner", () => ({
+  runShoot: vi.fn(),
+}));
+
+vi.mock("@/lib/shoot-limit", () => ({
+  spendShootAllowance: vi.fn(),
+}));
+
+vi.mock("@/lib/image2", () => ({
+  Image2UnavailableError: class Image2UnavailableError extends Error {},
+}));
+
 describe("id-photo moment routes", () => {
   beforeEach(() => {
     vi.mocked(getSessionFromRequest).mockReset();

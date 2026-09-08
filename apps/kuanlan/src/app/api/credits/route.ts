@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 
   const log = appLog.child({ route: "credits", userId: session.userId });
   try {
-    const { tenant } = await tenantDbFor(session.userId);
+    const { tenant } = await tenantDbFor(session);
     const welcome = await ensureWelcomeCredits(tenant.tenantId);
     if (welcome.granted) log.info("welcome credits granted");
     const balance = await creditBalance(tenant.tenantId);

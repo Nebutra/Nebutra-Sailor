@@ -25,6 +25,7 @@
  * - FEISHU_APP_ID / FEISHU_APP_SECRET (optional, enables Feishu/Lark SSO via Better Auth generic OAuth)
  */
 
+import type { PrismaClient } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import type { BetterAuthPlugin } from "better-auth/types";
 import type {
@@ -288,9 +289,16 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     const { buildInvitationDatabaseHooks, mergeDatabaseHooks } = await import(
       "../invitation-hooks"
     );
+    // Identity mirror — every new Better Auth user gets its `public.users`
+    // row, under the same id, so the thirteen foreign keys that reference
+    // `users` have something to point at. See ../identity-mirror.ts.
+    const { buildIdentityMirrorDatabaseHooks } = await import("../identity-mirror");
     const databaseHooks = mergeDatabaseHooks(
-      buildAuditDatabaseHooks(),
-      buildInvitationDatabaseHooks(),
+      mergeDatabaseHooks(buildAuditDatabaseHooks(), buildInvitationDatabaseHooks()),
+      buildIdentityMirrorDatabaseHooks(prismaClient as PrismaClient, {
+        onError: (error, userId) =>
+          logger.error("Better Auth identity mirror failed", { userId, error }),
+      }),
     ) as Record<string, unknown>;
 
     // Multi-app login center: share session cookies across first-party

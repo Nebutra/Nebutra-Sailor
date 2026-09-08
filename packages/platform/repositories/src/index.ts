@@ -63,6 +63,7 @@ export type {
 export { UsageLedgerRepository } from "./usage-ledger.repository";
 export type {
   CreateUserData,
+  IdentityRecord,
   UpdateUserData,
   UpsertByClerkIdData,
 } from "./user.repository";

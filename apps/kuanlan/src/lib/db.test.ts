@@ -1,6 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { ensurePersonalTenant, isDbConfigured } from "./db";
 
+/** The users-row mirror is @nebutra/auth's and tested there; here it only has to be called first. */
+const ensureUser = async () => {};
+
 describe("personal tenant", () => {
   const previous = { ...process.env };
 
@@ -14,12 +17,16 @@ describe("personal tenant", () => {
 
   it("creates one INDIVIDUAL tenant keyed by the user, and nothing else", async () => {
     const calls: unknown[] = [];
-    const tenant = await ensurePersonalTenant("user_1", {
-      upsert: async (args) => {
-        calls.push(args);
-        return { id: "tenant_abc", userId: "user_1" };
+    const tenant = await ensurePersonalTenant(
+      { userId: "user_1" },
+      {
+        ensureUser,
+        upsert: async (args) => {
+          calls.push(args);
+          return { id: "tenant_abc", userId: "user_1" };
+        },
       },
-    });
+    );
 
     expect(tenant).toEqual({ tenantId: "tenant_abc", userId: "user_1" });
     expect(calls).toEqual([
@@ -40,8 +47,8 @@ describe("personal tenant", () => {
       return { id: "tenant_abc", userId: "user_1" };
     };
 
-    const first = await ensurePersonalTenant("user_1", { upsert });
-    const second = await ensurePersonalTenant("user_1", { upsert });
+    const first = await ensurePersonalTenant({ userId: "user_1" }, { ensureUser, upsert });
+    const second = await ensurePersonalTenant({ userId: "user_1" }, { ensureUser, upsert });
 
     expect(first.tenantId).toBe(second.tenantId);
     expect(hits).toBe(2);
@@ -49,7 +56,10 @@ describe("personal tenant", () => {
 
   it("refuses a user id that is not a plain token", async () => {
     await expect(
-      ensurePersonalTenant("../someone-else", { upsert: async () => ({ id: "x", userId: "x" }) }),
+      ensurePersonalTenant(
+        { userId: "../someone-else" },
+        { ensureUser, upsert: async () => ({ id: "x", userId: "x" }) },
+      ),
     ).rejects.toMatchObject({ name: "InvalidUserIdError" });
   });
 
@@ -58,12 +68,32 @@ describe("personal tenant", () => {
 
     expect(isDbConfigured()).toBe(false);
     await expect(
-      ensurePersonalTenant("user_1", { upsert: async () => ({ id: "x", userId: "x" }) }),
+      ensurePersonalTenant(
+        { userId: "user_1" },
+        { ensureUser, upsert: async () => ({ id: "x", userId: "x" }) },
+      ),
     ).rejects.toMatchObject({ name: "DbUnavailableError" });
   });
 
   it("treats a blank DATABASE_URL as absent, not as a connection string", async () => {
     process.env.DATABASE_URL = "   ";
     expect(isDbConfigured()).toBe(false);
+  });
+
+  it("mirrors the person into users before the tenant row that references them", async () => {
+    const order: string[] = [];
+    await ensurePersonalTenant(
+      { userId: "user_1", email: "u1@example.com" },
+      {
+        ensureUser: async (who) => {
+          order.push(`user:${who.userId}:${who.email}`);
+        },
+        upsert: async (args) => {
+          order.push("tenant");
+          return { id: "t1", userId: args.where.userId };
+        },
+      },
+    );
+    expect(order).toEqual(["user:user_1:u1@example.com", "tenant"]);
   });
 });

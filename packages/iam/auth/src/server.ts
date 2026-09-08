@@ -34,3 +34,5 @@ export async function createAuth(config: AuthConfig): Promise<AuthProvider> {
       throw new Error(`Unknown auth provider: ${String((config as AuthConfig).provider)}`);
   }
 }
+
+export { ensureUserRecordForSession } from "./identity-mirror";

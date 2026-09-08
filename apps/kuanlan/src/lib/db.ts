@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getSystemDb, getTenantDb, type PrismaClient } from "@nebutra/db";
+import { UserRepository } from "@nebutra/repositories";
 
 /**
  * 观澜's first database seam.
@@ -56,6 +57,11 @@ type UpsertTenant = (args: {
   select: { id: true; userId: true };
 }) => Promise<{ id: string; userId: string | null }>;
 
+/** The signed-in person, as much of them as the row needs. A `Session` fits. */
+export type PersonalIdentity = { userId: string; email?: string | null };
+
+type EnsureUser = (who: { userId: string; email?: string }) => Promise<void>;
+
 /**
  * Every person gets one tenant of their own, and this is where it comes from.
  *
@@ -72,16 +78,31 @@ type UpsertTenant = (args: {
  * exists. Everything downstream of this uses `tenantDbFor` and is scoped.
  */
 export async function ensurePersonalTenant(
-  userId: string,
-  io: { upsert?: UpsertTenant } = {},
+  identity: PersonalIdentity,
+  io: { upsert?: UpsertTenant; ensureUser?: EnsureUser } = {},
 ): Promise<PersonalTenant> {
   requireDb();
+  const { userId } = identity;
   if (!USER_ID.test(userId)) {
     throw new InvalidUserIdError();
   }
 
   const upsert: UpsertTenant =
     io.upsert ?? ((args) => getSystemDb().tenant.upsert(args as never) as never);
+  const ensureUser: EnsureUser =
+    io.ensureUser ??
+    (async (who) => {
+      await new UserRepository(getSystemDb()).ensureFromIdentity({
+        id: who.userId,
+        email: who.email ?? null,
+      });
+    });
+
+  // `Tenant.userId` references `users`, and Better Auth never wrote that table
+  // — it keeps its own. The platform mirrors new sign-ups from a hook; this is
+  // the lazy half, for anyone who signed up before the hook existed. One
+  // upsert, before the row that needs it.
+  await ensureUser({ userId, email: identity.email ?? undefined });
 
   const row = await upsert({
     where: { userId },
@@ -103,10 +124,10 @@ export async function ensurePersonalTenant(
  * surfaces here as a thrown error, per request — it does not stop the app from
  * starting, and the health route reports it as `roleUsable: false`.
  */
-export async function tenantDbFor(userId: string): Promise<{
+export async function tenantDbFor(identity: PersonalIdentity): Promise<{
   db: PrismaClient;
   tenant: PersonalTenant;
 }> {
-  const tenant = await ensurePersonalTenant(userId);
+  const tenant = await ensurePersonalTenant(identity);
   return { db: getTenantDb(tenant.tenantId), tenant };
 }

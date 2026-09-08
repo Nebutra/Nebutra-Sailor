@@ -61,7 +61,7 @@ export default async function MePage() {
   // The ledger is its own dependency; losing it costs the page a number, not
   // the account.
   try {
-    const { tenant } = await tenantDbFor(session.userId);
+    const { tenant } = await tenantDbFor(session);
     credits = { balance: await creditBalance(tenant.tenantId), price: shootPriceCredits() };
   } catch (error) {
     if (!(error instanceof DbUnavailableError)) throw error;
