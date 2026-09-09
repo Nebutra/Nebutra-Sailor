@@ -126,11 +126,12 @@ export async function completeLogin(
     );
   }
   const state = parsed.searchParams.get("state") ?? "";
-  const flow = pending.get(state);
-  if (!flow)
-    throw new Error(
-      "This callback does not match a login started here (state unknown or expired).",
-    );
+  // `pending` is this Machine's bookkeeping for the console, not the authority
+  // on the flow: CLIProxyAPI issued the state and holds the verifier. A deploy
+  // between "start sign-in" and the paste-back empties the map, and refusing
+  // here would strand a callback CLIProxyAPI can still redeem. So an unknown
+  // state is reconstructed from the redirect port and forwarded anyway.
+  const flow = pending.get(state) ?? adoptCallback(state, parsed, caller);
   const res = await fetchImpl(`${CLIPROXY_INTERNAL_URL}/oauth-callback${parsed.search}`, {
     headers: managementHeaders(),
     redirect: "manual",
@@ -158,6 +159,30 @@ export async function completeLogin(
     summary: `Callback accepted for ${flow.providerLabel}. ${flow.detail}`,
     result: { state, status: flow.status },
   };
+}
+
+/**
+ * Rebuild a flow record for a callback this Machine has no memory of. The
+ * provider is read from the redirect port the provider was told to use; an
+ * unrecognised port still goes through, because only CLIProxyAPI can say
+ * whether the state is redeemable.
+ */
+function adoptCallback(state: string, parsed: URL, caller: StaffCaller): PendingLogin {
+  const port = Number(parsed.port);
+  const entry = Object.entries(LOGIN_PROVIDERS).find(([, meta]) => meta.callbackPort === port);
+  const provider = (entry?.[0] ?? "codex") as LoginProvider;
+  const adopted: PendingLogin = {
+    id: state,
+    provider,
+    providerLabel: entry ? LOGIN_PROVIDERS[provider].label : `callback on port ${parsed.port}`,
+    url: "",
+    status: "wait",
+    detail: "Adopted from a sign-in started before this Machine came up",
+    startedAt: new Date().toISOString(),
+    startedBy: caller.userId,
+  };
+  pending.set(state, adopted);
+  return adopted;
 }
 
 async function refreshStatus(flow: PendingLogin, fetchImpl: typeof fetch): Promise<void> {

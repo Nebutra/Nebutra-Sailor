@@ -76,16 +76,30 @@ describe("account login flows", () => {
     expect(done.result).toMatchObject({ state: "st1", status: "ok" });
   });
 
-  it("rejects a callback for a state it never started", async () => {
+  it("forwards a callback for a state this Machine never started", async () => {
+    // A deploy between "start sign-in" and the paste-back empties the in-memory
+    // map. CLIProxyAPI still holds the verifier, so the callback must reach it
+    // rather than being refused here — and the provider comes from the port.
+    const calls: string[] = [];
+    const fetchImpl = vi.fn(async (url: string | URL) => {
+      calls.push(String(url));
+      return new Response(JSON.stringify({ status: "ok" }), { status: 200 });
+    }) as unknown as typeof fetch;
+
+    const done = await completeLogin(
+      "http://localhost:51121/oauth-callback?state=nope&code=1",
+      caller,
+      req(),
+      fetchImpl,
+    );
+
+    expect(calls.some((u) => u.includes("/oauth-callback") && u.includes("state=nope"))).toBe(true);
+    expect(done.result).toMatchObject({ state: "nope" });
+    expect(done.summary).toContain("Antigravity");
+  });
+
+  it("still refuses something that is not a URL", async () => {
     const fetchImpl = vi.fn() as unknown as typeof fetch;
-    await expect(
-      completeLogin(
-        "http://localhost:51121/oauth-callback?state=nope&code=1",
-        caller,
-        req(),
-        fetchImpl,
-      ),
-    ).rejects.toThrow(/state unknown/);
     await expect(completeLogin("not a url", caller, req(), fetchImpl)).rejects.toThrow(/full URL/);
   });
 });
