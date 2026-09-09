@@ -34,7 +34,11 @@ if (!baseRef || migrations.length === 0) {
 const pkgDir = new URL("..", import.meta.url).pathname;
 const work = mkdtempSync(join(tmpdir(), "verify-migrations-"));
 const prisma = (args: string[]) =>
-  execFileSync("pnpm", ["exec", "prisma", ...args], { cwd: pkgDir, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+  execFileSync("pnpm", ["exec", "prisma", ...args], {
+    cwd: pkgDir,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
 
 /** Prisma refuses a datasource it cannot resolve; the URL is never connected to. */
 const neutralise = (schema: string) =>
@@ -44,7 +48,14 @@ const neutralise = (schema: string) =>
 
 const oldPath = join(work, "old.prisma");
 const newPath = join(work, "new.prisma");
-writeFileSync(oldPath, neutralise(execFileSync("git", ["show", `${baseRef}:packages/platform/db/prisma/schema.prisma`], { encoding: "utf8" })));
+writeFileSync(
+  oldPath,
+  neutralise(
+    execFileSync("git", ["show", `${baseRef}:packages/platform/db/prisma/schema.prisma`], {
+      encoding: "utf8",
+    }),
+  ),
+);
 writeFileSync(newPath, neutralise(readFileSync(join(pkgDir, "prisma/schema.prisma"), "utf8")));
 
 const files = migrations.map((name) => ({
@@ -74,8 +85,19 @@ try {
 
 // 2. Are they complete? Prisma's own delta for the same change is the reference.
 //    Every table and column it would create must appear in the hand-written SQL.
-const canonical = prisma(["migrate", "diff", "--from-schema-datamodel", oldPath, "--to-schema", newPath, "--script"]);
-const mine = files.map((f) => f.sql).join("\n").toLowerCase();
+const canonical = prisma([
+  "migrate",
+  "diff",
+  "--from-schema-datamodel",
+  oldPath,
+  "--to-schema",
+  newPath,
+  "--script",
+]);
+const mine = files
+  .map((f) => f.sql)
+  .join("\n")
+  .toLowerCase();
 const norm = (s: string) => s.replace(/"/g, "").toLowerCase();
 
 const missing: string[] = [];
@@ -88,8 +110,12 @@ for (const line of canonical.split("\n")) {
 }
 
 if (missing.length === 0) {
-  process.stdout.write("\nexecutes on Postgres, and covers every table, column and type Prisma would create\n");
+  process.stdout.write(
+    "\nexecutes on Postgres, and covers every table, column and type Prisma would create\n",
+  );
 } else {
-  process.stdout.write(`\nINCOMPLETE: ${missing.length} thing(s) Prisma would create that the migrations do not\n${missing.slice(0, 25).join("\n")}\n`);
+  process.stdout.write(
+    `\nINCOMPLETE: ${missing.length} thing(s) Prisma would create that the migrations do not\n${missing.slice(0, 25).join("\n")}\n`,
+  );
   process.exitCode = 1;
 }
