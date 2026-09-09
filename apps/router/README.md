@@ -25,7 +25,24 @@ Public OpenAI-compatible edge (302.ai contract): `https://router.nebutra.com/v1`
 | POST | `/v1/images/generations` | same body as 302.ai |
 | POST | `/v1/images/edits` | multipart `image` + `prompt` + `model` + `size` |
 
-Use a **router product key** (New-API user token). The 302.ai channel key stays in New-API.
+| POST | `/v1/responses` | Responses API (Codex CLI, Agents SDK) |
+| POST | `/v1/messages` | Anthropic Messages — `x-api-key` accepted (Claude Code, Anthropic SDK) |
+| POST | `/v1/embeddings` | embeddings |
+
+One key, every protocol. Supply behind New-API is either an API-key channel
+(302.ai, official keys) or the CLIProxyAPI account relay (ChatGPT / Google /
+Claude accounts) — the customer cannot tell and does not choose. See
+`infra/nebutra-router/README.md`.
+
+### Key store
+
+| `ROUTER_KEY_STORE` | Customer holds | Edge does |
+|---|---|---|
+| unset / `newapi-token` (default) | a New-API user token | forwards it untouched (legacy) |
+| `nebutra` | a Nebutra key (`sk-sailor-…`, shared `APIKey` table with app + gateway) | validates by hash, swaps in `NEW_API_ACCESS_TOKEN`, writes a usage ledger row per request, `/keys` revoke takes effect immediately |
+
+`nebutra` mode needs `DATABASE_URL` and `NEW_API_ACCESS_TOKEN`. The customer key
+never reaches New-API; the New-API token never reaches customers.
 
 ## Model list maintenance (302-style sellable shelf)
 
@@ -61,3 +78,23 @@ Supply engines stay in `infra/nebutra-router`; this app is the product shell.
 # Optional: shorter catalog TTL while developing
 MODEL_CATALOG_TTL_MS=60000 pnpm --filter @nebutra/router dev
 ```
+
+## Admin contract (`nebutra.admin/v1`)
+
+Router owns its **supply** admin domain and exposes it to the platform admin
+through the Admin Contract (`@nebutra/contracts/admin`,
+docs/plans/2026-09-08-admin-of-admins-model.md). `admin.nebutra.com` renders
+it from the manifest and never imports router code.
+
+| Path | Guard | What |
+|---|---|---|
+| `GET /.well-known/nebutra-admin.json` | public | manifest: resources · actions · signals · policies (urls and schemas only) |
+| `GET /api/admin/v1/supply/engines` | staff token | CLIProxyAPI + New-API reachability, latency |
+| `GET /api/admin/v1/supply/accounts` | staff token | account pool from CLIProxyAPI auth files, normalised status |
+| `GET /api/admin/v1/supply/shelf` | staff token | what New-API sells ∩ what CLIProxyAPI serves, with `pending-sync` |
+| `POST /api/admin/v1/supply/actions/channel.sync` | `platform_operator` | `{mode:"plan"}` → diff; `{mode:"apply", planId}` → upsert channel + audit event |
+| `GET /api/admin/v1/supply/signals/{engine.down,channel.drift,account.expired}` | staff token | `SignalReading` with `probedAt`; `unknown` when the probe itself fails |
+
+**Staff token**: `x-service-token` (HS256 over `SERVICE_SECRET`, `signServiceToken` from `@nebutra/auth`) whose claims match `x-user-id` and `x-role`; the role must be on the staff ladder. Plans expire after 10 minutes and are single-use.
+
+Env on the router Machine: `SERVICE_SECRET`, `CLIPROXY_API_KEY`, `CLIPROXY_MANAGEMENT_KEY`, `NEW_API_ROOT_PASSWORD`, `NEW_API_ACCESS_TOKEN` (shelf read), optional `CLIPROXY_INTERNAL_URL` / `NEW_API_INTERNAL_URL` (default 6PN hosts).

@@ -1,4 +1,4 @@
-import type { PrismaClient, User } from "@nebutra/db";
+import type { Prisma, PrismaClient, User } from "@nebutra/db";
 import type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
 import { normalizePaginationParams } from "./pagination";
 
@@ -20,6 +20,19 @@ export interface UpsertByClerkIdData {
   email: string;
   name: string | null;
   avatarUrl: string | null;
+}
+
+/**
+ * What an authenticated identity may assert about itself when a `users` row is
+ * created on its behalf. `id` is the auth provider's user id — Better Auth's
+ * `auth_users.id` — and becomes `users.id`, so every table that references
+ * `users` can hold a session's `userId` directly, with no lookup between.
+ */
+export interface IdentityRecord {
+  id: string;
+  email?: string | null;
+  name?: string | null;
+  avatarUrl?: string | null;
 }
 
 export class UserRepository {
@@ -85,6 +98,34 @@ export class UserRepository {
         avatarUrl,
       },
     });
+  }
+
+  /**
+   * Make sure the `users` row for an authenticated identity exists.
+   *
+   * `users` was first written by the Clerk webhook, so it was keyed by
+   * `clerkId`; Better Auth keeps its own `auth_users` table and never wrote
+   * here, which left thirteen foreign keys — tenants, consents, skills — with
+   * nothing to point at for anyone who signed up after the switch. This is the
+   * bridge. The Better Auth `user.create.after` hook calls it for new sign-ups;
+   * anything about to reference `users` calls it lazily for people who signed
+   * up before the hook existed. Both are one upsert keyed by id, so they are
+   * idempotent and safe to race.
+   *
+   * A login refreshes the email, since that is what the auth provider owns; a
+   * name or avatar a person set here is never overwritten by one.
+   */
+  async ensureFromIdentity(identity: IdentityRecord): Promise<User> {
+    const { id, email, name, avatarUrl } = identity;
+    const create: Prisma.UserCreateInput = { id };
+    const update: Prisma.UserUpdateInput = {};
+    if (email != null) {
+      create.email = email;
+      update.email = email;
+    }
+    if (name != null) create.name = name;
+    if (avatarUrl != null) create.avatarUrl = avatarUrl;
+    return this.prisma.user.upsert({ where: { id }, create, update });
   }
 
   async delete(id: string): Promise<void> {

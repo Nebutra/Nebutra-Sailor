@@ -1242,6 +1242,23 @@
         "cta": "Katso laskutusarkkitehtuuri"
       }
     },
+    "productDemo": {
+      "badge": "Tuotedemo",
+      "title": "Katso alusta toiminnassa.",
+      "description": "Kolme pintaa, jotka jokainen tekoäly-SaaS toimittaa ensimmäisenä päivänä — analytiikka, laskutus ja työtilat — samalla tyypitetyllä ytimellä.",
+      "analytics": {
+        "label": "Analytiikka",
+        "desc": "Tapahtumien vastaanotosta koontinäyttöön vuokralaiskohtaisilla kyselyillä ja ilman liimakoodia."
+      },
+      "billing": {
+        "label": "Laskutus",
+        "desc": "Tilaukset, oikeudet ja käytön mittaus kytkettynä valitsemaasi palveluntarjoajaan."
+      },
+      "workspaces": {
+        "label": "Työtilat",
+        "desc": "Monivuokralaisorganisaatiot, kutsut ja roolit rivitason suojauksella oletuksena."
+      }
+    },
     "workflow": {
       "badge": "Nopeus",
       "title": "Nollasta tuotantoon ennätyksellisessä ajassa.",

@@ -3,9 +3,12 @@
  *
  * Order matters:
  * 1) preset = tailwind + tokens + UI @source
- * 2) @source this app (so utilities in our components generate)
+ * 2) skins.css = design-language catalog; the root layout sets
+ *    html[data-brand="vercel"], so the console renders in that language
+ * 3) @source this app (so utilities in our components generate)
  */
 @import "@nebutra/ui/styles/preset.css";
+@import "@nebutra/theme/skins.css";
 
 /* Scan the admin app source for utility classes */
 @source "../**/*.{ts,tsx}";

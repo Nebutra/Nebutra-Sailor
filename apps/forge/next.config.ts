@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
   // (and so browser binaries are installable next to the release).
   serverExternalPackages: ["playwright", "playwright-core", "sharp"],
   transpilePackages: [
+    "@nebutra/health",
     "@nebutra/fonts",
     "@nebutra/auth",
     "@nebutra/billing",

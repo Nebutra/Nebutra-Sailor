@@ -1242,6 +1242,23 @@
         "cta": "Vezi arhitectura de facturare"
       }
     },
+    "productDemo": {
+      "badge": "Demo produs",
+      "title": "Vedeți platforma în acțiune.",
+      "description": "Trei suprafețe pe care orice SaaS AI le livrează din prima zi — analitică, facturare și spații de lucru — pe același nucleu tipizat.",
+      "analytics": {
+        "label": "Analitică",
+        "desc": "De la ingestia evenimentelor la tabloul de bord, cu interogări limitate la tenant și fără cod de legătură."
+      },
+      "billing": {
+        "label": "Facturare",
+        "desc": "Abonamente, drepturi și măsurarea utilizării conectate la furnizorul ales de dvs."
+      },
+      "workspaces": {
+        "label": "Spații de lucru",
+        "desc": "Organizații multi-tenant, invitații și roluri cu securitate la nivel de rând în mod implicit."
+      }
+    },
     "workflow": {
       "badge": "Viteză",
       "title": "De la zero la producție în timp record.",

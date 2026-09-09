@@ -1,5 +1,13 @@
 // Pagination
 
+// ApiKey (shared across app / gateway / router)
+export type {
+  ActiveApiKey,
+  ApiKeySummary,
+  CreateApiKeyData,
+} from "./api-key.repository";
+export { ApiKeyRepository, hashApiKeyPlaintext } from "./api-key.repository";
+
 // Automations
 export type {
   CreateAutomationData,
@@ -83,6 +91,7 @@ export type {
 export { UsageLedgerRepository } from "./usage-ledger.repository";
 export type {
   CreateUserData,
+  IdentityRecord,
   UpdateUserData,
   UpsertByClerkIdData,
 } from "./user.repository";

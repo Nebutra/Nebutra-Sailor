@@ -17,6 +17,7 @@
   "dependencies": {
     "@nebutra/brand": "workspace:*",
     "@nebutra/fonts": "workspace:*",
+    "@nebutra/health": "workspace:*",
     "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/prepaid-wallet": "workspace:*",
@@ -31,7 +32,12 @@
     "zod": "catalog:",
     "@lobehub/icons": "^5.0.1",
     "@nebutra/ai-providers": "workspace:*",
-    "@nebutra/auth": "workspace:*"
+    "@nebutra/auth": "workspace:*",
+    "@nebutra/db": "workspace:*",
+    "@nebutra/repositories": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "@nebutra/contracts": "workspace:*",
+    "@nebutra/audit": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",

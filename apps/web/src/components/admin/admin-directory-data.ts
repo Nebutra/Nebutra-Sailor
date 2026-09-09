@@ -123,7 +123,8 @@ export async function listAdminDirectory(input: {
     totalOrganizations,
     users: users.map((user) => ({
       id: user.id,
-      name: user.name ?? user.email,
+      // A mirrored phone-only identity may carry neither; the id still names it.
+      name: user.name ?? user.email ?? user.id,
       email: user.email,
       organizationName: user.organizations[0]?.organization.name ?? null,
       emailVerified: null,

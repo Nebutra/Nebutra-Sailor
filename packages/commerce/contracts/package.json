@@ -32,12 +32,21 @@
     "./notifications": {
       "import": "./dist/notifications.js",
       "types": "./dist/notifications.d.ts"
+    },
+    "./admin": {
+      "import": "./dist/admin.js",
+      "types": "./dist/admin.d.ts"
+    },
+    "./sleptons": {
+      "import": "./dist/sleptons.js",
+      "types": "./dist/sleptons.d.ts"
     }
   },
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist .turbo"
+    "clean": "rm -rf dist .turbo",
+    "test": "vitest run"
   },
   "dependencies": {
     "zod": "catalog:"
@@ -45,7 +54,8 @@
   "devDependencies": {
     "@types/node": "^22.19.15",
     "tsup": "^8.5.1",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/commerce/contracts#readme",
   "repository": {

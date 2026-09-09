@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createHttpCheck, type HealthChecker, runHealthChecks } from "./index";
+import { createHttpCheck, type HealthChecker, nextHealthRoute, runHealthChecks } from "./index";
 
 const originalFetch = globalThis.fetch;
 
@@ -74,5 +74,44 @@ describe("runHealthChecks", () => {
     const result = await resultPromise;
     expect(result.status).toBe("healthy");
     expect(Object.keys(result.checks)).toHaveLength(12);
+  });
+});
+
+describe("nextHealthRoute", () => {
+  it("serves the HealthCheckResult shape with the service name and no-store", async () => {
+    const GET = nextHealthRoute({ service: "router", version: "1.2.3" });
+    const response = await GET();
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(response.headers.get("content-type")).toContain("application/json");
+
+    const body = (await response.json()) as Record<string, unknown>;
+    expect(body.service).toBe("router");
+    expect(body.status).toBe("healthy");
+    expect(body.version).toBe("1.2.3");
+    expect(typeof body.timestamp).toBe("string");
+    expect(body.checks).toEqual({});
+  });
+
+  it("returns 200 when degraded and 503 when unhealthy", async () => {
+    const warn: HealthChecker = {
+      name: "warn",
+      check: async () => ({ status: "warn", latency_ms: 1, message: "slow" }),
+    };
+    const fail: HealthChecker = {
+      name: "fail",
+      check: async () => ({ status: "fail", latency_ms: 1, message: "down" }),
+    };
+
+    const degraded = await nextHealthRoute({ service: "svc", checkers: [warn] })();
+    expect(degraded.status).toBe(200);
+    expect(((await degraded.json()) as { status: string }).status).toBe("degraded");
+
+    const unhealthy = await nextHealthRoute({ service: "svc", checkers: [warn, fail] })();
+    expect(unhealthy.status).toBe(503);
+    const body = (await unhealthy.json()) as { status: string; checks: Record<string, unknown> };
+    expect(body.status).toBe("unhealthy");
+    expect(body.checks.fail).toEqual({ status: "fail", latency_ms: 1, message: "down" });
   });
 });

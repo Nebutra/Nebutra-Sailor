@@ -1116,6 +1116,23 @@ export type EnumProductStageWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
 }
 
+export type EnumResumeLangFilter<$PrismaModel = never> = {
+  equals?: $Enums.ResumeLang | Prisma.EnumResumeLangFieldRefInput<$PrismaModel>
+  in?: $Enums.ResumeLang[] | Prisma.ListEnumResumeLangFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ResumeLang[] | Prisma.ListEnumResumeLangFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumResumeLangFilter<$PrismaModel> | $Enums.ResumeLang
+}
+
+export type EnumResumeLangWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ResumeLang | Prisma.EnumResumeLangFieldRefInput<$PrismaModel>
+  in?: $Enums.ResumeLang[] | Prisma.ListEnumResumeLangFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ResumeLang[] | Prisma.ListEnumResumeLangFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumResumeLangWithAggregatesFilter<$PrismaModel> | $Enums.ResumeLang
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumResumeLangFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumResumeLangFilter<$PrismaModel>
+}
+
 export type EnumPebbleDiagnosticStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PebbleDiagnosticStatus | Prisma.EnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PebbleDiagnosticStatus[] | Prisma.ListEnumPebbleDiagnosticStatusFieldRefInput<$PrismaModel>
@@ -2226,6 +2243,23 @@ export type NestedEnumProductStageWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProductStageFilter<$PrismaModel>
+}
+
+export type NestedEnumResumeLangFilter<$PrismaModel = never> = {
+  equals?: $Enums.ResumeLang | Prisma.EnumResumeLangFieldRefInput<$PrismaModel>
+  in?: $Enums.ResumeLang[] | Prisma.ListEnumResumeLangFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ResumeLang[] | Prisma.ListEnumResumeLangFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumResumeLangFilter<$PrismaModel> | $Enums.ResumeLang
+}
+
+export type NestedEnumResumeLangWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ResumeLang | Prisma.EnumResumeLangFieldRefInput<$PrismaModel>
+  in?: $Enums.ResumeLang[] | Prisma.ListEnumResumeLangFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ResumeLang[] | Prisma.ListEnumResumeLangFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumResumeLangWithAggregatesFilter<$PrismaModel> | $Enums.ResumeLang
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumResumeLangFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumResumeLangFilter<$PrismaModel>
 }
 
 export type NestedEnumPebbleDiagnosticStatusFilter<$PrismaModel = never> = {

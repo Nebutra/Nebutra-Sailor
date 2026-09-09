@@ -1,0 +1,163 @@
+name: Deploy CLIProxyAPI to Fly
+
+# Private account relay. No public hostname. Registered in New-API as a
+# channel; customers keep consuming https://router.nebutra.com/v1.
+#
+# Secrets: FLY_API_TOKEN, CLIPROXY_API_KEY (the api-keys entry New-API uses),
+# CLIPROXY_MANAGEMENT_KEY (management UI secret, injected by admin.nebutra.com),
+# NEW_API_ROOT_PASSWORD (optional; channel registration and the admin sync button).
+# The full config.yaml is rendered here from infra/nebutra-router/config/
+# cliproxyapi.yaml.template and stored as the Fly secret CLIPROXY_CONFIG_YAML.
+
+on:
+  workflow_dispatch:
+    inputs:
+      register_channel:
+        description: "Upsert the cliproxyapi channel in nebutra-new-api after deploy"
+        required: false
+        default: "true"
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-cliproxyapi-fly
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Fly cliproxyapi private
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require secrets
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLIPROXY_API_KEY: ${{ secrets.CLIPROXY_API_KEY }}
+          CLIPROXY_MANAGEMENT_KEY: ${{ secrets.CLIPROXY_MANAGEMENT_KEY }}
+        run: |
+          [ -n "${FLY_API_TOKEN:-}" ] || { echo "::error::Set repository secret FLY_API_TOKEN."; exit 1; }
+          [ -n "${CLIPROXY_API_KEY:-}" ] || { echo "::error::Set repository secret CLIPROXY_API_KEY (openssl rand -hex 32)."; exit 1; }
+          [ -n "${CLIPROXY_MANAGEMENT_KEY:-}" ] || { echo "::error::Set repository secret CLIPROXY_MANAGEMENT_KEY (openssl rand -hex 24)."; exit 1; }
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app and volume
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-cliproxyapi' in names else 1)"; then
+            echo "app exists"
+          else
+            flyctl apps create nebutra-cliproxyapi --machines --org "$org" --yes
+          fi
+          if flyctl volumes list -a nebutra-cliproxyapi --json | python3 -c 'import json,sys; vols=json.load(sys.stdin); sys.exit(0 if any((v.get("Name") or v.get("name"))=="cliproxy_auths" for v in vols) else 1)'; then
+            echo "volume exists"
+          else
+            flyctl volumes create cliproxy_auths -a nebutra-cliproxyapi --region sin --size 1 --yes
+          fi
+          flyctl ips list -a nebutra-cliproxyapi --json | python3 -c '
+          import json, sys, subprocess
+          for ip in json.load(sys.stdin):
+              addr = ip.get("Address") or ip.get("address") or ""
+              kind = (ip.get("Type") or ip.get("type") or "").lower()
+              if not addr or "private" in kind or addr.startswith("fdaa:"):
+                  continue
+              print("releasing public", addr)
+              subprocess.check_call(["flyctl", "ips", "release", addr, "-a", "nebutra-cliproxyapi"])
+          '
+
+      - name: Render config.yaml into a Fly secret
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLIPROXY_API_KEY: ${{ secrets.CLIPROXY_API_KEY }}
+          CLIPROXY_MANAGEMENT_KEY: ${{ secrets.CLIPROXY_MANAGEMENT_KEY }}
+        run: |
+          set -euo pipefail
+          sed -e "s#replace-with-openssl-rand-hex-32#${CLIPROXY_API_KEY}#" \
+              -e "s#replace-with-management-secret#${CLIPROXY_MANAGEMENT_KEY}#" \
+            infra/nebutra-router/config/cliproxyapi.yaml.template > "$RUNNER_TEMP/config.yaml"
+          flyctl secrets set CLIPROXY_CONFIG_YAML="$(base64 < "$RUNNER_TEMP/config.yaml" | tr -d '\n')" \
+            -a nebutra-cliproxyapi --stage
+          rm -f "$RUNNER_TEMP/config.yaml"
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy \
+            --config "$GITHUB_WORKSPACE/infra/fly/cliproxyapi.toml" \
+            --image eceasy/cli-proxy-api:v7.2.154 \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Smoke 6PN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLIPROXY_API_KEY: ${{ secrets.CLIPROXY_API_KEY }}
+        run: |
+          set -euo pipefail
+          # The image ships no wget/curl; probe over flyctl proxy (WireGuard) from the runner.
+          flyctl proxy 18317:8317 -a nebutra-cliproxyapi >/dev/null 2>&1 &
+          sleep 6
+          for i in 1 2 3 4 5 6; do
+            if curl -fsS --max-time 5 -H "Authorization: Bearer ${CLIPROXY_API_KEY}" \
+              http://127.0.0.1:18317/v1/models | grep -q '"data"'; then
+              echo "cliproxyapi answered on try $i"
+              kill %1 2>/dev/null || true
+              exit 0
+            fi
+            sleep 8
+          done
+          kill %1 2>/dev/null || true
+          flyctl logs -a nebutra-cliproxyapi --no-tail || true
+          echo "::error::nebutra-cliproxyapi did not answer on :8317"
+          exit 1
+
+      - name: Hand the control plane its supply secrets
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLIPROXY_API_KEY: ${{ secrets.CLIPROXY_API_KEY }}
+          CLIPROXY_MANAGEMENT_KEY: ${{ secrets.CLIPROXY_MANAGEMENT_KEY }}
+          NEW_API_ROOT_PASSWORD: ${{ secrets.NEW_API_ROOT_PASSWORD }}
+        run: |
+          set -euo pipefail
+          # admin.nebutra.com proxies the management UI and syncs the channel;
+          # it holds the engine secrets so staff never do.
+          args=(CLIPROXY_API_KEY="$CLIPROXY_API_KEY" CLIPROXY_MANAGEMENT_KEY="$CLIPROXY_MANAGEMENT_KEY")
+          if [ -n "${NEW_API_ROOT_PASSWORD:-}" ]; then
+            args+=(NEW_API_ROOT_PASSWORD="$NEW_API_ROOT_PASSWORD")
+          fi
+          flyctl secrets set "${args[@]}" -a nebutra-admin
+
+      - name: Register channel in New-API
+        if: github.event.inputs.register_channel != 'false'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLIPROXY_API_KEY: ${{ secrets.CLIPROXY_API_KEY }}
+          NEW_API_ROOT_PASSWORD: ${{ secrets.NEW_API_ROOT_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -z "${NEW_API_ROOT_PASSWORD:-}" ]; then
+            echo "::warning::No NEW_API_ROOT_PASSWORD — add the channel by hand: base http://nebutra-cliproxyapi.internal:8317, type OpenAI."
+            exit 0
+          fi
+          # Reach both private Machines from the runner over flyctl proxy (WireGuard);
+          # the New-API image has no python, and the seed needs to probe CLIProxyAPI too.
+          flyctl proxy 3000:3000 -a nebutra-new-api >/dev/null 2>&1 &
+          flyctl proxy 8317:8317 -a nebutra-cliproxyapi >/dev/null 2>&1 &
+          sleep 6
+          NEW_API_BASE_URL=http://127.0.0.1:3000 \
+          CLIPROXY_BASE_URL=http://nebutra-cliproxyapi.internal:8317 \
+          CLIPROXY_PROBE_URL=http://127.0.0.1:8317 \
+          python3 infra/nebutra-router/scripts/seed-newapi-channel-cliproxy.py \
+            || echo "::warning::channel not registered yet — log an account in at admin.nebutra.com/supply, then press 同步."
+          kill %1 %2 2>/dev/null || true

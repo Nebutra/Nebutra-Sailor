@@ -186,7 +186,10 @@ jobs:
           VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
           # kuanlan Moments list nebutra-uploads. The VM .env still carries the
           # assets-only seeder; importing it overwrites the uploads token.
-          SKIP_IMPORT_KEYS: ${{ matrix.app == 'kuanlan' && 'R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY' || '' }}
+          # router / admin: the VM .env predates Fly — its NEW_API_BASE_URL is the
+          # ECS localhost port and it knows nothing of the admin contract secrets.
+          # Those are Fly-native; importing over them broke supply after every deploy.
+          SKIP_IMPORT_KEYS: ${{ matrix.app == 'kuanlan' && 'R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY' || matrix.app == 'router' && 'NEW_API_BASE_URL NEW_API_ACCESS_TOKEN SERVICE_SECRET CLIPROXY_API_KEY CLIPROXY_MANAGEMENT_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'admin' && 'SERVICE_SECRET CLIPROXY_MANAGEMENT_KEY CLIPROXY_API_KEY NEW_API_ROOT_PASSWORD' || '' }}
         run: |
           set -euo pipefail
           if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
@@ -240,6 +243,11 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_KUANLAN_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_KUANLAN_SECRET_ACCESS_KEY }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          # PlanetScale via the PgBouncer pooler. kuanlan is on Fly, not
+          # Cloudflare, so there is no Hyperdrive binding to reach it through.
+          # DIRECT_URL is deliberately absent: the schema is owned by
+          # packages/platform/db and this app must never run a migration.
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           set -euo pipefail
           args=()
@@ -248,6 +256,12 @@ jobs:
           [ -n "${R2_ACCESS_KEY_ID:-}" ] && args+=(R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID")
           [ -n "${R2_SECRET_ACCESS_KEY:-}" ] && args+=(R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY")
           [ -n "${BETTER_AUTH_SECRET:-}" ] && args+=(BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET")
+          [ -n "${DATABASE_URL:-}" ] && args+=(DATABASE_URL="$DATABASE_URL")
+          # A role name, not a secret. @nebutra/db issues SET LOCAL ROLE with it
+          # inside every tenant transaction; unset, the query runs as whatever
+          # the connection is, which is the one thing tenant isolation cannot
+          # afford to get wrong.
+          args+=(APP_DB_ROLE="app_user")
           args+=(NEXT_PUBLIC_AUTH_URL="https://auth.nebutra.com")
           args+=(BETTER_AUTH_URL="https://auth.nebutra.com")
           args+=(NEXT_PUBLIC_AUTH_PROVIDER="better-auth")

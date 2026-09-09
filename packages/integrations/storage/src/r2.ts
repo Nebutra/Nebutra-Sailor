@@ -36,9 +36,22 @@ const config = {
 // Client
 // ============================================
 
+/**
+ * R2 by default; any S3-compatible endpoint when `R2_ENDPOINT` is set.
+ *
+ * The override exists so the storage path can run somewhere other than
+ * production — MinIO in a local container, a staging bucket on another host —
+ * without real R2 credentials. It is optional and changes nothing when unset.
+ * Path-style addressing goes with it: virtual-host style is what R2 speaks,
+ * but a bare `http://localhost:9000` cannot put the bucket in the hostname.
+ */
+const endpoint =
+  process.env.R2_ENDPOINT?.trim() || `https://${config.accountId}.r2.cloudflarestorage.com`;
+
 export const r2Client = new S3Client({
   region: "auto",
-  endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+  endpoint,
+  forcePathStyle: Boolean(process.env.R2_ENDPOINT?.trim()),
   credentials: {
     accessKeyId: config.accessKeyId,
     secretAccessKey: config.secretAccessKey,

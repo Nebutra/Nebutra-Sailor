@@ -1,0 +1,33 @@
+# CLIProxyAPI config for the Nebutra Router account-relay sidecar.
+# Copy to config/cliproxyapi.yaml (gitignored) and replace the api-key.
+#
+# Contract:
+#   - This process is never public. Only New-API holds the api-key below.
+#   - Accounts are added from the web UI (admin.nebutra.com/supply) or scripts/cliproxy-login.sh.
+#   - Auth JSON is written to auth-dir, which is a persistent volume.
+
+port: 8317
+host: ""
+debug: false
+
+auth-dir: "/root/.cli-proxy-api"
+
+# One random secret, referenced as the New-API channel key.
+#   openssl rand -hex 32
+api-keys:
+  - "replace-with-openssl-rand-hex-32"
+
+# Management API + bundled web UI. Reached only through admin.nebutra.com,
+# which proxies /management.html and /v0/management/* over 6PN and injects
+# the secret; allow-remote must be on because that proxy is not localhost.
+remote-management:
+  allow-remote: true
+  secret-key: "replace-with-management-secret"
+  disable-control-panel: false
+
+# Retry across credentials of the same provider before failing the request.
+request-retry: 3
+
+# Keep a conversation on the same account when the client sends a session id.
+# Off by default: Router sells stateless calls; New-API already round-robins.
+# session-affinity: false

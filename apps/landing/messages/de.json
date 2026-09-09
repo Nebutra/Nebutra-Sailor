@@ -1242,6 +1242,23 @@
         "cta": "Abrechnungsarchitektur ansehen"
       }
     },
+    "productDemo": {
+      "badge": "Produktdemo",
+      "title": "Sehen Sie die Plattform in Aktion.",
+      "description": "Drei Oberflächen, die jedes AI-SaaS ab Tag eins ausliefert — Analytics, Abrechnung und Workspaces — auf demselben typisierten Kern.",
+      "analytics": {
+        "label": "Analytics",
+        "desc": "Von der Event-Erfassung bis zum Dashboard mit mandantenbezogenen Abfragen und ohne Glue-Code."
+      },
+      "billing": {
+        "label": "Abrechnung",
+        "desc": "Abonnements, Berechtigungen und Nutzungsmessung, verbunden mit dem Anbieter Ihrer Wahl."
+      },
+      "workspaces": {
+        "label": "Workspaces",
+        "desc": "Mandantenfähige Organisationen, Einladungen und Rollen mit Row-Level Security als Standard."
+      }
+    },
     "workflow": {
       "badge": "Geschwindigkeit",
       "title": "Von null in Rekordzeit in die Produktion.",

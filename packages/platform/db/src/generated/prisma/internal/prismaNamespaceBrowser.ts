@@ -135,6 +135,7 @@ export const ModelName = {
   SleptonsProduct: 'SleptonsProduct',
   SleptonsUpvote: 'SleptonsUpvote',
   SleptonsConnection: 'SleptonsConnection',
+  SleptonsResume: 'SleptonsResume',
   BAOrganization: 'BAOrganization',
   BAMember: 'BAMember',
   BAInvitation: 'BAInvitation',
@@ -1602,6 +1603,26 @@ export const SleptonsConnectionScalarFieldEnum = {
 } as const
 
 export type SleptonsConnectionScalarFieldEnum = (typeof SleptonsConnectionScalarFieldEnum)[keyof typeof SleptonsConnectionScalarFieldEnum]
+
+
+export const SleptonsResumeScalarFieldEnum = {
+  id: 'id',
+  member_id: 'member_id',
+  content: 'content',
+  schema_version: 'schema_version',
+  headline: 'headline',
+  skills_flat: 'skills_flat',
+  highlights: 'highlights',
+  years_active: 'years_active',
+  completeness: 'completeness',
+  is_public: 'is_public',
+  language: 'language',
+  last_exported_at: 'last_exported_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SleptonsResumeScalarFieldEnum = (typeof SleptonsResumeScalarFieldEnum)[keyof typeof SleptonsResumeScalarFieldEnum]
 
 
 export const BAOrganizationScalarFieldEnum = {

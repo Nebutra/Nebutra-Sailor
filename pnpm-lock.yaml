@@ -261,15 +261,24 @@ importers:
 
   apps/admin:
     dependencies:
+      '@nebutra/auth':
+        specifier: workspace:*
+        version: link:../../packages/iam/auth
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/contracts':
+        specifier: workspace:*
+        version: link:../../packages/commerce/contracts
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -279,6 +288,9 @@ importers:
       '@nebutra/preset':
         specifier: workspace:*
         version: link:../../packages/ops/preset
+      '@nebutra/theme':
+        specifier: workspace:*
+        version: link:../../packages/design/theme
       '@nebutra/tokens':
         specifier: workspace:*
         version: link:../../packages/design/tokens
@@ -349,6 +361,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
@@ -440,6 +455,9 @@ importers:
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -504,6 +522,9 @@ importers:
       '@nebutra/forge-runtime':
         specifier: workspace:*
         version: link:../../packages/ai/forge-runtime
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
@@ -577,6 +598,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/oauth':
         specifier: workspace:*
         version: link:../../packages/iam/oauth
@@ -635,18 +659,30 @@ importers:
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
+      '@nebutra/billing':
+        specifier: workspace:*
+        version: link:../../packages/commerce/billing
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../packages/platform/db
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../packages/platform/logger
       '@nebutra/rate-limit':
         specifier: workspace:*
         version: link:../../packages/platform/rate-limit
+      '@nebutra/repositories':
+        specifier: workspace:*
+        version: link:../../packages/platform/repositories
       '@nebutra/storage':
         specifier: workspace:*
         version: link:../../packages/integrations/storage
@@ -996,6 +1032,9 @@ importers:
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       next:
         specifier: ^16.2.11
         version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1030,24 +1069,42 @@ importers:
       '@nebutra/ai-providers':
         specifier: workspace:*
         version: link:../../packages/ai/ai-providers
+      '@nebutra/audit':
+        specifier: workspace:*
+        version: link:../../packages/iam/audit
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand
+      '@nebutra/contracts':
+        specifier: workspace:*
+        version: link:../../packages/commerce/contracts
+      '@nebutra/db':
+        specifier: workspace:*
+        version: link:../../packages/platform/db
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
+      '@nebutra/logger':
+        specifier: workspace:*
+        version: link:../../packages/platform/logger
       '@nebutra/prepaid-wallet':
         specifier: workspace:*
         version: link:../../packages/platform/prepaid-wallet
+      '@nebutra/repositories':
+        specifier: workspace:*
+        version: link:../../packages/platform/repositories
       '@nebutra/router-supply':
         specifier: workspace:*
         version: link:../../packages/platform/router-supply
@@ -1121,6 +1178,9 @@ importers:
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -1266,6 +1326,9 @@ importers:
       '@clerk/nextjs':
         specifier: '>=7.2.4'
         version: 7.3.7(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@nebutra/contracts':
+        specifier: workspace:*
+        version: link:../../packages/commerce/contracts
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
@@ -1591,6 +1654,9 @@ importers:
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
+      '@nebutra/health':
+        specifier: workspace:*
+        version: link:../../packages/platform/health
       '@nebutra/i18n':
         specifier: workspace:*
         version: link:../../packages/platform/i18n
@@ -3463,6 +3529,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commerce/legal:
     dependencies:
@@ -4094,6 +4163,9 @@ importers:
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../platform/logger
+      '@nebutra/repositories':
+        specifier: workspace:*
+        version: link:../../platform/repositories
       '@nebutra/ui':
         specifier: workspace:*
         version: link:../../design/ui
@@ -33192,7 +33264,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))
+      vitest: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))
 
   '@vitest/expect@2.0.5':
     dependencies:

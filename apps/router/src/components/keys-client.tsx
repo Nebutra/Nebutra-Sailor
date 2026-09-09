@@ -25,11 +25,13 @@ export function KeysClient() {
   const [name, setName] = useState("default");
   const [once, setOnce] = useState("");
   const [loading, setLoading] = useState(false);
+  const [store, setStore] = useState<"demo" | "nebutra">("demo");
 
   const refresh = useCallback(async () => {
     const res = await fetch("/api/v1/keys");
-    const data = (await res.json()) as { keys: KeyRow[] };
-    setKeys(data.keys);
+    const data = (await res.json()) as { keys?: KeyRow[]; store?: "demo" | "nebutra" };
+    setKeys(data.keys ?? []);
+    if (data.store) setStore(data.store);
   }, []);
 
   useEffect(() => {
@@ -47,6 +49,16 @@ export function KeysClient() {
       });
       const data = (await res.json()) as { fullKey?: string; error?: string };
       if (data.fullKey) setOnce(data.fullKey);
+      await refresh();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const revoke = async (id: string) => {
+    setLoading(true);
+    try {
+      await fetch(`/api/v1/keys/${id}`, { method: "DELETE" });
       await refresh();
     } finally {
       setLoading(false);
@@ -111,6 +123,9 @@ export function KeysClient() {
               <TableHead alignment="start" className="font-medium">
                 创建时间
               </TableHead>
+              <TableHead alignment="end" className="font-medium">
+                <span className="sr-only">操作</span>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody bordered>
@@ -136,6 +151,20 @@ export function KeysClient() {
                   className="tabular-nums text-[11px] text-[var(--neutral-10)]"
                 >
                   {new Date(k.createdAt).toLocaleString()}
+                </TableCell>
+                <TableCell alignment="end">
+                  {store === "nebutra" ? (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="h-7"
+                      disabled={loading}
+                      onClick={() => void revoke(k.id)}
+                    >
+                      吊销
+                    </Button>
+                  ) : null}
                 </TableCell>
               </TableRow>
             ))}

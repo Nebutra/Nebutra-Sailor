@@ -1242,6 +1242,23 @@
         "cta": "Voir l'architecture de facturation"
       }
     },
+    "productDemo": {
+      "badge": "Démo produit",
+      "title": "Voyez la plateforme en action.",
+      "description": "Trois surfaces que tout SaaS IA livre dès le premier jour — analytique, facturation et espaces de travail — sur le même noyau typé.",
+      "analytics": {
+        "label": "Analytique",
+        "desc": "De l'ingestion des événements au tableau de bord, avec des requêtes limitées au tenant et sans code de liaison."
+      },
+      "billing": {
+        "label": "Facturation",
+        "desc": "Abonnements, droits et mesure d'usage reliés au prestataire de votre choix."
+      },
+      "workspaces": {
+        "label": "Espaces de travail",
+        "desc": "Organisations multi-tenant, invitations et rôles avec sécurité au niveau des lignes par défaut."
+      }
+    },
     "workflow": {
       "badge": "Vélocité",
       "title": "De zéro à la production en un temps record.",
