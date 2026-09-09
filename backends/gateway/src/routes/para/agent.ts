@@ -21,6 +21,7 @@ import {
 } from "@nebutra/agent-runtime/adapters/prisma-rollout";
 import { getTenantDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
+import { getQueue } from "@nebutra/queue";
 import {
   ApprovalAlreadyDecidedError,
   getParaAgentRepository,
@@ -28,8 +29,8 @@ import {
 } from "@nebutra/repositories";
 import type { Context } from "hono";
 import { streamSSE } from "hono/streaming";
-import { inngest } from "../../inngest/client.js";
 import { createParaToolRegistry, estimateToolCost } from "../../lib/para-agent-tools.js";
+import { enqueueParaAgentRun } from "../../lib/para-agent-worker.js";
 import { OriginRejectedError } from "../../lib/para-origin.js";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 import { resolveAiOriginClientIp } from "../ai/origin-headers.js";
@@ -49,6 +50,16 @@ function originIdentity(c: Context) {
     plan: tenant.plan,
     requestId: c.get("requestId"),
     clientIp: resolveAiOriginClientIp(c.req.raw.headers),
+  };
+}
+
+/** The caller's identity, carried on the job so the worker can sign origin calls as them. */
+function runIdentity(c: Context): { userId?: string; role?: string; plan?: string } {
+  const tenant = c.get("tenant");
+  return {
+    ...(tenant.userId ? { userId: tenant.userId as string } : {}),
+    ...(tenant.role ? { role: tenant.role as string } : {}),
+    ...(tenant.plan ? { plan: tenant.plan as string } : {}),
   };
 }
 
@@ -298,16 +309,10 @@ paraAgentRoutes.openapi(
       input: body.input,
       contextNodeIds: body.contextNodeIds,
     });
-    const tenant = c.get("tenant");
-    await inngest.send({
-      name: "nebutra/para.agent.run.requested",
-      data: {
-        tenantId,
-        runId: run.id,
-        ...(tenant.userId ? { userId: tenant.userId } : {}),
-        ...(tenant.role ? { role: tenant.role } : {}),
-        ...(tenant.plan ? { plan: tenant.plan } : {}),
-      },
+    await enqueueParaAgentRun(await getQueue(), {
+      tenantId,
+      runId: run.id,
+      ...runIdentity(c),
     });
     return c.json(serializeRun(run), 202);
   },
@@ -471,16 +476,10 @@ paraAgentRoutes.openapi(
 
     // Hand the run back to the worker so the turn continues where it parked.
     await repo.requeueRun(run.id);
-    const tenant = c.get("tenant");
-    await inngest.send({
-      name: "nebutra/para.agent.run.requested",
-      data: {
-        tenantId,
-        runId: run.id,
-        ...(tenant.userId ? { userId: tenant.userId } : {}),
-        ...(tenant.role ? { role: tenant.role } : {}),
-        ...(tenant.plan ? { plan: tenant.plan } : {}),
-      },
+    await enqueueParaAgentRun(await getQueue(), {
+      tenantId,
+      runId: run.id,
+      ...runIdentity(c),
     });
 
     const fresh = (await repo.findApproval(decided.id)) ?? decided;

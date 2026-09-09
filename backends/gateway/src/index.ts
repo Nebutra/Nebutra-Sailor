@@ -38,6 +38,7 @@ import { captureRequestError, initSentry } from "./config/sentry.js";
 import { inngestHandler } from "./inngest/index.js";
 import { createAiGatewayIngestUsage } from "./lib/ai-gateway-metering.js";
 import { buildGatewayDeps } from "./lib/gateway-deps.js";
+import { registerParaAgentWorker } from "./lib/para-agent-worker.js";
 import { requestContext, runWithContext } from "./lib/requestContext.js";
 import { apiVersionMiddleware } from "./middlewares/apiVersion.js";
 import { auditMutationMiddleware } from "./middlewares/auditMutation.js";
@@ -286,6 +287,7 @@ try {
   );
 
   try {
+    registerParaAgentWorker(gatewayDeps.queue as never);
     registerCompletionWorker(gatewayDeps.queue as never, {
       prisma: gatewayDeps.prisma as never,
       redis: gatewayDeps.redis,

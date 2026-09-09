@@ -36,12 +36,18 @@ vi.mock("@nebutra/repositories", () => ({
 }));
 
 const sent: unknown[] = [];
-vi.mock("../../inngest/client.js", () => ({
-  inngest: {
-    send: async (payload: unknown) => {
-      sent.push(payload);
+vi.mock("@nebutra/queue", () => ({
+  createJob: (queue: string, type: string, data: unknown, options: unknown) => ({
+    queue,
+    type,
+    data,
+    options,
+  }),
+  getQueue: async () => ({
+    enqueue: async (job: unknown) => {
+      sent.push(job);
     },
-  },
+  }),
 }));
 
 async function createApp() {
@@ -121,11 +127,13 @@ describe("/api/v1/para/agent", () => {
 
     expect(res.status).toBe(202);
     expect(await res.json()).toMatchObject({ id: "r1", status: "queued", workspaceId: "w1" });
+    // The turn is handed to the queue, not executed here.
     expect(sent).toEqual([
-      {
-        name: "nebutra/para.agent.run.requested",
+      expect.objectContaining({
+        queue: "para",
+        type: "agent.run",
         data: { tenantId: "org_1", runId: "r1", userId: "user_1", role: "org:admin", plan: "PRO" },
-      },
+      }),
     ]);
   });
 
