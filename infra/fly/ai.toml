@@ -19,7 +19,10 @@ primary_region = "sin"
   CELERY_WORKER_CONCURRENCY = "2"
   CELERY_PREFETCH_MULTIPLIER = "1"
   IMAGE_PROVIDER = "dashscope"
-  UPLOAD_STORAGE_PROVIDER = "s3"
+  # r2, not s3: the s3 branch of resolve_upload_storage_provider() reads AWS_* credentials, while
+  # the bucket here is Cloudflare R2 and the secrets are R2_*. Naming it s3 fails closed at persist
+  # time, after the image has already been generated and paid for.
+  UPLOAD_STORAGE_PROVIDER = "r2"
 
 [processes]
   # `::` and not 0.0.0.0: Fly's private network is IPv6, so an IPv4-only bind is unreachable at
