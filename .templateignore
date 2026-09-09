@@ -317,6 +317,7 @@ tests/architecture/nebutra/
 # default. The two Dockerfiles and the nginx conf exist only for carina /
 # dns-leak, whose deploy workflows are stripped above.
 infra/fly/admin.toml
+infra/fly/ai.toml
 infra/fly/auth.toml
 infra/fly/carina.toml
 infra/fly/cliproxyapi.toml
