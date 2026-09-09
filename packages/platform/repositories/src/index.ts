@@ -29,6 +29,13 @@ export type { UpsertMemberData } from "./organization-member.repository";
 // OrganizationMember
 export { OrganizationMemberRepository } from "./organization-member.repository";
 export type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
+export {
+  ApprovalAlreadyDecidedError,
+  type CreateRunData,
+  getParaAgentRepository,
+  ParaAgentRepository,
+  type RunWithThread,
+} from "./para-agent.repository";
 // ── PARA (apps/para) ─────────────────────────────────────────────────────────
 export {
   type CreateParaAssetData,

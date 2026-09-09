@@ -64,6 +64,7 @@ import { integrationRoutes } from "./routes/integrations/index.js";
 import { consentRoutes } from "./routes/legal/consent.js";
 import { healthRoutes } from "./routes/misc/health.js";
 import { notificationRoutes } from "./routes/notifications/index.js";
+import { paraAgentRoutes } from "./routes/para/agent.js";
 import { paraRoutes } from "./routes/para/index.js";
 import { pebbleRoutes } from "./routes/pebble/index.js";
 import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
@@ -254,6 +255,7 @@ app.route("/api/v1/workflows", workflowRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/tasks", taskRoutes);
 app.route("/api/v1/uploads", uploadRoutes);
+app.route("/api/v1/para/agent", paraAgentRoutes);
 app.route("/api/v1/para", paraRoutes);
 
 // Pebble desktop support intake. Unauthenticated by design (desktop users have

@@ -184,6 +184,7 @@ export type ParaProjectWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ParaProject"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   workspaces?: Prisma.ParaWorkspaceListRelationFilter
+  threads?: Prisma.ParaThreadListRelationFilter
 }
 
 export type ParaProjectOrderByWithRelationInput = {
@@ -194,6 +195,7 @@ export type ParaProjectOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   workspaces?: Prisma.ParaWorkspaceOrderByRelationAggregateInput
+  threads?: Prisma.ParaThreadOrderByRelationAggregateInput
 }
 
 export type ParaProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -207,6 +209,7 @@ export type ParaProjectWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"ParaProject"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   workspaces?: Prisma.ParaWorkspaceListRelationFilter
+  threads?: Prisma.ParaThreadListRelationFilter
 }, "id">
 
 export type ParaProjectOrderByWithAggregationInput = {
@@ -238,6 +241,7 @@ export type ParaProjectCreateInput = {
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutParaProjectsInput
   workspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutProjectInput
+  threads?: Prisma.ParaThreadCreateNestedManyWithoutProjectInput
 }
 
 export type ParaProjectUncheckedCreateInput = {
@@ -247,6 +251,7 @@ export type ParaProjectUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   workspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutProjectInput
+  threads?: Prisma.ParaThreadUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ParaProjectUpdateInput = {
@@ -256,6 +261,7 @@ export type ParaProjectUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutParaProjectsNestedInput
   workspaces?: Prisma.ParaWorkspaceUpdateManyWithoutProjectNestedInput
+  threads?: Prisma.ParaThreadUpdateManyWithoutProjectNestedInput
 }
 
 export type ParaProjectUncheckedUpdateInput = {
@@ -265,6 +271,7 @@ export type ParaProjectUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutProjectNestedInput
+  threads?: Prisma.ParaThreadUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ParaProjectCreateManyInput = {
@@ -385,12 +392,27 @@ export type ParaProjectUpdateOneRequiredWithoutWorkspacesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ParaProjectUpdateToOneWithWhereWithoutWorkspacesInput, Prisma.ParaProjectUpdateWithoutWorkspacesInput>, Prisma.ParaProjectUncheckedUpdateWithoutWorkspacesInput>
 }
 
+export type ParaProjectCreateNestedOneWithoutThreadsInput = {
+  create?: Prisma.XOR<Prisma.ParaProjectCreateWithoutThreadsInput, Prisma.ParaProjectUncheckedCreateWithoutThreadsInput>
+  connectOrCreate?: Prisma.ParaProjectCreateOrConnectWithoutThreadsInput
+  connect?: Prisma.ParaProjectWhereUniqueInput
+}
+
+export type ParaProjectUpdateOneRequiredWithoutThreadsNestedInput = {
+  create?: Prisma.XOR<Prisma.ParaProjectCreateWithoutThreadsInput, Prisma.ParaProjectUncheckedCreateWithoutThreadsInput>
+  connectOrCreate?: Prisma.ParaProjectCreateOrConnectWithoutThreadsInput
+  upsert?: Prisma.ParaProjectUpsertWithoutThreadsInput
+  connect?: Prisma.ParaProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ParaProjectUpdateToOneWithWhereWithoutThreadsInput, Prisma.ParaProjectUpdateWithoutThreadsInput>, Prisma.ParaProjectUncheckedUpdateWithoutThreadsInput>
+}
+
 export type ParaProjectCreateWithoutTenantInput = {
   id?: string
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
   workspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutProjectInput
+  threads?: Prisma.ParaThreadCreateNestedManyWithoutProjectInput
 }
 
 export type ParaProjectUncheckedCreateWithoutTenantInput = {
@@ -399,6 +421,7 @@ export type ParaProjectUncheckedCreateWithoutTenantInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   workspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutProjectInput
+  threads?: Prisma.ParaThreadUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ParaProjectCreateOrConnectWithoutTenantInput = {
@@ -444,6 +467,7 @@ export type ParaProjectCreateWithoutWorkspacesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutParaProjectsInput
+  threads?: Prisma.ParaThreadCreateNestedManyWithoutProjectInput
 }
 
 export type ParaProjectUncheckedCreateWithoutWorkspacesInput = {
@@ -452,6 +476,7 @@ export type ParaProjectUncheckedCreateWithoutWorkspacesInput = {
   name: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  threads?: Prisma.ParaThreadUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ParaProjectCreateOrConnectWithoutWorkspacesInput = {
@@ -476,6 +501,7 @@ export type ParaProjectUpdateWithoutWorkspacesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutParaProjectsNestedInput
+  threads?: Prisma.ParaThreadUpdateManyWithoutProjectNestedInput
 }
 
 export type ParaProjectUncheckedUpdateWithoutWorkspacesInput = {
@@ -484,6 +510,59 @@ export type ParaProjectUncheckedUpdateWithoutWorkspacesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  threads?: Prisma.ParaThreadUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ParaProjectCreateWithoutThreadsInput = {
+  id?: string
+  name: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutParaProjectsInput
+  workspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutProjectInput
+}
+
+export type ParaProjectUncheckedCreateWithoutThreadsInput = {
+  id?: string
+  tenantId: string
+  name: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  workspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ParaProjectCreateOrConnectWithoutThreadsInput = {
+  where: Prisma.ParaProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ParaProjectCreateWithoutThreadsInput, Prisma.ParaProjectUncheckedCreateWithoutThreadsInput>
+}
+
+export type ParaProjectUpsertWithoutThreadsInput = {
+  update: Prisma.XOR<Prisma.ParaProjectUpdateWithoutThreadsInput, Prisma.ParaProjectUncheckedUpdateWithoutThreadsInput>
+  create: Prisma.XOR<Prisma.ParaProjectCreateWithoutThreadsInput, Prisma.ParaProjectUncheckedCreateWithoutThreadsInput>
+  where?: Prisma.ParaProjectWhereInput
+}
+
+export type ParaProjectUpdateToOneWithWhereWithoutThreadsInput = {
+  where?: Prisma.ParaProjectWhereInput
+  data: Prisma.XOR<Prisma.ParaProjectUpdateWithoutThreadsInput, Prisma.ParaProjectUncheckedUpdateWithoutThreadsInput>
+}
+
+export type ParaProjectUpdateWithoutThreadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutParaProjectsNestedInput
+  workspaces?: Prisma.ParaWorkspaceUpdateManyWithoutProjectNestedInput
+}
+
+export type ParaProjectUncheckedUpdateWithoutThreadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ParaProjectCreateManyTenantInput = {
@@ -499,6 +578,7 @@ export type ParaProjectUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspaces?: Prisma.ParaWorkspaceUpdateManyWithoutProjectNestedInput
+  threads?: Prisma.ParaThreadUpdateManyWithoutProjectNestedInput
 }
 
 export type ParaProjectUncheckedUpdateWithoutTenantInput = {
@@ -507,6 +587,7 @@ export type ParaProjectUncheckedUpdateWithoutTenantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutProjectNestedInput
+  threads?: Prisma.ParaThreadUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ParaProjectUncheckedUpdateManyWithoutTenantInput = {
@@ -523,10 +604,12 @@ export type ParaProjectUncheckedUpdateManyWithoutTenantInput = {
 
 export type ParaProjectCountOutputType = {
   workspaces: number
+  threads: number
 }
 
 export type ParaProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workspaces?: boolean | ParaProjectCountOutputTypeCountWorkspacesArgs
+  threads?: boolean | ParaProjectCountOutputTypeCountThreadsArgs
 }
 
 /**
@@ -546,6 +629,13 @@ export type ParaProjectCountOutputTypeCountWorkspacesArgs<ExtArgs extends runtim
   where?: Prisma.ParaWorkspaceWhereInput
 }
 
+/**
+ * ParaProjectCountOutputType without action
+ */
+export type ParaProjectCountOutputTypeCountThreadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ParaThreadWhereInput
+}
+
 
 export type ParaProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -555,6 +645,7 @@ export type ParaProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   workspaces?: boolean | Prisma.ParaProject$workspacesArgs<ExtArgs>
+  threads?: boolean | Prisma.ParaProject$threadsArgs<ExtArgs>
   _count?: boolean | Prisma.ParaProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["paraProject"]>
 
@@ -588,6 +679,7 @@ export type ParaProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ParaProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   workspaces?: boolean | Prisma.ParaProject$workspacesArgs<ExtArgs>
+  threads?: boolean | Prisma.ParaProject$threadsArgs<ExtArgs>
   _count?: boolean | Prisma.ParaProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ParaProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -602,6 +694,7 @@ export type $ParaProjectPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
     workspaces: Prisma.$ParaWorkspacePayload<ExtArgs>[]
+    threads: Prisma.$ParaThreadPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1005,6 +1098,7 @@ export interface Prisma__ParaProjectClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   workspaces<T extends Prisma.ParaProject$workspacesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ParaProject$workspacesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParaWorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  threads<T extends Prisma.ParaProject$threadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ParaProject$threadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParaThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1456,6 +1550,30 @@ export type ParaProject$workspacesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.ParaWorkspaceScalarFieldEnum | Prisma.ParaWorkspaceScalarFieldEnum[]
+}
+
+/**
+ * ParaProject.threads
+ */
+export type ParaProject$threadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ParaThread
+   */
+  select?: Prisma.ParaThreadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ParaThread
+   */
+  omit?: Prisma.ParaThreadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ParaThreadInclude<ExtArgs> | null
+  where?: Prisma.ParaThreadWhereInput
+  orderBy?: Prisma.ParaThreadOrderByWithRelationInput | Prisma.ParaThreadOrderByWithRelationInput[]
+  cursor?: Prisma.ParaThreadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ParaThreadScalarFieldEnum | Prisma.ParaThreadScalarFieldEnum[]
 }
 
 /**

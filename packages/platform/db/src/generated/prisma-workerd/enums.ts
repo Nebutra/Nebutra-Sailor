@@ -243,6 +243,34 @@ export const ParaAssetScope = {
 export type ParaAssetScope = (typeof ParaAssetScope)[keyof typeof ParaAssetScope]
 
 
+export const ParaAutonomy = {
+  ASK: 'ASK',
+  ACT: 'ACT'
+} as const
+
+export type ParaAutonomy = (typeof ParaAutonomy)[keyof typeof ParaAutonomy]
+
+
+export const ParaRunStatus = {
+  QUEUED: 'QUEUED',
+  RUNNING: 'RUNNING',
+  AWAITING_APPROVAL: 'AWAITING_APPROVAL',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type ParaRunStatus = (typeof ParaRunStatus)[keyof typeof ParaRunStatus]
+
+
+export const ParaApprovalStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DENIED: 'DENIED'
+} as const
+
+export type ParaApprovalStatus = (typeof ParaApprovalStatus)[keyof typeof ParaApprovalStatus]
+
+
 export const AIProvider = {
   OPENAI: 'OPENAI',
   ANTHROPIC: 'ANTHROPIC',

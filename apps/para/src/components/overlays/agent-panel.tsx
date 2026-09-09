@@ -2,14 +2,16 @@
 
 import { ArrowUp, Cross } from "@nebutra/icons";
 import { Textarea } from "@nebutra/ui/primitives";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type { AgentStep } from "@/domain/types";
+import { type AgentRunState, type AgentTraceEvent, agentApi, followRun } from "@/lib/agent-api";
+import { isGatewayMode } from "@/lib/gateway-api";
 import { findAsset } from "@/mock/queries";
 import { useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
 import { useUiStore } from "@/stores/ui-store";
 
-const PLAN: Array<Pick<AgentStep, "label" | "cost">> = [
+const MOCK_PLAN: Array<Pick<AgentStep, "label" | "cost">> = [
   { label: "Read canvas context" },
   { label: "Describe references" },
   { label: "Generate 4 variations", cost: 4 },
@@ -18,8 +20,10 @@ const PLAN: Array<Pick<AgentStep, "label" | "cost">> = [
 
 /**
  * Bottom composer that expands into a panel (B — recorded departure from the right dock).
- * Selection chips (A) · collapsible step log (A) · results land as derived placeholder nodes (A) ·
- * Stop replaces Send while running (B) · panel height-capped to ~33 % of the viewport.
+ *
+ * In gateway mode this panel owns no agent state: starting a turn queues a server run and the
+ * panel attaches to its event stream, so closing it does not stop the turn and reopening replays
+ * the trace. In standalone mode a local timer stands in for the run.
  */
 export function AgentPanel({ projectId }: { projectId: string }) {
   const agent = useUiStore((s) => s.agent);
@@ -31,6 +35,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
   const nodes = useEditorStore((s) => s.document?.nodes);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const detach = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     if (agent.status === "composing") inputRef.current?.focus();
@@ -39,24 +44,61 @@ export function AgentPanel({ projectId }: { projectId: string }) {
   useEffect(
     () => () => {
       if (timer.current) clearInterval(timer.current);
+      detach.current?.();
     },
     [],
   );
 
+  const applyRun = useCallback(
+    (run: AgentRunState) => {
+      setAgent({
+        runId: run.id,
+        runStatus: run.status,
+        approvals: run.pendingApprovals ?? [],
+        status: run.status === "completed" || run.status === "failed" ? "done" : "running",
+      });
+    },
+    [setAgent],
+  );
+
+  /** Trace events become step-log rows; the server decides what happened, we only render it. */
+  const applyTrace = useCallback(
+    (event: AgentTraceEvent) => {
+      const label = traceLabel(event);
+      if (!label) return;
+      const current = useUiStore.getState().agent.steps;
+      const steps: AgentStep[] = [
+        ...current.map((s) => ({ ...s, state: "done" as const })),
+        { id: `s${current.length}`, label, state: "now" },
+      ];
+      setAgent({ steps });
+    },
+    [setAgent],
+  );
+
   const close = () => {
     if (timer.current) clearInterval(timer.current);
+    detach.current?.();
+    detach.current = null;
     resetAgent();
     setDrawer(null);
   };
 
   const stop = () => {
+    if (isGatewayMode) {
+      // A queued run belongs to the worker; detaching only stops watching it.
+      detach.current?.();
+      detach.current = null;
+      setAgent({ status: "done" });
+      return;
+    }
     if (timer.current) clearInterval(timer.current);
     const { jobs, cancel } = useJobsStore.getState();
     for (const id of useUiStore.getState().agent.createdNodeIds) {
-      const j = jobs.find(
+      const job = jobs.find(
         (x) => x.nodeId === id && (x.status === "queued" || x.status === "running"),
       );
-      if (j) cancel(j.id);
+      if (job) cancel(job.id);
     }
     setAgent({
       status: "done",
@@ -66,11 +108,59 @@ export function AgentPanel({ projectId }: { projectId: string }) {
     });
   };
 
-  const run = () => {
-    const prompt = agent.prompt.trim();
-    if (!prompt) return;
+  const decide = async (approvalId: string, approve: boolean) => {
+    try {
+      await agentApi.decideApproval(approvalId, approve);
+      const runId = useUiStore.getState().agent.runId;
+      if (!runId) return;
+      // Approving resumes the run server-side; re-attach to watch it continue.
+      detach.current?.();
+      detach.current = followRun(runId, { onRun: applyRun, onTrace: applyTrace });
+    } catch {
+      const runId = useUiStore.getState().agent.runId;
+      if (runId) void agentApi.getRun(runId).then(applyRun);
+    }
+  };
+
+  const runGateway = async (prompt: string) => {
+    setAgent({
+      status: "running",
+      steps: [],
+      approvals: [],
+      total: 0,
+      done: 0,
+      activityOpen: true,
+    });
+    try {
+      const thread = agent.threadId
+        ? { id: agent.threadId }
+        : await agentApi.createThread(projectId, prompt);
+      const workspaceId = useEditorStore.getState().documentId;
+      if (!workspaceId) throw new Error("no workspace loaded");
+      const run = await agentApi.startTurn(thread.id, {
+        workspaceId,
+        input: prompt,
+        contextNodeIds: agent.contextNodeIds,
+      });
+      setAgent({ threadId: thread.id, runId: run.id, runStatus: run.status });
+      detach.current = followRun(run.id, { onRun: applyRun, onTrace: applyTrace });
+    } catch (e) {
+      setAgent({
+        status: "done",
+        steps: [
+          {
+            id: "s-error",
+            label: e instanceof Error ? e.message : "Could not start the run",
+            state: "done",
+          },
+        ],
+      });
+    }
+  };
+
+  const runMock = (prompt: string) => {
     const thread = newThread(projectId, prompt);
-    const steps: AgentStep[] = PLAN.map((p, i) => ({
+    const steps: AgentStep[] = MOCK_PLAN.map((p, i) => ({
       id: `s${i}`,
       label: p.label,
       state: i === 0 ? "now" : "next",
@@ -95,7 +185,6 @@ export function AgentPanel({ projectId }: { projectId: string }) {
         (s, i) => ({ ...s, state: i < step ? "done" : i === step ? "now" : "next" }) as AgentStep,
       );
       if (step === 2) {
-        // The spending step: placeholder child nodes + derived edges appear at submit (A).
         const editor = useEditorStore.getState();
         const src = source ? editor.document?.nodes[source] : undefined;
         const created: string[] = [];
@@ -120,7 +209,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
         setAgent({ steps: next, createdNodeIds: created, done: 0 });
         return;
       }
-      if (step >= PLAN.length) {
+      if (step >= MOCK_PLAN.length) {
         if (timer.current) clearInterval(timer.current);
         setAgent({ steps: next.map((s) => ({ ...s, state: "done" })), status: "done" });
         return;
@@ -129,14 +218,23 @@ export function AgentPanel({ projectId }: { projectId: string }) {
     }, 1400);
   };
 
-  // Progress of the spending step mirrors node completion.
-  const done = agent.createdNodeIds.filter(
-    (id) => nodes?.[id]?.status === "completed" || nodes?.[id]?.status === "failed",
-  ).length;
+  const run = () => {
+    const prompt = agent.prompt.trim();
+    if (!prompt) return;
+    if (isGatewayMode) void runGateway(prompt);
+    else runMock(prompt);
+  };
+
+  const doneCount = isGatewayMode
+    ? agent.steps.filter((s) => s.state === "done").length
+    : agent.createdNodeIds.filter(
+        (id) => nodes?.[id]?.status === "completed" || nodes?.[id]?.status === "failed",
+      ).length;
 
   if (agent.status === "idle") return null;
 
   const chips = agent.contextNodeIds.map((id) => nodes?.[id]).filter(Boolean);
+  const pending = agent.approvals.filter((a) => a.status === "pending");
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
@@ -216,26 +314,59 @@ export function AgentPanel({ projectId }: { projectId: string }) {
           <div className="min-h-0 overflow-y-auto px-4 pt-2 pb-3">
             <div className="flex items-center justify-between text-sm">
               <span className="text-foreground">
-                {agent.status === "done"
-                  ? "Done."
-                  : agent.createdNodeIds.length
-                    ? "Creating 4 variations…"
-                    : "Working…"}
+                {headline(agent.runStatus, agent.status, agent.createdNodeIds.length)}
               </span>
-              {agent.createdNodeIds.length > 0 && (
+              {agent.total > 0 && (
                 <span className="text-muted-foreground tabular-nums">
-                  {done} / {agent.total}
+                  {doneCount} / {agent.total}
                 </span>
               )}
             </div>
-            <div className="mt-2 h-0.5 w-full overflow-hidden rounded-full bg-neutral-4">
+
+            {pending.map((approval) => (
               <div
-                className="h-full rounded-full bg-primary transition-[width] duration-500"
-                style={{
-                  width: `${agent.createdNodeIds.length ? (done / agent.total) * 100 : 8}%`,
-                }}
-              />
-            </div>
+                key={approval.id}
+                className="mt-3 rounded-lg border border-border/70 bg-background p-3"
+              >
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-foreground">{approvalTitle(approval.toolName)}</span>
+                  <span className="text-muted-foreground tabular-nums">
+                    ≈ ✦{approval.estimatedCost}
+                  </span>
+                </div>
+                {typeof approval.args.prompt === "string" && (
+                  <p className="mt-1 line-clamp-2 text-[11px] text-muted-foreground">
+                    {approval.args.prompt}
+                  </p>
+                )}
+                <div className="mt-2.5 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => void decide(approval.id, true)}
+                    className="h-7 rounded-md bg-primary px-3 font-medium text-primary-foreground text-xs"
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void decide(approval.id, false)}
+                    className="h-7 rounded-md border border-border px-3 text-foreground text-xs hover:bg-accent"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            {agent.total > 0 && (
+              <div className="mt-2 h-0.5 w-full overflow-hidden rounded-full bg-neutral-4">
+                <div
+                  className="h-full rounded-full bg-primary transition-[width] duration-500"
+                  style={{ width: `${(doneCount / Math.max(1, agent.total)) * 100}%` }}
+                />
+              </div>
+            )}
+
             <div className="mt-3 flex items-center gap-2">
               {agent.status === "running" ? (
                 <button
@@ -264,7 +395,8 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 actions
               </button>
             </div>
-            {agent.activityOpen && (
+
+            {agent.activityOpen && agent.steps.length > 0 && (
               <ul className="mt-3 space-y-1 border-border/60 border-t pt-3 text-xs">
                 {agent.steps.map((s) => (
                   <li key={s.id} className="flex items-center gap-2">
@@ -296,4 +428,36 @@ export function AgentPanel({ projectId }: { projectId: string }) {
       </div>
     </div>
   );
+}
+
+function headline(runStatus: string | null, status: string, createdCount: number): string {
+  if (runStatus === "awaiting_approval") return "Waiting for you.";
+  if (runStatus === "failed") return "The run failed.";
+  if (runStatus === "completed" || status === "done") return "Done.";
+  if (runStatus === "queued") return "Queued…";
+  return createdCount > 0 ? "Creating 4 variations…" : "Working…";
+}
+
+function approvalTitle(toolName: string): string {
+  return toolName === "generate_image" ? "Generate image" : toolName.replace(/_/g, " ");
+}
+
+/** Turn a rollout event into one readable row; unknown shapes are skipped rather than guessed at. */
+function traceLabel(event: AgentTraceEvent): string | null {
+  if (event.type === "turn.started") return "Read canvas context";
+  if (event.type !== "item.completed") return null;
+  const item = event.item ?? {};
+  switch (item.type) {
+    case "mcp_tool_call":
+    case "tool_call":
+      return `Called ${String(item.name ?? item.tool ?? "a tool")}`;
+    case "agent_message":
+      return "Answered";
+    case "reasoning":
+      return "Considered the canvas";
+    case "error":
+      return `Failed: ${String(item.message ?? "unknown error")}`;
+    default:
+      return null;
+  }
 }

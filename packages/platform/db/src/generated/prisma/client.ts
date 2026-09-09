@@ -162,6 +162,27 @@ export type ParaWorkspace = Prisma.ParaWorkspaceModel
  */
 export type ParaAsset = Prisma.ParaAssetModel
 /**
+ * Model ParaThread
+ * An agent conversation, scoped to a project so it is visible from any of its workspaces.
+ * The turn trace itself lives in `agent_rollout_lines` (@nebutra/agent-runtime); this row holds
+ * only what the rollout does not know: the project and the autonomy setting.
+ */
+export type ParaThread = Prisma.ParaThreadModel
+/**
+ * Model ParaRun
+ * One agent turn as a durable server-side object. A run advances in a worker, never inside the
+ * request that asked for it, so closing the browser cannot stop it and any client can attach to
+ * its trace later. AWAITING_APPROVAL is a real resting state: the run stops there having spent
+ * nothing, and resolving the approval re-enqueues it.
+ */
+export type ParaRun = Prisma.ParaRunModel
+/**
+ * Model ParaApproval
+ * A spending tool call the run reached while its thread was in ASK mode. The run records it and
+ * parks; approving it is what executes the call and resumes the run.
+ */
+export type ParaApproval = Prisma.ParaApprovalModel
+/**
  * Model WorkflowDefinition
  * 
  */

@@ -5,6 +5,7 @@ import { automationRunner } from "./functions/automationRunner.js";
 import { automationScheduler } from "./functions/automationScheduler.js";
 import { processBillingEvent } from "./functions/billingSync.js";
 import { processGdprDeletion } from "./functions/gdprDeletion.js";
+import { paraAgentRunner } from "./functions/paraAgentRunner.js";
 import { pebbleDiagnosticsRetention } from "./functions/pebbleDiagnosticsRetention.js";
 import { provisionTenant } from "./functions/tenantProvisioning.js";
 import { deleteUserFromDB, syncUserToDB } from "./functions/userSync.js";
@@ -18,6 +19,7 @@ export const inngestFunctions: InngestFunction.Any[] = [
   provisionTenant,
   automationScheduler,
   automationRunner,
+  paraAgentRunner,
   workflowRunner,
   pebbleDiagnosticsRetention,
 ];

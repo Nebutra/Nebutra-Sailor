@@ -235,6 +235,9 @@ model Tenant {
   paraProjects             ParaProject[]
   paraWorkspaces           ParaWorkspace[]
   paraAssets               ParaAsset[]
+  paraThreads              ParaThread[]
+  paraRuns                 ParaRun[]
+  paraApprovals            ParaApproval[]
   invoices                 Invoice[]
   oauthClients             OAuthClient[]
   orders                   Order[]
@@ -769,6 +772,7 @@ model ParaProject {
 
   tenant     Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   workspaces ParaWorkspace[]
+  threads    ParaThread[]
 
   @@index([tenantId, updatedAt(sort: Desc)])
   @@map("para_projects")
@@ -814,6 +818,106 @@ model ParaAsset {
   @@index([tenantId, origin, createdAt(sort: Desc)])
   @@index([tenantId, workspaceId])
   @@map("para_assets")
+  @@schema("public")
+}
+
+enum ParaAutonomy {
+  ASK
+  ACT
+
+  @@schema("public")
+}
+
+enum ParaRunStatus {
+  QUEUED
+  RUNNING
+  AWAITING_APPROVAL
+  COMPLETED
+  FAILED
+
+  @@schema("public")
+}
+
+enum ParaApprovalStatus {
+  PENDING
+  APPROVED
+  DENIED
+
+  @@schema("public")
+}
+
+/// An agent conversation, scoped to a project so it is visible from any of its workspaces.
+/// The turn trace itself lives in `agent_rollout_lines` (@nebutra/agent-runtime); this row holds
+/// only what the rollout does not know: the project and the autonomy setting.
+model ParaThread {
+  id        String       @id @default(cuid())
+  tenantId  String       @map("tenant_id")
+  projectId String       @map("project_id")
+  title     String       @db.VarChar(200)
+  autonomy  ParaAutonomy @default(ASK)
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+
+  tenant  Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  project ParaProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  runs    ParaRun[]
+
+  @@index([tenantId, projectId, updatedAt(sort: Desc)])
+  @@map("para_threads")
+  @@schema("public")
+}
+
+/// One agent turn as a durable server-side object. A run advances in a worker, never inside the
+/// request that asked for it, so closing the browser cannot stop it and any client can attach to
+/// its trace later. AWAITING_APPROVAL is a real resting state: the run stops there having spent
+/// nothing, and resolving the approval re-enqueues it.
+model ParaRun {
+  id             String        @id @default(cuid())
+  tenantId       String        @map("tenant_id")
+  threadId       String        @map("thread_id")
+  workspaceId    String        @map("workspace_id")
+  input          String        @db.Text
+  /// Node ids the user attached as context (the composer's selection chips).
+  contextNodeIds Json          @default("[]") @map("context_node_ids")
+  status         ParaRunStatus @default(QUEUED)
+  /// Terminal payload: {code, message}. Never a separate lifecycle branch.
+  error          Json?
+  startedAt      DateTime?     @map("started_at")
+  finishedAt     DateTime?     @map("finished_at")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  tenant    Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  thread    ParaThread     @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  approvals ParaApproval[]
+
+  @@index([tenantId, threadId, createdAt(sort: Desc)])
+  @@index([tenantId, status])
+  @@map("para_runs")
+  @@schema("public")
+}
+
+/// A spending tool call the run reached while its thread was in ASK mode. The run records it and
+/// parks; approving it is what executes the call and resumes the run.
+model ParaApproval {
+  id            String             @id @default(cuid())
+  tenantId      String             @map("tenant_id")
+  runId         String             @map("run_id")
+  toolName      String             @map("tool_name") @db.VarChar(120)
+  args          Json               @default("{}")
+  estimatedCost Int                @default(0) @map("estimated_cost")
+  status        ParaApprovalStatus @default(PENDING)
+  decidedBy     String?            @map("decided_by")
+  decidedAt     DateTime?          @map("decided_at")
+  resultJobId   String?            @map("result_job_id") @db.VarChar(160)
+  createdAt     DateTime           @default(now()) @map("created_at")
+
+  tenant Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  run    ParaRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, runId, createdAt(sort: Desc)])
+  @@index([tenantId, status])
+  @@map("para_approvals")
   @@schema("public")
 }
 

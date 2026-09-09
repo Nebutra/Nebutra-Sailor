@@ -593,6 +593,57 @@ export type EnumParaAssetScopeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel>
 }
 
+export type EnumParaAutonomyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAutonomy | Prisma.EnumParaAutonomyFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAutonomy[] | Prisma.ListEnumParaAutonomyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAutonomy[] | Prisma.ListEnumParaAutonomyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAutonomyFilter<$PrismaModel> | $Enums.ParaAutonomy
+}
+
+export type EnumParaAutonomyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAutonomy | Prisma.EnumParaAutonomyFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAutonomy[] | Prisma.ListEnumParaAutonomyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAutonomy[] | Prisma.ListEnumParaAutonomyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAutonomyWithAggregatesFilter<$PrismaModel> | $Enums.ParaAutonomy
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaAutonomyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaAutonomyFilter<$PrismaModel>
+}
+
+export type EnumParaRunStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaRunStatus | Prisma.EnumParaRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaRunStatus[] | Prisma.ListEnumParaRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaRunStatus[] | Prisma.ListEnumParaRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaRunStatusFilter<$PrismaModel> | $Enums.ParaRunStatus
+}
+
+export type EnumParaRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaRunStatus | Prisma.EnumParaRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaRunStatus[] | Prisma.ListEnumParaRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaRunStatus[] | Prisma.ListEnumParaRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.ParaRunStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaRunStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaRunStatusFilter<$PrismaModel>
+}
+
+export type EnumParaApprovalStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaApprovalStatus | Prisma.EnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaApprovalStatus[] | Prisma.ListEnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaApprovalStatus[] | Prisma.ListEnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaApprovalStatusFilter<$PrismaModel> | $Enums.ParaApprovalStatus
+}
+
+export type EnumParaApprovalStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaApprovalStatus | Prisma.EnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaApprovalStatus[] | Prisma.ListEnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaApprovalStatus[] | Prisma.ListEnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaApprovalStatusWithAggregatesFilter<$PrismaModel> | $Enums.ParaApprovalStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaApprovalStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaApprovalStatusFilter<$PrismaModel>
+}
+
 export type EnumWorkflowStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.WorkflowStatus | Prisma.EnumWorkflowStatusFieldRefInput<$PrismaModel>
   in?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
@@ -1652,6 +1703,57 @@ export type NestedEnumParaAssetScopeWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumParaAssetScopeFilter<$PrismaModel>
+}
+
+export type NestedEnumParaAutonomyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAutonomy | Prisma.EnumParaAutonomyFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAutonomy[] | Prisma.ListEnumParaAutonomyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAutonomy[] | Prisma.ListEnumParaAutonomyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAutonomyFilter<$PrismaModel> | $Enums.ParaAutonomy
+}
+
+export type NestedEnumParaAutonomyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaAutonomy | Prisma.EnumParaAutonomyFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaAutonomy[] | Prisma.ListEnumParaAutonomyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaAutonomy[] | Prisma.ListEnumParaAutonomyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaAutonomyWithAggregatesFilter<$PrismaModel> | $Enums.ParaAutonomy
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaAutonomyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaAutonomyFilter<$PrismaModel>
+}
+
+export type NestedEnumParaRunStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaRunStatus | Prisma.EnumParaRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaRunStatus[] | Prisma.ListEnumParaRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaRunStatus[] | Prisma.ListEnumParaRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaRunStatusFilter<$PrismaModel> | $Enums.ParaRunStatus
+}
+
+export type NestedEnumParaRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaRunStatus | Prisma.EnumParaRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaRunStatus[] | Prisma.ListEnumParaRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaRunStatus[] | Prisma.ListEnumParaRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.ParaRunStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaRunStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaRunStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumParaApprovalStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaApprovalStatus | Prisma.EnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaApprovalStatus[] | Prisma.ListEnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaApprovalStatus[] | Prisma.ListEnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaApprovalStatusFilter<$PrismaModel> | $Enums.ParaApprovalStatus
+}
+
+export type NestedEnumParaApprovalStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ParaApprovalStatus | Prisma.EnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ParaApprovalStatus[] | Prisma.ListEnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ParaApprovalStatus[] | Prisma.ListEnumParaApprovalStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumParaApprovalStatusWithAggregatesFilter<$PrismaModel> | $Enums.ParaApprovalStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumParaApprovalStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumParaApprovalStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumWorkflowStatusFilter<$PrismaModel = never> = {

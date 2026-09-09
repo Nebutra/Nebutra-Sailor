@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { AgentStep, AgentThread } from "@/domain/types";
+import type { AgentApproval, AgentRunState } from "@/lib/agent-api";
 
 /**
  * Contextual surfaces. M1: at most one open at a time (EXPERIMENTAL — no competitor enforces it;
@@ -20,6 +21,12 @@ export interface AgentRun {
   done: number;
   activityOpen: boolean;
   threadId: string | null;
+  /** Gateway mode: the server-owned run this panel is watching. Null in mock mode. */
+  runId: string | null;
+  runStatus: AgentRunState["status"] | null;
+  approvals: AgentApproval[];
+  /** Autonomy is a thread setting, mirrored here for the composer's switch. */
+  autonomy: "ask" | "act";
 }
 
 interface UiState {
@@ -48,6 +55,10 @@ const idleAgent: AgentRun = {
   done: 0,
   activityOpen: false,
   threadId: null,
+  runId: null,
+  runStatus: null,
+  approvals: [],
+  autonomy: "ask",
 };
 
 export const useUiStore = create<UiState>((set, get) => ({
@@ -68,7 +79,7 @@ export const useUiStore = create<UiState>((set, get) => ({
     const a = get().agent;
     set({ agent: { ...a, contextNodeIds: a.contextNodeIds.filter((x) => x !== id) } });
   },
-  resetAgent: () => set({ agent: idleAgent }),
+  resetAgent: () => set({ agent: { ...idleAgent, autonomy: get().agent.autonomy } }),
   newThread: (projectId, title) => {
     const thread: AgentThread = {
       id: `t-${Date.now().toString(36)}`,
