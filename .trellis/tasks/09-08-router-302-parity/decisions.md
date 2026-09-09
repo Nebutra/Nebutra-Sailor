@@ -356,3 +356,60 @@ given customer key may call. Added `GET /api/catalogue`, the sellable shelf as o
 answers what the station can sell at all. Prospective customers read it before signing up; the
 pipeline reads it before touching DNS. The cutover now requires at least one sellable model and
 a 401/403 on an unkeyed relay.
+
+## A20 — The pool callback went to a path that does not exist
+
+Every account sign-in failed because `completeLogin` posted to `/oauth-callback` on CLIProxyAPI.
+That path belongs to the loopback listener on the operator's own machine, which the provider
+redirects to; CLIProxyAPI answers 404 for it. The server's own endpoint is
+`POST /v0/management/oauth-callback`, taking `{provider, redirect_url, state}` as JSON, and it is
+registered outside the authenticated group so it takes no management key.
+
+Confirmed against the v7.2.154 source tree, not by probing. Probing is actively misleading here:
+every unmatched path under `/v0/management/` answers 401 rather than 404, because the management
+auth middleware runs before the not-found handler. A 401 there is not evidence a route exists —
+which is exactly the wrong conclusion I drew first.
+
+A 200 means the code was handed off, not that the login succeeded. CLIProxyAPI writes the code to
+its auth dir and a background exchange picks it up; `get-auth-status` reports the real outcome.
+
+## A21 — The shelf over-claimed supply and under-quoted price, in production
+
+Two independent ways of publishing what we cannot honour, both live:
+
+**Aliases claimed their own supply.** `getListingCatalog` set `sellable: true` for every explicit
+alias, so the catalogue reported twelve sellable models against a supply inventory of one. This is
+A16 again in a second place: a configured SKU is `routed`, which is a claim about intent; only the
+edge's real upstream may set `sellable`, which is a claim about capability.
+
+**The storefront quoted a different table from the till.** The listing took prices from the open
+model index while the billing spine charges from `ModelConfig`. `gpt-image-2` was advertised at
+$0 and settles at $50 per million.
+
+`GET /api/catalogue` now reads published price rows through the repository seam
+(`listPublishedPrices`) and a model reaches customers only when supply confirms it *and* a
+published price exists. The DNS cutover gate reads this endpoint, so a station that cannot both
+serve and price something cannot take the hostname.
+
+Still open: the HTML shelf at `/models` continues to display model-index prices. The catalogue
+JSON is now the honest surface; reconciling the page belongs with the price service in Batch D.
+
+## A22 — The cutover would have deleted production DNS and left nothing
+
+The DNS cutover failed with Cloudflare error 10000 (`Authentication error`) on the CNAME create.
+The token in `CLOUDFLARE_API_TOKEN` can read the zone but cannot write it; it needs
+**Zone → DNS → Edit** on nebutra.com. That is the user's to rotate — it is a credential.
+
+The dangerous part was not the failure. Cloudflare will not hold a CNAME beside an A/AAAA at the
+same name, so `point-host-dns-fly.sh` deletes the old records *before* creating the new one — and
+it piped both delete responses to `/dev/null`. A token permitted to delete but not create would
+have stripped `router.nebutra.com` and left nothing behind, with the script reporting only the
+create failure. `router.nebutra.com` survived this run purely because the token cannot write at
+all, so the deletes failed too.
+
+Fixed by proving the capability before using it: the script creates and deletes a throwaway TXT
+record first, and every mutation is now checked. Verified with an invalid token — it stops at the
+zone lookup, names the missing permission, and leaves DNS intact.
+
+Cutover status: both gates pass (`sellable: 1, priced: 1` — gpt-image-2 at $50/1M; unkeyed relay
+refused 401). Only the Cloudflare token blocks it.
