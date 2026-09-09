@@ -932,6 +932,9 @@ importers:
 
   apps/para:
     dependencies:
+      '@nebutra/auth':
+        specifier: workspace:*
+        version: link:../../packages/iam/auth
       '@nebutra/brand':
         specifier: workspace:*
         version: link:../../packages/design/brand

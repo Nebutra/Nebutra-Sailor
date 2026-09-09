@@ -7,7 +7,7 @@
     "graph": "labs",
     "productionReady": false
   },
-  "description": "PARA — progressive-disclosure creative workspace shell (para.nebutra.com). Milestone 1: shell + canvas skeleton on mock data.",
+  "description": "PARA \u2014 progressive-disclosure creative workspace shell (para.nebutra.com). Milestone 1: shell + canvas skeleton on mock data.",
   "scripts": {
     "dev": "next dev --port 3110",
     "build": "next build",
@@ -18,6 +18,7 @@
     "clean": "rm -rf .next"
   },
   "dependencies": {
+    "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",

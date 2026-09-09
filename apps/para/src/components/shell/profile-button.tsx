@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { AuthActions } from "./auth-actions";
 
 export function ProfileButton() {
   return (
@@ -26,7 +27,10 @@ export function ProfileButton() {
         <DropdownMenuItem render={<Link href="/projects" />}>Projects</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem disabled>Settings</DropdownMenuItem>
-        <DropdownMenuItem disabled>Sign out</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <div className="px-1 py-0.5">
+          <AuthActions />
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
