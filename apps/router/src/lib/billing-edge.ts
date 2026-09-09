@@ -323,10 +323,40 @@ export function createRouterGuard(
           tenantId: input.identity.tenantId,
         });
       }
-      const price =
+      const priced =
         input.billable && model !== "unknown"
           ? await priceSettled(billing, model, input.usage)
           : zeroPrice(model, model === "unknown" ? "model_unreadable" : undefined);
+
+      // The station must not be able to lose money on a request that worked.
+      //
+      // Upstream bills us for a successful call whether or not we could read
+      // its usage. Settling those at zero — a model id we could not parse, a
+      // unit the response did not report — means we paid and collected
+      // nothing, and it scales with traffic. So a billable request that cannot
+      // be priced falls back to the amount admission already held: a
+      // worst-case figure the customer's balance was checked against before
+      // the call went out, so it is never a surprise and never below cost.
+      //
+      // Only when there is no hold at all (a post-paid multipart upload) does
+      // zero survive, and the edge now refuses those before they are relayed.
+      const price =
+        input.billable && priced.unpriced && input.admission && input.admission.reserved > 0
+          ? {
+              quantity: 1,
+              unit: "request",
+              unitCost: input.admission.reserved,
+              totalCost: input.admission.reserved,
+              unpriced: priced.unpriced,
+            }
+          : priced;
+      if (price !== priced) {
+        logger.warn("[router] charged the reservation for an unpriceable success", {
+          model,
+          reason: priced.unpriced,
+          charged: input.admission?.reserved,
+        });
+      }
 
       // `saveLogs` is the customer's own switch over prompt-derived detail.
       // Read here rather than carried from admit because settle runs after the

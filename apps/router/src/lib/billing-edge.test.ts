@@ -524,6 +524,62 @@ describe("router money guard — post-paid multipart settlement", () => {
     expect(log.record).toHaveBeenCalledTimes(1);
     warn.mockRestore();
   });
+
+  it("charges the reservation when a successful call cannot be priced", async () => {
+    // Upstream bills us for a call that worked whether or not we could read its
+    // usage. Settling that at zero is a loss that scales with traffic, so the
+    // hold admission already took — a worst case the balance was checked
+    // against — is what the customer pays.
+    const warn = vi.spyOn(logger, "warn").mockImplementation(() => {});
+    const settle = vi.fn(async (_input: RouterSettleInput) => ({
+      settled: true as const,
+      charged: 0.02,
+      refunded: 0,
+    }));
+    await createRouterGuard(billing({ settle, findPrice: async () => null })).settle({
+      requestId: "req_unpriceable",
+      identity,
+      path: "images/generations",
+      admission: { reserved: 0.02, currency: "USD", candidates: ["gpt-image-2"] },
+      usage: usage({ model: "gpt-image-2" }),
+      status: 200,
+      latencyMs: 900,
+      ttfbMs: null,
+      clientIp: null,
+      supplyPath: "302-image2",
+      billable: true,
+    });
+    const written = settle.mock.calls[0]?.[0] as RouterSettleInput;
+    expect(written.totalCost).toBe(0.02);
+    expect(written.metadata).toMatchObject({ unpriced: expect.any(String) });
+    expect(warn).toHaveBeenCalledWith(
+      "[router] charged the reservation for an unpriceable success",
+      expect.objectContaining({ charged: 0.02 }),
+    );
+    warn.mockRestore();
+  });
+
+  it("still charges nothing when the same call failed", async () => {
+    const settle = vi.fn(async (_input: RouterSettleInput) => ({
+      settled: true as const,
+      charged: 0,
+      refunded: 0.02,
+    }));
+    await createRouterGuard(billing({ settle, findPrice: async () => null })).settle({
+      requestId: "req_failed",
+      identity,
+      path: "images/generations",
+      admission: { reserved: 0.02, currency: "USD", candidates: ["gpt-image-2"] },
+      usage: usage({ model: "gpt-image-2" }),
+      status: 500,
+      latencyMs: 120,
+      ttfbMs: null,
+      clientIp: null,
+      supplyPath: null,
+      billable: false,
+    });
+    expect((settle.mock.calls[0]?.[0] as RouterSettleInput).totalCost).toBe(0);
+  });
 });
 
 describe("router money guard — refusals are visible", () => {

@@ -1,0 +1,378 @@
+# Trellis Configuration
+# Project-level settings for the Trellis workflow system
+#
+# All values have sensible defaults. Only override what you need.
+
+#-------------------------------------------------------------------------------
+# Session Recording
+#-------------------------------------------------------------------------------
+
+# Commit message used when auto-committing journal/index changes
+# after running add_session.py
+session_commit_message: "chore: record journal"
+
+# Maximum lines per journal file before rotating to a new one
+max_journal_lines: 2000
+
+#-------------------------------------------------------------------------------
+# Session Auto-Commit
+#-------------------------------------------------------------------------------
+
+# Auto-commit behavior for session journal + task archive operations.
+# - true (default): scripts auto-stage and auto-commit journal / task changes
+#   after add_session.py / task.py archive runs.
+# - false: scripts do not touch git. Files (journal-*.md, task archive moves)
+#   are still written to disk; you decide whether to git add / commit.
+#
+# Use `false` if your project's .gitignore intentionally excludes `.trellis/`
+# and you want session data kept local-only, or if you prefer to review
+# staged changes manually before each commit.
+#
+# Accepts: true / false / yes / no / 1 / 0 / on / off (case-insensitive).
+#
+# session_auto_commit: true
+
+#-------------------------------------------------------------------------------
+# Task Lifecycle Hooks
+#-------------------------------------------------------------------------------
+
+# Shell commands to run after task lifecycle events.
+# Each hook receives TASK_JSON_PATH environment variable pointing to task.json.
+# Hook failures print a warning but do not block the main operation.
+#
+# hooks:
+#   after_create:
+#     - "echo 'Task created'"
+#   after_start:
+#     - "echo 'Task started'"
+#   after_finish:
+#     - "echo 'Task finished'"
+#   after_archive:
+#     - "echo 'Task archived'"
+
+#-------------------------------------------------------------------------------
+# Monorepo / Packages
+#-------------------------------------------------------------------------------
+
+# Declare packages for monorepo projects.
+# Trellis auto-detects workspaces during `trellis init`, but you can also
+# configure them manually here.
+#
+# packages:
+#   frontend:
+#     path: packages/frontend
+#   backend:
+#     path: packages/backend
+#   docs:
+#     path: docs-site
+#     type: submodule
+#   # For polyrepo / meta-repo layouts (independent .git in each subdir),
+#   # mark the package with `git: true`. The runtime treats it as an
+#   # independent repository for things like git-context display.
+#   webapp:
+#     path: ./webapp
+#     git: true
+
+# Default package used when --package is not specified.
+# default_package: frontend
+
+#-------------------------------------------------------------------------------
+# Channel worker OOM guard
+#-------------------------------------------------------------------------------
+# Default safeguards for `trellis channel spawn` workers. The guard runs
+# at spawn time (cleans expired idle workers, then enforces the live-worker
+# budget) and inside each supervisor (self-terminates a worker that stays
+# continuously idle past `idle_timeout`).
+#
+# Precedence: CLI flag > env var (TRELLIS_CHANNEL_WORKER_IDLE_TIMEOUT /
+# TRELLIS_CHANNEL_MAX_LIVE_WORKERS) > this config > built-in default.
+#
+# `idle_timeout: 0` disables idle cleanup (workers can sit idle forever
+# unless explicitly killed or given `--timeout`).
+# `max_live_workers: 0` disables the spawn-time budget check.
+#
+channel:
+  worker_guard:
+    idle_timeout: 5m
+    max_live_workers: 6
+
+#-------------------------------------------------------------------------------
+# Codex (dispatch behavior)
+#-------------------------------------------------------------------------------
+# Codex-only knob; other platforms ignore it. Default ("inline") makes the
+# main Codex agent edit code directly because Codex sub-agents run with
+# `fork_turns="none"` isolation and can't inherit the parent session's
+# task context. Set to "sub-agent" to opt into the legacy dispatch model
+# (main agent spawns trellis-implement / trellis-check / trellis-research
+# sub-agents).
+#
+# codex:
+#   dispatch_mode: inline  # or "sub-agent" to dispatch trellis-* sub-agents
+
+# Auto-detected monorepo packages
+packages:
+  admin:
+    path: apps/admin
+  auth-center:
+    path: apps/auth
+  design:
+    path: apps/design
+  forge:
+    path: apps/forge
+  idp:
+    path: apps/idp
+  kuanlan:
+    path: apps/kuanlan
+  landing:
+    path: apps/landing
+  mail-preview:
+    path: apps/mail-preview
+  pebble-site:
+    path: apps/pebble
+  router:
+    path: apps/router
+  sailor-docs:
+    path: apps/sailor-docs
+  sleptons:
+    path: apps/sleptons
+  storybook:
+    path: apps/storybook
+  studio:
+    path: apps/studio
+  typelens:
+    path: apps/typelens
+  web:
+    path: apps/web
+  3d-pipeline:
+    path: packages/ai/3d-pipeline
+  agent-runtime:
+    path: packages/ai/agent-runtime
+  agents:
+    path: packages/ai/agents
+  ai-primitives:
+    path: packages/ai/ai-primitives
+  ai-providers:
+    path: packages/ai/ai-providers
+  atelier-canvas:
+    path: packages/ai/atelier-canvas
+  audio-pipeline:
+    path: packages/ai/audio-pipeline
+  brand-genesis:
+    path: packages/ai/brand-genesis
+  browser-control:
+    path: packages/ai/browser-control
+  cinema:
+    path: packages/ai/cinema
+  code-execution:
+    path: packages/ai/code-execution
+  code-index:
+    path: packages/ai/code-index
+  cofounder-match:
+    path: packages/ai/cofounder-match
+  content-store:
+    path: packages/ai/content-store
+  document-pipeline:
+    path: packages/ai/document-pipeline
+  ecosystem-safety:
+    path: packages/ai/ecosystem-safety
+  event-log:
+    path: packages/ai/event-log
+  execution-policy:
+    path: packages/ai/execution-policy
+  forge-dns-leak:
+    path: packages/ai/forge-dns-leak
+  forge-runtime:
+    path: packages/ai/forge-runtime
+  founder-cemetery:
+    path: packages/ai/founder-cemetery
+  generation-context:
+    path: packages/ai/generation-context
+  idea-plaza:
+    path: packages/ai/idea-plaza
+  image-pipeline:
+    path: packages/ai/image-pipeline
+  knowledge-base:
+    path: packages/ai/knowledge-base
+  knowledge-graph:
+    path: packages/ai/knowledge-graph
+  knowledge-rag:
+    path: packages/ai/knowledge-rag
+  landing-builder:
+    path: packages/ai/landing-builder
+  local-embedding:
+    path: packages/ai/local-embedding
+  mcp:
+    path: packages/ai/mcp
+  outreach-engine:
+    path: packages/ai/outreach-engine
+  play-loader:
+    path: packages/ai/play-loader
+  play-marketplace:
+    path: packages/ai/play-marketplace
+  reel:
+    path: packages/ai/reel
+  sandbox-runtime:
+    path: packages/ai/sandbox-runtime
+  startup-os:
+    path: packages/ai/startup-os
+  support-deflector:
+    path: packages/ai/support-deflector
+  time-machine:
+    path: packages/ai/time-machine
+  tool-registry:
+    path: packages/ai/tool-registry
+  video-pipeline:
+    path: packages/ai/video-pipeline
+  voice-realtime:
+    path: packages/ai/voice-realtime
+  workflow-runtime:
+    path: packages/ai/workflow-runtime
+  access-gate:
+    path: packages/commerce/access-gate
+  billing:
+    path: packages/commerce/billing
+  blog:
+    path: packages/commerce/blog
+  contracts:
+    path: packages/commerce/contracts
+  legal:
+    path: packages/commerce/legal
+  license:
+    path: packages/commerce/license
+  marketing:
+    path: packages/commerce/marketing
+  metering:
+    path: packages/commerce/metering
+  waitlist:
+    path: packages/commerce/waitlist
+  brand:
+    path: packages/design/brand
+  design-sync:
+    path: packages/design/design-sync
+  design-tokens:
+    path: packages/design/design-tokens
+  docs-shared:
+    path: packages/design/docs-shared
+  fonts:
+    path: packages/design/fonts
+  icons:
+    path: packages/design/icons
+  theme:
+    path: packages/design/theme
+  tokens:
+    path: packages/design/tokens
+  typelens-catalog:
+    path: packages/design/typelens-catalog
+  ui:
+    path: packages/design/ui
+  audit:
+    path: packages/iam/audit
+  auth:
+    path: packages/iam/auth
+  captcha:
+    path: packages/iam/captcha
+  identity:
+    path: packages/iam/identity
+  oauth:
+    path: packages/iam/oauth
+  permissions:
+    path: packages/iam/permissions
+  tenant:
+    path: packages/iam/tenant
+  vault:
+    path: packages/iam/vault
+  admin-tooling:
+    path: packages/integrations/admin-tooling
+  cache:
+    path: packages/integrations/cache
+  collab:
+    path: packages/integrations/collab
+  email:
+    path: packages/integrations/email
+  event-bus:
+    path: packages/integrations/event-bus
+  integration-vault:
+    path: packages/integrations/integration-vault
+  notifications:
+    path: packages/integrations/notifications
+  onboarding:
+    path: packages/integrations/onboarding
+  queue:
+    path: packages/integrations/queue
+  saga:
+    path: packages/integrations/saga
+  search:
+    path: packages/integrations/search
+  sms:
+    path: packages/integrations/sms
+  storage:
+    path: packages/integrations/storage
+  tts:
+    path: packages/integrations/tts
+  uploads:
+    path: packages/integrations/uploads
+  video-compose:
+    path: packages/integrations/video-compose
+  webhooks:
+    path: packages/integrations/webhooks
+  china-compliance:
+    path: packages/ops/china-compliance
+  nebutra:
+    path: packages/ops/cli
+  create-sailor:
+    path: packages/ops/create-sailor
+  preset:
+    path: packages/ops/preset
+  sanity:
+    path: packages/ops/sanity
+  supabase:
+    path: packages/ops/supabase
+  alerting:
+    path: packages/platform/alerting
+  analytics:
+    path: packages/platform/analytics
+  browser-utils:
+    path: packages/platform/browser-utils
+  capability-kit:
+    path: packages/platform/capability-kit
+  config:
+    path: packages/platform/config
+  db:
+    path: packages/platform/db
+  errors:
+    path: packages/platform/errors
+  feature-flags:
+    path: packages/platform/feature-flags
+  gateway-core:
+    path: packages/platform/gateway-core
+  graph-model:
+    path: packages/platform/graph-model
+  health:
+    path: packages/platform/health
+  i18n:
+    path: packages/platform/i18n
+  logger:
+    path: packages/platform/logger
+  prepaid-wallet:
+    path: packages/platform/prepaid-wallet
+  provider-factory:
+    path: packages/platform/provider-factory
+  rate-limit:
+    path: packages/platform/rate-limit
+  repositories:
+    path: packages/platform/repositories
+  router-supply:
+    path: packages/platform/router-supply
+  status:
+    path: packages/platform/status
+  tenant-store:
+    path: packages/platform/tenant-store
+  trace-store:
+    path: packages/platform/trace-store
+  _shared:
+    path: backends/python/_shared
+  nebutra-ai-service:
+    path: backends/python/ai
+  gateway:
+    path: backends/gateway
+default_package: @nebutra/admin
