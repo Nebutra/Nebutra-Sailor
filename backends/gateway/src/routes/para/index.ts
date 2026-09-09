@@ -628,7 +628,55 @@ paraRoutes.post("/jobs/:id/cancel", (c) =>
   }),
 );
 
-/** SSE pass-through of the origin task events; each `task` event carries an envelope the client maps with taskToJob rules. */
+/**
+ * SSE of job progress. The origin emits task envelopes (`succeeded`, progress 0-100, node id
+ * buried in the payload); the browser only ever sees PARA jobs, so every `task` frame is mapped
+ * through `taskToJob` here. Mapping stays in one place — the client must not learn the envelope.
+ */
+export function mapTaskEventStream(
+  upstream: ReadableStream<Uint8Array>,
+): ReadableStream<Uint8Array> {
+  const decoder = new TextDecoder();
+  const encoder = new TextEncoder();
+  let buffer = "";
+
+  const emit = (controller: TransformStreamDefaultController<Uint8Array>, frame: string) => {
+    const dataLine = frame.split("\n").find((line) => line.startsWith("data:"));
+    // Only `task` frames carry an envelope; `error` frames pass through untouched.
+    if (!frame.includes("event: task") || !dataLine) {
+      controller.enqueue(encoder.encode(`${frame}\n\n`));
+      return;
+    }
+    try {
+      const task = JSON.parse(dataLine.slice("data:".length).trim()) as Record<string, unknown>;
+      controller.enqueue(
+        encoder.encode(`event: task\ndata: ${JSON.stringify(taskToJob(task))}\n\n`),
+      );
+    } catch {
+      controller.enqueue(encoder.encode(`${frame}\n\n`));
+    }
+  };
+
+  return upstream.pipeThrough(
+    new TransformStream<Uint8Array, Uint8Array>({
+      transform(chunk, controller) {
+        buffer += decoder.decode(chunk, { stream: true });
+        let index = buffer.indexOf("\n\n");
+        while (index !== -1) {
+          const frame = buffer.slice(0, index);
+          buffer = buffer.slice(index + 2);
+          if (frame.trim()) emit(controller, frame);
+          index = buffer.indexOf("\n\n");
+        }
+      },
+      flush(controller) {
+        const tail = buffer.trim();
+        if (tail) emit(controller, tail);
+      },
+    }),
+  );
+}
+
 paraRoutes.get("/jobs/:id/events", (c) =>
   withOrigin(c, "para.jobs.events", async () => {
     const upstream = await originFetch(
@@ -636,11 +684,17 @@ paraRoutes.get("/jobs/:id/events", (c) =>
       `/api/v1/tasks/${encodeURIComponent(c.req.param("id"))}/events`,
       "GET",
     );
-    const headers = new Headers();
-    for (const name of ["content-type", "cache-control", "x-accel-buffering"]) {
-      const v = upstream.headers.get(name);
-      if (v) headers.set(name, v);
+    if (upstream.status === 404) return c.json({ error: "job not found" }, 404);
+    if (!upstream.ok || !upstream.body) {
+      return c.json({ error: `origin error (${upstream.status})` }, 503);
     }
-    return new Response(upstream.body, { status: upstream.status, headers });
+    return new Response(mapTaskEventStream(upstream.body), {
+      status: 200,
+      headers: {
+        "content-type": "text/event-stream",
+        "cache-control": "no-cache",
+        "x-accel-buffering": "no",
+      },
+    });
   }),
 );

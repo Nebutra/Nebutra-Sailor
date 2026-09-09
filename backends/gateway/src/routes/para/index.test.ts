@@ -204,6 +204,60 @@ describe("/api/v1/para", () => {
     ).toMatchObject({ status: "completed", progress: 1, finishedAt: "2026-09-08T10:00:00Z" });
   });
 
+  it("maps SSE task frames to PARA jobs so the browser never sees a task envelope", async () => {
+    const { mapTaskEventStream } = await import("./index.js");
+    const frames = [
+      `event: task\ndata: ${JSON.stringify({ id: "t1", status: "queued", progress: 0, payload: { nodeId: "n1", workspaceId: "w1" }, metadata: { queue_position: 3 } })}\n\n`,
+      `event: task\ndata: ${JSON.stringify({ id: "t1", status: "running", progress: 40, payload: { nodeId: "n1", workspaceId: "w1" } })}\n\n`,
+      'event: error\ndata: {"detail":"noted"}\n\n',
+      `event: task\ndata: ${JSON.stringify({ id: "t1", status: "succeeded", progress: 100, payload: { nodeId: "n1", workspaceId: "w1" }, result: { assets: [{ url: "https://cdn/x.png" }] }, completed_at: "2026-09-09T00:00:00Z" })}\n\n`,
+    ].join("");
+
+    // Split mid-frame to prove the transform reassembles across chunk boundaries.
+    const cut = Math.floor(frames.length / 3);
+    const encoder = new TextEncoder();
+    const source = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(encoder.encode(frames.slice(0, cut)));
+        controller.enqueue(encoder.encode(frames.slice(cut)));
+        controller.close();
+      },
+    });
+
+    const out: string[] = [];
+    const reader = mapTaskEventStream(source).getReader();
+    const decoder = new TextDecoder();
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      out.push(decoder.decode(value));
+    }
+    const events = out
+      .join("")
+      .split("\n\n")
+      .filter(Boolean)
+      .map((frame) => frame.split("\ndata: "));
+
+    expect(events).toHaveLength(4);
+    expect(JSON.parse(events[0]?.[1] as string)).toMatchObject({
+      status: "queued",
+      nodeId: "n1",
+      queuePosition: 3,
+      progress: 0,
+    });
+    expect(JSON.parse(events[1]?.[1] as string)).toMatchObject({
+      status: "running",
+      progress: 0.4,
+    });
+    // Non-task frames survive untouched.
+    expect(events[2]).toEqual(["event: error", '{"detail":"noted"}']);
+    expect(JSON.parse(events[3]?.[1] as string)).toMatchObject({
+      status: "completed",
+      progress: 1,
+      result: { assets: [{ url: "https://cdn/x.png" }] },
+    });
+  });
+
   it("lists assets with lower-cased enums", async () => {
     assets.list.mockResolvedValueOnce([
       {

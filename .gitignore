@@ -63,6 +63,8 @@ __pycache__
 .venv
 venv
 .pytest_cache
+.coverage
+.ruff_cache
 
 # Rust
 target

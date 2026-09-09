@@ -32,15 +32,11 @@ export function followJob(job: Job): () => void {
         next.error ?? { type: "task_failed", message: "Generation failed" },
       );
     else if (next.status === "completed") {
-      const assetId = (next as Job & { result?: { assetId?: string } }).result?.assetId;
-      if (assetId) editor.completeNode(next.nodeId, assetId, next.id);
-      else
-        editor.failNode(next.nodeId, {
-          type: "no_output",
-          message: "Completed without an output asset",
-        });
+      es.close();
+      void recordOutput(next);
+      return;
     }
-    if (next.status === "completed" || next.status === "failed") es.close();
+    if (next.status === "failed") es.close();
   };
   es.addEventListener("task", (e) => {
     try {
@@ -57,4 +53,50 @@ export function followJob(job: Job): () => void {
       .catch(() => es.close());
   };
   return () => es.close();
+}
+
+/**
+ * A completed job's output becomes an account asset (Library › Generated) and lands on the node.
+ * Result shape from backends/python/ai handle_para_generate: {assets: [{url, contentType}], mode, text?}.
+ */
+async function recordOutput(job: Job): Promise<void> {
+  const editor = useEditorStore.getState();
+  const result = (
+    job as Job & { result?: { assets?: Array<{ url: string }>; mode?: string; text?: string } }
+  ).result;
+  const node = editor.document?.nodes[job.nodeId];
+  try {
+    if (result?.mode === "text" && node?.type === "text") {
+      editor.setNodeStatus(job.nodeId, "completed", {
+        text: result.text ?? "",
+        jobId: job.id,
+        finishedAt: new Date().toISOString(),
+      });
+      return;
+    }
+    const first = result?.assets?.[0];
+    if (!first) {
+      editor.failNode(job.nodeId, {
+        type: "no_output",
+        message: "Completed without an output asset",
+      });
+      return;
+    }
+    const aspect = node?.generator?.params?.aspect;
+    const asset = await gatewayApi.createAsset({
+      type: node?.type === "video" ? "video" : "image",
+      url: first.url,
+      label: job.nodeId,
+      aspect: aspect === "1:1" || aspect === "9:16" || aspect === "4:3" ? aspect : "16:9",
+      origin: "generated",
+      jobId: job.id,
+      ...(editor.documentId ? { workspaceId: editor.documentId } : {}),
+    });
+    useEditorStore.getState().completeNode(job.nodeId, asset.id, job.id);
+  } catch (e) {
+    useEditorStore.getState().failNode(job.nodeId, {
+      type: "asset_record_failed",
+      message: e instanceof Error ? e.message : "Could not record the output",
+    });
+  }
 }
