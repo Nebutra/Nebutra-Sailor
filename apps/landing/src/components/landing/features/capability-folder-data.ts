@@ -228,16 +228,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 21,
       unitLabel: copy("packages", "包"),
-<<<<<<< HEAD
-      sourceFiles: 325,
-      testFiles: 57,
-||||||| ddc9d0142
-      sourceFiles: 310,
-      testFiles: 55,
-=======
-      sourceFiles: 318,
-      testFiles: 61,
->>>>>>> origin/main
+      sourceFiles: 333,
+      testFiles: 63,
       readmes: 15,
     },
     title: copy("Platform Control Plane", "平台控制平面"),
@@ -916,16 +908,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 1,
       unitLabel: copy("backend", "后端"),
-<<<<<<< HEAD
-      sourceFiles: 102,
+      sourceFiles: 104,
       testFiles: 44,
-||||||| ddc9d0142
-      sourceFiles: 96,
-      testFiles: 41,
-=======
-      sourceFiles: 98,
-      testFiles: 41,
->>>>>>> origin/main
       readmes: 0,
     },
     title: copy("Typed API Gateway Boundary", "类型化 API 网关边界"),
