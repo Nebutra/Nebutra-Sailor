@@ -42,6 +42,9 @@ jobs:
           - app: admin
             fly_app: nebutra-admin
             host: admin
+          - app: para
+            fly_app: nebutra-para
+            host: para
           - app: sailor-docs
             fly_app: nebutra-docs
             host: docs
