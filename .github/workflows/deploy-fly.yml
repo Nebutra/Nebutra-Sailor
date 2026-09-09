@@ -316,9 +316,7 @@ jobs:
           base="https://${{ matrix.fly_app }}.fly.dev"
 
           catalogue=$(curl -sS --max-time 30 "$base/api/catalogue" || echo '{}')
-          sellable=$(printf '%s' "$catalogue" | python3 -c 'import json,sys
-try: print(len(json.load(sys.stdin).get("data") or []))
-except Exception: print(0)')
+          sellable=$(printf '%s' "$catalogue" | python3 -c "import json,sys;print(len(json.load(sys.stdin).get('data') or []))" 2>/dev/null || echo 0)
           echo "sellable models: $sellable"
           printf '%s' "$catalogue" | head -c 400; echo
           if [ "$sellable" -lt 1 ]; then

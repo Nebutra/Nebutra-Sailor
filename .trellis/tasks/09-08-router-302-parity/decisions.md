@@ -317,3 +317,42 @@ nothing rather than guessing. Production went 15 published → 1, and `gpt-5.4-m
 
 Still open: the DNS cutover, and the account pool has no accounts logged in, so `gpt-image-2` via
 302 is the only real supply.
+
+## A17 — Cloudflare eats an origin 502, so our error bodies never reached anyone
+
+Logging the first account into the pool from `admin.nebutra.com/supply` failed with
+`network · HTTP 502` and no cause. The body was not ours: Cloudflare fronts every host and
+replaces an origin `502` or `504` with its own branded HTML error page. Every layer between the
+browser and the real failure had answered with a gateway status, so the JSON envelope carrying
+the code and the message was discarded before the console could read it.
+
+This was not only an admin problem. `/api/v1/[...path]` answered `502` on an upstream failure,
+so an OpenAI-compatible client received HTML instead of our error body.
+
+Fixed at the contract rather than per route: `ADMIN_ERROR_STATUS` and `cdnSafeStatus()` in
+`@nebutra/contracts/admin` are the single source for the status an admin error travels as —
+`503` for an upstream failure, `500` for a fault of our own. Eleven routes were changed.
+`tests/architecture/cdn-safe-error-status.test.ts` fails if a gateway status is reintroduced;
+verified against a planted violation.
+
+## A18 — A pool sign-in must survive a Machine restart
+
+`completeLogin` refused any state its in-memory `pending` map did not know. But CLIProxyAPI
+issues the state and holds the verifier; our map is bookkeeping for the console. A router deploy
+between "start sign-in" and the operator pasting the callback emptied the map and stranded a
+callback CLIProxyAPI could still redeem — and deploys happen exactly when we are fixing supply.
+
+An unknown state is now rebuilt from the redirect port (1455 codex, 51121 antigravity, 54545
+anthropic) and forwarded. Only CLIProxyAPI can say whether a state is redeemable.
+
+## A19 — The DNS cutover gate checked liveness, not sellability
+
+`deploy-fly.yml` gated the Cloudflare cutover on a 200 from the home page. That would have
+pointed `router.nebutra.com` at a deployment with an empty shelf, or one whose edge admits an
+unkeyed request — both worse than leaving the ECS origin in place.
+
+`/v1/models` could not serve as the gate: it is the OpenAI-compatible surface and answers what a
+given customer key may call. Added `GET /api/catalogue`, the sellable shelf as open JSON, which
+answers what the station can sell at all. Prospective customers read it before signing up; the
+pipeline reads it before touching DNS. The cutover now requires at least one sellable model and
+a 401/403 on an unkeyed relay.
