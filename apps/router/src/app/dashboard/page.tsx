@@ -160,6 +160,9 @@ export default async function DashboardPage() {
                       {c.ok ? <Check className="h-2.5 w-2.5" /> : null}
                     </span>
                     {c.label}
+                    {/* The tick is colour and shape only; without this the row
+                        reads the same done and not-done to a screen reader. */}
+                    <span className="sr-only">{c.ok ? "已完成" : "未完成"}</span>
                   </span>
                   <ArrowRight className="h-3 w-3 text-[var(--neutral-9)]" />
                 </Link>
