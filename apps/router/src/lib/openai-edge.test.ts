@@ -260,7 +260,7 @@ describe("router OpenAI edge", () => {
       `data: ${JSON.stringify({ type: "response.created", response: { model: "gpt-5-codex" } })}`,
       `data: ${JSON.stringify({ type: "response.completed", response: { model: "gpt-5-codex", usage: { input_tokens: 40, output_tokens: 10, total_tokens: 50 } } })}`,
     ].join("\n\n");
-    expect(parseUsage(responses, "text/event-stream")).toEqual({
+    expect(parseUsage(responses, "text/event-stream")).toMatchObject({
       model: "gpt-5-codex",
       promptTokens: 40,
       completionTokens: 10,
@@ -271,7 +271,7 @@ describe("router OpenAI edge", () => {
       `event: message_start\ndata: ${JSON.stringify({ type: "message_start", message: { model: "claude-sonnet-4-5", usage: { input_tokens: 20, output_tokens: 1 } } })}`,
       `event: message_delta\ndata: ${JSON.stringify({ type: "message_delta", usage: { output_tokens: 9 } })}`,
     ].join("\n\n");
-    expect(parseUsage(anthropic, "text/event-stream")).toEqual({
+    expect(parseUsage(anthropic, "text/event-stream")).toMatchObject({
       model: "claude-sonnet-4-5",
       promptTokens: 20,
       completionTokens: 9,

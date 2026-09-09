@@ -26,9 +26,16 @@ const nextConfig: NextConfig = {
     "@nebutra/repositories",
     "@nebutra/contracts",
     "@nebutra/audit",
+    "@nebutra/billing",
+    "@nebutra/rate-limit",
   ],
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg"],
   async rewrites() {
+    // The public, key-authenticated relay only. `/api/v1/[...path]` answers 404
+    // for anything outside its allow-list, so this rewrite cannot expose a
+    // console route: the console lives under `/api/console/v1/*`, which no
+    // `/v1/...` URL can reach. It used to sit under `/api/v1/*`, where
+    // `/v1/wallet/topup` was an unauthenticated public mutation.
     return [{ source: "/v1/:path*", destination: "/api/v1/:path*" }];
   },
   experimental: {

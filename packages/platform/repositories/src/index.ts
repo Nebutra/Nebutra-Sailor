@@ -53,6 +53,22 @@ export {
   retentionExpiryFrom,
 } from "./pebble-support.repository";
 export type {
+  RouterKeySpend,
+  RouterPriceRow,
+  RouterReleaseInput,
+  RouterReserveInput,
+  RouterSettleInput,
+  RouterSettleResult,
+  RouterSweepOptions,
+  RouterSweepResult,
+} from "./router-billing.repository";
+// Router money spine (reserve → settle → release → sweep)
+export {
+  RESERVATION_TTL_MS,
+  RouterBillingRepository,
+  startOfUtcDay,
+} from "./router-billing.repository";
+export type {
   ProviderKeyCredentials,
   ResolvedProviderKey,
   UpsertProviderKeyData,

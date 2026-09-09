@@ -6,8 +6,10 @@ import type { ReactNode } from "react";
 import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
 import { requireAuth } from "@/lib/auth";
-import { getBaseUrlHint, getModelRoutes, getWallet, listKeys } from "@/lib/demo-store";
 import { formatPrice, getListingCatalog, PROVIDER_LABEL } from "@/lib/listing-catalog";
+import { getBaseUrlHint, getModelRoutes } from "@/lib/model-routes";
+import { getApiKeyRepository, resolveSessionTenantId } from "@/lib/router-keys";
+import { getBalanceForDisplay } from "@/lib/wallet";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "数据汇总" };
@@ -26,9 +28,14 @@ function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: 
 
 /** 管理后台 · 数据汇总（原首页控制台） */
 export default async function DashboardPage() {
-  await requireAuth("/dashboard");
-  const balance = await getWallet().getBalance("demo");
-  const keys = listKeys();
+  const session = await requireAuth("/dashboard");
+  const tenantId = await resolveSessionTenantId(session);
+  const [balance, keys] = tenantId
+    ? await Promise.all([
+        getBalanceForDisplay(tenantId),
+        getApiKeyRepository().listByTenant(tenantId),
+      ])
+    : [{ balance: 0, currency: "USD" }, []];
   const baseUrl = getBaseUrlHint();
   const routes = getModelRoutes();
   const { models, fetchedNote } = await getListingCatalog();
@@ -65,7 +72,7 @@ export default async function DashboardPage() {
           label="余额"
           value={
             <>
-              {balance.balance}
+              {balance.balance.toFixed(2)}
               <span className="ml-1 text-xs font-medium text-[var(--neutral-10)]">
                 {balance.currency}
               </span>

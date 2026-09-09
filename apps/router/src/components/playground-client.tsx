@@ -21,7 +21,6 @@ export function PlaygroundClient({
   const [prompt, setPrompt] = useState(`用一句话介绍 ${brand.name} Router`);
   const [apiKey, setApiKey] = useState("");
   const [out, setOut] = useState("");
-  const [mode, setMode] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -32,9 +31,8 @@ export function PlaygroundClient({
   const run = async () => {
     setLoading(true);
     setOut("");
-    setMode("");
     try {
-      const res = await fetch("/api/v1/chat", {
+      const res = await fetch("/api/console/v1/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model, prompt, apiKey }),
@@ -42,13 +40,11 @@ export function PlaygroundClient({
       const data = (await res.json()) as {
         content?: string;
         error?: string;
-        mode?: string;
       };
       if (data.error) {
         setOut(data.error);
         return;
       }
-      setMode(data.mode ?? "ok");
       setOut(data.content ?? "");
     } finally {
       setLoading(false);
@@ -110,12 +106,6 @@ export function PlaygroundClient({
           >
             {loading ? "请求中…" : "发送"}
           </Button>
-          {mode ? (
-            <span className="font-mono text-[11px] text-[var(--neutral-10)]">
-              mode={mode}
-              {mode === "demo" ? " · 本地模拟（未配上游）" : ""}
-            </span>
-          ) : null}
         </div>
       </div>
 

@@ -5,18 +5,11 @@ import { ApiKeyRepository, hashApiKeyPlaintext } from "@nebutra/repositories";
 import type { EdgeIdentity, KeyResolver } from "./openai-edge";
 
 /**
- * Which credential the /v1 edge expects.
- *
- * - `nebutra`      — a product-issued key (shared APIKey table); the edge swaps
- *                    it for NEW_API_ACCESS_TOKEN upstream. Production target.
- * - `newapi-token` — legacy: the customer holds a New-API user token and the
- *                    edge forwards it untouched. Default until keys migrate.
+ * The Router has one credential: a product-issued key in the shared `APIKey`
+ * table, which the /v1 edge swaps for the upstream token. `ROUTER_KEY_STORE`
+ * and the New-API pass-through mode are gone (D4) — there is nothing to branch
+ * on and no in-memory store to fall back to.
  */
-export type RouterKeyStoreMode = "nebutra" | "newapi-token";
-
-export function routerKeyStoreMode(): RouterKeyStoreMode {
-  return process.env.ROUTER_KEY_STORE === "nebutra" ? "nebutra" : "newapi-token";
-}
 
 interface CacheEntry {
   identity: EdgeIdentity | null;
@@ -71,9 +64,8 @@ const g = globalThis as unknown as {
   __routerKeyResolver?: ReturnType<typeof createProductKeyResolver>;
 };
 
-/** Process-wide resolver in `nebutra` mode; `undefined` in legacy mode. */
-export function getKeyResolver(): KeyResolver | undefined {
-  if (routerKeyStoreMode() !== "nebutra") return undefined;
+/** Process-wide resolver over the shared APIKey table. */
+export function getKeyResolver(): KeyResolver {
   if (!g.__routerKeyResolver) {
     g.__routerKeyResolver = createProductKeyResolver(new ApiKeyRepository(getSystemDb()));
   }

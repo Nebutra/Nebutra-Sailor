@@ -34,15 +34,59 @@ One key, every protocol. Supply behind New-API is either an API-key channel
 Claude accounts) — the customer cannot tell and does not choose. See
 `infra/nebutra-router/README.md`.
 
+Chat and messages also accept OpenRouter's `models: [...]` fallback chain: the
+edge tries each candidate in order and moves on when the upstream answers with
+a retryable status (408/409/425/429/5xx). Reading it means parsing the request
+body, so a JSON body is buffered (4 MB ceiling); a multipart upload and any
+JSON body over the ceiling stream through untouched and simply do not get
+`models[]`.
+
+### Console API — not on the public surface
+
+The console lives under `/api/console/v1/{wallet,wallet/topup,keys,chat}` and
+requires a session. It used to live under `/api/v1/*`, which the `/v1/:path*`
+rewrite made **publicly reachable**: `POST /v1/wallet/topup` was an
+unauthenticated mutation on a wallet. Those paths are now 404
+(`error.code = "unknown_endpoint"`), asserted in
+`src/lib/console-surface.test.ts`. Nothing new may be added under `/api/v1`
+except the relay's own catch-all.
+
+### Refusals
+
+Every refusal carries a `code` in the OpenAI envelope, so a caller can branch
+without reading prose:
+
+| Status | `error.code` | Meaning |
+| --- | --- | --- |
+| 401 | `missing_api_key` · `invalid_api_key` · `key_disabled` | credential |
+| 403 | `model_not_published` | priced but not on the shelf, or its price is incomplete |
+| 404 | `unknown_endpoint` · `unknown_model` | not sold here |
+| 402 | `insufficient_balance` | the tenant balance cannot cover the hold |
+| 402 | `key_quota_exceeded` | the key's `limitDaily` (UTC) or `limitTotal` would break |
+| 429 | `rate_limit_exceeded` | `APIKey.rateLimitRps`; `Retry-After` is set |
+| 503 | `router_unconfigured` | no supply configured |
+
+Every `/v1` response carries `X-RateLimit-Limit` / `-Remaining` / `-Reset`.
+
 ### Key store
 
-| `ROUTER_KEY_STORE` | Customer holds | Edge does |
-|---|---|---|
-| unset / `newapi-token` (default) | a New-API user token | forwards it untouched (legacy) |
-| `nebutra` | a Nebutra key (`sk-sailor-…`, shared `APIKey` table with app + gateway) | validates by hash, swaps in `NEW_API_ACCESS_TOKEN`, writes a usage ledger row per request, `/keys` revoke takes effect immediately |
+There is one. The customer holds a Nebutra key (`sk-sailor-…`) in the shared
+`APIKey` table — the same table as app settings and the gateway. The edge
+validates it by hash, swaps in `NEW_API_ACCESS_TOKEN` upstream, writes a usage
+ledger row per request, and `/keys` revoke takes effect immediately.
 
-`nebutra` mode needs `DATABASE_URL` and `NEW_API_ACCESS_TOKEN`. The customer key
-never reaches New-API; the New-API token never reaches customers.
+`ROUTER_KEY_STORE` and the New-API pass-through mode are gone, along with the
+in-memory demo store behind them. Needs `DATABASE_URL` and
+`NEW_API_ACCESS_TOKEN`. The customer key never reaches New-API; the New-API
+token never reaches customers.
+
+### Wallet
+
+`CreditBalance` / `CreditTransaction`, keyed by `Tenant.id`, through
+`@nebutra/prepaid-wallet`. `src/instrumentation.ts` calls
+`configureBillingTenantDb(getTenantDb)` at boot — without it every credits call
+throws. Spend decisions read `getBalanceFresh()`, never the cached
+`getBalance()`; see `src/lib/wallet.ts`.
 
 ## Model list maintenance (302-style sellable shelf)
 

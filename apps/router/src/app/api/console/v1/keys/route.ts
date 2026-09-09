@@ -2,18 +2,16 @@ import { DEFAULT_PRODUCT_SCOPES, issueApiKey } from "@nebutra/prepaid-wallet";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getSessionFromRequest } from "@/lib/auth";
-import { createKey, listKeys } from "@/lib/demo-store";
-import { getApiKeyRepository, resolveSessionTenantId, routerKeyStoreMode } from "@/lib/router-keys";
+import { getApiKeyRepository, resolveSessionTenantId } from "@/lib/router-keys";
 
 export const dynamic = "force-dynamic";
 
 const CreateBody = z.object({ name: z.string().trim().min(1).max(64).default("default") });
 
 /**
- * Console key management. In `nebutra` mode keys are rows in the shared
- * APIKey table (same table as app settings and the gateway) scoped by the
- * session's tenant, and the /v1 edge validates them. In legacy mode the demo
- * store keeps the console usable without a database.
+ * Console key management. Keys are rows in the shared `APIKey` table (the same
+ * table as app settings and the gateway), scoped by the session's tenant, and
+ * the /v1 edge validates them. There is no second store.
  */
 async function requireTenant(request: Request) {
   const session = await getSessionFromRequest(request);
@@ -33,13 +31,10 @@ async function requireTenant(request: Request) {
 }
 
 export async function GET(request: Request) {
-  if (routerKeyStoreMode() !== "nebutra") {
-    return NextResponse.json({ keys: listKeys(), store: "demo" });
-  }
   const ctx = await requireTenant(request);
   if ("error" in ctx) return ctx.error;
   const keys = await getApiKeyRepository().listByTenant(ctx.tenantId);
-  return NextResponse.json({ keys, store: "nebutra" });
+  return NextResponse.json({ keys });
 }
 
 export async function POST(request: Request) {
@@ -48,18 +43,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid input." }, { status: 400 });
   }
   const { name } = parsed.data;
-
-  if (routerKeyStoreMode() !== "nebutra") {
-    const key = createKey(name);
-    return NextResponse.json({
-      id: key.id,
-      name: key.name,
-      keyPrefix: key.keyPrefix,
-      scopes: key.scopes,
-      fullKey: key.fullKey,
-      warning: "Shown once only in demo store",
-    });
-  }
 
   const ctx = await requireTenant(request);
   if ("error" in ctx) return ctx.error;

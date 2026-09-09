@@ -21,8 +21,7 @@ import {
   parseAliasTableJson,
   type SupplyInventory,
 } from "@nebutra/router-supply";
-import type { ModelRouteRow } from "@/lib/demo-store";
-import { getModelRoutes } from "@/lib/demo-store";
+import { getModelRoutes, type ModelRouteRow } from "./model-routes";
 
 /** models.dev raw providers we keep on the shelf */
 const PREFERRED_RAW = new Set([

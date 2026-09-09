@@ -6,6 +6,7 @@ export {
   issueApiKey,
 } from "./api-key";
 export {
+  type CreditLedgerBalanceRow,
   type CreditLedgerPort,
   createCreditLedgerWallet,
 } from "./credit-ledger-wallet";

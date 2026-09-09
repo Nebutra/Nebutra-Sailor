@@ -13,7 +13,7 @@ export function WalletClient() {
   const [loading, setLoading] = useState(false);
 
   const refresh = useCallback(async () => {
-    const res = await fetch("/api/v1/wallet");
+    const res = await fetch("/api/console/v1/wallet");
     const data = (await res.json()) as { balance: number; currency: string };
     setBalance(data.balance);
     setCurrency(data.currency);
@@ -27,13 +27,13 @@ export function WalletClient() {
     setLoading(true);
     setMsg("");
     try {
-      const res = await fetch("/api/v1/wallet/topup", {
+      const res = await fetch("/api/console/v1/wallet/topup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: Number(amount) }),
       });
-      const data = (await res.json()) as { message?: string; error?: string };
-      setMsg(data.message ?? data.error ?? "");
+      const data = (await res.json()) as { error?: string };
+      setMsg(res.ok ? `已到账 ${Number(amount).toFixed(2)} USD` : (data.error ?? "充值失败"));
       await refresh();
     } finally {
       setLoading(false);
@@ -45,16 +45,16 @@ export function WalletClient() {
       <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3">
         <p className="text-[11px] text-[var(--neutral-10)]">当前余额</p>
         <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight">
-          {balance === null ? "…" : balance}
+          {balance === null ? "…" : balance.toFixed(2)}
           <span className="ml-1.5 text-sm font-medium text-[var(--neutral-10)]">{currency}</span>
         </p>
         <p className="mt-2 text-[11px] leading-snug text-[var(--neutral-10)]">
-          Demo 内存账本 · 生产写入 prepaid-wallet
+          按量扣费，单次请求精确到 6 位小数
         </p>
       </div>
 
       <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3">
-        <p className="mb-2 text-[12px] font-semibold">Mock 充值</p>
+        <p className="mb-2 text-[12px] font-semibold">充值</p>
         <div className="mb-2 flex flex-wrap gap-1.5">
           {PRESETS.map((n) => (
             <button

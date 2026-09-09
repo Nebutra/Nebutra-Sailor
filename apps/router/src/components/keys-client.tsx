@@ -25,13 +25,11 @@ export function KeysClient() {
   const [name, setName] = useState("default");
   const [once, setOnce] = useState("");
   const [loading, setLoading] = useState(false);
-  const [store, setStore] = useState<"demo" | "nebutra">("demo");
 
   const refresh = useCallback(async () => {
-    const res = await fetch("/api/v1/keys");
-    const data = (await res.json()) as { keys?: KeyRow[]; store?: "demo" | "nebutra" };
+    const res = await fetch("/api/console/v1/keys");
+    const data = (await res.json()) as { keys?: KeyRow[] };
     setKeys(data.keys ?? []);
-    if (data.store) setStore(data.store);
   }, []);
 
   useEffect(() => {
@@ -42,7 +40,7 @@ export function KeysClient() {
     setLoading(true);
     setOnce("");
     try {
-      const res = await fetch("/api/v1/keys", {
+      const res = await fetch("/api/console/v1/keys", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name }),
@@ -58,7 +56,7 @@ export function KeysClient() {
   const revoke = async (id: string) => {
     setLoading(true);
     try {
-      await fetch(`/api/v1/keys/${id}`, { method: "DELETE" });
+      await fetch(`/api/console/v1/keys/${id}`, { method: "DELETE" });
       await refresh();
     } finally {
       setLoading(false);
@@ -153,18 +151,16 @@ export function KeysClient() {
                   {new Date(k.createdAt).toLocaleString()}
                 </TableCell>
                 <TableCell alignment="end">
-                  {store === "nebutra" ? (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="h-7"
-                      disabled={loading}
-                      onClick={() => void revoke(k.id)}
-                    >
-                      吊销
-                    </Button>
-                  ) : null}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-7"
+                    disabled={loading}
+                    onClick={() => void revoke(k.id)}
+                  >
+                    吊销
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

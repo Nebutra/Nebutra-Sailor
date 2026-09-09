@@ -247,6 +247,24 @@ export type CreditBalance = Prisma.CreditBalanceModel
  */
 export type CreditTransaction = Prisma.CreditTransactionModel
 /**
+ * Model RouterReservation
+ * A Router hold that has left the balance but not yet become a charge.
+ * 
+ * The admit path decrements `credit_balances.balance` before the upstream call
+ * so two concurrent requests cannot spend the same dollar. Without this row the
+ * decrement is money that has moved with nothing recording that it is a hold:
+ * if the process dies between admit and settle — a deploy restart, an OOM,
+ * during a request that may stream for up to 180 s — the balance stays reduced,
+ * no ledger row explains it, and nothing can give it back. Fly recycles
+ * machines on every deploy, so that is normal operation, not a disaster case.
+ * 
+ * The row's lifetime brackets the money exactly: it is written in the same
+ * transaction as the decrement and deleted in the same transaction as the
+ * settle, the release, or the sweep that refunds it. `id` is the edge's
+ * `requestId`, so a retried admit collides instead of holding twice.
+ */
+export type RouterReservation = Prisma.RouterReservationModel
+/**
  * Model StripeCustomer
  * 
  */

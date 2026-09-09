@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSessionFromRequest } from "@/lib/auth";
-import {
-  getApiKeyRepository,
-  invalidateKeyCache,
-  resolveSessionTenantId,
-  routerKeyStoreMode,
-} from "@/lib/router-keys";
+import { getApiKeyRepository, invalidateKeyCache, resolveSessionTenantId } from "@/lib/router-keys";
 
 export const dynamic = "force-dynamic";
 
@@ -13,9 +8,6 @@ type RouteContext = { params: Promise<{ id: string }> };
 
 /** Revoke. Takes effect at the /v1 edge immediately in this process. */
 export async function DELETE(request: Request, context: RouteContext) {
-  if (routerKeyStoreMode() !== "nebutra") {
-    return NextResponse.json({ error: "Revoke needs ROUTER_KEY_STORE=nebutra." }, { status: 501 });
-  }
   const session = await getSessionFromRequest(request);
   if (!session?.userId) {
     return NextResponse.json({ error: "Authentication required." }, { status: 401 });

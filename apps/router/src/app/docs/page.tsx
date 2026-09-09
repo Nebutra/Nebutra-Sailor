@@ -9,7 +9,8 @@ import {
 } from "@nebutra/ui/primitives";
 import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
-import { getBaseUrlHint, getModels } from "@/lib/demo-store";
+import { getListedModelIds } from "@/lib/listing-catalog";
+import { getBaseUrlHint } from "@/lib/model-routes";
 
 export const metadata = { title: "接入" };
 
@@ -24,9 +25,10 @@ function Snippet({ title, code }: { title: string; code: string }) {
   );
 }
 
-export default function DocsPage() {
+export default async function DocsPage() {
   const base = getBaseUrlHint();
-  const models = getModels();
+  // The shelf, not the alias table — a snippet must name a model we actually sell.
+  const models = await getListedModelIds();
   const sampleModel = models[0] ?? DEFAULT_PUBLIC_MODEL;
   const host = base.replace(/\/v1\/?$/, "");
 

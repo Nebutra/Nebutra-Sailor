@@ -98,13 +98,13 @@ export function ProductDetail({
     () => [
       {
         name: "Chat（聊天）",
-        path: "/api/v1/chat/completions",
+        path: "/v1/chat/completions",
         method: "POST",
         stability: "稳定",
       },
       {
         name: "Chat（流式）",
-        path: "/api/v1/chat/completions",
+        path: "/v1/chat/completions",
         method: "POST",
         stability: "稳定",
       },
@@ -120,7 +120,7 @@ export function ProductDetail({
       `输入: ${formatPrice(model.inputPerMTok)}/1M`,
       `输出: ${formatPrice(model.outputPerMTok)}/1M`,
       `上下文: ${model.context || "—"}`,
-      `接入: ${brand.name} Router OpenAI-compatible /api/v1/chat/completions`,
+      `接入: ${brand.name} Router OpenAI-compatible /v1/chat/completions`,
     ].join("\n");
     try {
       await navigator.clipboard.writeText(text);
