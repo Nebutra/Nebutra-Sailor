@@ -18,13 +18,16 @@
     "clean": "rm -rf .next"
   },
   "dependencies": {
+    "@nebutra/atelier-canvas": "workspace:*",
     "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/fonts": "workspace:*",
+    "@nebutra/graph-model": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@tanstack/react-query": "5.101.0",
+    "@xyflow/react": "^12.10.2",
     "geist": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
