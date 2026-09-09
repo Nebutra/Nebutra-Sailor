@@ -70,7 +70,8 @@
     "prisma": "catalog:",
     "tsx": "^4.21.0",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "@electric-sql/pglite-socket": "^0.0.20"
   },
   "license": "AGPL-3.0-only",
   "files": [

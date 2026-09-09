@@ -165,7 +165,9 @@ const nextConfig: NextConfig = {
   // Enable Partial Prerendering — Next.js 16 merged experimental.ppr into cacheComponents.
   cacheComponents: true,
   experimental: {
-    viewTransition: true,
+    // `viewTransition` graduated out of experimental in Next 16.3 — the key no
+    // longer exists on ExperimentalConfig, so setting it is a type error and
+    // does nothing. React's view transitions are on without it.
     webpackBuildWorker: true,
     webpackMemoryOptimizations: true,
     // Rewrite barrel imports of the dist-published internal packages into direct
