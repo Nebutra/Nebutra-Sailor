@@ -57,9 +57,9 @@ isolates untrusted code — a sovereignty argument. A canvas renderer has no equ
   selection, viewport culling, minimap and connection handles for free.
 - Node placement stops being duplicated: `apps/para` and `backends/gateway` should use
   `findNextPosition` from `@nebutra/atelier-canvas` rather than each carrying a `placeChild`.
-- The document model must map to `@nebutra/graph-model`'s `GraphNode` / `GraphEdge`. PARA's node
-  already carries `id`, position and size, so this is an adapter, not a rewrite.
-- `@nebutra/ui` gains a real second consumer, which will expose whatever the reel binding did not.
+- `@nebutra/ui` does not gain a second consumer of `NodeGraphCanvas`; it stays reel's composition.
+  Should a third canvas appear, that is the moment to ask whether the component should grow a
+  node-component slot rather than each caller composing ReactFlow again.
 
 ## When to revisit
 

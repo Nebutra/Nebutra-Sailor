@@ -980,9 +980,6 @@ importers:
       '@nebutra/fonts':
         specifier: workspace:*
         version: link:../../packages/design/fonts
-      '@nebutra/graph-model':
-        specifier: workspace:*
-        version: link:../../packages/platform/graph-model
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -1000,10 +997,10 @@ importers:
         version: 12.10.2(@types/react@19.2.14)(immer@11.1.4)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       geist:
         specifier: 'catalog:'
-        version: 1.7.0(next@16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        version: 1.7.0(next@16.3.4(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       next:
-        specifier: ^16.2.11
-        version: 16.2.11(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^16.3.3
+        version: 16.3.4(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react:
         specifier: 19.2.4
         version: 19.2.4

@@ -22,7 +22,6 @@
     "@nebutra/auth": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/fonts": "workspace:*",
-    "@nebutra/graph-model": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",

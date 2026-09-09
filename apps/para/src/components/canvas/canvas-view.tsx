@@ -27,10 +27,14 @@ const NODE_TYPES = { [PARA_NODE_TYPE]: ParaNode };
 const PRO_OPTIONS = { hideAttribution: true };
 
 /**
- * The canvas, rendered by React Flow through `@nebutra/ui`'s graph contract rather than a
- * hand-written transform layer (ADR 2026-09-09 para-canvas-renderer). React Flow owns pan, zoom,
- * drag, marquee selection, viewport culling and edges; PARA owns what a node *is* and what appears
- * when one is selected.
+ * The canvas, rendered by React Flow rather than a hand-written transform layer
+ * (ADR 2026-09-09 para-canvas-renderer). React Flow owns pan, zoom, drag, marquee selection,
+ * viewport culling and edges; PARA owns what a node *is* and what appears when one is selected.
+ *
+ * The document maps to React Flow inline rather than through `@nebutra/ui`'s graph adapter: that
+ * adapter earns its keep on the cycle guard in `tryAddEdge`, and PARA's edges are provenance the
+ * system writes, not wires a user draws — `nodesConnectable` is false, so there is no cycle to
+ * guard against.
  *
  * Chrome is ours, not React Flow's: no built-in Controls, no MiniMap, and the dot grid is the one
  * from `shell.css`, so the visual language has a single home.
