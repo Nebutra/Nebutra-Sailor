@@ -6,7 +6,8 @@ reads for that area, stays within one agent context, and has three layers:
 
 Decision rule and evidence tiers: [ADR 2026-09-08 competitive product cartography](../architecture/2026-09-08-competitive-product-cartography.md).
 Gates: [ADR 2026-09-08 product intelligence phase](../architecture/2026-09-08-product-intelligence-phase.md).
-Source corpus: `research/synthesis/` (12 reports, all six targets, synthesized 2026-09-08).
+Source corpus: `research/synthesis/` (12 reports, all six targets, synthesized 2026-09-08) and
+`research/visual/` (six visual-language reports + `synthesis.md`, 2026-09-09).
 
 | File | Area | Status |
 | --- | --- | --- |
@@ -18,6 +19,7 @@ Source corpus: `research/synthesis/` (12 reports, all six targets, synthesized 2
 | library.md | Assets, subjects, scope, reuse across workspaces | written 2026-09-08 |
 | generation.md | Request → artifact, provenance, variants, compare, approve | written 2026-09-08 |
 | versioning.md | History, branches, promote, diff | written 2026-09-08 |
+| visual-language.md | Ground, chrome shape, accent, node/selection rendering, overlays, type, theme, tokens | written 2026-09-09 |
 
 Precondition for any large PARA UI task: read `apps/para` PRD → the relevant file here → design system →
 existing component patterns. Never the whole `research/` tree.
@@ -25,7 +27,8 @@ existing component patterns. Never the whole `research/` tree.
 **Reading order for an implementation task:** `.trellis/tasks/09-08-para-frontend-shell/prd.md` → `workspace.md`
 (always) → the one area file the task touches (`canvas.md` for schema/store work, `selection.md` for anything shown on
 select, `agent.md` for the composer/panel, `jobs.md` for status, `library.md` for the drawer, `generation.md` for the
-generate path, `versioning.md` before adding any history UI) → its "What this changes in the current PRD/shell"
+generate path, `versioning.md` before adding any history UI; `visual-language.md` for anything that sets a colour, a
+surface, a radius, a type size or a control height) → its "What this changes in the current PRD/shell"
 section → `apps/para/src/domain/types.ts`. Read a `research/competitors/<slug>/` file only to check one cited claim.
 
 **Gate status (cartography v1, 2026-09-08):** decidable now — workspace layout (A, with B for project → workspace and

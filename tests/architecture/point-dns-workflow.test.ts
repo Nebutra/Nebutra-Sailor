@@ -23,12 +23,13 @@ const HOSTS = [
   "kuanlan",
   "leak",
   "open",
+  "para",
   "pebble",
   "router",
   "status",
   "www",
 ];
-const TARGETS = ["cloudflare-worker", "ecs", "vercel", "apex", "authoritative"];
+const TARGETS = ["cloudflare-worker", "ecs", "fly", "vercel", "apex", "authoritative"];
 
 // Every (host, target) pair the one-shots supported, and the script each ran.
 const SUPPORTED: Record<string, string> = {
@@ -44,6 +45,8 @@ const SUPPORTED: Record<string, string> = {
   "kuanlan/ecs": "point-kuanlan-dns-ecs.sh",
   "leak/authoritative": "point-leak-zone-dns.sh",
   "open/vercel": "point-open-dns-vercel.sh",
+  // The one generic script: every Fly product edge takes the same proxied-CNAME shape.
+  "para/fly": "point-fly-dns.sh",
   "pebble/vercel": "point-pebble-dns-vercel.sh",
   "router/ecs": "point-router-dns-ecs.sh",
   "status/vercel": "point-status-dns-vercel.sh",

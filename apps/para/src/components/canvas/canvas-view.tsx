@@ -199,7 +199,8 @@ export function CanvasView() {
             className="absolute"
             style={{
               left: viewport.x + (selected.x + selected.width / 2) * viewport.zoom,
-              top: viewport.y + selected.y * viewport.zoom - 48,
+              // Clears the 11px identity label, which sits just outside the node's top edge.
+              top: viewport.y + selected.y * viewport.zoom - 64,
               transform: "translateX(-50%)",
             }}
             onPointerDown={(e) => e.stopPropagation()}

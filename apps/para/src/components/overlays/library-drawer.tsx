@@ -78,7 +78,7 @@ export function LibraryDrawer({
       type="button"
       onClick={() => setTab(t)}
       aria-pressed={tab === t}
-      className="h-7 rounded-md px-2.5 text-muted-foreground text-xs hover:text-foreground aria-pressed:bg-accent aria-pressed:text-foreground"
+      className="h-[var(--para-h-chip)] rounded-md px-2.5 text-muted-foreground text-xs hover:text-foreground aria-pressed:bg-accent aria-pressed:text-foreground"
     >
       {label}
     </button>
@@ -108,7 +108,7 @@ export function LibraryDrawer({
           <button
             type="button"
             onClick={() => setWholeProject((v) => !v)}
-            className="h-7 rounded-md px-2 text-[11px] text-muted-foreground hover:text-foreground"
+            className="h-[var(--para-h-chip)] rounded-md px-2 text-[11px] text-muted-foreground hover:text-foreground"
           >
             {wholeProject ? "Whole project" : "This workspace"}
           </button>

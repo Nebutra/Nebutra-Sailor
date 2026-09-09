@@ -1,10 +1,36 @@
-/* PARA shell — quiet by default. Chrome stays thin; the work surface owns the viewport. */
+/**
+ * PARA shell — geometry and the few values the design tokens do not carry.
+ *
+ * The surface ladder is a *mapping* onto existing tokens, not new values:
+ *   canvas ground   --background   222 14%  9%
+ *   node / overlay  --card/--popover 222 12% 13%   (+4 L*)
+ *   input well      --muted       222 10% 17%      (+4 L*)
+ * Δ4 sits inside the 2–7 band the six mapped products use. Nothing here redefines a token;
+ * see docs/product-intelligence/visual-language.md §8 for why this is not a Brand Package.
+ */
 
 :root {
   --para-topbar-h: 46px;
   --para-dock-h: 44px;
   --para-drawer-w: 300px;
   --para-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Node geometry — 10px sits inside the observed 8–14 radius band. */
+  --para-node-radius: 10px;
+
+  /* Selection is a 1px stroke on the node's own bounds: no offset, no glow, no scale.
+     Near-white rather than the accent, so --primary stays free for the one action that spends. */
+  --para-select-w: 1px;
+  --para-select-color: hsl(var(--ring));
+
+  /* Control heights: chip / control / target. Three, not five. */
+  --para-h-chip: 28px;
+  --para-h-control: 36px;
+  --para-h-target: 44px;
+
+  /* Dot grid — faint enough to read as texture, not as a ruler. */
+  --para-grid-color: rgb(255 255 255 / 6%);
+  --para-grid-pitch: 20px;
 }
 
 html,
@@ -17,10 +43,18 @@ body {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  background-image: radial-gradient(var(--para-grid-color) 1px, transparent 1px);
+  background-size: var(--para-grid-pitch) var(--para-grid-pitch);
 }
 
 .para-node {
   will-change: transform;
+}
+
+/* One stroke, on the bounds. Outline rather than box-shadow so it never joins the elevation ramp. */
+.para-selected {
+  outline: var(--para-select-w) solid var(--para-select-color);
+  outline-offset: 0;
 }
 
 .para-drawer-enter {

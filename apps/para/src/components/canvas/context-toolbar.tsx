@@ -22,7 +22,7 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
   );
 
   const item =
-    "h-7 rounded-md px-2.5 text-xs text-foreground hover:bg-accent disabled:cursor-default disabled:opacity-35 disabled:hover:bg-transparent";
+    "h-[var(--para-h-chip)] rounded-md px-2.5 text-xs text-foreground hover:bg-accent disabled:cursor-default disabled:opacity-35 disabled:hover:bg-transparent";
   const run = (mode: "image" | "video", label: string) => {
     const id = derive({ sourceId: node.id, mode, createdBy: "user" });
     if (id) enqueue(id, `${label} · ${node.id}`, mode === "video" ? 7 : 1);
@@ -84,7 +84,7 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="para-rise flex h-9 items-center gap-0.5 rounded-lg border border-border/70 bg-card/95 px-1 shadow-ambient-md backdrop-blur-md">
+    <div className="para-rise flex h-[var(--para-h-control)] items-center gap-0.5 rounded-xl border border-border bg-popover px-1 shadow-ambient-md">
       {children}
     </div>
   );
@@ -105,7 +105,7 @@ function InfoPopover({ node }: { node: WorkspaceNode }) {
         <button
           type="button"
           aria-label="More"
-          className="flex h-7 items-center rounded-md px-2 text-foreground hover:bg-accent"
+          className="flex h-[var(--para-h-chip)] items-center rounded-md px-2 text-foreground hover:bg-accent"
         >
           <MoreHorizontal className="size-3.5" />
         </button>

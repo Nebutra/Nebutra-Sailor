@@ -31,10 +31,10 @@ on:
           - kuanlan
           - leak
           - open
+          - para
           - pebble
           - router
           - status
-          - para
           - www
       target:
         description: "DNS target — see the support matrix at the top of point-dns.yml"
@@ -224,8 +224,8 @@ jobs:
               echo "::warning::health ok but google probe not pair_ok yet"
               exit 0
               ;;
-            carina|pebble)
-              # Best-effort until the Vercel domain is attached.
+            carina|para|pebble)
+              # Best-effort until the origin is attached (Vercel project, or the Fly cert for para).
               for i in 1 2 3 4 5 6; do
                 code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://${DNS_HOST}.nebutra.com/" || echo 000)
                 echo "attempt $i ${DNS_HOST}=$code"

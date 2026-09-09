@@ -16,12 +16,12 @@ export function BottomDock() {
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-      <div className="para-rise pointer-events-auto flex h-[var(--para-dock-h)] w-[min(640px,80%)] items-center gap-1 rounded-full border border-border/70 bg-card/85 pr-1.5 pl-1.5 shadow-ambient-md backdrop-blur-md">
+      <div className="para-rise pointer-events-auto flex h-[var(--para-dock-h)] w-[min(640px,80%)] items-center gap-1 rounded-full border border-border bg-popover pr-1.5 pl-1.5 shadow-ambient-md">
         <button
           type="button"
           onClick={() => toggleDrawer("library")}
           aria-pressed={activeDrawer === "library"}
-          className="h-8 rounded-full px-3.5 text-sm text-foreground hover:bg-accent aria-pressed:bg-accent"
+          className="h-[var(--para-h-control)] rounded-full px-3.5 text-sm text-foreground hover:bg-accent aria-pressed:bg-accent"
         >
           Assets
         </button>
@@ -31,7 +31,7 @@ export function BottomDock() {
             setDrawer("agent");
             setAgent({ status: "composing" });
           }}
-          className="flex h-8 flex-1 items-center rounded-full px-4 text-left text-muted-foreground text-sm hover:bg-accent hover:text-foreground"
+          className="flex h-[var(--para-h-control)] flex-1 items-center rounded-full px-4 text-left text-muted-foreground text-sm hover:bg-accent hover:text-foreground"
         >
           Ask PARA…
         </button>

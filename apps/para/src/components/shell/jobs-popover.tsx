@@ -31,7 +31,7 @@ export function JobsIndicator() {
         <button
           type="button"
           aria-label={`${active.length} jobs`}
-          className="flex h-7 items-center gap-1.5 rounded-md px-2 text-muted-foreground text-xs tabular-nums hover:bg-accent hover:text-foreground"
+          className="flex h-[var(--para-h-chip)] items-center gap-1.5 rounded-md px-2 text-muted-foreground text-xs tabular-nums hover:bg-accent hover:text-foreground"
         >
           <span aria-hidden="true" className="size-1.5 animate-pulse rounded-full bg-primary" />
           {active.length}

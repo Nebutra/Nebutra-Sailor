@@ -12,7 +12,7 @@ export function HomeTopBar() {
   const setCommandOpen = useUiStore((s) => s.setCommandOpen);
   return (
     <header className="flex h-[var(--para-topbar-h)] shrink-0 items-center justify-between px-5">
-      <Link href="/" className="font-semibold text-foreground text-sm tracking-[0.18em]">
+      <Link href="/" className="font-medium text-foreground text-sm tracking-[0.18em]">
         PARA
       </Link>
       <div className="flex items-center gap-1">

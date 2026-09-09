@@ -21,14 +21,14 @@ export function AuthActions({ onNavigate }: { onNavigate?: () => void }) {
   }, [returnTo]);
 
   const item =
-    "flex h-8 w-full items-center rounded-md px-2 text-left text-foreground text-sm hover:bg-accent";
+    "flex h-[var(--para-h-control)] w-full items-center rounded-md px-2 text-left text-foreground text-sm hover:bg-accent";
 
   if (!isLoaded) return <span className={`${item} text-muted-foreground`}>…</span>;
 
   if (isSignedIn) {
     return (
       <>
-        <span className="flex h-8 w-full items-center truncate px-2 text-muted-foreground text-xs">
+        <span className="flex h-[var(--para-h-control)] w-full items-center truncate px-2 text-muted-foreground text-xs">
           {user?.email ?? user?.name ?? "Signed in"}
         </span>
         <button

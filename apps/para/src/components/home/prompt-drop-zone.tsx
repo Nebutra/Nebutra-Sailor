@@ -35,8 +35,8 @@ export function PromptDropZone() {
         void submit();
       }}
       className={[
-        "relative rounded-xl border bg-card transition-colors",
-        over ? "border-primary/60" : "border-border",
+        "relative rounded-xl border bg-popover transition-colors",
+        over ? "border-[hsl(var(--ring))]" : "border-border",
       ].join(" ")}
     >
       <Textarea

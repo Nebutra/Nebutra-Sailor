@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`dark ${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
       suppressHydrationWarning
     >
       <body className="h-full bg-background font-sans text-foreground antialiased">

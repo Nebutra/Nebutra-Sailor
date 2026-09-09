@@ -238,7 +238,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-      <div className="para-rise pointer-events-auto flex max-h-[33vh] w-[min(640px,80%)] flex-col rounded-2xl border border-border/70 bg-card/90 shadow-ambient-lg backdrop-blur-md">
+      <div className="para-rise pointer-events-auto flex max-h-[33vh] w-[min(640px,80%)] flex-col rounded-2xl border border-border bg-popover shadow-ambient-lg">
         <div className="flex items-center justify-between px-4 pt-3">
           <span className="font-medium text-foreground text-xs">Ask PARA</span>
           <button
@@ -258,7 +258,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
               return n ? (
                 <span
                   key={n.id}
-                  className="flex h-6 items-center gap-1 rounded-md border border-border/60 bg-background pr-1 pl-1 text-[11px] text-foreground"
+                  className="flex h-[var(--para-h-chip)] items-center gap-1 rounded-md border border-border/60 bg-background pr-1 pl-1 text-[11px] text-foreground"
                 >
                   {asset ? (
                     <img src={asset.url} alt="" className="size-4 rounded-sm object-cover" />
@@ -303,7 +303,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
               aria-label="Send"
               onClick={run}
               disabled={!agent.prompt.trim()}
-              className="absolute right-4 bottom-4 flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-40"
+              className="absolute right-4 bottom-4 flex size-7 items-center justify-center rounded-full bg-foreground text-background disabled:opacity-40"
             >
               <ArrowUp className="size-3.5" />
             </button>
@@ -343,14 +343,14 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                   <button
                     type="button"
                     onClick={() => void decide(approval.id, true)}
-                    className="h-7 rounded-md bg-primary px-3 font-medium text-primary-foreground text-xs"
+                    className="h-[var(--para-h-chip)] rounded-md bg-primary px-3 font-medium text-primary-foreground text-xs"
                   >
                     Confirm
                   </button>
                   <button
                     type="button"
                     onClick={() => void decide(approval.id, false)}
-                    className="h-7 rounded-md border border-border px-3 text-foreground text-xs hover:bg-accent"
+                    className="h-[var(--para-h-chip)] rounded-md border border-border px-3 text-foreground text-xs hover:bg-accent"
                   >
                     Cancel
                   </button>
@@ -372,7 +372,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 <button
                   type="button"
                   onClick={stop}
-                  className="h-7 rounded-md border border-border px-2.5 text-foreground text-xs hover:bg-accent"
+                  className="h-[var(--para-h-chip)] rounded-md border border-border px-2.5 text-foreground text-xs hover:bg-accent"
                 >
                   Stop
                 </button>
@@ -380,7 +380,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 <button
                   type="button"
                   onClick={close}
-                  className="h-7 rounded-md border border-border px-2.5 text-foreground text-xs hover:bg-accent"
+                  className="h-[var(--para-h-chip)] rounded-md border border-border px-2.5 text-foreground text-xs hover:bg-accent"
                 >
                   Done
                 </button>
@@ -389,7 +389,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 type="button"
                 onClick={() => setAgent({ activityOpen: !agent.activityOpen })}
                 aria-expanded={agent.activityOpen}
-                className="h-7 rounded-md px-2.5 text-muted-foreground text-xs hover:text-foreground"
+                className="h-[var(--para-h-chip)] rounded-md px-2.5 text-muted-foreground text-xs hover:text-foreground"
               >
                 {agent.steps.filter((s) => s.state === "done").length} of {agent.steps.length}{" "}
                 actions

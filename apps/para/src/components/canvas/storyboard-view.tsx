@@ -28,7 +28,7 @@ export function StoryboardView() {
               <div className="min-h-0 flex-1">
                 <MediaNode node={n} selected={false} />
               </div>
-              <div className="flex h-7 items-center justify-between px-2 text-[11px] text-muted-foreground">
+              <div className="flex h-[var(--para-h-chip)] items-center justify-between px-2 text-[11px] text-muted-foreground">
                 <span>Shot {String(i + 1).padStart(2, "0")}</span>
                 <span className="capitalize">{n.status}</span>
               </div>

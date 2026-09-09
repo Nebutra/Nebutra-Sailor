@@ -52,10 +52,10 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
   };
 
   const chip =
-    "flex h-7 items-center gap-1 rounded-md px-2 text-xs text-foreground hover:bg-accent";
+    "flex h-[var(--para-h-chip)] items-center gap-1 rounded-md px-2 text-xs text-foreground hover:bg-accent";
 
   return (
-    <div className="para-rise flex w-[420px] flex-col gap-1.5 rounded-xl border border-border/70 bg-card/95 p-2 shadow-ambient-md backdrop-blur-md">
+    <div className="para-rise flex w-[420px] flex-col gap-1.5 rounded-xl border border-border bg-popover p-2 shadow-ambient-md">
       <div className="flex items-center gap-0.5">
         <Popover>
           <PopoverTrigger asChild>
@@ -70,7 +70,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
                 key={m}
                 type="button"
                 onClick={() => updateGenerator(node.id, { mode: m })}
-                className="flex h-7 w-full items-center rounded-md px-2 text-xs capitalize hover:bg-accent"
+                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-xs capitalize hover:bg-accent"
               >
                 {m}
               </button>
@@ -90,7 +90,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
                 key={m}
                 type="button"
                 onClick={() => updateGenerator(node.id, { model: m })}
-                className="flex h-7 w-full items-center rounded-md px-2 text-xs hover:bg-accent"
+                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-xs hover:bg-accent"
               >
                 {m}
               </button>
@@ -161,7 +161,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
           type="button"
           onClick={generate}
           disabled={busy}
-          className="h-8 rounded-md bg-primary px-3 font-medium text-primary-foreground text-xs disabled:opacity-40"
+          className="h-[var(--para-h-control)] rounded-md bg-primary px-3 font-medium text-primary-foreground text-xs disabled:opacity-40"
         >
           Generate
         </button>

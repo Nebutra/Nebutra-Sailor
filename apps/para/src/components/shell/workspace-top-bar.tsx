@@ -31,9 +31,9 @@ export function WorkspaceTopBar({ projectId, projectName, workspaceId, workspace
   const { data: list } = useWorkspaces(projectId);
   const router = useRouter();
   return (
-    <header className="grid h-[var(--para-topbar-h)] shrink-0 grid-cols-[1fr_auto_1fr] items-center border-border/60 border-b px-4">
+    <header className="grid h-[var(--para-topbar-h)] shrink-0 grid-cols-[1fr_auto_1fr] items-center px-4">
       <div className="flex min-w-0 items-center gap-3 text-sm">
-        <Link href="/" className="font-semibold text-foreground tracking-[0.18em]">
+        <Link href="/" className="font-medium text-foreground tracking-[0.18em]">
           PARA
         </Link>
         <span className="text-neutral-7">|</span>
@@ -49,7 +49,7 @@ export function WorkspaceTopBar({ projectId, projectName, workspaceId, workspace
             <DropdownMenuTrigger asChild>
               <button
                 type="button"
-                className="flex h-7 items-center gap-1 rounded-md px-1.5 text-foreground hover:bg-accent"
+                className="flex h-[var(--para-h-chip)] items-center gap-1 rounded-md px-1.5 text-foreground hover:bg-accent"
                 aria-label="Switch workspace"
               >
                 <span className="truncate">{workspaceName}</span>
