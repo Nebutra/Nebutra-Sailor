@@ -36,8 +36,15 @@ const MARGIN = 1.25;
 const OVERRIDES = [
   {
     modelName: "gpt-image-2",
+    // We buy it from 302.ai through the New-API channel, which is an
+    // OpenAI-compatible upstream; `OPENAI` is the closest enum value and the
+    // column is provenance, not routing — routing is the alias table's job.
+    provider: "OPENAI" as const,
     unit: "PER_1M_TOKENS" as const,
-    unitPrice: UPSTREAM_CEILING_PER_MILLION * MARGIN,
+    // Token-metered models price from the per-million columns; `unitPrice` is
+    // for the units a non-token SKU is sold in (per image, per second).
+    inputPricePerMillion: UPSTREAM_CEILING_PER_MILLION * MARGIN,
+    outputPricePerMillion: UPSTREAM_CEILING_PER_MILLION * MARGIN,
     contextLength: null,
     note: "302.ai gpt-image family ceiling $40/1M × 1.25; true gpt-image-2 rate unpublished",
   },
@@ -47,7 +54,7 @@ const dryRun = process.argv.includes("--dry-run");
 const db = getSystemDb();
 
 for (const o of OVERRIDES) {
-  const line = `${o.modelName}  ${o.unit}  $${o.unitPrice}/1M  — ${o.note}`;
+  const line = `${o.modelName}  ${o.unit}  in $${o.inputPricePerMillion}/1M  out $${o.outputPricePerMillion}/1M  — ${o.note}`;
   if (dryRun) {
     process.stdout.write(`would upsert  ${line}\n`);
     continue;
@@ -56,13 +63,21 @@ for (const o of OVERRIDES) {
     where: { modelName: o.modelName },
     create: {
       modelName: o.modelName,
+      provider: o.provider,
       unit: o.unit,
-      unitPrice: o.unitPrice,
+      inputPricePerMillion: o.inputPricePerMillion,
+      outputPricePerMillion: o.outputPricePerMillion,
       contextLength: o.contextLength,
       published: true,
       isActive: true,
     },
-    update: { unit: o.unit, unitPrice: o.unitPrice, published: true, isActive: true },
+    update: {
+      unit: o.unit,
+      inputPricePerMillion: o.inputPricePerMillion,
+      outputPricePerMillion: o.outputPricePerMillion,
+      published: true,
+      isActive: true,
+    },
   });
   process.stdout.write(`upserted      ${line}\n`);
 }
