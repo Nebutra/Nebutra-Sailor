@@ -123,4 +123,4 @@ Complete navigation to all project documentation.
 | [Nebutra-instance runbooks](./ops/nebutra/README.md) | Bills, cutovers, hosts of Nebutra's own deployment — stripped from the template |
 | [Fly origin runbook](./ops/nebutra/fly-origin.md) | FLY_API_TOKEN → deploy-fly.yml → optional DNS cutover (source repo only) |
 | [changelog](../CHANGELOG.md)        | Version history      |
-| [Alibaba Cloud ECS](./ops/aliyun-ecs-deployment-guide.md) | ECS deployment guide |
+| [Alibaba Cloud ECS](./ops/nebutra/aliyun-ecs-deployment-guide.md) | ECS deployment guide |

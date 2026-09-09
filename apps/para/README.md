@@ -1,6 +1,6 @@
 # @nebutra/para
 
-PARA — a quiet, progressive-disclosure creative workspace. `para.nebutra.com`.
+PARA — a quiet, progressive-disclosure creative workspace.
 
 **Status: labs / wip / experimental — Exploration, not Architecture.** Per the
 [product intelligence phase](../../docs/architecture/2026-09-08-product-intelligence-phase.md), no

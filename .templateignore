@@ -327,6 +327,7 @@ infra/fly/gateway.toml
 infra/fly/idp.toml
 infra/fly/kuanlan.toml
 infra/fly/new-api.toml
+infra/fly/para.toml
 infra/fly/pebble.toml
 infra/fly/router.toml
 infra/fly/sailor-docs.toml
@@ -363,3 +364,6 @@ tests/architecture/template-residue.baseline.json
 # source repo's changesets fixed group; the mirror ships `fixed: []` on purpose
 # (scripts/template-build.ts clears it — the mirror never publishes).
 tests/architecture/sailor-version.test.ts
+
+# Trellis task workspace — local development workflow state, never part of the template.
+.trellis/

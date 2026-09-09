@@ -34,7 +34,7 @@ async function createApp() {
   const app = new OpenAPIHono();
   app.use("*", async (c, next) => {
     c.set("requestId", "req_para_1");
-    c.set("tenant", {
+    const tenant = {
       userId: "user_1",
       tenantId: "org_1",
       tenantKind: "organization",
@@ -42,6 +42,15 @@ async function createApp() {
       role: "org:admin",
       plan: "PRO",
       ip: "203.0.113.5",
+    };
+    c.set("tenant", tenant);
+    // requirePermission reads this; tenantContextMiddleware derives it from the tenant in
+    // production. Inlined rather than imported because that module pulls in the auth stack.
+    c.set("user", {
+      userId: "user_1",
+      tenantId: "org_1",
+      roles: ["admin"],
+      attributes: { plan: "PRO" },
     });
     await next();
   });

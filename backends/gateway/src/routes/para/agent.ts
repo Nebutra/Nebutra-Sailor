@@ -32,11 +32,26 @@ import { streamSSE } from "hono/streaming";
 import { createParaToolRegistry, estimateToolCost } from "../../lib/para-agent-tools.js";
 import { enqueueParaAgentRun } from "../../lib/para-agent-worker.js";
 import { OriginRejectedError } from "../../lib/para-origin.js";
+import { requirePermission } from "../../middlewares/permissions.js";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 import { resolveAiOriginClientIp } from "../ai/origin-headers.js";
 
 export const paraAgentRoutes = new OpenAPIHono();
 paraAgentRoutes.use("*", requireAuth, requireOrganization);
+
+/**
+ * Threads, runs and approvals are all content inside a project, so they authorize as `Document`.
+ * Deciding an approval is an update: it releases work the run already planned, it does not create
+ * a new object of its own.
+ */
+paraAgentRoutes.use("*", (c, next) => {
+  const method = c.req.method;
+  const action = method === "GET" ? "read" : method === "POST" ? "create" : "update";
+  return requirePermission(
+    action === "create" && c.req.path.includes("/approvals/") ? "update" : action,
+    "Document",
+  )(c, next);
+});
 
 const orgId = (c: Context): string => c.get("tenant").organizationId as string;
 const errorBody = (err: unknown) => ({ error: toApiError(err).error.message });

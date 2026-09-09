@@ -17,6 +17,7 @@ import {
 import { SpanStatusCode, trace } from "@opentelemetry/api";
 import type { Context } from "hono";
 import { env } from "../../config/env.js";
+import { requirePermission } from "../../middlewares/permissions.js";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 import { aiServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
 import {
@@ -29,6 +30,29 @@ const tracer = trace.getTracer("api-gateway.para");
 
 export const paraRoutes = new OpenAPIHono();
 paraRoutes.use("*", requireAuth, requireOrganization);
+
+/**
+ * Map a request to the CASL action it needs. PARA's objects are Projects and Documents: a canvas
+ * workspace, its document, an asset and a generation job are all content inside a project, so they
+ * authorize as `Document`. The permissions package reserves `Workspace` for the tenant workspace,
+ * which is a different thing entirely and would lock members out of their own canvases.
+ */
+function paraAction(method: string): "read" | "create" | "update" | "delete" {
+  if (method === "GET") return "read";
+  if (method === "PATCH" || method === "PUT" || method === "POST") {
+    return method === "POST" ? "create" : "update";
+  }
+  return "delete";
+}
+
+function paraResource(path: string): "Project" | "Document" {
+  // Only the project collection itself is a Project; everything under it is content.
+  return /\/projects\/?$/.test(path) ? "Project" : "Document";
+}
+
+paraRoutes.use("*", (c, next) =>
+  requirePermission(paraAction(c.req.method), paraResource(c.req.path))(c, next),
+);
 
 const DOCUMENT_MAX_BYTES = 1_000_000;
 

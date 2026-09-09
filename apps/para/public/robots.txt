@@ -1,0 +1,11 @@
+# PARA — authenticated creative workspace.
+# Every surface here is a signed-in user's own work: projects, canvases, generated media.
+# Nothing on this origin is public, so there is nothing to index.
+#
+# This file is the single robots answer for this origin. There is deliberately no
+# src/app/robots.ts — an app that ships both eventually ships two opposite directives.
+
+User-agent: *
+Disallow: /
+
+# No sitemap - private application
