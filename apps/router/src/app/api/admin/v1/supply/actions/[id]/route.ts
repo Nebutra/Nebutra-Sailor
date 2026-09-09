@@ -1,4 +1,8 @@
-import { ActionRequestSchema, assertApplyAllowed } from "@nebutra/contracts/admin";
+import {
+  ActionRequestSchema,
+  ADMIN_ERROR_STATUS,
+  assertApplyAllowed,
+} from "@nebutra/contracts/admin";
 import { ROUTER_ADMIN_MANIFEST } from "@/lib/admin/manifest";
 import { err, gateStaff, json } from "@/lib/admin/service-token";
 import { SupplyConfigError } from "@/lib/supply/clients";
@@ -53,10 +57,13 @@ export async function POST(request: Request, context: RouteContext) {
     return json(err("not_found", `Action ${id} has no handler.`), 404);
   } catch (error) {
     if (error instanceof SupplyConfigError)
-      return json(err("upstream_unavailable", error.message), 503);
+      return json(
+        err("upstream_unavailable", error.message),
+        ADMIN_ERROR_STATUS.upstream_unavailable,
+      );
     return json(
       err("upstream_unavailable", error instanceof Error ? error.message : "action failed"),
-      502,
+      ADMIN_ERROR_STATUS.upstream_unavailable,
     );
   }
 }
