@@ -200,6 +200,7 @@ paraAgentRoutes.openapi(
     path: "/threads",
     tags: ["PARA Agent"],
     operationId: "paraListThreads",
+    summary: "List a project's agent threads",
     request: { query: z.object({ projectId: z.string().min(1).max(64) }) },
     responses: {
       200: {
@@ -221,6 +222,7 @@ paraAgentRoutes.openapi(
     path: "/threads",
     tags: ["PARA Agent"],
     operationId: "paraCreateThread",
+    summary: "Create an agent thread",
     request: {
       body: {
         content: {
@@ -256,6 +258,7 @@ paraAgentRoutes.openapi(
     path: "/threads/{id}",
     tags: ["PARA Agent"],
     operationId: "paraSetThreadAutonomy",
+    summary: "Set a thread's autonomy (ask before acting / act without asking)",
     request: {
       params: IdParam,
       body: {
@@ -292,6 +295,7 @@ paraAgentRoutes.openapi(
     path: "/threads/{id}/turns",
     tags: ["PARA Agent"],
     operationId: "paraStartTurn",
+    summary: "Queue an agent turn; a worker advances it",
     request: {
       params: IdParam,
       body: {
@@ -339,6 +343,7 @@ paraAgentRoutes.openapi(
     path: "/runs/{id}",
     tags: ["PARA Agent"],
     operationId: "paraGetRun",
+    summary: "Get a run and its pending approvals",
     request: { params: IdParam },
     responses: {
       200: { description: "Run", content: { "application/json": { schema: RunSchema } } },
@@ -410,6 +415,7 @@ paraAgentRoutes.openapi(
     path: "/approvals/{id}",
     tags: ["PARA Agent"],
     operationId: "paraDecideApproval",
+    summary: "Approve or deny a parked tool call",
     request: {
       params: IdParam,
       body: { content: { "application/json": { schema: z.object({ approve: z.boolean() }) } } },

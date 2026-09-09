@@ -305,6 +305,7 @@ paraRoutes.openapi(
     path: "/projects",
     tags: ["PARA"],
     operationId: "paraListProjects",
+    summary: "List PARA projects",
     responses: {
       200: {
         description: "Projects",
@@ -325,6 +326,7 @@ paraRoutes.openapi(
     path: "/projects",
     tags: ["PARA"],
     operationId: "paraCreateProject",
+    summary: "Create a PARA project",
     request: {
       body: {
         content: { "application/json": { schema: z.object({ name: z.string().min(1).max(200) }) } },
@@ -349,6 +351,7 @@ paraRoutes.openapi(
     path: "/projects/{id}",
     tags: ["PARA"],
     operationId: "paraGetProject",
+    summary: "Get a PARA project",
     request: { params: IdParam },
     responses: {
       200: { description: "Project", content: { "application/json": { schema: ProjectSchema } } },
@@ -369,6 +372,7 @@ paraRoutes.openapi(
     path: "/projects/{id}/workspaces",
     tags: ["PARA"],
     operationId: "paraListWorkspaces",
+    summary: "List a project's workspaces",
     request: { params: IdParam },
     responses: {
       200: {
@@ -395,6 +399,7 @@ paraRoutes.openapi(
     path: "/projects/{id}/workspaces",
     tags: ["PARA"],
     operationId: "paraCreateWorkspace",
+    summary: "Create a workspace (zero-step, auto-named)",
     request: {
       params: IdParam,
       body: {
@@ -424,6 +429,7 @@ paraRoutes.openapi(
     path: "/workspaces/{id}",
     tags: ["PARA"],
     operationId: "paraGetWorkspace",
+    summary: "Get a workspace",
     request: { params: IdParam },
     responses: {
       200: {
@@ -447,6 +453,7 @@ paraRoutes.openapi(
     path: "/workspaces/{id}/document",
     tags: ["PARA"],
     operationId: "paraGetDocument",
+    summary: "Get a workspace document with its version",
     request: { params: IdParam },
     responses: {
       200: {
@@ -476,6 +483,7 @@ paraRoutes.openapi(
     path: "/workspaces/{id}/document",
     tags: ["PARA"],
     operationId: "paraPutDocument",
+    summary: "Replace a workspace document (optimistic concurrency)",
     description:
       "Replace the document. `If-Match` carries the documentVersion the client last saw; a mismatch returns 409 with the server copy.",
     request: {
@@ -545,6 +553,7 @@ paraRoutes.openapi(
     path: "/assets",
     tags: ["PARA"],
     operationId: "paraListAssets",
+    summary: "List assets, filtered by origin, workspace or project",
     request: {
       query: z.object({
         origin: AssetOriginSchema.optional(),
@@ -579,6 +588,7 @@ paraRoutes.openapi(
     path: "/assets",
     tags: ["PARA"],
     operationId: "paraCreateAsset",
+    summary: "Record an uploaded or generated asset",
     request: { body: { content: { "application/json": { schema: AssetCreateSchema } } } },
     responses: {
       201: { description: "Created", content: { "application/json": { schema: AssetSchema } } },
