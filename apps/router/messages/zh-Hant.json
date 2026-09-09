@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "總覽",
+    "usage": "用量",
     "keys": "API 金鑰",
     "wallet": "錢包",
     "docs": "文件",

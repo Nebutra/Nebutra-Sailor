@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Overzicht",
+    "usage": "Gebruik",
     "keys": "API-sleutels",
     "wallet": "Portefeuille",
     "docs": "Documentatie",

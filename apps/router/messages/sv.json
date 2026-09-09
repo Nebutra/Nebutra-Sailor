@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Översikt",
+    "usage": "Användning",
     "keys": "API-nycklar",
     "wallet": "Plånbok",
     "docs": "Dokumentation",

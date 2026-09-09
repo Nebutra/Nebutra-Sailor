@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "अवलोकन",
+    "usage": "उपयोग",
     "keys": "API कुंजियाँ",
     "wallet": "वॉलेट",
     "docs": "दस्तावेज़",

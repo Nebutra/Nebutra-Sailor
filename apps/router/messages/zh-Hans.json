@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "数据汇总",
+    "usage": "用量",
     "keys": "API 密钥",
     "wallet": "钱包",
     "docs": "接入文档",

@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Oversigt",
+    "usage": "Forbrug",
     "keys": "API-nøgler",
     "wallet": "Lommebog",
     "docs": "Dokumentation",

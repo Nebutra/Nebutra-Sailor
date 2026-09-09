@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Tổng quan",
+    "usage": "Mức dùng",
     "keys": "Khóa API",
     "wallet": "Ví",
     "docs": "Tài liệu",

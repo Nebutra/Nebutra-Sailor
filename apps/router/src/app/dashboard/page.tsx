@@ -1,4 +1,5 @@
 import { ArrowRight, Check } from "@nebutra/icons";
+import { monthToDateWindow } from "@nebutra/repositories";
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
 import { Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
@@ -6,8 +7,9 @@ import type { ReactNode } from "react";
 import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
 import { requireAuth } from "@/lib/auth";
+import { usageRepository } from "@/lib/console-usage";
 import { formatPrice, getListingCatalog, PROVIDER_LABEL } from "@/lib/listing-catalog";
-import { getBaseUrlHint, getModelRoutes } from "@/lib/model-routes";
+import { getBaseUrlHint } from "@/lib/model-routes";
 import { getApiKeyRepository, resolveSessionTenantId } from "@/lib/router-keys";
 import { getBalanceForDisplay } from "@/lib/wallet";
 
@@ -30,23 +32,45 @@ function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: 
 export default async function DashboardPage() {
   const session = await requireAuth("/dashboard");
   const tenantId = await resolveSessionTenantId(session);
-  const [balance, keys] = tenantId
+  const period = monthToDateWindow();
+  // Month-to-date in UTC — the same window `/usage` opens on and the same
+  // clock the per-key daily cap resets on, so the two pages cannot disagree.
+  const [balance, keys, usage] = tenantId
     ? await Promise.all([
         getBalanceForDisplay(tenantId),
-        getApiKeyRepository().listByTenant(tenantId),
+        getApiKeyRepository().listDetailByTenant(tenantId),
+        usageRepository().summary({ tenantId, from: period.from, to: period.to }),
       ])
-    : [{ balance: 0, currency: "USD" }, []];
+    : [
+        { balance: 0, currency: "USD" },
+        [],
+        {
+          totalCost: 0,
+          totalTokens: 0,
+          promptTokens: 0,
+          completionTokens: 0,
+          requestCount: 0,
+          currency: "USD",
+        },
+      ];
   const baseUrl = getBaseUrlHint();
-  const routes = getModelRoutes();
   const { models, fetchedNote } = await getListingCatalog();
   const sample =
     models.find((m) => m.routed)?.publicModel ?? models[0]?.publicModel ?? DEFAULT_PUBLIC_MODEL;
 
+  // Every line is computed. Two of these used to be literals — `配置 baseURL`
+  // was hard-coded `true` and `快捷使用试跑` hard-coded `false`, so the list
+  // told the same story to an account that had never made a call and to one
+  // that had made a thousand.
   const checklist = [
     { label: "钱包余额 > 0", ok: balance.balance > 0, href: "/wallet" },
-    { label: "至少一个 API Key", ok: keys.length > 0, href: "/keys" },
-    { label: "配置 baseURL", ok: true, href: "/docs" },
-    { label: "快捷使用试跑", ok: false, href: "/use" },
+    { label: "至少一个可用 Key", ok: keys.some((key) => key.status === "active"), href: "/keys" },
+    {
+      label: "Key 被调用过（baseURL 已接通）",
+      ok: keys.some((key) => key.lastUsedAt !== null),
+      href: "/docs",
+    },
+    { label: "本月已有计费请求", ok: usage.requestCount > 0, href: "/usage" },
   ];
 
   return (
@@ -55,6 +79,9 @@ export default async function DashboardPage() {
       description="管理后台：充值 · Key · 接入。逛货架请回 API 集市首页。"
       actions={
         <>
+          <Button asChild variant="outline" size="sm" className="h-8">
+            <Link href="/usage">用量</Link>
+          </Button>
           <Button asChild variant="outline" size="sm" className="h-8">
             <Link href="/">API 集市</Link>
           </Button>
@@ -80,9 +107,24 @@ export default async function DashboardPage() {
           }
           hint="prepaid wallet"
         />
-        <Stat label="API Keys" value={keys.length} hint="sk-sailor-*" />
+        <Stat
+          label="API Keys"
+          value={keys.length}
+          hint={`${keys.filter((key) => key.status === "active").length} 把在用`}
+        />
+        <Stat
+          label="本月花费"
+          value={
+            <>
+              {usage.totalCost.toFixed(usage.totalCost > 0 && usage.totalCost < 0.01 ? 6 : 2)}
+              <span className="ml-1 text-xs font-medium text-[var(--neutral-10)]">
+                {usage.currency}
+              </span>
+            </>
+          }
+          hint={`${usage.requestCount} 次请求`}
+        />
         <Stat label="目录模型" value={models.length} hint={fetchedNote} />
-        <Stat label="显式路由" value={routes.length} hint="aliases" />
       </div>
 
       <div className="mb-4 grid gap-3 lg:grid-cols-[1.4fr_1fr]">

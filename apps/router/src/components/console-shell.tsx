@@ -1,8 +1,8 @@
 "use client";
 
 import { brand } from "@nebutra/brand/metadata";
-import { safeGetItem, safeSetItem } from "@nebutra/browser-utils";
 import {
+  Analytics,
   BookOpen,
   ChevronDown,
   ChevronLeft,
@@ -37,19 +37,20 @@ import { MARKET_CHANNELS } from "@/lib/market-taxonomy";
 
 const ADMIN_NAV = [
   { href: "/dashboard", key: "dashboard" as const, icon: Home },
+  { href: "/usage", key: "usage" as const, icon: Analytics },
   { href: "/keys", key: "keys" as const, icon: Key },
   { href: "/wallet", key: "wallet" as const, icon: CreditCard },
   { href: "/docs", key: "docs" as const, icon: BookOpen },
 ] as const;
 
-const STORAGE_KEY = "nebutra-router-sidebar-collapsed";
-
-const CURRENCIES = [
-  { id: "USD", label: "USD $" },
-  { id: "CNY", label: "CNY ¥" },
-  { id: "JPY", label: "JPY ¥" },
-  { id: "RUB", label: "RUB ₽" },
-] as const;
+/**
+ * The sidebar's collapsed state travels in a cookie, not in localStorage.
+ *
+ * localStorage can only be read after hydration, so the sidebar painted
+ * expanded and then snapped shut on every navigation. A cookie is on the
+ * request, so the server renders the width the user chose.
+ */
+export const SIDEBAR_COOKIE = "nebutra-router-sidebar-collapsed";
 
 type Surface = "market" | "admin" | "use";
 
@@ -58,6 +59,7 @@ function surfaceOf(pathname: string): Surface {
     return "use";
   if (
     pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/usage") ||
     pathname.startsWith("/keys") ||
     pathname.startsWith("/wallet") ||
     pathname.startsWith("/docs")
@@ -66,11 +68,23 @@ function surfaceOf(pathname: string): Surface {
   return "market";
 }
 
-export function ConsoleShell({ children }: { children: ReactNode }) {
+export function ConsoleShell({
+  children,
+  sidebarCollapsed = false,
+}: {
+  children: ReactNode;
+  /** Read from the cookie on the server, so the first paint is already right. */
+  sidebarCollapsed?: boolean;
+}) {
   const pathname = usePathname();
   const surface = surfaceOf(pathname);
   if (surface === "use") return <UsageShell>{children}</UsageShell>;
-  if (surface === "admin") return <AdminShell pathname={pathname}>{children}</AdminShell>;
+  if (surface === "admin")
+    return (
+      <AdminShell pathname={pathname} initialCollapsed={sidebarCollapsed}>
+        {children}
+      </AdminShell>
+    );
   return <MarketShell pathname={pathname}>{children}</MarketShell>;
 }
 
@@ -171,8 +185,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
   const searchParams = useSearchParams();
   const t = useTranslations("chrome");
   const tCh = useTranslations("channels");
-  const [q, setQ] = useState("");
-  const [currency, setCurrency] = useState<(typeof CURRENCIES)[number]["id"]>("USD");
+  const seededQuery = searchParams.get("q") ?? "";
 
   const productType = searchParams.get("product_type") === "tool" ? "tool" : "api";
   const isHome = pathname === "/";
@@ -181,13 +194,18 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
   const isApiChannel = (isHome || isModels || isProductDetail) && productType === "api";
   const isToolChannel = isHome && productType === "tool";
 
+  /**
+   * The field is uncontrolled and re-keyed on `?q=`, so navigation (including
+   * back/forward) reseeds it instead of leaving the previous term in the box
+   * while the results below show a different one.
+   */
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
-    const query = q.trim();
+    const form = e.currentTarget;
+    const value = form instanceof HTMLFormElement ? new FormData(form).get("q") : null;
+    const query = typeof value === "string" ? value.trim() : "";
     router.push(query ? `/models?q=${encodeURIComponent(query)}` : "/models");
   };
-
-  const currencyLabel = CURRENCIES.find((c) => c.id === currency)?.label ?? "USD $";
 
   return (
     <div className="router-market text-[var(--neutral-12)]">
@@ -195,14 +213,11 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
       <div className="border-b border-[var(--rm-line)]/80 bg-white/40 backdrop-blur-sm">
         <div className="router-market-shell flex h-9 items-center justify-between gap-3 text-[12px] text-[var(--neutral-11)]">
           <div className="flex items-center gap-2 sm:gap-3">
-            <HeaderMenu
-              label={currencyLabel}
-              items={CURRENCIES.map((c) => ({
-                id: c.id,
-                label: c.label,
-                onSelect: () => setCurrency(c.id),
-              }))}
-            />
+            {/* Settlement currency. A picker used to sit here that changed a
+                piece of local state and converted nothing — every price on the
+                site stayed in USD. Display currencies need the FX table
+                (Batch D); until it exists this says what is true. */}
+            <span title="计价与结算均为美元">USD $</span>
             <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
             <span className="text-[var(--neutral-7)]" aria-hidden>
               |
@@ -253,8 +268,9 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
             />
             <input
               data-allow-native
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
+              key={seededQuery}
+              name="q"
+              defaultValue={seededQuery}
               placeholder={t("searchPlaceholder")}
               className="h-12 w-full rounded-full border border-[var(--rm-panel-border)] bg-white pr-[6rem] pl-11 text-[15px] shadow-[0_1px_2px_rgb(15_23_42/0.03)] outline-none transition placeholder:text-[var(--neutral-9)] focus:border-[var(--neutral-8)] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--neutral-6)_65%,transparent)]"
             />
@@ -321,18 +337,18 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
   );
 }
 
-function AdminShell({ pathname, children }: { pathname: string; children: ReactNode }) {
+function AdminShell({
+  pathname,
+  initialCollapsed,
+  children,
+}: {
+  pathname: string;
+  initialCollapsed: boolean;
+  children: ReactNode;
+}) {
   const t = useTranslations("admin");
   const tChrome = useTranslations("chrome");
-  const [collapsed, setCollapsed] = useState(false);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setCollapsed(safeGetItem(STORAGE_KEY) === "1");
-    setReady(true);
-  }, []);
-
-  const isCollapsed = ready && collapsed;
+  const [isCollapsed, setCollapsed] = useState(initialCollapsed);
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--neutral-1)] text-[var(--neutral-12)]">
@@ -388,9 +404,10 @@ function AdminShell({ pathname, children }: { pathname: string; children: ReactN
             className="m-2 flex h-8 items-center justify-center rounded-lg text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
             onClick={() => {
               setCollapsed((c) => {
-                const n = !c;
-                safeSetItem(STORAGE_KEY, n ? "1" : "0");
-                return n;
+                const next = !c;
+                // biome-ignore lint/suspicious/noDocumentCookie: the width must be on the request, so the server can render it collapsed
+                document.cookie = `${SIDEBAR_COOKIE}=${next ? "1" : "0"}; path=/; max-age=31536000; samesite=lax`;
+                return next;
               });
             }}
             aria-label={isCollapsed ? tChrome("expandSidebar") : tChrome("collapseSidebar")}
