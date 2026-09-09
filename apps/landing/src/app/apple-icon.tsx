@@ -1,7 +1,8 @@
 import { brand, colors } from "@nebutra/brand/metadata";
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+// No `runtime` segment config: Next 16.3 rejects it alongside
+// `cacheComponents`, and `next/og` renders fine on the Node runtime.
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
