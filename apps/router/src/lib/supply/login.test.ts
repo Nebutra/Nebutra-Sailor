@@ -31,7 +31,10 @@ describe("account login flows", () => {
     const fetchImpl = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = String(input);
       calls.push(url);
-      expect(new Headers(init?.headers).get("authorization")).toBe("Bearer mgmt");
+      // oauth-callback is registered outside CLIProxyAPI's authenticated group
+      // and takes no management key; every other management call must carry it.
+      const auth = new Headers(init?.headers).get("authorization");
+      expect(auth).toBe(url.endsWith("/oauth-callback") ? null : "Bearer mgmt");
       if (url.endsWith("/antigravity-auth-url"))
         return json({
           state: "st1",
@@ -66,13 +69,11 @@ describe("account login flows", () => {
       req(),
       fetchImpl,
     );
-    expect(
-      calls.some(
-        (u) =>
-          u.endsWith("/oauth-callback?state=st1&code=4%2Fabc&scope=x") ||
-          u.endsWith("/oauth-callback?state=st1&code=4/abc&scope=x"),
-      ),
-    ).toBe(true);
+    // The bare /oauth-callback path belongs to the loopback listener on the
+    // operator's own machine. CLIProxyAPI's own endpoint is under /v0/management,
+    // and hitting the wrong one 404s.
+    expect(calls.some((u) => u.endsWith("/v0/management/oauth-callback"))).toBe(true);
+    expect(calls.some((u) => u.endsWith("/oauth-callback") && !u.includes("/v0/"))).toBe(false);
     expect(done.result).toMatchObject({ state: "st1", status: "ok" });
   });
 
@@ -80,9 +81,9 @@ describe("account login flows", () => {
     // A deploy between "start sign-in" and the paste-back empties the in-memory
     // map. CLIProxyAPI still holds the verifier, so the callback must reach it
     // rather than being refused here — and the provider comes from the port.
-    const calls: string[] = [];
-    const fetchImpl = vi.fn(async (url: string | URL) => {
-      calls.push(String(url));
+    const calls: { url: string; body: string }[] = [];
+    const fetchImpl = vi.fn(async (url: string | URL, init?: RequestInit) => {
+      calls.push({ url: String(url), body: String(init?.body ?? "") });
       return new Response(JSON.stringify({ status: "ok" }), { status: 200 });
     }) as unknown as typeof fetch;
 
@@ -93,7 +94,12 @@ describe("account login flows", () => {
       fetchImpl,
     );
 
-    expect(calls.some((u) => u.includes("/oauth-callback") && u.includes("state=nope"))).toBe(true);
+    const posted = calls.find((c) => c.url.endsWith("/v0/management/oauth-callback"));
+    expect(posted).toBeDefined();
+    expect(JSON.parse(posted?.body ?? "{}")).toMatchObject({
+      provider: "antigravity",
+      state: "nope",
+    });
     expect(done.result).toMatchObject({ state: "nope" });
     expect(done.summary).toContain("Antigravity");
   });

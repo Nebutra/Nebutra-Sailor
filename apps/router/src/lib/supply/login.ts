@@ -107,9 +107,13 @@ export async function startLogin(
 }
 
 /**
- * The provider redirects the operator's browser to localhost:<port>, which
- * does not load. The operator pastes that URL; we replay its query string to
- * CLIProxyAPI's callback endpoint, which completes the exchange server-side.
+ * The provider redirects the operator's browser to localhost:<port>, which does
+ * not load. The operator pastes that URL; we hand it to CLIProxyAPI, which
+ * exchanges the code for tokens server-side.
+ *
+ * A 200 means the code was handed off, not that the login succeeded: CLIProxyAPI
+ * writes the code to its auth dir and a background exchange picks it up. The
+ * real outcome comes from `get-auth-status`, which the console polls.
  */
 export async function completeLogin(
   redirectUrl: string,
@@ -132,15 +136,24 @@ export async function completeLogin(
   // here would strand a callback CLIProxyAPI can still redeem. So an unknown
   // state is reconstructed from the redirect port and forwarded anyway.
   const flow = pending.get(state) ?? adoptCallback(state, parsed, caller);
-  const res = await fetchImpl(`${CLIPROXY_INTERNAL_URL}/oauth-callback${parsed.search}`, {
-    headers: managementHeaders(),
+  // POST /v0/management/oauth-callback, not /oauth-callback: the bare path is
+  // the loopback listener the provider redirects to on the operator's own
+  // machine, and asking CLIProxyAPI for it returns 404. Probing is misleading
+  // here — every unmatched path under /v0/management/ answers 401 rather than
+  // 404, because the management auth middleware runs before the not-found
+  // handler. This endpoint is registered outside the authenticated group and
+  // takes no management key.
+  const res = await fetchImpl(`${CLIPROXY_INTERNAL_URL}/v0/management/oauth-callback`, {
+    method: "POST",
+    headers: { "content-type": "application/json", accept: "application/json" },
+    body: JSON.stringify({ provider: flow.provider, redirect_url: redirectUrl.trim(), state }),
     redirect: "manual",
     signal: AbortSignal.timeout(20_000),
   });
-  const text = await res.text().catch(() => "");
-  if (res.status >= 400) {
+  const body = (await res.json().catch(() => ({}))) as { status?: string; error?: string };
+  if (res.status !== 200 || body.status === "error") {
     flow.status = "error";
-    flow.detail = text.slice(0, 200) || `HTTP ${res.status}`;
+    flow.detail = body.error ?? `HTTP ${res.status}`;
     throw new Error(`CLIProxyAPI rejected the callback: ${flow.detail}`);
   }
   const auditId = randomUUID();
