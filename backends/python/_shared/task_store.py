@@ -170,7 +170,6 @@ class PostgresTaskStore:
                         $6::jsonb, $7::jsonb, $8, $9, CURRENT_TIMESTAMP
                     )
                     ON CONFLICT (tenant_id, idempotency_key)
-                    WHERE idempotency_key IS NOT NULL
                     DO UPDATE SET updated_at = public.tasks.updated_at
                     RETURNING *
                     """,

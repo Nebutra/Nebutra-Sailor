@@ -17,9 +17,10 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# curl is the healthcheck; the rest is what asyncpg and oss2 need to install.
+# curl is the healthcheck. ca-certificates is not optional: the database URL is sslmode=verify-full,
+# and without a CA bundle libpq looks for ~/.postgresql/root.crt and refuses the connection.
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends curl \
+  && apt-get install -y --no-install-recommends curl ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
 COPY ai/requirements.txt ./requirements.txt

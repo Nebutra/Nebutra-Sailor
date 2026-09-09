@@ -11,6 +11,9 @@ primary_region = "sin"
   PORT = "8000"
   # Postgres task store; memory is refused in production by resolve_task_store().
   TASK_STORE_PROVIDER = "postgres"
+  # verify-full needs a CA to verify against; point libpq at the system bundle rather than
+  # weakening the connection to sslmode=require.
+  PGSSLROOTCERT = "/etc/ssl/certs/ca-certificates.crt"
   TASK_DISPATCHER_PROVIDER = "celery"
   CELERY_QUEUES = "default,ai,document,maintenance,webhook"
   CELERY_WORKER_CONCURRENCY = "2"

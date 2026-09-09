@@ -1805,6 +1805,10 @@ model Task {
 
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
+  /// The task store upserts on this pair to make submission idempotent. Postgres treats NULLs
+  /// as distinct in a unique index, so tasks without an idempotency key never collide — the
+  /// semantics the store wants, without a partial index Prisma cannot express.
+  @@unique([tenantId, idempotencyKey])
   @@index([tenantId, status, createdAt(sort: Desc)])
   @@index([tenantId, type, createdAt(sort: Desc)])
   @@index([tenantId, updatedAt(sort: Desc)])

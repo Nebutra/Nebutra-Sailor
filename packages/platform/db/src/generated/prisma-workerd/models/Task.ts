@@ -349,6 +349,7 @@ export type TaskOrderByWithRelationInput = {
 
 export type TaskWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  tenantId_idempotencyKey?: Prisma.TaskTenantIdIdempotencyKeyCompoundUniqueInput
   AND?: Prisma.TaskWhereInput | Prisma.TaskWhereInput[]
   OR?: Prisma.TaskWhereInput[]
   NOT?: Prisma.TaskWhereInput | Prisma.TaskWhereInput[]
@@ -372,7 +373,7 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   completedAt?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   expiresAt?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
-}, "id">
+}, "id" | "tenantId_idempotencyKey">
 
 export type TaskOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -596,6 +597,11 @@ export type TaskListRelationFilter = {
 
 export type TaskOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type TaskTenantIdIdempotencyKeyCompoundUniqueInput = {
+  tenantId: string
+  idempotencyKey: string
 }
 
 export type TaskCountOrderByAggregateInput = {
