@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Mwonekano",
+    "usage": "Matumizi",
     "keys": "Ufunguo wa API",
     "wallet": "Mkoba",
     "docs": "Nyaraka",

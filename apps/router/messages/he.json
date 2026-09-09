@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "סקירה כללית",
+    "usage": "שימוש",
     "keys": "מפתחות API",
     "wallet": "ארנק",
     "docs": "תיעוד",

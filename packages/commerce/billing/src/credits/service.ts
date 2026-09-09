@@ -92,7 +92,12 @@ function toJsonInput(metadata: Record<string, unknown> | undefined): InputJsonVa
 }
 
 /**
- * Get credit balance for an organization
+ * Get credit balance for an organization.
+ *
+ * Reads through a 60s per-process cache. **Never use this on an admit/guard
+ * path.** `balanceCache` is a module-level Map, so a second instance can serve
+ * a stale positive balance while the first has already spent it — that is an
+ * overdraw. Guards must call {@link getCreditBalanceFresh}.
  */
 export async function getCreditBalance(organizationId: string): Promise<CreditBalance> {
   const now = Date.now();
@@ -129,6 +134,30 @@ export async function getCreditBalance(organizationId: string): Promise<CreditBa
   });
 
   return mapped;
+}
+
+/**
+ * Get credit balance straight from the database, bypassing `balanceCache`.
+ *
+ * This is the read a spend guard must use. It drops the cache entry first so a
+ * concurrent reader on this instance cannot keep serving the stale value, then
+ * repopulates it from the row it just read.
+ */
+export async function getCreditBalanceFresh(organizationId: string): Promise<CreditBalance> {
+  balanceCache.delete(organizationId);
+  return getCreditBalance(organizationId);
+}
+
+/**
+ * Check a balance against the database, not the cache. Use this, not
+ * {@link hasEnoughCredits}, before admitting a request that will spend money.
+ */
+export async function hasEnoughCreditsFresh(
+  organizationId: string,
+  amount: number,
+): Promise<boolean> {
+  const balance = await getCreditBalanceFresh(organizationId);
+  return balance.balance >= amount;
 }
 
 /**

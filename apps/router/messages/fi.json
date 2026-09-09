@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Yleiskatsaus",
+    "usage": "Käyttö",
     "keys": "API-avaimet",
     "wallet": "Lompakko",
     "docs": "Dokumentaatio",

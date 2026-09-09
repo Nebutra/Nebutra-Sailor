@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Přehled",
+    "usage": "Spotřeba",
     "keys": "Klíče API",
     "wallet": "Peněženka",
     "docs": "Dokumentace",

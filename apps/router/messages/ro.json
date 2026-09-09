@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Prezentare generală",
+    "usage": "Utilizare",
     "keys": "Chei API",
     "wallet": "Portofel",
     "docs": "Documentație",

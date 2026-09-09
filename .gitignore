@@ -135,3 +135,9 @@ docs/research/
 # on a clean clone without fontTools.
 packages/design/fonts/vendor/**/*.ttf
 packages/design/fonts/vendor/**/*.otf
+
+# Trellis research evidence: keep the reports and data dumps reviewable,
+# never commit the screenshot corpora (117 MB for the 302-parity round alone).
+.trellis/tasks/*/research/shots/
+.trellis/tasks/*/research/shots-*/
+.trellis/tasks/*/research/*.png

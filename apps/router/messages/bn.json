@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "সারসংক্ষেপ",
+    "usage": "ব্যবহার",
     "keys": "API কী",
     "wallet": "ওয়ালেট",
     "docs": "ডক্স",

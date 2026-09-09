@@ -423,6 +423,7 @@ export const ModelName = {
   UsageLedgerEntry: 'UsageLedgerEntry',
   CreditBalance: 'CreditBalance',
   CreditTransaction: 'CreditTransaction',
+  RouterReservation: 'RouterReservation',
   StripeCustomer: 'StripeCustomer',
   WebhookEvent: 'WebhookEvent',
   AuditLog: 'AuditLog',
@@ -487,7 +488,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "routerReservation" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3358,6 +3359,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CreditTransactionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CreditTransactionCountAggregateOutputType> | number
+        }
+      }
+    }
+    RouterReservation: {
+      payload: Prisma.$RouterReservationPayload<ExtArgs>
+      fields: Prisma.RouterReservationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RouterReservationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RouterReservationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>
+        }
+        findFirst: {
+          args: Prisma.RouterReservationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RouterReservationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>
+        }
+        findMany: {
+          args: Prisma.RouterReservationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>[]
+        }
+        create: {
+          args: Prisma.RouterReservationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>
+        }
+        createMany: {
+          args: Prisma.RouterReservationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RouterReservationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>[]
+        }
+        delete: {
+          args: Prisma.RouterReservationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>
+        }
+        update: {
+          args: Prisma.RouterReservationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>
+        }
+        deleteMany: {
+          args: Prisma.RouterReservationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RouterReservationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RouterReservationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>[]
+        }
+        upsert: {
+          args: Prisma.RouterReservationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RouterReservationPayload>
+        }
+        aggregate: {
+          args: Prisma.RouterReservationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRouterReservation>
+        }
+        groupBy: {
+          args: Prisma.RouterReservationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RouterReservationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RouterReservationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RouterReservationCountAggregateOutputType> | number
         }
       }
     }
@@ -7083,7 +7158,14 @@ export const APIKeyScalarFieldEnum = {
   updatedAt: 'updatedAt',
   scopes: 'scopes',
   rateLimitRps: 'rateLimitRps',
-  expiresAt: 'expiresAt'
+  expiresAt: 'expiresAt',
+  disabledAt: 'disabledAt',
+  saveLogs: 'saveLogs',
+  limitTotal: 'limitTotal',
+  limitDaily: 'limitDaily',
+  costTotal: 'costTotal',
+  costDaily: 'costDaily',
+  costDailyResetAt: 'costDailyResetAt'
 } as const
 
 export type APIKeyScalarFieldEnum = (typeof APIKeyScalarFieldEnum)[keyof typeof APIKeyScalarFieldEnum]
@@ -7382,7 +7464,13 @@ export const ModelConfigScalarFieldEnum = {
   currency: 'currency',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  unit: 'unit',
+  unitPrice: 'unitPrice',
+  cacheReadPerMillion: 'cacheReadPerMillion',
+  cacheWritePerMillion: 'cacheWritePerMillion',
+  contextLength: 'contextLength',
+  published: 'published'
 } as const
 
 export type ModelConfigScalarFieldEnum = (typeof ModelConfigScalarFieldEnum)[keyof typeof ModelConfigScalarFieldEnum]
@@ -7401,7 +7489,15 @@ export const RequestLogScalarFieldEnum = {
   latencyMs: 'latencyMs',
   status: 'status',
   errorMessage: 'errorMessage',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  path: 'path',
+  httpStatus: 'httpStatus',
+  ttfbMs: 'ttfbMs',
+  cachedPromptTokens: 'cachedPromptTokens',
+  cacheWriteTokens: 'cacheWriteTokens',
+  supplyPath: 'supplyPath',
+  clientIp: 'clientIp',
+  expiresAt: 'expiresAt'
 } as const
 
 export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
@@ -7692,6 +7788,18 @@ export const CreditTransactionScalarFieldEnum = {
 } as const
 
 export type CreditTransactionScalarFieldEnum = (typeof CreditTransactionScalarFieldEnum)[keyof typeof CreditTransactionScalarFieldEnum]
+
+
+export const RouterReservationScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  apiKeyId: 'apiKeyId',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type RouterReservationScalarFieldEnum = (typeof RouterReservationScalarFieldEnum)[keyof typeof RouterReservationScalarFieldEnum]
 
 
 export const StripeCustomerScalarFieldEnum = {
@@ -8694,6 +8802,27 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
  * Reference to a field of type 'Role'
  */
 export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
@@ -8722,13 +8851,6 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'ContentStatus'
  */
 export type EnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentStatus'>
@@ -8739,20 +8861,6 @@ export type EnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'ContentStatus[]'
  */
 export type ListEnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -8879,6 +8987,20 @@ export type EnumWorkflowRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'WorkflowRunStatus[]'
  */
 export type ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkflowRunStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PriceUnit'
+ */
+export type EnumPriceUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PriceUnit'>
+    
+
+
+/**
+ * Reference to a field of type 'PriceUnit[]'
+ */
+export type ListEnumPriceUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PriceUnit[]'>
     
 
 
@@ -9393,6 +9515,7 @@ export type GlobalOmitConfig = {
   usageLedgerEntry?: Prisma.UsageLedgerEntryOmit
   creditBalance?: Prisma.CreditBalanceOmit
   creditTransaction?: Prisma.CreditTransactionOmit
+  routerReservation?: Prisma.RouterReservationOmit
   stripeCustomer?: Prisma.StripeCustomerOmit
   webhookEvent?: Prisma.WebhookEventOmit
   auditLog?: Prisma.AuditLogOmit

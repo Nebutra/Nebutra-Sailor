@@ -239,6 +239,7 @@ model Tenant {
   paymentMethods           PaymentMethod[]
   products                 Product[]
   requestLogs              RequestLog[]
+  routerReservations       RouterReservation[]
   stripeCustomers          StripeCustomer[]
   subscriptions            Subscription[]
   tasks                    Task[]
@@ -302,11 +303,24 @@ model APIKey {
   rateLimitRps Int       @default(10) @map("rate_limit_rps")
   expiresAt    DateTime? @map("expires_at")
 
+  // Router money spine — per-key spend control.
+  // `disabledAt` is reversible; `revokedAt` is terminal.
+  // Daily counters reset lazily when `costDailyResetAt < startOfUtcDay(now)`.
+  // Timezone is UTC and is stated in the UI.
+  disabledAt       DateTime? @map("disabled_at")
+  saveLogs         Boolean   @default(false) @map("save_logs")
+  limitTotal       Decimal?  @map("limit_total") @db.Decimal(10, 4)
+  limitDaily       Decimal?  @map("limit_daily") @db.Decimal(10, 4)
+  costTotal        Decimal   @default(0) @map("cost_total") @db.Decimal(12, 6)
+  costDaily        Decimal   @default(0) @map("cost_daily") @db.Decimal(12, 6)
+  costDailyResetAt DateTime? @map("cost_daily_reset_at")
+
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   @@index([tenantId])
   @@index([keyHash])
   @@index([tenantId, revokedAt])
+  @@index([tenantId, disabledAt])
   @@map("api_keys")
   @@schema("public")
 }
@@ -816,6 +830,22 @@ enum AIProvider {
   @@schema("public")
 }
 
+/// How a model's usage is metered. Batch A ships the pricing subset only;
+/// tiers, markup and catalogue metadata land in Batch D.
+enum PriceUnit {
+  PER_1M_TOKENS
+  PER_CALL
+  PER_SECOND
+  PER_IMAGE
+  PER_1M_CHARS
+  PER_MINUTE
+  PER_PAGE
+  FREE
+  PASS_THROUGH
+
+  @@schema("public")
+}
+
 model ModelConfig {
   id                    String     @id @default(cuid())
   modelName             String     @unique @map("model_name") @db.VarChar(128)
@@ -827,10 +857,33 @@ model ModelConfig {
   createdAt             DateTime   @default(now()) @map("created_at")
   updatedAt             DateTime   @updatedAt @map("updated_at")
 
+  // Router price service (Batch A subset) — the one place a charge is derived from.
+  // `published` is the shelf gate: an unpriced model must never be sellable.
+  unit                 PriceUnit @default(PER_1M_TOKENS)
+  unitPrice            Decimal?  @map("unit_price") @db.Decimal(12, 6)
+  cacheReadPerMillion  Decimal?  @map("cache_read_per_million") @db.Decimal(10, 6)
+  cacheWritePerMillion Decimal?  @map("cache_write_per_million") @db.Decimal(10, 6)
+  contextLength        Int?      @map("context_length")
+  published            Boolean   @default(false)
+
+  @@index([published])
   @@map("model_configs")
   @@schema("public")
 }
 
+/// The one per-request log for every relay in the platform — the gateway's
+/// completion worker and the Router edge both write here.
+///
+/// It is deliberately *not* a second ledger. `UsageLedgerEntry` is the money
+/// record and is kept for as long as the money matters; this row is the
+/// debuggable record of one request and expires (see `expiresAt`). `cost` is
+/// carried so a log line can be read without a join, and nothing else about
+/// the money lives here.
+///
+/// Request and response bodies are never stored. When the key has `saveLogs`
+/// off the row is still written — the customer is entitled to see that a
+/// request happened and what it cost — but every prompt-derived field
+/// (token counts, client IP, upstream error text) is left empty.
 model RequestLog {
   id               String   @id @default(cuid())
   requestId        String   @unique @map("request_id")
@@ -846,11 +899,34 @@ model RequestLog {
   errorMessage     String?  @map("error_message")
   createdAt        DateTime @default(now()) @map("created_at")
 
+  // Router edge (Batch B). Every column is nullable or defaulted so the
+  // gateway's existing writer is unchanged.
+  /// Relay path without the `/v1` prefix — `chat/completions`, `embeddings`, …
+  path               String?   @db.VarChar(120)
+  /// The HTTP status the customer saw. `status` stays the semantic verdict
+  /// ("success" / "error") the gateway already writes, so the two are not
+  /// conflated.
+  httpStatus         Int?      @map("http_status")
+  /// Time to first byte of the upstream response. The only latency number a
+  /// streaming customer can feel; `latencyMs` covers the whole body.
+  ttfbMs             Int?      @map("ttfb_ms")
+  cachedPromptTokens Int       @default(0) @map("cached_prompt_tokens")
+  cacheWriteTokens   Int       @default(0) @map("cache_write_tokens")
+  /// Which upstream channel served it, when the upstream says so.
+  supplyPath         String?   @map("supply_path") @db.VarChar(64)
+  clientIp           String?   @map("client_ip") @db.VarChar(64)
+  /// Retention horizon. Null means "no horizon set by the writer" — the sweep
+  /// only ever deletes rows that carry one, so it can never reach the
+  /// gateway's existing rows.
+  expiresAt          DateTime? @map("expires_at")
+
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   @@index([tenantId, createdAt])
   @@index([apiKeyId])
+  @@index([apiKeyId, createdAt])
   @@index([model, createdAt])
+  @@index([expiresAt])
   @@map("ai_request_logs")
   @@schema("public")
 }
@@ -1351,6 +1427,36 @@ model CreditTransaction {
   @@index([type])
   @@index([createdAt])
   @@map("credit_transactions")
+  @@schema("public")
+}
+
+/// A Router hold that has left the balance but not yet become a charge.
+///
+/// The admit path decrements `credit_balances.balance` before the upstream call
+/// so two concurrent requests cannot spend the same dollar. Without this row the
+/// decrement is money that has moved with nothing recording that it is a hold:
+/// if the process dies between admit and settle — a deploy restart, an OOM,
+/// during a request that may stream for up to 180 s — the balance stays reduced,
+/// no ledger row explains it, and nothing can give it back. Fly recycles
+/// machines on every deploy, so that is normal operation, not a disaster case.
+///
+/// The row's lifetime brackets the money exactly: it is written in the same
+/// transaction as the decrement and deleted in the same transaction as the
+/// settle, the release, or the sweep that refunds it. `id` is the edge's
+/// `requestId`, so a retried admit collides instead of holding twice.
+model RouterReservation {
+  id        String   @id
+  tenantId  String   @map("tenant_id")
+  apiKeyId  String?  @map("api_key_id")
+  amount    Decimal  @db.Decimal(12, 6)
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+  @@index([tenantId, expiresAt])
+  @@map("router_reservations")
   @@schema("public")
 }
 

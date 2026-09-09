@@ -3,8 +3,11 @@
 // ApiKey (shared across app / gateway / router)
 export type {
   ActiveApiKey,
+  ApiKeyDetail,
+  ApiKeyStatus,
   ApiKeySummary,
   CreateApiKeyData,
+  UpdateApiKeyData,
 } from "./api-key.repository";
 export { ApiKeyRepository, hashApiKeyPlaintext } from "./api-key.repository";
 
@@ -52,6 +55,53 @@ export {
   PebbleFeedbackRepository,
   retentionExpiryFrom,
 } from "./pebble-support.repository";
+export type {
+  ListRequestLogsInput,
+  ListRequestLogsResult,
+  RecordRequestLogInput,
+  RequestLogRow,
+} from "./request-log.repository";
+// Per-request log (shared with the gateway's completion worker)
+export {
+  REQUEST_LOG_RETENTION_DAYS,
+  RequestLogRepository,
+  requestLogExpiryFrom,
+} from "./request-log.repository";
+export type {
+  RouterKeySpend,
+  RouterPriceRow,
+  RouterReleaseInput,
+  RouterReserveInput,
+  RouterSettleInput,
+  RouterSettleResult,
+  RouterSweepOptions,
+  RouterSweepResult,
+} from "./router-billing.repository";
+// Router money spine (reserve → settle → release → sweep)
+export {
+  RESERVATION_TTL_MS,
+  RouterBillingRepository,
+  startOfUtcDay,
+} from "./router-billing.repository";
+export type {
+  RouterUsageBucket,
+  RouterUsageByKey,
+  RouterUsageByModel,
+  RouterUsageRecord,
+  RouterUsageRecordsInput,
+  RouterUsageRecordsResult,
+  RouterUsageSummary,
+  RouterUsageWindow,
+  UsageGranularity,
+} from "./router-usage.repository";
+// Router console read side (aggregates over the usage ledger — never the
+// gateway's rollups, see PRD D1)
+export {
+  monthToDateWindow,
+  RouterUsageRepository,
+  USAGE_EXPORT_LIMIT,
+  USAGE_PAGE_LIMIT,
+} from "./router-usage.repository";
 export type {
   ProviderKeyCredentials,
   ResolvedProviderKey,

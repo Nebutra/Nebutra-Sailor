@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Oversikt",
+    "usage": "Bruk",
     "keys": "API-nøkler",
     "wallet": "Lommebok",
     "docs": "Dokumentasjon",

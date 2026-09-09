@@ -144,6 +144,32 @@ BASE=https://router.nebutra.com/v1 TOKEN=sk-sailor-… MODEL=gpt-5 scripts/smoke
 Probes `/models`, `/chat/completions`, `/responses`, and `/messages` with
 `x-api-key` — one key, every protocol.
 
+## Price seed (`scripts/seed-model-prices.mts`)
+
+The /v1 edge prices a request from `model_configs`, never from a live models.dev
+call. This script fills that table from the shelf — the intersection of what the
+sidecars can route and what models.dev knows the price of.
+
+```bash
+# from the repo root
+pnpm exec tsx infra/nebutra-router/scripts/seed-model-prices.mts --dry-run
+pnpm exec tsx infra/nebutra-router/scripts/seed-model-prices.mts
+```
+
+- **Idempotent** — upserts on `model_name`; re-running updates prices in place.
+- **Never deletes** — a model that leaves the shelf is unpublished
+  (`published = false`, `is_active = false`) so old ledger rows still join to a
+  price.
+- **Unpriced never publishes** — a model with no input/output price is written
+  but held back, because an unpriced SKU must be refusable at the edge rather
+  than relayed for free.
+- Needs `DATABASE_URL`, plus whatever `NEW_API_*` / `NEBUTRA_MODEL_ALIASES` the
+  shelf needs to see real inventory. Without them the shelf falls back to the
+  alias table and the seed is correspondingly small — the dry run prints the
+  shelf size and source first, so check that line before writing.
+- `.mts` rather than `.ts`: the repo root is CommonJS, and the script needs ESM
+  to import `@nebutra/db`.
+
 ## Related
 
 - Design: `docs/plans/2026-07-23-nebutra-router-forge-design.md`  

@@ -17,6 +17,14 @@ pre-commit:
 
 pre-push:
   commands:
+    lockfile:
+      # A lockfile that has drifted from a package.json costs a whole CI cycle:
+      # "Frozen install from a clean clone" fails first and every job that needs
+      # an install fails behind it, so six red checks all report one missing
+      # `pnpm install`. `--lockfile-only` resolves without touching node_modules,
+      # so this is seconds, and it only ever runs when a manifest is in the push.
+      glob: "{package.json,pnpm-workspace.yaml,**/package.json}"
+      run: pnpm install --lockfile-only --frozen-lockfile
     turbo-contract:
       run: npm_config_verify_deps_before_run=false node scripts/verify-turbo-build-contract.mjs
     typecheck:

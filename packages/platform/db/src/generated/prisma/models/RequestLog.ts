@@ -14,7 +14,19 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model RequestLog
+ * The one per-request log for every relay in the platform — the gateway's
+ * completion worker and the Router edge both write here.
  * 
+ * It is deliberately *not* a second ledger. `UsageLedgerEntry` is the money
+ * record and is kept for as long as the money matters; this row is the
+ * debuggable record of one request and expires (see `expiresAt`). `cost` is
+ * carried so a log line can be read without a join, and nothing else about
+ * the money lives here.
+ * 
+ * Request and response bodies are never stored. When the key has `saveLogs`
+ * off the row is still written — the customer is entitled to see that a
+ * request happened and what it cost — but every prompt-derived field
+ * (token counts, client IP, upstream error text) is left empty.
  */
 export type RequestLogModel = runtime.Types.Result.DefaultSelection<Prisma.$RequestLogPayload>
 
@@ -32,6 +44,10 @@ export type RequestLogAvgAggregateOutputType = {
   totalTokens: number | null
   cost: runtime.Decimal | null
   latencyMs: number | null
+  httpStatus: number | null
+  ttfbMs: number | null
+  cachedPromptTokens: number | null
+  cacheWriteTokens: number | null
 }
 
 export type RequestLogSumAggregateOutputType = {
@@ -40,6 +56,10 @@ export type RequestLogSumAggregateOutputType = {
   totalTokens: number | null
   cost: runtime.Decimal | null
   latencyMs: number | null
+  httpStatus: number | null
+  ttfbMs: number | null
+  cachedPromptTokens: number | null
+  cacheWriteTokens: number | null
 }
 
 export type RequestLogMinAggregateOutputType = {
@@ -56,6 +76,14 @@ export type RequestLogMinAggregateOutputType = {
   status: string | null
   errorMessage: string | null
   createdAt: Date | null
+  path: string | null
+  httpStatus: number | null
+  ttfbMs: number | null
+  cachedPromptTokens: number | null
+  cacheWriteTokens: number | null
+  supplyPath: string | null
+  clientIp: string | null
+  expiresAt: Date | null
 }
 
 export type RequestLogMaxAggregateOutputType = {
@@ -72,6 +100,14 @@ export type RequestLogMaxAggregateOutputType = {
   status: string | null
   errorMessage: string | null
   createdAt: Date | null
+  path: string | null
+  httpStatus: number | null
+  ttfbMs: number | null
+  cachedPromptTokens: number | null
+  cacheWriteTokens: number | null
+  supplyPath: string | null
+  clientIp: string | null
+  expiresAt: Date | null
 }
 
 export type RequestLogCountAggregateOutputType = {
@@ -88,6 +124,14 @@ export type RequestLogCountAggregateOutputType = {
   status: number
   errorMessage: number
   createdAt: number
+  path: number
+  httpStatus: number
+  ttfbMs: number
+  cachedPromptTokens: number
+  cacheWriteTokens: number
+  supplyPath: number
+  clientIp: number
+  expiresAt: number
   _all: number
 }
 
@@ -98,6 +142,10 @@ export type RequestLogAvgAggregateInputType = {
   totalTokens?: true
   cost?: true
   latencyMs?: true
+  httpStatus?: true
+  ttfbMs?: true
+  cachedPromptTokens?: true
+  cacheWriteTokens?: true
 }
 
 export type RequestLogSumAggregateInputType = {
@@ -106,6 +154,10 @@ export type RequestLogSumAggregateInputType = {
   totalTokens?: true
   cost?: true
   latencyMs?: true
+  httpStatus?: true
+  ttfbMs?: true
+  cachedPromptTokens?: true
+  cacheWriteTokens?: true
 }
 
 export type RequestLogMinAggregateInputType = {
@@ -122,6 +174,14 @@ export type RequestLogMinAggregateInputType = {
   status?: true
   errorMessage?: true
   createdAt?: true
+  path?: true
+  httpStatus?: true
+  ttfbMs?: true
+  cachedPromptTokens?: true
+  cacheWriteTokens?: true
+  supplyPath?: true
+  clientIp?: true
+  expiresAt?: true
 }
 
 export type RequestLogMaxAggregateInputType = {
@@ -138,6 +198,14 @@ export type RequestLogMaxAggregateInputType = {
   status?: true
   errorMessage?: true
   createdAt?: true
+  path?: true
+  httpStatus?: true
+  ttfbMs?: true
+  cachedPromptTokens?: true
+  cacheWriteTokens?: true
+  supplyPath?: true
+  clientIp?: true
+  expiresAt?: true
 }
 
 export type RequestLogCountAggregateInputType = {
@@ -154,6 +222,14 @@ export type RequestLogCountAggregateInputType = {
   status?: true
   errorMessage?: true
   createdAt?: true
+  path?: true
+  httpStatus?: true
+  ttfbMs?: true
+  cachedPromptTokens?: true
+  cacheWriteTokens?: true
+  supplyPath?: true
+  clientIp?: true
+  expiresAt?: true
   _all?: true
 }
 
@@ -257,6 +333,14 @@ export type RequestLogGroupByOutputType = {
   status: string
   errorMessage: string | null
   createdAt: Date
+  path: string | null
+  httpStatus: number | null
+  ttfbMs: number | null
+  cachedPromptTokens: number
+  cacheWriteTokens: number
+  supplyPath: string | null
+  clientIp: string | null
+  expiresAt: Date | null
   _count: RequestLogCountAggregateOutputType | null
   _avg: RequestLogAvgAggregateOutputType | null
   _sum: RequestLogSumAggregateOutputType | null
@@ -296,6 +380,14 @@ export type RequestLogWhereInput = {
   status?: Prisma.StringFilter<"RequestLog"> | string
   errorMessage?: Prisma.StringNullableFilter<"RequestLog"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RequestLog"> | Date | string
+  path?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  httpStatus?: Prisma.IntNullableFilter<"RequestLog"> | number | null
+  ttfbMs?: Prisma.IntNullableFilter<"RequestLog"> | number | null
+  cachedPromptTokens?: Prisma.IntFilter<"RequestLog"> | number
+  cacheWriteTokens?: Prisma.IntFilter<"RequestLog"> | number
+  supplyPath?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  clientIp?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"RequestLog"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
@@ -313,6 +405,14 @@ export type RequestLogOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  path?: Prisma.SortOrderInput | Prisma.SortOrder
+  httpStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  ttfbMs?: Prisma.SortOrderInput | Prisma.SortOrder
+  cachedPromptTokens?: Prisma.SortOrder
+  cacheWriteTokens?: Prisma.SortOrder
+  supplyPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientIp?: Prisma.SortOrderInput | Prisma.SortOrder
+  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
@@ -333,6 +433,14 @@ export type RequestLogWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.StringFilter<"RequestLog"> | string
   errorMessage?: Prisma.StringNullableFilter<"RequestLog"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RequestLog"> | Date | string
+  path?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  httpStatus?: Prisma.IntNullableFilter<"RequestLog"> | number | null
+  ttfbMs?: Prisma.IntNullableFilter<"RequestLog"> | number | null
+  cachedPromptTokens?: Prisma.IntFilter<"RequestLog"> | number
+  cacheWriteTokens?: Prisma.IntFilter<"RequestLog"> | number
+  supplyPath?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  clientIp?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"RequestLog"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "requestId">
 
@@ -350,6 +458,14 @@ export type RequestLogOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  path?: Prisma.SortOrderInput | Prisma.SortOrder
+  httpStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  ttfbMs?: Prisma.SortOrderInput | Prisma.SortOrder
+  cachedPromptTokens?: Prisma.SortOrder
+  cacheWriteTokens?: Prisma.SortOrder
+  supplyPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientIp?: Prisma.SortOrderInput | Prisma.SortOrder
+  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.RequestLogCountOrderByAggregateInput
   _avg?: Prisma.RequestLogAvgOrderByAggregateInput
   _max?: Prisma.RequestLogMaxOrderByAggregateInput
@@ -374,6 +490,14 @@ export type RequestLogScalarWhereWithAggregatesInput = {
   status?: Prisma.StringWithAggregatesFilter<"RequestLog"> | string
   errorMessage?: Prisma.StringNullableWithAggregatesFilter<"RequestLog"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RequestLog"> | Date | string
+  path?: Prisma.StringNullableWithAggregatesFilter<"RequestLog"> | string | null
+  httpStatus?: Prisma.IntNullableWithAggregatesFilter<"RequestLog"> | number | null
+  ttfbMs?: Prisma.IntNullableWithAggregatesFilter<"RequestLog"> | number | null
+  cachedPromptTokens?: Prisma.IntWithAggregatesFilter<"RequestLog"> | number
+  cacheWriteTokens?: Prisma.IntWithAggregatesFilter<"RequestLog"> | number
+  supplyPath?: Prisma.StringNullableWithAggregatesFilter<"RequestLog"> | string | null
+  clientIp?: Prisma.StringNullableWithAggregatesFilter<"RequestLog"> | string | null
+  expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"RequestLog"> | Date | string | null
 }
 
 export type RequestLogCreateInput = {
@@ -389,6 +513,14 @@ export type RequestLogCreateInput = {
   status: string
   errorMessage?: string | null
   createdAt?: Date | string
+  path?: string | null
+  httpStatus?: number | null
+  ttfbMs?: number | null
+  cachedPromptTokens?: number
+  cacheWriteTokens?: number
+  supplyPath?: string | null
+  clientIp?: string | null
+  expiresAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutRequestLogsInput
 }
 
@@ -406,6 +538,14 @@ export type RequestLogUncheckedCreateInput = {
   status: string
   errorMessage?: string | null
   createdAt?: Date | string
+  path?: string | null
+  httpStatus?: number | null
+  ttfbMs?: number | null
+  cachedPromptTokens?: number
+  cacheWriteTokens?: number
+  supplyPath?: string | null
+  clientIp?: string | null
+  expiresAt?: Date | string | null
 }
 
 export type RequestLogUpdateInput = {
@@ -421,6 +561,14 @@ export type RequestLogUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  httpStatus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ttfbMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cachedPromptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cacheWriteTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutRequestLogsNestedInput
 }
 
@@ -438,6 +586,14 @@ export type RequestLogUncheckedUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  httpStatus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ttfbMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cachedPromptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cacheWriteTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type RequestLogCreateManyInput = {
@@ -454,6 +610,14 @@ export type RequestLogCreateManyInput = {
   status: string
   errorMessage?: string | null
   createdAt?: Date | string
+  path?: string | null
+  httpStatus?: number | null
+  ttfbMs?: number | null
+  cachedPromptTokens?: number
+  cacheWriteTokens?: number
+  supplyPath?: string | null
+  clientIp?: string | null
+  expiresAt?: Date | string | null
 }
 
 export type RequestLogUpdateManyMutationInput = {
@@ -469,6 +633,14 @@ export type RequestLogUpdateManyMutationInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  httpStatus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ttfbMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cachedPromptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cacheWriteTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type RequestLogUncheckedUpdateManyInput = {
@@ -485,6 +657,14 @@ export type RequestLogUncheckedUpdateManyInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  httpStatus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ttfbMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cachedPromptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cacheWriteTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type RequestLogListRelationFilter = {
@@ -511,6 +691,14 @@ export type RequestLogCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  path?: Prisma.SortOrder
+  httpStatus?: Prisma.SortOrder
+  ttfbMs?: Prisma.SortOrder
+  cachedPromptTokens?: Prisma.SortOrder
+  cacheWriteTokens?: Prisma.SortOrder
+  supplyPath?: Prisma.SortOrder
+  clientIp?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
 }
 
 export type RequestLogAvgOrderByAggregateInput = {
@@ -519,6 +707,10 @@ export type RequestLogAvgOrderByAggregateInput = {
   totalTokens?: Prisma.SortOrder
   cost?: Prisma.SortOrder
   latencyMs?: Prisma.SortOrder
+  httpStatus?: Prisma.SortOrder
+  ttfbMs?: Prisma.SortOrder
+  cachedPromptTokens?: Prisma.SortOrder
+  cacheWriteTokens?: Prisma.SortOrder
 }
 
 export type RequestLogMaxOrderByAggregateInput = {
@@ -535,6 +727,14 @@ export type RequestLogMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  path?: Prisma.SortOrder
+  httpStatus?: Prisma.SortOrder
+  ttfbMs?: Prisma.SortOrder
+  cachedPromptTokens?: Prisma.SortOrder
+  cacheWriteTokens?: Prisma.SortOrder
+  supplyPath?: Prisma.SortOrder
+  clientIp?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
 }
 
 export type RequestLogMinOrderByAggregateInput = {
@@ -551,6 +751,14 @@ export type RequestLogMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  path?: Prisma.SortOrder
+  httpStatus?: Prisma.SortOrder
+  ttfbMs?: Prisma.SortOrder
+  cachedPromptTokens?: Prisma.SortOrder
+  cacheWriteTokens?: Prisma.SortOrder
+  supplyPath?: Prisma.SortOrder
+  clientIp?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
 }
 
 export type RequestLogSumOrderByAggregateInput = {
@@ -559,6 +767,10 @@ export type RequestLogSumOrderByAggregateInput = {
   totalTokens?: Prisma.SortOrder
   cost?: Prisma.SortOrder
   latencyMs?: Prisma.SortOrder
+  httpStatus?: Prisma.SortOrder
+  ttfbMs?: Prisma.SortOrder
+  cachedPromptTokens?: Prisma.SortOrder
+  cacheWriteTokens?: Prisma.SortOrder
 }
 
 export type RequestLogCreateNestedManyWithoutTenantInput = {
@@ -603,22 +815,6 @@ export type RequestLogUncheckedUpdateManyWithoutTenantNestedInput = {
   deleteMany?: Prisma.RequestLogScalarWhereInput | Prisma.RequestLogScalarWhereInput[]
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type RequestLogCreateWithoutTenantInput = {
   id?: string
   requestId: string
@@ -632,6 +828,14 @@ export type RequestLogCreateWithoutTenantInput = {
   status: string
   errorMessage?: string | null
   createdAt?: Date | string
+  path?: string | null
+  httpStatus?: number | null
+  ttfbMs?: number | null
+  cachedPromptTokens?: number
+  cacheWriteTokens?: number
+  supplyPath?: string | null
+  clientIp?: string | null
+  expiresAt?: Date | string | null
 }
 
 export type RequestLogUncheckedCreateWithoutTenantInput = {
@@ -647,6 +851,14 @@ export type RequestLogUncheckedCreateWithoutTenantInput = {
   status: string
   errorMessage?: string | null
   createdAt?: Date | string
+  path?: string | null
+  httpStatus?: number | null
+  ttfbMs?: number | null
+  cachedPromptTokens?: number
+  cacheWriteTokens?: number
+  supplyPath?: string | null
+  clientIp?: string | null
+  expiresAt?: Date | string | null
 }
 
 export type RequestLogCreateOrConnectWithoutTenantInput = {
@@ -692,6 +904,14 @@ export type RequestLogScalarWhereInput = {
   status?: Prisma.StringFilter<"RequestLog"> | string
   errorMessage?: Prisma.StringNullableFilter<"RequestLog"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RequestLog"> | Date | string
+  path?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  httpStatus?: Prisma.IntNullableFilter<"RequestLog"> | number | null
+  ttfbMs?: Prisma.IntNullableFilter<"RequestLog"> | number | null
+  cachedPromptTokens?: Prisma.IntFilter<"RequestLog"> | number
+  cacheWriteTokens?: Prisma.IntFilter<"RequestLog"> | number
+  supplyPath?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  clientIp?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"RequestLog"> | Date | string | null
 }
 
 export type RequestLogCreateManyTenantInput = {
@@ -707,6 +927,14 @@ export type RequestLogCreateManyTenantInput = {
   status: string
   errorMessage?: string | null
   createdAt?: Date | string
+  path?: string | null
+  httpStatus?: number | null
+  ttfbMs?: number | null
+  cachedPromptTokens?: number
+  cacheWriteTokens?: number
+  supplyPath?: string | null
+  clientIp?: string | null
+  expiresAt?: Date | string | null
 }
 
 export type RequestLogUpdateWithoutTenantInput = {
@@ -722,6 +950,14 @@ export type RequestLogUpdateWithoutTenantInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  httpStatus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ttfbMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cachedPromptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cacheWriteTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type RequestLogUncheckedUpdateWithoutTenantInput = {
@@ -737,6 +973,14 @@ export type RequestLogUncheckedUpdateWithoutTenantInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  httpStatus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ttfbMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cachedPromptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cacheWriteTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type RequestLogUncheckedUpdateManyWithoutTenantInput = {
@@ -752,6 +996,14 @@ export type RequestLogUncheckedUpdateManyWithoutTenantInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  httpStatus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ttfbMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cachedPromptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cacheWriteTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  supplyPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -770,6 +1022,14 @@ export type RequestLogSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   status?: boolean
   errorMessage?: boolean
   createdAt?: boolean
+  path?: boolean
+  httpStatus?: boolean
+  ttfbMs?: boolean
+  cachedPromptTokens?: boolean
+  cacheWriteTokens?: boolean
+  supplyPath?: boolean
+  clientIp?: boolean
+  expiresAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["requestLog"]>
 
@@ -787,6 +1047,14 @@ export type RequestLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   status?: boolean
   errorMessage?: boolean
   createdAt?: boolean
+  path?: boolean
+  httpStatus?: boolean
+  ttfbMs?: boolean
+  cachedPromptTokens?: boolean
+  cacheWriteTokens?: boolean
+  supplyPath?: boolean
+  clientIp?: boolean
+  expiresAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["requestLog"]>
 
@@ -804,6 +1072,14 @@ export type RequestLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   status?: boolean
   errorMessage?: boolean
   createdAt?: boolean
+  path?: boolean
+  httpStatus?: boolean
+  ttfbMs?: boolean
+  cachedPromptTokens?: boolean
+  cacheWriteTokens?: boolean
+  supplyPath?: boolean
+  clientIp?: boolean
+  expiresAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["requestLog"]>
 
@@ -821,9 +1097,17 @@ export type RequestLogSelectScalar = {
   status?: boolean
   errorMessage?: boolean
   createdAt?: boolean
+  path?: boolean
+  httpStatus?: boolean
+  ttfbMs?: boolean
+  cachedPromptTokens?: boolean
+  cacheWriteTokens?: boolean
+  supplyPath?: boolean
+  clientIp?: boolean
+  expiresAt?: boolean
 }
 
-export type RequestLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "apiKeyId" | "tenantId" | "model" | "promptTokens" | "completionTokens" | "totalTokens" | "cost" | "latencyMs" | "status" | "errorMessage" | "createdAt", ExtArgs["result"]["requestLog"]>
+export type RequestLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "apiKeyId" | "tenantId" | "model" | "promptTokens" | "completionTokens" | "totalTokens" | "cost" | "latencyMs" | "status" | "errorMessage" | "createdAt" | "path" | "httpStatus" | "ttfbMs" | "cachedPromptTokens" | "cacheWriteTokens" | "supplyPath" | "clientIp" | "expiresAt", ExtArgs["result"]["requestLog"]>
 export type RequestLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
@@ -853,6 +1137,34 @@ export type $RequestLogPayload<ExtArgs extends runtime.Types.Extensions.Internal
     status: string
     errorMessage: string | null
     createdAt: Date
+    /**
+     * Relay path without the `/v1` prefix — `chat/completions`, `embeddings`, …
+     */
+    path: string | null
+    /**
+     * The HTTP status the customer saw. `status` stays the semantic verdict
+     * ("success" / "error") the gateway already writes, so the two are not
+     * conflated.
+     */
+    httpStatus: number | null
+    /**
+     * Time to first byte of the upstream response. The only latency number a
+     * streaming customer can feel; `latencyMs` covers the whole body.
+     */
+    ttfbMs: number | null
+    cachedPromptTokens: number
+    cacheWriteTokens: number
+    /**
+     * Which upstream channel served it, when the upstream says so.
+     */
+    supplyPath: string | null
+    clientIp: string | null
+    /**
+     * Retention horizon. Null means "no horizon set by the writer" — the sweep
+     * only ever deletes rows that carry one, so it can never reach the
+     * gateway's existing rows.
+     */
+    expiresAt: Date | null
   }, ExtArgs["result"]["requestLog"]>
   composites: {}
 }
@@ -1290,6 +1602,14 @@ export interface RequestLogFieldRefs {
   readonly status: Prisma.FieldRef<"RequestLog", 'String'>
   readonly errorMessage: Prisma.FieldRef<"RequestLog", 'String'>
   readonly createdAt: Prisma.FieldRef<"RequestLog", 'DateTime'>
+  readonly path: Prisma.FieldRef<"RequestLog", 'String'>
+  readonly httpStatus: Prisma.FieldRef<"RequestLog", 'Int'>
+  readonly ttfbMs: Prisma.FieldRef<"RequestLog", 'Int'>
+  readonly cachedPromptTokens: Prisma.FieldRef<"RequestLog", 'Int'>
+  readonly cacheWriteTokens: Prisma.FieldRef<"RequestLog", 'Int'>
+  readonly supplyPath: Prisma.FieldRef<"RequestLog", 'String'>
+  readonly clientIp: Prisma.FieldRef<"RequestLog", 'String'>
+  readonly expiresAt: Prisma.FieldRef<"RequestLog", 'DateTime'>
 }
     
 

@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Genel Bakış",
+    "usage": "Kullanım",
     "keys": "API Anahtarları",
     "wallet": "Cüzdan",
     "docs": "Dokümanlar",

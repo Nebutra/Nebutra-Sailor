@@ -8,11 +8,12 @@ import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
-import { ConsoleShell } from "@/components/console-shell";
+import { ConsoleShell, SIDEBAR_COOKIE } from "@/components/console-shell";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("meta");
@@ -56,6 +57,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   const locale = await getLocale();
   const messages = await getMessages();
+  // The admin sidebar's width is on the request, so it renders collapsed on the
+  // server rather than expanding and snapping shut after hydration.
+  const sidebarCollapsed = (await cookies()).get(SIDEBAR_COOKIE)?.value === "1";
 
   return (
     <html
@@ -68,7 +72,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider provider={authProvider} config={authProviderConfig}>
             <Suspense fallback={<div className="min-h-screen bg-[var(--neutral-1)]" />}>
-              <ConsoleShell>{children}</ConsoleShell>
+              <ConsoleShell sidebarCollapsed={sidebarCollapsed}>{children}</ConsoleShell>
             </Suspense>
           </AuthProvider>
         </NextIntlClientProvider>

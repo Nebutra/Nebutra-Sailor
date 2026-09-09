@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "개요",
+    "usage": "사용량",
     "keys": "API 키",
     "wallet": "지갑",
     "docs": "문서",

@@ -2,7 +2,8 @@ import { brand, colors } from "@nebutra/brand/metadata";
 import { ImageResponse } from "next/og";
 import { seoContent } from "@/lib/landing-content";
 
-export const runtime = "edge";
+// No `runtime` segment config: Next 16.3 rejects it alongside
+// `cacheComponents`, and `next/og` renders fine on the Node runtime.
 
 export const alt = seoContent.title;
 export const size = { width: 1200, height: 630 };

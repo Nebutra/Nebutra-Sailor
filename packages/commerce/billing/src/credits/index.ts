@@ -12,7 +12,10 @@ export {
   formatCredits,
   getCreditAllowanceForPlan,
   getCreditBalance,
+  getCreditBalanceFresh,
   getCreditTransactions,
   hasEnoughCredits,
+  hasEnoughCreditsFresh,
+  invalidateCreditCache,
   refundCredits,
 } from "./service";

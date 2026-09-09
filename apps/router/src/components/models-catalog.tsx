@@ -2,8 +2,8 @@
 
 import { ChevronDown, ChevronUp } from "@nebutra/icons";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useMemo, useState, useTransition } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useMemo, useRef, useState, useTransition } from "react";
 import { ProductCard } from "@/components/product-card";
 import {
   CATEGORY_LABEL,
@@ -83,6 +83,21 @@ function parseTag(raw?: string): ListingCategory | "all" {
   return "all";
 }
 
+type Filters = {
+  tag: ListingCategory | "all";
+  brand: ListingProvider | "all";
+  q: string;
+  sort: "default" | "price-asc" | "price-desc";
+};
+
+function parseSort(raw?: string): Filters["sort"] {
+  return raw === "price-asc" || raw === "price-desc" ? raw : "default";
+}
+
+function sameFilters(a: Filters, b: Filters): boolean {
+  return a.tag === b.tag && a.brand === b.brand && a.q === b.q && a.sort === b.sort;
+}
+
 function buildModelsHref(opts: {
   tag?: ListingCategory | "all";
   brand?: ListingProvider | "all";
@@ -121,37 +136,63 @@ export function ModelsCatalog({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const params = useSearchParams();
   const [, startTransition] = useTransition();
 
-  const [q, setQ] = useState(initialQuery);
-  const [cat, setCat] = useState<ListingCategory | "all">(() => parseTag(initialTag));
-  const [brand, setBrand] = useState<ListingProvider | "all">(() => parseBrand(initialBrand));
-  const [sort, setSort] = useState<"default" | "price-asc" | "price-desc">(() => {
-    if (initialSort === "price-asc" || initialSort === "price-desc") return initialSort;
-    return "default";
-  });
+  /**
+   * The URL is the filter state.
+   *
+   * It used to be held in `useState` *as well*, and `pushFilters` closed over
+   * whichever copy the last render had: clicking a category and then blurring
+   * the search box wrote the previous category back, because the blur handler
+   * still held the old `cat`. And `useState(() => parse(initial…))` runs its
+   * initialiser once, so a back/forward navigation left the chips on the
+   * filters the customer had already left.
+   *
+   * Now every filter is derived from `useSearchParams()` on each render. The
+   * one exception is the text field, which keeps a *draft* — that is not a
+   * second copy of the filter, it is what has been typed but not applied.
+   */
+  const applied = {
+    tag: parseTag(params.get("tag") ?? initialTag),
+    brand: parseBrand(params.get("brand") ?? initialBrand),
+    q: params.get("q") ?? initialQuery,
+    sort: parseSort(params.get("sort") ?? initialSort),
+  };
+  const cat = applied.tag;
+  const brand = applied.brand;
+  const sort = applied.sort;
+
+  const [draft, setDraft] = useState(applied.q);
+  const [seenQuery, setSeenQuery] = useState(applied.q);
+  if (seenQuery !== applied.q) {
+    // The URL moved under us (back/forward, or a chip elsewhere). Re-seed the
+    // box rather than leaving a term in it that no longer filters anything.
+    setSeenQuery(applied.q);
+    setDraft(applied.q);
+  }
+
   const [taxonomyOpen, setTaxonomyOpen] = useState(true);
   const [view, setView] = useState<"grid" | "list">("grid");
 
-  const pushFilters = useCallback(
-    (next: {
-      tag?: ListingCategory | "all";
-      brand?: ListingProvider | "all";
-      q?: string;
-      sort?: "default" | "price-asc" | "price-desc";
-    }) => {
-      const href = buildModelsHref({
-        tag: next.tag ?? cat,
-        brand: next.brand ?? brand,
-        q: next.q ?? q,
-        sort: next.sort ?? sort,
-      });
-      startTransition(() => {
-        router.replace(href, { scroll: false });
-      });
-    },
-    [brand, cat, q, router, sort],
-  );
+  /**
+   * The last filter set actually pushed. `router.replace` runs inside a
+   * transition, so `params` can still be one navigation behind when a second
+   * handler fires; merging onto this ref instead of onto `params` is what keeps
+   * two clicks in a row from cancelling each other out.
+   */
+  const pushedRef = useRef<Filters | null>(null);
+  if (pushedRef.current && sameFilters(pushedRef.current, applied)) {
+    pushedRef.current = null;
+  }
+
+  const pushFilters = (next: Partial<Filters>) => {
+    const merged: Filters = { ...(pushedRef.current ?? applied), ...next };
+    pushedRef.current = merged;
+    startTransition(() => {
+      router.replace(buildModelsHref(merged), { scroll: false });
+    });
+  };
 
   const taxonomy = useMemo(() => {
     return CAT_ORDER.map((c) => {
@@ -172,7 +213,7 @@ export function ModelsCatalog({
   }, [models]);
 
   const filtered = useMemo(() => {
-    const needle = q.trim().toLowerCase();
+    const needle = draft.trim().toLowerCase();
     let list = models.filter((m) => {
       if (cat !== "all" && m.category !== cat) return false;
       if (brand !== "all" && m.provider !== brand) return false;
@@ -189,7 +230,7 @@ export function ModelsCatalog({
       list = [...list].sort((a, b) => (b.inputPerMTok || 0) - (a.inputPerMTok || 0));
     }
     return list;
-  }, [models, q, cat, brand, sort]);
+  }, [models, draft, cat, brand, sort]);
 
   const title =
     cat === "all"
@@ -217,12 +258,14 @@ export function ModelsCatalog({
           </Link>
           <input
             data-allow-native
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") pushFilters({ q });
+              if (e.key === "Enter") pushFilters({ q: e.currentTarget.value });
             }}
-            onBlur={() => pushFilters({ q })}
+            onBlur={(e) => {
+              if (e.currentTarget.value !== applied.q) pushFilters({ q: e.currentTarget.value });
+            }}
             placeholder="在结果中筛选…"
             className="ml-auto h-8 w-full max-w-[220px] rounded-full border border-[var(--neutral-6)] px-3 text-[12px] outline-none md:w-auto"
           />
@@ -247,12 +290,7 @@ export function ModelsCatalog({
               <div key={row.c} className="flex flex-wrap items-start gap-x-3 gap-y-1">
                 <button
                   type="button"
-                  onClick={() => {
-                    const next = cat === row.c ? "all" : row.c;
-                    setCat(next);
-                    setBrand("all");
-                    pushFilters({ tag: next, brand: "all" });
-                  }}
+                  onClick={() => pushFilters({ tag: cat === row.c ? "all" : row.c, brand: "all" })}
                   className={[
                     "inline-flex shrink-0 items-center gap-1 text-[12px] font-medium",
                     cat === row.c
@@ -270,11 +308,7 @@ export function ModelsCatalog({
                     <button
                       key={b.provider}
                       type="button"
-                      onClick={() => {
-                        setCat(row.c);
-                        setBrand(b.provider);
-                        pushFilters({ tag: row.c, brand: b.provider });
-                      }}
+                      onClick={() => pushFilters({ tag: row.c, brand: b.provider })}
                       className={[
                         "text-[12px]",
                         active
@@ -299,14 +333,14 @@ export function ModelsCatalog({
             type="button"
             className={sort.startsWith("price") ? "font-semibold text-[var(--neutral-12)]" : ""}
             onClick={() => {
-              const next =
-                sort === "price-asc"
-                  ? "price-desc"
-                  : sort === "price-desc"
-                    ? "default"
-                    : "price-asc";
-              setSort(next);
-              pushFilters({ sort: next });
+              pushFilters({
+                sort:
+                  sort === "price-asc"
+                    ? "price-desc"
+                    : sort === "price-desc"
+                      ? "default"
+                      : "price-asc",
+              });
             }}
           >
             价格 {sort === "price-asc" ? "↑" : sort === "price-desc" ? "↓" : "↕"}
@@ -342,16 +376,8 @@ export function ModelsCatalog({
               <MarketIcon name="list" className="h-3.5 w-3.5" />
             </button>
           </div>
-          {pathname.startsWith("/models") && (cat !== "all" || brand !== "all" || q) ? (
-            <Link
-              href="/models?cate=api"
-              className="hover:text-[var(--neutral-12)]"
-              onClick={() => {
-                setCat("all");
-                setBrand("all");
-                setQ("");
-              }}
-            >
+          {pathname.startsWith("/models") && (cat !== "all" || brand !== "all" || draft) ? (
+            <Link href="/models?cate=api" className="hover:text-[var(--neutral-12)]">
               清除筛选
             </Link>
           ) : null}

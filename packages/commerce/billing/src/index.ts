@@ -127,8 +127,11 @@ export {
   formatCredits,
   getCreditAllowanceForPlan,
   getCreditBalance,
+  getCreditBalanceFresh,
   getCreditTransactions,
   hasEnoughCredits,
+  hasEnoughCreditsFresh,
+  invalidateCreditCache,
   refundCredits,
 } from "./credits/index";
 // Host DB wiring (no private @nebutra/db import)
