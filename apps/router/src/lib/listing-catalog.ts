@@ -427,7 +427,11 @@ export async function getListingCatalog(): Promise<{
       }
     }
 
-    // Explicit aliases always on shelf (configured SKUs)
+    // Explicit aliases are always on the shelf (they are configured SKUs), but
+    // being configured is not the same as being servable. `sellable` means the
+    // edge's real upstream confirmed the model; only inventory may set it. The
+    // shelf once advertised twelve models against an inventory of one because
+    // an alias set this flag on its own.
     for (const id of aliasIds) {
       const cur = byPublic.get(id);
       if (cur) {
@@ -435,7 +439,7 @@ export async function getListingCatalog(): Promise<{
           ...cur,
           routes: routes.get(id) ?? cur.routes,
           routed: true,
-          sellable: true,
+          sellable: inv.ok ? inventoryHas(inv, id) : false,
         });
         continue;
       }
@@ -448,7 +452,7 @@ export async function getListingCatalog(): Promise<{
           { reasoning: false, vision: false },
           routes.get(id) ?? [],
           "alias-fallback",
-          true,
+          inv.ok ? inventoryHas(inv, id) : false,
         ),
       );
     }
