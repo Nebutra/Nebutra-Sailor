@@ -289,3 +289,31 @@ Fix before deploying the router:
 2. Give that tenant a credit balance, or it 402s instead of 401s.
 3. Price `gpt-image-2` in `model_configs` and publish it.
 4. Then deploy router + gateway, and re-run the smoke.
+
+## A16 — What the deploy actually revealed (2026-09-10)
+
+Batch A+B merged, migrated and deployed. Three things the smoke test found:
+
+**The money spine works.** Against `nebutra-router.fly.dev` a real key is validated locally, the
+upstream token is swapped in, and the response carries `x-ratelimit-limit: 10 / remaining: 9`.
+Rate limit, key store and edge all behave as designed.
+
+**`router.nebutra.com` does not reach it.** No `x-request-id` on the response and New-API's own
+error bodies: the hostname still resolves through Cloudflare to the ECS box, whose nginx sends
+`/v1` straight to New-API on :3301 (`infra/ops/scripts/install-router-v1-nginx.sh`). Every
+production call bypasses the money spine — including kuanlan's, which is why its legacy New-API
+token still worked. **A DNS cutover is required before any of this bills anything.** Not done:
+it redirects a live hostname, and getting it wrong is an outage.
+
+**The shelf listed what we cannot serve.** The seed marked 15 models published; New-API has one
+channel and serves exactly one model. Root cause: `sellable` is the union of every engine
+`loadEnginesFromEnv()` finds, and a stray `OPENAI_API_KEY` in the operator's shell added
+models.dev's 17. The operator's environment leaked into a production seed.
+
+Fixed by removing the trust, not by remembering to clear the variable: publishing is now gated on
+the edge's actual upstream (`NEW_API_BASE_URL/models`), and an unreachable upstream publishes
+nothing rather than guessing. Production went 15 published → 1, and `gpt-5.4-mini` now returns
+`403 model_not_published` locally instead of a confusing upstream "no available channel".
+
+Still open: the DNS cutover, and the account pool has no accounts logged in, so `gpt-image-2` via
+302 is the only real supply.
