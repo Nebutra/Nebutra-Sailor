@@ -163,7 +163,19 @@ export type WorkflowRun = Prisma.WorkflowRunModel
 export type ModelConfig = Prisma.ModelConfigModel
 /**
  * Model RequestLog
+ * The one per-request log for every relay in the platform — the gateway's
+ * completion worker and the Router edge both write here.
  * 
+ * It is deliberately *not* a second ledger. `UsageLedgerEntry` is the money
+ * record and is kept for as long as the money matters; this row is the
+ * debuggable record of one request and expires (see `expiresAt`). `cost` is
+ * carried so a log line can be read without a join, and nothing else about
+ * the money lives here.
+ * 
+ * Request and response bodies are never stored. When the key has `saveLogs`
+ * off the row is still written — the customer is entitled to see that a
+ * request happened and what it cost — but every prompt-derived field
+ * (token counts, client IP, upstream error text) is left empty.
  */
 export type RequestLog = Prisma.RequestLogModel
 /**

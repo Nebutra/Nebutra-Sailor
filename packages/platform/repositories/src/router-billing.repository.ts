@@ -55,6 +55,8 @@ export interface RouterKeySpend {
   keyId: string;
   disabled: boolean;
   rateLimitRps: number;
+  /** Whether this key's owner asked for prompt-derived request detail. */
+  saveLogs: boolean;
   limitDaily: number | null;
   limitTotal: number | null;
   /** Zero when `costDailyResetAt` predates the current UTC day. */
@@ -176,6 +178,7 @@ export class RouterBillingRepository {
         id: true,
         disabledAt: true,
         rateLimitRps: true,
+        saveLogs: true,
         limitDaily: true,
         limitTotal: true,
         costDaily: true,
@@ -189,6 +192,7 @@ export class RouterBillingRepository {
       keyId: row.id,
       disabled: row.disabledAt !== null,
       rateLimitRps: row.rateLimitRps,
+      saveLogs: row.saveLogs,
       limitDaily: decimal(row.limitDaily),
       limitTotal: decimal(row.limitTotal),
       costDaily: stale ? 0 : Number(row.costDaily),

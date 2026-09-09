@@ -5,6 +5,7 @@ import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { TokenBucket } from "@nebutra/rate-limit";
 import {
+  RequestLogRepository,
   RouterBillingRepository,
   type RouterKeySpend,
   type RouterPriceRow,
@@ -51,6 +52,13 @@ import { getBalanceFresh } from "./wallet";
  * or not at all. The ledger row's unique `(tenantId, idempotencyKey)` is the
  * idempotency check, so a retried settle moves nothing.
  *
+ * **One request, two rows.** The ledger row is the money; `ai_request_logs`
+ * is the request — model, status, first-byte time, upstream channel — and it
+ * expires where the ledger does not. They are written from the same place so
+ * a charge can never exist without the record of what produced it. The log is
+ * best-effort: it is written after the customer already has their answer, and
+ * a failure to write it must not undo a settled charge.
+ *
  * **An unpriced model is refused, not relayed.** `priceUsage` returning
  * `ok:false` means we cannot say what a call costs; serving it anyway is
  * serving it for free.
@@ -82,8 +90,15 @@ export type RouterBilling = Pick<
   "findPrice" | "getKeySpend" | "reserve" | "release" | "settle" | "sweepExpired"
 >;
 
+/** The log seam, narrowed the same way, so the guard stays testable. */
+export type RouterRequestLog = Pick<RequestLogRepository, "record">;
+
 function repo(): RouterBilling {
   return new RouterBillingRepository(getSystemDb());
+}
+
+function logRepo(): RouterRequestLog {
+  return new RequestLogRepository(getSystemDb());
 }
 
 /**
@@ -120,8 +135,12 @@ function overKeyLimit(spend: RouterKeySpend, amount: number): "daily" | "total" 
  * guard at module scope and a Prisma client must not be created while a
  * serverless bundle is still being imported.
  */
-export function createRouterGuard(injected?: RouterBilling): EdgeGuard {
+export function createRouterGuard(
+  injected?: RouterBilling,
+  injectedLog?: RouterRequestLog,
+): EdgeGuard {
   const db = () => injected ?? repo();
+  const logs = () => injectedLog ?? logRepo();
   return {
     async admit(input: EdgeAdmitInput): Promise<EdgeAdmitDecision> {
       const billing = db();
@@ -270,12 +289,50 @@ export function createRouterGuard(injected?: RouterBilling): EdgeGuard {
       return { ok: true };
     },
 
+    async noteRefusal(input): Promise<void> {
+      // Cheap by construction: one insert, no key lookup, nothing
+      // prompt-derived. The customer gets the fact and the reason; the reason
+      // is our own refusal code, not anything they sent.
+      await logs()
+        .record({
+          requestId: input.requestId,
+          tenantId: input.identity.tenantId,
+          apiKeyId: input.identity.keyId,
+          model: input.model ?? "unknown",
+          path: input.path,
+          httpStatus: input.status,
+          status: "refused",
+          cost: 0,
+          errorMessage: input.code,
+        })
+        .catch(() => false);
+    },
+
     async settle(input: EdgeSettleInput): Promise<void> {
       const billing = db();
       const model = pickSettledModel(input);
-      const price = input.billable
-        ? await priceSettled(billing, model, input.usage)
-        : zeroPrice(model);
+      // Post-paid (a multipart upload) whose `model` field never appeared in the
+      // scanned prefix. Nothing can be priced, so nothing is charged — but the
+      // gap is named out loud, because a silent one is free inference.
+      if (!input.admission && model === "unknown") {
+        logger.warn("[router] post-paid request settled with no readable model", {
+          requestId: input.requestId,
+          path: input.path,
+          status: input.status,
+          keyId: input.identity.keyId,
+          tenantId: input.identity.tenantId,
+        });
+      }
+      const price =
+        input.billable && model !== "unknown"
+          ? await priceSettled(billing, model, input.usage)
+          : zeroPrice(model, model === "unknown" ? "model_unreadable" : undefined);
+
+      // `saveLogs` is the customer's own switch over prompt-derived detail.
+      // Read here rather than carried from admit because settle runs after the
+      // response has finished — it is off the latency path, and a key whose
+      // owner turned logging off mid-request should have that honoured.
+      const spend = await billing.getKeySpend(input.identity.keyId).catch(() => null);
 
       try {
         const result = await billing.settle({
@@ -289,8 +346,11 @@ export function createRouterGuard(injected?: RouterBilling): EdgeGuard {
           unit: price.unit,
           unitCost: price.unitCost,
           totalCost: price.totalCost,
-          currency: input.admission.currency,
-          reserved: input.admission.reserved,
+          currency: input.admission?.currency ?? "USD",
+          // No admission means no hold was ever taken (post-paid). Zero is the
+          // truth here, not a placeholder: `settle` finds no reservation row,
+          // returns nothing, and debits the charge.
+          reserved: input.admission?.reserved ?? 0,
           metadata: {
             product: "router",
             path: input.path,
@@ -302,7 +362,8 @@ export function createRouterGuard(injected?: RouterBilling): EdgeGuard {
             status: input.status,
             latencyMs: input.latencyMs,
             supplyPath: input.supplyPath,
-            reserved: input.admission.reserved,
+            reserved: input.admission?.reserved ?? 0,
+            postPaid: input.admission === null,
             billable: input.billable,
             ...(input.billable ? {} : { refundReason: refundReason(input) }),
             ...(price.unpriced ? { unpriced: price.unpriced } : {}),
@@ -313,6 +374,7 @@ export function createRouterGuard(injected?: RouterBilling): EdgeGuard {
         }
       } finally {
         invalidateCreditCache(input.identity.tenantId);
+        await writeRequestLog(logs(), input, model, price, spend?.saveLogs ?? false);
       }
     },
 
@@ -330,6 +392,41 @@ export function createRouterGuard(injected?: RouterBilling): EdgeGuard {
   };
 }
 
+/**
+ * The request record. Best-effort by construction: the repository swallows its
+ * own failures, and this is called from a `finally` so a log problem can never
+ * roll back money that is already settled.
+ */
+async function writeRequestLog(
+  logs: RouterRequestLog,
+  input: EdgeSettleInput,
+  model: string,
+  price: SettledPrice,
+  saveLogs: boolean,
+): Promise<void> {
+  await logs.record({
+    requestId: input.requestId,
+    tenantId: input.identity.tenantId,
+    apiKeyId: input.identity.keyId,
+    model,
+    path: input.path,
+    httpStatus: input.status,
+    status: input.billable ? "success" : "error",
+    latencyMs: input.latencyMs,
+    ttfbMs: input.ttfbMs,
+    promptTokens: input.usage.promptTokens,
+    completionTokens: input.usage.completionTokens,
+    totalTokens: input.usage.totalTokens,
+    cachedPromptTokens: input.usage.cachedPromptTokens,
+    cacheWriteTokens: input.usage.cacheWriteTokens,
+    cost: price.totalCost,
+    supplyPath: input.supplyPath,
+    clientIp: input.clientIp,
+    errorMessage: input.billable ? null : refundReason(input),
+    saveLogs,
+  });
+}
+
 interface SettledPrice {
   quantity: number;
   unit: string;
@@ -338,8 +435,14 @@ interface SettledPrice {
   unpriced?: string;
 }
 
-function zeroPrice(_model: string): SettledPrice {
-  return { quantity: 0, unit: "token", unitCost: 0, totalCost: 0 };
+function zeroPrice(_model: string, unpriced?: string): SettledPrice {
+  return {
+    quantity: 0,
+    unit: "token",
+    unitCost: 0,
+    totalCost: 0,
+    ...(unpriced ? { unpriced } : {}),
+  };
 }
 
 /**
@@ -348,7 +451,7 @@ function zeroPrice(_model: string): SettledPrice {
  */
 function pickSettledModel(input: EdgeSettleInput): string {
   if (input.usage.model && input.usage.model !== "unknown") return input.usage.model;
-  return input.admission.candidates[0] ?? "unknown";
+  return input.admission?.candidates[0] ?? "unknown";
 }
 
 async function priceSettled(
@@ -365,6 +468,12 @@ async function priceSettled(
       cachedPromptTokens: usage.cachedPromptTokens,
       cacheWriteTokens: usage.cacheWriteTokens,
       calls: 1,
+      // Non-token quantities, for the units an image or audio SKU is sold in.
+      // The price row picks which one it reads; the parser reports whatever the
+      // upstream actually returned and never guesses the rest.
+      images: usage.images,
+      seconds: usage.seconds,
+      minutes: usage.seconds > 0 ? usage.seconds / 60 : 0,
     },
     row ? toPriceRow(row) : null,
   );

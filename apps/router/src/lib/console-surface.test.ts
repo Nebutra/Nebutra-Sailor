@@ -28,10 +28,40 @@ describe("console routes are off the public /v1 surface", () => {
       "console/v1/wallet/topup",
       "console/v1/keys",
       "console/v1/keys/[id]",
+      "console/v1/keys/[id]/logs",
       "console/v1/chat",
+      "console/v1/usage/summary",
+      "console/v1/usage/by-model",
+      "console/v1/usage/by-key",
+      "console/v1/usage/history",
+      "console/v1/usage/records",
+      "console/v1/usage/export",
     ]) {
       expect(existsSync(path.join(appDir, route, "route.ts")), route).toBe(true);
     }
+  });
+
+  it("keeps no console route under the rewrite target, at any depth", () => {
+    for (const leaked of [
+      "v1/wallet",
+      "v1/wallet/topup",
+      "v1/keys",
+      "v1/chat",
+      "v1/usage",
+      "v1/usage/summary",
+    ]) {
+      expect(existsSync(path.join(appDir, leaked, "route.ts")), leaked).toBe(false);
+    }
+  });
+
+  /**
+   * `/v1/limits` is the one addition to the public surface: it is
+   * key-authenticated, not session-authenticated, because its audience is the
+   * program holding the key. As a static segment it takes precedence over the
+   * `[...path]` relay, so it is answered here and never forwarded upstream.
+   */
+  it("serves /v1/limits as a static route, not through the relay", () => {
+    expect(existsSync(path.join(appDir, "v1", "limits", "route.ts"))).toBe(true);
   });
 
   describe("the relay route itself", () => {
@@ -48,6 +78,9 @@ describe("console routes are off the public /v1 surface", () => {
       ["keys"],
       ["keys", "abc"],
       ["chat"],
+      ["usage"],
+      ["usage", "summary"],
+      ["usage", "export"],
     ])("answers 404 for /v1/%s", async (...segments: string[]) => {
       const response = await route.POST(
         new Request(`https://router.nebutra.com/v1/${segments.join("/")}`, {

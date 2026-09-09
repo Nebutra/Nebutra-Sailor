@@ -871,6 +871,19 @@ model ModelConfig {
   @@schema("public")
 }
 
+/// The one per-request log for every relay in the platform — the gateway's
+/// completion worker and the Router edge both write here.
+///
+/// It is deliberately *not* a second ledger. `UsageLedgerEntry` is the money
+/// record and is kept for as long as the money matters; this row is the
+/// debuggable record of one request and expires (see `expiresAt`). `cost` is
+/// carried so a log line can be read without a join, and nothing else about
+/// the money lives here.
+///
+/// Request and response bodies are never stored. When the key has `saveLogs`
+/// off the row is still written — the customer is entitled to see that a
+/// request happened and what it cost — but every prompt-derived field
+/// (token counts, client IP, upstream error text) is left empty.
 model RequestLog {
   id               String   @id @default(cuid())
   requestId        String   @unique @map("request_id")
@@ -886,11 +899,34 @@ model RequestLog {
   errorMessage     String?  @map("error_message")
   createdAt        DateTime @default(now()) @map("created_at")
 
+  // Router edge (Batch B). Every column is nullable or defaulted so the
+  // gateway's existing writer is unchanged.
+  /// Relay path without the `/v1` prefix — `chat/completions`, `embeddings`, …
+  path               String?   @db.VarChar(120)
+  /// The HTTP status the customer saw. `status` stays the semantic verdict
+  /// ("success" / "error") the gateway already writes, so the two are not
+  /// conflated.
+  httpStatus         Int?      @map("http_status")
+  /// Time to first byte of the upstream response. The only latency number a
+  /// streaming customer can feel; `latencyMs` covers the whole body.
+  ttfbMs             Int?      @map("ttfb_ms")
+  cachedPromptTokens Int       @default(0) @map("cached_prompt_tokens")
+  cacheWriteTokens   Int       @default(0) @map("cache_write_tokens")
+  /// Which upstream channel served it, when the upstream says so.
+  supplyPath         String?   @map("supply_path") @db.VarChar(64)
+  clientIp           String?   @map("client_ip") @db.VarChar(64)
+  /// Retention horizon. Null means "no horizon set by the writer" — the sweep
+  /// only ever deletes rows that carry one, so it can never reach the
+  /// gateway's existing rows.
+  expiresAt          DateTime? @map("expires_at")
+
   tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   @@index([tenantId, createdAt])
   @@index([apiKeyId])
+  @@index([apiKeyId, createdAt])
   @@index([model, createdAt])
+  @@index([expiresAt])
   @@map("ai_request_logs")
   @@schema("public")
 }

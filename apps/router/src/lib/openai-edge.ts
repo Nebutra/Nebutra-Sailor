@@ -107,17 +107,45 @@ export interface EdgeSettleInput {
   readonly requestId: string;
   readonly identity: EdgeIdentity;
   readonly path: string;
-  readonly admission: EdgeAdmission;
+  /**
+   * What the guard held before the call, or `null` for a **post-paid** request.
+   *
+   * A multipart upload carries its model in a form field, so nothing can be
+   * priced before the bytes move and no hold is taken (see `admitUnpriced`).
+   * Such a request is settled after the fact against the model read out of the
+   * upload's prefix. `null` says exactly that: there is no hold to return, only
+   * a charge to take. It is not a zero-value admission — inventing one would
+   * claim money was held that never was.
+   */
+  readonly admission: EdgeAdmission | null;
   readonly usage: ParsedUsage;
   readonly status: number;
   readonly latencyMs: number;
+  /**
+   * Time to the upstream response headers. On a streamed relay this is the
+   * only latency the customer feels; `latencyMs` is the whole body.
+   */
+  readonly ttfbMs: number | null;
   readonly supplyPath: string | null;
+  /** Left-most `x-forwarded-for` hop, or null when the edge cannot see one. */
+  readonly clientIp: string | null;
   /**
    * False when the request produced nothing the customer can use — a non-2xx,
    * or a 200 whose body carried an error / an empty completion. The guard must
    * then write a zero-cost row and return the reservation in full.
    */
   readonly billable: boolean;
+}
+
+/** One refused request, as much of it as the edge could identify. */
+export interface EdgeRefusalRecord {
+  readonly requestId: string;
+  readonly identity: EdgeIdentity;
+  readonly path: string;
+  readonly status: number;
+  readonly code: EdgeRefusalCode;
+  /** The requested model when the body named one; null when it could not be read. */
+  readonly model: string | null;
 }
 
 /**
@@ -132,8 +160,9 @@ export interface EdgeGuard {
    * `images/edits`, `images/variations` and the two `audio` transcription paths
    * take `multipart/form-data`, and the model is a form field: reading it means
    * consuming the upload, so there is no price and no hold. Those calls are
-   * post-paid. Without this check a key with a zero balance could call them
-   * forever, bounded only by the rate limit — so the balance must at least be
+   * post-paid — the model is recovered from the upload's prefix as it streams
+   * (see {@link scanMultipartModel}) and the charge is taken at settle. This
+   * check is the front half of that bargain: the balance must at least be
    * positive before the upload is forwarded. One call may still overshoot into
    * a small negative; unbounded free usage cannot.
    */
@@ -142,6 +171,12 @@ export interface EdgeGuard {
     path: string;
   }): Promise<{ ok: true } | { ok: false; status: number; code: EdgeRefusalCode; message: string }>;
   settle(input: EdgeSettleInput): Promise<void>;
+  /**
+   * Record a refusal. A customer who is told "no" is entitled to find out why
+   * from their own activity log; a refusal that leaves no trace is the same
+   * support ticket every time. Zero-cost by construction — nothing was served.
+   */
+  noteRefusal(input: EdgeRefusalRecord): Promise<void>;
   /** Called when the upstream call never happened; returns the whole hold. */
   abandon(input: {
     identity: EdgeIdentity;
@@ -226,6 +261,21 @@ export function isAllowedEdgePath(path: readonly string[]): boolean {
   return ALLOWED_PATHS.some((re) => re.test(joined));
 }
 
+/**
+ * The caller's address as the edge can best tell it, or null.
+ *
+ * `x-forwarded-for` is a client-settable header, so the left-most hop is a
+ * hint and never an authorisation input — it is written to the request log so
+ * a customer can recognise their own traffic, and used for nothing else.
+ */
+export function clientIpOf(request: Request): string | null {
+  const forwarded = request.headers.get("x-forwarded-for");
+  const first = forwarded?.split(",")[0]?.trim();
+  if (first) return first.slice(0, 64);
+  const real = request.headers.get("x-real-ip")?.trim();
+  return real ? real.slice(0, 64) : null;
+}
+
 /** `Authorization: Bearer …` (OpenAI) or `x-api-key` (Anthropic) — same credential. */
 export function extractCredential(request: Request): string | null {
   const auth = request.headers.get("authorization");
@@ -251,6 +301,103 @@ interface ReadBody {
    * would otherwise buy unlimited free inference.
    */
   readonly overflow: boolean;
+  /**
+   * The `model` form field of a multipart upload, once enough of the body has
+   * streamed past for it to be readable. Null until then, and null for good
+   * when the field was not inside the scanned prefix. Never set for a JSON
+   * body — that model comes from {@link modelCandidates}.
+   */
+  readonly multipartModel?: () => string | null;
+}
+
+/**
+ * How much of a multipart upload is scanned for the `model` field.
+ *
+ * Every client that matters — the OpenAI SDKs (Python, Node), `curl -F`,
+ * browser `FormData`, Go's `mime/multipart` — writes parts in the order they
+ * were added, and the OpenAI SDKs add the scalar fields (`model`, `prompt`,
+ * `size`, `response_format`) before the file. So the field lives in the first
+ * few hundred bytes in practice. 64 KB is ~100x that: generous enough to
+ * survive an unusual part order or a large `prompt` written first, small enough
+ * that the memory held per in-flight upload is irrelevant next to the file
+ * itself — which is never held at all.
+ */
+const MULTIPART_MODEL_SCAN_LIMIT = 64 * 1024;
+
+/**
+ * The value of the `model` form field, if the prefix contains a complete one.
+ *
+ * Deliberately strict about "complete": the value is only returned when the
+ * line after the part's headers is terminated, so a prefix that stops mid-value
+ * reports nothing rather than a truncated model id that would price wrongly.
+ * A part carrying a `filename` is a file, never the model field.
+ */
+export function scanMultipartModel(prefix: string): string | null {
+  const lines = prefix.split(/\r?\n/);
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i] ?? "";
+    if (!/^content-disposition\s*:/i.test(line)) continue;
+    if (/;\s*filename\s*\*?=/i.test(line)) continue;
+    if (!/;\s*name\s*=\s*"?model"?\s*(;|$)/i.test(line)) continue;
+
+    // Skip the rest of this part's headers; a blank line ends them.
+    let cursor = i + 1;
+    while (cursor < lines.length && lines[cursor] !== "") cursor += 1;
+    const valueLine = lines[cursor + 1];
+    // `cursor + 2` must exist, or the value line was not terminated and what we
+    // hold may be half a model id.
+    if (valueLine === undefined || cursor + 2 > lines.length - 1) return null;
+    const value = valueLine.trim();
+    return value ? value.slice(0, 128) : null;
+  }
+  return null;
+}
+
+/**
+ * Pass an upload through untouched while reading its first {@link
+ * MULTIPART_MODEL_SCAN_LIMIT} bytes for the `model` field.
+ *
+ * The stream is never buffered: each chunk is enqueued first and only then
+ * copied into a bounded prefix, which is dropped the moment the field is found
+ * or the cap is reached. The upload keeps flowing to the upstream at its own
+ * pace; all this holds is at most 64 KB of text.
+ */
+function scanUploadForModel(
+  body: ReadableStream<Uint8Array>,
+  found: (model: string | null) => void,
+): ReadableStream<Uint8Array> {
+  const decoder = new TextDecoder();
+  let prefix = "";
+  let settled = false;
+  return body.pipeThrough(
+    new TransformStream<Uint8Array, Uint8Array>({
+      transform(chunk, controller) {
+        controller.enqueue(chunk);
+        if (settled) return;
+        prefix += decoder.decode(chunk, { stream: true });
+        const model = scanMultipartModel(prefix);
+        if (model) {
+          settled = true;
+          prefix = "";
+          found(model);
+          return;
+        }
+        if (prefix.length >= MULTIPART_MODEL_SCAN_LIMIT) {
+          settled = true;
+          prefix = "";
+          found(null);
+        }
+      },
+      flush() {
+        if (settled) return;
+        settled = true;
+        prefix += decoder.decode();
+        const model = scanMultipartModel(prefix);
+        prefix = "";
+        found(model);
+      },
+    }),
+  );
 }
 
 /**
@@ -273,6 +420,23 @@ export async function readRequestBody(request: Request, limit: number): Promise<
   }
   const contentType = request.headers.get("content-type") ?? "";
   if (!contentType.includes("application/json")) {
+    if (contentType.includes("multipart/form-data")) {
+      // Post-paid: the model is a form field, so it is read off the stream as
+      // it goes by and the charge is taken at settle. Without this the request
+      // was never priced at all — a key holding one cent could run image edits
+      // forever (decisions.md A13).
+      let model: string | null = null;
+      const forward = scanUploadForModel(request.body, (found) => {
+        model = found;
+      });
+      return {
+        json: null,
+        forward,
+        streaming: true,
+        overflow: false,
+        multipartModel: () => model,
+      };
+    }
     return { json: null, forward: request.body, streaming: true, overflow: false };
   }
 
@@ -416,11 +580,34 @@ export async function proxyOpenAiCompatible(
     upstreamAuth = `Bearer ${upstreamToken}`;
   }
 
+  const requestId = crypto.randomUUID();
+
+  /**
+   * Refuse, and leave a trace of it. An unauthenticated caller has no tenant to
+   * log against, so those refusals stay in the response only; every refusal
+   * that got as far as identifying a key writes a zero-cost row.
+   */
+  const deny = async (
+    status: number,
+    code: EdgeRefusalCode,
+    message: string,
+    model: string | null = null,
+  ): Promise<Response> => {
+    if (identity && opts.guard) {
+      await opts.guard
+        .noteRefusal({ requestId, identity, path: joinedPath, status, code, model })
+        .catch(() => {});
+    }
+    const response = refuse(status, code, message);
+    response.headers.set("x-request-id", requestId);
+    return response;
+  };
+
   let verdict: RateLimitVerdict | null = null;
   if (identity && opts.rateLimit) {
     verdict = await opts.rateLimit(identity);
     if (!verdict.allowed) {
-      const response = refuse(
+      const response = await deny(
         429,
         "rate_limit_exceeded",
         "Too many requests for this API key. Slow down or raise the key's rate limit.",
@@ -436,7 +623,6 @@ export async function proxyOpenAiCompatible(
     }
   }
 
-  const requestId = crypto.randomUUID();
   const url = new URL(request.url);
   const upstream = openaiCompatibleUrl(newApiBaseUrl(), path, url.search);
   const headers = new Headers();
@@ -452,6 +638,8 @@ export async function proxyOpenAiCompatible(
 
   // Money gate. No guard means relay-only mode (legacy token pass-through).
   let admission: EdgeAdmission | null = null;
+  /** Admitted with no hold: the charge is taken after the fact, at settle. */
+  let postPaid = false;
   if (identity && opts.guard && candidates.length > 0) {
     const decision = await opts.guard.admit({
       requestId,
@@ -462,7 +650,12 @@ export async function proxyOpenAiCompatible(
       maxOutputTokens: maxOutputTokens(read.json),
     });
     if (!decision.ok) {
-      const response = refuse(decision.status, decision.code, decision.message);
+      const response = await deny(
+        decision.status,
+        decision.code,
+        decision.message,
+        candidates[0] ?? null,
+      );
       if (verdict) rateLimitHeaders(response.headers, verdict);
       return response;
     }
@@ -470,7 +663,7 @@ export async function proxyOpenAiCompatible(
   } else if (identity && opts.guard && read.overflow) {
     // A JSON body too large to read: no model, therefore no price and no hold.
     // Refusing is the only honest answer — see `payload_too_large`.
-    const response = refuse(
+    const response = await deny(
       413,
       "payload_too_large",
       "Request body is too large to price. Keep the JSON body under 4 MB.",
@@ -482,10 +675,11 @@ export async function proxyOpenAiCompatible(
     // still costs money, so it needs a balance even though it cannot be priced.
     const decision = await opts.guard.admitUnpriced({ identity, path: joinedPath });
     if (!decision.ok) {
-      const response = refuse(decision.status, decision.code, decision.message);
+      const response = await deny(decision.status, decision.code, decision.message);
       if (verdict) rateLimitHeaders(response.headers, verdict);
       return response;
     }
+    postPaid = true;
   }
 
   const startedAt = now();
@@ -507,6 +701,11 @@ export async function proxyOpenAiCompatible(
     throw error;
   }
 
+  // First byte: the upstream's headers are back. Measured before anything is
+  // read from the body, which is what makes it comparable across a streamed
+  // and a buffered response.
+  const ttfbMs = Math.max(0, now() - startedAt);
+
   const outgoing = new Headers(upstreamResponse.headers);
   outgoing.delete("content-encoding");
   outgoing.delete("transfer-encoding");
@@ -519,13 +718,19 @@ export async function proxyOpenAiCompatible(
     null;
 
   let body: ReadableStream<Uint8Array> | null = upstreamResponse.body;
-  const wantsBody = Boolean(identity && (opts.onUsage || (opts.guard && admission)));
+  const wantsBody = Boolean(identity && (opts.onUsage || (opts.guard && (admission || postPaid))));
 
   if (identity && wantsBody) {
     const resolved = identity;
     const contentType = upstreamResponse.headers.get("content-type") ?? "";
     const finish = (text: string) => {
       const parsed = parseUsage(text, contentType);
+      // An image or audio response names no model, so the one read off the
+      // upload's prefix is the only thing that can price it.
+      if (parsed.model === "unknown") {
+        const uploaded = read.multipartModel?.();
+        if (uploaded) parsed.model = uploaded;
+      }
       if (opts.onUsage) {
         void Promise.resolve(
           opts.onUsage({
@@ -542,7 +747,7 @@ export async function proxyOpenAiCompatible(
           }),
         ).catch(() => {});
       }
-      if (opts.guard && admission) {
+      if (opts.guard && (admission || postPaid)) {
         void Promise.resolve(
           opts.guard.settle({
             requestId,
@@ -552,7 +757,9 @@ export async function proxyOpenAiCompatible(
             usage: parsed,
             status: upstreamResponse.status,
             latencyMs: Math.max(0, now() - startedAt),
+            ttfbMs,
             supplyPath,
+            clientIp: clientIpOf(request),
             billable: isBillable(upstreamResponse.status, joinedPath, parsed),
           }),
         ).catch(() => {});
@@ -679,6 +886,19 @@ export interface ParsedUsage {
   /** Prompt tokens the upstream served from its cache — priced separately. */
   cachedPromptTokens: number;
   cacheWriteTokens: number;
+  /**
+   * Images the response actually returned. The billable quantity of a
+   * `PER_IMAGE` model: image endpoints report no tokens at all unless they are
+   * one of the newer token-billed ones, and then `usage` carries the tokens and
+   * this stays at whatever `data[]` held.
+   */
+  images: number;
+  /**
+   * Audio seconds the upstream billed. `usage.seconds` on the newer
+   * transcription models, `duration` on a `verbose_json` transcription. The
+   * billable quantity of a `PER_SECOND` / `PER_MINUTE` model.
+   */
+  seconds: number;
   /** An error object appeared in the body, whatever the HTTP status said. */
   errored: boolean;
   /** `stop` / `length` / `error` / … — null when the body never reported one. */
@@ -702,6 +922,8 @@ export function parseUsage(text: string, contentType: string): ParsedUsage {
     totalTokens: 0,
     cachedPromptTokens: 0,
     cacheWriteTokens: 0,
+    images: 0,
+    seconds: 0,
     errored: false,
     finishReason: null,
   };
@@ -749,7 +971,14 @@ export function parseUsage(text: string, contentType: string): ParsedUsage {
     const reason = finishReasonOf(frame) ?? (nested ? finishReasonOf(nested) : null);
     if (reason) result.finishReason = reason;
 
+    const returnedImages = imageCountOf(frame) ?? (nested ? imageCountOf(nested) : null);
+    if (returnedImages !== null) result.images = returnedImages;
+
     const usage = pickUsage(frame) ?? (nested ? pickUsage(nested) : null);
+    // A transcription reports its length as a top-level `duration` when it was
+    // asked for `verbose_json`, and inside `usage` on the newer models.
+    const duration = num(usage?.seconds) ?? num(frame.duration) ?? num(nested?.duration);
+    if (duration !== undefined) result.seconds = duration;
     if (!usage) continue;
     const cachedRead =
       num(usage.cache_read_input_tokens) ??
@@ -796,6 +1025,26 @@ function finishReasonOf(frame: Record<string, unknown>): string | null {
   const status = str(frame.status);
   if (status === "completed" || status === "incomplete" || status === "failed") return status;
   return null;
+}
+
+/**
+ * How many images this frame returned, or null when it returned none.
+ *
+ * `data[]` is the images envelope for `images/generations|edits|variations`.
+ * Only entries that actually carry an image count, so the `data[]` of a models
+ * listing (or any other array-shaped payload) can never be read as a charge.
+ */
+function imageCountOf(frame: Record<string, unknown>): number | null {
+  const data = frame.data;
+  if (!Array.isArray(data)) return null;
+  const images = data.filter(
+    (entry) =>
+      isRecord(entry) &&
+      (typeof entry.b64_json === "string" ||
+        typeof entry.url === "string" ||
+        typeof entry.revised_prompt === "string"),
+  ).length;
+  return images > 0 ? images : null;
 }
 
 function detailOf(usage: Record<string, unknown>, key: string): Record<string, unknown> | null {

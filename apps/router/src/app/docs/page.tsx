@@ -91,6 +91,7 @@ const r = await client.responses.create({
     ["POST", `${base}/embeddings`, "向量"],
     ["POST", `${base}/images/generations`, "文生图（302.ai / OpenAI 同契约）"],
     ["POST", `${base}/images/edits`, "图生图（multipart：image + prompt + model + size）"],
+    ["GET", `${base}/limits`, "这把 Key 的速率上限与额度余量"],
   ];
 
   return (
@@ -112,6 +113,24 @@ const r = await client.responses.create({
         <Snippet title="Codex CLI · Responses API" code={codex} />
         <Snippet title="图片生成" code={images} />
       </div>
+
+      <section className="mt-3 rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3 text-[12px] leading-relaxed text-[var(--neutral-11)]">
+        <h2 className="mb-1 text-[13px] font-semibold text-[var(--neutral-12)]">限额</h2>
+        <p>
+          每把 Key 默认 <span className="font-mono">10</span> 次/秒。超出时返回{" "}
+          <span className="font-mono">429</span>，并带上{" "}
+          <span className="font-mono">x-ratelimit-limit</span> /{" "}
+          <span className="font-mono">x-ratelimit-remaining</span> /{" "}
+          <span className="font-mono">x-ratelimit-reset</span> 与{" "}
+          <span className="font-mono">retry-after</span>。
+        </p>
+        <p className="mt-1">
+          Key 上还可以设总额度与单日额度，单日额度按 UTC 零点重置；触顶返回{" "}
+          <span className="font-mono">402 key_quota_exceeded</span>，余额不足返回{" "}
+          <span className="font-mono">402 insufficient_balance</span>。当前生效的数值由{" "}
+          <span className="font-mono">GET {base}/limits</span> 返回，用同一把 Key 调用即可。
+        </p>
+      </section>
 
       <div className="mt-3 overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
         <Table bare className="w-full text-[12px]">

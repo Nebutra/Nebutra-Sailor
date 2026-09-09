@@ -2,12 +2,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   type EdgeAdmission,
   type EdgeGuard,
+  type EdgeRefusalRecord,
   type EdgeSettleInput,
   isBillable,
   modelCandidates,
   parseUsage,
   proxyOpenAiCompatible,
   readRequestBody,
+  scanMultipartModel,
 } from "./openai-edge";
 
 const identity = { keyId: "key_1", tenantId: "tenant_1", userId: "user_1" };
@@ -19,6 +21,7 @@ function flush() {
 
 function fakeGuard(over: Partial<EdgeGuard> = {}) {
   const settled: EdgeSettleInput[] = [];
+  const refused: EdgeRefusalRecord[] = [];
   const abandoned: string[] = [];
   const guard: EdgeGuard = {
     admit: vi.fn(async () => ({ ok: true as const, admission })),
@@ -26,12 +29,15 @@ function fakeGuard(over: Partial<EdgeGuard> = {}) {
     settle: vi.fn(async (input: EdgeSettleInput) => {
       settled.push(input);
     }),
+    noteRefusal: vi.fn(async (input: EdgeRefusalRecord) => {
+      refused.push(input);
+    }),
     abandon: vi.fn(async (input) => {
       abandoned.push(input.requestId);
     }),
     ...over,
   };
-  return { guard, settled, abandoned };
+  return { guard, settled, refused, abandoned };
 }
 
 function chatRequest(body: unknown, path = "chat/completions") {
@@ -227,6 +233,144 @@ describe("edge money path", () => {
     );
   });
 
+  it("charges a multipart image edit against the model read out of the upload", async () => {
+    // The defect this closes: the model is a form field, so nothing was priced
+    // and nothing settled — a key holding one cent ran image edits for free.
+    const form = new FormData();
+    form.set("model", "gpt-image-2");
+    form.set("image", new Blob([new Uint8Array([1, 2, 3])], { type: "image/png" }), "p.png");
+    let forwarded: unknown;
+    const fetchImpl: typeof fetch = vi.fn(async (_input, init?: RequestInit) => {
+      forwarded = init?.body;
+      // Drain the upload the way a real upstream would, so the prefix scan runs.
+      await new Response(init?.body as ReadableStream).arrayBuffer();
+      return new Response(JSON.stringify({ created: 1, data: [{ b64_json: "iVBORw0K" }] }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    });
+    const { guard, settled } = fakeGuard();
+    const response = await proxyOpenAiCompatible(
+      new Request("https://router.nebutra.com/v1/images/edits", {
+        method: "POST",
+        headers: { Authorization: "Bearer sk-sailor" },
+        body: form,
+      }),
+      ["images", "edits"],
+      { fetchImpl, resolveKey, upstreamToken: "t", guard },
+    );
+    expect(response.status).toBe(200);
+    // The upload is still streamed, never buffered.
+    expect(forwarded).toBeInstanceOf(ReadableStream);
+    await response.text();
+    await flush();
+    expect(settled).toHaveLength(1);
+    // Post-paid: nothing was held, so there is no admission to return.
+    expect(settled[0]?.admission).toBeNull();
+    expect(settled[0]?.billable).toBe(true);
+    expect(settled[0]?.usage).toMatchObject({ model: "gpt-image-2", images: 1 });
+  });
+
+  it("settles an audio transcription on the seconds the upstream reported", async () => {
+    const form = new FormData();
+    form.set("model", "whisper-1");
+    form.set("file", new Blob([new Uint8Array([9, 9])], { type: "audio/mpeg" }), "a.mp3");
+    const fetchImpl: typeof fetch = vi.fn(async (_input, init?: RequestInit) => {
+      await new Response(init?.body as ReadableStream).arrayBuffer();
+      return new Response(JSON.stringify({ text: "hello there", duration: 12.5 }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    });
+    const { guard, settled } = fakeGuard();
+    const response = await proxyOpenAiCompatible(
+      new Request("https://router.nebutra.com/v1/audio/transcriptions", {
+        method: "POST",
+        headers: { Authorization: "Bearer sk-sailor" },
+        body: form,
+      }),
+      ["audio", "transcriptions"],
+      { fetchImpl, resolveKey, upstreamToken: "t", guard },
+    );
+    expect(response.status).toBe(200);
+    await response.text();
+    await flush();
+    expect(settled[0]?.usage).toMatchObject({ model: "whisper-1", seconds: 12.5 });
+  });
+
+  it("does not charge — and says so — when the model is past the scanned prefix", async () => {
+    // A client that writes the file part first pushes `model` beyond the cap.
+    // The request is relayed (the balance was checked) but nothing can price it,
+    // so it settles at zero against an unknown model. `billing-edge` warns.
+    const form = new FormData();
+    form.set("image", new Blob([new Uint8Array(80 * 1024)], { type: "image/png" }), "big.png");
+    form.set("model", "gpt-image-2");
+    const fetchImpl: typeof fetch = vi.fn(async (_input, init?: RequestInit) => {
+      await new Response(init?.body as ReadableStream).arrayBuffer();
+      return new Response(JSON.stringify({ data: [{ b64_json: "x" }] }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    });
+    const { guard, settled } = fakeGuard();
+    const response = await proxyOpenAiCompatible(
+      new Request("https://router.nebutra.com/v1/images/edits", {
+        method: "POST",
+        headers: { Authorization: "Bearer sk-sailor" },
+        body: form,
+      }),
+      ["images", "edits"],
+      { fetchImpl, resolveKey, upstreamToken: "t", guard },
+    );
+    expect(response.status).toBe(200);
+    await response.text();
+    await flush();
+    expect(settled).toHaveLength(1);
+    expect(settled[0]?.usage.model).toBe("unknown");
+  });
+
+  it("records the refusal a key can see, and nothing for an unknown credential", async () => {
+    const fetchImpl = vi.fn();
+    const { guard, refused } = fakeGuard({
+      admit: vi.fn(async () => ({
+        ok: false as const,
+        status: 402,
+        code: "insufficient_balance" as const,
+        message: "Insufficient balance. Top up to continue.",
+      })),
+    });
+    const denied = await proxyOpenAiCompatible(
+      chatRequest({ model: "gpt-5", messages: [] }),
+      ["chat", "completions"],
+      { fetchImpl: fetchImpl as unknown as typeof fetch, resolveKey, upstreamToken: "t", guard },
+    );
+    expect(denied.status).toBe(402);
+    expect(refused).toHaveLength(1);
+    expect(refused[0]).toMatchObject({
+      code: "insufficient_balance",
+      status: 402,
+      path: "chat/completions",
+      model: "gpt-5",
+      identity,
+    });
+    // The customer can quote the same id back at us.
+    expect(denied.headers.get("x-request-id")).toBe(refused[0]?.requestId);
+
+    // An unrecognised credential has no tenant to log against.
+    const anonymous = await proxyOpenAiCompatible(
+      chatRequest({ model: "gpt-5", messages: [] }),
+      ["chat", "completions"],
+      {
+        fetchImpl: fetchImpl as unknown as typeof fetch,
+        resolveKey: async () => null,
+        upstreamToken: "t",
+        guard,
+      },
+    );
+    expect(anonymous.status).toBe(401);
+    expect(refused).toHaveLength(1);
+  });
+
   it("refuses an unpriceable multipart upload when the balance is empty", async () => {
     // Without this a zero-balance key could call images/edits forever: the model
     // is a form field, so nothing can be priced or held before the upload.
@@ -389,6 +533,35 @@ describe("request body split", () => {
   });
 });
 
+describe("the multipart model field", () => {
+  const part = (name: string, value: string) =>
+    `--B\r\nContent-Disposition: form-data; name="${name}"\r\n\r\n${value}\r\n`;
+
+  it("reads the model out of a form-field prefix", () => {
+    expect(scanMultipartModel(`${part("model", "gpt-image-2")}--B--\r\n`)).toBe("gpt-image-2");
+  });
+
+  it("reads it past other scalar fields", () => {
+    const prefix = `${part("prompt", "a duck")}${part("model", "whisper-1")}--B\r\n`;
+    expect(scanMultipartModel(prefix)).toBe("whisper-1");
+  });
+
+  it("refuses a value the prefix cut in half rather than pricing a truncated id", () => {
+    expect(
+      scanMultipartModel(`--B\r\nContent-Disposition: form-data; name="model"\r\n\r\ngpt-ima`),
+    ).toBeNull();
+  });
+
+  it("never mistakes a file part for the model field", () => {
+    const file = `--B\r\nContent-Disposition: form-data; name="model"; filename="model.png"\r\nContent-Type: image/png\r\n\r\nPNGDATA\r\n`;
+    expect(scanMultipartModel(file)).toBeNull();
+  });
+
+  it("reports nothing when there is no model field at all", () => {
+    expect(scanMultipartModel(`${part("size", "1024x1024")}--B--\r\n`)).toBeNull();
+  });
+});
+
 describe("billability", () => {
   const base = parseUsage("{}", "application/json");
 
@@ -458,6 +631,34 @@ describe("usage parsing for the money path", () => {
       completionTokens: 9,
       finishReason: "end_turn",
     });
+  });
+
+  it("counts the images an image endpoint returned", () => {
+    const parsed = parseUsage(
+      JSON.stringify({ created: 1, data: [{ b64_json: "a" }, { url: "https://x/y.png" }] }),
+      "application/json",
+    );
+    expect(parsed.images).toBe(2);
+  });
+
+  it("does not read a models listing as two images", () => {
+    const parsed = parseUsage(
+      JSON.stringify({ object: "list", data: [{ id: "gpt-5" }, { id: "gpt-4o" }] }),
+      "application/json",
+    );
+    expect(parsed.images).toBe(0);
+  });
+
+  it("reads transcription seconds from duration and from usage alike", () => {
+    expect(
+      parseUsage(JSON.stringify({ text: "hi", duration: 8.25 }), "application/json").seconds,
+    ).toBe(8.25);
+    expect(
+      parseUsage(
+        JSON.stringify({ text: "hi", usage: { type: "duration", seconds: 30 } }),
+        "application/json",
+      ).seconds,
+    ).toBe(30);
   });
 
   it("flags an SSE error event", () => {

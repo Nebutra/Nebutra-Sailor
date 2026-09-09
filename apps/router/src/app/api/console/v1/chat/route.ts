@@ -1,20 +1,32 @@
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
 import { NextResponse } from "next/server";
+import { requireConsoleTenant } from "@/lib/console-tenant";
+
+export const dynamic = "force-dynamic";
 
 /**
  * Console trial chat.
  *
- * It forwards to the configured relay with the caller's own key and returns
- * what came back. There is no local simulation and no wallet debit here: the
- * charge is written by the /v1 edge, against the real ledger, for whichever key
- * made the call. When no relay is configured this route says so rather than
- * inventing a reply.
+ * ## `ROUTER_GATEWAY_URL` is gone
  *
- * `ROUTER_GATEWAY_URL` must point at a **metered** Router edge (this app's own
- * `/v1`), never straight at New-API. Pointed upstream it becomes a second way
- * to reach supply with no reservation, no ledger row and no debit.
+ * This route used to forward to whatever `ROUTER_GATEWAY_URL` named. Unset, it
+ * did nothing; pointed at New-API it was a second way to reach supply with no
+ * reservation, no ledger row and no debit — a guard-free egress whose only
+ * protection was a comment asking the operator not to. An escape hatch that
+ * costs money when someone gets it wrong is not a configuration option.
+ *
+ * The target is now this app's own metered `/v1` edge, derived from the
+ * incoming request's origin. There is one path to supply and it is the guarded
+ * one: key resolution, balance hold, priced ledger row, request log.
+ *
+ * The caller still supplies their own API key — that key is what the charge is
+ * attributed to. Making the playground use the session's key instead is the
+ * page rebuild's job (Batch B part 2); what is closed here is the bypass.
  */
 export async function POST(request: Request) {
+  const ctx = await requireConsoleTenant(request);
+  if ("error" in ctx) return ctx.error;
+
   const body = (await request.json().catch(() => ({}))) as {
     model?: string;
     prompt?: string;
@@ -22,20 +34,19 @@ export async function POST(request: Request) {
   };
   const model = body.model ?? DEFAULT_PUBLIC_MODEL;
   const prompt = body.prompt ?? "";
-  const gateway = process.env.ROUTER_GATEWAY_URL;
 
-  if (!gateway) {
+  if (!body.apiKey) {
     return NextResponse.json(
-      { error: "上游中转未配置，请设置 ROUTER_GATEWAY_URL。" },
-      { status: 501 },
+      { error: "需要一个 API Key 才能发起请求，请在 Keys 页面创建一个。" },
+      { status: 401 },
     );
   }
-  if (!body.apiKey) {
-    return NextResponse.json({ error: "需要一个 API Key 才能发起请求。" }, { status: 401 });
-  }
+
+  // Same origin, same deployment, same guard. Not configurable.
+  const edge = new URL("/v1/chat/completions", request.url);
 
   try {
-    const upstream = await fetch(`${gateway.replace(/\/$/, "")}/chat/completions`, {
+    const upstream = await fetch(edge, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${body.apiKey}`,
@@ -50,11 +61,14 @@ export async function POST(request: Request) {
     const data = (await upstream.json()) as {
       choices?: Array<{ message?: { content?: string } }>;
       usage?: { prompt_tokens?: number; completion_tokens?: number };
-      error?: { message?: string };
+      error?: { message?: string; code?: string };
     };
     if (!upstream.ok) {
       return NextResponse.json(
-        { error: data.error?.message ?? `upstream ${upstream.status}` },
+        {
+          error: data.error?.message ?? `upstream ${upstream.status}`,
+          ...(data.error?.code ? { code: data.error.code } : {}),
+        },
         { status: upstream.status },
       );
     }
@@ -62,6 +76,7 @@ export async function POST(request: Request) {
       content: data.choices?.[0]?.message?.content ?? "",
       model,
       usage: data.usage ?? null,
+      requestId: upstream.headers.get("x-request-id"),
     });
   } catch (err) {
     return NextResponse.json(

@@ -7489,7 +7489,15 @@ export const RequestLogScalarFieldEnum = {
   latencyMs: 'latencyMs',
   status: 'status',
   errorMessage: 'errorMessage',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  path: 'path',
+  httpStatus: 'httpStatus',
+  ttfbMs: 'ttfbMs',
+  cachedPromptTokens: 'cachedPromptTokens',
+  cacheWriteTokens: 'cacheWriteTokens',
+  supplyPath: 'supplyPath',
+  clientIp: 'clientIp',
+  expiresAt: 'expiresAt'
 } as const
 
 export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]

@@ -1,4 +1,10 @@
-import type { RouterKeySpend, RouterPriceRow, RouterSettleInput } from "@nebutra/repositories";
+import { logger } from "@nebutra/logger";
+import type {
+  RecordRequestLogInput,
+  RouterKeySpend,
+  RouterPriceRow,
+  RouterSettleInput,
+} from "@nebutra/repositories";
 import { describe, expect, it, vi } from "vitest";
 import type { RouterBilling } from "./billing-edge";
 import { createRouterGuard } from "./billing-edge";
@@ -27,6 +33,7 @@ function spend(over: Partial<RouterKeySpend> = {}): RouterKeySpend {
     keyId: "key_1",
     disabled: false,
     rateLimitRps: 10,
+    saveLogs: false,
     limitDaily: null,
     limitTotal: null,
     costDaily: 0,
@@ -67,6 +74,8 @@ function usage(over: Partial<ParsedUsage> = {}): ParsedUsage {
     totalTokens: 1500,
     cachedPromptTokens: 0,
     cacheWriteTokens: 0,
+    images: 0,
+    seconds: 0,
     errored: false,
     finishReason: "stop",
     ...over,
@@ -194,6 +203,8 @@ describe("router money guard — settle", () => {
       usage: usage(),
       status: 200,
       latencyMs: 42,
+      ttfbMs: null,
+      clientIp: null,
       supplyPath: "channel-3",
       billable: true,
     });
@@ -231,6 +242,8 @@ describe("router money guard — settle", () => {
       usage: usage({ promptTokens: 2000, cachedPromptTokens: 1000, completionTokens: 0 }),
       status: 200,
       latencyMs: 5,
+      ttfbMs: null,
+      clientIp: null,
       supplyPath: null,
       billable: true,
     });
@@ -254,6 +267,8 @@ describe("router money guard — settle", () => {
       usage: usage({ completionTokens: 0, finishReason: null, errored: true }),
       status: 200,
       latencyMs: 5,
+      ttfbMs: null,
+      clientIp: null,
       supplyPath: null,
       billable: false,
     });
@@ -280,6 +295,8 @@ describe("router money guard — settle", () => {
       usage: usage({ completionTokens: 0, finishReason: null }),
       status: 502,
       latencyMs: 5,
+      ttfbMs: null,
+      clientIp: null,
       supplyPath: null,
       billable: false,
     });
@@ -301,6 +318,8 @@ describe("router money guard — settle", () => {
       usage: usage({ model: "claude-sonnet-4-5" }),
       status: 200,
       latencyMs: 5,
+      ttfbMs: null,
+      clientIp: null,
       supplyPath: null,
       billable: true,
     });
@@ -319,5 +338,229 @@ describe("router money guard — settle", () => {
       requestId: "req_6",
       amount: 0.011,
     });
+  });
+});
+
+describe("router money guard — the request log", () => {
+  const settleInput = (over: Partial<RouterSettleInput> = {}) =>
+    ({
+      requestId: "req_log",
+      identity,
+      path: "chat/completions",
+      admission: { reserved: 0.02, currency: "USD", candidates: ["gpt-5"] },
+      usage: usage({ cachedPromptTokens: 30, cacheWriteTokens: 5 }),
+      status: 200,
+      latencyMs: 1_400,
+      ttfbMs: 220,
+      supplyPath: "channel-7",
+      clientIp: "203.0.113.9",
+      billable: true,
+      ...over,
+    }) as unknown as Parameters<ReturnType<typeof createRouterGuard>["settle"]>[0];
+
+  function logger() {
+    return { record: vi.fn(async (_input: RecordRequestLogInput) => true) };
+  }
+
+  it("writes one log line alongside the ledger row", async () => {
+    const log = logger();
+    await createRouterGuard(billing(), log).settle(settleInput());
+    expect(log.record).toHaveBeenCalledTimes(1);
+    expect(log.record.mock.calls[0]?.[0]).toMatchObject({
+      requestId: "req_log",
+      tenantId: "tenant_1",
+      apiKeyId: "key_1",
+      model: "gpt-5",
+      path: "chat/completions",
+      httpStatus: 200,
+      status: "success",
+      ttfbMs: 220,
+      cachedPromptTokens: 30,
+      cacheWriteTokens: 5,
+      supplyPath: "channel-7",
+      clientIp: "203.0.113.9",
+      saveLogs: false,
+    });
+  });
+
+  it("passes the key's own saveLogs switch through", async () => {
+    const log = logger();
+    const db = billing({ getKeySpend: vi.fn(async () => spend({ saveLogs: true })) });
+    await createRouterGuard(db, log).settle(settleInput());
+    expect(log.record.mock.calls[0]?.[0]).toMatchObject({ saveLogs: true });
+  });
+
+  it("records why an unbillable request produced nothing", async () => {
+    const log = logger();
+    await createRouterGuard(billing(), log).settle(
+      settleInput({ billable: false, status: 502 } as Partial<RouterSettleInput>),
+    );
+    expect(log.record.mock.calls[0]?.[0]).toMatchObject({
+      status: "error",
+      httpStatus: 502,
+      errorMessage: "upstream_status_502",
+      cost: 0,
+    });
+  });
+
+  it("still settles when the log cannot be written", async () => {
+    const db = billing();
+    const log = { record: vi.fn(async (_input: RecordRequestLogInput) => false) };
+    await expect(createRouterGuard(db, log).settle(settleInput())).resolves.toBeUndefined();
+    expect(db.settle).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("router money guard — post-paid multipart settlement", () => {
+  const imageRow = (): RouterPriceRow =>
+    price({
+      modelName: "gpt-image-2",
+      unit: "PER_IMAGE",
+      inputPerMTok: null,
+      outputPerMTok: null,
+      unitPrice: 0.04,
+    });
+
+  const postPaid = (over: Record<string, unknown> = {}) =>
+    ({
+      requestId: "req_img",
+      identity,
+      path: "images/edits",
+      // No hold was taken: the model was a form field, so there was nothing to
+      // price before the upload moved.
+      admission: null,
+      usage: usage({
+        model: "gpt-image-2",
+        promptTokens: 0,
+        completionTokens: 0,
+        totalTokens: 0,
+        images: 2,
+      }),
+      status: 200,
+      latencyMs: 900,
+      ttfbMs: 400,
+      supplyPath: null,
+      clientIp: null,
+      billable: true,
+      ...over,
+    }) as unknown as Parameters<ReturnType<typeof createRouterGuard>["settle"]>[0];
+
+  it("charges the images the upstream returned, against no reservation", async () => {
+    const settle = vi.fn(async (_input: RouterSettleInput) => ({
+      settled: true as const,
+      charged: 0.08,
+      refunded: 0,
+    }));
+    const db = billing({ settle, findPrice: vi.fn(async () => imageRow()) });
+    await createRouterGuard(db, { record: vi.fn(async () => true) }).settle(postPaid());
+    const written = settle.mock.calls[0]?.[0] as RouterSettleInput;
+    expect(written).toMatchObject({
+      model: "gpt-image-2",
+      unit: "image",
+      quantity: 2,
+      totalCost: 0.08,
+      // Nothing was held, so nothing comes back — settle is a plain debit.
+      reserved: 0,
+    });
+    expect(written.metadata).toMatchObject({ postPaid: true });
+  });
+
+  it("prices an audio transcription by its seconds", async () => {
+    const settle = vi.fn(async (_input: RouterSettleInput) => ({
+      settled: true as const,
+      charged: 0.075,
+      refunded: 0,
+    }));
+    const db = billing({
+      settle,
+      findPrice: vi.fn(async () =>
+        price({
+          modelName: "whisper-1",
+          unit: "PER_SECOND",
+          inputPerMTok: null,
+          outputPerMTok: null,
+          unitPrice: 0.006,
+        }),
+      ),
+    });
+    await createRouterGuard(db, { record: vi.fn(async () => true) }).settle(
+      postPaid({
+        path: "audio/transcriptions",
+        usage: usage({
+          model: "whisper-1",
+          promptTokens: 0,
+          completionTokens: 0,
+          totalTokens: 0,
+          seconds: 12.5,
+        }),
+      }),
+    );
+    expect(settle.mock.calls[0]?.[0]).toMatchObject({
+      unit: "second",
+      quantity: 12.5,
+      totalCost: 0.075,
+    });
+  });
+
+  it("charges nothing, loudly, when the upload never revealed its model", async () => {
+    const warn = vi.spyOn(logger, "warn").mockImplementation(() => {});
+    const settle = vi.fn(async (_input: RouterSettleInput) => ({
+      settled: true as const,
+      charged: 0,
+      refunded: 0,
+    }));
+    const log = { record: vi.fn(async () => true) };
+    await createRouterGuard(billing({ settle }), log).settle(
+      postPaid({ usage: usage({ model: "unknown", images: 1 }) }),
+    );
+    const written = settle.mock.calls[0]?.[0] as RouterSettleInput;
+    expect(written).toMatchObject({ model: "unknown", totalCost: 0, quantity: 0 });
+    expect(written.metadata).toMatchObject({ unpriced: "model_unreadable" });
+    expect(warn).toHaveBeenCalledWith(
+      "[router] post-paid request settled with no readable model",
+      expect.objectContaining({ requestId: "req_img", path: "images/edits" }),
+    );
+    // The customer still sees the request happened.
+    expect(log.record).toHaveBeenCalledTimes(1);
+    warn.mockRestore();
+  });
+});
+
+describe("router money guard — refusals are visible", () => {
+  it("writes a zero-cost log row naming the refusal code", async () => {
+    const log = { record: vi.fn(async (_input: RecordRequestLogInput) => true) };
+    await createRouterGuard(billing(), log).noteRefusal({
+      requestId: "req_denied",
+      identity,
+      path: "chat/completions",
+      status: 402,
+      code: "insufficient_balance",
+      model: "gpt-5",
+    });
+    expect(log.record.mock.calls[0]?.[0]).toMatchObject({
+      requestId: "req_denied",
+      tenantId: "tenant_1",
+      apiKeyId: "key_1",
+      model: "gpt-5",
+      path: "chat/completions",
+      httpStatus: 402,
+      status: "refused",
+      cost: 0,
+      errorMessage: "insufficient_balance",
+    });
+  });
+
+  it("survives a log write that fails", async () => {
+    const log = { record: vi.fn(async () => Promise.reject(new Error("down"))) };
+    await expect(
+      createRouterGuard(billing(), log as never).noteRefusal({
+        requestId: "req_denied",
+        identity,
+        path: "chat/completions",
+        status: 429,
+        code: "rate_limit_exceeded",
+        model: null,
+      }),
+    ).resolves.toBeUndefined();
   });
 });

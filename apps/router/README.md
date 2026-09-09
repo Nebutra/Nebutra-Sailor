@@ -41,6 +41,26 @@ body, so a JSON body is buffered (4 MB ceiling); a multipart upload and any
 JSON body over the ceiling stream through untouched and simply do not get
 `models[]`.
 
+### Multipart uploads are post-paid
+
+`images/edits`, `images/variations` and the two `audio` paths carry their model
+in a form field, so nothing can be priced before the upload moves and no hold
+is taken. Two things make them paid rather than free:
+
+1. **Admission needs a positive balance** (`admitUnpriced`), so a zero-balance
+   key cannot call them at all.
+2. **The model is read off the stream as it goes by.** The first 64 KB of the
+   upload is scanned for a `Content-Disposition … name="model"` part while the
+   bytes are already on their way upstream — the file itself is never buffered.
+   The response is then priced against that model and settled as a plain debit:
+   one ledger row, no hold to return.
+
+Image and audio responses carry no token counts, so the billable quantity is
+whatever the upstream actually reported — images returned in `data[]` for a
+`PER_IMAGE` model, `usage.seconds` or a `verbose_json` `duration` for
+`PER_SECOND` / `PER_MINUTE`. A model that is not inside the scanned prefix
+settles at zero and logs a warning: the gap is visible, never silent.
+
 ### Console API — not on the public surface
 
 The console lives under `/api/console/v1/{wallet,wallet/topup,keys,chat}` and
@@ -67,6 +87,11 @@ without reading prose:
 | 503 | `router_unconfigured` | no supply configured |
 
 Every `/v1` response carries `X-RateLimit-Limit` / `-Remaining` / `-Reset`.
+
+A refusal that got as far as identifying the key also writes a zero-cost
+`ai_request_logs` row (`status = "refused"`, `errorMessage` = the code above),
+so a customer can see in their own activity why they were turned away. An
+unrecognised credential has no tenant to log against and writes nothing.
 
 ### Key store
 
@@ -111,10 +136,10 @@ Do not hand-edit hundreds of models in the app.
 
 ## Admin journey
 
-1. `/wallet` mock top-up  
+1. `/wallet` top-up  
 2. `/keys` create `sk-sailor-*`  
 3. `/docs` baseURL snippet  
-4. `/use` trial chat (or `ROUTER_GATEWAY_URL` forward)
+4. `/use` trial chat — always through this app's own metered `/v1` edge
 
 Supply engines stay in `infra/nebutra-router`; this app is the product shell.
 

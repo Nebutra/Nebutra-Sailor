@@ -25,6 +25,7 @@
  * from the published tarball.
  */
 import type { PGlite } from "@electric-sql/pglite";
+import type { PrismaClient } from "./client";
 
 export interface SqlClient {
   kind: string;
@@ -125,4 +126,83 @@ export function availableBackends(schemaPrefix?: string): Backend[] {
     });
   }
   return backends;
+}
+
+/**
+ * A **real Prisma client** over an in-process database.
+ *
+ * The SQL harness above proves a guarantee that lives in SQL. It cannot prove
+ * that Prisma emits that SQL — a repository test written against a mocked
+ * client asserts the shape the author believed in, which is exactly the shape
+ * that was wrong. So this runs the generated client, its query compiler and
+ * the `@prisma/adapter-pg` driver adapter, unchanged, against PGlite served
+ * over the Postgres wire protocol on a loopback port. No service to start, no
+ * container, no `describe.skip` when a developer has no database.
+ *
+ * Create only the tables the behaviour under test needs, as SQL. Applying the
+ * whole schema would make every repository test a schema test.
+ *
+ * ```ts
+ * const { prisma, close } = await createPglitePrismaClient();
+ * try {
+ *   await prisma.$executeRawUnsafe(CREDIT_BALANCES_DDL);
+ *   await new RouterBillingRepository(prisma).reserve({ … });
+ * } finally {
+ *   await close();
+ * }
+ * ```
+ */
+export interface PrismaTestDatabase {
+  /** The package's own `PrismaClient` type — because it is one. */
+  prisma: PrismaClient;
+  connectionString: string;
+  close(): Promise<void>;
+}
+
+/** Ask the OS for a port, then hand it to PGlite — no fixed port to collide on. */
+async function freePort(): Promise<number> {
+  const { createServer } = await import("node:net");
+  return new Promise<number>((resolve, reject) => {
+    const server = createServer();
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", () => {
+      const address = server.address();
+      const port = typeof address === "object" && address ? address.port : 0;
+      server.close(() => (port ? resolve(port) : reject(new Error("no free port"))));
+    });
+  });
+}
+
+export async function createPglitePrismaClient(): Promise<PrismaTestDatabase> {
+  const [
+    { PGlite: PGliteCtor },
+    { PGLiteSocketServer },
+    { PrismaPg },
+    { PrismaClient: PrismaCtor },
+  ] = await Promise.all([
+    import("@electric-sql/pglite"),
+    import("@electric-sql/pglite-socket"),
+    import("@prisma/adapter-pg"),
+    import("#prisma-client"),
+  ]);
+
+  const db = new PGliteCtor();
+  const port = await freePort();
+  const server = new PGLiteSocketServer({ db, port, host: "127.0.0.1" });
+  await server.start();
+
+  // PGlite serves a single database; the credentials are not checked.
+  const connectionString = `postgresql://postgres:postgres@127.0.0.1:${port}/template1`;
+  const adapter = new PrismaPg({ connectionString });
+  const prisma = new PrismaCtor({ adapter }) as unknown as PrismaClient;
+
+  return {
+    prisma,
+    connectionString,
+    async close() {
+      await prisma.$disconnect().catch(() => undefined);
+      await server.stop().catch(() => undefined);
+      await db.close().catch(() => undefined);
+    },
+  };
 }
