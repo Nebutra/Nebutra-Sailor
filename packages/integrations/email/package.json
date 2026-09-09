@@ -31,7 +31,7 @@
     "resend": "^4.0.1"
   },
   "peerDependencies": {
-    "nodemailer": "^9.0.1"
+    "nodemailer": "^9.1.0"
   },
   "peerDependenciesMeta": {
     "nodemailer": {

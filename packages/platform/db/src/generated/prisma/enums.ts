@@ -282,6 +282,21 @@ export const AIProvider = {
 export type AIProvider = (typeof AIProvider)[keyof typeof AIProvider]
 
 
+export const PriceUnit = {
+  PER_1M_TOKENS: 'PER_1M_TOKENS',
+  PER_CALL: 'PER_CALL',
+  PER_SECOND: 'PER_SECOND',
+  PER_IMAGE: 'PER_IMAGE',
+  PER_1M_CHARS: 'PER_1M_CHARS',
+  PER_MINUTE: 'PER_MINUTE',
+  PER_PAGE: 'PER_PAGE',
+  FREE: 'FREE',
+  PASS_THROUGH: 'PASS_THROUGH'
+} as const
+
+export type PriceUnit = (typeof PriceUnit)[keyof typeof PriceUnit]
+
+
 export const SubscriptionStatus = {
   ACTIVE: 'ACTIVE',
   PAST_DUE: 'PAST_DUE',

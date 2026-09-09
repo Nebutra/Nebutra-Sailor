@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Áttekintés",
+    "usage": "Használat",
     "keys": "API-kulcsok",
     "wallet": "Tárca",
     "docs": "Dokumentáció",

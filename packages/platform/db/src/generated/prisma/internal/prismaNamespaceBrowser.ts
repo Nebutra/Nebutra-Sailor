@@ -96,6 +96,7 @@ export const ModelName = {
   UsageLedgerEntry: 'UsageLedgerEntry',
   CreditBalance: 'CreditBalance',
   CreditTransaction: 'CreditTransaction',
+  RouterReservation: 'RouterReservation',
   StripeCustomer: 'StripeCustomer',
   WebhookEvent: 'WebhookEvent',
   AuditLog: 'AuditLog',
@@ -220,7 +221,14 @@ export const APIKeyScalarFieldEnum = {
   updatedAt: 'updatedAt',
   scopes: 'scopes',
   rateLimitRps: 'rateLimitRps',
-  expiresAt: 'expiresAt'
+  expiresAt: 'expiresAt',
+  disabledAt: 'disabledAt',
+  saveLogs: 'saveLogs',
+  limitTotal: 'limitTotal',
+  limitDaily: 'limitDaily',
+  costTotal: 'costTotal',
+  costDaily: 'costDaily',
+  costDailyResetAt: 'costDailyResetAt'
 } as const
 
 export type APIKeyScalarFieldEnum = (typeof APIKeyScalarFieldEnum)[keyof typeof APIKeyScalarFieldEnum]
@@ -611,7 +619,13 @@ export const ModelConfigScalarFieldEnum = {
   currency: 'currency',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  unit: 'unit',
+  unitPrice: 'unitPrice',
+  cacheReadPerMillion: 'cacheReadPerMillion',
+  cacheWritePerMillion: 'cacheWritePerMillion',
+  contextLength: 'contextLength',
+  published: 'published'
 } as const
 
 export type ModelConfigScalarFieldEnum = (typeof ModelConfigScalarFieldEnum)[keyof typeof ModelConfigScalarFieldEnum]
@@ -630,7 +644,15 @@ export const RequestLogScalarFieldEnum = {
   latencyMs: 'latencyMs',
   status: 'status',
   errorMessage: 'errorMessage',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  path: 'path',
+  httpStatus: 'httpStatus',
+  ttfbMs: 'ttfbMs',
+  cachedPromptTokens: 'cachedPromptTokens',
+  cacheWriteTokens: 'cacheWriteTokens',
+  supplyPath: 'supplyPath',
+  clientIp: 'clientIp',
+  expiresAt: 'expiresAt'
 } as const
 
 export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
@@ -921,6 +943,18 @@ export const CreditTransactionScalarFieldEnum = {
 } as const
 
 export type CreditTransactionScalarFieldEnum = (typeof CreditTransactionScalarFieldEnum)[keyof typeof CreditTransactionScalarFieldEnum]
+
+
+export const RouterReservationScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  apiKeyId: 'apiKeyId',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type RouterReservationScalarFieldEnum = (typeof RouterReservationScalarFieldEnum)[keyof typeof RouterReservationScalarFieldEnum]
 
 
 export const StripeCustomerScalarFieldEnum = {

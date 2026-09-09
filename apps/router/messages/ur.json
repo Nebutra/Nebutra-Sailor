@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "جائزہ",
+    "usage": "استعمال",
     "keys": "API کیز",
     "wallet": "والیٹ",
     "docs": "دستاویزات",

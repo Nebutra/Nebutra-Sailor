@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Ringkasan",
+    "usage": "Penggunaan",
     "keys": "Kunci API",
     "wallet": "Dompet",
     "docs": "Dokumentasi",

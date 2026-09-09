@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "Panoramica",
+    "usage": "Utilizzo",
     "keys": "Chiavi API",
     "wallet": "Portafoglio",
     "docs": "Documentazione",

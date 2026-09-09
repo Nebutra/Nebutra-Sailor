@@ -28,10 +28,18 @@ export type AggregateAPIKey = {
 
 export type APIKeyAvgAggregateOutputType = {
   rateLimitRps: number | null
+  limitTotal: runtime.Decimal | null
+  limitDaily: runtime.Decimal | null
+  costTotal: runtime.Decimal | null
+  costDaily: runtime.Decimal | null
 }
 
 export type APIKeySumAggregateOutputType = {
   rateLimitRps: number | null
+  limitTotal: runtime.Decimal | null
+  limitDaily: runtime.Decimal | null
+  costTotal: runtime.Decimal | null
+  costDaily: runtime.Decimal | null
 }
 
 export type APIKeyMinAggregateOutputType = {
@@ -47,6 +55,13 @@ export type APIKeyMinAggregateOutputType = {
   updatedAt: Date | null
   rateLimitRps: number | null
   expiresAt: Date | null
+  disabledAt: Date | null
+  saveLogs: boolean | null
+  limitTotal: runtime.Decimal | null
+  limitDaily: runtime.Decimal | null
+  costTotal: runtime.Decimal | null
+  costDaily: runtime.Decimal | null
+  costDailyResetAt: Date | null
 }
 
 export type APIKeyMaxAggregateOutputType = {
@@ -62,6 +77,13 @@ export type APIKeyMaxAggregateOutputType = {
   updatedAt: Date | null
   rateLimitRps: number | null
   expiresAt: Date | null
+  disabledAt: Date | null
+  saveLogs: boolean | null
+  limitTotal: runtime.Decimal | null
+  limitDaily: runtime.Decimal | null
+  costTotal: runtime.Decimal | null
+  costDaily: runtime.Decimal | null
+  costDailyResetAt: Date | null
 }
 
 export type APIKeyCountAggregateOutputType = {
@@ -78,16 +100,31 @@ export type APIKeyCountAggregateOutputType = {
   scopes: number
   rateLimitRps: number
   expiresAt: number
+  disabledAt: number
+  saveLogs: number
+  limitTotal: number
+  limitDaily: number
+  costTotal: number
+  costDaily: number
+  costDailyResetAt: number
   _all: number
 }
 
 
 export type APIKeyAvgAggregateInputType = {
   rateLimitRps?: true
+  limitTotal?: true
+  limitDaily?: true
+  costTotal?: true
+  costDaily?: true
 }
 
 export type APIKeySumAggregateInputType = {
   rateLimitRps?: true
+  limitTotal?: true
+  limitDaily?: true
+  costTotal?: true
+  costDaily?: true
 }
 
 export type APIKeyMinAggregateInputType = {
@@ -103,6 +140,13 @@ export type APIKeyMinAggregateInputType = {
   updatedAt?: true
   rateLimitRps?: true
   expiresAt?: true
+  disabledAt?: true
+  saveLogs?: true
+  limitTotal?: true
+  limitDaily?: true
+  costTotal?: true
+  costDaily?: true
+  costDailyResetAt?: true
 }
 
 export type APIKeyMaxAggregateInputType = {
@@ -118,6 +162,13 @@ export type APIKeyMaxAggregateInputType = {
   updatedAt?: true
   rateLimitRps?: true
   expiresAt?: true
+  disabledAt?: true
+  saveLogs?: true
+  limitTotal?: true
+  limitDaily?: true
+  costTotal?: true
+  costDaily?: true
+  costDailyResetAt?: true
 }
 
 export type APIKeyCountAggregateInputType = {
@@ -134,6 +185,13 @@ export type APIKeyCountAggregateInputType = {
   scopes?: true
   rateLimitRps?: true
   expiresAt?: true
+  disabledAt?: true
+  saveLogs?: true
+  limitTotal?: true
+  limitDaily?: true
+  costTotal?: true
+  costDaily?: true
+  costDailyResetAt?: true
   _all?: true
 }
 
@@ -237,6 +295,13 @@ export type APIKeyGroupByOutputType = {
   scopes: string[]
   rateLimitRps: number
   expiresAt: Date | null
+  disabledAt: Date | null
+  saveLogs: boolean
+  limitTotal: runtime.Decimal | null
+  limitDaily: runtime.Decimal | null
+  costTotal: runtime.Decimal
+  costDaily: runtime.Decimal
+  costDailyResetAt: Date | null
   _count: APIKeyCountAggregateOutputType | null
   _avg: APIKeyAvgAggregateOutputType | null
   _sum: APIKeySumAggregateOutputType | null
@@ -276,6 +341,13 @@ export type APIKeyWhereInput = {
   scopes?: Prisma.StringNullableListFilter<"APIKey">
   rateLimitRps?: Prisma.IntFilter<"APIKey"> | number
   expiresAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
+  disabledAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
+  saveLogs?: Prisma.BoolFilter<"APIKey"> | boolean
+  limitTotal?: Prisma.DecimalNullableFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.DecimalNullableFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
@@ -293,6 +365,13 @@ export type APIKeyOrderByWithRelationInput = {
   scopes?: Prisma.SortOrder
   rateLimitRps?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  disabledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  saveLogs?: Prisma.SortOrder
+  limitTotal?: Prisma.SortOrderInput | Prisma.SortOrder
+  limitDaily?: Prisma.SortOrderInput | Prisma.SortOrder
+  costTotal?: Prisma.SortOrder
+  costDaily?: Prisma.SortOrder
+  costDailyResetAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
@@ -313,6 +392,13 @@ export type APIKeyWhereUniqueInput = Prisma.AtLeast<{
   scopes?: Prisma.StringNullableListFilter<"APIKey">
   rateLimitRps?: Prisma.IntFilter<"APIKey"> | number
   expiresAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
+  disabledAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
+  saveLogs?: Prisma.BoolFilter<"APIKey"> | boolean
+  limitTotal?: Prisma.DecimalNullableFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.DecimalNullableFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "keyHash">
 
@@ -330,6 +416,13 @@ export type APIKeyOrderByWithAggregationInput = {
   scopes?: Prisma.SortOrder
   rateLimitRps?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  disabledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  saveLogs?: Prisma.SortOrder
+  limitTotal?: Prisma.SortOrderInput | Prisma.SortOrder
+  limitDaily?: Prisma.SortOrderInput | Prisma.SortOrder
+  costTotal?: Prisma.SortOrder
+  costDaily?: Prisma.SortOrder
+  costDailyResetAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.APIKeyCountOrderByAggregateInput
   _avg?: Prisma.APIKeyAvgOrderByAggregateInput
   _max?: Prisma.APIKeyMaxOrderByAggregateInput
@@ -354,6 +447,13 @@ export type APIKeyScalarWhereWithAggregatesInput = {
   scopes?: Prisma.StringNullableListFilter<"APIKey">
   rateLimitRps?: Prisma.IntWithAggregatesFilter<"APIKey"> | number
   expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"APIKey"> | Date | string | null
+  disabledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"APIKey"> | Date | string | null
+  saveLogs?: Prisma.BoolWithAggregatesFilter<"APIKey"> | boolean
+  limitTotal?: Prisma.DecimalNullableWithAggregatesFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.DecimalNullableWithAggregatesFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalWithAggregatesFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalWithAggregatesFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.DateTimeNullableWithAggregatesFilter<"APIKey"> | Date | string | null
 }
 
 export type APIKeyCreateInput = {
@@ -369,6 +469,13 @@ export type APIKeyCreateInput = {
   scopes?: Prisma.APIKeyCreatescopesInput | string[]
   rateLimitRps?: number
   expiresAt?: Date | string | null
+  disabledAt?: Date | string | null
+  saveLogs?: boolean
+  limitTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Date | string | null
   tenant: Prisma.TenantCreateNestedOneWithoutApiKeysInput
 }
 
@@ -386,6 +493,13 @@ export type APIKeyUncheckedCreateInput = {
   scopes?: Prisma.APIKeyCreatescopesInput | string[]
   rateLimitRps?: number
   expiresAt?: Date | string | null
+  disabledAt?: Date | string | null
+  saveLogs?: boolean
+  limitTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Date | string | null
 }
 
 export type APIKeyUpdateInput = {
@@ -401,6 +515,13 @@ export type APIKeyUpdateInput = {
   scopes?: Prisma.APIKeyUpdatescopesInput | string[]
   rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  saveLogs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  limitTotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.TenantUpdateOneRequiredWithoutApiKeysNestedInput
 }
 
@@ -418,6 +539,13 @@ export type APIKeyUncheckedUpdateInput = {
   scopes?: Prisma.APIKeyUpdatescopesInput | string[]
   rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  saveLogs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  limitTotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyCreateManyInput = {
@@ -434,6 +562,13 @@ export type APIKeyCreateManyInput = {
   scopes?: Prisma.APIKeyCreatescopesInput | string[]
   rateLimitRps?: number
   expiresAt?: Date | string | null
+  disabledAt?: Date | string | null
+  saveLogs?: boolean
+  limitTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Date | string | null
 }
 
 export type APIKeyUpdateManyMutationInput = {
@@ -449,6 +584,13 @@ export type APIKeyUpdateManyMutationInput = {
   scopes?: Prisma.APIKeyUpdatescopesInput | string[]
   rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  saveLogs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  limitTotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyUncheckedUpdateManyInput = {
@@ -465,6 +607,13 @@ export type APIKeyUncheckedUpdateManyInput = {
   scopes?: Prisma.APIKeyUpdatescopesInput | string[]
   rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  saveLogs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  limitTotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyListRelationFilter = {
@@ -499,10 +648,21 @@ export type APIKeyCountOrderByAggregateInput = {
   scopes?: Prisma.SortOrder
   rateLimitRps?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
+  disabledAt?: Prisma.SortOrder
+  saveLogs?: Prisma.SortOrder
+  limitTotal?: Prisma.SortOrder
+  limitDaily?: Prisma.SortOrder
+  costTotal?: Prisma.SortOrder
+  costDaily?: Prisma.SortOrder
+  costDailyResetAt?: Prisma.SortOrder
 }
 
 export type APIKeyAvgOrderByAggregateInput = {
   rateLimitRps?: Prisma.SortOrder
+  limitTotal?: Prisma.SortOrder
+  limitDaily?: Prisma.SortOrder
+  costTotal?: Prisma.SortOrder
+  costDaily?: Prisma.SortOrder
 }
 
 export type APIKeyMaxOrderByAggregateInput = {
@@ -518,6 +678,13 @@ export type APIKeyMaxOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   rateLimitRps?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
+  disabledAt?: Prisma.SortOrder
+  saveLogs?: Prisma.SortOrder
+  limitTotal?: Prisma.SortOrder
+  limitDaily?: Prisma.SortOrder
+  costTotal?: Prisma.SortOrder
+  costDaily?: Prisma.SortOrder
+  costDailyResetAt?: Prisma.SortOrder
 }
 
 export type APIKeyMinOrderByAggregateInput = {
@@ -533,10 +700,21 @@ export type APIKeyMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   rateLimitRps?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
+  disabledAt?: Prisma.SortOrder
+  saveLogs?: Prisma.SortOrder
+  limitTotal?: Prisma.SortOrder
+  limitDaily?: Prisma.SortOrder
+  costTotal?: Prisma.SortOrder
+  costDaily?: Prisma.SortOrder
+  costDailyResetAt?: Prisma.SortOrder
 }
 
 export type APIKeySumOrderByAggregateInput = {
   rateLimitRps?: Prisma.SortOrder
+  limitTotal?: Prisma.SortOrder
+  limitDaily?: Prisma.SortOrder
+  costTotal?: Prisma.SortOrder
+  costDaily?: Prisma.SortOrder
 }
 
 export type APIKeyCreateNestedManyWithoutTenantInput = {
@@ -598,6 +776,26 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type APIKeyCreateWithoutTenantInput = {
   id?: string
   name: string
@@ -611,6 +809,13 @@ export type APIKeyCreateWithoutTenantInput = {
   scopes?: Prisma.APIKeyCreatescopesInput | string[]
   rateLimitRps?: number
   expiresAt?: Date | string | null
+  disabledAt?: Date | string | null
+  saveLogs?: boolean
+  limitTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Date | string | null
 }
 
 export type APIKeyUncheckedCreateWithoutTenantInput = {
@@ -626,6 +831,13 @@ export type APIKeyUncheckedCreateWithoutTenantInput = {
   scopes?: Prisma.APIKeyCreatescopesInput | string[]
   rateLimitRps?: number
   expiresAt?: Date | string | null
+  disabledAt?: Date | string | null
+  saveLogs?: boolean
+  limitTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Date | string | null
 }
 
 export type APIKeyCreateOrConnectWithoutTenantInput = {
@@ -671,6 +883,13 @@ export type APIKeyScalarWhereInput = {
   scopes?: Prisma.StringNullableListFilter<"APIKey">
   rateLimitRps?: Prisma.IntFilter<"APIKey"> | number
   expiresAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
+  disabledAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
+  saveLogs?: Prisma.BoolFilter<"APIKey"> | boolean
+  limitTotal?: Prisma.DecimalNullableFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.DecimalNullableFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFilter<"APIKey"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.DateTimeNullableFilter<"APIKey"> | Date | string | null
 }
 
 export type APIKeyCreateManyTenantInput = {
@@ -686,6 +905,13 @@ export type APIKeyCreateManyTenantInput = {
   scopes?: Prisma.APIKeyCreatescopesInput | string[]
   rateLimitRps?: number
   expiresAt?: Date | string | null
+  disabledAt?: Date | string | null
+  saveLogs?: boolean
+  limitTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Date | string | null
 }
 
 export type APIKeyUpdateWithoutTenantInput = {
@@ -701,6 +927,13 @@ export type APIKeyUpdateWithoutTenantInput = {
   scopes?: Prisma.APIKeyUpdatescopesInput | string[]
   rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  saveLogs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  limitTotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyUncheckedUpdateWithoutTenantInput = {
@@ -716,6 +949,13 @@ export type APIKeyUncheckedUpdateWithoutTenantInput = {
   scopes?: Prisma.APIKeyUpdatescopesInput | string[]
   rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  saveLogs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  limitTotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type APIKeyUncheckedUpdateManyWithoutTenantInput = {
@@ -731,6 +971,13 @@ export type APIKeyUncheckedUpdateManyWithoutTenantInput = {
   scopes?: Prisma.APIKeyUpdatescopesInput | string[]
   rateLimitRps?: Prisma.IntFieldUpdateOperationsInput | number
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  saveLogs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  limitTotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  limitDaily?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDaily?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  costDailyResetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -749,6 +996,13 @@ export type APIKeySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scopes?: boolean
   rateLimitRps?: boolean
   expiresAt?: boolean
+  disabledAt?: boolean
+  saveLogs?: boolean
+  limitTotal?: boolean
+  limitDaily?: boolean
+  costTotal?: boolean
+  costDaily?: boolean
+  costDailyResetAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aPIKey"]>
 
@@ -766,6 +1020,13 @@ export type APIKeySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   scopes?: boolean
   rateLimitRps?: boolean
   expiresAt?: boolean
+  disabledAt?: boolean
+  saveLogs?: boolean
+  limitTotal?: boolean
+  limitDaily?: boolean
+  costTotal?: boolean
+  costDaily?: boolean
+  costDailyResetAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aPIKey"]>
 
@@ -783,6 +1044,13 @@ export type APIKeySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   scopes?: boolean
   rateLimitRps?: boolean
   expiresAt?: boolean
+  disabledAt?: boolean
+  saveLogs?: boolean
+  limitTotal?: boolean
+  limitDaily?: boolean
+  costTotal?: boolean
+  costDaily?: boolean
+  costDailyResetAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aPIKey"]>
 
@@ -800,9 +1068,16 @@ export type APIKeySelectScalar = {
   scopes?: boolean
   rateLimitRps?: boolean
   expiresAt?: boolean
+  disabledAt?: boolean
+  saveLogs?: boolean
+  limitTotal?: boolean
+  limitDaily?: boolean
+  costTotal?: boolean
+  costDaily?: boolean
+  costDailyResetAt?: boolean
 }
 
-export type APIKeyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "keyHash" | "keyPrefix" | "tenantId" | "createdById" | "lastUsedAt" | "revokedAt" | "createdAt" | "updatedAt" | "scopes" | "rateLimitRps" | "expiresAt", ExtArgs["result"]["aPIKey"]>
+export type APIKeyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "keyHash" | "keyPrefix" | "tenantId" | "createdById" | "lastUsedAt" | "revokedAt" | "createdAt" | "updatedAt" | "scopes" | "rateLimitRps" | "expiresAt" | "disabledAt" | "saveLogs" | "limitTotal" | "limitDaily" | "costTotal" | "costDaily" | "costDailyResetAt", ExtArgs["result"]["aPIKey"]>
 export type APIKeyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
@@ -832,6 +1107,13 @@ export type $APIKeyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     scopes: string[]
     rateLimitRps: number
     expiresAt: Date | null
+    disabledAt: Date | null
+    saveLogs: boolean
+    limitTotal: runtime.Decimal | null
+    limitDaily: runtime.Decimal | null
+    costTotal: runtime.Decimal
+    costDaily: runtime.Decimal
+    costDailyResetAt: Date | null
   }, ExtArgs["result"]["aPIKey"]>
   composites: {}
 }
@@ -1269,6 +1551,13 @@ export interface APIKeyFieldRefs {
   readonly scopes: Prisma.FieldRef<"APIKey", 'String[]'>
   readonly rateLimitRps: Prisma.FieldRef<"APIKey", 'Int'>
   readonly expiresAt: Prisma.FieldRef<"APIKey", 'DateTime'>
+  readonly disabledAt: Prisma.FieldRef<"APIKey", 'DateTime'>
+  readonly saveLogs: Prisma.FieldRef<"APIKey", 'Boolean'>
+  readonly limitTotal: Prisma.FieldRef<"APIKey", 'Decimal'>
+  readonly limitDaily: Prisma.FieldRef<"APIKey", 'Decimal'>
+  readonly costTotal: Prisma.FieldRef<"APIKey", 'Decimal'>
+  readonly costDaily: Prisma.FieldRef<"APIKey", 'Decimal'>
+  readonly costDailyResetAt: Prisma.FieldRef<"APIKey", 'DateTime'>
 }
     
 

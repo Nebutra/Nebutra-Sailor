@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "概要",
+    "usage": "使用状況",
     "keys": "API キー",
     "wallet": "ウォレット",
     "docs": "ドキュメント",

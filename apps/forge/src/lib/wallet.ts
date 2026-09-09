@@ -39,6 +39,11 @@ async function createLedgerWallet(): Promise<PrepaidWallet> {
   const credits = await import("@nebutra/billing/credits");
   return createCreditLedgerWallet({
     getCreditBalance: (organizationId) => credits.getCreditBalance(organizationId),
+    // The cached read is display-only; anything that admits work reads fresh,
+    // because the cache is a per-instance Map and a stale positive balance on a
+    // second instance is how an empty wallet gets past a guard.
+    getCreditBalanceFresh: (organizationId) => credits.getCreditBalanceFresh(organizationId),
+    invalidateCreditCache: (organizationId) => credits.invalidateCreditCache(organizationId),
     addCredits: (input) => credits.addCredits(input),
     deductCredits: (input) => credits.deductCredits(input),
   });

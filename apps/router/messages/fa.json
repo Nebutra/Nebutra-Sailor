@@ -6,6 +6,7 @@
   },
   "admin": {
     "dashboard": "نمای کلی",
+    "usage": "مصرف",
     "keys": "کلیدهای API",
     "wallet": "کیف پول",
     "docs": "مستندات",

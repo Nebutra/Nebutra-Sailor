@@ -33,10 +33,27 @@ export interface DebitInput {
  * or in-memory stores for tests.
  */
 export interface PrepaidWallet {
+  /**
+   * Display read. May be served from a cache — fine for a dashboard, never for
+   * a spend decision.
+   */
   getBalance(tenantId: string): Promise<WalletBalance>;
+  /**
+   * Guard read. Bypasses every cache and hits the ledger.
+   *
+   * The billing credits service keeps `balanceCache`, a module-level Map with a
+   * 60s TTL. On a second instance that cache can report a positive balance the
+   * first instance has already spent — an overdraw. Admit/guard paths must call
+   * this, and `debit()` must invalidate the cache. The two methods exist
+   * separately so the guard cannot silently pick the cached one.
+   */
+  getBalanceFresh(tenantId: string): Promise<WalletBalance>;
   topUp(input: TopUpInput): Promise<WalletMutationResult>;
   debit(input: DebitInput): Promise<WalletMutationResult>;
+  /** Display check. See {@link PrepaidWallet.getBalance}. */
   hasBalance(tenantId: string, amount: number): Promise<boolean>;
+  /** Guard check. See {@link PrepaidWallet.getBalanceFresh}. */
+  hasBalanceFresh(tenantId: string, amount: number): Promise<boolean>;
 }
 
 interface MemoryAccount {
@@ -45,8 +62,10 @@ interface MemoryAccount {
 }
 
 /**
- * Deterministic in-memory wallet for unit tests and local demos.
- * Not for production multi-instance use.
+ * Deterministic in-memory wallet. **Test double only** — it is process-local,
+ * so two instances disagree about the balance and a restart loses it. No
+ * product surface may construct it; production wires
+ * {@link createCreditLedgerWallet} over `CreditBalance` / `CreditTransaction`.
  */
 export class MemoryPrepaidWallet implements PrepaidWallet {
   private readonly accounts = new Map<string, MemoryAccount>();
@@ -99,6 +118,15 @@ export class MemoryPrepaidWallet implements PrepaidWallet {
   async hasBalance(tenantId: string, amount: number): Promise<boolean> {
     const account = this.ensure(tenantId);
     return account.balance >= amount;
+  }
+
+  /** No cache to bypass in memory; identical to {@link MemoryPrepaidWallet.getBalance}. */
+  async getBalanceFresh(tenantId: string): Promise<WalletBalance> {
+    return this.getBalance(tenantId);
+  }
+
+  async hasBalanceFresh(tenantId: string, amount: number): Promise<boolean> {
+    return this.hasBalance(tenantId, amount);
   }
 
   /** Test helper: set absolute balance. */

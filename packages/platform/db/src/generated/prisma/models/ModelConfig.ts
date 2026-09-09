@@ -29,11 +29,19 @@ export type AggregateModelConfig = {
 export type ModelConfigAvgAggregateOutputType = {
   inputPricePerMillion: runtime.Decimal | null
   outputPricePerMillion: runtime.Decimal | null
+  unitPrice: runtime.Decimal | null
+  cacheReadPerMillion: runtime.Decimal | null
+  cacheWritePerMillion: runtime.Decimal | null
+  contextLength: number | null
 }
 
 export type ModelConfigSumAggregateOutputType = {
   inputPricePerMillion: runtime.Decimal | null
   outputPricePerMillion: runtime.Decimal | null
+  unitPrice: runtime.Decimal | null
+  cacheReadPerMillion: runtime.Decimal | null
+  cacheWritePerMillion: runtime.Decimal | null
+  contextLength: number | null
 }
 
 export type ModelConfigMinAggregateOutputType = {
@@ -46,6 +54,12 @@ export type ModelConfigMinAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  unit: $Enums.PriceUnit | null
+  unitPrice: runtime.Decimal | null
+  cacheReadPerMillion: runtime.Decimal | null
+  cacheWritePerMillion: runtime.Decimal | null
+  contextLength: number | null
+  published: boolean | null
 }
 
 export type ModelConfigMaxAggregateOutputType = {
@@ -58,6 +72,12 @@ export type ModelConfigMaxAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  unit: $Enums.PriceUnit | null
+  unitPrice: runtime.Decimal | null
+  cacheReadPerMillion: runtime.Decimal | null
+  cacheWritePerMillion: runtime.Decimal | null
+  contextLength: number | null
+  published: boolean | null
 }
 
 export type ModelConfigCountAggregateOutputType = {
@@ -70,6 +90,12 @@ export type ModelConfigCountAggregateOutputType = {
   isActive: number
   createdAt: number
   updatedAt: number
+  unit: number
+  unitPrice: number
+  cacheReadPerMillion: number
+  cacheWritePerMillion: number
+  contextLength: number
+  published: number
   _all: number
 }
 
@@ -77,11 +103,19 @@ export type ModelConfigCountAggregateOutputType = {
 export type ModelConfigAvgAggregateInputType = {
   inputPricePerMillion?: true
   outputPricePerMillion?: true
+  unitPrice?: true
+  cacheReadPerMillion?: true
+  cacheWritePerMillion?: true
+  contextLength?: true
 }
 
 export type ModelConfigSumAggregateInputType = {
   inputPricePerMillion?: true
   outputPricePerMillion?: true
+  unitPrice?: true
+  cacheReadPerMillion?: true
+  cacheWritePerMillion?: true
+  contextLength?: true
 }
 
 export type ModelConfigMinAggregateInputType = {
@@ -94,6 +128,12 @@ export type ModelConfigMinAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  unit?: true
+  unitPrice?: true
+  cacheReadPerMillion?: true
+  cacheWritePerMillion?: true
+  contextLength?: true
+  published?: true
 }
 
 export type ModelConfigMaxAggregateInputType = {
@@ -106,6 +146,12 @@ export type ModelConfigMaxAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  unit?: true
+  unitPrice?: true
+  cacheReadPerMillion?: true
+  cacheWritePerMillion?: true
+  contextLength?: true
+  published?: true
 }
 
 export type ModelConfigCountAggregateInputType = {
@@ -118,6 +164,12 @@ export type ModelConfigCountAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  unit?: true
+  unitPrice?: true
+  cacheReadPerMillion?: true
+  cacheWritePerMillion?: true
+  contextLength?: true
+  published?: true
   _all?: true
 }
 
@@ -217,6 +269,12 @@ export type ModelConfigGroupByOutputType = {
   isActive: boolean
   createdAt: Date
   updatedAt: Date
+  unit: $Enums.PriceUnit
+  unitPrice: runtime.Decimal | null
+  cacheReadPerMillion: runtime.Decimal | null
+  cacheWritePerMillion: runtime.Decimal | null
+  contextLength: number | null
+  published: boolean
   _count: ModelConfigCountAggregateOutputType | null
   _avg: ModelConfigAvgAggregateOutputType | null
   _sum: ModelConfigSumAggregateOutputType | null
@@ -252,6 +310,12 @@ export type ModelConfigWhereInput = {
   isActive?: Prisma.BoolFilter<"ModelConfig"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ModelConfig"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ModelConfig"> | Date | string
+  unit?: Prisma.EnumPriceUnitFilter<"ModelConfig"> | $Enums.PriceUnit
+  unitPrice?: Prisma.DecimalNullableFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: Prisma.DecimalNullableFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: Prisma.DecimalNullableFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: Prisma.IntNullableFilter<"ModelConfig"> | number | null
+  published?: Prisma.BoolFilter<"ModelConfig"> | boolean
 }
 
 export type ModelConfigOrderByWithRelationInput = {
@@ -264,6 +328,12 @@ export type ModelConfigOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  cacheReadPerMillion?: Prisma.SortOrderInput | Prisma.SortOrder
+  cacheWritePerMillion?: Prisma.SortOrderInput | Prisma.SortOrder
+  contextLength?: Prisma.SortOrderInput | Prisma.SortOrder
+  published?: Prisma.SortOrder
 }
 
 export type ModelConfigWhereUniqueInput = Prisma.AtLeast<{
@@ -279,6 +349,12 @@ export type ModelConfigWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"ModelConfig"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ModelConfig"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ModelConfig"> | Date | string
+  unit?: Prisma.EnumPriceUnitFilter<"ModelConfig"> | $Enums.PriceUnit
+  unitPrice?: Prisma.DecimalNullableFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: Prisma.DecimalNullableFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: Prisma.DecimalNullableFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: Prisma.IntNullableFilter<"ModelConfig"> | number | null
+  published?: Prisma.BoolFilter<"ModelConfig"> | boolean
 }, "id" | "modelName">
 
 export type ModelConfigOrderByWithAggregationInput = {
@@ -291,6 +367,12 @@ export type ModelConfigOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  cacheReadPerMillion?: Prisma.SortOrderInput | Prisma.SortOrder
+  cacheWritePerMillion?: Prisma.SortOrderInput | Prisma.SortOrder
+  contextLength?: Prisma.SortOrderInput | Prisma.SortOrder
+  published?: Prisma.SortOrder
   _count?: Prisma.ModelConfigCountOrderByAggregateInput
   _avg?: Prisma.ModelConfigAvgOrderByAggregateInput
   _max?: Prisma.ModelConfigMaxOrderByAggregateInput
@@ -311,6 +393,12 @@ export type ModelConfigScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"ModelConfig"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ModelConfig"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ModelConfig"> | Date | string
+  unit?: Prisma.EnumPriceUnitWithAggregatesFilter<"ModelConfig"> | $Enums.PriceUnit
+  unitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: Prisma.DecimalNullableWithAggregatesFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: Prisma.DecimalNullableWithAggregatesFilter<"ModelConfig"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: Prisma.IntNullableWithAggregatesFilter<"ModelConfig"> | number | null
+  published?: Prisma.BoolWithAggregatesFilter<"ModelConfig"> | boolean
 }
 
 export type ModelConfigCreateInput = {
@@ -323,6 +411,12 @@ export type ModelConfigCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  unit?: $Enums.PriceUnit
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: number | null
+  published?: boolean
 }
 
 export type ModelConfigUncheckedCreateInput = {
@@ -335,6 +429,12 @@ export type ModelConfigUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  unit?: $Enums.PriceUnit
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: number | null
+  published?: boolean
 }
 
 export type ModelConfigUpdateInput = {
@@ -347,6 +447,12 @@ export type ModelConfigUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit?: Prisma.EnumPriceUnitFieldUpdateOperationsInput | $Enums.PriceUnit
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ModelConfigUncheckedUpdateInput = {
@@ -359,6 +465,12 @@ export type ModelConfigUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit?: Prisma.EnumPriceUnitFieldUpdateOperationsInput | $Enums.PriceUnit
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ModelConfigCreateManyInput = {
@@ -371,6 +483,12 @@ export type ModelConfigCreateManyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  unit?: $Enums.PriceUnit
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: number | null
+  published?: boolean
 }
 
 export type ModelConfigUpdateManyMutationInput = {
@@ -383,6 +501,12 @@ export type ModelConfigUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit?: Prisma.EnumPriceUnitFieldUpdateOperationsInput | $Enums.PriceUnit
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ModelConfigUncheckedUpdateManyInput = {
@@ -395,6 +519,12 @@ export type ModelConfigUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  unit?: Prisma.EnumPriceUnitFieldUpdateOperationsInput | $Enums.PriceUnit
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheReadPerMillion?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  cacheWritePerMillion?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  contextLength?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ModelConfigCountOrderByAggregateInput = {
@@ -407,11 +537,21 @@ export type ModelConfigCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  cacheReadPerMillion?: Prisma.SortOrder
+  cacheWritePerMillion?: Prisma.SortOrder
+  contextLength?: Prisma.SortOrder
+  published?: Prisma.SortOrder
 }
 
 export type ModelConfigAvgOrderByAggregateInput = {
   inputPricePerMillion?: Prisma.SortOrder
   outputPricePerMillion?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  cacheReadPerMillion?: Prisma.SortOrder
+  cacheWritePerMillion?: Prisma.SortOrder
+  contextLength?: Prisma.SortOrder
 }
 
 export type ModelConfigMaxOrderByAggregateInput = {
@@ -424,6 +564,12 @@ export type ModelConfigMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  cacheReadPerMillion?: Prisma.SortOrder
+  cacheWritePerMillion?: Prisma.SortOrder
+  contextLength?: Prisma.SortOrder
+  published?: Prisma.SortOrder
 }
 
 export type ModelConfigMinOrderByAggregateInput = {
@@ -436,11 +582,33 @@ export type ModelConfigMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  cacheReadPerMillion?: Prisma.SortOrder
+  cacheWritePerMillion?: Prisma.SortOrder
+  contextLength?: Prisma.SortOrder
+  published?: Prisma.SortOrder
 }
 
 export type ModelConfigSumOrderByAggregateInput = {
   inputPricePerMillion?: Prisma.SortOrder
   outputPricePerMillion?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  cacheReadPerMillion?: Prisma.SortOrder
+  cacheWritePerMillion?: Prisma.SortOrder
+  contextLength?: Prisma.SortOrder
+}
+
+export type EnumPriceUnitFieldUpdateOperationsInput = {
+  set?: $Enums.PriceUnit
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 
@@ -455,6 +623,12 @@ export type ModelConfigSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  unit?: boolean
+  unitPrice?: boolean
+  cacheReadPerMillion?: boolean
+  cacheWritePerMillion?: boolean
+  contextLength?: boolean
+  published?: boolean
 }, ExtArgs["result"]["modelConfig"]>
 
 export type ModelConfigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -467,6 +641,12 @@ export type ModelConfigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  unit?: boolean
+  unitPrice?: boolean
+  cacheReadPerMillion?: boolean
+  cacheWritePerMillion?: boolean
+  contextLength?: boolean
+  published?: boolean
 }, ExtArgs["result"]["modelConfig"]>
 
 export type ModelConfigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -479,6 +659,12 @@ export type ModelConfigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  unit?: boolean
+  unitPrice?: boolean
+  cacheReadPerMillion?: boolean
+  cacheWritePerMillion?: boolean
+  contextLength?: boolean
+  published?: boolean
 }, ExtArgs["result"]["modelConfig"]>
 
 export type ModelConfigSelectScalar = {
@@ -491,9 +677,15 @@ export type ModelConfigSelectScalar = {
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  unit?: boolean
+  unitPrice?: boolean
+  cacheReadPerMillion?: boolean
+  cacheWritePerMillion?: boolean
+  contextLength?: boolean
+  published?: boolean
 }
 
-export type ModelConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "modelName" | "provider" | "inputPricePerMillion" | "outputPricePerMillion" | "currency" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["modelConfig"]>
+export type ModelConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "modelName" | "provider" | "inputPricePerMillion" | "outputPricePerMillion" | "currency" | "isActive" | "createdAt" | "updatedAt" | "unit" | "unitPrice" | "cacheReadPerMillion" | "cacheWritePerMillion" | "contextLength" | "published", ExtArgs["result"]["modelConfig"]>
 
 export type $ModelConfigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ModelConfig"
@@ -508,6 +700,12 @@ export type $ModelConfigPayload<ExtArgs extends runtime.Types.Extensions.Interna
     isActive: boolean
     createdAt: Date
     updatedAt: Date
+    unit: $Enums.PriceUnit
+    unitPrice: runtime.Decimal | null
+    cacheReadPerMillion: runtime.Decimal | null
+    cacheWritePerMillion: runtime.Decimal | null
+    contextLength: number | null
+    published: boolean
   }, ExtArgs["result"]["modelConfig"]>
   composites: {}
 }
@@ -940,6 +1138,12 @@ export interface ModelConfigFieldRefs {
   readonly isActive: Prisma.FieldRef<"ModelConfig", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"ModelConfig", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ModelConfig", 'DateTime'>
+  readonly unit: Prisma.FieldRef<"ModelConfig", 'PriceUnit'>
+  readonly unitPrice: Prisma.FieldRef<"ModelConfig", 'Decimal'>
+  readonly cacheReadPerMillion: Prisma.FieldRef<"ModelConfig", 'Decimal'>
+  readonly cacheWritePerMillion: Prisma.FieldRef<"ModelConfig", 'Decimal'>
+  readonly contextLength: Prisma.FieldRef<"ModelConfig", 'Int'>
+  readonly published: Prisma.FieldRef<"ModelConfig", 'Boolean'>
 }
     
 
