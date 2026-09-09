@@ -51,7 +51,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "build": "tsc -p tsconfig.json && cp src/generated/prisma-workerd/internal/query_compiler_fast_bg.js src/generated/prisma-workerd/internal/query_compiler_fast_bg.wasm dist/generated/prisma-workerd/internal/"
+    "build": "tsc -p tsconfig.json && cp src/generated/prisma-workerd/internal/query_compiler_fast_bg.js src/generated/prisma-workerd/internal/query_compiler_fast_bg.wasm dist/generated/prisma-workerd/internal/",
+    "verify:migrations": "tsx scripts/verify-migrations.mts"
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
