@@ -69,7 +69,7 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
             { key: "supply", label: "Supply", kind: "badge" },
             { key: "status", label: "Status", kind: "badge" },
           ],
-          actions: ["channel.sync", "price.publish"],
+          actions: ["channel.sync", "price.publish", "price.unpublish_drifted"],
         },
       ],
       actions: [
@@ -133,6 +133,17 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
           description:
             "Write the shelf into the price table the /v1 edge charges from. A model reaches customers only when supply confirms it and it carries a price.",
         },
+        {
+          id: "price.unpublish_drifted",
+          verb: "Take drifted off sale",
+          resource: "shelf",
+          role: "platform_operator",
+          url: `${V1}/actions/price.unpublish_drifted`,
+          plan: false,
+          destructive: false,
+          description:
+            "Unpublish every model that now costs more upstream than we charge. Prices are never raised automatically — a silent increase ambushes the customer on their next invoice.",
+        },
       ],
       signals: [
         {
@@ -141,6 +152,14 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
           severity: "critical",
           probe: `${V1}/signals/engine.down`,
           resource: "engine",
+        },
+        {
+          id: "price.drift",
+          label: "Upstream costs more than we charge",
+          severity: "critical",
+          probe: `${V1}/signals/price.drift`,
+          resource: "shelf",
+          action: "price.unpublish_drifted",
         },
         {
           id: "channel.drift",

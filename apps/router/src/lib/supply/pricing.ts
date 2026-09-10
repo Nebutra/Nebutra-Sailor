@@ -6,7 +6,7 @@ import type { ActionPlan, ActionResult } from "@nebutra/contracts/admin";
 import { getSystemDb } from "@nebutra/db";
 import type { StaffCaller } from "../admin/service-token";
 import { getListingCatalog, type ListingModel, type ListingProvider } from "../listing-catalog";
-import { priceOverrideFor } from "./price-overrides";
+import { coverageFor, priceOverrideFor } from "./price-overrides";
 
 /**
  * Publish the shelf into `model_configs`, the one table the /v1 edge prices a
@@ -61,8 +61,11 @@ function toRow(m: ListingModel): PriceRowPlan {
   // hand-set price and take the model off sale — which is what a plan to
   // publish would have done to gpt-image-2, the only model we currently sell.
   const override = priceOverrideFor(m.publicModel);
-  const inputPerMTok = override?.inputPricePerMillion ?? m.inputPerMTok;
-  const outputPerMTok = override?.outputPricePerMillion ?? m.outputPerMTok;
+  // Fold in the dimensions upstream bills that our parsed usage cannot see (I3).
+  // Applied here, at publish, so the request path stays a plain table lookup.
+  const cover = coverageFor(m.provider);
+  const inputPerMTok = (override?.inputPricePerMillion ?? m.inputPerMTok) * cover.input;
+  const outputPerMTok = (override?.outputPricePerMillion ?? m.outputPerMTok) * cover.output;
   return {
     modelName: m.publicModel,
     provider: override?.provider ?? PROVIDER_MAP[m.provider] ?? "CUSTOM",
@@ -95,6 +98,91 @@ async function computePlan(): Promise<Omit<PricePlan, "expiresAt">> {
     onShelf: models.map((m) => m.publicModel),
     publishing: rows.filter((r) => r.published).map((r) => r.modelName),
     holding: rows.filter((r) => !r.published).map((r) => r.modelName),
+  };
+}
+
+/**
+ * Models whose upstream rate has risen above what we published against.
+ *
+ * Every guarantee here rests on our recorded rate still being upstream's rate,
+ * and that premise expires without telling us. The structural answer is to
+ * **unpublish, never auto-reprice**: a model we can no longer price above cost
+ * is refused at the edge, which cannot lose money, while raising a customer's
+ * price without warning ambushes them on their next invoice.
+ */
+export interface PriceDrift {
+  modelName: string;
+  publishedInput: number;
+  upstreamInput: number;
+  publishedOutput: number;
+  upstreamOutput: number;
+}
+
+export async function findPriceDrift(): Promise<PriceDrift[]> {
+  const { models } = await getListingCatalog();
+  const db = getSystemDb();
+  const live = await db.modelConfig.findMany({
+    where: { published: true },
+    select: { modelName: true, inputPricePerMillion: true, outputPricePerMillion: true },
+  });
+  const byName = new Map(live.map((r) => [r.modelName, r]));
+
+  const drifted: PriceDrift[] = [];
+  for (const m of models) {
+    const row = byName.get(m.publicModel);
+    if (!row) continue;
+    // An override is a deliberate rate we set ourselves; the index does not
+    // price those models, so its numbers say nothing about them.
+    if (priceOverrideFor(m.publicModel)) continue;
+    const cover = coverageFor(m.provider);
+    const publishedInput = Number(row.inputPricePerMillion ?? 0);
+    const publishedOutput = Number(row.outputPricePerMillion ?? 0);
+    // Upstream's own rate, before our markup — what we would actually be billed.
+    const upstreamInput = m.inputPerMTok * cover.input;
+    const upstreamOutput = m.outputPerMTok * cover.output;
+    if (upstreamInput > publishedInput || upstreamOutput > publishedOutput) {
+      drifted.push({
+        modelName: m.publicModel,
+        publishedInput,
+        upstreamInput,
+        publishedOutput,
+        upstreamOutput,
+      });
+    }
+  }
+  return drifted;
+}
+
+/** Take every drifted model off sale. Prices are never raised automatically. */
+export async function unpublishDrifted(
+  caller: StaffCaller,
+  request: Request,
+): Promise<ActionResult> {
+  const drifted = await findPriceDrift();
+  const names = drifted.map((d) => d.modelName);
+  if (names.length > 0) {
+    await getSystemDb().modelConfig.updateMany({
+      where: { modelName: { in: names } },
+      data: { published: false },
+    });
+  }
+  const auditId = randomUUID();
+  await auditLogger(request, {
+    actor: { id: caller.userId, type: "user" },
+    tenantId: "platform",
+  }).log({
+    action: "supply.price.unpublish_drifted",
+    outcome: "success",
+    resource: { type: "price-table", id: "model_configs" },
+    metadata: { auditId, role: caller.role, unpublished: names },
+  });
+  return {
+    auditId,
+    summary:
+      names.length === 0
+        ? "No published model costs more upstream than we charge."
+        : `Took ${names.length} model(s) off sale: upstream now costs more than we charge.`,
+    result: { unpublished: names, drift: drifted },
   };
 }
 

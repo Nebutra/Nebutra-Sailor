@@ -74,9 +74,11 @@ describe("router admin manifest", () => {
       "account.login.callback",
       "channel.sync",
       "price.publish",
+      "price.unpublish_drifted",
     ]);
     expect(supply?.signals.map((s) => s.id)).toEqual([
       "engine.down",
+      "price.drift",
       "channel.drift",
       "account.expired",
     ]);

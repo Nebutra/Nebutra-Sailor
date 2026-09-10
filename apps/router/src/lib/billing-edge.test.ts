@@ -188,6 +188,86 @@ describe("router money guard — admit", () => {
   });
 });
 
+describe("router money guard — the per-request floor", () => {
+  /**
+   * A request costs roughly seven Postgres writes to serve whatever it carried,
+   * so a ten-token call priced at fractions of a cent lost money at any markup,
+   * and the shortfall grew with key count rather than revenue.
+   */
+  it("charges the floor when the metered price falls under it", async () => {
+    const settle = vi.fn(async (_input: RouterSettleInput) => ({
+      settled: true as const,
+      charged: 0,
+      refunded: 0,
+    }));
+    await createRouterGuard(billing({ settle })).settle({
+      requestId: "req_tiny",
+      identity,
+      path: "chat/completions",
+      admission: { reserved: 0.0002, currency: "USD", candidates: ["gpt-5"] },
+      // 10 in / 10 out at $1 / $10 per million is $0.00011 — under the floor.
+      usage: usage({ promptTokens: 10, completionTokens: 10, totalTokens: 20 }),
+      status: 200,
+      latencyMs: 12,
+      ttfbMs: null,
+      clientIp: null,
+      supplyPath: "channel-3",
+      billable: true,
+    });
+    const written = settle.mock.calls[0]?.[0] as RouterSettleInput;
+    expect(written.totalCost).toBe(0.0002);
+    expect(written.unit).toBe("request");
+    expect(written.metadata).toMatchObject({ flooredFrom: 0.00011 });
+  });
+
+  it("leaves a price above the floor alone", async () => {
+    const settle = vi.fn(async (_input: RouterSettleInput) => ({
+      settled: true as const,
+      charged: 0,
+      refunded: 0,
+    }));
+    await createRouterGuard(billing({ settle })).settle({
+      requestId: "req_normal",
+      identity,
+      path: "chat/completions",
+      admission: { reserved: 0.011, currency: "USD", candidates: ["gpt-5"] },
+      usage: usage(),
+      status: 200,
+      latencyMs: 42,
+      ttfbMs: null,
+      clientIp: null,
+      supplyPath: "channel-3",
+      billable: true,
+    });
+    const written = settle.mock.calls[0]?.[0] as RouterSettleInput;
+    expect(written.totalCost).toBe(0.006);
+    expect(written.metadata).not.toHaveProperty("flooredFrom");
+  });
+
+  it("exempts a refunded request — the promise is a full refund", async () => {
+    const settle = vi.fn(async (_input: RouterSettleInput) => ({
+      settled: true as const,
+      charged: 0,
+      refunded: 0,
+    }));
+    await createRouterGuard(billing({ settle })).settle({
+      requestId: "req_zero",
+      identity,
+      path: "chat/completions",
+      admission: { reserved: 0.011, currency: "USD", candidates: ["gpt-5"] },
+      usage: usage({ completionTokens: 0, totalTokens: 1000 }),
+      status: 200,
+      latencyMs: 42,
+      ttfbMs: null,
+      clientIp: null,
+      supplyPath: "channel-3",
+      billable: false,
+    });
+    const written = settle.mock.calls[0]?.[0] as RouterSettleInput;
+    expect(written.totalCost).toBe(0);
+  });
+});
+
 describe("router money guard — settle", () => {
   it("writes one ledger row priced from the reported usage", async () => {
     const settle = vi.fn(async (_input: RouterSettleInput) => ({

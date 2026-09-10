@@ -8,7 +8,7 @@ import { err, gateStaff, json } from "@/lib/admin/service-token";
 import { SupplyConfigError } from "@/lib/supply/clients";
 import { applyChannelSync, planChannelSync } from "@/lib/supply/domain";
 import { completeLogin, isLoginProvider, startLogin } from "@/lib/supply/login";
-import { applyPricePublish, planPricePublish } from "@/lib/supply/pricing";
+import { applyPricePublish, planPricePublish, unpublishDrifted } from "@/lib/supply/pricing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -39,6 +39,9 @@ export async function POST(request: Request, context: RouteContext) {
       if ("expired" in result)
         return json(err("plan_expired", "Plan expired or unknown — plan again."), 409);
       return json(result);
+    }
+    if (id === "price.unpublish_drifted") {
+      return json(await unpublishDrifted(gate.caller, request));
     }
     if (id === "price.publish") {
       if (parsed.data.mode === "plan") return json(await planPricePublish());
