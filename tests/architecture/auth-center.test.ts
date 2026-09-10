@@ -68,3 +68,32 @@ describe("auth center multi-app governance", () => {
     expect(domains).toContain("permanent");
   });
 });
+
+/**
+ * A product host missing from the sign-in return allowlist does not error.
+ * `sanitizeReturnUrl` silently falls back to "/", so the user lands on the auth
+ * home page and reads it as "sign-in did nothing" — which is exactly what
+ * router.nebutra.com did, because the list lived in apps/auth/vercel.json and
+ * auth stopped running on Vercel when it moved behind the Worker.
+ *
+ * The Worker configs are where it takes effect, so that is where it is checked.
+ */
+describe("sign-in can return to every product host", () => {
+  const PRODUCT_HOSTS = [
+    "router.nebutra.com",
+    "forge.nebutra.com",
+    "admin.nebutra.com",
+    "kuanlan.nebutra.com",
+  ];
+
+  for (const config of ["apps/auth/wrangler.edge.jsonc", "apps/auth/wrangler.jsonc"]) {
+    it(`${config} allows returning to each product host`, () => {
+      const vars = read(config);
+      const line = vars.split("\n").find((l) => l.includes("AUTH_RETURN_ALLOWED_HOSTS"));
+      expect(line, `${config} must set AUTH_RETURN_ALLOWED_HOSTS`).toBeDefined();
+      for (const host of PRODUCT_HOSTS) {
+        expect(line, `${host} must be allowed to be returned to`).toContain(host);
+      }
+    });
+  }
+});
