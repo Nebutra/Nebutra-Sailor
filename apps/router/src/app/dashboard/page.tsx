@@ -8,7 +8,7 @@ import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
 import { requireAuth } from "@/lib/auth";
 import { usageRepository } from "@/lib/console-usage";
-import { formatPrice, getListingCatalog, PROVIDER_LABEL } from "@/lib/listing-catalog";
+import { formatPrice, getPricedListingCatalog, PROVIDER_LABEL } from "@/lib/listing-catalog";
 import { getBaseUrlHint } from "@/lib/model-routes";
 import { getApiKeyRepository, resolveSessionTenantId } from "@/lib/router-keys";
 import { getBalanceForDisplay } from "@/lib/wallet";
@@ -54,7 +54,7 @@ export default async function DashboardPage() {
         },
       ];
   const baseUrl = getBaseUrlHint();
-  const { models, fetchedNote } = await getListingCatalog();
+  const { models, fetchedNote } = await getPricedListingCatalog();
   const sample =
     models.find((m) => m.routed)?.publicModel ?? models[0]?.publicModel ?? DEFAULT_PUBLIC_MODEL;
 

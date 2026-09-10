@@ -1,5 +1,5 @@
 import { MarketHome } from "@/components/market-home";
-import { getListingCatalog } from "@/lib/listing-catalog";
+import { getPricedListingCatalog } from "@/lib/listing-catalog";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +14,8 @@ type Props = {
 export default async function MarketHomePage({ searchParams }: Props) {
   const { product_type } = await searchParams;
   const productType = product_type === "tool" ? "tool" : "api";
-  const { models, fetchedNote, source, inventoryOk, inventorySources } = await getListingCatalog();
+  const { models, fetchedNote, source, inventoryOk, inventorySources } =
+    await getPricedListingCatalog();
 
   const inv = inventoryOk ? `库存 ${inventorySources.join(", ") || "—"}` : "库存未连通";
   const note = `${fetchedNote} · ${inv} · ${source}`;

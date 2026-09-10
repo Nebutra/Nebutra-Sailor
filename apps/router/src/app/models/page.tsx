@@ -1,6 +1,5 @@
 import { ModelsCatalog } from "@/components/models-catalog";
-import { getListingCatalog } from "@/lib/listing-catalog";
-import { applyPublishedPrices, publishedPriceMap } from "@/lib/shelf-prices";
+import { getPricedListingCatalog } from "@/lib/listing-catalog";
 
 export const metadata = { title: "API 集市" };
 export const dynamic = "force-dynamic";
@@ -18,11 +17,8 @@ type Props = {
 /** 对应 302 /product/list?cate=api&tag=&brand= */
 export default async function ModelsPage({ searchParams }: Props) {
   const { q, brand, tag, sort } = await searchParams;
-  const [{ models: listed, fetchedNote, source, inventoryOk, inventorySources }, prices] =
-    await Promise.all([getListingCatalog(), publishedPriceMap()]);
-  // Quote what the edge will charge, not what the public index says a model
-  // costs. Those are different numbers once the markup and the overrides land.
-  const models = applyPublishedPrices(listed, prices);
+  const { models, fetchedNote, source, inventoryOk, inventorySources } =
+    await getPricedListingCatalog();
   const inv = inventoryOk ? `库存 ${inventorySources.join(", ") || "—"}` : "库存未连通";
   const note = `${fetchedNote} · ${inv} · ${source}`;
 

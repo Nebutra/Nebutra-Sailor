@@ -1,6 +1,6 @@
 import { logger } from "@nebutra/logger";
 import type { RouterPriceRow } from "@nebutra/repositories";
-import { getListingCatalog, type ListingModel } from "@/lib/listing-catalog";
+import { getPricedListingCatalog, type ListingModel } from "@/lib/listing-catalog";
 import { num, publishedPriceMap } from "@/lib/shelf-prices";
 
 export const runtime = "nodejs";
@@ -61,7 +61,7 @@ function toEntry(model: ListingModel, price: RouterPriceRow): CatalogueEntry {
 export async function GET() {
   try {
     const [{ models, source, inventoryOk, inventorySources }, prices] = await Promise.all([
-      getListingCatalog(),
+      getPricedListingCatalog(),
       publishedPriceMap(),
     ]);
 
