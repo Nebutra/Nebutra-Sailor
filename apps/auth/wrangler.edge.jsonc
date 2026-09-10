@@ -25,6 +25,15 @@
     "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
     "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
     "AUTH_COOKIE_DOMAIN": ".nebutra.com",
+    // Every product host allowed to be returned to after sign-in.
+    //
+    // `sanitizeReturnUrl` falls back to "/" for any absolute URL not on this
+    // list, so a missing host does not error — the user simply lands on the
+    // auth home page and reads it as "sign-in did nothing". That is what
+    // happened to router.nebutra.com: the list lived in apps/auth/vercel.json,
+    // and auth has not run on Vercel since it moved behind this Worker, so it
+    // was never in effect. Adding a product host here is part of shipping it.
+    "AUTH_RETURN_ALLOWED_HOSTS": "router.nebutra.com,forge.nebutra.com,admin.nebutra.com,kuanlan.nebutra.com,www.nebutra.com",
     // Dedicated Next UI origin. Do not reuse origin.nebutra.com: that hostname
     // belongs to the Hono gateway and does not serve /sign-in.
     "ORIGIN_URL": "https://nebutra-auth.fly.dev",
