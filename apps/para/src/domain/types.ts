@@ -8,6 +8,15 @@ export interface Project {
   id: string;
   name: string;
   updatedAt: string;
+  /**
+   * The piece of work that stands for the project on a card.
+   *
+   * A creative tool's project card exists to show the work; without this the card had nothing to
+   * render and drew a bordered grey rectangle instead, which read as a broken thumbnail rather
+   * than as a project. Optional because a project genuinely can be empty — that case gets its own
+   * treatment, not a void.
+   */
+  coverAssetId?: string;
 }
 
 export interface Workspace {
