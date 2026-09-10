@@ -29,6 +29,9 @@
     "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
     "BETTER_AUTH_URL": "https://auth.nebutra.com",
     "AUTH_COOKIE_DOMAIN": ".nebutra.com",
+    // Keep in step with wrangler.edge.jsonc — a host allowed in one config and
+    // not the other makes sign-in behave differently by environment.
+    "AUTH_RETURN_ALLOWED_HOSTS": "router.nebutra.com,forge.nebutra.com,admin.nebutra.com,kuanlan.nebutra.com,www.nebutra.com",
     "AUTH_PROVIDER": "better-auth",
     "NEXT_PUBLIC_AUTH_PROVIDER": "better-auth",
     "DEPLOY_TARGET_AUTH": "cloudflare-workers"
