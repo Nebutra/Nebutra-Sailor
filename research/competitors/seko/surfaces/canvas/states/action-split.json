@@ -1,0 +1,32 @@
+{
+  "id": "seko.canvas.action-split",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "split-popover",
+    "selectedEntity": "image-node",
+    "majorControls": ["四宫格 2x2", "九宫格 3x3", "十六宫格 4x4", "二十五宫格 5x5"]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "split-popover",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["四宫格 2x2", "九宫格 3x3", "十六宫格 4x4", "二十五宫格 5x5"],
+  "disclosure": { "appeared": ["grid options"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.action-split.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "画面切分 splits an image into N×N tiles; choice is made before any job."
+    }
+  ]
+}

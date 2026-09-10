@@ -70,6 +70,12 @@ export const ModelName = {
   TenantProviderKey: 'TenantProviderKey',
   Automation: 'Automation',
   AutomationRun: 'AutomationRun',
+  ParaProject: 'ParaProject',
+  ParaWorkspace: 'ParaWorkspace',
+  ParaAsset: 'ParaAsset',
+  ParaThread: 'ParaThread',
+  ParaRun: 'ParaRun',
+  ParaApproval: 'ParaApproval',
   WorkflowDefinition: 'WorkflowDefinition',
   WorkflowRun: 'WorkflowRun',
   ModelConfig: 'ModelConfig',
@@ -467,6 +473,98 @@ export const AutomationRunScalarFieldEnum = {
 } as const
 
 export type AutomationRunScalarFieldEnum = (typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum]
+
+
+export const ParaProjectScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ParaProjectScalarFieldEnum = (typeof ParaProjectScalarFieldEnum)[keyof typeof ParaProjectScalarFieldEnum]
+
+
+export const ParaWorkspaceScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  projectId: 'projectId',
+  name: 'name',
+  document: 'document',
+  documentVersion: 'documentVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ParaWorkspaceScalarFieldEnum = (typeof ParaWorkspaceScalarFieldEnum)[keyof typeof ParaWorkspaceScalarFieldEnum]
+
+
+export const ParaAssetScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  type: 'type',
+  origin: 'origin',
+  scope: 'scope',
+  url: 'url',
+  label: 'label',
+  aspect: 'aspect',
+  jobId: 'jobId',
+  workspaceId: 'workspaceId',
+  projectId: 'projectId',
+  favorite: 'favorite',
+  createdAt: 'createdAt'
+} as const
+
+export type ParaAssetScalarFieldEnum = (typeof ParaAssetScalarFieldEnum)[keyof typeof ParaAssetScalarFieldEnum]
+
+
+export const ParaThreadScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  projectId: 'projectId',
+  title: 'title',
+  autonomy: 'autonomy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ParaThreadScalarFieldEnum = (typeof ParaThreadScalarFieldEnum)[keyof typeof ParaThreadScalarFieldEnum]
+
+
+export const ParaRunScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  threadId: 'threadId',
+  workspaceId: 'workspaceId',
+  input: 'input',
+  contextNodeIds: 'contextNodeIds',
+  status: 'status',
+  error: 'error',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ParaRunScalarFieldEnum = (typeof ParaRunScalarFieldEnum)[keyof typeof ParaRunScalarFieldEnum]
+
+
+export const ParaApprovalScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  runId: 'runId',
+  toolName: 'toolName',
+  args: 'args',
+  estimatedCost: 'estimatedCost',
+  status: 'status',
+  decidedBy: 'decidedBy',
+  decidedAt: 'decidedAt',
+  resultJobId: 'resultJobId',
+  createdAt: 'createdAt'
+} as const
+
+export type ParaApprovalScalarFieldEnum = (typeof ParaApprovalScalarFieldEnum)[keyof typeof ParaApprovalScalarFieldEnum]
 
 
 export const WorkflowDefinitionScalarFieldEnum = {

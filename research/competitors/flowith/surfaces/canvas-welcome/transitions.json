@@ -1,0 +1,311 @@
+[
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "prompt node"
+    },
+    "toState": "flowith.canvas-welcome.prompt-node-selected",
+    "sideEffects": ["composer.token.added"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.prompt-node-selected.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "answer node"
+    },
+    "toState": "flowith.canvas-welcome.answer-node-selected",
+    "sideEffects": ["composer.token.added"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.answer-node-selected.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "image node"
+    },
+    "toState": "flowith.canvas-welcome.image-node-selected",
+    "sideEffects": ["composer.token.added"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.image-node-selected.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.image-node-selected",
+    "action": {
+      "type": "click",
+      "control": "Vary"
+    },
+    "toState": "flowith.canvas-welcome.image-vary-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.image-vary-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.image-node-selected",
+    "action": {
+      "type": "click",
+      "control": "Follow Up (Branch node)"
+    },
+    "toState": "flowith.canvas-welcome.follow-up",
+    "sideEffects": [
+      "node.created:follow-up-draft",
+      "composer.mode=image",
+      "composer.token.lineage",
+      "lineage.highlighted"
+    ],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.follow-up.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.answer-node-selected",
+    "action": {
+      "type": "click",
+      "control": "Edit"
+    },
+    "toState": "flowith.canvas-welcome.text-node-edit",
+    "sideEffects": ["toast:Upgrade to unlock"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.text-node-edit.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "dock Free Node"
+    },
+    "toState": "flowith.canvas-welcome.free-node-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.free-node-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "Composer"
+    },
+    "toState": "flowith.canvas-welcome.composer-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.composer-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "zoom %"
+    },
+    "toState": "flowith.canvas-welcome.zoom-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.zoom-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "logo"
+    },
+    "toState": "flowith.canvas-welcome.title-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.title-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "title caret"
+    },
+    "toState": "flowith.canvas-welcome.title-dropdown",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.title-dropdown.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "Share"
+    },
+    "toState": "flowith.canvas-welcome.share-dialog",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.share-dialog.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "Comment"
+    },
+    "toState": "flowith.canvas-welcome.comment",
+    "sideEffects": ["mode:comment"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.comment.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "dock Search Node"
+    },
+    "toState": "flowith.canvas-welcome.search-node",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.search-node.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "dock Media History"
+    },
+    "toState": "flowith.canvas-welcome.media-history-dock",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.media-history-dock.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "dock Knowledge Garden"
+    },
+    "toState": "flowith.canvas-welcome.knowledge-dock",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.knowledge-dock.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "click",
+      "control": "Minimize"
+    },
+    "toState": "flowith.canvas-welcome.minimized",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.minimized.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.fit",
+    "action": {
+      "type": "right_click",
+      "control": "pane"
+    },
+    "toState": "flowith.canvas-welcome.canvas-context-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.canvas-context-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-welcome.follow-up",
+    "action": {
+      "type": "refresh",
+      "control": "browser reload"
+    },
+    "toState": "flowith.canvas-welcome.reloaded",
+    "sideEffects": ["state.persisted"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.welcome.reloaded.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

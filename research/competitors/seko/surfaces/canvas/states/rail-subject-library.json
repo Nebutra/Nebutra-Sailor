@@ -1,0 +1,29 @@
+{
+  "id": "seko.canvas.rail-subject-library",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "subject-library-modal",
+    "selectedEntity": "none",
+    "majorControls": ["全部/公共/个人", "类别 combobox", "search", "添加新主体", "subject grid"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "subject-library-modal",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["全部/公共/个人", "类别 combobox", "search", "添加新主体", "subject grid"],
+  "disclosure": { "appeared": ["modal"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.subject-library-modal.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    { "tier": "O", "text": "主体库 modal is the same list as the @ picker plus creation entry." }
+  ]
+}

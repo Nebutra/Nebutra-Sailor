@@ -1,0 +1,24 @@
+[
+  {
+    "fromState": "lovart.projects.list",
+    "action": { "type": "click", "control": "lovart-projects-select-mode-button" },
+    "toState": "lovart.projects.select-mode",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/projects.select-mode.webp" }]
+  },
+  {
+    "fromState": "lovart.projects.select-mode",
+    "action": { "type": "keyboard", "control": "Escape", "keys": "Escape" },
+    "toState": "lovart.projects.list",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/projects.list.webp" }]
+  },
+  {
+    "fromState": "lovart.projects.list",
+    "action": { "type": "click", "control": "project card" },
+    "toState": "lovart.canvas.idle",
+    "sideEffects": ["window.open('/canvas?projectId=…')"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.populated.webp" }]
+  }
+]

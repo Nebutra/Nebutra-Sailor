@@ -1,0 +1,85 @@
+[
+  {
+    "fromState": "tapnow.agent.idle",
+    "action": {
+      "type": "click",
+      "control": "Ask"
+    },
+    "toState": "tapnow.agent.confirm-mode-menu",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.agent.confirm-mode.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.agent.idle",
+    "action": {
+      "type": "submit",
+      "control": "Send (text-only prompt)"
+    },
+    "toState": "tapnow.agent.text-done",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.agent.done.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["chat.created (auto-titled)"]
+  },
+  {
+    "fromState": "tapnow.agent.text-done",
+    "action": {
+      "type": "submit",
+      "control": "Send (generate one image)"
+    },
+    "toState": "tapnow.agent.awaiting-approval",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.agent.approval.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["agent.actions (7) read skill/docs, list models"]
+  },
+  {
+    "fromState": "tapnow.agent.awaiting-approval",
+    "action": {
+      "type": "click",
+      "control": "Confirm"
+    },
+    "toState": "tapnow.agent.running",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.agent.generated.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": [
+      "node.created ('Generate Image')",
+      "node.linked (edge from reference image)",
+      "job.created"
+    ]
+  },
+  {
+    "fromState": "tapnow.agent.running",
+    "action": {
+      "type": "refresh",
+      "control": "(time ~2m)"
+    },
+    "toState": "tapnow.agent.done",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.agent.generated.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["artifact.created", "credits.debited (~5)"]
+  }
+]

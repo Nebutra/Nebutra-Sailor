@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.reloaded",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "logo menu",
+      "flow title + flow switcher",
+      "Share",
+      "Comment (mode toggle)",
+      "Minimize",
+      "Organize Nodes"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "logo menu",
+    "flow title + flow switcher",
+    "Share",
+    "Comment (mode toggle)",
+    "Minimize",
+    "Organize Nodes",
+    "zoom % (menu)",
+    "Composer (menu)",
+    "dock: Free Node",
+    "dock: Search Node",
+    "dock: Media History",
+    "dock: Knowledge Garden",
+    "credit balance 0",
+    "bottom composer",
+    "toast: 0% credits remaining"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.reloaded.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "After hard reload: 34 nodes (was 33), zoom restored to 25%, follow-up node present."
+    },
+    {
+      "tier": "O",
+      "text": "Upgrade modal did not auto-show again; the 0%-credits toast did."
+    }
+  ]
+}

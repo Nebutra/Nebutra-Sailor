@@ -1,0 +1,418 @@
+{
+  "id": "seko.canvas",
+  "competitor": "seko",
+  "route": "/infinite-canvas?canvasId=<id>[&nodeId=<id>]",
+  "name": "无限画布 (Infinite Canvas) inside a Story shell",
+  "category": "canvas",
+  "layout": {
+    "persistentPanels": [
+      "header (nav-drawer · story title · 画布/编辑器 tabs · share/publish · credits · 开通会员)",
+      "left floating rail (+ / 资产库 / 主体库 / 特效模版)",
+      "bottom toolbar (自动布局 · 小地图 · 抓手模式 · 网格吸附 · zoom −/%/+ · 快捷键 · 1 more)",
+      "minimap",
+      "Agent aside (right, ~33% width, closable, toggled by 'Agent' button)"
+    ],
+    "chromeRatio": 0.4,
+    "workSurfaceRatio": 0.6
+  },
+  "navigation": [
+    {
+      "label": "打开导航菜单 → 返回主页 / 返回我的空间",
+      "type": "drawer-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "画布 tab",
+      "type": "tab",
+      "location": "top-center",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "编辑器 tab (greyed; click does nothing on a canvas with only images)",
+      "type": "tab",
+      "location": "top-center",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "画布",
+      "default": true,
+      "changesUrl": false,
+      "scope": "story"
+    },
+    {
+      "name": "编辑器",
+      "changesUrl": false,
+      "lazy": true,
+      "scope": "story"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "+ (新建空白节点 / 上传本地文件)",
+      "type": "popover-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "double-click canvas → node · drag-drop upload (png/jpg/mp4/mov/mp3/wav)",
+      "type": "dropzone",
+      "location": "canvas",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "quick-start chips on empty canvas: Seedance2.5视频生成 · 九宫格图 · 提示词反推 · 720°全景图",
+      "type": "contextual-action",
+      "location": "canvas",
+      "visibleWhen": "canvas.empty"
+    },
+    {
+      "label": "generator panel under selected node: tabs 文本生成/图片生成/视频生成/音频生成 · 上传 · 选择 · prompt · model · ratio/res · @角色 · count · cost · send",
+      "type": "inspector",
+      "location": "canvas-node",
+      "visibleWhen": "node.selected"
+    },
+    {
+      "label": "node context toolbar: 全景 · 多角度 · 九宫格 · 画面切分 · 打光 · 故事推演 · 对口型 · 消除笔 · 图片超清 · ··· (剪裁/标注/水平翻转/局部重绘/元素添加) · 合成视频 · download · 1 more",
+      "type": "context-toolbar",
+      "location": "floating above node",
+      "visibleWhen": "imageNode.selected"
+    },
+    {
+      "label": "Agent composer (prompt · 添加附件或画布引用 · 选择 Skill · 选择模型 · send)",
+      "type": "input",
+      "location": "right-panel",
+      "visibleWhen": "agent panel open"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "share → 发布作品 dialog",
+      "type": "icon-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Agent toggle button",
+      "type": "secondary-button",
+      "location": "top-right",
+      "visibleWhen": "agent panel closed"
+    },
+    {
+      "label": "新建对话 · 对话历史 · close (agent header)",
+      "type": "icon-button",
+      "location": "right-panel",
+      "visibleWhen": "agent panel open"
+    },
+    {
+      "label": "换一批 (agent suggestion refresh)",
+      "type": "link",
+      "location": "right-panel",
+      "visibleWhen": "conversation empty"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "add-popover",
+      "kind": "popover",
+      "trigger": "+ rail button",
+      "dismiss": "outside click",
+      "modal": false,
+      "contentOwnership": "新建空白节点 / 上传本地文件"
+    },
+    {
+      "id": "asset-library-modal",
+      "kind": "modal",
+      "trigger": "rail 资产库",
+      "dismiss": "close / 取消导入",
+      "modal": true,
+      "width": "960px",
+      "contentOwnership": "请选择要导入的分镜素材 — scope 当前项目/故事/数字人/画布 · type 全部/视频/图片/音频 · 选择全部 · 批量下载 · 确认导入"
+    },
+    {
+      "id": "subject-library-modal",
+      "kind": "modal",
+      "trigger": "rail 主体库",
+      "dismiss": "close",
+      "modal": true,
+      "width": "860px",
+      "contentOwnership": "全部/公共/个人 · 类别 · search · 添加新主体 · ~62 public subjects"
+    },
+    {
+      "id": "subject-create-form",
+      "kind": "modal",
+      "trigger": "添加新主体",
+      "dismiss": "取消",
+      "modal": true,
+      "contentOwnership": "名称 · 类别(角色/场景) · 音色(上传本地音色) · 形象(本地上传 / AI生成) · 应用"
+    },
+    {
+      "id": "template-modal",
+      "kind": "modal",
+      "trigger": "rail 特效模版",
+      "dismiss": "close",
+      "modal": true,
+      "width": "880px",
+      "contentOwnership": "特效模版: 全部/世界杯/Seedance2.0/图片模板/电商广告 + search"
+    },
+    {
+      "id": "generator-panel",
+      "kind": "inspector",
+      "trigger": "select node",
+      "dismiss": "deselect",
+      "modal": false,
+      "contentOwnership": "generation config for the selected node (mode tabs, model, params, references, cost)"
+    },
+    {
+      "id": "node-toolbar",
+      "kind": "context-toolbar",
+      "trigger": "select image node",
+      "dismiss": "deselect",
+      "modal": false,
+      "contentOwnership": "derivative operations on the node"
+    },
+    {
+      "id": "node-overflow-menu",
+      "kind": "context-menu",
+      "trigger": "··· in node toolbar",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "剪裁 / 标注 / 水平翻转 / 局部重绘 / 元素添加"
+    },
+    {
+      "id": "image-model-picker",
+      "kind": "popover",
+      "trigger": "model chip",
+      "dismiss": "click elsewhere (Escape does not close)",
+      "modal": false,
+      "width": "280px",
+      "contentOwnership": "20 image models with max res + reference count"
+    },
+    {
+      "id": "image-ratio-picker",
+      "kind": "popover",
+      "trigger": "ratio chip",
+      "dismiss": "click elsewhere",
+      "modal": false,
+      "width": "346px",
+      "contentOwnership": "画面比例 9:16/16:9/3:4/4:3/21:9/1:1 · 分辨率 1K/2K"
+    },
+    {
+      "id": "at-reference-picker",
+      "kind": "popover",
+      "trigger": "@ chip or typing @",
+      "dismiss": "click elsewhere",
+      "modal": false,
+      "contentOwnership": "subject list (public presets)"
+    },
+    {
+      "id": "video-model-picker",
+      "kind": "popover",
+      "trigger": "model chip (视频生成 tab)",
+      "modal": false,
+      "contentOwnership": "31 video models grouped 图生视频 / 全能参考, with res + duration range + 音效同出 flag"
+    },
+    {
+      "id": "video-settings",
+      "kind": "popover",
+      "trigger": "res·duration chip",
+      "modal": false,
+      "contentOwnership": "分辨率 720P/1080P · 时长"
+    },
+    {
+      "id": "split-popover",
+      "kind": "popover",
+      "trigger": "画面切分",
+      "modal": false,
+      "width": "172px",
+      "contentOwnership": "四宫格 2x2 / 九宫格 3x3 / 十六宫格 4x4 / 二十五宫格 5x5"
+    },
+    {
+      "id": "story-deduce-popover",
+      "kind": "popover",
+      "trigger": "故事推演",
+      "modal": false,
+      "width": "280px",
+      "contentOwnership": "向后推演/向前推演 · offset −5s…+5s · 画面比例 · 图片模型 专业/通用 · 生成 ✦10"
+    },
+    {
+      "id": "upscale-popover",
+      "kind": "popover",
+      "trigger": "图片超清",
+      "modal": false,
+      "width": "256px",
+      "contentOwnership": "模式 通用模式 · 放大倍数 2X/4X · 应用 ✦6"
+    },
+    {
+      "id": "compose-video-popover",
+      "kind": "popover",
+      "trigger": "合成视频",
+      "modal": false,
+      "width": "128px",
+      "contentOwnership": "合成视频节点 / 添加到编辑器"
+    },
+    {
+      "id": "multi-angle-panel",
+      "kind": "inspector",
+      "trigger": "多角度",
+      "dismiss": "x",
+      "modal": false,
+      "contentOwnership": "自定义/鱼眼镜头/反打镜头/荷兰角镜头 · 3D orbit widget · 旋转角度 · 倾斜角度 · 镜头 特写/中景/广角 · 重置参数 · submit ✦1 — replaces the generator panel under the node"
+    },
+    {
+      "id": "publish-dialog",
+      "kind": "modal",
+      "trigger": "share icon",
+      "dismiss": "Close",
+      "modal": true,
+      "width": "800px",
+      "contentOwnership": "发布作品: cover upload · 标题* · 活动标签 · 作品简介 · 社媒链接 · 封面图 · 公开画布 switch · 发布作品"
+    },
+    {
+      "id": "nav-drawer",
+      "kind": "popover",
+      "trigger": "打开导航菜单",
+      "modal": false,
+      "width": "162px",
+      "contentOwnership": "返回主页 / 返回我的空间"
+    },
+    {
+      "id": "shortcuts-panel",
+      "kind": "popover",
+      "trigger": "快捷键 (bottom bar)",
+      "modal": false,
+      "contentOwnership": "基础操作 复制/粘贴/撤销/重做/删除/框选多选/菜单(right-click) · 缩放 · 移动画布 · 分组 创建分组/取消分组"
+    },
+    {
+      "id": "agent-history",
+      "kind": "popover",
+      "trigger": "对话历史",
+      "modal": false,
+      "width": "256px",
+      "contentOwnership": "conversation list (无记录)"
+    },
+    {
+      "id": "agent-attach",
+      "kind": "popover",
+      "trigger": "添加附件或画布引用",
+      "modal": false,
+      "width": "192px",
+      "contentOwnership": "上传附件 / 从画布上选择"
+    },
+    {
+      "id": "agent-skill-picker",
+      "kind": "popover",
+      "trigger": "选择 Skill or typing /",
+      "modal": false,
+      "contentOwnership": "技能: 官方精选 / 成片工作流 / 爆款内容裂变 / 顶流超创 / 热门短剧 / 剧本策划… with skill cards"
+    },
+    {
+      "id": "agent-model-picker",
+      "kind": "popover",
+      "trigger": "选择模型",
+      "modal": false,
+      "width": "224px",
+      "contentOwnership": "智能选择 · Sensenova 6.8 Flash Lite · GMLM 3 Flash · GMLM 3.7 Flash · Qwen 3.7 Plus · Qwen3.7 Max · Doubao Seed 2.1 Pro · Doubao Seed 2.1 Turbo · 5.6 L · 5.6 L High"
+    },
+    {
+      "id": "onboarding-tips",
+      "kind": "tooltip",
+      "trigger": "first visit (driver.js)",
+      "dismiss": "我知道了",
+      "modal": false,
+      "contentOwnership": "生成历史 explanation; 上传图片 explanation"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.blank.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.blank-node.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.image-completed.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.multiangle-submitted.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.reloaded.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.text-tab.webp",
+      "capturedAt": "2026-09-08",
+      "note": "文本生成 tab click left the video tab active on an image node"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Navigating to /infinite-canvas with no id immediately creates a persisted canvas: URL rewrites to ?canvasId=2097273517239623682 and a card '未命名故事 2026/09/08 18:39' appears in /my-space?tab=canvas. No 'create' dialog, no naming step."
+    },
+    {
+      "tier": "O",
+      "text": "The header names the container 未命名故事 and offers 画布 / 编辑器 tabs, but the canvas is listed ONLY under my-space 画布, not under 故事. So a canvas is its own top-level object that reuses the story shell (title + editor tab)."
+    },
+    {
+      "tier": "O",
+      "text": "Node selection is written to the URL (&nodeId=…), i.e. selection is deep-linkable."
+    },
+    {
+      "tier": "O",
+      "text": "A blank node carries the generator panel for all four media types; submitting converts the blank node IN PLACE into a typed node (label 空白节点 → 图片) with a new server id (uuid → snowflake), same position. The prompt and config stay attached to the node and are shown again when it is re-selected."
+    },
+    {
+      "tier": "O",
+      "text": "Generation submit is silent: no confirm dialog; credit balance decremented immediately (110→109 for Seko Image 1K ✦1; 109→108 for 多角度 ✦1). Cost is shown as a ✦N chip next to the send button and changes live with model/resolution (即梦 5.0 Pro 2K ✦7 → 1K ✦4 → Seko Image 1K ✦1)."
+    },
+    {
+      "tier": "O",
+      "text": "Job lifecycle inside the node: 排队中，请稍候 (+ 会员加速 upsell link) → 生成中，请稍候 → image rendered in node. ~60 s for a 1K image. No separate job center was found on this surface; the '生成历史' concept (rail tooltip) says all canvas generations are kept even if nodes are deleted."
+    },
+    {
+      "tier": "O",
+      "text": "Derivative operations (多角度) create a NEW node to the right of the source, connected by an edge (3 SVG paths in .react-flow__edges), and the result is a distinct asset URL. The source node is unchanged. This is the provenance model: source → derived node via edge."
+    },
+    {
+      "tier": "O",
+      "text": "Persistence: after navigating away and re-opening the canvasId URL, both nodes, their images and the edge are restored; the in-flight 多角度 job completed while the page was away."
+    },
+    {
+      "tier": "O",
+      "text": "Selecting a node auto-attaches it to the Agent composer as a '图片' chip (上传 / 选择 / 图片 thumbnail), i.e. canvas selection is agent context."
+    },
+    {
+      "tier": "O",
+      "text": "Reusable identity: '@ 引用角色' in the prompt and the 主体库 rail modal both list ~62 public subjects (公共) and a 个人 tab; 添加新主体 supports category 角色/场景, a voice (音色) and an image (local or AI-generated). Subjects also have a top-level route /characters, so scope is account-level, not per-canvas."
+    },
+    {
+      "tier": "O",
+      "text": "Model catalogue on canvas: 20 image models (即梦 5.0 Pro/Lite/4.5/4.0/3.0, 全能图片 G2/NB Pro/NB 2/NB, Qwen Image 3.0 Pro/3.0, 极致美学 V8.2/V8.1/V7/Niji7, Wan 2.7 Pro/2.7, Z-Image, Seko Image, Seko IDX) and 31 video models (Seedance 2.5/2.5普惠/2.0/2.0普惠/Fast/Mini/1.5 Pro/1.0 Pro/1.0 Pro Fast, MiniMax H3, Wan 3.0 Prime/3.0/2.7/2.6/2.5/2.2 Plus/2.2 Flash, HappyHorse 1.1/1.0, 可灵 3.0/2.6/2.5 Turbo/2.1/2.1 大师版, Pixverse V5.6/V5, Vidu Q2, 海螺 2.3/2.0, Seko 1.5); audio default Mureka V9 ✦3; agent LLM picker lists 9 models + 智能选择."
+    },
+    {
+      "tier": "O",
+      "text": "Escape does not close Radix popovers on this surface; they close on outside click. Rail modals stack (opening a second while one is open leaves both mounted)."
+    },
+    {
+      "tier": "I2",
+      "text": "The 编辑器 tab is a timeline/编辑 surface fed by 合成视频 → 添加到编辑器; it is inert until a video/composition exists (clicking it changed nothing on an image-only canvas)."
+    },
+    {
+      "tier": "I2",
+      "text": "The generator panel keeps the previous prompt when switching 图片生成 → 视频生成 (首帧/尾帧 slots appear, image becomes first frame), so an image node is the natural parent of a video node (image-to-video chain)."
+    },
+    {
+      "tier": "U",
+      "text": "Whether 九宫格/全景/打光/对口型/消除笔 spend credits immediately or open a config panel first — not triggered (budget)."
+    }
+  ]
+}

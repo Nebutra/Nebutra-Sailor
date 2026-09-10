@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.search-node",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Search",
+    "activeTab": "All",
+    "overlay": "search-node",
+    "selectedEntity": "none",
+    "majorControls": [
+      "Search input",
+      "All 33",
+      "Text 25",
+      "Media 8",
+      "Export",
+      "result cards (type, author, model, date)"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "All",
+  "openOverlay": "search-node",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Search input",
+    "All 33",
+    "Text 25",
+    "Media 8",
+    "Export",
+    "result cards (type, author, model, date)"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.search-node.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Flow-scoped search enumerates nodes by type with counts; results show provenance (model id, date, 'You')."
+    },
+    {
+      "tier": "I2",
+      "text": "'Export' exports the flow/search results (not pressed)."
+    }
+  ]
+}

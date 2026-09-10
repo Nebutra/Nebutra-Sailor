@@ -1,0 +1,19 @@
+%% Surfaces and their overlays
+flowchart TB
+  subgraph shell["Shell (left icon rail)"]
+    H[lovart.home]:::s
+    P[lovart.projects]:::s
+    B[lovart.brand-kit]:::s
+  end
+  C[lovart.canvas]:::s
+  H --> C
+  P --> C
+  B -. "从零开始" .-> C
+  H --- Hp["popovers: + attachments · Skill · 模型偏好 · help"]
+  P --- Pp["select-mode checkboxes"]
+  B --- Bp["info onboarding · kit list · section tiles · dropzone"]
+  C --- Cl["left drawers: 图层(+历史记录) · 生成文件"]
+  C --- Cr["right panel: agent thread + composer (collapsible)"]
+  C --- Cf["floating: image/text/group/multi toolbars · quick-edit · crop · generator composer · context menu"]
+  C --- Cm["modals: 画布历史 · paywall · font generator card"]
+  classDef s fill:#eef,stroke:#446;

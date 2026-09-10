@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.gallery.default",
+  "surfaceId": "flowith.gallery",
+  "fingerprint": {
+    "route": "/gallery?entry_source=sidebar",
+    "heading": "Media History",
+    "activeTab": "Generations",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "sidebar nav (New Flow · Flow Library · Media History · Knowledge Garden · Knowledge Market · Projects · History)",
+      "account",
+      "credits",
+      "Notifications",
+      "day strip Aug 20 – Sep 8, 2026",
+      "date menu"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Generations",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "sidebar nav (New Flow · Flow Library · Media History · Knowledge Garden · Knowledge Market · Projects · History)",
+    "account",
+    "credits",
+    "Notifications",
+    "day strip Aug 20 – Sep 8, 2026",
+    "date menu",
+    "Generations",
+    "Uploads",
+    "Search File",
+    "Starred",
+    "All Types"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/media-history.default.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Empty for the selected day; chrome only."
+    }
+  ]
+}

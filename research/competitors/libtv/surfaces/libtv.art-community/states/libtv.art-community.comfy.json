@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-community.comfy",
+  "surfaceId": "libtv.art-community",
+  "fingerprint": {
+    "route": "https://www.liblib.art/comfy",
+    "heading": "在线ComfyUI",
+    "activeTab": "none",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["新版 switch", "开始生图"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "none",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "新版 switch",
+    "timestamp",
+    "开始生图",
+    "credit estimate 10",
+    "CAPTCHA widget"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-comfy.webp",
+      "url": "https://www.liblib.art/comfy",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Hosted ComfyUI; not explored further (workflow editor)."
+    }
+  ]
+}

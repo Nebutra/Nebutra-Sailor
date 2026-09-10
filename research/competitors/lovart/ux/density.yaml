@@ -1,0 +1,23 @@
+# Density measurements at the observed 1040×797 CSS viewport (2× DPR captures), tier O unless noted
+canvas:
+  viewport: { w: 1040, h: 797 }
+  promo_banner_h: 48
+  agent_panel_w: 400            # ≈38% of width when open
+  canvas_w_open: 640
+  canvas_w_collapsed: 831       # measured; 1040 after 对话 re-expand toggle (I1: layout animates)
+  layers_drawer_w: 280
+  dock: { position: bottom-center, buttons: 10, h: 44 }
+  bottom_left_cluster: { buttons: 4 + zoom }
+  minimap: { w: 200, h: 120, position: bottom-left, toggleable: true }
+  top_bar_h: 48
+  chrome_ratio_open: 0.45       # banner + top bar + panel + dock + minimap over viewport area
+  work_surface_ratio_open: 0.55
+  chrome_ratio_collapsed: 0.22
+persistent_panels_default: [agent panel]
+optional_panels: [图层 drawer, 生成文件 drawer, minimap]
+home:
+  left_rail_w: 60
+  hero_composer_w: 730
+  chrome_ratio: 0.12
+brand_kit:
+  list_column_w: 260

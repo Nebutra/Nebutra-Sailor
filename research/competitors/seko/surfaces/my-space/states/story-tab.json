@@ -1,0 +1,31 @@
+{
+  "id": "seko.my-space.story-tab",
+  "surfaceId": "seko.my-space",
+  "fingerprint": {
+    "route": "/my-space",
+    "heading": "我的空间",
+    "activeTab": "故事",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["search", "category filter"]
+  },
+  "activeTab": "故事",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "tabs 故事/画布/数字人",
+    "search 输入策划案名称搜索",
+    "filters 全部/出海短剧/短剧漫剧/音乐MV/知识分享",
+    "empty state"
+  ],
+  "disclosure": { "appeared": ["search", "filters"], "disappeared": [] },
+  "evidence": [
+    {
+      "file": "evidence/myspace.list.webp",
+      "url": "https://seko.sensetime.com/my-space",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Empty on first visit (fresh account)." }]
+}

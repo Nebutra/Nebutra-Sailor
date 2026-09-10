@@ -1,0 +1,21 @@
+{
+  "id": "lovart.home.plus-popover",
+  "surfaceId": "lovart.home",
+  "fingerprint": {
+    "route": "/zh/home",
+    "heading": "Lovart 让设计更简单",
+    "overlay": "plus-popover",
+    "selectedEntity": "none"
+  },
+  "openOverlay": "plus-popover",
+  "agentState": "composing",
+  "visibleControls": ["上传文件 (Upload file)", "联网搜索 (Web search) toggle — off"],
+  "disclosure": { "appeared": ["上传文件", "联网搜索 toggle"], "disappeared": [] },
+  "evidence": [{ "file": "evidence/home.plus-popover.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Attachment and web-search are the only two items under +; references are attached per-message, not from a library here."
+    }
+  ]
+}

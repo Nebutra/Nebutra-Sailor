@@ -1,0 +1,91 @@
+[
+  {
+    "fromState": "seko.explore.home",
+    "action": {
+      "type": "click",
+      "control": "left-rail 我的空间"
+    },
+    "toState": "seko.my-space.story-tab",
+    "sideEffects": ["url.changed:/my-space"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/myspace.list.webp"
+      }
+    ]
+  },
+  {
+    "fromState": "seko.explore.home",
+    "action": {
+      "type": "click",
+      "control": "left-rail 主体库"
+    },
+    "toState": "seko.characters.list",
+    "sideEffects": ["url.changed:/characters"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/explore.home.webp"
+      }
+    ]
+  },
+  {
+    "fromState": "seko.explore.home",
+    "action": {
+      "type": "click",
+      "control": "left-rail 技能社区"
+    },
+    "toState": "seko.skill-community.list",
+    "sideEffects": ["url.changed:/skill-community"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/explore.home.webp"
+      }
+    ]
+  },
+  {
+    "fromState": "seko.explore.home",
+    "action": {
+      "type": "click",
+      "control": "left-rail 数字人视频"
+    },
+    "toState": "seko.avatar-video.home",
+    "sideEffects": ["url.changed:/avatar-video"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/explore.home.webp"
+      }
+    ]
+  },
+  {
+    "fromState": "seko.explore.home",
+    "action": {
+      "type": "navigate",
+      "control": "空白画布 link /infinite-canvas"
+    },
+    "toState": "seko.canvas.blank",
+    "sideEffects": ["canvas.created (url gains ?canvasId=…)", "story.created (header 未命名故事)"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.blank.webp"
+      }
+    ]
+  },
+  {
+    "fromState": "seko.explore.home",
+    "action": {
+      "type": "click",
+      "control": "hero tab 创作 Agent"
+    },
+    "toState": "seko.explore.hero-agent",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/explore.hero-agent.webp"
+      }
+    ]
+  }
+]

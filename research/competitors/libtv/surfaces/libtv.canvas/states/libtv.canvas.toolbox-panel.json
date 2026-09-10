@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.toolbox-panel",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "toolbox-panel",
+    "selectedEntity": "none",
+    "majorControls": ["团队工具箱", "我的工具箱"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "toolbox-panel",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "团队工具箱",
+    "我的工具箱",
+    "工具箱模板说明",
+    "按成员筛选",
+    "周星驰经典名场面 (sample)",
+    "暂无数据"
+  ],
+  "disclosure": {
+    "appeared": ["floating panel"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.dock-toolbox.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Team-scoped saved tool templates; empty for this account."
+    }
+  ]
+}

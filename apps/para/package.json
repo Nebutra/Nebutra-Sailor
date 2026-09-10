@@ -1,0 +1,46 @@
+{
+  "name": "@nebutra/para",
+  "version": "0.1.0",
+  "private": true,
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "productionReady": false
+  },
+  "description": "PARA \u2014 progressive-disclosure creative workspace shell. Milestone 1: shell + canvas skeleton on mock data.",
+  "scripts": {
+    "dev": "next dev --port 3110",
+    "build": "next build",
+    "start": "next start --port 3110",
+    "lint": "biome check .",
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf .next"
+  },
+  "dependencies": {
+    "@nebutra/atelier-canvas": "workspace:*",
+    "@nebutra/auth": "workspace:*",
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "@nebutra/ui": "workspace:*",
+    "@tanstack/react-query": "5.101.0",
+    "@xyflow/react": "^12.10.2",
+    "geist": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "FSL-1.1-ALv2"
+}

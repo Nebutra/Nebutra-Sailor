@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.collab-presence",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "collab-presence",
+    "selectedEntity": "none",
+    "majorControls": ["邀请协作"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "collab-presence",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": ["协作者 · 1", "在线", "Nebutra", "邀请协作"],
+  "disclosure": {
+    "appeared": ["popover"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.collab.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Real-time presence with invite; suggests multi-user canvas (not tested)."
+    }
+  ]
+}

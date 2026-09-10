@@ -1,0 +1,27 @@
+{
+  "id": "seko.canvas.action-upscale",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "upscale-popover",
+    "selectedEntity": "image-node",
+    "majorControls": ["模式 通用模式", "2X", "4X", "应用 ✦6"]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "upscale-popover",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["模式 通用模式", "2X", "4X", "应用 ✦6"],
+  "disclosure": { "appeared": ["popover"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.action-upscale.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Upscale ✦6." }]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "seko.canvas.action-multiangle",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "multi-angle-panel",
+    "selectedEntity": "image-node",
+    "majorControls": [
+      "自定义/鱼眼镜头/反打镜头/荷兰角镜头",
+      "orbit widget",
+      "旋转角度",
+      "倾斜角度",
+      "镜头 特写/中景/广角",
+      "重置参数",
+      "submit ✦1",
+      "+ handles left/right of node",
+      "agent composer shows 图片 chip"
+    ]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "multi-angle-panel",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": [
+    "自定义/鱼眼镜头/反打镜头/荷兰角镜头",
+    "orbit widget",
+    "旋转角度",
+    "倾斜角度",
+    "镜头 特写/中景/广角",
+    "重置参数",
+    "submit ✦1",
+    "+ handles left/right of node",
+    "agent composer shows 图片 chip"
+  ],
+  "disclosure": {
+    "appeared": [
+      "multi-angle panel replaces generator panel",
+      "node side + handles",
+      "agent attachment chip"
+    ],
+    "disappeared": ["generator panel"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.action-multiangle.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "多角度 is a parametric camera re-angle tool with a 3D orbit preview; cost ✦1 at 1K."
+    }
+  ]
+}

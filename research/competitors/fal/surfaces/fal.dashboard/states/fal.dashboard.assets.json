@@ -1,0 +1,41 @@
+{
+  "id": "fal.dashboard.assets",
+  "surfaceId": "fal.dashboard",
+  "fingerprint": {
+    "route": "/assets",
+    "heading": "Assets — Home",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "All media",
+    "Collections",
+    "Favorites",
+    "Entities: Characters/Props/Environments/Styles/Scenes",
+    "Recently added",
+    "Generate media"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/assets.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Keyboard DnD instructions for collections (Space pick up / arrows / Enter drop)."
+    }
+  ]
+}

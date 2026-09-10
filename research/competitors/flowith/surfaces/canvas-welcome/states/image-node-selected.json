@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.image-node-selected",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "node-toolbar",
+    "selectedEntity": "image-node 966cc910",
+    "majorControls": [
+      "logo menu",
+      "flow title + flow switcher",
+      "Share",
+      "Comment (mode toggle)",
+      "Minimize",
+      "Organize Nodes"
+    ]
+  },
+  "selectedEntity": "image-node 966cc910",
+  "activeTab": "",
+  "openOverlay": "node-toolbar",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "logo menu",
+    "flow title + flow switcher",
+    "Share",
+    "Comment (mode toggle)",
+    "Minimize",
+    "Organize Nodes",
+    "zoom % (menu)",
+    "Composer (menu)",
+    "dock: Free Node",
+    "dock: Search Node",
+    "dock: Media History",
+    "dock: Knowledge Garden",
+    "credit balance 0",
+    "bottom composer",
+    "toast: 0% credits remaining",
+    "Crop",
+    "Upscale",
+    "Background Removal",
+    "Vary",
+    "Rerun",
+    "Copy Content",
+    "Download",
+    "Delete",
+    "Add node",
+    "Follow Up",
+    "composer token 'AI'"
+  ],
+  "disclosure": {
+    "appeared": ["Crop", "Upscale", "Background Removal", "Vary", "Download"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.image-node-selected.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Image node exposes professional tools inline (Crop, Upscale, Background Removal, Vary) - no separate editor page needed to reach them."
+    },
+    {
+      "tier": "O",
+      "text": "Image node's token label is 'AI' (node title), not the prompt."
+    }
+  ]
+}

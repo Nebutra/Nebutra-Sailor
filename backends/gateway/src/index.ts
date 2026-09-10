@@ -38,6 +38,7 @@ import { captureRequestError, initSentry } from "./config/sentry.js";
 import { inngestHandler } from "./inngest/index.js";
 import { createAiGatewayIngestUsage } from "./lib/ai-gateway-metering.js";
 import { buildGatewayDeps } from "./lib/gateway-deps.js";
+import { registerParaAgentWorker } from "./lib/para-agent-worker.js";
 import { requestContext, runWithContext } from "./lib/requestContext.js";
 import { apiVersionMiddleware } from "./middlewares/apiVersion.js";
 import { auditMutationMiddleware } from "./middlewares/auditMutation.js";
@@ -64,6 +65,8 @@ import { integrationRoutes } from "./routes/integrations/index.js";
 import { consentRoutes } from "./routes/legal/consent.js";
 import { healthRoutes } from "./routes/misc/health.js";
 import { notificationRoutes } from "./routes/notifications/index.js";
+import { paraAgentRoutes } from "./routes/para/agent.js";
+import { paraRoutes } from "./routes/para/index.js";
 import { pebbleRoutes } from "./routes/pebble/index.js";
 import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
@@ -253,6 +256,8 @@ app.route("/api/v1/workflows", workflowRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/tasks", taskRoutes);
 app.route("/api/v1/uploads", uploadRoutes);
+app.route("/api/v1/para/agent", paraAgentRoutes);
+app.route("/api/v1/para", paraRoutes);
 
 // Pebble desktop support intake. Unauthenticated by design (desktop users have
 // no Nebutra account) — the routes carry their own per-IP limits and size caps.
@@ -282,6 +287,7 @@ try {
   );
 
   try {
+    registerParaAgentWorker(gatewayDeps.queue as never);
     registerCompletionWorker(gatewayDeps.queue as never, {
       prisma: gatewayDeps.prisma as never,
       redis: gatewayDeps.redis,

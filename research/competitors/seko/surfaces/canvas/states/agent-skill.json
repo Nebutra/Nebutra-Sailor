@@ -1,0 +1,38 @@
+{
+  "id": "seko.canvas.agent-skill",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "agent-skill-picker",
+    "selectedEntity": "none",
+    "majorControls": [
+      "category chips 官方精选/成片工作流/爆款内容裂变/顶流超创/热门短剧/剧本策划",
+      "skill rows 影视级一镜到底短片 / 角色概念板 / 第一视角催泪短片【编导李让】/ 幽默反讽家庭剧【阿松的奋斗】/ 山音编剧大师2.0【Seko独家】…"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "agent-skill-picker",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": [
+    "category chips 官方精选/成片工作流/爆款内容裂变/顶流超创/热门短剧/剧本策划",
+    "skill rows 影视级一镜到底短片 / 角色概念板 / 第一视角催泪短片【编导李让】/ 幽默反讽家庭剧【阿松的奋斗】/ 山音编剧大师2.0【Seko独家】…"
+  ],
+  "disclosure": { "appeared": ["skill list"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.agent-skill.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Skills are packaged workflows selectable via / in the agent composer; the same names appear as home 特色功能 cards and in 技能社区."
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "seko.explore",
+  "competitor": "seko",
+  "route": "/explore",
+  "name": "首页 / Explore (home)",
+  "category": "home",
+  "layout": {
+    "persistentPanels": [
+      "left-rail (首页/我的空间/主体库/技能社区/数字人视频)",
+      "top-bar (credits 110 · 开通会员 · 3 popover triggers)",
+      "promo banner"
+    ],
+    "chromeRatio": 0.15,
+    "workSurfaceRatio": 0.85
+  },
+  "navigation": [
+    { "label": "首页", "type": "icon-button", "location": "left-rail", "visibleWhen": "always" },
+    {
+      "label": "我的空间",
+      "type": "icon-button",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    { "label": "主体库", "type": "icon-button", "location": "left-rail", "visibleWhen": "always" },
+    {
+      "label": "技能社区",
+      "type": "icon-button",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "数字人视频",
+      "type": "icon-button",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [
+    { "name": "短片工作室", "default": true, "changesUrl": false, "scope": "hero composer mode" },
+    { "name": "创作 Agent", "changesUrl": false, "scope": "hero composer mode" },
+    { "name": "无限画布", "changesUrl": false, "scope": "hero composer mode" },
+    { "name": "Seko TV", "default": true, "changesUrl": false, "scope": "community feed" },
+    { "name": "技能社区", "changesUrl": false, "scope": "community feed" },
+    { "name": "资源活动", "changesUrl": false, "scope": "community feed" }
+  ],
+  "primaryActions": [
+    {
+      "label": "hero prompt textbox (有什么新的故事灵感？ · genre chip 短剧漫剧 · file upload pdf/docx/txt · model chip Seedance2.5 全能模式 · 多剧集 switch)",
+      "type": "input",
+      "location": "top-center",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "空白画布 → /infinite-canvas",
+      "type": "link",
+      "location": "特色功能 grid",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "发布作品",
+      "type": "secondary-button",
+      "location": "feed header",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "genre presets 出海短剧 / 短剧漫剧 / 知识分享 / 音乐 MV",
+      "type": "contextual-action",
+      "location": "under hero",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "特色功能 skill cards: Seedance2.5 视频生成 · 第一视角催泪短片【编导李让】 · 山音编剧大师2.0【Seko独家】 · 出海剧转绘",
+      "type": "link",
+      "location": "grid",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "feed category tabs 全部/精选画布/短剧漫剧/叙事短片/IP剧集/动画二次元/广告TVC/教程案例",
+      "type": "tab",
+      "location": "feed",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "promo-banner",
+      "kind": "sheet",
+      "trigger": "on load",
+      "dismiss": "x",
+      "modal": false,
+      "contentOwnership": "pricing promo (Seedance 2.5 普惠版 9积分/秒)"
+    },
+    {
+      "id": "help-center",
+      "kind": "popover",
+      "trigger": "Open help center button bottom-right",
+      "modal": false
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/explore.home.webp",
+      "url": "https://seko.sensetime.com/explore",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Root https://seko.sensetime.com redirects a logged-in user to /explore. Account shows 110 credits (积分) in the top bar next to 开通会员."
+    },
+    {
+      "tier": "O",
+      "text": "Home hero is a single prompt composer with three modes (短片工作室 / 创作 Agent / 无限画布); the composer accepts a document upload (pdf/docx/txt) and has a model chip 'Seedance2.5 全能模式' and a '多剧集' (multi-episode) switch."
+    },
+    {
+      "tier": "O",
+      "text": "Community feed cards carry a '画布' badge for canvas-type works, implying published works can be either canvases or story videos."
+    },
+    {
+      "tier": "I2",
+      "text": "The genre chips (出海短剧 / 短剧漫剧 / 知识分享 / 音乐 MV) are templates for the story-planning agent (短片工作室), matching the my-space 故事 category filters."
+    },
+    {
+      "tier": "O",
+      "text": "Promo banner: Seedance 2.5 普惠版 9积分/秒 — credits are charged per second for video generation."
+    }
+  ]
+}

@@ -1,0 +1,331 @@
+{
+  "id": "lovart.canvas",
+  "competitor": "lovart",
+  "route": "/canvas?projectId=<32hex> | /canvas?newProject=true",
+  "name": "Canvas (tldraw-based infinite canvas + right agent panel)",
+  "category": "canvas",
+  "layout": {
+    "persistentPanels": [
+      "top-left: logo app-menu (brand-menu-button) · project name 'Untitled' · brand-kit chevron (.lo-brand-arrow)",
+      "top-right: 试用 Lovart 新版本 · ⚡credits · avatar; when panel collapsed also '对话' re-open button",
+      "right: agent panel (#agent-panel-container) ≈ 400/1040 px = 38% of viewport at 1040 wide; collapsible",
+      "bottom-center dock: select▾ · 标记 · upload▾ · 智能画板 · shape▾ · 铅笔▾ · 文字 · | · 图像生成器 · 视频生成器 · 字体生成器",
+      "bottom-left: 画布背景 · 图层 · 生成文件 · 小地图 toggle · zoom% ▾ ; minimap card above",
+      "promo countdown banner across the top (48px)"
+    ],
+    "chromeRatio": 0.45,
+    "workSurfaceRatio": 0.55
+  },
+  "navigation": [
+    {
+      "label": "logo → app menu: 主页 / 项目库 / 新建项目 / 删除当前项目 / 画布历史 / 导入图片 / 撤销 ⌘Z / 重做 ⌘⇧Z / 复制对象 ⌘D / 显示画布所有元素 ⇧1 / 放大 ⌘+ / 缩小 ⌘-",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "brand-kit chevron → 品牌套件: 无 (✓) / 未命名",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "zoom% → 放大 / 缩小 / 显示画布所有元素 ⇧1 / 50% / 100% / 200%",
+      "type": "popover-trigger",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "agent composer mode: Agent (default) / 图像 / 视频",
+      "default": true,
+      "changesUrl": false,
+      "persistsState": true,
+      "scope": "composer"
+    },
+    {
+      "name": "layers drawer sections: 图层 + collapsible 历史记录",
+      "changesUrl": false,
+      "scope": "left drawer"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "agent-message-input 请输入你的设计需求 + send (agent-send-button)",
+      "type": "input",
+      "location": "right-panel",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "图像生成器 (A) → places a c-generator node on the canvas + generator composer under it (size · model · ⚡cost Generate)",
+      "type": "primary-button",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "视频生成器 (S) → places a c-video-generator node (参考图/视频 · Auto·5s·720p · model · ⚡90)",
+      "type": "primary-button",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "快捷编辑 (Tab) on selected image → zoom-to-image + inline edit composer 'Describe your edit here' Run ⚡14 + suggestion chips",
+      "type": "contextual-action",
+      "location": "floating",
+      "visibleWhen": "image.selected"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "image context toolbar: 快捷编辑 Tab · 放大 (HD upscale) · 去背景 · 橡皮工具 · 图层拆分 · 编辑文字 · 多角度 · 动态图片 (GIF, new) · ··· · ⬇ download",
+      "type": "context-toolbar",
+      "location": "floating",
+      "visibleWhen": "image.selected"
+    },
+    {
+      "label": "image ··· menu: 移动对象 (new) · Mockup · 扩展 · 调整 · 裁剪 · 矢量 ⚡9 · 翻转与旋转 · 自定义工具栏 ›",
+      "type": "menu-item",
+      "location": "floating",
+      "visibleWhen": "image.selected"
+    },
+    {
+      "label": "text context toolbar: fill color · stroke color · font family (Inter) · font style (Bold) · 2 unlabeled · rich-text advanced settings · download",
+      "type": "context-toolbar",
+      "location": "floating",
+      "visibleWhen": "text.selected"
+    },
+    {
+      "label": "group toolbar: 解除编组 · download",
+      "type": "context-toolbar",
+      "location": "floating",
+      "visibleWhen": "group.selected"
+    },
+    {
+      "label": "multi-select toolbar: 自动整理 · 创建编组 · 合并图层 · align▾ · arrange▾ · download▾ (下载 / 导出 PSD)",
+      "type": "context-toolbar",
+      "location": "floating",
+      "visibleWhen": "multi.selected"
+    },
+    {
+      "label": "right-click menu: 复制 ⌘C · 剪切 · 粘贴 · 创建副本 ⌘D · 上移一层 · 下移一层 · 移动至顶层 · 移动至底层 · 发送至对话 · 创建编组 ⌘G · 解除编组 · 自动整理 ⇧A · 合并图层 ⌘E · 显示/隐藏 ⌘⇧H · 锁定/解锁 ⌘⇧L · 水平翻转 · 垂直翻转 · 导出 › · 删除",
+      "type": "context-menu",
+      "location": "floating",
+      "visibleWhen": "shape.selected"
+    },
+    {
+      "label": "crop panel: W · H · 锁定宽高比 · 预设 (通用 / Instagram / Facebook / TikTok / YouTube / LinkedIn / Twitter) · 取消 · 完成",
+      "type": "contextual-action",
+      "location": "floating",
+      "visibleWhen": "image.crop"
+    },
+    {
+      "label": "agent header: 新建对话 · 历史对话 (search + list) · share · collapse",
+      "type": "icon-button",
+      "location": "right-panel",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "composer: + (上传文件/联网搜索) · Skill book · mode Agent▾ · thinking bulb · 模型偏好 cube · mic (when empty) / send",
+      "type": "icon-button",
+      "location": "right-panel",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "canvas.image-toolbar",
+      "kind": "context-toolbar",
+      "trigger": "select one c-image",
+      "dismiss": "deselect / Escape",
+      "modal": false,
+      "width": "~850px labelled, collapses to icon-only when space is tight",
+      "contentOwnership": "AI edit ops (credit-priced) + local ops (crop, flip) + export"
+    },
+    {
+      "id": "canvas.quick-edit",
+      "kind": "sheet",
+      "trigger": "快捷编辑 / Tab",
+      "dismiss": "Escape / click empty canvas",
+      "modal": true,
+      "width": "canvas-wide",
+      "contentOwnership": "single-image edit prompt + cost + suggested edits; camera zooms to the image; state survives reload"
+    },
+    {
+      "id": "canvas.context-menu",
+      "kind": "context-menu",
+      "trigger": "right-click shape",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "clipboard, z-order, grouping, 发送至对话, visibility/lock, flip, export, delete"
+    },
+    {
+      "id": "canvas.crop",
+      "kind": "inspector",
+      "trigger": "··· → 裁剪",
+      "dismiss": "取消 / 完成",
+      "modal": false,
+      "contentOwnership": "crop box + social presets (local, no credits)"
+    },
+    {
+      "id": "canvas.layers-drawer",
+      "kind": "drawer",
+      "trigger": "图层 (bottom-left)",
+      "dismiss": "× or toggle",
+      "modal": false,
+      "width": "280px, pushes canvas right",
+      "contentOwnership": "z-ordered layer list with thumbnails, expandable groups + 历史记录 section (暂无历史记录)"
+    },
+    {
+      "id": "canvas.files-drawer",
+      "kind": "drawer",
+      "trigger": "生成文件 (bottom-left)",
+      "dismiss": "toggle",
+      "modal": false,
+      "width": "280px",
+      "contentOwnership": "list of agent-generated files (e.g. banana_taped_to_wall) · 到底了"
+    },
+    {
+      "id": "canvas.background-popover",
+      "kind": "popover",
+      "trigger": "画布背景",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "画布背景色: 6 presets + hex"
+    },
+    {
+      "id": "canvas.history",
+      "kind": "modal",
+      "trigger": "app menu → 画布历史",
+      "dismiss": "× (local-history-close-button)",
+      "modal": true,
+      "width": "full-screen",
+      "contentOwnership": "snapshot list (relative time · 保存/打开 tag · HH:MM · N 个元素 · KB) with preview + 恢复"
+    },
+    {
+      "id": "canvas.generator-composer",
+      "kind": "inspector",
+      "trigger": "select a c-generator node",
+      "dismiss": "deselect",
+      "modal": false,
+      "contentOwnership": "prompt + 图像设置 (质量 自动/高/中/低 · W/H · 宽高比 incl 2k/4k · 生成数量 1-10) + model list (22) + ⚡cost"
+    },
+    {
+      "id": "canvas.font-generator",
+      "kind": "popover",
+      "trigger": "字体生成器",
+      "dismiss": "toggle button",
+      "modal": false,
+      "contentOwnership": "Beta onboarding card: Generation / My Fonts tabs, image reference upload, 开始"
+    },
+    {
+      "id": "canvas.agent-history",
+      "kind": "popover",
+      "trigger": "历史对话",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "search + per-project conversation list (新对话)"
+    },
+    {
+      "id": "canvas.mode-switch",
+      "kind": "popover",
+      "trigger": "Agent ▾",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Agent / 图像 / 视频"
+    },
+    {
+      "id": "paywall",
+      "kind": "modal",
+      "trigger": "gated feature (调整) · after export (导出完成) · promo on load",
+      "dismiss": "paywall-close",
+      "modal": true,
+      "width": "full",
+      "contentOwnership": "plans Starter/Basic/Pro/Ultimate, per-model credit table, FAQ (raw/paywall.txt)"
+    },
+    {
+      "id": "canvas.empty-viewport-toast",
+      "kind": "tooltip",
+      "trigger": "viewport contains no shapes",
+      "dismiss": "回到内容",
+      "modal": false,
+      "contentOwnership": "视口内无内容 · 回到内容"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.populated.webp",
+      "url": "https://www.lovart.ai/canvas?projectId=…",
+      "capturedAt": "2026-09-08",
+      "note": "idle canvas of the onboarding project"
+    },
+    {
+      "file": "evidence/canvas.image-selected.webp",
+      "capturedAt": "2026-09-08",
+      "note": "labelled image toolbar + chip in composer"
+    },
+    { "file": "evidence/canvas.image-selected.more-menu.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.image-selected.quick-edit.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.image-selected.context-menu.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.multi-selected.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.dock.generate-menu-image.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.float-layer-button.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.canvas-history.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.agent-collapsed.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/paywall.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "The canvas is tldraw (role=application aria-label=tldraw, .tl-shape, TLDRAW_TAB_ID_v2 global). Custom shape types: c-image, c-generator, c-video-generator, text, group. Shape records hold name/url/originalUrl only — no prompt, model or parent-job metadata on the image record (raw/canvas.populated.shapes.json)."
+    },
+    {
+      "tier": "O",
+      "text": "Selecting one image: floating toolbar above the selection (7 AI ops + GIF + ··· + download), a name/size label ('Image 221 · 1024 × 1024'), and the selection is mirrored as a chip inside the agent composer (multi-select → one chip per shape). No right inspector exists."
+    },
+    {
+      "tier": "O",
+      "text": "Credit cost is shown in place: Run ⚡14 in quick edit, 矢量 ⚡9 in the ··· menu, ⚡15 on the image generator button, ⚡90 on the video generator. Free tier shows ⚡70 daily credits."
+    },
+    {
+      "tier": "O",
+      "text": "调整 (adjust) is paywalled on the free tier — clicking it opens the plan modal. The download button also opens the paywall after '导出完成'."
+    },
+    {
+      "tier": "O",
+      "text": "Agent chat lives in a persistent right panel, collapsible via |→; a '对话' button in the top bar re-opens it and the canvas widens. Empty state lists Skills. Mode switch Agent / 图像 / 视频 changes the composer's target."
+    },
+    {
+      "tier": "O",
+      "text": "Generator tools are canvas nodes: clicking 图像生成器 inserts a 1024×1024 'Image Generator' placeholder shape (props generatorName openai/gpt-image-2, quality medium, count 1) with its composer beneath. Video node: seedance/seedance-2-0, 5s, 720p, referenceMode multiImage, generateAudio true."
+    },
+    {
+      "tier": "O",
+      "text": "Versioning: app menu → 画布历史 opens a full-screen snapshot browser (保存/打开 tagged snapshots with element count and size, 恢复 to restore). The layers drawer also has a 历史记录 section. No side-by-side compare UI observed."
+    },
+    {
+      "tier": "O",
+      "text": "UI state persists across reload: camera zoom, selection, quick-edit mode, open popovers (brand-kit, font generator), collapsed agent panel all came back after a hard reload."
+    },
+    {
+      "tier": "O",
+      "text": "Right-click menu includes 发送至对话 (send to chat) and 合并图层 (merge layers) alongside standard tldraw ops; 自动整理 ⇧A auto-arranges."
+    },
+    {
+      "tier": "O",
+      "text": "Professional tools are modal tools in the bottom dock (select V / hand H, 标记 C, 智能画板 F, shapes R/L/⇧L/O, pen P, text T) plus the layers drawer; text editing exposes font family/style/fill/stroke in a floating bar."
+    },
+    {
+      "tier": "I2",
+      "text": "The tool bar collapses labels to icons responsively (labelled at 640px canvas when zoomed out, icon-only when the toolbar would overflow)."
+    },
+    {
+      "tier": "I2",
+      "text": "画布历史 is browser-local (testid local-history-close-button, snapshots tagged by session events 打开/保存), not a server version list."
+    },
+    {
+      "tier": "U",
+      "text": "自定义工具栏 submenu contents; 导出 submenu formats; 标记 tool behaviour; share dialog contents (blocked by stacked popovers); Mockup / 扩展 / 多角度 / 图层拆分 panels (each would spend credits)."
+    }
+  ]
+}

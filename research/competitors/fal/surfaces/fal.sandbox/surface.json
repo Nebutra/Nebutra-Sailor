@@ -1,0 +1,140 @@
+{
+  "id": "fal.sandbox",
+  "competitor": "fal",
+  "overlays": [
+    {
+      "id": "model-picker",
+      "kind": "popover",
+      "trigger": "N models",
+      "contentOwnership": "search + chips Selected/SOTA/Trending/Fast + multi-select model list"
+    },
+    {
+      "id": "model-sets",
+      "kind": "modal",
+      "trigger": "Sets",
+      "dismiss": "Cancel / Select Set / Close",
+      "modal": true,
+      "contentOwnership": "named model sets (State of the Art – default 5; Fast Open Source – 4); Edit Sets"
+    },
+    {
+      "id": "verify-banner",
+      "kind": "sheet",
+      "trigger": "page load",
+      "dismiss": "Dismiss",
+      "contentOwnership": "'Unlock 50 free generations per day – verify with a card' (not clicked)"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Simple | Advanced input",
+      "type": "tab",
+      "location": "top-left"
+    },
+    {
+      "label": "Type: Text To Image ▾",
+      "type": "popover-trigger",
+      "location": "bottom-dock"
+    },
+    {
+      "label": "aspect 1:1 ▾",
+      "type": "popover-trigger"
+    },
+    {
+      "label": "N models ▾",
+      "type": "popover-trigger"
+    },
+    {
+      "label": "Sets",
+      "type": "popover-trigger"
+    },
+    {
+      "label": "1x ▾ (repeat multiplier)",
+      "type": "popover-trigger"
+    },
+    {
+      "label": "Search generations...",
+      "type": "input"
+    },
+    {
+      "label": "Filter: All",
+      "type": "popover-trigger"
+    },
+    {
+      "label": "Show Metadata",
+      "type": "input"
+    },
+    {
+      "label": "Collapse prompt bar",
+      "type": "icon-button"
+    },
+    {
+      "label": "image upload",
+      "type": "dropzone"
+    }
+  ],
+  "navigation": [],
+  "tabs": [],
+  "route": "/sandbox",
+  "name": "Sandbox (multi-model fan-out)",
+  "category": "workspace",
+  "layout": {
+    "persistentPanels": [
+      "app-nav",
+      "toolbar (search generations, filter, Show Metadata)",
+      "bottom prompt dock"
+    ],
+    "chromeRatio": 0.25,
+    "workSurfaceRatio": 0.75
+  },
+  "primaryActions": [
+    {
+      "label": "Run ⌘↵",
+      "type": "primary-button",
+      "location": "bottom-dock"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/sandbox.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/sandbox.models.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/sandbox.sets.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/sandbox.advanced.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Sandbox is fal's compare surface: one prompt fans out to N selected models × M repeats; dock shows 'Will run 1x on 5 models  Est. $0.37' before Run."
+    },
+    {
+      "tier": "O",
+      "text": "Generations grid is empty for this account; per-generation metadata toggle and search/filter exist for the feed."
+    },
+    {
+      "tier": "O",
+      "text": "Advanced input adds a side panel: Image|Video|Audio modality radio, Type, Model Selection list with per-model Remove, Clear, SOTA quick-add."
+    },
+    {
+      "tier": "O",
+      "text": "Model sets are reusable named selections; default set 'State of the Art' = flux-2-pro, gpt-image-2, krea v2 large, nano-banana-2, seedream v5 pro."
+    },
+    {
+      "tier": "I2",
+      "text": "Est. cost = Σ(per-model unit price × repeats); recomputed on any picker change (not verified by changing selection)."
+    },
+    {
+      "tier": "U",
+      "text": "Post-run layout (grid per model? side-by-side?) – no balance to run."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "lovart.canvas.reloaded",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=2pabxcoqfb40",
+    "heading": "PARA research scratch",
+    "overlay": "none",
+    "selectedEntity": "none"
+  },
+  "jobState": "completed",
+  "agentState": "done",
+  "visibleControls": [
+    "both images",
+    "chat thread restored with result card + text",
+    "title restored",
+    "zoom 37% restored"
+  ],
+  "evidence": [
+    { "file": "evidence/scratch.reloaded.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/projects.after-scratch.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Hard reload restores shapes, chat thread, title and camera. /zh/projects shows 'PARA research scratch · 更新于 2026年9月8日' with a 2-image cover mosaic; cards are not sorted by update date (the scratch project is 2nd, after the 新建 card, but older cards keep their original order)."
+    },
+    {
+      "tier": "O",
+      "text": "The onboarding project also reads 更新于 2026年9月8日 after my export/generator-node insert+delete — any canvas mutation bumps updatedAt."
+    }
+  ]
+}

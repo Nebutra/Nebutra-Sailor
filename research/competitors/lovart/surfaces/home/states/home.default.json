@@ -1,0 +1,44 @@
+{
+  "id": "lovart.home.default",
+  "surfaceId": "lovart.home",
+  "fingerprint": {
+    "route": "/zh/home",
+    "heading": "Lovart 让设计更简单",
+    "activeTab": "灵感发现:全部",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["agent-message-input", "chips", "最近项目", "灵感发现 grid"]
+  },
+  "selectedEntity": "none",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "left rail ×4 + help",
+    "试用 Lovart 新版本",
+    "⚡70 升级",
+    "avatar",
+    "prompt textbox",
+    "+",
+    "skill book",
+    "thinking bulb",
+    "model cube",
+    "send",
+    "7 chips",
+    "新建项目 card",
+    "project cards",
+    "查看全部",
+    "9 inspiration filter chips",
+    "inspiration grid (20 cells)"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/home.webp",
+      "url": "https://www.lovart.ai/zh/home",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    { "tier": "O", "text": "Send button is disabled while the textbox is empty (greyed)." }
+  ]
+}

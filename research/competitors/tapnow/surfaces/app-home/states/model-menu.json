@@ -1,0 +1,28 @@
+{
+  "id": "tapnow.app-home.model-menu",
+  "surfaceId": "tapnow.app-home",
+  "fingerprint": {
+    "route": "/home",
+    "heading": "What are we making today?",
+    "overlay": "agent-model-menu",
+    "selectedEntity": "none"
+  },
+  "visibleControls": ["model list"],
+  "evidence": [
+    {
+      "file": "evidence/app.home.model-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Plan-gated LLM list; free tier = Gemini 3.7 Flash only."
+    }
+  ],
+  "disclosure": {
+    "appeared": ["model list with Recommended / Unlock with plan / Coming soon"],
+    "disappeared": []
+  },
+  "openOverlay": "agent-model-menu"
+}

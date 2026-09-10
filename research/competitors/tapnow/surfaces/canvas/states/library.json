@@ -1,0 +1,50 @@
+{
+  "id": "tapnow.canvas.library",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Library",
+    "overlay": "library",
+    "selectedEntity": "none",
+    "activeTab": "Private"
+  },
+  "visibleControls": [
+    "AI Character",
+    "Add",
+    "Private",
+    "Team",
+    "Search",
+    "Favorite",
+    "Elements",
+    "About Elements",
+    "Folder",
+    "Character",
+    "Scene",
+    "Item",
+    "Style",
+    "Sound Effect",
+    "Others"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.library.private.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Elements tooltip: 'Pack images, text, audio, and video into a unified Subject for one-click use in video nodes… Exclusive to Seedance 2 series and Seedance 2.5.'"
+    },
+    {
+      "tier": "O",
+      "text": "Reusable identity scope: Private vs Team; categories Character/Scene/Item/Style/Sound Effect."
+    }
+  ],
+  "disclosure": {
+    "appeared": ["library drawer"],
+    "disappeared": ["dock rail"]
+  },
+  "activeTab": "Private",
+  "openOverlay": "library"
+}

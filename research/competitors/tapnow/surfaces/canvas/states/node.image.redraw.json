@@ -1,0 +1,37 @@
+{
+  "id": "tapnow.canvas.node.image.redraw",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Draw mask to redraw",
+    "overlay": "none",
+    "selectedEntity": "node:image"
+  },
+  "visibleControls": [
+    "Brush",
+    "Marquee Selection",
+    "Eraser",
+    "size",
+    "Undo",
+    "Redo",
+    "Describe what you want to change...",
+    "2K",
+    "x1",
+    "Banana Pro",
+    "cost 15",
+    "Generate"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image.tool-redraw.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Inpaint mode with its own model (Banana Pro) and cost; mode persisted across reload."
+    }
+  ],
+  "selectedEntity": "node:image"
+}

@@ -1,0 +1,29 @@
+%% Surfaces and their overlays (Route ≠ Surface ≠ Overlay)
+flowchart TB
+  C[libtv.art-community]:::lib --> G[libtv.art-generator]:::ed
+  C --> H[libtv.tv-home]:::home
+  H --> S[libtv.tv-skill]:::agent
+  H --> K[libtv.canvas]:::canvas
+  S -. composer send (I2) .-> K
+  H -. 查看创作过程 .-> V[/creation-process-viewer: read-only canvas overlay/]
+  V -. 复制项目 .-> K
+  K --> O1[/add-node-popover/]
+  K --> O2[/角色库 modal/]
+  K --> O3[/生成历史 panel/]
+  K --> O4[/资产管理 side panel/]
+  K --> O5[/Agent drawer/]
+  O5 --> O6[/Agent 设置 modal/]
+  O5 --> O7[/选择模型 popover/]
+  K --> O8[/node config popover/]
+  K --> O9[/特效 picker modal/]
+  K --> O10[/node context menu/]
+  K --> O11[/发布与分享 popover/]
+  K --> O12[/画布 switcher/]
+  G --> O13[/选择模型 modal/]
+  G --> O14[/config popover/]
+  G --> O15[/灵感库 drawer/]
+  classDef lib fill:#eef,stroke:#88a
+  classDef ed fill:#efe,stroke:#8a8
+  classDef home fill:#fee,stroke:#a88
+  classDef agent fill:#ffe,stroke:#aa8
+  classDef canvas fill:#eff,stroke:#8aa

@@ -1,0 +1,39 @@
+{
+  "id": "seko.avatar-video.home",
+  "surfaceId": "seko.avatar-video",
+  "fingerprint": {
+    "route": "/avatar-video",
+    "heading": "数字人视频",
+    "activeTab": "文本朗读",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["image upload", "台词", "声音音色", "生成视频"]
+  },
+  "activeTab": "文本朗读",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "image dropzone + 4 samples",
+    "tabs 文本朗读/上传配音",
+    "台词 textbox",
+    "试听",
+    "声音音色",
+    "情绪",
+    "声音音量",
+    "声音语速",
+    "画面描述",
+    "model 可灵数字人",
+    "720P",
+    "生成视频"
+  ],
+  "disclosure": { "appeared": [], "disappeared": [] },
+  "evidence": [
+    {
+      "file": "evidence/avatar.home.webp",
+      "url": "https://seko.sensetime.com/avatar-video",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Form-only surface; no canvas, no agent." }]
+}

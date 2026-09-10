@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.knowledge-market",
+  "competitor": "flowith",
+  "route": "/community",
+  "name": "Knowledge Market (community)",
+  "category": "library",
+  "layout": {
+    "persistentPanels": ["left sidebar"],
+    "chromeRatio": 0.2,
+    "workSurfaceRatio": 0.8
+  },
+  "navigation": [],
+  "tabs": [
+    {
+      "name": "knowledge-garden",
+      "default": true,
+      "changesUrl": false
+    },
+    {
+      "name": "oracle",
+      "changesUrl": false
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "Featured Knowledge Gardens cards",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "All Knowledge Gardens + 'Search gardens...'",
+      "type": "input",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/knowledge-market.oracle.webp",
+      "url": "https://flowith.io/community",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Public marketplace of shareable knowledge bases (e.g. 'Paul Graham's Essays', 'YC Startup Investments Archive'); second tab 'oracle' (not opened)."
+    },
+    {
+      "tier": "I2",
+      "text": "Knowledge Gardens are the reusable/shareable identity object in Flowith — a knowledge base, not a character or style."
+    },
+    {
+      "tier": "U",
+      "text": "What happens on opening a garden (clone into own garden? use as context?)."
+    }
+  ]
+}

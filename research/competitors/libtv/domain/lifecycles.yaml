@@ -1,0 +1,26 @@
+# Lifecycles observed (O) or inferred (I2/I1/U). No generation was submitted (credits 0), so job lifecycle is partial.
+lifecycles:
+  project:
+    tier: O
+    states: [created (新建项目 → /canvas, 已同步), editing (同步中 ↔ 已同步), published (在LibTV上发布 — not exercised), shared-by-link (分享链接 — not exercised), cloned (复制项目 / template clone → new spaceId+projectId)]
+    persistence: server-side autosave; nodes survived reload (O).
+  node:
+    tier: O
+    states: [empty (prompt placeholder, 空空如也 for 智能剪辑), configured (chips + config), submitted ▶ (not exercised), generated (AI生成 badge, thumbnail/video, size label), rated (所有评级 filter implies per-result rating — I2), copied/duplicated/deleted (context menu)]
+  generation_job:
+    tier: U
+    states: [submitted, running, completed, failed]
+    notes: Only inferred from 生成历史 (type counters, 时间倒序, 批量操作) and the node's AI生成 badge. Whether jobs survive navigation is unverified; history is persisted per canvas/project (O), which implies server-side jobs (I2).
+  agent_run:
+    tier: I2
+    states: [composing (composer with @ refs, model/skill chips), planning/awaiting-approval (default: per-step confirmation implied by Agent 设置 '无需逐次确认' toggle), running (auto mode may spend credits), done]
+    notes: Budget alert at 提醒阈值 (default 1000 积分) per project (O).
+  skill:
+    tier: O
+    states: [browse (/skill), preview (detail modal), added (添加 Skill / 收藏), applied (chip in composer)]
+  lora_training (liblib.art):
+    tier: O
+    states: [upload images → 预计消耗积分, configure (Repeat/Epoch/LR/crop/caption), 开始训练, listed in 训练管理 (暂无训练任务), published as /modelinfo version (I2)]
+  community_loop:
+    tier: O
+    states: [publish (作品 + 创作过程) → feed (TV Show / 发现灵感) → 查看创作过程 (read-only) → 复制项目 (own workspace) ; liblib.art: image post → 做同款 → generator prefilled]

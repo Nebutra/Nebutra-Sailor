@@ -1,0 +1,33 @@
+{
+  "id": "tapnow.canvas.node.image.relight",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "KEY LIGHT",
+    "overlay": "none",
+    "selectedEntity": "node:image"
+  },
+  "visibleControls": [
+    "PERSPECTIVE",
+    "FRONT",
+    "Reset",
+    "Global",
+    "Brightness",
+    "Color Temperature",
+    "Main Light",
+    "Rim Light"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image.tool-relight.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Inline relight controls; matches marketing 'Studio lighting control'."
+    }
+  ],
+  "selectedEntity": "node:image"
+}

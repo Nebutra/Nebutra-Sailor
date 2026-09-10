@@ -1,0 +1,31 @@
+%% flowith surfaces and their overlays
+flowchart TB
+  subgraph home["flowith.home (/blank)"]
+    composer["composer — modes Chat·Image·Video·Slides·Website·Neo Agent"]
+    apps["Apps rail + template gallery"]
+    acct["account menu · create-project dialog"]
+  end
+  subgraph canvas["flowith.canvas-* (/conv/uuid)"]
+    tree["React Flow node tree"]
+    toolbar["node context-toolbar (type-specific)"]
+    bcomp["bottom composer w/ node tokens"]
+    dock["left dock: Free Node · Search Node · Media History drawer · Knowledge Garden modal"]
+    title["title bar: logo menu · flow switcher · Share dialog · Comment mode · Minimize | Organize · zoom menu · Composer menu"]
+    vary["Vary popover (mini generation form)"]
+    tree --> toolbar --> vary
+    toolbar --> bcomp
+  end
+  lib["flowith.library (/flows)"]
+  gal["flowith.gallery (/gallery)"]
+  km["flowith.knowledge-market (/community)"]
+  kg["flowith.knowledge-garden (modal)"]
+  set["flowith.settings (modal)"]
+  bill["flowith.billing (modal)"]
+  home --> canvas
+  home --> lib --> canvas
+  home --> gal
+  home --> km
+  home --> kg
+  canvas --> kg
+  home --> set
+  canvas --> bill

@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.agent-model-picker",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "agent-model-picker",
+    "selectedEntity": "none",
+    "majorControls": ["图片/视频 radio", "添加模型 list"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "agent-model-picker",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "图片",
+    "视频",
+    "Lib Image",
+    "General image Pro",
+    "General image V2",
+    "Seedream 5.0 Pro",
+    "Style Image V8.2",
+    "Style Image V8.1",
+    "Style Image V7",
+    "Seedance 2.5",
+    "Seedance 2.0 VIP",
+    "Minimax H3",
+    "Seedance 2.0 Fast VIP",
+    "Wan 3.0 Prime",
+    "Wan 3.0",
+    "Kling O3",
+    "Kling 3.0"
+  ],
+  "disclosure": {
+    "appeared": ["popover"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.agent-model-picker.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "添加模型 inserts a model chip into the composer text (mention-style)."
+    }
+  ]
+}

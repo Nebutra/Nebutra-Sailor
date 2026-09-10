@@ -1,0 +1,35 @@
+{
+  "id": "lovart.canvas.image-selected.more-menu",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "overlay": "image-more-menu",
+    "selectedEntity": "c-image"
+  },
+  "openOverlay": "image-more-menu",
+  "visibleControls": [
+    "移动对象 (new)",
+    "Mockup",
+    "扩展",
+    "调整 (new)",
+    "裁剪",
+    "矢量 ⚡9",
+    "翻转与旋转 (new)",
+    "自定义工具栏 ›"
+  ],
+  "disclosure": { "appeared": ["8 menu items"], "disappeared": [] },
+  "evidence": [
+    { "file": "evidence/canvas.image-selected.more-menu.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Credit price is printed inline only on the paid op (矢量 9); 调整 opens the paywall on the free tier."
+    },
+    {
+      "tier": "O",
+      "text": "自定义工具栏 lets the user choose which ops sit in the primary bar (submenu not captured)."
+    }
+  ]
+}

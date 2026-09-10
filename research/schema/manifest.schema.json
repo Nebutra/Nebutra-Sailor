@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research/schema/manifest.schema.json",
+  "title": "CompetitorManifest",
+  "type": "object",
+  "required": ["slug", "name", "targets", "access", "status"],
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string" },
+    "category": {
+      "type": "string",
+      "description": "creative-os | canvas-tool | agent-workspace | model-infra | community"
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["url", "track"],
+        "properties": {
+          "url": { "type": "string" },
+          "track": { "enum": ["public", "authenticated"] },
+          "verified": { "type": "boolean", "description": "URL confirmed reachable and correct" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "access": {
+      "type": "object",
+      "properties": {
+        "account": { "enum": ["none", "free", "paid"] },
+        "owner_assisted": { "type": "boolean" },
+        "credit_budget": { "type": "string", "description": "e.g. '20 generations' or '¥50'" }
+      }
+    },
+    "status": { "enum": ["planned", "in_progress", "core_done", "complete", "stale"] },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "route": { "type": "number" },
+        "surface": { "type": "number" },
+        "interaction": { "type": "number" },
+        "state": { "type": "number" },
+        "core_loop": { "type": "number" }
+      }
+    },
+    "last_explored": { "type": "string", "format": "date" }
+  }
+}

@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../schema/manifest.schema.json
+slug: flowith
+name: Flowith
+category: agent-workspace
+targets:
+  - { url: "https://flowith.io", track: public, verified: true }
+  - { url: "https://flowith.io/blank", track: authenticated, verified: true, note: "logged-in home = new-flow composer" }
+  - { url: "https://flowith.io/conv/<uuid>", track: authenticated, verified: true, note: "flow canvas (React Flow)" }
+  - { url: "https://flowith.io/flows", track: authenticated, verified: true, note: "Flow Library" }
+  - { url: "https://flowith.io/gallery", track: authenticated, verified: true, note: "Media History (account, by day)" }
+  - { url: "https://flowith.io/community", track: authenticated, verified: true, note: "Knowledge Market" }
+  - { url: "https://flowith.io/notifications", track: authenticated, verified: true }
+access:
+  account: free
+  owner_assisted: true
+  credit_budget: "0 credits available (Free/Starter, balance 0) — 2 Chat attempts made, none charged; no successful run possible. Credit model: single 'cr.' balance + per-model Free Gens + Unlimited Pack; Starter 300 cr./mo."
+status: core_done
+coverage: { route: 0.85, surface: 0.8, interaction: 0.6, state: 0.65, core_loop: 0.75 }
+last_explored: "2026-09-08"

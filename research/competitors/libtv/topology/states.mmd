@@ -1,0 +1,21 @@
+%% Core-loop state graph inside libtv.canvas (O). Selection is not a DOM state (I2).
+stateDiagram-v2
+  [*] --> canvas.default : 新建项目 / 新建画布创作 / template clone
+  canvas.default --> add_node_popover : + or double-click pane
+  add_node_popover --> video_node : 视频 / 全能参考生视频 / 智能剪辑 …
+  video_node --> node_config : config chip
+  video_node --> fx_picker : 特效
+  video_node --> character_library : 角色库
+  video_node --> context_menu : right-click
+  video_node --> generating : ▶ (not exercised — credits 0)
+  generating --> history : result recorded in 生成历史 (U)
+  canvas.default --> storyboard_mode : 故事板
+  storyboard_mode --> canvas.default : 工作流
+  canvas.default --> agent_drawer : Agent
+  agent_drawer --> agent_settings : Agent 设置
+  agent_drawer --> agent_running : Send (not exercised)
+  agent_running --> video_node : nodes created by agent (I1)
+  canvas.default --> publish_share : 发布与分享
+  publish_share --> community_feed : 在LibTV上发布
+  community_feed --> viewer_readonly : 查看创作过程
+  viewer_readonly --> canvas.default : 复制项目

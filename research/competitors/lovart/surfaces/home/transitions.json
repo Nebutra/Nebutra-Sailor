@@ -1,0 +1,58 @@
+[
+  {
+    "fromState": "lovart.home.default",
+    "action": { "type": "click", "control": "+ (agent-input-bottom-more-button)" },
+    "toState": "lovart.home.plus-popover",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/home.plus-popover.webp" }]
+  },
+  {
+    "fromState": "lovart.home.default",
+    "action": { "type": "click", "control": "book icon (skill)" },
+    "toState": "lovart.home.skill-popover",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/home.book-popover.webp" }]
+  },
+  {
+    "fromState": "lovart.home.default",
+    "action": { "type": "click", "control": "cube icon (agent-custom-settings-button)" },
+    "toState": "lovart.home.model-popover",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/home.settings-popover.webp" }]
+  },
+  {
+    "fromState": "lovart.home.default",
+    "action": { "type": "click", "control": "Design chip" },
+    "toState": "lovart.home.default",
+    "sideEffects": ["placeholder suggestions replaced with Design prompts"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/home.webp" }]
+  },
+  {
+    "fromState": "lovart.home.default",
+    "action": { "type": "click", "control": "项目 (left rail)" },
+    "toState": "lovart.projects.list",
+    "sideEffects": ["url.changed:/zh/projects"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/projects.list.webp" }]
+  },
+  {
+    "fromState": "lovart.home.default",
+    "action": { "type": "click", "control": "品牌套件 (left rail)" },
+    "toState": "lovart.brand-kit.empty",
+    "sideEffects": ["url.changed:/zh/brand-kit"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/brandkit.list.webp" }]
+  },
+  {
+    "fromState": "lovart.home.default",
+    "action": { "type": "click", "control": "project card" },
+    "toState": "lovart.canvas.idle",
+    "sideEffects": ["window.open('/canvas?projectId=…') — new tab"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.populated.webp" }]
+  }
+]

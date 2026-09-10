@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: forge router web pebble design auth kuanlan idp admin sailor-docs gateway cache carina new-api dns-leak). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api / dns-leak are the remaining ECS leftovers."
+        description: "Apps to deploy (space-separated: forge router web pebble design auth kuanlan idp admin sailor-docs para gateway cache carina new-api dns-leak). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api / dns-leak are the remaining ECS leftovers."
         required: false
         default: ""
       cutover:
@@ -36,6 +36,7 @@ on:
       - "apps/design/**"
       - "apps/auth/**"
       - "apps/kuanlan/**"
+      - "apps/para/**"
       - "apps/idp/**"
       - "apps/admin/**"
       - "apps/sailor-docs/**"
@@ -83,6 +84,7 @@ jobs:
             {"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","build_command":"build","fly_app":"nebutra-idp","host":"sso","site":"https://sso.nebutra.com"},
             {"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","build_command":"build","fly_app":"nebutra-admin","host":"admin","site":"https://admin.nebutra.com"},
             {"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","build_command":"build:vm","fly_app":"nebutra-docs","host":"docs","site":"https://docs.nebutra.com"},
+            {"app":"para","package":"@nebutra/para","workspace":"apps/para","build_command":"build","fly_app":"nebutra-para","host":"para","site":"https://para.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
           known = {row["app"] for row in all_apps} | {"gateway", "cache", "carina", "new-api", "dns-leak"}
@@ -269,6 +271,23 @@ jobs:
             exit 0
           fi
           flyctl secrets set "${args[@]}" -a nebutra-kuanlan --stage
+
+      - name: Set para auth secrets
+        if: matrix.app == 'para'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+        run: |
+          set -euo pipefail
+          args=()
+          [ -n "${BETTER_AUTH_SECRET:-}" ] && args+=(BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET")
+          args+=(NEXT_PUBLIC_AUTH_URL="https://auth.nebutra.com")
+          args+=(BETTER_AUTH_URL="https://auth.nebutra.com")
+          args+=(NEXT_PUBLIC_AUTH_PROVIDER="better-auth")
+          args+=(NEXT_PUBLIC_SITE_URL="https://para.nebutra.com")
+          # NEXT_PUBLIC_PARA_API_URL stays unset until the PARA migration is applied on the
+          # origin database; the shell falls back to mock data rather than 401-ing every call.
+          flyctl secrets set "${args[@]}" -a nebutra-para --stage
 
       - name: Deploy Machine
         env:

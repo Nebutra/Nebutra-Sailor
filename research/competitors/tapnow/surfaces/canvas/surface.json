@@ -1,0 +1,342 @@
+{
+  "id": "tapnow.canvas",
+  "competitor": "tapnow",
+  "route": "https://app.tapnow.ai/canvas/<project-uuid>",
+  "name": "Project canvas (node graph) + agent panel",
+  "category": "canvas",
+  "layout": {
+    "persistentPanels": [
+      "header-left (logo/back, canvas title, canvas switcher)",
+      "header-center (Tapies balance, Community, Share)",
+      "left dock rail (add node, node search, library, comment mode, history, avatar)",
+      "bottom-left canvas controls (minimap, hide connections, snap, fit view, zoom slider, help)",
+      "right agent panel (~33% width, collapsible)"
+    ],
+    "chromeRatio": 0.42,
+    "workSurfaceRatio": 0.58
+  },
+  "navigation": [
+    {
+      "label": "Back to Workspace",
+      "type": "icon-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Rename canvas",
+      "type": "input",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Switch canvas",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "Add node ⊕",
+      "type": "popover-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Generate (per node)",
+      "type": "primary-button",
+      "location": "canvas-node",
+      "visibleWhen": "node.selected"
+    },
+    {
+      "label": "Send (agent)",
+      "type": "primary-button",
+      "location": "right-panel",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Node search",
+      "type": "popover-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Library",
+      "type": "drawer-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Comment mode",
+      "type": "icon-button",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "History",
+      "type": "drawer-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Tapies balance → Settings",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Community",
+      "type": "link",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Share",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Open minimap",
+      "type": "icon-button",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Hide node connections",
+      "type": "icon-button",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Snap to Grid",
+      "type": "icon-button",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Reset (fit view)",
+      "type": "icon-button",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Help ?",
+      "type": "popover-trigger",
+      "location": "bottom-dock",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Node toolbar (per type)",
+      "type": "context-toolbar",
+      "location": "canvas-node",
+      "visibleWhen": "node.selected"
+    },
+    {
+      "label": "Reference handle",
+      "type": "icon-button",
+      "location": "canvas-node",
+      "visibleWhen": "node.selected"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "add-nodes",
+      "kind": "command-palette",
+      "trigger": "dock ⊕ / right-click",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "node types + utilities + upload"
+    },
+    {
+      "id": "node-search",
+      "kind": "modal",
+      "trigger": "dock search",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "find nodes by title/prompt/text"
+    },
+    {
+      "id": "library",
+      "kind": "drawer",
+      "trigger": "dock folder",
+      "dismiss": "Back",
+      "modal": "",
+      "contentOwnership": "assets: Private/Team, Elements(Subject), AI Character"
+    },
+    {
+      "id": "history",
+      "kind": "drawer",
+      "trigger": "dock clock",
+      "dismiss": "Back",
+      "modal": false,
+      "contentOwnership": "generation outputs by media type, multi-select, Apply to Canvas, Download"
+    },
+    {
+      "id": "node-context-menu",
+      "kind": "context-menu",
+      "trigger": "right-click node",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Copy/Paste/Duplicate/Delete/Report an issue"
+    },
+    {
+      "id": "canvas-context-menu",
+      "kind": "context-menu",
+      "trigger": "right-click pane",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Upload/Add Assets/Add Nodes/Add Utilities/Undo/Redo/Paste"
+    },
+    {
+      "id": "model-select",
+      "kind": "popover",
+      "trigger": "node bar model",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "per-media model list with res/duration/cost tags"
+    },
+    {
+      "id": "params",
+      "kind": "popover",
+      "trigger": "node bar params",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "quality/aspect/resolution/duration/audio"
+    },
+    {
+      "id": "variations",
+      "kind": "popover",
+      "trigger": "node bar 1×",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "1×–4×"
+    },
+    {
+      "id": "share-menu",
+      "kind": "popover",
+      "trigger": "header share",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Publish to TapTV / Share by link / Move to team"
+    },
+    {
+      "id": "settings",
+      "kind": "modal",
+      "trigger": "Tapies balance / usage icon",
+      "dismiss": "Close",
+      "modal": true,
+      "contentOwnership": "plans, credits, billing, usage, team, help"
+    },
+    {
+      "id": "canvas-switcher",
+      "kind": "popover",
+      "trigger": "header ▾",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "canvases in project + New Canvas"
+    },
+    {
+      "id": "image-editor",
+      "kind": "modal",
+      "trigger": "Image Editor node → Open editor",
+      "dismiss": "Close (x) / Save and Back To Canvas",
+      "modal": true,
+      "contentOwnership": "fullscreen raster editor with its own generation composer"
+    },
+    {
+      "id": "help-menu",
+      "kind": "popover",
+      "trigger": "? button",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Changelog/User Guide/Report an issue/Hotkeys"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.default.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.overview.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.dock.add-node.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.text-selected.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.node.image.generated.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Unit of work = Project → Canvas (many per project, 'New Canvas') → Node. Node types observed: text, image, video, audio, threed ('3D World'), Image Editor (rendered as image node), agent-created 'Generate Image'."
+    },
+    {
+      "tier": "O",
+      "text": "Node = generator + result holder: each node carries prompt (TipTap), model select, params, variations, Generate, cost in Tapies; the result renders inside the same node and the bar stays for regeneration."
+    },
+    {
+      "tier": "O",
+      "text": "Selection: single click selects one node; empty-pane click deselects; on select → floating toolbar above node + title input + generation bar below + Reference handle; selected nodes are pushed as context chips into the agent composer."
+    },
+    {
+      "tier": "O",
+      "text": "Add Nodes palette: Text / Image / Video / Audio / 3D; Utilities: Timeline Editor (Beta), 3D Studio, Image Editor; Add Source: Upload."
+    },
+    {
+      "tier": "O",
+      "text": "Text node toolbar: Background Color, H1/H2/H3, Paragraph, Bold, Italic, Bullet/Ordered List, Divider, Pin, Copy All, Save to Library, Fullscreen. Text generator model default Gemini 3.1 Flash Lite (LLM list with 'Low cost / 5~10s' tags)."
+    },
+    {
+      "tier": "O",
+      "text": "Image node: default Seedream 5.0 Lite 1:1·2K 1× cost 5; params popover Quality 2K/3K + Aspect 1:1…21:9; ~22 image models. After generation toolbar: Crop, Change Angle, Redraw, Relight, View All, Pin, Save to Library, Download, Full Screen."
+    },
+    {
+      "tier": "O",
+      "text": "Change Angle / Relight / Redraw render INLINE inside the node (cube with Rotation/Tilt/Scale/Wide-Angle; KEY LIGHT Global/Brightness/Color Temperature/Main Light/Rim Light; mask Brush/Marquee/Eraser + 'Describe what you want to change' + model Banana Pro cost 15)."
+    },
+    {
+      "tier": "O",
+      "text": "Video node: default Seedance 2.0 Mini, 'Frames · 16:9 · 480p · 5s' cost 30; params: Generate method Frames | Omni Reference; Aspect; Resolution 480p/720p; Duration 4–15s; Generate Audio On/Off; toolbar Upload, Point to Edit, First Frame, Last Frame; ~50 video models."
+    },
+    {
+      "tier": "O",
+      "text": "Audio node: prompt + lyrics, models Mureka V8/O2, Seed audio 1.0, MiniMax Music 2.6, ElevenLabs V3, Sonilo; scene 'Music'; cost 10."
+    },
+    {
+      "tier": "O",
+      "text": "3D node ('3D World'): model Marble 1.1; toolbar Upload, Pin."
+    },
+    {
+      "tier": "O",
+      "text": "Generation lifecycle (manual): Generate disabled until prompt → click → ~39s → image lands in node; no confirm dialog; History drawer gains a dated entry. No textual progress state observed in DOM (U: visual spinner)."
+    },
+    {
+      "tier": "O",
+      "text": "Share menu: Publish to TapTV / Share by link ('Anyone with the link can view and copy your template') / Move to team projects."
+    },
+    {
+      "tier": "O",
+      "text": "History drawer = generation output history (Image/Video/Audio/3D tabs, search, Select → Apply to Canvas / Download) — not document version history. Canvas has Undo/Redo (⌘Z/⇧⌘Z) only; no version/branch UI observed (U)."
+    },
+    {
+      "tier": "O",
+      "text": "Comment mode toggle on dock (EnableCommenting) — collaboration annotation mode exists; content not exercised."
+    },
+    {
+      "tier": "U",
+      "text": "Timeline Editor and 3D Studio: clicking the palette items produced no node/URL change in this tab; likely open a separate window/page."
+    }
+  ]
+}

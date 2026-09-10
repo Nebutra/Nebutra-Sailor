@@ -1,0 +1,48 @@
+{
+  "id": "fal.model.playground.advanced",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell",
+    "heading": "fal-ai/flux/schnell",
+    "activeTab": "Playground",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Prompt",
+    "Num Inference Steps slider 1-12 (8)",
+    "Image Size Landscape 4:3 + 1024×768",
+    "Seed + randomize",
+    "Guidance scale 1-20 (3.5)",
+    "Sync Mode switch",
+    "Num Images 1-4",
+    "Enable Safety Checker (locked alert)",
+    "Output Format",
+    "Acceleration",
+    "Less",
+    "Reset",
+    "Run"
+  ],
+  "disclosure": {
+    "appeared": ["8 advanced params", "Less"],
+    "disappeared": ["More", "'Customize your input with more control.'"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.advanced.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "'More' toggles to 'Less'; 8 controls appear inline (no modal). Safety-checker row shows an inline alert that it is API-only."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "seko.explore.hero-agent",
+  "surfaceId": "seko.explore",
+  "fingerprint": {
+    "route": "/explore",
+    "heading": "有什么新的故事灵感？",
+    "activeTab": "创作 Agent",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["skill chips", "更多 Skill", "+ attach", "skill icon", "send"]
+  },
+  "activeTab": "创作 Agent",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "placeholder 描述你的想法，或从技能列表中选择一个技能开始创作",
+    "skill chips 出海原创短剧 / BJD古偶甜宠剧 / 原创影视角色 / 反转带货小剧",
+    "更多 Skill",
+    "attach +",
+    "skill icon",
+    "send"
+  ],
+  "disclosure": {
+    "appeared": ["skill chips", "更多 Skill"],
+    "disappeared": [
+      "genre chip 短剧漫剧",
+      "document upload",
+      "model chip Seedance2.5 全能模式",
+      "多剧集 switch",
+      "genre presets"
+    ]
+  },
+  "evidence": [
+    {
+      "file": "evidence/explore.hero-agent.webp",
+      "url": "https://seko.sensetime.com/explore",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "创作 Agent mode (badged 无限画布) turns the hero into an agent/skill composer; the story-pipeline controls disappear."
+    },
+    {
+      "tier": "I2",
+      "text": "Submitting here opens a new canvas with the agent conversation started (matches the badge and the canvas aside), not exercised."
+    }
+  ]
+}

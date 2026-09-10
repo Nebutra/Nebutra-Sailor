@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.tv-skill.detail",
+  "surfaceId": "libtv.tv-skill",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/skill",
+    "heading": "东方巨构美学短剧",
+    "activeTab": "Skill",
+    "overlay": "skill-detail",
+    "selectedEntity": "skill:东方巨构美学短剧",
+    "majorControls": ["添加 Skill", "分享", "收藏"]
+  },
+  "selectedEntity": "skill:东方巨构美学短剧",
+  "activeTab": "Skill",
+  "openOverlay": "skill-detail",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "关闭",
+    "鱿鱼chill",
+    "短剧漫剧",
+    "3.3k",
+    "1.6k",
+    "分享",
+    "收藏",
+    "添加 Skill",
+    "简介: 介绍 / 使用场景 / 如何使用 / 输出内容",
+    "向下滚动"
+  ],
+  "disclosure": {
+    "appeared": ["modal"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.skill.detail.webp",
+      "url": "https://www.liblib.tv/skill",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Skill contract is documented as inputs (一份剧本或一句话，可选人脸/造型参考图) and outputs (角色/道具/场景资产图、逐镜分镜表格、仙侠短剧视频成片)."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+graph TD
+  explore[seko.explore home]
+  myspace[seko.my-space library]
+  characters[seko.characters library]
+  skills[seko.skill-community library]
+  avatar[seko.avatar-video editor form]
+  canvas[seko.canvas canvas + agent aside]
+  editor[seko.editor tab 编辑器 - inert on image-only canvas]
+  explore --> myspace
+  explore --> characters
+  explore --> skills
+  explore --> avatar
+  explore --> canvas
+  myspace --> canvas
+  canvas --> editor
+  canvas -->|rail modal 主体库 = same list| characters
+  canvas -->|/ skill picker = same catalogue| skills
+  canvas -->|对口型 node action ≈| avatar

@@ -1,0 +1,27 @@
+{
+  "id": "seko.canvas.agent-history",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "agent-history",
+    "selectedEntity": "none",
+    "majorControls": ["对话历史 无记录"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "agent-history",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["对话历史 无记录"],
+  "disclosure": { "appeared": ["popover"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.agent-history.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Conversations are listed per canvas (empty)." }]
+}

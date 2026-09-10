@@ -1,0 +1,41 @@
+{
+  "id": "fal.sandbox.model-picker",
+  "surfaceId": "fal.sandbox",
+  "fingerprint": {
+    "route": "/sandbox",
+    "heading": "Sandbox",
+    "activeTab": "Simple",
+    "overlay": "model-picker",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Simple",
+  "openOverlay": "model-picker",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Find text to image models...",
+    "Selected",
+    "SOTA",
+    "Trending",
+    "Fast",
+    "model list (multi-select)"
+  ],
+  "disclosure": {
+    "appeared": ["picker dialog"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/sandbox.models.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Picker is scoped to the current Type (text-to-image)."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "tapnow.app-home.user-menu",
+  "surfaceId": "tapnow.app-home",
+  "fingerprint": {
+    "route": "/home",
+    "heading": "What are we making today?",
+    "overlay": "user-menu",
+    "selectedEntity": "none"
+  },
+  "visibleControls": [
+    "Create Team",
+    "My Portfolio",
+    "English",
+    "Earn Tapies",
+    "My Account",
+    "Changelog",
+    "Partnership Center",
+    "Help Center",
+    "Sign Out"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/app.user-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Balance + plan shown in menu header."
+    }
+  ],
+  "openOverlay": "user-menu"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "seko.my-space.avatar-tab",
+  "surfaceId": "seko.my-space",
+  "fingerprint": {
+    "route": "/my-space?tab=avatar",
+    "heading": "我的空间",
+    "activeTab": "数字人",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "activeTab": "数字人",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["tabs", "empty state"],
+  "disclosure": { "appeared": ["empty state"], "disappeared": ["search", "filters"] },
+  "evidence": [
+    {
+      "file": "evidence/myspace.avatar-tab.webp",
+      "url": "https://seko.sensetime.com/my-space?tab=avatar",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Avatar videos are a third, separate work-object list." }]
+}

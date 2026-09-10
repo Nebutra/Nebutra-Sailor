@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.minimized",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["icon-only title bar", "Organize", "zoom", "Composer"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["icon-only title bar", "Organize", "zoom", "Composer"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": ["flow title text"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.minimized.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Minimize collapses the title cluster to icons; canvas chrome drops to ~5%."
+    }
+  ]
+}

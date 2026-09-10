@@ -1,0 +1,166 @@
+[
+  {
+    "fromState": "fal.model.playground.idle-example",
+    "action": {
+      "type": "click",
+      "control": "More"
+    },
+    "toState": "fal.model.playground.advanced",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.advanced",
+    "action": {
+      "type": "click",
+      "control": "Run ⌘↵"
+    },
+    "toState": "fal.model.playground.confirm-example",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.confirm-example",
+    "action": {
+      "type": "click",
+      "control": "Run anyway"
+    },
+    "toState": "fal.model.playground.starting",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.idle-example",
+    "action": {
+      "type": "click",
+      "control": "Credits button"
+    },
+    "toState": "fal.model.credits-popover",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.idle-example",
+    "action": {
+      "type": "click",
+      "control": "▾ more menu"
+    },
+    "toState": "fal.model.more-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.idle-example",
+    "action": {
+      "type": "click",
+      "control": "(i) Prompt"
+    },
+    "toState": "fal.model.prompt-info",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.idle-example",
+    "action": {
+      "type": "click",
+      "control": "tab API"
+    },
+    "toState": "fal.model.api",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.idle-example",
+    "action": {
+      "type": "click",
+      "control": "tab Examples"
+    },
+    "toState": "fal.model.examples",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.idle-example",
+    "action": {
+      "type": "click",
+      "control": "tab Requests"
+    },
+    "toState": "fal.model.requests.empty",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.requests.empty",
+    "action": {
+      "type": "click",
+      "control": "Status combobox"
+    },
+    "toState": "fal.model.requests.status-filter",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.idle-example",
+    "action": {
+      "type": "click",
+      "control": "tab Analytics"
+    },
+    "toState": "fal.model.analytics",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.examples",
+    "action": {
+      "type": "click",
+      "control": "example card"
+    },
+    "toState": "fal.model.playground.share-result",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "fal.model.playground.starting",
+    "action": {
+      "type": "navigate",
+      "control": "(server 403)"
+    },
+    "toState": "fal.model.playground.error-no-credits",
+    "sideEffects": ["job.rejected", "no history row"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/model.schnell.after-run.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "fal.model.playground.share-result",
+    "action": {
+      "type": "click",
+      "control": "Edit / Upscale / Make Video"
+    },
+    "toState": "fal.model.playground.idle-example",
+    "sideEffects": ["url.changed (?fromOutput=<requestId>)", "input prefilled from output"],
+    "tier": "I2",
+    "evidence": [
+      {
+        "file": "evidence/model.schnell.share.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

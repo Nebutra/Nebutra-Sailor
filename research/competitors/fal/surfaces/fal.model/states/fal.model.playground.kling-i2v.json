@@ -1,0 +1,43 @@
+{
+  "id": "fal.model.playground.kling-i2v",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/kling-video/v3/pro/image-to-video",
+    "heading": "fal-ai/kling-video/v3/pro/image-to-video",
+    "activeTab": "Playground",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Prompt",
+    "Multi prompt (shots: prompt+duration)",
+    "Start image",
+    "Duration",
+    "Generate Audio switch",
+    "End image",
+    "Elements (frontal + reference images, video)",
+    "cost line per second with audio tiers + 5s example $0.98"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.kling-i2v.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Video model shows more visible-by-default structure (multi-shot list) and a per-second price with worked example."
+    }
+  ]
+}

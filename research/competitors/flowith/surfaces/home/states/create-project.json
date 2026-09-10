@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.home.create-project",
+  "surfaceId": "flowith.home",
+  "fingerprint": {
+    "route": "/blank",
+    "heading": "Create project",
+    "activeTab": "",
+    "overlay": "create-project-dialog",
+    "selectedEntity": "none",
+    "majorControls": ["project name input (required)", "Cancel", "Create"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "create-project-dialog",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["project name input (required)", "Cancel", "Create"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/home.create-project.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "'Create new project' opens a modal with a single required name field. Not submitted."
+    },
+    {
+      "tier": "U",
+      "text": "Whether a project is a folder of flows or a separate object."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "lovart.canvas.image-selected.crop",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "裁剪",
+    "overlay": "crop",
+    "selectedEntity": "c-image"
+  },
+  "openOverlay": "crop",
+  "visibleControls": [
+    "W",
+    "H",
+    "锁定宽高比",
+    "预设: 通用 / Instagram / Facebook / TikTok / YouTube / LinkedIn / Twitter",
+    "取消",
+    "完成 (crop-run)"
+  ],
+  "disclosure": { "appeared": ["crop panel"], "disappeared": ["image toolbar"] },
+  "evidence": [{ "file": "evidence/canvas.image-selected.crop.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    { "tier": "O", "text": "Crop is local and free; presets are social-platform sizes." }
+  ]
+}

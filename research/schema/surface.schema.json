@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research/schema/surface.schema.json",
+  "title": "SurfaceSpec",
+  "type": "object",
+  "required": ["id", "competitor", "name", "category", "primaryActions", "overlays", "evidence"],
+  "properties": {
+    "id": { "type": "string", "description": "competitor.surface, e.g. tapnow.canvas" },
+    "competitor": { "type": "string" },
+    "route": { "type": "string" },
+    "name": { "type": "string" },
+    "category": {
+      "enum": [
+        "home",
+        "project",
+        "workspace",
+        "canvas",
+        "library",
+        "agent",
+        "editor",
+        "viewer",
+        "settings",
+        "other"
+      ]
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "persistentPanels": { "type": "array", "items": { "type": "string" } },
+        "chromeRatio": { "type": "number", "description": "approximate 0..1" },
+        "workSurfaceRatio": { "type": "number" }
+      }
+    },
+    "navigation": { "type": "array", "items": { "$ref": "#/$defs/control" } },
+    "tabs": { "type": "array", "items": { "$ref": "#/$defs/tab" } },
+    "primaryActions": { "type": "array", "items": { "$ref": "#/$defs/control" } },
+    "secondaryActions": { "type": "array", "items": { "$ref": "#/$defs/control" } },
+    "overlays": { "type": "array", "items": { "$ref": "#/$defs/overlay" } },
+    "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidenceRef" } },
+    "observations": { "type": "array", "items": { "$ref": "#/$defs/observation" } }
+  },
+  "$defs": {
+    "tier": { "enum": ["O", "I2", "I1", "U"] },
+    "evidenceRef": {
+      "type": "object",
+      "required": ["file"],
+      "properties": {
+        "file": { "type": "string" },
+        "url": { "type": "string" },
+        "capturedAt": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "required": ["tier", "text"],
+      "properties": {
+        "tier": { "$ref": "#/$defs/tier" },
+        "text": { "type": "string" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidenceRef" } }
+      }
+    },
+    "control": {
+      "type": "object",
+      "required": ["label", "type"],
+      "properties": {
+        "label": { "type": "string" },
+        "type": {
+          "type": "string",
+          "description": "primary-button | secondary-button | icon-button | link | tab | drawer-trigger | popover-trigger | contextual-action | menu-item | input | dropzone"
+        },
+        "location": {
+          "type": "string",
+          "description": "top-left | top-right | bottom-dock | left-rail | right-panel | floating | canvas-node"
+        },
+        "visibleWhen": {
+          "type": "string",
+          "description": "always | hover | <entity>.selected | overlay:<id> | advanced"
+        }
+      }
+    },
+    "tab": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "default": { "type": "boolean" },
+        "changesUrl": { "type": "boolean" },
+        "persistsState": { "type": "boolean" },
+        "lazy": { "type": "boolean" },
+        "scope": { "type": "string" }
+      }
+    },
+    "overlay": {
+      "type": "object",
+      "required": ["id", "kind", "trigger"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": {
+          "enum": [
+            "popover",
+            "drawer",
+            "modal",
+            "sheet",
+            "inspector",
+            "context-toolbar",
+            "context-menu",
+            "tooltip",
+            "command-palette"
+          ]
+        },
+        "trigger": { "type": "string" },
+        "dismiss": { "type": "string" },
+        "modal": { "type": "boolean" },
+        "width": { "type": "string" },
+        "contentOwnership": {
+          "type": "string",
+          "description": "what business content the overlay owns, e.g. selection + generation config + history"
+        }
+      }
+    }
+  }
+}

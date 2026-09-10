@@ -1,0 +1,38 @@
+{
+  "id": "lovart.canvas.idle",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "activeTab": "Agent",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["dock", "agent panel", "minimap", "zoom"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Agent",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "logo menu",
+    "Untitled",
+    "brand-kit chevron",
+    "试用 Lovart 新版本",
+    "⚡70",
+    "avatar",
+    "agent header (新建对话, 历史对话, share, collapse)",
+    "Skills empty-state chips ×7 + 所有Skills",
+    "upgrade banner",
+    "composer (+, skill, Agent▾, bulb, cube, mic)",
+    "dock ×10",
+    "画布背景 / 图层 / 生成文件 / 小地图 / zoom"
+  ],
+  "evidence": [{ "file": "evidence/canvas.populated.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Send button is replaced by a mic (voice input) while the composer is empty."
+    }
+  ]
+}

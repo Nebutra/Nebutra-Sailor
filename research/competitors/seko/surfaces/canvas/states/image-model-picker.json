@@ -1,0 +1,29 @@
+{
+  "id": "seko.canvas.image-model-picker",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "image-model-picker",
+    "selectedEntity": "blank-node",
+    "majorControls": ["20 model rows (name · max res · 支持 N 个参考)"]
+  },
+  "selectedEntity": "blank-node",
+  "activeTab": "画布",
+  "openOverlay": "image-model-picker",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": ["20 model rows (name · max res · 支持 N 个参考)"],
+  "disclosure": { "appeared": ["model list"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image-model-picker.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    { "tier": "O", "text": "Reference-image capacity is a per-model attribute (3–14 references)." }
+  ]
+}

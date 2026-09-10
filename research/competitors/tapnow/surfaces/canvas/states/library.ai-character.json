@@ -1,0 +1,33 @@
+{
+  "id": "tapnow.canvas.library.ai-character",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "AI Character Library",
+    "overlay": "ai-character-dialog",
+    "selectedEntity": "none"
+  },
+  "visibleControls": [
+    "All Characters",
+    "Ancient",
+    "Contemporary",
+    "Early Modern",
+    "Fantasy",
+    "Sci-Fi",
+    "filters Gender/Age Group/Species/Build/Height/Skin Color/Hair Length/Hair Color/Temperament",
+    "character cards"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.library.ai-character.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Preset character catalog with attribute facets; cards like 'Female General — Female · Young Adult · Athletic · Dashing'."
+    }
+  ],
+  "openOverlay": "ai-character-dialog"
+}

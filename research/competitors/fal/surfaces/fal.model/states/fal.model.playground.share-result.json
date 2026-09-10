@@ -1,0 +1,50 @@
+{
+  "id": "fal.model.playground.share-result",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell?share=<id>",
+    "heading": "fal-ai/flux/schnell",
+    "activeTab": "Playground",
+    "overlay": "none",
+    "selectedEntity": "request:019efbde-…",
+    "majorControls": []
+  },
+  "selectedEntity": "request:019efbde-…",
+  "activeTab": "Playground",
+  "openOverlay": "none",
+  "jobState": "completed",
+  "agentState": "none",
+  "visibleControls": [
+    "Result: Idle",
+    "image",
+    "Edit ▾",
+    "Upscale ▾",
+    "Make Video ▾",
+    "Favorite",
+    "Link character",
+    "Add to Collection",
+    "Share",
+    "Download",
+    "JSON"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.share.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "?share=<uuid> loads a specific past request into the playground with the full 'What would you like to do next?' action set; chain links carry ?fromOutput=<requestId>."
+    },
+    {
+      "tier": "O",
+      "text": "Each chain action has a ▾ menu (alternative target models)."
+    }
+  ]
+}

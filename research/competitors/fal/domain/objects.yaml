@@ -1,0 +1,29 @@
+# fal domain objects — tier per field
+Model:
+  tier: O
+  id: "<owner>/<model>[/<endpoint>]"   # e.g. fal-ai/flux/schnell, fal-ai/nano-banana-2/edit
+  fields: [name, description, tags(task, capability), badges(new), vendor/lab, variants(endpoint switcher), schema(input, output, other types), pricing_line, readme, llms.txt, openapi]
+  surfaces: [fal.explore, fal.model]
+Request:            # fal's job/unit of work
+  tier: O (UI) / O-documented (API)
+  fields: [request_id, gateway_request_id, status(IN_QUEUE|IN_PROGRESS|COMPLETED), queue_position, logs[], metrics.inference_time, error, error_type, response_url, status_url, cancel_url, input_payload(30d), output_payload(30d)]
+  ui_status_buckets: [Success, Error, Client error]     # Requests tab filter
+  note: rejected-at-gateway (403 balance) requests get requestId '' and no history row
+Result:
+  tier: O
+  fields: [images[url,width,height,content_type] | video | audio_url, seed, prompt, timings.inference, has_nsfw_concepts]
+  actions: [Preview|JSON, Download, Copy JSON, Edit(?fromOutput), Upscale(?fromOutput), Make Video(?fromOutput), Favorite, Link character, Add to Collection, Share(?share=)]
+Asset:
+  tier: O
+  library: /assets → All media, Collections, Favorites
+  note: "Everything you create on fal shows up here automatically"
+Entity:
+  tier: O (existence) / I2 (usage)
+  kinds: [Character, Prop, Environment, Style, Scene]
+  usage: "@ to reference entities" in prompt; "Link character" on a result
+Collection: {tier: O, ops: [Add to Collection, keyboard DnD in /assets]}
+ModelSet:  {tier: O, surface: fal.sandbox, examples: [State of the Art(5, default), Fast Open Source(4)], ops: [Select Set, Edit Sets]}
+SandboxRun: {tier: O, fields: [prompt, type, aspect, models[], repeats(1x), est_cost], note: cost estimate shown pre-run}
+Credits:   {tier: O, fields: [available_usd, out_of_credits], surfaces: [header popover, /dashboard/usage-billing/credits]}
+Webhook:   {tier: O-documented, fields: [request_id, gateway_request_id, status(OK|ERROR), payload, error, payload_error], dashboard: /dashboard/webhooks(Request, URL, Status, At)}
+Workflow:  {tier: O (enumerated), surface: /workflows, templates: true}

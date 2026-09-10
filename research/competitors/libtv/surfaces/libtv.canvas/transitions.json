@@ -1,0 +1,375 @@
+[
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "添加节点 (+)"
+    },
+    "toState": "libtv.canvas.add-node-popover",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.dblclick.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "double_click",
+      "control": "canvas pane"
+    },
+    "toState": "libtv.canvas.add-node-popover",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.dblclick.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "打开工具箱"
+    },
+    "toState": "libtv.canvas.toolbox-panel",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.dock-toolbox.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "角色库"
+    },
+    "toState": "libtv.canvas.character-library",
+    "sideEffects": ["overlay.opened"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.dock-character-lib.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "生成历史"
+    },
+    "toState": "libtv.canvas.generation-history",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.dock-gen-history.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "资产管理"
+    },
+    "toState": "libtv.canvas.asset-mgmt-panel",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.asset-mgmt.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "故事板"
+    },
+    "toState": "libtv.canvas.storyboard-mode",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.storyboard-mode.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.storyboard-mode",
+    "action": {
+      "type": "click",
+      "control": "工作流"
+    },
+    "toState": "libtv.canvas.default",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.new-project.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "画布 1 ▾"
+    },
+    "toState": "libtv.canvas.canvas-switcher",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.canvas-switcher.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "发布与分享"
+    },
+    "toState": "libtv.canvas.publish-share",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.publish-share.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "协作者：1 人"
+    },
+    "toState": "libtv.canvas.collab-presence",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.collab.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "打开 Agent"
+    },
+    "toState": "libtv.canvas.agent-drawer",
+    "sideEffects": ["drawer.opened"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.agent-drawer.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.agent-drawer",
+    "action": {
+      "type": "click",
+      "control": "Agent 设置"
+    },
+    "toState": "libtv.canvas.agent-settings",
+    "sideEffects": ["overlay.opened"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.agent-settings.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.agent-drawer",
+    "action": {
+      "type": "click",
+      "control": "选择模型"
+    },
+    "toState": "libtv.canvas.agent-model-picker",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.agent-model-picker.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.agent-model-picker",
+    "action": {
+      "type": "click",
+      "control": "添加模型 Seedance 2.0 Fast VIP"
+    },
+    "toState": "libtv.canvas.agent-drawer",
+    "sideEffects": ["composer.chip.inserted"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.agent-drawer.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "全能参考生视频 (empty state)"
+    },
+    "toState": "libtv.canvas.video-node-default",
+    "sideEffects": [
+      "node.created ×2",
+      "edge.created",
+      "sync 同步中→已同步",
+      "composer.chip.inserted"
+    ],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.node-video-ref.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.video-node-default",
+    "action": {
+      "type": "refresh",
+      "control": "browser reload"
+    },
+    "toState": "libtv.canvas.video-node-default",
+    "sideEffects": ["nodes persisted (2)"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.node-video-ref.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.video-node-default",
+    "action": {
+      "type": "click",
+      "control": "16:9 · 720P · 5s · 1个"
+    },
+    "toState": "libtv.canvas.video-node-config",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.node-config-popover.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.video-node-default",
+    "action": {
+      "type": "click",
+      "control": "特效"
+    },
+    "toState": "libtv.canvas.video-node-fx-picker",
+    "sideEffects": ["overlay.opened"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.node-fx-chip.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.video-node-default",
+    "action": {
+      "type": "right_click",
+      "control": "video node"
+    },
+    "toState": "libtv.canvas.node-context-menu",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.node-context-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.video-node-default",
+    "action": {
+      "type": "click",
+      "control": "video node body"
+    },
+    "toState": "libtv.canvas.video-node-default",
+    "sideEffects": ["no DOM change (selection not reflected)"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.node-video-ref.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.add-node-popover",
+    "action": {
+      "type": "click",
+      "control": "智能剪辑"
+    },
+    "toState": "libtv.canvas.smart-edit-node",
+    "sideEffects": ["node.created", "composer.chip.inserted"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.node-smart-edit.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.canvas.template-virtual-studio",
+    "action": {
+      "type": "click",
+      "control": "打开导演台"
+    },
+    "toState": "libtv.canvas.template-virtual-studio",
+    "sideEffects": ["nothing observable"],
+    "tier": "U",
+    "evidence": [
+      {
+        "file": "evidence/libtv.canvas.template-virtual-studio.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

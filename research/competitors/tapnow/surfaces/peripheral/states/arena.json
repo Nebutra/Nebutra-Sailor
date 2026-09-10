@@ -1,0 +1,25 @@
+{
+  "id": "tapnow.peripheral.arena",
+  "surfaceId": "tapnow.peripheral",
+  "fingerprint": {
+    "route": "/home/challenge",
+    "heading": "Active Events",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "activeTab": "Active Events"
+  },
+  "visibleControls": ["Active Events", "Event Archive", "event cards"],
+  "evidence": [
+    {
+      "file": "evidence/app.arena.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Community layer is competition-driven (Tapies rewards)."
+    }
+  ],
+  "activeTab": "Active Events"
+}

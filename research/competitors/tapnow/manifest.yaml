@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../schema/manifest.schema.json
+slug: tapnow
+name: TapNow
+category: creative-os
+targets:
+  - { url: "https://www.tapnow.ai", track: public, verified: true, note: "marketing home + manifesto/download/enterprise; /pricing redirects to app" }
+  - { url: "https://app.tapnow.ai/home", track: authenticated, verified: true, note: "owner's Chrome session was already logged in (FREE plan); login NOT required on this pass, no credentials entered. Project canvas at /canvas/<uuid>" }
+access:
+  account: free
+  owner_assisted: true
+  credit_budget: "2 cheapest image generations spent (5 + ~5 Tapies of ~200 gifted); nothing deleted/published/shared"
+status: core_done
+coverage: { route: 0.85, surface: 0.8, interaction: 0.65, state: 0.6, core_loop: 0.75 }
+last_explored: "2026-09-08"

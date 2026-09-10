@@ -1,0 +1,82 @@
+# TapNow domain objects — derived from UI labels only. tier: O observed · I2 strongly inferred · U unknown
+objects:
+  - name: Team
+    tier: O
+    evidence: [app.user-menu.webp, app.workspace.team.webp]
+    notes: "User chip shows '<name>'s Team'; Team Projects scope; Team Settings / Team Entitlements / 'Member Tapies controls' in plans; Create Team in user menu."
+  - name: Project
+    tier: O
+    evidence: [app.workspace.private.webp, app.workspace.project-menu.webp]
+    notes: "Card in Workspace; Rename / Move to... / Share by link / Move to team / Delete. Route /canvas/<uuid>. Skill/template clone creates a project ('Video Edit (copy)')."
+  - name: Collection
+    tier: O
+    evidence: [app.workspace.private.webp]
+    notes: "Filter 'Collections | Projects' and 'Move to...' imply folders of projects."
+  - name: Canvas
+    tier: O
+    evidence: [canvas.default.webp]
+    notes: "Header switcher lists canvases in a project + 'New Canvas'; rename in header. One project → many canvases."
+  - name: Node
+    tier: O
+    kinds: [text, image, video, audio, threed("3D World"), image-editor, agent "Generate Image", world, group]
+    evidence: [canvas.dock.add-node.webp, canvas.node.text-selected.webp, canvas.node.image.generated.webp]
+    notes: "Node = prompt + model + params + result holder + title. Search filters expose 'World' and 'Group' kinds (Group not exercised)."
+  - name: Edge (Wire)
+    tier: O
+    evidence: [canvas.agent.generated.webp]
+    notes: "Agent-created 'Generate Image' node arrived with 1 edge from the reference image node; 'Hide node connections' toggle; manifesto: 'Wire is the Logic'."
+  - name: Reference
+    tier: O
+    evidence: [canvas.node.text-selected.webp]
+    notes: "Round 'Reference' handle on every selected node; video 'Omni Reference' generate method; composer '@ add references'."
+  - name: Generation / Output
+    tier: O
+    evidence: [canvas.node.image.generated.webp, canvas.dock.history.with-item.webp]
+    notes: "Result image URL files.tapnow.media/api/conversation/storage/uploads/<uuid>; appears in node and in History drawer (by media, dated); 'Apply to Canvas' re-materialises an output as a node."
+  - name: Library asset
+    tier: O
+    evidence: [canvas.library.private.webp]
+    notes: "Scopes Private | Team; Favorite; categories Folder / Character / Scene / Item / Style / Sound Effect / Others; 'Save to Library' on text & image nodes."
+  - name: Subject (Element)
+    tier: O
+    evidence: [canvas.library.private.webp]
+    notes: "'Pack images, text, audio, and video into a unified Subject for one-click use in video nodes' — Seedance 2/2.5 only. 'Omnimodal Subject' skill: up to 50 references."
+  - name: AI Character (preset)
+    tier: O
+    evidence: [canvas.library.ai-character.webp]
+    notes: "Catalogue with era tabs and facets (Gender, Age Group, Species, Build, Height, Skin Color, Hair, Temperament)."
+  - name: Skill
+    tier: O
+    evidence: [app.home.webp, app.skill-card.canvas.webp]
+    notes: "Home skill cards clone a template project; agent reads 'TapNow canvas operation Skill'; pricing sells 'Pro Skills from top institutions' and 'Reusable personal Skills'; agent suggestion 'Create a custom Skill from my preferences'."
+  - name: Template
+    tier: O
+    evidence: [app.template-preview.webp, canvas.header.share.webp]
+    notes: "Home templates with Preview/Try Now; Share by link makes a project a copyable template; Publish to TapTV."
+  - name: Chat session (agent)
+    tier: O
+    evidence: [canvas.agent.chat-history.webp]
+    notes: "Per project; auto-titled; Fork conversation; model locked per session."
+  - name: Memory
+    tier: O
+    evidence: [canvas.default.webp]
+    notes: "Suggestion cards 'build creative memory for this project — theme, style, relationships, limits' / 'carry forward this project's memory'. Structure not observed (U)."
+  - name: Action (agent)
+    tier: O
+    evidence: [canvas.agent.actions-expanded.webp]
+    notes: "Logged steps: read skill/docs, run command, get node details, submit generation task; paid actions need approval in Ask mode."
+  - name: Tapies (credit)
+    tier: O
+    evidence: [canvas.settings.subscriptions.webp, canvas.settings.usage.webp]
+    notes: "$1 = 100 Tapies; per-node cost shown; separate 'Agent Tapies' pool; 'Gift Tapies Benefit'."
+  - name: Model card
+    tier: I2
+    evidence: [canvas.settings.subscriptions.webp]
+    notes: "'Model Mart' + 'Unlimited Model Card Purchase Access' suggest purchasable per-model access."
+  - name: Comment
+    tier: O
+    evidence: [canvas.default.webp]
+    notes: "Dock 'comment mode' (EnableCommenting); content not exercised."
+  - name: Event (Arena)
+    tier: O
+    evidence: [app.arena.webp]

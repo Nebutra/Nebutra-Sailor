@@ -1,0 +1,23 @@
+{
+  "id": "lovart.canvas.agent-collapsed",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["对话 button", "floating mic"]
+  },
+  "openOverlay": "none",
+  "visibleControls": [
+    "对话 (re-open) in top bar",
+    "floating mic bubble bottom-right",
+    "dock centred in the wider canvas"
+  ],
+  "disclosure": {
+    "appeared": ["对话 button", "mic bubble"],
+    "disappeared": ["agent panel", "composer"]
+  },
+  "evidence": [{ "file": "evidence/canvas.agent-collapsed.webp", "capturedAt": "2026-09-08" }],
+  "observations": [{ "tier": "O", "text": "Collapsed state persisted across reload." }]
+}

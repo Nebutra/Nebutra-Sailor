@@ -1,0 +1,35 @@
+{
+  "id": "fal.login.wall",
+  "surfaceId": "fal.login",
+  "fingerprint": {
+    "route": "/login",
+    "heading": "Welcome to fal",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Continue with GitHub",
+    "Continue with Google",
+    "Continue with SSO",
+    "Terms",
+    "Privacy"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/login-wall.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": []
+}

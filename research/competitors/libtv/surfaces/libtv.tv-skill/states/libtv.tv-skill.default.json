@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.tv-skill.default",
+  "surfaceId": "libtv.tv-skill",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/skill",
+    "heading": "全开，故事走起 Skill",
+    "activeTab": "Skill",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["composer", "Skill/收藏/团队", "skill grid"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Skill",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "composer 请输入你的创作灵感，或从下方挑选一个 Skill 开始",
+    "添加附件",
+    "选择模型",
+    "Skill",
+    "生成模式",
+    "发送",
+    "Skill",
+    "收藏",
+    "团队",
+    "通用技能 chip",
+    "搜索 Skill",
+    "cards: 东方巨构美学短剧 (视频, 鱿鱼chill, 3.3k), 仙侠氛围美学短片, 梦核美学, A24电影美学 …"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.skill.default.webp",
+      "url": "https://www.liblib.tv/skill",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Marketplace of agent skills with author and usage counters."
+    }
+  ]
+}

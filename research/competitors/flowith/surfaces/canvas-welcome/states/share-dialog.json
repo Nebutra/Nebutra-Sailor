@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.share-dialog",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Share this flow",
+    "activeTab": "",
+    "overlay": "share-dialog",
+    "selectedEntity": "none",
+    "majorControls": [
+      "switch 'Anyone with this link' (on)",
+      "permission 'can view'",
+      "Copy Link",
+      "members: (Me) owner",
+      "Close"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "share-dialog",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "switch 'Anyone with this link' (on)",
+    "permission 'can view'",
+    "Copy Link",
+    "members: (Me) owner",
+    "Close"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.share-dialog.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Flow-level sharing with view permission; no publish-to-community control here."
+    }
+  ]
+}

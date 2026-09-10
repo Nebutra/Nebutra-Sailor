@@ -1,0 +1,34 @@
+{
+  "id": "fal.docs.webhooks",
+  "surfaceId": "fal.docs",
+  "fingerprint": {
+    "route": "/docs/documentation/model-apis/inference/webhooks",
+    "heading": "Webhooks",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["payload OK/ERROR", "payload_error", "retry policy", "IP ranges"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/docs.webhooks.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "31 retries with backoff until stored result expires (~1h; ~6min for ≥10KB); 3xx = permanent failure."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-generator.image-model-picker",
+  "surfaceId": "libtv.art-generator",
+  "fingerprint": {
+    "route": "https://www.liblib.art/ai-tool/image-generator",
+    "heading": "选择模型",
+    "activeTab": "图片生成",
+    "overlay": "model-picker-modal",
+    "selectedEntity": "none",
+    "majorControls": ["model list"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "图片生成",
+  "openOverlay": "model-picker-modal",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Close",
+    "Seedream 5.0 Pro (多参考图)",
+    "Seedream 5.0 Lite (超清4K, 多参考图)",
+    "全能图片模型V2-Flash (超清4K, 多参考图, 指令编辑强)",
+    "Qwen Image3 (多参考图, 风格模型)",
+    "Seedream 4.6 (超清4K, 组图模式, 多参考图)",
+    "Seedream 4.5",
+    "全能图片模型V2",
+    "Qwen-Image (设置参考维度)",
+    "智能图片V2 (多参考生成，长文本能力突出)"
+  ],
+  "disclosure": {
+    "appeared": ["modal"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-image-gen.base-model-picker.webp",
+      "url": "https://www.liblib.art/ai-tool/image-generator",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Capability badges per model."
+    }
+  ]
+}

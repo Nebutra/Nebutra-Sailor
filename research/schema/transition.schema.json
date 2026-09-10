@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research/schema/transition.schema.json",
+  "title": "ProductTransitions",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["fromState", "action", "toState", "evidence"],
+    "properties": {
+      "fromState": { "type": "string" },
+      "action": {
+        "type": "object",
+        "required": ["type", "control"],
+        "properties": {
+          "type": {
+            "enum": [
+              "click",
+              "double_click",
+              "drag",
+              "drop",
+              "right_click",
+              "keyboard",
+              "submit",
+              "hover",
+              "navigate",
+              "refresh"
+            ]
+          },
+          "control": { "type": "string" },
+          "keys": { "type": "string" }
+        }
+      },
+      "toState": { "type": "string" },
+      "sideEffects": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "e.g. job.created, artifact.created, node.linked, url.changed"
+      },
+      "tier": { "enum": ["O", "I2", "I1", "U"], "default": "O" },
+      "evidence": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["file"],
+          "properties": { "file": { "type": "string" }, "capturedAt": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

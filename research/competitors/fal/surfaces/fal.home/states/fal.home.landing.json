@@ -1,0 +1,45 @@
+{
+  "id": "fal.home.landing",
+  "surfaceId": "fal.home",
+  "fingerprint": {
+    "route": "/",
+    "heading": "Generative media platform for developers.",
+    "activeTab": "",
+    "overlay": "cookie-consent",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "cookie-consent",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Products menu",
+    "Documentation",
+    "Pricing",
+    "Enterprise",
+    "Resources",
+    "Contact Sales",
+    "Login",
+    "Get started",
+    "Explore all models",
+    "model carousel cards"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/home.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Featured carousel links straight to /models/<id> model pages."
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-generator.video-default",
+  "surfaceId": "libtv.art-generator",
+  "fingerprint": {
+    "route": "https://www.liblib.art/ai-tool/video-generator",
+    "heading": "视频创作",
+    "activeTab": "视频生成",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "@-prompt",
+      "视频/图片/音频 attach",
+      "Seedance 2.0 VIP",
+      "全能参考",
+      "智能比例 | 720p | 5s | 有配音"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "视频生成",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "contenteditable prompt with @ references",
+    "视频",
+    "图片",
+    "音频 (.wav/.mp3)",
+    "Seedance 2.0 VIP",
+    "全能参考 ▾",
+    "config chip",
+    "generate",
+    "做同款 strip (海螺 2.3 …)"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-video-gen.webp",
+      "url": "https://www.liblib.art/ai-tool/video-generator",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Video generator mirrors the LibTV video node vocabulary (全能参考, @引用)."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.template-shot-breakdown",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?model=star-video2.5&spaceId=7895434&projectId=f7f42c8135674a53b60b16c2851fd9f5",
+    "heading": "未命名项目 - 画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["group nodes", "shot image nodes", "motion video nodes", "audio node"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "groups: 分镜组02｜入境感受…, 分镜组03｜青涩余韵…, 动态｜运镜动作参考, 音乐｜BGM参考片段",
+    "shots S07…S12 (全景/近景/中景, 逆光/仰拍)",
+    "motions M01 5s / M02 9s / M03 8s 1920 × 1080",
+    "BGM参考·清新抒情·舒缓节拍·稻田入境段（24s）",
+    "zoom 38%"
+  ],
+  "disclosure": {
+    "appeared": ["cloned project, 14 nodes"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.template-shot-breakdown.webp",
+      "url": "https://www.liblib.tv/canvas?model=star-video2.5&spaceId=7895434&projectId=f7f42c8135674a53b60b16c2851fd9f5",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "逐帧拉片 = pre-built shot-breakdown graph (groups → shots → motion clips → BGM) rather than a dedicated timeline tool."
+    }
+  ]
+}

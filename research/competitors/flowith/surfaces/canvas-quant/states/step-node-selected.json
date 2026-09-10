@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-quant.step-node-selected",
+  "surfaceId": "flowith.canvas-quant",
+  "fingerprint": {
+    "route": "/conv/3e48cb10-e17f-4309-8e07-32364045ad9a",
+    "heading": "Quant System PRD",
+    "activeTab": "",
+    "overlay": "node-toolbar",
+    "selectedEntity": "step-node 618c6851",
+    "majorControls": ["Rerun", "Edit", "Delete", "Add node", "Follow Up"]
+  },
+  "selectedEntity": "step-node 618c6851",
+  "activeTab": "",
+  "openOverlay": "node-toolbar",
+  "jobState": "none",
+  "agentState": "done",
+  "visibleControls": ["Rerun", "Edit", "Delete", "Add node", "Follow Up"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.quant.step-node-selected.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Step-label node toolbar: Rerun · Edit · Delete."
+    }
+  ]
+}

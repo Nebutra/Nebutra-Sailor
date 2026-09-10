@@ -1,0 +1,30 @@
+{
+  "id": "tapnow.peripheral.pricing",
+  "surfaceId": "tapnow.peripheral",
+  "fingerprint": {
+    "route": "/pricing",
+    "heading": "Select your plan",
+    "overlay": "none",
+    "selectedEntity": "none"
+  },
+  "visibleControls": [
+    "Monthly",
+    "Quarterly",
+    "Annual",
+    "Enterprise",
+    "Subscribe ×2",
+    "Price in USD"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/app.pricing.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Concurrency (4 tasks) and queue priority are plan features."
+    }
+  ]
+}

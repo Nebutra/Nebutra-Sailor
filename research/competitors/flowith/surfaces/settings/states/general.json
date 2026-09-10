@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.settings.general",
+  "surfaceId": "flowith.settings",
+  "fingerprint": {
+    "route": "/blank (modal)",
+    "heading": "General Setting",
+    "activeTab": "General",
+    "overlay": "settings-modal",
+    "selectedEntity": "none",
+    "majorControls": ["General", "Usage", "Account", "Report Bugs", "Language", "Theme"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "General",
+  "openOverlay": "settings-modal",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "General",
+    "Usage",
+    "Account",
+    "Report Bugs",
+    "Language",
+    "Theme",
+    "Node Interaction Mode",
+    "Sending",
+    "shortcut table",
+    "Close settings"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/settings.node-interaction-options.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "See surface observations."
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "lovart.brand-kit",
+  "competitor": "lovart",
+  "route": "/zh/brand-kit",
+  "name": "我的品牌套件 Beta (My Brand Kit)",
+  "category": "library",
+  "layout": {
+    "persistentPanels": ["left icon rail", "kit list column (~260px): 新建 button + kit cards"],
+    "chromeRatio": 0.22,
+    "workSurfaceRatio": 0.78
+  },
+  "navigation": [
+    {
+      "label": "Info (i) → onboarding popover",
+      "type": "popover-trigger",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [],
+  "primaryActions": [
+    {
+      "label": "新建 (New kit)",
+      "type": "primary-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "上传完整的品牌手册，自动填充所有内容 (PNG/JPG/PDF · 最大 50MB) dropzone",
+      "type": "dropzone",
+      "location": "floating",
+      "visibleWhen": "kit.empty"
+    },
+    {
+      "label": "从零开始 (Start from scratch) → create on canvas",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "kit.empty"
+    }
+  ],
+  "secondaryActions": [],
+  "overlays": [
+    {
+      "id": "brandkit.info",
+      "kind": "popover",
+      "trigger": "Info button",
+      "dismiss": "跳过 / 下一步",
+      "modal": false,
+      "contentOwnership": "onboarding: '在项目中使用品牌套件 — 点击左上角的项目名称，添加品牌套件'"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/brandkit.list.webp",
+      "url": "https://www.lovart.ai/zh/brand-kit",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Brand kit is a workspace-level library (own route, own list), separate from projects. One kit '未命名' exists, empty."
+    },
+    {
+      "tier": "O",
+      "text": "Kit sections: Logo / 字体 / 颜色 / 设计指南 / 图像 / 品牌指南. Empty state offers PDF/image brand-book upload to auto-fill, or building it on the canvas."
+    },
+    {
+      "tier": "O",
+      "text": "Section tiles are not clickable in the empty state; the only entry points are the upload dropzone and 从零开始."
+    },
+    {
+      "tier": "O",
+      "text": "Onboarding popover states the attachment point: the kit is attached to a project from the project-name menu at the canvas top-left (brand-menu-button)."
+    },
+    {
+      "tier": "I2",
+      "text": "Scope: brand kit is account-wide and referenced per project (many projects → one kit), not embedded per canvas."
+    },
+    {
+      "tier": "U",
+      "text": "What a filled kit looks like, whether 图像 acts as a reusable reference set for generation, and whether fonts are usable by the text tool — no assets to observe and populating the kit would mutate account state."
+    }
+  ]
+}

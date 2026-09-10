@@ -1,0 +1,79 @@
+# Domain objects observed on Seko (seko.sensetime.com), 2026-09-08. Tiers: O observed, I2 strongly inferred, I1 weak, U unknown.
+objects:
+  - name: Account
+    tier: O
+    scope: global
+    notes: "Credits (积分) balance shown in every header (110 at start); 开通会员 upsell; 会员加速 queue priority."
+    surfaces: [explore, canvas, my-space, characters, skill-community, avatar-video]
+  - name: Story (故事 / 策划案)
+    tier: O
+    scope: account
+    lifecycle: "created from the /explore hero 短片工作室 (not exercised) → listed in my-space 故事 with genre filter"
+    relationships: ["has genre (出海短剧/短剧漫剧/音乐MV/知识分享)", "shell provides 画布 + 编辑器 tabs (I2)"]
+    surfaces: [explore, my-space]
+  - name: Canvas (画布)
+    tier: O
+    scope: account
+    lifecycle: "instant create on /infinite-canvas → persisted (canvasId) → listed in my-space 画布 → publishable via 发布作品 (公开画布)"
+    relationships: ["contains Nodes and Edges", "has one Agent conversation history", "titled 未命名故事 by default"]
+    surfaces: [canvas, my-space]
+  - name: Node
+    tier: O
+    scope: canvas
+    lifecycle: "blank (client uuid) → typed on first generation (server snowflake) → completed; deletable (生成历史 keeps the asset)"
+    relationships: ["has generator config (mode/model/params/prompt/@subjects)", "source of derived nodes via Edge", "selectable via URL nodeId", "auto-attached to agent composer when selected"]
+    types_observed: ["空白节点", "图片", "多角度 (derived image)"]
+    types_offered: ["文本", "图片", "视频", "音频", "合成视频节点"]
+    surfaces: [canvas]
+  - name: Edge
+    tier: O
+    scope: canvas
+    notes: "Provenance link source → derived node (multi-angle). Rendered as connector; selectable/deletable per React Flow a11y text."
+    surfaces: [canvas]
+  - name: Job / Generation
+    tier: O
+    scope: node
+    lifecycle: "submit (credits debited, no confirm) → 排队中 → 生成中 → result in node; survives navigation; ~60 s for 1K image"
+    relationships: ["produces Asset", "recorded in 生成历史 (O text, panel content U)"]
+    surfaces: [canvas]
+  - name: Asset (素材)
+    tier: O
+    scope: account
+    notes: "Stored at seko-resource.sensetime.com/seko/algo-gen/creations/<hash>.png; importable into any canvas via 资产库 (scopes 当前项目/故事/数字人/画布; types 视频/图片/音频)."
+    surfaces: [canvas]
+  - name: Subject (主体)
+    tier: O
+    scope: account (个人) + platform (公共)
+    lifecycle: "添加新主体 / 批量上传主体 → used via @ in prompts, 主体库 modal"
+    fields: ["名称", "类别 角色|场景", "音色 (voice)", "形象 (image: upload or AI-generated)"]
+    surfaces: [characters, canvas]
+  - name: Skill (技能)
+    tier: O
+    scope: platform
+    notes: "Packaged workflow with like/use counters; invoked via / in agent composer or home chips; 8 categories."
+    surfaces: [skill-community, canvas, explore]
+  - name: Template (特效模版)
+    tier: O
+    scope: platform
+    notes: "Campaign/effect presets (世界杯, Seedance2.0, 图片模板, 电商广告)."
+    surfaces: [canvas]
+  - name: Agent conversation
+    tier: O
+    scope: canvas
+    notes: "新对话 / 对话历史 per canvas; messages show tool-call log; LLM selectable."
+    surfaces: [canvas]
+  - name: Avatar video (数字人)
+    tier: O
+    scope: account
+    lifecycle: "form submit on /avatar-video → listed in my-space 数字人"
+    surfaces: [avatar-video, my-space]
+  - name: Published work (作品)
+    tier: O
+    scope: community
+    notes: "发布作品 dialog: title, tags, description, social link, cover, 公开画布 switch; feed cards show 画布 badge."
+    surfaces: [canvas, explore]
+  - name: Composition / Editor timeline
+    tier: I2
+    scope: story/canvas
+    notes: "合成视频 → 合成视频节点 or 添加到编辑器; 编辑器 tab inert until such content exists."
+    surfaces: [canvas]

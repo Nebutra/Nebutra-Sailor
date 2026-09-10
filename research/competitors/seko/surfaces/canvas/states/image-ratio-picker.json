@@ -1,0 +1,27 @@
+{
+  "id": "seko.canvas.image-ratio-picker",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "image-ratio-picker",
+    "selectedEntity": "blank-node",
+    "majorControls": ["9:16", "16:9", "3:4", "4:3", "21:9", "1:1", "1K", "2K"]
+  },
+  "selectedEntity": "blank-node",
+  "activeTab": "画布",
+  "openOverlay": "image-ratio-picker",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": ["9:16", "16:9", "3:4", "4:3", "21:9", "1:1", "1K", "2K"],
+  "disclosure": { "appeared": ["ratio/res grid"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image-ratio-picker.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Choosing 1K changes cost chip 7 → 4 immediately." }]
+}

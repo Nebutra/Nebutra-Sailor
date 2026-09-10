@@ -1,0 +1,27 @@
+{
+  "id": "seko.canvas.nav-drawer",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "nav-drawer",
+    "selectedEntity": "none",
+    "majorControls": ["返回主页", "返回我的空间"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "nav-drawer",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["返回主页", "返回我的空间"],
+  "disclosure": { "appeared": ["popover"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.nav-drawer.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [{ "tier": "O", "text": "Only two exits from the canvas shell." }]
+}

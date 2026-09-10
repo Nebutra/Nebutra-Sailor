@@ -1,0 +1,285 @@
+{
+  "id": "fal.model",
+  "competitor": "fal",
+  "overlays": [
+    {
+      "id": "confirm-example-run",
+      "kind": "modal",
+      "trigger": "Run with unedited example prompt",
+      "dismiss": "Edit my input / Run anyway",
+      "modal": true,
+      "contentOwnership": "cost guard: warns credits will be spent on the sample prompt"
+    },
+    {
+      "id": "credits-popover",
+      "kind": "popover",
+      "trigger": "Credits button",
+      "dismiss": "Escape",
+      "contentOwnership": "Available credits, Buy credits, Redeem credits, Go to billing"
+    },
+    {
+      "id": "param-info",
+      "kind": "popover",
+      "trigger": "(i) next to any parameter label",
+      "dismiss": "Escape",
+      "contentOwnership": "schema description of that parameter"
+    },
+    {
+      "id": "more-menu",
+      "kind": "context-menu",
+      "trigger": "▾ next to LLMs",
+      "contentOwnership": "Open Markdown, Copy content, Open in ChatGPT, Open in Claude"
+    },
+    {
+      "id": "status-filter",
+      "kind": "popover",
+      "trigger": "Requests tab Status combobox",
+      "contentOwnership": "All statuses / Success / Error / Client error"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "More / Less (Additional Settings)",
+      "type": "drawer-trigger",
+      "location": "input-card"
+    },
+    {
+      "label": "Form ▾ (input mode)",
+      "type": "popover-trigger",
+      "location": "input-card-header"
+    },
+    {
+      "label": "Preview | JSON",
+      "type": "tab",
+      "location": "result-card-header"
+    },
+    {
+      "label": "Download",
+      "type": "link",
+      "location": "result"
+    },
+    {
+      "label": "Copy JSON",
+      "type": "icon-button"
+    },
+    {
+      "label": "Add to favorites",
+      "type": "icon-button"
+    },
+    {
+      "label": "Schema (OpenAPI)",
+      "type": "link"
+    },
+    {
+      "label": "LLMs (llms.txt)",
+      "type": "link"
+    },
+    {
+      "label": "variant switcher 'Text to Image [schnell] ▾'",
+      "type": "popover-trigger"
+    },
+    {
+      "label": "Edit / Upscale / Make Video (?fromOutput=)",
+      "type": "contextual-action",
+      "visibleWhen": "result.completed"
+    },
+    {
+      "label": "Favorite / Link character / Add to Collection / Share / Download",
+      "type": "contextual-action",
+      "visibleWhen": "result.completed"
+    }
+  ],
+  "navigation": [
+    {
+      "label": "Back to Gallery",
+      "type": "link",
+      "location": "top-left"
+    },
+    {
+      "label": "Open in Sandbox",
+      "type": "secondary-button",
+      "location": "top-right"
+    },
+    {
+      "label": "Credits: $x.xx",
+      "type": "popover-trigger",
+      "location": "top-right"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "Playground",
+      "default": true,
+      "changesUrl": true,
+      "persistsState": false,
+      "scope": "model"
+    },
+    {
+      "name": "API",
+      "changesUrl": true,
+      "scope": "model"
+    },
+    {
+      "name": "Examples",
+      "changesUrl": true,
+      "scope": "model"
+    },
+    {
+      "name": "Requests",
+      "changesUrl": true,
+      "lazy": true,
+      "scope": "model+account"
+    },
+    {
+      "name": "Analytics",
+      "changesUrl": true,
+      "lazy": true,
+      "scope": "model+account"
+    }
+  ],
+  "route": "/models/<owner>/<model>[/<endpoint>][/api|/examples|/requests|/analytics]",
+  "name": "Model page (playground + API + history)",
+  "category": "workspace",
+  "layout": {
+    "persistentPanels": [
+      "app-nav (Home/Explore/Assets/Generate/Serverless/Settings)",
+      "model header",
+      "tab strip"
+    ],
+    "chromeRatio": 0.3,
+    "workSurfaceRatio": 0.7
+  },
+  "primaryActions": [
+    {
+      "label": "Run ⌘↵",
+      "type": "primary-button",
+      "location": "input-card-footer",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Reset",
+      "type": "secondary-button",
+      "location": "input-card-footer"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.advanced.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.run-attempt.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.after-run.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.share.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.api.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.examples.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.requests.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.requests.statusfilter.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.schnell.analytics.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.nb2-edit.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/model.kling-i2v.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/pg.credits.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/pg.moremenu.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/pg.promptinfo.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Two-column layout: Input card (left, ~48%) and Result card (right). Result header carries a status chip (Idle / Starting / Error observed; docs name IN_QUEUE / IN_PROGRESS / COMPLETED for the API)."
+    },
+    {
+      "tier": "O",
+      "text": "Playground loads pre-populated with a sample prompt AND a sample result (image + JSON + timing/cost line), so the result column is never empty on first visit."
+    },
+    {
+      "tier": "O",
+      "text": "Disclosure: only required inputs (Prompt) are visible; 'Additional Settings – More' reveals 8 optional params (steps slider+number, image size preset+W×H, seed+randomize, CFG slider, sync_mode switch, num_images slider, safety checker (locked: 'cannot be disabled on the playground'), output format, acceleration)."
+    },
+    {
+      "tier": "O",
+      "text": "Every parameter has an (i) popover with the schema description; the API tab exposes the identical schema, defaults and enums."
+    },
+    {
+      "tier": "O",
+      "text": "Cost is shown before and after: pre-run 'Your request will cost $0.003 per megapixel'; post-run 'Your request took 0.76 seconds and will cost $0.003 per megapixel'; nb2/edit shows per-image + 'for $1.00 you can run this model 12 times' + resolution multipliers; Kling shows per-second with audio/voice tiers and a worked 5s example."
+    },
+    {
+      "tier": "O",
+      "text": "Result JSON is the raw API response (images[url,width,height,content_type], timings.inference, seed, has_nsfw_concepts, prompt). Preview/JSON is a toggle over the same object."
+    },
+    {
+      "tier": "O",
+      "text": "Completed result exposes chain actions Edit / Upscale / Make Video that deep-link another model page with ?fromOutput=<requestId> – output-to-input provenance is carried by request id."
+    },
+    {
+      "tier": "O",
+      "text": "Result also exposes Favorite, Link character (entity), Add to Collection, Share (?share=<id> permalink), Download."
+    },
+    {
+      "tier": "O",
+      "text": "Requests tab = per-model request history: search by request ID, status filter (All/Success/Error/Client error), Show preview toggle, compact/list/grid layouts, pagination. A 403 'exhausted balance' rejection did NOT create a history row."
+    },
+    {
+      "tier": "O",
+      "text": "Analytics tab: total requests, execution p50-p99, cold-boot rate, startup p50-p99, queue p90, recent errors, slower requests, per-phase cold start (pending/docker pull/setup)."
+    },
+    {
+      "tier": "O",
+      "text": "Examples tab lists prior public requests: 'Request <uuid>. Status 200. <model>. <age>' + prompt + share link -> load that request into the playground."
+    },
+    {
+      "tier": "O",
+      "text": "No side-by-side compare inside the model playground; compare lives in the Sandbox (multi-model fan-out)."
+    },
+    {
+      "tier": "I2",
+      "text": "The 'Form ▾' combobox implies a JSON input mode alternative to the form; not opened (click did not register)."
+    },
+    {
+      "tier": "U",
+      "text": "Behaviour of the status chip during a real IN_QUEUE/IN_PROGRESS run (queue position, logs) – not observable with $0 balance."
+    }
+  ]
+}

@@ -95,7 +95,9 @@ Complete navigation to all project documentation.
 
 | Document | Description |
 | --- | --- |
-| [Closure phase](./architecture/2026-08-27-closure-phase.md) | Converge existing modules; no expansion, no deletion |
+| [Product intelligence phase](./architecture/2026-09-08-product-intelligence-phase.md) | Research before architecture; closure rescinded, repo-trust rules kept |
+| [Competitive product cartography](./architecture/2026-09-08-competitive-product-cartography.md) | Recursive competitor topology research → `research/` → `docs/product-intelligence/` |
+| [Docs conventions](./CONVENTIONS.md) | Naming and placement rules for everything under `docs/` and `research/` |
 
 ## Security
 
@@ -121,4 +123,4 @@ Complete navigation to all project documentation.
 | [Nebutra-instance runbooks](./ops/nebutra/README.md) | Bills, cutovers, hosts of Nebutra's own deployment — stripped from the template |
 | [Fly origin runbook](./ops/nebutra/fly-origin.md) | FLY_API_TOKEN → deploy-fly.yml → optional DNS cutover (source repo only) |
 | [changelog](../CHANGELOG.md)        | Version history      |
-| [Alibaba Cloud ECS](./阿里云ECS部署指南.md) | ECS deployment guide |
+| [Alibaba Cloud ECS](./ops/nebutra/aliyun-ecs-deployment-guide.md) | ECS deployment guide |

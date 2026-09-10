@@ -1,0 +1,115 @@
+{
+  "id": "tapnow.workspace",
+  "competitor": "tapnow",
+  "route": "https://app.tapnow.ai/canvas/projects[?scope=team]",
+  "name": "Workspace (project list)",
+  "category": "project",
+  "layout": {
+    "persistentPanels": ["top nav"],
+    "chromeRatio": 0.15,
+    "workSurfaceRatio": 0.85
+  },
+  "tabs": [
+    {
+      "name": "Private",
+      "default": true,
+      "changesUrl": false,
+      "scope": "user"
+    },
+    {
+      "name": "Team Projects",
+      "changesUrl": true,
+      "scope": "team (?scope=team)"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "New Project",
+      "type": "primary-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Search",
+      "type": "input",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Show All (filter/sort)",
+      "type": "popover-trigger",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Grid view",
+      "type": "icon-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "List view",
+      "type": "icon-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Project card ⋯ menu",
+      "type": "popover-trigger",
+      "visibleWhen": "hover"
+    },
+    {
+      "label": "Rename pencil",
+      "type": "icon-button",
+      "visibleWhen": "hover"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "filter-menu",
+      "kind": "popover",
+      "trigger": "Show All",
+      "dismiss": "",
+      "modal": "",
+      "contentOwnership": ""
+    },
+    {
+      "id": "project-card-menu",
+      "kind": "context-menu",
+      "trigger": "hover ⋯ on card",
+      "dismiss": "Escape / click outside",
+      "modal": false,
+      "contentOwnership": ""
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/app.workspace.private.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/app.workspace.project-menu.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/app.workspace.team.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Filter menu: Show All / Collections / Projects; Sort by Last modified / Date created; Order Newest / Oldest first → objects: Project, Collection (folder)."
+    },
+    {
+      "tier": "O",
+      "text": "Card menu: Open / Rename / Select / Move to... / Share by link / Move to team / Delete."
+    },
+    {
+      "tier": "O",
+      "text": "Team tab empty state: 'No team projects yet — Create new projects in the team, or move private projects to the team'."
+    },
+    {
+      "tier": "U",
+      "text": "Project list often stayed in skeleton state in a background tab; direct route /canvas/<uuid> works."
+    }
+  ]
+}

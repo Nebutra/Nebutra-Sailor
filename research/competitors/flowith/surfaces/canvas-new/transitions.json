@@ -1,0 +1,71 @@
+[
+  {
+    "fromState": "flowith.canvas-new.empty",
+    "action": {
+      "type": "submit",
+      "control": "in-flow composer Send"
+    },
+    "toState": "flowith.canvas-new.sent-t2",
+    "sideEffects": [
+      "node.created:prompt",
+      "node.created:answer-placeholder",
+      "job.created",
+      "title.autoset"
+    ],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.new.sent-t2.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-new.sent-t2",
+    "action": {
+      "type": "navigate",
+      "control": "wait ~6s"
+    },
+    "toState": "flowith.canvas-new.sent-t8",
+    "sideEffects": ["job.failed:credits", "node.updated:answer"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.new.sent-t8.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-new.sent-t8",
+    "action": {
+      "type": "click",
+      "control": "failed answer node"
+    },
+    "toState": "flowith.canvas-new.failed-node-selected",
+    "sideEffects": [],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.new.failed-node-selected.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "flowith.canvas-new.sent-t8",
+    "action": {
+      "type": "refresh",
+      "control": "reload"
+    },
+    "toState": "flowith.canvas-new.reloaded",
+    "sideEffects": ["state.persisted"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.new.reloaded.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

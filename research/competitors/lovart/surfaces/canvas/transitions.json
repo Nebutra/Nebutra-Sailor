@@ -1,0 +1,212 @@
+[
+  {
+    "fromState": "lovart.projects.list",
+    "action": { "type": "click", "control": "project card" },
+    "toState": "lovart.canvas.idle",
+    "sideEffects": ["window.open new tab", "url /canvas?projectId=…"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.populated.webp" }]
+  },
+  {
+    "fromState": "lovart.home.default",
+    "action": { "type": "navigate", "control": "/canvas?newProject=true" },
+    "toState": "lovart.canvas.new-project",
+    "sideEffects": ["project.created", "url.changed → ?projectId=<id>"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/scratch.new.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "c-image shape" },
+    "toState": "lovart.canvas.image-selected",
+    "sideEffects": ["composer chip added"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.image-selected.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.image-selected",
+    "action": { "type": "click", "control": "image-toolbar-more (···)" },
+    "toState": "lovart.canvas.image-selected.more-menu",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.image-selected.more-menu.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.image-selected",
+    "action": { "type": "click", "control": "quick-edit-button / Tab" },
+    "toState": "lovart.canvas.image-selected.quick-edit",
+    "sideEffects": ["camera zoom-to-image"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.image-selected.quick-edit.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.image-selected.quick-edit",
+    "action": { "type": "refresh", "control": "browser reload" },
+    "toState": "lovart.canvas.image-selected.quick-edit",
+    "sideEffects": ["state restored"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.image-selected.quick-edit.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.image-selected.quick-edit",
+    "action": { "type": "keyboard", "control": "Escape / click empty canvas", "keys": "Escape" },
+    "toState": "lovart.canvas.idle",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.reset.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.image-selected",
+    "action": { "type": "right_click", "control": "c-image shape" },
+    "toState": "lovart.canvas.image-selected.context-menu",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.image-selected.context-menu.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.image-selected.more-menu",
+    "action": { "type": "click", "control": "裁剪" },
+    "toState": "lovart.canvas.image-selected.crop",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.image-selected.crop.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.image-selected.more-menu",
+    "action": { "type": "click", "control": "调整" },
+    "toState": "lovart.canvas.paywall",
+    "sideEffects": ["feature gated"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/paywall.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.image-selected",
+    "action": { "type": "click", "control": "image-toolbar-download" },
+    "toState": "lovart.canvas.paywall",
+    "sideEffects": ["file downloaded", "paywall '导出完成' upsell"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/paywall.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "text shape" },
+    "toState": "lovart.canvas.text-selected",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.text-selected.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "group shape" },
+    "toState": "lovart.canvas.group-selected",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.group-selected.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "drag", "control": "marquee over two images (editor.select)" },
+    "toState": "lovart.canvas.multi-selected",
+    "sideEffects": ["two composer chips"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.multi-selected.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "generate-menu-image (图像生成器 A)" },
+    "toState": "lovart.canvas.generator-image",
+    "sideEffects": ["shape.created c-generator 1024×1024"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.dock.generate-menu-image.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "generate-menu-video (视频生成器 S)" },
+    "toState": "lovart.canvas.generator-video",
+    "sideEffects": ["shape.created c-video-generator 1920×1080"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.dock.generate-menu-video.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.generator-image",
+    "action": { "type": "click", "control": "generator-generate-button ⚡15" },
+    "toState": "lovart.canvas.generator-running",
+    "sideEffects": ["job.created", "credits −15 immediately", "shape c-generator → c-task"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/scratch.gen-node.running.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.generator-running",
+    "action": { "type": "navigate", "control": "job completes (~25 s)" },
+    "toState": "lovart.canvas.idle",
+    "sideEffects": ["shape c-task → c-image '图片 1' (genType 1, generatorTaskId)"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/scratch.gen-node.done.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.new-project",
+    "action": { "type": "submit", "control": "agent-send-button" },
+    "toState": "lovart.canvas.agent-running",
+    "sideEffects": ["thread.created + auto-title", "shape.created c-task", "send → stop"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/scratch.running.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.agent-running",
+    "action": { "type": "navigate", "control": "agent completes (~45 s)" },
+    "toState": "lovart.canvas.agent-done",
+    "sideEffects": [
+      "shape c-task → c-image with agentMeta",
+      "credits −3 at completion",
+      "assistant message"
+    ],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/scratch.done.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.agent-done",
+    "action": { "type": "refresh", "control": "browser reload" },
+    "toState": "lovart.canvas.reloaded",
+    "sideEffects": ["everything restored"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/scratch.reloaded.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "float-layer-button (图层)" },
+    "toState": "lovart.canvas.layers-drawer",
+    "sideEffects": ["canvas shifts right 280px"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.float-layer-button.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "float-file-search-button (生成文件)" },
+    "toState": "lovart.canvas.files-drawer",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.float-file-search-button.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "brand-menu-button → 画布历史" },
+    "toState": "lovart.canvas.history",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.canvas-history.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "agent-collapse-button" },
+    "toState": "lovart.canvas.agent-collapsed",
+    "sideEffects": ["canvas width 640 → 831/1040", "对话 button appears"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.agent-collapsed.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.agent-collapsed",
+    "action": { "type": "click", "control": "对话" },
+    "toState": "lovart.canvas.idle",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.reset.webp" }]
+  },
+  {
+    "fromState": "lovart.canvas.idle",
+    "action": { "type": "click", "control": "zoom-trigger" },
+    "toState": "lovart.canvas.idle+zoom-menu (放大 ⌘+ / 缩小 ⌘- / 显示画布所有元素 ⇧1 / 50% / 100% / 200%)",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/canvas.populated.webp" }]
+  }
+]

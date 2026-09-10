@@ -2143,6 +2143,201 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/para/agent/threads": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List a project's agent threads */
+    get: operations["paraListThreads"];
+    put?: never;
+    /** Create an agent thread */
+    post: operations["paraCreateThread"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/agent/threads/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    /** Set a thread's autonomy (ask before acting / act without asking) */
+    patch: operations["paraSetThreadAutonomy"];
+    trace?: never;
+  };
+  "/api/v1/para/agent/threads/{id}/turns": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Queue an agent turn; a worker advances it */
+    post: operations["paraStartTurn"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/agent/runs/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get a run and its pending approvals */
+    get: operations["paraGetRun"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/agent/approvals/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Approve or deny a parked tool call */
+    post: operations["paraDecideApproval"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/projects": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List PARA projects */
+    get: operations["paraListProjects"];
+    put?: never;
+    /** Create a PARA project */
+    post: operations["paraCreateProject"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/projects/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get a PARA project */
+    get: operations["paraGetProject"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/projects/{id}/workspaces": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List a project's workspaces */
+    get: operations["paraListWorkspaces"];
+    put?: never;
+    /** Create a workspace (zero-step, auto-named) */
+    post: operations["paraCreateWorkspace"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/workspaces/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get a workspace */
+    get: operations["paraGetWorkspace"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/workspaces/{id}/document": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get a workspace document with its version */
+    get: operations["paraGetDocument"];
+    /**
+     * Replace a workspace document (optimistic concurrency)
+     * @description Replace the document. `If-Match` carries the documentVersion the client last saw; a mismatch returns 409 with the server copy.
+     */
+    put: operations["paraPutDocument"];
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/para/assets": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List assets, filtered by origin, workspace or project */
+    get: operations["paraListAssets"];
+    put?: never;
+    /** Record an uploaded or generated asset */
+    post: operations["paraCreateAsset"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/pebble/v1/feedback": {
     parameters: {
       query?: never;
@@ -7169,6 +7364,803 @@ export interface operations {
         content: {
           "application/json": {
             error: string;
+          };
+        };
+      };
+    };
+  };
+  paraListThreads: {
+    parameters: {
+      query: {
+        projectId: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Threads */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            items: {
+              id: string;
+              projectId: string;
+              title: string;
+              /** @enum {string} */
+              autonomy: "ask" | "act";
+              updatedAt: string;
+            }[];
+          };
+        };
+      };
+    };
+  };
+  paraCreateThread: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          projectId: string;
+          title: string;
+        };
+      };
+    };
+    responses: {
+      /** @description Created */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            projectId: string;
+            title: string;
+            /** @enum {string} */
+            autonomy: "ask" | "act";
+            updatedAt: string;
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraSetThreadAutonomy: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          /** @enum {string} */
+          autonomy: "ask" | "act";
+        };
+      };
+    };
+    responses: {
+      /** @description Thread */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            projectId: string;
+            title: string;
+            /** @enum {string} */
+            autonomy: "ask" | "act";
+            updatedAt: string;
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraStartTurn: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          workspaceId: string;
+          input: string;
+          /** @default [] */
+          contextNodeIds?: string[];
+        };
+      };
+    };
+    responses: {
+      /** @description Run queued */
+      202: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            threadId: string;
+            workspaceId: string;
+            input: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "awaiting_approval" | "completed" | "failed";
+            error: {
+              code: string;
+              message: string;
+            } | null;
+            startedAt: string | null;
+            finishedAt: string | null;
+            createdAt: string;
+            pendingApprovals?: {
+              id: string;
+              runId: string;
+              toolName: string;
+              args: {
+                [key: string]: unknown;
+              };
+              estimatedCost: number;
+              /** @enum {string} */
+              status: "pending" | "approved" | "denied";
+              resultJobId: string | null;
+              createdAt: string;
+            }[];
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraGetRun: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Run */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            threadId: string;
+            workspaceId: string;
+            input: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "awaiting_approval" | "completed" | "failed";
+            error: {
+              code: string;
+              message: string;
+            } | null;
+            startedAt: string | null;
+            finishedAt: string | null;
+            createdAt: string;
+            pendingApprovals?: {
+              id: string;
+              runId: string;
+              toolName: string;
+              args: {
+                [key: string]: unknown;
+              };
+              estimatedCost: number;
+              /** @enum {string} */
+              status: "pending" | "approved" | "denied";
+              resultJobId: string | null;
+              createdAt: string;
+            }[];
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraDecideApproval: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          approve: boolean;
+        };
+      };
+    };
+    responses: {
+      /** @description Approval */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            runId: string;
+            toolName: string;
+            args: {
+              [key: string]: unknown;
+            };
+            estimatedCost: number;
+            /** @enum {string} */
+            status: "pending" | "approved" | "denied";
+            resultJobId: string | null;
+            createdAt: string;
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+      /** @description Already decided */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+      /** @description Origin rejected */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraListProjects: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Projects */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            items: {
+              id: string;
+              name: string;
+              updatedAt: string;
+            }[];
+          };
+        };
+      };
+    };
+  };
+  paraCreateProject: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          name: string;
+        };
+      };
+    };
+    responses: {
+      /** @description Created */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            name: string;
+            updatedAt: string;
+          };
+        };
+      };
+    };
+  };
+  paraGetProject: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Project */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            name: string;
+            updatedAt: string;
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraListWorkspaces: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Workspaces */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            items: {
+              id: string;
+              projectId: string;
+              name: string;
+              documentVersion: number;
+              updatedAt: string;
+            }[];
+          };
+        };
+      };
+    };
+  };
+  paraCreateWorkspace: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          name?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description Created */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            projectId: string;
+            name: string;
+            documentVersion: number;
+            updatedAt: string;
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraGetWorkspace: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Workspace */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            projectId: string;
+            name: string;
+            documentVersion: number;
+            updatedAt: string;
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraGetDocument: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Document */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            documentVersion: number;
+            document: {
+              version: number;
+              nodes: {
+                [key: string]: unknown;
+              };
+              /** @default {} */
+              edges: {
+                [key: string]: unknown;
+              };
+              viewport: {
+                x: number;
+                y: number;
+                zoom: number;
+              };
+            } & {
+              [key: string]: unknown;
+            };
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraPutDocument: {
+    parameters: {
+      query?: never;
+      header: {
+        "if-match": string;
+      };
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          version: number;
+          nodes: {
+            [key: string]: unknown;
+          };
+          /** @default {} */
+          edges?: {
+            [key: string]: unknown;
+          };
+          viewport: {
+            x: number;
+            y: number;
+            zoom: number;
+          };
+        } & {
+          [key: string]: unknown;
+        };
+      };
+    };
+    responses: {
+      /** @description Saved */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            documentVersion: number;
+            document: {
+              version: number;
+              nodes: {
+                [key: string]: unknown;
+              };
+              /** @default {} */
+              edges: {
+                [key: string]: unknown;
+              };
+              viewport: {
+                x: number;
+                y: number;
+                zoom: number;
+              };
+            } & {
+              [key: string]: unknown;
+            };
+          };
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+      /** @description Version conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            documentVersion: number;
+            document: {
+              version: number;
+              nodes: {
+                [key: string]: unknown;
+              };
+              /** @default {} */
+              edges: {
+                [key: string]: unknown;
+              };
+              viewport: {
+                x: number;
+                y: number;
+                zoom: number;
+              };
+            } & {
+              [key: string]: unknown;
+            };
+            error: string;
+          };
+        };
+      };
+      /** @description Too large */
+      413: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  paraListAssets: {
+    parameters: {
+      query?: {
+        origin?: "upload" | "generated";
+        workspaceId?: string;
+        projectId?: string;
+        limit?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Assets */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            items: {
+              id: string;
+              /** @enum {string} */
+              type: "image" | "video" | "audio";
+              /** @enum {string} */
+              origin: "upload" | "generated";
+              /** @enum {string} */
+              scope: "account" | "team";
+              url: string;
+              label: string;
+              aspect: string;
+              jobId: string | null;
+              workspaceId: string | null;
+              projectId: string | null;
+              favorite: boolean;
+              createdAt: string;
+            }[];
+          };
+        };
+      };
+    };
+  };
+  paraCreateAsset: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          /** @enum {string} */
+          type: "image" | "video" | "audio";
+          /** @enum {string} */
+          origin: "upload" | "generated";
+          /** Format: uri */
+          url: string;
+          label: string;
+          /**
+           * @default 16:9
+           * @enum {string}
+           */
+          aspect?: "16:9" | "1:1" | "9:16" | "4:3";
+          jobId?: string;
+          workspaceId?: string;
+          projectId?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description Created */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            /** @enum {string} */
+            type: "image" | "video" | "audio";
+            /** @enum {string} */
+            origin: "upload" | "generated";
+            /** @enum {string} */
+            scope: "account" | "team";
+            url: string;
+            label: string;
+            aspect: string;
+            jobId: string | null;
+            workspaceId: string | null;
+            projectId: string | null;
+            favorite: boolean;
+            createdAt: string;
           };
         };
       };

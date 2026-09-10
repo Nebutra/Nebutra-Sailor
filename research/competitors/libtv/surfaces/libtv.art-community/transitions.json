@@ -1,0 +1,162 @@
+[
+  {
+    "fromState": "libtv.art-community.home-feed",
+    "action": {
+      "type": "click",
+      "control": "前往LibTV创作"
+    },
+    "toState": "libtv.tv-home.default",
+    "sideEffects": ["url.changed (origin liblib.tv)"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.tv-home.default.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.home-feed",
+    "action": {
+      "type": "click",
+      "control": "model card"
+    },
+    "toState": "libtv.art-community.model-detail",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-modelinfo.cta.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.home-feed",
+    "action": {
+      "type": "click",
+      "control": "image card"
+    },
+    "toState": "libtv.art-community.image-detail",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-imageinfo.default.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.image-detail",
+    "action": {
+      "type": "click",
+      "control": "做同款"
+    },
+    "toState": "libtv.art-generator.image-default",
+    "sideEffects": ["window.open /ai-tool/image-generator?fillimgid=…"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-image-gen.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.model-detail",
+    "action": {
+      "type": "click",
+      "control": "去WebUI使用"
+    },
+    "toState": "libtv.art-community.sd-webui",
+    "sideEffects": ["expected route /sd (click produced no navigation in bridge)"],
+    "tier": "I2",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-sd.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.home-feed",
+    "action": {
+      "type": "navigate",
+      "control": "创作 ▾ → 训练 LoRA"
+    },
+    "toState": "libtv.art-community.pretrain",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-pretrain.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.home-feed",
+    "action": {
+      "type": "navigate",
+      "control": "创作 ▾ → WebUI"
+    },
+    "toState": "libtv.art-community.sd-webui",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-sd.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.home-feed",
+    "action": {
+      "type": "navigate",
+      "control": "创作 ▾ → ComfyUI"
+    },
+    "toState": "libtv.art-community.comfy",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-comfy.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.home-feed",
+    "action": {
+      "type": "navigate",
+      "control": "创作 ▾ → AI 应用"
+    },
+    "toState": "libtv.art-community.lib3-app",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-lib3.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "libtv.art-community.home-feed",
+    "action": {
+      "type": "navigate",
+      "control": "资产"
+    },
+    "toState": "libtv.art-community.asset",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/libtv.art-asset.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

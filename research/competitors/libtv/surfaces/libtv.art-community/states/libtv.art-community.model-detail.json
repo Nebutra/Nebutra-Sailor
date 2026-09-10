@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-community.model-detail",
+  "surfaceId": "libtv.art-community",
+  "fingerprint": {
+    "route": "https://www.liblib.art/modelinfo/c47a45d326fe454a8e48dee8c1f160f4?versionUuid=c9764c4589dd4bb1ac752bd0a93a358d",
+    "heading": "HG2512_Illustrious",
+    "activeTab": "v1.0",
+    "overlay": "none",
+    "selectedEntity": "model:HG2512_Illustrious (LoRA)",
+    "majorControls": ["去WebUI使用", "加入收藏", "会员下载"]
+  },
+  "selectedEntity": "model:HG2512_Illustrious (LoRA)",
+  "activeTab": "v1.0",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "tags 少年青年 2D平涂 亚洲动漫 动漫 老婆 画风",
+    "counters 588.7k / 1.4k / 3.5k / 356",
+    "version tab v1.0",
+    "gallery with weight range 0.3–0.8",
+    "author card 晨雨秋林 Lib认证作者 关注",
+    "去WebUI使用",
+    "加入收藏 ▾",
+    "会员下载 (217.90MB)",
+    "版本详情",
+    "推荐参数",
+    "许可范围 / 创作与商用规则说明",
+    "我要晒图",
+    "comments (7)"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-modelinfo.cta.webp",
+      "url": "https://www.liblib.art/modelinfo/c47a45d326fe454a8e48dee8c1f160f4?versionUuid=c9764c4589dd4bb1ac752bd0a93a358d",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "LoRA is consumed in WebUI; recommended params are documentation, not a one-click preset into the consumer generator."
+    }
+  ]
+}

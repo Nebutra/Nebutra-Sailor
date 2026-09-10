@@ -1,0 +1,35 @@
+{
+  "id": "lovart.home.model-popover",
+  "surfaceId": "lovart.home",
+  "fingerprint": {
+    "route": "/zh/home",
+    "heading": "模型偏好",
+    "activeTab": "Image",
+    "overlay": "model-popover",
+    "selectedEntity": "none"
+  },
+  "openOverlay": "model-popover",
+  "activeTab": "Image",
+  "agentState": "composing",
+  "visibleControls": [
+    "自动 toggle (on)",
+    "Image / Video / 3D segmented anchors",
+    "model rows: name, description, ETA badge (e.g. 30s), check icon; video rows carry 会员专属"
+  ],
+  "disclosure": { "appeared": ["model catalog"], "disappeared": [] },
+  "evidence": [{ "file": "evidence/home.settings-popover.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "22 image models (GPT Image 2 Auto/Low/Medium/High, Nano Banana Pro/2/2 Lite, Seedream 5.0 Pro/Lite/4.5/4, GPT Image 1.5, Luma uni-1/-max, Flux.2 Max/Pro, Nano Banana, Midjourney, Ideogram 4 / P-Image, Qwen Image3 / Pro); 20 video models; 1 3D (Tripo). Full dump raw/home.model-popover.txt."
+    },
+    {
+      "tier": "O",
+      "text": "GPT Image 2 quality tiers are exposed as separate models with cost wording ('Fast, affordable' / 'most expensive') but no numeric credit price in this popover."
+    },
+    {
+      "tier": "I2",
+      "text": "Image/Video/3D are scroll anchors into one list (clicking Video did not filter Image rows out of the DOM)."
+    }
+  ]
+}

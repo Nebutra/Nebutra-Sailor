@@ -1,0 +1,32 @@
+{
+  "id": "tapnow.canvas.node.image.change-angle",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Drag cube to change angle",
+    "overlay": "none",
+    "selectedEntity": "node:image"
+  },
+  "visibleControls": [
+    "cube BK/L/R/T/B",
+    "Reset",
+    "Rotation",
+    "Tilt",
+    "Scale",
+    "Wide-Angle Lens",
+    "Generate"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image.tool-change-angle.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Inline in-node tool; matches marketing 'Multi-angle camera control'."
+    }
+  ],
+  "selectedEntity": "node:image"
+}

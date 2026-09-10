@@ -1,0 +1,44 @@
+{
+  "id": "fal.docs",
+  "competitor": "fal",
+  "overlays": [],
+  "secondaryActions": [],
+  "navigation": [],
+  "tabs": [],
+  "route": "/docs/documentation/model-apis/**",
+  "name": "Model API docs (queue, webhooks, errors, retention)",
+  "category": "viewer",
+  "primaryActions": [],
+  "evidence": [
+    {
+      "file": "evidence/docs.queue.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/docs.webhooks.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/docs.request-errors.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/docs.media-expiration.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/docs.synchronous.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/docs.client-setup.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Public. Documented (not UI-observed) job model: IN_QUEUE(queue_position) -> IN_PROGRESS(logs[]) -> COMPLETED(logs, metrics.inference_time, error?, error_type?). See business/jobs.md."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.free-node-menu",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "free-node-menu",
+    "selectedEntity": "none",
+    "majorControls": ["Text", "Upload"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "free-node-menu",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["Text", "Upload"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.free-node-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Free Node = manual node creation: Text or Upload."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+graph TD
+  root["/ (redirect when logged in)"] --> explore["/explore 首页"]
+  explore -->|rail 我的空间| myspace["/my-space?tab=story|canvas|avatar"]
+  explore -->|rail 主体库| characters["/characters 主体库"]
+  explore -->|rail 技能社区| skills["/skill-community 技能社区"]
+  explore -->|rail 数字人视频| avatar["/avatar-video 数字人视频"]
+  explore -->|空白画布 link| canvasNew["/infinite-canvas (no id)"]
+  canvasNew -->|instant create, URL rewrite| canvas["/infinite-canvas?canvasId=…"]
+  canvas -->|select node| canvasNode["/infinite-canvas?canvasId=…&nodeId=…"]
+  myspace -->|canvas card| canvas
+  canvas -->|nav drawer 返回主页| explore
+  canvas -->|nav drawer 返回我的空间| myspace
+  explore -.->|hero 短片工作室 submit (not exercised, U)| story["story project route (U)"]
+  skills -.->|card click did nothing (U)| skillDetail["skill detail (U)"]

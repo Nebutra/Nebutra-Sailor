@@ -1,0 +1,32 @@
+{
+  "id": "tapnow.workspace.team",
+  "surfaceId": "tapnow.workspace",
+  "fingerprint": {
+    "route": "/canvas/projects?scope=team",
+    "heading": "Team Projects",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "activeTab": "Team Projects"
+  },
+  "visibleControls": [
+    "Search",
+    "Show All",
+    "Grid view",
+    "List view",
+    "extra icon button",
+    "New Project"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/app.workspace.team.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Empty state copy documents the private→team move model."
+    }
+  ],
+  "activeTab": "Team Projects"
+}

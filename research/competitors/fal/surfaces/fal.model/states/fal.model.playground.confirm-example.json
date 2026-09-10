@@ -1,0 +1,38 @@
+{
+  "id": "fal.model.playground.confirm-example",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell",
+    "heading": "You're about to run the example",
+    "activeTab": "Playground",
+    "overlay": "confirm-example-run",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "confirm-example-run",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["Run anyway", "Edit my input"],
+  "disclosure": {
+    "appeared": ["alertdialog"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.run-attempt.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "alertdialog: 'You haven't edited the example prompt yet. Running it uses your credits.'"
+    },
+    {
+      "tier": "I2",
+      "text": "Guard exists to stop accidental spend on the sample; edited prompts skip it (not verified)."
+    }
+  ]
+}

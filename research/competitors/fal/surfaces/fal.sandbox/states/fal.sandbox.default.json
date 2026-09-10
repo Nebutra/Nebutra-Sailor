@@ -1,0 +1,50 @@
+{
+  "id": "fal.sandbox.default",
+  "surfaceId": "fal.sandbox",
+  "fingerprint": {
+    "route": "/sandbox",
+    "heading": "Sandbox",
+    "activeTab": "Simple",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["Run", "models", "Est."]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Simple",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Simple|Advanced input",
+    "Search generations",
+    "Filter: All",
+    "Show Metadata",
+    "verify banner",
+    "No generations yet",
+    "prompt textarea",
+    "Text To Image ▾",
+    "1:1 ▾",
+    "5 models ▾",
+    "Sets",
+    "gift",
+    "Will run 1x on 5 models Est. $0.37",
+    "1x ▾",
+    "Run ⌘↵"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/sandbox.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Pre-run cost estimate is always visible in the dock."
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.agent-settings",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "agent-settings-modal",
+    "selectedEntity": "none",
+    "majorControls": ["协作模式", "积分预算管理", "通知设置"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "agent-settings-modal",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "非会员每天免费对话 3 轮",
+    "未签署人像安全协议 … 去签署",
+    "自动生成图片/视频 toggle",
+    "积分预算管理 toggle",
+    "提醒阈值设置 1000",
+    "浏览器通知",
+    "通知声音",
+    "完成"
+  ],
+  "disclosure": {
+    "appeared": ["modal"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.agent-settings.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Autonomy switch: 开启后，Agent 可直接消耗积分，提交图片/视频生成，无需逐次确认."
+    }
+  ]
+}

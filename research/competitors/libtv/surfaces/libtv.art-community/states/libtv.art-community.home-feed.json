@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-community.home-feed",
+  "surfaceId": "libtv.art-community",
+  "fingerprint": {
+    "route": "https://www.liblib.art/inspiration",
+    "heading": "LiblibAI-哩布哩布AI",
+    "activeTab": "图片模型",
+    "overlay": "login-promo",
+    "selectedEntity": "none",
+    "majorControls": ["model strip", "feed tabs", "category chips", "feed grid"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "图片模型",
+  "openOverlay": "login-promo",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "搜索视频特效/模型/AI应用/工作流/创作者/图片",
+    "邀请有礼",
+    "积分超市",
+    "会员中心",
+    "登录/注册",
+    "banners",
+    "一键使用顶尖视频/图片模型 strip",
+    "图片模型 / 视频特效 / 发现灵感 / 工作流",
+    "category chips",
+    "推荐 ▾",
+    "筛选 ▾",
+    "grid of /imageinfo and /modelinfo cards"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.home.default.webp",
+      "url": "https://www.liblib.art/inspiration",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Feed cards are typed (Checkpoint / LORA / 模板) and link to model or image detail."
+    }
+  ]
+}

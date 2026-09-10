@@ -1,0 +1,42 @@
+{
+  "id": "fal.docs.queue",
+  "surfaceId": "fal.docs",
+  "fingerprint": {
+    "route": "/docs/documentation/model-apis/inference/queue",
+    "heading": "Asynchronous Inference",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "submit",
+    "status",
+    "stream status (SSE)",
+    "result",
+    "cancel",
+    "webhooks",
+    "submit params: path, start_timeout, hint"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/docs.queue.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Full queue API incl. cancel semantics and retry guarantees."
+    }
+  ]
+}

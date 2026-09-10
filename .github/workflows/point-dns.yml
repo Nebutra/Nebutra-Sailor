@@ -9,6 +9,7 @@ name: Point DNS
 #   auth      cloudflare-worker (production) | ecs (China fallback) | vercel (emergency only)
 #   docs      ecs (emergency default) | cloudflare-worker | vercel
 #   design, forge, kuanlan, router   ecs
+#   para      fly            proxied CNAME → nebutra-para.fly.dev (fly certs add first)
 #   carina, open, pebble, status     vercel   (open also attaches the domain on nebutra-landing)
 #   www       apex           CNAME www → nebutra.com
 #   leak      authoritative  NS delegation + glue → ECS authoritative forge-dns-leak (DNS-only,
@@ -30,6 +31,7 @@ on:
           - kuanlan
           - leak
           - open
+          - para
           - pebble
           - router
           - status
@@ -41,6 +43,7 @@ on:
         options:
           - cloudflare-worker
           - ecs
+          - fly
           - vercel
           - apex
           - authoritative
@@ -77,6 +80,7 @@ jobs:
             docs/vercel)            script=point-docs-dns-vercel.sh ;;
             forge/ecs)              script=point-forge-dns-ecs.sh ;;
             kuanlan/ecs)            script=point-kuanlan-dns-ecs.sh ;;
+            para/fly)               script=point-fly-dns.sh ;;
             leak/authoritative)     script=point-leak-zone-dns.sh ;;
             open/vercel)            script=point-open-dns-vercel.sh ;;
             pebble/vercel)          script=point-pebble-dns-vercel.sh ;;
@@ -88,6 +92,7 @@ jobs:
                 auth) supported="cloudflare-worker ecs vercel" ;;
                 docs) supported="ecs cloudflare-worker vercel" ;;
                 design|forge|kuanlan|router) supported="ecs" ;;
+                para) supported="fly" ;;
                 carina|open|pebble|status) supported="vercel" ;;
                 www) supported="apex" ;;
                 leak) supported="authoritative" ;;
@@ -114,6 +119,10 @@ jobs:
           ZONE_NAME: nebutra.com
           ORIGIN_IP: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
           SCRIPT: ${{ steps.resolve.outputs.script }}
+          # point-fly-dns.sh is the one generic script here: it needs the host label and the
+          # Fly app to CNAME onto. Every per-host script hardcodes its own and ignores these.
+          DNS_HOST: ${{ inputs.host }}
+          FLY_APP: ${{ inputs.host == 'para' && 'nebutra-para' || '' }}
         run: |
           set -euo pipefail
           test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
@@ -215,8 +224,8 @@ jobs:
               echo "::warning::health ok but google probe not pair_ok yet"
               exit 0
               ;;
-            carina|pebble)
-              # Best-effort until the Vercel domain is attached.
+            carina|para|pebble)
+              # Best-effort until the origin is attached (Vercel project, or the Fly cert for para).
               for i in 1 2 3 4 5 6; do
                 code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://${DNS_HOST}.nebutra.com/" || echo 000)
                 echo "attempt $i ${DNS_HOST}=$code"

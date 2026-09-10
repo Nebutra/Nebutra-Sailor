@@ -1,0 +1,45 @@
+{
+  "id": "fal.model.playground.error-no-credits",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell",
+    "heading": "fal-ai/flux/schnell",
+    "activeTab": "Playground",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "none",
+  "jobState": "failed",
+  "agentState": "none",
+  "visibleControls": [
+    "Result: Error",
+    "Not enough credits alert",
+    "Add credits -> /dashboard/billing",
+    "JSON error body",
+    "Copy",
+    "cost line"
+  ],
+  "disclosure": {
+    "appeared": ["Error chip", "Not enough credits", "Add credits"],
+    "disappeared": ["Starting chip"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.after-run.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Error JSON: {name:'ApiError',status:403,body:{detail:'User is locked. Reason: Exhausted balance. Top up your balance at fal.ai/dashboard/billing.'},requestId:''}. Empty requestId = rejected before queue admission."
+    },
+    {
+      "tier": "O",
+      "text": "Header credits button still reads 'Credits: $0.00, out of credits'."
+    }
+  ]
+}

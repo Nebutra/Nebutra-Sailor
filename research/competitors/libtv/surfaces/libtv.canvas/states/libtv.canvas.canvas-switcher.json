@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.canvas-switcher",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "canvas-switcher",
+    "selectedEntity": "none",
+    "majorControls": ["画布 list", "新建画布"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "canvas-switcher",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "新建画布",
+    "切换到画布 画布 1",
+    "使用教程",
+    "联系客服",
+    "联系销售",
+    "关注公众号"
+  ],
+  "disclosure": {
+    "appeared": ["popover"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.canvas-switcher.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "One project can hold multiple canvases."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "fromState": "fal.explore.gallery",
+    "action": {
+      "type": "click",
+      "control": "Try it now!"
+    },
+    "toState": "fal.model.playground.idle-example",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/explore.webp",
+        "capturedAt": "2026-09-08"
+      },
+      {
+        "file": "evidence/model.schnell.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "fal.explore.gallery",
+    "action": {
+      "type": "click",
+      "control": "See docs"
+    },
+    "toState": "fal.model.api",
+    "sideEffects": ["url.changed"],
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/explore.webp",
+        "capturedAt": "2026-09-08"
+      },
+      {
+        "file": "evidence/model.schnell.api.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "id": "fal.dashboard.home",
+  "surfaceId": "fal.dashboard",
+  "fingerprint": {
+    "route": "/dashboard",
+    "heading": "Dashboard",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Getting started checklist",
+    "Set up billing",
+    "Add credits",
+    "Try the Sandbox",
+    "fal Sandbox",
+    "fal Workflows",
+    "fal Agent (Early Access)",
+    "Featured/Explore",
+    "Latest generations (empty)",
+    "See all -> recent-history"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/dashboard.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": []
+}

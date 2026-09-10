@@ -1,0 +1,27 @@
+{
+  "id": "tapnow.canvas.node-search",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Node search",
+    "overlay": "node-search",
+    "selectedEntity": "none"
+  },
+  "visibleControls": [
+    "Search canvas nodes by title, prompt, or text",
+    "All/Image/Video/Text/Audio/World/Group"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.dock.assets.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Node kinds include 'World' and 'Group' (Group = manifesto's reusable Phrase/Chapter; not exercised, I2)."
+    }
+  ],
+  "openOverlay": "node-search"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "fal.pricing",
+  "competitor": "fal",
+  "overlays": [],
+  "secondaryActions": [],
+  "navigation": [],
+  "tabs": [],
+  "route": "/pricing",
+  "name": "Pricing",
+  "category": "other",
+  "primaryActions": [
+    {
+      "label": "Start Building",
+      "type": "link"
+    },
+    {
+      "label": "Contact Sales",
+      "type": "link"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/pricing.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "GPU list vs as-low-as prices (H100 $4.50/h list, $1.89/h); video per-second or per-video; image per-image or per-megapixel normalized to 1MP; 'Output per $1' column for comparison."
+    }
+  ]
+}

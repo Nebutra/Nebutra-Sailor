@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../schema/manifest.schema.json
+slug: lovart
+name: Lovart
+category: creative-os
+targets:
+  - { url: "https://www.lovart.ai", track: public, verified: true }
+  - { url: "https://www.lovart.ai/zh/home", track: authenticated, verified: true, note: "owner logged in; shell routes /zh/home /zh/projects /zh/brand-kit" }
+  - { url: "https://www.lovart.ai/canvas?projectId=<id>", track: authenticated, verified: true, note: "canvas; locale-less; opened in new tab from cards" }
+access:
+  account: paid
+  owner_assisted: true
+  credit_budget: "free tier ⚡70/day; spent 18 (agent GPT Image 2 Low = 3, generator node = 15); balance 52 at close"
+status: core_done
+coverage: { route: 0.9, surface: 0.85, interaction: 0.7, state: 0.75, core_loop: 0.9 }
+last_explored: "2026-09-08"

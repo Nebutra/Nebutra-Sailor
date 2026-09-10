@@ -1,0 +1,31 @@
+lifecycles:
+  canvas:
+    tier: O
+    states: [created-on-visit, has-nodes, published(U)]
+    transitions:
+      - "GET /infinite-canvas → created (URL rewritten, my-space card)"
+      - "+ / double-click / drop file → node added"
+      - "发布作品 → published (not exercised)"
+  node:
+    tier: O
+    states: [blank, submitted, queued, running, completed, failed(U)]
+    transitions:
+      - "blank --submit--> queued (credits debited, id uuid→snowflake, label→type)"
+      - "queued --server--> running (生成中)"
+      - "running --server--> completed (asset in node)"
+      - "completed --derived op (多角度/故事推演/图片超清/画面切分/…)--> new node + edge"
+      - "completed --合成视频--> composition node | editor"
+  generation_job:
+    tier: O
+    notes: "No global job center found; status lives in the node. Job continues while user navigates away (O). Failure display: U."
+  subject:
+    tier: O
+    states: [public-preset, personal-created]
+    transitions: ["添加新主体 (form) → personal", "批量上传主体 → personal", "@ in prompt → referenced by generation"]
+  agent_turn:
+    tier: O
+    states: [composing, thinking(正在思考), tool-calls(已调用工具), answered]
+    notes: "No approval step observed for a text-only request; whether generation-producing turns ask for approval is U."
+  story:
+    tier: U
+    notes: "Hero 短片工作室 submission not exercised (would likely start Seedance video generation)."

@@ -1,0 +1,83 @@
+{
+  "id": "fal.home",
+  "competitor": "fal",
+  "overlays": [
+    {
+      "id": "cookie-consent",
+      "kind": "sheet",
+      "trigger": "page load",
+      "dismiss": "Reject All / Close",
+      "modal": false
+    },
+    {
+      "id": "announcement-bar",
+      "kind": "sheet",
+      "trigger": "page load",
+      "dismiss": "Dismiss announcement"
+    }
+  ],
+  "secondaryActions": [],
+  "navigation": [
+    {
+      "label": "Products",
+      "type": "popover-trigger",
+      "location": "top-left"
+    },
+    {
+      "label": "Documentation",
+      "type": "link"
+    },
+    {
+      "label": "Pricing",
+      "type": "link"
+    },
+    {
+      "label": "Enterprise",
+      "type": "link"
+    },
+    {
+      "label": "Resources",
+      "type": "popover-trigger"
+    },
+    {
+      "label": "Login",
+      "type": "link",
+      "location": "top-right"
+    }
+  ],
+  "tabs": [],
+  "route": "/",
+  "name": "Marketing home",
+  "category": "home",
+  "layout": {
+    "persistentPanels": ["top-nav"],
+    "chromeRatio": 0.1,
+    "workSurfaceRatio": 0.9
+  },
+  "primaryActions": [
+    {
+      "label": "Get started",
+      "type": "primary-button"
+    },
+    {
+      "label": "Explore all models",
+      "type": "link"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/home.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Home is a marketing page: hero + model carousel + three product pillars (model APIs / serverless / compute). Login link present even when the owner's session is authenticated on app routes."
+    },
+    {
+      "tier": "O",
+      "text": "hCaptcha iframe is mounted on every public page (passive, never triggered)."
+    }
+  ]
+}

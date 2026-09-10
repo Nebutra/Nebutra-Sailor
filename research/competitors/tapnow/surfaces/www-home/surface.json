@@ -1,0 +1,125 @@
+{
+  "id": "tapnow.www-home",
+  "competitor": "tapnow",
+  "route": "https://www.tapnow.ai/",
+  "name": "Marketing home",
+  "category": "home",
+  "layout": {
+    "persistentPanels": ["header nav"],
+    "chromeRatio": 0.08,
+    "workSurfaceRatio": 0.0
+  },
+  "navigation": [
+    {
+      "label": "Manifesto",
+      "type": "link",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Download",
+      "type": "link",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Community",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Enterprise",
+      "type": "link",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Careers",
+      "type": "link",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Pricing",
+      "type": "link",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "EN",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "Get started for free",
+      "type": "primary-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Download App",
+      "type": "secondary-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Try TapNow Agent",
+      "type": "secondary-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Try lens combo",
+      "type": "secondary-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Try change angle",
+      "type": "secondary-button",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "cookie-banner",
+      "kind": "sheet",
+      "trigger": "page load",
+      "dismiss": "OKAY (only option)",
+      "modal": false,
+      "contentOwnership": ""
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/home.hero.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Hero: 'Your Creative OS' — 'TapNow is the best way to create with AI Agents. Orchestrate text, image, audio, and video models. Zero friction.'"
+    },
+    {
+      "tier": "O",
+      "text": "Hero embeds a live React Flow demo canvas (nodes Reference → Image Generation → Poem → Video Generation, left tool rail, prompt bar 'Describe your idea or select nodes for context...')."
+    },
+    {
+      "tier": "O",
+      "text": "'Get started for free' runs navToTap() → https://app.tapnow.ai/home (opens outside the tab; the app URL is embedded in JSON-LD)."
+    },
+    {
+      "tier": "I1",
+      "text": "Sections (marketing screenshots/videos only): 'Your AI Executive Director' (zero manual context feeding, agent drives script, predicts next scene, enforces shot-by-shot consistency), Lens Combo (camera bodies, lenses, focal lengths, apertures), Multi-angle camera control (cube), Studio lighting control, Video object replacement, Global frontier models (Veo, Kling, Luma, Sora, Midjourney, GPT Image, Hailuo, Jimeng, Vidu, Flux, Pixverse, Grok, Gemini), TapNow Community (clone/remix templates)."
+    },
+    {
+      "tier": "O",
+      "text": "Trust logos: Alibaba, Google Ads/Cloud, TikTok, YouTube, ByteDance, Tencent, WPP, Honda, The Trade Desk, BlueFocus, Yeahmobi, ANTA, AUKEY."
+    }
+  ]
+}

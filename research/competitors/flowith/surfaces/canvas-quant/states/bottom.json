@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-quant.bottom",
+  "surfaceId": "flowith.canvas-quant",
+  "fingerprint": {
+    "route": "/conv/3e48cb10-e17f-4309-8e07-32364045ad9a",
+    "heading": "Quant System PRD",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "document nodes with version strings",
+      "sandbox preview node",
+      "final spec nodes"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "done",
+  "visibleControls": [
+    "document nodes with version strings",
+    "sandbox preview node",
+    "final spec nodes"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.quant.bottom.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Tail of the chain: dark sandbox node ('Load sandbox preview'), more doc nodes."
+    }
+  ]
+}

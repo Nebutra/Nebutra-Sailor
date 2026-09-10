@@ -1,0 +1,166 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "libtv.art-community",
+  "competitor": "libtv",
+  "route": "https://www.liblib.art/inspiration | /modelinfo/<uuid>?versionUuid=<v> | /imageinfo/<uuid> | /asset | /pretrain | /sd | /comfy | /lib3",
+  "name": "LiblibAI community + model layer (home feed, model page, image page, assets, LoRA training, WebUI/ComfyUI)",
+  "category": "library",
+  "layout": {
+    "persistentPanels": [
+      "left nav rail (首页 / 创作▾ / 资产 / 个人中心 / 创作中心 / 发布 / 教程 / API / 前往LibTV创作)",
+      "top search + promo (邀请有礼, 积分超市, 会员中心)",
+      "promo countdown banner"
+    ],
+    "chromeRatio": 0.2,
+    "workSurfaceRatio": 0.8
+  },
+  "navigation": [
+    {
+      "label": "创作 ▾: 图片生成 /ai-tool/image-generator · 视频生成 /ai-tool/video-generator · WebUI /sd · ComfyUI /comfy · 训练 LoRA /pretrain · AI 应用 /lib3",
+      "type": "menu-item",
+      "location": "left-rail"
+    },
+    { "label": "资产 /asset", "type": "link", "location": "left-rail" },
+    { "label": "创作中心 https://creator.liblib.art", "type": "link", "location": "left-rail" },
+    { "label": "前往LibTV创作 https://www.liblib.tv/", "type": "link", "location": "left-rail" }
+  ],
+  "tabs": [
+    {
+      "name": "home feed tabs: 图片模型 / 视频特效 / 发现灵感 / 工作流",
+      "default": true,
+      "changesUrl": false
+    },
+    {
+      "name": "home category chips: 全部 / 🎥 电商产品渲染·视频特效 / 🐉解锁动漫新世界 / ❤️‍🔥短剧漫剧·视频特效 / 摄影写真 / 电商营销 / 动漫游戏 / 风格插画 / 平面设计 / 建筑及室内设计 / 创意玩法 / 文创周边 / 小说推文",
+      "changesUrl": false
+    },
+    { "name": "/asset: 团队中心 / 个人资产 (+ date range, 我的收藏)", "changesUrl": false },
+    {
+      "name": "/sd tabs: 文生图 / 图生图 / 后期处理 / 超清放大 / Inpaint Anything / PNG图片信息 / WD1.4 标签器 / gallery; side tabs 生图 / 模型",
+      "changesUrl": false
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "home: '一键使用顶尖视频/图片模型' model strip (Seedance 2.5, Minmax H3, Seedream 5.0 Pro, Seedance 2.0/Fast, Happy Horse 1.0, Seedream 5.0 lite, 可灵 3.0, 可灵 3.0 Omni)",
+      "type": "link",
+      "location": "floating"
+    },
+    {
+      "label": "home feed cards → /imageinfo/<id>?from=feed (images) or /modelinfo/<id>?from=feed&versionUuid=… (models, typed Checkpoint / LORA / 模板)",
+      "type": "link",
+      "location": "floating"
+    },
+    {
+      "label": "modelinfo: 去WebUI使用 (primary CTA)",
+      "type": "primary-button",
+      "location": "right-panel"
+    },
+    {
+      "label": "imageinfo: 做同款 → /ai-tool/image-generator?fillimgid=<id>; 图生视频",
+      "type": "primary-button",
+      "location": "right-panel"
+    },
+    {
+      "label": "/pretrain: 开始训练 (LoRA trainer)",
+      "type": "primary-button",
+      "location": "right-panel"
+    },
+    {
+      "label": "/sd: 开始生图 ; /comfy: 开始生图 ; /lib3: 一键生成 (限免8次)",
+      "type": "primary-button",
+      "location": "floating"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "modelinfo: 加入收藏 ▾ / 会员下载 (217.90MB) / 关注 author / 我要晒图 / version tab v1.0 / comments",
+      "type": "secondary-button",
+      "location": "right-panel"
+    },
+    {
+      "label": "imageinfo: 生成参数 panel, links to used models (模板 + base model), 关注",
+      "type": "secondary-button",
+      "location": "right-panel"
+    },
+    {
+      "label": "home: 推荐 ▾ / 筛选 ▾ ; search",
+      "type": "popover-trigger",
+      "location": "top-right"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "login-promo",
+      "kind": "popover",
+      "trigger": "auto when logged-out (登录领 20 积分/天)",
+      "dismiss": "关闭",
+      "modal": false,
+      "contentOwnership": "free-tier promise: 100+ models, ~40 images or 2 videos, 3GB storage"
+    },
+    {
+      "id": "pretrain-model-picker",
+      "kind": "modal",
+      "trigger": "base model select on /pretrain",
+      "dismiss": "Close",
+      "modal": true,
+      "contentOwnership": "搜索模型 + 全选 + switch"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/libtv.home.default.webp",
+      "url": "https://www.liblib.art/inspiration",
+      "capturedAt": "2026-09-08"
+    },
+    { "file": "evidence/libtv.home.models-tab.webp", "note": "图片模型 tab" },
+    {
+      "file": "evidence/libtv.art-modelinfo.cta.webp",
+      "url": "https://www.liblib.art/modelinfo/c47a45d326fe454a8e48dee8c1f160f4",
+      "note": "LoRA page with 去WebUI使用, 版本详情, 推荐参数"
+    },
+    {
+      "file": "evidence/libtv.art-imageinfo.default.webp",
+      "url": "https://www.liblib.art/imageinfo/18fc4df8a94149969b4276814d467edb"
+    },
+    { "file": "evidence/libtv.art-asset.webp", "url": "https://www.liblib.art/asset" },
+    { "file": "evidence/libtv.art-pretrain.webp", "url": "https://www.liblib.art/pretrain" },
+    { "file": "evidence/libtv.art-sd.webp", "url": "https://www.liblib.art/sd" },
+    { "file": "evidence/libtv.art-comfy.webp", "url": "https://www.liblib.art/comfy" },
+    { "file": "evidence/libtv.art-lib3.webp", "url": "https://www.liblib.art/lib3" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Community objects are typed: image posts (/imageinfo), models (/modelinfo, typed Checkpoint / LORA / 模板 with base model e.g. Illustrious, Qwen-Image, Seedream), 视频特效, 工作流 (ComfyUI), AI 应用 (/lib3 hosted ComfyUI apps such as 'flux高清放大-在线生图')."
+    },
+    {
+      "tier": "O",
+      "text": "Model page (LoRA) carries 版本详情 (类型 LORA, 是否原创, 在线生成数 588.7k, 下载量, 基础算法 Illustrious, 触发词 HG2512) and 推荐参数 (推荐搭配 Checkpoint null_v15, 推荐权重 0.7, CFG 4, VAE, 高清放大算法); actions 去WebUI使用 / 加入收藏 / 会员下载; 许可范围 link 创作与商用规则说明."
+    },
+    {
+      "tier": "O",
+      "text": "Model → generation: LoRA/Checkpoint community models route to the SD WebUI (/sd) via 去WebUI使用; the consumer generator (/ai-tool/*) uses closed API models (Seedream, Seedance, Kling, Wan, Minimax) and community '风格模型' cards; image posts route to the generator via 做同款 (?fillimgid=…)."
+    },
+    {
+      "tier": "O",
+      "text": "LoRA training (/pretrain) is a form: image upload (预计消耗积分 computed after upload), 参数设置 Repeat 1–50, Epoch 1–20, Learning Rate presets 1e-6…2e-4, 模型效果预览提示词, cropping (聚焦裁剪 / 中央裁剪 / 无需裁剪, 512*512/512*768/768*512), auto-captioning (BLIP / Deepbooru / 仅触发词 / 无需标注 / Llava / Joy2 / 通义千问), 训练管理 list (暂无训练任务). Some options are gated (升级会员)."
+    },
+    {
+      "tier": "O",
+      "text": "/asset is the user's asset home with 团队中心 / 个人资产 tabs, date-range filter and 我的收藏; it is the only place on liblib.art resembling a 'workspace' — no project object exists on liblib.art (projects live only in LibTV)."
+    },
+    {
+      "tier": "O",
+      "text": "/sd is a hosted A1111-style WebUI (checkpoint 基础算法_F.1.safetensors, VAE list, Clip Skip, sampler list Euler…LCM, Sampling Steps 1–60, Width/Height sliders, CFG scale, 面部修复, 高分辨率修复, 商用规则) and /comfy a hosted ComfyUI (新版 switch, 开始生图, credit estimate 10)."
+    },
+    {
+      "tier": "O",
+      "text": "Credits (积分) and membership are shared across liblib.art and liblib.tv (same '积分 0', same 会员中心 / 开通会员 chrome, cross-storage iframe)."
+    },
+    {
+      "tier": "I2",
+      "text": "The LibTV canvas Agent's 特效 picker (特效广场 with authors and 商用 badge) is the same community 视频特效 catalogue surfaced on the liblib.art home tab 视频特效 — community-authored effects are consumed inside the canvas node."
+    }
+  ]
+}
