@@ -55,8 +55,12 @@ async function main() {
       process.stdout.write("would create a machine tenant\n");
       tenantId = "(new)";
     } else {
+      // TenantKind is ORGANIZATION | INDIVIDUAL — there is no machine kind, and
+      // lifecycleState keeps its schema default. A first-party service consumer
+      // is closer to an organization than to a person, and the router path reads
+      // neither field: it needs a tenant only as the thing that owns a balance.
       const created = await db.tenant.create({
-        data: { kind: "machine", lifecycleState: "active" },
+        data: { kind: "ORGANIZATION" },
         select: { id: true },
       });
       tenantId = created.id;
