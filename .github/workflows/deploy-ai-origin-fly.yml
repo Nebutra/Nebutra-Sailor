@@ -67,9 +67,11 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           set -euo pipefail
-          flyctl deploy backends/python \
-            --config infra/fly/ai.toml \
-            --dockerfile backends/python/Dockerfile \
+          # Absolute paths: flyctl resolves --config and --dockerfile relative to the build
+          # context argument, so repo-relative paths look like backends/python/infra/fly/ai.toml.
+          flyctl deploy "$GITHUB_WORKSPACE/backends/python" \
+            --config "$GITHUB_WORKSPACE/infra/fly/ai.toml" \
+            --dockerfile "$GITHUB_WORKSPACE/backends/python/Dockerfile" \
             --ha=false \
             --remote-only \
             --yes
