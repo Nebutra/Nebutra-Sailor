@@ -52,10 +52,10 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
   };
 
   const chip =
-    "flex h-[var(--para-h-chip)] items-center gap-1 rounded-md px-2 text-xs text-foreground hover:bg-accent";
+    "flex h-[var(--para-h-chip)] items-center gap-1 rounded-md px-2 text-label text-foreground hover:bg-accent";
 
   return (
-    <div className="para-rise flex w-[420px] flex-col gap-1.5 rounded-xl border border-border bg-popover p-2 shadow-ambient-md">
+    <div className="para-rise flex w-para-nodeconfig flex-col gap-1.5 rounded-xl border border-border bg-popover p-2 shadow-ambient-md">
       <div className="flex items-center gap-0.5">
         <Popover>
           <PopoverTrigger asChild>
@@ -70,7 +70,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
                 key={m}
                 type="button"
                 onClick={() => updateGenerator(node.id, { mode: m })}
-                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-xs capitalize hover:bg-accent"
+                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-label capitalize hover:bg-accent"
               >
                 {m}
               </button>
@@ -90,14 +90,14 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
                 key={m}
                 type="button"
                 onClick={() => updateGenerator(node.id, { model: m })}
-                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-xs hover:bg-accent"
+                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-label hover:bg-accent"
               >
                 {m}
               </button>
             ))}
           </PopoverContent>
         </Popover>
-        <span className="rounded-md bg-neutral-3 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+        <span className="rounded-md bg-neutral-3 px-1.5 py-0.5 text-meta text-muted-foreground">
           {String(g.params?.ratio ?? "16:9")} · {String(g.params?.resolution ?? "1K")}
         </span>
         <div className="flex-1" />
@@ -109,7 +109,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
         >
           {count}×
         </button>
-        <span className="px-1.5 text-muted-foreground text-xs tabular-nums">✦{est}</span>
+        <span className="px-1.5 text-muted-foreground text-label tabular-nums">✦{est}</span>
         <Popover>
           <PopoverTrigger asChild>
             <button type="button" className={chip}>
@@ -118,7 +118,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
             </button>
           </PopoverTrigger>
           <PopoverContent align="end" className="w-56 p-3">
-            <div className="mb-1.5 font-medium text-foreground text-xs">Advanced</div>
+            <div className="mb-1.5 font-medium text-foreground text-label">Advanced</div>
             {[
               ["Ratio", "16:9"],
               ["Resolution", "1K"],
@@ -126,7 +126,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
               ["Steps", "—"],
               ["Reference weight", "—"],
             ].map(([k, v]) => (
-              <div key={k} className="flex justify-between py-0.5 text-xs">
+              <div key={k} className="flex justify-between py-0.5 text-label">
                 <span className="text-muted-foreground">{k}</span>
                 <span className="text-foreground">{v}</span>
               </div>
@@ -161,7 +161,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
           type="button"
           onClick={generate}
           disabled={busy}
-          className="h-[var(--para-h-control)] rounded-md bg-primary px-3 font-medium text-primary-foreground text-xs disabled:opacity-40"
+          className="h-[var(--para-h-control)] rounded-md bg-primary px-3 font-medium text-primary-foreground text-label disabled:opacity-40"
         >
           Generate
         </button>

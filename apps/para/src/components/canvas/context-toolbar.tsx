@@ -22,7 +22,7 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
   );
 
   const item =
-    "h-[var(--para-h-chip)] rounded-md px-2.5 text-xs text-foreground hover:bg-accent disabled:cursor-default disabled:opacity-35 disabled:hover:bg-transparent";
+    "h-[var(--para-h-chip)] rounded-md px-2.5 text-label text-foreground hover:bg-accent disabled:cursor-default disabled:opacity-35 disabled:hover:bg-transparent";
   const run = (mode: "image" | "video", label: string) => {
     const id = derive({ sourceId: node.id, mode, createdBy: "user" });
     if (id) enqueue(id, `${label} · ${node.id}`, mode === "video" ? 7 : 1);
@@ -94,7 +94,7 @@ function Frame({ children }: { children: React.ReactNode }) {
 function InfoPopover({ node }: { node: WorkspaceNode }) {
   const row = (k: string, v: string | undefined) =>
     v ? (
-      <div className="flex justify-between gap-6 py-0.5 text-xs">
+      <div className="flex justify-between gap-6 py-0.5 text-label">
         <span className="text-muted-foreground">{k}</span>
         <span className="text-foreground">{v}</span>
       </div>
@@ -111,7 +111,7 @@ function InfoPopover({ node }: { node: WorkspaceNode }) {
         </button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-60 p-3">
-        <div className="mb-1.5 font-medium text-foreground text-xs">Info</div>
+        <div className="mb-1.5 font-medium text-foreground text-label">Info</div>
         {row("Type", node.type)}
         {row("Status", node.status)}
         {row("Model", node.generator?.model)}

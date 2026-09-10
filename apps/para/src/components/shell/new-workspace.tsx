@@ -18,7 +18,7 @@ export function NewWorkspace({ projectId }: { projectId: string }) {
     });
   }, [projectId, qc, router]);
   return (
-    <div className="flex h-full items-center justify-center text-muted-foreground text-sm">
+    <div className="flex h-full items-center justify-center text-muted-foreground text-body">
       Creating…
     </div>
   );

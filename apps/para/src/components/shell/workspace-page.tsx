@@ -58,7 +58,7 @@ export function WorkspacePage({
 
   if (!isLoading && !workspace) {
     return (
-      <div className="flex h-full items-center justify-center text-muted-foreground text-sm">
+      <div className="flex h-full items-center justify-center text-muted-foreground text-body">
         This workspace does not exist.
       </div>
     );

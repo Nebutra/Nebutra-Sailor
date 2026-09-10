@@ -17,6 +17,7 @@ import { CreateMenu } from "./create-menu";
 import { JobsIndicator } from "./jobs-popover";
 import { ProfileButton } from "./profile-button";
 import { ViewSelector } from "./view-selector";
+import { Wordmark } from "./wordmark";
 
 interface Props {
   projectId: string;
@@ -32,12 +33,10 @@ export function WorkspaceTopBar({ projectId, projectName, workspaceId, workspace
   const router = useRouter();
   return (
     <header className="grid h-[var(--para-topbar-h)] shrink-0 grid-cols-[1fr_auto_1fr] items-center px-4">
-      <div className="flex min-w-0 items-center gap-3 text-sm">
-        <Link href="/" className="font-medium text-foreground tracking-[0.18em]">
-          PARA
-        </Link>
+      <div className="flex min-w-0 items-center gap-3 text-body">
+        <Wordmark />
         <span className="text-neutral-7">|</span>
-        <nav className="flex min-w-0 items-center gap-1 text-sm">
+        <nav className="flex min-w-0 items-center gap-1 text-body">
           <Link
             href={`/p/${projectId}`}
             className="truncate text-muted-foreground hover:text-foreground"

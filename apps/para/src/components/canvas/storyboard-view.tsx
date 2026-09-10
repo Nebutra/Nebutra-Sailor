@@ -15,7 +15,7 @@ export function StoryboardView() {
   return (
     <div className="h-full w-full overflow-y-auto bg-background p-8">
       {nodes.length === 0 ? (
-        <p className="text-muted-foreground text-sm">No shots yet.</p>
+        <p className="text-muted-foreground text-body">No shots yet.</p>
       ) : (
         <div className="grid grid-cols-4 gap-4">
           {nodes.map((n, i) => (
@@ -28,7 +28,7 @@ export function StoryboardView() {
               <div className="min-h-0 flex-1">
                 <MediaNode node={n} selected={false} />
               </div>
-              <div className="flex h-[var(--para-h-chip)] items-center justify-between px-2 text-[11px] text-muted-foreground">
+              <div className="flex h-[var(--para-h-chip)] items-center justify-between px-2 text-meta text-muted-foreground">
                 <span>Shot {String(i + 1).padStart(2, "0")}</span>
                 <span className="capitalize">{n.status}</span>
               </div>

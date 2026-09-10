@@ -27,12 +27,12 @@ export function MediaNode({ node, selected }: { node: WorkspaceNode; selected: b
 
   return (
     <>
-      <span className="-top-5 pointer-events-none absolute left-0 truncate text-[11px] text-muted-foreground">
+      <span className="-top-5 pointer-events-none absolute left-0 truncate text-meta text-muted-foreground">
         {identity}
       </span>
       {node.type === "text" ? (
         <div
-          className={`h-full w-full rounded-[var(--para-node-radius)] px-3 py-2 text-foreground text-sm leading-snug ${hover}`}
+          className={`h-full w-full rounded-[var(--para-node-radius)] px-3 py-2 text-foreground text-body leading-snug ${hover}`}
         >
           {node.text}
         </div>
@@ -56,18 +56,14 @@ export function MediaNode({ node, selected }: { node: WorkspaceNode; selected: b
           {(node.status === "queued" || node.status === "running") && <TaskState node={node} />}
           {node.status === "failed" && (
             <div className="absolute inset-0 flex flex-col items-start justify-end gap-0.5 bg-background/70 p-2.5">
-              <span className="text-[11px] text-destructive">
-                {node.error?.message ?? "Failed"}
-              </span>
+              <span className="text-meta text-destructive">{node.error?.message ?? "Failed"}</span>
               {node.error?.type && (
-                <span className="font-mono text-[11px] text-muted-foreground">
-                  {node.error.type}
-                </span>
+                <span className="font-mono text-meta text-muted-foreground">{node.error.type}</span>
               )}
             </div>
           )}
           {(node.status === "empty" || node.status === "configured") && !asset && (
-            <div className="absolute inset-0 flex items-center justify-center text-[11px] text-muted-foreground">
+            <div className="absolute inset-0 flex items-center justify-center text-meta text-muted-foreground">
               {node.generator?.prompt ? node.generator.prompt : "Empty"}
             </div>
           )}
@@ -82,13 +78,11 @@ function TaskState({ node }: { node: WorkspaceNode }) {
   const running = node.status === "running";
   return (
     <div className="absolute inset-0 flex items-end justify-between bg-neutral-2/90 p-2.5">
-      <span className="rounded-md bg-popover px-1.5 py-0.5 text-[11px] text-foreground">
+      <span className="rounded-md bg-popover px-1.5 py-0.5 text-meta text-foreground">
         {running ? "Generating…" : `Queued${node.queuePosition ? ` · ${node.queuePosition}` : ""}`}
       </span>
       {node.cost?.estimated !== undefined && (
-        <span className="text-[11px] text-muted-foreground tabular-nums">
-          ✦{node.cost.estimated}
-        </span>
+        <span className="text-meta text-muted-foreground tabular-nums">✦{node.cost.estimated}</span>
       )}
     </div>
   );

@@ -51,7 +51,7 @@ export function PromptDropZone() {
           }
         }}
         rows={3}
-        className="resize-none border-0 bg-transparent px-5 py-4 pr-14 text-base shadow-none"
+        className="resize-none border-0 bg-transparent px-5 py-4 pr-14 text-body shadow-none"
       />
       <div className="absolute right-3 bottom-3">
         <Button

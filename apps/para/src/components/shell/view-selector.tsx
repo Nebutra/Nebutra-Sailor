@@ -67,9 +67,7 @@ export function ViewSelector() {
           <DropdownMenuItem key={v} onClick={() => setView(v)}>
             <span className="flex-1">{LABEL[v]}</span>
             {LABS_VIEWS.includes(v) && (
-              <span className="ml-3 text-[10px] text-muted-foreground uppercase tracking-wider">
-                labs
-              </span>
+              <span className="ml-3 text-meta text-muted-foreground">labs</span>
             )}
           </DropdownMenuItem>
         ))}

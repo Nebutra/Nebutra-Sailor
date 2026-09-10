@@ -238,9 +238,9 @@ export function AgentPanel({ projectId }: { projectId: string }) {
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-      <div className="para-rise pointer-events-auto flex max-h-[33vh] w-[min(640px,80%)] flex-col rounded-2xl border border-border bg-popover shadow-ambient-lg">
+      <div className="para-rise pointer-events-auto flex max-h-[33vh] w-para-dock flex-col rounded-2xl border border-border bg-popover shadow-ambient-lg">
         <div className="flex items-center justify-between px-4 pt-3">
-          <span className="font-medium text-foreground text-xs">Ask PARA</span>
+          <span className="font-medium text-foreground text-label">Ask PARA</span>
           <button
             type="button"
             aria-label="Close"
@@ -258,7 +258,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
               return n ? (
                 <span
                   key={n.id}
-                  className="flex h-[var(--para-h-chip)] items-center gap-1 rounded-md border border-border/60 bg-background pr-1 pl-1 text-[11px] text-foreground"
+                  className="flex h-[var(--para-h-chip)] items-center gap-1 rounded-md border border-border/60 bg-background pr-1 pl-1 text-meta text-foreground"
                 >
                   {asset ? (
                     <img src={asset.url} alt="" className="size-4 rounded-sm object-cover" />
@@ -296,7 +296,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 }
                 if (e.key === "Escape") close();
               }}
-              className="resize-none border-0 bg-transparent px-3 py-2 pr-12 text-sm shadow-none"
+              className="resize-none border-0 bg-transparent px-3 py-2 pr-12 text-body shadow-none"
             />
             <button
               type="button"
@@ -312,7 +312,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
 
         {(agent.status === "running" || agent.status === "done") && (
           <div className="min-h-0 overflow-y-auto px-4 pt-2 pb-3">
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-body">
               <span className="text-foreground">
                 {headline(agent.runStatus, agent.status, agent.createdNodeIds.length)}
               </span>
@@ -328,14 +328,14 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 key={approval.id}
                 className="mt-3 rounded-lg border border-border/70 bg-background p-3"
               >
-                <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center justify-between text-label">
                   <span className="text-foreground">{approvalTitle(approval.toolName)}</span>
                   <span className="text-muted-foreground tabular-nums">
                     ≈ ✦{approval.estimatedCost}
                   </span>
                 </div>
                 {typeof approval.args.prompt === "string" && (
-                  <p className="mt-1 line-clamp-2 text-[11px] text-muted-foreground">
+                  <p className="mt-1 line-clamp-2 text-meta text-muted-foreground">
                     {approval.args.prompt}
                   </p>
                 )}
@@ -343,14 +343,14 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                   <button
                     type="button"
                     onClick={() => void decide(approval.id, true)}
-                    className="h-[var(--para-h-chip)] rounded-md bg-primary px-3 font-medium text-primary-foreground text-xs"
+                    className="h-[var(--para-h-chip)] rounded-md bg-primary px-3 font-medium text-primary-foreground text-label"
                   >
                     Confirm
                   </button>
                   <button
                     type="button"
                     onClick={() => void decide(approval.id, false)}
-                    className="h-[var(--para-h-chip)] rounded-md border border-border px-3 text-foreground text-xs hover:bg-accent"
+                    className="h-[var(--para-h-chip)] rounded-md border border-border px-3 text-foreground text-label hover:bg-accent"
                   >
                     Cancel
                   </button>
@@ -372,7 +372,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 <button
                   type="button"
                   onClick={stop}
-                  className="h-[var(--para-h-chip)] rounded-md border border-border px-2.5 text-foreground text-xs hover:bg-accent"
+                  className="h-[var(--para-h-chip)] rounded-md border border-border px-2.5 text-foreground text-label hover:bg-accent"
                 >
                   Stop
                 </button>
@@ -380,7 +380,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 <button
                   type="button"
                   onClick={close}
-                  className="h-[var(--para-h-chip)] rounded-md border border-border px-2.5 text-foreground text-xs hover:bg-accent"
+                  className="h-[var(--para-h-chip)] rounded-md border border-border px-2.5 text-foreground text-label hover:bg-accent"
                 >
                   Done
                 </button>
@@ -389,7 +389,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 type="button"
                 onClick={() => setAgent({ activityOpen: !agent.activityOpen })}
                 aria-expanded={agent.activityOpen}
-                className="h-[var(--para-h-chip)] rounded-md px-2.5 text-muted-foreground text-xs hover:text-foreground"
+                className="h-[var(--para-h-chip)] rounded-md px-2.5 text-muted-foreground text-label hover:text-foreground"
               >
                 {agent.steps.filter((s) => s.state === "done").length} of {agent.steps.length}{" "}
                 actions
@@ -397,7 +397,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
             </div>
 
             {agent.activityOpen && agent.steps.length > 0 && (
-              <ul className="mt-3 space-y-1 border-border/60 border-t pt-3 text-xs">
+              <ul className="mt-3 space-y-1 border-border/60 border-t pt-3 text-label">
                 {agent.steps.map((s) => (
                   <li key={s.id} className="flex items-center gap-2">
                     <span

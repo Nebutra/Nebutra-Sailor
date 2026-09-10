@@ -246,7 +246,7 @@ function CanvasSurface() {
 function ZoomReadout() {
   const zoom = useEditorStore((s) => s.document?.viewport.zoom ?? 1);
   return (
-    <div className="pointer-events-none absolute right-3 bottom-3 text-[11px] text-muted-foreground tabular-nums opacity-60">
+    <div className="pointer-events-none absolute right-3 bottom-3 text-meta text-muted-foreground tabular-nums opacity-60">
       {Math.round(zoom * 100)}%
     </div>
   );
