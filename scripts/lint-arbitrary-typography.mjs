@@ -34,12 +34,15 @@ import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-// Scoped to the apps that HAVE a ladder to comply with. apps/para defines one in
-// src/styles/shell.css; the rest of the monorepo carries 1640 arbitrary type values across
-// 366 files as of 2026-09-10, and pointing a guard at them before they have a ladder would
-// produce 366 failures nobody can act on. Same staging as lint-motion-tokens.mjs, which
-// governs packages/design/ui/src and says so. Add an app here when it adopts a ladder.
-const SCAN_ROOTS = ["apps/para"];
+// Repo-wide. Every app already has a ladder to comply with — Tailwind's own scale
+// (text-xs … text-5xl) at minimum, and apps/para additionally names its four roles in
+// src/styles/shell.css. The rule is not "use PARA's ladder", it is "do not type a raw
+// length into a className", which every app can satisfy today.
+//
+// Same scope as lint-no-forbidden-containers.mjs, and for the same reason it grew to
+// include packages/design: a size baked into a library component reaches every page
+// that renders it.
+const SCAN_ROOTS = ["apps", "packages/design"];
 
 function sh(cmd) {
   try {

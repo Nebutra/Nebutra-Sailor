@@ -30,9 +30,9 @@ import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-// Same staging as lint-arbitrary-typography.mjs: govern the app being brought to
-// the standard, widen as each app is migrated.
-const SCAN_ROOTS = ["apps/para"];
+// Repo-wide across product apps. packages/** is deliberately absent: primitives are
+// built from raw elements by definition, and this guard is about call sites.
+const SCAN_ROOTS = ["apps"];
 const EXEMPT_RE = /^\s*\/\/\s*@primitive-exempt:/m;
 
 function sh(cmd) {
