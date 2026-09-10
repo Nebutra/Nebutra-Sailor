@@ -163,7 +163,7 @@ overrides:
   rollup: '>=4.59.0'
   semver: '>=7.8.0'
   sharp: '>=0.35.4'
-  smol-toml: '>=1.6.1'
+  smol-toml: '>=1.7.1'
   svgo: '>=4.1.0'
   tar: '>=7.5.21'
   tmp: '>=0.2.6'
@@ -2690,8 +2690,8 @@ importers:
         specifier: ^1.5.4
         version: 1.5.4
       smol-toml:
-        specifier: '>=1.6.1'
-        version: 1.6.1
+        specifier: '>=1.7.1'
+        version: 1.8.0
       sql-formatter:
         specifier: ^15.8.2
         version: 15.8.2
@@ -20503,8 +20503,8 @@ packages:
     resolution: {integrity: sha512-tf+h5W1IrjNm/9rKKj0JU2MDMruiopx0jjVA5zCdBtcGjfp0+c5rHw/zADLC3IeKlGHtVbHtpfzvYA0OYT+HKg==}
     engines: {node: '>=8.0.0'}
 
-  smol-toml@1.6.1:
-    resolution: {integrity: sha512-dWUG8F5sIIARXih1DTaQAX4SsiTXhInKf1buxdY9DIg4ZYPZK5nGM1VRIYmEbDbsHt7USo99xSLFu5Q1IqTmsg==}
+  smol-toml@1.8.0:
+    resolution: {integrity: sha512-kCZr2V3ch9i00x8zXRhjUNVcjG9ijES5dDudkXvUVCT5QlJNQWElSJdZqyPemffHoLNUYwOcou0Fy+ojN0uHSQ==}
     engines: {node: '>= 18'}
 
   snake-case@3.0.4:
@@ -30406,7 +30406,7 @@ snapshots:
       react-is: 19.2.4
       rxjs: 7.8.2
       semver: 7.8.0
-      smol-toml: 1.6.1
+      smol-toml: 1.8.0
       tar: 7.5.22
       tar-fs: 3.1.2
       tar-stream: 3.1.8
@@ -37360,7 +37360,7 @@ snapshots:
       oxc-parser: 0.133.0
       oxc-resolver: 11.20.0
       picomatch: 4.0.4
-      smol-toml: 1.6.1
+      smol-toml: 1.8.0
       strip-json-comments: 5.0.3
       tinyglobby: 0.2.16
       unbash: 3.0.0
@@ -41231,7 +41231,7 @@ snapshots:
 
   slugify@1.4.7: {}
 
-  smol-toml@1.6.1: {}
+  smol-toml@1.8.0: {}
 
   snake-case@3.0.4:
     dependencies:
