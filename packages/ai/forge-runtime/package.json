@@ -94,7 +94,7 @@
     "pinyin-pro": "^3.28.2",
     "prettier": "^3.8.1",
     "qrcode": "^1.5.4",
-    "smol-toml": "^1.6.1",
+    "smol-toml": "^1.7.1",
     "sql-formatter": "^15.8.2",
     "svgo": "^4.0.2",
     "ua-parser-js": "^2.0.10",
