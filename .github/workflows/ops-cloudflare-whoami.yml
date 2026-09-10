@@ -85,3 +85,18 @@ jobs:
           echo "── every worker this token can see"
           timeout 60 pnpm exec wrangler list 2>&1 | head -30 || \
             timeout 60 pnpm exec wrangler deployments list 2>&1 | head -10 || true
+
+      - name: What intercepts router.nebutra.com/v1
+        env:
+          CF: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -uo pipefail
+          api=https://api.cloudflare.com/client/v4
+          zid=$(curl -sS -H "Authorization: Bearer $CF" "$api/zones?name=nebutra.com" | python3 -c 'import json,sys;print((json.load(sys.stdin).get("result") or [{}])[0].get("id",""))')
+          echo "PROBE zone=$zid"
+          echo "PROBE -- dns"
+          curl -sS -H "Authorization: Bearer $CF" "$api/zones/$zid/dns_records?name=router.nebutra.com" | python3 -c 'import json,sys;d=json.load(sys.stdin);print("PROBE "+json.dumps(d.get("result") or d.get("errors"),ensure_ascii=False)[:800])'
+          echo "PROBE -- worker routes"
+          curl -sS -H "Authorization: Bearer $CF" "$api/zones/$zid/workers/routes" | python3 -c 'import json,sys;d=json.load(sys.stdin);print("PROBE "+json.dumps(d.get("result") or d.get("errors"),ensure_ascii=False)[:900])'
+          echo "PROBE -- rulesets"
+          curl -sS -H "Authorization: Bearer $CF" "$api/zones/$zid/rulesets" | python3 -c 'import json,sys;d=json.load(sys.stdin);r=d.get("result");print("PROBE "+(json.dumps([{k:x.get(k) for k in ("id","phase","name")} for x in r],ensure_ascii=False)[:900] if r else json.dumps(d.get("errors"),ensure_ascii=False)[:400]))'
