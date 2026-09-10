@@ -52,6 +52,41 @@ export const PRICE_OVERRIDES: Record<string, PriceOverride> = {
     contextLength: null,
     note: "302.ai gpt-image family ceiling $40/1M x 1.25; true gpt-image-2 rate unpublished",
   },
+
+  /**
+   * gpt-image-2.5, released 2026-09-08 as two tiers that bill identically:
+   * text input $5/1M, image input $8/1M, image output $30/1M, cache read $2/1M.
+   *
+   * A single `input_tokens` count cannot tell text tokens from image tokens, so
+   * every input token is charged as the dearer kind — $8, not $5. Output takes
+   * the image rate, $30. Both x1.25.
+   *
+   * Cache read is deliberately left unset: falling back to the full input rate
+   * overcharges us in our own favour, which is the safe direction for a rate we
+   * have not yet seen a real invoice for.
+   *
+   * The bare id `gpt-image-2.5` is deliberately absent from this table. OpenAI
+   * released only the two suffixed ids; the bare one 404s in their docs, and
+   * CLIProxyAPI forwards it upstream as-is, so it would fail at request time.
+   * With no price it stays unpublished and our edge refuses it, which is the
+   * outcome we want — do not add it to make the shelf look bigger.
+   */
+  "gpt-image-2.5-sunburst": {
+    provider: "OPENAI",
+    unit: "PER_1M_TOKENS",
+    inputPricePerMillion: 8 * MARGIN,
+    outputPricePerMillion: 30 * MARGIN,
+    contextLength: null,
+    note: "OpenAI list: image input $8/1M, image output $30/1M, x1.25",
+  },
+  "gpt-image-2.5-flare": {
+    provider: "OPENAI",
+    unit: "PER_1M_TOKENS",
+    inputPricePerMillion: 8 * MARGIN,
+    outputPricePerMillion: 30 * MARGIN,
+    contextLength: null,
+    note: "OpenAI list: image input $8/1M, image output $30/1M, x1.25",
+  },
 };
 
 export function priceOverrideFor(modelName: string): PriceOverride | undefined {
