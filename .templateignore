@@ -307,6 +307,7 @@ tests/architecture/nebutra/
 .github/workflows/ops-kuanlan-database-url.yml
 .github/workflows/ops-database-migrate.yml
 .github/workflows/ops-kuanlan-r2-uploads.yml
+.github/workflows/ops-origin-r2-uploads.yml
 .github/workflows/point-design-dns.yml
 .github/workflows/point-kuanlan-dns.yml
 .github/workflows/point-leak-dns.yml
