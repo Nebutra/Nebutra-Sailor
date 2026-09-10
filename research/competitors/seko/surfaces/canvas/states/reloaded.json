@@ -1,0 +1,32 @@
+{
+  "id": "seko.canvas.reloaded",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["node 图片", "node 多角度 (completed, distinct asset)", "edge"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "none",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["node 图片", "node 多角度 (completed, distinct asset)", "edge"],
+  "disclosure": { "appeared": [""], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.reloaded.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Full reload of the canvasId URL restores nodes, images and edge; job finished server-side while away."
+    }
+  ]
+}

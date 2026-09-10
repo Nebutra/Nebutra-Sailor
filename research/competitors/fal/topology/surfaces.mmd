@@ -1,0 +1,13 @@
+graph TD
+  home[fal.home] --> explore[fal.explore]
+  explore -->|Try it now| model[fal.model: Playground/API/Examples/Requests/Analytics]
+  explore -->|See docs| model
+  model -->|Open in Sandbox| sandbox[fal.sandbox]
+  model -->|Add credits / Credits popover| dashboard[fal.dashboard]
+  model -->|Link character / Collection| dashboard
+  dashboard --> sandbox
+  dashboard --> workflows[fal.workflows]
+  dashboard --> agent[fal.agent]
+  model -.->|API tab links| docs[fal.docs]
+  home --> pricing[fal.pricing]
+  home --> login[fal.login]

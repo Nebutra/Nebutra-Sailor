@@ -1,0 +1,91 @@
+[
+  {
+    "fromState": "tapnow.app-home.default",
+    "action": {
+      "type": "click",
+      "control": "Auto"
+    },
+    "toState": "tapnow.app-home.model-menu",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/app.home.model-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.app-home.default",
+    "action": {
+      "type": "click",
+      "control": "Workspace"
+    },
+    "toState": "tapnow.workspace.private",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/app.workspace.private.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["url.changed /canvas/projects"]
+  },
+  {
+    "fromState": "tapnow.app-home.default",
+    "action": {
+      "type": "click",
+      "control": "Arena"
+    },
+    "toState": "tapnow.peripheral.arena",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/app.arena.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["url.changed /home/challenge"]
+  },
+  {
+    "fromState": "tapnow.app-home.default",
+    "action": {
+      "type": "click",
+      "control": "Preview (template)"
+    },
+    "toState": "tapnow.app-home.template-preview",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/app.template-preview.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.app-home.default",
+    "action": {
+      "type": "click",
+      "control": "Skill card 'Video Editing'"
+    },
+    "toState": "tapnow.canvas.default",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/app.skill-card.canvas.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["project.created ('Video Edit (copy)')", "url.changed /canvas/<new-uuid>"]
+  },
+  {
+    "fromState": "tapnow.app-home.default",
+    "action": {
+      "type": "click",
+      "control": "Open project Untitled"
+    },
+    "toState": "tapnow.canvas.default",
+    "tier": "I2",
+    "evidence": [],
+    "sideEffects": ["url.changed /canvas/<uuid> (opened outside the tab)"]
+  }
+]

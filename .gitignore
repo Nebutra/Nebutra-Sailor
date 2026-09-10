@@ -63,6 +63,8 @@ __pycache__
 .venv
 venv
 .pytest_cache
+.coverage
+.ruff_cache
 
 # Rust
 target
@@ -125,9 +127,10 @@ apps/*/.source/
 # intended to keep.
 scratch-verify/
 
-# Competitor teardown captures — local research artifacts, not source.
-# Briefs in docs/plans/tools/ are the committed deliverable; regenerate the
-# captures with scripts/research-screenshot.mjs.
+# Competitor research: committed evidence lives in research/competitors/*/evidence/
+# (webp ≤ 150 KB per state). Full-size captures, DOM dumps and HAR stay local.
+# Regenerate with scripts/research-screenshot.mjs or the owner-assisted Chrome session.
+research/**/raw/
 docs/research/
 
 # Full CJK source faces downloaded by subset:cjk. Generated OFL woff2 files

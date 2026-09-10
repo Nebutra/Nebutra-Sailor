@@ -1,0 +1,50 @@
+{
+  "id": "seko.canvas.publish-dialog",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "publish-dialog",
+    "selectedEntity": "none",
+    "majorControls": [
+      "cover upload",
+      "标题*",
+      "活动标签",
+      "作品简介 0/500",
+      "社媒链接",
+      "封面图",
+      "公开画布 switch",
+      "发布作品"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "publish-dialog",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": [
+    "cover upload",
+    "标题*",
+    "活动标签",
+    "作品简介 0/500",
+    "社媒链接",
+    "封面图",
+    "公开画布 switch",
+    "发布作品"
+  ],
+  "disclosure": { "appeared": ["modal"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.share-popover.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Share = publish to community; 公开画布 switch suggests the canvas graph itself can be made public (matches 画布 badge on feed cards). Not submitted."
+    }
+  ]
+}

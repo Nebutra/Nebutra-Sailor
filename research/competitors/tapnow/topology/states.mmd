@@ -1,0 +1,42 @@
+%% TapNow state graph — core loop only (canvas + agent). Tier O unless marked.
+stateDiagram-v2
+  [*] --> app_home
+  app_home --> workspace_private : Workspace
+  app_home --> canvas_default : skill card (project.created) / open project
+  workspace_private --> canvas_default : project card
+
+  state canvas_default {
+    [*] --> idle
+    idle --> add_nodes : dock ⊕ / right-click
+    add_nodes --> node_selected_empty : pick type (node.created, selected)
+    idle --> node_selected : click node (composer context chip added)
+    node_selected --> idle : click pane
+    node_selected_empty --> node_generating : Generate (prompt required, cost shown)
+    node_generating --> node_result : ~39s, image in node, history entry
+    node_result --> tool_change_angle : toolbar Change Angle (inline)
+    node_result --> tool_relight : toolbar Relight (inline)
+    node_result --> tool_redraw : toolbar Redraw (mask, Banana Pro, cost 15)
+    tool_change_angle --> node_result : Escape
+    tool_relight --> node_result : Escape
+    tool_redraw --> node_result : Escape
+    idle --> library : dock Library
+    library --> ai_character : AI Character
+    idle --> history : dock History
+    idle --> image_editor : Image Editor node → Open editor (fullscreen)
+    image_editor --> idle : Close / Save and Back To Canvas
+    idle --> settings : Tapies balance / Usage
+    idle --> share_menu : Share
+  }
+
+  state agent_panel {
+    [*] --> agent_idle
+    agent_idle --> confirm_mode_menu : Ask
+    confirm_mode_menu --> agent_idle : choose Ask-before-acting / Act-without-asking
+    agent_idle --> agent_text_done : Send (text-only) — Worked for 1s
+    agent_text_done --> awaiting_approval : Send (paid action) — Completed 7 actions
+    awaiting_approval --> agent_idle : Cancel (U, not exercised)
+    awaiting_approval --> agent_running : Confirm — node "Generate Image" + edge created
+    agent_running --> agent_done : Processing ~60s → Editing 1 file → Worked for 2m25s
+  }
+  canvas_default --> agent_panel : selection → context chips
+  agent_panel --> canvas_default : agent mutates graph

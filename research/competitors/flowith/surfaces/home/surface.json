@@ -1,0 +1,254 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.home",
+  "competitor": "flowith",
+  "route": "/blank",
+  "name": "Home — 'Flow with ideas' composer + app/template gallery",
+  "category": "home",
+  "layout": {
+    "persistentPanels": [
+      "left sidebar (nav + Projects + History)",
+      "top promo banner (Unlock Unlimited Generation)",
+      "top-right credits strip"
+    ],
+    "chromeRatio": 0.2,
+    "workSurfaceRatio": 0.8
+  },
+  "navigation": [
+    { "label": "New Flow", "type": "link", "location": "left-rail", "visibleWhen": "always" },
+    { "label": "Flow Library", "type": "link", "location": "left-rail", "visibleWhen": "always" },
+    { "label": "Media History", "type": "link", "location": "left-rail", "visibleWhen": "always" },
+    {
+      "label": "Knowledge Garden",
+      "type": "link",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Knowledge Market",
+      "type": "link",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Projects (collapsible) + Create new project",
+      "type": "drawer-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "History (flow list, Sort by)",
+      "type": "link",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Account menu (name + FREE badge)",
+      "type": "popover-trigger",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Get more credits",
+      "type": "secondary-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Notifications",
+      "type": "icon-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Credit balance (0)",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "Chat",
+      "default": true,
+      "changesUrl": false,
+      "persistsState": false,
+      "scope": "composer mode"
+    },
+    { "name": "Image", "changesUrl": false, "scope": "composer mode" },
+    { "name": "Video", "changesUrl": false, "scope": "composer mode" },
+    { "name": "Slides", "changesUrl": false, "scope": "composer mode" },
+    { "name": "Website", "changesUrl": false, "scope": "composer mode" },
+    { "name": "Neo Agent", "changesUrl": false, "scope": "composer mode" },
+    {
+      "name": "For You | Branding | Creative | E-commerce | GPT Image 2 | Home design | Image tools | Just for fun | Poster | Product | Social media",
+      "changesUrl": false,
+      "scope": "template gallery filter"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "Composer textbox ('Every great idea starts with a single thought...')",
+      "type": "input",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    { "label": "Send", "type": "primary-button", "location": "floating", "visibleWhen": "always" },
+    {
+      "label": "Mode chips Chat / Image / Video / Slides / Website / Neo Agent",
+      "type": "tab",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Mode · Model picker (e.g. 'Chat · GPT 4.1', 'Image · Seedream 5.0 Pro', 'Auto · Neo Agent')",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Attach (file input; accept list switches per mode: text/code types in Chat, image types in Image)",
+      "type": "dropzone",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Settings gear (dialog)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Batch count '1 x' (menu)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Style + (Add style image)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "mode:Image"
+    },
+    {
+      "label": "Aspect ratio 1:1 / Image size 1K / Agent off toggle / Unlimited Mode (locked)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "mode:Image"
+    },
+    {
+      "label": "Start frame + / Swap keyframes / End frame + / Loop toggle",
+      "type": "dropzone",
+      "location": "floating",
+      "visibleWhen": "mode:Video"
+    },
+    {
+      "label": "MAX toggle",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "mode:Neo Agent"
+    },
+    {
+      "label": "Apps rail: Virtual Try-on, Social Post Maker, Background Remover, Photo Relighting, Image Upscaler, Editorial Poster, Crop & Resize, Wallpaper Generator, Furry Art Generator",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Template cards (hover → title + 'Use')",
+      "type": "contextual-action",
+      "location": "floating",
+      "visibleWhen": "hover"
+    },
+    {
+      "label": "Toggle theme (click on 'Flow' word)",
+      "type": "icon-button",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "home.upgrade-banner",
+      "kind": "sheet",
+      "trigger": "always (top strip)",
+      "dismiss": "none observed",
+      "modal": false,
+      "contentOwnership": "upsell to Unlimited Generation pack"
+    },
+    {
+      "id": "home.projects-create",
+      "kind": "modal",
+      "trigger": "Create new project (+)",
+      "dismiss": "Escape",
+      "modal": true,
+      "contentOwnership": "project (folder) creation — not opened"
+    },
+    {
+      "id": "home.sort-menu",
+      "kind": "popover",
+      "trigger": "History → Sort by",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "flow-list ordering — not opened"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/home.default.webp",
+      "url": "https://flowith.io/blank",
+      "capturedAt": "2026-09-08",
+      "note": "Chat mode default"
+    },
+    {
+      "file": "evidence/home.mode-image.webp",
+      "url": "https://flowith.io/blank",
+      "capturedAt": "2026-09-08",
+      "note": "Image mode composer"
+    },
+    {
+      "file": "evidence/home.mode-video.webp",
+      "url": "https://flowith.io/blank",
+      "capturedAt": "2026-09-08",
+      "note": "Video mode mid-transition: Start frame / End frame / Loop"
+    },
+    {
+      "file": "evidence/home.mode-neo-agent.webp",
+      "url": "https://flowith.io/blank",
+      "capturedAt": "2026-09-08",
+      "note": "Neo Agent mode composer with MAX toggle"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Route /blank is the logged-in home. Heading 'Flow with ideas'. Left sidebar lists New Flow, Flow Library, Media History, Knowledge Garden, Knowledge Market, a collapsible Projects group with 'Create new project', and a History list of flows (name + 'Last edit' date)."
+    },
+    {
+      "tier": "O",
+      "text": "The composer is the single entry point; six mode chips (Chat, Image, Video, Slides, Website, Neo Agent) re-skin the same composer in place with no URL change. Chat shows 'Chat · GPT 4.1'; Image shows 'Image · Seedream 5.0 Pro' + Style, aspect ratio, image size, an 'Agent off' toggle, a locked 'Unlimited Mode'; Video shows Start frame / End frame / Loop keyframe slots; Neo Agent shows 'Auto · Neo Agent' + a MAX toggle and placeholder 'Describe a complex task for the Agent to handle...'."
+    },
+    {
+      "tier": "O",
+      "text": "The hidden file input's accept list changes with mode: Chat accepts .md/.txt/.json/.py/... text & code; Image accepts .jpg/.png/.webp/.heic. Evidence: DOM diff between home.default and home.mode-image state dumps."
+    },
+    {
+      "tier": "O",
+      "text": "Account shown as 'Tseka Luk · FREE' with credit balance 0 and a 'Get more credits' button. A persistent top banner advertises 'Unlock Unlimited Generation — GPT Image, Kling, Nano Banana & More'."
+    },
+    {
+      "tier": "O",
+      "text": "Below the composer: an 'Apps' rail of task-specific tools (Virtual Try-on, Social Post Maker, Background Remover, Photo Relighting, Image Upscaler, Editorial Poster, Crop & Resize, Wallpaper Generator, Furry Art Generator) and a category-filtered template gallery whose cards expose a 'Use' action on hover."
+    },
+    {
+      "tier": "I2",
+      "text": "Submitting from the home composer creates a new flow (the History list items are flows and the Welcome flow's root node id equals its /conv/<uuid> route id) — confirmed later in canvas.new; see surfaces/canvas-new."
+    },
+    {
+      "tier": "U",
+      "text": "What 'Projects' contains (folders of flows vs something else) — not opened."
+    }
+  ]
+}

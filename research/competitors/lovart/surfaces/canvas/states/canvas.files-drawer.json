@@ -1,0 +1,22 @@
+{
+  "id": "lovart.canvas.files-drawer",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "生成文件",
+    "overlay": "files-drawer",
+    "selectedEntity": "none"
+  },
+  "openOverlay": "files-drawer",
+  "visibleControls": ["file rows (banana_taped_to_wall)", "到底了 end marker"],
+  "evidence": [
+    { "file": "evidence/canvas.float-file-search-button.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Agent-generated artefacts also exist as named files in a per-project list, separate from canvas layers."
+    },
+    { "tier": "I1", "text": "File names are agent-chosen slugs derived from the prompt." }
+  ]
+}

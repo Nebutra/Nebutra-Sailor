@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.smart-edit-node",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "none",
+    "selectedEntity": "node:智能剪辑 1",
+    "majorControls": ["presets", "prompt", "默认模式", "16:9 · 720P · 30s", "发送"]
+  },
+  "selectedEntity": "node:智能剪辑 1",
+  "activeTab": "工作流",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "空空如也，请连接视频节点后操作",
+    "尝试：讲解视频 / 批量广告 / 口播视频 / 素材混剪",
+    "参考",
+    "描述想剪成什么效果",
+    "默认模式 ▾",
+    "16:9 · 720P · 30s",
+    "发送"
+  ],
+  "disclosure": {
+    "appeared": ["new v-node", "composer chip 智能剪辑 1"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.node-smart-edit.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Edit node requires upstream video nodes (graph dependency)."
+    }
+  ]
+}

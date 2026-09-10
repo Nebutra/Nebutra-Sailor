@@ -1,0 +1,75 @@
+{
+  "id": "fal.dashboard",
+  "competitor": "fal",
+  "overlays": [],
+  "secondaryActions": [],
+  "navigation": [
+    {
+      "label": "Settings side-nav: Account, Notification Settings, Usage, Address, Credits & Tiers, Concurrency Limits, Billing, Invoices, API Keys, Webhooks, Log Drains, Log Privacy, Activity(Beta), Errors, Request History, Training History",
+      "type": "link",
+      "location": "left-rail"
+    }
+  ],
+  "tabs": [],
+  "route": "/dashboard, /dashboard/recent-history, /dashboard/usage-billing, /dashboard/webhooks, /assets",
+  "name": "Dashboard, history, usage, assets",
+  "category": "settings",
+  "primaryActions": [
+    {
+      "label": "Try the Sandbox",
+      "type": "primary-button"
+    },
+    {
+      "label": "Set up billing / Add credits",
+      "type": "link"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/dashboard.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/dashboard.recent-history.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/dashboard.usage.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/dashboard.webhooks.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/assets.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Dashboard home = onboarding checklist (create account ✓, add payment method, add credits, generate first media), product launchers (Sandbox, Workflows, Agent Early Access), latest models, 'Latest generations' feed (empty)."
+    },
+    {
+      "tier": "O",
+      "text": "/dashboard/recent-history = cross-endpoint request history ('View your recent API requests across all endpoints', Show preview)."
+    },
+    {
+      "tier": "O",
+      "text": "/dashboard/webhooks lists delivery attempts: Request, URL, Status, At."
+    },
+    {
+      "tier": "O",
+      "text": "Usage page: usage over time, top endpoints by spend, per-endpoint quantity/unit type/discount/net rate/cost."
+    },
+    {
+      "tier": "O",
+      "text": "/assets = generated-media library: All media, Collections, Favorites, Entities (Characters, Props, Environments, Styles, Scenes). 'Everything you create on fal shows up here automatically.'"
+    },
+    {
+      "tier": "I2",
+      "text": "Entities are the referents of the '@ to reference entities' affordance in playground prompts."
+    }
+  ]
+}

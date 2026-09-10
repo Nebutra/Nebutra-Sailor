@@ -1,0 +1,67 @@
+{
+  "id": "seko.avatar-video",
+  "competitor": "seko",
+  "route": "/avatar-video",
+  "name": "数字人视频 (Avatar / lip-sync video)",
+  "category": "editor",
+  "layout": {
+    "persistentPanels": ["left-rail", "top-bar", "single-column form"],
+    "chromeRatio": 0.15,
+    "workSurfaceRatio": 0.85
+  },
+  "tabs": [{ "name": "文本朗读", "default": true }, { "name": "上传配音" }],
+  "primaryActions": [
+    { "label": "生成视频", "type": "primary-button", "location": "bottom", "visibleWhen": "always" }
+  ],
+  "secondaryActions": [
+    {
+      "label": "image upload (>300px, ratio 2:5–5:2) + 4 sample portraits",
+      "type": "dropzone",
+      "location": "top",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "台词 textbox 0/240 · 试听 · 约 0s 音频",
+      "type": "input",
+      "location": "form",
+      "visibleWhen": "tab:文本朗读"
+    },
+    {
+      "label": "声音音色 picker · 情绪 · 声音音量 slider · 声音语速 1.1x",
+      "type": "input",
+      "location": "form",
+      "visibleWhen": "tab:文本朗读"
+    },
+    {
+      "label": "画面描述（选填） textarea 600",
+      "type": "input",
+      "location": "form",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "model chip 可灵数字人 · 720P",
+      "type": "popover-trigger",
+      "location": "bottom",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/avatar.home.webp",
+      "url": "https://seko.sensetime.com/avatar-video",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "A standalone single-form tool (not canvas-based): portrait image + script (TTS with voice/emotion/volume/speed) or uploaded audio → 生成视频 with 可灵数字人 at 720P. Results are listed under my-space 数字人."
+    },
+    {
+      "tier": "I2",
+      "text": "This is the same capability as the canvas node action 对口型 (lip-sync), offered as a simplified page for non-canvas users."
+    },
+    { "tier": "U", "text": "Cost of a digital-human video not observed (not submitted)." }
+  ]
+}

@@ -1,0 +1,240 @@
+[
+  {
+    "fromState": "tapnow.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "dock ⊕"
+    },
+    "toState": "tapnow.canvas.add-nodes",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.dock.add-node.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.add-nodes",
+    "action": {
+      "type": "click",
+      "control": "Image"
+    },
+    "toState": "tapnow.canvas.node.image-empty",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.node.image.prompt-filled.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["node.created (image, selected)"]
+  },
+  {
+    "fromState": "tapnow.canvas.node.image-empty",
+    "action": {
+      "type": "click",
+      "control": "Generate"
+    },
+    "toState": "tapnow.canvas.node.image-generated",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.node.image.generated.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": [
+      "job.created",
+      "artifact.created (files.tapnow.media upload uuid)",
+      "history.entry.added",
+      "credits.debited (5)"
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.node.image-generated",
+    "action": {
+      "type": "click",
+      "control": "toolbar Change Angle"
+    },
+    "toState": "tapnow.canvas.node.image.change-angle",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.node.image.tool-change-angle.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.node.image-generated",
+    "action": {
+      "type": "click",
+      "control": "toolbar Relight"
+    },
+    "toState": "tapnow.canvas.node.image.relight",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.node.image.tool-relight.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.node.image-generated",
+    "action": {
+      "type": "click",
+      "control": "toolbar Redraw"
+    },
+    "toState": "tapnow.canvas.node.image.redraw",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.node.image.tool-redraw.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "node (Text)"
+    },
+    "toState": "tapnow.canvas.node.text-selected",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.node.text-selected.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": ["selection.changed", "agent.composer.context.added"]
+  },
+  {
+    "fromState": "tapnow.canvas.node.text-selected",
+    "action": {
+      "type": "click",
+      "control": "empty pane"
+    },
+    "toState": "tapnow.canvas.default",
+    "tier": "O",
+    "evidence": [],
+    "sideEffects": ["selection.cleared"]
+  },
+  {
+    "fromState": "tapnow.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "dock Library"
+    },
+    "toState": "tapnow.canvas.library",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.library.private.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.library",
+    "action": {
+      "type": "click",
+      "control": "AI Character"
+    },
+    "toState": "tapnow.canvas.library.ai-character",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.library.ai-character.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "dock History"
+    },
+    "toState": "tapnow.canvas.history",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.dock.history.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "header Share"
+    },
+    "toState": "tapnow.canvas.share-menu",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.header.share.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.default",
+    "action": {
+      "type": "click",
+      "control": "Tapies balance"
+    },
+    "toState": "tapnow.canvas.settings",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.settings.subscriptions.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ]
+  },
+  {
+    "fromState": "tapnow.canvas.add-nodes",
+    "action": {
+      "type": "click",
+      "control": "Image Editor → Open editor"
+    },
+    "toState": "tapnow.canvas.image-editor",
+    "tier": "O",
+    "evidence": [],
+    "sideEffects": ["node.created (Image Editor)", "toast 'Image editor created successfully'"]
+  },
+  {
+    "fromState": "tapnow.canvas.image-editor",
+    "action": {
+      "type": "click",
+      "control": "Close (x)"
+    },
+    "toState": "tapnow.canvas.default",
+    "tier": "O",
+    "evidence": []
+  },
+  {
+    "fromState": "tapnow.canvas.default",
+    "action": {
+      "type": "right_click",
+      "control": "pane"
+    },
+    "toState": "tapnow.canvas.default",
+    "tier": "O",
+    "evidence": [
+      {
+        "file": "evidence/canvas.context-menu.webp",
+        "capturedAt": "2026-09-08"
+      }
+    ],
+    "sideEffects": [
+      "overlay canvas-context-menu (Upload/Add Assets/Add Nodes/Add Utilities/Undo/Redo/Paste)"
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+# TapNow lifecycles as observed 2026-09-08 (tier per step)
+node_generation:
+  tier: O
+  steps:
+    - {state: empty, note: "node created from palette, selected; Generate disabled until prompt non-empty; cost shown inline (5 Tapies image / 30 video / 10 audio)"}
+    - {state: submitted, note: "click Generate; no confirmation dialog; no DOM status text observed (U: visual spinner)"}
+    - {state: completed, note: "~39 s later result image renders inside the same node; prompt/model/params retained; toolbar switches to edit tools; History drawer gets dated entry"}
+    - {state: failed, tier: U}
+    - {state: cancelled, tier: U}
+agent_session:
+  tier: O
+  steps:
+    - {state: composing, note: "composer with Ask/Act mode, LLM (locked once session starts), context chips from selection"}
+    - {state: planning, note: "'Completed N actions' collapsible log (read skill docs, list/describe models, get node details)"}
+    - {state: awaiting-approval, note: "approval card: action type, ~cost, prompt, refs, model, ratio, res, count; Cancel / Confirm (Ask mode only)"}
+    - {state: running, note: "'Confirmed' → 'Thinking...' → node + edge created on canvas → 'Processing... · Ns' → 'Editing 1 file'"}
+    - {state: done, note: "final message with node mention chips; 'Worked for 2m25s'; Copy / Good / Bad / Fork conversation"}
+    - {state: failed, tier: U}
+project:
+  tier: O
+  steps:
+    - {state: created, note: "New Project button, or clone from skill/template ('<name> (copy)')"}
+    - {state: edited, note: "'Edited 2 months ago' on card; canvases inside"}
+    - {state: shared, note: "Share by link (viewable + copyable template) / Publish to TapTV / Move to team"}
+    - {state: deleted, tier: U, note: "menu item exists; not exercised"}
+library_asset:
+  tier: I2
+  steps:
+    - {state: saved, note: "'Save to Library' from text/image node toolbar"}
+    - {state: scoped, note: "Private | Team tabs; Favorite"}
+    - {state: packed, note: "Elements → Subject for video nodes (Seedance 2/2.5)"}
+credits:
+  tier: O
+  steps:
+    - {state: gifted, note: "'Gift Tapies Benefit' toast; trial Tapies"}
+    - {state: estimated, note: "per node inline; agent card '~5 Tapies'"}
+    - {state: debited, note: "balance 200 → 170 after two image generations (U exact split, U agent-pool vs model-pool)"}

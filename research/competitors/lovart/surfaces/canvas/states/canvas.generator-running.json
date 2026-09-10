@@ -1,0 +1,43 @@
+{
+  "id": "lovart.canvas.generator-running",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=2pabxcoqfb40",
+    "heading": "PARA research scratch",
+    "overlay": "none",
+    "selectedEntity": "c-task(generator-image)"
+  },
+  "jobState": "running",
+  "agentState": "none",
+  "visibleControls": [
+    "c-task placeholder with prompt pill 'flat icon of a green apple, white background'",
+    "transient toast 网络不稳定 · 请检查网络或尝试刷新页面",
+    "credits ⚡52 (pre-charged 15)"
+  ],
+  "disclosure": {
+    "appeared": ["c-task replaces c-generator", "prompt pill"],
+    "disappeared": ["generator composer"]
+  },
+  "evidence": [
+    { "file": "evidence/scratch.gen-node.composed.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/scratch.gen-node.running.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Generator lifecycle: c-generator (config node) → click ⚡15 → c-task 'generator-image' with the prompt shown on the placeholder → ~25 s → c-image '图片 1' (auto-numbered). Chat panel is untouched: generator jobs are not part of the agent thread."
+    },
+    {
+      "tier": "O",
+      "text": "Credits were deducted at submit (67 → 52) and the button label ⚡15 did not change when quality was set to 低 or ratio to 1:1, contradicting the paywall table (GPT Image 2 1K low = 1 credit) — displayed price is not parameter-sensitive on this surface."
+    },
+    {
+      "tier": "O",
+      "text": "Result record: meta {source:'ai'}, props {genType:1, generatorTaskId} — a task id but no prompt/model on the image."
+    },
+    {
+      "tier": "I1",
+      "text": "The 网络不稳定 toast appeared during polling; it may be the owner's proxy rather than the product."
+    }
+  ]
+}

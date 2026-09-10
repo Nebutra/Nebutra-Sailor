@@ -1,0 +1,34 @@
+{
+  "id": "seko.canvas.multiangle-submitted",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "none",
+    "selectedEntity": "multiangle-node",
+    "majorControls": ["node 图片", "node 多角度 生成中，请稍候", "edge between them", "credits 108"]
+  },
+  "selectedEntity": "multiangle-node",
+  "activeTab": "画布",
+  "openOverlay": "none",
+  "jobState": "running",
+  "agentState": "composing",
+  "visibleControls": [
+    "node 图片",
+    "node 多角度 生成中，请稍候",
+    "edge between them",
+    "credits 108"
+  ],
+  "disclosure": { "appeared": ["second node", "edge"], "disappeared": ["multi-angle panel"] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.multiangle-submitted.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    { "tier": "O", "text": "Derived result = new node + edge; source untouched; credits 109→108." }
+  ]
+}

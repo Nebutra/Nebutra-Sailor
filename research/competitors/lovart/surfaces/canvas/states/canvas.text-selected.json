@@ -1,0 +1,28 @@
+{
+  "id": "lovart.canvas.text-selected",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "overlay": "text-toolbar",
+    "selectedEntity": "text"
+  },
+  "selectedEntity": "text 'Welcome to Lovart,'",
+  "openOverlay": "text-toolbar",
+  "visibleControls": [
+    "fill-color-button",
+    "stroke-color-button",
+    "font family (Inter)",
+    "font style (Bold)",
+    "2 unlabeled controls",
+    "rich-text-advanced-settings-button",
+    "download-button"
+  ],
+  "evidence": [{ "file": "evidence/canvas.text-selected.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Text record stores richText with fontFamily/fontSize/fontWeight/fillPaint/stroke (Figma-like paint model)."
+    }
+  ]
+}

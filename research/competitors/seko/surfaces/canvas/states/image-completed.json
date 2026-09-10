@@ -1,0 +1,42 @@
+{
+  "id": "seko.canvas.image-completed",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "generator-panel",
+    "selectedEntity": "image-node",
+    "majorControls": [
+      "rendered image",
+      "download icon on hover corner",
+      "node toolbar",
+      "generator panel"
+    ]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "generator-panel",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": [
+    "rendered image",
+    "download icon on hover corner",
+    "node toolbar",
+    "generator panel"
+  ],
+  "disclosure": { "appeared": ["image", "hover download"], "disappeared": ["排队中"] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image-completed.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Result rendered inside the same node after ~60 s; asset url seko-resource.sensetime.com/seko/algo-gen/creations/<hash>.png."
+    }
+  ]
+}

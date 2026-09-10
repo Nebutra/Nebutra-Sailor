@@ -351,5 +351,2255 @@
   "inertDimensions": {
     "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written — it is not somewhere to park a new dimension so the gate goes green. spacing and controls were removed 2026-07-31: both were false positives from a detector bug (scripts/lint-inert-dimensions.mjs required var(--x) to close immediately, but every real caller writes a CSS fallback, var(--spacing-md, ...)). Compiling apps/web's real globals.css with @tailwindcss/node confirmed --spacing-md/--spacing-lg vary per brand (consumed by apps/web/src/components/theme-playground) and --control-height-* is read at 58 call sites in packages/design/ui/src/primitives/button-variants.ts and switch.tsx, density-driven via packages/design/tokens/src/brand-package/emit-css.ts. Both dimensions were already wired; only the guard was blind to it.",
     "known": []
+  },
+  "arbitraryTypography": {
+    "description": "Shrink-only. Arbitrary font-size/tracking/leading in apps/**. Use the app type ladder.",
+    "allowlist": [
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/whitepaper/page.tsx",
+        "count": 52
+      },
+      {
+        "file": "apps/router/src/components/market-home.tsx",
+        "count": 35
+      },
+      {
+        "file": "apps/router/src/components/product-detail.tsx",
+        "count": 34
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/products/page.tsx",
+        "count": 32
+      },
+      {
+        "file": "apps/design/src/app/(brand)/brand/page.tsx",
+        "count": 27
+      },
+      {
+        "file": "apps/router/src/components/usage-client.tsx",
+        "count": 23
+      },
+      {
+        "file": "apps/router/src/components/market-banner-carousel.tsx",
+        "count": 18
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-portable-text.tsx",
+        "count": 15
+      },
+      {
+        "file": "apps/router/src/components/console-shell.tsx",
+        "count": 15
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/global/page.tsx",
+        "count": 14
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/features/[name]/page.tsx",
+        "count": 14
+      },
+      {
+        "file": "packages/design/ui/src/primitives/file-card.tsx",
+        "count": 14
+      },
+      {
+        "file": "packages/design/ui/src/primitives/github-inline-diff.tsx",
+        "count": 14
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/page.tsx",
+        "count": 13
+      },
+      {
+        "file": "apps/landing/src/components/status/status-page-view.tsx",
+        "count": 13
+      },
+      {
+        "file": "apps/router/src/components/keys-client.tsx",
+        "count": 13
+      },
+      {
+        "file": "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
+        "count": 13
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/layers/page.tsx",
+        "count": 12
+      },
+      {
+        "file": "apps/router/src/app/dashboard/page.tsx",
+        "count": 12
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/color/page.tsx",
+        "count": 11
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/business-portfolio/page.tsx",
+        "count": 11
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/FeatureMockups.tsx",
+        "count": 11
+      },
+      {
+        "file": "apps/sailor-docs/src/components/previews/avatar-demo.tsx",
+        "count": 11
+      },
+      {
+        "file": "packages/design/ui/src/patterns/kinetic-marketing.tsx",
+        "count": 11
+      },
+      {
+        "file": "apps/auth/src/components/boot-log-card.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/design/src/components/live-specimen.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/landing/src/components/landing/capability-cards/MultiTenantCard.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/landing/src/components/landing/MonorepoFileTree.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/router/src/components/models-catalog.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/router/src/components/playground-client.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/typelens/src/app/pairings/page.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/_components/primitives.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/page.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/traps/page.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/design/src/app/page.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/i18n-glyph.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/sandbox-runtime-glyph.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/ui-glyph.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/ai-group-showcase.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/db-showcase.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/typelens/src/components/site-header.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/web/src/components/account/account-dialog.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-chat-panel.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/design/src/app/(foundations)/copywriting/page.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/_components/token-rows.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/brand-genesis-glyph.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/errors-glyph.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/image-pipeline-glyph.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/marketing-glyph.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/landing/src/components/landing/use-cases/mockups/EnterpriseMockup.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/sailor-docs/src/components/brand-overview-visuals.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/shortcuts/page.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/design/src/components/duration-carriers.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/design/src/components/pattern-specimens.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/capability-cards/AIGatewayCard.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/brand-glyph.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/code-execution-glyph.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/cofounder-match-glyph.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/collab-glyph.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/config-glyph.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/founder-cemetery-glyph.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/generation-context-glyph.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/storage-glyph.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/audit-showcase.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/search-showcase.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/FooterMinimal.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/use-cases/mockups/DesignMockup.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/use-cases/mockups/EDAMMockup.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/router/src/app/docs/page.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/router/src/components/product-card.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/web/src/components/startup-os/company-tower/field-card.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-canvas-panel.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/auth/src/components/auth-banner.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/design/src/app/(foundations)/accessibility/page.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/type/page.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/design/src/components/command-palette.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/forge/src/components/site-footer.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/3d-pipeline-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/china-compliance-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/contracts-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/create-sailor-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/design-tokens-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/document-pipeline-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/event-log-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/legal-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/sanity-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/tenant-store-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/knowledge-rag-showcase.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/GlobalEdgeMap.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/HeroMockupWindow.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/WorkspacesVisuals.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/use-cases/mockups/IPMockup.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/router/src/components/auth-actions.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/router/src/components/market-footer.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/web/src/components/auth/auth-banner.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/design/src/app/(patterns)/patterns/[slug]/page.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/design/src/components/site-nav.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/forge/src/components/specimens/bank-card-specimen.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/capability-cards/RBACCard.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/ai-providers-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/alerting-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/cache-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/captcha-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/code-index-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/content-store-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/ecosystem-safety-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/health-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/idea-plaza-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/knowledge-graph-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/landing-builder-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/outreach-engine-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/permissions-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/provider-factory-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/rate-limit-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/time-machine-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/tokens-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/tool-registry-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/trace-store-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/uploads-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/voice-realtime-glyph.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/billing-showcase.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/commerce-group-showcase.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/iam-group-showcase.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/integrations-group-showcase.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/use-cases/mockups/MultimodalMockup.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/landing/src/components/landing/use-cases/mockups/OPCMockup.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/router/src/components/wallet-client.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/typelens/src/app/works/[slug]/page.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/web/src/components/growth/referral-panel.tsx",
+        "count": 5
+      },
+      {
+        "file": "packages/design/ui/src/patterns/artifact-shift-card.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/design/src/app/(patterns)/patterns/modality/page.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/elevation/page.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/shape/page.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/design/src/lib/components/previews.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/forge/src/components/dns-leak-runner.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/open/page.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/playbook/page.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/capability-cards/BillingCard.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/CapabilityFolderShowcase.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/FeatureHero.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/access-gate-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/agent-runtime-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/agents-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/analytics-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/audit-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/capability-kit-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/cinema-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/cli-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/design-sync-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/execution-policy-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/feature-flags-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/gateway-core-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/graph-model-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/identity-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/integration-vault-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/knowledge-base-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/knowledge-rag-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/llm-gateway-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/logger-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/mcp-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/metering-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/oauth-server-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/onboarding-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/play-marketplace-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/preset-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/provider-registry-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/reel-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/sms-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/supabase-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/tenant-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/theme-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/vault-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/video-pipeline-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/webhooks-glyph.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/LogoStrip.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/MobileDrawer.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/sailor-docs/src/components/motion-demos.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/sleptons/src/features/resume/render/ResumeDocument.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-os-file-tree.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/web/src/components/webhooks/webhook-deliveries-panel.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/docs-shared/src/components/typography-demos.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/theme/src/language-switcher.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/layout/FullPageStatus.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/patterns/dashboard-surfaces.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/primitives/badge.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/primitives/base-badge-variants.ts",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/primitives/color-badge.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/design/src/app/(components)/components/page.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/design/src/lib/components/demos/separator.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/forge/src/app/t/[slug]/page.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/forge/src/components/specimens/file-paper-specimen.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/FeatureBentoCard.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/atelier-canvas-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/audio-pipeline-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/browser-control-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/db-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/license-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/notifications-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/play-loader-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/queue-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/repositories-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/search-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/support-deflector-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/tts-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/waitlist-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/design-group-showcase.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/platform-group-showcase.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/HeroSection.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/InvoiceCard.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/vc/VcDirectory.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/ui/mockups/TerminalMockup.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/mail-preview/src/components/sidebar.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/typelens/src/app/about/page.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/typelens/src/app/typefaces/page.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/typelens/src/components/site-footer.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/app/(app)/cofounder/page.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/team/TeamMemberList.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/app/providers/design-system-shell.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/cofounder-match/cofounder-card.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/onboarding/recent-sessions.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/personalization/personalization-panel.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/startup-os/company-tower/control-deck.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/docs-shared/src/components/pattern-demos.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-surface.ts",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/marketing/terminal-control-section-animated.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/patterns/sidebar-nav/sidebar-nav.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/primitives/edit-tool.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/primitives/enable-2fa-card.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/admin/src/app/fleet/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/admin/src/app/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/admin/src/components/console-shell.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/admin/src/components/signal-strip.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/app/(foundations)/icons/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/motion/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/switchability/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/components/modality-specimens.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/components/page-toc.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/lib/components/demo-kit.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/lib/components/demos/empty-state.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/lib/components/demos/status-dot.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/lib/components/demos/tabs.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/forge/src/app/docs/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/forge/src/app/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/forge/src/components/specimens/jwt-token-specimen.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/forge/src/components/tool-card.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/security/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-cta-block.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-index-explorer.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/ColorScaleCard.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/PipelineCard.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/ThemeSelectorCard.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/TokenGovernanceCard.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/VrtCard.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/admin-tooling-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/ai-primitives-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/billing-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/event-bus-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/icons-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/local-embedding-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/saga-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/status-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/video-compose-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/gateway-core-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/gateway-group-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/ops-group-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/vault-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/webhooks-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/HeroInstallPill.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/DesktopNav.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/NavbarAuthCluster.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/ResourcesMegaMenu.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/SolutionsMegaMenu.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/ActivityMatrix.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/BillingTerminal.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/LiveMetricsChart.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/vc/VcProfile.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/app/use/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/brand-marks.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/console-states.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/copy-field.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/page-frame.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sailor-docs/src/components/accessibility-demos.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sailor-docs/src/components/grid-layout-demos.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sailor-docs/src/components/tailwind-demos.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/typelens/src/components/filter-bar.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/typelens/src/components/work-card.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/app/(public)/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/appearance/theme-preset-picker.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/billing/active-plan-card.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/billing/billing-self-service.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/cofounder-match/room-view.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/connectors/connectors-hub.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/documents/document-task-uploader.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/notifications/notification-center.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/notifications/notifications-dialog.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/onboarding/progress-bar.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/skills/skills-grid.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/startup-os/company-tower/company-tower.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-thread-panel.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-pull-quote.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/Footer.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/Navbar.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/marketing/upgrade-banner.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/assisted-password-confirmation.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/avatar.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/book.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/dynamic-island-toc.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/folder.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/mcp-tool.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/admin/src/components/command-palette.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/admin/src/components/console-tabs.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/admin/src/components/panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/app/(components)/components/[slug]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/app/(showcase)/showcase/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/app/layout.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/components/pattern-specimen.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/components/showcase-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/lib/components/demos/alert.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/lib/components/demos/animate-in.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/lib/components/demos/page-header.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/lib/components/demos/table.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/lib/components/preview-theme.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/app/r/[root]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/home-search.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/json-diff-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/mermaid-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/p0-runners.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/root-nav.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/site-header.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/sota-runners.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/specimens/segmented-code-specimen.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/wallet-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/word-count-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/ai/models/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/blog/[slug]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/careers/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/licensing/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/refer/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-author-avatar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-code-block.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-comments.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-motion-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-share-actions.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/BlogShowcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/InteractiveDocsCard.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/faq-section.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/agent-runtime-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/auth-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/cache-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/metering-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/permissions-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/UserAvatarMenu.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/news-archive.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/pricing-comparison-table.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/PricingHintSection.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/FauxTerminal.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/WorkspacesTerminal.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/social-proof-bar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/use-cases/UseCasesSection.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/VelocitySignalStrip.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/WorkflowSection.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/status/uptime-bar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/ui/globe-stickers.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/ui/mockups/MiniPipeline.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/badge-demos.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/color-palette.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/introduction-hero.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/theming-demos.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/typelens/src/components/work-grid.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/admin/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/cofounder/discover/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/cofounder/matches/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/cofounder/room/[profileId]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/demo/embed/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/admin/access-invite-issuer.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/admin/admin-directory-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/auth/sign-up-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/command-palette/command-surface-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/ErrorBoundary.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/feedback/feedback-dialog.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/notifications/inbox-bell.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/notifications/notification-inbox-preview.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/notifications/notifications-page-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/onboarding/dashboard-hint-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/company-tower/tower-floor.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-builder-home.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-connectors-menu.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-workspace-files-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/webhooks/webhooks-list.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/vite-app/routes/__root.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/docs-shared/src/components/demos/command-dialog-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/docs-shared/src/components/icon-gallery.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/docs-shared/src/components/previews/animated-beam-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/docs-shared/src/components/previews/badge-notification-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-embed-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-faq.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-key-takeaways.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-source-index.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-step-ladder.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-timeline.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/layouts/bento-grid.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/marketing/database-rest-api.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/marketing/Pricing.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/gallery-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/workspace-switcher.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/accordion.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/base-button-variants.ts",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/checkbox-group.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/data-list.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/file-attachment.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/message-content.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/word-fade-in.tsx",
+        "count": 1
+      }
+    ]
+  },
+  "primitiveReuse": {
+    "description": "Shrink-only. Raw <button> at call sites in governed apps. Use @nebutra/ui/primitives Button or an existing pattern; // @primitive-exempt: <reason> for genuine cases.",
+    "allowlist": [
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/para/src/components/overlays/agent-panel.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/sailor-docs/src/components/feedback/client.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/router/src/components/models-catalog.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/sailor-docs/src/components/component-preview.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/web/src/components/notifications/notifications-page-client.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/kuanlan/src/components/IdPhotoStudio.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-share-actions.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/para/src/components/overlays/library-drawer.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/router/src/components/console-shell.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/sailor-docs/src/components/accessibility-demos.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/sailor-docs/src/components/previews/sidebar-demo.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/web/src/components/admin/admin-directory-panel.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/web/src/components/billing/billing-self-service.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/web/src/components/webhooks/webhooks-list.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/kuanlan/src/components/ConsentControl.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/kuanlan/src/components/MomentTile.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/vc/VcDirectory.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/para/src/components/shell/bottom-dock.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/para/src/components/shell/jobs-popover.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/router/src/components/market-banner-carousel.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/router/src/components/market-home.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/app/(app)/integrations/page.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/admin/access-invite-issuer.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/organizations/organization-invitation-modal.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/webhooks/webhook-deliveries-panel.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/admin/src/components/command-palette.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/auth/src/components/credentials-form.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/components/command-palette.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/design/src/lib/components/demo-kit.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/forge/src/components/w3-business-day-shift-runner.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/idp/src/app/oauth/authorize/consent-form.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/kuanlan/src/components/AuthActions.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/cookie-consent-banner.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-comments.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-copy-button.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-motion-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/VrtCard.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/tts-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/InteractiveChangelog.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/UserAvatarMenu.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/WorkspacesVisuals.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/mail-preview/src/components/preview-pane.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/para/src/components/overlays/jobs-drawer.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/auth-actions.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/product-detail.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sailor-docs/src/components/color-usage.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sailor-docs/src/components/page-actions.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sailor-docs/src/components/tailwind-demos.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sleptons/src/components/WelcomeOverlay.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sleptons/src/features/resume/editor/ResumeEditor.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/api-keys/CreateApiKeyForm.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/account/account-dialog.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/account/profile-form.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/appearance/color-picker-row.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/feedback/feedback-dialog.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/notifications/inbox-list.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/notifications/notification-center.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/personalization/personalization-panel.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/provider-keys/provider-keys-list.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/skills/skills-grid.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/admin/src/components/add-account-dialog.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/auth/src/components/reset-password-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/auth/src/components/wechat-login-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/lib/components/preview-theme.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/app/global-error.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/dns-leak-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/json-diff-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/w3-license-chooser-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/kuanlan/src/app/error.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/kuanlan/src/app/global-error.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/kuanlan/src/components/FaceNotice.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-code-block.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-index-explorer.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/faq-section.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/audit-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/HeroInstallPill.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/MobileDrawer.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/ResourcesMegaMenu.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/SolutionsMegaMenu.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/news-archive.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/news-rail-carousel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/product-demo/BillingTerminal.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/ProductDemoSection.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/use-cases/UseCasesSection.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/status/uptime-bar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/ui/shimmer-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/ui/theme-switcher.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/mail-preview/src/components/sidebar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/canvas/storyboard-view.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/home/recent-projects.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/shell/auth-actions.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/shell/profile-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/shell/workspace-top-bar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/usage-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/wallet-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/color-palette.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/demos/dialog-password-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/demos/dialog-share-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/previews/grain-gradient-background-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sleptons/src/features/resume/editor/FieldControl.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/typelens/src/app/search/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/api-keys/api-keys-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/api-keys/ApiKeyList.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/audit-log/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/provider-keys/provider-keys-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/team/InviteMemberForm.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/settings/team/TeamMemberList.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/global-error.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/providers/design-system-shell.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/select-org/select-org-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/account/avatar-upload-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/account/data-export-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/account/email-change-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/admin/impersonate-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/appearance/accent-swatch-picker.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/appearance/theme-preset-dropdown.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/appearance/theme-preset-picker.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/auth/sign-in-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/auth/sign-up-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/auth/wechat-login-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/billing/pricing-plan-grid.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/cofounder-match/discover-deck.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/command-palette/command-surface-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/command-palette/mode-pills.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/connectors/connectors-hub.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/growth/redemption-code-input.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/notifications/inbox-bell.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/notifications/notification-inbox-preview.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/notifications/notifications-dialog.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/onboarding/invite-team-step.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/onboarding/profile-setup-step.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/onboarding/wizard-shell.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/organizations/organization-logo-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/personalization/communication-preferences.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/settings/notifications/notification-preferences-matrix.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/settings/notifications/notification-preferences-row.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/settings/organization/members-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-canvas-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-chat-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-thread-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/vite-app/routes/__root.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/vite-app/routes/settings.tsx",
+        "count": 1
+      }
+    ]
   }
 }

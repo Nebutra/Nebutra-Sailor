@@ -1,0 +1,40 @@
+{
+  "id": "fal.model.credits-popover",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell",
+    "heading": "Credit balance and purchase",
+    "activeTab": "Playground",
+    "overlay": "credits-popover",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "credits-popover",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Available credits $0.00",
+    "Out of credits",
+    "Buy credits",
+    "Redeem credits",
+    "Go to billing"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/pg.credits.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Observed only; nothing clicked. Popover is the sole in-context purchase entry."
+    }
+  ]
+}

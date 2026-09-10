@@ -1,0 +1,74 @@
+{
+  "id": "lovart.projects",
+  "competitor": "lovart",
+  "route": "/zh/projects",
+  "name": "项目 (Projects list)",
+  "category": "project",
+  "layout": {
+    "persistentPanels": ["left icon rail"],
+    "chromeRatio": 0.06,
+    "workSurfaceRatio": 0.94
+  },
+  "navigation": [
+    {
+      "label": "left rail (same as home)",
+      "type": "link",
+      "location": "left-rail",
+      "visibleWhen": "always"
+    }
+  ],
+  "tabs": [],
+  "primaryActions": [
+    {
+      "label": "新建项目 (+) card",
+      "type": "primary-button",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "project card (Untitled · 更新于 <date>) → canvas in new tab",
+      "type": "link",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "select-mode icon (lovart-projects-select-mode-button) → checkbox per card",
+      "type": "icon-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/projects.list.webp",
+      "url": "https://www.lovart.ai/zh/projects",
+      "capturedAt": "2026-09-08"
+    },
+    { "file": "evidence/projects.select-mode.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Flat grid, no folders, no search, no sort control, no tags. Cards show a 4-image cover mosaic, name (all 'Untitled' — auto-naming not applied), and 更新于 date."
+    },
+    {
+      "tier": "O",
+      "text": "Select mode adds a checkbox to every card (bulk action bar not observed with zero selection; delete would be irreversible so not tested)."
+    },
+    {
+      "tier": "O",
+      "text": "Hovering a card revealed no contextual menu (no rename/duplicate/delete affordance on hover)."
+    },
+    {
+      "tier": "I2",
+      "text": "Project = the canvas document; one project maps to one /canvas?projectId. Six projects exist on this account, five created 2026-07-12 (bulk, likely by earlier sessions)."
+    },
+    {
+      "tier": "U",
+      "text": "Rename/delete location (maybe inside the canvas project-name menu); pagination beyond one screen."
+    }
+  ]
+}

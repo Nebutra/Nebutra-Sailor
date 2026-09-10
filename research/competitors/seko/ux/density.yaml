@@ -1,0 +1,25 @@
+# Approximate at 1440×900. Tiers O.
+canvas:
+  persistent_panels: [header, left floating rail (4), bottom toolbar (8), minimap, agent aside]
+  agent_aside_width_ratio: 0.33
+  chrome_ratio_with_agent: 0.42
+  chrome_ratio_agent_closed: 0.12
+  visible_primary_buttons_idle: 3   # + rail, Agent send, share
+  visible_primary_buttons_node_selected: 2   # inspector send, toolbar (none primary)
+  toolbar_items_image_node: 12
+  tabs: [画布, 编辑器]
+  inspector_tabs: [文本生成, 图片生成, 视频生成, 音频生成]
+explore:
+  chrome_ratio: 0.15
+  hero_modes: 2   # 短片工作室, 创作 Agent(无限画布)
+  feed_tabs: 3
+  feed_category_tabs: 8
+  featured_cards: 5
+my-space:
+  chrome_ratio: 0.15
+  tabs: 3
+  filters_story_tab: 5
+avatar-video:
+  chrome_ratio: 0.15
+  form_fields: 9
+  primary_buttons: 1

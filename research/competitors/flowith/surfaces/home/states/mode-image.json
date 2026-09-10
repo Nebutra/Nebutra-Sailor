@@ -1,0 +1,75 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.home.mode-image",
+  "surfaceId": "flowith.home",
+  "fingerprint": {
+    "route": "/blank",
+    "heading": "Flow with ideas",
+    "activeTab": "Image",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "composer: Image · Seedream 5.0 Pro",
+      "Style + (Add style image)",
+      "Aspect ratio 1:1",
+      "Image size 1K",
+      "Agent off toggle",
+      "Unlimited Mode (locked, upgrade to unlock)"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Image",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "composer: Image · Seedream 5.0 Pro",
+    "Style + (Add style image)",
+    "Aspect ratio 1:1",
+    "Image size 1K",
+    "Agent off toggle",
+    "Unlimited Mode (locked, upgrade to unlock)",
+    "attach (image accept)",
+    "batch 1 x",
+    "sidebar: New Flow",
+    "sidebar: Flow Library",
+    "sidebar: Media History",
+    "sidebar: Knowledge Garden",
+    "sidebar: Knowledge Market",
+    "sidebar: Projects + Create new project",
+    "sidebar: History list + Sort by",
+    "account menu (Tseka Luk · FREE)",
+    "Get more credits",
+    "Notifications",
+    "credit balance 0",
+    "composer textbox",
+    "Send",
+    "mode chips Chat/Image/Video/Slides/Website/Neo Agent",
+    "Apps rail",
+    "template gallery + category filter"
+  ],
+  "disclosure": {
+    "appeared": ["Style +", "aspect ratio", "image size", "Agent off", "Unlimited Mode lock"],
+    "disappeared": ["Chat · GPT 4.1"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/home.mode-image.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Clicking the Image chip re-skins the same composer: model becomes Seedream 5.0 Pro, a Style row appears above the text, and ratio/size/agent/unlimited controls appear in the footer."
+    },
+    {
+      "tier": "O",
+      "text": "File input accept list switched from text/code extensions to .jpg/.jpeg/.png/.webp/.heic/.heif."
+    },
+    {
+      "tier": "O",
+      "text": "'Agent off' is a toggle inside Image mode (aria-label 'Agent off'), i.e. agent assistance can be layered onto a plain image generation."
+    }
+  ]
+}

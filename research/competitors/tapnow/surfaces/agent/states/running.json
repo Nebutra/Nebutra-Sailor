@@ -1,0 +1,32 @@
+{
+  "id": "tapnow.agent.running",
+  "surfaceId": "tapnow.agent",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Ceramic Teacup Ad",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["Processing timer"]
+  },
+  "visibleControls": [
+    "Confirmed",
+    "Thinking...",
+    "Completed 8 actions",
+    "Processing... · Ns",
+    "Editing 1 file"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.agent.generated.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Canvas gains node 'Generate Image' + edge while running."
+    }
+  ],
+  "jobState": "running",
+  "agentState": "running"
+}

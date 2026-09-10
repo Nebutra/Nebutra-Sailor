@@ -1,0 +1,115 @@
+name: Deploy AI origin to Fly
+
+# The Python origin — FastAPI plus the Celery worker that drains the task envelope. One image, two
+# Fly process groups (infra/fly/ai.toml). It has no public IP: the gateway reaches it over private
+# networking at http://nebutra-ai.internal:8000, the same shape New-API uses
+# (docs/ops/nebutra/fly-origin.md).
+#
+# This replaces deploy-origin-ecs.yml as the live path. That workflow expected an image in GHCR
+# that no workflow has published since docker-build-push.yml was retired on 2026-09-02, so it never
+# ran; here Fly builds from source and there is no registry step to go stale.
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_secrets:
+        description: "Deploy without re-staging secrets from GitHub"
+        required: false
+        default: false
+        type: boolean
+  push:
+    branches: [main]
+    paths:
+      - "backends/python/**"
+      - "infra/fly/ai.toml"
+      - ".github/workflows/deploy-ai-origin-fly.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-ai-origin-fly
+  cancel-in-progress: false
+
+jobs:
+  origin:
+    name: nebutra-ai
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - uses: superfly/flyctl-actions/setup-flyctl@fc53c09e1bc3be6f54706524e3b82c4f462f77be # v1.5
+
+      # Only the credentials CI owns. Everything the origin needs that is derivable from another
+      # Fly app — database, broker, service secret — is staged out of band and left alone here.
+      #
+      # The R2 *object* keys are deliberately NOT here. The shared GitHub R2_* pair is the assets
+      # seeder: it can read nebutra-assets but has no Object Write on nebutra-uploads, so staging
+      # it over the origin's own key made every generation fail at persist time while /health
+      # stayed green. The origin's key is minted and staged by
+      # ops-origin-r2-uploads.yml → provision-origin-r2-uploads-token.sh, which verifies Put
+      # before it finishes. Only the account id, which is not a credential, is staged here.
+      - name: Stage secrets CI owns
+        if: ${{ inputs.skip_secrets != true }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${R2_ACCOUNT_ID:-}" ]; then
+            echo "::warning::R2_ACCOUNT_ID is not set in GitHub."
+            exit 0
+          fi
+          flyctl secrets set R2_ACCOUNT_ID="$R2_ACCOUNT_ID" -a nebutra-ai --stage
+
+      # A green deploy with an unwritable uploads key is the failure mode this whole file guards
+      # against, so say plainly whether the object key is present rather than letting it be found
+      # by a user whose generation silently produced nothing.
+      - name: Check the origin holds its own uploads key
+        if: ${{ inputs.skip_secrets != true }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          if flyctl secrets list -a nebutra-ai 2>/dev/null | grep -q '^R2_ACCESS_KEY_ID'; then
+            echo "R2_ACCESS_KEY_ID present on nebutra-ai"
+          else
+            echo "::warning::nebutra-ai has no R2_ACCESS_KEY_ID — run ops-origin-r2-uploads.yml or generated assets cannot be persisted."
+          fi
+
+      - name: Deploy both process groups
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          # Absolute paths: flyctl resolves --config and --dockerfile relative to the build
+          # context argument, so repo-relative paths look like backends/python/infra/fly/ai.toml.
+          flyctl deploy "$GITHUB_WORKSPACE/backends/python" \
+            --config "$GITHUB_WORKSPACE/infra/fly/ai.toml" \
+            --dockerfile "$GITHUB_WORKSPACE/backends/python/Dockerfile" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Health
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          flyctl status -a nebutra-ai
+          # No public hostname to curl: the origin is private. A started app process and a
+          # started worker process is the check this deploy can honestly make.
+          flyctl status -a nebutra-ai --json \
+            | python3 -c '
+          import json, sys
+          machines = json.load(sys.stdin).get("Machines") or []
+          roles = {}
+          for m in machines:
+              roles.setdefault((m.get("process_group") or m.get("config", {}).get("metadata", {}).get("fly_process_group") or "?"), []).append(m.get("state"))
+          print("process groups:", json.dumps(roles))
+          missing = [g for g in ("app", "worker") if not any(s == "started" for s in roles.get(g, []))]
+          if missing:
+              raise SystemExit(f"::error::process group(s) not started: {missing}")
+          print("app and worker are both started")
+          '

@@ -1,0 +1,10 @@
+[
+  {
+    "fromState": "seko.characters.list",
+    "action": { "type": "click", "control": "添加新主体" },
+    "toState": "seko.canvas.subject-create-form",
+    "sideEffects": ["same form as canvas modal (I2)"],
+    "tier": "I2",
+    "evidence": [{ "file": "evidence/canvas.subject-create-form.webp" }]
+  }
+]

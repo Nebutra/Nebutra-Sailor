@@ -1,0 +1,32 @@
+{
+  "id": "seko.canvas.image-overflow-menu",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "node-overflow-menu",
+    "selectedEntity": "image-node",
+    "majorControls": ["剪裁", "标注", "水平翻转", "局部重绘", "元素添加"]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "node-overflow-menu",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["剪裁", "标注", "水平翻转", "局部重绘", "元素添加"],
+  "disclosure": { "appeared": ["menu"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.image-overflow-menu.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Pro-tool entries (crop, annotate, flip, inpaint, add element) live under ··· — on-demand disclosure."
+    }
+  ]
+}

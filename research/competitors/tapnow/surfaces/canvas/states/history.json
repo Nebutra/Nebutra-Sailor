@@ -1,0 +1,43 @@
+{
+  "id": "tapnow.canvas.history",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "History",
+    "overlay": "history",
+    "selectedEntity": "none",
+    "activeTab": "Image"
+  },
+  "visibleControls": [
+    "Back",
+    "Select",
+    "List view",
+    "Expand",
+    "Image",
+    "Video",
+    "Audio",
+    "3D",
+    "Search history",
+    "Cancel",
+    "Apply to Canvas",
+    "Download"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.dock.history.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.dock.history.with-item.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "After a generation the panel shows a '2026-09-08' date group. Outputs can be re-applied to canvas as nodes."
+    }
+  ],
+  "activeTab": "Image",
+  "openOverlay": "history"
+}

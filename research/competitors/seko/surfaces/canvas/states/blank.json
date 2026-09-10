@@ -1,0 +1,52 @@
+{
+  "id": "seko.canvas.blank",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": [
+      "+ rail",
+      "资产库",
+      "主体库",
+      "特效模版",
+      "bottom toolbar",
+      "minimap",
+      "quick chips Seedance2.5视频生成/九宫格图/提示词反推/720°全景图",
+      "Agent aside with 3 suggestions",
+      "agent composer"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "+ rail",
+    "资产库",
+    "主体库",
+    "特效模版",
+    "bottom toolbar",
+    "minimap",
+    "quick chips Seedance2.5视频生成/九宫格图/提示词反推/720°全景图",
+    "Agent aside with 3 suggestions",
+    "agent composer"
+  ],
+  "disclosure": { "appeared": ["empty-canvas hero 开启全新创作之旅"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.blank.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Fresh canvas: hero text 双击画布创建节点，或拖拽上传素材; agent aside open by default with 3 rotating suggestion cards (打造一部出海爆款短剧 / 创作爆款古偶甜宠剧 / 设计原创影视角色)."
+    }
+  ]
+}

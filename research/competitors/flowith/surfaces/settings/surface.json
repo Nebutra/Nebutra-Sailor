@@ -1,0 +1,77 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.settings",
+  "competitor": "flowith",
+  "route": "(modal over /blank)",
+  "name": "Settings modal",
+  "category": "settings",
+  "layout": {
+    "persistentPanels": ["modal: left tabs General/Usage/Account/Report Bugs"],
+    "chromeRatio": 0.2,
+    "workSurfaceRatio": 0.8
+  },
+  "navigation": [],
+  "tabs": [
+    {
+      "name": "General",
+      "default": true
+    },
+    {
+      "name": "Usage"
+    },
+    {
+      "name": "Account"
+    },
+    {
+      "name": "Report Bugs"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "Language (English)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Theme (System)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Node Interaction Mode (Quote first)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Sending shortcut (Enter)",
+      "type": "popover-trigger",
+      "location": "floating",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/settings.node-interaction-options.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "General settings: Language, Theme (System), Node Interaction Mode = 'Quote first', Sending = Enter; shortcut table: Read Closer E, Organize Nodes ⌘O, Zoom Out ⌘-, Zoom to Fit ⌘0, Zoom to Selected ⌘1, Zoom to Top ↑↑, Zoom to Bottom ↓↓."
+    },
+    {
+      "tier": "O",
+      "text": "'Read Closer (E)' is the node focus/read shortcut — the same key the toolbar tooltip calls Edit."
+    },
+    {
+      "tier": "U",
+      "text": "Other Node Interaction Mode options (dropdown closed the modal); Usage and Account tab contents (enumerated by name only)."
+    }
+  ]
+}

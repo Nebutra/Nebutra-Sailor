@@ -1,0 +1,34 @@
+{
+  "id": "fal.model.requests.status-filter",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell/requests",
+    "heading": "Request history",
+    "activeTab": "Requests",
+    "overlay": "status-filter",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Requests",
+  "openOverlay": "status-filter",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["All statuses ✓", "Success", "Error", "Client error"],
+  "disclosure": {
+    "appeared": ["listbox"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.requests.statusfilter.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Three terminal buckets: Success / Error / Client error (4xx by caller)."
+    }
+  ]
+}

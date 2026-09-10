@@ -305,8 +305,10 @@ tests/architecture/nebutra/
 .github/workflows/ops-vm-reclaim.yml
 .github/workflows/ops-vm-triage.yml
 .github/workflows/ops-kuanlan-database-url.yml
+.github/workflows/ops-issue-router-key.yml
 .github/workflows/ops-database-migrate.yml
 .github/workflows/ops-kuanlan-r2-uploads.yml
+.github/workflows/ops-origin-r2-uploads.yml
 .github/workflows/point-design-dns.yml
 .github/workflows/point-kuanlan-dns.yml
 .github/workflows/point-leak-dns.yml
@@ -317,6 +319,7 @@ tests/architecture/nebutra/
 # default. The two Dockerfiles and the nginx conf exist only for carina /
 # dns-leak, whose deploy workflows are stripped above.
 infra/fly/admin.toml
+infra/fly/ai.toml
 infra/fly/auth.toml
 infra/fly/carina.toml
 infra/fly/cliproxyapi.toml
@@ -327,6 +330,7 @@ infra/fly/gateway.toml
 infra/fly/idp.toml
 infra/fly/kuanlan.toml
 infra/fly/new-api.toml
+infra/fly/para.toml
 infra/fly/pebble.toml
 infra/fly/router.toml
 infra/fly/sailor-docs.toml
@@ -363,3 +367,6 @@ tests/architecture/template-residue.baseline.json
 # source repo's changesets fixed group; the mirror ships `fixed: []` on purpose
 # (scripts/template-build.ts clears it — the mirror never publishes).
 tests/architecture/sailor-version.test.ts
+
+# Trellis task workspace — local development workflow state, never part of the template.
+.trellis/

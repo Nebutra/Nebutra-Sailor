@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.publish-share",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "publish-share-popover",
+    "selectedEntity": "none",
+    "majorControls": ["在LibTV上发布", "分享链接"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "publish-share-popover",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "在LibTV上发布 — 发布你的作品和创作过程，让更多创作者看到。",
+    "分享链接 — 拥有此链接的人可以查看并复制你的画布。"
+  ],
+  "disclosure": {
+    "appeared": ["popover"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.publish-share.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Publishing explicitly includes the creation process (the graph)."
+    }
+  ]
+}

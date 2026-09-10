@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-generator.image-default",
+  "surfaceId": "libtv.art-generator",
+  "fingerprint": {
+    "route": "https://www.liblib.art/ai-tool/image-generator",
+    "heading": "图片创作",
+    "activeTab": "图片生成",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["prompt", "风格模型", "智能图片V2", "1:1 | 1 张", "▶"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "图片生成",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "图片生成 / 视频生成 / 数字人 / 动作模仿 radios",
+    "textarea",
+    "风格模型",
+    "图片 (attach)",
+    "智能图片V2",
+    "1:1 1 张",
+    "generate",
+    "灵感库",
+    "来试试一键做同款 strip",
+    "查看更多"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-image-gen.webp",
+      "url": "https://www.liblib.art/ai-tool/image-generator",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Single-form generator; credits 0 so ▶ not exercised."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "fal.login",
+  "competitor": "fal",
+  "overlays": [],
+  "secondaryActions": [],
+  "navigation": [],
+  "tabs": [],
+  "route": "/login?returnTo=…",
+  "name": "Login wall",
+  "category": "other",
+  "primaryActions": [
+    {
+      "label": "Continue with GitHub",
+      "type": "primary-button"
+    },
+    {
+      "label": "Continue with Google",
+      "type": "primary-button"
+    },
+    {
+      "label": "Continue with SSO",
+      "type": "link"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/login-wall.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "On the first visit /models/fal-ai/flux/schnell redirected to /login?returnTo=<route>; a second visit rendered the playground because the owner's Chrome session was already authenticated (avatar 'TsekaLuk'). No credentials were entered."
+    },
+    {
+      "tier": "I1",
+      "text": "The first redirect was likely a session-hydration race rather than a hard gate; the API tab is public regardless."
+    }
+  ]
+}

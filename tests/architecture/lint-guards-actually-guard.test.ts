@@ -75,6 +75,17 @@ const CASES: Case[] = [
     guard: "lint-no-arbitrary-breakpoints",
     violation: 'export const C = () => <div className="min-[600px]:flex" />;\n',
   },
+  {
+    // A size typed into a className rather than taken from the app's ladder. The value is
+    // deliberately one no scale defines, so it cannot be mistaken for a legitimate step.
+    guard: "lint-arbitrary-typography",
+    violation: 'export const C = () => <p className="text-[13px]">x</p>;\n',
+  },
+  {
+    // A raw control at a call site, where Button or an existing pattern belongs.
+    guard: "lint-primitive-reuse",
+    violation: 'export const C = () => <button type="button">x</button>;\n',
+  },
 ];
 
 /**

@@ -1,0 +1,43 @@
+{
+  "id": "fal.sandbox.advanced-input",
+  "surfaceId": "fal.sandbox",
+  "fingerprint": {
+    "route": "/sandbox",
+    "heading": "Sandbox",
+    "activeTab": "Advanced",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Advanced",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Image|Video|Audio",
+    "Type",
+    "Model Selection",
+    "Sets",
+    "5 models selected",
+    "Clear",
+    "per-model Remove",
+    "SOTA"
+  ],
+  "disclosure": {
+    "appeared": ["modality radio", "Model Selection panel"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/sandbox.advanced.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Advanced mode moves model selection from a dock popover into a persistent panel."
+    }
+  ]
+}

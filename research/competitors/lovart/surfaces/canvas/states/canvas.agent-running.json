@@ -1,0 +1,48 @@
+{
+  "id": "lovart.canvas.agent-running",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=2pabxcoqfb40",
+    "heading": "Generate one simple flat vector-st… (auto-titled thread)",
+    "activeTab": "Agent",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["c-task placeholder", "status bar", "stop button"]
+  },
+  "jobState": "running",
+  "agentState": "running",
+  "visibleControls": [
+    "user bubble",
+    "model badge 'GPT Image 2' + step '生成中' + shimmer card",
+    "status row '使用 GPT Image 2 生成图片… 00:31 / 2分钟' (elapsed / ETA)",
+    "send button → ■ stop",
+    "canvas placeholder shape (c-task) with '生成中' pill",
+    "dock still enabled"
+  ],
+  "disclosure": {
+    "appeared": ["c-task shape", "status row", "stop button", "thread title"],
+    "disappeared": ["Skills empty state", "mic"]
+  },
+  "evidence": [
+    { "file": "evidence/scratch.running.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/scratch.composed.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Sequence after send (20:56:41): '思考中…' → c-task placeholder lands on canvas at the future image position → chat step card 'GPT Image 2 / 生成中' → ~40 s later c-task is swapped for c-image 'yellow banana icon' → assistant summary text. Credits 70 → 67 on completion."
+    },
+    {
+      "tier": "O",
+      "text": "The canvas is not modally blocked during the run: dock tools remain enabled and the composer stays available (a stop button replaces send)."
+    },
+    {
+      "tier": "O",
+      "text": "Auto-titling: the conversation header becomes the first prompt; the image name 'yellow banana icon' is agent-chosen."
+    },
+    {
+      "tier": "I2",
+      "text": "Agent mode charges after the job (credits changed at completion), whereas generator mode pre-charges at submit."
+    }
+  ]
+}

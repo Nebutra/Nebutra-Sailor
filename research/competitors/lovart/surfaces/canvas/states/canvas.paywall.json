@@ -1,0 +1,37 @@
+{
+  "id": "lovart.canvas.paywall",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "选择您的套餐",
+    "activeTab": "年付",
+    "overlay": "paywall",
+    "selectedEntity": "none"
+  },
+  "openOverlay": "paywall",
+  "activeTab": "年付",
+  "visibleControls": [
+    "月付 / 年付 tabs",
+    "团队版",
+    "plan cards Starter $16 · Basic $27 · Pro $45 · Ultimate $109 (annual)",
+    "立即升级 ×4 (NOT clicked)",
+    "credit table per model",
+    "FAQ",
+    "paywall-close"
+  ],
+  "evidence": [{ "file": "evidence/paywall.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Free: 70 credits refreshed daily, 1 concurrent task. Starter 2,000/mo, 2 concurrent, 5 brand kits; Basic 3,500, 4, 10; Pro 11,000, 8, 30; Ultimate 27,000, 10, 100. Subscription credits reset monthly; top-up credits last 366 days."
+    },
+    {
+      "tier": "O",
+      "text": "Per-image prices (generator mode; agent mode 'slightly higher'): GPT Image 2 1K low 1 · medium 8; Nano Banana 2 1K 8; Nano Banana Pro 1K/2K 14; Seedream 4.5 3; Flux 2 Pro 1K 4. Video: Seedance 2.0 720p 90/5s; Veo 3.1 104/4s. Full dump raw/paywall.txt."
+    },
+    {
+      "tier": "O",
+      "text": "'无限低速生成' (unlimited slow queue) exists for Basic+ on selected models; queue priority differs per tier."
+    }
+  ]
+}

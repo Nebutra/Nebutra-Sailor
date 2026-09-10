@@ -1,0 +1,52 @@
+{
+  "id": "tapnow.www-pages",
+  "competitor": "tapnow",
+  "route": "https://www.tapnow.ai/{manifesto,download,enterprise,pricing}",
+  "name": "Marketing secondary pages",
+  "category": "other",
+  "primaryActions": [
+    {
+      "label": "Contact sales",
+      "type": "primary-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Download macOS",
+      "type": "primary-button",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/www.manifesto.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/www.enterprise.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/www.pricing.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "/manifesto ('Written in Autumn 2025', Jessie QIN, Founder): Friction = gap between imagination and creation; 'Skillset Collapse'; 'We serve Intent, not Identity'; visuals as 'Global Tongue'; 'Transparent. Traceable. Replicable.'; **Node is the Vocabulary, Wire is the Logic, Group is the Phrase (reusable Chapters), Canvas is the Universe**; rejects 'Black Boxes'; 'Precise Control with Ease'; TapTV: 'We fork. We remix. We evolve together.'"
+    },
+    {
+      "tier": "O",
+      "text": "/download: desktop app macOS Apple silicon v0.4.46 (272 MB); 'connect it to your local creative files' — local folders/references brought into TapNow; composer copy 'Describe ideas, / use skills, add canvas content, @ add references or use plugins' with Ask + Sonnet 5."
+    },
+    {
+      "tier": "O",
+      "text": "/enterprise: 'Creative OS, from brief to delivery'; Workspaces / Members / Credits / Usage admin; SAML SSO, SCIM, training-data protection; Contact sales → app.tapnow.ai/contact-sales."
+    },
+    {
+      "tier": "O",
+      "text": "/pricing on www redirects to app.tapnow.ai/pricing (in-app pricing page)."
+    }
+  ]
+}

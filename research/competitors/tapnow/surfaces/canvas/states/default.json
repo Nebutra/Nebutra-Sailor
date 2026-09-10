@@ -1,0 +1,48 @@
+{
+  "id": "tapnow.canvas.default",
+  "surfaceId": "tapnow.canvas",
+  "fingerprint": {
+    "route": "/canvas/<uuid>",
+    "heading": "Untitled",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["dock", "agent panel", "header"]
+  },
+  "visibleControls": [
+    "Back to Workspace",
+    "Rename canvas",
+    "Switch canvas",
+    "Tapies 200",
+    "Community",
+    "Share",
+    "dock ⊕/search/library/comment/history",
+    "minimap",
+    "hide connections",
+    "snap",
+    "fit view",
+    "zoom",
+    "help",
+    "agent: New chat, Chat history, Side panel, Usage, Collapse chat, suggestion cards, composer (+, Ask, Auto, mic, Send)"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.default.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/canvas.overview.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Right panel greets 'Hi <name>! What are we making today?' with suggestion cards 'New: Create a sound-rich H3 short' and 'Memory: Help me build creative memory for this project — Record the theme, style, relationships, and limits.'"
+    },
+    {
+      "tier": "O",
+      "text": "Toast on open: 'Gift Tapies Benefit — We've gifted you limited-time trial Tapies.'"
+    }
+  ],
+  "agentState": "composing"
+}

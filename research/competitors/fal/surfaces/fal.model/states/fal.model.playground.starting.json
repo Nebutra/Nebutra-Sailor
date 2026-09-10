@@ -1,0 +1,42 @@
+{
+  "id": "fal.model.playground.starting",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell",
+    "heading": "fal-ai/flux/schnell",
+    "activeTab": "Playground",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "none",
+  "jobState": "submitted",
+  "agentState": "none",
+  "visibleControls": [
+    "Result: Starting",
+    "Preview|JSON",
+    "cost line 'will cost $0.003 per megapixel'"
+  ],
+  "disclosure": {
+    "appeared": ["Starting chip"],
+    "disappeared": ["sample image", "timing line"]
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.run-attempt.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Sample image cleared; status chip 'Starting' for ~1s before the 403 came back."
+    },
+    {
+      "tier": "U",
+      "text": "Whether a funded run shows 'In queue (position n)' / 'In progress' chips – docs say the client receives them."
+    }
+  ]
+}

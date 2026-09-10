@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.template-virtual-studio",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7895423&projectId=4f5f3c83a3704256a615a19340fc2683",
+    "heading": "未命名项目 - 画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["导演台 node", "打开导演台"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "导演台 2 - 副本 (n-node): 在3D空间中搭建场景并进行多视角截图 / 打开导演台",
+    "导演台 2 动画导出 - 副本 (v-node, 3D mannequin frame, AI生成)",
+    "素材图片 - 副本 (i-node, shield badge)",
+    "视频节点 2 - 副本 1280 × 720 (AI生成)",
+    "zoom 62%"
+  ],
+  "disclosure": {
+    "appeared": ["cloned project"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.template-virtual-studio.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7895423&projectId=4f5f3c83a3704256a615a19340fc2683",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Clone of the 导演台 template; node titles suffixed - 副本."
+    },
+    {
+      "tier": "U",
+      "text": "打开导演台 did not open anything observable."
+    }
+  ]
+}

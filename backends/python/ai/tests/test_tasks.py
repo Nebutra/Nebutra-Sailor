@@ -245,7 +245,7 @@ async def test_worker_processes_llm_generate_task_to_success(monkeypatch):
     )
 
     with patch(
-        "app.workers.task_envelope.get_default_provider",
+        "app.tasks.handlers.get_default_provider",
         Mock(return_value=provider),
     ):
         result = await _process_task(task.id, tenant_id="tenant_worker")

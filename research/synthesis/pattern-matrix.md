@@ -1,0 +1,49 @@
+# Pattern matrix — capability × competitor × PARA decision
+
+Last synthesized 2026-09-08. Every cell carries a tier (**O** observed · **I2** strongly inferred · **I1** weak ·
+**U** unknown · **O-neg** observed absent). The PARA column applies the ADR decision rule: **A** ≥ 3 mature competitors
+converge · **B** 1–2 + strong PARA business logic · **C** open-source / infrastructure engineering evidence · else
+**EXPERIMENTAL**. Detail and evidence links live in the per-topic reports named in the last column.
+
+| Capability | Seko | TapNow | Flowith | Lovart | LibTV | fal | PARA decision |
+|---|---|---|---|---|---|---|---|
+| **Core workspace** | infinite canvas of nodes, one route, agent aside (O) | project → canvases, one route, agent panel (O) | flow tree, one route, composer (O) | project = tldraw canvas + threads (O) | project → canvases, two views (O) | model page with 5 tabs; no canvas (O) | **A** — one production route per workspace, everything else overlay; project → workspaces is **B** (TapNow, LibTV). `page-topology-comparison.md` |
+| **Unit of work** | node = generator + result (O) | node = generator + artefact (O) | prompt node + answer node pair (O) | generator shape + separate image shape (O) | node = form + result (O) | request (`request_id`) (O) | **A** — node carries generator state and result (Seko, TapNow, LibTV; Lovart generator node). `canvas-patterns.md` |
+| **Agent entry & placement** | right aside, open by default, per-canvas history (O) | right panel, open by default, per-project sessions (O) | composer mode chip, no panel; plan as nodes (O) | right panel ≈38 %, collapsible, per-project threads (O) | right drawer, optional, per-project (O) | none in product (O) | **A** for right docked panel (4) / open-by-default (3). PARA departs on density logic → **B** bottom composer + expandable panel (Flowith, LibTV closed-by-default). `agent-patterns.md` |
+| **Agent approval / autonomy** | U | Ask/Act switch + approval card with cost and params (O) | U | none (O) | 自动生成 switch + budget threshold (O label; confirm UI U) | – | **B** — approval card before any credit spend + two-state switch (TapNow, LibTV + PARA metering logic). Budget threshold EXPERIMENTAL. `agent-patterns.md` |
+| **Canvas persistence** | continuous server; in-flight job survives navigation (O) | continuous server; in-node sub-mode restored (O) | continuous server incl. zoom, draft, failed node (O) | server + client camera/selection (O); local snapshots (I2) | server with 待同步/已同步 indicator (O) | request payloads 30 d (O-doc) | **A** — silent continuous autosave, no Save button (5). Sync indicator EXPERIMENTAL (LibTV). Camera restore **B**. `canvas-patterns.md` |
+| **Selection toolbar** | floating above node, 9 + ··· 5 + 2 (O) | floating type-specific toolbar + bar (O) | node toolbar, type-specific, 8 (O) | floating above, 10 (7 AI) + ··· 8 (O) | none — always-on node UI; right-click 6 (O/I2) | chain actions on result (O) | **A** — floating contextual toolbar above the selection, ~8 + overflow (Seko, TapNow, Flowith, Lovart). `selection-patterns.md` |
+| **Inspector** | node-anchored panel **under** the node (O) | generation bar **inside** the node (O) | none; bottom composer (O) | none (O-neg) | none (O-neg) | input card (page) (O) | **A** — config anchored to the node. A **right-side inspector drawer** has zero supporters → **EXPERIMENTAL**; PRD contract must be re-decided at IA freeze. `selection-patterns.md` |
+| **Jobs** | in node 排队中 → 生成中; no job center (O-neg) (O) | in node + agent card timer; no job center found (O/U) | answer node is the job; no list (O) | placeholder + chat card + status row; no list (O) | 生成历史 only; lifecycle U (O) | Requests tab Success/Error/Client error; IN_QUEUE→IN_PROGRESS→COMPLETED (O / O-doc) | **A** — job = node, no permanent jobs panel; history list of outputs (6). States with queue position + error taxonomy: **C** (fal). `job-patterns.md` |
+| **Variants / derivation** | derived op → new child node + edge, source kept (O) | in-node regenerate; agent → new node + edge (O); 1×–4× | Vary / Follow Up → new child/sibling nodes (O); batch locked | placeholder swap; new shape, no link (O); 数量 1–10 | 生成数量 1/2/4 on node; display U (O) | `?fromOutput=` chain; `num_images` 1–4 (O) | **A** — derivation never overwrites; linked child node (Seko, Flowith, TapNow). Regenerate in place vs new node: **EXPERIMENTAL**. `canvas-patterns.md` |
+| **Compare** | none (O-neg) | none (O) | spatial siblings under one prompt (O) | none (O-neg) | rating filter (I2); no compare view (O-neg) | Sandbox: 1 prompt × N models × M repeats, Est. $ (O) | **EXPERIMENTAL** — only fal (models, not iterations) and Flowith (spatial). Not in M1. `versioning-patterns.md` |
+| **Subject / identity** | 主体 (name · 角色\|场景 · voice · image), account + ~62 platform presets, `@` (O) | Library Character/Scene/Item/Style; Subject packs; AI Character presets (O) | none; Knowledge Garden instead (O/I2) | none; brand kit instead (O) | 角色库 platform sheets (4 images), 应用至画布 (O) | Entities Characters/Props/Environments/Styles/Scenes, `@` (O exist / I2 use) | **A** — subject/character object at account + platform scope with `@` entry (Seko, TapNow, LibTV, fal). Brand kit / knowledge base **EXPERIMENTAL**. `library-patterns.md` |
+| **Professional tools entry** | selection toolbar ops; parametric panel replaces inspector; 编辑器 tab inert (O) | in-node panels (Change Angle, Relight, Redraw); fullscreen Image Editor overlay; Timeline node (O/U) | on the image node (Crop, Upscale, BG removal, Vary); Apps rail (O) | same floating bar for AI and local ops; 快捷编辑 sub-mode; crop panel; layers drawer (O) | **template graphs** cloned into the canvas + node types (导演台, 逐帧拉片, 智能剪辑) — no tool page/mode (O) | sibling endpoints + chain links (O) | **A** — tools are selection-toolbar ops on the node, not a separate mode (Seko, TapNow, Flowith, Lovart). Fullscreen editor overlay **B** (TapNow, Lovart crop/快捷编辑). Template graphs **B** (LibTV, TapNow skills). Timeline: none observed → EXPERIMENTAL. `selection-patterns.md`, `canvas-patterns.md` |
+| **Versioning** | none; graph + 生成历史 is history; undo/redo (O) | none found; History drawer of outputs; undo/redo (O/U) | none; version strings inside agent docs only (O/U) | 画布历史 whole-canvas snapshots, browser-local (I2); undo/redo (O) | none; published = frozen read-only copy (O) | request history 30 d (O-doc) | **A (negative)** — no per-object versions in M1; provenance on the node **A**; undo/redo **A**; snapshots EXPERIMENTAL. `versioning-patterns.md` |
+| **Cost display** | ✦ chip live-repriced; header balance drops; no confirm (O) | cost beside Generate; agent `~N Tapies`; no confirm; approval card (O) | sentence, no number; 0-credit card in node (O) | ⚡ badge per op, not param-sensitive; charge ≠ badge (O) | balance + agent budget threshold; estimates on /comfy, /pretrain (O) | per-unit before, time + cost after; sample-run guard; Sandbox Est. $ (O) | **A** — numeric cost at the trigger, no confirm for manual generation (Seko, TapNow, Lovart, fal). Post-run cost **B** (fal, Seko). Gateway rejection inline, no job row **C** (fal). `job-patterns.md` |
+| **Disclosure of params** | tier 1 under node (mode, model, ratio, @, count, ✦) → popovers → ··· (O) | tier 1 in node bar → popovers → in-node panels (O) | composer per mode → Vary form → locks (O) | generator node composer → popovers → paywall (O) | tier 1 chips + compact config chip → popover → `高级设置` (O) | required-first → "More" inline with (i) → locked API-only shown (O) | **A** — params tiered at the node (prompt · model · summary chip → popover → advanced), never a side panel (6). Summary chip **B** (LibTV, Seko); labelled advanced group **B** (LibTV, fal). `progressive-disclosure.md` |
+
+## Additional rows the reports settled
+
+| Capability | Supporters (tier) | PARA decision |
+|---|---|---|
+| Zero-step creation on route visit | Seko, Lovart, LibTV, Flowith, TapNow (O) | **A** |
+| Prompt-first Home sharing the workspace composer | TapNow, Lovart, Flowith, LibTV, Seko (O) | **A** |
+| Selection → agent context chips, removable, accumulating | Seko, TapNow, Flowith, Lovart (O) | **A** |
+| Agent execution shown as a tool/step log in the panel | Seko, TapNow, Lovart (O) | **A** |
+| Agent plan projected as canvas nodes | Flowith (O) | **EXPERIMENTAL** |
+| Non-blocking agent runs, stop replaces send | Seko, Lovart, TapNow (O) / Lovart stop (O) | **A** / **B** |
+| Placeholder node on canvas at submit | Lovart, Flowith, TapNow, Seko (O) | **A** |
+| Library as drawer/modal, never a permanent panel | all five creative tools (O) | **A** |
+| Two library scopes: Generated (workspace) + Assets (account) | history 6 (O); catalogue Seko, TapNow, Flowith, fal (O) | **A** |
+| `@` mention entry for library objects | Seko, LibTV, fal, TapNow (O) | **A** |
+| "Apply to canvas" from a list item | TapNow, LibTV, Seko (O) | **A** |
+| Two views over one graph (`view=storyboard`) | LibTV (O), Seko 编辑器 (I2) | **B**; `timeline` / `viewer` EXPERIMENTAL |
+| Selection in URL | Seko (O) | **EXPERIMENTAL** |
+| Chrome ≤ 25 % at first paint | Flowith, LibTV, TapNow, Seko — agent closed only (O) | **B** — achievable only without a persistent right panel |
+| One primary button at rest; +1 on selection | TapNow, Flowith, Lovart, fal (O) | **A** |
+| Persistent commerce chrome | Seko, LibTV, Lovart, Flowith (O) | A-supported, **deliberately not adopted** |
+| Skills / recipes from the composer | Seko, TapNow, Lovart, LibTV (O) | existence A; shape **EXPERIMENTAL** (PRD non-goal) |
+| Multi-select = structural ops only | Lovart (O) | **B** |
+| Failure / retry UI | none O (Flowith Delete-only; fal cancel docs) | **EXPERIMENTAL**; cancel semantics **C** |
+| Share workspace as copyable template / publish with process | TapNow, LibTV, Seko, Flowith (O) | **A**, post-M1 |

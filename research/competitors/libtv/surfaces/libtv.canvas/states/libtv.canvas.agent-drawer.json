@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.agent-drawer",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "agent-drawer",
+    "selectedEntity": "conversation:新对话",
+    "majorControls": ["composer", "skill suggestions", "Agent 设置"]
+  },
+  "selectedEntity": "conversation:新对话",
+  "activeTab": "工作流",
+  "openOverlay": "agent-drawer",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "当前已是新对话",
+    "历史对话",
+    "新对话无法分享",
+    "Agent 设置",
+    "CLI & Skill",
+    "关闭",
+    "从 Skill 出发，抵达成片",
+    "换一批",
+    "使用 Skill 皮克斯动画广告 /pixar-animated-ad-creator",
+    "爆款拉片复刻 /viral-video-replicator",
+    "新中式美学TVC /neo-chinese-aesthetic-tvc",
+    "古典武侠电影全流程导演 /hujinquanwuxia",
+    "开启浏览器通知 开启",
+    "添加附件",
+    "composer 开始你的创作，或者 @ 引用工作流/节点/资源",
+    "选择模型",
+    "Skill",
+    "生成模式",
+    "Send"
+  ],
+  "disclosure": {
+    "appeared": ["drawer"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.agent-drawer.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Conversation is per project; 新对话无法分享 implies conversations become shareable once started."
+    }
+  ]
+}

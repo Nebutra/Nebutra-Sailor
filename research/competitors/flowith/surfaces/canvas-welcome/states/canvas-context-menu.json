@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.canvas-context-menu",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "pane-context-menu",
+    "selectedEntity": "none",
+    "majorControls": [
+      "Paste",
+      "Organize Nodes",
+      "Zoom In",
+      "Zoom Out",
+      "Zoom to Fit",
+      "Zoom to Selected"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "pane-context-menu",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Paste",
+    "Organize Nodes",
+    "Zoom In",
+    "Zoom Out",
+    "Zoom to Fit",
+    "Zoom to Selected",
+    "Zoom to Top",
+    "Zoom to Bottom"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.canvas-context-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Pane right-click menu; Paste implies node copy/paste between flows."
+    }
+  ]
+}

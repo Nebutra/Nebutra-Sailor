@@ -1,0 +1,62 @@
+{
+  "id": "seko.skill-community",
+  "competitor": "seko",
+  "route": "/skill-community",
+  "name": "技能社区 (Skill community)",
+  "category": "library",
+  "layout": {
+    "persistentPanels": ["left-rail", "top-bar"],
+    "chromeRatio": 0.15,
+    "workSurfaceRatio": 0.85
+  },
+  "tabs": [
+    { "name": "官方精选", "default": true },
+    { "name": "成片工作流" },
+    { "name": "爆款内容裂变" },
+    { "name": "顶流超创" },
+    { "name": "热门短剧" },
+    { "name": "剧本策划" },
+    { "name": "美术资产设计" },
+    { "name": "营销广告片" }
+  ],
+  "primaryActions": [
+    {
+      "label": "skill card (image + title + description + like count + use count)",
+      "type": "contextual-action",
+      "location": "grid",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "search 输入技能名称搜索",
+      "type": "input",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    { "label": "点赞", "type": "icon-button", "location": "card", "visibleWhen": "always" }
+  ],
+  "overlays": [],
+  "evidence": [
+    {
+      "file": "evidence/skills.list.webp",
+      "url": "https://seko.sensetime.com/skill-community",
+      "capturedAt": "2026-09-08"
+    },
+    { "file": "evidence/skills.card-hover.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Skills are packaged multi-step workflows (e.g. 山音编剧大师2.0【Seko独家】 '从一句想法出发,完成全格式影视剧本创作', 26039 uses; 角色概念板 '多视图、装备拆解…表情九宫'; 清宫宫斗剧 '剧本、定妆照、场景与连续视频'). Categories span script planning, art assets, ads, short drama."
+    },
+    {
+      "tier": "O",
+      "text": "The same skill names appear in the canvas agent's / picker and in the home 创作 Agent chips, so skills are invoked through the agent composer."
+    },
+    {
+      "tier": "U",
+      "text": "Skill detail page: clicking the card (button, title, hover) did not navigate or open a dialog in this session; the card has no href. Not reached."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "fromState": "lovart.brand-kit.empty",
+    "action": { "type": "click", "control": "Info button" },
+    "toState": "lovart.brand-kit.empty+info-popover",
+    "tier": "O",
+    "evidence": [{ "file": "evidence/brandkit.list.webp" }]
+  },
+  {
+    "fromState": "lovart.brand-kit.empty",
+    "action": { "type": "click", "control": "从零开始" },
+    "toState": "lovart.canvas.idle (new project)",
+    "tier": "I1",
+    "evidence": [{ "file": "evidence/brandkit.list.webp" }]
+  }
+]

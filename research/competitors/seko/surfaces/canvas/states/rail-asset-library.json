@@ -1,0 +1,46 @@
+{
+  "id": "seko.canvas.rail-asset-library",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "asset-library-modal",
+    "selectedEntity": "none",
+    "majorControls": [
+      "scope 当前项目/故事/数字人/画布",
+      "type 全部/视频/图片/音频",
+      "选择全部",
+      "取消导入",
+      "批量下载(0)",
+      "确认导入(0)"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "asset-library-modal",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": [
+    "scope 当前项目/故事/数字人/画布",
+    "type 全部/视频/图片/音频",
+    "选择全部",
+    "取消导入",
+    "批量下载(0)",
+    "确认导入(0)"
+  ],
+  "disclosure": { "appeared": ["modal"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.rail-panel-47.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "资产库 is an IMPORT dialog across the account (stories, avatar videos, other canvases) — assets are account-scoped and re-importable into any canvas."
+    }
+  ]
+}

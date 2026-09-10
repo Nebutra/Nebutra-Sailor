@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.title-menu",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "logo-menu",
+    "selectedEntity": "none",
+    "majorControls": [
+      "Back To Homepage",
+      "Theme · Notebook",
+      "General Setting",
+      "Product Docs",
+      "Report Bugs",
+      "Join us"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "logo-menu",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Back To Homepage",
+    "Theme · Notebook",
+    "General Setting",
+    "Product Docs",
+    "Report Bugs",
+    "Join us"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.title-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Logo menu; 'Theme · Notebook' names a canvas visual theme."
+    }
+  ]
+}

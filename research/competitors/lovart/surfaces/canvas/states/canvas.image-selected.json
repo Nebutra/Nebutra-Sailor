@@ -1,0 +1,47 @@
+{
+  "id": "lovart.canvas.image-selected",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "activeTab": "Agent",
+    "overlay": "image-toolbar",
+    "selectedEntity": "c-image",
+    "majorControls": ["image toolbar", "selection label", "composer chip"]
+  },
+  "selectedEntity": "c-image (Image 221, 1024×1024)",
+  "openOverlay": "image-toolbar",
+  "agentState": "composing",
+  "visibleControls": [
+    "快捷编辑 Tab",
+    "放大",
+    "去背景",
+    "橡皮工具",
+    "图层拆分",
+    "编辑文字",
+    "多角度",
+    "动态图片 (new dot)",
+    "··· (new dot)",
+    "download",
+    "label 'Image 221 1024 × 1024'",
+    "composer chip 'Image 221'"
+  ],
+  "disclosure": {
+    "appeared": ["floating toolbar", "selection label", "composer chip", "send arrow replaces mic"],
+    "disappeared": []
+  },
+  "evidence": [
+    { "file": "evidence/canvas.image-selected.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/canvas.image-selected.banana.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Toolbar is horizontal above the selection, no right inspector. 7 AI ops are primary; local ops (crop, flip, adjust, vector, mockup, extend, move-object) sit behind ···."
+    },
+    {
+      "tier": "O",
+      "text": "Selection ⇒ chat context: the selected shape is inserted as a mention chip in the agent composer automatically; deselect removes it."
+    }
+  ]
+}

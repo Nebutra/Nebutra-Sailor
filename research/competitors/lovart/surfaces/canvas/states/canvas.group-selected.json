@@ -1,0 +1,14 @@
+{
+  "id": "lovart.canvas.group-selected",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "overlay": "group-toolbar",
+    "selectedEntity": "group"
+  },
+  "openOverlay": "group-toolbar",
+  "visibleControls": ["解除编组", "download"],
+  "evidence": [{ "file": "evidence/canvas.group-selected.webp", "capturedAt": "2026-09-08" }],
+  "observations": [{ "tier": "O", "text": "A group gets no AI ops — only ungroup and export." }]
+}

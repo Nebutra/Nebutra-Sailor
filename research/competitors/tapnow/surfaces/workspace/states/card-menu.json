@@ -1,0 +1,34 @@
+{
+  "id": "tapnow.workspace.card-menu",
+  "surfaceId": "tapnow.workspace",
+  "fingerprint": {
+    "route": "/canvas/projects",
+    "heading": "Private",
+    "overlay": "project-card-menu",
+    "selectedEntity": "project:Untitled",
+    "activeTab": "Private"
+  },
+  "visibleControls": [
+    "Open",
+    "Rename",
+    "Select",
+    "Move to...",
+    "Share by link",
+    "Move to team",
+    "Delete"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/app.workspace.project-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Project-level sharing and team transfer live here and in the canvas share menu."
+    }
+  ],
+  "selectedEntity": "project:Untitled",
+  "openOverlay": "project-card-menu"
+}

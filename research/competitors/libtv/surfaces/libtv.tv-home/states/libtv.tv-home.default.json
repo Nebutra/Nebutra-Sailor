@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.tv-home.default",
+  "surfaceId": "libtv.tv-home",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/",
+    "heading": "LibTV - 专业视频创作工具",
+    "activeTab": "TV Show:全部",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["新建画布创作", "tool cards", "Agent composer", "TV Show feed"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "TV Show:全部",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "展开侧边栏",
+    "新建项目",
+    "首页",
+    "项目",
+    "LibTV Agent",
+    "创作者挑战赛",
+    "帮助",
+    "Blender 插件",
+    "积分超市",
+    "开通会员",
+    "注册/登录 (pre-hydration)",
+    "新建画布创作",
+    "Seedance 2.5 多参创作",
+    "Wan 3.0 全新上线",
+    "Minimax H3 Max 极速生成",
+    "导演台 独家",
+    "逐帧拉片 独家",
+    "片段重拍",
+    "查看全部 skills",
+    "添加附件",
+    "composer textbox",
+    "选择模型",
+    "Skill",
+    "生成模式",
+    "发送",
+    "使用 Skill POP MV / 是枝裕和电影美学 / 真人感美妆UGC产品测评",
+    "全部Skill",
+    "category chips",
+    "请输入搜索内容",
+    "查看创作过程 (per card, hover)"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.tv-home.default.webp",
+      "url": "https://www.liblib.tv/",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Landing surface of the professional tool; all launchers resolve to /canvas."
+    },
+    {
+      "tier": "O",
+      "text": "Promo banner with countdown is persistent chrome."
+    }
+  ]
+}

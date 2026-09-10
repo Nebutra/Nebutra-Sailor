@@ -1,0 +1,26 @@
+lifecycles:
+  flow:
+    tier: O
+    states: [created-empty (Send from /blank), titled (auto from first prompt), populated, shared (link on), archived/deleted (U)]
+  generation_job:
+    tier: O
+    states:
+      - submitted: prompt node + empty answer node appear immediately (t≈0)
+      - running: answer node empty placeholder (t+2s) — streaming appearance not observed (U)
+      - completed: answer node holds content + model footer (tutorial nodes)
+      - failed: answer node holds an error/upsell card ('Need a refill?'); toolbar Delete only
+    persistence: both prompt and terminal answer node persist across reload (O); survival of an in-flight job across navigation (U)
+  agent_run:
+    tier: O (structure) / U (live)
+    states: [composing (Neo Agent mode, Auto format, MAX toggle), planning (U — no plan panel seen), executing → step-label + output nodes appended (Group for parallel), done ('Powered by Neo' badge, outputs as nodes)]
+    approval: U (no gate observed in a completed run)
+    retry: per step node 'Rerun'; per answer node 'Rerun'
+  node_selection:
+    tier: O
+    states: [none, selected (toolbar + token), multi-token (several nodes quoted), follow-up (lineage token + draft node)]
+  media_item:
+    tier: O
+    states: [generated/uploaded → listed by day in /gallery, starred (filter exists), downloaded (image toolbar)]
+  plan_gating:
+    tier: O
+    free_locks: [node Edit, batch 2X/4X, most top image models, Unlimited Mode, 0-credit generation → failure card]

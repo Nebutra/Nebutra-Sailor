@@ -1,0 +1,23 @@
+%% flowith routes (O unless noted)
+flowchart LR
+  blank["/blank — home = new-flow composer"]
+  conv["/conv/<uuid> — flow canvas"]
+  flows["/flows — Flow Library"]
+  gallery["/gallery?entry_source=sidebar — Media History"]
+  community["/community — Knowledge Market (tabs: knowledge-garden | oracle)"]
+  notif["/notifications"]
+  blank -- "Send (creates flow)" --> conv
+  blank -- "History item / Flow Library row" --> conv
+  blank --> flows
+  blank --> gallery
+  blank --> community
+  blank --> notif
+  conv -- "title ▾ flow switcher" --> conv
+  conv -- "logo menu › Back To Homepage" --> blank
+  kg{{"Knowledge Garden — modal, no route (O)"}}
+  settings{{"Settings — modal, no route (O)"}}
+  upgrade{{"Upgrade plan — modal, no route (O)"}}
+  blank -. sidebar .-> kg
+  conv -. dock .-> kg
+  blank -. account menu .-> settings
+  conv -. auto on 0 credits / 'upgrade here' .-> upgrade

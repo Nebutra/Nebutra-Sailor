@@ -1,0 +1,17 @@
+request:            # API lifecycle — O (documented at docs/queue), not UI-observed
+  states:
+    IN_QUEUE:    {carries: queue_position, cancel: "removed immediately, never processed"}
+    IN_PROGRESS: {carries: logs[] (message,timestamp), cancel: "signal to runner; may still complete"}
+    COMPLETED:   {carries: [logs, metrics.inference_time, error?, error_type?], note: "failure is COMPLETED + error fields, not a separate state"}
+  guarantees: [never dropped, no queue size limit, auto re-queue+retry up to 10x on 503/504/conn error, start_timeout deadline -> 504 X-Fal-Request-Timeout-Type:user]
+  cancel_responses: {202: CANCELLATION_REQUESTED, 400: ALREADY_COMPLETED, 404: NOT_FOUND}
+  delivery: [poll status, SSE stream /status/stream, webhook POST (OK|ERROR)]
+playground_run:     # UI lifecycle — O observed with $0 balance
+  states: [Idle(sample shown), Confirm(sample-prompt guard), Starting, Error(Not enough credits + Add credits), Completed(sample/share state: image + JSON + timing + chain actions)]
+  unobserved: [queued chip / position, in-progress logs, cancel button]   # U
+sandbox_run:
+  states: [configured(est. cost), running, generations feed]   # running/feed = U
+retention:          # O documented
+  payload_json: 30d default (X-Fal-Store-IO: 0 opts out; deletable only after completion)
+  cdn_media: configurable via X-Fal-Object-Lifecycle-Preference {expiration_duration_seconds|null, initial_acl}
+  stored_result_for_webhook_retry: ~1h (≈6 min if ≥10 KB)

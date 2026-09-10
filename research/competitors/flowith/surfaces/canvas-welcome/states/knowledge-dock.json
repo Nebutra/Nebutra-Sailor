@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.knowledge-dock",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Knowledge Base",
+    "activeTab": "",
+    "overlay": "knowledge-garden-modal",
+    "selectedEntity": "none",
+    "majorControls": [
+      "Knowledge Garden + (new)",
+      "No projects for now",
+      "Search File",
+      "Share",
+      "Welcome to Your Knowledge Garden",
+      "Add Chrome Extension"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "knowledge-garden-modal",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Knowledge Garden + (new)",
+    "No projects for now",
+    "Search File",
+    "Share",
+    "Welcome to Your Knowledge Garden",
+    "Add Chrome Extension",
+    "Close"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.knowledge-dock.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Knowledge Garden opens as a full modal over the canvas; content is account-level - identical to the sidebar entry."
+    },
+    {
+      "tier": "I2",
+      "text": "Knowledge Garden is account-scoped, not flow-scoped."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+# LibLib / LibTV domain objects — tier per statement. O = observed in UI, I2 = strongly inferred.
+objects:
+  - name: 工作区 / 项目 (workspace / project)
+    tier: O
+    where: liblib.tv/canvas?spaceId=&projectId=
+    fields: [name (inline input 未命名工作区/未命名项目), spaceId, projectId, canvases[], collaborators[], agentConversations[], creditBudgetThreshold]
+    notes: Created instantly by 新建项目; cloned from a template by sourceSpaceId+sourceProjectUuid; listed on tv-home 最近项目. Not present on liblib.art.
+  - name: 画布 (canvas)
+    tier: O
+    parent: 项目
+    fields: [title 画布 1, nodes[], edges[], viewMode (工作流|故事板)]
+    notes: Multiple canvases per project (画布 switcher + 新建画布). Both view modes render the same nodes.
+  - name: 节点 (node)
+    tier: O
+    parent: 画布
+    kinds: [文本, 图片 (i), 视频 (v), 智能剪辑 (v, Beta), 导演台 (n, NEW), 逐帧拉片 (template of g/i/v/a), 音频 (a), 脚本 (submenu), 素材库 (submenu), group (g)]
+    fields: [title (editable), size (e.g. 1536 × 2048), AI生成 badge, prompt, model, mode (全能参考), config (ratio/res/duration/audio/count), chips (参考/标记/特效/角色库/运镜), 高级设置 (联网搜索/自动校验素材/智能引用 AutoLink), rating (implied by 所有评级 filter), handles]
+    notes: The node is both the generation form and the result container; edges carry references (首帧 → 视频).
+  - name: 生成记录 (generation history item)
+    tier: O
+    parent: 画布 (scope 本画布) or 项目 (全部画布)
+    fields: [type 图片|视频|音频, member, rating, createdAt]
+    notes: Lives in the 生成历史 panel; 从生成历史选择 re-imports a result as a resource node.
+  - name: 角色 (character preset)
+    tier: O
+    scope: platform preset library (角色库)
+    fields: [name 甜妹/清新少女, tags 女主 女 现代 青年 温柔, 全身图, 面部特写, 表情九宫格, 人物呈现板]
+    notes: Applied via 应用至画布; also selectable from a video node chip. No user-created character seen (U).
+  - name: 素材 (asset)
+    tier: O
+    scope: team / personal (素材库, 资产管理 资产 tab, liblib.art /asset 团队中心|个人资产)
+  - name: 工具箱模板 (tool template)
+    tier: O
+    scope: 团队工具箱 / 我的工具箱
+  - name: 特效 (community video effect)
+    tier: O
+    scope: community (特效广场) with author, usage count, 商用 badge, favourites
+    notes: Applied inside a video node; locks the node model.
+  - name: Skill (agent recipe)
+    tier: O
+    scope: community marketplace (/skill) + 收藏 + 团队
+    fields: [name, slug (/pixar-animated-ad-creator), author, category, output type 视频|图片, usage count, 介绍, 使用场景, 如何使用 (inputs), 输出内容 (outputs)]
+  - name: Agent 对话 (agent conversation)
+    tier: O
+    parent: 项目
+    fields: [title 新对话, history, shareable-after-start (新对话无法分享), model chips, skill chips, attachments, 生成模式]
+  - name: 模型 (community model)
+    tier: O
+    where: liblib.art /modelinfo
+    kinds: [Checkpoint, LORA, 模板 (template)]
+    fields: [versions (v1.0 tab, versionUuid), base model 基础算法, trigger word 触发词, 推荐参数 (checkpoint, weight, CFG, VAE, upscaler), license 许可范围, 在线生成数, 下载量, 商用 rules]
+    notes: LoRA consumed via 去WebUI使用; user-trainable at /pretrain.
+  - name: 作品 (published image / video post)
+    tier: O
+    where: liblib.art /imageinfo ; liblib.tv TV Show
+    fields: [author, 生成参数, model links, 做同款 (fillimgid), 图生视频; on LibTV: 查看创作过程 → read-only graph, 复制项目]
+  - name: 积分 / 会员 (credits / membership)
+    tier: O
+    scope: account, shared across both origins
+    notes: 积分 shown in every header; VIP models; 非会员每天免费对话 3 轮 for agent.

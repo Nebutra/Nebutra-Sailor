@@ -1,0 +1,39 @@
+{
+  "id": "fal.model.more-menu",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell",
+    "heading": "fal-ai/flux/schnell",
+    "activeTab": "Playground",
+    "overlay": "more-menu",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Playground",
+  "openOverlay": "more-menu",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Open Markdown content (llms.txt)",
+    "Copy content",
+    "Open in ChatGPT",
+    "Open in Claude"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/pg.moremenu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Model page is agent-ready: llms.txt, OpenAPI schema link, and 'open in ChatGPT/Claude' prompts."
+    }
+  ]
+}

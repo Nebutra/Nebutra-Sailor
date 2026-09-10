@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.billing.upgrade-modal",
+  "surfaceId": "flowith.billing",
+  "fingerprint": {
+    "route": "/conv/<uuid> (modal)",
+    "heading": "Upgrade your plan",
+    "activeTab": "Yearly",
+    "overlay": "upgrade-modal",
+    "selectedEntity": "none",
+    "majorControls": [
+      "Monthly | Yearly Unlimited Mode",
+      "Starter (current)",
+      "Pro Continue",
+      "Ultimate Continue",
+      "Infinite Continue",
+      "Close Pricing Modal"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "Yearly",
+  "openOverlay": "upgrade-modal",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Monthly | Yearly Unlimited Mode",
+    "Starter (current)",
+    "Pro Continue",
+    "Ultimate Continue",
+    "Infinite Continue",
+    "Close Pricing Modal"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/billing.upgrade-modal.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Auto-shown; closed with X, nothing purchased."
+    }
+  ]
+}

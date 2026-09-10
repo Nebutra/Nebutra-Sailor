@@ -1,0 +1,25 @@
+{
+  "id": "lovart.brand-kit.empty",
+  "surfaceId": "lovart.brand-kit",
+  "fingerprint": {
+    "route": "/zh/brand-kit",
+    "heading": "开始使用你的品牌套件",
+    "overlay": "none",
+    "selectedEntity": "kit:未命名",
+    "majorControls": ["新建", "dropzone", "从零开始"]
+  },
+  "selectedEntity": "kit:未命名",
+  "visibleControls": [
+    "新建",
+    "Info",
+    "Beta badge",
+    "kit card 未命名",
+    "6 section tiles",
+    "upload dropzone",
+    "从零开始"
+  ],
+  "evidence": [{ "file": "evidence/brandkit.list.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    { "tier": "O", "text": "Empty-state copy: 添加 Logo、颜色、字体等，保持品牌一致性。" }
+  ]
+}

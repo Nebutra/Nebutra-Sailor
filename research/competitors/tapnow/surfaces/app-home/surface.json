@@ -1,0 +1,196 @@
+{
+  "id": "tapnow.app-home",
+  "competitor": "tapnow",
+  "route": "https://app.tapnow.ai/home",
+  "name": "App home (agent launcher)",
+  "category": "home",
+  "layout": {
+    "persistentPanels": [
+      "top nav (Home/Workspace/Arena/Pricing, bell, team-user menu)",
+      "promo pill"
+    ],
+    "chromeRatio": 0.1,
+    "workSurfaceRatio": 0.9
+  },
+  "navigation": [
+    {
+      "label": "Home",
+      "type": "tab",
+      "location": "top-center",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Workspace",
+      "type": "tab",
+      "location": "top-center",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Arena",
+      "type": "tab",
+      "location": "top-center",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Pricing",
+      "type": "link",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Notifications",
+      "type": "icon-button",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Team / user menu",
+      "type": "popover-trigger",
+      "location": "top-right",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Download the app",
+      "type": "icon-button",
+      "location": "top-left",
+      "visibleWhen": "always"
+    }
+  ],
+  "primaryActions": [
+    {
+      "label": "Send (agent composer)",
+      "type": "primary-button",
+      "location": "floating",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "New Project",
+      "type": "secondary-button",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "Auto (agent LLM selector)",
+      "type": "popover-trigger",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Voice input",
+      "type": "icon-button",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Open project <recent>",
+      "type": "contextual-action",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Help me carry forward this project's memory",
+      "type": "contextual-action",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "All projects",
+      "type": "link",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Skill cards ×12",
+      "type": "contextual-action",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Join the Contest",
+      "type": "link",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Templates Preview ×12",
+      "type": "secondary-button",
+      "visibleWhen": "always"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "agent-model-menu",
+      "kind": "popover",
+      "trigger": "click Auto",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "agent LLM choice, plan gating"
+    },
+    {
+      "id": "template-preview",
+      "kind": "modal",
+      "trigger": "click Preview",
+      "dismiss": "Close",
+      "modal": true,
+      "contentOwnership": "template intro + Try Now"
+    },
+    {
+      "id": "user-menu",
+      "kind": "popover",
+      "trigger": "click team/user chip",
+      "dismiss": "Escape / click outside",
+      "modal": false,
+      "contentOwnership": ""
+    },
+    {
+      "id": "settings-dialog",
+      "kind": "modal",
+      "trigger": "Pricing/credits entries",
+      "dismiss": "Close",
+      "modal": true,
+      "contentOwnership": "plans, credits, billing, team, personal settings"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/app.home.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/app.home.model-menu.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/app.template-preview.webp",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/app.user-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Title 'TapNow | Your Agentic Creative Canvas'. Home is a prompt-first launcher: 'What are we making today?' composer (rotating placeholders: 'Organize this project's cre…', 'Help me learn my creative prefere…', 'Try Brainstorm mode to enr…'), then New Project + recent projects, then Skill cards, Arena events, Templates."
+    },
+    {
+      "tier": "O",
+      "text": "'Auto' selector = agent reasoning model: 'Balanced speed, effort, and cost' Recommended Gemini 3.7 Flash; Sonnet 5, GPT 5.6 Sol, GPT 6 Astra, Opus 5, Sonnet 4.6, Opus 4.8/4.7/4.6, Fable 5, Kimi 2.7/2.6, GPT 5.6 Luna/Terra = 'Unlock with plan'; GPT-5.5, Gemini 3.5/3.6 Flash, 3.1 Pro = 'Coming soon'."
+    },
+    {
+      "tier": "O",
+      "text": "Recent project card carries an agent suggestion chip ('Help me carry forward this project's memory' / 'Build a visual story workbench' / 'Connect first and last frames with H3') — memory is a first-class agent concept."
+    },
+    {
+      "tier": "O",
+      "text": "Skill cards: H3 Master Skill, Video Editing, AR, Paper Collage, Motion Design, Music Performance; SD2.5 Master Skills, Second-level Reshoot, Boundless Video Extend, OmniCamera, Omnimodal Subject ('up to 50 references'), Spatial Inpaint. Clicking 'Video Editing' immediately created project 'Video Edit (copy)' and opened its canvas → skills are clonable template projects."
+    },
+    {
+      "tier": "O",
+      "text": "Templates 'Preview' → modal intro (title, description, Input Image / Output, 'Skip intro next time', 'Try Now', Close)."
+    },
+    {
+      "tier": "O",
+      "text": "User menu: name, email, Tapies balance (170 after two generations), plan FREE, Create Team, My Portfolio, English, Earn Tapies, My Account, Changelog, Partnership Center, Help Center, Sign Out."
+    },
+    {
+      "tier": "O",
+      "text": "Footer: © 2026 Tamar AI Inc., v2.15.9; Privacy / Terms / Community Guidelines / Generated Content License."
+    }
+  ]
+}

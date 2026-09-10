@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-community.pretrain",
+  "surfaceId": "libtv.art-community",
+  "fingerprint": {
+    "route": "https://www.liblib.art/pretrain",
+    "heading": "在线模型训练",
+    "activeTab": "none",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["upload", "参数设置", "开始训练", "训练管理"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "none",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "帮助文档",
+    "训练管理",
+    "上传图片后计算 / 预计消耗积分",
+    "Repeat 1–50",
+    "Epoch 1–20",
+    "Learning Rate 1e-4 (1e-6…2e-4)",
+    "模型效果预览提示词 a girl sitting in a park",
+    "聚焦裁剪 / 中央裁剪 / 无需裁剪",
+    "512*512 / 512*768 / 768*512",
+    "BLIP / Deepbooru / 仅触发词 / 无需标注 / Llava / Joy2 / 通义千问",
+    "升级会员",
+    "开始训练",
+    "暂无训练任务"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-pretrain.webp",
+      "url": "https://www.liblib.art/pretrain",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "LoRA is the user-trainable identity on liblib.art; outputs land in 训练管理."
+    }
+  ]
+}

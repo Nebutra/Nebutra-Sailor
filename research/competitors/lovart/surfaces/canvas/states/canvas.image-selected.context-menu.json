@@ -1,0 +1,41 @@
+{
+  "id": "lovart.canvas.image-selected.context-menu",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "overlay": "context-menu",
+    "selectedEntity": "c-image"
+  },
+  "openOverlay": "context-menu",
+  "visibleControls": [
+    "复制 ⌘C",
+    "剪切 ⌘X",
+    "粘贴 ⌘V",
+    "创建副本 ⌘D",
+    "上移一层 ⌘]",
+    "下移一层 ⌘[",
+    "移动至顶层 ]",
+    "移动至底层 [",
+    "发送至对话",
+    "创建编组 ⌘G",
+    "解除编组 ⌘⇧G",
+    "自动整理 ⇧A",
+    "合并图层 ⌘E",
+    "显示/隐藏 ⌘⇧H",
+    "锁定/解锁 ⌘⇧L",
+    "水平翻转",
+    "垂直翻转",
+    "导出 ›",
+    "删除"
+  ],
+  "evidence": [
+    { "file": "evidence/canvas.image-selected.context-menu.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "发送至对话 is the explicit bridge from canvas object to agent context; 合并图层 flattens a selection into one image."
+    }
+  ]
+}

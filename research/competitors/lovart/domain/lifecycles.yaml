@@ -1,0 +1,32 @@
+lifecycles:
+  agent_generation:
+    tier: O
+    steps:
+      - composing: "textbox + optional selection chips; mic replaces send when empty"
+      - submitted: "message bubble appears; header auto-titles; '思考中…'"
+      - planning: "(no visible plan / approval step for a one-image request)"
+      - running: "c-task placeholder shape on canvas; chat step card '<model> / 生成中' with shimmer; status row '使用 <model> 生成图片… mm:ss / ETA'; send → stop"
+      - completed: "c-task swapped for c-image (agentMeta); result card with title; assistant summary; 点赞/点踩; credits deducted (−3)"
+      - failed: U
+      - cancelled: "stop button exists (not pressed) — U"
+    timing: "~45 s for GPT Image 2 Low 1K"
+  generator_node:
+    tier: O
+    steps:
+      - placed: "c-generator node 1024×1024 + composer (参考图 · prompt · 质量/尺寸/数量 · model · ⚡price)"
+      - submitted: "credits pre-charged (−15); node → c-task with prompt pill"
+      - completed: "c-task → c-image '图片 N' (genType 1, generatorTaskId); not recorded in chat"
+      - failed: U
+    timing: "~25 s"
+  quick_edit:
+    tier: O
+    steps: [select image, Tab, camera zooms, type edit or pick chip, Run ⚡14 (not executed), result U]
+  project:
+    tier: O
+    steps: [create via newProject=true (instant), rename via title input, mutate (updatedAt bumps), delete via logo menu 删除当前项目 (not executed), bulk select on /zh/projects (actions U)]
+  conversation:
+    tier: O
+    steps: [新建对话 creates a fresh thread per project, 历史对话 lists + searches threads, share (dialog U)]
+  canvas_snapshot:
+    tier: O
+    steps: [auto-captured on 打开 and 保存 events, browse with preview, 恢复]

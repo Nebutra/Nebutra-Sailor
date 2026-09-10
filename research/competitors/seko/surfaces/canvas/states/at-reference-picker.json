@@ -1,0 +1,32 @@
+{
+  "id": "seko.canvas.at-reference-picker",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "at-reference-picker",
+    "selectedEntity": "blank-node",
+    "majorControls": ["subject list ~62 presets"]
+  },
+  "selectedEntity": "blank-node",
+  "activeTab": "画布",
+  "openOverlay": "at-reference-picker",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": ["subject list ~62 presets"],
+  "disclosure": { "appeared": ["subject list"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.at-reference-picker.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "@ picker shows public subject presets (金发女郎 … 腹黑帝王); no personal subjects on this account."
+    }
+  ]
+}

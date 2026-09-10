@@ -133,6 +133,9 @@ export function ProductDetail({
     }
     return [
       { name: "Chat（聊天）", path: "/v1/chat/completions", method: "POST", stability: "稳定" },
+      // Streaming is the same endpoint with `stream: true`, listed separately
+      // because a buyer scanning the table is looking for the word.
+      { name: "Chat（流式）", path: "/v1/chat/completions", method: "POST", stability: "稳定" },
       { name: "Responses（响应）", path: "/v1/responses", method: "POST", stability: "稳定" },
     ];
   }, [model.category]);

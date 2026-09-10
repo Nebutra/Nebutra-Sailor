@@ -1,0 +1,154 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "libtv.art-generator",
+  "competitor": "libtv",
+  "route": "https://www.liblib.art/ai-tool/image-generator | /ai-tool/video-generator (+ ?fillimgid=<id> from 做同款)",
+  "name": "LiblibAI 图片/视频创作 (consumer generator)",
+  "category": "editor",
+  "layout": {
+    "persistentPanels": [
+      "liblib.art left nav (首页, 创作▾, 资产, 个人中心, 创作中心, 发布, 教程, API, 前往LibTV创作)",
+      "top search (搜索视频特效/模型/AI应用/工作流/创作者/图片) + 邀请有礼 / 积分超市 / 会员中心 / credits / avatar",
+      "灵感库 (inspiration drawer trigger) + 积分超市"
+    ],
+    "chromeRatio": 0.25,
+    "workSurfaceRatio": 0.75
+  },
+  "navigation": [
+    {
+      "label": "mode radio: 图片生成 / 视频生成 / 数字人 / 动作模仿",
+      "type": "tab",
+      "location": "top-left"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "图片生成",
+      "default": true,
+      "changesUrl": true,
+      "scope": "/ai-tool/image-generator"
+    },
+    { "name": "视频生成", "changesUrl": true, "scope": "/ai-tool/video-generator" },
+    { "name": "数字人", "changesUrl": false },
+    { "name": "动作模仿", "changesUrl": false }
+  ],
+  "primaryActions": [
+    {
+      "label": "prompt textarea (可直接文字生图，或上传图片输入文字指令对图片进行编辑，如：将背景改为雪夜)",
+      "type": "input",
+      "location": "floating"
+    },
+    {
+      "label": "video prompt (输入你想要的画面，支持 @ 图片、视频、音频自由组合，例如：让@图片1动起来像@视频1，声音用@音频1的音色)",
+      "type": "input",
+      "location": "floating"
+    },
+    {
+      "label": "generate button (▶, credits-gated)",
+      "type": "primary-button",
+      "location": "floating"
+    },
+    { "label": "风格模型 (style/LoRA picker)", "type": "popover-trigger", "location": "floating" },
+    {
+      "label": "base model chip (智能图片V2 / Seedance 2.0 VIP) → 选择模型 modal",
+      "type": "popover-trigger",
+      "location": "floating"
+    },
+    {
+      "label": "config chip '1:1 | 1 张' or '智能比例 | 720p | 5s | 有配音'",
+      "type": "popover-trigger",
+      "location": "floating"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "attach 图片 / 视频 / 音频 (video mode)",
+      "type": "icon-button",
+      "location": "floating"
+    },
+    {
+      "label": "来试试一键做同款 + 查看更多 (inspiration strip)",
+      "type": "link",
+      "location": "floating"
+    },
+    { "label": "灵感库 (drawer)", "type": "drawer-trigger", "location": "top-left" }
+  ],
+  "overlays": [
+    {
+      "id": "model-picker-modal",
+      "kind": "modal",
+      "trigger": "base model chip",
+      "dismiss": "Close",
+      "modal": true,
+      "contentOwnership": "选择模型 list with capability badges: Seedream 5.0 Pro (多参考图), Seedream 5.0 Lite (超清4K, 多参考图), 全能图片模型V2-Flash (超清4K, 多参考图, 指令编辑强), Qwen Image3 (多参考图, 风格模型), Seedream 4.6/4.5 (超清4K, 组图模式, 多参考图), 全能图片模型V2, Qwen-Image (设置参考维度), 智能图片V2 (多参考生成，长文本能力突出) …"
+    },
+    {
+      "id": "config-popover",
+      "kind": "popover",
+      "trigger": "config chip",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "image: 图像质量 (低/标准/高画质), 清晰度 (1K/2K/4K), 图片尺寸 (智能比例 + 13 ratios), 图片张数 (1–4, VIP badge). video: 视频比例 (智能 + 6), 视频质量 (480P/720P/1080P), 视频时长 slider 4–15s, 同时生成声音 开启/关闭"
+    },
+    {
+      "id": "style-model-picker",
+      "kind": "popover",
+      "trigger": "风格模型",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "community style models (LoRA) with 做同款 cards (e.g. Qwen-Image 3D商业渲染)"
+    },
+    {
+      "id": "inspiration-drawer",
+      "kind": "drawer",
+      "trigger": "灵感库",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "large gallery of community outputs (interactive count 135 → 448) for 一键做同款"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-image-gen.webp",
+      "url": "https://www.liblib.art/ai-tool/image-generator",
+      "capturedAt": "2026-09-08"
+    },
+    { "file": "evidence/libtv.art-image-gen.base-model-picker.webp", "note": "选择模型 modal" },
+    {
+      "file": "evidence/libtv.art-image-gen.settings-popover.webp",
+      "note": "image config popover"
+    },
+    { "file": "evidence/libtv.art-image-gen.inspiration-drawer.webp", "note": "灵感库 drawer" },
+    {
+      "file": "evidence/libtv.art-video-gen.webp",
+      "url": "https://www.liblib.art/ai-tool/video-generator"
+    },
+    { "file": "evidence/libtv.art-video-gen.settings-popover.webp", "note": "video config popover" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "The consumer generator is a single-prompt form with a compact config chip and progressive popovers; 图片/视频/数字人/动作模仿 are radio modes of the same page (<title> 图片视频生成器)."
+    },
+    {
+      "tier": "O",
+      "text": "Parameter disclosure: tier 1 = prompt + model chip + config chip; tier 2 = config popover (quality, resolution, ratio, count / duration, audio). No 'advanced' section on liblib.art; sampler-level controls exist only in the /sd WebUI surface."
+    },
+    {
+      "tier": "O",
+      "text": "Community → generation link: image detail 做同款 opens /ai-tool/image-generator?fillimgid=<imageId> (prefills the generator from a published image); the model detail page's primary CTA is 去WebUI使用 (LoRA routed to the SD WebUI, not this generator)."
+    },
+    {
+      "tier": "O",
+      "text": "Model picker exposes capability badges per model (多参考图, 超清4K, 组图模式, 指令编辑强, 风格模型) — capability-based disclosure rather than raw parameters."
+    },
+    {
+      "tier": "O",
+      "text": "Video prompt supports inline @ references to attached 图片/视频/音频 (same @-mention idiom as the LibTV canvas)."
+    },
+    {
+      "tier": "U",
+      "text": "Job lifecycle on liblib.art was not exercised: credits were 0 (积分 0) and an Aliyun CAPTCHA widget is mounted on the page; no generation was submitted."
+    }
+  ]
+}

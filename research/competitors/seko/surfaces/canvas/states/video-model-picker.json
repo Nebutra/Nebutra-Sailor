@@ -1,0 +1,32 @@
+{
+  "id": "seko.canvas.video-model-picker",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "video-model-picker",
+    "selectedEntity": "image-node",
+    "majorControls": ["图生视频 / 全能参考 group tabs", "31 model rows"]
+  },
+  "selectedEntity": "image-node",
+  "activeTab": "画布",
+  "openOverlay": "video-model-picker",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["图生视频 / 全能参考 group tabs", "31 model rows"],
+  "disclosure": { "appeared": ["model list"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.node.video-model-picker.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Each video model row shows res, duration range and 音效同出 (audio co-generation) flag; promos 限时钜惠 / 限时6折 inline."
+    }
+  ]
+}

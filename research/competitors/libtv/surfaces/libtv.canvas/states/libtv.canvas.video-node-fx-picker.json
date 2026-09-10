@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.video-node-fx-picker",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "node-fx-picker",
+    "selectedEntity": "node:视频 (v)",
+    "majorControls": ["特效广场", "我的收藏", "最近使用"]
+  },
+  "selectedEntity": "node:视频 (v)",
+  "activeTab": "工作流",
+  "openOverlay": "node-fx-picker",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "特效广场",
+    "我的收藏",
+    "最近使用",
+    "搜索特效名称、作者",
+    "推荐",
+    "minimize",
+    "close",
+    "cards: 小蜜蜂运镜 (vibe fckuing, 2900, 商用), 穿云而入 (管夯工作台, 1300), 飞跃地平线, 逆转引力, 地球缩放 …",
+    "当前节点已使用风格，模型不可切换"
+  ],
+  "disclosure": {
+    "appeared": ["modal"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.node-fx-chip.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Community-authored effects with usage counts and commercial badge; applying one locks the node's model."
+    }
+  ]
+}

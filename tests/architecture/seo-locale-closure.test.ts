@@ -185,6 +185,7 @@ describe("per-app robots posture", () => {
     "idp",
     "kuanlan",
     "mail-preview",
+    "para",
     "sleptons",
     "studio",
     "typelens",

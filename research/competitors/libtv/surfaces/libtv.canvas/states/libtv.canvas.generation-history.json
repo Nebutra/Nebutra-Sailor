@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.canvas.generation-history",
+  "surfaceId": "libtv.canvas",
+  "fingerprint": {
+    "route": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+    "heading": "画布 1 - LibTV",
+    "activeTab": "工作流",
+    "overlay": "generation-history-panel",
+    "selectedEntity": "none",
+    "majorControls": ["本画布/全部画布", "type counters", "所有评级", "批量操作"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "工作流",
+  "openOverlay": "generation-history-panel",
+  "jobState": "none",
+  "agentState": "composing",
+  "visibleControls": [
+    "size slider 0–4",
+    "本画布",
+    "全部画布",
+    "图片 0",
+    "视频 0",
+    "音频 0",
+    "按成员筛选",
+    "所有评级",
+    "时间倒序 (当前：最新优先)",
+    "批量操作",
+    "暂无历史记录"
+  ],
+  "disclosure": {
+    "appeared": ["panel"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.canvas.dock-gen-history.webp",
+      "url": "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "History is scoped to canvas or workspace and filterable by member and rating."
+    }
+  ]
+}

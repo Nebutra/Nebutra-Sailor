@@ -1,0 +1,48 @@
+{
+  "id": "fal.model.analytics",
+  "surfaceId": "fal.model",
+  "fingerprint": {
+    "route": "/models/fal-ai/flux/schnell/analytics",
+    "heading": "Analytics",
+    "activeTab": "Analytics",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "Analytics",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Interval",
+    "timezone",
+    "Total requests",
+    "Execution p50/p75/p90/p95/p99",
+    "Cold boot rate",
+    "Startup p50-p99",
+    "Request counts chart",
+    "End-to-End latency",
+    "Startup breakdown (Queue p90, Cold boot p90)",
+    "Execution duration",
+    "Recent errors table",
+    "Slower requests table",
+    "Runner cold start phases"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/model.schnell.analytics.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Latency is decomposed into queue + boot (startup) and execution; queue wait is a first-class metric."
+    }
+  ]
+}

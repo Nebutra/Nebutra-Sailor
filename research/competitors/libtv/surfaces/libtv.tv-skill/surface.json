@@ -1,0 +1,85 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "libtv.tv-skill",
+  "competitor": "libtv",
+  "route": "https://www.liblib.tv/skill",
+  "name": "LibTV Agent / Skill marketplace",
+  "category": "agent",
+  "layout": {
+    "persistentPanels": ["left sidebar (same as tv-home)", "top header (same as tv-home)"],
+    "chromeRatio": 0.18,
+    "workSurfaceRatio": 0.82
+  },
+  "navigation": [
+    { "label": "Skill / 收藏 / 团队 (source tabs)", "type": "tab", "location": "top-left" },
+    { "label": "category chips incl. 通用技能", "type": "tab", "location": "top-left" },
+    { "label": "搜索 Skill", "type": "input", "location": "top-right" }
+  ],
+  "tabs": [
+    { "name": "Skill (public marketplace)", "default": true, "changesUrl": false },
+    { "name": "收藏 (favourited skills)", "changesUrl": false, "scope": "user" },
+    { "name": "团队 (team skills)", "changesUrl": false, "scope": "team" }
+  ],
+  "primaryActions": [
+    {
+      "label": "Agent composer: 请输入你的创作灵感，或从下方挑选一个 Skill 开始 (添加附件 / 选择模型 / Skill / 生成模式 / 发送)",
+      "type": "input",
+      "location": "floating"
+    },
+    {
+      "label": "skill card (image + 视频/图片 output badge + name + one-line description + author + usage count)",
+      "type": "contextual-action",
+      "location": "floating"
+    },
+    {
+      "label": "添加 Skill (in detail)",
+      "type": "primary-button",
+      "location": "right-panel",
+      "visibleWhen": "overlay:skill-detail"
+    }
+  ],
+  "secondaryActions": [
+    {
+      "label": "分享 / 收藏 (in detail)",
+      "type": "icon-button",
+      "location": "right-panel",
+      "visibleWhen": "overlay:skill-detail"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "skill-detail",
+      "kind": "modal",
+      "trigger": "click skill card",
+      "dismiss": "关闭",
+      "modal": true,
+      "contentOwnership": "skill name, author, category (短剧漫剧), usage/like counts, 简介: 介绍 / 使用场景 / 如何使用 / 输出内容; actions 分享 / 收藏 / 添加 Skill"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/libtv.skill.default.webp",
+      "url": "https://www.liblib.tv/skill",
+      "capturedAt": "2026-09-08"
+    },
+    { "file": "evidence/libtv.skill.detail.webp", "note": "skill detail modal: 东方巨构美学短剧" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Skills are community-authored agent recipes (slugs like /pixar-animated-ad-creator, /viral-video-replicator, /neo-chinese-aesthetic-tvc, /hujinquanwuxia) with declared inputs (如何使用: '一份剧本或一句话，可选人脸/造型参考图') and outputs (输出内容: '角色/道具/场景资产图、逐镜分镜表格、仙侠短剧视频成片'). The marketplace headline reads '从 Skill 出发，抵达成片' / '全开，故事走起'."
+    },
+    {
+      "tier": "O",
+      "text": "A skill is applied by inserting it as a chip into the Agent composer (aria-label '使用 Skill …'); 添加 Skill in the detail modal adds it to the user's set (收藏 tab)."
+    },
+    {
+      "tier": "I2",
+      "text": "Skills are the agent's planning unit: the same composer exists on tv-home, /skill and inside the canvas Agent drawer, and sending from home lands the run in a canvas project (not verified by sending — credits were 0)."
+    },
+    {
+      "tier": "U",
+      "text": "CLI & Skill button in the canvas Agent drawer produced no visible overlay; what 'CLI' refers to is unknown."
+    }
+  ]
+}

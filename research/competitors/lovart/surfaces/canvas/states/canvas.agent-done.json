@@ -1,0 +1,38 @@
+{
+  "id": "lovart.canvas.agent-done",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=2pabxcoqfb40",
+    "heading": "Generate one simple flat vector-st…",
+    "activeTab": "Agent",
+    "overlay": "none",
+    "selectedEntity": "none"
+  },
+  "jobState": "completed",
+  "agentState": "done",
+  "visibleControls": [
+    "result card in chat: model badge, title 'yellow banana icon', image, bottom-right icon button",
+    "assistant text",
+    "点赞 / 点踩",
+    "滚动到底部",
+    "credits ⚡67"
+  ],
+  "evidence": [
+    { "file": "evidence/scratch.done.webp", "capturedAt": "2026-09-08" },
+    { "file": "evidence/scratch.chat-image-action.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Result c-image record carries provenance: meta {groupId, threadId, actionId, agentName 'CreationPlanner', source 'ai', toolCallId, rootTaskId} and props.agentMeta — the canvas object is linked to the chat action that produced it. url under a.lovart.ai/artifacts/agent/."
+    },
+    {
+      "tier": "O",
+      "text": "Result lands as a new top-level shape, not grouped, not inside a frame; no visible link line to the prompt."
+    },
+    {
+      "tier": "U",
+      "text": "The icon button on the chat image card (bottom-right) — clicking produced no visible change; likely locate/download."
+    }
+  ]
+}

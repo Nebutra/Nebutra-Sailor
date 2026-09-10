@@ -1,0 +1,66 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.home.account-menu",
+  "surfaceId": "flowith.home",
+  "fingerprint": {
+    "route": "/blank",
+    "heading": "Flow with ideas",
+    "activeTab": "",
+    "overlay": "account-menu",
+    "selectedEntity": "none",
+    "majorControls": [
+      "Upgrade Your Plan",
+      "Settings",
+      "Official Website",
+      "Get More Free Credits (Discord link)",
+      "Help (submenu)",
+      "Log Out"
+    ]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "account-menu",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "Upgrade Your Plan",
+    "Settings",
+    "Official Website",
+    "Get More Free Credits (Discord link)",
+    "Help (submenu)",
+    "Log Out",
+    "Follow us: X / Discord / LinkedIn / Instagram",
+    "sidebar: New Flow",
+    "sidebar: Flow Library",
+    "sidebar: Media History",
+    "sidebar: Knowledge Garden",
+    "sidebar: Knowledge Market",
+    "sidebar: Projects + Create new project",
+    "sidebar: History list + Sort by",
+    "account menu (Tseka Luk · FREE)",
+    "Get more credits",
+    "Notifications",
+    "credit balance 0",
+    "composer textbox",
+    "Send",
+    "mode chips Chat/Image/Video/Slides/Website/Neo Agent",
+    "Apps rail",
+    "template gallery + category filter"
+  ],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/home.account-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Account popover shows name, FREE badge and email, plus Upgrade / Settings / Official Website / Get More Free Credits / Help / Log Out."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "tapnow.app-home.default",
+  "surfaceId": "tapnow.app-home",
+  "fingerprint": {
+    "route": "/home",
+    "heading": "What are we making today?",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": ["composer", "Auto", "Send", "New Project", "skill cards"]
+  },
+  "visibleControls": [
+    "composer",
+    "Auto",
+    "mic",
+    "Send",
+    "New Project",
+    "recent project",
+    "All projects",
+    "skill cards",
+    "Arena events",
+    "Templates"
+  ],
+  "evidence": [
+    {
+      "file": "evidence/app.home.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Logged-in landing; no login wall in owner session."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "seko.explore.home",
+  "surfaceId": "seko.explore",
+  "fingerprint": {
+    "route": "/explore",
+    "heading": "有什么新的故事灵感？",
+    "activeTab": "短片工作室 · Seko TV · 全部",
+    "overlay": "promo-banner",
+    "selectedEntity": "none",
+    "majorControls": ["hero textbox", "空白画布", "发布作品", "开通会员"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "短片工作室",
+  "openOverlay": "promo-banner",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "left rail 5 icons",
+    "credits 110",
+    "开通会员",
+    "hero textbox",
+    "genre chip 短剧漫剧",
+    "file upload",
+    "model chip Seedance2.5 全能模式",
+    "多剧集 switch",
+    "4 genre presets",
+    "特色功能 grid (空白画布 + 4 skill cards)",
+    "banner carousel",
+    "feed tabs Seko TV/技能社区/资源活动",
+    "search 输入作品名称搜索",
+    "发布作品",
+    "8 category tabs",
+    "feed cards"
+  ],
+  "disclosure": {
+    "appeared": ["everything on load"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/explore.home.webp",
+      "url": "https://seko.sensetime.com/explore",
+      "capturedAt": "2026-09-08"
+    },
+    {
+      "file": "evidence/explore.hero-studio.webp",
+      "url": "https://seko.sensetime.com/explore",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Left rail tooltips: 首页 → /explore, 我的空间 → /my-space, 主体库 → /characters, 技能社区 → /skill-community, 数字人视频 → /avatar-video."
+    }
+  ]
+}

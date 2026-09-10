@@ -1,0 +1,29 @@
+{
+  "id": "lovart.canvas.generator-video",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Video Generator",
+    "overlay": "generator-composer",
+    "selectedEntity": "c-video-generator"
+  },
+  "selectedEntity": "c-video-generator 1920×1080",
+  "openOverlay": "generator-composer",
+  "visibleControls": [
+    "上传",
+    "参考图/视频",
+    "video-multi-params-button 'Auto · 5s · 720p'",
+    "generator-model-button 'Seedance 2.0'",
+    "generator-generate-button ⚡90"
+  ],
+  "evidence": [
+    { "file": "evidence/canvas.dock.generate-menu-video.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Record props: generatorName seedance/seedance-2-0, duration 5, resolution 720p, referenceMode multiImage, generateAudio true, useWebSearch false."
+    },
+    { "tier": "O", "text": "Not run (video is out of budget)." }
+  ]
+}

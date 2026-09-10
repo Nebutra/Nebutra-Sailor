@@ -1,0 +1,37 @@
+{
+  "id": "lovart.canvas.image-selected.quick-edit",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "Untitled",
+    "overlay": "quick-edit",
+    "selectedEntity": "c-image"
+  },
+  "openOverlay": "quick-edit",
+  "agentState": "composing",
+  "visibleControls": [
+    "textbox 'Describe your edit here'",
+    "Run ⚡14",
+    "chips: 🪞 展示方式 · 💠 2×2 细节图 ⚡14",
+    "selection handles",
+    "composer chip Image 221"
+  ],
+  "disclosure": {
+    "appeared": ["camera zoomed to image", "inline edit composer", "suggestion chips with prices"],
+    "disappeared": ["image toolbar", "selection label"]
+  },
+  "evidence": [
+    { "file": "evidence/canvas.image-selected.quick-edit.webp", "capturedAt": "2026-09-08" }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Quick edit is a focused mode: camera zoom-to-fit + a dedicated single-image prompt with a priced Run button; the main agent composer stays visible on the right."
+    },
+    { "tier": "O", "text": "Mode survived a hard reload (zoom, selection, chips)." },
+    {
+      "tier": "I2",
+      "text": "Run ⚡14 matches the Nano Banana Pro 1K/2K price in the credit table, suggesting quick edit uses that model by default."
+    }
+  ]
+}

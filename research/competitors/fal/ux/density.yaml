@@ -1,0 +1,16 @@
+# approximate, from 1440×900 captures — I2
+fal.model.playground:
+  chrome: 0.30           # announcement bar + app nav + model header + tab strip
+  input_card: 0.33
+  result_card: 0.37
+  controls_visible_default: 6   # prompt, More, Reset, Run, Form▾, Preview|JSON
+  controls_after_more: 14
+fal.sandbox:
+  chrome: 0.20
+  feed: 0.55
+  dock: 0.25
+  controls_dock: 9
+fal.explore:
+  hero: 0.55
+  search: 0.10
+  grid: 0.35

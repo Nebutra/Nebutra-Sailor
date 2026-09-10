@@ -1,0 +1,32 @@
+{
+  "id": "seko.canvas.agent-model",
+  "surfaceId": "seko.canvas",
+  "fingerprint": {
+    "route": "/infinite-canvas?canvasId=2097273517239623682",
+    "heading": "未命名故事",
+    "activeTab": "画布",
+    "overlay": "agent-model-picker",
+    "selectedEntity": "none",
+    "majorControls": ["智能选择 + 9 LLMs"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "画布",
+  "openOverlay": "agent-model-picker",
+  "jobState": "completed",
+  "agentState": "composing",
+  "visibleControls": ["智能选择 + 9 LLMs"],
+  "disclosure": { "appeared": ["list"], "disappeared": [""] },
+  "evidence": [
+    {
+      "file": "evidence/canvas.agent-model.webp",
+      "url": "https://seko.sensetime.com/infinite-canvas?canvasId=2097273517239623682",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "The agent LLM is user-selectable (Sensenova, GLM, Qwen, Doubao, 5.6 L)."
+    }
+  ]
+}

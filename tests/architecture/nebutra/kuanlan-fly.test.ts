@@ -36,8 +36,15 @@ describe("kuanlan Fly origin", () => {
       "utf-8",
     );
     expect(mint).toContain("provision-kuanlan-r2-uploads-token.sh");
-    const script = readFileSync(
+    // The wrapper carries the app identity; one canonical script does the minting.
+    const wrapper = readFileSync(
       resolve(ROOT, "infra/ops/scripts/provision-kuanlan-r2-uploads-token.sh"),
+      "utf-8",
+    );
+    expect(wrapper).toContain("provision-r2-uploads-token.sh");
+    expect(wrapper).toContain("nebutra-kuanlan");
+    const script = readFileSync(
+      resolve(ROOT, "infra/ops/scripts/provision-r2-uploads-token.sh"),
       "utf-8",
     );
     expect(script).toContain("nebutra-uploads");

@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../schema/state.schema.json",
+  "id": "libtv.art-generator.image-config",
+  "surfaceId": "libtv.art-generator",
+  "fingerprint": {
+    "route": "https://www.liblib.art/ai-tool/image-generator",
+    "heading": "图片创作",
+    "activeTab": "图片生成",
+    "overlay": "config-popover",
+    "selectedEntity": "none",
+    "majorControls": ["图像质量", "清晰度", "图片尺寸", "图片张数"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "图片生成",
+  "openOverlay": "config-popover",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": [
+    "低画质/标准画质/高画质",
+    "1K/2K/4K",
+    "智能比例 + 1:1 1:2 2:1 9:16 16:9 3:4 4:3 3:2 2:3 5:4 4:5 21:9 9:21",
+    "1/2/3/4 (VIP)"
+  ],
+  "disclosure": {
+    "appeared": ["popover"],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/libtv.art-image-gen.settings-popover.webp",
+      "url": "https://www.liblib.art/ai-tool/image-generator",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Batch count up to 4 with VIP gating."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "lovart.projects.select-mode",
+  "surfaceId": "lovart.projects",
+  "fingerprint": {
+    "route": "/zh/projects",
+    "heading": "项目",
+    "overlay": "none",
+    "selectedEntity": "none (0 checked)",
+    "majorControls": ["checkboxes"]
+  },
+  "visibleControls": ["checkbox on each card", "select-mode icon (active)"],
+  "disclosure": { "appeared": ["input[type=checkbox] per card"], "disappeared": [] },
+  "evidence": [{ "file": "evidence/projects.select-mode.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    { "tier": "U", "text": "Bulk actions after checking (delete? move?) not observed." }
+  ]
+}

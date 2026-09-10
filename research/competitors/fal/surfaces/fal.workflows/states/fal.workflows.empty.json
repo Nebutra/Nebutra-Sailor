@@ -1,0 +1,29 @@
+{
+  "id": "fal.workflows.empty",
+  "surfaceId": "fal.workflows",
+  "fingerprint": {
+    "route": "/workflows",
+    "heading": "Workflows",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["Templates", "Create", "No workflows found", "template cards"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/workflows.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": []
+}

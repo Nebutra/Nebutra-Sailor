@@ -1,0 +1,29 @@
+{
+  "id": "fal.docs.client-setup",
+  "surfaceId": "fal.docs",
+  "fingerprint": {
+    "route": "/docs/documentation/model-apis/inference/client-setup",
+    "heading": "Client Setup",
+    "activeTab": "",
+    "overlay": "none",
+    "selectedEntity": "none",
+    "majorControls": []
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "none",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["@fal-ai/client", "fal-client"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/docs.client-setup.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": []
+}

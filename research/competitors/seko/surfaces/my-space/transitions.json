@@ -1,0 +1,18 @@
+[
+  {
+    "fromState": "seko.my-space.story-tab",
+    "action": { "type": "click", "control": "tab 画布" },
+    "toState": "seko.my-space.canvas-tab",
+    "sideEffects": ["url.changed:?tab=canvas"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/myspace.canvas-tab.webp" }]
+  },
+  {
+    "fromState": "seko.my-space.canvas-tab",
+    "action": { "type": "click", "control": "tab 数字人" },
+    "toState": "seko.my-space.avatar-tab",
+    "sideEffects": ["url.changed:?tab=avatar"],
+    "tier": "O",
+    "evidence": [{ "file": "evidence/myspace.avatar-tab.webp" }]
+  }
+]

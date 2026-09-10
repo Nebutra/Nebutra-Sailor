@@ -20,7 +20,7 @@ Dimensions: B4 安全架构评审
 | `apps/sailor-docs/content/docs/en/configuration/environment-variables.mdx:20` | redacted candidate |
 | `apps/sailor-docs/content/docs/en/integrations/github.mdx:30` | redacted candidate |
 | `apps/sailor-docs/content/docs/zh/configuration/environment-variables.mdx:20` | redacted candidate |
-| `docs/阿里云ECS部署指南.md:156` | redacted candidate |
+| `docs/ops/nebutra/aliyun-ecs-deployment-guide.md:156 (was docs/阿里云ECS部署指南.md)` | redacted candidate |
 | `infra/iac/k8s/base/configmaps/pgbouncer-config.yaml:15` | redacted candidate |
 | `packages/platform/db/README.md:89` | redacted candidate |
 

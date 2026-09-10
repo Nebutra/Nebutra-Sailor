@@ -1,0 +1,27 @@
+{
+  "id": "lovart.canvas.layers-drawer",
+  "surfaceId": "lovart.canvas",
+  "fingerprint": {
+    "route": "/canvas?projectId=…",
+    "heading": "图层",
+    "overlay": "layers-drawer",
+    "selectedEntity": "none"
+  },
+  "openOverlay": "layers-drawer",
+  "visibleControls": [
+    "× close",
+    "历史记录 section (collapsible) — 暂无历史记录",
+    "layer rows with thumbnails: Image 221, Image 220, Image 210, Image 204, ▸ 创建编组, Image 140, Image 139"
+  ],
+  "disclosure": {
+    "appeared": ["280px left drawer; dock and minimap shift right"],
+    "disappeared": []
+  },
+  "evidence": [{ "file": "evidence/canvas.float-layer-button.webp", "capturedAt": "2026-09-08" }],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "Layers are z-ordered shapes with auto names 'Image N'; groups expand. The drawer is the only persistent-panel option on the canvas side."
+    }
+  ]
+}

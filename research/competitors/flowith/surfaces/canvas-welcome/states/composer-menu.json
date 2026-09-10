@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../schema/state.schema.json",
+  "id": "flowith.canvas-welcome.composer-menu",
+  "surfaceId": "flowith.canvas-welcome",
+  "fingerprint": {
+    "route": "/conv/acda4226-c366-4582-b8ed-fa578c8bccfe",
+    "heading": "Welcome to flowith 2.0: Where Ideas Flow",
+    "activeTab": "",
+    "overlay": "composer-menu",
+    "selectedEntity": "none",
+    "majorControls": ["New Composer"]
+  },
+  "selectedEntity": "none",
+  "activeTab": "",
+  "openOverlay": "composer-menu",
+  "jobState": "none",
+  "agentState": "none",
+  "visibleControls": ["New Composer"],
+  "disclosure": {
+    "appeared": [],
+    "disappeared": []
+  },
+  "evidence": [
+    {
+      "file": "evidence/canvas.welcome.composer-menu.webp",
+      "capturedAt": "2026-09-08"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "'Composer' opens a menu whose only item is 'New Composer' (submenu not opened)."
+    },
+    {
+      "tier": "U",
+      "text": "What a Composer is (saved prompt preset? custom agent?)."
+    }
+  ]
+}

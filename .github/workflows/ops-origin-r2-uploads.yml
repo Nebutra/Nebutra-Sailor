@@ -1,0 +1,52 @@
+name: Ops — Origin R2 uploads token
+
+# The python-ai origin writes generated images to nebutra-uploads. The shared
+# R2_* GitHub secret is the assets seeder and has no Object Write there, so
+# every generation failed at persist time. This dispatch mints an Object Read &
+# Write token, verifies Put and Delete, and stages it onto Fly nebutra-ai only.
+# It never prints the secret.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why (run summary)"
+        required: false
+        default: "origin PutObject AccessDenied on nebutra-uploads"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-origin-r2-uploads
+  cancel-in-progress: false
+
+jobs:
+  restage:
+    name: Mint token and restage Fly
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Create token and set Fly secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || 'a4248a5738df319996a70092fe598d37' }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN is not set"
+            exit 1
+          fi
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::FLY_API_TOKEN is not set"
+            exit 1
+          fi
+          bash infra/ops/scripts/provision-origin-r2-uploads-token.sh

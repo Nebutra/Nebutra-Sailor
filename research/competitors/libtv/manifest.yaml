@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../schema/manifest.schema.json
+slug: libtv
+name: LibLib / LibTV
+category: community
+targets:
+  - { url: "https://www.liblib.art", track: public, verified: true, note: "community + consumer generators (/ai-tool/image-generator, /ai-tool/video-generator), /sd, /comfy, /pretrain, /lib3, /asset" }
+  - { url: "https://www.liblib.tv/", track: authenticated, verified: true, note: "LibTV professional video tool — reached via nav pill 前往LibTV创作; home launchers all resolve to /canvas?spaceId=&projectId= (node canvas). Auth bridged from liblib.art via cross-storage-hub.html" }
+  - { url: "https://www.liblib.tv/canvas?spaceId=7892966&projectId=c85cf652c2cc4c479e0bf5451976c3a4", track: authenticated, verified: true, note: "throwaway project created during exploration (4 nodes); safe to delete by owner" }
+  - { url: "https://www.liblib.tv/skill", track: authenticated, verified: true, note: "LibTV Agent skill marketplace" }
+access:
+  account: paid
+  owner_assisted: true
+  credit_budget: "0 积分 available on 2026-09-08 — no generation or agent run submitted; job lifecycle unverified"
+status: core_done
+coverage: { route: 0.85, surface: 0.8, interaction: 0.6, state: 0.6, core_loop: 0.55 }
+last_explored: "2026-09-08"

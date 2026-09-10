@@ -1,0 +1,13 @@
+%% Lovart routes (O unless noted). Locale prefix /zh only on shell routes; /canvas is locale-less.
+flowchart LR
+  home["/zh/home"] --> projects["/zh/projects"]
+  home --> brand["/zh/brand-kit"]
+  home -- "新建项目 / prompt submit (I2)" --> newp["/canvas?newProject=true"]
+  newp -- "creates project, rewrites URL" --> canvas["/canvas?projectId=<id>"]
+  projects -- "card → window.open (new tab)" --> canvas
+  home -- "recent card → window.open" --> canvas
+  canvas -- "logo menu 主页 / 项目库" --> home
+  canvas -- "logo menu 项目库" --> projects
+  canvas -. "试用 Lovart 新版本 (U)" .-> newshell["new-version shell (not entered)"]
+  home -. "升级 / 立即升级 (not clicked)" .-> paywall["paywall modal (in-place)"]
+  canvas -- "调整 / export / promo" --> paywall

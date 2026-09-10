@@ -1,0 +1,93 @@
+{
+  "$schema": "../../../../schema/surface.schema.json",
+  "id": "flowith.canvas-quant",
+  "competitor": "flowith",
+  "route": "/conv/<flow-uuid>",
+  "name": "Flow canvas — owner's Neo Agent run 'Quant System PRD' (agent plan projection)",
+  "category": "agent",
+  "layout": {
+    "persistentPanels": ["title bar", "left dock", "bottom composer"],
+    "chromeRatio": 0.12,
+    "workSurfaceRatio": 0.88
+  },
+  "navigation": [],
+  "tabs": [],
+  "primaryActions": [
+    {
+      "label": "step node toolbar: Rerun · Edit · Delete",
+      "type": "context-toolbar",
+      "location": "canvas-node",
+      "visibleWhen": "step-node.selected"
+    },
+    {
+      "label": "Group container with editable name ('Group 1')",
+      "type": "contextual-action",
+      "location": "canvas-node",
+      "visibleWhen": "always"
+    },
+    {
+      "label": "Sandbox Preview node: 'Load sandbox preview' (flo.fun)",
+      "type": "contextual-action",
+      "location": "canvas-node",
+      "visibleWhen": "always"
+    }
+  ],
+  "secondaryActions": [],
+  "overlays": [
+    {
+      "id": "node-toolbar",
+      "kind": "context-toolbar",
+      "trigger": "click step node",
+      "dismiss": "Escape",
+      "modal": false,
+      "contentOwnership": "Rerun · Edit · Delete"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "evidence/canvas.quant.overview.webp",
+      "capturedAt": "2026-09-08",
+      "note": "whole agent run at 15-18%"
+    },
+    {
+      "file": "evidence/canvas.quant.fit.webp",
+      "capturedAt": "2026-09-08",
+      "note": "prompt + first step + fan-out at 83%"
+    },
+    {
+      "file": "evidence/canvas.quant.bottom.webp",
+      "capturedAt": "2026-09-08",
+      "note": "chain tail incl. sandbox/webpage node"
+    }
+  ],
+  "observations": [
+    {
+      "tier": "O",
+      "text": "A Neo Agent run is rendered entirely as canvas nodes: the user prompt (Chinese PRD brief, 'Me · 25-12-10') → a small step-label node (subtask text) → a 'Group 1' container holding six parallel research-result nodes → a vertical chain of ten step-label nodes each followed by its output document node (h1/h2 docs with version numbers 1.0.0 / 2.1.0) → a Sandbox Preview node ('Explore interactive code preview from flo.fun') → final spec nodes. Badge 'Powered by Neo'."
+    },
+    {
+      "tier": "O",
+      "text": "Step-label texts (the plan, in execution order): Conduct comprehensive research on multi-source market data integrations… | Generate a detailed database schema for Supabase using PostgreSQL with TimescaleDB… | Design the information ingestion system… RSS feeds… | Outline the AI/ML layer… Deepseek V3.2… | Design the trading system using C#/.NET 8… | Define the full GraphQL schema for the API Gateway (BFF)… | Prototype the Next.js 16.0.7 frontend powered by React 19… | Outline the DevOps and infrastructure configuration… | Synthesize all platform components into a unified monorepo structure… | Compile a final comprehensive system specification as an interactive webpage…"
+    },
+    {
+      "tier": "O",
+      "text": "There is no separate plan panel, timeline or task list in the flow; the plan is the sequence of step nodes and the group of parallel branches. Selecting a step node gives Rerun · Edit · Delete."
+    },
+    {
+      "tier": "O",
+      "text": "Group nodes exist (editable name 'Edit group name') and visually contain their children."
+    },
+    {
+      "tier": "I2",
+      "text": "Parallel subtasks are expressed as a Group of sibling nodes (fan-out), sequential subtasks as a chain; the agent chooses per step. Output documents carry version strings, suggesting the agent revised specs across steps (I1)."
+    },
+    {
+      "tier": "I2",
+      "text": "'Sandbox Preview' is a lazy-loaded embedded runtime (flo.fun) for the generated website — the Website mode's artifact type."
+    },
+    {
+      "tier": "U",
+      "text": "Whether the plan was shown for approval before execution; live streaming layout; how a run in progress looks (this run is complete)."
+    }
+  ]
+}
