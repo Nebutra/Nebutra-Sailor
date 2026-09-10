@@ -58,6 +58,14 @@ jobs:
         if: github.event.inputs.fly_app != ''
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
 
+      - name: Generate the Prisma client
+        run: |
+          set -euo pipefail
+          # The script imports @nebutra/db, whose client is generated, not
+          # committed. Without this it fails on a missing dist/generated path.
+          pnpm --filter @nebutra/db db:generate
+          pnpm --filter @nebutra/db build
+
       - name: Issue the key
         id: issue
         env:
