@@ -39,6 +39,9 @@ catalogs:
     ai:
       specifier: ^6.0.116
       version: 6.0.116
+    class-variance-authority:
+      specifier: ^0.7.1
+      version: 0.7.1
     fumadocs-mdx:
       specifier: ^14.2.10
       version: 14.2.10
@@ -995,6 +998,9 @@ importers:
       '@xyflow/react':
         specifier: ^12.10.2
         version: 12.10.2(@types/react@19.2.14)(immer@11.1.4)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      class-variance-authority:
+        specifier: 'catalog:'
+        version: 0.7.1
       geist:
         specifier: 'catalog:'
         version: 1.7.0(next@16.3.4(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))

@@ -27,6 +27,7 @@
     "@nebutra/ui": "workspace:*",
     "@tanstack/react-query": "5.101.0",
     "@xyflow/react": "^12.10.2",
+    "class-variance-authority": "catalog:",
     "geist": "catalog:",
     "next": "catalog:",
     "react": "catalog:",

@@ -2,6 +2,7 @@
 
 import { ChevronDown } from "@nebutra/icons";
 import { Input, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
+import { Chip } from "@/components/ui/chip";
 import { MODELS_BY_MODE } from "@/domain/models";
 import type { GeneratorMode, WorkspaceNode } from "@/domain/types";
 import { useEditorStore } from "@/stores/editor-store";
@@ -39,15 +40,16 @@ function ParamRow({
       <span className="text-label text-muted-foreground">{label}</span>
       <div className="flex gap-0.5">
         {options.map((o) => (
-          <button
+          <Chip
             key={o}
-            type="button"
-            onClick={() => onPick(o)}
+            tone="muted"
+            pressed={o === value}
             aria-pressed={o === value}
-            className="rounded px-1.5 py-0.5 text-label text-muted-foreground hover:bg-accent aria-pressed:bg-accent aria-pressed:text-foreground"
+            onClick={() => onPick(o)}
+            className="px-1.5"
           >
             {o}
-          </button>
+          </Chip>
         ))}
       </div>
     </div>
@@ -98,49 +100,41 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
     if (id) enqueue(id, `Generate · ${node.id}`, est);
   };
 
-  const chip =
-    "flex h-[var(--para-h-chip)] items-center gap-1 rounded-md px-2 text-label text-foreground hover:bg-accent";
-
   return (
     <div className="para-rise flex w-para-nodeconfig flex-col gap-1.5 rounded-xl border border-border bg-popover p-2 shadow-ambient-md">
       <div className="flex items-center gap-0.5">
         <Popover>
           <PopoverTrigger asChild>
-            <button type="button" className={chip} aria-label="Mode">
+            <Chip aria-label="Mode">
               <span className="capitalize">{mode}</span>
               <ChevronDown className="size-3 text-muted-foreground" />
-            </button>
+            </Chip>
           </PopoverTrigger>
           <PopoverContent align="start" className="w-32 p-1">
             {MODES.map((m) => (
-              <button
+              <Chip
                 key={m}
-                type="button"
+                size="row"
                 onClick={() => updateGenerator(node.id, { mode: m })}
-                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-label capitalize hover:bg-accent"
+                className="capitalize"
               >
                 {m}
-              </button>
+              </Chip>
             ))}
           </PopoverContent>
         </Popover>
         <Popover>
           <PopoverTrigger asChild>
-            <button type="button" className={chip} aria-label="Model">
+            <Chip aria-label="Model">
               {g.model ?? "Auto"}
               <ChevronDown className="size-3 text-muted-foreground" />
-            </button>
+            </Chip>
           </PopoverTrigger>
           <PopoverContent align="start" className="w-44 p-1">
             {MODELS_BY_MODE[mode].map((m) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => updateGenerator(node.id, { model: m })}
-                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-label hover:bg-accent"
-              >
+              <Chip key={m} size="row" onClick={() => updateGenerator(node.id, { model: m })}>
                 {m}
-              </button>
+              </Chip>
             ))}
           </PopoverContent>
         </Popover>
@@ -150,32 +144,32 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
         <div className="flex-1" />
         <Popover>
           <PopoverTrigger asChild>
-            <button type="button" className={chip} aria-label="Output count">
+            <Chip aria-label="Output count">
               {count}×
               <ChevronDown className="size-3 text-muted-foreground" />
-            </button>
+            </Chip>
           </PopoverTrigger>
           <PopoverContent align="end" className="w-24 p-1">
             {COUNTS.map((c) => (
-              <button
+              <Chip
                 key={c}
-                type="button"
-                onClick={() => updateGenerator(node.id, { count: c })}
+                size="row"
+                pressed={c === count}
                 aria-pressed={c === count}
-                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-label hover:bg-accent aria-pressed:text-foreground"
+                onClick={() => updateGenerator(node.id, { count: c })}
               >
                 {c}×
-              </button>
+              </Chip>
             ))}
           </PopoverContent>
         </Popover>
         <span className="px-1.5 text-muted-foreground text-label tabular-nums">✦{est}</span>
         <Popover>
           <PopoverTrigger asChild>
-            <button type="button" className={chip}>
+            <Chip>
               Advanced
               <ChevronDown className="size-3 text-muted-foreground" />
-            </button>
+            </Chip>
           </PopoverTrigger>
           <PopoverContent align="end" className="w-56 p-3">
             <div className="mb-1.5 font-medium text-foreground text-label">Advanced</div>
@@ -195,13 +189,9 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
         </Popover>
       </div>
       <div className="flex items-center gap-1.5">
-        <button
-          type="button"
-          className={`${chip} text-muted-foreground`}
-          aria-label="Mention subject or asset"
-        >
+        <Chip tone="muted" aria-label="Mention subject or asset">
           @
-        </button>
+        </Chip>
         <Input
           size="sm"
           aria-label="Prompt"
@@ -217,14 +207,9 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
           placeholder={mode === "text" ? "Write…" : "Describe the change…"}
           className="flex-1"
         />
-        <button
-          type="button"
-          onClick={generate}
-          disabled={busy}
-          className="h-[var(--para-h-control)] rounded-md bg-primary px-3 font-medium text-primary-foreground text-label disabled:opacity-40"
-        >
+        <Chip tone="primary" size="control" onClick={generate} disabled={busy}>
           Generate
-        </button>
+        </Chip>
       </div>
     </div>
   );
