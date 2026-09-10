@@ -73,6 +73,14 @@ export interface Job {
   finishedAt?: string;
   error?: JobError;
   cost?: Cost;
+  /**
+   * The generator config as it stood when this job was admitted.
+   *
+   * The node's own `generator` is a live draft the user keeps editing, so without a snapshot here
+   * "what settings produced this?" had no answer once they touched a control mid-run — the panel
+   * silently stopped describing the job it was sitting on. Captured at enqueue, never rewritten.
+   */
+  config?: GeneratorState;
 }
 
 // ---------------------------------------------------------------------------

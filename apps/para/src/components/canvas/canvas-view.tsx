@@ -233,7 +233,9 @@ function CanvasSurface() {
               transform: "translateX(-50%)",
             }}
           >
-            <NodeConfig key={selected.id} node={selected} />
+            {/* No key: the panel holds no state of its own, so there is nothing to reset on
+                reselect — and remounting it used to be what destroyed a half-typed prompt. */}
+            <NodeConfig node={selected} />
           </div>
         </>
       )}

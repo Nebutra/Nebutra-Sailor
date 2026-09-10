@@ -2,14 +2,57 @@
 
 import { ChevronDown } from "@nebutra/icons";
 import { Input, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
-import { useState } from "react";
+import { MODELS_BY_MODE } from "@/domain/models";
 import type { GeneratorMode, WorkspaceNode } from "@/domain/types";
 import { useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
 
 const MODES: GeneratorMode[] = ["image", "video", "text", "audio"];
-const MODELS = ["Auto", "Seedance 2.5", "Kling 3", "Nano Banana 2", "GPT Image 2"];
+
 const COST: Record<GeneratorMode, number> = { image: 1, video: 7, text: 0, audio: 2 };
+
+const RATIOS = ["16:9", "4:3", "1:1", "9:16"];
+const RESOLUTIONS = ["1K", "2K", "4K"];
+const COUNTS = [1, 2, 4] as const;
+
+/**
+ * One Advanced parameter: label, and the values it can take laid out in place.
+ *
+ * Deliberately not a nested Popover. A popover opened from inside a popover is the defect that
+ * started this rewrite — the inner surface has no dependable relationship to the outer one, and the
+ * list ends up drawn against the panel it belongs to. With two or three options per row, showing
+ * them costs less space than a menu that has to escape its own container.
+ */
+function ParamRow({
+  label,
+  value,
+  options,
+  onPick,
+}: {
+  label: string;
+  value: string;
+  options: readonly string[];
+  onPick: (v: string) => void;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 py-1">
+      <span className="text-label text-muted-foreground">{label}</span>
+      <div className="flex gap-0.5">
+        {options.map((o) => (
+          <button
+            key={o}
+            type="button"
+            onClick={() => onPick(o)}
+            aria-pressed={o === value}
+            className="rounded px-1.5 py-0.5 text-label text-muted-foreground hover:bg-accent aria-pressed:bg-accent aria-pressed:text-foreground"
+          >
+            {o}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 /**
  * Generator config anchored under the selected node (A — Seko under, TapNow inside, LibTV on, Lovart generator node).
@@ -20,7 +63,6 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
   const updateGenerator = useEditorStore((s) => s.updateGenerator);
   const derive = useEditorStore((s) => s.derive);
   const enqueue = useJobsStore((s) => s.enqueue);
-  const [prompt, setPrompt] = useState(node.generator?.prompt ?? "");
 
   const g = node.generator ?? {
     mode: node.type === "text" ? "text" : node.type,
@@ -29,12 +71,17 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
   };
   const mode = g.mode;
   const count = g.count ?? 1;
+  const prompt = g.prompt ?? "";
   const est = COST[mode] * count;
   const busy = node.status === "queued" || node.status === "running";
+  const ratio = String(g.params?.ratio ?? "16:9");
+  const resolution = String(g.params?.resolution ?? "1K");
+
+  const setParam = (key: string, value: string) =>
+    updateGenerator(node.id, { params: { ...g.params, [key]: value } });
 
   const generate = () => {
     if (busy) return;
-    updateGenerator(node.id, { prompt });
     const fresh = node.status === "empty" || node.status === "configured";
     if (fresh) {
       // First generation fills the node in place (A).
@@ -85,7 +132,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
             </button>
           </PopoverTrigger>
           <PopoverContent align="start" className="w-44 p-1">
-            {MODELS.map((m) => (
+            {MODELS_BY_MODE[mode].map((m) => (
               <button
                 key={m}
                 type="button"
@@ -98,17 +145,30 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
           </PopoverContent>
         </Popover>
         <span className="rounded-md bg-neutral-3 px-1.5 py-0.5 text-meta text-muted-foreground">
-          {String(g.params?.ratio ?? "16:9")} · {String(g.params?.resolution ?? "1K")}
+          {ratio} · {resolution}
         </span>
         <div className="flex-1" />
-        <button
-          type="button"
-          onClick={() => updateGenerator(node.id, { count: count === 1 ? 2 : count === 2 ? 4 : 1 })}
-          className={chip}
-          aria-label="Count"
-        >
-          {count}×
-        </button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <button type="button" className={chip} aria-label="Output count">
+              {count}×
+              <ChevronDown className="size-3 text-muted-foreground" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent align="end" className="w-24 p-1">
+            {COUNTS.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => updateGenerator(node.id, { count: c })}
+                aria-pressed={c === count}
+                className="flex h-[var(--para-h-chip)] w-full items-center rounded-md px-2 text-label hover:bg-accent aria-pressed:text-foreground"
+              >
+                {c}×
+              </button>
+            ))}
+          </PopoverContent>
+        </Popover>
         <span className="px-1.5 text-muted-foreground text-label tabular-nums">✦{est}</span>
         <Popover>
           <PopoverTrigger asChild>
@@ -119,18 +179,18 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
           </PopoverTrigger>
           <PopoverContent align="end" className="w-56 p-3">
             <div className="mb-1.5 font-medium text-foreground text-label">Advanced</div>
-            {[
-              ["Ratio", "16:9"],
-              ["Resolution", "1K"],
-              ["Seed", "—"],
-              ["Steps", "—"],
-              ["Reference weight", "—"],
-            ].map(([k, v]) => (
-              <div key={k} className="flex justify-between py-0.5 text-label">
-                <span className="text-muted-foreground">{k}</span>
-                <span className="text-foreground">{v}</span>
-              </div>
-            ))}
+            <ParamRow
+              label="Ratio"
+              value={ratio}
+              options={RATIOS}
+              onPick={(v) => setParam("ratio", v)}
+            />
+            <ParamRow
+              label="Resolution"
+              value={resolution}
+              options={RESOLUTIONS}
+              onPick={(v) => setParam("resolution", v)}
+            />
           </PopoverContent>
         </Popover>
       </div>
@@ -146,7 +206,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
           size="sm"
           aria-label="Prompt"
           value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
+          onChange={(e) => updateGenerator(node.id, { prompt: e.target.value })}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();

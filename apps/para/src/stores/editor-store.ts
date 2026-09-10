@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { reconcileModel } from "@/domain/models";
 import type {
   Edge,
   GeneratorMode,
@@ -133,11 +134,24 @@ export const useEditorStore = create<EditorState>((set, get) => {
     addEdge: (edge) => patchDoc((doc) => ({ ...doc, edges: { ...doc.edges, [edge.id]: edge } })),
 
     updateGenerator: (id, patch) =>
-      patchNode(id, (n) => ({
-        ...n,
-        status: n.status === "empty" ? "configured" : n.status,
-        generator: { mode: n.type === "text" ? "text" : n.type, ...n.generator, ...patch },
-      })),
+      patchNode(id, (n) => {
+        const merged: GeneratorState = {
+          mode: n.type === "text" ? "text" : n.type,
+          ...n.generator,
+          ...patch,
+        };
+        // Enforced here, not in the panel: a store that can hold an impossible mode/model pair
+        // sends it to the origin, which rejects it only after the credits are spent.
+        const generator: GeneratorState = {
+          ...merged,
+          model: reconcileModel(merged.mode, merged.model),
+        };
+        return {
+          ...n,
+          status: n.status === "empty" ? "configured" : n.status,
+          generator,
+        } as WorkspaceNode;
+      }),
 
     setNodeStatus: (id, status, extra) =>
       patchNode(id, (n) => ({ ...n, ...extra, status }) as WorkspaceNode),

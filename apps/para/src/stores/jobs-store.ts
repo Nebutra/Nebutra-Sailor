@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Job } from "@/domain/types";
+import type { GeneratorState, Job } from "@/domain/types";
 import { gatewayApi, isGatewayMode } from "@/lib/gateway-api";
 import { assets } from "@/mock/data";
 import { useEditorStore } from "./editor-store";
@@ -11,6 +11,7 @@ import { useEditorStore } from "./editor-store";
  */
 interface JobsState {
   jobs: Job[];
+  /** `config` is the committed snapshot: what the node's draft said at the moment of admission. */
   enqueue: (nodeId: string, label: string, estimated?: number) => string;
   cancel: (jobId: string) => void;
   upsert: (job: Job) => void;
@@ -33,6 +34,12 @@ export const useJobsStore = create<JobsState>((set, get) => ({
   enqueue: (nodeId, label, estimated) => {
     const id = `j-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 5)}`;
     const queued = get().jobs.filter((j) => j.status === "queued").length;
+    const editor = useEditorStore.getState();
+    // Snapshot before anything can await: from here the node's draft may change under us.
+    const node = editor.document?.nodes[nodeId];
+    const config: GeneratorState = node?.generator ?? {
+      mode: node?.type === "text" ? "text" : (node?.type ?? "image"),
+    };
     const job: Job = {
       id,
       nodeId,
@@ -40,22 +47,20 @@ export const useJobsStore = create<JobsState>((set, get) => ({
       status: "queued",
       progress: 0,
       queuePosition: queued + 1,
+      config,
       ...(estimated !== undefined ? { cost: { estimated, currency: "credits" } } : {}),
     };
     set({ jobs: [...get().jobs, job] });
-    const editor = useEditorStore.getState();
     editor.setNodeStatus(nodeId, "queued", { queuePosition: queued + 1, jobId: id });
 
     if (isGatewayMode) {
-      const node = editor.document?.nodes[nodeId];
       const workspaceId = editor.documentId;
       if (!node || !workspaceId) return id;
-      const generator = node.generator ?? { mode: node.type === "text" ? "text" : node.type };
       void import("@/lib/job-stream").then(({ followJob }) =>
         gatewayApi
-          .createJob({ workspaceId, nodeId, generator })
+          .createJob({ workspaceId, nodeId, generator: config })
           .then((created) => {
-            const real = { ...created, label, ...(job.cost ? { cost: job.cost } : {}) };
+            const real = { ...created, label, config, ...(job.cost ? { cost: job.cost } : {}) };
             set({ jobs: get().jobs.map((j) => (j.id === id ? real : j)) });
             useEditorStore.getState().setNodeStatus(nodeId, real.status, {
               jobId: real.id,
