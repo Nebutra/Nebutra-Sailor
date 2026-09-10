@@ -1,7 +1,7 @@
-import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
-import { RouterBillingRepository, type RouterPriceRow } from "@nebutra/repositories";
+import type { RouterPriceRow } from "@nebutra/repositories";
 import { getListingCatalog, type ListingModel } from "@/lib/listing-catalog";
+import { num, publishedPriceMap } from "@/lib/shelf-prices";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -38,16 +38,6 @@ interface CatalogueEntry {
   };
 }
 
-/** A price row carries a rate if any of the fields it can be sold by is set. */
-function hasRate(row: RouterPriceRow): boolean {
-  return rate(row.inputPerMTok) > 0 || rate(row.outputPerMTok) > 0 || rate(row.unitPrice) > 0;
-}
-
-/** An unset price column is not free — it is a column this SKU is not sold by. */
-function rate(value: number | null): number {
-  return value ?? 0;
-}
-
 function toEntry(model: ListingModel, price: RouterPriceRow): CatalogueEntry {
   return {
     id: model.publicModel,
@@ -59,23 +49,22 @@ function toEntry(model: ListingModel, price: RouterPriceRow): CatalogueEntry {
     pricing: {
       unit: price.unit,
       currency: price.currency,
-      inputPerMTok: rate(price.inputPerMTok),
-      outputPerMTok: rate(price.outputPerMTok),
-      cacheReadPerMTok: rate(price.cacheReadPerMTok),
-      cacheWritePerMTok: rate(price.cacheWritePerMTok),
-      unitPrice: rate(price.unitPrice),
+      inputPerMTok: num(price.inputPerMTok),
+      outputPerMTok: num(price.outputPerMTok),
+      cacheReadPerMTok: num(price.cacheReadPerMTok),
+      cacheWritePerMTok: num(price.cacheWritePerMTok),
+      unitPrice: num(price.unitPrice),
     },
   };
 }
 
 export async function GET() {
   try {
-    const [{ models, source, inventoryOk, inventorySources }, priceRows] = await Promise.all([
+    const [{ models, source, inventoryOk, inventorySources }, prices] = await Promise.all([
       getListingCatalog(),
-      new RouterBillingRepository(getSystemDb()).listPublishedPrices(),
+      publishedPriceMap(),
     ]);
 
-    const prices = new Map(priceRows.filter(hasRate).map((row) => [row.modelName, row]));
     const sellable = models.filter((model) => model.sellable);
 
     const data: CatalogueEntry[] = [];
