@@ -413,3 +413,46 @@ zone lookup, names the missing permission, and leaves DNS intact.
 
 Cutover status: both gates pass (`sellable: 1, priced: 1` — gpt-image-2 at $50/1M; unkeyed relay
 refused 401). Only the Cloudflare token blocks it.
+
+## A23 — The cutover is done: /v1 runs through the money spine
+
+A Worker route `router.nebutra.com/v1*` → `nebutra-router-v1` sat in front of DNS and
+forwarded every `/v1` call to the old ECS origin. It was not in the repo; its whole body was a
+pass-through to `http://router-origin.nebutra.com` with the Host rewritten — no rate limiting, no
+logging, no customer logic. DNS had already been cut to Fly, which is why `/api/*` answered from
+our app while `/v1/*` did not.
+
+Deleted, after three checks in order: the edge was healthy, the shelf had 8 sellable priced
+models, and **kuanlan could call us with a key we issued** — it had been holding a New-API token
+our edge rejects, so deleting first would have taken it down. Verified after: unkeyed `/v1`
+returns our `missing_api_key`, kuanlan's key returns 200, and a real call carried our own
+`x-request-id` through admit → reserve → relay.
+
+That call came back 429 from upstream ("分组上游负载已饱和") — a supply capacity问题, not a
+路径 problem. The path is proven.
+
+## A24 — A boot hook cannot be relied on to have run in this instance
+
+`/v1/limits` answered 500 with `@nebutra/billing requires a host tenant DB`. The call in
+`instrumentation.ts` is correct, but boot and a request handler do not always share a module
+instance in a bundled build, so the copy that route reached had never been configured.
+
+Fixed by binding configuration to the thing that needs it: `getWallet()` configures before
+building, idempotently. The general shape — *a global side effect at boot that no caller can
+verify ran* — is the part worth remembering.
+
+Found only because the cutover made a real billed call possible. It predated today.
+
+## A25 — Open: APP_DB_ROLE cannot be assumed on production
+
+With the billing bootstrap fixed, `/v1/limits` now fails deeper:
+`[db] APP_DB_ROLE="app_user" could not be assumed via SET ROLE`. The router's connection role
+cannot `SET ROLE app_user`, so `getTenantDb()` — the RLS-scoped client — is unusable there.
+
+The money path is unaffected: admission and settlement go through `RouterBillingRepository` on
+`getSystemDb()`, which is why the billed call succeeded. Only balance *display* is broken.
+
+Not fixed here. It is a database privilege change (`GRANT app_user TO <connection role>`, or
+creating the role if the RLS rollout never did), and granting production roles at the end of a
+long session without first confirming whether `app_user` is meant to exist yet is the wrong way
+to touch a security boundary.
