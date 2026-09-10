@@ -12,7 +12,7 @@ import {
   type Viewport,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { type DragEvent, useCallback, useEffect, useMemo, useRef } from "react";
+import { type DragEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { WorkspaceNode } from "@/domain/types";
 import { api } from "@/mock/queries";
 import { nextId, useEditorStore } from "@/stores/editor-store";
@@ -51,13 +51,16 @@ function CanvasSurface() {
   const document = useEditorStore((s) => s.document);
   const selection = useEditorStore((s) => s.selection);
   const select = useEditorStore((s) => s.select);
-  const moveNode = useEditorStore((s) => s.moveNode);
+  const setNodePosition = useEditorStore((s) => s.setNodePosition);
   const deleteNodes = useEditorStore((s) => s.deleteNodes);
   const addNode = useEditorStore((s) => s.addNode);
   const setViewport = useEditorStore((s) => s.setViewport);
   const addContextNode = useUiStore((s) => s.addContextNode);
   const { screenToFlowPosition, flowToScreenPosition } = useReactFlow();
   const wrapper = useRef<HTMLDivElement>(null);
+  // Node-anchored chrome is hidden mid-drag: it cannot keep up with the pointer, and measuring
+  // where to put it forces a synchronous layout on every frame of the gesture.
+  const [isDragging, setDragging] = useState(false);
 
   const nodes: ParaFlowNode[] = useMemo(() => {
     if (!document) return [];
@@ -87,12 +90,19 @@ function CanvasSurface() {
   /**
    * `nodes` is controlled from the store, so every change React Flow emits has to be applied here
    * or it does not happen — including `select`, which is what makes a click stick.
-   * Positions land only when a drag ends, so one drag is one move.
+   *
+   * Position is applied on EVERY frame, not only when the drag ends. Holding it back meant the
+   * controlled `nodes` prop kept re-rendering the node at the position it started from while the
+   * pointer had already moved, so the node fought the cursor for the whole gesture — the drag read
+   * as stuttering. The comment that used to sit here justified the delay as "one drag is one move",
+   * which was protecting an undo stack that does not exist yet. When one lands, it should coalesce
+   * a gesture at commit time rather than starve the renderer.
    */
   const onNodesChange = useCallback(
     (changes: NodeChange<ParaFlowNode>[]) => {
       const current = useEditorStore.getState();
       let nextSelection: string[] | null = null;
+      let dragging = false;
       for (const change of changes) {
         if (change.type === "select") {
           const base: string[] = nextSelection ?? current.selection;
@@ -102,15 +112,16 @@ function CanvasSurface() {
               : [...base, change.id]
             : base.filter((id) => id !== change.id);
         }
-        if (change.type === "position" && change.dragging === false && change.position) {
-          const node = current.document?.nodes[change.id];
-          if (node) moveNode(change.id, change.position.x - node.x, change.position.y - node.y);
+        if (change.type === "position" && change.position) {
+          setNodePosition(change.id, change.position.x, change.position.y);
+          if (change.dragging) dragging = true;
         }
         if (change.type === "remove") deleteNodes([change.id]);
       }
       if (nextSelection) select(nextSelection);
+      setDragging(dragging);
     },
-    [moveNode, deleteNodes, select],
+    [setNodePosition, deleteNodes, select],
   );
 
   /** A single deliberate pick becomes agent context (selection.md §5); a marquee does not. */
@@ -162,17 +173,22 @@ function CanvasSurface() {
     return () => window.removeEventListener("keydown", onKey);
   }, [select]);
 
+  // Chrome is summoned by a settled selection, never by one in motion — so nothing anchored is
+  // computed while the pointer is down. Reading getBoundingClientRect during render forced a
+  // synchronous layout on every frame of a drag, which is the other half of why it stuttered.
   const selected: WorkspaceNode | undefined =
-    selection.length === 1 && selection[0] ? document?.nodes[selection[0]] : undefined;
+    !isDragging && selection.length === 1 && selection[0]
+      ? document?.nodes[selection[0]]
+      : undefined;
 
-  // Chrome anchored to a node is positioned in screen space, so it never scales with the zoom.
+  // Positioned in screen space, so the chrome never scales with the zoom.
   const anchor = selected
     ? flowToScreenPosition({ x: selected.x + selected.width / 2, y: selected.y })
     : null;
   const anchorBottom = selected
     ? flowToScreenPosition({ x: selected.x + selected.width / 2, y: selected.y + selected.height })
     : null;
-  const box = wrapper.current?.getBoundingClientRect();
+  const box = selected ? wrapper.current?.getBoundingClientRect() : undefined;
 
   if (!document) return <div className="h-full w-full" />;
 

@@ -44,6 +44,13 @@ interface EditorState {
   toggleSelect: (id: string) => void;
   clearSelection: () => void;
   moveNode: (id: string, dx: number, dy: number) => void;
+  /**
+   * Absolute placement, applied on every frame of a drag.
+   *
+   * Deltas are for keyboard nudges; a drag already knows where the pointer is, and re-deriving a
+   * delta against a position the renderer may have already moved makes the node drift.
+   */
+  setNodePosition: (id: string, x: number, y: number) => void;
   addNode: (node: WorkspaceNode) => void;
   addEdge: (edge: Edge) => void;
   updateGenerator: (id: string, patch: Partial<GeneratorState>) => void;
@@ -129,6 +136,9 @@ export const useEditorStore = create<EditorState>((set, get) => {
     clearSelection: () => set({ selection: [] }),
 
     moveNode: (id, dx, dy) => patchNode(id, (n) => ({ ...n, x: n.x + dx, y: n.y + dy })),
+
+    setNodePosition: (id, x, y) =>
+      patchNode(id, (n) => (n.x === x && n.y === y ? n : { ...n, x, y })),
 
     addNode: (node) => patchDoc((doc) => ({ ...doc, nodes: { ...doc.nodes, [node.id]: node } })),
     addEdge: (edge) => patchDoc((doc) => ({ ...doc, edges: { ...doc.edges, [edge.id]: edge } })),
