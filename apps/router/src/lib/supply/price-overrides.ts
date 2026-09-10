@@ -148,3 +148,8 @@ export const PRICE_OVERRIDES: Record<string, PriceOverride> = {
 export function priceOverrideFor(modelName: string): PriceOverride | undefined {
   return PRICE_OVERRIDES[modelName];
 }
+
+/** Every model we hold a deliberate price for — shelf candidates in their own right. */
+export function overridePricedModels(): string[] {
+  return Object.keys(PRICE_OVERRIDES);
+}

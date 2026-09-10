@@ -193,26 +193,52 @@ export async function planPricePublish(): Promise<ActionPlan> {
   plans.set(planId, { ...plan, expiresAt });
 
   const db = getSystemDb();
-  const live = new Set(
-    (
-      await db.modelConfig.findMany({
-        where: { published: true },
-        select: { modelName: true },
-      })
-    ).map((r) => r.modelName),
-  );
+  const rows = await db.modelConfig.findMany({
+    select: {
+      modelName: true,
+      published: true,
+      inputPricePerMillion: true,
+      outputPricePerMillion: true,
+    },
+  });
+  const live = new Set(rows.filter((r) => r.published).map((r) => r.modelName));
+  const byName = new Map(rows.map((r) => [r.modelName, r]));
+
   const adding = plan.publishing.filter((m) => !live.has(m));
   const removing = [...live].filter((m) => !plan.publishing.includes(m));
 
+  // Membership is not the whole diff. A margin change or a corrected upstream
+  // rate moves the numbers while the published set stays identical, and a plan
+  // that reported "already match" would talk an operator out of applying it.
+  const repricing: { model: string; from: string; to: string }[] = [];
+  for (const row of plan.rows) {
+    const current = byName.get(row.modelName);
+    if (!current) continue;
+    const wasIn = Number(current.inputPricePerMillion ?? 0);
+    const wasOut = Number(current.outputPricePerMillion ?? 0);
+    if (wasIn === row.inputPricePerMillion && wasOut === row.outputPricePerMillion) continue;
+    repricing.push({
+      model: row.modelName,
+      from: `${wasIn}/${wasOut}`,
+      to: `${row.inputPricePerMillion}/${row.outputPricePerMillion}`,
+    });
+  }
+
+  const quiet = adding.length === 0 && removing.length === 0 && repricing.length === 0;
   return {
     planId,
-    summary:
-      adding.length === 0 && removing.length === 0
-        ? `Prices already match the shelf: ${plan.publishing.length} published, ${plan.holding.length} held.`
-        : `Publish prices: +${adding.length} −${removing.length}; ${plan.holding.length} held unpriced or unservable.`,
+    summary: quiet
+      ? `Prices already match the shelf: ${plan.publishing.length} published, ${plan.holding.length} held.`
+      : `Publish prices: +${adding.length} −${removing.length}, ${repricing.length} repriced; ${plan.holding.length} held unpriced or unservable.`,
     diff: [
       ...adding.map((m) => ({ op: "add" as const, path: `price.published.${m}`, to: m })),
       ...removing.map((m) => ({ op: "remove" as const, path: `price.published.${m}`, from: m })),
+      ...repricing.map((r) => ({
+        op: "change" as const,
+        path: `price.rate.${r.model}`,
+        from: r.from,
+        to: r.to,
+      })),
     ],
     affected: [{ resource: "shelf", id: "model_configs", label: "Router price table" }],
     warnings:
