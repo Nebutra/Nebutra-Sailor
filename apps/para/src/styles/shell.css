@@ -9,6 +9,45 @@
  * see docs/product-intelligence/visual-language.md §8 for why this is not a Brand Package.
  */
 
+/**
+ * The type ladder decided in visual-language.md §6: four sizes, two weights, nothing under 11px.
+ * Registered as theme values rather than left to each call site, because the previous shell carried
+ * the decision only in prose — seven sizes were in use against the four that were agreed, and the
+ * two smallest were arbitrary values that no reviewer could see drift.
+ *
+ * Named by role, not by size, so the ceiling stays visible: a fifth role has to be argued for here
+ * rather than typed into a className.
+ */
+@theme {
+  /* Modal and empty-state headlines only — the top of the ladder, not a hero size. */
+  --text-display: 20px;
+  --text-display--line-height: 28px;
+  --text-body: 14px;
+  --text-body--line-height: 20px;
+  --text-label: 12px;
+  --text-label--line-height: 16px;
+  /* Machine facts only: dimensions, credit cost, zoom %, queue position, timestamps, key hints. */
+  --text-meta: 11px;
+  --text-meta--line-height: 16px;
+
+  /* The wordmark is a lockup, not type in the system — the one place tracking is set by hand. */
+  --tracking-wordmark: 0.18em;
+
+  /* Containers. The composer is a reading measure; a grid of work is not, which is why the
+     launcher used to sit in an 896px column with the rest of the viewport empty. */
+  --container-para-focus: 40rem;
+  --container-para-surface: 78rem;
+
+  /* Chrome geometry that visual-language.md decided and the shell had scattered as literals:
+     the dock pill (§9, kept as the A-supported inset island) appeared in two files, and the
+     NodeConfig width in a third. A decided number that lives in a className cannot be reviewed. */
+  --container-para-dock: min(640px, 80%);
+  --container-para-nodeconfig: 420px;
+
+  /* Card media ratio. 4/3 rather than 16/9: a project thumbnail is a crop of work, not a frame. */
+  --aspect-para-card: 4 / 3;
+}
+
 :root {
   --para-topbar-h: 46px;
   --para-dock-h: 44px;

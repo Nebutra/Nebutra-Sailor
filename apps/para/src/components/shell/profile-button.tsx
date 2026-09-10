@@ -17,7 +17,7 @@ export function ProfileButton() {
         <button
           type="button"
           aria-label="Account"
-          className="ml-1 flex size-7 items-center justify-center rounded-full bg-neutral-4 font-medium text-foreground text-xs hover:bg-neutral-5"
+          className="ml-1 flex size-7 items-center justify-center rounded-full bg-neutral-4 font-medium text-foreground text-label hover:bg-neutral-5"
         >
           M
         </button>

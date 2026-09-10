@@ -7,6 +7,7 @@ import { JobsDrawer } from "@/components/overlays/jobs-drawer";
 import { LibraryDrawer } from "@/components/overlays/library-drawer";
 import { api, useDocument, useProject, useWorkspace } from "@/mock/queries";
 import { useEditorStore } from "@/stores/editor-store";
+import { useJobsStore } from "@/stores/jobs-store";
 import { useUiStore } from "@/stores/ui-store";
 import { BottomDock } from "./bottom-dock";
 import { useWorkspaceView } from "./view-selector";
@@ -36,7 +37,12 @@ export function WorkspacePage({
   const [view] = useWorkspaceView();
 
   useEffect(() => {
-    if (workspace && doc && loadedId !== workspace.documentId) load(workspace.documentId, doc);
+    if (workspace && doc && loadedId !== workspace.documentId) {
+      load(workspace.documentId, doc);
+      // Node status is persisted; the jobs store is not. Without this, a reload during a
+      // generation leaves the node reading "running" with nothing behind it, and no way back.
+      void useJobsStore.getState().reconcile();
+    }
   }, [workspace, doc, loadedId, load]);
 
   // Silent autosave, debounced.
@@ -58,7 +64,7 @@ export function WorkspacePage({
 
   if (!isLoading && !workspace) {
     return (
-      <div className="flex h-full items-center justify-center text-muted-foreground text-sm">
+      <div className="flex h-full items-center justify-center text-muted-foreground text-body">
         This workspace does not exist.
       </div>
     );

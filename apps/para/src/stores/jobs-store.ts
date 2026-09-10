@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Job } from "@/domain/types";
+import type { GeneratorState, Job } from "@/domain/types";
 import { gatewayApi, isGatewayMode } from "@/lib/gateway-api";
 import { assets } from "@/mock/data";
 import { useEditorStore } from "./editor-store";
@@ -11,7 +11,18 @@ import { useEditorStore } from "./editor-store";
  */
 interface JobsState {
   jobs: Job[];
+  /** `config` is the committed snapshot: what the node's draft said at the moment of admission. */
   enqueue: (nodeId: string, label: string, estimated?: number) => string;
+  /**
+   * Re-attach to work the server is still doing, after a reload.
+   *
+   * This store is seeded by `enqueue`, so it only ever knew about jobs the current session
+   * started. Node status, however, is persisted in the document — so refreshing the page mid-run
+   * left the node reading "running" forever with nothing behind it and no way back. The document
+   * also persists each node's `jobId`, which is enough to ask the gateway what actually happened
+   * without needing a job-list endpoint that does not exist.
+   */
+  reconcile: () => Promise<void>;
   cancel: (jobId: string) => void;
   upsert: (job: Job) => void;
   tick: () => void;
@@ -33,6 +44,12 @@ export const useJobsStore = create<JobsState>((set, get) => ({
   enqueue: (nodeId, label, estimated) => {
     const id = `j-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 5)}`;
     const queued = get().jobs.filter((j) => j.status === "queued").length;
+    const editor = useEditorStore.getState();
+    // Snapshot before anything can await: from here the node's draft may change under us.
+    const node = editor.document?.nodes[nodeId];
+    const config: GeneratorState = node?.generator ?? {
+      mode: node?.type === "text" ? "text" : (node?.type ?? "image"),
+    };
     const job: Job = {
       id,
       nodeId,
@@ -40,22 +57,20 @@ export const useJobsStore = create<JobsState>((set, get) => ({
       status: "queued",
       progress: 0,
       queuePosition: queued + 1,
+      config,
       ...(estimated !== undefined ? { cost: { estimated, currency: "credits" } } : {}),
     };
     set({ jobs: [...get().jobs, job] });
-    const editor = useEditorStore.getState();
     editor.setNodeStatus(nodeId, "queued", { queuePosition: queued + 1, jobId: id });
 
     if (isGatewayMode) {
-      const node = editor.document?.nodes[nodeId];
       const workspaceId = editor.documentId;
       if (!node || !workspaceId) return id;
-      const generator = node.generator ?? { mode: node.type === "text" ? "text" : node.type };
       void import("@/lib/job-stream").then(({ followJob }) =>
         gatewayApi
-          .createJob({ workspaceId, nodeId, generator })
+          .createJob({ workspaceId, nodeId, generator: config })
           .then((created) => {
-            const real = { ...created, label, ...(job.cost ? { cost: job.cost } : {}) };
+            const real = { ...created, label, config, ...(job.cost ? { cost: job.cost } : {}) };
             set({ jobs: get().jobs.map((j) => (j.id === id ? real : j)) });
             useEditorStore.getState().setNodeStatus(nodeId, real.status, {
               jobId: real.id,
@@ -78,6 +93,50 @@ export const useJobsStore = create<JobsState>((set, get) => ({
   },
 
   /** Immediate when queued, best-effort when running (C — fal semantics). */
+  reconcile: async () => {
+    const editor = useEditorStore.getState();
+    const nodes = Object.values(editor.document?.nodes ?? {});
+    const orphaned = nodes.filter(
+      (n) => ACTIVE.has(n.status) && n.jobId && !get().jobs.some((j) => j.id === n.jobId),
+    );
+    if (!orphaned.length) return;
+
+    if (!isGatewayMode) {
+      // Mock mode has no server to ask; a task that outlived its scheduler is simply gone.
+      for (const n of orphaned) {
+        useEditorStore.getState().failNode(n.id, {
+          type: "interrupted",
+          message: "Generation was interrupted",
+          retryable: true,
+        });
+      }
+      return;
+    }
+
+    const { followJob } = await import("@/lib/job-stream");
+    await Promise.all(
+      orphaned.map(async (n) => {
+        const jobId = n.jobId as string;
+        try {
+          const job = await gatewayApi.getJob(jobId);
+          get().upsert(job);
+          useEditorStore.getState().setNodeStatus(n.id, job.status, {
+            ...(job.queuePosition !== undefined ? { queuePosition: job.queuePosition } : {}),
+          });
+          if (ACTIVE.has(job.status)) followJob(job);
+        } catch {
+          // The job is gone from the origin's side. Say so on the node rather than leave it
+          // spinning: an unrecoverable state the user can retry beats one they can only reload.
+          useEditorStore.getState().failNode(n.id, {
+            type: "lost",
+            message: "This generation could not be recovered",
+            retryable: true,
+          });
+        }
+      }),
+    );
+  },
+
   cancel: (jobId) => {
     const job = get().jobs.find((j) => j.id === jobId);
     if (!job || !ACTIVE.has(job.status)) return;

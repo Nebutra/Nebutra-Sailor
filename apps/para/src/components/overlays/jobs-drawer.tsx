@@ -16,7 +16,7 @@ export function JobsDrawer() {
       className="para-drawer-enter flex w-[var(--para-drawer-w)] shrink-0 flex-col border-border/60 border-l bg-background"
     >
       <div className="flex h-11 items-center justify-between px-4">
-        <span className="font-medium text-foreground text-sm">Jobs</span>
+        <span className="font-medium text-foreground text-body">Jobs</span>
         <button
           type="button"
           aria-label="Close jobs"
@@ -28,14 +28,14 @@ export function JobsDrawer() {
       </div>
       <ul className="flex-1 overflow-y-auto px-4 pb-6">
         {active.length === 0 && (
-          <li className="text-muted-foreground text-xs">
+          <li className="text-muted-foreground text-label">
             Nothing running. Finished outputs are in Library › Generated.
           </li>
         )}
         {active.map((j) => (
           <li
             key={j.id}
-            className="flex items-center justify-between border-border/40 border-b py-2.5 text-sm"
+            className="flex items-center justify-between border-border/40 border-b py-2.5 text-body"
           >
             <span className="text-foreground">{j.label}</span>
             <span className="flex items-center gap-2 text-muted-foreground tabular-nums">
@@ -45,7 +45,7 @@ export function JobsDrawer() {
               <button
                 type="button"
                 onClick={() => cancel(j.id)}
-                className="text-xs hover:text-foreground"
+                className="text-label hover:text-foreground"
               >
                 Cancel
               </button>

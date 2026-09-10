@@ -3,8 +3,19 @@ import type { Asset, Project, Subject, Workspace, WorkspaceDocument } from "@/do
 /** Milestone 1 fixtures. Replace the adapters in `queries.ts` when a backend exists. */
 
 export const projects: Project[] = [
-  { id: "last-animal", name: "The Last Animal", updatedAt: "2026-09-07T18:20:00Z" },
-  { id: "kuanlan-launch", name: "Kuanlan Launch", updatedAt: "2026-09-05T09:00:00Z" },
+  {
+    id: "last-animal",
+    name: "The Last Animal",
+    updatedAt: "2026-09-07T18:20:00Z",
+    coverAssetId: "a001",
+  },
+  {
+    id: "kuanlan-launch",
+    name: "Kuanlan Launch",
+    updatedAt: "2026-09-05T09:00:00Z",
+    coverAssetId: "a004",
+  },
+  // Deliberately without a cover: the empty project is a real state, and the card has to say so.
   { id: "studio-reel", name: "Studio Reel 2026", updatedAt: "2026-08-30T14:45:00Z" },
 ];
 

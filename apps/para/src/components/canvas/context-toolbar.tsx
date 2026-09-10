@@ -2,6 +2,7 @@
 
 import { MoreHorizontal } from "@nebutra/icons";
 import { Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
+import { Chip } from "@/components/ui/chip";
 import type { WorkspaceNode } from "@/domain/types";
 import { useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
@@ -21,8 +22,6 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
     s.jobs.find((j) => j.nodeId === node.id && (j.status === "queued" || j.status === "running")),
   );
 
-  const item =
-    "h-[var(--para-h-chip)] rounded-md px-2.5 text-xs text-foreground hover:bg-accent disabled:cursor-default disabled:opacity-35 disabled:hover:bg-transparent";
   const run = (mode: "image" | "video", label: string) => {
     const id = derive({ sourceId: node.id, mode, createdBy: "user" });
     if (id) enqueue(id, `${label} · ${node.id}`, mode === "video" ? 7 : 1);
@@ -31,9 +30,9 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
   if (node.status === "queued" || node.status === "running") {
     return (
       <Frame>
-        <button type="button" className={item} onClick={() => activeJob && cancel(activeJob.id)}>
+        <Chip className="px-2.5" onClick={() => activeJob && cancel(activeJob.id)}>
           {node.status === "queued" ? "Cancel" : "Stop — may complete"}
-        </button>
+        </Chip>
       </Frame>
     );
   }
@@ -43,40 +42,36 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
     <Frame>
       {!isText && (
         <>
-          <button type="button" className={item} onClick={() => run("image", "Vary")}>
+          <Chip className="px-2.5" onClick={() => run("image", "Vary")}>
             Vary
-          </button>
-          <button type="button" className={item} disabled title="M2">
+          </Chip>
+          <Chip className="px-2.5" disabled title="M2">
             Upscale
-          </button>
-          <button type="button" className={item} disabled title="M2">
+          </Chip>
+          <Chip className="px-2.5" disabled title="M2">
             Crop
-          </button>
+          </Chip>
         </>
       )}
-      <button type="button" className={item} disabled title="M2">
+      <Chip className="px-2.5" disabled title="M2">
         Edit
-      </button>
+      </Chip>
       {!isText && (
         <>
-          <button type="button" className={item} onClick={() => run("video", "To video")}>
+          <Chip className="px-2.5" onClick={() => run("video", "To video")}>
             To video
-          </button>
-          <button type="button" className={item} disabled title="M2">
+          </Chip>
+          <Chip className="px-2.5" disabled title="M2">
             Download
-          </button>
+          </Chip>
         </>
       )}
-      <button type="button" className={item} onClick={() => duplicateNode(node.id)}>
+      <Chip className="px-2.5" onClick={() => duplicateNode(node.id)}>
         Duplicate
-      </button>
-      <button
-        type="button"
-        className={`${item} text-destructive`}
-        onClick={() => deleteNodes([node.id])}
-      >
+      </Chip>
+      <Chip className="px-2.5 text-destructive" onClick={() => deleteNodes([node.id])}>
         Delete
-      </button>
+      </Chip>
       <InfoPopover node={node} />
     </Frame>
   );
@@ -94,7 +89,7 @@ function Frame({ children }: { children: React.ReactNode }) {
 function InfoPopover({ node }: { node: WorkspaceNode }) {
   const row = (k: string, v: string | undefined) =>
     v ? (
-      <div className="flex justify-between gap-6 py-0.5 text-xs">
+      <div className="flex justify-between gap-6 py-0.5 text-label">
         <span className="text-muted-foreground">{k}</span>
         <span className="text-foreground">{v}</span>
       </div>
@@ -102,16 +97,12 @@ function InfoPopover({ node }: { node: WorkspaceNode }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button
-          type="button"
-          aria-label="More"
-          className="flex h-[var(--para-h-chip)] items-center rounded-md px-2 text-foreground hover:bg-accent"
-        >
+        <Chip aria-label="More">
           <MoreHorizontal className="size-3.5" />
-        </button>
+        </Chip>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-60 p-3">
-        <div className="mb-1.5 font-medium text-foreground text-xs">Info</div>
+        <div className="mb-1.5 font-medium text-foreground text-label">Info</div>
         {row("Type", node.type)}
         {row("Status", node.status)}
         {row("Model", node.generator?.model)}

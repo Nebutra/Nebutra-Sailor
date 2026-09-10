@@ -78,7 +78,7 @@ export function LibraryDrawer({
       type="button"
       onClick={() => setTab(t)}
       aria-pressed={tab === t}
-      className="h-[var(--para-h-chip)] rounded-md px-2.5 text-muted-foreground text-xs hover:text-foreground aria-pressed:bg-accent aria-pressed:text-foreground"
+      className="h-[var(--para-h-chip)] rounded-md px-2.5 text-muted-foreground text-label hover:text-foreground aria-pressed:bg-accent aria-pressed:text-foreground"
     >
       {label}
     </button>
@@ -90,7 +90,7 @@ export function LibraryDrawer({
       className="para-drawer-enter flex w-[var(--para-drawer-w)] shrink-0 flex-col border-border/60 border-r bg-background"
     >
       <div className="flex h-11 items-center justify-between px-4">
-        <span className="font-medium text-foreground text-sm">Library</span>
+        <span className="font-medium text-foreground text-body">Library</span>
         <button
           type="button"
           aria-label="Close library"
@@ -108,7 +108,7 @@ export function LibraryDrawer({
           <button
             type="button"
             onClick={() => setWholeProject((v) => !v)}
-            className="h-[var(--para-h-chip)] rounded-md px-2 text-[11px] text-muted-foreground hover:text-foreground"
+            className="h-[var(--para-h-chip)] rounded-md px-2 text-meta text-muted-foreground hover:text-foreground"
           >
             {wholeProject ? "Whole project" : "This workspace"}
           </button>
@@ -126,7 +126,7 @@ export function LibraryDrawer({
       </div>
       <div className="flex-1 overflow-y-auto px-3 pb-6">
         {list.length === 0 ? (
-          <p className="px-1 text-muted-foreground text-xs">
+          <p className="px-1 text-muted-foreground text-label">
             {tab === "generated"
               ? "Nothing generated here yet."
               : "Drop files on the canvas to add assets."}

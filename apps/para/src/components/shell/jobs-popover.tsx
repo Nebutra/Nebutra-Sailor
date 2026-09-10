@@ -31,17 +31,17 @@ export function JobsIndicator() {
         <button
           type="button"
           aria-label={`${active.length} jobs`}
-          className="flex h-[var(--para-h-chip)] items-center gap-1.5 rounded-md px-2 text-muted-foreground text-xs tabular-nums hover:bg-accent hover:text-foreground"
+          className="flex h-[var(--para-h-chip)] items-center gap-1.5 rounded-md px-2 text-muted-foreground text-label tabular-nums hover:bg-accent hover:text-foreground"
         >
           <span aria-hidden="true" className="size-1.5 animate-pulse rounded-full bg-primary" />
           {active.length}
         </button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-64 p-3">
-        <div className="mb-2 font-medium text-foreground text-xs">Running</div>
+        <div className="mb-2 font-medium text-foreground text-label">Running</div>
         <ul className="space-y-1.5">
           {active.slice(0, 5).map((j) => (
-            <li key={j.id} className="flex items-center justify-between text-xs">
+            <li key={j.id} className="flex items-center justify-between text-label">
               <span className="text-foreground">{j.label}</span>
               <span className="flex items-center gap-2 text-muted-foreground tabular-nums">
                 {j.status === "running"
@@ -61,7 +61,7 @@ export function JobsIndicator() {
         <button
           type="button"
           onClick={() => setDrawer("jobs")}
-          className="mt-3 text-muted-foreground text-xs hover:text-foreground"
+          className="mt-3 text-muted-foreground text-label hover:text-foreground"
         >
           View all
         </button>
