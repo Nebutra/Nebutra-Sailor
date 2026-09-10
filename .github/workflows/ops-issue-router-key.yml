@@ -1,0 +1,103 @@
+name: Ops — Issue a Router consume key
+
+# Issues a key in the shared APIKey table and installs it on a Fly app as
+# ROUTER_API_KEY. The plaintext never reaches the log: the script prints it on
+# a single `KEY=` line which is masked as a secret the moment it is read.
+#
+# Needed because the /v1 edge has one credential source now. A consumer still
+# holding a New-API token — kuanlan does — is rejected with invalid_api_key, so
+# every consumer needs a key from here before the legacy /v1 bypass is removed.
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "What the key is called in the console (e.g. kuanlan image2)"
+        required: true
+        type: string
+      fly_app:
+        description: "Fly app to install ROUTER_API_KEY on (blank = issue only)"
+        required: false
+        default: ""
+        type: string
+      tenant_id:
+        description: "Reuse an existing tenant (blank = create one)"
+        required: false
+        default: ""
+        type: string
+      grant_usd:
+        description: "Ensure the tenant's balance is at least this many USD"
+        required: false
+        default: "25"
+        type: string
+      dry_run:
+        description: "Print what would happen and write nothing"
+        required: false
+        default: "false"
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-issue-router-key
+  cancel-in-progress: false
+
+jobs:
+  issue:
+    name: Issue and install
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup pnpm + Node
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Setup flyctl
+        if: github.event.inputs.fly_app != ''
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Issue the key
+        id: issue
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NAME: ${{ github.event.inputs.name }}
+          TENANT_ID: ${{ github.event.inputs.tenant_id }}
+          GRANT_USD: ${{ github.event.inputs.grant_usd }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+        run: |
+          set -euo pipefail
+          [ -n "${DATABASE_URL:-}" ] || { echo "::error::DATABASE_URL is not set."; exit 1; }
+          pnpm exec tsx infra/nebutra-router/scripts/issue-customer-key.mts > "$RUNNER_TEMP/out.txt"
+          # Mask before anything else can echo it, then hand it on as an output.
+          key="$(grep -m1 '^KEY=' "$RUNNER_TEMP/out.txt" | cut -d= -f2- || true)"
+          if [ -n "$key" ]; then
+            echo "::add-mask::$key"
+            echo "key=$key" >> "$GITHUB_OUTPUT"
+          fi
+          grep -v '^KEY=' "$RUNNER_TEMP/out.txt" || true
+          rm -f "$RUNNER_TEMP/out.txt"
+
+      - name: Install it on the Fly app
+        if: github.event.inputs.fly_app != '' && github.event.inputs.dry_run != 'true'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          APP: ${{ github.event.inputs.fly_app }}
+          KEY: ${{ steps.issue.outputs.key }}
+        run: |
+          set -euo pipefail
+          [ -n "${KEY:-}" ] || { echo "::error::No key was issued."; exit 1; }
+          flyctl secrets set "ROUTER_API_KEY=$KEY" -a "$APP"
+          echo "ROUTER_API_KEY installed on $APP"
+
+      - name: Prove the key works against the edge
+        if: github.event.inputs.dry_run != 'true'
+        env:
+          KEY: ${{ steps.issue.outputs.key }}
+        run: |
+          set -euo pipefail
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 \
+            -H "Authorization: Bearer $KEY" https://nebutra-router.fly.dev/v1/models || echo 000)
+          echo "GET /v1/models with the new key -> $code"
+          [ "$code" = "200" ] || { echo "::error::The edge did not accept the key it just issued."; exit 1; }
