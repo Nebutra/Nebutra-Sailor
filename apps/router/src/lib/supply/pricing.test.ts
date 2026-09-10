@@ -55,6 +55,18 @@ describe("every published rate carries the markup", () => {
     expect(rate.output).toBeCloseTo(10 * MARGIN, 10);
   });
 
+  it("publishes a clean rate that never rounds below the arithmetic", () => {
+    const publishable = (rate: number) => Math.ceil(Number(rate.toPrecision(12)) * 1e6) / 1e6;
+    // Binary residue sits above the true value; stripping it must not leave a
+    // price like 15.600001 that nobody would write down.
+    expect(publishable(12 * 1.3)).toBe(15.6);
+    expect(publishable(0.14 * 1.3)).toBe(0.182);
+    expect(publishable(0.75 * 1.3)).toBe(0.975);
+    // A genuine value finer than the tick still rounds up, never down.
+    expect(publishable(0.1234564)).toBe(0.123457);
+    expect(publishable(0.1234564)).toBeGreaterThan(0.1234564);
+  });
+
   it("keeps the markup above the break-even the leakage implies", () => {
     // (1−.02)(1−.03)(1−.02)(1−.01) = 0.9223 → break-even markup 1/0.9223.
     const leakage = 0.98 * 0.97 * 0.98 * 0.99;

@@ -55,6 +55,24 @@ interface PriceRowPlan {
   published: boolean;
 }
 
+/**
+ * A rate fit to publish: six decimal places, rounded **up**.
+ *
+ * Multiplying a list price by a markup and a coverage factor leaves binary
+ * floating-point residue — 12 × 1.3 is 15.600000000000001 — and a public price
+ * table should not carry sixteen significant digits. Rounding up rather than to
+ * nearest is the only safe direction: rounding down, however slightly, is a
+ * price below the one the no-loss arithmetic was checked against.
+ */
+function publishable(rate: number): number {
+  // Strip the binary residue first. It sits just *above* the true value, so
+  // rounding up without this turns an exact 15.6 into 15.600001 — a price no
+  // one would write down. Twelve significant digits is far finer than any rate
+  // we publish, so this only ever removes noise.
+  const exact = Number(rate.toPrecision(12));
+  return Math.ceil(exact * 1e6) / 1e6;
+}
+
 function toRow(m: ListingModel): PriceRowPlan {
   // An override is a deliberate, documented rate for a model the public index
   // cannot price, and it wins. Without this the shelf's zero would overwrite a
@@ -75,8 +93,8 @@ function toRow(m: ListingModel): PriceRowPlan {
   return {
     modelName: m.publicModel,
     provider: override?.provider ?? PROVIDER_MAP[m.provider] ?? "CUSTOM",
-    inputPricePerMillion: inputPerMTok,
-    outputPricePerMillion: outputPerMTok,
+    inputPricePerMillion: publishable(inputPerMTok),
+    outputPricePerMillion: publishable(outputPerMTok),
     contextLength: override ? override.contextLength : parseContext(m.context),
     // `sellable` is inventory-confirmed: the edge's real upstream said it can
     // serve this. Nothing else may set it.
