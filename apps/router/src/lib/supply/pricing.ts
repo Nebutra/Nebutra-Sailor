@@ -6,6 +6,7 @@ import type { ActionPlan, ActionResult } from "@nebutra/contracts/admin";
 import { getSystemDb } from "@nebutra/db";
 import type { StaffCaller } from "../admin/service-token";
 import { getListingCatalog, type ListingModel, type ListingProvider } from "../listing-catalog";
+import { priceOverrideFor } from "./price-overrides";
 
 /**
  * Publish the shelf into `model_configs`, the one table the /v1 edge prices a
@@ -55,16 +56,23 @@ interface PriceRowPlan {
 }
 
 function toRow(m: ListingModel): PriceRowPlan {
+  // An override is a deliberate, documented rate for a model the public index
+  // cannot price, and it wins. Without this the shelf's zero would overwrite a
+  // hand-set price and take the model off sale — which is what a plan to
+  // publish would have done to gpt-image-2, the only model we currently sell.
+  const override = priceOverrideFor(m.publicModel);
+  const inputPerMTok = override?.inputPricePerMillion ?? m.inputPerMTok;
+  const outputPerMTok = override?.outputPricePerMillion ?? m.outputPerMTok;
   return {
     modelName: m.publicModel,
-    provider: PROVIDER_MAP[m.provider] ?? "CUSTOM",
-    inputPricePerMillion: m.inputPerMTok,
-    outputPricePerMillion: m.outputPerMTok,
-    contextLength: parseContext(m.context),
+    provider: override?.provider ?? PROVIDER_MAP[m.provider] ?? "CUSTOM",
+    inputPricePerMillion: inputPerMTok,
+    outputPricePerMillion: outputPerMTok,
+    contextLength: override ? override.contextLength : parseContext(m.context),
     // `sellable` is inventory-confirmed: the edge's real upstream said it can
     // serve this. Nothing else may set it.
     isActive: m.sellable,
-    published: m.sellable && isPriced(m),
+    published: m.sellable && (override ? true : isPriced(m)),
   };
 }
 
