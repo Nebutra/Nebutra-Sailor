@@ -43,24 +43,40 @@ jobs:
 
       # Only the credentials CI owns. Everything the origin needs that is derivable from another
       # Fly app — database, broker, service secret — is staged out of band and left alone here.
+      #
+      # The R2 *object* keys are deliberately NOT here. The shared GitHub R2_* pair is the assets
+      # seeder: it can read nebutra-assets but has no Object Write on nebutra-uploads, so staging
+      # it over the origin's own key made every generation fail at persist time while /health
+      # stayed green. The origin's key is minted and staged by
+      # ops-origin-r2-uploads.yml → provision-origin-r2-uploads-token.sh, which verifies Put
+      # before it finishes. Only the account id, which is not a credential, is staged here.
       - name: Stage secrets CI owns
         if: ${{ inputs.skip_secrets != true }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          args=()
-          [ -n "${R2_ACCESS_KEY_ID:-}" ] && args+=(R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID")
-          [ -n "${R2_SECRET_ACCESS_KEY:-}" ] && args+=(R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY")
-          [ -n "${R2_ACCOUNT_ID:-}" ] && args+=(R2_ACCOUNT_ID="$R2_ACCOUNT_ID")
-          if [ "${#args[@]}" -eq 0 ]; then
-            echo "::warning::No R2 secrets in GitHub — generated assets cannot be persisted."
+          if [ -z "${R2_ACCOUNT_ID:-}" ]; then
+            echo "::warning::R2_ACCOUNT_ID is not set in GitHub."
             exit 0
           fi
-          flyctl secrets set "${args[@]}" -a nebutra-ai --stage
+          flyctl secrets set R2_ACCOUNT_ID="$R2_ACCOUNT_ID" -a nebutra-ai --stage
+
+      # A green deploy with an unwritable uploads key is the failure mode this whole file guards
+      # against, so say plainly whether the object key is present rather than letting it be found
+      # by a user whose generation silently produced nothing.
+      - name: Check the origin holds its own uploads key
+        if: ${{ inputs.skip_secrets != true }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          if flyctl secrets list -a nebutra-ai 2>/dev/null | grep -q '^R2_ACCESS_KEY_ID'; then
+            echo "R2_ACCESS_KEY_ID present on nebutra-ai"
+          else
+            echo "::warning::nebutra-ai has no R2_ACCESS_KEY_ID — run ops-origin-r2-uploads.yml or generated assets cannot be persisted."
+          fi
 
       - name: Deploy both process groups
         env:
