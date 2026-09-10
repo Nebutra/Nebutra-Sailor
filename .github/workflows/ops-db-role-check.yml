@@ -1,0 +1,38 @@
+name: Ops — Database role check (read-only)
+
+# Does APP_DB_ROLE exist, and may the connection role assume it?
+#
+# `/v1/limits` returns 500 with `APP_DB_ROLE="app_user" could not be assumed via
+# SET ROLE`, so getTenantDb() — the RLS-scoped client — is unusable on the
+# router. The fix differs depending on whether the role is missing or merely
+# ungranted, and granting a production role on a guess is the wrong way to touch
+# a security boundary. This answers the question first. It writes nothing.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-db-role-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Roles and grants
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup pnpm + Node
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Ask the database
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          [ -n "${DATABASE_URL:-}" ] || { echo "::error::DATABASE_URL is not set."; exit 1; }
+          node scripts/db-role-check.mjs

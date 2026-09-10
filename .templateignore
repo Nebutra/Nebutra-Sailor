@@ -306,6 +306,7 @@ tests/architecture/nebutra/
 .github/workflows/ops-vm-triage.yml
 .github/workflows/ops-kuanlan-database-url.yml
 .github/workflows/ops-issue-router-key.yml
+.github/workflows/ops-db-role-check.yml
 .github/workflows/ops-database-migrate.yml
 .github/workflows/ops-kuanlan-r2-uploads.yml
 .github/workflows/ops-origin-r2-uploads.yml
