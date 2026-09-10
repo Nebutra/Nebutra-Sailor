@@ -22,7 +22,6 @@ import {
   type SupplyInventory,
 } from "@nebutra/router-supply";
 import { getModelRoutes, type ModelRouteRow } from "./model-routes";
-import { applyPublishedPrices, publishedPriceMap } from "./shelf-prices";
 import { overridePricedModels, priceOverrideFor } from "./supply/price-overrides";
 
 /** models.dev raw providers we keep on the shelf */
@@ -552,30 +551,10 @@ export async function getListedModelIds(): Promise<string[]> {
 }
 
 /** PDP lookup by public model id (url slug) */
-/**
- * The shelf priced at what the edge will charge.
- *
- * `getListingCatalog` prices from the public model index — upstream's own list
- * price, before our markup, coverage factors and overrides. That is the right
- * input for deciding what to publish, and the wrong number to show a customer.
- *
- * Two names rather than one flag, because the mistake this prevents is silent:
- * the shelf page, the catalogue JSON and the detail page each quoted the index
- * at some point today, each fixed separately, and the detail page was still
- * advertising gpt-5.6-sol at $4 while the edge billed $5.20. A new surface now
- * has to choose a name, and the wrong choice reads wrong.
- */
-export async function getPricedListingCatalog(): Promise<
-  Awaited<ReturnType<typeof getListingCatalog>>
-> {
-  const [catalog, prices] = await Promise.all([getListingCatalog(), publishedPriceMap()]);
-  return { ...catalog, models: applyPublishedPrices(catalog.models, prices) };
-}
-
 export async function getListedModelBySlug(slug: string): Promise<ListingModel | null> {
   const decoded = decodeURIComponent(slug).trim();
   if (!decoded) return null;
-  const { models } = await getPricedListingCatalog();
+  const { models } = await getListingCatalog();
   const lower = decoded.toLowerCase();
   return (
     models.find((m) => m.publicModel.toLowerCase() === lower) ??
@@ -586,7 +565,7 @@ export async function getListedModelBySlug(slug: string): Promise<ListingModel |
 
 /** Related shelf rows for "猜你喜欢" */
 export async function getRelatedListings(seed: ListingModel, limit = 6): Promise<ListingModel[]> {
-  const { models } = await getPricedListingCatalog();
+  const { models } = await getListingCatalog();
   const provider = resolveListingProvider(seed);
   const sameProvider = models.filter(
     (m) => m.publicModel !== seed.publicModel && resolveListingProvider(m) === provider,

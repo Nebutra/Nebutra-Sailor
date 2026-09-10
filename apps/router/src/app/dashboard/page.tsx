@@ -8,9 +8,10 @@ import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
 import { requireAuth } from "@/lib/auth";
 import { usageRepository } from "@/lib/console-usage";
-import { formatPrice, getPricedListingCatalog, PROVIDER_LABEL } from "@/lib/listing-catalog";
+import { formatPrice, PROVIDER_LABEL } from "@/lib/listing-catalog";
 import { getBaseUrlHint } from "@/lib/model-routes";
 import { getApiKeyRepository, resolveSessionTenantId } from "@/lib/router-keys";
+import { getPricedListingCatalog } from "@/lib/shelf-prices";
 import { getBalanceForDisplay } from "@/lib/wallet";
 
 export const dynamic = "force-dynamic";

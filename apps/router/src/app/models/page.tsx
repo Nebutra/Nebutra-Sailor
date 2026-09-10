@@ -1,5 +1,5 @@
 import { ModelsCatalog } from "@/components/models-catalog";
-import { getPricedListingCatalog } from "@/lib/listing-catalog";
+import { getPricedListingCatalog } from "@/lib/shelf-prices";
 
 export const metadata = { title: "API 集市" };
 export const dynamic = "force-dynamic";

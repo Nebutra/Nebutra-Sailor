@@ -52,12 +52,26 @@ describe("customer-facing surfaces quote the charged price", () => {
     expect(publisher).not.toContain("getPricedListingCatalog");
   });
 
-  it("the detail page's own lookups are priced", () => {
+  it("the detail page reads the priced lookups", () => {
+    const page = readFileSync(
+      join(ROOT, "apps/router/src/app/product/detail/[slug]/page.tsx"),
+      "utf8",
+    );
+    expect(page).toContain("getPricedModelBySlug");
+    expect(page).toContain("getPricedRelatedListings");
+    expect(page).not.toContain("getListedModelBySlug(");
+  });
+
+  /**
+   * The priced accessors read the price table through Prisma, so they cannot
+   * live in `listing-catalog` — client components import that module for its
+   * labels and formatters, and a Prisma import there pulled `dns`, `fs` and
+   * `net` into the browser bundle and failed the build.
+   */
+  it("keeps the client-safe catalogue free of the database", () => {
     const catalog = readFileSync(join(ROOT, "apps/router/src/lib/listing-catalog.ts"), "utf8");
-    for (const fn of ["getListedModelBySlug", "getRelatedListings"]) {
-      const body = catalog.slice(catalog.indexOf(`export async function ${fn}`));
-      const head = body.slice(0, body.indexOf("\n}"));
-      expect(head, `${fn} must read the priced catalogue`).toContain("getPricedListingCatalog");
-    }
+    expect(catalog).not.toContain("shelf-prices");
+    expect(catalog).not.toContain("@nebutra/db");
+    expect(catalog).not.toContain("@nebutra/repositories");
   });
 });

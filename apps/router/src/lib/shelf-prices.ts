@@ -2,7 +2,12 @@ import "server-only";
 
 import { getSystemDb } from "@nebutra/db";
 import { RouterBillingRepository, type RouterPriceRow } from "@nebutra/repositories";
-import type { ListingModel } from "./listing-catalog";
+import {
+  getListedModelBySlug,
+  getListingCatalog,
+  getRelatedListings,
+  type ListingModel,
+} from "./listing-catalog";
 
 /**
  * The rates the /v1 edge will actually charge, for every surface that quotes a
@@ -54,4 +59,44 @@ export function applyPublishedPrices(
       outputPerMTok: num(row.outputPerMTok),
     };
   });
+}
+
+/**
+ * The shelf, and lookups into it, priced at what the edge will charge.
+ *
+ * These live here rather than in `listing-catalog` because they read the price
+ * table through Prisma, and `listing-catalog` is imported by client components
+ * for its labels and formatters. Putting a Prisma import there dragged `dns`,
+ * `fs` and `net` into the browser bundle and broke the build — `server-only`
+ * did not catch it first because the unresolvable Node built-ins surfaced
+ * before the boundary check did.
+ *
+ * So the split is a build constraint as much as a naming one: the raw catalogue
+ * is client-safe, and anything that knows our real prices stays on the server.
+ */
+export async function getPricedListingCatalog(): Promise<
+  Awaited<ReturnType<typeof getListingCatalog>>
+> {
+  const [catalog, prices] = await Promise.all([getListingCatalog(), publishedPriceMap()]);
+  return { ...catalog, models: applyPublishedPrices(catalog.models, prices) };
+}
+
+/** One model by slug, priced. */
+export async function getPricedModelBySlug(slug: string): Promise<ListingModel | null> {
+  const model = await getListedModelBySlug(slug);
+  if (!model) return null;
+  const prices = await publishedPriceMap();
+  return applyPublishedPrices([model], prices)[0] ?? null;
+}
+
+/** Related models for the detail page, priced. */
+export async function getPricedRelatedListings(
+  seed: ListingModel,
+  limit = 6,
+): Promise<ListingModel[]> {
+  const [related, prices] = await Promise.all([
+    getRelatedListings(seed, limit),
+    publishedPriceMap(),
+  ]);
+  return applyPublishedPrices(related, prices);
 }

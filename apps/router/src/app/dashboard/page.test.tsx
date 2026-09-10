@@ -37,9 +37,14 @@ vi.mock("@/lib/wallet", () => ({
 vi.mock("@/lib/model-routes", () => ({ getBaseUrlHint: () => "https://api.example.test/v1" }));
 
 vi.mock("@/lib/listing-catalog", () => ({
-  getPricedListingCatalog: () => getPricedListingCatalog(),
   formatPrice: (value: number) => `$${value.toFixed(2)}`,
   PROVIDER_LABEL: { openai: "OpenAI" },
+}));
+
+// The priced accessors live in the server-only module — listing-catalog stays
+// client-safe and therefore database-free.
+vi.mock("@/lib/shelf-prices", () => ({
+  getPricedListingCatalog: () => getPricedListingCatalog(),
 }));
 
 vi.mock("@nebutra/repositories", () => ({

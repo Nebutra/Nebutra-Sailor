@@ -1,5 +1,5 @@
 import { MarketHome } from "@/components/market-home";
-import { getPricedListingCatalog } from "@/lib/listing-catalog";
+import { getPricedListingCatalog } from "@/lib/shelf-prices";
 
 export const dynamic = "force-dynamic";
 
