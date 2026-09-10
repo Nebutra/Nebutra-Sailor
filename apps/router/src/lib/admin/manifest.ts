@@ -69,7 +69,7 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
             { key: "supply", label: "Supply", kind: "badge" },
             { key: "status", label: "Status", kind: "badge" },
           ],
-          actions: ["channel.sync"],
+          actions: ["channel.sync", "price.publish"],
         },
       ],
       actions: [
@@ -121,6 +121,17 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
           destructive: false,
           description:
             "Publish every model CLIProxyAPI serves to the New-API channel that sells it.",
+        },
+        {
+          id: "price.publish",
+          verb: "Publish prices",
+          resource: "shelf",
+          role: "platform_operator",
+          url: `${V1}/actions/price.publish`,
+          plan: true,
+          destructive: false,
+          description:
+            "Write the shelf into the price table the /v1 edge charges from. A model reaches customers only when supply confirms it and it carries a price.",
         },
       ],
       signals: [

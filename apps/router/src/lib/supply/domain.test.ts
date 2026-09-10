@@ -73,6 +73,7 @@ describe("router admin manifest", () => {
       "account.login",
       "account.login.callback",
       "channel.sync",
+      "price.publish",
     ]);
     expect(supply?.signals.map((s) => s.id)).toEqual([
       "engine.down",
