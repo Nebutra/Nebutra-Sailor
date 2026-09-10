@@ -72,6 +72,35 @@ describe("generator config ownership", () => {
     expect(editor().document?.nodes.a?.generator?.model).toBe("Auto");
   });
 
+  it("does not leave a node running forever after a reload", async () => {
+    // What a reload looks like: the document remembers the node was running and which job it was,
+    // the jobs store remembers nothing. Mock mode has no server to ask, so the honest outcome is a
+    // retryable failure on the node rather than a spinner that never resolves.
+    editor().load("d", {
+      ...doc(),
+      nodes: {
+        a: {
+          ...doc().nodes.a,
+          status: "running" as const,
+          jobId: "j-from-a-previous-session",
+        },
+      },
+    });
+    useJobsStore.setState({ jobs: [] });
+
+    await jobs().reconcile();
+
+    const node = editor().document?.nodes.a;
+    expect(node?.status).toBe("failed");
+    expect(node?.error?.retryable).toBe(true);
+  });
+
+  it("leaves a settled node alone when reconciling", async () => {
+    editor().load("d", doc());
+    await jobs().reconcile();
+    expect(editor().document?.nodes.a?.status).toBe("completed");
+  });
+
   it("records the estimated cost it was admitted with", () => {
     const jobId = jobs().enqueue("a", "Generate · a", 7);
     expect(jobs().jobs.find((j) => j.id === jobId)?.cost).toEqual({
