@@ -6,7 +6,7 @@ import type { ActionPlan, ActionResult } from "@nebutra/contracts/admin";
 import { getSystemDb } from "@nebutra/db";
 import type { StaffCaller } from "../admin/service-token";
 import { getListingCatalog, type ListingModel, type ListingProvider } from "../listing-catalog";
-import { coverageFor, priceOverrideFor } from "./price-overrides";
+import { coverageFor, MARGIN, priceOverrideFor } from "./price-overrides";
 
 /**
  * Publish the shelf into `model_configs`, the one table the /v1 edge prices a
@@ -64,8 +64,14 @@ function toRow(m: ListingModel): PriceRowPlan {
   // Fold in the dimensions upstream bills that our parsed usage cannot see (I3).
   // Applied here, at publish, so the request path stays a plain table lookup.
   const cover = coverageFor(m.provider);
-  const inputPerMTok = (override?.inputPricePerMillion ?? m.inputPerMTok) * cover.input;
-  const outputPerMTok = (override?.outputPricePerMillion ?? m.outputPerMTok) * cover.output;
+  // The markup belongs to every model, not only the hand-priced ones. An
+  // override's numbers already carry it — they are written as ceiling × MARGIN —
+  // so applying it again there would double it. The index's numbers are
+  // upstream's own list price, and publishing those unchanged sells at cost,
+  // which after the leakage between charging and banking is a loss.
+  const inputPerMTok = (override?.inputPricePerMillion ?? m.inputPerMTok * MARGIN) * cover.input;
+  const outputPerMTok =
+    (override?.outputPricePerMillion ?? m.outputPerMTok * MARGIN) * cover.output;
   return {
     modelName: m.publicModel,
     provider: override?.provider ?? PROVIDER_MAP[m.provider] ?? "CUSTOM",

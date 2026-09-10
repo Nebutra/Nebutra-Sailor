@@ -39,7 +39,7 @@ export interface PriceOverride {
  *
  * Revisit by re-measuring the four rates, not by picking a rounder number.
  */
-const MARGIN = 1.3;
+export const MARGIN = 1.3;
 
 const UPSTREAM_CEILING_PER_MILLION = 40;
 
