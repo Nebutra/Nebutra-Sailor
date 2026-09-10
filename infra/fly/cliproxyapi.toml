@@ -6,7 +6,7 @@ app = "nebutra-cliproxyapi"
 primary_region = "sin"
 
 [build]
-  image = "eceasy/cli-proxy-api:v7.2.154"
+  image = "eceasy/cli-proxy-api:v7.2.156"
 
 [env]
   TZ = "Asia/Shanghai"

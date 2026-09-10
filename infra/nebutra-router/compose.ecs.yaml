@@ -18,7 +18,7 @@ services:
   # (infra/fly/cliproxyapi.toml). Localhost only; New-API reaches it via
   # host.docker.internal or the compose network.
   cliproxyapi:
-    image: eceasy/cli-proxy-api:v7.2.154
+    image: eceasy/cli-proxy-api:v7.2.156
     restart: unless-stopped
     ports:
       - "127.0.0.1:3303:8317"
