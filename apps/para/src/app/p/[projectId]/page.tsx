@@ -6,7 +6,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ projec
   return (
     <div className="flex min-h-full flex-col">
       <HomeTopBar />
-      <main className="mx-auto w-full max-w-4xl flex-1 px-6 pt-16 pb-24">
+      <main className="mx-auto w-full max-w-para-surface flex-1 px-6 pt-24 pb-24">
         <ProjectOverview projectId={projectId} />
       </main>
     </div>

@@ -1,5 +1,7 @@
 "use client";
 
+// @async-surface-exempt: this is the page shell that decides what to mount; the surfaces it mounts own their own states.
+
 import { useEffect } from "react";
 import { WorkspaceSurface } from "@/components/canvas/workspace-surface";
 import { AgentPanel } from "@/components/overlays/agent-panel";
