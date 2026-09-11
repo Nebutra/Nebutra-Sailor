@@ -16,6 +16,7 @@
 
 import { execSync } from "node:child_process";
 import fs from "node:fs";
+import path from "node:path";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { buildProgram } from "./steps/cli-setup";
@@ -30,6 +31,7 @@ import { SOCIAL_LOGIN_PROVIDERS } from "./utils/auth-social";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
 import {
   DEFAULT_PROJECT_NAME,
+  describeUnsafeTarget,
   promptProjectTarget,
   resolveTargetFromInput,
 } from "./utils/project-target";
@@ -260,6 +262,22 @@ async function run(): Promise<void> {
     }
   }
 
+  // Hard stop, whatever route produced the target: scaffolding writes a
+  // monorepo and cleans up after itself on failure or Ctrl+C, so a home
+  // directory or filesystem root can never be the destination. Applies to
+  // `create-sailor .` and `create-sailor ~` just as much as to the prompts.
+  {
+    const unsafe = describeUnsafeTarget(path.resolve(resolvedTarget));
+    if (unsafe) {
+      const msg =
+        `Refusing to scaffold into ${unsafe} (${path.resolve(resolvedTarget)}).\n` +
+        `  Create a folder for the project instead:  ${pc.cyan("create-sailor my-app")}`;
+      if (!useJson) process.stderr.write(`\n${pc.red("✘")} ${msg}\n\n`);
+      emitJson(useJson, { event: "error", code: "UNSAFE_TARGET_DIR", message: msg });
+      process.exit(1);
+    }
+  }
+
   const resolvedPm = opts.pm ?? detectPm();
 
   // ---- Config resolution (interactive or non-interactive) ----
@@ -312,17 +330,41 @@ async function run(): Promise<void> {
   }
 
   // ---- SIGINT handler ----
+  // Only ever removes entries the scaffold itself created (reported by
+  // cloneTemplate), and only when it created the target directory outright.
+  // It must not `rm -rf resolvedTarget`: with `resolvedTarget === "."` that is
+  // the user's cwd, including everything that was in it beforehand.
+  const targetExistedBefore = fs.existsSync(resolvedTarget);
+  let createdEntries: string[] = [];
+  const scaffoldCreatedEntries = (): string[] => createdEntries;
   const onInterrupt = async () => {
     process.stdout.write("\n" + pc.red("✘ Cancelled\n"));
-    if (fs.existsSync(resolvedTarget)) {
-      const cleanup = await p.confirm({
-        message: `Cleanup partial install at ${resolvedTarget}?`,
-        initialValue: true,
-      });
-      if (cleanup === true) {
-        fs.rmSync(resolvedTarget, { recursive: true, force: true });
-        process.stdout.write(pc.dim(`  ✓ Removed ${resolvedTarget}\n`));
+
+    const created = scaffoldCreatedEntries();
+    if (created.length === 0 && targetExistedBefore) {
+      process.exit(130);
+    }
+
+    const removable = targetExistedBefore
+      ? created.map((name) => path.join(resolvedTarget, name))
+      : [resolvedTarget];
+
+    const cleanup = await p.confirm({
+      message: targetExistedBefore
+        ? `Remove the ${removable.length} item${removable.length === 1 ? "" : "s"} added to ${resolvedTarget}?`
+        : `Remove the partial install at ${resolvedTarget}?`,
+      initialValue: true,
+    });
+
+    if (cleanup === true) {
+      for (const entry of removable) {
+        try {
+          fs.rmSync(entry, { recursive: true, force: true });
+        } catch {
+          // Best-effort cleanup — never fail the exit path.
+        }
       }
+      process.stdout.write(pc.dim(`  ✓ Cleaned up ${resolvedTarget}\n`));
     }
     process.exit(130);
   };
@@ -338,6 +380,9 @@ async function run(): Promise<void> {
       useJson,
       resolved,
       startedAt: Date.now(),
+      reportCreatedEntries: (entries) => {
+        createdEntries = entries;
+      },
     });
     process.exit(0);
   } catch (error) {

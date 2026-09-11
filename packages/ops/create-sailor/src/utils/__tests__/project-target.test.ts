@@ -4,6 +4,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   DEFAULT_PROJECT_NAME,
+  describeUnsafeTarget,
   hasBlockingProjectMarkers,
   isCurrentDirToken,
   isDirEffectivelyEmpty,
@@ -116,5 +117,31 @@ describe("resolveTargetFromInput", () => {
     const r = resolveTargetFromInput("./apps/web", "/repo");
     expect(r.targetDir).toBe("./apps/web");
     expect(r.projectName).toBe("web");
+  });
+});
+
+describe("describeUnsafeTarget", () => {
+  it("refuses the home directory", () => {
+    expect(describeUnsafeTarget(os.homedir())).toBe("your home directory");
+    // Trailing separators and `.` segments resolve to the same place.
+    expect(describeUnsafeTarget(path.join(os.homedir(), "."))).toBe("your home directory");
+  });
+
+  it("refuses the filesystem root", () => {
+    expect(describeUnsafeTarget(path.parse(os.homedir()).root)).toBe("the filesystem root");
+  });
+
+  it("refuses the standard user folders people npx from", () => {
+    expect(describeUnsafeTarget(path.join(os.homedir(), "Desktop"))).toBe("your Desktop folder");
+    expect(describeUnsafeTarget(path.join(os.homedir(), "Downloads"))).toBe(
+      "your Downloads folder",
+    );
+    expect(describeUnsafeTarget(path.join(os.homedir(), ".config"))).toBe("your config directory");
+  });
+
+  it("allows an ordinary project folder", () => {
+    expect(describeUnsafeTarget(path.join(os.homedir(), "my-app"))).toBeUndefined();
+    expect(describeUnsafeTarget(path.join(os.homedir(), "Desktop", "my-app"))).toBeUndefined();
+    expect(describeUnsafeTarget(makeTmp())).toBeUndefined();
   });
 });

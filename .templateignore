@@ -359,3 +359,45 @@ tests/architecture/template-residue.baseline.json
 # source repo's changesets fixed group; the mirror ships `fixed: []` on purpose
 # (scripts/template-build.ts clears it — the mirror never publishes).
 tests/architecture/sailor-version.test.ts
+
+# ---------------------------------------------------------------------------
+# Weight — reference material nobody scaffolding a SaaS needs
+#
+# Everything below is Nebutra's own reference material. It was shipping into
+# every scaffold, and it dominated the tarball: the mirror was a 126 MB
+# download over a 182 MB working tree, of which 98 MB was PNG/WebP/PDF. A
+# stalled transfer on that archive was the whole failure mode `create-sailor`
+# reported as a bare "fetch failed". These patterns drop 109 MB — 60% of the
+# mirror — taking the tree to 73 MB and the tarball to roughly 25 MB, with no
+# code reference anywhere to any of them.
+#
+# Two heavy directories are deliberately NOT listed here, because stripping
+# them would break the scaffold rather than slim it:
+#   packages/platform/db/src/generated/   20.8 MB, but @nebutra/db's `build`
+#     copies the workerd engine out of it and nothing in a fresh scaffold runs
+#     `prisma generate` first — strip it and `pnpm build` fails.
+#   packages/design/fonts/generated/       4.7 MB, but it backs the published
+#     `@nebutra/fonts/cjk.css` and `./cjk` export paths, and is produced by
+#     `subset:cjk`, which is not part of `build`.
+# Slimming those two means giving the scaffold a way to regenerate them first.
+#
+# If you add a screenshot set, a VI export, or another reference bundle, add it
+# here in the same commit.
+# ---------------------------------------------------------------------------
+
+# Design-system review screenshots — 63.7 MB of full-page captures (one
+# live-fullpage--dark.png is 5.0 MB). A record of Nebutra's own review rounds.
+docs/design-system/screenshots/
+
+# Brand VI source material — 33.8 MB of logo proposals and print PDFs
+# (Nebutra品牌logo提案_07.png alone is 6.4 MB). The brand *tokens* are the
+# reusable part and stay; the proposal deck for Nebutra's identity does not —
+# downstream projects rebrand via packages/design/design-tokens. The only
+# mention of this path in code is a "VI Reference:" doc comment in
+# packages/design/ui/src/tokens/index.ts, which is a pointer, not an import.
+packages/design/brand/assets/proposals/
+packages/design/brand/assets/vi/
+
+# Nebutra's product-intelligence corpus: competitor teardowns, market notes,
+# cartography working files. Nebutra's thinking, not the customer's skeleton.
+research/

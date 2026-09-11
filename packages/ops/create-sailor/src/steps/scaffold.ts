@@ -29,7 +29,7 @@ import { applyEmailSelection } from "../utils/email";
 import { injectEnv } from "../utils/env";
 import { generateEnvSecrets } from "../utils/env-secrets";
 import { applyFeatureFlagsSelection } from "../utils/feature-flags";
-import { cloneTemplate } from "../utils/git";
+import { type CloneProgressEvent, cloneTemplate, formatBytes } from "../utils/git";
 import { applyGovernanceLints } from "../utils/governance-lints";
 import { emitScaffoldLicense } from "../utils/license-emit";
 import { applyMcpSwitch } from "../utils/mcp";
@@ -147,6 +147,83 @@ export interface ScaffoldContext {
   useJson: boolean;
   resolved: ResolvedConfig;
   startedAt: number;
+  /**
+   * Reports the top-level entries the clone newly created inside the target.
+   * The SIGINT handler removes exactly these on cleanup, rather than the whole
+   * target directory (which may be a cwd full of the user's own files).
+   */
+  reportCreatedEntries?: (entries: string[]) => void;
+}
+
+/**
+ * Live one-line progress for the template download.
+ *
+ * Without this the terminal is silent for the whole transfer — tens of seconds
+ * to several minutes on a large archive — which reads as a hang and is exactly
+ * when people reach for Ctrl+C.
+ */
+function createCloneReporter(useJson: boolean): (event: CloneProgressEvent) => void {
+  let lastRender = 0;
+  const isTty = process.stdout.isTTY === true;
+
+  const line = (text: string): void => {
+    if (!isTty) {
+      process.stdout.write(`  ${text}\n`);
+      return;
+    }
+    process.stdout.write(`\r\u001b[2K  ${text}`);
+  };
+
+  return (event) => {
+    if (useJson) {
+      emitJson(true, {
+        event: "step",
+        step: "clone",
+        status: "start",
+        phase: event.phase,
+        source: event.source,
+        receivedBytes: event.receivedBytes,
+        totalBytes: event.totalBytes,
+        attempt: event.attempt,
+      });
+      return;
+    }
+
+    switch (event.phase) {
+      case "resolve":
+        line(pc.dim(`Resolving ${event.source}…`));
+        break;
+      case "download": {
+        const now = Date.now();
+        // Throttle: a 126 MB body arrives in thousands of chunks.
+        if (event.receivedBytes && now - lastRender < 120) return;
+        lastRender = now;
+        const got = formatBytes(event.receivedBytes ?? 0);
+        const of = event.totalBytes ? ` / ${formatBytes(event.totalBytes)}` : "";
+        const pct =
+          event.totalBytes && event.receivedBytes
+            ? ` (${Math.floor((event.receivedBytes / event.totalBytes) * 100)}%)`
+            : "";
+        line(pc.dim(`Downloading template  ${got}${of}${pct}`));
+        break;
+      }
+      case "retry":
+        if (isTty) process.stdout.write("\r\u001b[2K");
+        process.stdout.write(
+          pc.yellow(`  ⚠ ${event.reason} — retrying (attempt ${event.attempt}/3)\n`),
+        );
+        break;
+      case "extract":
+        line(pc.dim("Extracting template…"));
+        break;
+      case "strip":
+        line(pc.dim("Stripping template-only files…"));
+        break;
+      case "install":
+        line(pc.dim("Writing project files…"));
+        break;
+    }
+  };
 }
 
 export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
@@ -189,8 +266,25 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
 
   // -- clone --
   emitJson(useJson, { event: "step", step: "clone", status: "start" });
-  await cloneTemplate(resolvedTarget);
-  emitJson(useJson, { event: "step", step: "clone", status: "ok" });
+  const clone = await cloneTemplate(resolvedTarget, {
+    onProgress: createCloneReporter(useJson),
+  });
+  ctx.reportCreatedEntries?.(clone.createdEntries);
+  if (useJson) {
+    emitJson(true, {
+      event: "step",
+      step: "clone",
+      status: "ok",
+      source: clone.source,
+      bytes: clone.bytes,
+    });
+  } else {
+    if (process.stdout.isTTY === true) process.stdout.write("\r\u001b[2K");
+    process.stdout.write(
+      pc.green(`  ✓ Template ready`) +
+        pc.dim(` (${formatBytes(clone.bytes)} from ${clone.source})\n`),
+    );
+  }
 
   // -- package.json --
   emitJson(useJson, { event: "step", step: "package", status: "start" });

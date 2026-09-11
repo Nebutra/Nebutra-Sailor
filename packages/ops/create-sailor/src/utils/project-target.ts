@@ -10,6 +10,7 @@
  */
 
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import * as p from "@clack/prompts";
 
@@ -36,6 +37,53 @@ const BLOCKING_ENTRIES = new Set([
   "bun.lockb",
   "turbo.json",
 ]);
+
+/**
+ * Directories that must never be a scaffold target, whatever the user answers.
+ *
+ * Scaffolding writes a monorepo's worth of files and, on rollback or Ctrl+C,
+ * removes what it wrote. Pointing that at a home directory or a filesystem
+ * root is never what anyone means — but `npx create-sailor` is most often run
+ * from exactly those places, and "In the current directory" was one keystroke
+ * away from selecting one.
+ */
+function unsafeTargetDirs(): Map<string, string> {
+  const home = os.homedir();
+  const dirs = new Map<string, string>();
+
+  const add = (dir: string | undefined, label: string): void => {
+    if (!dir) return;
+    dirs.set(path.resolve(dir), label);
+  };
+
+  add(home, "your home directory");
+  add(path.parse(home || "/").root, "the filesystem root");
+  for (const name of [
+    "Desktop",
+    "Documents",
+    "Downloads",
+    "Library",
+    "Movies",
+    "Music",
+    "Pictures",
+    "Public",
+  ]) {
+    if (home) add(path.join(home, name), `your ${name} folder`);
+  }
+  add(process.env.XDG_CONFIG_HOME, "your config directory");
+  if (home) add(path.join(home, ".config"), "your config directory");
+
+  return dirs;
+}
+
+/**
+ * Returns a human-readable reason when `dir` must not be scaffolded into,
+ * or undefined when it is a fine target.
+ */
+export function describeUnsafeTarget(dir: string): string | undefined {
+  const resolved = path.resolve(dir);
+  return unsafeTargetDirs().get(resolved);
+}
 
 export type LocationChoice = "new" | "current";
 
@@ -191,26 +239,45 @@ export async function promptProjectTarget(
 
   const cwdLabel = path.basename(cwd) || cwd;
 
-  const location = await p.select({
-    message: "Create the project…",
-    options: [
-      {
-        value: "new" as const,
-        label: "In a new folder",
-        hint: preferCurrent ? undefined : "recommended from home or a parent directory",
-      },
-      {
-        value: "current" as const,
-        label: "In the current directory",
-        hint: preferCurrent ? `${cwdLabel} looks empty — good to go` : cwd,
-      },
-    ],
-    initialValue: preferCurrent ? ("current" as const) : ("new" as const),
-  });
+  // From a home directory or a filesystem root there is only one sane answer,
+  // so don't offer a choice that would have to be rejected afterwards.
+  const unsafeCwd = describeUnsafeTarget(cwd);
+
+  const location = unsafeCwd
+    ? ("new" as const)
+    : await p.select({
+        message: "Create the project…",
+        options: [
+          {
+            value: "new" as const,
+            label: "In a new folder",
+            hint: preferCurrent ? undefined : "recommended from home or a parent directory",
+          },
+          {
+            value: "current" as const,
+            label: "In the current directory",
+            hint: preferCurrent ? `${cwdLabel} looks empty — good to go` : cwd,
+          },
+        ],
+        initialValue: preferCurrent ? ("current" as const) : ("new" as const),
+      });
+
+  if (unsafeCwd) {
+    p.log.info(`You're in ${unsafeCwd} — Sailor will create a subfolder here instead.`);
+  }
 
   if (p.isCancel(location)) onCancel();
 
   if (location === "current") {
+    const unsafe = describeUnsafeTarget(cwd);
+    if (unsafe) {
+      p.log.error(
+        `Refusing to scaffold directly into ${unsafe} (${cwd}). ` +
+          `Run create-sailor from an empty folder, or pass a name: create-sailor my-app`,
+      );
+      onCancel();
+    }
+
     if (hasBlockingProjectMarkers(cwd)) {
       const markers = fs
         .readdirSync(cwd)
@@ -245,8 +312,9 @@ export async function promptProjectTarget(
       if (isCurrentDirToken(v) || /[\\/]/.test(v) || path.isAbsolute(v)) {
         // Allow power-users to type a path in the name field.
         try {
-          resolveTargetFromInput(v, cwd);
-          return undefined;
+          const candidate = resolveTargetFromInput(v, cwd);
+          const unsafe = describeUnsafeTarget(candidate.absoluteDir);
+          return unsafe ? `That path is ${unsafe} — choose a subfolder.` : undefined;
         } catch (err) {
           return err instanceof Error ? err.message : "Invalid path.";
         }
