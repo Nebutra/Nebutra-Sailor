@@ -1,0 +1,53 @@
+name: Ops — Grant APP_DB_ROLE to the connection role
+
+# One-shot privilege repair. `getTenantDb()` does `SET ROLE app_user` so tenant
+# queries run under row-level security. The router's connection role cannot, so
+# /v1/limits returns 500 — and, more quietly, wallet reads never enter RLS scope.
+#
+# Direction matters: app_user has rolbypassrls=false and the connection role has
+# rolbypassrls=true. This does not escalate anything; it lets a privileged role
+# step down into the restricted one, which is what makes RLS apply. Leaving it
+# ungranted is the weaker state.
+#
+# PostgreSQL 16+ membership carries a SET option. The existing chain
+# pscale_api_* -> postgres -> app_user exists but does not convey SET, which is
+# why the grant is made directly and explicitly WITH SET TRUE.
+#
+# Default is a dry run: it reports the statement and changes nothing unless
+# `confirm` is exactly GRANT.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type GRANT to apply. Anything else reports and changes nothing."
+        required: true
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-db-role-grant
+  cancel-in-progress: false
+
+jobs:
+  grant:
+    name: Grant and verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup pnpm + Node
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Grant, then prove it worked
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CONFIRM: ${{ github.event.inputs.confirm }}
+        run: |
+          set -euo pipefail
+          [ -n "${DATABASE_URL:-}" ] || { echo "::error::DATABASE_URL is not set."; exit 1; }
+          node scripts/db-role-grant.mjs
