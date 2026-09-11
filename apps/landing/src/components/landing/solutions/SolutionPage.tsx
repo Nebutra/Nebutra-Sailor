@@ -83,7 +83,7 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
       </FeatureHero>
 
       {/* Use cases — 痛点 → 方案 */}
-      <section className="mx-auto max-w-[1400px] px-4 py-16 md:px-6 md:py-24">
+      <section className="mx-auto max-w-wide px-4 py-16 md:px-6 md:py-24">
         <AnimateIn preset="fadeUp" inView>
           <h2 className="mb-10 text-2xl font-bold text-neutral-12 md:text-3xl">
             {copy("useCases", locale)}
@@ -105,7 +105,7 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
 
       {/* Capabilities */}
       {solution.capabilityAnchors?.length ? (
-        <section className="mx-auto max-w-[1400px] px-4 pb-16 md:px-6 md:pb-24">
+        <section className="mx-auto max-w-wide px-4 pb-16 md:px-6 md:pb-24">
           <AnimateIn preset="fadeUp" inView>
             <h2 className="mb-6 text-xl font-bold text-neutral-12 md:text-2xl">
               {copy("capabilities", locale)}
@@ -133,7 +133,7 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
 
       {/* Best-practice strip — hidden while content is being authored */}
       {relatedPosts.length > 0 ? (
-        <section className="mx-auto max-w-[1400px] px-4 pb-16 md:px-6 md:pb-24">
+        <section className="mx-auto max-w-wide px-4 pb-16 md:px-6 md:pb-24">
           <AnimateIn preset="fadeUp" inView>
             <h2 className="mb-8 text-2xl font-bold text-neutral-12 md:text-3xl">
               {copy("bestPractices", locale)}

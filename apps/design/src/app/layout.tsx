@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             moved into the sidebar, where the whole inventory is visible at once
             rather than five representatives of it. */}
         <header className="sticky top-0 z-20 bg-background/85 backdrop-blur">
-          <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-3 md:px-10">
+          <div className="mx-auto flex max-w-wide flex-col gap-3 px-6 py-3 md:px-10">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <Link className="font-semibold text-[15px] tracking-tight" href="/">
                 {SITE_NAME}
@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             removes itself when a page has fewer than two sections, so short
             pages keep the full measure instead of reserving a column for a
             list of one. */}
-        <div className="mx-auto grid max-w-[1400px] gap-8 px-6 pb-16 md:px-10 lg:grid-cols-[224px_minmax(0,1fr)] xl:grid-cols-[224px_minmax(0,1fr)_180px]">
+        <div className="mx-auto grid max-w-wide gap-8 px-6 pb-16 md:px-10 lg:grid-cols-[224px_minmax(0,1fr)] xl:grid-cols-[224px_minmax(0,1fr)_180px]">
           <SiteNav sections={sections} />
           <main className="min-w-0 py-8">{children}</main>
           <PageToc />

@@ -356,7 +356,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       {/* 1. Hero — R&D Manifesto */}
       <section className="relative pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
         <AuroraBackground variant="vivid" position="top" intensity={0.6} />
-        <div className="relative container mx-auto px-4 max-w-[1400px]">
+        <div className="relative container mx-auto px-4 max-w-wide">
           <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
             {hero.eyebrow}
           </span>
@@ -383,7 +383,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       {/* 2. Harness Timeline — AI Stack 三层演化 (Russian-doll nested layers) */}
       <section className="relative py-24 md:py-32 border-y border-border/50 bg-muted/10 overflow-hidden">
         <AuroraBackground variant="subtle" position="center" intensity={0.4} />
-        <div className="relative container mx-auto px-4 max-w-[1400px]">
+        <div className="relative container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
               {harnessCopy.eyebrow}
@@ -514,7 +514,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
       {/* 3. Pillar 01 — AI-Native Architecture (Harness stack) */}
       <section className="py-24 md:py-32 border-b border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-5">
               <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
@@ -571,7 +571,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
       {/* 4. Pillar 02 — Open-Source Infrastructure */}
       <section className="py-24 md:py-32">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-5 lg:order-2">
               <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
@@ -626,7 +626,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
       {/* 5. Pillar 03 — Engineering Best Practices */}
       <section className="py-24 md:py-32 border-y border-border/50 bg-muted/20">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
               Pillar 03
@@ -679,7 +679,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
       {/* 6. Organizational Principles — Whitepaper Ⅳ */}
       <section className="py-24 md:py-32 border-b border-border/50 bg-background">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
               {orgPrinciplesCopy.eyebrow}
@@ -738,7 +738,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
       {/* 7. Innovation Timeline */}
       <section className="py-24 md:py-32">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
               {isZhUiLocale(lang) ? "创新时间线" : "Innovation Timeline"}

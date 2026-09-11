@@ -89,7 +89,7 @@ export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
           />
         </AnimateIn>
 
-        <p className="mx-auto mt-12 max-w-[1400px] px-4 text-xs leading-relaxed text-muted-foreground/60 md:px-6">
+        <p className="mx-auto mt-12 max-w-wide px-4 text-xs leading-relaxed text-muted-foreground/60 md:px-6">
           {text("source")}
         </p>
       </section>

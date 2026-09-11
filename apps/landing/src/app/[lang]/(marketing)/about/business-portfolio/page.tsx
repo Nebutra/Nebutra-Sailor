@@ -118,7 +118,7 @@ export default async function BusinessPortfolioPage({
 
       {/* ─── Section 1 · Hero ─────────────────────────────────────────────── */}
       <section className="pt-32 md:pt-48 pb-20 md:pb-24 border-b border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
             {hero.kicker}
           </span>
@@ -181,7 +181,7 @@ export default async function BusinessPortfolioPage({
 
         return (
           <section key={group.key} className={`py-24 md:py-32 ${altBg} border-b border-border/50`}>
-            <div className="container mx-auto px-4 max-w-[1400px]">
+            <div className="container mx-auto px-4 max-w-wide">
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16 md:mb-20">
                 <div className="max-w-2xl">
                   <div className="inline-flex items-center gap-3 mb-6 px-3 py-1.5 rounded-full border border-border bg-background">
@@ -250,7 +250,7 @@ export default async function BusinessPortfolioPage({
 
       {/* ─── Section 3 · Capability matrix overview ─────────────────────── */}
       <section className="py-24 md:py-32 bg-background border-b border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-16 md:mb-20 max-w-3xl">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
               {copy.matrixKicker}

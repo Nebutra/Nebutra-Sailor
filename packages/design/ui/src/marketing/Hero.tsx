@@ -76,7 +76,7 @@ export function Hero({
 
         <div
           className={cn(
-            "relative z-10 mx-auto w-full min-w-0 max-w-[var(--container-wide)] px-4 sm:px-6 lg:px-8",
+            "relative z-10 mx-auto w-full min-w-0 max-w-wide px-4 sm:px-6 lg:px-8",
             variant === "split"
               ? "grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8"
               : "flex flex-col items-center",

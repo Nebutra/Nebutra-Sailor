@@ -242,7 +242,7 @@ export const IntentMapping: StoryObj = {
 
     return (
       <div className="bg-[hsl(var(--background))] p-8">
-        <table className="w-full max-w-[1400px] text-left text-sm">
+        <table className="w-full max-w-wide text-left text-sm">
           <thead className="border-b border-[hsl(var(--border))] text-xs uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
             <tr>
               <th className="px-3 py-2 font-medium">Scenario</th>

@@ -226,9 +226,9 @@ surface, which CLAUDE.md forbids outright.
 
 | Container | When to use |
 |-----------|-------------|
-| `max-w-[var(--container-text)]` (896px) | Hero copy, CTA, FAQ — reading-optimized |
-| `max-w-[var(--container-content)]` (1152px) | Pricing, blog, architecture diagrams |
-| `max-w-[1400px]` (`--container-wide`) | Feature bento, testimonials, navbar, product demos |
+| `max-w-text` (896px) | Hero copy, CTA, FAQ — reading-optimized |
+| `max-w-content` (1152px) | Pricing, blog, architecture diagrams |
+| `max-w-wide` (`--container-wide`) | Feature bento, testimonials, navbar, product demos |
 
 ---
 

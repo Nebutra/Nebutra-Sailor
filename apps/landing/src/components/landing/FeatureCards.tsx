@@ -58,7 +58,7 @@ export function FeatureCards() {
       {/* Decorative background glows */}
       <AuroraBackground variant="subtle" />
 
-      <div className="feature-cards-cq relative z-10 mx-auto w-full min-w-0 max-w-[1400px] px-4 sm:px-6 md:px-12">
+      <div className="feature-cards-cq relative z-10 mx-auto w-full min-w-0 max-w-wide px-4 sm:px-6 md:px-12">
         <AnimateIn preset="emerge" inView className="w-full min-w-0">
           <div className="mb-12 flex w-full justify-center md:mb-16">
             <h2

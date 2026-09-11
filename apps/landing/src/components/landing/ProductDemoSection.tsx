@@ -38,7 +38,7 @@ export function ProductDemoSection() {
       {/* Ambient aurora background */}
       <AuroraBackground variant="monochrome" position="center" intensity={0.4} />
 
-      <div className="container mx-auto px-4 max-w-[1400px] relative z-10">
+      <div className="container mx-auto px-4 max-w-wide relative z-10">
         {/* Header */}
         <div className="mb-12 flex w-full flex-col items-center text-center md:mb-20 lg:mb-28">
           <div className="mb-8 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5">
@@ -61,7 +61,7 @@ export function ProductDemoSection() {
         </div>
 
         {/* Interactive Split Interface */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center max-w-wide mx-auto">
           {/* Left: Structural Stepper Navigation */}
           <div className="relative flex w-full flex-col pt-4 lg:col-span-5">
             {/* Continuous Vertical Tracking Line */}

@@ -43,7 +43,7 @@ export async function PricingSection({ hideHeader = false }: { hideHeader?: bool
     <section className="py-24 md:py-32 bg-background relative overflow-hidden">
       <AuroraBackground variant="subtle" position="center" intensity={0.4} />
 
-      <div className="container relative mx-auto px-4 max-w-[1400px]">
+      <div className="container relative mx-auto px-4 max-w-wide">
         {!hideHeader && (
           <div className="text-center mb-16 md:mb-24">
             <h2

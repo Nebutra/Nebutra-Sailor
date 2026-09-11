@@ -63,7 +63,7 @@ function LegalFooter() {
   const t = useTranslations("footer");
   return (
     <footer className="border-t border-border bg-background/[0.08] dark:bg-background">
-      <div className="mx-auto max-w-[1400px] px-6 py-8">
+      <div className="mx-auto max-w-wide px-6 py-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <nav
             aria-label="Legal"
@@ -130,7 +130,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
           className="relative overflow-hidden border-b border-[color:hsl(var(--muted))]/[0.06]"
         >
           <AuroraBackground variant="vivid" position="bottom" intensity={0.5} />
-          <div className="relative mx-auto max-w-[1400px] px-6 py-24 text-center">
+          <div className="relative mx-auto max-w-wide px-6 py-24 text-center">
             <p className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
               {tCta("eyebrow")}
             </p>
@@ -166,7 +166,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
         </section>
       )}
 
-      <div className="mx-auto w-full min-w-0 max-w-[1400px] px-4 pt-12 pb-8 sm:px-6 sm:pt-16">
+      <div className="mx-auto w-full min-w-0 max-w-wide px-4 pt-12 pb-8 sm:px-6 sm:pt-16">
         {/* Main grid: Brand + Navigation */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(14rem,2fr)_minmax(0,4fr)] lg:gap-12">
           {/* Brand block — real track min avoids CJK 1-glyph min-content collapse */}

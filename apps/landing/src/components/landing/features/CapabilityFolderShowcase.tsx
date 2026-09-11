@@ -107,7 +107,7 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
 export function CapabilityFolderShowcase({ locale }: { locale: Locale }) {
   return (
     <section
-      className="relative z-10 mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8"
+      className="relative z-10 mx-auto max-w-wide px-4 pb-20 sm:px-6 lg:px-8"
       id="capability-map"
     >
       <AnimateInGroup stagger="fast" className="grid grid-cols-1 gap-6 lg:grid-cols-2">

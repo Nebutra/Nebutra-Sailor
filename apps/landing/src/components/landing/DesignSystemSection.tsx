@@ -19,7 +19,7 @@ export function DesignSystemSection() {
       {/* Ambient aurora background */}
       <AuroraBackground variant="subtle" position="center" intensity={0.4} />
 
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6 relative z-10">
+      <div className="mx-auto max-w-wide px-4 md:px-6 relative z-10">
         {/* Section Header */}
         <div className="w-full flex flex-col items-center justify-center mb-16 md:mb-20 text-center">
           <div className="inline-flex items-center justify-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-6 opacity-0 translate-y-2 animate-[fade-in_0.5s_ease-out_forwards]">

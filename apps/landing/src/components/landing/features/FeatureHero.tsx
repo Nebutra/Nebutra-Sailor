@@ -59,7 +59,7 @@ export function FeatureHero({
 
   return (
     <section
-      className="relative isolate mx-auto flex max-w-[1400px] flex-col px-4 pt-36 pb-20 sm:px-6 lg:px-8"
+      className="relative isolate mx-auto flex max-w-wide flex-col px-4 pt-36 pb-20 sm:px-6 lg:px-8"
       data-align={align}
     >
       <AuroraBackground

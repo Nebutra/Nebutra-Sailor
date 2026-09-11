@@ -915,22 +915,27 @@ declaration that reads it.
 
 ### Layout container widths (use these, not arbitrary max-w values)
 
-| Token | CSS Variable | Tailwind | Use for |
-|-------|-------------|----------|---------|
-| `text` | `var(--container-text)` | `max-w-[var(--container-text)]` or `max-w-4xl` | Hero copy, CTA, FAQ — optimized for reading |
-| `content` | `var(--container-content)` | `max-w-[var(--container-content)]` or `max-w-6xl` | Pricing, architecture, blog |
-| `wide` | `var(--container-wide)` | `max-w-[1400px]` | Feature bento, testimonials, product demos, navbar |
+| Token | Tailwind | Width | Use for |
+|-------|----------|-------|---------|
+| `text` | `max-w-text` | 896px | Hero copy, CTA, FAQ — optimized for reading |
+| `content` | `max-w-content` | 1152px | Pricing, architecture, blog |
+| `wide` | `max-w-wide` | 1400px | Feature bento, testimonials, product demos, navbar |
+
+These are real utilities, registered on the Tailwind theme (ADR 2026-09-11 container-width-tokens).
+`max-w-[1400px]` and the `max-w-[var(--container-*)]` long form are **lint failures** — this table
+used to recommend both, which is how one decided number reached 98 hardcoded call sites. Use
+`var(--container-wide)` only in hand-written CSS, where no utility applies.
 
 ```tsx
 // ✅ Correct — use wide container for feature sections
-<div className="mx-auto max-w-[1400px] px-4 md:px-6">
+<div className="mx-auto max-w-wide px-4 md:px-6">
 
 // ✅ Correct — use text container for reading-focused content
-<div className="mx-auto max-w-4xl px-4 text-center">
+<div className="mx-auto max-w-text px-4 text-center">
 
 // ❌ NEVER use max-w-5xl or max-w-7xl for feature sections — too narrow/inconsistent
-<div className="mx-auto max-w-5xl">  // → max-w-[1400px]
-<div className="mx-auto max-w-7xl">  // → max-w-[1400px]
+<div className="mx-auto max-w-5xl">  // → max-w-wide
+<div className="mx-auto max-w-7xl">  // → max-w-wide
 ```
 
 ### Exception: `global-error.tsx`

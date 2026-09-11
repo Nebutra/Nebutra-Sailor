@@ -54,7 +54,7 @@ export default async function ChoosePlanPage() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-[1400px] px-4 py-12 md:px-6">
+    <section className="mx-auto w-full max-w-wide px-4 py-12 md:px-6">
       <header className="mx-auto mb-10 max-w-2xl text-center">
         <h1 className="font-bold text-3xl text-foreground lg:text-4xl">Choose your plan</h1>
         <p className="mt-3 text-muted-foreground text-sm lg:text-base">

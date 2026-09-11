@@ -248,7 +248,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       {/* ─── 1. Hero — Dual Flagship ───────────────────────────────────── */}
       <section className="relative pt-32 md:pt-48 pb-20 md:pb-28 overflow-hidden">
         <AuroraBackground variant="subtle" position="top" intensity={0.5} />
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-muted-foreground mb-8 block">
             {hero.eyebrow}
           </span>
@@ -330,7 +330,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
 
       {/* ─── 2. Builder Core Deep Dive ─────────────────────────────────── */}
       <section id="builder-core" className="py-24 md:py-32 border-t border-border/50 bg-muted/20">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-16 md:mb-20 max-w-4xl">
             <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
               {labels.builderEyebrow}
@@ -445,7 +445,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
 
       {/* ─── 3. Sleptons Deep Dive + Launchpad submodule ───────────────── */}
       <section id="sleptons" className="py-24 md:py-32 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-16 md:mb-20 max-w-4xl">
             <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
               {labels.sleptonsEyebrow}
@@ -574,7 +574,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
 
       {/* ─── 4. Why Two Flagships? ──────────────────────────────────────── */}
       <section className="py-24 md:py-32 border-t border-border/50 bg-muted/20">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-16 md:mb-20 max-w-4xl">
             <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
               {labels.whySubtitle}
@@ -654,7 +654,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
 
       {/* ─── 5. Three Business Pillars ──────────────────────────────────── */}
       <section className="py-24 md:py-32 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-16 md:mb-20 max-w-3xl">
             <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
               {labels.pillarsKicker}

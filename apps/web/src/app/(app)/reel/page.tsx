@@ -26,7 +26,7 @@ export default async function ReelPage() {
   if (!enabled) notFound();
 
   return (
-    <section className="mx-auto w-full max-w-[1400px]">
+    <section className="mx-auto w-full max-w-wide">
       <PageHeader
         title="Reel"
         description="Split a script into shots — each becomes a typed node whose generated output flows through a versioned IO envelope."

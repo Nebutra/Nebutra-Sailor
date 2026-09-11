@@ -193,7 +193,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
       {/* 1. Hero — Day 1 Global */}
       <section className="relative pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
         <AuroraBackground variant="subtle" />
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="emerge" className="max-w-4xl mx-auto text-center">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
               {pick(lang, EYEBROW)}
@@ -216,7 +216,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
 
       {/* 2. Four Pillars of Global Readiness */}
       <section className="py-24 md:py-32 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
             <h2
               className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
@@ -261,7 +261,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
 
       {/* 3. Language Coverage Matrix */}
       <section className="py-24 md:py-32 bg-muted/30 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
               i18n · l10n
@@ -393,7 +393,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
 
       {/* 5. Multi-region Payments */}
       <section className="py-24 md:py-32 bg-muted/30 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
               Payments

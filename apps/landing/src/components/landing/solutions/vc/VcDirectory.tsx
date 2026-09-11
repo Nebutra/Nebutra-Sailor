@@ -248,7 +248,7 @@ export function VcDirectory({ orgs, sectors, types, locale, variant, hrefBase }:
         ];
 
   return (
-    <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+    <div className="mx-auto max-w-wide px-4 md:px-6">
       <div className="relative mb-5 max-w-xl">
         <MagnifyingGlass className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 h-4 w-4 text-muted-foreground/60" />
         <Input

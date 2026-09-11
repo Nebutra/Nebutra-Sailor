@@ -96,7 +96,7 @@ export default async function PlaybookPage({ params }: { params: Promise<{ lang:
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-[1400px] px-4 pb-24 pt-32 sm:px-6">
+      <main className="mx-auto max-w-wide px-4 pb-24 pt-32 sm:px-6">
         <AnimateIn preset="fadeUp">
           <div className="text-center">
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.12em] text-neutral-11">

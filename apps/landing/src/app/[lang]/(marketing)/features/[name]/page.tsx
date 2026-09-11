@@ -151,7 +151,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
       {/* GOVERNANCE — small below-hero strip giving the package's
  stability, scope, and boundary at a glance. */}
-      <section className="relative z-10 mx-auto -mt-6 max-w-[1400px] px-4 pb-10 sm:px-6 lg:px-8">
+      <section className="relative z-10 mx-auto -mt-6 max-w-wide px-4 pb-10 sm:px-6 lg:px-8">
         <AnimateIn preset="fade" inView delay={0.05}>
           <dl className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border/40 pt-5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.22em]">
             <div className="flex items-center gap-2">
@@ -197,7 +197,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       {Showcase ? (
         <section
           id="showcase"
-          className="relative z-10 mx-auto max-w-[1400px] scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
+          className="relative z-10 mx-auto max-w-wide scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
         >
           <AnimateIn preset="fadeUp" inView>
             <Showcase entry={serializableEntry} locale={locale} />
@@ -208,7 +208,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       {/* CODE — wrapped in ShowcaseFrame so it shares panel chrome with the Showcase above */}
       <section
         id="usage"
-        className="relative z-10 mx-auto max-w-[1400px] scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
+        className="relative z-10 mx-auto max-w-wide scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
       >
         <AnimateIn preset="fadeUp" inView>
           <div className="mb-4 flex items-end justify-between gap-4 border-b border-border/40 pb-3">
@@ -252,7 +252,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       {entry.children.length > 0 ? (
         <section
           id="sub-packages"
-          className="relative z-10 mx-auto max-w-[1400px] scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
+          className="relative z-10 mx-auto max-w-wide scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
         >
           <AnimateInGroup
             stagger="fast"
@@ -331,7 +331,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       {related.length > 0 ? (
         <section
           id="related"
-          className="relative z-10 mx-auto max-w-[1400px] scroll-mt-24 px-4 pt-12 pb-[var(--section-gap-lg)] sm:px-6 lg:px-8"
+          className="relative z-10 mx-auto max-w-wide scroll-mt-24 px-4 pt-12 pb-[var(--section-gap-lg)] sm:px-6 lg:px-8"
         >
           <div className="mb-6 flex items-center justify-between border-t border-border/40 pt-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em]">
             <span>

@@ -38,7 +38,7 @@ export function PricingComparisonTable() {
       className="relative w-full bg-background py-24 md:py-32"
       aria-labelledby="landing-comparison-title"
     >
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+      <div className="mx-auto max-w-wide px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[hsl(var(--primary))]">
             {t("badge")}
