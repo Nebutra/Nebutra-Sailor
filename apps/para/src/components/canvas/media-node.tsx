@@ -31,8 +31,16 @@ export function MediaNode({ node, selected }: { node: WorkspaceNode; selected: b
         {identity}
       </span>
       {node.type === "text" ? (
+        /**
+         * A text node sits on the overlay step of the surface ladder rather than on the canvas
+         * ground. visual-language.md §4 drops the border on a media node because "PARA separates by
+         * luminance" and a border on a full-bleed image is redundant — but a text node has no image
+         * to do that separating, so on the bare ground it read as loose type rather than as an
+         * object you can select and drag. Same rule, applied to a node with no media: give it the
+         * luminance, still no border.
+         */
         <div
-          className={`h-full w-full rounded-[var(--para-node-radius)] px-3 py-2 text-foreground text-body leading-snug ${hover}`}
+          className={`h-full w-full overflow-hidden rounded-[var(--para-node-radius)] bg-card px-3 py-2 text-body text-foreground leading-snug ${hover}`}
         >
           {node.text}
         </div>
