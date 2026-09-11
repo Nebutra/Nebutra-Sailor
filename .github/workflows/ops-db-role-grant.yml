@@ -24,6 +24,11 @@ on:
         required: true
         default: ""
         type: string
+      grant_to:
+        description: "Role to grant to (blank = this connection). PlanetScale app roles carry a .<branch-id> suffix and are NOT the runner's role."
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: read
@@ -47,6 +52,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           CONFIRM: ${{ github.event.inputs.confirm }}
+          GRANT_TO: ${{ github.event.inputs.grant_to }}
         run: |
           set -euo pipefail
           [ -n "${DATABASE_URL:-}" ] || { echo "::error::DATABASE_URL is not set."; exit 1; }
