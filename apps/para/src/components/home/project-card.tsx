@@ -32,8 +32,11 @@ export function ProjectCard({ project }: { project: Project }) {
           <span className="text-label text-muted-foreground">Empty project</span>
         </div>
       )}
-      {/* The label needs to hold contrast over arbitrary artwork, so it sits on its own scrim. */}
-      <div className="relative bg-gradient-to-t from-neutral-1/90 to-transparent p-4 pt-10">
+      {/* A scrim exists to hold the label legible over artwork. With no artwork there is nothing to
+          scrim, and the gradient just makes an empty card look like a failed image. */}
+      <div
+        className={`relative p-4 ${cover ? "bg-gradient-to-t from-neutral-1/90 to-transparent pt-10" : ""}`}
+      >
         <div className="truncate font-medium text-body text-foreground">{project.name}</div>
         <div className="text-label text-muted-foreground">{fmt(project.updatedAt)}</div>
       </div>

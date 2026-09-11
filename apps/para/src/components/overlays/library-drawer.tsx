@@ -4,6 +4,7 @@ import { Cross, MagnifyingGlass } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
 import { useState } from "react";
 import { ASSET_MIME } from "@/components/canvas/canvas-view";
+import { AsyncSurface } from "@/components/ui/async-surface";
 import type { Asset } from "@/domain/types";
 import { useAssets } from "@/mock/queries";
 import { nextId, useEditorStore } from "@/stores/editor-store";
@@ -33,7 +34,7 @@ export function LibraryDrawer({
   const addNode = useEditorStore((s) => s.addNode);
   const select = useEditorStore((s) => s.select);
   const document = useEditorStore((s) => s.document);
-  const { data: assets } = useAssets();
+  const { data: assets, isLoading, isError, refetch } = useAssets();
   const [tab, setTab] = useState<Tab>("generated");
   const [wholeProject, setWholeProject] = useState(false);
   const [q, setQ] = useState("");
@@ -125,34 +126,50 @@ export function LibraryDrawer({
         />
       </div>
       <div className="flex-1 overflow-y-auto px-3 pb-6">
-        {list.length === 0 ? (
-          <p className="px-1 text-muted-foreground text-label">
-            {tab === "generated"
-              ? "Nothing generated here yet."
-              : "Drop files on the canvas to add assets."}
-          </p>
-        ) : (
-          <div className="grid grid-cols-3 gap-2">
-            {list.map((a) => (
-              <button
-                key={a.id}
-                type="button"
-                title={`Apply ${a.label} to canvas`}
-                draggable
-                onDragStart={(e) => e.dataTransfer.setData(ASSET_MIME, a.id)}
-                onClick={() => place(a)}
-                className="aspect-square overflow-hidden rounded-md bg-neutral-3 ring-border/0 transition hover:ring-2 hover:ring-neutral-7"
-              >
-                <img
-                  src={a.url}
-                  alt={a.label}
-                  className="h-full w-full object-cover"
-                  draggable={false}
-                />
-              </button>
-            ))}
-          </div>
-        )}
+        <AsyncSurface
+          query={{ isLoading, isError, refetch }}
+          isEmpty={list.length === 0}
+          skeleton={
+            <div className="grid grid-cols-3 gap-2">
+              {Array.from({ length: 9 }, (_, i) => (
+                <div key={i} className="aspect-square animate-pulse rounded-md bg-card" />
+              ))}
+            </div>
+          }
+          errorTitle="The library could not be loaded"
+          empty={
+            <p className="px-1 text-label text-muted-foreground">
+              {q.trim()
+                ? `No matches for "${q.trim()}".`
+                : tab === "generated"
+                  ? "Nothing generated here yet."
+                  : "Drop files on the canvas to add assets."}
+            </p>
+          }
+        >
+          {list.length === 0 ? null : (
+            <div className="grid grid-cols-3 gap-2">
+              {list.map((a) => (
+                <button
+                  key={a.id}
+                  type="button"
+                  title={`Apply ${a.label} to canvas`}
+                  draggable
+                  onDragStart={(e) => e.dataTransfer.setData(ASSET_MIME, a.id)}
+                  onClick={() => place(a)}
+                  className="aspect-square overflow-hidden rounded-md bg-neutral-3 ring-border/0 transition hover:ring-2 hover:ring-neutral-7"
+                >
+                  <img
+                    src={a.url}
+                    alt={a.label}
+                    className="h-full w-full object-cover"
+                    draggable={false}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+        </AsyncSurface>
       </div>
     </aside>
   );

@@ -1,5 +1,8 @@
 "use client";
 
+// @async-surface-exempt: the workspace list populates a dropdown menu, not a surface — a menu owes the user its items,
+// not a skeleton and an empty state.
+
 import { ChevronDown, MagnifyingGlass, Share } from "@nebutra/icons";
 import {
   Button,
