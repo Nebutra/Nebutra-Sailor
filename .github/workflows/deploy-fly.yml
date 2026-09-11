@@ -234,7 +234,12 @@ jobs:
         if: matrix.app == 'kuanlan'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          ROUTER_API_KEY: ${{ secrets.KUANLAN_ROUTER_API_KEY }}
+          # Deliberately NOT set from a repo secret. ops-issue-router-key.yml
+          # issues the key and installs it on the Machine; re-staging it here
+          # from KUANLAN_ROUTER_API_KEY overwrote a freshly issued key with a
+          # stale New-API token on the next deploy — it tested green, then was
+          # an invalid key hours later with nothing in the logs to say why.
+          # Fly keeps the installed value; reissue with that workflow.
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # Moments List/Get/Put nebutra-uploads. Shared R2_* is the assets
           # seeder and is AccessDenied on uploads — do not restage it here.
@@ -251,7 +256,6 @@ jobs:
         run: |
           set -euo pipefail
           args=()
-          [ -n "${ROUTER_API_KEY:-}" ] && args+=(ROUTER_API_KEY="$ROUTER_API_KEY")
           [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] && args+=(CLOUDFLARE_ACCOUNT_ID="$CLOUDFLARE_ACCOUNT_ID")
           [ -n "${R2_ACCESS_KEY_ID:-}" ] && args+=(R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID")
           [ -n "${R2_SECRET_ACCESS_KEY:-}" ] && args+=(R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY")
