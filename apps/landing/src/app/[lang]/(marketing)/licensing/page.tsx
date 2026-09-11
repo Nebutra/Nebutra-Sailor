@@ -162,7 +162,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
       </section>
 
       {/* License Comparison Cards */}
-      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-24 sm:px-6 lg:px-8">
+      <section className="relative z-10 mx-auto max-w-wide px-4 pb-24 sm:px-6 lg:px-8">
         <AnimateInGroup
           stagger="normal"
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[1200px] mx-auto"

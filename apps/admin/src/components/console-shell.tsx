@@ -42,7 +42,7 @@ export function ConsoleShell({
         </span>
       </header>
       <ConsoleTabs tabs={tabs} />
-      <main className="mx-auto flex w-full max-w-[1400px] flex-1 flex-col gap-5 px-6 py-7">
+      <main className="mx-auto flex w-full max-w-wide flex-1 flex-col gap-5 px-6 py-7">
         {children}
       </main>
     </div>

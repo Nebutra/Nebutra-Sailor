@@ -93,7 +93,7 @@ export function CompanyTower({
         className="text-neutral-7/[0.08]"
       />
 
-      <div className="relative mx-auto flex max-w-[1400px] flex-col">
+      <div className="relative mx-auto flex max-w-wide flex-col">
         {/* Header — left-aligned tool chrome, NOT a centered marketing hero. */}
 
         <header className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-neutral-7 px-4 py-3">

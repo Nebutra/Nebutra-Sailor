@@ -803,6 +803,22 @@ function buildTailwindThemeInline() {
   --radius-3xl: 1.5rem;
   --radius-full: 9999px;
 
+  /* Containers — the page-width contract from CLAUDE.md, as real utilities.
+     max-w-text (reading), max-w-content (pricing/blog), max-w-wide (feature bento, navbar).
+
+     These values also reach :root through the semantic layer, so var(--container-wide) keeps
+     working; what was missing was the Tailwind side. Without it there is no max-w-wide to reach
+     for, and 92 call sites across apps/** had typed max-w-wide instead — a decided number
+     living in a className, where changing the token cannot move it.
+
+     Literals rather than var(--container-wide): Tailwind emits an @theme entry into its own
+     layer, so a same-named reference becomes self-referential and survives only because the
+     semantic :root happens to come later in the cascade. Duplicating the number and pinning it
+     with a parity test is the honest trade — see design-tokens' container parity test. */
+  --container-text: 896px;
+  --container-content: 1152px;
+  --container-wide: 1400px;
+
   /* Shadows */
   --shadow-xs: var(--elevation-xs);
   --shadow-sm: var(--elevation-sm);

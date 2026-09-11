@@ -29,7 +29,7 @@ export default async function CommunityPage({ searchParams }: PageProps) {
     <>
       {isWelcome && <WelcomeOverlayShell />}
 
-      <main className="mx-auto max-w-[1400px] px-4 py-12 md:px-6">
+      <main className="mx-auto max-w-wide px-4 py-12 md:px-6">
         <div className="mb-12 text-center">
           <h1 className="mb-3 text-5xl font-bold tracking-tight text-foreground">SLEPTONS</h1>
           <p className="mb-6 text-lg text-muted-foreground">

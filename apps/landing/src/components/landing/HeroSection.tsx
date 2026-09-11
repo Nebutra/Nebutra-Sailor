@@ -27,7 +27,7 @@ export async function HeroSection() {
       <AuroraBackground intensity={0.3} position="top" variant="subtle" />
 
       <div className="relative z-10 w-full min-w-0 px-4 sm:px-6">
-        <div className="mx-auto flex w-full max-w-[1400px] min-w-0 flex-col items-center justify-center text-center">
+        <div className="mx-auto flex w-full max-w-wide min-w-0 flex-col items-center justify-center text-center">
           <AnimateInGroup
             stagger="normal"
             className="flex w-full min-w-0 flex-col items-center justify-center space-y-6 md:space-y-7"

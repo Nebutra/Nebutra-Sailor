@@ -28,7 +28,7 @@ export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[var(--neutral-6)] bg-[color-mix(in_srgb,var(--neutral-1)_92%,transparent)] backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-[1400px] min-w-0 items-center gap-2 px-4 sm:gap-4 sm:px-6 md:gap-6">
+      <div className="mx-auto flex h-16 w-full max-w-wide min-w-0 items-center gap-2 px-4 sm:gap-4 sm:px-6 md:gap-6">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2 sm:gap-2.5"

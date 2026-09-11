@@ -23,7 +23,7 @@ export function SolutionsIndex({ locale }: SolutionsIndexProps) {
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
 
   return (
-    <div className="mx-auto max-w-[1400px] px-4 pb-24 pt-28 md:px-6 md:pt-36">
+    <div className="mx-auto max-w-wide px-4 pb-24 pt-28 md:px-6 md:pt-36">
       <AnimateIn preset="emerge">
         <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-muted-foreground/70">
           {pick(COPY.eyebrow, locale)}

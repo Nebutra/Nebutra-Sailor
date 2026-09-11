@@ -16,7 +16,7 @@ export function CapabilityMatrixSection() {
       {/* Ambient aurora background */}
       <AuroraBackground variant="subtle" position="center" intensity={0.4} />
 
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6 relative z-10">
+      <div className="mx-auto max-w-wide px-4 md:px-6 relative z-10">
         {/* Section header */}
         <AnimateIn preset="emerge" inView className="mx-auto max-w-3xl text-center mb-16 md:mb-24">
           <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-6">

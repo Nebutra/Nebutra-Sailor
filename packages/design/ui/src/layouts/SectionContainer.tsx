@@ -30,9 +30,9 @@ type SectionSpacing = "sm" | "md" | "lg" | "xl";
  */
 const maxWidthMap: Record<SectionSize, string> = {
   sm: "max-w-3xl", // 768px
-  md: "max-w-[var(--container-text)]", // 896px
-  lg: "max-w-[var(--container-content)]", // 1152px
-  xl: "max-w-[var(--container-wide)]", // 1400px
+  md: "max-w-text", // 896px
+  lg: "max-w-content", // 1152px
+  xl: "max-w-wide", // 1400px
   full: "max-w-none",
 };
 

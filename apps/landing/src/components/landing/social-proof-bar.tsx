@@ -42,7 +42,7 @@ export async function SocialProofBar({ locale }: { locale: Locale }) {
       className="relative w-full border-y border-border bg-background py-16 md:py-20"
       aria-labelledby="social-proof-title"
     >
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+      <div className="mx-auto max-w-wide px-4 md:px-6">
         <h2
           id="social-proof-title"
           className="text-center text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground"

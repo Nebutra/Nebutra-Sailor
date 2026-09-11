@@ -112,7 +112,7 @@ const CODE_LINES = CODE_SNIPPET.split("\n").map((line, lineNumber) => ({
 
 export function HeroMockupWindow() {
   return (
-    <AnimateIn preset="fadeUp" className="w-full max-w-[1400px] mx-auto relative z-20 px-4 group">
+    <AnimateIn preset="fadeUp" className="w-full max-w-wide mx-auto relative z-20 px-4 group">
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
         className="relative rounded-[var(--radius-panel)] border border-border bg-background/95 overflow-hidden transition-[background-color,border-color,box-shadow] duration-500"

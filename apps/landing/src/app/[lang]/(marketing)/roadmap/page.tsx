@@ -136,7 +136,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
       <Navbar />
 
       {/* Hero */}
-      <section className="relative mx-auto max-w-[1400px] px-4 pt-20 pb-16 md:px-6 text-center">
+      <section className="relative mx-auto max-w-wide px-4 pt-20 pb-16 md:px-6 text-center">
         <AuroraBackground variant="vivid" position="top" intensity={0.5} />
         <AnimateIn preset="fade">
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--blue-6)] bg-[color:hsl(var(--primary))]/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[color:hsl(var(--primary))]">

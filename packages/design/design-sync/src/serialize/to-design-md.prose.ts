@@ -82,7 +82,7 @@ export const DESIGN_MD_GOVERNANCE = {
   ],
   donts: [
     "Don't hardcode brand or status hex values in components — use token aliases (`var(--brand-primary)`, etc.).",
-    "Don't use `max-w-5xl` or `max-w-7xl` for feature sections — use the wide container (`max-w-[1400px]`).",
+    "Don't use `max-w-5xl` or `max-w-7xl` for feature sections — use the wide container (`max-w-wide`).",
     "Don't reintroduce hardcoded focus rings (they double-render with the global `:focus-visible` rule).",
     "Don't use raw form controls (`<input>`, `<select>`, `<textarea>`) in app surfaces — use the primitives from `@nebutra/ui/primitives`.",
   ],

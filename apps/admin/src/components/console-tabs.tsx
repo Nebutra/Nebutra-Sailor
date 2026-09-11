@@ -20,7 +20,7 @@ export function ConsoleTabs({ tabs }: { tabs: ConsoleTab[] }) {
   const pathname = usePathname();
   return (
     <nav aria-label="Console" className="border-border border-b bg-card">
-      <div className="mx-auto flex max-w-[1400px] items-center px-3">
+      <div className="mx-auto flex max-w-wide items-center px-3">
         {tabs.map((tab) => {
           const active = !tab.disabled && isActive(pathname, tab.href);
           const body = (

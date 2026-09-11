@@ -29,7 +29,7 @@ export default async function AtelierPage() {
   if (!enabled) notFound();
 
   return (
-    <section className="mx-auto w-full max-w-[1400px]">
+    <section className="mx-auto w-full max-w-wide">
       <PageHeader
         title="Atelier"
         description="Describe what you want — the agent generates it and the server places it on the canvas."

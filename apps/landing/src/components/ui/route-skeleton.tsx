@@ -13,10 +13,7 @@
  */
 export default function RouteSkeleton() {
   return (
-    <div
-      className="mx-auto w-full max-w-[1400px] animate-pulse px-4 py-16 md:px-6"
-      aria-busy="true"
-    >
+    <div className="mx-auto w-full max-w-wide animate-pulse px-4 py-16 md:px-6" aria-busy="true">
       <span className="sr-only">Loading…</span>
       <div className="h-10 w-2/3 rounded-md bg-muted" />
       <div className="mt-4 h-5 w-1/2 rounded-md bg-muted" />

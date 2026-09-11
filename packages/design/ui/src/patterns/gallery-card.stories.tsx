@@ -130,7 +130,7 @@ export const WithActions: Story = {
 
 export const Grid: Story = {
   render: () => (
-    <div className="grid w-full max-w-[1400px] grid-cols-2 gap-4 lg:grid-cols-4">
+    <div className="grid w-full max-w-wide grid-cols-2 gap-4 lg:grid-cols-4">
       <GalleryCard
         icon={<FileText className="h-5 w-5" />}
         iconTone="blue"
@@ -192,7 +192,7 @@ const toneShowcase: Array<{
 
 export const AllTones: Story = {
   render: () => (
-    <div className="grid w-full max-w-[1400px] grid-cols-2 gap-4 lg:grid-cols-4">
+    <div className="grid w-full max-w-wide grid-cols-2 gap-4 lg:grid-cols-4">
       {toneShowcase.map((t) => (
         <GalleryCard
           key={t.tone}

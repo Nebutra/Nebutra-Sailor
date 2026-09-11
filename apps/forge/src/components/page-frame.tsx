@@ -19,7 +19,7 @@ export function PageFrame({
   className?: string;
   as?: "div" | "section" | "article";
 }) {
-  const max = width === "wide" ? "max-w-[1400px]" : width === "content" ? "max-w-6xl" : "max-w-3xl";
+  const max = width === "wide" ? "max-w-wide" : width === "content" ? "max-w-6xl" : "max-w-3xl";
 
   // min-w-0 + tighter mobile padding: prevents CJK/flex children from forcing
   // horizontal scroll on small viewports.

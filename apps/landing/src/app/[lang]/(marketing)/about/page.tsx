@@ -61,7 +61,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
       {/* 1. Hero Section (Asymmetrical Text + Abstract Art) */}
       <section className="relative pt-32 md:pt-48 pb-20 overflow-hidden">
         <AuroraBackground variant="subtle" position="top" intensity={0.5} />
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
             {/* Text Content */}
             <div className="flex-1 w-full text-left">
@@ -155,7 +155,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
       {/* 2.5 Triple Vision — 创业智能化 / 轻量化 / 民主化 */}
       <section className="py-24 md:py-32 bg-background border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" inView>
             <div className="mb-16 md:mb-24 text-center md:text-left max-w-4xl">
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
@@ -224,7 +224,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
       {/* 2.75 Omni-Factor Routing Protocol — 超级要素路由协议 */}
       <section className="py-24 md:py-32 bg-background border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" inView>
             <div className="mb-16 md:mb-20 max-w-4xl">
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
@@ -317,7 +317,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
       {/* 4. Values Bento Grid (4 Columns) */}
       <section className="py-32 bg-background relative">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-20 text-center md:text-left">
             <h2
               className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4"
@@ -380,7 +380,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
       {/* 5. Organization & Architecture Philosophy (50/50 Split) */}
       <section className="py-24 md:py-32 overflow-hidden bg-muted/30 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             {/* Left: Text */}
             <div className="flex-1 w-full text-left order-2 lg:order-1">
@@ -432,7 +432,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
       {/* 5.5 Explore More — Entry cards to child pages */}
       <section className="py-24 md:py-32 bg-background">
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-16 text-center md:text-left">
             <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-4 block">
               {isZhUiLocale(lang) ? "深入了解" : "Explore More"}

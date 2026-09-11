@@ -93,7 +93,7 @@ function IconChip({ icon, name }: AiIcon) {
 export function AIConstellationMarquee() {
   return (
     <KineticSignalMarquee
-      className="w-full max-w-[1400px] mt-14"
+      className="w-full max-w-wide mt-14"
       eyebrow={
         <AnimateIn preset="emerge" inView>
           INTEGRATED WITH 47 AI PROVIDERS

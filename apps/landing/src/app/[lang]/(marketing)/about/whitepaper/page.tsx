@@ -400,7 +400,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
         </div>
 
         {/* Three factor groups — wider container for grid */}
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             {OMNI_FACTOR_GROUPS.map((group, idx) => {
               const content = pick(lang, group);
@@ -466,7 +466,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
         </div>
 
         {/* Dual product deep-dive */}
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
             {/* Builder Core */}
             <article className="h-full rounded-[var(--radius-card)] border border-border/60 bg-background p-8 md:p-10 flex flex-col">
@@ -608,7 +608,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           </div>
         </div>
 
-        <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="container mx-auto px-4 max-w-wide">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {ORGANIZATION_PRINCIPLES.map((principle) => {
               const content = pick(lang, principle);

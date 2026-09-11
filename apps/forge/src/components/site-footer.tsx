@@ -48,7 +48,7 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-auto w-full border-t border-[var(--neutral-6)] bg-[var(--neutral-1)]">
-      <div className="mx-auto w-full max-w-[1400px] px-6 pt-14 pb-8 md:pt-16">
+      <div className="mx-auto w-full max-w-wide px-6 pt-14 pb-8 md:pt-16">
         {/*
           First track needs a real min (not minmax(0,…)): CJK soft-wrap makes
           min-content ≈ one glyph, which collapses the brand column into a

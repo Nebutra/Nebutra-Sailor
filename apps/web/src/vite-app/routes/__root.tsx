@@ -50,7 +50,7 @@ function ProductShell() {
     <SidebarProvider>
       <div className="min-h-screen bg-neutral-1 text-neutral-12">
         <header className="sticky top-0 z-30 border-neutral-7 border-b bg-neutral-1/90 backdrop-blur">
-          <div className="mx-auto flex h-14 w-full max-w-[1400px] items-center justify-between px-4">
+          <div className="mx-auto flex h-14 w-full max-w-wide items-center justify-between px-4">
             <Link
               to="/startup-os"
               className="inline-flex h-8 items-center"
@@ -89,7 +89,7 @@ function ProductShell() {
             </div>
           </div>
         </header>
-        <main className="mx-auto w-full max-w-[1400px] px-4 py-6">
+        <main className="mx-auto w-full max-w-wide px-4 py-6">
           <Outlet />
         </main>
         {import.meta.env.DEV ? <ReactQueryDevtools initialIsOpen={false} /> : null}

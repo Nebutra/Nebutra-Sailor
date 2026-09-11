@@ -24,7 +24,7 @@ export function UseCasesSection() {
     <section className="py-16 md:py-24 lg:py-32 bg-muted/20 relative overflow-hidden">
       {/* Ambient aurora background */}
       <AuroraBackground variant="subtle" position="center" intensity={0.4} />
-      <div className="container relative z-10 mx-auto px-4 max-w-[1400px]">
+      <div className="container relative z-10 mx-auto px-4 max-w-wide">
         {/* Header section */}
         <div className="text-center mb-10 md:mb-16 lg:mb-24">
           <AnimateIn preset="fadeUp">
@@ -53,7 +53,7 @@ export function UseCasesSection() {
         {/* Elite Interactive Split Layout */}
         <KineticMorphSurface
           activeKey={USE_CASES_DATA[activeTab].key}
-          className="mx-auto max-w-[1400px]"
+          className="mx-auto max-w-wide"
         >
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 relative z-20">
             {/* Left Column: Interactive Command-Palette style Tabs */}

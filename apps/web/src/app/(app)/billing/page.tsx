@@ -135,7 +135,7 @@ export default async function BillingPage({ searchParams }: BillingPageProps) {
   const journeyNotice = resolveBillingJourneyNotice(resolvedSearchParams);
 
   return (
-    <section className="mx-auto w-full max-w-[1400px]" aria-label="Billing">
+    <section className="mx-auto w-full max-w-wide" aria-label="Billing">
       <Suspense fallback={<LoadingState message="Loading billing overview..." />}>
         <BillingContent journeyNotice={journeyNotice} />
       </Suspense>

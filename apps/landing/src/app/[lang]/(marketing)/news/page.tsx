@@ -169,7 +169,7 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
     <main id="main-content" className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="mx-auto max-w-[1400px] px-4 pt-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-wide px-4 pt-16 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
           <NewsroomHero contactHref={contactHref} rssHref={rssHref} isZh={isZh} />
         </AnimateIn>
@@ -210,14 +210,14 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
 function NewsPageSkeleton() {
   return (
     <main id="main-content" className="min-h-screen bg-background" aria-busy="true">
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-wide items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
         <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">
           <div className="h-4 w-16 animate-pulse rounded bg-muted" />
           <div className="h-4 w-16 animate-pulse rounded bg-muted" />
         </div>
       </div>
-      <div className="mx-auto max-w-[1400px] px-4 pt-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-wide px-4 pt-16 sm:px-6 lg:px-8">
         <div className="h-14 w-72 animate-pulse rounded bg-muted" />
         <div className="mt-14 grid gap-12 border-t border-border pt-14 lg:grid-cols-[1.65fr_1fr]">
           <div className="h-[26rem] animate-pulse rounded-[var(--radius-xl)] bg-muted" />
