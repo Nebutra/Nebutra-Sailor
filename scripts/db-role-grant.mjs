@@ -35,38 +35,42 @@ try {
   const me = (await client.query("select current_user")).rows[0].current_user;
   say("connection role", me);
 
-  if (await canAssume()) {
-    say("already granted", { role: ROLE, changed: false });
+  // Resolve the target first. Whether *this* connection can already assume the
+  // role says nothing about another one, and checking that first is how a run
+  // aimed at the app's role short-circuited on the runner's own grant and
+  // reported "already granted" while the app stayed broken.
+  const target = (process.env.GRANT_TO ?? "").trim();
+  if (target && !/^[A-Za-z0-9_.]+$/.test(target)) {
+    throw new Error(`GRANT_TO is not a plain role name: ${target}`);
+  }
+  const other = target !== "" && target !== me;
+  const grantee = target ? `"${target}"` : "current_user";
+
+  if (!other && (await canAssume())) {
+    say("already granted", { role: ROLE, to: me, changed: false });
   } else if (process.env.CONFIRM !== "GRANT") {
-    say("would grant", { statement: `GRANT ${ROLE} TO ${me} WITH SET TRUE`, changed: false });
+    say("would grant", {
+      statement: `GRANT ${ROLE} TO ${target || me} WITH SET TRUE`,
+      changed: false,
+    });
     console.log("Not confirmed — re-run with confirm=GRANT to apply.");
   } else {
-    // Grant to a named role when given one, not just to `current_user`.
-    // PlanetScale usernames carry a `.<branch-id>` suffix, so the role a runner
-    // connects as (`pscale_api_x`) and the role an app connects as
-    // (`pscale_api_x.<branch>`) are different roles. Granting only to
-    // current_user fixed CI and left the app failing exactly as before.
-    const target = (process.env.GRANT_TO ?? "").trim();
-    if (target && !/^[A-Za-z0-9_.]+$/.test(target)) {
-      throw new Error(`GRANT_TO is not a plain role name: ${target}`);
-    }
-    const grantee = target ? `"${target}"` : "current_user";
     // `WITH SET TRUE` is the part that matters: in PostgreSQL 16 membership
     // alone stopped conveying SET ROLE, which is why the existing
     // connection -> postgres -> app_user chain does not work.
+    //
+    // PlanetScale usernames carry a `.<branch-id>` suffix, so the role a runner
+    // connects as and the role an app connects as are different roles. The
+    // grant has to name the one that is actually failing.
     await client.query(`grant ${ROLE} to ${grantee} with set true`);
-    say("granted", { role: ROLE, to: target || me });
+    say("granted", { role: ROLE, to: target || me, changed: true });
 
-    if (target && target !== me) {
-      say("note", {
-        message: "granted to another role; this connection cannot verify it",
-        verify: "re-run from that role, or call the endpoint that uses it",
+    if (other) {
+      say("not verified here", {
+        reason: "this connection cannot SET ROLE as another role",
+        verify: "call the endpoint that uses it",
       });
-      await client.end();
-      process.exit(0);
-    }
-
-    if (!(await canAssume())) {
+    } else if (!(await canAssume())) {
       console.error(`::error::GRANT succeeded but ${ROLE} still cannot be assumed.`);
       process.exitCode = 1;
     } else {
