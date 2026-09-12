@@ -22,6 +22,7 @@ import {
   type SupplyInventory,
 } from "@nebutra/router-supply";
 import { getModelRoutes, type ModelRouteRow } from "./model-routes";
+import { overridePricedModels, priceOverrideFor } from "./supply/price-overrides";
 
 /** models.dev raw providers we keep on the shelf */
 const PREFERRED_RAW = new Set([
@@ -427,7 +428,11 @@ export async function getListingCatalog(): Promise<{
       }
     }
 
-    // Explicit aliases always on shelf (configured SKUs)
+    // Explicit aliases are always on the shelf (they are configured SKUs), but
+    // being configured is not the same as being servable. `sellable` means the
+    // edge's real upstream confirmed the model; only inventory may set it. The
+    // shelf once advertised twelve models against an inventory of one because
+    // an alias set this flag on its own.
     for (const id of aliasIds) {
       const cur = byPublic.get(id);
       if (cur) {
@@ -435,7 +440,7 @@ export async function getListingCatalog(): Promise<{
           ...cur,
           routes: routes.get(id) ?? cur.routes,
           routed: true,
-          sellable: true,
+          sellable: inv.ok ? inventoryHas(inv, id) : false,
         });
         continue;
       }
@@ -448,9 +453,33 @@ export async function getListingCatalog(): Promise<{
           { reasoning: false, vision: false },
           routes.get(id) ?? [],
           "alias-fallback",
-          true,
+          inv.ok ? inventoryHas(inv, id) : false,
         ),
       );
+    }
+
+    // A model we hold a deliberate price for is one we intend to sell, so it
+    // belongs on the shelf even when the public index has never heard of it.
+    // Without this, a model the upstream genuinely serves and we genuinely
+    // priced — gpt-image-2.5, released days ago — was never even a candidate,
+    // because candidacy came only from the index or the alias table.
+    for (const id of overridePricedModels()) {
+      if (byPublic.has(id)) continue;
+      const override = priceOverrideFor(id);
+      if (!override) continue;
+      byPublic.set(id, {
+        ...toListing(
+          id,
+          id,
+          null,
+          { reasoning: false, vision: false },
+          routes.get(id) ?? [],
+          "alias-fallback",
+          inv.ok ? inventoryHas(inv, id) : false,
+        ),
+        inputPerMTok: override.inputPricePerMillion,
+        outputPerMTok: override.outputPricePerMillion,
+      });
     }
 
     let models = [...byPublic.values()];

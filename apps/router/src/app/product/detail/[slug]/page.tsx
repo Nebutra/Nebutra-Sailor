@@ -2,12 +2,8 @@ import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductDetail } from "@/components/product-detail";
-import {
-  getListedModelBySlug,
-  getRelatedListings,
-  PROVIDER_LABEL,
-  resolveListingProvider,
-} from "@/lib/listing-catalog";
+import { PROVIDER_LABEL, resolveListingProvider } from "@/lib/listing-catalog";
+import { getPricedModelBySlug, getPricedRelatedListings } from "@/lib/shelf-prices";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +13,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const model = await getListedModelBySlug(slug);
+  const model = await getPricedModelBySlug(slug);
   if (!model) {
     return { title: "模型详情" };
   }
@@ -34,10 +30,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  */
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
-  const model = await getListedModelBySlug(slug);
+  const model = await getPricedModelBySlug(slug);
   if (!model) notFound();
 
-  const related = await getRelatedListings(model, 8);
+  const related = await getPricedRelatedListings(model, 8);
 
   return <ProductDetail model={model} related={related} />;
 }

@@ -167,6 +167,32 @@ export class RouterBillingRepository {
   }
 
   /**
+   * Every published, active price row.
+   *
+   * The public shelf used to quote the open model index while the spine charged
+   * from this table, so a model could be advertised at zero and billed at fifty.
+   * A storefront must quote the rate it will actually charge, which is this one.
+   */
+  async listPublishedPrices(): Promise<RouterPriceRow[]> {
+    const rows = await this.prisma.modelConfig.findMany({
+      where: { published: true, isActive: true },
+      orderBy: { modelName: "asc" },
+    });
+    return rows.map((row) => ({
+      modelName: row.modelName,
+      unit: row.unit,
+      currency: row.currency,
+      published: row.published,
+      isActive: row.isActive,
+      inputPerMTok: decimal(row.inputPricePerMillion),
+      outputPerMTok: decimal(row.outputPricePerMillion),
+      cacheReadPerMTok: decimal(row.cacheReadPerMillion),
+      cacheWritePerMTok: decimal(row.cacheWritePerMillion),
+      unitPrice: decimal(row.unitPrice),
+    }));
+  }
+
+  /**
    * Per-key spend state. `costDaily` is reported as 0 when the stored counter
    * belongs to an earlier UTC day — the row itself is reset lazily on the next
    * settle, so a key that is never used again never needs a sweep.

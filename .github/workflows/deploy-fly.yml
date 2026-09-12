@@ -323,6 +323,36 @@ jobs:
           echo "::error::$url is not healthy ($code). DNS will not cut over."
           exit 1
 
+      # A 200 on the home page says the process is up, not that the station can
+      # take money. router.nebutra.com is the paid surface: cutting its DNS to a
+      # deployment with an empty shelf, or one whose edge lets an unkeyed request
+      # through, is worse than leaving the old origin in place. Gate the cutover
+      # on the two facts that make the hostname worth pointing at.
+      - name: Gate the router cutover on a sellable shelf
+        if: matrix.app == 'router' && github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
+        run: |
+          set -euo pipefail
+          base="https://${{ matrix.fly_app }}.fly.dev"
+
+          catalogue=$(curl -sS --max-time 30 "$base/api/catalogue" || echo '{}')
+          sellable=$(printf '%s' "$catalogue" | python3 -c "import json,sys;print(len(json.load(sys.stdin).get('data') or []))" 2>/dev/null || echo 0)
+          echo "sellable models: $sellable"
+          printf '%s' "$catalogue" | head -c 400; echo
+          if [ "$sellable" -lt 1 ]; then
+            echo "::error::The shelf is empty — nothing is sellable on $base. DNS will not cut over."
+            exit 1
+          fi
+
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 \
+            -X POST "$base/v1/chat/completions" \
+            -H 'content-type: application/json' \
+            -d '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"hi"}]}' || echo 000)
+          echo "unkeyed relay -> $code"
+          if [ "$code" != "401" ] && [ "$code" != "403" ]; then
+            echo "::error::An unkeyed relay answered $code, so the edge is not refusing it. DNS will not cut over."
+            exit 1
+          fi
+
       - name: Cut over Cloudflare DNS
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true' && matrix.host != ''
         env:

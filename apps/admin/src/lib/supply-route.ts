@@ -19,7 +19,8 @@ export async function handleSupplyProxy(request: Request, targetPath: string): P
     }
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "upstream_failed" },
-      { status: 502 },
+      // Cloudflare replaces an origin 502 with its own page, discarding this body.
+      { status: 503 },
     );
   }
 }

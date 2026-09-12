@@ -295,3 +295,34 @@ export function assertApplyAllowed(action: AdminAction, request: ActionRequest):
 export function resolveContractUrl(manifest: Pick<AdminManifest, "origin">, path: string): string {
   return new URL(path, manifest.origin).toString();
 }
+
+/**
+ * The HTTP status an admin error travels as.
+ *
+ * Cloudflare sits in front of every admin and product host, and it replaces an
+ * origin's `502` or `504` with its own branded HTML error page. The body we
+ * wrote — the code and the message the operator needs — is discarded before the
+ * browser sees it, so the console can only report `network · HTTP 502`. A
+ * contract endpoint therefore never answers with a gateway status: an upstream
+ * that failed is `503`, and a fault of our own is `500`. Both reach the client
+ * with their JSON envelope intact.
+ */
+export const ADMIN_ERROR_STATUS: Record<AdminError["error"]["code"], number> = {
+  unauthenticated: 401,
+  forbidden: 403,
+  not_found: 404,
+  invalid_input: 400,
+  plan_required: 409,
+  plan_expired: 409,
+  upstream_unavailable: 503,
+  internal: 500,
+};
+
+/**
+ * Narrow an arbitrary status to one that survives the CDN, preserving anything
+ * already safe. Use it when echoing an upstream contract call's status.
+ */
+export function cdnSafeStatus(status: number | undefined, fallback = 503): number {
+  if (!status || status === 502 || status === 504 || status < 400 || status > 599) return fallback;
+  return status;
+}

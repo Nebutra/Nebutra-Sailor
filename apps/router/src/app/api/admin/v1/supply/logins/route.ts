@@ -1,3 +1,4 @@
+import { ADMIN_ERROR_STATUS } from "@nebutra/contracts/admin";
 import { err, gateStaff, json } from "@/lib/admin/service-token";
 import { listLogins } from "@/lib/supply/login";
 
@@ -12,7 +13,7 @@ export async function GET(request: Request) {
   } catch (error) {
     return json(
       err("upstream_unavailable", error instanceof Error ? error.message : "probe failed"),
-      502,
+      ADMIN_ERROR_STATUS.upstream_unavailable,
     );
   }
 }

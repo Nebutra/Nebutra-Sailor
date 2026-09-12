@@ -1,9 +1,14 @@
-import { ActionRequestSchema, assertApplyAllowed } from "@nebutra/contracts/admin";
+import {
+  ActionRequestSchema,
+  ADMIN_ERROR_STATUS,
+  assertApplyAllowed,
+} from "@nebutra/contracts/admin";
 import { ROUTER_ADMIN_MANIFEST } from "@/lib/admin/manifest";
 import { err, gateStaff, json } from "@/lib/admin/service-token";
 import { SupplyConfigError } from "@/lib/supply/clients";
 import { applyChannelSync, planChannelSync } from "@/lib/supply/domain";
 import { completeLogin, isLoginProvider, startLogin } from "@/lib/supply/login";
+import { applyPricePublish, planPricePublish, unpublishDrifted } from "@/lib/supply/pricing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,6 +40,16 @@ export async function POST(request: Request, context: RouteContext) {
         return json(err("plan_expired", "Plan expired or unknown — plan again."), 409);
       return json(result);
     }
+    if (id === "price.unpublish_drifted") {
+      return json(await unpublishDrifted(gate.caller, request));
+    }
+    if (id === "price.publish") {
+      if (parsed.data.mode === "plan") return json(await planPricePublish());
+      const result = await applyPricePublish(parsed.data.planId ?? "", gate.caller, request);
+      if ("expired" in result)
+        return json(err("plan_expired", "Plan expired or unknown — plan again."), 409);
+      return json(result);
+    }
     if (id === "account.login") {
       const provider = parsed.data.input.provider;
       if (!isLoginProvider(provider))
@@ -53,10 +68,13 @@ export async function POST(request: Request, context: RouteContext) {
     return json(err("not_found", `Action ${id} has no handler.`), 404);
   } catch (error) {
     if (error instanceof SupplyConfigError)
-      return json(err("upstream_unavailable", error.message), 503);
+      return json(
+        err("upstream_unavailable", error.message),
+        ADMIN_ERROR_STATUS.upstream_unavailable,
+      );
     return json(
       err("upstream_unavailable", error instanceof Error ? error.message : "action failed"),
-      502,
+      ADMIN_ERROR_STATUS.upstream_unavailable,
     );
   }
 }

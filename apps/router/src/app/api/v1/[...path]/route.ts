@@ -27,7 +27,8 @@ async function handle(request: Request, context: RouteContext): Promise<Response
       return refuse(503, "router_unconfigured", "Router supply is not configured.");
     }
     return refuse(
-      502,
+      // 502 never leaves the origin: Cloudflare swaps it for an HTML error page.
+      503,
       "upstream_failed",
       error instanceof Error ? error.message : "upstream_failed",
     );

@@ -1,3 +1,4 @@
+import { ADMIN_ERROR_STATUS } from "@nebutra/contracts/admin";
 import { err, gateStaff, json } from "@/lib/admin/service-token";
 import { SupplyConfigError } from "@/lib/supply/clients";
 import { readSignal } from "@/lib/supply/domain";
@@ -17,10 +18,13 @@ export async function GET(request: Request, context: RouteContext) {
     return json(reading);
   } catch (error) {
     if (error instanceof SupplyConfigError)
-      return json(err("upstream_unavailable", error.message), 503);
+      return json(
+        err("upstream_unavailable", error.message),
+        ADMIN_ERROR_STATUS.upstream_unavailable,
+      );
     return json(
       err("upstream_unavailable", error instanceof Error ? error.message : "probe failed"),
-      502,
+      ADMIN_ERROR_STATUS.upstream_unavailable,
     );
   }
 }

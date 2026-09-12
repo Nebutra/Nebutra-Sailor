@@ -64,7 +64,26 @@ import { getBalanceFresh } from "./wallet";
  * serving it for free.
  */
 
-const MIN_RESERVATION = 0.0001;
+/**
+ * The floor under a billable request, in USD.
+ *
+ * Serving a request costs something regardless of how few tokens it carried:
+ * roughly seven Postgres writes — the ledger entry, the balance, the credit
+ * transaction, two key counters, the request log, and the reservation row's
+ * insert and delete — plus the compute to relay it. A ten-token call to
+ * `gpt-5.6-luna` prices at $0.000014, about a fourteenth of that, so every one
+ * of them lost money no matter how large the markup was.
+ *
+ * It was unbounded, too: at the per-key rate limit a client doing nothing but
+ * tiny calls runs ~432,000 of them a month, and the shortfall grew with the
+ * number of keys rather than with revenue.
+ *
+ * The reservation floor is the same number on purpose. Admission has to hold at
+ * least what settlement will charge, or a request is admitted against a balance
+ * check it then exceeds.
+ */
+const MIN_CHARGE = 0.0002;
+const MIN_RESERVATION = MIN_CHARGE;
 
 function toPriceRow(row: RouterPriceRow): ModelPriceRow {
   return {
@@ -323,10 +342,54 @@ export function createRouterGuard(
           tenantId: input.identity.tenantId,
         });
       }
-      const price =
+      const priced =
         input.billable && model !== "unknown"
           ? await priceSettled(billing, model, input.usage)
           : zeroPrice(model, model === "unknown" ? "model_unreadable" : undefined);
+
+      // The station must not be able to lose money on a request that worked.
+      //
+      // Upstream bills us for a successful call whether or not we could read
+      // its usage. Settling those at zero — a model id we could not parse, a
+      // unit the response did not report — means we paid and collected
+      // nothing, and it scales with traffic. So a billable request that cannot
+      // be priced falls back to the amount admission already held: a
+      // worst-case figure the customer's balance was checked against before
+      // the call went out, so it is never a surprise and never below cost.
+      //
+      // Only when there is no hold at all (a post-paid multipart upload) does
+      // zero survive, and the edge now refuses those before they are relayed.
+      const price =
+        input.billable && priced.unpriced && input.admission && input.admission.reserved > 0
+          ? {
+              quantity: 1,
+              unit: "request",
+              unitCost: input.admission.reserved,
+              totalCost: input.admission.reserved,
+              unpriced: priced.unpriced,
+            }
+          : priced;
+      if (price !== priced) {
+        logger.warn("[router] charged the reservation for an unpriceable success", {
+          model,
+          reason: priced.unpriced,
+          charged: input.admission?.reserved,
+        });
+      }
+
+      // Nothing billable settles below what it cost us to serve it.
+      //
+      // Two exemptions, both deliberate. A refunded request pays nothing —
+      // the zero-completion promise is a full refund, and the infrastructure
+      // it burned is what the margin's refund allowance exists for. And a
+      // request with no admission hold pays nothing, because its balance was
+      // never checked: charging there would be a debit the customer had no
+      // chance to be refused for. The edge refuses those before relaying now,
+      // so that path should not arise.
+      const floored =
+        input.billable && input.admission && price.totalCost < MIN_CHARGE
+          ? { ...price, quantity: 1, unit: "request", unitCost: MIN_CHARGE, totalCost: MIN_CHARGE }
+          : price;
 
       // `saveLogs` is the customer's own switch over prompt-derived detail.
       // Read here rather than carried from admit because settle runs after the
@@ -342,10 +405,10 @@ export function createRouterGuard(
           requestId: input.requestId,
           idempotencyKey: `router:${input.requestId}`,
           model,
-          quantity: price.quantity,
-          unit: price.unit,
-          unitCost: price.unitCost,
-          totalCost: price.totalCost,
+          quantity: floored.quantity,
+          unit: floored.unit,
+          unitCost: floored.unitCost,
+          totalCost: floored.totalCost,
           currency: input.admission?.currency ?? "USD",
           // No admission means no hold was ever taken (post-paid). Zero is the
           // truth here, not a placeholder: `settle` finds no reservation row,
@@ -366,7 +429,8 @@ export function createRouterGuard(
             postPaid: input.admission === null,
             billable: input.billable,
             ...(input.billable ? {} : { refundReason: refundReason(input) }),
-            ...(price.unpriced ? { unpriced: price.unpriced } : {}),
+            ...(floored.unpriced ? { unpriced: floored.unpriced } : {}),
+            ...(floored !== price ? { flooredFrom: price.totalCost } : {}),
           },
         });
         if (!result.settled) {
@@ -374,7 +438,7 @@ export function createRouterGuard(
         }
       } finally {
         invalidateCreditCache(input.identity.tenantId);
-        await writeRequestLog(logs(), input, model, price, spend?.saveLogs ?? false);
+        await writeRequestLog(logs(), input, model, floored, spend?.saveLogs ?? false);
       }
     },
 

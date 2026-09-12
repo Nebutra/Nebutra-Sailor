@@ -1,0 +1,1723 @@
+{
+  "categories": [
+    {
+      "key": "api",
+      "name": "API",
+      "count": 1539,
+      "tags": [
+        {
+          "name": "语言大模型",
+          "count": 678,
+          "brands": [
+            {
+              "name": "OpenAI",
+              "count": 80,
+              "description": "OpenAI出品",
+              "logo": "https://file.302.ai/gpt/resource302db/4d6f8c05c9264d33b1be5892faae5099.png"
+            },
+            {
+              "name": "Anthropic",
+              "count": 25,
+              "description": "较快速的视觉文本模型，能以近乎即时的方式提供流畅的人机交互体验",
+              "logo": "https://file.302.ai/gpt/resource302db/cbd897b8853d4e52b66f9bd31fcb5328.png"
+            },
+            {
+              "name": "Gemini",
+              "count": 24,
+              "description": "原生集成谷歌联网搜索能力",
+              "logo": "https://file.302.ai/gpt/resource302db/76b694e1961741189c0ba0c5f26ae26b.png"
+            },
+            {
+              "name": "Grok",
+              "count": 15,
+              "description": "xAI 推出的具备原生工具使用、实时搜索集成与前沿推理能力的智能模型",
+              "logo": "https://file.302.ai/gpt/resource302db/c992be4e7f794f668979777d3243d539.png"
+            },
+            {
+              "name": "通义千问",
+              "count": 117,
+              "description": "集合中国各大AI模型",
+              "logo": "https://file.302.ai/gpt/resource302db/6f40b576077e4937a9e47d433ecd7316.png"
+            },
+            {
+              "name": "Qwen",
+              "count": 42,
+              "description": "开源模型，价格实惠",
+              "logo": "https://file.302.ai/gpt/resource302db/d20a0cf01d72467f99fc7a880dfb0a6b.png"
+            },
+            {
+              "name": "智谱",
+              "count": 36,
+              "description": "智谱AI推出的高性能中文基座模型",
+              "logo": "https://file.302.ai/gpt/resource302db/dbd1ab1ecc3a419cab43ae04c3a8bae4.png"
+            },
+            {
+              "name": "月之暗面",
+              "count": 14,
+              "description": "集合中国各大AI模型",
+              "logo": "https://file.302.ai/gpt/resource302db/b03c0a0c026f4e20a1047a6be76bfe92.png"
+            },
+            {
+              "name": "百度",
+              "count": 10,
+              "description": "集合中国各大AI模型",
+              "logo": "https://file.302.ai/gpt/resource302db/0ef14158bf734b818fe37a6182385bef.png"
+            },
+            {
+              "name": "Deepseek",
+              "count": 24,
+              "description": "DeepSeek最新对话模型版本",
+              "logo": "https://file.302ai.cn/gpt/resource302db/20260812/d04395e997004124a5e67cee1e7ab161.png"
+            },
+            {
+              "name": "豆包",
+              "count": 28,
+              "description": "集合中国各大AI模型",
+              "logo": "https://file.302.ai/gpt/resource302db/20251126/b87c2a3422e4489f9df94f956b4ef18a.png"
+            },
+            {
+              "name": "阶跃星辰",
+              "count": 10,
+              "description": "集合中国各大AI模型",
+              "logo": "https://file.302.ai/gpt/resource302db/b27002b78549497885d6fa801a0ea888.png"
+            },
+            {
+              "name": "商汤",
+              "count": 5,
+              "description": "商汤大规模混合专家语言模型",
+              "logo": "https://file.302.ai/gpt/resource302db/68e883e8014a4e59b4ef26dced4664d2.png"
+            },
+            {
+              "name": "Minimax",
+              "count": 3,
+              "description": "MoE 架构通用大模型",
+              "logo": "https://file.302.ai/gpt/resource302db/6d02f6976c294d5d81e544dda59d7aca.png"
+            },
+            {
+              "name": "MiniMax",
+              "count": 9,
+              "description": "融合了Lightning注意力、Softmax注意力和专家混合（MoE）的混合架构大模型",
+              "logo": "https://file.302.ai/gpt/resource302db/6d02f6976c294d5d81e544dda59d7aca.png"
+            },
+            {
+              "name": "腾讯混元",
+              "count": 13,
+              "description": "集合中国各大AI模型",
+              "logo": "https://file.302.ai/gpt/resource302db/20251126/61941b7b087e434cb5ba8913788bf10b.png"
+            },
+            {
+              "name": "Google",
+              "count": 1,
+              "description": "谷歌高性能且高效的开源模型",
+              "logo": "https://file.302.ai/gpt/resource302db/db16cabfed534ab79c82e4de3cb115af.png"
+            },
+            {
+              "name": "Meta",
+              "count": 9,
+              "description": "拥有极致推理能力与多语言通用性的开源模型",
+              "logo": "https://file.302.ai/gpt/resource302db/c7c87f24167940fab8640d300a70074d.png"
+            },
+            {
+              "name": "Mistral AI",
+              "count": 16,
+              "description": "高性价比、全能型，专为平衡复杂任务需求与落地成本打造",
+              "logo": "https://file.302.ai/gpt/resource302db/c518b46e7e1c48d8bd63ad7780b83002.png"
+            },
+            {
+              "name": "Microsoft",
+              "count": 3,
+              "description": "轻量级多语言指令微调开源模型",
+              "logo": "https://file.302.ai/gpt/resource302db/03a2cdee19cb4685ae02a428ad51f31a.png"
+            },
+            {
+              "name": "零一万物",
+              "count": 2,
+              "description": "集合中国各大AI模型",
+              "logo": "https://file.302.ai/gpt/resource302db/256e1c2221984cdf86bae9c725ca568e.png"
+            },
+            {
+              "name": "百川智能",
+              "count": 6,
+              "description": "集合中国各大AI模型",
+              "logo": "https://file.302.ai/gpt/resource302db/c4631b9b05074b76a863f763fb861fa2.png"
+            },
+            {
+              "name": "v0",
+              "count": 3,
+              "description": "Vercel 推出的代码生成类专业级模型，适用于日常任务和 UI 生成",
+              "logo": "https://file.302.ai/gpt/resource302db/ab90dbe5322c4386b5a2e1f446931e3f.png"
+            },
+            {
+              "name": "Perplexity",
+              "count": 5,
+              "description": "提供高级搜索功能，支持复杂的查询和后续操作",
+              "logo": "https://file.302.ai/gpt/resource302db/0d2811cf101044a9b0fbbe120e3a8c94.png"
+            },
+            {
+              "name": "专业模型",
+              "count": 4,
+              "description": "专注于医疗健康领域的垂直大模型，模拟全科医生和专家的诊疗思维",
+              "logo": "https://file.302.ai/gpt/resource302db/ba48e57144bb45688e730e834e73d999.png"
+            },
+            {
+              "name": "PPIO派欧云",
+              "count": 44,
+              "description": "直接在302.AI使用欧派云的所有模型",
+              "logo": "https://file.302.ai/gpt/resource302db/10a4e241cfda4150bca0d5d54799f807.png"
+            },
+            {
+              "name": "SophNet",
+              "count": 44,
+              "description": "直接在302.AI使用Sophnet的所有模型",
+              "logo": "https://file.302.ai/gpt/resource302db/20bf34d37c454938820cfa99b252465e.png"
+            },
+            {
+              "name": "硅基流动",
+              "count": 70,
+              "description": "直接在302.AI使用硅基流动的所有模型",
+              "logo": "https://file.302.ai/gpt/resource302db/bfd0d39385cb4e9fb0b12e85e1bfbecc.png"
+            },
+            {
+              "name": "长期记忆（Beta）",
+              "count": 1,
+              "description": "为任何大模型增加长期记忆功能",
+              "logo": "https://file.302.ai/gpt/resource302db/1d1cc308edca4be9a60ed582ef663844.png"
+            },
+            {
+              "name": "302.AI",
+              "count": 9,
+              "description": "为任何大模型增加联网能力",
+              "logo": "https://file.302.ai/gpt/resource302db/19d4e6584f874b45a526eef1255c2d64.png"
+            },
+            {
+              "name": "Unifuncs",
+              "count": 2,
+              "description": "UniFuncs推出的专业深度研究模型，擅长研究推理，能够从收集材料中分析和提出专业见解",
+              "logo": "https://file.302.ai/gpt/resource302db/24604c34645f44ebbdbfc17ddc6ae123.png"
+            },
+            {
+              "name": "美团",
+              "count": 1,
+              "description": "美团技术团队发布并开源的高效混合专家（MoE）语言模型",
+              "logo": "https://file.302.ai/gpt/resource302db/b4577707b00e4249956d31775ffd3d7b.png"
+            },
+            {
+              "name": "StreamLake",
+              "count": 3,
+              "description": "来自快手StreamLake的轻量级AI编码模型",
+              "logo": "https://file.302.ai/gpt/resource302db/55cdb83034784fb48f8def70655f129e.png"
+            }
+          ]
+        },
+        {
+          "name": "图片生成",
+          "count": 207,
+          "brands": [
+            {
+              "name": "通用接口",
+              "count": 1,
+              "description": "将所有图片模型通过统一格式调用",
+              "logo": "https://file.302.ai/gpt/resource302db/bef4d3aa06ac42f5bd1a8ad7f0e54a1d.png"
+            },
+            {
+              "name": "Grok",
+              "count": 1,
+              "description": "xAI 推出的文生图产品，高性价比、易集成的图像生成接口",
+              "logo": "https://file.302.ai/gpt/resource302db/20260131/67143324ce73422687c496ab5b6787fd.png"
+            },
+            {
+              "name": "DALL.E",
+              "count": 3,
+              "description": "OpenAI绘画模型",
+              "logo": "https://file.302.ai/gpt/resource302db/1f46ff46c8fa4d47a0270512fd7bb01c.png"
+            },
+            {
+              "name": "302.AI",
+              "count": 21,
+              "description": "由302.AI团队自主部署的开源模型",
+              "logo": "https://file.302.ai/gpt/resource302db/ef0462b7fa7e426ba20682de09917866.png"
+            },
+            {
+              "name": "Glif",
+              "count": 1,
+              "description": "AI工作流制作平台",
+              "logo": "https://file.302.ai/gpt/resource302db/5e98a47e80a54bd98d47fd424fd20581.png"
+            },
+            {
+              "name": "百度",
+              "count": 2,
+              "description": "来自百度的图片生成模型 ",
+              "logo": "https://file.302.ai/gpt/resource302db/eb694148e4514fa1adc8c98a7feb74c7.png"
+            },
+            {
+              "name": "GPT-Image-1",
+              "count": 3,
+              "description": "OpenAI于2025年4月发布的多模态图像生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/1639a83422214167954a6ee8168327fb.png"
+            },
+            {
+              "name": "GPT-Image-1.5",
+              "count": 1,
+              "description": "OpenAI旗舰级文生图与图像编辑模型",
+              "logo": "https://file.302.ai/gpt/resource302db/1639a83422214167954a6ee8168327fb.png"
+            },
+            {
+              "name": "gpt-image-2",
+              "count": 1,
+              "description": "OpenAI最新旗舰图像生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/1639a83422214167954a6ee8168327fb.png"
+            },
+            {
+              "name": "Bagel",
+              "count": 2,
+              "description": "来自字节跳动的文生图片模型",
+              "logo": "https://file.302.ai/gpt/resource302db/e0e1e6d57f0b4828a9efaeb1fd60d749.png"
+            },
+            {
+              "name": "硅基流动",
+              "count": 1,
+              "description": "来自硅基流动的图片生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/bfd0d39385cb4e9fb0b12e85e1bfbecc.png"
+            },
+            {
+              "name": "Higgsfield",
+              "count": 1,
+              "description": "来自Higgsfield的图片生成服务，专为影像与视频创作者设计",
+              "logo": "https://file.302.ai/gpt/resource302db/9c11d392b2de43bb91ab25a2726dc1eb.png"
+            },
+            {
+              "name": "Flux",
+              "count": 31,
+              "description": "Black Forest Labs公司提供的图片生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/105032da58024afb8e48946386f16403.png"
+            },
+            {
+              "name": "Ideogram",
+              "count": 10,
+              "description": "Ideogram提供的文字生成图片服务，可生成准确高质量的文字和海报",
+              "logo": "https://file.302.ai/gpt/resource302db/be9bed991a4942b0bbc83e5c7347543f.png"
+            },
+            {
+              "name": "通义万相",
+              "count": 11,
+              "description": "来自阿里云推出的尖端AI图像生成工具",
+              "logo": "https://file.302.ai/gpt/resource302db/a003633635534ebfaadfd8703978ef0e.png"
+            },
+            {
+              "name": "Qwen",
+              "count": 2,
+              "description": "阿里巴巴推出的旗舰级图片生成模型，具备顶级真实感与复杂文字渲染能力",
+              "logo": "https://file.302.ai/gpt/resource302db/20260105/f925f13c2a8d4c5683ab94e7b86cbe68.png"
+            },
+            {
+              "name": "Google",
+              "count": 10,
+              "description": "Google出品的图片生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/a1ddcceb33eb41838e936bdcf150cf55.png"
+            },
+            {
+              "name": "Midjourney",
+              "count": 12,
+              "description": "AIGC美学引领者",
+              "logo": "https://file.302.ai/gpt/resource302db/8f08c82a830b4998ad64514b21177333.png"
+            },
+            {
+              "name": "即梦",
+              "count": 9,
+              "description": "来自即梦的图片生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/f103c4b6dbba4414af0407e248ec68df.png"
+            },
+            {
+              "name": "Recraft",
+              "count": 3,
+              "description": "功能强大的AI图像生成模型，专为设计师和创意工作者打造",
+              "logo": "https://file.302.ai/gpt/resource302db/f98e041368fa4021814faeca2969e067.png"
+            },
+            {
+              "name": "Luma AI",
+              "count": 3,
+              "description": "来自Luma AI的图片生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/8a6295a542a64056b3b0b41cfc6f5644.png"
+            },
+            {
+              "name": "智谱",
+              "count": 3,
+              "description": "来自智谱的文生图片模型",
+              "logo": "https://file.302.ai/gpt/resource302db/dfd3a3c958404ad69b3d05ae35fdb84c.png"
+            },
+            {
+              "name": "Kling可灵",
+              "count": 8,
+              "description": "来自可灵AI的图片生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/2f06f6cd549d45f9a577994cd9471e6f.png"
+            },
+            {
+              "name": "Hidream",
+              "count": 3,
+              "description": "全球首个上线开放使用的图像和视频生成Diffusion Transformer（DiT）架构模型",
+              "logo": "https://file.302.ai/gpt/resource302db/28f51c5dbecd4ac1a24b783bad0b376a.png"
+            },
+            {
+              "name": "Minimax",
+              "count": 1,
+              "description": "来自Minimax的文生图片模型",
+              "logo": "https://file.302.ai/gpt/resource302db/c72f476621874cbb8f4a5c5b3659cab3.png"
+            },
+            {
+              "name": "Vidu",
+              "count": 2,
+              "description": "生数科技与清华联合推出的视频大模型",
+              "logo": "https://file.302.ai/gpt/resource302db/0ac466a6591b420191e42665a1d9185e.png"
+            },
+            {
+              "name": "WaveSpeed",
+              "count": 61,
+              "description": "在302.AI直接使用WaveSpeed的模型",
+              "logo": "https://file.302.ai/gpt/resource302db/d60f6bca70fb428590d8f67cb314335c.png"
+            }
+          ]
+        },
+        {
+          "name": "图片处理",
+          "count": 142,
+          "brands": [
+            {
+              "name": "Recraft",
+              "count": 4,
+              "description": "来自Recraft的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/2549e89840d04ee99868ed2ab998dcd9.png"
+            },
+            {
+              "name": "Vectorizer.AI",
+              "count": 1,
+              "description": "用AI将图片转化成矢量图",
+              "logo": "https://file.302.ai/gpt/resource302db/ea608ace930e42eb952090b2c130fa66.png"
+            },
+            {
+              "name": "阶跃星辰",
+              "count": 1,
+              "description": "来自阶跃星辰的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/fe0c95ee361a4de9b75cf344300f45ca.png"
+            },
+            {
+              "name": "BRIA",
+              "count": 16,
+              "description": "来自BRIA的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/1cb5bf955b3b4327b14208b4d2866b53.png"
+            },
+            {
+              "name": "Bagel",
+              "count": 1,
+              "description": "来自字节跳动的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/024352273eb04d77a1b12855d3d13f31.png"
+            },
+            {
+              "name": "腾讯混元3D",
+              "count": 2,
+              "description": "来自腾讯混元的Hunyuan3d模型",
+              "logo": "https://file.302.ai/gpt/resource302db/9644ef90f63945d981d8e75221de81f9.png"
+            },
+            {
+              "name": "302.AI",
+              "count": 41,
+              "description": "我们自己部署的开源方案",
+              "logo": "https://file.302.ai/gpt/resource302db/e683fccde25344e9b98c57221650e743.png"
+            },
+            {
+              "name": "Hidream",
+              "count": 1,
+              "description": "来自智象未来的图片编辑服务",
+              "logo": "https://file.302.ai/gpt/resource302db/1204436378214780ada769300351234d.png"
+            },
+            {
+              "name": "共绩算力",
+              "count": 7,
+              "description": "使用302.AI在共绩云上部署的开源模型",
+              "logo": "https://file.302.ai/gpt/resource302db/464d7e8101844c7ab2ec27560779410d.png"
+            },
+            {
+              "name": "Kling可灵",
+              "count": 2,
+              "description": "来自可灵的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/db2c3d2b22df4ffebcb4c844caea4c08.png"
+            },
+            {
+              "name": "即梦",
+              "count": 6,
+              "description": "来自即梦的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/f950557273624ae0b85e5953029a9bab.png"
+            },
+            {
+              "name": "Ideogram",
+              "count": 13,
+              "description": "来自Ideogram的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/be9bed991a4942b0bbc83e5c7347543f.png"
+            },
+            {
+              "name": "FASHN",
+              "count": 2,
+              "description": "来自FASHN的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/c23c2e26f91b44d28198bf46bf27011d.png"
+            },
+            {
+              "name": "Tripo3D",
+              "count": 1,
+              "description": "来自Tripo3D的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/55446f30948941d48f48ee8ddd5ad5f1.png"
+            },
+            {
+              "name": "Hyper3d",
+              "count": 1,
+              "description": "Hyper3d的Rodin Sketch提供了快速生成3D模型，适用于早期的原型设计。",
+              "logo": "https://file.302.ai/gpt/resource302db/1591b375a0764ccf8de9f89ba47878f2.png"
+            },
+            {
+              "name": "Flux",
+              "count": 14,
+              "description": "由Black Forest Labs团队推出的开源文本到图像生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/105032da58024afb8e48946386f16403.png"
+            },
+            {
+              "name": "Clipdrop",
+              "count": 4,
+              "description": "图片处理集合API公司",
+              "logo": "https://file.302.ai/gpt/resource302db/1ac210a560274f75bb3a7eac69b976a2.png"
+            },
+            {
+              "name": "Glif",
+              "count": 6,
+              "description": "AI工作流制作平台",
+              "logo": "https://file.302.ai/gpt/resource302db/d0ff5735b97d4d0fbfec4d5875dc343f.png"
+            },
+            {
+              "name": "302.AI-ComfyUI",
+              "count": 5,
+              "description": "302.AI基于ComfyUI实现的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/ac323cee1e9c4215a505e385d6ce011e.png"
+            },
+            {
+              "name": "通义万相",
+              "count": 4,
+              "description": "来自阿里云推出的尖端AI图像生成工具",
+              "logo": "https://file.302.ai/gpt/resource302db/8c0b04cb26ca449f9618bb330d51a471.png"
+            },
+            {
+              "name": "Qwen",
+              "count": 1,
+              "description": "通义千问系列图像编辑Plus模型，在首版Edit模型基础上进一步优化了推理性能与系统稳定性",
+              "logo": "https://file.302.ai/gpt/resource302db/1790c3059eef4c1192f3ce50bffb200f.png"
+            },
+            {
+              "name": "WaveSpeed",
+              "count": 2,
+              "description": "在302.AI直接使用WaveSpeed的模型",
+              "logo": "https://file.302.ai/gpt/resource302db/d60f6bca70fb428590d8f67cb314335c.png"
+            },
+            {
+              "name": "Topazlabs",
+              "count": 5,
+              "description": "来自Topazlabs的图片处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/e9cb6cd6ff814cb6bc523f3c4c21dbfd.png"
+            },
+            {
+              "name": "Topview",
+              "count": 1,
+              "description": "Topview商品图片智能替换工具，支持将指定商品图片与模板图片进行替换，自动生成新的商品展示图",
+              "logo": "https://file.302.ai/gpt/resource302db/d5d07db0ad984a9db445e7a34cac5f3e.png"
+            },
+            {
+              "name": "Photoroom",
+              "count": 1,
+              "description": "来自Photoroom的图像背景移除工具",
+              "logo": "https://file.302.ai/gpt/resource302db/20260113/08cdefd32c1e4b9f82e815b2b1c37c8d.png"
+            }
+          ]
+        },
+        {
+          "name": "视频生成",
+          "count": 209,
+          "brands": [
+            {
+              "name": "通用接口",
+              "count": 1,
+              "description": "将所有视频模型通过统一格式调用",
+              "logo": "https://file.302.ai/gpt/resource302db/fa9a5081b5194c509f960b88fa79fdd7.png"
+            },
+            {
+              "name": "OpenAI",
+              "count": 4,
+              "description": "OpenAI最新视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/b6cb8a384a164c33a8bd108be23d049b.png"
+            },
+            {
+              "name": "Luma AI",
+              "count": 1,
+              "description": "支持文字/图片生成视频",
+              "logo": "https://file.302.ai/gpt/resource302db/2e99a001d2bc4263afb90fbe75382ca8.png"
+            },
+            {
+              "name": "Genmo",
+              "count": 1,
+              "description": "来自 Genmo 公司开源的 Mochi 1 视频生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/1ccd6c47180e4107b15de2fd0e56da90.png"
+            },
+            {
+              "name": "昆仑万维",
+              "count": 1,
+              "description": "昆仑万维出品的视频生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/145458163e794222a98c2ccb783d7e82.png"
+            },
+            {
+              "name": "302.AI",
+              "count": 5,
+              "description": "我们自己部署的开源方案",
+              "logo": "https://file.302.ai/gpt/resource302db/a7c2275aff8848a1a367476fd3e93863.png"
+            },
+            {
+              "name": "智谱",
+              "count": 2,
+              "description": "来自智谱的图、文生视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/c7c76e959e2e4a19af1668abedd308de.png"
+            },
+            {
+              "name": "Runway",
+              "count": 7,
+              "description": "超真实文字生成视频",
+              "logo": "https://file.302.ai/gpt/resource302db/eea8b11b10204e53abfed3bd81c2c10c.png"
+            },
+            {
+              "name": "可灵",
+              "count": 22,
+              "description": "来自可灵的文生视频1.0模型",
+              "logo": "https://file.302.ai/gpt/resource302db/0d396876c8dc40f19c1514f308d781d8.png"
+            },
+            {
+              "name": "Minimax",
+              "count": 6,
+              "description": "来自Minimax的文生视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/bf4e0d20b1da448d8a8d48607edff6fe.png"
+            },
+            {
+              "name": "MiniMax",
+              "count": 5,
+              "description": "来自Minimax的文生视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/1ffa7555c50749dabc969b76f2a6b451.png"
+            },
+            {
+              "name": "Pika",
+              "count": 4,
+              "description": "来自 Pika 的图生成视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/e7491a4430a64ef7b8cbb1d4d6fe266d.png"
+            },
+            {
+              "name": "PixVerse",
+              "count": 6,
+              "description": "来自PixVerse的视频生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/f8f09c17042b431c86d4e316d765f969.png"
+            },
+            {
+              "name": "Lightricks",
+              "count": 4,
+              "description": "来自Lightricks的文字生成视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/05b88f1673e2434e84dd27873c201e9d.png"
+            },
+            {
+              "name": "腾讯混元",
+              "count": 1,
+              "description": "来自腾讯混元的视频生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/208d0ef38ed8474d831592146a9f85df.png"
+            },
+            {
+              "name": "Vidu",
+              "count": 9,
+              "description": "来自Vidu的视频生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/df6166046d9e49b6a21d411a32dc2ca5.png"
+            },
+            {
+              "name": "即梦",
+              "count": 11,
+              "description": "来自字节跳动的文/图生视频",
+              "logo": "https://file.302.ai/gpt/resource302db/05f975582dc64c7faa5c3d98df09a7dc.png"
+            },
+            {
+              "name": "硅基流动",
+              "count": 2,
+              "description": "来自硅基流动的图片生成视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/bfd0d39385cb4e9fb0b12e85e1bfbecc.png"
+            },
+            {
+              "name": "Google",
+              "count": 10,
+              "description": "Google出品的Veo3文字生成视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/12ddcfb1d3be410f925aca8883003aec.png"
+            },
+            {
+              "name": "Higgsfield",
+              "count": 1,
+              "description": "来自Higgsfield的视频生成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/cd126c314a8043a4b2495937d88a4224.png"
+            },
+            {
+              "name": "Midjourney",
+              "count": 1,
+              "description": "来自Midjourney的视频生成模型，支持图生视频和视频扩展",
+              "logo": "https://file.302.ai/gpt/resource302db/0a69ac9edaf0471dbd0dcf9db8eb2918.png"
+            },
+            {
+              "name": "Topview",
+              "count": 4,
+              "description": "Image2Video 是 Topview 推出的AI图片生成视频工具，用户只需上传图片，即可在几分钟内将静态图片转换为动态视频。",
+              "logo": "https://file.302.ai/gpt/resource302db/d5d07db0ad984a9db445e7a34cac5f3e.png"
+            },
+            {
+              "name": "通义万相",
+              "count": 26,
+              "description": "来自通义万相的图片生成视频模型",
+              "logo": "https://file.302.ai/gpt/resource302db/dce280f7ef6b4594afb753556554fd96.png"
+            },
+            {
+              "name": "Qwen",
+              "count": 2,
+              "description": "阿里巴巴全新一代多模态全能力视频生成旗舰大模型",
+              "logo": "https://file.302.ai/gpt/resource302db/dce280f7ef6b4594afb753556554fd96.png"
+            },
+            {
+              "name": "WaveSpeed",
+              "count": 73,
+              "description": "在302.AI直接使用WaveSpeed的模型",
+              "logo": "https://file.302.ai/gpt/resource302db/d60f6bca70fb428590d8f67cb314335c.png"
+            }
+          ]
+        },
+        {
+          "name": "音视频处理",
+          "count": 90,
+          "brands": [
+            {
+              "name": "通用接口",
+              "count": 1,
+              "description": "将所有TTS模型通过统一格式调用",
+              "logo": "https://file.302.ai/gpt/resource302db/c0483074a0f44984a85aec2084444cac.png"
+            },
+            {
+              "name": "可灵",
+              "count": 2,
+              "description": "可灵文生音效模型",
+              "logo": "https://file.302.ai/gpt/resource302db/2fca1c94bacd4d60888d0db9aeb23a53.png"
+            },
+            {
+              "name": "微软",
+              "count": 1,
+              "description": "微软云提供的音频处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/f39cb22f00c44b2ea91f224a5a1ff08a.png"
+            },
+            {
+              "name": "硅基流动",
+              "count": 3,
+              "description": "来自硅基流动的音频生成模型FunAudioLLM/SenseVoiceSmall",
+              "logo": "https://file.302.ai/gpt/resource302db/bfd0d39385cb4e9fb0b12e85e1bfbecc.png"
+            },
+            {
+              "name": "302.AI",
+              "count": 15,
+              "description": "我们自己部署的开源方案",
+              "logo": "https://file.302.ai/gpt/resource302db/d064883ab58e405fb1bad4921a08c71b.png"
+            },
+            {
+              "name": "Minimax",
+              "count": 16,
+              "description": "来自Minimax的超长文本语音生成",
+              "logo": "https://file.302.ai/gpt/resource302db/995e73c7c18f432f9fae120e4d834770.png"
+            },
+            {
+              "name": "OpenAI",
+              "count": 12,
+              "description": "支持语音转文字",
+              "logo": "https://file.302.ai/gpt/resource302db/cc2ea17375c74d298ca47006291feaf2.png"
+            },
+            {
+              "name": "Suno",
+              "count": 6,
+              "description": "AI歌曲生成",
+              "logo": "https://file.302.ai/gpt/resource302db/7d5d952704c94f26bb7a222135d36d88.png"
+            },
+            {
+              "name": "豆包",
+              "count": 4,
+              "description": "来自豆包的文字转语音API",
+              "logo": "https://file.302.ai/gpt/resource302db/07f33335fd0f4df2a2473f88a2316df6.png"
+            },
+            {
+              "name": "Dubbingx",
+              "count": 1,
+              "description": "来自 Dubbingx 的文本语音生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/d642e673e3b54e02bb235aad07a07f97.png"
+            },
+            {
+              "name": "Elevenlabs",
+              "count": 9,
+              "description": "来自Elevenlabs提供的音视频处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/b6c49a54107943bd8905031df79a6bed.png"
+            },
+            {
+              "name": "Google",
+              "count": 3,
+              "description": "来自Google的音频生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/461effd079734afca0d695cf16040b86.png"
+            },
+            {
+              "name": "蝉镜数字人",
+              "count": 2,
+              "description": "来自蝉镜的音频生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/e3ebf7289ecc4bb4ad0be89d8a9a7003.png"
+            },
+            {
+              "name": "Mureka",
+              "count": 7,
+              "description": "Mureka是由昆仑万维公司推出的一项音频处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/bf7501b904d240cfb949515895d7bd68.png"
+            },
+            {
+              "name": "通义万相",
+              "count": 2,
+              "description": "来自通义万相的语音合成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/dce280f7ef6b4594afb753556554fd96.png"
+            },
+            {
+              "name": "Topazlabs",
+              "count": 1,
+              "description": "来自Topazlabs的音视频处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/e9cb6cd6ff814cb6bc523f3c4c21dbfd.png"
+            },
+            {
+              "name": "Stability",
+              "count": 2,
+              "description": "来自 Stability AI 公司推出的文字生成音频技术及模型",
+              "logo": "https://file.302.ai/gpt/resource302db/00a9ca2b5fa54bbaaf1d107f5b3d9748.png"
+            },
+            {
+              "name": "WaveSpeed",
+              "count": 1,
+              "description": "在302.AI直接使用WaveSpeed的模型",
+              "logo": "https://file.302.ai/gpt/resource302db/d60f6bca70fb428590d8f67cb314335c.png"
+            },
+            {
+              "name": "智谱",
+              "count": 2,
+              "description": "结合大语言模型和扩散模型技术的GLM语音合成模型",
+              "logo": "https://file.302.ai/gpt/resource302db/20251215/4d8deb0791d64ad6abd32bf31bccd16b.png"
+            }
+          ]
+        },
+        {
+          "name": "信息处理",
+          "count": 86,
+          "brands": [
+            {
+              "name": "通用接口",
+              "count": 1,
+              "description": "将所有搜索模型通过统一格式调用",
+              "logo": "https://file.302.ai/gpt/resource302db/acae575dab174b7aa49d0155ed9cc8ca.png"
+            },
+            {
+              "name": "Jina",
+              "count": 4,
+              "description": "一家专注于信息检索的AI公司",
+              "logo": "https://file.302.ai/gpt/resource302db/06a60659366f44a5a761cd2301a477e2.png"
+            },
+            {
+              "name": "Exa",
+              "count": 3,
+              "description": "AI的专属搜索工具",
+              "logo": "https://file.302.ai/gpt/resource302db/67917540b05e4a539ba1f85ea9373188.png"
+            },
+            {
+              "name": "博查AI",
+              "count": 2,
+              "description": "博查AI提供的网页和AI搜索服务",
+              "logo": "https://file.302.ai/gpt/resource302db/b9c4e879ef8348d68f8dabda5784ae8f.png"
+            },
+            {
+              "name": "302.AI",
+              "count": 34,
+              "description": "从非结构化文本里提取结构化信息",
+              "logo": "https://file.302.ai/gpt/resource302db/6bcffe79e78e43428270cb117cab6b53.png"
+            },
+            {
+              "name": "Search1API",
+              "count": 5,
+              "description": "一家专注于搜索聚合的公司",
+              "logo": "https://file.302.ai/gpt/resource302db/6765893689b143ebadae1fec0d96cf69.png"
+            },
+            {
+              "name": "RSSHub",
+              "count": 1,
+              "description": "世界上最大的RSS网络",
+              "logo": "https://file.302.ai/gpt/resource302db/c173610ccd1a4a8f91c1c206458a848e.png"
+            },
+            {
+              "name": "流光卡片",
+              "count": 1,
+              "description": "来自流光卡片的信息检索服务",
+              "logo": "https://file.302.ai/gpt/resource302db/eb69fdcff96f4cb3b1fc2fea029b101a.png"
+            },
+            {
+              "name": "有道",
+              "count": 1,
+              "description": "网易推出的翻译服务",
+              "logo": "https://file.302.ai/gpt/resource302db/7f3a9f43c8c845c3b8417347d1dce7e5.png"
+            },
+            {
+              "name": "Mistral",
+              "count": 1,
+              "description": "Mistral推出的信息处理服务",
+              "logo": "https://file.302.ai/gpt/resource302db/81a7eec64ae6479781a7344926052b46.png"
+            },
+            {
+              "name": "秘塔搜索",
+              "count": 3,
+              "description": "来自秘塔科技的搜索服务",
+              "logo": "https://file.302.ai/gpt/resource302db/0a11e29366574e6487104a92d6025c26.png"
+            },
+            {
+              "name": "MinerU",
+              "count": 3,
+              "description": "PDF解析工具MinerU",
+              "logo": "https://file.302.ai/gpt/resource302db/2afcd09fc8274875bcd5ef67c45b1124.png"
+            },
+            {
+              "name": "Tavily",
+              "count": 2,
+              "description": "专为AI开发的搜索引擎",
+              "logo": "https://file.302.ai/gpt/resource302db/b72579408883463eb33d052cd6d62186.png"
+            },
+            {
+              "name": "Glif",
+              "count": 1,
+              "description": "AI工作流制作平台",
+              "logo": "https://file.302.ai/gpt/resource302db/2263f559ae3e4d858d9f68ca886e6314.png"
+            },
+            {
+              "name": "Firecrawl",
+              "count": 6,
+              "description": "Mendable.ai推出的网页抓取工具",
+              "logo": "https://file.302.ai/gpt/resource302db/5c6cf45037044bc18864c096a8173d25.png"
+            },
+            {
+              "name": "SerpApi",
+              "count": 8,
+              "description": "搜索引擎结果抓取 API，支持多平台数据获取功能全面",
+              "logo": "https://file.302.ai/gpt/resource302db/c9e426c9e5a94e06b5533a9d64e7c313.png"
+            },
+            {
+              "name": "Doc2x",
+              "count": 1,
+              "description": "将PDF转化为文本格式",
+              "logo": "https://file.302.ai/gpt/resource302db/2c83e94013814d819bc5c662795fd8ed.png"
+            },
+            {
+              "name": "智谱Agent",
+              "count": 2,
+              "description": "来自智谱的Agent",
+              "logo": "https://file.302.ai/gpt/resource302db/460714f74a694e97a482a33835546684.png"
+            },
+            {
+              "name": "Unifuncs",
+              "count": 2,
+              "description": "Unifuncs 推出的Web-Reader",
+              "logo": "https://file.302.ai/gpt/resource302db/13cdbac69861471da9dfb5efdbdd8a2b.png"
+            },
+            {
+              "name": "SophNet",
+              "count": 2,
+              "description": "来自Sophnet的文档识别智能文档解析模型",
+              "logo": "https://file.302.ai/gpt/resource302db/20bf34d37c454938820cfa99b252465e.png"
+            },
+            {
+              "name": "豆包",
+              "count": 1,
+              "description": "来自豆包的自研的多语言翻译模型",
+              "logo": "https://file.302.ai/gpt/resource302db/4d060836e3f84e9eacf32293fd11fe46.png"
+            },
+            {
+              "name": "Perplexity",
+              "count": 1,
+              "description": "来自Perplexity的搜索API",
+              "logo": "https://file.302.ai/gpt/resource302db/fc86316d94c342a6adb6049e0334f3d2.png"
+            },
+            {
+              "name": "Aminer",
+              "count": 1,
+              "description": "来自Aminer的学术搜索API",
+              "logo": "https://file.302.ai/gpt/resource302db/b091e73babf14d67a7c6aa870717cf6b.png"
+            }
+          ]
+        },
+        {
+          "name": "RAG相关",
+          "count": 39,
+          "brands": [
+            {
+              "name": "OpenAI",
+              "count": 3,
+              "description": "OpenAI提供的数据向量化服务",
+              "logo": "https://file.302.ai/gpt/resource302db/cabc92e1518642cb9de57a44cb29b811.png"
+            },
+            {
+              "name": "Jina",
+              "count": 6,
+              "description": "一家专注于信息检索的AI公司",
+              "logo": "https://file.302.ai/gpt/resource302db/2de923346ddb4a52af09aa07a519d250.png"
+            },
+            {
+              "name": "国产模型",
+              "count": 12,
+              "description": "集合中国各大模型",
+              "logo": "https://file.302.ai/gpt/resource302db/0fd1469667824f11ba7dad3f9100cdab.png"
+            },
+            {
+              "name": "302.AI",
+              "count": 1,
+              "description": "我们自己提供的服务",
+              "logo": "https://file.302.ai/gpt/resource302db/b97a979bbd4645119777046c9f0533fb.png"
+            },
+            {
+              "name": "硅基流动",
+              "count": 6,
+              "description": "直接在302.AI使用硅基流动的所有模型",
+              "logo": "https://file.302.ai/gpt/resource302db/bfd0d39385cb4e9fb0b12e85e1bfbecc.png"
+            },
+            {
+              "name": "Google",
+              "count": 1,
+              "description": "来自Google的向量生成服务",
+              "logo": "https://file.302.ai/gpt/resource302db/10f660cdc9d04477a0561d78e28b18c2.png"
+            },
+            {
+              "name": "Voyage",
+              "count": 10,
+              "description": "来自Voyage AI的嵌入式模型",
+              "logo": "https://file.302.ai/gpt/resource302db/6184b2ab28e04433bccf4ff5fe5bf423.png"
+            }
+          ]
+        },
+        {
+          "name": "工具API",
+          "count": 88,
+          "brands": [
+            {
+              "name": "AI文档编辑器",
+              "count": 1,
+              "description": "一键生成长文档，提升写作效率和内容质量",
+              "logo": "https://file.302.ai/gpt/resource302db/5fdc463a2a1947bab60fd434a0815594.svg"
+            },
+            {
+              "name": "AI 3D建模",
+              "count": 1,
+              "description": "使用AI将图片转成3D模型",
+              "logo": "https://file.302.ai/gpt/resource302db/f08c28a23c29441cbb1f7ef07bf06e99.svg"
+            },
+            {
+              "name": "AI搜索大师3.0",
+              "count": 1,
+              "description": "通过AI搜索，节省查找的时间",
+              "logo": "https://file.302.ai/gpt/resource302db/c5119e684a524b56a9e04814ca8279cd.svg"
+            },
+            {
+              "name": "AI播客制作",
+              "count": 1,
+              "description": "将任意素材转为有意思的播客",
+              "logo": "https://file.302.ai/gpt/resource302db/bf8a2f9e827c4094a3460e794fcf9351.svg"
+            },
+            {
+              "name": "AI文案助手",
+              "count": 1,
+              "description": "文案创作的得力助手，让创意和效率并驾齐驱",
+              "logo": "https://file.302.ai/gpt/resource302db/2062436e4b61447d8a197a4b1b361cb2.svg"
+            },
+            {
+              "name": "AI视频深度翻译",
+              "count": 1,
+              "description": "使用 AI 翻译字幕并配音",
+              "logo": "https://file.302.ai/gpt/resource302db/ce6559807c624fd18df06e575dbd381a.svg"
+            },
+            {
+              "name": "AI视频素材创意站",
+              "count": 1,
+              "description": "输入关键词，AI自动寻找并合成视频素材",
+              "logo": "https://file.302.ai/gpt/resource302db/fbfb760ec2b94de3b32ffe5e21a8ee06.svg"
+            },
+            {
+              "name": "AI答题机",
+              "count": 1,
+              "description": "使用AI进行题目解答",
+              "logo": "https://file.302.ai/gpt/resource302db/eb7f613599ce43528e09743a8de8541e.svg"
+            },
+            {
+              "name": "网页数据提取工具",
+              "count": 1,
+              "description": "自动爬取网页输出markdown和结构化数据",
+              "logo": "https://file.302.ai/gpt/resource302db/74b219920d364e698c72cfa05b5c6210.svg"
+            },
+            {
+              "name": "AI提示词专家",
+              "count": 1,
+              "description": "AI 驱动的高级提示词生成工具",
+              "logo": "https://file.302.ai/gpt/resource302db/04c6bf14e1b54928945d3578fa578deb.svg"
+            },
+            {
+              "name": "AI 矢量图生成",
+              "count": 1,
+              "description": "使用AI生成矢量图或根据矢量图生成视频",
+              "logo": "https://file.302.ai/gpt/resource302db/cc8fc05e5e554174b055aba263a4a9c6.svg"
+            },
+            {
+              "name": "AI PPT制作",
+              "count": 1,
+              "description": "一键生成高质量演示文稿",
+              "logo": "https://file.302.ai/gpt/resource302db/1a129c3268a94ffcba67343fe30a2134.svg"
+            },
+            {
+              "name": "网页一键部署",
+              "count": 1,
+              "description": "网页一键部署",
+              "logo": "https://file.302.ai/gpt/resource302db/c143281a81654fe998340124e0d2a25c.svg"
+            },
+            {
+              "name": "AI头像制作",
+              "count": 1,
+              "description": "生成不同风格的自拍头像",
+              "logo": "https://file.302.ai/gpt/resource302db/caeea15b28944f6fababe876c5b49d0f.svg"
+            },
+            {
+              "name": "AI 卡片生成",
+              "count": 1,
+              "description": "使用AI生成多种类型卡片",
+              "logo": "https://file.302.ai/gpt/resource302db/b87d8bd5d4684e5280a0b6a62831aba8.svg"
+            },
+            {
+              "name": "AI图像创意站",
+              "count": 73,
+              "description": "探索文生图多种创意玩法",
+              "logo": "https://file.302.ai/gpt/resource302db/c6aa376e36544bc6a362d76253564232.svg"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "tool",
+      "name": "工具",
+      "count": 69,
+      "tags": [
+        {
+          "name": "机器人",
+          "count": 5,
+          "brands": [
+            {
+              "name": "聊天机器人",
+              "count": 1,
+              "product_id": 1,
+              "alias_name": "302ai-chat-bot",
+              "description": "支持所有LLM，支持Artifacts和文件解析",
+              "logo": "https://file.302.ai/gpt/resource302db/20251127/5cef3e5fa809448aaf072e0941dc95d8.svg"
+            },
+            {
+              "name": "绘画机器人",
+              "count": 1,
+              "product_id": 2,
+              "alias_name": "302ai-drawing-bot",
+              "description": "支持Midjourney/Flux/SD/Ideogram/Recraft",
+              "logo": "https://file.302.ai/gpt/resource302db/bc4e164aa985471d95255b39cd186934.svg"
+            },
+            {
+              "name": "知识库机器人",
+              "count": 1,
+              "product_id": 3,
+              "alias_name": "302ai-knowledage-base-bot",
+              "description": "基于先进的RAG技术开发",
+              "logo": "https://file.302.ai/gpt/resource302db/90a02fa0df6d438d9ba2ce73869eade2.svg"
+            },
+            {
+              "name": "应用机器人",
+              "count": 1,
+              "product_id": 4,
+              "alias_name": "302ai-app-bot",
+              "description": "50w+AI应用,支持从GPTs导入生成相应的应用机器人",
+              "logo": "https://file.302.ai/gpt/resource302db/5f8d8192a9ca4af3bb744ae4e397ab79.svg"
+            },
+            {
+              "name": "302 Media Studio",
+              "count": 1,
+              "product_id": 3134,
+              "alias_name": "302ai-302-media-studio",
+              "description": "302 Media Studio：AI Agent 驱动的多媒体工作台",
+              "logo": "https://file.302ai.cn/gpt/resource302db/20260710/e34645db43e04a86b67526861a49561a.svg"
+            }
+          ]
+        },
+        {
+          "name": "工作效率",
+          "count": 13,
+          "brands": [
+            {
+              "name": "模型竞技场",
+              "count": 1,
+              "product_id": 12,
+              "alias_name": "302ai-model-arena",
+              "description": "所有AI模型一起回答",
+              "logo": "https://file.302.ai/gpt/resource302db/2afa3ad9144741b3bbd337877ebb6ebc.svg"
+            },
+            {
+              "name": "AI文案助手",
+              "count": 1,
+              "product_id": 31,
+              "alias_name": "302ai-ai-writing-assistant",
+              "description": "文案创作的得力助手，让创意和效率并驾齐驱",
+              "logo": "https://file.302.ai/gpt/resource302db/bff80636573344f0977cc7589105722a.svg"
+            },
+            {
+              "name": "AI电商文案助手",
+              "count": 1,
+              "product_id": 34,
+              "alias_name": "302ai-ai-e-commerce-assistant",
+              "description": "告别电商文案难题，快速上架提升排名",
+              "logo": "https://file.302.ai/gpt/resource302db/c3e80c921753484aab6f8d69d0b29fbc.svg"
+            },
+            {
+              "name": "AI文档编辑器",
+              "count": 1,
+              "product_id": 36,
+              "alias_name": "302ai-ai-doucument-editror",
+              "description": "一键生成长文档，提升写作效率和内容质量",
+              "logo": "https://file.302.ai/gpt/resource302db/859224ff63e24080aa8d7b85711c1aba.svg"
+            },
+            {
+              "name": "Nano Banana MD",
+              "count": 1,
+              "product_id": 2980,
+              "alias_name": "302ai-Nano-Banana-MD",
+              "description": "使用Nano-Banana来自动为文章配图",
+              "logo": "https://file.302.ai/gpt/resource302db/859224ff63e24080aa8d7b85711c1aba.svg"
+            },
+            {
+              "name": "AI PPT制作",
+              "count": 1,
+              "product_id": 37,
+              "alias_name": "302ai-ai-ppt-generator",
+              "description": "一键生成高质量演示文稿",
+              "logo": "https://file.302.ai/gpt/resource302db/c85e7a136a954904bb06c1de9f90a8e1.svg"
+            },
+            {
+              "name": "Nano Banana PPT",
+              "count": 1,
+              "product_id": 2842,
+              "alias_name": "302ai-Nano-Banana-PPT",
+              "description": "使用Nano-Banana来制作PPT",
+              "logo": "https://file.302.ai/gpt/resource302db/c85e7a136a954904bb06c1de9f90a8e1.svg"
+            },
+            {
+              "name": "AI 网页总结",
+              "count": 1,
+              "product_id": 43,
+              "alias_name": "302ai-ai-webpage-summary",
+              "description": "一键概括网页重点信息",
+              "logo": "https://file.302.ai/gpt/resource302db/e39bc281aebd4275a96550601b5ca7b0.svg"
+            },
+            {
+              "name": "AI 画图板",
+              "count": 1,
+              "product_id": 45,
+              "alias_name": "302ai-ai-whiteboard",
+              "description": "使用AI在白板上快速创建草图",
+              "logo": "https://file.302.ai/gpt/resource302db/d994ed3dad82431ab5a98e3434b7310b.svg"
+            },
+            {
+              "name": "AI财讯助手",
+              "count": 1,
+              "product_id": 48,
+              "alias_name": "302ai-ai-financial-information-assistant",
+              "description": "和AI聊天快速获取股票数据和财经资讯",
+              "logo": "https://file.302.ai/gpt/resource302db/4a73b5102eac429e9a0bfce258b75f64.svg"
+            },
+            {
+              "name": "AI Excel",
+              "count": 1,
+              "product_id": 49,
+              "alias_name": "302ai-ai-excel",
+              "description": "使用AI对Excel进行数据分析",
+              "logo": "https://file.302.ai/gpt/resource302db/1de4ad5324f34fdfb4a75cf5e553d451.svg"
+            },
+            {
+              "name": "AI简历制作",
+              "count": 1,
+              "product_id": 50,
+              "alias_name": "302ai-ai-resume-creation",
+              "description": "使用AI制作高质量简历",
+              "logo": "https://file.302.ai/gpt/resource302db/fd8fdc7a99e84572903d86b39712fcb3.svg"
+            },
+            {
+              "name": "AI 小说写作",
+              "count": 1,
+              "product_id": 70,
+              "alias_name": "302ai-ai-novel-writing",
+              "description": "使用AI进行小说写作",
+              "logo": "https://file.302.ai/gpt/resource302db/d495c64e270d4b7199f04af101e085c8.svg"
+            }
+          ]
+        },
+        {
+          "name": "学术相关",
+          "count": 3,
+          "brands": [
+            {
+              "name": "PDF全能工具箱",
+              "count": 1,
+              "product_id": 25,
+              "alias_name": "302ai-pdf-toolbox",
+              "description": "全方位PDF助手，一站式解决各种PDF需求",
+              "logo": "https://file.302.ai/gpt/resource302db/d3fe2bc6e66e4477b2e73f9dd61ff12d.svg"
+            },
+            {
+              "name": "AI专利搜索",
+              "count": 1,
+              "product_id": 28,
+              "alias_name": "302ai-ai-patent-search",
+              "description": "快速搜寻、翻译和分析全球专利信息",
+              "logo": "https://file.302.ai/gpt/resource302db/89841485d36e4c6bac3bc26df2235f60.svg"
+            },
+            {
+              "name": "AI答题机",
+              "count": 1,
+              "product_id": 54,
+              "alias_name": "302ai-ai-answer-machine",
+              "description": "使用AI对任何习题进行解答",
+              "logo": "https://file.302.ai/gpt/resource302db/3a9bed0e1a9846aeabe24f90b02cf73d.svg"
+            }
+          ]
+        },
+        {
+          "name": "图片处理",
+          "count": 20,
+          "brands": [
+            {
+              "name": "3D摄影棚",
+              "count": 1,
+              "product_id": 2999,
+              "alias_name": "302ai-3D-Camera-Stuido",
+              "description": "对图像进行多角度变换及背景融合处理",
+              "logo": "https://file.302.ai/gpt/resource302db/20260112/308f3f4559604557bb5cfbcf96762833.svg"
+            },
+            {
+              "name": "Nano Banana Canvas",
+              "count": 1,
+              "product_id": 3015,
+              "alias_name": "302ai-Nano-Banana-Canvas",
+              "description": "对图像进行编辑，包括标注、拼接等，也可通过提示词进行图片处理",
+              "logo": "https://file.302.ai/gpt/resource302db/20260112/308f3f4559604557bb5cfbcf96762833.svg"
+            },
+            {
+              "name": "GPT Image 2 Canvas",
+              "count": 1,
+              "product_id": 3100,
+              "alias_name": "302ai-Gpt-Image-2-Canvas",
+              "description": "通过GPT Image 2 模型对图像进行生成，编辑，包括标注、拼接等",
+              "logo": "https://file.302.ai/gpt/resource302db/20260112/308f3f4559604557bb5cfbcf96762833.svg"
+            },
+            {
+              "name": "AI老照片修复",
+              "count": 1,
+              "product_id": 18,
+              "alias_name": "302ai-ai-old-photo-restoration",
+              "description": "老照片修复，高清放大，黑白上色",
+              "logo": "https://file.302.ai/gpt/resource302db/f09a90ead84e4e77a18f0791e98616e3.svg"
+            },
+            {
+              "name": "AI电商场景图生成",
+              "count": 1,
+              "product_id": 23,
+              "alias_name": "302ai-aie-commerce-scene-generation",
+              "description": "AI一键生成电商场景图，适用于产品图和模特图",
+              "logo": "https://file.302.ai/gpt/resource302db/1d8f3eff13e14282986e3e94ac2d0fa0.svg"
+            },
+            {
+              "name": "AI图片工具箱",
+              "count": 1,
+              "product_id": 29,
+              "alias_name": "302ai-ai-image-toolbox",
+              "description": "智能处理和优化图片的一站式解决方案",
+              "logo": "https://file.302.ai/gpt/resource302db/515a03ce9d5d4a5eb7e2266ddebf923c.svg"
+            },
+            {
+              "name": "AI 图片翻译",
+              "count": 1,
+              "product_id": 39,
+              "alias_name": "302ai-ai-image-translation",
+              "description": "快速翻译并替换图片中的文字",
+              "logo": "https://file.302.ai/gpt/resource302db/f9ba1f5c02894bfe9aa15918b498be5b.svg"
+            },
+            {
+              "name": "证件照生成\n",
+              "count": 1,
+              "product_id": 42,
+              "alias_name": "302ai-id-photo-generation",
+              "description": "快速生成各种通用的证件照",
+              "logo": "https://file.302.ai/gpt/resource302db/af52563beb60466e86bb97ceb3e470e0.svg"
+            },
+            {
+              "name": "AI 头像制作",
+              "count": 1,
+              "product_id": 46,
+              "alias_name": "302ai-ai-avatar-maker",
+              "description": "生成不同风格的自拍头像",
+              "logo": "https://file.302.ai/gpt/resource302db/277756679e4441698ed2eb5afc360472.svg"
+            },
+            {
+              "name": "AI照片说话",
+              "count": 1,
+              "product_id": 47,
+              "alias_name": "302ai-ai-talking-photo",
+              "description": "让照片开口说话",
+              "logo": "https://file.302.ai/gpt/resource302db/6fef06daea344a268c8b6bbb6cfc2d82.svg"
+            },
+            {
+              "name": "AI 红包封面生成",
+              "count": 1,
+              "product_id": 52,
+              "alias_name": "302ai-ai-red-pocket-cover-generation",
+              "description": "使用AI生成红包封面图",
+              "logo": "https://file.302.ai/gpt/resource302db/299c922eeb2440b0ba5df3981dcadb2a.svg"
+            },
+            {
+              "name": "AI 换衣",
+              "count": 1,
+              "product_id": 53,
+              "alias_name": "302ai-ai-virtual-try-on",
+              "description": "使用AI进行虚拟试穿",
+              "logo": "https://file.302.ai/gpt/resource302db/238be66d77e442aebde425076c4c0a3d.svg"
+            },
+            {
+              "name": "AI 矢量图生成",
+              "count": 1,
+              "product_id": 56,
+              "alias_name": "302ai-vector-graphics-generation",
+              "description": "使用AI生成矢量图或根据矢量图生成视频",
+              "logo": "https://file.302.ai/gpt/resource302db/236cb00cf0c64e828365a2d65c92136a.svg"
+            },
+            {
+              "name": "图片竞技场",
+              "count": 1,
+              "product_id": 57,
+              "alias_name": "302ai-image-arena",
+              "description": "AI模型文生图能力大比拼",
+              "logo": "https://file.302.ai/gpt/resource302db/06ff0cfe295d441786ee66bdba3f8cc4.svg"
+            },
+            {
+              "name": "AI 3D 建模",
+              "count": 1,
+              "product_id": 58,
+              "alias_name": "302ai-ai-3d-modeling",
+              "description": "使用AI将图片转成3D模型",
+              "logo": "https://file.302.ai/gpt/resource302db/1c895f1214a3467fbfc842e9c9b57b83.svg"
+            },
+            {
+              "name": "Lora风格创意站",
+              "count": 1,
+              "product_id": 61,
+              "alias_name": "302ai-lora-style-creative-hub",
+              "description": "训练和使用Lora模型生成不同风格的创意图片",
+              "logo": "https://file.302.ai/gpt/resource302db/345667f4471449fda49608f778ef0bae.svg"
+            },
+            {
+              "name": "ComfyUI工具箱",
+              "count": 1,
+              "product_id": 64,
+              "alias_name": "302ai-comfyui-toolbox",
+              "description": "通过ComfyUI复杂工作流实现多种变换效果",
+              "logo": "https://file.302.ai/gpt/resource302db/eb0cff1cf1bf4da0acc239d150a88dc1.svg"
+            },
+            {
+              "name": "AI绘图提示词专家",
+              "count": 1,
+              "product_id": 66,
+              "alias_name": "302ai-aI-drawing-prompt-word-expert",
+              "description": "一键生成高质量图片提示词",
+              "logo": "https://file.302.ai/gpt/resource302db/01412d032b7547298388a46d5bc4b722.svg"
+            },
+            {
+              "name": "AI 图像创意站",
+              "count": 1,
+              "product_id": 68,
+              "alias_name": "302ai-ai-image-creative-station",
+              "description": "探索GPT-Image-1、Flux-Kontext的多种创意玩法",
+              "logo": "https://file.302.ai/gpt/resource302db/e39e90a24eff4d029dd76e6dd480650a.svg"
+            },
+            {
+              "name": "AI 人像创意站",
+              "count": 1,
+              "product_id": 2484,
+              "alias_name": "302ai-ai-portrait-studio",
+              "description": "传入人像照片，生成多种风格写真",
+              "logo": "https://file.302.ai/gpt/resource302db/35e2fadd941c447682e56c3c1c2c014a.svg"
+            }
+          ]
+        },
+        {
+          "name": "音频相关",
+          "count": 5,
+          "brands": [
+            {
+              "name": "AI语音生成器",
+              "count": 1,
+              "product_id": 19,
+              "alias_name": "302-ai-ai-voice-generator",
+              "description": "将文本内容转换成自然流畅的语音",
+              "logo": "https://file.302.ai/gpt/resource302db/8b72131978b742cab83dd4b2c6734768.svg"
+            },
+            {
+              "name": "AI 音乐制作",
+              "count": 1,
+              "product_id": 38,
+              "alias_name": "302-ai-ai-voice-production",
+              "description": "把你的灵感变成动听的音乐",
+              "logo": "https://file.302.ai/gpt/resource302db/c8d64333dfe140588d31522164ef4aa4.svg"
+            },
+            {
+              "name": "AI 播客制作",
+              "count": 1,
+              "product_id": 41,
+              "alias_name": "302-ai-ai-podcast-production",
+              "description": "将任意素材转为有意思的播客",
+              "logo": "https://file.302.ai/gpt/resource302db/2c4ae89073f94059b583ce876cf8700b.svg"
+            },
+            {
+              "name": "AI 语音通话",
+              "count": 1,
+              "product_id": 44,
+              "alias_name": "302-ai-ai-voice-call",
+              "description": "和AI实时语音聊天",
+              "logo": "https://file.302.ai/gpt/resource302db/e8310f51adf04ab093b3000b814b206a.svg"
+            },
+            {
+              "name": "语音竞技场",
+              "count": 1,
+              "product_id": 71,
+              "alias_name": "302-ai-ai-voice-arena",
+              "description": "AI模型语音生成能力大比拼",
+              "logo": "https://file.302.ai/gpt/resource302db/e385104e664d4640a29d4b4309c31b4f.svg"
+            }
+          ]
+        },
+        {
+          "name": "视频相关",
+          "count": 6,
+          "brands": [
+            {
+              "name": "AI视频素材创意站",
+              "count": 1,
+              "product_id": 20,
+              "alias_name": "302ai-ai-video-creation-hub",
+              "description": "输入关键词，AI自动寻找并合成视频素材",
+              "logo": "https://file.302.ai/gpt/resource302db/df397db0704d4ce094d7424ffcb361fe.svg"
+            },
+            {
+              "name": "AI视频生成器",
+              "count": 1,
+              "product_id": 26,
+              "alias_name": "302ai-video-generator",
+              "description": "通过文字和图片生成视频",
+              "logo": "https://file.302.ai/gpt/resource302db/27b780a9ee0043a0b8eab89fa046f523.svg"
+            },
+            {
+              "name": "AI音视频总结",
+              "count": 1,
+              "product_id": 30,
+              "alias_name": "302ai-ai-audio-video-summarization",
+              "description": "一键提取音视频精华内容，高效获取信息",
+              "logo": "https://file.302.ai/gpt/resource302db/1aee209807dc498abb4a58bf1c46d0b5.svg"
+            },
+            {
+              "name": "AI视频实时翻译",
+              "count": 1,
+              "product_id": 35,
+              "alias_name": "302ai-video-real-time-translation",
+              "description": "传入视频链接，实时生成翻译字幕",
+              "logo": "https://file.302.ai/gpt/resource302db/deaee2dc81bb4913b83c5e519d6f7394.svg"
+            },
+            {
+              "name": "AI视频深度翻译",
+              "count": 1,
+              "product_id": 51,
+              "alias_name": "302ai-ai-video-deep-translation",
+              "description": "使用 AI 翻译字幕并配音",
+              "logo": "https://file.302.ai/gpt/resource302db/d28aa05a76ec4d44a92b60306b948995.svg"
+            },
+            {
+              "name": "视频竞技场",
+              "count": 1,
+              "product_id": 63,
+              "alias_name": "302ai-video-arena",
+              "description": "AI模型视频生成能力大比拼",
+              "logo": "https://file.302.ai/gpt/resource302db/55aa0c0ac12e4d16897d0bd977e15c90.svg"
+            }
+          ]
+        },
+        {
+          "name": "代码相关",
+          "count": 4,
+          "brands": [
+            {
+              "name": "AI网页生成器",
+              "count": 1,
+              "product_id": 21,
+              "alias_name": "302ai-ai-web-pag-generator",
+              "description": "无需编程知识也能轻松制作网页",
+              "logo": "https://file.302.ai/gpt/resource302db/69fe7eef22ee44868fbca8bbbb4259da.svg"
+            },
+            {
+              "name": "AI网页生成器2.0",
+              "count": 1,
+              "product_id": 40,
+              "alias_name": "302ai-ai-web-page-generator-2",
+              "description": "一键生成高质量的网页",
+              "logo": "https://file.302.ai/gpt/resource302db/d8bc13afd0a94708adedbc9087ebd8e0.svg"
+            },
+            {
+              "name": "代码竞技场",
+              "count": 1,
+              "product_id": 59,
+              "alias_name": "302ai-code-arena",
+              "description": "AI模型代码能力大比拼",
+              "logo": "https://file.302.ai/gpt/resource302db/0568962d2a7d4ccc95a27adc65628354.svg"
+            },
+            {
+              "name": "网页一键部署",
+              "count": 1,
+              "product_id": 65,
+              "alias_name": "deploy-web-pages-by-one-click",
+              "description": "一键部署静态网页",
+              "logo": "https://file.302.ai/gpt/resource302db/2a991ca091ac43a6a160c55ff62a471a.svg"
+            }
+          ]
+        },
+        {
+          "name": "信息处理",
+          "count": 9,
+          "brands": [
+            {
+              "name": "302搜索",
+              "count": 1,
+              "product_id": 2298,
+              "alias_name": "302search",
+              "description": "支持多搜索引擎选择，AI智能总结，提升搜索效率。",
+              "logo": "https://file.302.ai/gpt/resource302db/ac823a49c92b47a6a645dfc54e70dd71.svg"
+            },
+            {
+              "name": "AI提示词专家",
+              "count": 1,
+              "product_id": 24,
+              "alias_name": "ai-prompt-expert",
+              "description": "AI 驱动的高级提示词生成工具",
+              "logo": "https://file.302.ai/gpt/resource302db/ca668dd2ce7c46cb926d30c47bab5174.svg"
+            },
+            {
+              "name": "AI搜索大师3.0",
+              "count": 1,
+              "product_id": 27,
+              "alias_name": "ai-search-master",
+              "description": "通过AI搜索，节省查找的时间",
+              "logo": "https://file.302.ai/gpt/resource302db/c0c9e19ccb0a42b390b700be48a03b83.svg"
+            },
+            {
+              "name": "网页数据提取工具",
+              "count": 1,
+              "product_id": 55,
+              "alias_name": "web-data-extraction-tool",
+              "description": "将网页内容通过AI提取出结构化数据",
+              "logo": "https://file.302.ai/gpt/resource302db/ed6bb82fa9cf4c9f980656f90f52968f.svg"
+            },
+            {
+              "name": "AI提示词专家2.0",
+              "count": 1,
+              "product_id": 60,
+              "alias_name": "ai-prompt-expert2",
+              "description": "一键生成高质量提示词",
+              "logo": "https://file.302.ai/gpt/resource302db/f67425a2a41344da9f50283edc1a7dae.svg"
+            },
+            {
+              "name": "AI事实求证",
+              "count": 1,
+              "product_id": 62,
+              "alias_name": "ai-facts-proof",
+              "description": "使用Jina和Exa搜索相关概念证实内容表达是否成立",
+              "logo": "https://file.302.ai/gpt/resource302db/0cd7403f9ad4444486c8e70d14795576.svg"
+            },
+            {
+              "name": "AI 卡片生成",
+              "count": 1,
+              "product_id": 67,
+              "alias_name": "ai-card-generation",
+              "description": "使用AI生成多种类型卡片",
+              "logo": "https://file.302.ai/gpt/resource302db/e9a62ac6a274491da78b9aa7fbbad5a1.svg"
+            },
+            {
+              "name": "AI 模型判官",
+              "count": 1,
+              "product_id": 69,
+              "alias_name": "ai-model-judge",
+              "description": "AI模型评测工具",
+              "logo": "https://file.302.ai/gpt/resource302db/c53d881b26694130aa41058bfe09f1c5.svg"
+            },
+            {
+              "name": "AI翻译大师",
+              "count": 1,
+              "product_id": 72,
+              "alias_name": "ai-translate-master",
+              "description": "利用 AI 快速生成准确的翻译",
+              "logo": "https://file.302.ai/gpt/resource302db/0882aec1185e4972a6f7872e64c94b7e.svg"
+            }
+          ]
+        },
+        {
+          "name": "客户端",
+          "count": 4,
+          "brands": [
+            {
+              "name": "桌面客户端",
+              "count": 1,
+              "product_id": 1940,
+              "alias_name": "destop-client",
+              "description": "302 AI Studio 是一款支持多种大模型（LLM）服务商的桌面客户端，适用于 Windows、Mac 和 Linux。",
+              "logo": "https://file.302.ai/gpt/resource302db/20260126/15ac8c5da7c941dba4d0268bf1a35729.png"
+            },
+            {
+              "name": "iOS APP",
+              "count": 1,
+              "product_id": 1942,
+              "alias_name": "ios-app",
+              "description": "302.AI 是一款功能强大的 AI 智能聊天应用，为您开启全新的对话体验。我们汇聚了市面上主流的各类顶尖 AI 模型，包括 Deepseek、Qwen、ChatGPT等，让您一站式畅享前沿 AI 技术的魅力。",
+              "logo": "https://file.302.ai/gpt/resource302db/20260126/9da236aeea9c45b289ae02a684efa6aa.png"
+            },
+            {
+              "name": "Android APP",
+              "count": 1,
+              "product_id": 1943,
+              "alias_name": "android-app",
+              "description": "302.AI 是一款功能强大的 AI 智能聊天应用，为您开启全新的对话体验。我们汇聚了市面上主流的各类顶尖 AI 模型，包括 Deepseek、Qwen、ChatGPT等，让您一站式畅享前沿 AI 技术的魅力。",
+              "logo": "https://file.302.ai/gpt/resource302db/20260126/27a96e9eab1c4731882666c8741bc5cb.png"
+            },
+            {
+              "name": "AI全能工具箱",
+              "count": 1,
+              "product_id": 1980,
+              "alias_name": "ai-omni-toolbox",
+              "description": "该全能工具箱包含聊天，绘画，工具超市和API超市四大功能，按需付费，可根据需求选择每项功能的模型。",
+              "logo": "https://file.302.ai/gpt/resource302db/20260126/93d326bf7beb46d0ac532f79775529cd.png"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "total_products": 1608
+}

@@ -19,7 +19,7 @@ const resolveSessionTenantId = vi.fn();
 const listDetailByTenant = vi.fn();
 const summary = vi.fn();
 const getBalanceForDisplay = vi.fn();
-const getListingCatalog = vi.fn();
+const getPricedListingCatalog = vi.fn();
 
 vi.mock("@/lib/auth", () => ({ requireAuth: (...args: unknown[]) => requireAuth(...args) }));
 
@@ -37,9 +37,14 @@ vi.mock("@/lib/wallet", () => ({
 vi.mock("@/lib/model-routes", () => ({ getBaseUrlHint: () => "https://api.example.test/v1" }));
 
 vi.mock("@/lib/listing-catalog", () => ({
-  getListingCatalog: () => getListingCatalog(),
   formatPrice: (value: number) => `$${value.toFixed(2)}`,
   PROVIDER_LABEL: { openai: "OpenAI" },
+}));
+
+// The priced accessors live in the server-only module — listing-catalog stays
+// client-safe and therefore database-free.
+vi.mock("@/lib/shelf-prices", () => ({
+  getPricedListingCatalog: () => getPricedListingCatalog(),
 }));
 
 vi.mock("@nebutra/repositories", () => ({
@@ -85,7 +90,7 @@ async function renderDashboard() {
 beforeEach(() => {
   vi.clearAllMocks();
   requireAuth.mockResolvedValue({ user: { id: "u1" } });
-  getListingCatalog.mockResolvedValue(CATALOG);
+  getPricedListingCatalog.mockResolvedValue(CATALOG);
 });
 
 describe("DashboardPage", () => {
