@@ -1,5 +1,16 @@
 # @nebutra/knowledge-rag
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agents@2.0.0
+  - @nebutra/errors@2.0.0
+  - @nebutra/logger@2.0.0
+  - @nebutra/search@2.0.0
+  - @nebutra/tenant-store@2.0.0
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/design-sync",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "Provider-agnostic design-tool sync. Figma + Tokens Studio | Penpot | git-only | design-md | memory.",
   "private": false,
   "license": "MIT",

@@ -1,8 +1,8 @@
 {
   "name": "@nebutra/kuanlan",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
-  "description": "KUANLAN \u89c2\u6f9c \u2014 AI personal presence platform",
+  "description": "KUANLAN 观澜 — AI personal presence platform",
   "nebutra": {
     "status": "wip",
     "graph": "labs",
