@@ -1,7 +1,7 @@
-import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { grepLines } from "./support/scan";
 
 const ROOT = process.cwd();
 
@@ -64,13 +64,11 @@ describe("container width contract", () => {
   });
 
   it("has no call site typing a container width by hand", () => {
-    const hits = execSync(
-      "rg -n --no-heading -e 'max-w-\\[1400px\\]' -e 'max-w-\\[1152px\\]' -e 'max-w-\\[896px\\]' " +
-        "-e 'max-w-\\[var\\(--container-[a-z]+\\)\\]' apps packages/design || true",
-      { encoding: "utf-8", cwd: ROOT, maxBuffer: 32 * 1024 * 1024 },
-    )
-      .split("\n")
-      .filter(Boolean);
+    const hits = grepLines(
+      ROOT,
+      ["apps", "packages/design"],
+      /max-w-\[(?:1400px|1152px|896px|var\(--container-[a-z]+\))\]/,
+    ).map((m) => `${m.file}:${m.line}: ${m.text}`);
     expect(hits, "use max-w-text / max-w-content / max-w-wide instead").toEqual([]);
   });
 
