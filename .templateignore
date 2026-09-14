@@ -415,3 +415,27 @@ packages/design/brand/assets/vi/
 # Nebutra's product-intelligence corpus: competitor teardowns, market notes,
 # cartography working files. Nebutra's thinking, not the customer's skeleton.
 research/
+
+# ---------------------------------------------------------------------------
+# Release history
+#
+# Nebutra's changelogs, in a customer's scaffold, describe releases of a
+# product they do not have. A scaffolded project starts its own history at its
+# own first commit.
+#
+# They also break the release. `@changesets/changelog-github` writes a
+# `Nebutra/Nebutra-Sailor` link into every entry, so each generated CHANGELOG
+# is a file carrying a Nebutra identifier — which is exactly what
+# tests/architecture/template-boundary.test.ts forbids shipping. The version PR
+# for 2026-09-14 failed on 13 of them, all newly created by that same run, and
+# the guard cannot be satisfied by listing them: its baseline may only shrink.
+#
+# That had been absorbed by parking 50 CHANGELOG paths in the baseline, one
+# release at a time, against the rule the baseline states about itself. This
+# removes the cause instead: no changelog ships, so none can carry an
+# identifier, and the 50 entries leave the baseline for good.
+#
+# Nothing reads these files — only landing marketing copy mentions the word.
+# ---------------------------------------------------------------------------
+CHANGELOG.md
+**/CHANGELOG.md
