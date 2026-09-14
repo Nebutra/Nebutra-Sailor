@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/ecosystem-safety",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Shared public-disclosure safety primitives for ecosystem publishing surfaces",
   "private": false,
   "license": "MIT",

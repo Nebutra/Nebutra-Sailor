@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/atelier-canvas",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Server-authoritative creative-canvas engine: scene model, non-overlap placement, write-then-broadcast consistency, tenant-scoped locking",
   "private": false,
   "license": "MIT",

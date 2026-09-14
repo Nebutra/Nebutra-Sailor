@@ -1,5 +1,12 @@
 # @nebutra/webhooks
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/logger@2.0.0
+
 ## 0.1.3
 
 ### Patch Changes

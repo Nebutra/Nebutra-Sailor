@@ -1,5 +1,16 @@
 # @nebutra/mail-preview
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/ui@2.0.0
+  - @nebutra/email@2.0.0
+  - @nebutra/fonts@2.0.0
+  - @nebutra/icons@2.0.0
+  - @nebutra/tokens@2.0.0
+
 ## 0.1.3
 
 ### Patch Changes

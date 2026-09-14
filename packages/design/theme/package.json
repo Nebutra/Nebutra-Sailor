@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/theme",
-  "version": "0.2.2",
+  "version": "2.0.0",
   "type": "module",
   "description": "Design-language catalog for global product chrome swap (Brand Packages). Multi-mood oklch catalog removed.",
   "private": false,

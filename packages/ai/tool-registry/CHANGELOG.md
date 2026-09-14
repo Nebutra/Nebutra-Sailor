@@ -1,5 +1,14 @@
 # @nebutra/tool-registry
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@2.0.0
+  - @nebutra/errors@2.0.0
+  - @nebutra/content-store@0.1.5
+
 ## 0.1.2
 
 ### Patch Changes
