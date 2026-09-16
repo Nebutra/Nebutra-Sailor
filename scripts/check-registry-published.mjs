@@ -30,9 +30,19 @@ const REGISTRY = process.env.NPM_REGISTRY_URL ?? "https://registry.npmjs.org";
 const CONCURRENCY = 12;
 const TIMEOUT_MS = 20_000;
 
-/** npm scopes are `/`-separated in the name and `%2F`-encoded in the URL. */
+/**
+ * A scoped name is one path segment on the registry, so every character in it
+ * has to be encoded rather than appended raw.
+ *
+ * encodeURIComponent, not `.replace("/", "%2F")`: a string pattern replaces
+ * only the FIRST occurrence, so that spelling depends on a package name never
+ * containing a second slash. npm does not allow one today, which is exactly
+ * what makes the bug invisible until the day it isn't. The registry accepts
+ * both `@scope%2Fname` and the fully-encoded `%40scope%2Fname` (verified: HTTP
+ * 200 for each), so there is nothing to trade away for the safe spelling.
+ */
 function packumentUrl(name) {
-  return `${REGISTRY}/${name.replace("/", "%2F")}`;
+  return `${REGISTRY}/${encodeURIComponent(name)}`;
 }
 
 async function hasVersion(name, version) {
