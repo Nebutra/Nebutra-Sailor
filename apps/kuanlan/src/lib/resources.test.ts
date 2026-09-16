@@ -91,16 +91,30 @@ describe("R2 configuration", () => {
     delete process.env.CLOUDFLARE_ACCOUNT_ID;
     delete process.env.R2_ACCESS_KEY_ID;
     delete process.env.R2_SECRET_ACCESS_KEY;
-    expect(isR2Configured()).toBe(false);
+    // Both the module under test and the class to compare against must come
+    // from the SAME module instance. vi.resetModules() gives every dynamic
+    // import a fresh graph, so the ResourceStoreUnavailableError imported at
+    // the top of this file is a different class object from the one
+    // resources.server throws — `toBeInstanceOf` then fails against a value
+    // that IS one, reporting "expected ResourceStoreUnavailableError: … to be
+    // an instance of ResourceStoreUnavailableError".
+    const [{ persistIdPhotoMoment }, resources] = await Promise.all([
+      import("./resources.server"),
+      import("./resources"),
+    ]);
 
-    const { persistIdPhotoMoment } = await import("./resources.server");
+    // Read configuration through the same instance too, so this asserts the
+    // state the code under test actually sees rather than the one the stale
+    // top-level import captured.
+    expect(resources.isR2Configured()).toBe(false);
+
     await expect(
       persistIdPhotoMoment({
         userId: "user_1",
         skuId: "cn-1in-white",
         print: Buffer.from("png"),
       }),
-    ).rejects.toBeInstanceOf(ResourceStoreUnavailableError);
+    ).rejects.toBeInstanceOf(resources.ResourceStoreUnavailableError);
   });
 
   it("writes the print, and only the print, to the uploads bucket", async () => {
