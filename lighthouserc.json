@@ -3,8 +3,9 @@
     "collect": {
       "url": ["http://localhost:3000"],
       "startServerCommand": "pnpm --filter @nebutra/landing start",
-      "startServerReadyPattern": "ready on",
+      "startServerReadyPattern": "Ready in",
       "startServerReadyTimeout": 30000,
+      "settings": { "disableFullPageScreenshot": true },
       "numberOfRuns": 1
     },
     "assert": {
