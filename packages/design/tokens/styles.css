@@ -1718,18 +1718,29 @@ html {
 
 /*
  * flex-col + items-center:
- * 1) Direct children (incl. AnimateIn wrappers) get a sane box — max 100% of
- *    the column, min-width 0 so they can wrap instead of forcing the column
- *    to min-content.
+ * 1) Direct children (incl. AnimateIn wrappers) get min-width 0 so they can
+ *    wrap instead of forcing the column to min-content.
  * 2) Nested prose (p/h*) under those columns takes width:100% so Chinese
  *    copy does not collapse to a 1-glyph strip. We deliberately do NOT set
  *    max-width here — leave Tailwind max-w-* / max-w-[…] in control.
+ *
+ * (1) used to also set `max-width: 100%`, which took that control away from
+ * every utility it was written to defer to. `:is(html:lang(zh)) :is(.flex
+ * .flex-col.items-center) > *` scores three classes; `.max-w-[20rem]` scores
+ * one, so the cap lost — on CJK locales only. The footer newsletter field was
+ * capped at 20rem in the markup and rendered 670px wide on /zh-Hans while the
+ * English page was correct, which is the shape this class of bug always takes:
+ * a global that only fires under :lang().
+ *
+ * min-width: 0 is what actually prevents the one-glyph strip. max-width: 100%
+ * was doing nothing for it — a flex column child cannot exceed the line box
+ * unless it is given an explicit larger width, and if it is, that is a
+ * deliberate local decision this file should not silently overrule.
  */
 :is(html:lang(zh), html:lang(ja), html:lang(ko))
   :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
   > * {
   box-sizing: border-box;
-  max-width: 100%;
   min-width: 0;
 }
 
