@@ -55,13 +55,22 @@ describe("wave6 hard-correct tools", () => {
     expect(out.forwardedChain).toHaveLength(2);
   });
 
-  it("dns-lookup resolves example.com A (network)", async () => {
-    const out = (await dnsLookupTool.execute({
-      name: "example.com",
-      type: "A",
-    })) as { count: number; records: unknown[] };
-    expect(out.count).toBeGreaterThan(0);
-  }, 15_000);
+  // A real DNS query, in a unit suite. It passes in CI, which has network, and
+  // fails on any machine whose resolver is slow or filtered — which is how a
+  // developer's local `turbo run test` disagrees with CI for reasons that have
+  // nothing to do with the code. Opt-in keeps the coverage where the network
+  // exists (CI sets NETWORK_TESTS=1) and keeps local runs deterministic.
+  it.skipIf(!process.env.NETWORK_TESTS)(
+    "dns-lookup resolves example.com A (network)",
+    async () => {
+      const out = (await dnsLookupTool.execute({
+        name: "example.com",
+        type: "A",
+      })) as { count: number; records: unknown[] };
+      expect(out.count).toBeGreaterThan(0);
+    },
+    15_000,
+  );
 
   it("mermaid-render parse_only returns diagramType", async () => {
     const out = (await mermaidRenderTool.execute({
