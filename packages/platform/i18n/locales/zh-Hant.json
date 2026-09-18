@@ -111,7 +111,8 @@
       "submit": "建立工作空間",
       "submitting": "建立中…",
       "error": "無法建立工作空間。",
-      "providerUnsupported": "目前的登入方式暫不支援建立工作空間。"
+      "providerUnsupported": "目前的登入方式暫不支援建立工作空間。",
+      "slugTaken": "這個工作空間位址已被使用，換一個。"
     },
     "invite": {
       "title": "邀請團隊",

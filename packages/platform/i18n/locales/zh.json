@@ -101,7 +101,8 @@
       "submit": "创建工作空间",
       "submitting": "创建中…",
       "error": "工作空间创建失败。",
-      "providerUnsupported": "当前登录方式暂不支持创建工作空间。"
+      "providerUnsupported": "当前登录方式暂不支持创建工作空间。",
+      "slugTaken": "这个工作空间地址已被占用，换一个。"
     },
     "invite": {
       "title": "邀请团队",

@@ -47,6 +47,10 @@ export {
   appendSetCookieHeaders,
   buildOAuthStartRedirectResponse,
 } from "./oauth-start-response";
+export {
+  isOrganizationsUnavailableError,
+  ORGANIZATIONS_UNAVAILABLE_CODE,
+} from "./organization-availability";
 // Static multi-provider matrix (declared support + product tier)
 export type { AuthProviderProfile, AuthProviderTier } from "./provider-matrix";
 export {
