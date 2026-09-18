@@ -5,7 +5,8 @@
  * in production TypeScript (excludes tests, dist, node_modules, templates,
  * and generated Prisma client). The baseline may only go down.
  */
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -14,46 +15,50 @@ const ROOT = join(import.meta.dirname, "../..");
 /** Recorded 2026-07-24 after CLI residual cleanup. Shrink-only. */
 const AS_ANY_BASELINE = 59;
 
-const SKIP_DIR = new Set([
-  "node_modules",
-  "dist",
-  ".next",
-  "coverage",
-  "generated",
-  "templates",
-  ".turbo",
-  ".git",
-  ".source", // fumadocs generated
-]);
-
 const PATTERN = /\bas any\b|@ts-ignore|@ts-expect-error|@ts-nocheck/g;
 
-function walk(dir: string, out: string[] = []): string[] {
-  let entries: string[];
-  try {
-    entries = readdirSync(dir);
-  } catch {
-    return out;
-  }
-  for (const name of entries) {
-    if (SKIP_DIR.has(name)) continue;
-    const full = join(dir, name);
-    let st: ReturnType<typeof statSync>;
-    try {
-      st = statSync(full);
-    } catch {
-      continue;
-    }
-    if (st.isDirectory()) {
-      walk(full, out);
-      continue;
-    }
-    if (!/\.(ts|tsx)$/.test(name)) continue;
-    if (/\.(test|spec)\.(ts|tsx)$/.test(name)) continue;
-    if (name.endsWith(".d.ts")) continue;
-    out.push(full);
-  }
-  return out;
+/** Directories whose TypeScript is generated or vendored, not authored here. */
+const SKIP_SEGMENT = [
+  "node_modules/",
+  "dist/",
+  ".next/",
+  "coverage/",
+  "generated/",
+  "templates/",
+  ".turbo/",
+  ".source/",
+];
+
+/**
+ * Production TypeScript tracked by git.
+ *
+ * This walked the filesystem with a hardcoded skip list until 2026-09-18. That
+ * counts anything sitting in the working directory, so four local copies of
+ * this repo (multi-agent scratch trees, untracked) pushed the measurement to
+ * 249 against a baseline of 59 — a red ratchet locally, green in CI, about
+ * code that was never in the repo.
+ *
+ * `git ls-files` is the same source of truth template-boundary uses, and it
+ * cannot see untracked scratch by construction. A guard that measures the
+ * repository should ask git what the repository contains.
+ */
+function trackedSourceFiles(): string[] {
+  const output = execFileSync("git", ["-C", ROOT, "ls-files", "-z", "*.ts", "*.tsx"], {
+    encoding: "utf-8",
+    maxBuffer: 64 * 1024 * 1024,
+  });
+
+  return (
+    output
+      .split("\0")
+      .filter(Boolean)
+      .filter((rel) => !SKIP_SEGMENT.some((segment) => rel.includes(segment)))
+      .filter((rel) => !/\.(test|spec)\.(ts|tsx)$/.test(rel))
+      .filter((rel) => !rel.endsWith(".d.ts"))
+      .map((rel) => join(ROOT, rel))
+      // A tracked path can be absent in a partial checkout or mid-rebase.
+      .filter((abs) => existsSync(abs))
+  );
 }
 
 function countMatches(files: string[]): { total: number; samples: string[] } {
@@ -73,7 +78,7 @@ function countMatches(files: string[]): { total: number; samples: string[] } {
 
 describe("type hygiene ratchet (#232)", () => {
   it("as any / @ts-* count does not grow above baseline", () => {
-    const files = walk(ROOT);
+    const files = trackedSourceFiles();
     const { total, samples } = countMatches(files);
     expect(
       total,
