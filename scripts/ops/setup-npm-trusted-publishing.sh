@@ -30,7 +30,26 @@
 
 set -uo pipefail
 
-REPO="${NPM_TRUST_REPO:-Nebutra/Nebutra-Sailor}"
+# Derived from the git remote, not hardcoded: a scaffolded project needs this
+# same setup, and an owner/repo literal here is a Nebutra instance fact that
+# tests/architecture/template-boundary.test.ts correctly refuses to ship.
+default_repo() {
+  local url
+  url="$(git config --get remote.origin.url 2>/dev/null || true)"
+  [ -n "$url" ] || return 1
+  # git@host:owner/repo.git | https://host/owner/repo.git | ssh://git@host/owner/repo
+  url="${url%.git}"
+  url="${url##*:}"
+  url="${url##*/github.com/}"
+  printf '%s' "$url" | grep -oE '[^/]+/[^/]+$'
+}
+
+REPO="${NPM_TRUST_REPO:-$(default_repo)}"
+if [ -z "$REPO" ]; then
+  printf 'Could not derive owner/repo from remote.origin.url.\n'
+  printf 'Set it explicitly:  NPM_TRUST_REPO=owner/repo bash %s\n' "$0"
+  exit 1
+fi
 WORKFLOW="${NPM_TRUST_WORKFLOW:-release.yml}"
 
 OTP_ARGS=()
