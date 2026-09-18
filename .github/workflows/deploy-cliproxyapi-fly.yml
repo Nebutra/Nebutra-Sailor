@@ -94,7 +94,7 @@ jobs:
         run: |
           flyctl deploy \
             --config "$GITHUB_WORKSPACE/infra/fly/cliproxyapi.toml" \
-            --image eceasy/cli-proxy-api:v7.2.154 \
+            --image eceasy/cli-proxy-api:v7.2.156 \
             --ha=false \
             --remote-only \
             --yes

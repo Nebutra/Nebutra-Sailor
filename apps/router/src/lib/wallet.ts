@@ -1,6 +1,8 @@
 import "server-only";
 
+import { configureBillingTenantDb } from "@nebutra/billing";
 import * as credits from "@nebutra/billing/credits";
+import { getTenantDb } from "@nebutra/db";
 import { createCreditLedgerWallet, type PrepaidWallet } from "@nebutra/prepaid-wallet";
 
 /**
@@ -11,8 +13,15 @@ import { createCreditLedgerWallet, type PrepaidWallet } from "@nebutra/prepaid-w
  * There is no demo wallet. `MemoryPrepaidWallet` is a test double and is never
  * constructed here.
  *
- * Requires `configureBillingTenantDb(getTenantDb)`, which runs in
- * `src/instrumentation.ts`. Without it every call throws.
+ * `@nebutra/billing` needs its tenant DB configured before any credits call.
+ * `src/instrumentation.ts` does that at boot, but boot and a request handler do
+ * not always share a module instance in a bundled build: `/v1/limits` reached a
+ * copy of `@nebutra/billing` that had never been configured and threw
+ * "requires a host tenant DB" as a 500, on our own published endpoint.
+ *
+ * So the wallet configures it on the way to first use instead. Registration is
+ * idempotent, and tying it to the thing that needs it removes the question of
+ * whether a boot hook ran in this instance.
  *
  * ## Reading a balance
  *
@@ -28,6 +37,7 @@ let wallet: PrepaidWallet | undefined;
 
 export function getWallet(): PrepaidWallet {
   if (!wallet) {
+    configureBillingTenantDb(getTenantDb);
     wallet = createCreditLedgerWallet({
       getCreditBalance: credits.getCreditBalance,
       getCreditBalanceFresh: credits.getCreditBalanceFresh,

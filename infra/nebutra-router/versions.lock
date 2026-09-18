@@ -17,7 +17,7 @@ sub2api:
 
 cliproxyapi:
   image: eceasy/cli-proxy-api
-  tag: v7.2.154
+  tag: v7.2.156
   role: account-relay
   notes: >
     B-class OAuth / CLI account reverse proxy (ChatGPT-Codex, Google via

@@ -94,23 +94,51 @@ export function ProductDetail({
     return items;
   }, [model]);
 
-  const apis = useMemo(
-    () => [
-      {
-        name: "Chat（聊天）",
-        path: "/v1/chat/completions",
-        method: "POST",
-        stability: "稳定",
-      },
-      {
-        name: "Chat（流式）",
-        path: "/v1/chat/completions",
-        method: "POST",
-        stability: "稳定",
-      },
-    ],
-    [],
-  );
+  /**
+   * The endpoints this model actually answers on.
+   *
+   * This was a hardcoded `/v1/chat/completions` for every model, which is wrong
+   * for an image SKU: gpt-image-2.5 answers only on /v1/images/*, and a chat
+   * call to it is refused. The page was telling a customer to make a request
+   * that cannot work, which is the worst thing a detail page can do — their
+   * first call fails and the fault looks like ours.
+   */
+  const apis = useMemo(() => {
+    if (model.category === "image") {
+      return [
+        {
+          name: "Images（生成）",
+          path: "/v1/images/generations",
+          method: "POST",
+          stability: "稳定",
+        },
+        { name: "Images（编辑）", path: "/v1/images/edits", method: "POST", stability: "稳定" },
+      ];
+    }
+    if (model.category === "audio") {
+      return [
+        { name: "Audio（语音合成）", path: "/v1/audio/speech", method: "POST", stability: "稳定" },
+        {
+          name: "Audio（转写）",
+          path: "/v1/audio/transcriptions",
+          method: "POST",
+          stability: "稳定",
+        },
+      ];
+    }
+    if (model.category === "data") {
+      return [
+        { name: "Embeddings（向量）", path: "/v1/embeddings", method: "POST", stability: "稳定" },
+      ];
+    }
+    return [
+      { name: "Chat（聊天）", path: "/v1/chat/completions", method: "POST", stability: "稳定" },
+      // Streaming is the same endpoint with `stream: true`, listed separately
+      // because a buyer scanning the table is looking for the word.
+      { name: "Chat（流式）", path: "/v1/chat/completions", method: "POST", stability: "稳定" },
+      { name: "Responses（响应）", path: "/v1/responses", method: "POST", stability: "稳定" },
+    ];
+  }, [model.category]);
 
   async function copyForAi() {
     const text = [
@@ -120,7 +148,7 @@ export function ProductDetail({
       `输入: ${formatPrice(model.inputPerMTok)}/1M`,
       `输出: ${formatPrice(model.outputPerMTok)}/1M`,
       `上下文: ${model.context || "—"}`,
-      `接入: ${brand.name} Router OpenAI-compatible /v1/chat/completions`,
+      `接入: ${brand.name} Router OpenAI-compatible ${apis[0]?.path ?? "/v1/chat/completions"}`,
     ].join("\n");
     try {
       await navigator.clipboard.writeText(text);

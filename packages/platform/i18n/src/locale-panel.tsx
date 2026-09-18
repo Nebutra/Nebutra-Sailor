@@ -94,6 +94,12 @@ export function LocalePanel({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const isMobile = useIsMobile();
   const [desktopMaxHeight, setDesktopMaxHeight] = useState<string>("min(70vh, 560px)");
+  const panelRef = useRef<HTMLDivElement>(null);
+  /**
+   * Horizontal offset from the trigger, in px, once the panel has been measured.
+   * `null` means "not measured yet" and falls back to right-alignment.
+   */
+  const [desktopLeft, setDesktopLeft] = useState<number | null>(null);
 
   useEffect(() => {
     if (!open || !showSearch) return;
@@ -120,11 +126,37 @@ export function LocalePanel({
       const spaceBelow = window.innerHeight - rect.bottom - 16;
       const cap = Math.max(200, Math.min(560, spaceBelow, window.innerHeight * 0.7));
       setDesktopMaxHeight(`${Math.floor(cap)}px`);
+
+      // Which side the panel opens toward is a property of where the trigger
+      // sits, not something a caller should have to know. Anchoring it to the
+      // trigger's right edge is right for a switcher in the top-right and wrong
+      // for one in the top-left, where the panel ran off the left of the
+      // viewport and clipped every language name — leaving only the narrow code
+      // rail visible, which read as a list of raw locale codes.
+      const panelWidth = panelRef.current?.offsetWidth ?? 0;
+      if (panelWidth === 0) return;
+      const margin = 12;
+      // Prefer opening leftward from the trigger's right edge, as before.
+      let viewportLeft = rect.right - panelWidth;
+      // If that would cross the left edge, open rightward from the trigger.
+      if (viewportLeft < margin) viewportLeft = rect.left;
+      // Then clamp, so neither choice can leave the viewport on a narrow window.
+      viewportLeft = Math.min(viewportLeft, window.innerWidth - margin - panelWidth);
+      viewportLeft = Math.max(margin, viewportLeft);
+      // `left` resolves against the positioned container, not the trigger, so
+      // the offset has to be measured from the container's own edge.
+      const base = containerRef.current?.getBoundingClientRect() ?? rect;
+      setDesktopLeft(Math.round(viewportLeft - base.left));
     };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, [open, isMobile]);
+
+  // Forget the measurement on close: the trigger may have moved by next open.
+  useLayoutEffect(() => {
+    if (!open) setDesktopLeft(null);
+  }, [open]);
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -150,7 +182,9 @@ export function LocalePanel({
       }
     : {
         position: "absolute",
-        right: 0,
+        // Right-aligned until measured, then pinned to a viewport-safe offset.
+        // useLayoutEffect measures before paint, so the fallback never shows.
+        ...(desktopLeft === null ? { right: 0 } : { left: desktopLeft }),
         top: "100%",
         marginTop: 8,
         // Above password-toggle / form chrome on auth split layout (z-10–ish).
@@ -219,6 +253,7 @@ export function LocalePanel({
 
       {open ? (
         <div
+          ref={panelRef}
           role="dialog"
           aria-label={copy.menuAria}
           aria-modal={isMobile ? "true" : "false"}
