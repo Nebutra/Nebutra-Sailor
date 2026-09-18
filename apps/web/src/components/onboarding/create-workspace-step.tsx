@@ -46,7 +46,11 @@ interface WorkspaceSchemaMessages {
 interface WorkspaceSubmitErrorMessages {
   error: string;
   providerUnsupported: string;
+  slugTaken: string;
 }
+
+/** Which form field a submit failure belongs to, when it belongs to one. */
+export type WorkspaceSubmitErrorTarget = "root" | "slug";
 
 export function createWorkspaceSchema(messages: WorkspaceSchemaMessages) {
   return z.object({
@@ -62,15 +66,25 @@ export function createWorkspaceSchema(messages: WorkspaceSchemaMessages) {
 export function resolveWorkspaceSubmitError(
   payload: unknown,
   messages: WorkspaceSubmitErrorMessages,
-): string {
+): { field: WorkspaceSubmitErrorTarget; message: string } {
   const code =
     payload && typeof payload === "object" && "code" in payload
       ? (payload as { code?: unknown }).code
       : undefined;
 
-  return code === ORGANIZATION_ERROR_CODES.notEnabled
-    ? messages.providerUnsupported
-    : messages.error;
+  // A taken slug is the one failure the user can fix without help, so it is
+  // reported on the field they need to edit rather than as a banner. Before
+  // the API classified failures, every cause — missing plugin, taken slug,
+  // anything else — arrived here as the same unattributed generic string.
+  if (code === ORGANIZATION_ERROR_CODES.slugTaken) {
+    return { field: "slug", message: messages.slugTaken };
+  }
+
+  if (code === ORGANIZATION_ERROR_CODES.notEnabled) {
+    return { field: "root", message: messages.providerUnsupported };
+  }
+
+  return { field: "root", message: messages.error };
 }
 
 export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
@@ -116,12 +130,13 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
 
       if (!response.ok) {
         const data: unknown = await response.json().catch(() => null);
-        setError("root", {
-          message: resolveWorkspaceSubmitError(data, {
-            error: t("error"),
-            providerUnsupported: t("providerUnsupported"),
-          }),
+        const resolved = resolveWorkspaceSubmitError(data, {
+          error: t("error"),
+          providerUnsupported: t("providerUnsupported"),
+          slugTaken: t("slugTaken"),
         });
+        setError(resolved.field, { message: resolved.message });
+        if (resolved.field === "slug") setFocus("slug");
         return;
       }
 

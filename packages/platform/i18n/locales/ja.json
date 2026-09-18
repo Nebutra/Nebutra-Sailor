@@ -117,7 +117,8 @@
       "submit": "Create workspace",
       "submitting": "Creating…",
       "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces."
+      "providerUnsupported": "This sign-in provider does not support workspaces.",
+      "slugTaken": "このワークスペースアドレスは使用済みです。別のものをお試しください。"
     },
     "invite": {
       "title": "Invite the team",

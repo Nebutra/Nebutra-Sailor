@@ -92,6 +92,12 @@ describe("CreateWorkspaceStep", () => {
     expect(result.error?.issues[0]?.message).toBe("请输入工作空间名称。");
   });
 
+  const MESSAGES = {
+    error: "工作空间创建失败。",
+    providerUnsupported: "当前登录方式暂不支持创建工作空间。",
+    slugTaken: "这个工作空间地址已被占用，换一个。",
+  };
+
   it("maps provider errors to translated UI copy instead of exposing server English", () => {
     expect(
       resolveWorkspaceSubmitError(
@@ -99,23 +105,35 @@ describe("CreateWorkspaceStep", () => {
           code: "ORGANIZATIONS_NOT_ENABLED",
           error: "Organizations are not enabled for this provider.",
         },
-        {
-          error: "工作空间创建失败。",
-          providerUnsupported: "当前登录方式暂不支持创建工作空间。",
-        },
+        MESSAGES,
       ),
-    ).toBe("当前登录方式暂不支持创建工作空间。");
+    ).toEqual({ field: "root", message: MESSAGES.providerUnsupported });
+  });
+
+  it("puts a taken slug on the field the user has to edit, not in a banner", () => {
+    // The case that had no test and no message: onboarding reported the same
+    // generic failure for a slug collision as for a missing plugin.
+    expect(
+      resolveWorkspaceSubmitError(
+        { code: "ORGANIZATION_SLUG_TAKEN", error: "That workspace address is already taken." },
+        MESSAGES,
+      ),
+    ).toEqual({ field: "slug", message: MESSAGES.slugTaken });
   });
 
   it("uses translated generic copy for unknown API errors", () => {
-    expect(
-      resolveWorkspaceSubmitError(
-        { error: "Internal server error" },
-        {
-          error: "工作空间创建失败。",
-          providerUnsupported: "当前登录方式暂不支持创建工作空间。",
-        },
-      ),
-    ).toBe("工作空间创建失败。");
+    expect(resolveWorkspaceSubmitError({ error: "Internal server error" }, MESSAGES)).toEqual({
+      field: "root",
+      message: MESSAGES.error,
+    });
+  });
+
+  it("does not claim a cause it cannot see", () => {
+    // A null body (response.json() failed) must stay generic rather than
+    // guessing at one of the specific codes.
+    expect(resolveWorkspaceSubmitError(null, MESSAGES)).toEqual({
+      field: "root",
+      message: MESSAGES.error,
+    });
   });
 });
