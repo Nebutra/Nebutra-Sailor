@@ -66,7 +66,7 @@ export function CommandPalette({
           onSwitchOrganization();
           return;
         }
-        router.push("/settings/organization");
+        router.push("/settings/organization/members");
       },
       openFeedback,
     }),

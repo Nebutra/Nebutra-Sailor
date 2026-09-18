@@ -168,7 +168,7 @@ function renderWhatYouCanDoNext(features: WaveFeatureSummary = {}): string {
       ? "- Press ⌘K to open the command palette (disabled — re-enable with `--command-palette=true`)"
       : "- Press ⌘K to open the command palette",
     "- Edit notification preferences at `/settings/notifications`",
-    "- Export your data at `/settings/account/export`",
+    "- Export your data at `/settings/account`",
     "- For China deployments, see `packages/ops/china-compliance/README.md`",
   ];
   return `
