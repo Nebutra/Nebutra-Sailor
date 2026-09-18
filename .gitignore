@@ -144,3 +144,25 @@ packages/design/fonts/vendor/**/*.otf
 .trellis/tasks/*/research/shots/
 .trellis/tasks/*/research/shots-*/
 .trellis/tasks/*/research/*.png
+
+# Local working copies of this repo (multi-agent / worktree scratch).
+#
+# These are full nebutra-sailor trees sitting inside the repo — same
+# package.json name, no .git of their own. They are not tracked, but the
+# architecture suite walks the filesystem rather than git, so it counts them as
+# repo content: template-boundary reported 4021 files "carrying a Nebutra
+# identifier" (every one of them inside these four), and type-hygiene-ratchet
+# measured 249 `as any` against a baseline of 59.
+#
+# CI is green because it checks out a clean tree. Only local runs of
+# `pnpm test` / `pnpm template:check` see the phantom failures, which is worse:
+# the guard that fires is the one nobody trusts.
+#
+# Ignoring is not deleting. Remove them yourself when you are done with them.
+/loggerhead/
+/pompano/
+/seasnake/
+/yabby/
+
+# Lighthouse CI local run output.
+/.lighthouseci/
