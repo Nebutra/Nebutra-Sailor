@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { createLegacyAppRedirectUrl } from "./lib/app-redirects";
-import { createDocsRewriteUrl } from "./lib/docs-routing";
+import { createDocsLocaleRedirectPath, createDocsRewriteUrl } from "./lib/docs-routing";
 import { shouldBounceSignedInVisitorToApp } from "./lib/session-home-redirect";
 
 const intlMiddleware = createMiddleware(routing);
@@ -148,6 +148,7 @@ export default function proxy(request: NextRequest): NextResponse {
   const _bot = botClass(request.headers.get("user-agent"));
   void _bot;
   const docsRewriteUrl = createDocsRewriteUrl(request.nextUrl);
+  const docsLocaleRedirectPath = createDocsLocaleRedirectPath(pathname);
   const legacyAppRedirectUrl = createLegacyAppRedirectUrl(pathname, APP_REDIRECT_URL);
   const legacyLocaleRedirectUrl = createLegacyLocaleRedirectUrl(request.nextUrl, pathname);
 
@@ -157,9 +158,19 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.redirect(legacyLocaleRedirectUrl, 308));
   }
 
+  // `/<locale>/docs/*` is the pre-zone shape. 308 it onto the zone's own URL so
+  // one page has one address; the Location is in this app's path space, so
+  // unlike a redirect from inside the zone it resolves correctly.
+  if (docsLocaleRedirectPath) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = docsLocaleRedirectPath;
+    return withSecurityHeaders(NextResponse.redirect(redirectUrl, 308));
+  }
+
   // Rewrite, not redirect: the visitor stays on this host and the address bar
   // keeps saying /docs. A 308 here is what sent documentation to its own
-  // subdomain, which is the design being removed.
+  // subdomain, which is the design being removed. The forward is identity —
+  // see lib/docs-routing.ts for why anything cleverer cannot work.
   if (docsRewriteUrl) {
     return withSecurityHeaders(NextResponse.rewrite(docsRewriteUrl));
   }
