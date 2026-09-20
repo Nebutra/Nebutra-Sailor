@@ -1,5 +1,14 @@
 # @nebutra/agents
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/billing@2.0.0
+  - @nebutra/cache@2.0.0
+  - @nebutra/logger@2.0.0
+
 ## 1.1.2
 
 ### Patch Changes

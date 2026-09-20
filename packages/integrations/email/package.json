@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/email",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "Multi-provider transactional email (Resend, Nodemailer, Console)",
   "private": false,
   "license": "MIT",

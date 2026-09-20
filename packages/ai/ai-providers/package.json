@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/ai-providers",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": false,
   "description": "Provider registry metadata for Nebutra — meta-only, consumed by @nebutra/create-sailor and docs. Runtime lives in @nebutra/agents.",
   "sideEffects": false,

@@ -1,6 +1,7 @@
-import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { grepFiles } from "../support/scan";
 
 const ROOT = process.cwd();
 const SRC = "apps/para/src";
@@ -25,17 +26,11 @@ const SRC = "apps/para/src";
  * the same escape hatch this repo uses for the repository seam and primitive reuse.
  */
 
-function sh(cmd: string): string[] {
-  return execSync(`${cmd} || true`, { encoding: "utf-8", cwd: ROOT, maxBuffer: 32 * 1024 * 1024 })
-    .split("\n")
-    .filter(Boolean);
-}
-
 /** Components that read a query and therefore owe the user four outcomes. */
-const QUERY_HOOKS = "useProjects|useProject|useWorkspaces|useAssets|useSubjects";
+const QUERY_HOOKS = /(useProjects|useProject|useWorkspaces|useAssets|useSubjects)\(/;
 
 describe("PARA async surfaces", () => {
-  const consumers = sh(`rg -l --glob '*.tsx' -e '(${QUERY_HOOKS})\\(' ${SRC}`).filter(
+  const consumers = grepFiles(ROOT, [SRC], QUERY_HOOKS, { extensions: [".tsx"] }).filter(
     (f) => !f.includes("/ui/async-surface"),
   );
 
@@ -49,7 +44,7 @@ describe("PARA async surfaces", () => {
   it("routes each of them through AsyncSurface", () => {
     const handRolled: string[] = [];
     for (const file of consumers) {
-      const src = readFileSync(file, "utf-8");
+      const src = readFileSync(join(ROOT, file), "utf-8");
       if (/^\s*\/\/\s*@async-surface-exempt:/m.test(src)) continue;
       if (!src.includes("AsyncSurface")) handRolled.push(file);
     }
@@ -57,7 +52,7 @@ describe("PARA async surfaces", () => {
   });
 
   it("keeps the pattern built from the design system, not hand-rolled markup", () => {
-    const pattern = readFileSync(`${SRC}/components/ui/async-surface.tsx`, "utf-8");
+    const pattern = readFileSync(join(ROOT, SRC, "components/ui/async-surface.tsx"), "utf-8");
     expect(pattern).toContain("@nebutra/ui/layout");
     expect(pattern).toContain("EmptyState");
     expect(pattern).toContain("ErrorState");

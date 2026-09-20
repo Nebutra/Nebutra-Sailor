@@ -1,5 +1,13 @@
 # @nebutra/design-sync
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/logger@2.0.0
+  - @nebutra/tokens@2.0.0
+
 ## 0.1.2
 
 ### Patch Changes

@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { withBrandWorktreeLock } from "./support/brand-worktree-lock";
 
 /**
  * README template drift guard.
@@ -55,10 +56,20 @@ describe("README template drift", () => {
   it("every rendered README matches what `brand:apply` would emit from its template", {
     timeout: 120_000,
   }, () => {
-    // Snapshot current rendered files so we can restore them after the
-    // brand:apply run modifies them in place.
-    const snapshots = [...LOCALES.map(({ rendered }) => rendered), ...BRAND_APPLY_SIDE_EFFECTS].map(
-      (relativePath) => {
+    // The whole snapshot → run → compare → restore section is exclusive.
+    // brand-apply's own lock only serializes the script runs; this test and
+    // brand-metadata-drift both mutate the same working-tree files around
+    // those runs, in parallel files, so without this one could snapshot the
+    // other's post-run state or have its restore overwritten mid-flight.
+    // That showed up as this test failing in a full-suite run and passing
+    // alone — and, when a restore lost the race, as real edits left behind.
+    return withBrandWorktreeLock(() => {
+      // Snapshot current rendered files so we can restore them after the
+      // brand:apply run modifies them in place.
+      const snapshots = [
+        ...LOCALES.map(({ rendered }) => rendered),
+        ...BRAND_APPLY_SIDE_EFFECTS,
+      ].map((relativePath) => {
         const src = join(ROOT, relativePath);
         const tmpPath = join(
           tmpdir(),
@@ -66,32 +77,32 @@ describe("README template drift", () => {
         );
         copyFileSync(src, tmpPath);
         return { src, tmpPath, originalBytes: readFileSync(src, "utf8") };
-      },
-    );
-    const readmeSnapshots = snapshots.slice(0, LOCALES.length);
+      });
+      const readmeSnapshots = snapshots.slice(0, LOCALES.length);
 
-    try {
-      // Run the script. It exits non-zero on internal failure; vitest
-      // surfaces that as a clear failure of *this* assertion.
-      runBrandApply();
+      try {
+        // Run the script. It exits non-zero on internal failure; vitest
+        // surfaces that as a clear failure of *this* assertion.
+        runBrandApply();
 
-      // Compare post-run bytes against the README snapshot.
-      for (const { src, originalBytes } of readmeSnapshots) {
-        const after = readFileSync(src, "utf8");
-        expect(
-          after,
-          `${src.replace(ROOT + "/", "")} drift detected — the rendered file does not match what \`pnpm brand:apply\` would produce. ` +
-            `Either (a) port your edits into the matching template file and re-run \`pnpm brand:apply\`, ` +
-            `or (b) commit both files together.`,
-        ).toBe(originalBytes);
+        // Compare post-run bytes against the README snapshot.
+        for (const { src, originalBytes } of readmeSnapshots) {
+          const after = readFileSync(src, "utf8");
+          expect(
+            after,
+            `${src.replace(ROOT + "/", "")} drift detected — the rendered file does not match what \`pnpm brand:apply\` would produce. ` +
+              `Either (a) port your edits into the matching template file and re-run \`pnpm brand:apply\`, ` +
+              `or (b) commit both files together.`,
+          ).toBe(originalBytes);
+        }
+      } finally {
+        // Always restore — never let the test leave the working tree dirty,
+        // even on failure.
+        for (const { src, tmpPath } of snapshots) {
+          copyFileSync(tmpPath, src);
+        }
       }
-    } finally {
-      // Always restore — never let the test leave the working tree dirty,
-      // even on failure.
-      for (const { src, tmpPath } of snapshots) {
-        copyFileSync(tmpPath, src);
-      }
-    }
+    });
   });
 
   it("every locale in LOCALES has a template + rendered file actually present", () => {

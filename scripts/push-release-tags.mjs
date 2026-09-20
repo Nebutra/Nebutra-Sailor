@@ -5,10 +5,17 @@ import { getReleaseSurfaceDiagnostics } from "./lib/release-surface.mjs";
 const MAX_ATTEMPTS = 3;
 
 function git(args, options = {}) {
-  return execFileSync("git", args, {
+  // execFileSync returns null when stdout is inherited rather than piped, so
+  // `.trim()` on the result threw for every call that passes stdio. pushTag is
+  // the only such caller, which made it fail on each of its three attempts
+  // after the push had already succeeded — the tag landed, the script died,
+  // and no tag after it was ever pushed. It stayed hidden because releases
+  // normally find every tag already on the remote and skip pushTag entirely.
+  const stdout = execFileSync("git", args, {
     encoding: "utf8",
     stdio: options.stdio ?? ["ignore", "pipe", "pipe"],
-  }).trim();
+  });
+  return typeof stdout === "string" ? stdout.trim() : "";
 }
 
 function remoteHasTag(tag) {

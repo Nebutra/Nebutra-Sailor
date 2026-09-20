@@ -103,10 +103,22 @@ jobs:
           NPM_CONFIG_PROVENANCE: "true"
           LEFTHOOK: "0"
 
-      # `changeset publish` never sees the unscoped CLIs (they publish first,
-      # via OIDC, in scripts/publish-unscoped-packages.mjs), so the action
-      # reports published=false for a CLI-only release and tags, attestation
-      # and the GitHub Packages mirror were skipped. Combine both signals.
+      # What the three steps below actually need to know is whether the repo's
+      # versions are on npm — not whether THIS run put them there.
+      #
+      # Two signals report the run's own work, and both under-report. `changeset
+      # publish` never sees the unscoped CLIs (they publish first, via OIDC, in
+      # scripts/publish-unscoped-packages.mjs), so a CLI-only release looked
+      # unpublished. And a run that publishes and then fails leaves nothing for
+      # the next dispatch to publish, so every retry reported false: on
+      # 2026-09-14 a run shipped 108 packages, died in `Push release tags`, and
+      # re-dispatching skipped tags, SBOM and the mirror while reporting
+      # success. The tags were pushed by hand; no SBOM was ever produced.
+      #
+      # The third signal asks the registry, which makes the tail of the release
+      # idempotent — re-dispatch finishes an interrupted one instead of quietly
+      # skipping the rest. It can only ever turn `published` on when every
+      # publishable version resolves on npm; a network failure reports false.
       - name: Resolve publish state
         id: publish_state
         env:
@@ -117,6 +129,11 @@ jobs:
           if [ -s artifacts/release/unscoped-published.json ] && \
              [ "$(node -p 'require("./artifacts/release/unscoped-published.json").length')" != "0" ]; then
             published="true"
+          fi
+          if [ "$published" != "true" ]; then
+            registry_state="$(node scripts/check-registry-published.mjs | grep '^published=' | cut -d= -f2)"
+            echo "registry reconciliation: published=${registry_state}"
+            if [ "$registry_state" = "true" ]; then published="true"; fi
           fi
           echo "published=${published}" >> "$GITHUB_OUTPUT"
           echo "published=${published}"

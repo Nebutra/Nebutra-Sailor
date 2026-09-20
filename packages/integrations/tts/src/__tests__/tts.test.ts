@@ -1,7 +1,22 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { getTts, MockTtsProvider, resolveTtsProvider, TtsError } from "../index";
 
+/**
+ * Every variable resolveTtsProvider() reads. Cleared before each test so the
+ * suite describes its own environment rather than inheriting the shell's.
+ *
+ * Saving and restoring was not enough: the saved copy IS the ambient
+ * environment, so a developer with a real OPENAI_API_KEY exported failed
+ * "falls back to mock with no env" with `expected 'openai' to be 'mock'`,
+ * while CI — which has no keys — passed. A test that only holds on machines
+ * without credentials is not testing the fallback.
+ */
+const PROVIDER_ENV = ["TTS_PROVIDER", "OPENAI_API_KEY", "ELEVENLABS_API_KEY"] as const;
+
 const SAVED = { ...process.env };
+beforeEach(() => {
+  for (const key of PROVIDER_ENV) delete process.env[key];
+});
 afterEach(() => {
   process.env = { ...SAVED };
 });

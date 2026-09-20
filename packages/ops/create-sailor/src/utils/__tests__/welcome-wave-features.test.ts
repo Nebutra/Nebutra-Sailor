@@ -30,7 +30,7 @@ describe("generateWelcomePage — wave 3-5 hints", () => {
     expect(nextSteps).toContain("/settings/audit-log");
     expect(nextSteps).toContain("/settings/webhooks");
     expect(nextSteps).toContain("/settings/notifications");
-    expect(nextSteps).toContain("/settings/account/export");
+    expect(nextSteps).toContain("/settings/account");
     expect(nextSteps).toContain("packages/ops/china-compliance/README.md");
     expect(nextSteps).toContain("⌘K");
   });

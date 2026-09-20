@@ -28,6 +28,7 @@
 import type { PrismaClient } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import type { BetterAuthPlugin } from "better-auth/types";
+import { ORGANIZATIONS_UNAVAILABLE_CODE } from "../organization-availability";
 import type {
   AuthCapabilities,
   AuthConfig,
@@ -587,8 +588,16 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     async createOrganization(data: CreateOrgInput) {
       const auth = await getAuth();
       try {
+        // Carries a machine-readable code so callers can tell "this deployment
+        // has no organization plugin" from "the create failed". Without it the
+        // API layer had no way to reach the ORGANIZATIONS_NOT_ENABLED response
+        // it already defines, and onboarding reported an unattributed failure
+        // when the plugin was simply absent from a standalone build.
+        const unavailable = (message: string) =>
+          Object.assign(new Error(message), { code: ORGANIZATIONS_UNAVAILABLE_CODE });
+
         if (!("createOrganization" in auth.api)) {
-          throw new Error(
+          throw unavailable(
             "Better Auth: organization plugin is not enabled. " +
               "Add the organization plugin to enable multi-tenant support.",
           );
@@ -599,7 +608,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         >;
         const createOrg = api.createOrganization;
         if (!createOrg) {
-          throw new Error(
+          throw unavailable(
             "Better Auth: createOrganization API endpoint not found on auth instance.",
           );
         }

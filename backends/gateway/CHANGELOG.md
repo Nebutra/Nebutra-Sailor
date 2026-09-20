@@ -1,5 +1,40 @@
 # @nebutra/gateway
 
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies [[`0ea06f4`](https://github.com/Nebutra/Nebutra-Sailor/commit/0ea06f4b7ca492d20911a3d68a8c4da16c680dc0), [`6162a58`](https://github.com/Nebutra/Nebutra-Sailor/commit/6162a585df12b3cd924092d2db15e61f6af2f61e), [`a29746f`](https://github.com/Nebutra/Nebutra-Sailor/commit/a29746fdd9eabdfb9c1692a2dc43fc7d5810779c), [`025abf8`](https://github.com/Nebutra/Nebutra-Sailor/commit/025abf8b94aad96ffe56f50632a094782a30b968)]:
+  - @nebutra/tenant@2.0.0
+  - @nebutra/db@0.1.3
+  - @nebutra/brand@2.0.0
+  - @nebutra/startup-os@0.1.2
+  - @nebutra/auth@1.0.0
+  - @nebutra/feature-flags@0.1.4
+  - @nebutra/gateway-core@0.1.4
+  - @nebutra/repositories@0.0.4
+  - @nebutra/email@2.0.0
+  - @nebutra/analytics@0.0.5
+  - @nebutra/billing@2.0.0
+  - @nebutra/license@2.0.0
+  - @nebutra/agents@2.0.0
+  - @nebutra/agent-runtime@2.0.0
+  - @nebutra/workflow-runtime@0.1.2
+  - @nebutra/ai-providers@2.0.0
+  - @nebutra/audit@2.0.0
+  - @nebutra/cache@2.0.0
+  - @nebutra/errors@2.0.0
+  - @nebutra/logger@2.0.0
+  - @nebutra/metering@2.0.0
+  - @nebutra/notifications@2.0.0
+  - @nebutra/permissions@2.0.0
+  - @nebutra/queue@2.0.0
+  - @nebutra/search@2.0.0
+  - @nebutra/uploads@2.0.0
+  - @nebutra/vault@2.0.0
+  - @nebutra/sms@0.1.3
+  - @nebutra/event-bus@0.1.3
+
 ## 0.2.2
 
 ### Patch Changes

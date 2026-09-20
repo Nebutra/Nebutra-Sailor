@@ -786,6 +786,10 @@ jobs:
         env:
           CI: true
           RLS_ATTACK_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/rls_test
+          # Tests that make real network calls run here, where the network
+          # exists, and are skipped locally so a developer's resolver cannot
+          # fail a suite about code. Grep NETWORK_TESTS for the opt-in sites.
+          NETWORK_TESTS: "1"
 
   coverage:
     name: Coverage Gate

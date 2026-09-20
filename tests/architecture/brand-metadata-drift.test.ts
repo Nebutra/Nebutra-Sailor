@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { withBrandWorktreeLock } from "./support/brand-worktree-lock";
 
 /**
  * Brand metadata drift guard.
@@ -43,31 +44,36 @@ describe("brand metadata drift", () => {
   it("metadata.ts is byte-identical to what `pnpm brand:apply` would emit", {
     timeout: 120_000,
   }, () => {
-    // H2: since brand:apply now also writes core.json, back it up and restore
-    // it in the finally block alongside metadata.ts.
-    const tmpMetadata = join(tmpdir(), `brand-metadata-drift-${Date.now()}.ts`);
-    const tmpCoreJson = join(tmpdir(), `brand-core-drift-${Date.now()}.json`);
+    // Exclusive for the same reason readme-template-drift is: both tests
+    // snapshot, rewrite and restore the same working-tree files around a
+    // brand-apply run, and vitest runs their files in parallel.
+    return withBrandWorktreeLock(() => {
+      // H2: since brand:apply now also writes core.json, back it up and restore
+      // it in the finally block alongside metadata.ts.
+      const tmpMetadata = join(tmpdir(), `brand-metadata-drift-${Date.now()}.ts`);
+      const tmpCoreJson = join(tmpdir(), `brand-core-drift-${Date.now()}.json`);
 
-    copyFileSync(METADATA_PATH, tmpMetadata);
-    copyFileSync(CORE_JSON_PATH, tmpCoreJson);
-    const originalBytes = readFileSync(METADATA_PATH, "utf8");
+      copyFileSync(METADATA_PATH, tmpMetadata);
+      copyFileSync(CORE_JSON_PATH, tmpCoreJson);
+      const originalBytes = readFileSync(METADATA_PATH, "utf8");
 
-    try {
-      runBrandApply();
+      try {
+        runBrandApply();
 
-      const afterBytes = readFileSync(METADATA_PATH, "utf8");
-      expect(
-        afterBytes,
-        "packages/design/brand/src/metadata.ts drifted from what `pnpm brand:apply` " +
-          "would emit. Edit DEFAULT_BRAND in scripts/brand-types.ts (or " +
-          "brand.config.ts) and re-run `pnpm brand:apply`, then commit both " +
-          "files together. Do not hand-edit metadata.ts.",
-      ).toBe(originalBytes);
-    } finally {
-      // Always restore — never leave the working tree dirty.
-      copyFileSync(tmpMetadata, METADATA_PATH);
-      copyFileSync(tmpCoreJson, CORE_JSON_PATH);
-    }
+        const afterBytes = readFileSync(METADATA_PATH, "utf8");
+        expect(
+          afterBytes,
+          "packages/design/brand/src/metadata.ts drifted from what `pnpm brand:apply` " +
+            "would emit. Edit DEFAULT_BRAND in scripts/brand-types.ts (or " +
+            "brand.config.ts) and re-run `pnpm brand:apply`, then commit both " +
+            "files together. Do not hand-edit metadata.ts.",
+        ).toBe(originalBytes);
+      } finally {
+        // Always restore — never leave the working tree dirty.
+        copyFileSync(tmpMetadata, METADATA_PATH);
+        copyFileSync(tmpCoreJson, CORE_JSON_PATH);
+      }
+    });
   });
 
   it("brand:apply is idempotent — a second run produces the same bytes as the first (metadata.ts AND core.json)", {

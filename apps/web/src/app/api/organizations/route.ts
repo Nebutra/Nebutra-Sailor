@@ -1,11 +1,14 @@
 import { auditLogger } from "@nebutra/audit";
-import { getConfiguredAuthProvider } from "@nebutra/auth";
+import { getConfiguredAuthProvider, isOrganizationsUnavailableError } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { setActiveOrganizationCookie } from "@/lib/active-organization";
-import { ORGANIZATION_ERROR_CODES } from "@/lib/organization-errors";
+import {
+  classifyOrganizationCreateError,
+  ORGANIZATION_ERROR_CODES,
+} from "@/lib/organization-errors";
 
 const provider = getConfiguredAuthProvider();
 
@@ -222,10 +225,31 @@ export async function POST(request: Request) {
 
     return response;
   } catch (error) {
+    const code = classifyOrganizationCreateError(error, isOrganizationsUnavailableError);
+
     logger.error("[organizations] Failed to create organization", {
       provider,
+      code: code ?? "unclassified",
       error: error instanceof Error ? error.message : "Unknown error",
     });
+
+    // A cause the UI can act on gets its own status and code. Only a genuinely
+    // unknown failure falls through to the opaque 500 — previously everything
+    // did, so "workspace creation failed" covered a missing plugin and a taken
+    // slug alike.
+    if (code === ORGANIZATION_ERROR_CODES.notEnabled) {
+      return NextResponse.json(
+        { code, error: "Organizations are not enabled for this deployment." },
+        { status: 404 },
+      );
+    }
+
+    if (code === ORGANIZATION_ERROR_CODES.slugTaken) {
+      return NextResponse.json(
+        { code, error: "That workspace address is already taken." },
+        { status: 409 },
+      );
+    }
 
     return NextResponse.json({ error: "Failed to create organization." }, { status: 500 });
   }

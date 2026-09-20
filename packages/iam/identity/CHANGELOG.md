@@ -1,5 +1,12 @@
 # @nebutra/identity
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`a29746f`](https://github.com/Nebutra/Nebutra-Sailor/commit/a29746fdd9eabdfb9c1692a2dc43fc7d5810779c)]:
+  - @nebutra/contracts@2.0.0
+
 ## 0.1.2
 
 ### Patch Changes

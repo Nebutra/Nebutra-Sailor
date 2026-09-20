@@ -52,8 +52,24 @@ vi.mock("@ai-sdk/openai", () => ({
 // ─── filterAvailableProviders ───────────────────────────────────────────────
 
 describe("filterAvailableProviders()", () => {
+  /**
+   * Every provider key the fallback chain consults. Cleared before each test,
+   * because `vi.unstubAllEnvs()` restores the *ambient* environment rather
+   * than an empty one: on a machine with a real OPENAI_API_KEY exported,
+   * "throws a clear error when no embedding-capable provider has a key"
+   * resolved instead of rejecting — openai was genuinely available. CI has no
+   * keys, so it passed there and nowhere else.
+   */
+  const PROVIDER_KEYS = [
+    "OPENAI_API_KEY",
+    "OPENROUTER_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "GOOGLE_GENERATIVE_AI_API_KEY",
+  ] as const;
+
   beforeEach(() => {
     vi.unstubAllEnvs();
+    for (const key of PROVIDER_KEYS) vi.stubEnv(key, "");
     _resetAgentsEnvCache();
   });
 
@@ -173,9 +189,16 @@ describe("runEmbedWithFallback()", () => {
   });
 
   it("throws a clear error when no embedding-capable provider has a key", async () => {
-    vi.unstubAllEnvs();
-    _resetAgentsEnvCache();
+    // This describe's beforeEach supplies openrouter + openai keys, and this
+    // test needs them gone. It used to reach for vi.unstubAllEnvs(), which
+    // restores the *ambient* environment rather than an empty one — equivalent
+    // to clearing only on a machine with no keys exported. CI has none, so it
+    // passed there and failed for anyone holding a real OPENAI_API_KEY, which
+    // genuinely made openai available and resolved the promise.
+    vi.stubEnv("OPENROUTER_API_KEY", "");
+    vi.stubEnv("OPENAI_API_KEY", "");
     vi.stubEnv("ANTHROPIC_API_KEY", "an-key");
+    _resetAgentsEnvCache();
     // No openrouter or openai key
 
     await expect(
