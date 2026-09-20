@@ -20,8 +20,30 @@ const withMDX = createMDX({
 const useStandalone =
   process.env.NEXT_OUTPUT !== "export" && process.env.SAILOR_DOCS_OUTPUT !== "export";
 
+/**
+ * Path this bundle is mounted at on the site that serves it.
+ *
+ * This is a Next.js zone: documentation is a path on the product it documents,
+ * not a host, so the landing app forwards `/docs/*` here unchanged. `basePath`
+ * is what makes that forward work — it puts the app's OWN emitted URLs
+ * (`_next/*` assets, internal links, redirect Locations, sitemap entries) in the
+ * same `/docs` space the visitor is in.
+ *
+ * Without it the app emitted `/_next/static/...`, which the browser resolved
+ * against the VISITOR's host and fetched from the landing app: every stylesheet
+ * and script 404'd, so `<site>/docs` rendered as unstyled HTML. Verified before
+ * this was set. Same root cause made the sitemap publish `/docs/en/<slug>` —
+ * URLs that resolve to nothing — and put sitemap.xml and robots.txt out of
+ * reach entirely.
+ *
+ * Overridable so the bundle can be mounted elsewhere (or at the root, with an
+ * empty value) by a deployment that serves its docs differently.
+ */
+const basePath = process.env.DOCS_BASE_PATH ?? "/docs";
+
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),
+  ...(basePath ? { basePath } : {}),
   // Skip in-build tsc on production deploys — the strict typecheck runs as
   // its own pre-push lefthook job (`pnpm --filter @nebutra/sailor-docs
   // typecheck`), so the build pipeline doesn't need to redo it. Without
@@ -125,75 +147,41 @@ const nextConfig: NextConfig = {
   },
 
   reactStrictMode: true,
-  // Clean-subdomain URL scheme (docs.brand domain/<lang>/<slug>). Old
-  // `/docs/...` and `/<lang>/docs/...` URLs are 301'd to the new paths so
-  // external links keep working. Host root `/` is redirected to default lang.
+  /**
+   * Redirects, in the zone's PUBLIC path shape.
+   *
+   * Two things changed the shape of this table. `basePath` means every `source`
+   * here is already under `/docs`, so the old `/docs/<slug>` sources addressed
+   * `<site>/docs/docs/<slug>` — a URL nothing links to. And `i18n.hideLocale`
+   * means the default language has no segment, so an `/en/<slug>` destination
+   * hands the visitor a URL the middleware immediately redirects away from.
+   *
+   * What remains is what is still true: pages that were RENAMED. A prefix strip
+   * needs no entry — landing 308s `/<locale>/docs/*` onto the zone, and the
+   * hideLocale rewrite absorbs `/docs/en/*`.
+   */
   async redirects() {
-    const backCompat = (slug: string) => [
-      // pre-i18n shape — assume English when no locale was specified
-      { source: `/docs/${slug}`, destination: `/en/${slug}`, permanent: true as const },
-      // legacy /<lang>/docs/<slug> → /<lang>/<slug>
-      { source: `/en/docs/${slug}`, destination: `/en/${slug}`, permanent: true as const },
-      { source: `/zh/docs/${slug}`, destination: `/zh/${slug}`, permanent: true as const },
+    // One taxonomy rename, in both locales. The default language's entry carries
+    // no locale segment, matching what the zone actually serves.
+    const renamed = (from: string, to: string) => [
+      { source: `/${from}`, destination: `/${to}`, permanent: true as const },
+      { source: `/zh/${from}`, destination: `/zh/${to}`, permanent: true as const },
     ];
 
     return [
-      // Host root → default language
-      { source: "/", destination: "/en", permanent: false },
-
-      // Catch-all back-compat from the old /docs prefix (both pre-i18n and
-      // post-i18n shapes). Permanent so caches + search engines update.
-      {
-        source: "/docs/:path*",
-        destination: "/en/:path*",
-        permanent: true,
-      },
-      {
-        source: "/:lang(en|zh)/docs/:path*",
-        destination: "/:lang/:path*",
-        permanent: true,
-      },
-
-      // Renamed pages — translated from the old `/docs/*` shape into the new
-      // clean shape. Listed explicitly because each one redirects across a
-      // taxonomy change (not just a prefix strip).
       {
         source: "/sailor/getting-started",
-        destination: "/en/getting-started/installation",
+        destination: "/getting-started/installation",
         permanent: true,
       },
-      ...backCompat("whitelabel").map((r) => ({
-        ...r,
-        destination: r.destination.replace(/\/whitelabel$/, "/customization/overview"),
-      })),
-      ...backCompat("billing").map((r) => ({
-        ...r,
-        destination: r.destination.replace(/\/billing$/, "/payments/overview"),
-      })),
-      ...backCompat("authentication").map((r) => ({
-        ...r,
-        destination: r.destination.replace(/\/authentication$/, "/guides/authentication"),
-      })),
-      ...backCompat("multi-tenancy").map((r) => ({
-        ...r,
-        destination: r.destination.replace(/\/multi-tenancy$/, "/guides/multi-tenancy"),
-      })),
-      ...backCompat("ai-integrations").map((r) => ({
-        ...r,
-        destination: r.destination.replace(/\/ai-integrations$/, "/ai/overview"),
-      })),
-      ...backCompat("integrations").map((r) => ({
-        ...r,
-        destination: r.destination.replace(/\/integrations$/, "/integrations/overview"),
-      })),
-      ...backCompat("infrastructure").map((r) => ({
-        ...r,
-        destination: r.destination.replace(/\/infrastructure$/, "/deployment/overview"),
-      })),
-      ...backCompat("monorepo").map((r) => ({
-        ...r,
-        destination: r.destination.replace(/\/monorepo$/, "/development/project-structure"),
-      })),
+      ...renamed("whitelabel", "customization/overview"),
+      ...renamed("billing", "payments/overview"),
+      ...renamed("authentication", "guides/authentication"),
+      ...renamed("multi-tenancy", "guides/multi-tenancy"),
+      ...renamed("ai-integrations", "ai/overview"),
+      ...renamed("integrations", "integrations/overview"),
+      ...renamed("infrastructure", "deployment/overview"),
+      ...renamed("monorepo", "development/project-structure"),
     ];
   },
   // `<lang>/<slug>.mdx` returns the raw Markdown via the llms.mdx internal API.
@@ -203,6 +191,15 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/:lang(en|zh)/:path*.mdx",
+        // Carry the language through. Dropping it answered `/zh/<slug>.mdx`
+        // with the English page.
+        destination: "/llms.mdx/docs/:lang/:path*",
+      },
+      // The same for the default language, whose URLs carry no locale segment
+      // under `i18n.hideLocale` — without this, `<slug>.mdx` 404'd for English
+      // while `zh/<slug>.mdx` worked.
+      {
+        source: "/:path*.mdx",
         destination: "/llms.mdx/docs/:path*",
       },
     ];

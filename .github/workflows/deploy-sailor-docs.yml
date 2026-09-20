@@ -216,7 +216,7 @@ jobs:
         run: |
           set -euo pipefail
           for url in \
-            "https://nebutra.com/docs/en" \
+            "https://nebutra.com/docs" \
             "https://pebble.nebutra.com/docs" \
             "https://nebutra-sailor-docs.nebutra.workers.dev/en" \
             ; do

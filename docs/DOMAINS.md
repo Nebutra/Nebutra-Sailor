@@ -7,7 +7,7 @@
 | `nebutra.com` | landing | Marketing site |
 | `www.nebutra.com` | landing | Redirect to apex |
 | `auth.nebutra.com` | auth-center | **Login center** (Better Auth UX + session authority for multi-app RPs) |
-| `nebutra.com/docs` (path, not a host) | sailor-docs (Fly Next Machine) | Sailor product docs — rewritten in by the landing proxy; each product app serves its own `/docs` on its own host |
+| `nebutra.com/docs` (path, not a host) | sailor-docs (Fly Next Machine) | Sailor product docs as a **Next.js zone**: the bundle sets `basePath: "/docs"` and landing forwards `/docs/*` to it unchanged, so the bundle's own asset, link and sitemap URLs are already in this path space. Default locale hidden (`/docs/<slug>`, `/docs/zh/<slug>`). Each product app serves its own `/docs` on its own host |
 | `app.nebutra.com` | web | Main SaaS dashboard (RP — redirects unauthenticated users to auth) |
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
 | `sso.nebutra.com` | idp | **OIDC IdP** — issuer URL permanent; used for SSO / internal tools |

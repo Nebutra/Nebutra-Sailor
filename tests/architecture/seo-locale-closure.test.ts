@@ -175,7 +175,20 @@ describe("per-app robots posture", () => {
    * was deleted rather than the route.
    */
   // tsekaluk-dev extracted 2026-07-27 → github.com/TsekaLuk/tsekaluk-dev
-  const INDEXABLE = ["landing", "sailor-docs", "forge", "router", "pebble"];
+  const INDEXABLE = ["landing", "forge", "router", "pebble"];
+
+  /**
+   * Indexable content that is NOT its own origin: a Next.js zone mounted on a
+   * path of a host that already owns a robots.txt.
+   *
+   * sailor-docs moved here when documentation stopped having a subdomain. A
+   * robots.txt is only honoured at a host root, so the one this app used to ship
+   * would have been served at `<site>/docs/robots.txt` and read by nobody — and
+   * its `host:` field, now carrying a path, is not even a legal value. The host
+   * site's root robots.txt governs these pages; the zone contributes its sitemap
+   * to that site's sitemap index instead.
+   */
+  const ZONE_ON_ANOTHER_ORIGIN = ["sailor-docs"];
 
   /** Everything else: internal tooling or authenticated product surfaces. */
   const DISALLOWED = [
@@ -200,14 +213,19 @@ describe("per-app robots posture", () => {
   const NO_ROBOTS_SURFACE = ["storybook"];
 
   it("classifies every app exactly once", () => {
-    const classified = [...INDEXABLE, ...DISALLOWED, ...NO_ROBOTS_SURFACE];
+    const classified = [
+      ...INDEXABLE,
+      ...ZONE_ON_ANOTHER_ORIGIN,
+      ...DISALLOWED,
+      ...NO_ROBOTS_SURFACE,
+    ];
     const duplicates = classified.filter((app, i) => classified.indexOf(app) !== i);
 
     expect(duplicates).toEqual([]);
     expect(
       appNames().filter((app) => !classified.includes(app)),
-      "New app with no declared robots posture — add it to INDEXABLE or DISALLOWED here " +
-        "and ship the matching robots file.",
+      "New app with no declared robots posture — add it to INDEXABLE, " +
+        "ZONE_ON_ANOTHER_ORIGIN or DISALLOWED here and ship the matching robots file.",
     ).toEqual([]);
     expect(classified.filter((app) => !appNames().includes(app))).toEqual([]);
   });
@@ -246,6 +264,19 @@ describe("per-app robots posture", () => {
     );
 
     expect(missing).toEqual([]);
+  });
+
+  it("gives a zone no robots source of its own", () => {
+    // The inverse assertion, and the one that matters: a robots.txt under a path
+    // is unreachable by the crawlers it addresses, so shipping one is worse than
+    // shipping none — it reads as coverage that does not exist.
+    const stray = ZONE_ON_ANOTHER_ORIGIN.filter(
+      (app) =>
+        existsSync(join(APPS_DIR, app, "src/app/robots.ts")) ||
+        existsSync(join(APPS_DIR, app, "public/robots.txt")),
+    );
+
+    expect(stray, "A zone must not ship robots — the host site's root file governs it").toEqual([]);
   });
 });
 

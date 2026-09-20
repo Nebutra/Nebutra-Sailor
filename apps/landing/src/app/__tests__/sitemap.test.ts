@@ -108,7 +108,16 @@ describe("sitemap index", () => {
     expect(body).toContain("<sitemapindex");
 
     const locs = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-    expect(locs).toEqual(routing.locales.map((locale) => `${BASE_URL}/sitemap/${locale}.xml`));
+
+    // The per-locale shards, then the docs zone. The zone is a separate
+    // deployment mounted at /docs, so its pages cannot appear in the shards —
+    // and a sitemap is only discovered through the robots.txt of the host it
+    // sits on, which is this app's. Without this entry the whole documentation
+    // tree became uncrawlable the moment docs stopped having a subdomain.
+    expect(locs).toEqual([
+      ...routing.locales.map((locale) => `${BASE_URL}/sitemap/${locale}.xml`),
+      `${BASE_URL}/docs/sitemap.xml`,
+    ]);
     expect(locs).not.toContain(`${BASE_URL}/sitemap/zh.xml`);
   });
 });

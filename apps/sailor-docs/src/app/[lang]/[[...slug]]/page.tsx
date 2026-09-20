@@ -1,11 +1,11 @@
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import type { MDXComponents } from "mdx/types";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Feedback } from "@/components/feedback/client";
 import { FigmaLink } from "@/components/figma-link";
 import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
 import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
-import { translationFallbackFor } from "@/lib/docs-fallback";
+import { fallbackPageFor } from "@/lib/docs-fallback";
 import { onPageFeedbackAction } from "@/lib/github";
 import { getPageImage, source } from "@/lib/source";
 import { useMDXComponents } from "../../../../mdx-components";
@@ -14,22 +14,27 @@ interface PageProps {
   params: Promise<{ slug?: string[]; lang: string }>;
 }
 
+/**
+ * The page to render: the requested one, or the fallback served in its place.
+ *
+ * Three miss shapes, two of them recoverable — `fallbackPageFor` owns which.
+ * The recoverable ones are SERVED here, not redirected to: this app is reached
+ * through landing's `/docs` rewrite, so a redirect's Location would be in this
+ * app's own path space (`/en/...`) and the browser would resolve it against the
+ * visitor's host, landing them outside the documentation. Serving content at the
+ * requested URL is the only answer a rewrite passes through intact.
+ */
+function resolvePage(slug: string[] | undefined, lang: string) {
+  const requested = source.getPage(slug, lang);
+  if (requested) return requested;
+  const fallback = fallbackPageFor(source, slug, lang);
+  return fallback ? source.getPage(fallback.slugs, fallback.language) : undefined;
+}
+
 export default async function Page({ params }: PageProps) {
   const { slug, lang } = await params;
-  const page = source.getPage(slug, lang);
+  const page = resolvePage(slug, lang);
   if (!page) {
-    // Three miss shapes, two of them recoverable:
-    //  - `/<lang>` (no slug): there is no `index.mdx`, so land on the entry
-    //    page — the requested language's copy when it exists, otherwise the
-    //    default language's. The old unconditional
-    //    `/${lang}/getting-started/installation` 404'd for zh, which has no
-    //    installation page.
-    //  - a slug this language lacks but the default language has: the zh tree
-    //    is a strict subset of en, so serve the English page rather than 404.
-    //    Temporary (307), never permanent — the translation may land later.
-    //  - neither language has it: genuinely gone.
-    const fallback = translationFallbackFor(source, slug, lang);
-    if (fallback) redirect(fallback);
     notFound();
   }
 
@@ -93,12 +98,13 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug, lang } = await params;
-  const page = source.getPage(slug, lang);
+  // Resolve exactly as the component does. This used to return `{}` for a
+  // recoverable miss because the component was about to redirect and a
+  // bare notFound() here would have 404'd the request first. The component now
+  // serves the fallback's content, so yielding empty metadata would ship a
+  // rendered page with no title, description or social image.
+  const page = resolvePage(slug, lang);
   if (!page) {
-    // Metadata resolves before the component, so a bare notFound() here would
-    // 404 every request the component is about to redirect. Yield empty
-    // metadata and let the component own the redirect decision.
-    if (translationFallbackFor(source, slug, lang)) return {};
     notFound();
   }
   const image = getPageImage(page);

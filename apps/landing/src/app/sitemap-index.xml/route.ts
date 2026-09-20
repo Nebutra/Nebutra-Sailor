@@ -1,6 +1,9 @@
 import { generateSitemaps } from "@/app/sitemap";
 import { getSiteUrl } from "@/lib/seo/site-routes";
 
+/** Where the docs zone serves its sitemap, in this site's path space. */
+const DOCS_SITEMAP_PATH = "/docs/sitemap.xml";
+
 /**
  * Sitemap index for the sharded per-locale sitemaps.
  *
@@ -25,6 +28,14 @@ export function GET(): Response {
     ({ id }) =>
       `  <sitemap>\n    <loc>${baseUrl}/sitemap/${encodeURIComponent(id)}.xml</loc>\n  </sitemap>`,
   );
+
+  // The docs zone's own sitemap. It is a separate deployment mounted at /docs
+  // (apps/sailor-docs, basePath "/docs"), so its pages are invisible to the
+  // shards above — they are generated from this app's route registry. And a
+  // sitemap is only discoverable through the robots.txt of the host it sits on,
+  // which is this app's: without this entry the whole documentation tree became
+  // uncrawlable the moment docs stopped having a subdomain of their own.
+  children.push(`  <sitemap>\n    <loc>${baseUrl}${DOCS_SITEMAP_PATH}</loc>\n  </sitemap>`);
 
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',

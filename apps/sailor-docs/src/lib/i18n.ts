@@ -2,6 +2,19 @@ export const i18n = {
   defaultLanguage: "en",
   languages: ["en", "zh"],
   parser: "dir" as const,
+  /**
+   * Keep the default language out of the URL: `<base>/getting-started/...` for
+   * English, `<base>/zh/getting-started/...` for Chinese.
+   *
+   * This bundle is a Next.js zone mounted at `/docs` on the site that owns it,
+   * so its own URLs are the public ones. `/docs/en/<slug>` would put a segment
+   * in every canonical docs URL that carries no information for the 90% case —
+   * the shape vercel.com/docs, supabase.com/docs and clerk.com/docs all avoid.
+   *
+   * Implemented by `createI18nMiddleware` (src/middleware.ts) as a rewrite, so
+   * the locale-less URL is the address AND the served route.
+   */
+  hideLocale: "default-locale" as const,
   translations: {
     en: {
       search: "Search",

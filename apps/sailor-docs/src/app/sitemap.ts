@@ -1,6 +1,6 @@
 import { getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import type { MetadataRoute } from "next";
-import { languagesWithPage, pathFor, xDefaultLanguage } from "@/lib/docs-fallback";
+import { languagesWithPage, publicPathFor, xDefaultLanguage } from "@/lib/docs-fallback";
 import { htmlLangForLanguage } from "@/lib/i18n";
 import { source } from "@/lib/source";
 
@@ -9,8 +9,11 @@ import { source } from "@/lib/source";
  *
  * Inventory comes from the Fumadocs loader (the same `source` that
  * `[lang]/[[...slug]]/page.tsx` reads), so the sitemap cannot drift from what
- * the app actually serves. One <loc> per (language, slug) over `i18n.languages`,
- * i.e. `/en/<slug>` and `/zh/<slug>`.
+ * the app actually serves. One <loc> per (language, slug) over `i18n.languages`
+ * in the PUBLIC shape — `<base>/<slug>` for the default language, whose locale
+ * `i18n.hideLocale` keeps out of the URL, and `<base>/zh/<slug>` for Chinese.
+ * Built from `publicPathFor`, never `pathFor`: the internal shape published
+ * `<base>/en/<slug>`, which is not an address this zone answers.
  *
  * Deliberately absent:
  * - the legacy `/docs/...` and `/<lang>/docs/...` shapes — next.config.ts 301s
@@ -43,7 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // by the app's own BCP-47 mapping (en → en-US, zh → zh-Hans-CN).
       const languages: Record<string, string> = {};
       for (const candidate of languagesWithPage(source, slugs)) {
-        languages[htmlLangForLanguage(candidate)] = `${baseUrl}${pathFor(candidate, slugs)}`;
+        languages[htmlLangForLanguage(candidate)] = `${baseUrl}${publicPathFor(candidate, slugs)}`;
       }
       // Exactly one x-default, and only at a URL that resolves: the default
       // language when it has the page, otherwise the first language that does.
@@ -51,12 +54,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // language always has the page) — fixed structurally so the first
       // zh-only page cannot silently publish a 404 as its cluster's x-default.
       const xDefault = xDefaultLanguage(source, slugs);
-      if (xDefault) languages["x-default"] = `${baseUrl}${pathFor(xDefault, slugs)}`;
+      if (xDefault) languages["x-default"] = `${baseUrl}${publicPathFor(xDefault, slugs)}`;
 
       const lastModified = lastModifiedOf(page.data);
 
       entries.push({
-        url: `${baseUrl}${pathFor(language, slugs)}`,
+        url: `${baseUrl}${publicPathFor(language, slugs)}`,
         ...(lastModified ? { lastModified } : {}),
         changeFrequency: "weekly",
         priority: slugs.length <= 1 ? 0.8 : 0.6,

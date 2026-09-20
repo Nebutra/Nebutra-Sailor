@@ -1,7 +1,7 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createPublicDocsUrl } from "./docs-links";
-import { createDocsRewriteUrl } from "./docs-routing";
+import { createDocsLocaleRedirectPath, createDocsRewriteUrl } from "./docs-routing";
 
 const SITE = getBrandOrigin("landing");
 
@@ -11,9 +11,9 @@ function url(path: string): URL {
 
 /**
  * A stand-in origin, not the real one. The upstream is deployment config
- * (DOCS_UPSTREAM_ORIGIN, emitted from brand.domains.docsOrigin), so naming the
- * instance's Fly app here would put a brand literal in template code — and
- * would stop testing the seam that makes the origin configurable at all.
+ * (DOCS_UPSTREAM_ORIGIN), so naming the instance's Fly app here would put a
+ * brand literal in template code — and would stop testing the seam that makes
+ * the origin configurable at all.
  */
 const UPSTREAM = "https://docs-origin.example";
 
@@ -34,52 +34,57 @@ describe("docs URL governance", () => {
     expect(createPublicDocsUrl("guides/multi-tenancy")).toBe(`${SITE}/docs/guides/multi-tenancy`);
     expect(createPublicDocsUrl("/docs/payments/overview")).toBe(`${SITE}/docs/payments/overview`);
   });
+});
 
-  it("rewrites the docs entrypoint to the explicit English docs root", () => {
-    // The locale prefix is always emitted so the upstream never answers with a
-    // redirect of its own — sailor-docs 301s "/" → "/en".
-    expect(createDocsRewriteUrl(url("/docs"))?.toString()).toBe(`${UPSTREAM}/en`);
-    expect(
-      createDocsRewriteUrl(url("/docs/getting-started/installation?utm=npm"))?.toString(),
-    ).toBe(`${UPSTREAM}/en/getting-started/installation?utm=npm`);
-  });
-
-  it("folds both Chinese scripts onto the docs bundle's single bilingual locale", () => {
-    // The bundle runs a narrower axis: i18n.languages = ["en", "zh"]
-    // (apps/sailor-docs/src/lib/i18n.ts), so zh-Hans and zh-Hant both land on "zh".
-    expect(createDocsRewriteUrl(url("/zh-Hans/docs/cli/create-sailor"))?.toString()).toBe(
-      `${UPSTREAM}/zh/cli/create-sailor`,
+describe("createDocsRewriteUrl", () => {
+  it("forwards the path unchanged, /docs prefix included", () => {
+    // Identity is the contract. The zone sets a matching basePath, so the path
+    // the visitor asked for is the path the zone serves — no segment is added,
+    // removed or translated in either direction.
+    expect(createDocsRewriteUrl(url("/docs"))?.toString()).toBe(`${UPSTREAM}/docs`);
+    expect(createDocsRewriteUrl(url("/docs/guides/auth"))?.toString()).toBe(
+      `${UPSTREAM}/docs/guides/auth`,
     );
-    expect(createDocsRewriteUrl(url("/zh-Hant/docs/cli/create-sailor"))?.toString()).toBe(
-      `${UPSTREAM}/zh/cli/create-sailor`,
+    expect(createDocsRewriteUrl(url("/docs/zh/guides/auth"))?.toString()).toBe(
+      `${UPSTREAM}/docs/zh/guides/auth`,
     );
   });
 
-  it("falls non-content landing locales back to the English docs path", () => {
-    expect(createDocsRewriteUrl(url("/de/docs/cli/create-sailor"))?.toString()).toBe(
-      `${UPSTREAM}/en/cli/create-sailor`,
+  it("forwards the zone's assets, which is why identity is not merely tidy", () => {
+    // The previous mapping stripped /docs and injected a locale, so the zone's
+    // own `/docs/_next/...` URLs had nowhere to land: every stylesheet and script
+    // 404'd against this app's origin and `<site>/docs` rendered unstyled.
+    expect(createDocsRewriteUrl(url("/docs/_next/static/chunks/main.js"))?.toString()).toBe(
+      `${UPSTREAM}/docs/_next/static/chunks/main.js`,
     );
-    expect(createDocsRewriteUrl(url("/en/docs/cli/create-sailor"))?.toString()).toBe(
-      `${UPSTREAM}/en/cli/create-sailor`,
+    expect(createDocsRewriteUrl(url("/docs/sitemap.xml"))?.toString()).toBe(
+      `${UPSTREAM}/docs/sitemap.xml`,
     );
   });
 
-  it("leaves the legacy bare /zh prefix to the proxy's 308", () => {
-    // Bare `zh` is not a route locale, so this seam must not claim it — it is
-    // redirected to /zh-Hans/docs/... first (see legacyLocalePathRedirect).
-    expect(createDocsRewriteUrl(url("/zh/docs/cli/create-sailor"))).toBeNull();
+  it("preserves the query string", () => {
+    expect(createDocsRewriteUrl(url("/docs/search?q=tenancy"))?.toString()).toBe(
+      `${UPSTREAM}/docs/search?q=tenancy`,
+    );
   });
 
-  it("claims nothing outside /docs", () => {
+  it("claims nothing outside the docs zone", () => {
     expect(createDocsRewriteUrl(url("/features"))).toBeNull();
     expect(createDocsRewriteUrl(url("/"))).toBeNull();
     // A path that merely starts with the same letters is not documentation.
     expect(createDocsRewriteUrl(url("/docsearch"))).toBeNull();
   });
 
+  it("leaves the locale-prefixed shape to the redirect, not the forward", () => {
+    // `/zh-Hans/docs/...` is this app's path space, not the zone's. Forwarding it
+    // verbatim would ask the zone for a route it does not have.
+    expect(createDocsRewriteUrl(url("/zh-Hans/docs/cli/create-sailor"))).toBeNull();
+    expect(createDocsRewriteUrl(url("/en/docs/cli/create-sailor"))).toBeNull();
+  });
+
   it("turns /docs into an ordinary 404 when no upstream is configured", () => {
     // The origin is deployment config, so a deployment that does not host docs
-    // must get a 404 from the app rather than a rewrite to nowhere.
+    // must get a 404 from the app rather than a forward to nowhere.
     vi.stubEnv("DOCS_UPSTREAM_ORIGIN", "");
     expect(createDocsRewriteUrl(url("/docs/guides/auth"))).toBeNull();
   });
@@ -92,6 +97,45 @@ describe("docs URL governance", () => {
     const target = createDocsRewriteUrl(url("/docs/guides/auth"));
     expect(target?.host).toBe(new URL(UPSTREAM).host);
     expect(target?.host).not.toBe(new URL(SITE).host);
-    expect(target?.pathname).toBe("/en/guides/auth");
+  });
+});
+
+describe("createDocsLocaleRedirectPath", () => {
+  it("drops the locale segment for the zone's default language", () => {
+    // The zone hides its default locale, so emitting `/docs/en/...` would hand
+    // the visitor a URL the zone itself redirects away from.
+    expect(createDocsLocaleRedirectPath("/en/docs/cli/create-sailor")).toBe(
+      "/docs/cli/create-sailor",
+    );
+    expect(createDocsLocaleRedirectPath("/en/docs")).toBe("/docs");
+  });
+
+  it("folds both Chinese scripts onto the zone's single bilingual locale", () => {
+    // The zone runs a narrower axis: i18n.languages = ["en", "zh"]
+    // (apps/sailor-docs/src/lib/i18n.ts), so zh-Hans and zh-Hant both land on "zh".
+    expect(createDocsLocaleRedirectPath("/zh-Hans/docs/cli/create-sailor")).toBe(
+      "/docs/zh/cli/create-sailor",
+    );
+    expect(createDocsLocaleRedirectPath("/zh-Hant/docs/cli/create-sailor")).toBe(
+      "/docs/zh/cli/create-sailor",
+    );
+  });
+
+  it("falls non-content landing locales back to the zone's default", () => {
+    expect(createDocsLocaleRedirectPath("/de/docs/cli/create-sailor")).toBe(
+      "/docs/cli/create-sailor",
+    );
+  });
+
+  it("leaves the legacy bare /zh prefix to the proxy's own 308", () => {
+    // Bare `zh` is not a route locale, so this seam must not claim it — it is
+    // redirected to /zh-Hans/docs/... first (see legacyLocalePathRedirect).
+    expect(createDocsLocaleRedirectPath("/zh/docs/cli/create-sailor")).toBeNull();
+  });
+
+  it("claims nothing that is not a locale-prefixed docs path", () => {
+    expect(createDocsLocaleRedirectPath("/docs/cli/create-sailor")).toBeNull();
+    expect(createDocsLocaleRedirectPath("/en/features")).toBeNull();
+    expect(createDocsLocaleRedirectPath("/")).toBeNull();
   });
 });

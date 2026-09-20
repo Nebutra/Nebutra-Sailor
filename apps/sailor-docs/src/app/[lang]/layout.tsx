@@ -15,6 +15,15 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { htmlLangForLanguage, i18n } from "@/lib/i18n";
+
+/**
+ * Home link for a language: the zone root when the locale is hidden from URLs,
+ * the prefixed root otherwise.
+ */
+function zoneRootPath(lang: string): string {
+  return i18n.hideLocale === "default-locale" && lang === i18n.defaultLanguage ? "/" : `/${lang}`;
+}
+
 import { source } from "@/lib/source";
 import "../globals.css";
 
@@ -156,7 +165,12 @@ export default async function RootLayout({
                     </span>
                   </div>
                 ),
-                url: `/${lang}`,
+                // The zone root, not `/${lang}`: `i18n.hideLocale` keeps the
+                // default language out of URLs, so a wordmark linking to `/en`
+                // put a link on every page that the middleware answers with a
+                // 307 back to where it already is. Other languages keep their
+                // prefix because theirs is the canonical shape.
+                url: zoneRootPath(lang),
                 transparentMode: "top",
               }}
               sidebar={{
