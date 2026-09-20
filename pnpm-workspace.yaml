@@ -178,7 +178,12 @@ overrides:
   "@types/react": "catalog:"
   "@types/react-dom": "catalog:"
   "@vercel/blob>undici": ">=7.29.0 <8"
-  "adm-zip": ">=0.6.0"
+  # GHSA-7q85-xj36-vmfc (high): adm-zip <0.6.1 allocates from the declared
+  # uncompressed size before reading, so a crafted archive exhausts memory. The
+  # >=0.6.0 floor here predates the advisory by one patch — raised, not added,
+  # for the reason in the block above. Reaches us via apps/studio > sanity >
+  # @sanity/cli > @sanity/runtime-cli.
+  "adm-zip": ">=0.6.1"
   "axios": ">=1.18.0"
   "baseline-browser-mapping": "^2.10.0"
   "basic-ftp": ">=5.3.1"

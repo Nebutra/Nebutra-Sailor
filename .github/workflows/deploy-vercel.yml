@@ -117,11 +117,24 @@ jobs:
           #   smoked instead.
           # repository / workdir: an external checkout, or "" / "." for this
           #   monorepo.
+          # ignore: the Ignored Build Step this project must carry, reconciled
+          #   like `root` below. "" leaves the project setting untouched, which
+          #   lets the app's vercel.json `ignoreCommand` decide. A non-empty
+          #   value is mandatory because the *project setting wins over
+          #   vercel.json*: on 2026-09-18 web and auth carried a dashboard
+          #   `exit 0` that shadowed the path filter for two weeks, so the
+          #   documented `[vercel:apps/web]` opt-in silently did nothing.
           APPS = {
               "landing": {
                   "project_candidates": "nebutra-landing landing nebutra-landing-page landing-page",
                   "project_id_var": "",
                   "root": "apps/landing",
+                  # Not the path filter: this project has no Git connection
+                  # and ships prebuilt from here. If the filter ever ran and
+                  # returned "build", a main push would race this workflow and
+                  # rebuild the site remotely — the double build that put $176
+                  # on the August invoice.
+                  "ignore": "exit 0",
                   "framework": "nextjs",
                   "create": False,
                   "domain": "open.nebutra.com",
@@ -133,6 +146,7 @@ jobs:
                   "project_candidates": "nebutra-web",
                   "project_id_var": "VERCEL_WEB_PROJECT_ID",
                   "root": "apps/web",
+                  "ignore": "bash ../../scripts/vercel-ignore-build.sh apps/web",
                   "framework": "nextjs",
                   "create": False,
                   "domain": "",
@@ -144,6 +158,7 @@ jobs:
                   "project_candidates": "nebutra-auth",
                   "project_id_var": "VERCEL_AUTH_PROJECT_ID",
                   "root": "apps/auth",
+                  "ignore": "bash ../../scripts/vercel-ignore-build.sh apps/auth",
                   "framework": "nextjs",
                   "create": False,
                   "domain": "",
@@ -155,6 +170,7 @@ jobs:
                   "project_candidates": "nebutra-pebble pebble pebble-site",
                   "project_id_var": "",
                   "root": "apps/pebble",
+                  "ignore": "bash ../../scripts/vercel-ignore-build.sh apps/pebble",
                   "framework": "nextjs",
                   "create": True,
                   "domain": "pebble.nebutra.com",
@@ -166,6 +182,7 @@ jobs:
                   "project_candidates": "nebutra-kuanlan",
                   "project_id_var": "",
                   "root": "apps/kuanlan",
+                  "ignore": "bash ../../scripts/vercel-ignore-build.sh apps/kuanlan",
                   "framework": "nextjs",
                   "create": True,
                   "domain": "kuanlan.nebutra.com",
@@ -181,6 +198,7 @@ jobs:
                   "project_candidates": "nebutra-carina carina carina-docs",
                   "project_id_var": "VERCEL_CARINA_PROJECT_ID",
                   "root": "apps/docs",
+                  "ignore": "",
                   "framework": "astro",
                   "create": True,
                   "domain": "carina.nebutra.com",
@@ -194,6 +212,7 @@ jobs:
                   "project_candidates": "docs nebutra-sailor-docs",
                   "project_id_var": "VERCEL_DOCS_PROJECT_ID",
                   "root": "apps/sailor-docs",
+                  "ignore": "bash ../../scripts/vercel-ignore-build.sh apps/sailor-docs",
                   "framework": "nextjs",
                   "create": False,
                   "domain": "",
@@ -245,11 +264,12 @@ jobs:
         with:
           install: "false"
 
-      - name: Resolve project and reconcile Root Directory
+      - name: Resolve project and reconcile Root Directory + Ignored Build Step
         id: project
         env:
           APP: ${{ matrix.app }}
           EXPECTED_ROOT: ${{ matrix.root }}
+          EXPECTED_IGNORE: ${{ matrix.ignore }}
           FRAMEWORK: ${{ matrix.framework }}
           PROJECT_CANDIDATES: ${{ matrix.project_candidates }}
           PROJECT_ID_VAR: ${{ matrix.project_id_var }}
@@ -271,9 +291,11 @@ jobs:
 
           PROJECT_ID="${KNOWN_PROJECT_ID:-}"
           CURRENT_ROOT="(missing)"
+          CURRENT_IGNORE=""
           if [ -n "$PROJECT_ID" ]; then
             meta=$(api "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" || true)
             CURRENT_ROOT=$(echo "$meta" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("(missing)" if "error" in d else (d.get("rootDirectory") or "(none)"))' 2>/dev/null || echo "(missing)")
+            CURRENT_IGNORE=$(echo "$meta" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("" if "error" in d else (d.get("commandForIgnoringBuildStep") or ""))' 2>/dev/null || echo "")
             if [ "$CURRENT_ROOT" = "(missing)" ]; then
               echo "::warning::${PROJECT_ID_VAR}=${PROJECT_ID} did not resolve to a project; falling back to name lookup"
               PROJECT_ID=""
@@ -288,7 +310,7 @@ jobs:
             # variables is one more thing that can go stale unnoticed.
             api "https://api.vercel.com/v9/projects?teamId=${VERCEL_ORG_ID}&limit=100" > projects.json
             python3 - <<'PY' > resolved.env
-          import json, os, sys
+          import json, os, shlex, sys
           data = json.load(open("projects.json"))
           names = {p["name"]: p for p in data.get("projects", [])}
           for candidate in os.environ["PROJECT_CANDIDATES"].split():
@@ -296,11 +318,15 @@ jobs:
                   p = names[candidate]
                   print("PROJECT_ID=" + p["id"])
                   print("CURRENT_ROOT=" + (p.get("rootDirectory") or "(none)"))
+                  # sourced by the shell below: the command has spaces, so an
+                  # unquoted value would run `../../scripts/...` as a command.
+                  print("CURRENT_IGNORE=" + shlex.quote(p.get("commandForIgnoringBuildStep") or ""))
                   break
           else:
               print("Projects found: " + ", ".join(sorted(names)), file=sys.stderr)
               print("PROJECT_ID=")
               print("CURRENT_ROOT=(missing)")
+              print("CURRENT_IGNORE=")
           PY
             cat resolved.env
             set -a; . ./resolved.env; set +a
@@ -337,6 +363,19 @@ jobs:
             echo "::warning::Root Directory was '$CURRENT_ROOT', correcting to '$EXPECTED_ROOT'"
             api -X PATCH "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
               -d "{\"rootDirectory\":\"${EXPECTED_ROOT}\"}" > /dev/null
+          fi
+
+          # The Ignored Build Step, same treatment. An empty `ignore` means the
+          # app's vercel.json owns the decision, so leave the project alone —
+          # only a declared value is enforced. The body is built with json.dumps
+          # because the command contains spaces and slashes; it is passed as
+          # argv so this does not depend on the variable being exported.
+          if [ -n "${EXPECTED_IGNORE:-}" ] && [ "${CURRENT_IGNORE:-}" != "$EXPECTED_IGNORE" ]; then
+            echo "::warning::Ignored Build Step was '${CURRENT_IGNORE:-(none)}', correcting to '$EXPECTED_IGNORE'"
+            python3 -c 'import json,sys; print(json.dumps({"commandForIgnoringBuildStep": sys.argv[1]}))' "$EXPECTED_IGNORE" > ignore-body.json
+            api -X PATCH "https://api.vercel.com/v9/projects/${PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
+              --data-binary @ignore-body.json > /dev/null
+            rm -f ignore-body.json
           fi
 
       # kuanlan's server routes read the router key and R2 credentials at
