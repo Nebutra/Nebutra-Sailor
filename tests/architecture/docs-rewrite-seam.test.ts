@@ -1,7 +1,10 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { brand } from "@nebutra/brand/metadata";
 import { describe, expect, it } from "vitest";
+// Source path, not the package export: the CI step that runs this suite does not
+// build the workspace, so `@nebutra/brand/metadata` resolves to a dist file that
+// does not exist there. Same import shape as brand-config-facts.test.ts.
+import { brand } from "../../packages/design/brand/src/metadata";
 
 const ROOT = process.cwd();
 const read = (rel: string) => readFileSync(resolve(ROOT, rel), "utf-8");
