@@ -145,6 +145,26 @@ packages/design/fonts/vendor/**/*.otf
 .trellis/tasks/*/research/shots-*/
 .trellis/tasks/*/research/*.png
 
+# Trellis / Codex machine state, and the locally-generated trellis skills.
+#
+# Everything here is regenerated per machine and belongs to no commit. main
+# tracks zero files under .trellis/ and .codex/, but only the research
+# screenshots above were ignored — so `git add -A` swept the rest in. That is
+# how PR #554 arrived carrying 1,677 .trellis files: 144,261 of the 146,208
+# lines in its diff, which buried a real capability-stats drift under noise and
+# failed its Test and CodeQL checks on content unrelated to the change.
+#
+# .trellis/tasks/ stays trackable on purpose — the block above exists so task
+# reports can be reviewed, minus their screenshot corpora.
+.trellis/.runtime/
+.trellis/.developer
+.trellis/scripts/
+.trellis/spec/
+.trellis/workspace/
+.trellis/agents/
+.codex/
+.agents/skills/trellis-*/
+
 # Local working copies of this repo (multi-agent / worktree scratch).
 #
 # These are full nebutra-sailor trees sitting inside the repo — same
