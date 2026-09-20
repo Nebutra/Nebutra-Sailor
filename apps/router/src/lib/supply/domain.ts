@@ -20,6 +20,7 @@ import {
   newApiLogin,
   newApiShelf,
 } from "./clients";
+import { findPriceDrift } from "./pricing";
 
 const now = () => new Date().toISOString();
 
@@ -232,6 +233,37 @@ export async function readSignal(
 ): Promise<SignalReading | null> {
   const probedAt = now();
   switch (id) {
+    case "price.drift": {
+      try {
+        const drifted = await findPriceDrift();
+        const raised = drifted.length > 0;
+        return {
+          id,
+          status: raised ? "raised" : "ok",
+          severity: "critical",
+          probedAt,
+          title: raised ? "Upstream costs more than we charge" : "Every price still covers cost",
+          detail: raised
+            ? `${drifted.length} published model(s) now cost more upstream than our price: ${drifted
+                .map((d) => d.modelName)
+                .join(", ")}. Take them off sale.`
+            : "No published model has been overtaken by its upstream rate.",
+          resource: "shelf",
+          action: "price.unpublish_drifted",
+          data: { drifted },
+        };
+      } catch (error) {
+        return {
+          id,
+          status: "unknown",
+          severity: "critical",
+          probedAt,
+          title: "Could not compare prices to upstream",
+          detail: error instanceof Error ? error.message : "probe failed",
+          resource: "shelf",
+        };
+      }
+    }
     case "channel.drift": {
       try {
         const diff = await computeChannelDiff(fetchImpl);

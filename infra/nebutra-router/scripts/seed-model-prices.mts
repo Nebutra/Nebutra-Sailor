@@ -66,6 +66,27 @@ function parseContext(display: string): number | null {
   return Math.round(n);
 }
 
+/**
+ * The model ids the router's own upstream will answer for. Empty means we could
+ * not ask, and the seed then publishes nothing rather than guessing — a shelf
+ * that lists what we cannot serve is worse than a short one.
+ */
+async function servableModels(): Promise<Set<string>> {
+  const base = (process.env.NEW_API_BASE_URL ?? "").replace(/\/+$/, "");
+  const token = process.env.NEW_API_ACCESS_TOKEN;
+  if (!base || !token) {
+    process.stderr.write(
+      "NEW_API_BASE_URL / NEW_API_ACCESS_TOKEN unset — nothing can be published\n",
+    );
+    return new Set();
+  }
+  const url = base.endsWith("/v1") ? `${base}/models` : `${base}/v1/models`;
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+  if (!res.ok) throw new Error(`upstream /models -> ${res.status}`);
+  const body = (await res.json()) as { data?: Array<{ id?: string }> };
+  return new Set((body.data ?? []).map((m) => m.id).filter((id): id is string => !!id));
+}
+
 /** A model with no price is never published — an unpriced SKU must be refusable. */
 function isPriced(m: ListingModel): boolean {
   return m.inputPerMTok > 0 && m.outputPerMTok > 0;
@@ -82,13 +103,21 @@ async function main() {
     return;
   }
 
+  // Publishable means the /v1 edge can actually serve it, and the edge forwards
+  // to exactly one upstream: New-API. The shelf's own `sellable` is the union of
+  // every engine `loadEnginesFromEnv()` happens to find, so a stray
+  // OPENAI_API_KEY in the operator's shell can mark 17 models sellable that
+  // New-API has no channel for — which is how this seed first published a shelf
+  // the edge answered with "no available channel". Ask the upstream directly.
+  const servable = await servableModels();
+
   const db = getSystemDb();
   let created = 0;
   let updated = 0;
   let skipped = 0;
 
   for (const m of models) {
-    const published = isPriced(m) && m.sellable;
+    const published = isPriced(m) && m.sellable && servable.has(m.publicModel);
     if (!isPriced(m)) skipped += 1;
 
     const row = {
