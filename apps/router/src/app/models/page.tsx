@@ -1,5 +1,5 @@
 import { ModelsCatalog } from "@/components/models-catalog";
-import { getListingCatalog } from "@/lib/listing-catalog";
+import { getPricedListingCatalog } from "@/lib/shelf-prices";
 
 export const metadata = { title: "API 集市" };
 export const dynamic = "force-dynamic";
@@ -17,7 +17,8 @@ type Props = {
 /** 对应 302 /product/list?cate=api&tag=&brand= */
 export default async function ModelsPage({ searchParams }: Props) {
   const { q, brand, tag, sort } = await searchParams;
-  const { models, fetchedNote, source, inventoryOk, inventorySources } = await getListingCatalog();
+  const { models, fetchedNote, source, inventoryOk, inventorySources } =
+    await getPricedListingCatalog();
   const inv = inventoryOk ? `库存 ${inventorySources.join(", ") || "—"}` : "库存未连通";
   const note = `${fetchedNote} · ${inv} · ${source}`;
 

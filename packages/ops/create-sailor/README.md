@@ -187,8 +187,8 @@ single monorepo you can extend instead of re-assembling from scratch.
 
 ## Documentation
 
-- **Getting Started**: [docs.nebutra.com/getting-started/installation](https://docs.nebutra.com/getting-started/installation)
-- **Customization Guide**: [docs.nebutra.com/customization/overview](https://docs.nebutra.com/customization/overview)
+- **Getting Started**: [nebutra.com/docs/getting-started/installation](https://nebutra.com/docs/getting-started/installation)
+- **Customization Guide**: [nebutra.com/docs/customization/overview](https://nebutra.com/docs/customization/overview)
 - **Licensing**: [nebutra.com/licensing](https://nebutra.com/licensing)
 
 ## License

@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { AdminError, AdminResource } from "@nebutra/contracts/admin";
+import { type AdminError, type AdminResource, cdnSafeStatus } from "@nebutra/contracts/admin";
 import { z } from "zod";
 import { ContractError, listResource, loadManifest } from "./contract-client";
 import { requireStaff, StaffAccessError } from "./staff";
@@ -26,8 +26,8 @@ const STATUS_FOR_CODE: Record<ErrorCode, number> = {
   plan_required: 409,
   plan_expired: 409,
   upstream_unavailable: 503,
-  internal: 502,
-  network: 502,
+  internal: 500,
+  network: 503,
 };
 
 function errorResponse(code: ErrorCode, message: string, status: number): Response {
@@ -64,8 +64,12 @@ export async function handleContractResource(raw: unknown): Promise<Response> {
   } catch (error) {
     if (error instanceof StaffAccessError) return errorResponse("forbidden", error.message, 403);
     if (error instanceof ContractError) {
-      return errorResponse(error.code, error.message, error.status ?? STATUS_FOR_CODE[error.code]);
+      return errorResponse(
+        error.code,
+        error.message,
+        cdnSafeStatus(error.status, STATUS_FOR_CODE[error.code]),
+      );
     }
-    return errorResponse("internal", error instanceof Error ? error.message : "internal", 502);
+    return errorResponse("internal", error instanceof Error ? error.message : "internal", 500);
   }
 }

@@ -14,7 +14,6 @@ interface Topology {
   ecs_host: string;
   apex_a: string;
   www_cname: string;
-  docs_cname: string;
   mail?: { provider: string; records: Record<string, string> };
   ecs_surfaces: DomainKey[];
   /** Brand fronts served by Vercel — CNAME to `www_cname`, no ECS origin. */
@@ -37,7 +36,6 @@ function loadTopology(): Topology {
   ) as Topology;
   if (process.env.ECS_HOST?.trim()) t.ecs_host = process.env.ECS_HOST.trim();
   if (process.env.DNS_APEX_A?.trim()) t.apex_a = process.env.DNS_APEX_A.trim();
-  if (process.env.DNS_DOCS_CNAME?.trim()) t.docs_cname = process.env.DNS_DOCS_CNAME.trim();
   return t;
 }
 
@@ -62,13 +60,6 @@ function build(brand: BrandConfig, topo: Topology) {
     const host = brand.domains[s];
     if (!host || !topo.www_cname) continue;
     out.push({ name: rel(host, zone), type: "CNAME", content: topo.www_cname.replace(/\.$/, "") });
-  }
-  if (topo.docs_cname && brand.domains.docs) {
-    out.push({
-      name: rel(brand.domains.docs, zone),
-      type: "CNAME",
-      content: topo.docs_cname.replace(/\.$/, ""),
-    });
   }
   if (topo.mail?.provider !== "none" && topo.mail?.records) {
     for (const [n, c] of Object.entries(topo.mail.records)) {

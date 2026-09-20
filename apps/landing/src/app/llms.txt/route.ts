@@ -1,5 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import { getSiteUrl } from "@/lib/seo/site-routes";
 
 /**
@@ -14,7 +14,7 @@ import { getSiteUrl } from "@/lib/seo/site-routes";
 
 export function GET() {
   const base = getSiteUrl();
-  const docs = process.env.DOCS_ORIGIN_URL?.replace(/\/$/, "") ?? getBrandOrigin("docs");
+  const docs = process.env.DOCS_ORIGIN_URL?.replace(/\/$/, "") ?? getDocsUrl();
 
   const body = `# ${brand.name}
 

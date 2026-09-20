@@ -206,7 +206,7 @@ jobs:
                   "repository": "Nebutra/carina",
                   "workdir": "carina",
               },
-              # docs.nebutra.com is Fly (deploy-fly.yml app=sailor-docs); this
+              # The docs bundle is Fly (deploy-fly.yml app=sailor-docs), rewritten in at /docs; this
               # entry keeps the Vercel project `docs` deployable on demand.
               "docs": {
                   "project_candidates": "docs nebutra-sailor-docs",

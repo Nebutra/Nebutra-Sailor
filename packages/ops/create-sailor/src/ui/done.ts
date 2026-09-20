@@ -63,7 +63,7 @@ export function showDone(opts: DoneOptions): void {
   lines.push(
     `     ${arrow} ${pm} dev          ${dim("→ http://localhost:3000")}`,
     "",
-    `   ${dim("More:")} ${dim("nebutra doctor")} ${dim("·")} ${dim("docs.nebutra.com")}`,
+    `   ${dim("More:")} ${dim("nebutra doctor")} ${dim("·")} ${dim("nebutra.com/docs")}`,
   );
 
   const preview = opts.previewSelections ?? [];

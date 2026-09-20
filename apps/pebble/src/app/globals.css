@@ -439,7 +439,7 @@ code.inline {
   color: var(--ink);
 }
 
-/* ── Docs shell (self-hosted until docs.nebutra.com Worker is redeployed) ─ */
+/* ── Docs shell (this app serves its own docs at /docs) ───────────────── */
 
 .docs-shell {
   width: min(1080px, calc(100% - 2rem));

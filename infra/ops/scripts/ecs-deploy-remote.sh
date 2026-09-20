@@ -649,7 +649,7 @@ bootstrap_landing_runtime_env() {
   NEXT_PUBLIC_AUTH_PROVIDER="${NEXT_PUBLIC_AUTH_PROVIDER:-$AUTH_PROVIDER}"
   NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL:-https://app.nebutra.com}"
   NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-https://api.nebutra.com}"
-  NEXT_PUBLIC_DOCS_URL="${NEXT_PUBLIC_DOCS_URL:-https://docs.nebutra.com}"
+  NEXT_PUBLIC_DOCS_URL="${NEXT_PUBLIC_DOCS_URL:-https://nebutra.com/docs}"
   NEXT_PUBLIC_GOOGLE_CLIENT_ID="${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
   NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP="${NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP:-true}"
 
@@ -1503,7 +1503,7 @@ ensure_carina_codeploy() {
       wait_for_local_http "pebble" "$pm2_name" "http://127.0.0.1:3017/" "^(200|301|302|307)$" "pebble.nebutra.com"
       ;;
     sailor-docs)
-      wait_for_local_http "sailor-docs" "$pm2_name" "http://127.0.0.1:3005/" "^(200|301|302|307)$" "docs.nebutra.com"
+      wait_for_local_http "sailor-docs" "$pm2_name" "http://127.0.0.1:3005/" "^(200|301|302|307)$" "nebutra.com/docs"
       ;;
     router)
       wait_for_local_http "router" "$pm2_name" "http://127.0.0.1:3106/" "^(200|301|302|307)$" "router.nebutra.com"

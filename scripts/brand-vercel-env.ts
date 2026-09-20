@@ -24,7 +24,10 @@ export function buildVercelEnvPatches(config: BrandConfig): Record<string, Recor
   const app = toHttps(d.app);
   const api = toHttps(d.api);
   const auth = toHttps(d.auth);
-  const docs = toHttps(d.docs);
+  // Docs are a path on the site that owns them, not a host of their own, so
+  // the docs URL is derived rather than configured. Landing serves the Sailor
+  // docs at /docs; each product app serves its own at the same path.
+  const docs = `${toHttps(d.landing)}/docs`;
   const router = toHttps(d.router);
   const forge = toHttps(d.forge);
   const shared = {

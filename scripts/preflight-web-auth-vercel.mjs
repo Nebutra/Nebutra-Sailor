@@ -84,7 +84,7 @@ await probe("app is Next.js", "https://app.nebutra.com/", (r) => {
   const vary = (r.headers.get("vary") || "").toLowerCase();
   return powered.includes("next") || vary.includes("rsc") || vary.includes("next-router");
 });
-await probe("docs", "https://docs.nebutra.com/", (r) => r.status === 200 || r.status === 307);
+await probe("docs", "https://nebutra.com/docs", (r) => r.status === 200 || r.status === 307);
 
 // ── report ────────────────────────────────────────────────────────────────
 for (const n of notes) console.log("ok ", n);

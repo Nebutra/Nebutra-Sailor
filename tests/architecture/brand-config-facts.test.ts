@@ -38,7 +38,6 @@ describe("brand config facts (contract lock for app helpers + i18n)", () => {
       "api",
       "auth",
       "sso",
-      "docs",
       "studio",
       "cdn",
       "router",

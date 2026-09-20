@@ -23,7 +23,7 @@ User
 Cloudflare DNS + proxy
   │
   ├─── apps/landing     nebutra.com           → Vercel
-  ├─── apps/sailor-docs      docs.nebutra.com      → Vercel
+  ├─── apps/sailor-docs      nebutra.com/docs      → Vercel
   │
   ├─── apps/web              app.nebutra.com       → ECS (PM2 Next standalone)
   ├─── apps/auth             auth.nebutra.com      → ECS (PM2 auth-center)
@@ -38,7 +38,7 @@ Cloudflare DNS + proxy
 | Hostname | App | Steady-state host |
 |----------|-----|-------------------|
 | `nebutra.com` | `apps/landing` | Vercel |
-| `docs.nebutra.com` | `apps/sailor-docs` | Vercel |
+| `nebutra.com/docs` | `apps/sailor-docs` | Vercel |
 | `app.nebutra.com` | `apps/web` | **ECS** (Next standalone). Vercel project `nebutra-web` is optional cutover |
 | `auth.nebutra.com` | `apps/auth` | **ECS**. Vercel project `nebutra-auth` is optional cutover |
 | `api.nebutra.com` | `backends/gateway` | **ECS** (not Vercel Functions in production) |

@@ -60,7 +60,15 @@ export function createServerRequestFromHeaders(
   return new Request(origin, { headers: requestHeaders });
 }
 
-async function buildServerRequest(): Promise<Request> {
+/**
+ * The incoming request, reconstructed from the Server Component header store.
+ *
+ * Exported because the auth provider APIs take a Request and Server
+ * Components do not have one — the tenant slug route needs the same object
+ * this module builds, and a second reconstruction would be a second thing to
+ * keep correct.
+ */
+export async function buildServerRequest(): Promise<Request> {
   return createServerRequestFromHeaders(new Headers(await headers()));
 }
 

@@ -7,13 +7,13 @@
 | `nebutra.com` | landing | Marketing site |
 | `www.nebutra.com` | landing | Redirect to apex |
 | `auth.nebutra.com` | auth-center | **Login center** (Better Auth UX + session authority for multi-app RPs) |
+| `nebutra.com/docs` (path, not a host) | sailor-docs (Fly Next Machine) | Sailor product docs — rewritten in by the landing proxy; each product app serves its own `/docs` on its own host |
 | `app.nebutra.com` | web | Main SaaS dashboard (RP — redirects unauthenticated users to auth) |
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
 | `sso.nebutra.com` | idp | **OIDC IdP** — issuer URL permanent; used for SSO / internal tools |
 | `design.nebutra.com` | design-docs | Design system docs (ECS PM2 :3004) |
 | `status.nebutra.com` | landing (host alias) | Public status page — Vercel landing, rewrite `/` → `/status` |
 | `open.nebutra.com` | landing (host alias) | **云毓开放平台** — public catalog; `/` rewrites to `/open`. Console is `app` `/settings/developers` |
-| `docs.nebutra.com` | sailor-docs (Fly Next Machine) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
 | `studio.nebutra.com` | studio | Optional branded Studio alias — **not provisioned** (no DNS record as of 2026-09-02); canonical host is `nebutra.sanity.studio`. Not in the public URL sweep until it exists |
 | `router.nebutra.com` | router | **Nebutra Router** — model fabric / OpenAI-compatible product edge (ECS PM2) |
@@ -48,7 +48,7 @@ brand front gets a host; everything transactional runs on the shared platform ho
 | Capability | Host + path |
 |---|---|
 | Landing / download | `pebble.nebutra.com` (CF A → ECS PM2 `pebble` :3017) |
-| Docs | `docs.nebutra.com/pebble/*` — canonical; `pebble.nebutra.com/docs/*` redirects here |
+| Docs | `pebble.nebutra.com/docs/*` — served by the pebble app itself; no docs subdomain exists |
 | Feedback | `POST api.nebutra.com/pebble/v1/feedback` |
 | Diagnostics | `POST api.nebutra.com/pebble/diagnostics/{token,upload,delete/:ticketId}` |
 | Status | `status.nebutra.com` |
@@ -106,7 +106,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | Host | DNS (Cloudflare) | Runtime | Notes |
 |------|------------------|---------|-------|
 | `nebutra.com` / `www` | Vercel anycast / CNAME | **Vercel** landing | Marketing |
-| `docs.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-docs` | `deploy-fly.yml` app=`sailor-docs` |
+| `nebutra.com/docs` | **no record** — a path, rewritten by the landing proxy | **Fly** `nebutra-docs` (origin only, no custom domain) | `deploy-fly.yml` app=`sailor-docs`. The landing app needs `DOCS_UPSTREAM_ORIGIN` = the Fly app's `.fly.dev` origin, set as a **Vercel project env var / GitHub repo var** — deliberately not committed, since a Fly app name is instance infrastructure, not brand identity. Unset ⇒ `/docs` 404s |
 | `app.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `web` | Target: Vercel (`nebutra-web`) when builds are green |
 | `auth.nebutra.com` | Worker **custom domain** only (`workers_dev: false`) | **Auth edge**: `/api/auth/*` + Hyperdrive; UI → ECS. No `*.workers.dev` test URL. | Rollback: `point-dns.yml` host=`auth` target=`ecs`; emergency Vercel only |
 | `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |
@@ -146,7 +146,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` | Login center origin |
 | `ECS_HOST` | `106.15.4.31` | Cloud VM origin |
 
-`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`, and optionally `landing` / `sailor-docs` / `design-docs`). Prefer **Cloudflare Workers (OpenNext)** for docs (`docs.nebutra.com`); Vercel is quota-limited Hobby fallback. Marketing (`nebutra.com`) stays on Vercel. Do **not** point `docs.nebutra.com` DNS at ECS in steady state — ECS sailor-docs is emergency-only.
+`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`, and optionally `landing` / `sailor-docs` / `design-docs`). The docs bundle runs on **Fly** (`nebutra-docs`) as an origin only; `nebutra.com/docs` reaches it through the landing proxy's rewrite, so there is no docs DNS record to point anywhere. Marketing (`nebutra.com`) stays on Vercel.
 
 PM2 release / preflight gotchas (sibling wipe, webpack `build:vm`, explicit `apps=`): [ops/ecs-pm2-release-lessons.md](./ops/nebutra/ecs-pm2-release-lessons.md).
 
@@ -212,7 +212,7 @@ Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.n
 | Project | Root | Domain(s) |
 |---------|------|-----------|
 | landing | `apps/landing` | `nebutra.com`, `www`, `open.nebutra.com` |
-| docs | `apps/sailor-docs` | `docs.nebutra.com` |
+| docs | `apps/sailor-docs` | `nebutra.com/docs` |
 | ~~nebutra-pebble~~ | `apps/pebble` | Superseded by ECS PM2 (kept only if Hobby quota is free for experiments) |
 | nebutra-auth | `apps/auth` | `auth.nebutra.com` (ready; DNS may still be ECS) |
 | nebutra-web | `apps/web` | `app.nebutra.com` (ready; DNS may still be ECS) |

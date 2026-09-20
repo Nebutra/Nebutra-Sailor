@@ -38,6 +38,23 @@ export function getBrandOrigin(service: BrandService): string {
  * Public object on `nebutra-assets` via `cdn.nebutra.com`.
  * R2_PUBLIC_URL / NEXT_PUBLIC_R2_PUBLIC_URL may override the origin for dogfood.
  */
+/**
+ * Where a product's documentation lives: a path on that product's own host.
+ *
+ * There is no `docs` entry in `brand.domains` — deliberately. A single docs
+ * subdomain meant a product's own host was never where its documentation
+ * lived: pebble's docs sat at docs.<domain>/pebble/* while
+ * pebble.<domain>/docs/* redirected to them. One value cannot express "each
+ * product serves its own", so the key is gone and the path is derived.
+ *
+ * Defaults to the marketing site, which carries the product docs. Pass a
+ * service to get that product's: getDocsUrl("pebble") → https://pebble.…/docs.
+ */
+export function getDocsUrl(service: BrandService = "landing", path = ""): string {
+  const suffix = path.replace(/^\/+/, "");
+  return `${getBrandOrigin(service)}/docs${suffix ? `/${suffix}` : ""}`;
+}
+
 export function publicAssetUrl(key: string, base?: string): string {
   const origin = (
     base ||
@@ -109,7 +126,7 @@ export function getBrandPublicUrls() {
     apiUrl: getBrandOrigin("api"),
     authUrl: getBrandOrigin("auth"),
     ssoUrl: getBrandOrigin("sso"),
-    docsUrl: getBrandOrigin("docs"),
+    docsUrl: getDocsUrl(),
     routerUrl: getBrandOrigin("router"),
     forgeUrl: getBrandOrigin("forge"),
     designUrl: getBrandOrigin("design"),

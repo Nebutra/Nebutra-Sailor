@@ -10,8 +10,8 @@
     },
     {
       "id": "docs",
-      "url": "https://docs.nebutra.com",
-      "llms": "https://docs.nebutra.com/llms.txt"
+      "url": "https://nebutra.com/docs",
+      "llms": "https://nebutra.com/docs/llms.txt"
     },
     {
       "id": "forge",

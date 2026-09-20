@@ -4,10 +4,10 @@ import { docs } from "@/.source/server";
 import { i18n } from "./i18n";
 
 export const source = loader({
-  // brand.domains.docs is dedicated to docs (clean-subdomain pattern, like
-  // docs.anthropic.com / docs.cursor.com), so docs pages mount at the host
-  // root rather than under /docs. Old `/docs/*` URLs are 301'd at the
-  // origin nginx layer for back-compat.
+  // This bundle is an origin, not a public site: the landing proxy rewrites
+  // `<site>/docs/<path>` to `<upstream>/<lang>/<path>`, stripping the /docs
+  // prefix on the way in. So pages mount at the root here — adding a /docs
+  // base would double the segment and 404 every page.
   baseUrl: "/",
   source: docs.toFumadocsSource(),
   i18n,

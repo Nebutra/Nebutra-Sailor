@@ -29,7 +29,7 @@ const logoColorMarkSrc =
 // CJK falls through to Noto Sans SC — whose subset carries no Latin glyphs at all.
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL || "https://docs.nebutra.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL || "https://nebutra.com/docs"),
   title: {
     default: "Nebutra Sailor Docs",
     template: "%s | Nebutra Sailor Docs",

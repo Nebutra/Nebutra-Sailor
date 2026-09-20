@@ -134,7 +134,7 @@ Thanks! We spent a lot of time on [specific feature]. Would love to hear how it 
 **Technical questions:**
 
 ```
-Great question! [Answer]. We also have detailed docs at docs.nebutra.com/[topic]. Happy to dive deeper if helpful!
+Great question! [Answer]. We also have detailed docs at nebutra.com/docs/[topic]. Happy to dive deeper if helpful!
 ```
 
 **Pricing/licensing:**

@@ -1,7 +1,6 @@
 import "server-only";
 
 import { signServiceToken } from "@nebutra/auth";
-import { brand } from "@nebutra/brand/metadata";
 import {
   type ActionPlan,
   ActionPlanSchema,
@@ -21,6 +20,7 @@ import {
   type StaffRole,
 } from "@nebutra/contracts/admin";
 import { FLEET } from "./fleet";
+import { serviceBase } from "./probe";
 
 /**
  * The platform admin's only way to talk to a product: its manifest and the
@@ -53,9 +53,8 @@ const manifestCache = new Map<string, { value: AdminManifest; expiresAt: number 
 
 export function manifestOrigin(serviceId: string): string | null {
   const svc = FLEET.find((s) => s.id === serviceId);
-  if (!svc?.domainKey || !svc.manifest) return null;
-  const override = process.env[`ADMIN_MANIFEST_ORIGIN_${svc.domainKey.toUpperCase()}`]?.trim();
-  return override || `https://${brand.domains[svc.domainKey]}`;
+  if (!svc?.manifest) return null;
+  return serviceBase(svc);
 }
 
 export async function loadManifest(

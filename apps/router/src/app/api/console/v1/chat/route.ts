@@ -126,7 +126,8 @@ export async function POST(request: Request) {
       return refuse(503, "router_unconfigured", "供给尚未接通，稍后再试。");
     }
     return refuse(
-      502,
+      // 502 never leaves the origin: Cloudflare swaps it for an HTML error page.
+      503,
       "upstream_failed",
       error instanceof Error ? error.message : "上游没有响应。",
     );

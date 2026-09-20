@@ -14,6 +14,14 @@ pre-commit:
       stage_fixed: true
     secrets-scan:
       run: gitleaks protect --staged --no-banner
+    workflow-yaml:
+      # A workflow with a YAML error only announces itself after the push, as
+      # "This run likely failed because of a workflow file issue" with no log to
+      # read. The usual cause is an inline script inside `run: |` whose
+      # continuation lines are indented less than the block, which silently ends
+      # the block scalar. Cheap to catch here; expensive to find in Actions.
+      glob: ".github/workflows/*.{yml,yaml}"
+      run: node scripts/check-workflow-yaml.mjs {staged_files}
 
 pre-push:
   commands:

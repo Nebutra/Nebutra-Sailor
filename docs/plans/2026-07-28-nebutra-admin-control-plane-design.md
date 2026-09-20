@@ -34,7 +34,7 @@ Every answer is a different tool, and none of them leaves an audit trail attache
 | gateway | `backends/gateway` | `api.nebutra.com` | ECS PM2 :3002 | `DEPLOY_TARGET_GATEWAY` |
 | router | `@nebutra/router` | `router.nebutra.com` | ECS PM2 :3106 | `DEPLOY_TARGET_ROUTER` |
 | forge | `@nebutra/forge` | `forge.nebutra.com` | ECS PM2 :3105 | `DEPLOY_TARGET_FORGE` |
-| sailor-docs | `@nebutra/sailor-docs` | `docs.nebutra.com` | CF Worker (OpenNext) | `DEPLOY_TARGET_SAILOR_DOCS` |
+| sailor-docs | `@nebutra/sailor-docs` | `nebutra.com/docs` | CF Worker (OpenNext) | `DEPLOY_TARGET_SAILOR_DOCS` |
 | design-docs | `@nebutra/design-docs` | `design.nebutra.com` | ECS PM2 :3004 | `DEPLOY_TARGET_DESIGN_DOCS` |
 | studio | `@nebutra/studio` | `nebutra.sanity.studio`, `studio.` | Sanity-hosted | — |
 | typelens | `@nebutra/typelens` | `typelens.nebutra.com` | Vercel | `DEPLOY_TARGET_TYPELENS` |

@@ -54,7 +54,7 @@ export const DOWNLOAD_ROWS: readonly DownloadRow[] = [
   },
 ] as const;
 
-/** Prefer on-origin docs while docs.nebutra.com/pebble Worker is stale. */
+/** Docs are on-origin: this app serves its own at /docs. */
 export const DOCS_BASE = `https://${brand.domains.pebble}/docs`;
 export const STATUS_URL = `https://${brand.domains.status}`;
 export const GITHUB_REPO = `${brand.social.github}/pebble`;

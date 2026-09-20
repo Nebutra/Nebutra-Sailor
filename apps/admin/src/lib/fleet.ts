@@ -13,7 +13,7 @@
  * fails if that file and this list drift apart.
  */
 
-import { brand } from "@nebutra/brand";
+import { brand, getDocsUrl } from "@nebutra/brand";
 import { type DeployTarget, resolveDeployTarget } from "@nebutra/preset/deploy-target";
 
 /** Where a service actually runs today, per docs/DOMAINS.md production truth. */
@@ -30,6 +30,15 @@ export interface FleetServiceDefinition {
   readonly label: string;
   /** Key in `brand.domains`, when the service owns a public hostname. */
   readonly domainKey?: keyof typeof brand.domains;
+  /**
+   * Public base URL for a service reachable at a *path* rather than a host of
+   * its own — the docs bundle, served at `<site>/docs`. Mutually exclusive with
+   * `domainKey`: giving docs a domain key is what would put it back on a
+   * subdomain. `envKey` names its `ADMIN_MANIFEST_ORIGIN_*` override, since
+   * there is no domain key to derive one from.
+   */
+  readonly baseUrl?: string;
+  readonly envKey?: string;
   /** PM2 process name in infra/iac/ecs/ecosystem.config.cjs, when ECS-hosted. */
   readonly pm2Name?: string;
   readonly port?: number;
@@ -181,13 +190,16 @@ export const FLEET: readonly FleetServiceDefinition[] = [
   {
     id: "@nebutra/sailor-docs",
     label: "Docs",
-    domainKey: "docs",
+    // No domainKey: documentation is a path on the site that owns it. The
+    // bundle is its own deployment but is reached through the landing proxy.
+    baseUrl: getDocsUrl(),
+    envKey: "SAILOR_DOCS",
     pm2Name: "sailor-docs",
     port: 3005,
     runtime: "cloudflare-worker",
     deployService: "sailor-docs",
     health: DEFAULT_HEALTH_PATH,
-    note: "OpenNext Worker preferred; ECS is emergency-only.",
+    note: "Reached at <site>/docs via rewrite; the bundle has no host of its own.",
   },
   {
     id: "@nebutra/design",

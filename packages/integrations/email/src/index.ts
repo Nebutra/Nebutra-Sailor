@@ -19,7 +19,7 @@
  */
 
 import { brand, colors } from "@nebutra/brand/metadata";
-import { getBrandMailFrom, getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandMailFrom, getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import { getEmailProvider, type SendResult } from "./provider";
 
 export type { EmailProvider, EmailProviderType, SendOptions, SendResult } from "./provider";
@@ -193,7 +193,7 @@ export async function sendWelcomeEmail(opts: {
       Open Dashboard →
     </a>
     <p style="margin:0;font-size:13px;color:#94a3b8;">
-      If you have questions, reply to this email or visit our <a href="${getBrandOrigin("docs")}" style="color:${colors.primary["500"]};">documentation</a>.
+      If you have questions, reply to this email or visit our <a href="${getDocsUrl()}" style="color:${colors.primary["500"]};">documentation</a>.
     </p>
     `,
     `Welcome to ${brand.name} — ${opts.orgName} is ready`,
@@ -392,7 +392,7 @@ export async function sendLicenseCreatedEmail(opts: {
       <code style="color:#334155;font-family:'Courier New',monospace;font-size:13px;">nebutra license activate ${opts.licenseKey}</code>
     </div>
     <p style="margin:0;font-size:13px;color:#94a3b8;">
-      If you have questions, reply to this email or visit our <a href="${getBrandOrigin("docs")}" style="color:${colors.primary["500"]};">documentation</a>.
+      If you have questions, reply to this email or visit our <a href="${getDocsUrl()}" style="color:${colors.primary["500"]};">documentation</a>.
     </p>
     `,
     `Your ${brand.name} License Key is Ready`,
