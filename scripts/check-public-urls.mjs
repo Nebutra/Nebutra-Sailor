@@ -111,7 +111,7 @@ const endpoints = [
   },
   {
     id: "sailor-docs",
-    url: "https://docs.nebutra.com",
+    url: "https://nebutra.com/docs",
     okStatuses: [200],
   },
   {

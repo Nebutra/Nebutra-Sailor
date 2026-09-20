@@ -535,7 +535,7 @@ Nebutra-Sailor/
 │   ├── landing/      # 营销官网 (nebutra.com)
 │   ├── web/               # SaaS 主控台 (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
-│   ├── sailor-docs/       # 公开产品文档 (docs.nebutra.com)
+│   ├── sailor-docs/       # 公开产品文档 (nebutra.com/docs)
 │   ├── idp/               # 身份认证服务 (OAuth 2.0 / OIDC)
 │   ├── storybook/         # 组件 Playground
 │   ├── mail-preview/      # 邮件模板预览

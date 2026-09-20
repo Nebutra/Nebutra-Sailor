@@ -1,5 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandEmail, getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandEmail, getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import Link from "next/link";
 import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
 import styles from "./public-page-chrome.module.css";
@@ -9,7 +9,7 @@ const MARKETING_ORIGIN = getBrandOrigin("landing");
 const publicLinks = [
   { href: `${MARKETING_ORIGIN}/features`, label: "Product" },
   { href: `${MARKETING_ORIGIN}/pricing`, label: "Pricing" },
-  { href: getBrandOrigin("docs"), label: "Docs" },
+  { href: getDocsUrl(), label: "Docs" },
   { href: `${brand.social.github}/${brand.name}-Sailor`, label: "GitHub" },
 ];
 
@@ -69,7 +69,7 @@ export function PublicPageFooter() {
         </div>
         <div>
           <h2>Resources</h2>
-          <a href={getBrandOrigin("docs")}>Docs</a>
+          <a href={getDocsUrl()}>Docs</a>
           <a href={`${MARKETING_ORIGIN}/roadmap`}>Roadmap</a>
           <a href={`mailto:${getBrandEmail("support")}`}>Contact</a>
         </div>

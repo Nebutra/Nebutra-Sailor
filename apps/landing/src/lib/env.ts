@@ -1,4 +1,4 @@
-import { getBrandEmail, getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandEmail, getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
@@ -10,7 +10,7 @@ export const env = createEnv({
     // Override recipient for contact form (defaults to brand contact mailbox)
     CONTACT_FORM_TO: z.string().email().default(getBrandEmail("contact")),
     // Direct docs app origin used for health checks and edge redirects.
-    DOCS_ORIGIN_URL: z.string().url().default(getBrandOrigin("docs")),
+    DOCS_ORIGIN_URL: z.string().url().default(getDocsUrl()),
     // Status page history + incident store (Upstash REST — optional, edge-friendly)
     UPSTASH_REDIS_REST_URL: z.string().url().optional(),
     UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
@@ -27,7 +27,7 @@ export const env = createEnv({
     // URLs
     NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3001"),
     NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3002"),
-    NEXT_PUBLIC_DOCS_URL: z.string().url().default(getBrandOrigin("docs")),
+    NEXT_PUBLIC_DOCS_URL: z.string().url().default(getDocsUrl()),
     NEXT_PUBLIC_AUTH_PROVIDER: z
       .enum(["clerk", "better-auth", "nextauth", "supabase", "dev"])
       .default("better-auth"),

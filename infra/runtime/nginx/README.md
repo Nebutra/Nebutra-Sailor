@@ -14,7 +14,6 @@ infra/runtime/nginx/
   conf.d/
     security.conf     -- Security headers fragment (http{} context)
     proxy_params.conf -- Common proxy headers (location{} context)
-    docs.nebutra.com.conf -- HTTP bootstrap reverse proxy for Sailor docs
 ```
 
 ---
@@ -56,7 +55,6 @@ sudo cp infra/runtime/nginx/nginx.conf /etc/nginx/nginx.conf
 sudo mkdir -p /etc/nginx/conf.d
 sudo cp infra/runtime/nginx/conf.d/security.conf     /etc/nginx/conf.d/security.conf
 sudo cp infra/runtime/nginx/conf.d/proxy_params.conf /etc/nginx/conf.d/proxy_params.conf
-sudo cp infra/runtime/nginx/conf.d/docs.nebutra.com.conf /etc/nginx/conf.d/docs.nebutra.com.conf
 ```
 
 Test the configuration:
@@ -195,7 +193,6 @@ sed -i 's/127.0.0.1:3000/web:3000/g; \
 
 ## 6. Sailor docs on ECS
 
-`docs.nebutra.com` is not a Vercel hostname. Keep its Cloudflare DNS record
 pointing at the ECS public IP and run `@nebutra/sailor-docs` on localhost port
 `3004`.
 
@@ -213,13 +210,11 @@ Deploy from a local machine so the small ECS origin does not compile Next.js
 (the script is source repo only — it is stripped from the Sailor template):
 
 ```bash
-REMOTE_HOST=root@106.15.4.31 bash infra/ops/scripts/deploy-sailor-docs-ecs.sh
 ```
 
 Install the HTTP bootstrap proxy and reload Nginx:
 
 ```bash
-sudo cp infra/runtime/nginx/conf.d/docs.nebutra.com.conf /etc/nginx/conf.d/docs.nebutra.com.conf
 sudo nginx -t
 sudo systemctl reload nginx
 ```
@@ -227,15 +222,11 @@ sudo systemctl reload nginx
 Verify before enabling Cloudflare proxy or HTTPS:
 
 ```bash
-dig +short docs.nebutra.com A
-curl -I http://docs.nebutra.com/
 ```
 
 After HTTP returns `200`, issue a certificate:
 
 ```bash
-sudo certbot --nginx -d docs.nebutra.com
-curl -I https://docs.nebutra.com/
 ```
 
 ---

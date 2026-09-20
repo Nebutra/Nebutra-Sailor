@@ -83,7 +83,7 @@ jobs:
             {"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","build_command":"build","fly_app":"nebutra-kuanlan","host":"kuanlan","site":"https://kuanlan.nebutra.com"},
             {"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","build_command":"build","fly_app":"nebutra-idp","host":"sso","site":"https://sso.nebutra.com"},
             {"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","build_command":"build","fly_app":"nebutra-admin","host":"admin","site":"https://admin.nebutra.com"},
-            {"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","build_command":"build:vm","fly_app":"nebutra-docs","host":"docs","site":"https://docs.nebutra.com"},
+            {"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","build_command":"build:vm","fly_app":"nebutra-docs","host":"","site":"https://nebutra.com/docs"},
             {"app":"para","package":"@nebutra/para","workspace":"apps/para","build_command":"build","fly_app":"nebutra-para","host":"para","site":"https://para.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]

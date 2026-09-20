@@ -155,7 +155,10 @@ describe("landing UI governance", () => {
     expect(LARGE_FEATURES.length).toBeGreaterThan(0);
 
     for (const feature of LARGE_FEATURES) {
-      expect(feature.href).toMatch(/^https:\/\/docs\.nebutra\.com\/[a-z0-9/-]+$/);
+      // Docs are a path on this site, not a subdomain. The shape still has to
+      // be pinned — a card pointing at some other host is the thing this
+      // guards — so the host moved, the assertion did not loosen.
+      expect(feature.href).toMatch(/^https:\/\/nebutra\.com\/docs\/[a-z0-9/-]+$/);
     }
   });
 

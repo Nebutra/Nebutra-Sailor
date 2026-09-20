@@ -35,7 +35,7 @@ export function SiteFooter() {
       title: t("company"),
       links: [
         { href: "https://nebutra.com", label: t("website"), external: true },
-        { href: "https://docs.nebutra.com", label: "Docs", external: true },
+        { href: "https://nebutra.com/docs", label: "Docs", external: true },
         { href: "https://nebutra.com/privacy", label: t("privacy"), external: true },
       ],
     },

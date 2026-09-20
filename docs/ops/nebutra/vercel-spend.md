@@ -93,7 +93,7 @@ on a Hobby quota refusal, which without a nightly retry was a silent loss.
 (docs/DOMAINS.md) and the Carina repository has its own Vercel workflow, so
 this entry only keeps the Sailor `VERCEL_*` secrets able to bootstrap the
 project. `docs` deploys `apps/sailor-docs` to the Vercel project `docs` on
-demand; `docs.nebutra.com` is Fly, and the push-gated Vercel job in
+demand; `nebutra.com/docs` is Fly, and the push-gated Vercel job in
 `deploy-sailor-docs.yml` is unchanged.
 
 ## landing — build on GitHub, ship prebuilt

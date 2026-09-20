@@ -1,4 +1,3 @@
-import { brand } from "@nebutra/brand/metadata";
 import type { ReactNode } from "react";
 
 const NAV = [
@@ -23,11 +22,6 @@ export default function DocsLayout({ children }: { children: ReactNode }) {
             </li>
           ))}
         </ul>
-        <p className="docs-nav-note">
-          Canonical platform docs will also live at{" "}
-          <a href={`https://${brand.domains.docs}/pebble`}>{brand.domains.docs}/pebble</a> once that
-          Worker is redeployed.
-        </p>
       </aside>
       <article className="docs-article prose">{children}</article>
     </main>

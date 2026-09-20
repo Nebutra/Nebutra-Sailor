@@ -35,7 +35,7 @@ User ──────────────►│  │ WAF │──│Cache
 | `api.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (api-gateway; EC2/ECS/CVM/GCE compatible) |
 | `status.nebutra.com` | ✅ Proxied | No cache | Cloud VM nginx reverse-proxy → landing `/status` (future: pure Vercel) |
 | `design.nebutra.com` | ✅ Proxied | No cache | Cloud VM (design PM2 :3109) |
-| `docs.nebutra.com` | DNS only (CNAME → Vercel) | Docs/static | Vercel project `docs` (`apps/sailor-docs`); grey-cloud avoids CF↔Vercel 525 |
+| `nebutra.com/docs` | DNS only (CNAME → Vercel) | Docs/static | Vercel project `docs` (`apps/sailor-docs`); grey-cloud avoids CF↔Vercel 525 |
 | `studio.nebutra.com` | ✅ Proxied when active | No cache | Optional branded Studio alias |
 | `cdn.nebutra.com` | ✅ Proxied | Long cache | R2 bucket |
 
@@ -59,7 +59,7 @@ CNAME   studio    <active studio host>     ✅      Auto
 CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto
 ```
 
-`docs.nebutra.com` is the Vercel project `docs` (`apps/sailor-docs`). Deploy is
+`nebutra.com/docs` is the Vercel project `docs` (`apps/sailor-docs`). Deploy is
 Git → Vercel (same pattern as landing). Do **not** attach this hostname to the
 landing project, and do **not** point it at ECS (unknown hosts 301 to apex).
 Prefer **DNS only** (not orange-cloud) for the Vercel CNAME to avoid origin SSL 525s.

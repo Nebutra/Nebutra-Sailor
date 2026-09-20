@@ -1,4 +1,4 @@
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import type { MetadataRoute } from "next";
 import { languagesWithPage, pathFor, xDefaultLanguage } from "@/lib/docs-fallback";
 import { htmlLangForLanguage } from "@/lib/i18n";
@@ -21,7 +21,7 @@ import { source } from "@/lib/source";
  *   omitted, which is honest.
  */
 function docsBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL?.replace(/\/+$/, "") || getBrandOrigin("docs");
+  return process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL?.replace(/\/+$/, "") || getDocsUrl();
 }
 
 function lastModifiedOf(data: unknown): Date | undefined {

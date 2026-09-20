@@ -1,7 +1,6 @@
 ecs_host: "106.15.4.31"
 apex_a: "216.198.79.1"
 www_cname: "cname.vercel-dns.com"
-docs_cname: "331816c5997d8344.vercel-dns-017.com"
 mail:
   provider: aliyun
   records:

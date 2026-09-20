@@ -96,12 +96,12 @@ gh variable set DEPLOY_TARGET_SAILOR_DOCS -R Nebutra/Nebutra-Sailor --body verce
 gh workflow run "Deploy Sailor Docs" -R Nebutra/Nebutra-Sailor -f target=vercel
 ```
 
-Ensure `docs.nebutra.com` DNS points at Vercel (`CNAME` → `cname.vercel-dns.com` or the project-specific `*.vercel-dns-*.com`) when using Vercel as primary. Worker route can remain for later cutback.
+Ensure `nebutra.com/docs` DNS points at Vercel (`CNAME` → `cname.vercel-dns.com` or the project-specific `*.vercel-dns-*.com`) when using Vercel as primary. Worker route can remain for later cutback.
 
 ## Related hosts
 
 | Host | Needs |
 |------|--------|
-| `docs.nebutra.com` Worker | Workers Scripts **Edit** + Assets |
+| `nebutra.com/docs` Worker | Workers Scripts **Edit** + Assets |
 | `point-dns.yml` / DNS scripts | Zone DNS **Edit** |
 | Pebble brand front | Already on **ECS** (`A` → origin); no Workers token required |

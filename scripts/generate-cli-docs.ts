@@ -772,7 +772,7 @@ nebutra add button input card badge select checkbox radio
 
 ## Support & Resources
 
-- **Documentation**: https://docs.nebutra.com
+- **Documentation**: https://nebutra.com/docs
 - **GitHub**: https://github.com/nebutra/sailor
 - **Community**: https://discord.gg/nebutra
 - **Issues**: https://github.com/nebutra/sailor/issues

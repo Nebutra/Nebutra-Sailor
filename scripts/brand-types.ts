@@ -216,7 +216,19 @@ export interface BrandConfig {
     api: string;
     auth: string;
     sso: string;
-    docs: string;
+    /**
+     * No `docs` host. Documentation is a path on the product it documents —
+     * nebutra.com/docs, pebble.nebutra.com/docs, carina.nebutra.com/docs —
+     * rather than one shared subdomain serving everyone's docs under prefixes.
+     *
+     * The old shape had a product's docs living at docs.<domain>/<product>/*
+     * while <product>.<domain>/docs/* redirected to them, so a product's own
+     * host was never where its documentation lived. Removing the key rather
+     * than repointing it is deliberate: a single value cannot express "each
+     * product serves its own", and leaving one invites a caller to treat it as
+     * the docs host again.
+     */
+
     studio: string;
     cdn: string;
     router: string;
@@ -364,7 +376,6 @@ export const DEFAULT_BRAND: BrandConfig = {
     api: "api.nebutra.com",
     auth: "auth.nebutra.com",
     sso: "sso.nebutra.com",
-    docs: "docs.nebutra.com",
     studio: "studio.nebutra.com",
     cdn: "cdn.nebutra.com",
     router: "router.nebutra.com",

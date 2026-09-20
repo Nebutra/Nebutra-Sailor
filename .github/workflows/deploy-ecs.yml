@@ -316,7 +316,7 @@ jobs:
             if [ "$auth" = "true" ]; then items+=('{"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","kind":"next-standalone","build_command":"build","site_url":"https://auth.nebutra.com"}'); fi
             if [ "$design" = "true" ]; then items+=('{"app":"design","package":"@nebutra/design","workspace":"apps/design","kind":"next-standalone","build_command":"build","site_url":"https://design.nebutra.com"}'); fi
             if [ "$pebble" = "true" ]; then items+=('{"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","kind":"next-standalone","build_command":"build","site_url":"https://pebble.nebutra.com"}'); fi
-            if [ "$sailor_docs" = "true" ]; then items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://docs.nebutra.com"}'); fi
+            if [ "$sailor_docs" = "true" ]; then items+=('{"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","kind":"next-standalone","build_command":"build:vm","site_url":"https://nebutra.com/docs"}'); fi
             if [ "$router" = "true" ]; then items+=('{"app":"router","package":"@nebutra/router","workspace":"apps/router","kind":"next-standalone","build_command":"build","site_url":"https://router.nebutra.com"}'); fi
             if [ "${F_KUANLAN:-false}" = "true" ]; then items+=('{"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","kind":"next-standalone","build_command":"build","site_url":"https://kuanlan.nebutra.com"}'); fi
             if [ "$forge" = "true" ]; then items+=('{"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","kind":"next-standalone","build_command":"build","site_url":"https://forge.nebutra.com"}'); fi
@@ -1165,7 +1165,7 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL || 'https://api.nebutra.com' }}
           NEXT_PUBLIC_API_GATEWAY_URL: ${{ vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}
           NEXT_PUBLIC_STUDIO_URL: ${{ vars.NEXT_PUBLIC_STUDIO_URL || 'https://studio.nebutra.com' }}
-          NEXT_PUBLIC_DOCS_URL: ${{ vars.NEXT_PUBLIC_DOCS_URL || 'https://docs.nebutra.com' }}
+          NEXT_PUBLIC_DOCS_URL: ${{ vars.NEXT_PUBLIC_DOCS_URL || 'https://nebutra.com/docs' }}
           NEBUTRA_LANDING_ORIGIN: ${{ vars.NEBUTRA_LANDING_ORIGIN || 'https://nebutra.com' }}
           NEBUTRA_SESSION_HINT_DOMAIN: ${{ vars.NEBUTRA_SESSION_HINT_DOMAIN || '.nebutra.com' }}
           DOMAIN_LANDING: ${{ vars.DOMAIN_LANDING || 'https://nebutra.com' }}
@@ -1459,7 +1459,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && targets[auth]="https://auth.nebutra.com/health"
           [ "${{ needs.detect-changes.outputs.design }}" = "true" ] && targets[design]="https://design.nebutra.com"
           [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && targets[pebble]="https://pebble.nebutra.com"
-          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://nebutra.com/docs"
           [ "${{ needs.detect-changes.outputs.router }}"         = "true" ] && targets[router]="https://router.nebutra.com"
           [ "${{ needs.detect-changes.outputs.kuanlan }}"        = "true" ] && targets[kuanlan]="https://kuanlan.nebutra.com"
           [ "${{ needs.detect-changes.outputs.forge }}"          = "true" ] && targets[forge]="https://forge.nebutra.com"
@@ -1657,7 +1657,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && emit_deployment_verified api "https://api.nebutra.com/api/misc/health"
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && emit_deployment_verified idp "https://sso.nebutra.com/.well-known/openid-configuration"
           [ "${{ needs.detect-changes.outputs.pebble }}" = "true" ] && emit_deployment_verified pebble "https://pebble.nebutra.com"
-          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && emit_deployment_verified sailor-docs "https://docs.nebutra.com"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && emit_deployment_verified sailor-docs "https://nebutra.com/docs"
 
       - name: Rollback Cloud VM on deploy or smoke failure
         if: failure() && (steps.remote-deploy.outcome == 'failure' || steps.smoke.outcome == 'failure')

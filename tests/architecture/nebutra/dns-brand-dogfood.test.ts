@@ -12,7 +12,6 @@ describe("dns brand dogfood", () => {
       "auth",
       "api",
       "sso",
-      "docs",
       "router",
       "forge",
       "pebble",

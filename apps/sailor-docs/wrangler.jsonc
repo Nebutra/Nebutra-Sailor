@@ -16,14 +16,11 @@
     "enabled": true
   },
   "vars": {
-    "NEXT_PUBLIC_DOCS_ORIGIN_URL": "https://docs.nebutra.com"
+    "NEXT_PUBLIC_DOCS_ORIGIN_URL": "https://nebutra.com/docs"
   },
-  // One-time DNS: CNAME docs → this worker (proxied). Route binds hostname.
-  "routes": [
-    {
-      "pattern": "docs.nebutra.com/*",
-      "zone_name": "nebutra.com"
-    }
-  ],
+  // No routes: documentation has no host of its own. The public URL is
+  // <site>/docs, which the landing proxy rewrites to the docs origin — so this
+  // Worker is reached as an upstream (workers.dev), never bound to a hostname.
+  // Binding a route here is what created the docs subdomain in the first place.
   "workers_dev": true
 }
