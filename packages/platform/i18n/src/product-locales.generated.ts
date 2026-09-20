@@ -37,7 +37,7 @@ export const PRODUCT_MESSAGE_LOCALES = [
   "ur",
   "vi",
   "zh-Hans",
-  "zh-Hant"
+  "zh-Hant",
 ] as const;
 
 export type ProductMessageLocale = (typeof PRODUCT_MESSAGE_LOCALES)[number];
