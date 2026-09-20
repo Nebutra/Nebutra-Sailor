@@ -107,7 +107,7 @@ overrides:
   '@types/react': ^19.2.14
   '@types/react-dom': ^19.2.3
   '@vercel/blob>undici': '>=7.29.0 <8'
-  adm-zip: '>=0.6.0'
+  adm-zip: '>=0.6.1'
   axios: '>=1.18.0'
   baseline-browser-mapping: ^2.10.0
   basic-ftp: '>=5.3.1'
@@ -14228,8 +14228,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  adm-zip@0.6.0:
-    resolution: {integrity: sha512-XleryMhbuksdKtofnWZ9Sk+4CUTbms4Mb/EU32SZwToAyZ5RgVos/ki8n+yr0LWHOGKuakbXTuuYNHLQjhddgg==}
+  adm-zip@0.6.1:
+    resolution: {integrity: sha512-Xwrja8nx9e5o2N1my4DsKCeKpdrnACyr1wtbPxBDgGzKzKyE9kRtBFA8mWldI+RVlD7CBZNWY/wQ2+ydwOR6kQ==}
     engines: {node: '>=14.0'}
 
   agent-base@6.0.2:
@@ -30683,7 +30683,7 @@ snapshots:
       '@sanity/blueprints': 0.18.0
       '@sanity/blueprints-parser': 0.4.0
       '@sanity/client': 7.22.0
-      adm-zip: 0.6.0
+      adm-zip: 0.6.1
       array-treeify: 0.1.5
       cardinal: 2.1.1
       empathic: 2.0.0
@@ -33306,7 +33306,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))
+      vitest: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))
 
   '@vitest/expect@2.0.5':
     dependencies:
@@ -33574,7 +33574,7 @@ snapshots:
 
   acorn@8.18.0: {}
 
-  adm-zip@0.6.0: {}
+  adm-zip@0.6.1: {}
 
   agent-base@6.0.2:
     dependencies:
