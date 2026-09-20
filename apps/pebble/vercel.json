@@ -48,18 +48,6 @@
       ]
     }
   ],
-  "redirects": [
-    {
-      "source": "/docs",
-      "destination": "https://docs.nebutra.com/pebble",
-      "permanent": true
-    },
-    {
-      "source": "/docs/:path*",
-      "destination": "https://docs.nebutra.com/pebble/:path*",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
       "source": "/v1/feedback",

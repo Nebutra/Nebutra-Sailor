@@ -1,6 +1,6 @@
 name: Deploy Sailor Docs
 
-# Dual-path production deploy for apps/sailor-docs (docs.nebutra.com):
+# Dual-path production deploy for apps/sailor-docs (served at <site>/docs):
 #
 # - vercel: CLI re-trigger (Hobby plan caps at ~100 deploys/day)
 # - cloudflare-workers: OpenNext → Worker + Assets (same pattern as typelens)
@@ -83,7 +83,7 @@ jobs:
           set -euo pipefail
           if [ -z "${VERCEL_TOKEN:-}" ]; then
             echo "::notice::VERCEL_TOKEN not set — relying on Vercel Git integration only."
-            echo "If docs.nebutra.com is not updating, add VERCEL_TOKEN + VERCEL_DOCS_PROJECT_ID."
+            echo "If /docs is not updating, add VERCEL_TOKEN + VERCEL_DOCS_PROJECT_ID."
             exit 0
           fi
           if [ -z "${VERCEL_PROJECT_ID:-}" ]; then
@@ -197,7 +197,7 @@ jobs:
         env:
           OPEN_NEXT_BUILD: "true"
           CI: "true"
-          NEXT_PUBLIC_DOCS_ORIGIN_URL: https://docs.nebutra.com
+          NEXT_PUBLIC_DOCS_ORIGIN_URL: https://nebutra.com/docs
         run: pnpm exec opennextjs-cloudflare build
 
       - name: Deploy Worker
@@ -212,30 +212,12 @@ jobs:
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
 
-      - name: Point docs DNS at Worker (proxied)
-        # DNS Edit usually lives on CLOUDFLARE_API_TOKEN (not Workers-only).
-        # Soft-fail: Worker is live on *.workers.dev even if DNS write is denied.
-        continue-on-error: true
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          set -euo pipefail
-          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
-            echo "::warning::No token for DNS point — skip. Worker still on nebutra-sailor-docs.nebutra.workers.dev"
-            exit 0
-          fi
-          if ! bash infra/ops/scripts/point-docs-dns-cloudflare-worker.sh; then
-            echo "::warning::DNS point failed (token may lack Zone DNS Edit). See docs/ops/cloudflare-ci-token.md"
-            exit 1
-          fi
-
       - name: Smoke docs
         run: |
           set -euo pipefail
           for url in \
-            "https://docs.nebutra.com/en" \
-            "https://docs.nebutra.com/en/pebble" \
+            "https://nebutra.com/docs/en" \
+            "https://pebble.nebutra.com/docs" \
             "https://nebutra-sailor-docs.nebutra.workers.dev/en" \
             ; do
             code=$(curl -sS -o /tmp/docs-smoke.html -w '%{http_code}' --max-time 30 -L "$url" || echo 000)

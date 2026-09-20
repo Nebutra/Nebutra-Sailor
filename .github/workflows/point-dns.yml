@@ -7,7 +7,6 @@ name: Point DNS
 #
 # Support matrix (anything else fails fast in the resolve step):
 #   auth      cloudflare-worker (production) | ecs (China fallback) | vercel (emergency only)
-#   docs      ecs (emergency default) | cloudflare-worker | vercel
 #   design, forge, kuanlan, router   ecs
 #   para      fly            proxied CNAME → nebutra-para.fly.dev (fly certs add first)
 #   carina, open, pebble, status     vercel   (open also attaches the domain on nebutra-landing)
@@ -26,7 +25,6 @@ on:
           - auth
           - carina
           - design
-          - docs
           - forge
           - kuanlan
           - leak
@@ -75,9 +73,6 @@ jobs:
             auth/vercel)            script=point-auth-dns-vercel.sh ;;
             carina/vercel)          script=point-carina-dns-vercel.sh ;;
             design/ecs)             script=point-design-dns-ecs.sh ;;
-            docs/ecs)               script=point-docs-dns-ecs.sh ;;
-            docs/cloudflare-worker) script=point-docs-dns-cloudflare-worker.sh ;;
-            docs/vercel)            script=point-docs-dns-vercel.sh ;;
             forge/ecs)              script=point-forge-dns-ecs.sh ;;
             kuanlan/ecs)            script=point-kuanlan-dns-ecs.sh ;;
             para/fly)               script=point-fly-dns.sh ;;
@@ -90,7 +85,6 @@ jobs:
             *)
               case "$DNS_HOST" in
                 auth) supported="cloudflare-worker ecs vercel" ;;
-                docs) supported="ecs cloudflare-worker vercel" ;;
                 design|forge|kuanlan|router) supported="ecs" ;;
                 para) supported="fly" ;;
                 carina|open|pebble|status) supported="vercel" ;;
@@ -262,20 +256,6 @@ jobs:
               fi
               curl -sSI --max-time 15 "https://${DNS_HOST}.nebutra.com/" || true
               exit 0
-              ;;
-            docs)
-              echo "=== headers (no follow) ==="
-              curl -sSI --max-redirs 0 --max-time 20 https://docs.nebutra.com/en | head -25 || true
-              echo "=== body logo markers ==="
-              code=$(curl -sS -o /tmp/docs.html -w '%{http_code}' --max-time 30 -L https://docs.nebutra.com/en || echo 000)
-              echo "GET /en -> $code"
-              if [ "$code" = "200" ]; then
-                if grep -qE '535\.71|currentColor|text-brand-mark' /tmp/docs.html; then
-                  echo "logo: inline SVG markers present"
-                elif grep -qi 'logo-horizontal-en' /tmp/docs.html; then
-                  echo "::warning::still serving public/logo img path"
-                fi
-              fi
               ;;
             forge|kuanlan|router)
               for i in 1 2 3 4 5 6 7 8; do

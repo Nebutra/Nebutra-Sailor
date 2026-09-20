@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { createLegacyAppRedirectUrl } from "./lib/app-redirects";
-import { createDocsRedirectUrl } from "./lib/docs-routing";
+import { createDocsRewriteUrl } from "./lib/docs-routing";
 import { shouldBounceSignedInVisitorToApp } from "./lib/session-home-redirect";
 
 const intlMiddleware = createMiddleware(routing);
@@ -83,7 +83,8 @@ function isHostAllowed(host: string | undefined): boolean {
     `www.${brand.domains.landing}`,
     brand.domains.app,
     brand.domains.status,
-    brand.domains.docs,
+    // No docs host: documentation is /docs on this site, served by rewriting to
+    // the bundle's Fly app. It never appears as a Host header here.
     // open.nebutra.com is a host alias of this app (DOMAINS.md); without it the
     // allowlist answered 421 to the Open Platform catalog.
     brand.domains.open,
@@ -146,7 +147,7 @@ export default function proxy(request: NextRequest): NextResponse {
   // (Actual per-IP rate limits belong on CF/WAF — see docs/seo/bot-policy-matrix.md)
   const _bot = botClass(request.headers.get("user-agent"));
   void _bot;
-  const docsRedirectUrl = createDocsRedirectUrl(request.nextUrl, host);
+  const docsRewriteUrl = createDocsRewriteUrl(request.nextUrl);
   const legacyAppRedirectUrl = createLegacyAppRedirectUrl(pathname, APP_REDIRECT_URL);
   const legacyLocaleRedirectUrl = createLegacyLocaleRedirectUrl(request.nextUrl, pathname);
 
@@ -156,8 +157,11 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.redirect(legacyLocaleRedirectUrl, 308));
   }
 
-  if (docsRedirectUrl) {
-    return withSecurityHeaders(NextResponse.redirect(docsRedirectUrl, 308));
+  // Rewrite, not redirect: the visitor stays on this host and the address bar
+  // keeps saying /docs. A 308 here is what sent documentation to its own
+  // subdomain, which is the design being removed.
+  if (docsRewriteUrl) {
+    return withSecurityHeaders(NextResponse.rewrite(docsRewriteUrl));
   }
 
   if (host !== STATUS_HOST && legacyAppRedirectUrl) {

@@ -1,4 +1,4 @@
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import {
   ChartActivity as Activity,
   Cart as ShoppingBag,
@@ -37,7 +37,7 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     icon: ShoppingBag,
     color: "text-[hsl(var(--success-strong))]",
     bgColor: "bg-success/10",
-    docUrl: `${getBrandOrigin("docs")}/integrations/shopify`,
+    docUrl: `${getDocsUrl()}/integrations/shopify`,
   },
   {
     type: "SHOPLINE",
@@ -46,7 +46,7 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     icon: Store,
     color: "text-primary",
     bgColor: "bg-primary/10 dark:bg-primary/15",
-    docUrl: `${getBrandOrigin("docs")}/integrations/shopline`,
+    docUrl: `${getDocsUrl()}/integrations/shopline`,
   },
   {
     type: "STRIPE",
@@ -55,7 +55,7 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     icon: Zap,
     color: "text-purple-900",
     bgColor: "bg-purple-200",
-    docUrl: `${getBrandOrigin("docs")}/integrations/stripe`,
+    docUrl: `${getDocsUrl()}/integrations/stripe`,
   },
   {
     type: "CUSTOM",
@@ -64,6 +64,6 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     icon: Activity,
     color: "text-[hsl(var(--warning-strong))]",
     bgColor: "bg-warning/10",
-    docUrl: `${getBrandOrigin("docs")}/integrations/webhooks`,
+    docUrl: `${getDocsUrl()}/integrations/webhooks`,
   },
 ];

@@ -12,18 +12,22 @@ describe("remaining Next edges on Fly", () => {
     for (const row of [
       { app: "idp", flyApp: "nebutra-idp", host: "sso", toml: "idp.toml" },
       { app: "admin", flyApp: "nebutra-admin", host: "admin", toml: "admin.toml" },
-      {
-        app: "sailor-docs",
-        flyApp: "nebutra-docs",
-        host: "docs",
-        toml: "sailor-docs.toml",
-      },
+      // The docs bundle is the one Machine with no host of its own: it is an
+      // origin that the landing proxy rewrites <site>/docs to. An empty `host`
+      // is what keeps deploy-fly.yml from binding a custom domain, and the
+      // absence from issue-fly-certs.yml is what keeps a cert from being
+      // issued for one. Both are asserted below rather than here.
+      { app: "sailor-docs", flyApp: "nebutra-docs", host: "", toml: "sailor-docs.toml" },
     ]) {
       expect(fly).toContain(`"app":"${row.app}"`);
       expect(fly).toContain(`"fly_app":"${row.flyApp}"`);
       expect(fly).toContain(`"host":"${row.host}"`);
-      expect(certs).toContain(row.flyApp);
-      expect(certs).toContain(`host: ${row.host}`);
+      if (row.host === "") {
+        expect(certs).not.toContain(row.flyApp);
+      } else {
+        expect(certs).toContain(row.flyApp);
+        expect(certs).toContain(`host: ${row.host}`);
+      }
 
       const toml = readFileSync(resolve(ROOT, "infra/fly", row.toml), "utf-8");
       expect(toml).toContain(`app = "${row.flyApp}"`);

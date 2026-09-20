@@ -1,12 +1,18 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 
-// brand.domains.docs (sailor-docs Fumadocs app) is the canonical public docs host
-// since 2026-05-15 when it was deployed to ECS. Both constants now resolve to
-// the same origin — PUBLIC_* kept for callers that semantically mean "the URL
-// a user would share", DOCS_ORIGIN_URL for callers that mean "host the bundle
-// is served from". Collapse once no caller distinguishes.
-export const PUBLIC_DOCS_BASE_URL = getBrandOrigin("docs");
-export const DOCS_ORIGIN_URL = getBrandOrigin("docs");
+// Docs are a path on the site that documents the product, not a host. There is
+// no brand.domains.docs any more: one value cannot express "each product serves
+// its own docs", and a shared docs subdomain meant a product's own host was
+// never where its documentation lived.
+//
+// Both constants remain because callers mean different things — PUBLIC_* is
+// "the URL a person would share", DOCS_ORIGIN_URL is "where the bundle is
+// served from". They coincide today; the rewrite upstream lives in
+// docs-routing.ts and is deliberately not exported here, so nothing can start
+// linking people at the Fly app directly.
+const DOCS_PATH = "/docs";
+export const PUBLIC_DOCS_BASE_URL = `${getBrandOrigin("landing")}${DOCS_PATH}`;
+export const DOCS_ORIGIN_URL = PUBLIC_DOCS_BASE_URL;
 
 function normalizeDocsPath(path = ""): string {
   const normalized = path.trim().replace(/^\/+/, "").replace(/\/+$/, "");

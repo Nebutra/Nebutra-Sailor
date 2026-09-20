@@ -353,7 +353,6 @@ infra/ops/scripts/install-router-v1-nginx.sh
 infra/ops/scripts/seed-kuanlan-router-key.sh
 infra/ops/scripts/seed-kuanlan-router-key.remote.py
 infra/ops/scripts/deploy-carina-docs-ecs.sh
-infra/ops/scripts/deploy-sailor-docs-ecs.sh
 # Nebutra Vercel-team / ECS cutover scripts (team id and host baked in)
 scripts/provision-admin-access.ts
 scripts/preflight-web-auth-vercel.mjs

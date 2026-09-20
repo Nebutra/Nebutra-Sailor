@@ -21,10 +21,24 @@ const TIMEOUT_MS = 4_000;
 const CACHE_TTL_MS = 30_000;
 let cache: { rows: ProbedFleetRow[]; expiresAt: number } | null = null;
 
+/**
+ * Base URL a row is probed against: a brand host for a service that owns one, a
+ * path base for one that does not (the docs bundle lives at `<site>/docs`).
+ * Either may be overridden per service by `ADMIN_MANIFEST_ORIGIN_<KEY>`.
+ */
+export function serviceBase(
+  row: Pick<FleetRow, "domainKey" | "baseUrl" | "envKey">,
+): string | null {
+  const key = row.domainKey ?? row.envKey;
+  const override = key ? process.env[`ADMIN_MANIFEST_ORIGIN_${key.toUpperCase()}`]?.trim() : "";
+  if (override) return override;
+  if (row.domainKey) return `https://${brand.domains[row.domainKey]}`;
+  return row.baseUrl ?? null;
+}
+
 export function healthUrl(row: FleetRow): string | null {
-  if (!row.health || !row.domainKey) return null;
-  const override = process.env[`ADMIN_MANIFEST_ORIGIN_${row.domainKey.toUpperCase()}`]?.trim();
-  return `${override || `https://${brand.domains[row.domainKey]}`}${row.health}`;
+  const base = row.health ? serviceBase(row) : null;
+  return base ? `${base}${row.health}` : null;
 }
 
 export async function probeFleet(

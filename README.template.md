@@ -529,7 +529,7 @@ Sailor is **provider-agnostic**: every platform package below auto-detects its b
 │   ├── landing/      # Marketing site (nebutra.com)
 │   ├── web/               # Main SaaS dashboard (app.nebutra.com)
 │   ├── studio/            # Sanity CMS (studio.nebutra.com)
-│   ├── sailor-docs/       # Public product docs (docs.nebutra.com)
+│   ├── sailor-docs/       # Public product docs (nebutra.com/docs)
 │   ├── idp/               # Identity provider service (OAuth 2.0 / OIDC)
 │   ├── storybook/         # Component playground
 │   ├── mail-preview/      # Email template preview

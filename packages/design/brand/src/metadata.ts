@@ -42,7 +42,6 @@ export const brand = {
     api: "api.nebutra.com",
     auth: "auth.nebutra.com",
     sso: "sso.nebutra.com",
-    docs: "docs.nebutra.com",
     studio: "studio.nebutra.com",
     cdn: "cdn.nebutra.com",
     router: "router.nebutra.com",

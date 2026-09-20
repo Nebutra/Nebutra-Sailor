@@ -40,7 +40,7 @@ Thank you! 🚀 Excited to finally share this with the community.
 ```
 Great question! [Answer the question].
 
-We have more details in our docs: docs.nebutra.com/[topic]
+We have more details in our docs: nebutra.com/docs/[topic]
 
 Happy to dive deeper if you have follow-up questions!
 ```
@@ -86,7 +86,7 @@ That said, like any framework, you'll want to adapt it to your specific needs. H
 ```
 If you know Next.js and TypeScript, you'll feel at home quickly.
 
-Most developers are productive within a day. Each package has its own README, and we have detailed docs at docs.nebutra.com.
+Most developers are productive within a day. Each package has its own README, and we have detailed docs at nebutra.com/docs.
 
 What's your current stack? I can point you to the right starting point!
 ```

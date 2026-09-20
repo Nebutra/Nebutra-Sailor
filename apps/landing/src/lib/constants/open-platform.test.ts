@@ -1,5 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import { describe, expect, it } from "vitest";
 import {
   OPEN_PLATFORM_CONSOLE_HREF,
@@ -13,7 +13,7 @@ describe("open platform catalog", () => {
   it("indexes existing brand hosts and does not invent a parallel API origin", () => {
     const byId = Object.fromEntries(OPEN_PLATFORM_ITEMS.map((item) => [item.id, item]));
 
-    expect(byId.docs?.href).toBe(getBrandOrigin("docs"));
+    expect(byId.docs?.href).toBe(getDocsUrl());
     expect(byId.api?.href).toBe(getBrandOrigin("api"));
     expect(byId.router?.href).toBe(getBrandOrigin("router"));
     expect(byId.forge?.href).toBe(getBrandOrigin("forge"));
