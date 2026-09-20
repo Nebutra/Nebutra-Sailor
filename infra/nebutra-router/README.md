@@ -88,8 +88,15 @@ docker compose up -d cliproxyapi
 2. **打开号池管理台** → CLIProxyAPI's own management UI, proxied over 6PN with
    the management key injected. Choose the provider's OAuth login.
 3. Codex: device code, done in the browser. Google / Claude: open the printed
-   link on your laptop, approve, copy the `localhost:51121/oauth-callback?…`
-   URL from the address bar and paste it back into the UI.
+   link on your laptop, approve, copy the `localhost:…` URL from the address
+   bar and paste it back into the UI.
+
+   That `localhost` address belongs to a listener on **your own machine**, not
+   to CLIProxyAPI. The server completes the exchange through
+   `POST /v0/management/oauth-callback`, which takes the pasted URL. Probing for
+   management routes is misleading: every unmatched path under `/v0/management/`
+   answers `401`, not `404`, because the auth middleware runs before the
+   not-found handler.
 4. Back on `/supply`, press **同步模型到 New-API 渠道**. Models are on the
    shelf at `router.nebutra.com/v1/models` within the inventory TTL.
 
