@@ -77,6 +77,7 @@ export {
   getBrandMailFrom,
   getBrandOrigin,
   getBrandPublicUrls,
+  getDocsUrl,
   getMarketingHomePath,
   getMarketingHomeUrl,
   getSiteMetadata,

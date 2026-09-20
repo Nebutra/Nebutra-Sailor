@@ -1,9 +1,10 @@
 import { createRequire } from "node:module";
 import path from "node:path";
-import { brand } from "@nebutra/brand";
+import { brand, getBrandOrigin } from "@nebutra/brand";
 import { DEPLOYABLE_SERVICES } from "@nebutra/preset/deploy-target";
 import { describe, expect, it } from "vitest";
 import { buildFleet, FLEET, unclaimedHosts } from "../fleet";
+import { healthUrl } from "../probe";
 
 const require_ = createRequire(import.meta.url);
 const ecosystem = require_(
@@ -41,6 +42,28 @@ describe("fleet inventory", () => {
         expect(brand.domains[service.domainKey]).toBeTruthy();
       }
     }
+  });
+
+  it("gives every row exactly one address shape — a host or a path, never both", () => {
+    // The docs bundle is the reason this distinction exists: it is reached at
+    // `<site>/docs` through the landing proxy and has no host of its own. A
+    // domainKey on that row would be the docs subdomain coming back.
+    for (const service of FLEET) {
+      const hasHost = Boolean(service.domainKey);
+      const hasPath = Boolean(service.baseUrl);
+      expect(hasHost && hasPath, `${service.id} declares both a host and a base URL`).toBe(false);
+      if (service.health) {
+        expect(hasHost || hasPath, `${service.id} is probed but has no address`).toBe(true);
+      }
+    }
+
+    // buildFleet(), not FLEET: healthUrl takes a resolved row, and under
+    // exactOptionalPropertyTypes the definition is not assignable to it.
+    const docs = buildFleet().find((s) => s.id === "@nebutra/sailor-docs");
+    if (!docs) throw new Error("the docs bundle left the fleet");
+    expect(docs.domainKey).toBeUndefined();
+    expect(docs.baseUrl).toBe(`${getBrandOrigin("landing")}/docs`);
+    expect(healthUrl(docs)).toBe(`${getBrandOrigin("landing")}/docs${docs.health}`);
   });
 
   it("includes the control plane itself with its own host and port", () => {
