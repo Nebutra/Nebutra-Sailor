@@ -89,7 +89,7 @@ jobs:
 
       - name: Initialize CodeQL
         if: matrix.language != 'python' || needs.detect-languages.outputs.python == 'true'
-        uses: github/codeql-action/init@faaca9a8f6edddba5725ffe5adefdab6669a2eca # v3
+        uses: github/codeql-action/init@3ea06614dafe36dec890db3446326e0d40ce53d4 # v3
         with:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
@@ -122,7 +122,7 @@ jobs:
 
       - name: Perform CodeQL Analysis
         if: matrix.language != 'python' || needs.detect-languages.outputs.python == 'true'
-        uses: github/codeql-action/analyze@faaca9a8f6edddba5725ffe5adefdab6669a2eca # v3
+        uses: github/codeql-action/analyze@3ea06614dafe36dec890db3446326e0d40ce53d4 # v3
         with:
           category: "/language:${{ matrix.language }}"
           # Upload results as SARIF to GitHub Security tab
