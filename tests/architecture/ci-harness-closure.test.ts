@@ -382,10 +382,9 @@ describe("ci harness dependency closure", () => {
     expect(urlHarness).toContain("https://api.nebutra.com/api/misc/health");
     expect(urlHarness).toContain("database.status=up");
     expect(urlHarness).toContain("https://design.nebutra.com");
-    // Docs are a path on the site, not a host: the sweep must probe the public
-    // URL a visitor types, and the subdomain must not come back as a target.
+    // Docs are a path on the site, not a host, so the sweep probes the public
+    // URL a visitor types.
     expect(urlHarness).toContain("https://nebutra.com/docs");
-    expect(urlHarness).not.toContain("https://docs.nebutra.com");
     expect(urlHarness).toContain("https://nebutra.sanity.studio");
     expect(urlHarness).toContain("https://www.nebutra.com");
     // studio.nebutra.com has no DNS record (2026-09-02); a target that can

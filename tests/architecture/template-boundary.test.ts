@@ -548,7 +548,7 @@ describe("template boundary — residue scanner rules", () => {
   beforeAll(() => {
     fixture = mkdtempSync(join(tmpdir(), "sailor-template-residue-"));
     write("docs/host.md", "curl https://api.nebutra.com/health");
-    write("docs/zone.md", "mail is user@nebutra.com; docs at docs.nebutra.com");
+    write("docs/zone.md", "mail is user@nebutra.com; console at app.nebutra.com");
     write("docs/fly.md", "app nebutra-gateway-edge, origin nebutra-web.fly.dev, ip 106.15.4.31");
     write("docs/near-miss.md", "nebutra-web3 nebutra.community 106.15.4.310 @nebutra/webhooks");
     // The regex-escaped host, as sentry.client.config.ts wrote it — and the escaped near-misses.
