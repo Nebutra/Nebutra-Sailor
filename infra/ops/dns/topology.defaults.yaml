@@ -1,6 +1,10 @@
 ecs_host: "106.15.4.31"
-apex_a: "216.198.79.1"
-www_cname: "cname.vercel-dns.com"
+# Landing ships as a Fly Machine. Cloudflare holds a proxied CNAME at the apex
+# (CNAME flattening) and on www; both need `fly certs add` first or Cloudflare
+# answers 525. The Fly app name is instance content, so it is not declared
+# here: `pnpm dns:render` reads it from infra/fly/landing.toml (or
+# DNS_LANDING_CNAME). The old Vercel apex A and cname.vercel-dns.com went with
+# the Vercel deploy surface on 2026-09-22.
 mail:
   provider: aliyun
   records:
@@ -12,14 +16,13 @@ mail:
 # carina: static Astro from Nebutra/carina apps/docs → nebutra-carina.
 # New-API: private Fly Machine (no public hostname). Leak DNS: dedicated IPv4.
 #
-# status: leftover A → ECS; landing already serves the page on Vercel.
-#
-# open: Vercel CNAME on the landing project (`point-open-dns-vercel.sh`).
-# Host alias — landing `/` on open.nebutra.com rewrites to `/open`.
-# Console stays on app `/settings/developers`. Do not add an ECS A or a
-# second Vercel project.
+# status/open: landing host aliases on the same Machine — open.nebutra.com
+# rewrites `/` to `/open`, status.nebutra.com to `/status`. Console stays on
+# app `/settings/developers`. Do not add an ECS A or a second project.
 ecs_surfaces: []
-vercel_surfaces: [open]
+# landing itself is the apex block above; these are the host aliases that
+# share its Machine.
+fly_surfaces: [open, status]
 proxy:
   proxied:
     [

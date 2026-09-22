@@ -10,7 +10,7 @@
 # file, which is not a contributor to any pattern, so the next run is a no-op.
 #
 # Deliberately not wired into ci.yml, and deliberately not a turbo task: apps do
-# not build the snapshot, and a Vercel shallow clone cannot produce it — which
+# not build the snapshot, and a shallow CI clone cannot produce it — which
 # is why it is committed in the first place (see the script's header).
 name: route-lastmod
 

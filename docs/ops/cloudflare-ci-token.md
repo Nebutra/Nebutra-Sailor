@@ -89,14 +89,17 @@ gh workflow run "Deploy Sailor Docs" -R Nebutra/Nebutra-Sailor -f target=cloudfl
 
 ## Temporary production path (no Workers Edit)
 
-Until the token is fixed:
+Production does not depend on this token: `nebutra.com/docs` is served by the
+Fly Machine `nebutra-docs` (`deploy-fly.yml` app=`sailor-docs`). Leave
+`DEPLOY_TARGET_SAILOR_DOCS` unset (or `fly`) and the Cloudflare job simply does
+not run on push; dispatch it again after the token is fixed:
 
 ```bash
-gh variable set DEPLOY_TARGET_SAILOR_DOCS -R Nebutra/Nebutra-Sailor --body vercel
-gh workflow run "Deploy Sailor Docs" -R Nebutra/Nebutra-Sailor -f target=vercel
+gh variable set DEPLOY_TARGET_SAILOR_DOCS -R Nebutra/Nebutra-Sailor --body cloudflare-workers
+gh workflow run "Deploy Sailor Docs" -R Nebutra/Nebutra-Sailor
 ```
 
-Ensure `nebutra.com/docs` DNS points at Vercel (`CNAME` → `cname.vercel-dns.com` or the project-specific `*.vercel-dns-*.com`) when using Vercel as primary. Worker route can remain for later cutback.
+The Vercel fallback was retired on 2026-09-22.
 
 ## Related hosts
 

@@ -12,13 +12,35 @@ type DomainKey = keyof BrandConfig["domains"];
 
 interface Topology {
   ecs_host: string;
-  apex_a: string;
-  www_cname: string;
+  /**
+   * The landing Fly Machine target for the apex/www CNAMEs. Not declared in
+   * the topology file: the Fly app name is instance content (it is stripped
+   * from the public template), so it is read from infra/fly/landing.toml or
+   * DNS_LANDING_CNAME at render time.
+   */
+  landing_cname?: string;
   mail?: { provider: string; records: Record<string, string> };
   ecs_surfaces: DomainKey[];
-  /** Brand fronts served by Vercel — CNAME to `www_cname`, no ECS origin. */
-  vercel_surfaces?: DomainKey[];
+  /** Brand fronts served by Fly — CNAME to `landing_cname`, no ECS origin. */
+  fly_surfaces?: DomainKey[];
   proxy: { proxied: string[]; dns_only: string[] };
+}
+
+/** Resolve the landing target from env, then the Fly manifest, else skip. */
+function resolveLandingCname(): string | undefined {
+  const fromEnv = process.env.DNS_LANDING_CNAME?.trim();
+  if (fromEnv) return fromEnv;
+  const manifest = path.join(ROOT, "infra", "fly", "landing.toml");
+  if (!fs.existsSync(manifest)) return undefined;
+  const app = fs
+    .readFileSync(manifest, "utf-8")
+    .split("\n")
+    .find((line) => line.trimStart().startsWith("app ="));
+  const name = app
+    ?.split("=")[1]
+    ?.trim()
+    .replace(/^["']|["']$/g, "");
+  return name ? `${name}.fly.dev` : undefined;
 }
 
 async function loadBrand(): Promise<BrandConfig> {
@@ -35,7 +57,7 @@ function loadTopology(): Topology {
     fs.readFileSync(path.join(DNS_DIR, "topology.defaults.yaml"), "utf-8"),
   ) as Topology;
   if (process.env.ECS_HOST?.trim()) t.ecs_host = process.env.ECS_HOST.trim();
-  if (process.env.DNS_APEX_A?.trim()) t.apex_a = process.env.DNS_APEX_A.trim();
+  t.landing_cname = resolveLandingCname();
   return t;
 }
 
@@ -48,18 +70,21 @@ function rel(host: string, zone: string) {
 function build(brand: BrandConfig, topo: Topology) {
   const zone = brand.domains.landing;
   const out: { name: string; type: string; content: string }[] = [];
-  if (topo.apex_a) out.push({ name: "@", type: "A", content: topo.apex_a });
-  if (topo.www_cname)
-    out.push({ name: "www", type: "CNAME", content: topo.www_cname.replace(/\.$/, "") });
+  const landingCname = topo.landing_cname?.replace(/\.$/, "");
+  if (landingCname) {
+    // Cloudflare accepts a proxied CNAME at the apex (CNAME flattening).
+    out.push({ name: "@", type: "CNAME", content: landingCname });
+    out.push({ name: "www", type: "CNAME", content: landingCname });
+  }
   for (const s of topo.ecs_surfaces ?? []) {
     const host = brand.domains[s];
     if (!host || !topo.ecs_host) continue;
     out.push({ name: rel(host, zone), type: "A", content: topo.ecs_host });
   }
-  for (const s of topo.vercel_surfaces ?? []) {
+  for (const s of topo.fly_surfaces ?? []) {
     const host = brand.domains[s];
-    if (!host || !topo.www_cname) continue;
-    out.push({ name: rel(host, zone), type: "CNAME", content: topo.www_cname.replace(/\.$/, "") });
+    if (!host || !landingCname) continue;
+    out.push({ name: rel(host, zone), type: "CNAME", content: landingCname });
   }
   if (topo.mail?.provider !== "none" && topo.mail?.records) {
     for (const [n, c] of Object.entries(topo.mail.records)) {

@@ -14,6 +14,10 @@ export type ScaffoldDeployTargetMap = DeployTargetMap;
 const FRONTEND_CLOUDFLARE = "cloudflare-pages" as const;
 const FRONTEND_STANDALONE = "standalone" as const;
 const FRONTEND_RAILWAY = "railway" as const;
+// The preset default is `fly` now; `--deploy=vercel` names Vercel explicitly
+// instead of returning the defaults, or the flag would silently scaffold a Fly
+// deployment.
+const FRONTEND_VERCEL = "vercel" as const;
 
 function withFrontends(
   base: DeployTargetMap,
@@ -66,8 +70,9 @@ export function resolveScaffoldDeployTargets(
       return withFrontends(defaults, FRONTEND_STANDALONE, "ecs-docker", "ecs-docker");
     case "railway":
       return withFrontends(defaults, FRONTEND_RAILWAY, "railway", "railway");
-    case "none":
     case "vercel":
+      return withFrontends(defaults, FRONTEND_VERCEL, "cloudflare-workers", "ecs-docker");
+    case "none":
       return defaults;
   }
 }

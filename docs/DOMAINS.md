@@ -12,15 +12,15 @@
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
 | `sso.nebutra.com` | idp | **OIDC IdP** — issuer URL permanent; used for SSO / internal tools |
 | `design.nebutra.com` | design-docs | Design system docs (ECS PM2 :3004) |
-| `status.nebutra.com` | landing (host alias) | Public status page — Vercel landing, rewrite `/` → `/status` |
+| `status.nebutra.com` | landing (host alias) | Public status page — Fly `nebutra-landing`, rewrite `/` → `/status` |
 | `open.nebutra.com` | landing (host alias) | **云毓开放平台** — public catalog; `/` rewrites to `/open`. Console is `app` `/settings/developers` |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
 | `studio.nebutra.com` | studio | Optional branded Studio alias — **not provisioned** (no DNS record as of 2026-09-02); canonical host is `nebutra.sanity.studio`. Not in the public URL sweep until it exists |
 | `router.nebutra.com` | router | **Nebutra Router** — model fabric / OpenAI-compatible product edge (ECS PM2) |
-| `forge.nebutra.com` | forge | **Nebutra Forge** — tool station + Agent tool API (Vercel; ECS PM2 fallback :3105) |
+| `forge.nebutra.com` | forge | **Nebutra Forge** — tool station + Agent tool API (Fly `nebutra-forge`; ECS PM2 fallback :3105) |
 | `leak.nebutra.com` | forge-dns-leak | **DNS leak authority zone** — NS → `ns1.leak.nebutra.com` (UDP/TCP 53 on Fly dedicated IPv4; DNS-only glue) |
 | `admin.nebutra.com` | admin | **Ecosystem control plane** — staff-only (Cloudflare Access + `sso` OIDC + platform-staff role). Never tenant-visible. See [PRD](./plans/2026-07-28-nebutra-admin-control-plane-design.md) |
-| `pebble.nebutra.com` | `apps/pebble` + external repo `Nebutra/pebble` | **Pebble brand front** — landing / download / feeds on ECS; product API on shared gateway |
+| `pebble.nebutra.com` | `apps/pebble` + external repo `Nebutra/pebble` | **Pebble brand front** — landing / download / feeds on the Fly Machine `nebutra-pebble`; product API on shared gateway |
 | `carina.nebutra.com` | (external repo `Nebutra/carina` → `apps/docs`) | **Carina product docs** — Astro + Starlight static site. No backend of its own. |
 
 > Router/Forge: product hosts; supply engines (New-API, CLIProxyAPI, Sub2API) stay **internal** — see `infra/nebutra-router/`.
@@ -36,7 +36,7 @@
 | API keys / webhooks / provider keys | `app.nebutra.com/settings/{api-keys,webhooks,provider-keys}` |
 | Docs / API / SSO | `docs` / `api` / `sso` — existing hosts |
 
-Do not add `apps/open`, `api.open.*`, or a second Vercel project. Bring-up: land `/open` on landing, then run **Point DNS** (`point-dns.yml`, host=`open`, target=`vercel`) — it upserts the Cloudflare CNAME and attaches `open.nebutra.com` on `nebutra-landing`. Smoke `/` on the alias (must rewrite, must not 301 to apex).
+Do not add `apps/open`, `api.open.*`, or a second landing origin. Bring-up: land `/open` on landing, then run **Point DNS** (`point-dns.yml`, host=`open`, target=`fly`) — it upserts the proxied CNAME `open.nebutra.com → nebutra-landing.fly.dev` (issue the Fly cert first). Smoke `/` on the alias (must rewrite, must not 301 to apex).
 
 Sign-in-with-Nebutra client registration is **not** self-serve yet. The catalog links the existing OIDC issuer and docs.
 
@@ -47,7 +47,7 @@ brand front gets a host; everything transactional runs on the shared platform ho
 
 | Capability | Host + path |
 |---|---|
-| Landing / download | `pebble.nebutra.com` (CF A → ECS PM2 `pebble` :3017) |
+| Landing / download | `pebble.nebutra.com` (CF CNAME → Fly `nebutra-pebble`) |
 | Docs | `pebble.nebutra.com/docs/*` — served by the pebble app itself; no docs subdomain exists |
 | Feedback | `POST api.nebutra.com/pebble/v1/feedback` |
 | Diagnostics | `POST api.nebutra.com/pebble/diagnostics/{token,upload,delete/:ticketId}` |
@@ -105,21 +105,21 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 
 | Host | DNS (Cloudflare) | Runtime | Notes |
 |------|------------------|---------|-------|
-| `nebutra.com` / `www` | Vercel anycast / CNAME | **Vercel** landing | Marketing |
-| `nebutra.com/docs` | **no record** — a path, rewritten by the landing proxy | **Fly** `nebutra-docs` (origin only, no custom domain) | `deploy-fly.yml` app=`sailor-docs`. The landing app needs `DOCS_UPSTREAM_ORIGIN` = the Fly app's `.fly.dev` origin, set as a **Vercel project env var / GitHub repo var** — deliberately not committed, since a Fly app name is instance infrastructure, not brand identity. Unset ⇒ `/docs` 404s |
+| `nebutra.com` / `www` | CNAME `nebutra-landing.fly.dev` **proxied** (apex uses CNAME flattening) | **Fly** `nebutra-landing` | Marketing. Deploy: `deploy-fly.yml` app=`landing`; cutover: `point-landing-dns-fly.sh`. `www` 308s to the apex in `next.config.ts` |
+| `nebutra.com/docs` | **no record** — a path, rewritten by the landing proxy | **Fly** `nebutra-docs` (origin only, no custom domain) | `deploy-fly.yml` app=`sailor-docs`. The landing app needs `DOCS_UPSTREAM_ORIGIN` = the Fly app's `.fly.dev` origin, set as a **Fly secret / GitHub repo var** — deliberately not committed, since a Fly app name is instance infrastructure, not brand identity. Unset ⇒ `/docs` 404s |
 | `app.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `web` | Target: Vercel (`nebutra-web`) when builds are green |
 | `auth.nebutra.com` | Worker **custom domain** only (`workers_dev: false`) | **Auth edge**: `/api/auth/*` + Hyperdrive; UI → ECS. No `*.workers.dev` test URL. | Rollback: `point-dns.yml` host=`auth` target=`ecs`; emergency Vercel only |
 | `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |
 | `sso.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-idp` | **Permanent OIDC issuer** `https://sso.nebutra.com` |
-| `router.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `router` | Product edge :3106; Vercel project `nebutra-router` exists for future cutover |
-| `forge.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `forge` | Product edge :3105; Vercel project `nebutra-forge` exists (Hobby deploy cap) |
+| `router.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-router` | Product edge. Deploy: `deploy-fly.yml` app=`router` |
+| `forge.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-forge` | Product edge. Deploy: `deploy-fly.yml` app=`forge` |
 | `ns1.leak.nebutra.com` | A Fly dedicated IPv4 **DNS only** | **Fly** `nebutra-dns-leak` | Glue for leak zone — never orange-cloud |
 | `leak.nebutra.com` | NS → `ns1.leak.nebutra.com` | **Fly** authoritative | Session probes `{n}.{sid}.s.leak.nebutra.com`; see `packages/ai/forge-dns-leak/README.md` |
 | `admin.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-admin` | Staff-only: Cloudflare Access in front of the Machine |
-| `pebble.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `pebble` :3017 | Brand front. Owner topology 2026-07-30: same ECS A pattern as app/api (not Vercel). nginx `conf.d/pebble.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`pebble`. Legacy `POST /v1/feedback` + `/diagnostics/*` reverse-proxy to api-gateway `/pebble/*`. |
+| `pebble.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-pebble` | Brand front. Deploy: `deploy-fly.yml` app=`pebble`. Legacy `POST /v1/feedback` + `/diagnostics/*` reverse-proxy to api-gateway `/pebble/*`. |
 | `carina.nebutra.com` | CNAME → Fly unique host **proxied** | **Fly** `nebutra-carina` nginx static | Product docs (Astro) from `Nebutra/carina` `apps/docs`. Deploy: `deploy-carina-fly.yml`. ECS rsync is `rollback-carina-ecs` only. |
-| `status.nebutra.com` | A `106.15.4.31` proxied | **ECS nginx** reverse-proxy → landing `/status` | vhost `conf.d/status.nebutra.com.conf` (no 301 to apex). Content from Vercel landing. Future: pure Vercel CNAME when CF token has DNS Edit + landing prod green (`point-status-dns-vercel.sh`). |
-| `open.nebutra.com` | CNAME `cname.vercel-dns.com` **proxied** | **Vercel landing** host alias | Bind on project `nebutra-landing` (`point-dns.yml` host=`open` target=`vercel`). Rewrite `/` → `/open`. Console: `https://app.nebutra.com/settings/developers`. Do not add `apps/open` or `api.open.*`. |
+| `status.nebutra.com` | CNAME `nebutra-landing.fly.dev` **proxied** | **Fly landing** host alias | `point-dns.yml` host=`status` target=`fly`. Rewrite `/` → `/status` (no 301 to apex). |
+| `open.nebutra.com` | CNAME `nebutra-landing.fly.dev` **proxied** | **Fly landing** host alias | `point-dns.yml` host=`open` target=`fly`. Rewrite `/` → `/open`. Console: `https://app.nebutra.com/settings/developers`. Do not add `apps/open` or `api.open.*`. |
 | `design.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `design-docs` :3004 | nginx `conf.d/design.nebutra.com.conf`. Deploy: `deploy-ecs.yml` apps=`design-docs`. Without PM2 → CF 502; without vhost → 301 apex. DNS: `point-design-dns-ecs.sh`. |
 
 ### Topology layers
@@ -127,26 +127,26 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | Layer | Role | Apps |
 |-------|------|------|
 | **Cloudflare** | DNS, CDN, WAF, edge Workers | All public hostnames; gateway Workers for edge API |
-| **Vercel** | Git-native frontends | landing, docs (+ web/auth when cut over) |
+| **Fly (sin)** | Product edges as Machines | landing, web, auth (private origin), router, forge, pebble, kuanlan, admin, sso, docs, para, carina |
 | **ECS (slim)** | Origin processes | web*, auth*, api, sso/idp |
 
-\* web/auth currently origin on ECS; Vercel Git auto-deploy for those two is off in `vercel.json`. kuanlan stays Git-linked and is skipped until `package.json` lands — [vercel-spend.md](./ops/nebutra/vercel-spend.md). Product-edge Fly Machines: [fly-origin.md](./ops/nebutra/fly-origin.md) (DNS still ECS until `FLY_API_TOKEN` + cutover).
+The Vercel deploy surface was retired on 2026-09-22; every product edge ships through [deploy-fly.yml](../../.github/workflows/deploy-fly.yml). See [fly-origin.md](./ops/nebutra/fly-origin.md) for the Machine map and secrets, and [fly-global-china-ecs-origin.md](./architecture/2026-08-31-fly-global-china-ecs-origin.md) for what stays on ECS.
 
 ### Repo variables (no drift)
 
 | Variable | Production value | Meaning |
 |----------|------------------|---------|
-| `HA_TOPOLOGY` | `cf-edge + vercel-marketing/docs + ecs-origin(app,auth,api,sso)` | Describe *actual* routing |
-| `DEPLOY_TARGET_LANDING` | `vercel` | Primary deploy path |
-| `DEPLOY_TARGET_SAILOR_DOCS` | `vercel` (temp) / `cloudflare-workers` (target) | Push path for `deploy-sailor-docs.yml`. Prefer CF Workers when token has **Workers Scripts Edit**; until then set `vercel`. Token ops: [ops/cloudflare-ci-token.md](./ops/cloudflare-ci-token.md) |
-| `DEPLOY_TARGET_WEB` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
-| `DEPLOY_TARGET_AUTH` | `cloudflare-workers` | Thin auth-edge Worker (`wrangler.edge.jsonc`); ECS UI origin; Vercel emergency-only |
-| `DEPLOY_TARGET_ADMIN` | `standalone` | Control plane — ECS origin only; a Vercel project would create a second origin outside Cloudflare Access |
+| `HA_TOPOLOGY` | `cf-edge + fly-machines(landing,product-edges) + ecs-origin(issuer,leak,rollback)` | Describe *actual* routing |
+| `DEPLOY_TARGET_LANDING` | `fly` | Primary deploy path (`deploy-fly.yml` app=`landing`) |
+| `DEPLOY_TARGET_SAILOR_DOCS` | `fly` (production) / `cloudflare-workers` (alternate) | Production is the Fly Machine (`deploy-fly.yml` app=`sailor-docs`). Set `cloudflare-workers` to also push-deploy `deploy-sailor-docs.yml` (needs **Workers Scripts Edit**). Token ops: [ops/cloudflare-ci-token.md](./ops/cloudflare-ci-token.md) |
+| `DEPLOY_TARGET_WEB` | `fly` | Production is the Fly Machine `nebutra-web` |
+| `DEPLOY_TARGET_AUTH` | `cloudflare-workers` | Thin auth-edge Worker (`wrangler.edge.jsonc`); UI origin is the Fly Machine `nebutra-auth` |
+| `DEPLOY_TARGET_ADMIN` | `standalone` | Control plane — Fly Machine behind Cloudflare Access; never a second public origin |
 | `DEPLOY_TARGET_GATEWAY` | `cloudflare-workers` | Edge API |
 | `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` | Login center origin |
 | `ECS_HOST` | `106.15.4.31` | Cloud VM origin |
 
-`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`, and optionally `landing` / `sailor-docs` / `design-docs`). The docs bundle runs on **Fly** (`nebutra-docs`) as an origin only; `nebutra.com/docs` reaches it through the landing proxy's rewrite, so there is no docs DNS record to point anywhere. Marketing (`nebutra.com`) stays on Vercel.
+`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`, and optionally `landing` / `sailor-docs` / `design-docs`). The docs bundle runs on **Fly** (`nebutra-docs`) as an origin only; `nebutra.com/docs` reaches it through the landing proxy's rewrite, so there is no docs DNS record to point anywhere. Marketing (`nebutra.com`) is the **Fly** Machine `nebutra-landing`.
 
 PM2 release / preflight gotchas (sibling wipe, webpack `build:vm`, explicit `apps=`): [ops/ecs-pm2-release-lessons.md](./ops/nebutra/ecs-pm2-release-lessons.md).
 
@@ -158,8 +158,8 @@ Hostnames dogfood `brand.domains` (`pnpm brand:apply`). Zone files: `pnpm dns:re
 ```
 Type    Name      Value                    Proxy        Notes
 ----    ----      -----                    -----        -----
-A       @         76.76.21.21              ✅           Vercel apex
-CNAME   www       cname.vercel-dns.com     ✅
+CNAME   @         nebutra-landing.fly.dev  ✅           Fly landing (apex CNAME flattening)
+CNAME   www       nebutra-landing.fly.dev  ✅           308 → apex in next.config.ts
 A       app       106.15.4.31              ✅           ECS (interim)
 A       auth      106.15.4.31              ✅           ECS (interim)
 A       api       106.15.4.31              ✅           ECS
@@ -168,12 +168,12 @@ A       router    106.15.4.31              ✅           ECS PM2 @nebutra/router
 A       forge     106.15.4.31              ✅           ECS PM2 @nebutra/forge
 CNAME   admin     w00nrye.nebutra-admin.fly.dev ✅      Fly staff control plane (Access)
 CNAME   docs      999625y.nebutra-docs.fly.dev ✅       Fly sailor-docs
-A       pebble    106.15.4.31              ✅           Pebble brand front (ECS PM2 :3017); not Vercel
-CNAME   carina    nebutra-carina.fly.dev   ✅           Carina product docs (Fly static); not Vercel
-CNAME   open      cname.vercel-dns.com     ✅           Landing host alias — create with the Vercel domain
+CNAME   pebble    nebutra-pebble.fly.dev  ✅           Pebble brand front (Fly Machine)
+CNAME   carina    nebutra-carina.fly.dev   ✅           Carina product docs (Fly static)
+CNAME   open      nebutra-landing.fly.dev  ✅           Landing host alias (fly cert add open.nebutra.com)
 ```
 
-When cutting `app` / `auth` to Vercel: switch to `CNAME … cname.vercel-dns.com` (grey or orange per SSL plan) and remove the ECS A records.
+Every product edge above is a proxied CNAME onto its Fly Machine's unique `.fly.dev` host, or an A record to the ECS origin where the row says so. The Vercel surface was retired on 2026-09-22.
 
 ## Auth multi-app model
 
@@ -207,15 +207,19 @@ Also document Feishu OAuth when China enterprise SSO is enabled: `FEISHU_APP_ID`
 
 Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.nebutra.com/…`
 
-## Vercel projects
+## Fly Machines
 
-| Project | Root | Domain(s) |
-|---------|------|-----------|
-| landing | `apps/landing` | `nebutra.com`, `www`, `open.nebutra.com` |
-| docs | `apps/sailor-docs` | `nebutra.com/docs` |
-| ~~nebutra-pebble~~ | `apps/pebble` | Superseded by ECS PM2 (kept only if Hobby quota is free for experiments) |
-| nebutra-auth | `apps/auth` | `auth.nebutra.com` (ready; DNS may still be ECS) |
-| nebutra-web | `apps/web` | `app.nebutra.com` (ready; DNS may still be ECS) |
+The Vercel projects were retired on 2026-09-22. Product edges are Fly Machines in `sin`,
+declared in `infra/fly/*.toml` and shipped by `.github/workflows/deploy-fly.yml`:
+
+| Machine | App | Host |
+|---------|-----|------|
+| `nebutra-landing` | `apps/landing` | `nebutra.com`, `www`, `status.nebutra.com`, `open.nebutra.com` |
+| `nebutra-docs` | `apps/sailor-docs` | origin only — `nebutra.com/docs` (rewritten) |
+| `nebutra-web` | `apps/web` | `app.nebutra.com` |
+| `nebutra-auth` | `apps/auth` | private origin behind the auth Worker |
+
+Runbook and secret import: [fly-origin.md](./ops/nebutra/fly-origin.md).
 
 ## Origin TLS
 

@@ -1083,27 +1083,26 @@ Status: as of 2026-05-12, after a follow-up audit, `backends/python/` contains o
 
 > See [ADR 2026-06-04 — Production Runtime Closure and Deploy Target Switchability](docs/architecture/2026-06-04-production-runtime-closure.md).
 
-Default production topology:
+Production topology (Vercel retired 2026-09-22):
 
 ```text
-Vercel frontends -> Cloudflare Workers gateway -> ECS Origin -> PlanetScale Postgres / Upstash / R2 or OSS
+Fly Machines (landing + product edges) -> Cloudflare Workers gateway -> Fly/ECS Origin -> PlanetScale Postgres / Upstash / R2 or OSS
 ```
 
-This default is provider-switchable, not provider-locked. Use the per-service
-selectors from `@nebutra/preset/deploy-target`:
+This is provider-switchable, not provider-locked. Use the per-service selectors
+from `@nebutra/preset/deploy-target`; this deployment sets:
 
-| Service | Default | Selector |
+| Service | Active | Selector |
 |---|---|---|
-| `web` | `vercel` | `DEPLOY_TARGET_WEB` |
-| `landing` | `vercel` | `DEPLOY_TARGET_LANDING` |
+| `web` | `fly` | `DEPLOY_TARGET_WEB` |
+| `landing` | `fly` | `DEPLOY_TARGET_LANDING` |
 | `gateway` | `cloudflare-workers` | `DEPLOY_TARGET_GATEWAY` |
-| `python-ai` | `ecs-docker` | `DEPLOY_TARGET_PYTHON_AI` |
+| `python-ai` | `fly` | `DEPLOY_TARGET_PYTHON_AI` |
 
 Frontends may switch to `standalone`, `cloudflare-pages`, or `railway` when an
-adapter is intentionally selected. Gateway may switch to `vercel-functions`,
-`ecs-docker`, `k8s`, `aws`, or `railway`. `python-ai` may switch to `k8s`,
-`aws`, or `railway`. The rule is one service, one environment, one active
-target.
+adapter is intentionally selected. Gateway may switch to `ecs-docker`, `k8s`,
+`aws`, or `railway`. `python-ai` may switch to `k8s`, `aws`, or `railway`. The
+rule is one service, one environment, one active target.
 
 `packages/*` do not deploy. They provide domain capabilities consumed by apps,
 the gateway, or the origin backend.

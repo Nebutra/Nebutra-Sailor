@@ -43,12 +43,12 @@ const DEPLOY_ORIGIN_ECS_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/deploy-
 const ORIGIN_COMPOSE_PATH = resolve(ROOT, "infra/runtime/docker/docker-compose.origin.yml");
 
 describe("production runtime closure", () => {
-  it("defaults to the recommended Worker Gateway + ECS Origin topology without locking providers", () => {
+  it("defaults to the Fly Machines + Worker Gateway topology without locking providers", () => {
     expect(getDefaultDeployTargets()).toMatchObject({
-      web: "vercel",
-      landing: "vercel",
+      web: "fly",
+      landing: "fly",
       gateway: "cloudflare-workers",
-      "python-ai": "ecs-docker",
+      "python-ai": "fly",
     });
 
     expect(TARGETS_BY_SURFACE.edgeGateway).toEqual(

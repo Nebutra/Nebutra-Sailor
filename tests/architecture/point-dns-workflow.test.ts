@@ -20,6 +20,7 @@ const HOSTS = [
   "design",
   "forge",
   "kuanlan",
+  "landing",
   "leak",
   "open",
   "para",
@@ -28,24 +29,26 @@ const HOSTS = [
   "status",
   "www",
 ];
-const TARGETS = ["cloudflare-worker", "ecs", "fly", "vercel", "apex", "authoritative"];
+// The Vercel target was retired on 2026-09-22; every product host is Fly or ECS.
+const TARGETS = ["cloudflare-worker", "ecs", "fly", "apex", "authoritative"];
 
-// Every (host, target) pair the one-shots supported, and the script each ran.
+// Every (host, target) pair the workflow supports, and the script each runs.
 const SUPPORTED: Record<string, string> = {
   "auth/cloudflare-worker": "point-auth-dns-cloudflare-worker.sh",
   "auth/ecs": "point-auth-dns-ecs.sh",
-  "auth/vercel": "point-auth-dns-vercel.sh",
-  "carina/vercel": "point-carina-dns-vercel.sh",
+  // Landing owns the apex plus www/status/open, so it has its own script.
+  "landing/fly": "point-landing-dns-fly.sh",
+  "carina/fly": "point-fly-dns.sh",
   "design/ecs": "point-design-dns-ecs.sh",
   "forge/ecs": "point-forge-dns-ecs.sh",
   "kuanlan/ecs": "point-kuanlan-dns-ecs.sh",
   "leak/authoritative": "point-leak-zone-dns.sh",
-  "open/vercel": "point-open-dns-vercel.sh",
+  "open/fly": "point-fly-dns.sh",
   // The one generic script: every Fly product edge takes the same proxied-CNAME shape.
   "para/fly": "point-fly-dns.sh",
-  "pebble/vercel": "point-pebble-dns-vercel.sh",
+  "pebble/fly": "point-fly-dns.sh",
   "router/ecs": "point-router-dns-ecs.sh",
-  "status/vercel": "point-status-dns-vercel.sh",
+  "status/fly": "point-fly-dns.sh",
   "www/apex": "point-www-dns-apex.sh",
 };
 
@@ -99,9 +102,9 @@ describe("point-dns.yml — one parameterized DNS cutover", () => {
     expect(pointIndex).toBeGreaterThan(resolveIndex);
   });
 
-  it("keeps the open host's Vercel domain-attach step and per-host smoke", () => {
-    const attach = steps.find((s) => s.name === "Attach open.nebutra.com on nebutra-landing");
-    expect(attach?.if).toBe("inputs.host == 'open'");
+  it("keeps per-host smoke coverage and no Vercel step", () => {
+    expect(raw).not.toContain("VERCEL_TOKEN");
+    expect(raw).not.toContain("api.vercel.com");
     const smoke = steps.find((s) => s.name?.startsWith("Smoke"))?.run ?? "";
     for (const host of HOSTS) {
       expect(smoke, `smoke step must handle host=${host}`).toMatch(

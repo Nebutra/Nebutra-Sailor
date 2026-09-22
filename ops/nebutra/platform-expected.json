@@ -1,37 +1,6 @@
 {
   "$comment": "Provider state that lives only in a dashboard, declared so scripts/ops/platform-reconcile.mjs can check it daily. Schema: ops/README.md. Checked by .github/workflows/platform-reconcile.yml.",
   "version": 1,
-  "vercel": {
-    "projects": [
-      {
-        "name": "nebutra-landing",
-        "buildMachineType": "standard",
-        "ignoreBuildStep": "exit 0",
-        "gitLinked": false,
-        "envNotSensitive": {
-          "production": ["NEXT_PUBLIC_SITE_URL", "DOCS_ORIGIN_URL", "NEXT_PUBLIC_API_URL"]
-        }
-      },
-      {
-        "name": "nebutra-web",
-        "buildMachineType": "standard",
-        "ignoreBuildStep": "exit 0"
-      },
-      {
-        "name": "nebutra-auth",
-        "buildMachineType": "standard",
-        "ignoreBuildStep": "exit 0"
-      },
-      {
-        "name": "docs",
-        "buildMachineType": "standard"
-      },
-      {
-        "name": "nebutra-kuanlan",
-        "buildMachineType": "standard"
-      }
-    ]
-  },
   "fly": {
     "apps": [
       {

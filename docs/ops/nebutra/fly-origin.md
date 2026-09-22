@@ -1,14 +1,17 @@
 # Fly origin (product edges + Hono gateway)
 
-ECS PM2 is no longer the intended home for `forge` / `router` / `web` /
-`pebble` / `design` / `kuanlan` / `idp` / `admin` / `sailor-docs` / the auth UI / the Node api-gateway. Next product edges ship as
-standalone Machines in `sin` via
+ECS PM2 is no longer the intended home for `landing` / `forge` / `router` /
+`web` / `pebble` / `design` / `kuanlan` / `idp` / `admin` / `sailor-docs` /
+the auth UI / the Node api-gateway. Product edges ship as standalone Machines
+in `sin` via
 [`.github/workflows/deploy-fly.yml`](../../../.github/workflows/deploy-fly.yml).
 The Hono origin ships separately via
 [`.github/workflows/deploy-fly-gateway.yml`](../../../.github/workflows/deploy-fly-gateway.yml)
 because it is not a Next standalone image.
 
-Landing and Cloudflare Workers (gateway-edge + auth-edge) stay put.
+Landing (`nebutra.com`, the apex plus `www` / `status` / `open`) moved from
+Vercel to the `nebutra-landing` Machine on 2026-09-22. Cloudflare Workers
+(gateway-edge + auth-edge) stay put.
 `sso` / `admin` / `docs` ship as Fly Next Machines. Carina is a static
 nginx Machine (`deploy-carina-fly.yml`). New-API is a private Machine
 with no public IP (`deploy-new-api-fly.yml`); Router reaches it at
@@ -21,10 +24,12 @@ the rollback.
 
 ## Live traffic
 
-`forge` / `router` / `app` / `pebble` / `design` / `kuanlan` / `sso` /
-`admin` / `docs` / `carina` are proxied CNAMEs to Fly Machines in `sin`
-(Let's Encrypt certs issued). Confirm with `via: 1.1 fly.io` on the
-product hostname. `ns1.leak` is a grey-cloud A to the leak Machine's
+`nebutra.com` (apex, plus `www` / `status` / `open`), `forge` / `router` /
+`app` / `pebble` / `design` / `kuanlan` / `sso` / `admin` / `docs` / `carina`
+are proxied CNAMEs to Fly Machines in `sin` (Let's Encrypt certs issued).
+Confirm with `via: 1.1 fly.io` on the product hostname. The apex is a CNAME
+at the zone root (Cloudflare CNAME flattening) — `point-landing-dns-fly.sh`
+writes it together with the three aliases. `ns1.leak` is a grey-cloud A to the leak Machine's
 dedicated IPv4. New-API has no public DNS.
 
 The Hono origin is `nebutra-gateway` in `sin`. `api.nebutra.com` stays
@@ -69,6 +74,16 @@ The Next workflow copies `/var/www/nebutra/<app>/.env` from the VM into
 `fly secrets import` when SSH vars exist. The Hono workflow copies
 `/var/www/nebutra/api/.env`. If that file is missing, set secrets on
 the Fly app before trusting the hostname.
+
+`nebutra-landing` was the last app whose secrets lived only in a provider
+dashboard (the Vercel project env), so the VM import may find nothing. Before
+cutting `nebutra.com` over, set the runtime secrets it actually reads:
+`RESEND_API_KEY` + `CONTACT_FORM_TO` (contact form), `UPSTASH_REDIS_REST_URL` /
+`UPSTASH_REDIS_REST_TOKEN` + `STATUS_ADMIN_TOKEN` (status page), and
+`DOCS_UPSTREAM_ORIGIN` (the `nebutra-docs` `.fly.dev` origin, or `/docs`
+404s). `ALLOWED_HOSTS` is deliberately not a secret: it lives in
+`infra/fly/landing.toml`, and the import step skips the key so a stale VM
+value cannot shadow it.
 
 The VM file describes the VM. Two of its keys must never reach a Machine:
 `CACHE_BACKEND=ioredis` and `REDIS_URL=redis://127.0.0.1:6379` point at the

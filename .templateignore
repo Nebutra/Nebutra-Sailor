@@ -228,7 +228,6 @@ tests/load/
 .github/workflows/deploy-origin-ecs.yml
 .github/workflows/deploy-sailor-docs.yml
 .github/workflows/deploy-typelens.yml
-.github/workflows/deploy-vercel.yml
 .github/workflows/ops-auth-console-setup.yml
 .github/workflows/ops-configure-pebble-r2.yml
 .github/workflows/ops-db-inventory.yml
@@ -298,10 +297,8 @@ tests/architecture/nebutra/
 .github/workflows/deploy-fly-gateway.yml
 .github/workflows/deploy-fly.yml
 .github/workflows/deploy-kuanlan-nginx.yml
-.github/workflows/deploy-kuanlan-vercel.yml
 .github/workflows/issue-fly-certs.yml
 .github/workflows/ops-cloudflare-whoami.yml
-.github/workflows/ops-sync-auth-vercel-db.yml
 .github/workflows/ops-vm-reclaim.yml
 .github/workflows/ops-vm-triage.yml
 .github/workflows/ops-kuanlan-database-url.yml
@@ -332,6 +329,7 @@ infra/fly/forge.toml
 infra/fly/gateway.toml
 infra/fly/idp.toml
 infra/fly/kuanlan.toml
+infra/fly/landing.toml
 infra/fly/new-api.toml
 infra/fly/para.toml
 infra/fly/pebble.toml
@@ -353,10 +351,8 @@ infra/ops/scripts/install-router-v1-nginx.sh
 infra/ops/scripts/seed-kuanlan-router-key.sh
 infra/ops/scripts/seed-kuanlan-router-key.remote.py
 infra/ops/scripts/deploy-carina-docs-ecs.sh
-# Nebutra Vercel-team / ECS cutover scripts (team id and host baked in)
+# Nebutra-instance access script (Cloudflare Access team id baked in)
 scripts/provision-admin-access.ts
-scripts/preflight-web-auth-vercel.mjs
-scripts/redeploy-web-auth-vercel.mjs
 # Source-repo-only guards: they read paths stripped above (Fly manifests,
 # deploy workflows, .templateignore itself), so they cannot run in a scaffold.
 tests/architecture/deploy-substrate.test.ts

@@ -11,7 +11,7 @@
 | Analytics | `brand.domains.analytics` | `getBrandOrigin("analytics")` |
 | Colors | tokens / `colors` | `var(--brand-*)` or `colors.primary["500"]` |
 | DNS | domains + topology | `pnpm dns:render` |
-| Vercel | domains | `pnpm brand:apply` |
+| Fly (apex + host aliases) | domains | `infra/ops/scripts/point-landing-dns-fly.sh` |
 
 ## Runtime rule
 

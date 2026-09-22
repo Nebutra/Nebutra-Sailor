@@ -27,9 +27,9 @@ read-only **Fleet** page.
 - **No live health.** The Fleet page renders *configuration* state — what the
   ecosystem is supposed to be. Probing is Phase 2; a health column that shows
   green without making a request is worse than no column.
-- **No `vercel.json`.** A Vercel project would give this app a second, public
-  origin that Cloudflare Access does not cover. The control plane ships to the
-  ECS origin only (`DEPLOY_TARGET_ADMIN=standalone`).
+- **No second origin.** The control plane ships as the Fly Machine
+  `nebutra-admin` behind Cloudflare Access; the Vercel surface was retired on
+  2026-09-22. A public origin outside Access is what this avoids.
 
 ## Fleet inventory
 

@@ -206,7 +206,7 @@ Nebula • Nurture • Ultra • Future
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/enterprise.svg" width="28" alt="Enterprise" /><br />
       <strong>企业级工程</strong>
-      <br />Cloudflare WAF/R2、Inngest 工作流、Sentry/Otel、Vercel 部署。
+      <br />Cloudflare WAF/R2、Inngest 工作流、Sentry/Otel、Fly.io 部署。
     </td>
   </tr>
   <tr>
@@ -484,7 +484,7 @@ Nebula • Nurture • Ultra • Future
 <tr>
 <td><strong>构建 / 部署</strong></td>
 <td>
-  <a href="https://vercel.com/"><img src="https://img.shields.io/badge/Vercel-black?style=flat-square&logo=vercel" alt="Vercel" /></a>
+  <a href="https://fly.io/"><img src="https://img.shields.io/badge/Fly.io-24175B?style=flat-square&logo=flydotio&logoColor=white" alt="Fly.io" /></a>
   <a href="https://turbo.build/"><img src="https://img.shields.io/badge/Turborepo-EF4444?style=flat-square&logo=turborepo&logoColor=white&v=1" alt="Turborepo" /></a>
   <a href="https://pnpm.io/"><img src="https://img.shields.io/badge/pnpm_10-F69220?style=flat-square&logo=pnpm&logoColor=white&v=1" alt="pnpm" /></a>
   <a href="https://biomejs.dev/"><img src="https://img.shields.io/badge/Biome-60A5FA?style=flat-square&logo=biome&logoColor=white&v=1" alt="Biome" /></a>

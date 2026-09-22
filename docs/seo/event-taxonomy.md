@@ -13,7 +13,7 @@
 
 | Event | When | Key properties |
 | --- | --- | --- |
-| `page.view` | Route change (optional; Vercel Analytics may cover) | `path`, `locale` |
+| `page.view` | Route change (optional; product analytics may cover) | `path`, `locale` |
 | `license.wizard` | License wizard steps | `step` |
 | `newsletter.subscribe` | Footer subscribe success | `source=footer` |
 | `cta.click` | Primary marketing CTAs | `id`, `href` |

@@ -18,6 +18,7 @@ import { type DeployTarget, resolveDeployTarget } from "@nebutra/preset/deploy-t
 
 /** Where a service actually runs today, per docs/DOMAINS.md production truth. */
 export type FleetRuntime =
+  | "fly"
   | "vercel"
   | "cloudflare-worker"
   | "ecs-pm2"
@@ -73,10 +74,10 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "landing",
     pm2Name: "landing",
     port: 3001,
-    runtime: "vercel",
+    runtime: "fly",
     deployService: "landing",
     health: null,
-    note: "Marketing site. ECS process exists as manual fallback only.",
+    note: "Marketing site on the nebutra-landing Machine. ECS process is manual fallback only.",
   },
   {
     id: "@nebutra/web",
@@ -84,10 +85,10 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "app",
     pm2Name: "web",
     port: 3000,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     deployService: "web",
     health: DEFAULT_HEALTH_PATH,
-    note: "Product dashboard. Vercel project ready; DNS still ECS.",
+    note: "Product dashboard on the nebutra-web Machine.",
   },
   {
     id: "@nebutra/auth-center",
@@ -95,10 +96,10 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "auth",
     pm2Name: "auth-center",
     port: 3101,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     deployService: "auth",
     health: DEFAULT_HEALTH_PATH,
-    note: "Session authority for every relying party.",
+    note: "Session authority for every relying party; private origin behind the auth edge Worker.",
   },
   {
     id: "@nebutra/idp",
@@ -106,7 +107,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "sso",
     pm2Name: "idp",
     port: 3100,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     health: DEFAULT_HEALTH_PATH,
     note: "Permanent OIDC issuer — not target-switchable.",
   },
@@ -116,12 +117,12 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "api",
     pm2Name: "api-gateway",
     port: 3002,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     deployService: "gateway",
     // Hono, not Next: mounted at /misc/health. Shares status/version/timestamp
     // with HealthCheckResult but reports `dependencies` instead of `checks`.
     health: "/misc/health",
-    note: "Shared API. Each product owns /<product>/v1/*.",
+    note: "Shared API origin on the nebutra-gateway Machine; the edge Worker fronts it. Each product owns /<product>/v1/*.",
   },
   {
     id: "carina-daemon",
@@ -138,10 +139,10 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     manifest: "/.well-known/nebutra-admin.json",
     pm2Name: "router",
     port: 3106,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     deployService: "router",
     health: DEFAULT_HEALTH_PATH,
-    note: "Model fabric edge. Supply engines stay internal.",
+    note: "Model fabric edge on the nebutra-router Machine. Supply engines stay internal.",
   },
   {
     id: "@nebutra/pebble",
@@ -149,13 +150,12 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "pebble",
     pm2Name: "pebble",
     port: 3017,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     health: DEFAULT_HEALTH_PATH,
-    // No deployService on purpose. pebble runs under PM2 and the smoke step
-    // references it, but it is not in DEPLOYABLE_SERVICES and not dispatchable
-    // by name — claiming a pipeline it does not have would make this inventory
-    // lie about the one thing it exists to report.
-    note: "Support intake — unauthenticated by design, non-tenant tables. No deploy pipeline yet.",
+    // No deployService on purpose. pebble is not in DEPLOYABLE_SERVICES and not
+    // dispatchable by name — claiming a pipeline it does not have would make
+    // this inventory lie about the one thing it exists to report.
+    note: "Support intake — unauthenticated by design, non-tenant tables. Ships with the Fly product edges, not by name.",
   },
   {
     id: "@nebutra/forge",
@@ -163,18 +163,18 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "forge",
     pm2Name: "forge",
     port: 3105,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     deployService: "forge",
     health: DEFAULT_HEALTH_PATH,
-    note: "Tool station + Agent tool API.",
+    note: "Tool station + Agent tool API on the nebutra-forge Machine.",
   },
   {
     id: "@nebutra/forge-dns-leak",
     label: "Forge DNS Leak",
     pm2Name: "forge-dns-leak",
-    runtime: "ecs-pm2",
+    runtime: "fly",
     health: null,
-    note: "Authoritative leak zone + localhost control API :3953. No PORT env.",
+    note: "Authoritative leak zone on the nebutra-dns-leak Machine (dedicated IPv4). No PORT env.",
   },
   {
     id: "@nebutra/admin",
@@ -182,10 +182,10 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "admin",
     pm2Name: "admin",
     port: 3108,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     deployService: "admin",
     health: DEFAULT_HEALTH_PATH,
-    note: "This control plane. Staff-only, behind Cloudflare Access.",
+    note: "This control plane on the nebutra-admin Machine. Staff-only, behind Cloudflare Access.",
   },
   {
     id: "@nebutra/sailor-docs",
@@ -196,10 +196,10 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     envKey: "SAILOR_DOCS",
     pm2Name: "sailor-docs",
     port: 3005,
-    runtime: "cloudflare-worker",
+    runtime: "fly",
     deployService: "sailor-docs",
     health: DEFAULT_HEALTH_PATH,
-    note: "Reached at <site>/docs via rewrite; the bundle has no host of its own.",
+    note: "Reached at <site>/docs via rewrite; the bundle has no host of its own. The Cloudflare Worker is the alternate path.",
   },
   {
     id: "@nebutra/design",
@@ -207,7 +207,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "design",
     pm2Name: "design",
     port: 3109,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     deployService: "design-docs",
     health: DEFAULT_HEALTH_PATH,
     note: "Replaced design-docs at the design hostname. Deploy service id is still design-docs.",
@@ -218,14 +218,14 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     domainKey: "kuanlan",
     pm2Name: "kuanlan",
     port: 3120,
-    runtime: "ecs-pm2",
+    runtime: "fly",
     health: DEFAULT_HEALTH_PATH,
-    note: "观澜. Production is Fly Singapore; ECS PM2 is rollback only.",
+    note: "观澜. Production is the nebutra-kuanlan Machine in sin; ECS PM2 is rollback only.",
   },
   {
     id: "@nebutra/typelens",
     label: "Type Lens",
-    runtime: "vercel",
+    runtime: "cloudflare-worker",
     deployService: "typelens",
     health: null,
     note: "Host not yet in the domain SSOT.",
@@ -258,7 +258,9 @@ export interface FleetRow extends FleetServiceDefinition {
 }
 
 const RUNTIME_FOR_TARGET: Partial<Record<DeployTarget, FleetRuntime>> = {
+  fly: "fly",
   vercel: "vercel",
+  "vercel-functions": "vercel",
   "cloudflare-workers": "cloudflare-worker",
   "cloudflare-pages": "cloudflare-worker",
   standalone: "ecs-pm2",

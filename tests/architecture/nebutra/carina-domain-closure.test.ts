@@ -25,8 +25,8 @@ describe("carina domain closure", () => {
     const ecsLine = raw.split("\n").find((l) => l.startsWith("ecs_surfaces:"));
     expect(ecsLine ?? "").not.toMatch(/carina/);
     expect(raw).toMatch(/^\s*carina,/m);
-    const vercelLine = raw.split("\n").find((l) => l.startsWith("vercel_surfaces:"));
-    expect(vercelLine ?? "").not.toMatch(/carina/);
+    const flyLine = raw.split("\n").find((l) => l.startsWith("fly_surfaces:"));
+    expect(flyLine ?? "").not.toMatch(/carina/);
   });
 
   it("DOMAINS.md documents Fly and no parallel origin", () => {

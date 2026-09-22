@@ -18,6 +18,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # landing owns the apex plus three aliases; entries whose `host`
+          # contains a dot are used verbatim, the rest get .nebutra.com.
+          - app: landing
+            fly_app: nebutra-landing
+            host: nebutra.com
+          - app: landing-www
+            fly_app: nebutra-landing
+            host: www.nebutra.com
+          - app: landing-status
+            fly_app: nebutra-landing
+            host: status.nebutra.com
+          - app: landing-open
+            fly_app: nebutra-landing
+            host: open.nebutra.com
           - app: forge
             fly_app: nebutra-forge
             host: forge
@@ -60,7 +74,10 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           set -euo pipefail
-          host="${{ matrix.host }}.nebutra.com"
+          case "${{ matrix.host }}" in
+            *.*) host="${{ matrix.host }}" ;;
+            *)   host="${{ matrix.host }}.nebutra.com" ;;
+          esac
           flyctl certs add "$host" -a "${{ matrix.fly_app }}"
           echo "----- show $host -----"
           flyctl certs show "$host" -a "${{ matrix.fly_app }}" || true

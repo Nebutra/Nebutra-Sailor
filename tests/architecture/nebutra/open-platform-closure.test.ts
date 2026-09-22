@@ -34,19 +34,16 @@ describe("open platform closure", () => {
     ).toBe(true);
   });
 
-  it("ships the Vercel CNAME + domain-attach runbook", () => {
-    expect(existsSync(join(process.cwd(), "infra/ops/scripts/point-open-dns-vercel.sh"))).toBe(
-      true,
-    );
+  it("points open.nebutra.com at the landing Fly Machine", () => {
+    expect(existsSync(join(process.cwd(), "infra/ops/scripts/point-fly-dns.sh"))).toBe(true);
     const pointDns = readFileSync(join(process.cwd(), ".github/workflows/point-dns.yml"), "utf-8");
-    expect(pointDns).toContain("open/vercel)");
-    expect(pointDns).toContain("point-open-dns-vercel.sh");
-    expect(pointDns).toContain("Attach open.nebutra.com on nebutra-landing");
+    expect(pointDns).toContain("open/fly)");
+    expect(pointDns).toContain("point-fly-dns.sh; fly_app=nebutra-landing");
   });
 
-  it("is a Vercel landing alias, not an ECS surface", () => {
+  it("is a Fly landing alias, not an ECS surface", () => {
     const raw = readFileSync("infra/ops/dns/topology.defaults.yaml", "utf-8");
-    expect(raw).toMatch(/vercel_surfaces:.*\bopen\b/);
+    expect(raw).toMatch(/fly_surfaces:.*\bopen\b/);
     const ecsLine = raw.split("\n").find((line) => line.startsWith("ecs_surfaces:"));
     expect(ecsLine ?? "").not.toMatch(/\bopen\b/);
   });

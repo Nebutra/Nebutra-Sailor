@@ -42,8 +42,7 @@
         "AUTH_PROVIDER",
         "NEXT_PUBLIC_AUTH_PROVIDER",
         "NEXT_OUTPUT",
-        "ANALYZE",
-        "VERCEL"
+        "ANALYZE"
       ]
     },
     "build:next": {
@@ -66,7 +65,6 @@
         "NEXT_PUBLIC_AUTH_PROVIDER",
         "NEXT_OUTPUT",
         "ANALYZE",
-        "VERCEL",
         "BETTER_AUTH_URL",
         "BETTER_AUTH_SECRET",
         "DATABASE_URL",

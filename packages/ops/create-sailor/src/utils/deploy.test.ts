@@ -13,8 +13,26 @@ import {
 const TEMPLATE_ROOT = path.resolve(import.meta.dirname, "..", "..", "templates");
 
 describe("resolveScaffoldDeployTargets", () => {
-  it("maps the default legacy deploy target to the provider-switchable runtime defaults", () => {
-    expect(resolveScaffoldDeployTargets("vercel")).toEqual(getDefaultDeployTargets());
+  it("maps --deploy=vercel to Vercel frontends, the Worker gateway, and an ECS origin", () => {
+    expect(resolveScaffoldDeployTargets("vercel")).toEqual({
+      ...getDefaultDeployTargets(),
+      web: "vercel",
+      landing: "vercel",
+      auth: "vercel",
+      admin: "vercel",
+      "design-docs": "vercel",
+      "sailor-docs": "vercel",
+      router: "vercel",
+      forge: "vercel",
+      typelens: "vercel",
+      gateway: "cloudflare-workers",
+      "python-ai": "ecs-docker",
+    });
+  });
+
+  it("keeps the preset's Fly defaults when no deploy target is selected", () => {
+    expect(resolveScaffoldDeployTargets("none")).toEqual(getDefaultDeployTargets());
+    expect(resolveScaffoldDeployTargets("none").web).toBe("fly");
   });
 
   it.each<[ScaffoldDeployTarget, Record<string, string>]>([

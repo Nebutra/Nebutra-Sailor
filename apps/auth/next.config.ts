@@ -13,11 +13,9 @@ const withNextIntl = createNextIntlPlugin("../../packages/platform/i18n/src/requ
 
 const monorepoRoot = path.join(__dirname, "../..");
 
-// Standalone: ECS/PM2 and OpenNext Cloudflare build. Skip for pure Vercel if ever used.
-const useStandalone =
-  process.env.NEXT_OUTPUT === "standalone" ||
-  process.env.OPEN_NEXT_BUILD === "true" ||
-  (process.env.VERCEL !== "1" && process.env.NEXT_OUTPUT !== "vercel");
+// Standalone: Fly Machine and the OpenNext Cloudflare build. The Vercel
+// opt-out was retired with the Vercel deploy surface on 2026-09-22.
+const useStandalone = process.env.NEXT_OUTPUT !== "vercel";
 
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),

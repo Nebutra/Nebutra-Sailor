@@ -11,7 +11,7 @@ const turboBin = resolve(
   process.platform === "win32" ? "turbo.cmd" : "turbo",
 );
 
-const vercelProjectEnv = [
+const deployProjectEnv = [
   "CI",
   "CLERK_SECRET_KEY",
   "DATABASE_URL",
@@ -43,7 +43,6 @@ const buildHashEnv = [
   "NEXT_PUBLIC_AUTH_PROVIDER",
   "NEXT_OUTPUT",
   "ANALYZE",
-  "VERCEL",
 ];
 
 function assert(condition, message) {
@@ -60,7 +59,7 @@ function includesAll(actual, expected, label) {
 
 includesAll(
   turboConfig.globalPassThroughEnv,
-  ["npm_config_verify_deps_before_run", ...vercelProjectEnv],
+  ["npm_config_verify_deps_before_run", ...deployProjectEnv],
   "globalPassThroughEnv",
 );
 includesAll(turboConfig.tasks?.build?.env, buildHashEnv, "tasks.build.env");
@@ -87,7 +86,7 @@ assert(
 );
 
 const syntheticEnv = Object.fromEntries(
-  [...new Set([...vercelProjectEnv, ...buildHashEnv])].map((name) => [
+  [...new Set([...deployProjectEnv, ...buildHashEnv])].map((name) => [
     name,
     name.startsWith("NEXT_PUBLIC_") || name.endsWith("_URL") || name.endsWith("_ORIGIN")
       ? `https://${name.toLowerCase().replaceAll("_", "-")}.example`

@@ -23,13 +23,13 @@ ALLOWED_HOSTS=nebutra.com,www.nebutra.com,app.nebutra.com,status.nebutra.com
 
 ## Origin token / edge authenticity (G30)
 
-When traffic terminates on Cloudflare / Vercel before the origin:
+When traffic terminates on Cloudflare / Fly before the origin:
 
 | Layer | Mechanism |
 | --- | --- |
 | Edge → Origin | Prefer platform private networking; optional shared secret header |
 | Optional | `ORIGIN_EDGE_TOKEN` — request must include `x-nebutra-edge-token: <token>` when set |
-| mTLS | Supported at infrastructure level (CF Authenticated Origin Pulls / ALB mTLS); not required for Vercel-only topology |
+| mTLS | Supported at infrastructure level (CF Authenticated Origin Pulls / ALB mTLS); not required for a CF-fronted Fly topology |
 
 ## Implementation
 
@@ -40,4 +40,4 @@ When traffic terminates on Cloudflare / Vercel before the origin:
 
 See ADR `docs/architecture/2026-06-04-production-runtime-closure.md`:
 
-`Vercel frontends → CF Workers gateway → Origin`
+`Fly Machines (landing + product edges) → CF Workers gateway → Origin`

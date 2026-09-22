@@ -5,11 +5,11 @@ name: Deploy to Cloud VM (PM2 Manual Fallback)
 # with AWS EC2, Alibaba Cloud ECS, Tencent Cloud CVM, GCP Compute Engine, or
 # any equivalent VM with SSH + Node.js + PM2.
 #
-# The production default is still Vercel frontends + Cloudflare Workers gateway
-# + VM/FastAPI origin for most surfaces. Auto-CI on this VM (see `on.push`) is
-# limited to product edges + the api-gateway (forge, router, pebble, api).
-# All other apps stay manual via workflow_dispatch to protect the small disk
-# and avoid cross-region SSH blast radius.
+# Production is Fly Machines (deploy-fly.yml) + Cloudflare Workers gateway;
+# this VM is the China-forward / rollback path. Auto-CI on this VM (see
+# `on.push`) is limited to product edges + the api-gateway (forge, router,
+# pebble, api). All other apps stay manual via workflow_dispatch to protect
+# the small disk and avoid cross-region SSH blast radius.
 #
 # REQUIRED REPOSITORY SECRETS (Settings → Secrets and variables → Actions):
 #   VM_SSH_PRIVATE_KEY   — OpenSSH private key (Ed25519 recommended) whose
@@ -535,9 +535,8 @@ jobs:
           OIDC_ISSUER: "https://sso.nebutra.com"
           OIDC_COOKIE_KEYS: "build-placeholder-cookie-key-one-000000,build-placeholder-cookie-key-two-000000"
           OIDC_ENABLE_CLIENT_CREDENTIALS: "false"
-          # Force standalone output for VM — landing's next.config gates
-          # `output: "standalone"` on this env so Vercel builds skip the trace
-          # cost. This workflow needs the standalone bundle for assembly below.
+          # Force standalone output for VM. This workflow needs the
+          # standalone bundle for assembly below.
           NEXT_OUTPUT: standalone
           NEXT_PUBLIC_R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL || 'https://cdn.nebutra.com' }}
           # Forge root metadata also reads these at build time. The deploy job
