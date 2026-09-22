@@ -24,6 +24,17 @@ FLY_APP="${FLY_APP:?FLY_APP is the Fly app name, e.g. nebutra-landing}"
 TARGET="${FLY_APP}.fly.dev"
 API="https://api.cloudflare.com/client/v4"
 
+# Fly validates custom-domain certificates through records Cloudflare must hold
+# (see `fly certs setup <host> -a <app>`):
+#   CNAME _acme-challenge.<host> → <host>.<dns-suffix>.flydns.net   (DNS only)
+#   TXT   _fly-ownership.<host>  → <ownership-id>                    (DNS only)
+# The ownership record is required because traffic is proxied. Without both,
+# Fly leaves the certificate "Not verified" and Cloudflare answers 525 as soon
+# as the proxied CNAME lands. The two values come from `fly certs setup` and
+# change only if the app is recreated.
+FLY_DNS_SUFFIX="${FLY_DNS_SUFFIX:-nwd610d}"
+FLY_OWNERSHIP_ID="${FLY_OWNERSHIP_ID:-app-nwd610d}"
+
 # Apex first, then the aliases. The apex entry is the FQDN; the rest are labels.
 NAMES=("${ZONE_NAME}" "www" "status" "open")
 
@@ -46,6 +57,27 @@ print(json.dumps(d.get("result")))
 
 record_id() {
   python3 -c 'import json,sys; r=json.load(sys.stdin) or []; print(r[0]["id"] if r else "")'
+}
+
+# Upsert one record by (name, type) and print it.
+upsert() {
+  local type="$1" name="$2" content="$3" proxied="$4" body rid
+  body=$(python3 -c '
+import json, sys
+print(json.dumps({
+    "type": sys.argv[1],
+    "name": sys.argv[2],
+    "content": sys.argv[3],
+    "proxied": sys.argv[4] == "true",
+    "ttl": 1,
+}))
+' "$type" "$name" "$content" "$proxied")
+  rid=$(cf "${API}/zones/${ZONE_ID}/dns_records?name=${name}&type=${type}" | ok | record_id)
+  if [ -n "$rid" ]; then
+    cf -X PUT --data "$body" "${API}/zones/${ZONE_ID}/dns_records/${rid}" | ok
+  else
+    cf -X POST --data "$body" "${API}/zones/${ZONE_ID}/dns_records" | ok
+  fi
 }
 
 if ! ZONES=$(cf "${API}/zones?name=${ZONE_NAME}" | ok); then
@@ -99,6 +131,14 @@ for name in "${NAMES[@]}"; do
     RESULT=$(cf -X POST --data "$BODY" "${API}/zones/${ZONE_ID}/dns_records" | ok)
   fi
   printf '%s' "$RESULT" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("cname", d["name"], "->", d["content"], "proxied=", d["proxied"])'
+
+  # Fly certificate validation. DNS-only on purpose: an orange-cloud CNAME at
+  # _acme-challenge never reaches the CA, and the ownership TXT is how Fly
+  # proves the app owns a hostname behind a proxy.
+  upsert CNAME "_acme-challenge.${fqdn}" "${fqdn}.${FLY_DNS_SUFFIX}.flydns.net" false |
+    python3 -c 'import json,sys; d=json.load(sys.stdin); print("acme", d["name"], "->", d["content"])'
+  upsert TXT "_fly-ownership.${fqdn}" "${FLY_OWNERSHIP_ID}" false |
+    python3 -c 'import json,sys; d=json.load(sys.stdin); print("ownership", d["name"], "->", d["content"])'
 done
 
 echo "=== smoke (DNS may still be propagating) ==="
