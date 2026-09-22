@@ -99,6 +99,8 @@ export const queuebaseJobClient = createJobClient(queuebaseJobs, {
 
 function getBaseUrlFromEnv(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  // Fly sets FLY_APP_NAME on every Machine; the Vercel fallback went with the
+  // Vercel deploy surface on 2026-09-22.
+  if (process.env.FLY_APP_NAME) return `https://${process.env.FLY_APP_NAME}.fly.dev`;
   return `http://localhost:${process.env.PORT ?? "3001"}`;
 }

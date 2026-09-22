@@ -1,0 +1,30 @@
+app = "nebutra-landing"
+primary_region = "sin"
+
+[env]
+  HOSTNAME = "0.0.0.0"
+  PORT = "8080"
+  # proxy.ts host allowlist (G32). The public names are derived from the brand
+  # config, but the Machine's own *.fly.dev address is not in it — the deploy
+  # smoke and the Cloudflare 525 preflight both hit that host, so it has to be
+  # listed. Setting the variable also turns off the loopback soft mode.
+  ALLOWED_HOSTS = "nebutra-landing.fly.dev"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "45s"
+  interval = "15s"
+  method = "GET"
+  timeout = "8s"
+  path = "/api/e2e/health"
+
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "2gb"

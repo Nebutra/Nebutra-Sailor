@@ -135,7 +135,7 @@ Publish only when `SANITY_API_TOKEN` is present or the user completes `sanity lo
 
 If the user asks where to provide credentials:
 
-- `SANITY_API_TOKEN`: shell env, `.env.local`, Vercel env, or the current terminal session; it needs Sanity document write permission.
+- `SANITY_API_TOKEN`: shell env, `.env.local`, the deployment's env (Fly secret), or the current terminal session; it needs Sanity document write permission.
 - `SANITY_WEBHOOK_SECRET`: optional, used for signed blog revalidation.
 
 ### 6. Verify the Result

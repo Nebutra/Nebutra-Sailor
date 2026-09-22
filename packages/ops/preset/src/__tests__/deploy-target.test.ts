@@ -9,15 +9,15 @@ import {
 } from "../deploy-target";
 
 describe("deploy-target selector", () => {
-  it("defaults the production MVP topology to Vercel, Cloudflare Workers, and ECS origin", () => {
-    expect(resolveDeployTarget("web", {})).toBe("vercel");
-    expect(resolveDeployTarget("landing", {})).toBe("vercel");
+  it("defaults the production topology to Fly Machines, Cloudflare Workers, and a Fly origin", () => {
+    expect(resolveDeployTarget("web", {})).toBe("fly");
+    expect(resolveDeployTarget("landing", {})).toBe("fly");
     expect(resolveDeployTarget("gateway", {})).toBe("cloudflare-workers");
-    expect(resolveDeployTarget("python-ai", {})).toBe("ecs-docker");
+    expect(resolveDeployTarget("python-ai", {})).toBe("fly");
   });
 
-  it("treats the admin control plane as a frontend that ships to the ECS origin today", () => {
-    expect(resolveDeployTarget("admin", {})).toBe("vercel");
+  it("treats the admin control plane as a frontend that ships as a Fly Machine", () => {
+    expect(resolveDeployTarget("admin", {})).toBe("fly");
     expect(resolveDeployTarget("admin", { DEPLOY_TARGET_ADMIN: "standalone" })).toBe("standalone");
     expect(() => resolveDeployTarget("admin", { DEPLOY_TARGET_ADMIN: "ecs-docker" })).toThrow(
       /not allowed/,
@@ -105,7 +105,7 @@ describe("deploy-target selector", () => {
     expect(resolveDeployTargets({ DEPLOY_TARGET_WEB: "standalone" })).toMatchObject({
       web: "standalone",
       gateway: "cloudflare-workers",
-      "python-ai": "ecs-docker",
+      "python-ai": "fly",
     });
   });
 });

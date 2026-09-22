@@ -336,7 +336,7 @@ Radix headless 包装、Token 驱动、跨所有 app 一致使用、不期望 fo
 
 ### 4.2 Hosting 方案
 
-**推荐：Sailor Docs site（apps/design-docs）+ Vercel 部署**
+**推荐：Sailor Docs site（apps/design-docs）+ Fly 部署**
 
 ```
 https://ui.nebutra.com/registry.json          ← registry index
@@ -345,7 +345,7 @@ https://ui.nebutra.com/r/[component-name].json ← 单组件 manifest
 
 理由：
 - `apps/design-docs` 已是 Next.js 16 + Fumadocs，可直接添加 API route 提供 JSON
-- Vercel 自动 CDN 缓存
+- Cloudflare CDN 缓存（Fly Machine 前置）
 - 与 Storybook 同源
 - 避免独立 GitHub Pages 维护负担
 

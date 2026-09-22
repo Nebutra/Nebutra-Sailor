@@ -46,9 +46,9 @@ describe("config → theme integration", () => {
     expect(envVars.NEBUTRA_LOCALES).toBe("en,zh");
 
     // Deploy targets
-    expect(envVars.DEPLOY_TARGET_WEB).toBe("vercel");
+    expect(envVars.DEPLOY_TARGET_WEB).toBe("fly");
     expect(envVars.DEPLOY_TARGET_GATEWAY).toBe("cloudflare-workers");
-    expect(envVars.DEPLOY_TARGET_PYTHON_AI).toBe("ecs-docker");
+    expect(envVars.DEPLOY_TARGET_PYTHON_AI).toBe("fly");
   });
 
   it("user overrides merge correctly on top of defaults", () => {
@@ -81,7 +81,7 @@ describe("config → theme integration", () => {
 
     expect(resolved.deployTargets.gateway).toBe("k8s");
     expect(resolved.deployTargets["python-ai"]).toBe("aws");
-    expect(resolved.deployTargets.web).toBe("vercel");
+    expect(resolved.deployTargets.web).toBe("fly");
     expect(envVars.DEPLOY_TARGET_GATEWAY).toBe("k8s");
     expect(envVars.DEPLOY_TARGET_PYTHON_AI).toBe("aws");
   });

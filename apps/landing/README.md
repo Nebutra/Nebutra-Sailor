@@ -59,4 +59,7 @@ See [`src/components/landing/index.ts`](./src/components/landing/index.ts) for t
 
 ## Deployment
 
-Deployed to Vercel. See [`vercel.json`](./vercel.json) for configuration.
+Ships as a Fly Machine (`infra/fly/landing.toml`) through
+[`deploy-fly.yml`](../../.github/workflows/deploy-fly.yml) (`app=landing`);
+routing config lives in `next.config.ts` and the DNS cutover for the apex plus
+its host aliases is `infra/ops/scripts/point-landing-dns-fly.sh`.

@@ -344,7 +344,7 @@ describe("platform-reconcile: expectations files", () => {
   it("ships a valid Nebutra declaration with the incident-derived checks", async () => {
     const { loadExpectations } = await loadEngine();
     const doc = loadExpectations(nebutraPath) as {
-      vercel: { projects: Array<Record<string, unknown>> };
+      vercel?: unknown;
       fly: { apps: Array<{ name: string; secretsPresent: string[]; secretsAbsent: string[] }> };
       github: { repo: string; variables: Record<string, string>; branchProtection?: BranchRule[] };
       cloudflare: {
@@ -352,23 +352,10 @@ describe("platform-reconcile: expectations files", () => {
       };
     };
 
-    const byName = Object.fromEntries(doc.vercel.projects.map((p) => [p.name as string, p]));
-    for (const name of [
-      "nebutra-landing",
-      "nebutra-web",
-      "nebutra-auth",
-      "docs",
-      "nebutra-kuanlan",
-    ]) {
-      expect(byName[name]?.buildMachineType, name).toBe("standard");
-    }
-    for (const name of ["nebutra-landing", "nebutra-web", "nebutra-auth"]) {
-      expect(byName[name]?.ignoreBuildStep, name).toBe("exit 0");
-    }
-    expect(byName["nebutra-landing"]?.gitLinked).toBe(false);
-    expect(byName["nebutra-landing"]?.envNotSensitive).toEqual({
-      production: ["NEXT_PUBLIC_SITE_URL", "DOCS_ORIGIN_URL", "NEXT_PUBLIC_API_URL"],
-    });
+    // The Vercel provider was retired with the deploy surface on 2026-09-22;
+    // a reappearing `vercel` section would send the daily run back to a
+    // dashboard nobody owns.
+    expect(doc.vercel).toBeUndefined();
 
     const gateway = doc.fly.apps.find((app) => app.name === "nebutra-gateway");
     expect(gateway?.secretsPresent).toEqual(
@@ -531,10 +518,6 @@ describe("platform-reconcile: engine", () => {
     // One row per declared expectation, counted from the declaration itself.
     expect(summary.total).toBeGreaterThan(0);
     expect(summary.total).toBe(declaredChecks(declaration));
-    expect(find(results, "vercel", "nebutra-landing", "gitLinked").actual).toBe("false");
-    expect(
-      find(results, "vercel", "nebutra-landing", "env DOCS_ORIGIN_URL@production").actual,
-    ).toBe("encrypted");
     expect(find(results, "fly", "nebutra-gateway", "secret REDIS_URL").actual).toBe("absent");
     expect(
       find(results, "github", "Nebutra/Nebutra-Sailor", "variable DEPLOY_TARGET_GATEWAY").actual,
@@ -550,15 +533,11 @@ describe("platform-reconcile: engine", () => {
       "ratelimit",
     );
 
-    // Requests are scoped to the team and authenticated, and read-only.
-    const vercelCalls = providers.calls.filter((call) =>
-      call.url.startsWith("https://api.vercel.com/"),
+    // Requests are scoped and authenticated, and read-only. No request may
+    // reach api.vercel.com: the provider is retired for this declaration.
+    expect(providers.calls.some((call) => call.url.startsWith("https://api.vercel.com/"))).toBe(
+      false,
     );
-    expect(vercelCalls.length).toBeGreaterThan(0);
-    for (const call of vercelCalls) {
-      expect(call.url).toContain("teamId=team_fixture");
-      expect(call.headers.authorization).toBe(`Bearer ${TOKENS.VERCEL_TOKEN}`);
-    }
     const cloudflareCalls = providers.calls.filter((call) =>
       call.url.startsWith("https://api.cloudflare.com/"),
     );
@@ -587,23 +566,6 @@ describe("platform-reconcile: engine", () => {
   it("flags each kind of dashboard drift and exits non-zero", async () => {
     const { reconcile, loadExpectations, exitCodeFor, STATUS } = await loadEngine();
     const world = greenWorld();
-    world.projects["nebutra-landing"] = {
-      resourceConfig: { buildMachineType: "turbo", buildMachineSelection: "elastic" },
-      commandForIgnoringBuildStep: "exit 0",
-      link: { type: "github", org: "Nebutra", repo: "Nebutra-Sailor" },
-    };
-    world.projects["nebutra-web"] = { resourceConfig: {}, commandForIgnoringBuildStep: "" };
-    delete world.projects["nebutra-kuanlan"];
-    world.envs["nebutra-landing"] = [
-      {
-        key: "NEXT_PUBLIC_SITE_URL",
-        type: "sensitive",
-        target: ["production"],
-        value: SECRET_VALUE,
-      },
-      { key: "DOCS_ORIGIN_URL", type: "plain", target: ["preview"], value: "x" },
-      { key: "NEXT_PUBLIC_API_URL", type: "plain", target: ["production"], value: "x" },
-    ];
     world.flySecrets = world.flySecrets
       .filter((name) => name !== "QSTASH_TOKEN")
       .concat("REDIS_URL");
@@ -613,43 +575,10 @@ describe("platform-reconcile: engine", () => {
     const { results, summary } = await reconcile(withMainRule(loadExpectations(nebutraPath)), {
       env: {
         ...TOKENS,
-        PLATFORM_RECONCILE_GITHUB_VARS: JSON.stringify({ DEPLOY_TARGET_SAILOR_DOCS: "vercel" }),
+        PLATFORM_RECONCILE_GITHUB_VARS: JSON.stringify({ DEPLOY_TARGET_SAILOR_DOCS: "ecs" }),
       },
       fetch: providers.fetch,
       exec: providers.exec,
-    });
-
-    const landing = (check: string) => find(results, "vercel", "nebutra-landing", check);
-    expect(landing("buildMachineType")).toMatchObject({
-      status: STATUS.drift,
-      expected: "standard",
-      actual: "turbo",
-      detail: "selection=elastic",
-    });
-    expect(landing("gitLinked")).toMatchObject({ status: STATUS.drift, actual: "true" });
-    expect(landing("gitLinked").detail).toContain("github:Nebutra/Nebutra-Sailor");
-    expect(landing("env NEXT_PUBLIC_SITE_URL@production")).toMatchObject({
-      status: STATUS.drift,
-      actual: "sensitive",
-    });
-    expect(landing("env DOCS_ORIGIN_URL@production")).toMatchObject({
-      status: STATUS.drift,
-      actual: "missing",
-    });
-    expect(landing("env NEXT_PUBLIC_API_URL@production").status).toBe(STATUS.ok);
-
-    expect(find(results, "vercel", "nebutra-web", "buildMachineType")).toMatchObject({
-      status: STATUS.drift,
-      actual: "(unset)",
-    });
-    expect(find(results, "vercel", "nebutra-web", "ignoreBuildStep")).toMatchObject({
-      status: STATUS.drift,
-      expected: "exit 0",
-      actual: "",
-    });
-    expect(find(results, "vercel", "nebutra-kuanlan", "project")).toMatchObject({
-      status: STATUS.drift,
-      actual: "not found",
     });
 
     expect(find(results, "fly", "nebutra-gateway", "secret QSTASH_TOKEN")).toMatchObject({
@@ -668,7 +597,7 @@ describe("platform-reconcile: engine", () => {
     ).toMatchObject({
       status: STATUS.drift,
       expected: "fly",
-      actual: "vercel",
+      actual: "ecs",
     });
     expect(
       find(results, "github", "Nebutra/Nebutra-Sailor", "variable DEPLOY_TARGET_GATEWAY"),
@@ -694,13 +623,6 @@ describe("platform-reconcile: engine", () => {
       .sort();
     expect(drifted).toEqual(
       [
-        "vercel nebutra-landing buildMachineType",
-        "vercel nebutra-landing gitLinked",
-        "vercel nebutra-landing env NEXT_PUBLIC_SITE_URL@production",
-        "vercel nebutra-landing env DOCS_ORIGIN_URL@production",
-        "vercel nebutra-web buildMachineType",
-        "vercel nebutra-web ignoreBuildStep",
-        "vercel nebutra-kuanlan project",
         "fly nebutra-gateway secret QSTASH_TOKEN",
         "fly nebutra-gateway secret REDIS_URL",
         "github Nebutra/Nebutra-Sailor variable DEPLOY_TARGET_SAILOR_DOCS",
@@ -764,9 +686,6 @@ describe("platform-reconcile: engine", () => {
     });
 
     expect(results.every((row) => row.status === STATUS.skipped)).toBe(true);
-    expect(find(results, "vercel", "nebutra-landing", "project").detail).toBe(
-      "skipped: no VERCEL_TOKEN",
-    );
     expect(find(results, "fly", "nebutra-gateway", "secrets").detail).toBe(
       "skipped: no FLY_API_TOKEN",
     );
@@ -791,7 +710,6 @@ describe("platform-reconcile: engine", () => {
     const { reconcile, loadExpectations, STATUS } = await loadEngine();
     const declaration = withMainRule(loadExpectations(nebutraPath) as Declaration);
     const world = greenWorld();
-    world.vercelStatus = 403;
     world.cloudflareStatus = 403;
     world.cloudflareBody = {
       success: false,
@@ -807,12 +725,6 @@ describe("platform-reconcile: engine", () => {
       exec: () => ({ ok: false, stdout: "", stderr: "flyctl: command not found", missing: true }),
     });
 
-    expect(find(results, "vercel", "nebutra-landing", "project")).toMatchObject({
-      status: STATUS.skipped,
-    });
-    expect(find(results, "vercel", "nebutra-landing", "project").detail).toContain(
-      "token rejected (HTTP 403",
-    );
     expect(find(results, "cloudflare", "nebutra-gateway-edge", "bindings").detail).toContain(
       "token lacks Workers Scripts read",
     );
@@ -1273,15 +1185,13 @@ describe("platform-reconcile: daily workflow and docs", () => {
     expect(workflow).toContain(
       "uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1",
     );
-    for (const secret of [
-      "VERCEL_TOKEN",
-      "FLY_API_TOKEN",
-      "CLOUDFLARE_API_TOKEN",
-      "CLOUDFLARE_ACCOUNT_ID",
-    ]) {
+    for (const secret of ["FLY_API_TOKEN", "CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"]) {
       expect(workflow).toContain(`secrets.${secret}`);
     }
-    expect(workflow).toContain("vars.VERCEL_ORG_ID");
+    // The Vercel provider was retired on 2026-09-22; the daily run must not
+    // hold a token for a dashboard nobody owns.
+    expect(workflow).not.toContain("VERCEL_TOKEN");
+    expect(workflow).not.toContain("VERCEL_ORG_ID");
     // Repository variables reach the engine from the workflow's own context, so
     // the job needs no token that can read the Variables API.
     expect(workflow).toMatch(/^\s+PLATFORM_RECONCILE_GITHUB_VARS: \$\{\{ toJSON\(vars\) \}\}$/m);

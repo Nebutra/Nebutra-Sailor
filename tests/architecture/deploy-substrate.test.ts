@@ -119,7 +119,7 @@ describe("Deploy substrate governance", () => {
   it("no workflow deploys to Kubernetes on an automatic trigger", () => {
     // The trigger extractor must actually see something, or the loop below is
     // vacuously green.
-    expect(triggers(read("deploy-vercel.yml"))).toContain("workflow_dispatch");
+    expect(triggers(read("deploy-fly.yml"))).toContain("workflow_dispatch");
     expect(triggers(read("ci.yml")).length).toBeGreaterThan(0);
 
     expect(
@@ -397,23 +397,18 @@ describe("Deploy substrate governance", () => {
     expect(certs).toContain("host: origin");
   });
 
-  it("web and auth reach Vercel only through deploy-vercel.yml workflow_dispatch", () => {
-    // The per-app workflows were folded into one matrix workflow. Its push
-    // trigger is landing's path filter; web and auth must stay off it.
-    for (const file of ["deploy-web-vercel.yml", "deploy-auth-vercel.yml"]) {
-      expect(existsSync(resolve(WORKFLOWS, file)), `${file} must stay retired`).toBe(false);
+  it("ships web and auth as Fly Machines, not through a Vercel workflow", () => {
+    // The Vercel path was retired on 2026-09-22. web and auth are Fly Machines
+    // (deploy-fly.yml) behind the edge Workers; a reintroduced Vercel workflow
+    // would be a second, unmetered deploy path.
+    expect(existsSync(resolve(WORKFLOWS, "deploy-vercel.yml"))).toBe(false);
+    const yml = read("deploy-fly.yml");
+    for (const row of [
+      { app: "web", flyApp: "nebutra-web" },
+      { app: "auth", flyApp: "nebutra-auth" },
+    ]) {
+      expect(yml).toContain(`"app":"${row.app}"`);
+      expect(yml).toContain(`"fly_app":"${row.flyApp}"`);
     }
-    const yml = read("deploy-vercel.yml");
-    expect(yml).toContain("workflow_dispatch:");
-    const pushPaths = yml.match(
-      /\n\s+push:\n\s+branches:\s*\[main\]\n\s+paths:\n((?:\s+(?:-|#)[^\n]+\n)+)/,
-    )?.[1];
-    expect(pushPaths, "deploy-vercel.yml must define on.push.paths for main").toBeTruthy();
-    expect(pushPaths).toContain("apps/landing/**");
-    expect(pushPaths).not.toContain("apps/web/**");
-    expect(pushPaths).not.toContain("apps/auth/**");
-    expect(yml).toContain(
-      "APP: $" + "{{ github.event_name == 'push' && 'landing' || inputs.app }}",
-    );
   });
 });

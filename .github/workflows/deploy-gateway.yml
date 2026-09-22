@@ -10,7 +10,6 @@ on:
         type: choice
         options:
           - cloudflare-workers
-          - vercel-functions
           - ecs-docker
           - k8s
           - aws

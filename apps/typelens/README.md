@@ -40,6 +40,8 @@ pnpm --filter @nebutra/typelens build
 pnpm --filter @nebutra/typelens start
 ```
 
-## Vercel (optional backup)
+## Deployment
 
-`vercel.json` is optional; primary production path is Cloudflare.
+Production path is the Cloudflare Worker (`deploy-typelens.yml`, OpenNext).
+The optional Vercel backup was retired with the Vercel deploy surface on
+2026-09-22.

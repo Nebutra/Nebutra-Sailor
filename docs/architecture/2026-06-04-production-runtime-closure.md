@@ -12,14 +12,14 @@
 
 ## Decision
 
-Nebutra's production runtime defaults to:
+Nebutra's production runtime runs on:
 
 ```text
-apps/web + apps/landing
-  -> Vercel frontend
+apps/web + apps/landing + the product edges
+  -> Fly Machines in sin (deploy-fly.yml; landing moved off Vercel 2026-09-22)
   -> api.nebutra.com
   -> Cloudflare Workers gateway
-  -> Cloud VM Origin (ECS Origin legacy target)
+  -> Fly origin (ECS kept for issuer / leak / China transit / rollback)
      -> backends/python/ai FastAPI
      -> Celery worker / beat
   -> PlanetScale Postgres
@@ -27,29 +27,33 @@ apps/web + apps/landing
   -> R2 or OSS object storage
 ```
 
-This is the default topology, not a provider lock-in. Deployment DX is
-provider-switchable through per-service selector keys:
+This is the active topology, not a provider lock-in. Deployment DX is
+provider-switchable through per-service selector keys. The preset defaults
+changed to Fly on 2026-09-22, when the Vercel deploy surface was retired; a
+scaffold that wants Vercel selects it explicitly (`--deploy=vercel`):
 
 | Service | Default | Allowed targets |
 | --- | --- | --- |
-| `web` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
-| `landing` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
-| `design-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
-| `sailor-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `web` | `fly` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `landing` | `fly` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `design-docs` | `fly` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `sailor-docs` | `fly` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
 | `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `gcp`, `railway`, `fly` |
-| `python-ai` | `ecs-docker` | `ecs-docker`, `k8s`, `aws`, `gcp`, `railway`, `fly` |
+| `python-ai` | `fly` | `ecs-docker`, `k8s`, `aws`, `gcp`, `railway`, `fly` |
 
 Selector env keys are service-specific:
 
 ```env
-DEPLOY_TARGET_WEB=vercel
-DEPLOY_TARGET_LANDING=vercel
-DEPLOY_TARGET_SAILOR_DOCS=vercel
+# Nebutra's own deployment (2026-09-22), which matches the preset defaults.
+DEPLOY_TARGET_WEB=fly
+DEPLOY_TARGET_LANDING=fly
+DEPLOY_TARGET_SAILOR_DOCS=fly
 DEPLOY_TARGET_GATEWAY=cloudflare-workers
-DEPLOY_TARGET_PYTHON_AI=ecs-docker
+DEPLOY_TARGET_PYTHON_AI=fly
 ```
 # Note: cloudflare-pages remains allowed for create-sailor DX, but production
-# sailor-docs exceeds the Cloudflare Workers script size limit (~87MiB); use Vercel.
+# sailor-docs exceeds the Cloudflare Workers script size limit (~87MiB); the
+# Fly Machine (deploy-fly.yml app=sailor-docs) is the active path.
 
 The governance rule is:
 

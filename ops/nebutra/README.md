@@ -4,7 +4,8 @@ Nebutra-Sailor is two things in one tree: the source of the public **Sailor
 template** (mirrored to `Nebutra/Sailor-Template` by `sync-template.yml`) and
 the codebase behind **one deployment of it** — Nebutra's own. Most of the repo
 belongs to the template. A small part belongs only to the instance: Nebutra's
-Fly organisation, its DNS zone, its Vercel team, its ECS host, its bills.
+Fly organisation, its DNS zone, its ECS host, its bills. (Its Vercel team
+and projects were retired on 2026-09-22; see `docs/ops/nebutra/cost-history.md`.)
 
 This directory is the declared home for the instance-only *configuration*
 side of that split. Anything committed here is stripped from the template by
@@ -18,7 +19,8 @@ anyone else's deployment:
 - Fly org / app bindings and per-app secrets manifests (names, never values)
 - DNS record overrides for the `nebutra.com` zone beyond what
   `infra/ops/dns/topology.defaults.yaml` derives from the brand config
-- Vercel team / project id maps, Cloudflare account and zone ids
+- Cloudflare account and zone ids (the Vercel team / project id maps were
+  retired with the Vercel deploy surface on 2026-09-22)
 - Host inventories (ECS, VMs) and their PM2 / nginx process maps
 
 ## What does not belong here

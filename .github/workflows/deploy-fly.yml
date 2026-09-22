@@ -2,7 +2,8 @@ name: Deploy origin apps to Fly
 
 # Replaces the Aliyun ECS PM2 product edges with Fly Machines (Singapore).
 # The Hono api-gateway is a different image — see deploy-fly-gateway.yml.
-# Landing, gateway-edge, and auth-edge stay where they are.
+# Landing (nebutra.com) ships here too; gateway-edge and auth-edge stay on
+# Cloudflare Workers.
 # The auth Next UI runs as a private origin behind auth-edge; its product DNS
 # must never be cut over directly to Fly.
 # SSO / admin / docs ship as Next Machines here. Carina, New-API, and
@@ -18,17 +19,18 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: forge router web pebble design auth kuanlan idp admin sailor-docs para gateway cache carina new-api dns-leak). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api / dns-leak are the remaining ECS leftovers."
+        description: "Apps to deploy (space-separated: landing forge router web pebble design auth kuanlan idp admin sailor-docs para gateway cache carina new-api dns-leak). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api / dns-leak are the remaining ECS leftovers."
         required: false
         default: ""
       cutover:
-        description: "After a healthy Fly URL, point Cloudflare DNS at <app>.fly.dev"
+        description: "After a healthy Fly URL, point Cloudflare DNS at <app>.fly.dev (landing also cuts nebutra.com, www, status and open over)"
         required: false
         default: "false"
         type: boolean
   push:
     branches: [main]
     paths:
+      - "apps/landing/**"
       - "apps/forge/**"
       - "apps/router/**"
       - "apps/web/**"
@@ -74,6 +76,11 @@ jobs:
           python3 <<'PY'
           import json, os
           all_apps = [
+            # host is "" on purpose: nebutra.com is an apex cutover plus three
+            # host aliases (www / status / open), which the generic
+            # point-host-dns-fly.sh cannot express. A dedicated step below
+            # points all four names at this Machine.
+            {"app":"landing","package":"@nebutra/landing","workspace":"apps/landing","build_command":"build","fly_app":"nebutra-landing","host":"","site":"https://nebutra.com"},
             {"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","build_command":"build","fly_app":"nebutra-forge","host":"forge","site":"https://forge.nebutra.com"},
             {"app":"router","package":"@nebutra/router","workspace":"apps/router","build_command":"build","fly_app":"nebutra-router","host":"router","site":"https://router.nebutra.com"},
             {"app":"web","package":"@nebutra/web","workspace":"apps/web","build_command":"build:next","fly_app":"nebutra-web","host":"app","site":"https://app.nebutra.com"},
@@ -158,6 +165,13 @@ jobs:
           NEXT_OUTPUT: standalone
           NEXT_PUBLIC_SITE_URL: ${{ matrix.site }}
           NEXT_PUBLIC_DOCS_ORIGIN_URL: ${{ matrix.site }}
+          # Landing reads DOCS_ORIGIN_URL / NEXT_PUBLIC_DOCS_URL (not the
+          # *_ORIGIN_* alias); both used to come from apps/landing/vercel.json.
+          DOCS_ORIGIN_URL: "https://nebutra.com/docs"
+          NEXT_PUBLIC_DOCS_URL: "https://nebutra.com/docs"
+          # Public One Tap client id; vercel.json carried it as a checked-in
+          # default, so the Fly build keeps the same value.
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '470784717517-g1rcks9d8ud342e1b0g8i6qeth96h41u.apps.googleusercontent.com' }}
           OIDC_ISSUER: "https://sso.nebutra.com"
           NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
@@ -189,7 +203,10 @@ jobs:
           # router / admin: the VM .env predates Fly — its NEW_API_BASE_URL is the
           # ECS localhost port and it knows nothing of the admin contract secrets.
           # Those are Fly-native; importing over them broke supply after every deploy.
-          SKIP_IMPORT_KEYS: ${{ matrix.app == 'kuanlan' && 'R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY' || matrix.app == 'router' && 'NEW_API_BASE_URL NEW_API_ACCESS_TOKEN SERVICE_SECRET CLIPROXY_API_KEY CLIPROXY_MANAGEMENT_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'admin' && 'SERVICE_SECRET CLIPROXY_MANAGEMENT_KEY CLIPROXY_API_KEY NEW_API_ROOT_PASSWORD' || '' }}
+          # landing: ALLOWED_HOSTS is the proxy.ts host allowlist and lives in
+          # infra/fly/landing.toml. A secret outranks [env], so a stale VM value
+          # (nebutra.com-only) would 421 the *.fly.dev smoke before cutover.
+          SKIP_IMPORT_KEYS: ${{ matrix.app == 'kuanlan' && 'R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY' || matrix.app == 'router' && 'NEW_API_BASE_URL NEW_API_ACCESS_TOKEN SERVICE_SECRET CLIPROXY_API_KEY CLIPROXY_MANAGEMENT_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'admin' && 'SERVICE_SECRET CLIPROXY_MANAGEMENT_KEY CLIPROXY_API_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'landing' && 'ALLOWED_HOSTS' || '' }}
         run: |
           set -euo pipefail
           if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
@@ -312,6 +329,9 @@ jobs:
           set -euo pipefail
           path="/"
           if [ "${{ matrix.app }}" = "auth" ]; then path="/sign-in"; fi
+          # The health route is server-only: it proves the Machine answers
+          # without depending on locale routing or a CDN cache hit.
+          if [ "${{ matrix.app }}" = "landing" ]; then path="/api/e2e/health"; fi
           url="https://${{ matrix.fly_app }}.fly.dev${path}"
           code="000"
           for i in 1 2 3 4 5 6; do
@@ -364,6 +384,16 @@ jobs:
           HOST: ${{ matrix.host }}
           FLY_APP: ${{ matrix.fly_app }}
         run: bash infra/ops/scripts/point-host-dns-fly.sh
+
+      # Landing owns the apex and three host aliases, so it cannot use the
+      # generic <label>.nebutra.com step. Certificates must already exist
+      # (issue-fly-certs.yml) or Cloudflare answers 525 for every name.
+      - name: Cut over nebutra.com + aliases to Fly
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true' && matrix.app == 'landing'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          FLY_APP: ${{ matrix.fly_app }}
+        run: bash infra/ops/scripts/point-landing-dns-fly.sh
 
   deploy-gateway:
     name: Fly Hono origin

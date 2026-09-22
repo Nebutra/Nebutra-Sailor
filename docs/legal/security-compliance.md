@@ -84,9 +84,10 @@ with the Enterprise compliance pack and updated on change.
 
 ## Data residency
 
-Determined entirely by your deployment. Sailor supports Vercel, Cloudflare
-Workers, ECS, Kubernetes, and self-managed targets, and supports China-region
-deployment with domestic providers via `packages/ops/china-compliance`.
+Determined entirely by your deployment. Sailor supports Fly Machines,
+Cloudflare Workers, ECS, Kubernetes, and self-managed targets, and supports
+China-region deployment with domestic providers via
+`packages/ops/china-compliance`.
 
 ## What is in the Enterprise compliance pack
 

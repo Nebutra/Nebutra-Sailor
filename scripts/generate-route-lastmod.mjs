@@ -6,7 +6,7 @@
  *   node scripts/generate-route-lastmod.mjs
  *
  * Why generated and committed rather than computed during `next build`:
- * Vercel builds from a shallow clone where per-file `git log` is unreliable, so
+ * CI builds from a shallow clone where per-file `git log` is unreliable, so
  * the timestamps are resolved here (full history available) and checked in
  * exactly like packages/platform/i18n/src/product-locales.generated.ts.
  *

@@ -1,9 +1,10 @@
 import { brand } from "@nebutra/brand/metadata";
 import type { NextConfig } from "next";
 
-const useStandalone =
-  process.env.NEXT_OUTPUT === "standalone" ||
-  (process.env.VERCEL !== "1" && process.env.NEXT_OUTPUT !== "vercel");
+// Standalone is the only shape that ships (Fly Machines, ECS rollback). The
+// Vercel opt-out was retired with the Vercel deploy surface on 2026-09-22;
+// NEXT_OUTPUT=standalone stays honoured for callers that set it explicitly.
+const useStandalone = process.env.NEXT_OUTPUT !== "vercel";
 
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),

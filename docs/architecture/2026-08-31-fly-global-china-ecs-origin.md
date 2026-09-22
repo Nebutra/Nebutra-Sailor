@@ -1,18 +1,20 @@
 # Fly product + Hono origin (Singapore), ECS kept for China transit / issuer / leak / rollback
 
 - **Date**: 2026-08-31
-- **Status**: Product edges and Hono origin live on Fly `sin`; ECS keeps issuer / leak / China transit
+- **Updated**: 2026-09-22 — landing (nebutra.com) moved off Vercel to the
+  `nebutra-landing` Machine; the Vercel deploy surface was retired.
+- **Status**: Every product edge and the Hono origin live on Fly `sin`; ECS keeps issuer / leak / China transit
 - **Runbook**: [fly-origin.md](../ops/nebutra/fly-origin.md) (source repo only — stripped from the Sailor template)
 
 ```text
 China + global browsers
   -> Cloudflare (proxied)
-    -> Fly Machines in sin     forge / router / web / pebble / design / kuanlan / idp / admin / docs
+    -> Fly Machines in sin     landing / forge / router / web / pebble / design / kuanlan / idp / admin / docs
     -> Fly Machine in sin      auth Next UI origin (not public DNS)
     -> Fly Machines in sin     Hono api-gateway (nebutra-gateway)
     -> Cloudflare Workers      api.nebutra.com → nebutra-gateway.fly.dev
                                auth.nebutra.com /api/auth/* + UI proxy to Fly
-    -> Vercel                  nebutra.com
+    -> Fly Machines in sin     nebutra.com (landing + host aliases)
     -> Shanghai ECS            China transit, sso, leak DNS, rollback
 ```
 

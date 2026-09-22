@@ -13,7 +13,6 @@ import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { generateFavicons } from "../packages/design/brand/scripts/generate-favicons";
 import { type BrandColorPalette, type BrandConfig, DEFAULT_BRAND } from "./brand-types";
-import { updateVercelEnvFromBrand } from "./brand-vercel-env";
 
 // `import.meta.dirname` is unset under tsx CJS transform on Node 25.
 // Compute it from `import.meta.url` for cross-runtime compatibility.
@@ -760,8 +759,6 @@ async function main() {
     updatePackageScopes(config);
     updateREADMEs(config);
     updateEnvTemplate(config);
-    logStep("Syncing vercel.json env from brand.domains");
-    updateVercelEnvFromBrand(config);
   } finally {
     releaseBrandApplyLock();
   }

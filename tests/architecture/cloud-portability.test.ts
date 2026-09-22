@@ -66,7 +66,9 @@ describe("cloud platform portability contract", () => {
     expect(originWorkflow).toContain("          - gcp");
     expect(deployTargets).toContain('"gcp"');
     expect(deployTargets).toContain('edgeGateway: "cloudflare-workers"');
-    expect(deployTargets).toContain('originBackend: "ecs-docker"');
+    // The origin default moved from ecs-docker to fly on 2026-09-22; the
+    // dormant adapters (gcp/aws/k8s/railway) stay selectable.
+    expect(deployTargets).toContain('originBackend: "fly"');
     // The scaffold deliberately holds no target list of its own — it imports
     // the map type and the defaults from the preset, so a target added there
     // reaches create-sailor without a second edit. Grepping for the literal

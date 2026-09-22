@@ -13,6 +13,7 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Fleet" };
 
 const RUNTIME_LABEL: Record<FleetRuntime, string> = {
+  fly: "Fly",
   vercel: "Vercel",
   "cloudflare-worker": "CF Worker",
   "ecs-pm2": "ECS PM2",

@@ -1,14 +1,16 @@
 name: Deploy Sailor Docs
 
-# Dual-path production deploy for apps/sailor-docs (served at <site>/docs):
+# Alternate deploy for apps/sailor-docs (served at <site>/docs).
 #
-# - vercel: CLI re-trigger (Hobby plan caps at ~100 deploys/day)
-# - cloudflare-workers: OpenNext → Worker + Assets (same pattern as typelens)
-#
-# Push path follows vars.DEPLOY_TARGET_SAILOR_DOCS:
-#   vercel | "" → Vercel job
+# Production is the Fly Machine (deploy-fly.yml, app=sailor-docs). This
+# workflow keeps the Cloudflare Workers path: OpenNext → Worker + Assets
+# (same pattern as typelens), gated by vars.DEPLOY_TARGET_SAILOR_DOCS:
 #   cloudflare-workers | cloudflare-pages → Cloudflare job
-# workflow_dispatch can force both / cloudflare / vercel.
+#   anything else (or unset) → no push deploy; the Fly path owns production
+# workflow_dispatch always runs the Cloudflare job.
+#
+# The Vercel path was retired on 2026-09-22 with the rest of the Vercel
+# deploy surface; its quota notes live in git history.
 #
 # Cloudflare token: CLOUDFLARE_API_TOKEN, with CLOUDFLARE_WORKERS_API_TOKEN as a
 # legacy fallback. The order used to be reversed, so a token left behind on
@@ -17,25 +19,13 @@ name: Deploy Sailor Docs
 # the second name. Two secrets for one credential, resolved by a precedence
 # rule nobody sees, is the whole failure.
 # must include Workers Scripts Edit (preflight probes assets-upload-session).
-# See docs/ops/cloudflare-ci-token.md. Until token is fixed, set
-# DEPLOY_TARGET_SAILOR_DOCS=vercel so push deploys stay healthy.
+# See docs/ops/cloudflare-ci-token.md.
 #
 # Historical note: old monorepo Workers builds could exceed script size; modern
-# OpenNext keeps handler thin and static under ASSETS. If CF deploy fails on
-# size, fall back to Vercel after quota reset or ECS emergency.
+# OpenNext keeps handler thin and static under ASSETS.
 
 on:
   workflow_dispatch:
-    inputs:
-      target:
-        description: "Deploy target"
-        required: true
-        default: both
-        type: choice
-        options:
-          - both
-          - cloudflare
-          - vercel
   push:
     branches: [main]
     paths:
@@ -45,10 +35,8 @@ on:
       - "packages/design/icons/**"
       - "packages/design/tokens/**"
       # pnpm-lock.yaml is deliberately not a trigger: a lockfile-only bump on
-      # main was half of this workflow's runs, each a remote Vercel build of an
-      # unchanged site. A dependency change that matters to docs also touches a
-      # path above.
-      - "apps/sailor-docs/vercel.json"
+      # main rebuilt an unchanged site. A dependency change that matters to docs
+      # also touches a path above.
       - "apps/sailor-docs/wrangler.jsonc"
       - "apps/sailor-docs/open-next.config.ts"
       - ".github/workflows/deploy-sailor-docs.yml"
@@ -61,66 +49,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  vercel:
-    name: Trigger Vercel production
-    runs-on: ubuntu-latest
-    if: >-
-      (github.event_name == 'workflow_dispatch' && (inputs.target == 'vercel' || inputs.target == 'both')) ||
-      (github.event_name == 'push' && (
-        vars.DEPLOY_TARGET_SAILOR_DOCS == 'vercel' ||
-        vars.DEPLOY_TARGET_SAILOR_DOCS == ''
-      ))
-    steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-
-      - name: Deploy to Vercel (production)
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID || vars.VERCEL_DOCS_PROJECT_ID }}
-        run: |
-          set -euo pipefail
-          if [ -z "${VERCEL_TOKEN:-}" ]; then
-            echo "::notice::VERCEL_TOKEN not set — relying on Vercel Git integration only."
-            echo "If /docs is not updating, add VERCEL_TOKEN + VERCEL_DOCS_PROJECT_ID."
-            exit 0
-          fi
-          if [ -z "${VERCEL_PROJECT_ID:-}" ]; then
-            echo "::error::Set VERCEL_DOCS_PROJECT_ID (prj_…) for the docs Vercel project"
-            exit 1
-          fi
-          npm i -g vercel@56.5.0
-          # Link the Vercel project at the monorepo root. The dashboard Root
-          # Directory is already `apps/sailor-docs` — do NOT pass --cwd into
-          # that folder or Vercel doubles the path
-          # (…/apps/sailor-docs/apps/sailor-docs).
-          mkdir -p .vercel
-          cat > .vercel/project.json <<EOF
-          {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}
-          EOF
-          # Deploy from monorepo root so turbo filter + pnpm workspace resolve.
-          # --archive=tgz avoids the 15k-file CLI upload limit on this monorepo.
-          set +e
-          out=$(vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" \
-            --scope "${VERCEL_ORG_ID:-}" 2>&1)
-          code=$?
-          set -e
-          echo "$out"
-          if [ "$code" -ne 0 ]; then
-            if echo "$out" | grep -qiE 'api-deployments-free-per-day|Resource is limited|try again in 24 hours'; then
-              echo "::warning::Vercel Hobby daily deploy quota exhausted. Prefer Cloudflare Workers job or retry after ~24h."
-              exit 0
-            fi
-            exit "$code"
-          fi
-
   cloudflare:
     name: Deploy Cloudflare Worker
     runs-on: ubuntu-latest
     timeout-minutes: 45
     if: >-
-      (github.event_name == 'workflow_dispatch' && (inputs.target == 'cloudflare' || inputs.target == 'both')) ||
+      github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'push' && (
         vars.DEPLOY_TARGET_SAILOR_DOCS == 'cloudflare-pages' ||
         vars.DEPLOY_TARGET_SAILOR_DOCS == 'cloudflare-workers'
@@ -183,7 +117,7 @@ jobs:
             echo "::error::Cloudflare token cannot deploy Workers (often error 10000 — missing Workers Scripts Edit)."
             echo "::error::Fix: docs/ops/cloudflare-ci-token.md — create token from Edit Cloudflare Workers template, then:"
             echo "::error::  printf '%s' \"\$NEW_TOKEN\" | gh secret set CLOUDFLARE_API_TOKEN -R Nebutra/Nebutra-Sailor"
-            echo "::error::Temporary path: gh variable set DEPLOY_TARGET_SAILOR_DOCS --body vercel && re-run with target=vercel"
+            echo "::error::Temporary path: production is already served by the Fly Machine (deploy-fly.yml app=sailor-docs); this workflow can be re-run after the token is fixed."
             exit 1
           fi
 

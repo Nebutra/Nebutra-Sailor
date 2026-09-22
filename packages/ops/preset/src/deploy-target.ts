@@ -54,10 +54,15 @@ const SERVICE_SURFACES = {
   "python-ai": "originBackend",
 } as const satisfies Record<DeployableService, DeploySurface>;
 
+// This repository's production default: Fly Machines for every frontend and
+// the origin backend, Cloudflare Workers for the edge gateway. Vercel remains
+// an allowed target for scaffolds that select it (`--deploy=vercel`), but it
+// is no longer the default — the Vercel deploy surface was retired on
+// 2026-09-22.
 const DEFAULT_TARGET_BY_SURFACE = {
-  frontend: "vercel",
+  frontend: "fly",
   edgeGateway: "cloudflare-workers",
-  originBackend: "ecs-docker",
+  originBackend: "fly",
 } as const satisfies {
   [Surface in DeploySurface]: (typeof TARGETS_BY_SURFACE)[Surface][number];
 };

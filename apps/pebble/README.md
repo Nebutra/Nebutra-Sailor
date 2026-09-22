@@ -10,7 +10,9 @@ Brand front for **https://pebble.nebutra.com**.
 | Origin | ECS PM2 process `pebble` on `127.0.0.1:3017` |
 | Edge | `infra/runtime/nginx/conf.d/pebble.nebutra.com.conf` |
 
-Vercel is **not** the production path for this host (Hobby deploy caps; owner chose unified ECS origin).
+Production is the Fly Machine `nebutra-pebble` (`deploy-fly.yml` app=`pebble`);
+the ECS PM2 process above is the rollback path. The Vercel surface was retired
+on 2026-09-22.
 
 ## Routes
 

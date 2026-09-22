@@ -14,7 +14,6 @@ Ranked by how much damage a single bad day can do:
 | Risk | Ceiling | Enforced by |
 | --- | --- | --- |
 | AI token spend | none today | **open — see below** |
-| Vercel build minutes / on-demand | per-app ignore + Git auto-deploy flags | [Vercel](#vercel) below |
 | Postgres storage growth | retention windows | `retention.sql` + Cron Trigger |
 | Postgres runaway query CPU | 30s | role `statement_timeout` |
 | Postgres connection exhaustion | 50 | role `CONNECTION LIMIT` |
@@ -124,27 +123,18 @@ that surfaces as duplicate work or a missed limit, not as an error. Memory
 headroom is a correctness property here, not only a cost one. Treat sustained
 `evicted_keys` growth as a bug, not as the cache doing its job.
 
-## Vercel
+## Fly Machines
 
-Vercel meters build minutes. One Git repo linked to several projects opens a
-remote build per project per push, and a workflow that runs `vercel deploy` on
-the same commit opens a second one. Two repo-side locks bound it:
+Every product edge is one or two Machines in `sin`, declared in `infra/fly/*.toml`
+(`min_machines_running = 1`, `auto_stop_machines = "off"` for user-facing apps).
+Cost is bounded by Machine count and size rather than by build minutes: the
+GitHub runner does the build and uploads a prebuilt standalone bundle, so a
+push cannot meter provider-side build CPU. A new Machine is a new fixed line
+item — review `infra/fly/` when adding one.
 
-- `git.deploymentEnabled: false` in the project's `vercel.json` for every app
-  whose production is not Vercel — a push then opens no remote build at all.
-- For the apps that are Vercel, build on the GitHub runner and upload only the
-  output (`vercel build` → `vercel deploy --prebuilt`). Vercel receives
-  `.vercel/output` and meters no build minutes; hosting, ISR and image
-  optimization are unchanged.
-
-Repo-side settings protect only the branches that contain them. The
-project-level build machine type (`standard`, not elastic) and the Dashboard
-Ignored Build Step apply to every branch and are the real lock — a long build
-otherwise promotes the project to a 30 vCPU machine that bills 7.5× per minute.
-
-Which projects one deployment has Git-linked, what its invoices said and what
-was applied to close them is instance history, not guidance. Nebutra's own is
-kept out of the template in `docs/ops/nebutra/cost-history.md`.
+The Vercel deploy surface (build-minute metering, per-app ignore flags, Git
+auto-deploy locks) was retired on 2026-09-22; its invoice history is kept out
+of the template in `docs/ops/nebutra/cost-history.md`.
 
 ## Settings only a dashboard can see
 
@@ -162,7 +152,6 @@ the engine asks each provider what it currently holds:
 
 | Provider | Declared | Read from |
 | --- | --- | --- |
-| Vercel | build machine type, project-level Ignored Build Step, whether a Git link exists, env keys that must not be Sensitive on a target | `GET /v9/projects/{name}`, `GET /v10/projects/{name}/env` |
 | Fly | secret names that must exist, secret names that must not | `flyctl secrets list --json` |
 | GitHub | repository variable values (deploy target selectors); per-branch protection — required status checks, up-to-date rule, admin enforcement, review count | the workflow's own `vars` context, or `gh variable get`; `GET /repos/{owner}/{repo}/branches/{branch}/protection` with `GH_TOKEN` or `gh api` |
 | Cloudflare | a named Worker binding, optionally its type | `GET /workers/scripts/{name}/settings` |
@@ -177,7 +166,7 @@ notifies the author of the last commit that touched the workflow's cron line
 (not the repository owner), and the job summary carries the table.
 
 The engine prints names and types, never values: Fly digests are dropped on
-parse, the `value` field of a Vercel env entry is never read, and GitHub
+parse, provider env values are never read, and GitHub
 variables and branch protection are non-secret configuration by definition.
 Fixing drift stays a human decision in the dashboard or the CLI; the check only
 says where. The required status checks on `main` are the clearest case: the

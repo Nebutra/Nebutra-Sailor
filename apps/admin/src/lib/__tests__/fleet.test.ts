@@ -75,14 +75,15 @@ describe("fleet inventory", () => {
   it("resolves hosts and flags target/runtime disagreement", () => {
     const rows = buildFleet({});
     const web = rows.find((r) => r.id === "@nebutra/web");
-    // web defaults to the Vercel target while production traffic is still ECS —
-    // exactly the drift the panel is meant to surface, not hide.
+    // web's default target is the Fly Machine it actually runs on.
     expect(web?.host).toBe("app.nebutra.com");
-    expect(web?.deployTarget).toBe("vercel");
-    expect(web?.targetMatchesRuntime).toBe(false);
+    expect(web?.deployTarget).toBe("fly");
+    expect(web?.targetMatchesRuntime).toBe(true);
 
+    // A standalone override disagrees with the Fly Machine — exactly the drift
+    // the panel is meant to surface, not hide.
     const withOverride = buildFleet({ DEPLOY_TARGET_WEB: "standalone" });
-    expect(withOverride.find((r) => r.id === "@nebutra/web")?.targetMatchesRuntime).toBe(true);
+    expect(withOverride.find((r) => r.id === "@nebutra/web")?.targetMatchesRuntime).toBe(false);
 
     // The IdP is not target-switchable, so there is nothing to compare.
     const idp = rows.find((r) => r.id === "@nebutra/idp");

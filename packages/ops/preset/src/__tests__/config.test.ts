@@ -14,9 +14,9 @@ describe("NebutraConfigSchema", () => {
     expect(result.theme).toBe("factory");
     expect(result.locales).toEqual(["en"]);
     expect(result.defaultLocale).toBe("en");
-    expect(result.deployTargets.web).toBe("vercel");
+    expect(result.deployTargets.web).toBe("fly");
     expect(result.deployTargets.gateway).toBe("cloudflare-workers");
-    expect(result.deployTargets["python-ai"]).toBe("ecs-docker");
+    expect(result.deployTargets["python-ai"]).toBe("fly");
     // defaults = everything enabled
     expect(Object.values(result.apps).every(Boolean)).toBe(true);
     expect(Object.values(result.features).every(Boolean)).toBe(true);
@@ -37,7 +37,7 @@ describe("NebutraConfigSchema", () => {
     expect(result.apps).toEqual({ web: true, blog: false });
     expect(result.features).toEqual({ billing: true, web3: false });
     expect(result.deployTargets).toMatchObject({ gateway: "k8s", "python-ai": "aws" });
-    expect(result.deployTargets.web).toBe("vercel");
+    expect(result.deployTargets.web).toBe("fly");
   });
 
   it("rejects invalid theme", () => {
@@ -129,7 +129,7 @@ describe("defineConfig", () => {
     const config = defineConfig({ theme: "linear", deployTargets: { gateway: "aws" } });
     expect(config.theme).toBe("linear");
     expect(config.deployTargets.gateway).toBe("aws");
-    expect(config.deployTargets.web).toBe("vercel");
+    expect(config.deployTargets.web).toBe("fly");
   });
 
   it("throws on invalid input", () => {

@@ -4,6 +4,9 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const cdnOrigin = getBrandOrigin("cdn");
+const apiOrigin = (process.env.NEXT_PUBLIC_API_URL ?? getBrandOrigin("api")).replace(/\/$/, "");
+const pebbleOrigin = getBrandOrigin("pebble");
+const landingHost = new URL(getBrandOrigin("landing")).host;
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const withBundleAnalyzer = createBundleAnalyzer({ enabled: true });
@@ -95,7 +98,7 @@ const securityHeaders = [
     value: "on",
   },
   {
-    // Align with CSP frame-ancestors 'none', proxy.ts DENY, and vercel.json DENY.
+    // Align with CSP frame-ancestors 'none' and proxy.ts DENY.
     // SAMEORIGIN here previously conflicted with edge/proxy DENY (visibility G35).
     key: "X-Frame-Options",
     value: "DENY",
@@ -139,16 +142,54 @@ const nextConfig: NextConfig = {
    * 404s it (the shards are served at `/sitemap/<locale>.xml`). Having both
    * refuses to build. So the index lives at `/sitemap-index.xml` and this
    * rewrite keeps the public URL working.
+   *
+   * The `/api/*` proxy to the gateway is a *fallback* rewrite: the app's own
+   * route handlers (newsletter, waitlist, license, feeds, og) win, and only
+   * paths this app does not serve reach the gateway. It used to live in
+   * vercel.json, where Vercel applied it after the filesystem for the same
+   * reason.
    */
   async rewrites() {
-    return [{ source: "/sitemap.xml", destination: "/sitemap-index.xml" }];
+    return {
+      beforeFiles: [],
+      afterFiles: [{ source: "/sitemap.xml", destination: "/sitemap-index.xml" }],
+      fallback: [{ source: "/api/:path*", destination: `${apiOrigin}/:path*` }],
+    };
   },
+
+  /**
+   * The Pebble brand front lives on its own host; `/pebble` was a section of
+   * this site before the split. www canonicalises onto the apex so the two
+   * names do not serve the same page. Both moved here from vercel.json when
+   * the site left Vercel.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/pebble",
+        destination: pebbleOrigin,
+        permanent: true,
+      },
+      {
+        source: "/pebble/:path*",
+        destination: `${pebbleOrigin}/:path*`,
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: `www.${landingHost}` }],
+        destination: `${getBrandOrigin("landing")}/:path*`,
+        permanent: true,
+      },
+    ];
+  },
+
   allowedDevOrigins: ["127.0.0.1"],
 
-  // `output: "standalone"` is gated by env so Vercel builds (which ignore it)
-  // skip the standalone trace cost, while Docker / ECS deploys can opt in by
-  // setting NEXT_OUTPUT=standalone. The ECS workflow at .github/workflows/
-  // deploy-ecs.yml relies on .next/standalone/ existing.
+  // `output: "standalone"` is gated by env: the Fly Machine and the ECS
+  // rollback path both set NEXT_OUTPUT=standalone (deploy-fly.yml /
+  // deploy-ecs.yml), while `next dev` and local `next build` skip the
+  // standalone trace cost.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
 
   // Prune build-time-only native toolchains from the standalone runtime trace.
@@ -185,12 +226,6 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // Vercel should produce the deployable artifact quickly; type checking stays
-  // a separate validation gate via `pnpm --filter @nebutra/landing typecheck`.
-  typescript: {
-    ignoreBuildErrors: process.env.VERCEL === "1",
-  },
-
   // Only workspace packages that still export raw `src/` need transpilation.
   // ui/marketing/sanity/brand/icons publish proper `dist/` (esm + d.ts) and
   // resolve via package exports — keeping them here would force SWC + React
@@ -219,6 +254,12 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: securityHeaders,
+      },
+      {
+        // API answers are per-session/per-request; never let a CDN hold them.
+        // Moved from vercel.json when the site left Vercel.
+        source: "/api/(.*)",
+        headers: [{ key: "Cache-Control", value: "no-store, max-age=0" }],
       },
     ];
   },
