@@ -332,6 +332,10 @@ jobs:
           # The health route is server-only: it proves the Machine answers
           # without depending on locale routing or a CDN cache hit.
           if [ "${{ matrix.app }}" = "landing" ]; then path="/api/e2e/health"; fi
+          # The docs bundle is a Next zone with basePath /docs — its root is a
+          # 404 by design, so smoking `/` failed every fleet deploy even though
+          # the zone was healthy.
+          if [ "${{ matrix.app }}" = "sailor-docs" ]; then path="/docs"; fi
           url="https://${{ matrix.fly_app }}.fly.dev${path}"
           code="000"
           for i in 1 2 3 4 5 6; do
