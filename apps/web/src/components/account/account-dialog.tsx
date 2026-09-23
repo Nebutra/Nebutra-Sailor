@@ -19,12 +19,14 @@ import {
 import { useTheme } from "@nebutra/tokens";
 import {
   BrandMark,
+  Button,
   Dialog,
   DialogContent,
   Entity,
   ToggleGroup,
   ToggleGroupItem,
 } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -125,7 +127,7 @@ const PersonalizationTab = dynamic(
   {
     loading: () => (
       <div className="flex min-h-[240px] items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-neutral-10" />
+        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
       </div>
     ),
     ssr: false,
@@ -154,9 +156,9 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           {/* Left rail — tabs */}
           <nav
             aria-label={t("navLabel")}
-            className="shrink-0 border-b border-neutral-6 bg-neutral-2/40 p-3 sm:w-[200px] sm:border-b-0 sm:border-r"
+            className="shrink-0 border-b border-border bg-muted/30 p-3 sm:w-[200px] sm:border-b-0 sm:border-r"
           >
-            <div className="mb-3 px-2 pt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
+            <div className="mb-3 px-2 pt-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               {t("title")}
             </div>
             <ul className="flex gap-1 overflow-x-auto sm:flex-col sm:overflow-visible">
@@ -169,13 +171,20 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                       type="button"
                       onClick={() => setActiveTab(tab.id)}
                       aria-current={isActive ? "page" : undefined}
-                      className={`flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2 text-left text-sm font-medium transition-colors ${
+                      // Same current-page treatment as SidebarNav: soft surface,
+                      // accent spent on the icon. The old classes carried an
+                      // invalid opacity stack (bg-primary/10/60) that emitted
+                      // nothing, so the active tab had no surface at all.
+                      className={`flex w-full items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-left text-[13px] leading-5 transition-[background-color,color] duration-micro ease-brand ${
                         isActive
-                          ? "bg-primary/10/60 text-primary dark:bg-primary/10/20 dark:text-primary"
-                          : "text-neutral-11 hover:bg-neutral-3/60 hover:text-neutral-12"
+                          ? "bg-accent font-medium text-foreground"
+                          : "text-muted-foreground hover:bg-accent/55 hover:text-foreground"
                       }`}
                     >
-                      <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                      <Icon
+                        className={cn("h-4 w-4 shrink-0", isActive && "text-primary")}
+                        aria-hidden="true"
+                      />
                       <span className="truncate">{t(tab.labelKey)}</span>
                     </button>
                   </li>
@@ -186,12 +195,12 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
 
           {/* Right panel */}
           <div className="relative flex min-h-0 flex-1 flex-col">
-            <header className="flex items-start justify-between gap-4 border-b border-neutral-6 px-6 py-4">
+            <header className="flex items-start justify-between gap-4 border-b border-border px-6 py-4">
               <div className="min-w-0">
-                <h2 className="text-base font-semibold text-neutral-12">
+                <h2 className="text-base font-semibold text-foreground">
                   {t(`${activeTab}.title`)}
                 </h2>
-                <p className="mt-0.5 truncate text-xs text-neutral-10">
+                <p className="mt-0.5 truncate text-xs text-muted-foreground">
                   {t(`${activeTab}.subtitle`)}
                 </p>
               </div>
@@ -231,7 +240,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
               )}
             </div>
 
-            <footer className="border-t border-neutral-6 px-6 py-3 text-[11px] text-neutral-10">
+            <footer className="border-t border-border px-6 py-3 text-xs text-muted-foreground">
               {t("tip", {
                 key: "⌘,",
               })}
@@ -267,7 +276,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                 alt=""
                 width={56}
                 height={56}
-                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6"
+                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-border"
               />
             ) : (
               <img
@@ -275,16 +284,16 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                 alt=""
                 width={56}
                 height={56}
-                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6"
+                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-border"
               />
             )}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-base font-semibold text-neutral-12">
+            <p className="truncate text-base font-semibold text-foreground">
               {name ?? email ?? t("profile.unknown")}
             </p>
             {email && (
-              <p className="mt-0.5 flex items-center gap-1.5 truncate text-xs text-neutral-11">
+              <p className="mt-0.5 flex items-center gap-1.5 truncate text-xs text-muted-foreground">
                 <Mail className="h-3 w-3 shrink-0" aria-hidden="true" />
                 <span className="truncate">{email}</span>
               </p>
@@ -296,8 +305,8 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           as="button"
           chevron
           onClick={onOpenFull}
-          className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 hover:bg-neutral-2"
-          left={<SettingsIcon className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
+          className="rounded-[var(--radius-lg)] border border-border bg-card hover:bg-accent/40"
+          left={<SettingsIcon className="h-4 w-4 text-muted-foreground" aria-hidden="true" />}
         >
           <Entity.Content title={t("profile.manageCta")} />
         </Entity>
@@ -318,36 +327,42 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
   }) {
     return (
       <div className="flex flex-col gap-5">
-        <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-gradient-to-br from-primary/10 to-transparent p-4 dark:from-primary/10">
+        {/* One surface, one accent. This card used to stack a primary-tinted
+            gradient, a haloed gradient brand mark, a blue badge and a blue CTA
+            — four blues in one panel. The brand mark stays (identity, small);
+            the tint and the halo go. */}
+        <div className="rounded-[var(--radius-lg)] border border-border bg-card p-4">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {t("subscription.currentPlan")}
               </p>
               <div className="mt-2">{planBadge}</div>
             </div>
-            <BrandMark size="md" variant="gradient" halo>
+            <BrandMark size="md" variant="gradient">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
             </BrandMark>
           </div>
         </div>
 
         <div className="grid gap-2 sm:grid-cols-2">
-          <button
+          <Button
+            className="group w-full justify-between"
+            size="sm"
             type="button"
             onClick={onUpgrade}
-            className="group flex items-center justify-between rounded-[var(--radius-xl)] px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: "hsl(var(--primary))" }}
+            suffix={
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            }
           >
-            <span>{t("subscription.upgradeCta")}</span>
-            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-          </button>
+            {t("subscription.upgradeCta")}
+          </Button>
           <Entity
             as="button"
             chevron
             onClick={onManage}
-            className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 hover:bg-neutral-2"
-            left={<CreditCard className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
+            className="rounded-[var(--radius-lg)] border border-border bg-card hover:bg-accent/40"
+            left={<CreditCard className="h-4 w-4 text-muted-foreground" aria-hidden="true" />}
           >
             <Entity.Content title={t("subscription.manageCta")} />
           </Entity>
@@ -370,7 +385,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
     return (
       <div className="flex flex-col gap-5">
         <section>
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             {t("preferences.theme")}
           </p>
           <ToggleGroup
@@ -394,7 +409,10 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                   key={option.id}
                   value={option.id}
                   variant="pill"
-                  className="h-auto flex-col gap-1.5 rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-3 py-3 text-xs font-medium text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 data-[state=on]:border-primary/30 data-[state=on]:bg-primary/10 data-[state=on]:text-primary dark:data-[state=on]:border-primary/40 dark:data-[state=on]:bg-primary/5/20 dark:data-[state=on]:text-primary"
+                  // The dark: overrides carried the same invalid opacity stack
+                  // (bg-primary/5/20) as the tab rail; the semantic tokens already
+                  // switch per mode, so the overrides were noise.
+                  className="h-auto flex-col gap-1.5 rounded-[var(--radius-lg)] border border-border bg-card px-3 py-3 text-xs font-medium text-muted-foreground hover:bg-accent/40 hover:text-foreground data-[state=on]:border-primary/30 data-[state=on]:bg-primary/10 data-[state=on]:text-primary"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
                   <span>{t(`preferences.${option.id}`)}</span>
@@ -405,7 +423,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
         </section>
 
         <section>
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             {t("preferences.help")}
           </p>
           <div className="flex flex-col gap-1.5">
@@ -413,8 +431,8 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
               as="button"
               chevron
               onClick={onReportIssue}
-              className="rounded-[var(--radius-lg)] hover:bg-neutral-2"
-              left={<LifeBuoy className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
+              className="rounded-[var(--radius-lg)] hover:bg-accent/40"
+              left={<LifeBuoy className="h-4 w-4 text-muted-foreground" aria-hidden="true" />}
             >
               <Entity.Content title={t("preferences.reportIssue")} />
             </Entity>
@@ -422,8 +440,8 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
               as="button"
               chevron
               onClick={onShortcuts}
-              className="rounded-[var(--radius-lg)] hover:bg-neutral-2"
-              left={<Keyboard className="h-4 w-4 text-neutral-10" aria-hidden="true" />}
+              className="rounded-[var(--radius-lg)] hover:bg-accent/40"
+              left={<Keyboard className="h-4 w-4 text-muted-foreground" aria-hidden="true" />}
             >
               <Entity.Content title={t("preferences.shortcuts")} />
             </Entity>
