@@ -1146,6 +1146,7 @@ export function ThemePlaygroundWorkbench() {
   // The inspector reports the variables the preview actually resolves, read off
   // the artboard's computed style — not a second, hand-maintained token map.
   const [tokenRows, setTokenRows] = useState<TokenRow[]>([]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the deps are the re-read trigger — the artboard itself is read through a ref, not captured here.
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       const el = artboardRef.current;
