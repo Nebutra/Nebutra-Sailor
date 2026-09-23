@@ -75,13 +75,40 @@ export function createFeatureFlagProviderAdapter(
   };
 }
 
-import { getRedis } from "@nebutra/cache";
-
 // ============================================
 // Default: Cached Provider with Env Fallback
 // ============================================
 
 const CACHE_TTL = 10; // 10 seconds
+
+type RedisClient = Awaited<ReturnType<typeof import("@nebutra/cache")["getRedis"]>>;
+
+let redisClientPromise: Promise<RedisClient | null> | undefined;
+
+/**
+ * Resolve the shared Redis client, or null when the cache package is not
+ * reachable at runtime.
+ *
+ * `@nebutra/cache` is externalized by the web build and pnpm does not hoist
+ * workspace packages into the standalone server, so `import("@nebutra/cache")`
+ * can fail there ("Cannot find package '@nebutra/cache'"). The cache is an
+ * optimization, not a dependency: with the import inside the try block ahead of
+ * the env check, a missing package made every flag resolve to false — an env
+ * flag could never be turned on. Resolving lazily and once keeps the env path
+ * working and logs the degradation a single time.
+ */
+function getRedisOrNull(): Promise<RedisClient | null> {
+  redisClientPromise ??= import("@nebutra/cache")
+    .then((mod) => mod.getRedis())
+    .catch((error: unknown) => {
+      console.warn(
+        "Feature flags: @nebutra/cache unavailable; resolving flags from env only",
+        error,
+      );
+      return null;
+    });
+  return redisClientPromise;
+}
 
 function getContextualCacheSuffix(context?: FeatureFlagContext): string {
   return context?.plan ? `:plan:${context.plan}` : "";
@@ -104,17 +131,19 @@ const dbProvider: FeatureFlagProvider = {
     if (envValue === "false") return false;
 
     try {
-      // 2. CHECK CACHE
-      const redis = await getRedis();
+      // 2. CHECK CACHE (when the cache package is present)
+      const redis = await getRedisOrNull();
       const cacheKey = getFlagCacheKey(flag, _context);
-      const cached = await redis.get<boolean>(cacheKey);
-      if (cached !== null) {
-        return cached;
+      if (redis) {
+        const cached = await redis.get<boolean>(cacheKey);
+        if (cached !== null) {
+          return cached;
+        }
       }
 
       // 3. FALL BACK TO ENV FLAGS
       const isEnabled = await envProvider.isEnabled(flag, _context);
-      await redis.set(cacheKey, isEnabled, { ex: CACHE_TTL });
+      if (redis) await redis.set(cacheKey, isEnabled, { ex: CACHE_TTL });
       return isEnabled;
     } catch (e) {
       // Fallback if DB/Redis fails and we don't want to bring down the app
@@ -139,13 +168,15 @@ const dbProvider: FeatureFlagProvider = {
     }
 
     try {
-      const redis = await getRedis();
+      const redis = await getRedisOrNull();
       const cacheKey = getVariantCacheKey(flag, _context);
-      const cached = await redis.get<T>(cacheKey);
-      if (cached !== null) return cached;
+      if (redis) {
+        const cached = await redis.get<T>(cacheKey);
+        if (cached !== null) return cached;
+      }
 
       const parsedVariant = await envProvider.getVariant(flag, defaultValue, _context);
-      await redis.set(cacheKey, parsedVariant, { ex: CACHE_TTL });
+      if (redis) await redis.set(cacheKey, parsedVariant, { ex: CACHE_TTL });
       return parsedVariant;
     } catch {
       return defaultValue;
