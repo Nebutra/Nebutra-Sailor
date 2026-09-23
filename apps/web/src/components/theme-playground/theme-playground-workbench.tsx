@@ -41,17 +41,17 @@ import {
   ToggleGroupItem,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { type CSSProperties, type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, type RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { DesignMdExport } from "./design-md-export";
 import { DesignMdImport } from "./design-md-import";
 import type { ImportedTheme } from "./design-md-types";
+import { carrierForImported, carrierForLanguage, type PreviewCarrier } from "./preview-carrier";
 import {
-  getPreviewStyleFromTokenSet,
+  channelsToCss,
   getSwatchesFromTokenSet,
-  getThemePreviewStyle,
   getThemeSwatches,
-  getTokenRows,
   type ThemeMode,
+  type TokenRow,
 } from "./theme-token-data";
 
 type Density = "compact" | "comfortable";
@@ -78,6 +78,26 @@ const surfaceLabels: Record<Surface, string> = {
   brand: "Brand",
   product: "Product",
 };
+
+/**
+ * Variables the Token Inspector reports. They are the carrier's own names —
+ * the same ones `emitBrandCss` writes for the app and `styles.css` declares —
+ * read from the artboard's computed style rather than re-derived.
+ */
+const INSPECTED_VARS = [
+  "--primary",
+  "--primary-foreground",
+  "--secondary",
+  "--accent",
+  "--background",
+  "--foreground",
+  "--card",
+  "--border",
+  "--muted",
+  "--ring",
+  "--brand-primary",
+  "--brand-accent",
+] as const;
 
 const densityScale: Record<Density, string> = {
   compact: "text-[13px] [--playground-gap:0.875rem] [--playground-pad:1rem]",
@@ -479,7 +499,7 @@ function CanvasHeader({
 }
 
 function PreviewCanvas({
-  theme,
+  carrier,
   mode,
   density,
   surface,
@@ -487,9 +507,9 @@ function PreviewCanvas({
   onSuiteChange,
   viewport,
   onViewportChange,
-  styleOverride,
+  artboardRef,
 }: {
-  theme: PlaygroundTheme;
+  carrier: PreviewCarrier;
   mode: ThemeMode;
   density: Density;
   surface: Surface;
@@ -497,16 +517,14 @@ function PreviewCanvas({
   onSuiteChange: (suite: PreviewSuite) => void;
   viewport: ViewportId;
   onViewportChange: (viewport: ViewportId) => void;
-  styleOverride?: CSSProperties;
+  artboardRef: RefObject<HTMLDivElement | null>;
 }) {
-  const style = styleOverride ?? getThemePreviewStyle(theme.id, mode);
   const { width: viewportWidth, height: viewportHeight } = viewportSpec[viewport];
 
-  // Tailwind v4 in this app uses `@theme inline { --color-*: hsl(var(--*)) }`,
-  // which inlines the value into the utility — so `bg-background` reads `--background`
-  // directly, NOT `--color-background`. Theme JSON stores oklch values that can't live
-  // inside `hsl(...)`. Solution: inside the preview, bypass the indirection and read
-  // `var(--color-*)` straight from the wrapper's inline style.
+  // The carrier CSS is the production emitter scoped to this artboard: it sets
+  // the same `--primary` / `--background` / `--font-sans` variables the app's
+  // `html[data-brand]` swap sets, and mode is the canonical `.dark` class the
+  // tokens SSOT reads. No inline token map, no `--color-*` indirection.
   return (
     <section className="theme-preview-canvas flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-background/55">
       <CanvasHeader
@@ -516,23 +534,29 @@ function PreviewCanvas({
         onViewportChange={onViewportChange}
       />
       <div className="min-h-0 flex-1 overflow-auto p-4">
+        {carrier.warning ? (
+          <p className="mx-auto mb-3 max-w-[80ch] rounded-[var(--radius-md)] border border-warning/40 bg-warning/10 px-3 py-2 text-warning text-xs">
+            {carrier.warning}
+          </p>
+        ) : null}
         {/* Viewport frame — centered, max-width/min-height follow the selected device.
             The pane scrolls when that artboard is taller than the remaining slot. */}
         <div
-          data-brand={theme.id === "factory" ? undefined : theme.id}
+          ref={artboardRef}
+          data-brand={carrier.brandId}
           data-mode={mode}
           data-surface={surface}
           style={{
-            ...style,
             maxWidth: `${viewportWidth}px`,
             minHeight: `${viewportHeight}px`,
           }}
           className={cn(
-            "theme-preview-artboard mx-auto w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
+            "theme-preview-artboard mx-auto w-full overflow-hidden rounded-[var(--radius-lg)] bg-background text-foreground transition-[max-width] duration-200",
+            mode === "dark" && "dark",
             // Force theme fonts onto ALL descendants, beating any intermediate CSS
             // rule (e.g. globals.css @layer base h1-h6 / body font-family) that
             // would otherwise re-declare font-family and break inheritance from
-            // the --font-sans / --font-heading vars we emit in the inline style.
+            // the carrier's --font-sans / --font-heading vars.
             // code/pre/kbd/samp are excluded so monospace stays intact.
             "[&_:not(:is(h1,h2,h3,h4,h5,h6,code,pre,kbd,samp))]:![font-family:var(--font-sans,ui-sans-serif,system-ui,sans-serif)]",
             "[&_:is(h1,h2,h3,h4,h5,h6)]:![font-family:var(--font-heading,var(--font-sans,ui-sans-serif,system-ui,sans-serif))]",
@@ -543,6 +567,7 @@ function PreviewCanvas({
             densityScale[density],
           )}
         >
+          {carrier.css ? <style>{carrier.css}</style> : null}
           <div className="theme-preview-grid gap-[var(--space-source-md,var(--playground-gap))] p-[var(--space-source-lg,var(--playground-pad))]">
             {activeSuite === "forms" ? <FormsPanel /> : null}
             {activeSuite === "pricing" ? <PricingPanel /> : null}
@@ -883,14 +908,14 @@ function MiniChart({
 
 function TokenInspector({
   theme,
-  mode,
+  rows,
   onThemeChange,
 }: {
   theme: PlaygroundTheme;
-  mode: ThemeMode;
+  /** Read off the artboard's computed style — what the preview actually uses. */
+  rows: TokenRow[];
   onThemeChange: (theme: PlaygroundTheme) => void;
 }) {
-  const rows = getTokenRows(theme.id, mode);
   const cliCommand = `nebutra theme inspect ${theme.id} --format json`;
 
   return (
@@ -952,7 +977,10 @@ function TokenInspector({
               >
                 <span
                   className="size-4 rounded-[var(--radius-sm)] border border-border"
-                  style={{ background: row.value }}
+                  // Token values are HSL channel triples ("222.8 85% 55.7%"),
+                  // consumed everywhere as hsl(var(--x)); swatches need the
+                  // same wrapping. Complete colors pass through untouched.
+                  style={{ background: channelsToCss(row.value, "transparent") }}
                 />
                 <div className="min-w-0">
                   <div className="truncate font-mono text-foreground">{row.name}</div>
@@ -1103,11 +1131,36 @@ export function ThemePlaygroundWorkbench() {
   const importedSwatches =
     importedTheme !== null ? getSwatchesFromTokenSet(importedTheme.tokenSet) : [];
 
-  // Compute override style when the imported theme is selected
-  const importedPreviewStyle =
-    viewingImported && importedTheme !== null
-      ? getPreviewStyleFromTokenSet(importedTheme.tokenSet, mode)
-      : undefined;
+  const artboardRef = useRef<HTMLDivElement>(null);
+
+  // The carrier the artboard paints with: the shipped Brand Package for a
+  // design language, a compiled Brand Package for a DESIGN.md import, nothing
+  // for factory (the artboard inherits the tokens SSOT).
+  const carrier = useMemo<PreviewCarrier>(() => {
+    if (viewingImported && importedTheme !== null) {
+      return carrierForImported(importedTheme.name, importedTheme.tokenSet);
+    }
+    return carrierForLanguage(selectedTheme.id);
+  }, [selectedTheme.id, viewingImported, importedTheme]);
+
+  // The inspector reports the variables the preview actually resolves, read off
+  // the artboard's computed style — not a second, hand-maintained token map.
+  const [tokenRows, setTokenRows] = useState<TokenRow[]>([]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the deps are the re-read trigger — the artboard itself is read through a ref, not captured here.
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const el = artboardRef.current;
+      if (!el) return;
+      const computed = getComputedStyle(el);
+      setTokenRows(
+        INSPECTED_VARS.map((name) => ({
+          name,
+          value: computed.getPropertyValue(name).trim(),
+        })).filter((row) => row.value.length > 0),
+      );
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [selectedTheme.id, mode, carrier.css]);
 
   function handleImported(theme: ImportedTheme) {
     setImportedTheme(theme);
@@ -1141,7 +1194,7 @@ export function ThemePlaygroundWorkbench() {
           onImported={handleImported}
         />
         <PreviewCanvas
-          theme={selectedTheme}
+          carrier={carrier}
           mode={mode}
           density={density}
           surface={surface}
@@ -1149,9 +1202,9 @@ export function ThemePlaygroundWorkbench() {
           onSuiteChange={setActiveSuite}
           viewport={viewport}
           onViewportChange={setViewport}
-          styleOverride={importedPreviewStyle}
+          artboardRef={artboardRef}
         />
-        <TokenInspector theme={selectedTheme} mode={mode} onThemeChange={setSelectedTheme} />
+        <TokenInspector theme={selectedTheme} rows={tokenRows} onThemeChange={setSelectedTheme} />
       </main>
     </div>
   );

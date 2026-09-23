@@ -1,12 +1,10 @@
 "use client";
 
 import { Check, Copy } from "@nebutra/icons";
-import { DEFAULT_LANGUAGE, getLanguageById } from "@nebutra/theme/languages";
 import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import { exportTokenSetAction } from "@/components/theme-playground/actions";
-import { getTokenSet } from "@/components/theme-playground/theme-token-data";
+import { exportThemeAction, exportTokenSetAction } from "@/components/theme-playground/actions";
 import { isFactoryLanguageId, useAppearance } from "./store";
 
 /**
@@ -16,43 +14,43 @@ import { isFactoryLanguageId, useAppearance } from "./store";
  */
 export function CopyThemeButton() {
   const t = useTranslations("settings.appearance.themeEditor");
-  const tPreset = useTranslations("settings.appearance.themePreset");
   const [state] = useAppearance();
   const [isPending, startTransition] = useTransition();
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
 
-  function resolveTheme(): { name: string; tokens: Record<string, unknown> } | null {
-    if (state.importedTheme) {
-      return {
-        name: state.importedTheme.name,
-        tokens: state.importedTheme.tokenSet as unknown as Record<string, unknown>,
-      };
-    }
-    const isFactory = isFactoryLanguageId(state.theme);
-    const themeId = isFactory ? DEFAULT_LANGUAGE : state.theme;
-    const tokens = getTokenSet(themeId);
-    if (!tokens) return null;
-    const language = getLanguageById(themeId);
-    const name = isFactory ? tPreset("default") : (language?.name ?? themeId);
-    return { name, tokens: tokens as unknown as Record<string, unknown> };
-  }
-
+  /**
+   * Both branches serialize through the canonical bridge: a built-in theme by
+   * id (`exportThemeAction` — factory, the mode sets and every design language,
+   * the latter off the light SSOT as its base), a custom import by its own
+   * token set. The old path read `getTokenSet`, which only knew light/dark, so
+   * copying factory or a design language failed.
+   */
   function handleCopy() {
-    const resolved = resolveTheme();
-    if (!resolved) {
-      setError(true);
-      return;
-    }
     setError(false);
     startTransition(async () => {
-      const res = await exportTokenSetAction(resolved.name, resolved.tokens);
-      if (!res.ok) {
-        setError(true);
-        return;
+      let designMd: string;
+      if (state.importedTheme) {
+        const res = await exportTokenSetAction(
+          state.importedTheme.name,
+          state.importedTheme.tokenSet as unknown as Record<string, unknown>,
+        );
+        if (!res.ok) {
+          setError(true);
+          return;
+        }
+        designMd = res.designMd;
+      } else {
+        const themeId = isFactoryLanguageId(state.theme) ? "factory" : state.theme;
+        const res = await exportThemeAction(themeId);
+        if (!res.ok) {
+          setError(true);
+          return;
+        }
+        designMd = res.export.designMd;
       }
       try {
-        await navigator.clipboard.writeText(res.designMd);
+        await navigator.clipboard.writeText(designMd);
         setCopied(true);
         window.setTimeout(() => setCopied(false), 2000);
       } catch {

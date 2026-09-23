@@ -19,8 +19,9 @@ export interface ImportReport {
 
 export interface ImportedTheme {
   /**
-   * { color, radius, fontFamily } DTCG leaves — directly renderable via
-   * getPreviewStyleFromTokenSet.
+   * { color, radius, fontFamily } DTCG leaves — compiled into the preview
+   * carrier by preview-carrier.ts (compileReferoTokens), the same path the
+   * appearance import applies with.
    */
   tokenSet: ThemeTokenSet;
   report: ImportReport;
