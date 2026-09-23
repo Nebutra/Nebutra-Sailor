@@ -121,7 +121,7 @@ export function AppShell({
           type="button"
           aria-label="Collapse navigation"
           onClick={() => onCollapsedChange?.(true)}
-          className="absolute inset-0 z-30 hidden cursor-default bg-foreground/20 backdrop-blur-[1px] md:block"
+          className="absolute inset-0 z-30 hidden cursor-default bg-foreground/25 backdrop-blur-xs md:block"
         />
       ) : null}
 
@@ -148,8 +148,7 @@ export function AppShell({
               onClick={() => setMobileOpen(true)}
               className={cn(
                 "relative inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
-                "hover:bg-muted hover:text-foreground md:hidden",
-                "focus-visible:outline-none",
+                "transition-colors duration-micro ease-brand hover:bg-muted hover:text-foreground md:hidden",
               )}
             >
               <Menu className="size-4" aria-hidden="true" />
@@ -167,8 +166,7 @@ export function AppShell({
               onClick={() => setMobileOpen(true)}
               className={cn(
                 "relative inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
-                "hover:bg-muted hover:text-foreground",
-                "focus-visible:outline-none",
+                "transition-colors duration-micro ease-brand hover:bg-muted hover:text-foreground",
               )}
             >
               <Menu className="size-4" aria-hidden="true" />

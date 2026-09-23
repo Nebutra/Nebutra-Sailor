@@ -421,7 +421,7 @@
       },
       {
         "file": "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
-        "count": 13
+        "count": 11
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/layers/page.tsx",
@@ -2046,7 +2046,7 @@
       },
       {
         "file": "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
-        "count": 5
+        "count": 2
       },
       {
         "file": "apps/kuanlan/src/components/IdPhotoStudio.tsx",

@@ -87,8 +87,11 @@ export interface SidebarNavProps {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+// Motion is tokenized (duration + ease rails) so a Brand Package can retarget
+// it; the state colors are product-owned and pinned by
+// patterns/__tests__/dashboard-surfaces-governance.test.ts.
 const ITEM_BASE_CLASSES =
-  "group flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform]";
+  "group flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform] duration-micro ease-brand";
 const ITEM_DEFAULT_CLASSES =
   "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
 const ITEM_ACTIVE_CLASSES =
@@ -154,7 +157,7 @@ function ItemContent({
       {showChevron ? (
         <ChevronRight
           className={cn(
-            "size-3.5 shrink-0 text-muted-foreground transition-transform",
+            "size-3.5 shrink-0 text-sidebar-foreground/50 transition-transform duration-micro ease-brand",
             chevronOpen && "rotate-90",
           )}
           aria-hidden="true"
