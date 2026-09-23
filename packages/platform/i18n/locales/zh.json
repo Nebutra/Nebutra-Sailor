@@ -87,7 +87,8 @@
     "progress": {
       "back": "返回",
       "stepCounter": "第 {current} 步 / 共 {total} 步",
-      "ariaLabel": "开通进度"
+      "ariaLabel": "开通进度",
+      "skip": "暂时跳过"
     },
     "workspace": {
       "title": "给工作空间起个名字",

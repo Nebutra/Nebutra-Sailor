@@ -97,7 +97,8 @@
     "progress": {
       "back": "Indietro",
       "stepCounter": "Passaggio {current} di {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Onboarding progress",
+      "skip": "Salta per ora"
     },
     "plan": {
       "title": "Scegli un piano",

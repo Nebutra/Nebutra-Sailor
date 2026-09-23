@@ -12,8 +12,9 @@
  *     - the AuthProvider interface contract (all required methods present)
  *     - conditional social provider env handling
  *
- *   Plugin paths (`better-auth/plugins/*`) are loaded via the variable-path
- *   `loadOptionalPlugin` helper so Vite skips static resolution at test time.
+ *   Plugin paths (`better-auth/plugins/*`) are imported with literal
+ *   specifiers inside getAuth(), so they are never resolved unless a test
+ *   actually constructs the auth instance.
  */
 
 import { getSystemDb } from "@nebutra/db";

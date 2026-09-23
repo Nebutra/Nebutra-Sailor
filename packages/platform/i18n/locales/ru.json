@@ -97,7 +97,8 @@
     "progress": {
       "back": "Назад",
       "stepCounter": "Шаг {current} из {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Onboarding progress",
+      "skip": "Пропустить пока"
     },
     "plan": {
       "title": "Выберите тариф",

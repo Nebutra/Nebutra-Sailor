@@ -126,9 +126,15 @@ assert(
 );
 
 const deployTargets = readText("packages/ops/preset/src/deploy-target.ts");
+// This asserts the portability capability, not one particular default: gcp
+// must stay selectable as an edge gateway, cloudflare-workers is this repo's
+// edge default, and ecs-docker must stay selectable as an origin backend even
+// though the production default moved to fly on 2026-09-22 (PR #609). The old
+// form pinned `originBackend: "ecs-docker"` as the default and went red the
+// day Fly became the default.
 includesAll(
   deployTargets,
-  ['"gcp"', 'edgeGateway: "cloudflare-workers"', 'originBackend: "ecs-docker"'],
+  ['"gcp"', 'edgeGateway: "cloudflare-workers"', 'originBackend: ["ecs-docker"'],
   "packages/ops/preset/src/deploy-target.ts",
   failures,
 );

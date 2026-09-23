@@ -182,6 +182,27 @@ describe("WizardShell", () => {
     expect(window.localStorage.getItem(ONBOARDING_STORAGE_KEY)).toBeNull();
   });
 
+  it("clears localStorage and redirects to / when 'Skip for now' is clicked on step 1", () => {
+    render(<WizardShell />);
+    const skipButton = screen.getByRole("button", { name: "onboarding.progress.skip" });
+    act(() => {
+      fireEvent.click(skipButton);
+    });
+
+    expect(pushMock).toHaveBeenCalledWith("/");
+    expect(window.localStorage.getItem(ONBOARDING_STORAGE_KEY)).toBeNull();
+  });
+
+  it("keeps the wizard-level skip available on step 2 but not on step 3", () => {
+    render(<WizardShell />);
+    fireEvent.click(screen.getByTestId("finish-step-1"));
+    expect(screen.getByRole("button", { name: "onboarding.progress.skip" })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("finish-step-2"));
+    expect(screen.queryByRole("button", { name: "onboarding.progress.skip" })).toBeNull();
+    expect(screen.getByRole("button", { name: "onboarding.plan.skip" })).toBeInTheDocument();
+  });
+
   it("clears localStorage and redirects to /choose-plan when 'Choose plan' is clicked on step 3", () => {
     window.localStorage.setItem(
       ONBOARDING_STORAGE_KEY,
