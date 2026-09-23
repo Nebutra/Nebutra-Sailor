@@ -223,7 +223,12 @@
       "subtitle": "प्लान, कोटा, और नवीनीकरण।",
       "currentPlan": "वर्तमान प्लान",
       "upgradeCta": "योजनाओं की तुलना करें",
-      "manageCta": "सदस्यता प्रबंधित करें"
+      "manageCta": "सदस्यता प्रबंधित करें",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "बिलिंग",

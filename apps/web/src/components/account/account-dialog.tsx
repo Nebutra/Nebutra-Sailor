@@ -42,6 +42,7 @@ import {
 } from "react";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { dicebearAvatarUrl } from "@/lib/avatar";
+import { UsageSummaryBlock } from "./usage-summary-block";
 
 /**
  * AccountDialog — unified account modal (Profile / Subscription / Preferences).
@@ -344,6 +345,8 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             </BrandMark>
           </div>
         </div>
+
+        <UsageSummaryBlock />
 
         <div className="grid gap-2 sm:grid-cols-2">
           <Button

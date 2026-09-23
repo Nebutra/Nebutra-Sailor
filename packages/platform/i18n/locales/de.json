@@ -223,7 +223,12 @@
       "subtitle": "Plan, Kontingent und Erneuerung.",
       "currentPlan": "Aktueller Plan",
       "upgradeCta": "Pläne vergleichen",
-      "manageCta": "Abonnement verwalten"
+      "manageCta": "Abonnement verwalten",
+      "usageTitle": "Nutzung in diesem Zeitraum",
+      "usageApiCalls": "API-Aufrufe",
+      "usageAiTokens": "KI-Tokens",
+      "usageUnavailable": "Die Nutzung ist derzeit nicht verfügbar.",
+      "usageRetry": "Erneut versuchen"
     },
     "billing": {
       "title": "Abrechnung",

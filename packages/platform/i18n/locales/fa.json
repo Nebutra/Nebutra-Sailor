@@ -223,7 +223,12 @@
       "subtitle": "پلن، سهمیه و تمدید.",
       "currentPlan": "پلن فعلی",
       "upgradeCta": "مقایسه طرح‌ها",
-      "manageCta": "مدیریت اشتراک"
+      "manageCta": "مدیریت اشتراک",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "صورتحساب",

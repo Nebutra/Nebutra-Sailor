@@ -223,7 +223,12 @@
       "subtitle": "Paket, kuota, dan perpanjangan.",
       "currentPlan": "Paket saat ini",
       "upgradeCta": "Bandingkan paket",
-      "manageCta": "Kelola langganan"
+      "manageCta": "Kelola langganan",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "Tagihan",

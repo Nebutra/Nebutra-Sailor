@@ -223,7 +223,12 @@
       "subtitle": "Тариф, квота и продление.",
       "currentPlan": "Текущий тариф",
       "upgradeCta": "Сравнить тарифы",
-      "manageCta": "Управление подпиской"
+      "manageCta": "Управление подпиской",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "Оплата",

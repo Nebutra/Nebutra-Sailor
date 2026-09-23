@@ -213,7 +213,12 @@
       "subtitle": "套餐、配额与续费。",
       "currentPlan": "当前套餐",
       "upgradeCta": "查看套餐对比",
-      "manageCta": "管理订阅"
+      "manageCta": "管理订阅",
+      "usageTitle": "本期用量",
+      "usageApiCalls": "API 调用",
+      "usageAiTokens": "AI Token",
+      "usageUnavailable": "暂时无法读取用量。",
+      "usageRetry": "重试"
     },
     "billing": {
       "title": "账单",

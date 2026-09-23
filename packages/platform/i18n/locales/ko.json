@@ -223,7 +223,12 @@
       "subtitle": "플랜, 할당량, 갱신.",
       "currentPlan": "현재 플랜",
       "upgradeCta": "플랜 비교",
-      "manageCta": "구독 관리"
+      "manageCta": "구독 관리",
+      "usageTitle": "이번 기간 사용량",
+      "usageApiCalls": "API 호출",
+      "usageAiTokens": "AI 토큰",
+      "usageUnavailable": "현재 사용량을 불러올 수 없습니다.",
+      "usageRetry": "다시 시도"
     },
     "billing": {
       "title": "청구",

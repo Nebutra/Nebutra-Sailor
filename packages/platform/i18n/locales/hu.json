@@ -223,7 +223,12 @@
       "subtitle": "Csomag, kvóta és megújítás.",
       "currentPlan": "Jelenlegi csomag",
       "upgradeCta": "Tervek összehasonlítása",
-      "manageCta": "Előfizetés kezelése"
+      "manageCta": "Előfizetés kezelése",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "Számlázás",

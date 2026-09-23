@@ -223,7 +223,12 @@
       "subtitle": "Plan, quota en verlenging.",
       "currentPlan": "Huidig plan",
       "upgradeCta": "Plannen vergelijken",
-      "manageCta": "Abonnement beheren"
+      "manageCta": "Abonnement beheren",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "Facturatie",

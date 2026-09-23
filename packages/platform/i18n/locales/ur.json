@@ -223,7 +223,12 @@
       "subtitle": "پلان، کوٹہ، اور تجدید۔",
       "currentPlan": "موجودہ پلان",
       "upgradeCta": "پلانز کا موازنہ کریں",
-      "manageCta": "سبسکرپشن مینیج کریں"
+      "manageCta": "سبسکرپشن مینیج کریں",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "بلنگ",

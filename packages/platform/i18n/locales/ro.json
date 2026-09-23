@@ -223,7 +223,12 @@
       "subtitle": "Plan, cotă și reînnoire.",
       "currentPlan": "Planul curent",
       "upgradeCta": "Compară planurile",
-      "manageCta": "Gestionează abonamentul"
+      "manageCta": "Gestionează abonamentul",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "Facturare",

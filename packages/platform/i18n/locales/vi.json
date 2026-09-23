@@ -223,7 +223,12 @@
       "subtitle": "Gói, hạn mức và gia hạn.",
       "currentPlan": "Gói hiện tại",
       "upgradeCta": "So sánh gói",
-      "manageCta": "Quản lý gói"
+      "manageCta": "Quản lý gói",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "Thanh toán",

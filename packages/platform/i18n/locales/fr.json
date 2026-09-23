@@ -223,7 +223,12 @@
       "subtitle": "Plan, quota et renouvellement.",
       "currentPlan": "Plan actuel",
       "upgradeCta": "Comparer les plans",
-      "manageCta": "Gérer l'abonnement"
+      "manageCta": "Gérer l'abonnement",
+      "usageTitle": "Utilisation sur la période",
+      "usageApiCalls": "Appels API",
+      "usageAiTokens": "Jetons IA",
+      "usageUnavailable": "L'utilisation est indisponible pour le moment.",
+      "usageRetry": "Réessayer"
     },
     "billing": {
       "title": "Facturation",

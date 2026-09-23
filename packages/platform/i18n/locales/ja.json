@@ -223,7 +223,12 @@
       "subtitle": "プラン、クォータ、および更新。",
       "currentPlan": "現在のプラン",
       "upgradeCta": "プランを比較",
-      "manageCta": "サブスクリプションを管理"
+      "manageCta": "サブスクリプションを管理",
+      "usageTitle": "今期の使用量",
+      "usageApiCalls": "API 呼び出し",
+      "usageAiTokens": "AI トークン",
+      "usageUnavailable": "現在、使用量を取得できません。",
+      "usageRetry": "再試行"
     },
     "billing": {
       "title": "請求",
