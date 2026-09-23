@@ -215,16 +215,18 @@ so each row should get one confirming `rg` before removal.
 puts it in this table. It should not be deleted. Verified independently:
 
 - Imports of the library `CopyButton`: **0**.
-- Local `function CopyButton` / `const CopyButton` definitions in app and package code: **7** —
+- Local `function CopyButton` / `const CopyButton` definitions in app and package code: **6** —
   `apps/design-docs/src/components/component-preview.tsx`,
   `apps/design-docs/src/components/tailwind-demos.tsx`,
   `apps/sailor-docs/src/components/component-preview.tsx`,
   `apps/sailor-docs/src/components/tailwind-demos.tsx`,
-  `apps/web/src/components/theme-playground/theme-playground-workbench.tsx`,
   `apps/web/src/components/growth/referral-panel.tsx`,
   `packages/design/docs-shared/src/components/gradient-demos.tsx`.
 
-That is a seven-way `手搓禁止` violation against a component that already exists, not dead code. The
+(The theme playground was on this list and has since adopted the library
+`CopyButton` — its inspector now imports `@nebutra/ui/primitives`.)
+
+That is a six-way `手搓禁止` violation against a component that already exists, not dead code. The
 action is adoption: replace all seven local definitions with the library import, then write its story.
 Its wrappers (`CopyCodeButton`, `CopyIdButton`, `CopyLinkButton`) inherit the same fate.
 
