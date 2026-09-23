@@ -97,7 +97,8 @@
     "progress": {
       "back": "돌아가기",
       "stepCounter": "{current}/{total} 단계",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Onboarding progress",
+      "skip": "지금은 건너뛰기"
     },
     "plan": {
       "title": "플랜 선택",

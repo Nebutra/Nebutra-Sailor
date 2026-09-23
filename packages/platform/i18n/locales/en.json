@@ -97,7 +97,8 @@
     "progress": {
       "back": "Back",
       "stepCounter": "Step {current} of {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Onboarding progress",
+      "skip": "Skip for now"
     },
     "workspace": {
       "title": "Name the workspace",

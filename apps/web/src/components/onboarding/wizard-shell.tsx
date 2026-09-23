@@ -158,6 +158,17 @@ export function WizardShell() {
               onSkip={() => finishOnboarding("/")}
             />
           )}
+
+          {currentStep !== 3 && (
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => finishOnboarding("/")}
+              className="mt-3 h-11 w-full"
+            >
+              {t("progress.skip")}
+            </Button>
+          )}
         </div>
       </main>
     </div>

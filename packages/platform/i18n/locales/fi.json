@@ -97,7 +97,8 @@
     "progress": {
       "back": "Takaisin",
       "stepCounter": "Vaihe {current}/{total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Onboarding progress",
+      "skip": "Skip for now"
     },
     "plan": {
       "title": "Valitse suunnitelma",

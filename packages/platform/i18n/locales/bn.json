@@ -97,7 +97,8 @@
     "progress": {
       "back": "পিছনে যান",
       "stepCounter": "মোট {total} এর মধ্যে ধাপ {current}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Onboarding progress",
+      "skip": "Skip for now"
     },
     "plan": {
       "title": "একটি প্ল্যান বেছে নিন",

@@ -97,7 +97,8 @@
     "progress": {
       "back": "ย้อนกลับ",
       "stepCounter": "ขั้นตอนที่ {current} จาก {total}",
-      "ariaLabel": "Onboarding progress"
+      "ariaLabel": "Onboarding progress",
+      "skip": "Skip for now"
     },
     "plan": {
       "title": "เลือกแพ็กเกจ",
