@@ -223,7 +223,12 @@
       "subtitle": "แผน โควตา และการต่ออายุ",
       "currentPlan": "แผนปัจจุบัน",
       "upgradeCta": "เปรียบเทียบแพ็กเกจ",
-      "manageCta": "จัดการการสมัคร"
+      "manageCta": "จัดการการสมัคร",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "การเรียกเก็บเงิน",

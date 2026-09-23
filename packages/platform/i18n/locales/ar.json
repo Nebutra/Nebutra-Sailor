@@ -223,7 +223,12 @@
       "subtitle": "الخطة، الحصة، والتجديد.",
       "currentPlan": "الخطة الحالية",
       "upgradeCta": "قارن الخطط",
-      "manageCta": "إدارة الاشتراك"
+      "manageCta": "إدارة الاشتراك",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "الفواتير",

@@ -223,7 +223,12 @@
       "subtitle": "Plan, cuota y renovación.",
       "currentPlan": "Plan actual",
       "upgradeCta": "Comparar planes",
-      "manageCta": "Administrar suscripción"
+      "manageCta": "Administrar suscripción",
+      "usageTitle": "Uso de este periodo",
+      "usageApiCalls": "Llamadas a la API",
+      "usageAiTokens": "Tokens de IA",
+      "usageUnavailable": "El uso no está disponible ahora.",
+      "usageRetry": "Reintentar"
     },
     "billing": {
       "title": "Facturación",

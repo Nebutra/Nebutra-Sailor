@@ -223,7 +223,12 @@
       "subtitle": "Suunnitelma, kiintiö ja uusiminen.",
       "currentPlan": "Nykyinen suunnitelma",
       "upgradeCta": "Vertaa suunnitelmia",
-      "manageCta": "Hallinnoi tilausta"
+      "manageCta": "Hallinnoi tilausta",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "Laskutus",

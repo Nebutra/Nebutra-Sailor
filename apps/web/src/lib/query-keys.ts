@@ -18,6 +18,11 @@
  */
 
 export const queryKeys = {
+  billingUsage: {
+    all: ["billing-usage"] as const,
+    summary: () => ["billing-usage", "summary"] as const,
+  },
+
   apiKeys: {
     all: ["api-keys"] as const,
     list: (orgId?: string) =>

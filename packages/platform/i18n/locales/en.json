@@ -223,7 +223,12 @@
       "subtitle": "Plan, quota, and renewal.",
       "currentPlan": "Current plan",
       "upgradeCta": "Compare plans",
-      "manageCta": "Manage subscription"
+      "manageCta": "Manage subscription",
+      "usageTitle": "Usage this period",
+      "usageApiCalls": "API calls",
+      "usageAiTokens": "AI tokens",
+      "usageUnavailable": "Usage is unavailable right now.",
+      "usageRetry": "Retry"
     },
     "billing": {
       "title": "Billing",
