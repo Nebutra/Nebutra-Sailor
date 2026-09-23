@@ -258,11 +258,14 @@ jobs:
               exit 1
               ;;
             www)
+              # www is a 308 onto the apex by design (apps/landing/next.config.ts
+              # canonicalises it), so the smoke follows the redirect and asserts
+              # the visitor lands on nebutra.com with 200.
               for i in 1 2 3 4 5; do
-                code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://www.nebutra.com/ || echo 000)
-                refer=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 'https://www.nebutra.com/refer?code=smoke' || echo 000)
-                echo "attempt $i apex-www=$code www-refer=$refer"
-                if [ "$code" = "200" ] && [ "$refer" = "200" ]; then
+                read -r code final < <(curl -sSL -o /dev/null -w '%{http_code} %{url_effective}\n' --max-time 25 "https://www.nebutra.com/" 2>/dev/null || echo "000 -")
+                refer=$(curl -sSL -o /dev/null -w '%{http_code}' --max-time 20 'https://www.nebutra.com/refer?code=smoke' || echo 000)
+                echo "attempt $i www=$code final=$final refer=$refer"
+                if [ "$code" = "200" ] && [ "$refer" = "200" ] && [ "$(printf '%s' "$final" | sed -E 's#^https?://([^/]+).*#\1#')" = "nebutra.com" ]; then
                   exit 0
                 fi
                 sleep 15
