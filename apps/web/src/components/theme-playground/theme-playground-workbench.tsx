@@ -249,7 +249,7 @@ function ThemeRegistryPanel({
               "w-full rounded-[var(--radius-lg)] border p-3 text-left transition",
               "bg-background/55 hover:border-primary/50 hover:bg-background/80",
               selectedTheme.id === IMPORTED_THEME_ID
-                ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,var(--color-primary),transparent_35%)]"
+                ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,hsl(var(--primary)),transparent_35%)]"
                 : "border-border/75",
             )}
             onClick={() => onSelect(importedEntry)}
@@ -284,7 +284,7 @@ function ThemeRegistryPanel({
                 "w-full rounded-[var(--radius-lg)] border p-3 text-left transition",
                 "bg-background/55 hover:border-primary/50 hover:bg-background/80",
                 active
-                  ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,var(--color-primary),transparent_35%)]"
+                  ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,hsl(var(--primary)),transparent_35%)]"
                   : "border-border/75",
               )}
               onClick={() => onSelect(theme)}
@@ -606,7 +606,7 @@ function PreviewCard({
         // The theme's --shadow-md is layered on top of the hairline ring so
         // an imported/built-in elevation token visibly takes effect on cards.
         // Fallback mirrors the original soft drop so themes without shadow tokens look unchanged.
-        "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--space-source-lg,var(--playground-pad))] text-[color:var(--color-card-foreground)]",
+        "rounded-[var(--radius-lg)] bg-card p-[var(--space-source-lg,var(--playground-pad))] text-card-foreground",
         "shadow-[0_0_0_1px_var(--edge-soft),var(--shadow-md,0_2px_8px_-2px_rgb(0_0_0/0.08))]",
         className,
       )}
@@ -635,7 +635,7 @@ function FormInput({
 }) {
   return (
     <label className="grid gap-1.5">
-      <span className="font-medium text-[11px] text-[color:var(--color-foreground)]">{label}</span>
+      <span className="font-medium text-[11px] text-foreground">{label}</span>
       {/* theme preview: bespoke recessed-well style, must bypass primitive */}
       <input
         data-allow-native
@@ -649,7 +649,7 @@ function FormInput({
         // the inset top shadow alone signals "pressed well". Top shadow is
         // visible on light (black on white) and reads as subtle depression on
         // dark (black-on-dark gives a faint inner darkening at the top edge).
-        className="h-9 rounded-[var(--radius-md)] bg-[var(--color-card)] px-3 text-[color:var(--color-foreground)] text-xs outline-none shadow-[inset_0_1px_2px_0_rgb(0_0_0/0.18)]"
+        className="h-9 rounded-[var(--radius-md)] bg-card px-3 text-foreground text-xs outline-none shadow-[inset_0_1px_2px_0_rgb(0_0_0/0.18)]"
       />
     </label>
   );
@@ -658,21 +658,19 @@ function FormInput({
 function FormsPanel() {
   return (
     <PreviewCard title="Create an account" className="mx-auto max-w-md">
-      <p className="mb-5 text-[color:var(--color-muted-foreground)] text-xs">
-        Start building in seconds.
-      </p>
+      <p className="mb-5 text-muted-foreground text-xs">Start building in seconds.</p>
       <div className="grid gap-4">
         <FormInput label="Full name" value="Ava Johnson" />
         <FormInput label="Email" value="ava.johnson@example.com" />
         <FormInput label="Password" value="************" type="password" />
-        <div className="flex items-center gap-2 text-[color:var(--color-muted-foreground)] text-xs">
-          <span className="grid size-4 place-items-center rounded-[var(--radius-sm)] bg-[var(--color-primary)] text-[color:var(--color-primary-foreground)]">
+        <div className="flex items-center gap-2 text-muted-foreground text-xs">
+          <span className="grid size-4 place-items-center rounded-[var(--radius-sm)] bg-primary text-primary-foreground">
             <Check className="size-3" />
           </span>
           I agree to the Terms of Service and Privacy Policy
         </div>
         <button
-          className="h-10 rounded-[var(--radius-md)] bg-[var(--color-primary)] px-4 font-medium text-[color:var(--color-primary-foreground)] text-sm shadow-[var(--shadow-md)]"
+          className="h-10 rounded-[var(--radius-md)] bg-primary px-4 font-medium text-primary-foreground text-sm shadow-[var(--shadow-md)]"
           type="button"
         >
           Create account
@@ -722,15 +720,12 @@ function PricingPanel() {
             <div className="font-semibold text-sm">{plan.name}</div>
             <div className="mt-3 flex items-end gap-1">
               <span className="font-bold text-2xl">{plan.price}</span>
-              <span className="text-[color:var(--color-muted-foreground)] text-xs">/month</span>
+              <span className="text-muted-foreground text-xs">/month</span>
             </div>
             <ul className="mt-4 flex-1 space-y-2 text-xs">
               {plan.items.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[color:var(--color-muted-foreground)]"
-                >
-                  <Check className="mt-0.5 size-3 shrink-0 text-[color:var(--color-primary)]" />
+                <li key={item} className="flex items-start gap-2 text-muted-foreground">
+                  <Check className="mt-0.5 size-3 shrink-0 text-primary" />
                   <span className="min-w-0 leading-5">{item}</span>
                 </li>
               ))}
@@ -739,8 +734,8 @@ function PricingPanel() {
               className={cn(
                 "mt-auto pt-5 min-h-9 w-full rounded-[var(--radius-md)] px-2 py-1.5 text-center font-medium text-xs leading-tight",
                 plan.popular
-                  ? "bg-[var(--color-primary)] text-[color:var(--color-primary-foreground)]"
-                  : "border border-[color:var(--edge-soft)] bg-[var(--color-card)] text-[color:var(--color-card-foreground)]",
+                  ? "bg-primary text-primary-foreground"
+                  : "border border-[color:var(--edge-soft)] bg-card text-card-foreground",
               )}
               type="button"
             >
@@ -767,11 +762,9 @@ function DashboardPanel() {
       <div className="theme-stats-grid gap-x-6 gap-y-3">
         {stats.map(([label, value, delta]) => (
           <div key={label} className="p-1">
-            <div className="text-[color:var(--color-muted-foreground)] text-[11px]">{label}</div>
+            <div className="text-muted-foreground text-[11px]">{label}</div>
             <div className="mt-1 font-bold text-lg">{value}</div>
-            <div className="mt-1 text-[11px] text-[color:var(--color-success)]">
-              +{delta} vs last 7 days
-            </div>
+            <div className="mt-1 text-[11px] text-success">+{delta} vs last 7 days</div>
           </div>
         ))}
       </div>
@@ -784,9 +777,7 @@ function DashboardPanel() {
               <Badge variant={index === 3 ? "purple-subtle" : "green-subtle"} size="sm">
                 {index === 3 ? "Paused" : "Active"}
               </Badge>
-              <span className="text-[color:var(--color-muted-foreground)] text-[11px]">
-                {index + 1}d ago
-              </span>
+              <span className="text-muted-foreground text-[11px]">{index + 1}d ago</span>
             </div>
           ),
         )}
@@ -799,15 +790,15 @@ function AiChatPanel() {
   return (
     <PreviewCard title="AI Assistant" className="mx-auto max-w-lg">
       <div className="mb-4 flex items-center gap-2">
-        <span className="grid size-7 place-items-center rounded-full bg-[color-mix(in_oklch,var(--color-primary),transparent_85%)] text-[color:var(--color-primary)]">
+        <span className="grid size-7 place-items-center rounded-full bg-[color-mix(in_oklch,hsl(var(--primary)),transparent_85%)] text-primary">
           <Sparkles className="size-4" />
         </span>
         <div>
           <div className="font-medium text-xs">Nebutra Agent</div>
-          <div className="text-[11px] text-[color:var(--color-success)]">Online</div>
+          <div className="text-[11px] text-success">Online</div>
         </div>
       </div>
-      <div className="ml-auto max-w-[72%] rounded-[var(--radius-lg)] bg-[var(--color-primary)] p-3 text-[color:var(--color-primary-foreground)] text-xs">
+      <div className="ml-auto max-w-[72%] rounded-[var(--radius-lg)] bg-primary p-3 text-primary-foreground text-xs">
         Can you help me analyze last month's growth?
       </div>
       {/* Assistant message bubble: foreground-mix at 6% — barely visible halo
@@ -816,14 +807,14 @@ function AiChatPanel() {
         Sure. Growth improved across activation and retention. I attached the report.
         <div className="mt-3 flex items-center justify-between rounded-[var(--radius-md)] bg-[var(--edge-soft)] p-2">
           <span className="font-mono text-[11px]">growth-report.pdf</span>
-          <Clipboard className="size-3 text-[color:var(--color-muted-foreground)]" />
+          <Clipboard className="size-3 text-muted-foreground" />
         </div>
       </div>
       <div className="mt-4 flex gap-2">
         {["Retention", "Region", "Revenue"].map((item) => (
           <button
             key={item}
-            className="rounded-full bg-[var(--edge-faint)] px-3 py-1 text-[color:var(--color-muted-foreground)] text-[11px]"
+            className="rounded-full bg-[var(--edge-faint)] px-3 py-1 text-muted-foreground text-[11px]"
             type="button"
           >
             {item}
@@ -875,31 +866,33 @@ function MiniChart({
             {bars.map((height) => (
               <span
                 key={`${title}-${height}`}
-                className="flex-1 rounded-t-[var(--radius-sm)] bg-[color-mix(in_oklch,var(--color-primary),transparent_20%)]"
+                className="flex-1 rounded-t-[var(--radius-sm)] bg-[color-mix(in_oklch,hsl(var(--primary)),transparent_20%)]"
                 style={{ height: `${height}%` }}
               />
             ))}
           </div>
         ) : (
           <>
-            <div className="absolute inset-x-3 bottom-3 h-[38%] rounded-t-full bg-[color-mix(in_oklch,var(--color-primary),transparent_85%)] blur-sm" />
+            <div className="absolute inset-x-3 bottom-3 h-[38%] rounded-t-full bg-[color-mix(in_oklch,hsl(var(--primary)),transparent_85%)] blur-sm" />
             <svg
               className="absolute inset-3 size-[calc(100%-1.5rem)]"
               viewBox="0 0 320 120"
               role="img"
               aria-label={`${title} trend`}
             >
+              {/* SVG paint goes through `style`, not presentation attributes:
+                  var() is not substituted inside an attribute value. */}
               <path
                 d="M0 88 C42 74 56 48 98 54 C146 60 156 28 204 38 C250 47 258 20 320 24"
-                fill="none"
-                stroke="var(--color-primary)"
+                style={{ stroke: "hsl(var(--primary))" }}
                 strokeLinecap="round"
                 strokeWidth="5"
+                fill="none"
               />
               {variant === "area" && (
                 <path
                   d="M0 88 C42 74 56 48 98 54 C146 60 156 28 204 38 C250 47 258 20 320 24 L320 120 L0 120 Z"
-                  fill="color-mix(in oklch, var(--color-primary), transparent 78%)"
+                  style={{ fill: "color-mix(in oklch, hsl(var(--primary)), transparent 78%)" }}
                 />
               )}
             </svg>
