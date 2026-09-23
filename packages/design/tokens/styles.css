@@ -220,12 +220,12 @@
   --ring: 222 47% 11%; /** Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring) / 0.5). */
   --sidebar: 210 40% 98%;
   --sidebar-foreground: 215 25% 27%;
-  --sidebar-primary: 228 85% 56%;
+  --sidebar-primary: 222.8 85% 55.7%; /** Current-page accent in the sidebar (icon tint + edge). Same value as --primary: the sidebar carried the superseded 228 85% 56% (#2f56ee, C 0.232), which the action-blue measurement trimmed to C 0.215. */
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 228 100% 97%;
-  --sidebar-accent-foreground: 228 85% 56%;
+  --sidebar-accent-foreground: 222.8 85% 55.7%;
   --sidebar-border: 214 32% 91%;
-  --sidebar-ring: 228 85% 56%;
+  --sidebar-ring: 222.8 85% 55.7%;
   --chart-1: 228 100% 50%;
   --chart-2: 168 91% 49%;
   --chart-3: 263 70% 66%;
@@ -549,12 +549,12 @@
   --ring: 0 0% 88%; /** Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice. */
   --sidebar: 222 16% 8%;
   --sidebar-foreground: 210 18% 94%;
-  --sidebar-primary: 228 95% 72%;
+  --sidebar-primary: 220.4 74.8% 73.5%; /** Current-page accent in the sidebar. = blue-11 (#89aaee, L* 74.0, C 0.106), the ramp's measured secondary-text tier on dark (8.62:1 on step 1). Was 228 95% 72% — 95% chroma sat outside every measured band and matched no ramp step. */
   --sidebar-primary-foreground: 222 14% 9%;
   --sidebar-accent: 228 38% 22%;
-  --sidebar-accent-foreground: 228 95% 80%;
+  --sidebar-accent-foreground: 220.5 91.5% 90.8%;
   --sidebar-border: 220 8% 18%;
-  --sidebar-ring: 228 95% 72%;
+  --sidebar-ring: 220.4 74.8% 73.5%;
   --chart-1: 228 95% 67%;
   --chart-2: 168 96% 54%;
   --chart-3: 228 100% 82%;

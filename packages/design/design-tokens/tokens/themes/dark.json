@@ -409,8 +409,9 @@
       "$type": "string"
     },
     "sidebar-primary": {
-      "$value": "228 95% 72%",
-      "$type": "string"
+      "$value": "220.4 74.8% 73.5%",
+      "$type": "string",
+      "$description": "Current-page accent in the sidebar. = blue-11 (#89aaee, L* 74.0, C 0.106), the ramp's measured secondary-text tier on dark (8.62:1 on step 1). Was 228 95% 72% — 95% chroma sat outside every measured band and matched no ramp step."
     },
     "sidebar-primary-foreground": {
       "$value": "222 14% 9%",
@@ -421,7 +422,7 @@
       "$type": "string"
     },
     "sidebar-accent-foreground": {
-      "$value": "228 95% 80%",
+      "$value": "220.5 91.5% 90.8%",
       "$type": "string"
     },
     "sidebar-border": {
@@ -429,7 +430,7 @@
       "$type": "string"
     },
     "sidebar-ring": {
-      "$value": "228 95% 72%",
+      "$value": "220.4 74.8% 73.5%",
       "$type": "string"
     },
     "chart-1": {
