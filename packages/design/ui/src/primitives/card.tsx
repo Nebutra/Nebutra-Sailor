@@ -11,7 +11,13 @@ const Card = ({
   <div
     ref={ref}
     className={cn(
-      "rounded-[var(--radius-lg)] border border-border bg-card text-card-foreground shadow-sm",
+      // Surface + elevation come from the rails a Brand Package can retarget:
+      // --radius-card, --elevation-card, and the mode-aware --edge-soft hairline.
+      // The previous `border border-border shadow-sm` was a fixed Tailwind step,
+      // so a language could change every button radius but not a card's, and
+      // dark mode drew a heavier outline than the elevation it sat on.
+      "rounded-[var(--radius-card,var(--radius-lg))] bg-card text-card-foreground",
+      "shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-card)]",
       className,
     )}
     {...props}

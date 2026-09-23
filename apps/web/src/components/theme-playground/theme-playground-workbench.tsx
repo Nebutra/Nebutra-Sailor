@@ -27,6 +27,7 @@ import {
 import {
   Badge,
   Button,
+  Checkbox,
   CopyButton,
   Input,
   Select,
@@ -41,7 +42,15 @@ import {
   ToggleGroupItem,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { type ReactNode, type RefObject, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { DesignMdExport } from "./design-md-export";
 import { DesignMdImport } from "./design-md-import";
 import type { ImportedTheme } from "./design-md-types";
@@ -633,25 +642,26 @@ function FormInput({
   value: string;
   type?: string;
 }) {
+  // The library field, not a hand-rolled <input>: it owns the focus ring,
+  // invalid state, affix layout and read-only treatment. Its geometry is a
+  // CSS-variable contract (getInputStyle merges the caller's style last), so
+  // the preview points it at the carrier's control ladder instead of the
+  // primitive's factory px — the field still changes with the design language.
   return (
-    <label className="grid gap-1.5">
-      <span className="font-medium text-[11px] text-foreground">{label}</span>
-      {/* theme preview: bespoke recessed-well style, must bypass primitive */}
-      <input
-        data-allow-native
-        type={type}
-        readOnly
-        value={value}
-        // Recessed well, not an outlined box — inset 1px hint + a tiny top inset
-        // shadow simulates "input pressed into the surface". Reads as soft and
-        // affordant; no hard outline anywhere.
-        // Input bg matches the card so there's NO color step at the edge —
-        // the inset top shadow alone signals "pressed well". Top shadow is
-        // visible on light (black on white) and reads as subtle depression on
-        // dark (black-on-dark gives a faint inner darkening at the top edge).
-        className="h-9 rounded-[var(--radius-md)] bg-card px-3 text-foreground text-xs outline-none shadow-[inset_0_1px_2px_0_rgb(0_0_0/0.18)]"
-      />
-    </label>
+    <Input
+      readOnly
+      id={`preview-${label.toLowerCase().replace(/\s+/g, "-")}`}
+      label={label}
+      type={type}
+      value={value}
+      style={
+        {
+          "--input-height": "var(--control-height-md, 2.5rem)",
+          "--input-radius": "var(--radius-inputs, var(--radius-md))",
+          "--input-font-size": "var(--control-font-size-md, 0.875rem)",
+        } as CSSProperties
+      }
+    />
   );
 }
 
@@ -664,17 +674,10 @@ function FormsPanel() {
         <FormInput label="Email" value="ava.johnson@example.com" />
         <FormInput label="Password" value="************" type="password" />
         <div className="flex items-center gap-2 text-muted-foreground text-xs">
-          <span className="grid size-4 place-items-center rounded-[var(--radius-sm)] bg-primary text-primary-foreground">
-            <Check className="size-3" />
-          </span>
-          I agree to the Terms of Service and Privacy Policy
+          <Checkbox defaultChecked aria-label="Agree to the terms" />I agree to the Terms of Service
+          and Privacy Policy
         </div>
-        <button
-          className="h-10 rounded-[var(--radius-md)] bg-primary px-4 font-medium text-primary-foreground text-sm shadow-[var(--shadow-md)]"
-          type="button"
-        >
-          Create account
-        </button>
+        <Button type="button">Create account</Button>
       </div>
     </PreviewCard>
   );
@@ -730,17 +733,14 @@ function PricingPanel() {
                 </li>
               ))}
             </ul>
-            <button
-              className={cn(
-                "mt-auto pt-5 min-h-9 w-full rounded-[var(--radius-md)] px-2 py-1.5 text-center font-medium text-xs leading-tight",
-                plan.popular
-                  ? "bg-primary text-primary-foreground"
-                  : "border border-[color:var(--edge-soft)] bg-card text-card-foreground",
-              )}
+            <Button
+              className="mt-auto w-full"
+              size="sm"
               type="button"
+              variant={plan.popular ? "default" : "outline"}
             >
               {plan.popular ? "Choose Pro" : "Get started"}
-            </button>
+            </Button>
           </div>
         ))}
       </div>
@@ -812,13 +812,9 @@ function AiChatPanel() {
       </div>
       <div className="mt-4 flex gap-2">
         {["Retention", "Region", "Revenue"].map((item) => (
-          <button
-            key={item}
-            className="rounded-full bg-[var(--edge-faint)] px-3 py-1 text-muted-foreground text-[11px]"
-            type="button"
-          >
+          <Button key={item} shape="pill" size="tiny" type="button" variant="secondary">
             {item}
-          </button>
+          </Button>
         ))}
       </div>
     </PreviewCard>
