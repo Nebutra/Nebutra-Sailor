@@ -97,7 +97,6 @@ const SHRINK_ONLY = {
     "apps/idp/src/app/oauth/login/page.tsx",
     "apps/idp/src/app/page.tsx",
     "apps/landing/src/components/landing/blog-motion-showcase.tsx",
-    "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
   ],
   /**
    * Shadows coloured with the foreground token. The one absorbed case mixes

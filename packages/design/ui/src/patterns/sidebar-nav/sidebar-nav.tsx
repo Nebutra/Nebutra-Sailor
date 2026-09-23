@@ -104,7 +104,7 @@ const ITEM_BASE_CLASSES =
 const ITEM_DEFAULT_CLASSES =
   "text-sidebar-foreground/72 hover:bg-sidebar-accent/55 hover:text-sidebar-foreground";
 const ITEM_ACTIVE_CLASSES =
-  "bg-sidebar-accent text-sidebar-foreground font-medium shadow-[inset_0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent";
+  "bg-sidebar-accent text-sidebar-foreground font-medium shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
 const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
 const ICON_CLASSES = "size-4 shrink-0";

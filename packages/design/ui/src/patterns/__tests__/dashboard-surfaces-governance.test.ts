@@ -54,7 +54,10 @@ describe("@nebutra/ui dashboard surface governance", () => {
     // thing on screen. This replaces the older `bg-sidebar-primary` fill
     // contract deliberately — see the component comment for the reasoning.
     expect(source).toContain("bg-sidebar-accent text-sidebar-foreground font-medium");
-    expect(source).toContain("shadow-[inset_0_0_0_1px_var(--sidebar-border)]");
+    // `--sidebar-border` is a bare channel triple, so the shadow colour must
+    // wrap it in hsl() — unwrapped, the whole declaration is invalid and the
+    // hairline silently never paints (lint-ui-contracts bare-channel rule).
+    expect(source).toContain("shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))]");
     expect(source).toContain('item.isActive && "text-sidebar-primary"');
     // Hover stays a step below the selected surface.
     expect(source).toContain("hover:bg-sidebar-accent/55");
