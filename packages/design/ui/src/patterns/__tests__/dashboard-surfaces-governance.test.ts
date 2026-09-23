@@ -46,9 +46,21 @@ describe("@nebutra/ui dashboard surface governance", () => {
     const source = readFileSync(SIDEBAR_NAV, "utf8");
 
     expect(source).toContain('data-ui="nebutra-sidebar-nav"');
-    expect(source).toContain("bg-sidebar-primary text-sidebar-primary-foreground");
-    expect(source).toContain("hover:bg-sidebar-accent");
     expect(source).toContain("border-sidebar-border");
+
+    // Current page = a soft surface, a hairline edge and an accent-tinted icon.
+    // The 2026 shells (Linear, Raycast) all mark position with surface and use
+    // the accent surgically; a saturated fill made the active row the loudest
+    // thing on screen. This replaces the older `bg-sidebar-primary` fill
+    // contract deliberately — see the component comment for the reasoning.
+    expect(source).toContain("bg-sidebar-accent text-sidebar-foreground font-medium");
+    expect(source).toContain("shadow-[inset_0_0_0_1px_var(--sidebar-border)]");
+    expect(source).toContain('item.isActive && "text-sidebar-primary"');
+    // Hover stays a step below the selected surface.
+    expect(source).toContain("hover:bg-sidebar-accent/55");
+    // The accent never returns as a fill on a nav row.
+    expect(source).not.toContain("bg-sidebar-primary text-sidebar-primary-foreground");
+
     expect(source).not.toMatch(/dark:(bg|border|text)-(black|white)(?:\b|\/|\[)/);
   });
 });

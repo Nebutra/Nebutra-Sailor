@@ -88,14 +88,23 @@ export interface SidebarNavProps {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 // Motion is tokenized (duration + ease rails) so a Brand Package can retarget
-// it; the state colors are product-owned and pinned by
+// it; the state treatment is pinned by
 // patterns/__tests__/dashboard-surfaces-governance.test.ts.
+//
+// The current page is a soft surface with a hairline edge and an accent-tinted
+// icon — the pattern Linear, Raycast and the 2026 app shells converged on. It
+// used to be a saturated --sidebar-primary fill with near-black ink, which made
+// the one item you are on the loudest thing on screen and read as a toy. The
+// accent now appears only on the icon, where it costs no contrast and still
+// carries the brand hue.
 const ITEM_BASE_CLASSES =
   "group flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform] duration-micro ease-brand";
+// Hover is a whisper of the selected surface, so the ladder reads
+// none -> hover -> current instead of hover == current.
 const ITEM_DEFAULT_CLASSES =
-  "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
+  "text-sidebar-foreground/72 hover:bg-sidebar-accent/55 hover:text-sidebar-foreground";
 const ITEM_ACTIVE_CLASSES =
-  "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm shadow-sidebar-primary/10 hover:bg-sidebar-primary hover:text-sidebar-primary-foreground";
+  "bg-sidebar-accent text-sidebar-foreground font-medium shadow-[inset_0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
 const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
 const ICON_CLASSES = "size-4 shrink-0";
@@ -139,7 +148,9 @@ function ItemContent({
   if (collapsed) {
     return (
       <>
-        {Icon ? <Icon className={ICON_CLASSES} /> : null}
+        {Icon ? (
+          <Icon className={cn(ICON_CLASSES, item.isActive && "text-sidebar-primary")} />
+        ) : null}
         <span className="sr-only">{item.label}</span>
       </>
     );
@@ -147,7 +158,7 @@ function ItemContent({
 
   return (
     <>
-      {Icon ? <Icon className={ICON_CLASSES} /> : null}
+      {Icon ? <Icon className={cn(ICON_CLASSES, item.isActive && "text-sidebar-primary")} /> : null}
       <span className="flex-1 truncate">{item.label}</span>
       {item.badge ? (
         <Badge variant={item.badge.tone} size="sm">

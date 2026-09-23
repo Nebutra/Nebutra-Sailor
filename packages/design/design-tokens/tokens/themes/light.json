@@ -382,8 +382,9 @@
       "$type": "string"
     },
     "sidebar-primary": {
-      "$value": "228 85% 56%",
-      "$type": "string"
+      "$value": "222.8 85% 55.7%",
+      "$type": "string",
+      "$description": "Current-page accent in the sidebar (icon tint + edge). Same value as --primary: the sidebar carried the superseded 228 85% 56% (#2f56ee, C 0.232), which the action-blue measurement trimmed to C 0.215."
     },
     "sidebar-primary-foreground": {
       "$value": "0 0% 100%",
@@ -394,7 +395,7 @@
       "$type": "string"
     },
     "sidebar-accent-foreground": {
-      "$value": "228 85% 56%",
+      "$value": "222.8 85% 55.7%",
       "$type": "string"
     },
     "sidebar-border": {
@@ -402,7 +403,7 @@
       "$type": "string"
     },
     "sidebar-ring": {
-      "$value": "228 85% 56%",
+      "$value": "222.8 85% 55.7%",
       "$type": "string"
     },
     "chart-1": {
