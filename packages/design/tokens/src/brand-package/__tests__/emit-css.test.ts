@@ -68,6 +68,44 @@ describe("emitBrandCss darkDefault binding", () => {
     assert.doesNotMatch(css, /\.dark/);
   });
 
+  it("root option scopes the carrier to a subtree (preview artboard)", () => {
+    const css = emitBrandCss(minimalBrand({ id: "cosmos", darkDefault: false }), {
+      mode: "scoped",
+      root: ".theme-preview-artboard",
+    });
+    assert.match(css, /\.theme-preview-artboard\[data-brand="cosmos"\] \{/);
+    assert.doesNotMatch(css, /html\[data-brand/);
+
+    const darkSemantic = {
+      ...minimalBrand({ id: "dual", darkDefault: false }).semantic,
+      background: "0 0% 6%",
+    };
+    const dual = emitBrandCss(
+      {
+        ...minimalBrand({ id: "dual", darkDefault: false }),
+        modes: {
+          light: { semantic: minimalBrand({ id: "dual", darkDefault: false }).semantic },
+          dark: { semantic: darkSemantic },
+        },
+      },
+      { mode: "scoped", root: ".theme-preview-artboard" },
+    );
+    assert.match(dual, /\.theme-preview-artboard\[data-brand="dual"\] \{/);
+    assert.match(dual, /\.theme-preview-artboard\.dark\[data-brand="dual"\] \{/);
+    assert.doesNotMatch(dual, /html\.dark\[data-brand/);
+  });
+
+  it("root defaults to html, so existing callers emit identical selectors", () => {
+    const withDefault = emitBrandCss(minimalBrand({ id: "notion", darkDefault: false }), {
+      mode: "scoped",
+    });
+    const withHtml = emitBrandCss(minimalBrand({ id: "notion", darkDefault: false }), {
+      mode: "scoped",
+      root: "html",
+    });
+    assert.equal(withDefault, withHtml);
+  });
+
   it("emitGlobalSkinSelector matches darkDefault contract", () => {
     assert.equal(emitGlobalSkinSelector("x", true), `:root,\n.dark,\nhtml[data-brand="x"] {`);
     assert.equal(emitGlobalSkinSelector("y", false), `:root,\nhtml[data-brand="y"] {`);

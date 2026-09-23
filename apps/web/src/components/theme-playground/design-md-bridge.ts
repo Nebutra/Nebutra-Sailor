@@ -46,8 +46,9 @@ const THEME_JSON_LOOKUP: Record<string, DesignTokenTree> = {
 // ── importDesignMdToThemeTokens ───────────────────────────────────────────────
 
 /**
- * Parse a DESIGN.md string and return a ThemeTokenSet ready for
- * getPreviewStyleFromTokenSet, plus the full ImportReport.
+ * Parse a DESIGN.md string and return a ThemeTokenSet ready for the preview
+ * carrier (preview-carrier.ts compiles it with compileReferoTokens), plus the
+ * full ImportReport.
  *
  * Propagates any Error from @google/design.md — the caller (server action) wraps it.
  */

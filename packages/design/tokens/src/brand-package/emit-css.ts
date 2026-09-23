@@ -336,32 +336,50 @@ export type EmitBrandCssMode =
 
 export interface EmitBrandCssOptions {
   /**
-   * `global` (default): `:root` + `html[data-brand]` — one import recolors the app.
+   * `global` (default): `:root` + `<root>[data-brand]` — one import recolors the app.
    * Single-mode dark packs also include `.dark`.
    * Dual-mode packs (`modes.light` + `modes.dark`) emit separate light/dark color blocks.
-   * `scoped`: only `html[data-brand]` (+ `html.dark[data-brand]` when dual).
+   * `scoped`: only `<root>[data-brand]` (+ `<root>.dark[data-brand]` when dual).
    */
   mode?: EmitBrandCssMode;
+  /**
+   * Element the carrier attaches to. Defaults to `html` — the app-level swap.
+   * A subtree preview passes its own root (e.g. `.theme-preview-artboard`) so
+   * the emitted CSS cannot leak out of the preview.
+   */
+  root?: string;
 }
 
 /** Global single-skin selector list — single-mode packs only. */
-export function emitGlobalSkinSelector(brandId: string, darkDefault: boolean): string {
+export function emitGlobalSkinSelector(
+  brandId: string,
+  darkDefault: boolean,
+  root = "html",
+): string {
   if (darkDefault) {
-    return `:root,\n.dark,\nhtml[data-brand="${brandId}"] {`;
+    return `:root,\n.dark,\n${root}[data-brand="${brandId}"] {`;
   }
-  return `:root,\nhtml[data-brand="${brandId}"] {`;
+  return `:root,\n${root}[data-brand="${brandId}"] {`;
 }
 
 /** Light mode selector (dual-mode). */
-export function emitLightModeSelector(brandId: string, mode: EmitBrandCssMode): string {
-  if (mode === "scoped") return `html[data-brand="${brandId}"] {`;
-  return `:root,\nhtml[data-brand="${brandId}"] {`;
+export function emitLightModeSelector(
+  brandId: string,
+  mode: EmitBrandCssMode,
+  root = "html",
+): string {
+  if (mode === "scoped") return `${root}[data-brand="${brandId}"] {`;
+  return `:root,\n${root}[data-brand="${brandId}"] {`;
 }
 
 /** Dark mode selector (dual-mode) — never paints light colors under .dark. */
-export function emitDarkModeSelector(brandId: string, mode: EmitBrandCssMode): string {
-  if (mode === "scoped") return `html.dark[data-brand="${brandId}"] {`;
-  return `.dark,\nhtml.dark[data-brand="${brandId}"] {`;
+export function emitDarkModeSelector(
+  brandId: string,
+  mode: EmitBrandCssMode,
+  root = "html",
+): string {
+  if (mode === "scoped") return `${root}.dark[data-brand="${brandId}"] {`;
+  return `.dark,\n${root}.dark[data-brand="${brandId}"] {`;
 }
 
 /**
@@ -526,6 +544,7 @@ function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): 
  */
 export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions = {}): string {
   const mode = options.mode ?? "global";
+  const root = options.root ?? "html";
   const b = normalizeBrandPackage(brand);
   const t = b.typography;
   const dual = isDualModeBrand(b);
@@ -592,7 +611,7 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
 
   if (dual && b.modes?.light?.semantic && b.modes?.dark?.semantic) {
     // Light block: colors + shared chrome
-    parts.push(emitLightModeSelector(b.id, mode));
+    parts.push(emitLightModeSelector(b.id, mode, root));
     parts.push(
       ...emitColorVars(b.modes.light.semantic, b.modes.light.roles),
       ...sharedChrome,
@@ -600,14 +619,14 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
       ``,
     );
     // Dark block: colors only (chrome inherits)
-    parts.push(emitDarkModeSelector(b.id, mode));
+    parts.push(emitDarkModeSelector(b.id, mode, root));
     parts.push(...emitColorVars(b.modes.dark.semantic, b.modes.dark.roles), `}`, ``);
   } else {
     // Single-mode: one selector + full block
     const selector =
       mode === "scoped"
-        ? `html[data-brand="${b.id}"] {`
-        : emitGlobalSkinSelector(b.id, b.darkDefault);
+        ? `${root}[data-brand="${b.id}"] {`
+        : emitGlobalSkinSelector(b.id, b.darkDefault, root);
     parts.push(selector);
     parts.push(...emitColorVars(b.semantic, b.roles), ...sharedChrome, `}`, ``);
   }

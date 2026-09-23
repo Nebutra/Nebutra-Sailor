@@ -1,322 +1,94 @@
 /**
- * Tests for the refactored theme-token-data module.
+ * Display-data tests for theme-token-data.
  *
- * Validates that:
- *   1. getPreviewStyleFromTokenSet builds CSS vars from an arbitrary ThemeTokenSet
- *   2. Missing keys fall back to mode defaults
- *   3. getThemePreviewStyle delegates correctly (delegation smoke test)
+ * Application is covered by preview-carrier.test.ts. These tests pin the
+ * swatch sources: factory/light/dark read the mode SSOT's `shadcn` group (the
+ * DTCG mirror of styles.css), design languages read their Brand Package, and an
+ * imported set reads its own `color` group.
  */
 
 import { describe, expect, it } from "vitest";
 import {
-  estimateLightness,
-  getPreviewStyleFromTokenSet,
-  getThemePreviewStyle,
+  channelsToCss,
+  getSwatchesFromTokenSet,
+  getThemeSwatches,
   type ThemeTokenSet,
 } from "../theme-token-data";
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-/** Cast the opaque CSSProperties to a plain record for assertions. */
-function asRecord(style: React.CSSProperties): Record<string, string> {
-  return style as Record<string, string>;
-}
-
-// ─── Suite: estimateLightness ─────────────────────────────────────────────────
-
-describe("estimateLightness", () => {
-  it("hex #fff7ed (warm white) is detected as light (> 0.5)", () => {
-    expect(estimateLightness("#fff7ed")).toBeGreaterThan(0.5);
+describe("channelsToCss", () => {
+  it("wraps HSL channel triples the way consumers do", () => {
+    expect(channelsToCss("222.8 85% 55.7%", "transparent")).toBe("hsl(222.8 85% 55.7%)");
   });
 
-  it("hex #101014 (near-black) is detected as dark (< 0.5)", () => {
-    expect(estimateLightness("#101014")).toBeLessThan(0.5);
+  it("passes complete colors through untouched", () => {
+    expect(channelsToCss("#fff7ed", "transparent")).toBe("#fff7ed");
+    expect(channelsToCss("oklch(0.98 0 0)", "transparent")).toBe("oklch(0.98 0 0)");
+    expect(channelsToCss("rgb(10 10 10)", "transparent")).toBe("rgb(10 10 10)");
+    expect(channelsToCss("hsl(200 50% 60%)", "transparent")).toBe("hsl(200 50% 60%)");
   });
 
-  it("oklch(0.16 0.005 285.9) parses the L component correctly (≈ 0.16)", () => {
-    expect(estimateLightness("oklch(0.16 0.005 285.9)")).toBeCloseTo(0.16, 2);
-  });
-
-  it("oklch(0.98 0 0) parses the L component correctly (≈ 0.98)", () => {
-    expect(estimateLightness("oklch(0.98 0 0)")).toBeCloseTo(0.98, 2);
-  });
-
-  it("unknown/unrecognised value returns 0.5 fallback", () => {
-    // hsl lightness channel is parsed when present
-    expect(estimateLightness("hsl(200 50% 60%)")).toBeCloseTo(0.6, 5);
-    expect(estimateLightness("")).toBe(0.5);
-    expect(estimateLightness("transparent")).toBe(0.5);
-  });
-
-  it("short hex #fff is detected as light", () => {
-    expect(estimateLightness("#fff")).toBeGreaterThan(0.5);
-  });
-
-  it("short hex #000 is detected as dark", () => {
-    expect(estimateLightness("#000")).toBeLessThan(0.5);
-  });
-
-  it("rgb(255,255,255) is detected as light", () => {
-    expect(estimateLightness("rgb(255, 255, 255)")).toBeGreaterThan(0.5);
-  });
-
-  it("rgb(10,10,10) is detected as dark", () => {
-    expect(estimateLightness("rgb(10, 10, 10)")).toBeLessThan(0.5);
+  it("falls back when the value is absent", () => {
+    expect(channelsToCss(undefined, "transparent")).toBe("transparent");
+    expect(channelsToCss("   ", "transparent")).toBe("transparent");
   });
 });
 
-// ─── Suite: getPreviewStyleFromTokenSet ──────────────────────────────────────
-
-describe("getPreviewStyleFromTokenSet", () => {
-  describe("color tokens", () => {
-    it("sets --color-primary from token set", () => {
-      const tokenSet: ThemeTokenSet = {
-        color: {
-          primary: { $value: "hsl(var(--primary))", $type: "color" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--color-primary"]).toBe("hsl(var(--primary))");
-    });
-
-    it("sets --color-accent from token set", () => {
-      const tokenSet: ThemeTokenSet = {
-        color: {
-          accent: { $value: "#0bf1c3", $type: "color" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--color-accent"]).toBe("#0bf1c3");
-    });
-
-    it("uses mode fallback for --color-background when token is absent (light mode)", () => {
-      // No color tokens at all — everything should fall back to mode defaults
-      const tokenSet: ThemeTokenSet = {};
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      // light mode background fallback is oklch(1 0 0) (pure white)
-      expect(style["--color-background"]).toBeDefined();
-      expect(style["--color-background"]).toContain("oklch");
-    });
-
-    it("uses mode fallback for --color-background in dark mode", () => {
-      const tokenSet: ThemeTokenSet = {};
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "dark"));
-      expect(style["--color-background"]).toBeDefined();
-      expect(style["--color-background"]).toContain("oklch");
-    });
-
-    it("always sets colorScheme to the requested mode", () => {
-      const tokenSet: ThemeTokenSet = {};
-      const lightStyle = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      const darkStyle = asRecord(getPreviewStyleFromTokenSet(tokenSet, "dark"));
-      expect(lightStyle["colorScheme"]).toBe("light");
-      expect(darkStyle["colorScheme"]).toBe("dark");
-    });
-
-    it("sets status color fallback for --color-destructive when absent", () => {
-      const tokenSet: ThemeTokenSet = {};
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--color-destructive"]).toBeDefined();
-      expect(style["--color-destructive"]).toMatch(/hsl|oklch/);
-    });
-
-    it("multiple color tokens are all emitted", () => {
-      const tokenSet: ThemeTokenSet = {
-        color: {
-          primary: { $value: "#aaa111", $type: "color" },
-          secondary: { $value: "#bbb222", $type: "color" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--color-primary"]).toBe("#aaa111");
-      expect(style["--color-secondary"]).toBe("#bbb222");
-    });
+describe("getSwatchesFromTokenSet", () => {
+  it("reads the imported set's own color group", () => {
+    const tokenSet: ThemeTokenSet = {
+      color: {
+        primary: { $value: "#ff5a1f", $type: "color" },
+        secondary: { $value: "#111111", $type: "color" },
+        accent: { $value: "#eeeeee", $type: "color" },
+        background: { $value: "#fff7ed", $type: "color" },
+        card: { $value: "#ffffff", $type: "color" },
+        border: { $value: "#e5e5e5", $type: "color" },
+      },
+    };
+    expect(getSwatchesFromTokenSet(tokenSet)).toEqual([
+      "#ff5a1f",
+      "#111111",
+      "#eeeeee",
+      "#fff7ed",
+      "#ffffff",
+      "#e5e5e5",
+    ]);
   });
 
-  describe("radius tokens", () => {
-    it("sets --radius-md from token set", () => {
-      const tokenSet: ThemeTokenSet = {
-        radius: {
-          md: { $value: "8px", $type: "dimension" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--radius-md"]).toBe("8px");
-    });
-
-    it("sets multiple radius vars", () => {
-      const tokenSet: ThemeTokenSet = {
-        radius: {
-          sm: { $value: "4px", $type: "dimension" },
-          lg: { $value: "16px", $type: "dimension" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--radius-sm"]).toBe("4px");
-      expect(style["--radius-lg"]).toBe("16px");
-    });
-
-    it("omits radius vars not in the token set", () => {
-      const tokenSet: ThemeTokenSet = {};
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--radius-sm"]).toBeUndefined();
-      expect(style["--radius-md"]).toBeUndefined();
-    });
-  });
-
-  describe("fontFamily tokens", () => {
-    it("sets --font-sans from token set", () => {
-      const tokenSet: ThemeTokenSet = {
-        fontFamily: {
-          sans: { $value: "Inter, sans-serif", $type: "fontFamily" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--font-sans"]).toBe("Inter, sans-serif");
-    });
-
-    it("emits --font-sans fallback even when absent from token set", () => {
-      // Since be56cb7b, getPreviewStyleFromTokenSet always emits --font-sans
-      // with a system-font fallback stack so the preview subtree never leaks
-      // to the app-global Geist variable. An empty token set gets the fallback.
-      const tokenSet: ThemeTokenSet = {};
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--font-sans"]).toBeDefined();
-      expect(typeof style["--font-sans"]).toBe("string");
-      expect((style["--font-sans"] as string).length).toBeGreaterThan(0);
-    });
-  });
-
-  describe("shadow tokens", () => {
-    it("sets --shadow-md from token set", () => {
-      const tokenSet: ThemeTokenSet = {
-        shadow: {
-          md: { $value: "0 2px 4px rgba(0,0,0,0.1)", $type: "shadow" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--shadow-md"]).toBe("0 2px 4px rgba(0,0,0,0.1)");
-    });
-  });
-
-  describe("surface precedence logic", () => {
-    it("light mode + light-designed theme: theme bg wins over fallback", () => {
-      // A token with L > 0.5 is "light-designed"
-      const tokenSet: ThemeTokenSet = {
-        color: {
-          background: { $value: "oklch(0.98 0 0)", $type: "color" }, // very light
-          foreground: { $value: "oklch(0.1 0 0)", $type: "color" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      // Theme value should win
-      expect(style["--color-background"]).toBe("oklch(0.98 0 0)");
-    });
-
-    it("dark mode: fallback always wins for surface colors", () => {
-      const tokenSet: ThemeTokenSet = {
-        color: {
-          // provide a background that signals it's a dark theme
-          background: { $value: "oklch(0.13 0.008 264)", $type: "color" },
-        },
-      };
-      const styleDark = asRecord(getPreviewStyleFromTokenSet(tokenSet, "dark"));
-      // In dark mode, fallback wins for surface — mode SSOT dark background
-      expect(styleDark["--color-background"]).toBe("oklch(0.14 0.005 285.9)");
-    });
-
-    // ── Bug 1 regression: imported hex backgrounds ───────────────────────────
-
-    it("light mode + hex #fff7ed bg (luminance ≈ 0.97): theme wins, --color-background is #fff7ed", () => {
-      // Mimics a DESIGN.md import that uses a warm-white hex background.
-      const tokenSet: ThemeTokenSet = {
-        color: {
-          background: { $value: "#fff7ed", $type: "color" },
-          primary: { $value: "#ff5a1f", $type: "color" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      // The hex bg has high luminance → light-designed → theme wins in light mode
-      expect(style["--color-background"]).toBe("#fff7ed");
-      // Brand color is still applied
-      expect(style["--color-primary"]).toBe("#ff5a1f");
-    });
-
-    it("dark mode + hex #fff7ed bg: dark fallback still wins (unchanged precedence)", () => {
-      const tokenSet: ThemeTokenSet = {
-        color: {
-          background: { $value: "#fff7ed", $type: "color" },
-          primary: { $value: "#ff5a1f", $type: "color" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "dark"));
-      // In dark mode the fallback always wins regardless of theme bg
-      expect(style["--color-background"]).toBe("oklch(0.14 0.005 285.9)");
-    });
-
-    it("light mode + dark hex background (#101014): fallback wins (dark-designed theme)", () => {
-      const tokenSet: ThemeTokenSet = {
-        color: {
-          background: { $value: "#101014", $type: "color" },
-        },
-      };
-      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      // Low luminance → dark-designed → light-mode fallback wins
-      expect(style["--color-background"]).toBe("oklch(1 0 0)");
-    });
+  it("drops missing keys instead of inventing fallbacks", () => {
+    expect(getSwatchesFromTokenSet({})).toEqual([]);
   });
 });
 
-// ─── Suite: getThemePreviewStyle delegation ───────────────────────────────────
+describe("getThemeSwatches", () => {
+  it("reads factory swatches from the mode SSOT, not a hardcoded palette", () => {
+    // light.json shadcn.primary is 222.8 85% 55.7% — the same value styles.css
+    // declares. The old hardcoded palette carried hsl(228 85% 56%).
+    const light = getThemeSwatches("factory", "light");
+    expect(light[0]).toBe("hsl(222.8 85% 55.7%)");
+    expect(light).toContain("hsl(0 0% 100%)");
 
-describe("getThemePreviewStyle", () => {
-  it("returns a populated style for factory (product SSOT)", () => {
-    const style = asRecord(getThemePreviewStyle("factory", "light"));
-    expect(Object.keys(style).length).toBeGreaterThan(5);
-    expect(style["--color-primary"]).toBeDefined();
-    expect(style["--color-background"]).toBeDefined();
+    const dark = getThemeSwatches("factory", "dark");
+    expect(dark[0]).toBe("hsl(222.6 74.4% 55.5%)");
+    expect(dark[0]).not.toBe(light[0]);
   });
 
-  it("returns a populated style for factory in dark mode", () => {
-    const style = asRecord(getThemePreviewStyle("factory", "dark"));
-    expect(style["--color-primary"]).toBeDefined();
-    expect(style["--color-background"]).toBeDefined();
+  it("treats the mode aliases as their own mode", () => {
+    expect(getThemeSwatches("light")[0]).toBe(getThemeSwatches("factory", "light")[0]);
+    expect(getThemeSwatches("dark")[0]).toBe(getThemeSwatches("factory", "dark")[0]);
   });
 
-  it("returns brand package preview for a design language", () => {
-    const style = asRecord(getThemePreviewStyle("linear", "light"));
-    expect(style["--color-primary"]).toBeDefined();
-    expect(style["--color-background"]).toBeDefined();
+  it("reads a design language's swatches from its Brand Package", () => {
+    // Cosmos: Ink Black #0d0d0d on Linen Canvas #f7f5f3.
+    const cosmos = getThemeSwatches("cosmos", "light");
+    expect(cosmos[0]).toBe("hsl(0 0% 5%)");
+    expect(cosmos[3]).toBe("hsl(30 20% 96%)");
+    expect(cosmos[0]).not.toBe(getThemeSwatches("factory", "light")[0]);
   });
 
-  it("falls back to factory palette for unknown themeId", () => {
-    const factoryStyle = asRecord(getThemePreviewStyle("factory", "light"));
-    const unknownStyle = asRecord(getThemePreviewStyle("does-not-exist", "light"));
-    expect(unknownStyle["--color-primary"]).toBe(factoryStyle["--color-primary"]);
-  });
-
-  it("brand language primary is distinct from factory", () => {
-    const factory = asRecord(getThemePreviewStyle("factory", "light"));
-    const linear = asRecord(getThemePreviewStyle("linear", "light"));
-    expect(linear["--color-primary"]).not.toBe(factory["--color-primary"]);
-  });
-
-  it("Theme Registry can preview the Cosmos design language", () => {
-    const style = asRecord(getThemePreviewStyle("cosmos", "light"));
-    const factory = asRecord(getThemePreviewStyle("factory", "light"));
-    // Ink Black #0d0d0d on Linen Canvas #f7f5f3 — the values in Cosmos's own
-    // style reference. v1.0.0 of the package carried #111111 / #f6f6f4, which
-    // were eyeballed off the KUANLAN app rather than read off the spec.
-    expect(style["--color-primary"]).toBe("hsl(0 0% 5%)");
-    expect(style["--color-background"]).toBe("hsl(30 20% 96%)");
-    expect(style["--color-background"]).not.toBe(factory["--color-background"]);
-  });
-
-  it("Cosmos chrome carries no accent: the brand mark is the action colour", () => {
-    const style = asRecord(getThemePreviewStyle("cosmos", "light"));
-    // The system's own don't-list forbids accent colours in chrome. v1.0.0 had
-    // Linear's acid-lime (64 89% 54%) sitting in roles.brand.
-    expect(style["--color-primary"]).toBe(style["--brand-mark"] ?? style["--color-primary"]);
-    expect(JSON.stringify(style)).not.toContain("64 89% 54%");
+  it("falls back to the factory mode palette for unknown ids", () => {
+    expect(getThemeSwatches("does-not-exist", "light")).toEqual(
+      getThemeSwatches("factory", "light"),
+    );
   });
 });
