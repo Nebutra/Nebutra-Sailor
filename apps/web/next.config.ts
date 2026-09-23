@@ -58,34 +58,14 @@ const nextConfig: NextConfig = {
   // Keep Prisma and bcryptjs out of the client bundle — they are Node-only.
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg", "bcryptjs"],
 
-  // Better Auth's optional plugins are loaded by
-  // packages/iam/auth/.../plugin-loaders.ts as
-  //   import(/* webpackIgnore: true */ `better-auth/plugins/${name}`)
-  // so webpack leaves them alone and, because the specifier is a template
-  // literal, the file tracer cannot compute a target either. With
-  // output: "standalone" the deployed node_modules contains only traced files,
-  // so every one of these was absent in production while working locally off a
-  // full node_modules.
-  //
-  // Measured before this entry: across 146 .nft.json manifests there were 1222
-  // better-auth entries and ZERO for any of these plugins.
-  //
-  // What that looked like: "工作空间创建失败" on onboarding. The organization
-  // plugin was missing, loadOptionalPlugin swallowed it as a warn, and
-  // createOrganization threw — reported as an unattributed 500.
-  //
-  // passkey is deliberately absent: better-auth 1.6.23 does not ship
-  // dist/plugins/passkey at all, so loadOptionalPlugin("passkey") fails in
-  // every environment and including it here would only add a glob that matches
-  // nothing. Anything added to loadOptionalPlugin's call sites belongs here.
-  outputFileTracingIncludes: {
-    "/**/*": [
-      "../../node_modules/.pnpm/better-auth@*/node_modules/better-auth/dist/plugins/organization/**",
-      "../../node_modules/.pnpm/better-auth@*/node_modules/better-auth/dist/plugins/two-factor/**",
-      "../../node_modules/.pnpm/better-auth@*/node_modules/better-auth/dist/plugins/magic-link/**",
-      "../../node_modules/.pnpm/better-auth@*/node_modules/better-auth/dist/plugins/captcha/**",
-    ],
-  },
+  // Better Auth's optional plugins (organization / two-factor / magic-link /
+  // captcha) are imported with literal specifiers inside @nebutra/auth, so the
+  // bundler ships them with the server build and no runtime node_modules
+  // resolution is involved. This used to be an outputFileTracingIncludes entry
+  // for the template-literal `loadOptionalPlugin` path; that approach copied
+  // the plugin files into `.pnpm/` but never recreated the top-level
+  // `node_modules/better-auth` entry, so production still failed to resolve
+  // them ("工作空间创建失败" on onboarding).
 
   // Workspace packages: src/-exporting packages need this for SWC to process
   // TypeScript; dist/-exporting packages need it for "use client" detection.

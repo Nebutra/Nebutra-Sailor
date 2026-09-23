@@ -51,7 +51,7 @@ import { buildMagicLinkCapability } from "./better-auth/magic-link";
 import { mapSession, mapUser, normalizeOrganization } from "./better-auth/mappers";
 import { buildOrganizationsCapability } from "./better-auth/organization";
 import { buildPasskeysCapability } from "./better-auth/passkey";
-import { loadBetterAuthOneTapPlugin, loadOptionalPlugin } from "./better-auth/plugin-loaders";
+import { loadBetterAuthOneTapPlugin } from "./better-auth/plugin-loaders";
 import { resolveBetterAuthPrismaClient } from "./better-auth/prisma";
 import { buildTwoFactorCapability } from "./better-auth/totp";
 import { resolveBetterAuthTrustedOrigins } from "./better-auth/trusted-origins";
@@ -158,28 +158,29 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     const { betterAuth } = await import("better-auth");
     const { prismaAdapter } = await import("better-auth/adapters/prisma");
 
-    // Plugin paths are routed through `loadOptionalPlugin` so that bundlers
-    // (Vite/Turbopack) treat them as runtime-only — necessary because some
-    // plugin paths (e.g. `passkey`) may be missing from the installed
-    // better-auth's `exports` map. Static resolution would fail at build
-    // time even though the runtime try/catch is meant to handle it.
+    // Plugin specifiers must be literals so the bundler ships them with the
+    // server build. The previous parameterised path
+    // (`import(/* webpackIgnore */ \`better-auth/plugins/${name}\`)`) resolved
+    // against node_modules at runtime, which the standalone deploy does not
+    // ship — organization silently failed to mount in production and
+    // createOrganization threw ("工作空间创建失败" on onboarding). The barrel is
+    // the exported entry point that covers every plugin we mount; the
+    // `./plugins/captcha` subpath is not in better-auth 1.6.23's `exports` map
+    // at all.
+    const { captcha, magicLink, organization, twoFactor } = await import("better-auth/plugins");
 
-    // Dynamically import the organization plugin — it may not be available
     let orgPlugin: BetterAuthPlugin | undefined;
     try {
-      const orgModule = await loadOptionalPlugin("organization");
-      orgPlugin = (orgModule as { organization: () => BetterAuthPlugin }).organization();
+      orgPlugin = organization();
     } catch {
       logger.warn(
         "Better Auth: organization plugin not available — multi-tenant features will be stubbed.",
       );
     }
 
-    // Dynamically import the twoFactor plugin — gracefully degrade if absent
     let twoFactorPlugin: BetterAuthPlugin | undefined;
     try {
-      const twoFactorModule = await loadOptionalPlugin("two-factor");
-      twoFactorPlugin = (twoFactorModule as { twoFactor: () => BetterAuthPlugin }).twoFactor();
+      twoFactorPlugin = twoFactor();
     } catch {
       logger.warn(
         "Better Auth: two-factor plugin not available — 2FA endpoints (/api/auth/two-factor/*) will not be exposed.",
@@ -217,14 +218,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     const turnstileSecret = process.env.TURNSTILE_SECRET_KEY ?? process.env.TURNSTILE_SECRET;
     if (turnstileSecret) {
       try {
-        const captchaModule = (await loadOptionalPlugin("captcha")) as {
-          captcha: (opts: {
-            provider: "cloudflare-turnstile";
-            secretKey: string;
-            endpoints?: string[];
-          }) => BetterAuthPlugin;
-        };
-        captchaPlugin = captchaModule.captcha({
+        captchaPlugin = captcha({
           provider: "cloudflare-turnstile",
           secretKey: turnstileSecret,
         });
@@ -233,18 +227,12 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       }
     }
 
-    // Dynamically import the magic-link plugin — gracefully degrade if absent
     let magicLinkPlugin: BetterAuthPlugin | undefined;
     try {
-      const magicLinkModule = (await loadOptionalPlugin("magic-link")) as {
-        magicLink: (opts: {
-          sendMagicLink: (args: { email: string; url: string }) => Promise<void>;
-        }) => BetterAuthPlugin;
-      };
       // The magic-link plugin requires a `sendMagicLink` callback. When not configured,
       // we register a no-op that logs a warning so endpoints still mount but operators
       // know to wire a real email transport.
-      magicLinkPlugin = magicLinkModule.magicLink({
+      magicLinkPlugin = magicLink({
         sendMagicLink: async ({ email, url }: { email: string; url: string }) => {
           try {
             const { sendMagicLinkEmail } = await import("@nebutra/email");
