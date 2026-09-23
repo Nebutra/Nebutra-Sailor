@@ -508,6 +508,7 @@ function PreviewCanvas({
   viewport,
   onViewportChange,
   artboardRef,
+  nonce,
 }: {
   carrier: PreviewCarrier;
   mode: ThemeMode;
@@ -518,6 +519,7 @@ function PreviewCanvas({
   viewport: ViewportId;
   onViewportChange: (viewport: ViewportId) => void;
   artboardRef: RefObject<HTMLDivElement | null>;
+  nonce?: string;
 }) {
   const { width: viewportWidth, height: viewportHeight } = viewportSpec[viewport];
 
@@ -567,7 +569,9 @@ function PreviewCanvas({
             densityScale[density],
           )}
         >
-          {carrier.css ? <style>{carrier.css}</style> : null}
+          {/* CSP: the dashboard allows inline <style> only with the request
+              nonce (style-src 'self' 'nonce-…'), so the carrier must carry it. */}
+          {carrier.css ? <style nonce={nonce}>{carrier.css}</style> : null}
           <div className="theme-preview-grid gap-[var(--space-source-md,var(--playground-gap))] p-[var(--space-source-lg,var(--playground-pad))]">
             {activeSuite === "forms" ? <FormsPanel /> : null}
             {activeSuite === "pricing" ? <PricingPanel /> : null}
@@ -1105,7 +1109,7 @@ function makeImportedRegistryEntry(imported: ImportedTheme): PlaygroundTheme {
   };
 }
 
-export function ThemePlaygroundWorkbench() {
+export function ThemePlaygroundWorkbench({ nonce }: { nonce?: string }) {
   const [selectedTheme, setSelectedTheme] = useState<PlaygroundTheme>(() => {
     const defaultTheme =
       DESIGN_LANGUAGES.find((theme) => theme.id === DEFAULT_LANGUAGE) ?? DESIGN_LANGUAGES[0];
@@ -1203,6 +1207,7 @@ export function ThemePlaygroundWorkbench() {
           viewport={viewport}
           onViewportChange={setViewport}
           artboardRef={artboardRef}
+          nonce={nonce}
         />
         <TokenInspector theme={selectedTheme} rows={tokenRows} onThemeChange={setSelectedTheme} />
       </main>
