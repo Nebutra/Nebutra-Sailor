@@ -348,10 +348,13 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
 
         <UsageSummaryBlock />
 
+        {/* Both rows ride the same control height (--control-height-md): the
+            primary at its default Button size, the Entity row pinned to it with
+            its own vertical padding removed. They used to be 32px and 44px —
+            a pair of side-by-side actions at two heights reads as two systems. */}
         <div className="grid gap-2 sm:grid-cols-2">
           <Button
             className="group w-full justify-between"
-            size="sm"
             type="button"
             onClick={onUpgrade}
             suffix={
@@ -364,7 +367,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             as="button"
             chevron
             onClick={onManage}
-            className="rounded-[var(--radius-lg)] border border-border bg-card hover:bg-accent/40"
+            className="h-[var(--control-height-md,2.5rem)] rounded-[var(--radius-lg)] border border-border bg-card py-0 hover:bg-accent/40"
             left={<CreditCard className="h-4 w-4 text-muted-foreground" aria-hidden="true" />}
           >
             <Entity.Content title={t("subscription.manageCta")} />
