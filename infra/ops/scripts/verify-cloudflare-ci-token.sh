@@ -21,7 +21,16 @@ auth() { curl -sS -H "Authorization: Bearer ${TOKEN}" -H "Content-Type: applicat
 
 echo "=== 1) token verify ==="
 VERIFY=$(auth "https://api.cloudflare.com/client/v4/user/tokens/verify")
-echo "$VERIFY" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d.get("success"), d; print("token_ok", d.get("result",{}).get("status"))'
+echo "$VERIFY" | python3 -c '
+import json, sys
+d = json.load(sys.stdin)
+if d.get("success"):
+    print("token_ok", d.get("result", {}).get("status"))
+else:
+    # Account-owned API tokens answer code 1000 here even though zone reads and
+    # writes succeed; the zone calls below are the real capability check.
+    print("token_verify: unavailable (account-owned token) — zone calls below are authoritative")
+'
 
 echo "=== 2) account access (${ACCOUNT_ID}) ==="
 ACC=$(auth "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}")

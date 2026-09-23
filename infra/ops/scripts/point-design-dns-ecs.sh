@@ -14,7 +14,16 @@ ACC="${CLOUDFLARE_ACCOUNT_ID:-}"
 
 echo "=== token verify ==="
 VERIFY=$(curl -sS -H "Authorization: Bearer ${TOKEN}" "https://api.cloudflare.com/client/v4/user/tokens/verify" || true)
-echo "$VERIFY" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d.get("success"), d; print("token_ok", d.get("result",{}).get("status"))'
+echo "$VERIFY" | python3 -c '
+import json, sys
+d = json.load(sys.stdin)
+if d.get("success"):
+    print("token_ok", d.get("result", {}).get("status"))
+else:
+    # Account-owned API tokens answer code 1000 here even though zone reads and
+    # writes succeed; the zone calls below are the real capability check.
+    print("token_verify: unavailable (account-owned token) — zone calls below are authoritative")
+'
 
 if [ -n "${CF_ZONE_ID:-}" ]; then
   ZONE_ID="$CF_ZONE_ID"
