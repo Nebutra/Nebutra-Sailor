@@ -135,13 +135,13 @@ import { NebutraThemeProvider } from "@nebutra/ui";
 
 | Token | Meaning | Light value |
 |-------|---------|------------|
-| `--neutral-1` | App background | #ffffff |
-| `--neutral-2` | Subtle background | #f8fafc |
-| `--neutral-7` | Default border | #96a3b5 |
-| `--neutral-11` | Secondary text | #334155 |
-| `--neutral-12` | Primary text | #0f172a |
-| `--primary` | **Action fill** — the one to reach for | `222.8 85% 55.7%` → #2e65ee |
+| `--background` | App canvas (House gray-50, cards sit on it in white) | `210 20% 98%` → #f9fafb |
+| `--neutral-12` | Primary text | #18191c |
+| `--muted-foreground` | Secondary text (4.75:1 on white) | `220 2.6% 45.5%` → #717377 |
+| `--border` | Default border | `225 8% 90.2%` → #e4e5e8 |
+| `--primary` | **Action fill = ink** — the one to reach for | `225 7.7% 10.2%` → #18191c |
 | `--primary-foreground` | Label on the action fill | #ffffff |
+| `--ring` | **The House blue**: focus, selection, links — the one saturated hue on a product screen | `222.8 85% 55.7%` → #2e65ee |
 | `--blue-3` | Primary component bg (tint) | #bac8ff |
 | `--brand-gradient` | Blue→Cyan gradient | 135deg |
 
@@ -151,6 +151,9 @@ import { NebutraThemeProvider } from "@nebutra/ui";
 |-------|-------|-------------------------------|
 | `--blue-9` / `--brand-primary` | #0033FE | The **VI identity lock**. OKLCH chroma 0.290 — 23% beyond the most saturated primary any comparable product ships, and white on it reads 7.23:1 where the field sits at 4.5–5.2. It belongs to the logo, the favicon and print. It reached 31 component call sites across 17 files because this table used to call it "Primary solid fill", including the sign-in, sign-up and phone-login buttons. Use `--primary`. |
 | `--cyan-9` / `--brand-accent` | #0BF1C3 | A **bright** accent: L\* 85.4, so it takes **dark** ink, not white. White on it is 1.46:1. Pair it with `--neutral-12` (12.23:1). Treat it the way Linear treats acid-lime — sparingly, and never as a fill that carries white text. |
+
+House grays are OKLCH hue 264, chroma ≤ 0.007 (2026-09-24; were Tailwind Slate). The type
+scale lives in `core.json:type`: every `text-*` step carries its own line-height and tracking.
 
 Use `bg-primary text-primary-foreground` rather than either of them. `--primary` is a
 bare HSL triple, so hand-written CSS needs `hsl(var(--primary))` — see the slot-type

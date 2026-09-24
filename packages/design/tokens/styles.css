@@ -47,17 +47,17 @@
   --nebutra-cyan-800: #057963;
   --nebutra-cyan-900: #035143;
   --nebutra-cyan-950: #012923;
-  --nebutra-neutral-50: #f8fafc;
-  --nebutra-neutral-100: #f1f5f9;
-  --nebutra-neutral-200: #e2e8f0;
-  --nebutra-neutral-300: #cbd5e1;
-  --nebutra-neutral-400: #94a3b8;
-  --nebutra-neutral-500: #64748b;
-  --nebutra-neutral-600: #475569;
-  --nebutra-neutral-700: #334155;
-  --nebutra-neutral-800: #1e293b;
-  --nebutra-neutral-900: #0f172a;
-  --nebutra-neutral-950: #020617;
+  --nebutra-neutral-50: #f9fafb;
+  --nebutra-neutral-100: #f3f4f6;
+  --nebutra-neutral-200: #e4e5e8;
+  --nebutra-neutral-300: #d2d4d8;
+  --nebutra-neutral-400: #9fa1a5;
+  --nebutra-neutral-500: #717377;
+  --nebutra-neutral-600: #515357;
+  --nebutra-neutral-700: #3f4044;
+  --nebutra-neutral-800: #26272a;
+  --nebutra-neutral-900: #18191c;
+  --nebutra-neutral-950: #0b0c0d;
   --nebutra-gray-50: #fafafa;
   --nebutra-gray-100: #f5f5f5;
   --nebutra-gray-200: #e5e5e5;
@@ -96,9 +96,54 @@
   --tracking-display: -0.04em; /** Hero H1 */
   --tracking-heading: -0.03em; /** Section H2/H3 */
   --tracking-tight: -0.015em; /** Body emphasis */
-  --tracking-label: 0.06em; /** Micro-caps / section labels — positive tracking keeps small uppercase legible without the loose 2020-era 0.1em. */
+  --tracking-label: 0.07em; /** Uppercase micro-labels. 0.07em is Vercel's measured eyebrow value (0.071em); open tracking keeps small caps legible. */
   --leading-display: 1.05;
   --leading-heading: 1.15;
+  --type-2xs-size: 0.6875rem;
+  --type-2xs-leading: 1.45;
+  --type-2xs-tracking: 0.01em;
+  --type-xs-size: 0.75rem;
+  --type-xs-leading: 1.4;
+  --type-xs-tracking: 0.005em;
+  --type-ui-size: 0.8125rem;
+  --type-ui-leading: 1.45;
+  --type-ui-tracking: 0em;
+  --type-sm-size: 0.875rem;
+  --type-sm-leading: 1.5;
+  --type-sm-tracking: 0em;
+  --type-base-size: 1rem;
+  --type-base-leading: 1.6;
+  --type-base-tracking: -0.005em;
+  --type-lg-size: 1.125rem;
+  --type-lg-leading: 1.55;
+  --type-lg-tracking: -0.01em;
+  --type-xl-size: 1.25rem;
+  --type-xl-leading: 1.45;
+  --type-xl-tracking: -0.012em;
+  --type-2xl-size: 1.5rem;
+  --type-2xl-leading: 1.33;
+  --type-2xl-tracking: -0.015em;
+  --type-3xl-size: 1.875rem;
+  --type-3xl-leading: 1.25;
+  --type-3xl-tracking: -0.02em;
+  --type-4xl-size: 2.25rem;
+  --type-4xl-leading: 1.15;
+  --type-4xl-tracking: -0.022em;
+  --type-5xl-size: 3rem;
+  --type-5xl-leading: 1.08;
+  --type-5xl-tracking: -0.028em;
+  --type-6xl-size: 3.75rem;
+  --type-6xl-leading: 1.04;
+  --type-6xl-tracking: -0.032em;
+  --type-7xl-size: 4.5rem;
+  --type-7xl-leading: 1;
+  --type-7xl-tracking: -0.035em;
+  --type-8xl-size: 6rem;
+  --type-8xl-leading: 1;
+  --type-8xl-tracking: -0.04em;
+  --type-9xl-size: 8rem;
+  --type-9xl-leading: 1;
+  --type-9xl-tracking: -0.045em;
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
   --overlay-faint: rgb(0 0 0 / 0.06); /** Light-mode faint overlay (6% black) */
   --font-sans:
@@ -154,17 +199,17 @@
   --motion-duration-cinematic: 500ms;
   --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4); /** Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css. */
   --neutral-1: #ffffff; /** app background */
-  --neutral-2: #f8fafc; /** subtle background */
-  --neutral-3: #f1f5f9; /** component bg default */
-  --neutral-4: #e2e8f0; /** component bg hover */
-  --neutral-5: #cbd5e1; /** component bg active */
-  --neutral-6: #b0bccb; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp step5 → step9 at t=0.25. The $value here is a placeholder anchor only; the preprocessor overwrites it. */
-  --neutral-7: #96a3b5; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
-  --neutral-8: #7d8ba0; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
-  --neutral-9: #64748b; /** solid fill */
-  --neutral-10: #475569; /** solid fill hover */
-  --neutral-11: #334155; /** secondary text */
-  --neutral-12: #0f172a; /** primary text */
+  --neutral-2: #f9fafb; /** subtle background */
+  --neutral-3: #f3f4f6; /** component bg default */
+  --neutral-4: #e4e5e8; /** component bg hover */
+  --neutral-5: #d2d4d8; /** component bg active */
+  --neutral-6: #b9bbbf; /** subtle border — DERIVED at build time (scripts/derive-border-tier.mjs): OKLab lerp step5 → step9 at t=0.25. The $value here is a placeholder anchor only; the preprocessor overwrites it. */
+  --neutral-7: #a0a2a6; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50. */
+  --neutral-8: #888a8e; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75. */
+  --neutral-9: #717377; /** solid fill */
+  --neutral-10: #515357; /** solid fill hover */
+  --neutral-11: #3f4044; /** secondary text */
+  --neutral-12: #18191c; /** primary text */
   --blue-1: #fafcfe; /** app tint — L* 99.01, C 0.003, hue 264. Radix blue-1 sits at L* 99.31 C 0.003. */
   --blue-2: #f2f6fd; /** subtle background — L* 97.21, C 0.010. */
   --blue-3: #e7eefc; /** component background default — L* 94.79, C 0.020. */
@@ -191,20 +236,20 @@
   --cyan-11: #027a61; /** secondary text — L* 51.64, C 0.100. 5.17:1 on step 1. */
   --cyan-12: #004133; /** primary text — L* 33.45, C 0.065. 11.35:1 on step 1. */
   --cyan-contrast: #0d2b25; /** Label ink for the bright fill tier. Absolute near-black, identical in both modes, carrying a trace of the scale hue. A bright fill needs an explicit dark ink; comparing white against the scale's own step 12 picks white in dark mode, where step 12 is light, and measures 1.52:1. 10.35:1 on step 9, 9.40:1 on step 10. */
-  --background: 0 0% 100%; /** HSL channel triple — consume via hsl(var(--background)) */
-  --foreground: 222 47% 11%;
+  --background: 210 20% 98%; /** House canvas. Light is gray-50 under white cards (two-surface layering, as Vercel #fafafa/#fff); dark is OKLCH L 0.16, inside the near-black band every reference measures (Linear L 0.14, Raycast #040506). */
+  --foreground: 225 7.7% 10.2%;
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
+  --card-foreground: 225 7.7% 10.2%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --primary: 222.8 85% 55.7%; /** Product action blue. Derived, not borrowed: hue 264 is the VI hue, L* and C were chosen inside the band the industry actually ships (measured OKLCH C 0.167-0.235, L* 54-67 across Vercel, Stripe, Linear, GitHub, Tailwind, Radix, Figma, Notion). #2e65ee = L*55.5 C0.215, white label 4.99:1. The previous 228 85% 56% (#2f56ee, C0.232) also passed at 5.70:1 — this trims it to the middle of the band rather than its top edge. The VI lock --blue-9 (#0033FE, C0.290) is 23% above anything in that band and must never surface on a component. */
+  --popover-foreground: 225 7.7% 10.2%;
+  --primary: 225 7.7% 10.2%; /** House action fill = ink, not blue (owner decision 2026-09-24). Every measured reference ships a solid near-black primary (Vercel #171717, Figma #000) and keeps its one saturated hue for a single signal. Blue now lives on --ring (focus, selection) only. */
   --primary-foreground: 0 0% 100%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222 47% 11%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 25% 45%;
-  --accent: 228 100% 97%;
-  --accent-foreground: 228 85% 56%; /** Softer brand blue — desaturated to match --primary, avoids 100% saturation glare on focus/accent */
+  --secondary: 220 14.3% 95.9%;
+  --secondary-foreground: 225 7.7% 10.2%;
+  --muted: 220 14.3% 95.9%;
+  --muted-foreground: 220 2.6% 45.5%;
+  --accent: 220 14.3% 95.9%;
+  --accent-foreground: 225 7.7% 10.2%; /** Softer brand blue — desaturated to match --primary, avoids 100% saturation glare on focus/accent */
   --destructive: 0 84% 45%;
   --destructive-foreground: 0 0% 100%;
   --destructive-strong: 0 84% 45%; /** Red as FOREGROUND. In light mode --destructive already passes (5.42:1 on white), so this equals it; the token exists so consumers reference one name across themes. In DARK, --destructive is 0 63% 38% = 2.15:1 on --card, unreadable as text — see dark.json. Mirrors --warning-strong. */
@@ -216,16 +261,16 @@
   --warning-strong: 38 92% 30%; /** Amber as FOREGROUND on a light surface. --warning is a fill: at 38 92% 50% it is 2.04:1 against --neutral-2, so it is unreadable as text or as an icon stroke. This darkened step is 5.17:1, which sits between --success (4.92) and --destructive (5.19) so the three status colours read with the same weight. Use --warning for fills with --warning-foreground on top; use this for amber text and icons. Destructive and success need no equivalent — they already pass AA as foreground. */
   --info: 228 85% 56%;
   --info-foreground: 0 0% 100%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 222 47% 11%; /** Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring)). */
-  --sidebar: 210 40% 98%;
-  --sidebar-foreground: 215 25% 27%;
-  --sidebar-primary: 222.8 85% 55.7%; /** Current-page accent in the sidebar (icon tint + edge). Same value as --primary: the sidebar carried the superseded 228 85% 56% (#2f56ee, C 0.232), which the action-blue measurement trimmed to C 0.215. */
+  --border: 225 8% 90.2%;
+  --input: 225 8% 90.2%;
+  --ring: 222.8 85% 55.7%; /** The House blue. Focus rings, selection and links — the one saturated hue on a product screen. #2e65ee light / #6b93f5 dark. */
+  --sidebar: 210 20% 98%;
+  --sidebar-foreground: 225 7.7% 10.2%;
+  --sidebar-primary: 225 7.7% 10.2%; /** Current-page accent in the sidebar (icon tint + edge). Same value as --primary: the sidebar carried the superseded 228 85% 56% (#2f56ee, C 0.232), which the action-blue measurement trimmed to C 0.215. */
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 228 100% 97%;
-  --sidebar-accent-foreground: 222.8 85% 55.7%;
-  --sidebar-border: 214 32% 91%;
+  --sidebar-accent: 220 14.3% 95.9%;
+  --sidebar-accent-foreground: 225 7.7% 10.2%;
+  --sidebar-border: 225 8% 90.2%;
   --sidebar-ring: 222.8 85% 55.7%;
   --chart-1: 228 100% 50%;
   --chart-2: 168 91% 49%;
@@ -375,17 +420,17 @@
   --nebutra-cyan-800: #057963;
   --nebutra-cyan-900: #035143;
   --nebutra-cyan-950: #012923;
-  --nebutra-neutral-50: #f8fafc;
-  --nebutra-neutral-100: #f1f5f9;
-  --nebutra-neutral-200: #e2e8f0;
-  --nebutra-neutral-300: #cbd5e1;
-  --nebutra-neutral-400: #94a3b8;
-  --nebutra-neutral-500: #64748b;
-  --nebutra-neutral-600: #475569;
-  --nebutra-neutral-700: #334155;
-  --nebutra-neutral-800: #1e293b;
-  --nebutra-neutral-900: #0f172a;
-  --nebutra-neutral-950: #020617;
+  --nebutra-neutral-50: #f9fafb;
+  --nebutra-neutral-100: #f3f4f6;
+  --nebutra-neutral-200: #e4e5e8;
+  --nebutra-neutral-300: #d2d4d8;
+  --nebutra-neutral-400: #9fa1a5;
+  --nebutra-neutral-500: #717377;
+  --nebutra-neutral-600: #515357;
+  --nebutra-neutral-700: #3f4044;
+  --nebutra-neutral-800: #26272a;
+  --nebutra-neutral-900: #18191c;
+  --nebutra-neutral-950: #0b0c0d;
   --nebutra-gray-50: #fafafa;
   --nebutra-gray-100: #f5f5f5;
   --nebutra-gray-200: #e5e5e5;
@@ -424,9 +469,54 @@
   --tracking-display: -0.04em; /** Hero H1 */
   --tracking-heading: -0.03em; /** Section H2/H3 */
   --tracking-tight: -0.015em; /** Body emphasis */
-  --tracking-label: 0.06em; /** Micro-caps / section labels — positive tracking keeps small uppercase legible without the loose 2020-era 0.1em. */
+  --tracking-label: 0.07em; /** Uppercase micro-labels. 0.07em is Vercel's measured eyebrow value (0.071em); open tracking keeps small caps legible. */
   --leading-display: 1.05;
   --leading-heading: 1.15;
+  --type-2xs-size: 0.6875rem;
+  --type-2xs-leading: 1.45;
+  --type-2xs-tracking: 0.01em;
+  --type-xs-size: 0.75rem;
+  --type-xs-leading: 1.4;
+  --type-xs-tracking: 0.005em;
+  --type-ui-size: 0.8125rem;
+  --type-ui-leading: 1.45;
+  --type-ui-tracking: 0em;
+  --type-sm-size: 0.875rem;
+  --type-sm-leading: 1.5;
+  --type-sm-tracking: 0em;
+  --type-base-size: 1rem;
+  --type-base-leading: 1.6;
+  --type-base-tracking: -0.005em;
+  --type-lg-size: 1.125rem;
+  --type-lg-leading: 1.55;
+  --type-lg-tracking: -0.01em;
+  --type-xl-size: 1.25rem;
+  --type-xl-leading: 1.45;
+  --type-xl-tracking: -0.012em;
+  --type-2xl-size: 1.5rem;
+  --type-2xl-leading: 1.33;
+  --type-2xl-tracking: -0.015em;
+  --type-3xl-size: 1.875rem;
+  --type-3xl-leading: 1.25;
+  --type-3xl-tracking: -0.02em;
+  --type-4xl-size: 2.25rem;
+  --type-4xl-leading: 1.15;
+  --type-4xl-tracking: -0.022em;
+  --type-5xl-size: 3rem;
+  --type-5xl-leading: 1.08;
+  --type-5xl-tracking: -0.028em;
+  --type-6xl-size: 3.75rem;
+  --type-6xl-leading: 1.04;
+  --type-6xl-tracking: -0.032em;
+  --type-7xl-size: 4.5rem;
+  --type-7xl-leading: 1;
+  --type-7xl-tracking: -0.035em;
+  --type-8xl-size: 6rem;
+  --type-8xl-leading: 1;
+  --type-8xl-tracking: -0.04em;
+  --type-9xl-size: 8rem;
+  --type-9xl-leading: 1;
+  --type-9xl-tracking: -0.045em;
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.06); /** Hairline override — more visible on dark background */
   --overlay-faint: rgb(
     255 255 255 / 0.06
@@ -483,18 +573,18 @@
   --motion-duration-reveal: 300ms;
   --motion-duration-cinematic: 500ms;
   --focus-ring: 0 0 0 2px hsl(var(--ring) / 0.4); /** Single-layer translucent focus ring (2026 pattern). Legacy box-shadow consumers stay compatible; modern surfaces should prefer the global :focus-visible outline rule in static/base.css. */
-  --neutral-1: #020617;
-  --neutral-2: #0f172a;
-  --neutral-3: #1e293b;
-  --neutral-4: #334155;
-  --neutral-5: #475569;
+  --neutral-1: #0b0c0d;
+  --neutral-2: #18191c;
+  --neutral-3: #26272a;
+  --neutral-4: #3f4044;
+  --neutral-5: #515357;
   --neutral-6: #666666; /** subtle border — DERIVED: OKLab lerp step5 → step9 at t=0.25, chroma forced to 0. The achromatic result is deliberate and preserves the documented intent of color.nebutra-gray ('used where blue undertone clashes — primarily dark-mode borders, dividers, elevation hairlines'). What was broken was the LIGHTNESS: gray-900/800/700 are darker than the slate background tier they sit above, so the border read as a hole rather than a hairline. */
-  --neutral-7: #7a7a7a; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50, chroma 0. */
+  --neutral-7: #797979; /** default border — DERIVED: OKLab lerp step5 → step9 at t=0.50, chroma 0. */
   --neutral-8: #8d8d8d; /** hovered border — DERIVED: OKLab lerp step5 → step9 at t=0.75, chroma 0. */
-  --neutral-9: #94a3b8;
-  --neutral-10: #cbd5e1;
-  --neutral-11: #e2e8f0;
-  --neutral-12: #f8fafc;
+  --neutral-9: #9fa1a5;
+  --neutral-10: #d2d4d8;
+  --neutral-11: #e4e5e8;
+  --neutral-12: #f9fafb;
   --blue-1: #030815; /** app tint — L* 13.59, C 0.031, hue 264. */
   --blue-2: #060f25; /** subtle background — L* 17.43, C 0.048. */
   --blue-3: #09183b; /** component background default — L* 22.04, C 0.071. */
@@ -521,20 +611,20 @@
   --cyan-11: #90fbdb; /** secondary text — L* 91.46, C 0.110. 15.68:1 on step 1. */
   --cyan-12: #bdfde8; /** primary text — L* 94.54, C 0.070. 16.95:1 on step 1. */
   --cyan-contrast: #0d2b25; /** Label ink for the bright fill tier. Absolute near-black, identical in both modes. 10.35:1 on step 9, 11.34:1 on step 10. */
-  --background: 222 14% 9%;
-  --foreground: 210 18% 96%;
-  --card: 222 12% 13%;
-  --card-foreground: 210 18% 96%;
-  --popover: 222 12% 13%;
-  --popover-foreground: 210 18% 96%;
-  --primary: 222.6 74.4% 55.5%; /** Dark-mode action blue, paired with the near-black --primary-foreground, not white. #396ae2 keeps the VI hue and sits at L*55.9 C0.191. */
-  --primary-foreground: 0 0% 100%; /** White, matching light mode and matching --blue-contrast. It was near-black (222 14% 9%) when --primary was a LIGHT fill at L* 68.3, where dark ink read 6.20:1. Once --primary became a deep fill at L* 55.9 the pairing inverted and measured 3.74:1, below AA — the fill moved and the ink did not. The deep-fill tier takes white in both modes; --blue-contrast says the same thing, and they must agree because --primary and --blue-9 are now the same value. */
-  --secondary: 222 10% 18%;
-  --secondary-foreground: 210 18% 96%;
-  --muted: 222 10% 17%;
-  --muted-foreground: 220 8% 65%;
-  --accent: 228 38% 22%;
-  --accent-foreground: 228 95% 80%;
+  --background: 220 11.1% 5.3%; /** House canvas. Light is gray-50 under white cards (two-surface layering, as Vercel #fafafa/#fff); dark is OKLCH L 0.16, inside the near-black band every reference measures (Linear L 0.14, Raycast #040506). */
+  --foreground: 228 23.8% 95.9%;
+  --card: 220 7.3% 8%;
+  --card-foreground: 228 23.8% 95.9%;
+  --popover: 225 7.7% 10.2%;
+  --popover-foreground: 228 23.8% 95.9%;
+  --primary: 228 23.8% 95.9%; /** House action fill = ink, not blue (owner decision 2026-09-24). Every measured reference ships a solid near-black primary (Vercel #171717, Figma #000) and keeps its one saturated hue for a single signal. Blue now lives on --ring (focus, selection) only. */
+  --primary-foreground: 220 11.1% 5.3%; /** White, matching light mode and matching --blue-contrast. It was near-black (222 14% 9%) when --primary was a LIGHT fill at L* 68.3, where dark ink read 6.20:1. Once --primary became a deep fill at L* 55.9 the pairing inverted and measured 3.74:1, below AA — the fill moved and the ink did not. The deep-fill tier takes white in both modes; --blue-contrast says the same thing, and they must agree because --primary and --blue-9 are now the same value. */
+  --secondary: 225 6.2% 12.5%;
+  --secondary-foreground: 228 23.8% 95.9%;
+  --muted: 225 6.2% 12.5%;
+  --muted-foreground: 228 2.6% 62.5%;
+  --accent: 225 6.2% 12.5%;
+  --accent-foreground: 228 23.8% 95.9%;
   --destructive: 0 63% 38%;
   --destructive-foreground: 210 18% 96%;
   --destructive-strong: 0 80% 66%; /** Red as FOREGROUND on a dark surface. --destructive (0 63% 38%) is 2.15:1 on --card here — a fill only. Lightened to 5.18:1 on --card / 5.61:1 on --neutral-1, which sits alongside the light-mode 5.42:1 so red reads with the same weight in both themes. Use --destructive for fills with --destructive-foreground on top; use this for red text and icons. */
@@ -546,17 +636,17 @@
   --warning-strong: 38 80% 52%; /** Amber as foreground on a dark surface. Unlike light mode this needs no adjustment — 38 80% 52% is already 7.98:1 against --neutral-1 — so it deliberately equals --warning. The token exists in both themes so consumers can reference one name. */
   --info: 228 95% 72%;
   --info-foreground: 222 14% 9%;
-  --border: 220 8% 22%;
-  --input: 220 8% 22%;
-  --ring: 0 0% 88%; /** Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice. */
-  --sidebar: 222 16% 8%;
-  --sidebar-foreground: 210 18% 94%;
-  --sidebar-primary: 220.4 74.8% 73.5%; /** Current-page accent in the sidebar. = blue-11 (#89aaee, L* 74.0, C 0.106), the ramp's measured secondary-text tier on dark (8.62:1 on step 1). Was 228 95% 72% — 95% chroma sat outside every measured band and matched no ramp step. */
-  --sidebar-primary-foreground: 222 14% 9%;
-  --sidebar-accent: 228 38% 22%;
-  --sidebar-accent-foreground: 220.5 91.5% 90.8%;
-  --sidebar-border: 220 8% 18%;
-  --sidebar-ring: 220.4 74.8% 73.5%;
+  --border: 220 3.6% 16.3%;
+  --input: 220 3.6% 16.3%;
+  --ring: 222.6 87.3% 69%; /** The House blue. Focus rings, selection and links — the one saturated hue on a product screen. #2e65ee light / #6b93f5 dark. */
+  --sidebar: 220 11.1% 5.3%;
+  --sidebar-foreground: 228 23.8% 95.9%;
+  --sidebar-primary: 228 23.8% 95.9%; /** Current-page accent in the sidebar. = blue-11 (#89aaee, L* 74.0, C 0.106), the ramp's measured secondary-text tier on dark (8.62:1 on step 1). Was 228 95% 72% — 95% chroma sat outside every measured band and matched no ramp step. */
+  --sidebar-primary-foreground: 220 11.1% 5.3%;
+  --sidebar-accent: 225 6.2% 12.5%;
+  --sidebar-accent-foreground: 228 23.8% 95.9%;
+  --sidebar-border: 225 6.2% 12.5%;
+  --sidebar-ring: 222.6 87.3% 69%;
   --chart-1: 228 95% 67%;
   --chart-2: 168 96% 54%;
   --chart-3: 228 100% 82%;
@@ -890,6 +980,54 @@
   --ease-brand: var(--motion-ease-brand);
   --ease-in-out: var(--motion-ease-in-out);
   --ease-spring: var(--motion-ease-spring);
+
+  /* Type scale — see core.json:type. Indirect so a Brand Package can retune size,
+     leading and tracking; each text-* utility sets all three. */
+  --text-2xs: var(--type-2xs-size);
+  --text-2xs--line-height: var(--type-2xs-leading);
+  --text-2xs--letter-spacing: var(--type-2xs-tracking);
+  --text-xs: var(--type-xs-size);
+  --text-xs--line-height: var(--type-xs-leading);
+  --text-xs--letter-spacing: var(--type-xs-tracking);
+  --text-ui: var(--type-ui-size);
+  --text-ui--line-height: var(--type-ui-leading);
+  --text-ui--letter-spacing: var(--type-ui-tracking);
+  --text-sm: var(--type-sm-size);
+  --text-sm--line-height: var(--type-sm-leading);
+  --text-sm--letter-spacing: var(--type-sm-tracking);
+  --text-base: var(--type-base-size);
+  --text-base--line-height: var(--type-base-leading);
+  --text-base--letter-spacing: var(--type-base-tracking);
+  --text-lg: var(--type-lg-size);
+  --text-lg--line-height: var(--type-lg-leading);
+  --text-lg--letter-spacing: var(--type-lg-tracking);
+  --text-xl: var(--type-xl-size);
+  --text-xl--line-height: var(--type-xl-leading);
+  --text-xl--letter-spacing: var(--type-xl-tracking);
+  --text-2xl: var(--type-2xl-size);
+  --text-2xl--line-height: var(--type-2xl-leading);
+  --text-2xl--letter-spacing: var(--type-2xl-tracking);
+  --text-3xl: var(--type-3xl-size);
+  --text-3xl--line-height: var(--type-3xl-leading);
+  --text-3xl--letter-spacing: var(--type-3xl-tracking);
+  --text-4xl: var(--type-4xl-size);
+  --text-4xl--line-height: var(--type-4xl-leading);
+  --text-4xl--letter-spacing: var(--type-4xl-tracking);
+  --text-5xl: var(--type-5xl-size);
+  --text-5xl--line-height: var(--type-5xl-leading);
+  --text-5xl--letter-spacing: var(--type-5xl-tracking);
+  --text-6xl: var(--type-6xl-size);
+  --text-6xl--line-height: var(--type-6xl-leading);
+  --text-6xl--letter-spacing: var(--type-6xl-tracking);
+  --text-7xl: var(--type-7xl-size);
+  --text-7xl--line-height: var(--type-7xl-leading);
+  --text-7xl--letter-spacing: var(--type-7xl-tracking);
+  --text-8xl: var(--type-8xl-size);
+  --text-8xl--line-height: var(--type-8xl-leading);
+  --text-8xl--letter-spacing: var(--type-8xl-tracking);
+  --text-9xl: var(--type-9xl-size);
+  --text-9xl--line-height: var(--type-9xl-leading);
+  --text-9xl--letter-spacing: var(--type-9xl-tracking);
 
   /* Motion — Durations (four-rail; see core.json:duration). Names denote intent, not relative speed. */
   --duration-micro: var(--motion-duration-micro);

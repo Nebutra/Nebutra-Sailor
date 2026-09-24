@@ -75,7 +75,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html
       lang="en"
-      data-brand="vercel"
       className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`.trim()}
       suppressHydrationWarning
     >

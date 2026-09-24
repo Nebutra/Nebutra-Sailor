@@ -226,265 +226,6 @@ interface AllowlistGroup {
 const ALLOWLIST_GROUPS: readonly AllowlistGroup[] = [
   {
     reason:
-      "Tailwind v4 `@theme inline` bridge — shadcn semantic roles. Each is a " +
-      "`--color-x: hsl(var(--x))` alias over a real semantic token so that " +
-      "`bg-primary` / `text-muted-foreground` resolve; the value is not authored here.",
-    migration:
-      "Generate the whole @theme block from the token tree (one bridge line per " +
-      "semantic token) instead of hand-listing it in buildTailwindThemeInline().",
-    tokens: [
-      "--color-accent",
-      "--color-accent-foreground",
-      "--color-background",
-      "--color-border",
-      "--color-card",
-      "--color-card-foreground",
-      "--color-chart-1",
-      "--color-chart-2",
-      "--color-chart-3",
-      "--color-chart-4",
-      "--color-chart-5",
-      "--color-destructive",
-      "--color-destructive-foreground",
-      "--color-foreground",
-      "--color-info",
-      "--color-info-foreground",
-      "--color-input",
-      "--color-muted",
-      "--color-muted-foreground",
-      "--color-popover",
-      "--color-popover-foreground",
-      "--color-primary",
-      "--color-primary-foreground",
-      "--color-ring",
-      "--color-secondary",
-      "--color-secondary-foreground",
-      "--color-sidebar",
-      "--color-sidebar-accent",
-      "--color-sidebar-accent-foreground",
-      "--color-sidebar-border",
-      "--color-sidebar-foreground",
-      "--color-sidebar-primary",
-      "--color-sidebar-primary-foreground",
-      "--color-sidebar-ring",
-      "--color-success",
-      "--color-success-foreground",
-      "--color-warning",
-      "--color-warning-foreground",
-    ],
-  },
-  {
-    reason:
-      "Tailwind v4 `@theme inline` bridge — 12-step semantic scales " +
-      "(`--color-neutral-3: var(--neutral-3)`), which is what registers " +
-      "`bg-neutral-3` as a utility.",
-    migration: "Same batch as the semantic-role bridge above: emit from the token tree.",
-    tokens: [
-      "--color-blue-1",
-      "--color-blue-10",
-      "--color-blue-11",
-      "--color-blue-12",
-      "--color-blue-2",
-      "--color-blue-3",
-      "--color-blue-4",
-      "--color-blue-5",
-      "--color-blue-6",
-      "--color-blue-7",
-      "--color-blue-8",
-      "--color-blue-9",
-      "--color-cyan-1",
-      "--color-cyan-10",
-      "--color-cyan-11",
-      "--color-cyan-12",
-      "--color-cyan-2",
-      "--color-cyan-3",
-      "--color-cyan-4",
-      "--color-cyan-5",
-      "--color-cyan-6",
-      "--color-cyan-7",
-      "--color-cyan-8",
-      "--color-cyan-9",
-      "--color-neutral-1",
-      "--color-neutral-10",
-      "--color-neutral-11",
-      "--color-neutral-12",
-      "--color-neutral-2",
-      "--color-neutral-3",
-      "--color-neutral-4",
-      "--color-neutral-5",
-      "--color-neutral-6",
-      "--color-neutral-7",
-      "--color-neutral-8",
-      "--color-neutral-9",
-    ],
-  },
-  {
-    reason:
-      "Tailwind v4 `@theme inline` bridge — `--nebutra-*` primitive palette " +
-      "(the rebrand input layer) exposed as `bg-nebutra-blue-500` utilities.",
-    migration: "Same batch: emit one bridge line per primitive token.",
-    tokens: [
-      "--color-nebutra-blue-100",
-      "--color-nebutra-blue-200",
-      "--color-nebutra-blue-300",
-      "--color-nebutra-blue-400",
-      "--color-nebutra-blue-50",
-      "--color-nebutra-blue-500",
-      "--color-nebutra-blue-600",
-      "--color-nebutra-blue-700",
-      "--color-nebutra-blue-800",
-      "--color-nebutra-blue-900",
-      "--color-nebutra-blue-950",
-      "--color-nebutra-cyan-100",
-      "--color-nebutra-cyan-200",
-      "--color-nebutra-cyan-300",
-      "--color-nebutra-cyan-400",
-      "--color-nebutra-cyan-50",
-      "--color-nebutra-cyan-500",
-      "--color-nebutra-cyan-600",
-      "--color-nebutra-cyan-700",
-      "--color-nebutra-cyan-800",
-      "--color-nebutra-cyan-900",
-      "--color-nebutra-cyan-950",
-      "--color-nebutra-neutral-100",
-      "--color-nebutra-neutral-200",
-      "--color-nebutra-neutral-300",
-      "--color-nebutra-neutral-400",
-      "--color-nebutra-neutral-50",
-      "--color-nebutra-neutral-500",
-      "--color-nebutra-neutral-600",
-      "--color-nebutra-neutral-700",
-      "--color-nebutra-neutral-800",
-      "--color-nebutra-neutral-900",
-      "--color-nebutra-neutral-950",
-    ],
-  },
-  {
-    reason:
-      "Tailwind v4 `@theme inline` bridge — Geist compat layer. Aliases over " +
-      "`--ds-gray-*` / `--ds-background-*`, the names the scraped Geist icon SVGs " +
-      "hardcode. Two spellings are published (`gray-*` and `geist-gray-*`).",
-    migration:
-      "Migrate together with the `ds.*` token subtree; one bridge line per ds token, " +
-      "both spellings derived from the same leaf.",
-    tokens: [
-      "--color-geist-background-100",
-      "--color-geist-gray-100",
-      "--color-geist-gray-1000",
-      "--color-geist-gray-200",
-      "--color-geist-gray-500",
-      "--color-geist-gray-600",
-      "--color-geist-gray-700",
-      "--color-gray-100",
-      "--color-gray-1000",
-      "--color-gray-200",
-      "--color-gray-700",
-    ],
-  },
-  {
-    reason:
-      "Tailwind v4 `@theme inline` bridge — accent palette stops used by docs / " +
-      "marketing surfaces (`--color-amber-200: var(--ds-amber-200)`), plus the " +
-      "`--ds-*-start|end` gradient stop pairs.",
-    migration:
-      "Same batch as the Geist compat layer — these all alias `--ds-*` tokens; " +
-      "only the bridge line is generator-authored.",
-    tokens: [
-      "--color-amber-200",
-      "--color-amber-700",
-      "--color-amber-900",
-      "--color-blue-700",
-      "--color-blue-900",
-      "--color-green-200",
-      "--color-green-700",
-      "--color-green-900",
-      "--color-pink-300",
-      "--color-pink-700",
-      "--color-pink-900",
-      "--color-purple-200",
-      "--color-purple-700",
-      "--color-purple-900",
-      "--color-red-200",
-      "--color-red-700",
-      "--color-red-900",
-      "--color-teal-300",
-      "--color-teal-700",
-      "--color-teal-900",
-      "--color-trial-end",
-      "--color-trial-start",
-      "--color-turbo-end",
-      "--color-turbo-start",
-    ],
-  },
-  {
-    reason:
-      "Tailwind v4 `@theme inline` bridge — brand aliases (`--color-brand-primary` " +
-      "→ `--brand-primary`), so `text-brand-accent` exists as a utility.",
-    migration: "Same batch: emit from the `brand.*` token subtree.",
-    tokens: ["--color-brand-accent", "--color-brand-primary", "--color-brand-tertiary"],
-  },
-  {
-    reason:
-      "Tailwind v4 `@theme inline` bridge — shadow scale. `--shadow-md: var(--elevation-md)` " +
-      "and the glass / ambient / brand / sheen composites; the values live in the " +
-      "`elevation.*` and `shadow.*` token subtrees, only the utility name is authored here.",
-    migration:
-      "Emit `--shadow-<name>` per `elevation.*` / `shadow.*` leaf; delete the hand-written list.",
-    tokens: [
-      "--shadow-2xl",
-      "--shadow-ambient-glow",
-      "--shadow-ambient-lg",
-      "--shadow-ambient-md",
-      "--shadow-ambient-sm",
-      "--shadow-brand",
-      "--shadow-brand-lg",
-      "--shadow-glass-lg",
-      "--shadow-glass-md",
-      "--shadow-glass-sm",
-      "--shadow-glow-accent",
-      "--shadow-glow-accent-lg",
-      "--shadow-glow-accent-sm",
-      "--shadow-glow-primary",
-      "--shadow-lg",
-      "--shadow-md",
-      "--shadow-sheen",
-      "--shadow-sm",
-      "--shadow-xl",
-      "--shadow-xs",
-    ],
-  },
-  {
-    reason:
-      "Post-processed gradient alias layer (buildExtras step 2). `--gradient-brand-*` / " +
-      "`--gradient-section` / `--gradient-glow` are legacy spellings pointing at the " +
-      "canonical `--brand-gradient-*` tokens; several collapse two names onto one token.",
-    migration:
-      "Model the aliases in semantic.json (e.g. `gradient.brand.glow` → " +
-      "`{brand.gradient.radial}`) and drop the literal lines from buildExtras().",
-    tokens: [
-      "--gradient-brand",
-      "--gradient-brand-glow",
-      "--gradient-brand-hover",
-      "--gradient-brand-logo",
-      "--gradient-brand-logo-reverse",
-      "--gradient-brand-radial",
-      "--gradient-brand-reverse",
-      "--gradient-brand-vertical",
-      "--gradient-glow",
-      "--gradient-section",
-    ],
-  },
-  {
-    reason:
-      "Primitive brand bridge (buildExtras step 1) — `--nebutra-brand-blue: var(--nebutra-blue-500)`, " +
-      "emitted in :root only, with a Display-P3 counterpart inside the @supports block.",
-    migration:
-      "Add `brand.blue` / `brand.cyan` aliases to core.json referencing the 500 stops; " +
-      "the P3 override still needs generator support.",
-    tokens: ["--nebutra-brand-blue", "--nebutra-brand-cyan"],
-  },
-  {
-    reason:
       "Composite shorthand (buildExtras step 3). `--transition` is a single-declaration " +
       "shorthand assembled from duration + easing; the `transition.default` DTCG leaf is " +
       "deliberately skipped by the namer because a composite cannot round-trip through it.",
@@ -536,13 +277,7 @@ const ALLOWLIST_GROUPS: readonly AllowlistGroup[] = [
       "`--transition-duration-*` alias the static/base.css and duration rails " +
       "the same way `--color-primary` aliases `--primary`.",
     migration: "Emit one bridge line per motion token from the token tree.",
-    tokens: [
-      "--ease-brand",
-      "--transition-duration-cinematic",
-      "--transition-duration-flow",
-      "--transition-duration-micro",
-      "--transition-duration-reveal",
-    ],
+    tokens: ["--ease-brand"],
   },
 ] as const;
 
@@ -552,6 +287,8 @@ interface DeclSite {
   scope: string;
   /** 1-based line in the generated CSS. */
   line: number;
+  /** Declared value, when the declaration fits on its line. */
+  value: string;
 }
 
 /** Blank out comments while preserving line count, so line numbers stay usable. */
@@ -576,12 +313,13 @@ function enumerateDeclarations(css: string): Map<string, DeclSite> {
     const line = raw.trim();
     if (line === "") return;
 
-    const decl = /^(--[a-zA-Z0-9_-]+)\s*:/.exec(line);
+    const decl = /^(--[a-zA-Z0-9_-]+)\s*:(.*)$/.exec(line);
     if (decl?.[1] && !found.has(decl[1])) {
       found.set(decl[1], {
         name: decl[1],
         scope: stack[stack.length - 1] ?? "(top level)",
         line: index + 1,
+        value: (decl[2] ?? "").trim().replace(/;$/, "").trim(),
       });
     }
 
@@ -654,8 +392,38 @@ interface AuthorshipReport {
   declared: number;
 }
 
-function checkAuthorship(generatedCss: string, derivable: Set<string>): AuthorshipReport {
+/**
+ * A pure alias — `var(--x)` or `hsl(var(--x))` with nothing else in the value —
+ * authors no value of its own; it only renames a token. When its target is
+ * derivable, so is the alias. Resolved to a fixpoint so alias chains
+ * (`--color-brand-primary` → `--brand-primary` → `--blue-9`) resolve too.
+ *
+ * This is what lets the Tailwind `@theme inline` bridge be generated freely:
+ * a bridge line that forwards to a token is derived, a bridge line that carries
+ * a literal is still a violation.
+ */
+const PURE_ALIAS = /^(?:hsl\(\s*)?var\(\s*(--[a-zA-Z0-9_-]+)\s*\)(?:\s*\))?$/;
+
+function withDerivedAliases(declared: Map<string, DeclSite>, derivable: Set<string>): Set<string> {
+  const result = new Set(derivable);
+  let grew = true;
+  while (grew) {
+    grew = false;
+    for (const site of declared.values()) {
+      if (result.has(site.name)) continue;
+      const target = PURE_ALIAS.exec(site.value)?.[1];
+      if (target && result.has(target)) {
+        result.add(site.name);
+        grew = true;
+      }
+    }
+  }
+  return result;
+}
+
+function checkAuthorship(generatedCss: string, tokenNames: Set<string>): AuthorshipReport {
   const declared = enumerateDeclarations(generatedCss);
+  const derivable = withDerivedAliases(declared, tokenNames);
   const allowlist = new Set(ALLOWLIST_GROUPS.flatMap((group) => group.tokens));
 
   const violations = [...declared.values()]

@@ -1,26 +1,27 @@
 import type { Metadata } from "next";
-import { assertStillMissing, fontStacks, leading, MISSING_FAMILIES, tracking } from "@/lib/tokens";
-import { Mono, Note, PageHeader, Panel, Section, Table } from "../_components/primitives";
+import { assertStillMissing, fontStacks, leading, tracking, typeScale } from "@/lib/tokens";
+import { Mono, PageHeader, Section, Table } from "../_components/primitives";
 import { SimpleRow, SimpleTableHead } from "../_components/token-rows";
 
 export const metadata: Metadata = {
   title: "Type — tokens",
   description:
-    "Font stacks, letter-spacing and line-height as the source declares them — and a plain statement that no font-size scale is tokenised.",
+    "Font stacks, the type scale, letter-spacing and line-height as the source declares them.",
 };
 
 export default function TypePage() {
   assertStillMissing("light");
 
   const stacks = fontStacks("light");
-  const sizeGap = MISSING_FAMILIES.find((family) => family.family.startsWith("font size"));
+  const scale = typeScale("light");
 
   return (
     <div>
       <PageHeader eyebrow="tokens / type" title="Type">
         <p>
-          Three families are tokenised: the font stacks, letter-spacing, and line-height. Font{" "}
-          <em>size</em> is not, and the last section says so.
+          Four families are tokenised: the font stacks, the type scale, letter-spacing, and
+          line-height. Each step of the scale carries its own leading and tracking, so{" "}
+          <Mono>text-2xl</Mono> alone is a finished heading.
         </p>
         <p>
           The order inside each stack is the design decision, not an accident — Geist first so it
@@ -139,24 +140,43 @@ export default function TypePage() {
         </Table>
       </Section>
 
-      {sizeGap ? (
-        <Section title="No font-size scale is tokenised">
-          <Panel tone="muted">
-            <p className="text-[14px] text-foreground leading-relaxed">{sizeGap.actualSource}</p>
-            <p className="mt-3 text-[13px] text-muted-foreground leading-relaxed">
-              {sizeGap.consequence}
-            </p>
-          </Panel>
-          <div className="mt-5">
-            <Note>
-              This is the odd shape worth noticing: the system tokenises how tightly a heading is
-              tracked and how tightly it leads, but not how large it is. So{" "}
-              <Mono>tracking-display</Mono> is a system decision and the <Mono>text-5xl</Mono> it is
-              applied to is not.
-            </Note>
-          </div>
-        </Section>
-      ) : null}
+      <Section
+        title="Type scale"
+        note={
+          <p>
+            Read from <Mono>core.json:type</Mono>. Sizes keep Tailwind's names and values; each step
+            adds leading and a tracking curve — slightly open below 14px, neutral at 13–14,
+            tightening to −0.045em at display sizes. Every specimen is set through the step's own
+            variables, so a Brand Package that retunes the scale shows up here unchanged.
+          </p>
+        }
+      >
+        <div className="divide-y divide-border rounded-panel border border-border bg-card">
+          {scale.map((step) => (
+            <div
+              key={step.step}
+              className="grid grid-cols-[7rem_minmax(0,1fr)] items-baseline gap-4 px-5 py-4"
+            >
+              <div className="space-y-1">
+                <Mono>{step.utility}</Mono>
+                <p className="font-mono text-2xs text-muted-foreground">
+                  {step.size.resolved} · {step.leading.resolved} · {step.tracking.resolved}
+                </p>
+              </div>
+              <p
+                className="truncate text-foreground"
+                style={{
+                  fontSize: `var(--${step.size.cssVar})`,
+                  lineHeight: `var(--${step.leading.cssVar})`,
+                  letterSpacing: `var(--${step.tracking.cssVar})`,
+                }}
+              >
+                云毓智能 Nebutra — ship the product
+              </p>
+            </div>
+          ))}
+        </div>
+      </Section>
     </div>
   );
 }
