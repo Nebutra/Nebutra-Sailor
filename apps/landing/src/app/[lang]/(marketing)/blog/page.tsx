@@ -210,7 +210,7 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
   const latestRailPosts = posts.map((post) => toBlogRailPost(post, lang, isZh));
 
   return (
-    <main id="main-content" className="min-h-screen bg-background">
+    <main id="main-content" className="min-h-dvh bg-background">
       <Navbar />
 
       <section className="mx-auto max-w-6xl px-4 pt-16 sm:px-6 lg:px-8">
@@ -285,7 +285,7 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
 
 function BlogPageSkeleton() {
   return (
-    <main id="main-content" className="min-h-screen bg-background" aria-busy="true">
+    <main id="main-content" className="min-h-dvh bg-background" aria-busy="true">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
         <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">

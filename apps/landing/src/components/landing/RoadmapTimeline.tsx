@@ -105,7 +105,7 @@ export function RoadmapTimeline({ data }: { data: RoadmapPhase[] }) {
                       {meta.label}
                     </span>
                   </div>
-                  <h3 className="mt-2 text-3xl font-semibold text-foreground md:text-4xl">
+                  <h3 className="mt-2 text-3xl font-semibold text-foreground tracking-heading md:text-4xl">
                     {phase.name}
                   </h3>
                   {phase.funding && (

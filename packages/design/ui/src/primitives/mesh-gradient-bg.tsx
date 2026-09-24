@@ -43,7 +43,7 @@ export interface MeshGradientBgProps
  *
  * @example
  * ```tsx
- * <div className="relative min-h-screen">
+ * <div className="relative min-h-dvh">
  *   <MeshGradientBg />
  *   <Content />
  * </div>

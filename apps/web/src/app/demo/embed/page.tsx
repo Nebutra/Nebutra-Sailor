@@ -43,7 +43,7 @@ export default async function DemoEmbedPage({
   const summary = await getGrowthSummary(process.env.DEFAULT_DASHBOARD_TENANT_ID || "demo_org");
 
   return (
-    <main className="min-h-screen bg-muted p-4 text-foreground dark:bg-background">
+    <main className="min-h-dvh bg-muted p-4 text-foreground dark:bg-background">
       <div className="mx-auto max-w-4xl">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>

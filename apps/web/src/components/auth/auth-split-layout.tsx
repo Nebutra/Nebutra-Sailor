@@ -31,7 +31,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
   return (
     <div
       className={cn(
-        "grid min-h-screen bg-background lg:grid-cols-[minmax(360px,36vw)_1fr]",
+        "grid min-h-dvh bg-background lg:grid-cols-[minmax(360px,36vw)_1fr]",
         className,
       )}
     >

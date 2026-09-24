@@ -45,7 +45,7 @@ export default async function SolutionDetailPage({ params }: SolutionDetailPageP
   return (
     <main
       id="main-content"
-      className="relative min-h-screen overflow-hidden bg-background selection:bg-primary/30"
+      className="relative min-h-dvh overflow-hidden bg-background selection:bg-primary/30"
     >
       <Navbar />
       {solution.slug === "china-vc" ? (

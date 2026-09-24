@@ -132,7 +132,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
   setRequestLocale(lang as Locale);
 
   return (
-    <main id="main-content" className="min-h-screen bg-background relative overflow-hidden">
+    <main id="main-content" className="min-h-dvh bg-background relative overflow-hidden">
       <Navbar />
 
       {/* Hero */}

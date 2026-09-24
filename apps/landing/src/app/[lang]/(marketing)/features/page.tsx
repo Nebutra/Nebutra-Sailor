@@ -46,7 +46,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
   return (
     <main
       id="main-content"
-      className="min-h-screen bg-background selection:bg-primary/30 relative overflow-hidden"
+      className="min-h-dvh bg-background selection:bg-primary/30 relative overflow-hidden"
     >
       <Navbar />
 

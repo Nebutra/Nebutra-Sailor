@@ -61,7 +61,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
 
   return (
     <Suspense>
-      <main id="main-content" className="flex flex-col min-h-screen bg-background">
+      <main id="main-content" className="flex flex-col min-h-dvh bg-background">
         <Navbar />
         <section className="container mx-auto max-w-4xl px-4 py-32">
           <AnimateIn preset="emerge">

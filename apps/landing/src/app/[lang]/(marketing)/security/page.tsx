@@ -152,7 +152,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
     <Suspense>
       <main
         id="main-content"
-        className="flex flex-col min-h-screen bg-background relative overflow-hidden"
+        className="flex flex-col min-h-dvh bg-background relative overflow-hidden"
       >
         <Navbar />
         <AuroraBackground variant="subtle" position="top" intensity={0.4} />

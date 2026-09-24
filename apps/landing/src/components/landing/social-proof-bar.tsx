@@ -84,7 +84,7 @@ export async function SocialProofBar({ locale }: { locale: Locale }) {
           {METRIC_KEYS.map((key) => (
             <div key={key} className="flex flex-col items-center text-center">
               <span
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold"
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-heading"
                 style={{
                   background: "hsl(var(--primary))",
                   WebkitBackgroundClip: "text",

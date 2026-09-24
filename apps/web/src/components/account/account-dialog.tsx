@@ -127,7 +127,7 @@ const PersonalizationTab = dynamic(
     ),
   {
     loading: () => (
-      <div className="flex min-h-[240px] items-center justify-center">
+      <div className="flex min-h-60 items-center justify-center">
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
       </div>
     ),
@@ -152,14 +152,14 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="overflow-hidden p-0 sm:max-w-[760px]" aria-label={t("ariaLabel")}>
-        <div className="flex min-h-[480px] flex-col sm:flex-row">
+      <DialogContent className="overflow-hidden p-0 sm:max-w-3xl" aria-label={t("ariaLabel")}>
+        <div className="flex sm:min-h-120 flex-col sm:flex-row">
           {/* Left rail — tabs */}
           <nav
             aria-label={t("navLabel")}
             className="shrink-0 border-b border-border bg-muted/30 p-3 sm:w-[200px] sm:border-b-0 sm:border-r"
           >
-            <div className="mb-3 px-2 pt-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <div className="mb-3 px-2 pt-1 text-xs font-semibold uppercase tracking-label text-muted-foreground">
               {t("title")}
             </div>
             <ul className="flex gap-1 overflow-x-auto sm:flex-col sm:overflow-visible">
@@ -335,7 +335,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
         <div className="rounded-[var(--radius-lg)] border border-border bg-card p-4">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              <p className="text-xs font-semibold uppercase tracking-label text-muted-foreground">
                 {t("subscription.currentPlan")}
               </p>
               <div className="mt-2">{planBadge}</div>
@@ -391,7 +391,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
     return (
       <div className="flex flex-col gap-5">
         <section>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-label text-muted-foreground">
             {t("preferences.theme")}
           </p>
           <ToggleGroup
@@ -429,7 +429,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
         </section>
 
         <section>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-label text-muted-foreground">
             {t("preferences.help")}
           </p>
           <div className="flex flex-col gap-1.5">

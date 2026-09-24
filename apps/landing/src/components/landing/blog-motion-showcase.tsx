@@ -160,7 +160,7 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
             <BookOpen className="size-3.5" aria-hidden />
             {isZh ? "Nebutra Journal · 技术札记" : "Nebutra Journal"}
           </div>
-          <h1 className="text-balance text-4xl font-semibold text-foreground sm:text-5xl">
+          <h1 className="text-balance text-4xl font-semibold text-foreground tracking-heading sm:text-5xl">
             {isZh ? "工程、产品与治理笔记" : "Notes on engineering, product, and governance"}
           </h1>
           <p className="max-w-xl text-base leading-7 text-muted-foreground">
@@ -186,7 +186,7 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
                   className="group relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 outline-none"
                 >
                   <span
-                    className={`flex min-w-0 items-center gap-3 text-3xl font-semibold leading-[1.05] text-foreground transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:text-4xl lg:text-5xl ${
+                    className={`flex min-w-0 items-center gap-3 text-3xl font-semibold leading-display text-foreground transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:text-4xl lg:text-5xl ${
                       active ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-70"
                     }`}
                   >

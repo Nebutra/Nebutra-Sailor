@@ -88,7 +88,7 @@ export function AppShell({
     <div
       data-ui="nebutra-app-shell"
       className={cn(
-        "relative flex h-screen w-full overflow-hidden bg-background text-foreground",
+        "relative flex h-dvh w-full overflow-hidden bg-background text-foreground",
         className,
       )}
     >
@@ -98,7 +98,7 @@ export function AppShell({
       <aside
         aria-label="Primary"
         className={cn(
-          "hidden h-screen overflow-hidden bg-sidebar text-sidebar-foreground md:block",
+          "hidden h-dvh overflow-hidden bg-sidebar text-sidebar-foreground md:block",
           "transition-[width] duration-flow ease-out",
           overlay ? "absolute inset-y-0 left-0 z-40" : "shrink-0",
           railWidth > 0 && "border-r border-sidebar-border",

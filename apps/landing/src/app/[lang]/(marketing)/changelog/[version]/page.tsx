@@ -289,7 +289,7 @@ export default async function ChangelogVersionPage({
         );
 
     return (
-      <main id="main-content" className="min-h-screen bg-background text-foreground">
+      <main id="main-content" className="min-h-dvh bg-background text-foreground">
         <Navbar />
 
         <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
@@ -414,7 +414,7 @@ export default async function ChangelogVersionPage({
       : null;
 
   return (
-    <main id="main-content" className="min-h-screen bg-background text-foreground">
+    <main id="main-content" className="min-h-dvh bg-background text-foreground">
       <Navbar />
 
       <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">

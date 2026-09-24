@@ -49,7 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
     const digest = this.state.error?.digest;
 
     return (
-      <div className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-background px-6 py-12">
+      <div className="relative isolate flex min-h-dvh items-center justify-center overflow-hidden bg-background px-6 py-12">
         {/* Subtle aurora — inlined because this is a client class component */}
         <div
           aria-hidden="true"

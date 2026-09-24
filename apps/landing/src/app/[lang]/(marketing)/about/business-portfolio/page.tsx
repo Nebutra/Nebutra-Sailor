@@ -113,7 +113,7 @@ export default async function BusinessPortfolioPage({
   const totalCount = stats.reduce((sum, s) => sum + s.count, 0);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-screen bg-background">
+    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
       <Navbar />
 
       {/* ─── Section 1 · Hero ─────────────────────────────────────────────── */}

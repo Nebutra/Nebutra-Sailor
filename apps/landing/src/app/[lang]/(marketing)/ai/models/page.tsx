@@ -70,7 +70,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
 
   return (
     <Suspense>
-      <main id="main-content" className="flex flex-col min-h-screen bg-background">
+      <main id="main-content" className="flex flex-col min-h-dvh bg-background">
         <Navbar />
         <section className="container mx-auto max-w-wide px-4 py-32">
           <AnimateIn preset="emerge" className="mb-16 max-w-4xl">

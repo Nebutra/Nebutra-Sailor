@@ -187,7 +187,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
   setRequestLocale(lang as Locale);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-screen bg-background">
+    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
       <Navbar />
 
       {/* 1. Hero — Day 1 Global */}

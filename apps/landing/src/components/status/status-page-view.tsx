@@ -41,7 +41,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
   const incidentsByDay = groupByCreatedDay(snapshot.incidents);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-dvh bg-background text-foreground">
       <StatusChrome checkedAt={snapshot.checkedAt} />
 
       <main id="main-content" className="px-4 pb-20 pt-8 sm:px-6 sm:pt-10">
@@ -345,7 +345,7 @@ function ComponentRow({ service }: { service: ServiceProbe }) {
 
 export function StatusPageSkeleton() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <div className="border-b border-border/80">
         <div className="mx-auto flex h-12 max-w-[720px] items-center px-4 sm:h-[3.25rem] sm:px-6">
           <div className="h-5 w-5 animate-pulse rounded bg-muted" />

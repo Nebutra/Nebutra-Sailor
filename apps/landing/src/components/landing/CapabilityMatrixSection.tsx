@@ -25,7 +25,7 @@ export function CapabilityMatrixSection() {
             </span>
           </div>
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-balance"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-balance tracking-heading"
             style={{
               letterSpacing: "var(--tracking-heading)",
               lineHeight: "var(--leading-heading)",

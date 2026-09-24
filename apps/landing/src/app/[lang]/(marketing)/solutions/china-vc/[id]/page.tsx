@@ -49,7 +49,7 @@ export default async function ChinaVcProfilePage({ params }: Props) {
   const similar = similarVcs(raw, CHINA_VC_ORGS).map((o) => ({ ...o, logo: chinaVcLogoFor(o) }));
 
   return (
-    <main id="main-content" className="relative min-h-screen overflow-hidden bg-background">
+    <main id="main-content" className="relative min-h-dvh overflow-hidden bg-background">
       <Navbar />
       <VcProfile
         org={org}

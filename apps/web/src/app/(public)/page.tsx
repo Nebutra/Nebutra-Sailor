@@ -153,7 +153,7 @@ export default async function PublicDashboardPage() {
   const copy = COPY[currentLocale];
 
   return (
-    <main id="main-content" className="min-h-screen bg-neutral-1 text-neutral-12">
+    <main id="main-content" className="min-h-dvh bg-neutral-1 text-neutral-12">
       <header className="border-neutral-5 border-b bg-neutral-1/95 text-neutral-12 shadow-[0_1px_0_rgba(24,24,27,0.04)] supports-[backdrop-filter]:bg-neutral-1/88 supports-[backdrop-filter]:backdrop-blur">
         <div className="mx-auto flex h-14 w-full max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6">
           <Link

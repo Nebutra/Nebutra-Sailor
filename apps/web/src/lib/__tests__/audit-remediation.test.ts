@@ -105,7 +105,11 @@ describe("UI/UX audit remediation invariants", () => {
     // particular rung of the scale — pinning the exact sizes made a routine
     // retune of the headline read as a regression.
     expect(hero).toMatch(/clamp\(|text-\d+xl[\s\S]*sm:text-\d+xl[\s\S]*md:text-\d+xl/);
-    expect(hero).toMatch(/var\(--tracking-display\)|var\(--leading-display\)/);
+    // Applied as token-backed utilities (tracking-display / leading-display) since the
+    // 2026-09 craft pass replaced the inline style the first version of this check pinned.
+    expect(hero).toMatch(
+      /var\(--tracking-display\)|var\(--leading-display\)|tracking-display|leading-display/,
+    );
     expect(capability).toMatch(/md:grid-cols-|lg:grid-cols-|lg:col-span-/);
   });
 

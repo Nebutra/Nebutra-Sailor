@@ -242,7 +242,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
   const labels = pick(lang, LABELS);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-screen bg-background">
+    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
       <Navbar />
 
       {/* ─── 1. Hero — Dual Flagship ───────────────────────────────────── */}

@@ -26,7 +26,7 @@ export interface WavesBgProps
  *
  * @example
  * ```tsx
- * <div className="relative min-h-screen">
+ * <div className="relative min-h-dvh">
  *   <WavesBg />
  *   <Content />
  * </div>

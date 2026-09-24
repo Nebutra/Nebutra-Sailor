@@ -16,7 +16,7 @@ export default async function Layer0DemoPage() {
 
   if (!enabled) {
     return (
-      <main className="min-h-screen bg-muted p-8 text-foreground">
+      <main className="min-h-dvh bg-muted p-8 text-foreground">
         <div className="mx-auto max-w-4xl">
           <Card className="p-6">
             <h1 className="font-semibold text-xl">Layer 0 demo disabled</h1>
@@ -30,7 +30,7 @@ export default async function Layer0DemoPage() {
   }
 
   return (
-    <main className="min-h-screen bg-muted p-8 text-foreground">
+    <main className="min-h-dvh bg-muted p-8 text-foreground">
       <div className="mx-auto flex max-w-4xl flex-col gap-6">
         <header>
           <h1 className="font-semibold text-2xl">Layer 0 capability loop</h1>

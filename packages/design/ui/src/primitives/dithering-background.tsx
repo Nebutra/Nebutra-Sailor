@@ -169,7 +169,7 @@ const DEFAULT_LIGHT_CONFIG: DitheringThemeConfig = {
  *
  * @example
  * ```tsx
- * <div className="relative min-h-screen">
+ * <div className="relative min-h-dvh">
  *   <DitheringBackground
  *     themeMode="system"
  *     intensity={0.8}
@@ -301,7 +301,7 @@ export function DitheringBackground({
         pxSize={config.pxSize}
         scale={config.scale}
         style={{
-          height: "100vh",
+          height: "100dvh",
           width: "100vw",
         }}
       />

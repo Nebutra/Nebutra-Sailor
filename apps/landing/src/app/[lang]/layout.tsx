@@ -178,7 +178,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     <html
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
-      className={`${fontVariables} min-h-screen antialiased`}
+      className={`${fontVariables} min-h-dvh antialiased`}
       suppressHydrationWarning
     >
       <body className="antialiased">

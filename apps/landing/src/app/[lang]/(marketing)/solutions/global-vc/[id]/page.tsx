@@ -42,7 +42,7 @@ export default async function GlobalVcProfilePage({ params }: Props) {
   const similar = similarVcs(raw, GLOBAL_VC_ORGS).map((o) => ({ ...o, logo: globalVcLogoFor(o) }));
 
   return (
-    <main id="main-content" className="relative min-h-screen overflow-hidden bg-background">
+    <main id="main-content" className="relative min-h-dvh overflow-hidden bg-background">
       <Navbar />
       <VcProfile
         org={org}

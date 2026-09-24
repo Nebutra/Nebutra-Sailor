@@ -98,10 +98,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
           text/CSS during LCP. */}
       <link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://d8j0ntlcm91z4.cloudfront.net" />
-      <main
-        id="main-content"
-        className="flex flex-col min-h-screen bg-background overflow-x-hidden"
-      >
+      <main id="main-content" className="flex flex-col min-h-dvh bg-background overflow-x-hidden">
         <Navbar />
         <div className="hero-stage relative isolate overflow-hidden bg-background">
           {/* 1. Hero */}
