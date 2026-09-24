@@ -26,7 +26,7 @@ export interface NeuroNoiseBgProps
  *
  * @example
  * ```tsx
- * <div className="relative min-h-screen">
+ * <div className="relative min-h-dvh">
  *   <NeuroNoiseBg />
  *   <Content />
  * </div>

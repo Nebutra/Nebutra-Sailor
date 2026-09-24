@@ -36,7 +36,7 @@ export default async function SolutionsPage({ params }: { params: Promise<{ lang
   return (
     <main
       id="main-content"
-      className="relative min-h-screen overflow-hidden bg-background selection:bg-primary/30"
+      className="relative min-h-dvh overflow-hidden bg-background selection:bg-primary/30"
     >
       <Navbar />
       <SolutionsIndex locale={lang as Locale} />

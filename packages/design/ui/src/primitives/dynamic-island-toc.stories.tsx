@@ -119,7 +119,7 @@ function MockArticle({ withOverrides = false }: { withOverrides?: boolean }) {
 
 export const Default: Story = {
   render: () => (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-dvh bg-background text-foreground">
       <DynamicIslandTOC />
       <MockArticle />
     </div>
@@ -138,7 +138,7 @@ export const WithOverrides: Story = {
     },
   },
   render: () => (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-dvh bg-background text-foreground">
       <DynamicIslandTOC />
       <MockArticle withOverrides />
     </div>
@@ -155,7 +155,7 @@ export const CustomLabels: Story = {
     },
   },
   render: () => (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-dvh bg-background text-foreground">
       <DynamicIslandTOC ariaLabel="目录导航" menuHeading="目录" emptyLabel="目录" />
       <article className="prose mx-auto max-w-3xl px-6 py-24 dark:prose-invert">
         <h1>云端聚合：从单机到边缘</h1>
@@ -186,7 +186,7 @@ export const EmptyState: Story = {
     },
   },
   render: () => (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-dvh bg-background text-foreground">
       <DynamicIslandTOC />
       <div className="mx-auto max-w-3xl px-6 py-24 text-center">
         <h1 className="text-3xl font-bold">No article markup here</h1>
@@ -211,7 +211,7 @@ export const KeyboardAndA11y: Story = {
     },
   },
   render: () => (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-dvh bg-background text-foreground">
       <DynamicIslandTOC />
       <article className="prose mx-auto max-w-3xl px-6 py-24 dark:prose-invert">
         <h1>Keyboard test</h1>
@@ -238,7 +238,7 @@ export const ReducedMotion: Story = {
     },
   },
   render: () => (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-dvh bg-background text-foreground">
       <DynamicIslandTOC />
       <MockArticle />
     </div>

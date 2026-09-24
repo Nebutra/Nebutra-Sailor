@@ -227,7 +227,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
   const sleptons = pick(lang, PRODUCT_SLEPTONS);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-screen bg-background">
+    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
       <Navbar />
 
       {/* ─── Hero ─────────────────────────────────────────────────────── */}

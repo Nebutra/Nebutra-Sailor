@@ -26,7 +26,7 @@ export default async function AgentRuntimeDemoPage() {
 
   if (!enabled) {
     return (
-      <main className="min-h-screen bg-muted p-8 text-foreground">
+      <main className="min-h-dvh bg-muted p-8 text-foreground">
         <div className="mx-auto max-w-4xl">
           <Card className="p-6">
             <h1 className="font-semibold text-xl">Agent Runtime — disabled</h1>
@@ -68,7 +68,7 @@ export default async function AgentRuntimeDemoPage() {
   }
 
   return (
-    <main className="min-h-screen bg-muted p-8 text-foreground">
+    <main className="min-h-dvh bg-muted p-8 text-foreground">
       <div className="mx-auto flex max-w-4xl flex-col gap-6">
         <header>
           <h1 className="font-semibold text-2xl">Agent Runtime grammar</h1>

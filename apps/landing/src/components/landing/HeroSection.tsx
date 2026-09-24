@@ -35,18 +35,12 @@ export async function HeroSection() {
             {/* H1 paints at full opacity from first frame so the LCP API can
                 attribute it. AnimateIn would inline `opacity:0` server-side
                 and disqualify the element. */}
-            <h1
-              className="mx-auto w-full max-w-[900px] text-balance font-semibold text-3xl text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
-              style={{
-                letterSpacing: "var(--tracking-display)",
-                lineHeight: "var(--leading-display)",
-              }}
-            >
+            <h1 className="mx-auto w-full max-w-[900px] text-balance font-semibold text-3xl text-foreground tracking-display leading-display sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
               {t("headline1")} <span className="text-foreground">{t("headline2")}</span>
             </h1>
 
             <AnimateIn preset="fadeUp" className="w-full min-w-0">
-              <p className="mx-auto w-full max-w-[680px] px-1 font-medium text-[16px] text-muted-foreground leading-normal sm:px-4 sm:text-[17px] md:text-[19px]">
+              <p className="mx-auto w-full max-w-[680px] px-1 font-medium text-base text-muted-foreground leading-normal sm:px-4 sm:text-lg">
                 {t.rich("subheadline", {
                   highlight: (chunks) => (
                     <span className="font-semibold text-foreground">{chunks}</span>

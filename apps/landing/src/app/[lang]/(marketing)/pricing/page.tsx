@@ -78,7 +78,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
   });
 
   return (
-    <main id="main-content" className="min-h-screen bg-background">
+    <main id="main-content" className="min-h-dvh bg-background">
       <StructuredData data={productLd} id="pricing-product-jsonld" />
       <Navbar />
 

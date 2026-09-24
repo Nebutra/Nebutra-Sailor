@@ -30,7 +30,7 @@ export default async function IdeasPage(props: { params: Promise<{ lang: string 
   return (
     <>
       <Navbar />
-      <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-24 px-6 md:px-12 text-center z-10 selection:bg-primary/20">
+      <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden pt-24 px-6 md:px-12 text-center z-10 selection:bg-primary/20">
         {/* hsl(var(--primary)/…) rather than rgba(var(--primary-rgb),…): there is
             no --primary-rgb token, so the light-mode gradient resolved to an
             invalid colour and the whole background-image was discarded. Only

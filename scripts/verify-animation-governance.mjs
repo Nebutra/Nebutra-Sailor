@@ -63,11 +63,7 @@ function walk(directory, files = []) {
 }
 
 function zoneFor(file) {
-  if (
-    file.startsWith("apps/landing/") ||
-    file.startsWith("packages/commerce/marketing/") ||
-    file.startsWith("packages/design/ui/src/marketing/")
-  ) {
+  if (file.startsWith("apps/landing/") || file.startsWith("packages/commerce/marketing/")) {
     return "Marketing";
   }
   if (file.startsWith("apps/sailor-docs/") || file.startsWith("apps/storybook/")) {

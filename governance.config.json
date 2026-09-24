@@ -22,38 +22,6 @@
         "count": 5
       },
       {
-        "file": "packages/design/ui/src/marketing/Hero.tsx",
-        "count": 1
-      },
-      {
-        "file": "packages/design/ui/src/marketing/Navbar.tsx",
-        "count": 2
-      },
-      {
-        "file": "packages/design/ui/src/marketing/SocialProof.tsx",
-        "count": 3
-      },
-      {
-        "file": "packages/design/ui/src/marketing/award-badge.tsx",
-        "count": 2
-      },
-      {
-        "file": "packages/design/ui/src/marketing/cosmic-spectrum.tsx",
-        "count": 3
-      },
-      {
-        "file": "packages/design/ui/src/marketing/cta-with-text-marquee.tsx",
-        "count": 8
-      },
-      {
-        "file": "packages/design/ui/src/marketing/customers-section.tsx",
-        "count": 2
-      },
-      {
-        "file": "packages/design/ui/src/marketing/stagger-testimonials.tsx",
-        "count": 1
-      },
-      {
         "file": "packages/design/ui/src/patterns/artifact-shift-card.tsx",
         "count": 3
       },
@@ -271,10 +239,7 @@
     ]
   },
   "brandHex": {
-    "allowlist": [
-      "apps/forge/src/components/sota-runners.tsx",
-      "packages/design/ui/src/marketing/cosmic-spectrum.tsx"
-    ]
+    "allowlist": ["apps/forge/src/components/sota-runners.tsx"]
   },
   "repositorySeam": {
     "coreDomains": [
@@ -1096,10 +1061,6 @@
         "count": 4
       },
       {
-        "file": "packages/design/ui/src/patterns/dashboard-surfaces.tsx",
-        "count": 4
-      },
-      {
         "file": "packages/design/ui/src/primitives/badge.tsx",
         "count": 4
       },
@@ -1196,10 +1157,6 @@
         "count": 3
       },
       {
-        "file": "apps/landing/src/components/landing/HeroSection.tsx",
-        "count": 3
-      },
-      {
         "file": "apps/landing/src/components/landing/product-demo/InvoiceCard.tsx",
         "count": 3
       },
@@ -1261,10 +1218,6 @@
       },
       {
         "file": "packages/design/ui/src/editorial/editorial-surface.ts",
-        "count": 3
-      },
-      {
-        "file": "packages/design/ui/src/marketing/terminal-control-section-animated.tsx",
         "count": 3
       },
       {
@@ -1568,18 +1521,6 @@
         "count": 2
       },
       {
-        "file": "packages/design/ui/src/marketing/Footer.tsx",
-        "count": 2
-      },
-      {
-        "file": "packages/design/ui/src/marketing/Navbar.tsx",
-        "count": 2
-      },
-      {
-        "file": "packages/design/ui/src/marketing/upgrade-banner.tsx",
-        "count": 2
-      },
-      {
         "file": "packages/design/ui/src/primitives/assisted-password-confirmation.tsx",
         "count": 2
       },
@@ -1729,10 +1670,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/blog-comments.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/landing/blog-motion-showcase.tsx",
         "count": 1
       },
       {
@@ -1972,14 +1909,6 @@
         "count": 1
       },
       {
-        "file": "packages/design/ui/src/marketing/database-rest-api.tsx",
-        "count": 1
-      },
-      {
-        "file": "packages/design/ui/src/marketing/Pricing.tsx",
-        "count": 1
-      },
-      {
         "file": "packages/design/ui/src/patterns/gallery-card.tsx",
         "count": 1
       },
@@ -1989,10 +1918,6 @@
       },
       {
         "file": "packages/design/ui/src/primitives/accordion.tsx",
-        "count": 1
-      },
-      {
-        "file": "packages/design/ui/src/primitives/base-button-variants.ts",
         "count": 1
       },
       {

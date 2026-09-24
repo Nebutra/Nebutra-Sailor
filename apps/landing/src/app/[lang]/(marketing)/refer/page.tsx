@@ -122,10 +122,7 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
   ] as const;
 
   return (
-    <main
-      id="main-content"
-      className="min-h-screen overflow-x-hidden bg-background text-foreground"
-    >
+    <main id="main-content" className="min-h-dvh overflow-x-hidden bg-background text-foreground">
       <Navbar />
 
       <section className="relative isolate overflow-hidden border-b border-border px-6 pb-12 pt-24 md:pb-20 md:pt-36">

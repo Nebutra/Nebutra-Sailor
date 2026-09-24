@@ -7,11 +7,7 @@ import { fontVariables } from "./fonts";
 // app/[lang]/layout.tsx's <html lang={locale}> instead.
 export default function GlobalNotFound() {
   return (
-    <html
-      lang="en"
-      className={`${fontVariables} min-h-screen antialiased`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${fontVariables} min-h-dvh antialiased`} suppressHydrationWarning>
       <body className="antialiased">
         <FullPageStatus
           code="404"

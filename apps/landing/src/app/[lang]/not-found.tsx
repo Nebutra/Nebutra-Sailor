@@ -6,7 +6,7 @@ export default function LocalizedNotFound() {
   const t = useTranslations("notFound");
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-dvh flex-col">
       <Navbar />
       <main className="flex-1 flex flex-col justify-center">
         <Unicorn404 title={t("title")} desc={t("desc")} homeText={t("home")} docsText={t("docs")} />

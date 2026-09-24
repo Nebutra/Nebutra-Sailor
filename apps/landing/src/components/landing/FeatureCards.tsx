@@ -62,7 +62,7 @@ export function FeatureCards() {
         <AnimateIn preset="emerge" inView className="w-full min-w-0">
           <div className="mb-12 flex w-full justify-center md:mb-16">
             <h2
-              className="w-full max-w-3xl text-balance text-center text-3xl font-semibold leading-tight text-foreground sm:text-4xl md:text-5xl"
+              className="w-full max-w-3xl text-balance text-center text-3xl font-semibold leading-tight text-foreground tracking-heading sm:text-4xl md:text-5xl"
               style={{ letterSpacing: "var(--tracking-heading)" }}
             >
               {t("sectionTitle")}

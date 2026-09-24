@@ -80,7 +80,10 @@ const EXCLUDED_DIRS = new Set([
  * saw one directory; if a future edit narrows the root back down, that must
  * fail rather than quietly report zero.
  */
-const MINIMUM_FILES_IN_SCOPE = 400;
+// The floor tracks the library's real size; it only exists to catch a walker
+// that silently narrows its scope. 2026-09-23: 85 dead files under src/marketing
+// were deleted, which took the real count from ~475 to ~390.
+const MINIMUM_FILES_IN_SCOPE = 380;
 
 /* ------------------------------------------------------------------ *
  * File collection
@@ -443,27 +446,6 @@ const STATIC_INLINE_STYLE_ALLOWLIST: readonly string[] = [
   "packages/design/ui/src/decorations/patterns/FloatingSpots.tsx :: left",
   "packages/design/ui/src/decorations/patterns/FloatingSpots.tsx :: top",
   "packages/design/ui/src/decorations/patterns/FloatingSpots.tsx :: transform",
-  "packages/design/ui/src/marketing/award-badge.tsx :: mixBlendMode",
-  "packages/design/ui/src/marketing/award-badge.tsx :: transform",
-  "packages/design/ui/src/marketing/award-badge.tsx :: transformOrigin",
-  "packages/design/ui/src/marketing/award-badge.tsx :: transition",
-  "packages/design/ui/src/marketing/award-badge.tsx :: willChange",
-  "packages/design/ui/src/marketing/globe.tsx :: animation",
-  "packages/design/ui/src/marketing/highlight-card.tsx :: backgroundImage",
-  "packages/design/ui/src/marketing/highlight-card.tsx :: backgroundSize",
-  "packages/design/ui/src/marketing/pricing-section.tsx :: boxShadow",
-  "packages/design/ui/src/marketing/pricing-section.tsx :: offsetPath",
-  "packages/design/ui/src/marketing/smooth-scroll-hero.tsx :: backgroundImage",
-  "packages/design/ui/src/marketing/smooth-scroll-hero.tsx :: backgroundPosition",
-  "packages/design/ui/src/marketing/smooth-scroll-hero.tsx :: backgroundRepeat",
-  "packages/design/ui/src/marketing/smooth-scroll-hero.tsx :: height",
-  "packages/design/ui/src/marketing/stagger-testimonials.tsx :: boxShadow",
-  "packages/design/ui/src/marketing/stagger-testimonials.tsx :: clipPath",
-  "packages/design/ui/src/marketing/stagger-testimonials.tsx :: height",
-  "packages/design/ui/src/marketing/stagger-testimonials.tsx :: right",
-  "packages/design/ui/src/marketing/stagger-testimonials.tsx :: top",
-  "packages/design/ui/src/marketing/stagger-testimonials.tsx :: transform",
-  "packages/design/ui/src/marketing/testimonials-registry/marquee3d.tsx :: transform",
   "packages/design/ui/src/navigation/StoryProgress.tsx :: height",
   "packages/design/ui/src/patterns/data-table/data-table.tsx :: height",
   "packages/design/ui/src/patterns/kinetic-marketing.tsx :: maskImage",

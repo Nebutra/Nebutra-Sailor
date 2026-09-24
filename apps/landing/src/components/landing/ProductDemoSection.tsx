@@ -47,7 +47,7 @@ export function ProductDemoSection() {
             </span>
           </div>
           <h2
-            className="mb-6 w-full max-w-4xl text-balance text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl"
+            className="mb-6 w-full max-w-4xl text-balance text-3xl font-semibold text-foreground tracking-heading md:text-4xl lg:text-5xl"
             style={{
               letterSpacing: "var(--tracking-heading)",
               lineHeight: "var(--leading-heading)",

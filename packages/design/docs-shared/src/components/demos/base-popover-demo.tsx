@@ -1,16 +1,10 @@
-import {
-  BaseBadge,
-  BaseButton,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@nebutra/ui/primitives";
+import { BaseBadge, Button, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 
 export function BasePopoverDemo() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <BaseButton variant="outline">Show Popover</BaseButton>
+        <Button variant="outline">Show Popover</Button>
       </PopoverTrigger>
       <PopoverContent className="max-w-[300px] text-sm space-y-2" side="top">
         {/* Title */}

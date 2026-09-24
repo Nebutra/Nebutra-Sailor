@@ -387,6 +387,11 @@
       "$value": "-0.015em",
       "$type": "string",
       "$description": "Body emphasis"
+    },
+    "label": {
+      "$value": "0.06em",
+      "$type": "string",
+      "$description": "Micro-caps / section labels — positive tracking keeps small uppercase legible without the loose 2020-era 0.1em."
     }
   },
   "leading": {

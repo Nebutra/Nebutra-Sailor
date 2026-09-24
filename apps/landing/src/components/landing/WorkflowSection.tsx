@@ -39,7 +39,7 @@ export function WorkflowSection() {
             {t("badge")}
           </p>
           <h2
-            className="text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl text-balance"
+            className="text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl text-balance tracking-heading"
             style={{ letterSpacing: "var(--tracking-heading)" }}
           >
             {t("title")}

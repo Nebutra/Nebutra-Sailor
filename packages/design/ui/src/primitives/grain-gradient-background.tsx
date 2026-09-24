@@ -16,7 +16,7 @@ export interface GrainGradientBackgroundProps
  *
  * @example
  * ```tsx
- * <div className="relative min-h-screen">
+ * <div className="relative min-h-dvh">
  *   <GrainGradientBackground
  *     colors={["#5100ff", "#00ff80", "#ffcc00"]}
  *     softness={0.8}

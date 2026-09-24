@@ -55,7 +55,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
   ] as const;
 
   return (
-    <main id="main-content" className="flex flex-col min-h-screen bg-background">
+    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
       <Navbar />
 
       {/* 1. Hero Section (Asymmetrical Text + Abstract Art) */}

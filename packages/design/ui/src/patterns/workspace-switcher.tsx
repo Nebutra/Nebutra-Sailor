@@ -95,7 +95,7 @@ function WorkspaceAvatar({ workspace, size = "sm", className }: WorkspaceAvatarP
       )}
       <AvatarFallback
         size={size}
-        className="rounded-[var(--radius-md)] bg-primary text-white font-semibold"
+        className="rounded-[var(--radius-md)] bg-primary text-primary-foreground font-semibold"
       >
         {initials}
       </AvatarFallback>

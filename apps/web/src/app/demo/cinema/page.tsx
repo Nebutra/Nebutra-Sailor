@@ -18,7 +18,7 @@ export default async function CinemaDemoPage() {
 
   if (!enabled) {
     return (
-      <main className="min-h-screen bg-muted p-8 text-foreground">
+      <main className="min-h-dvh bg-muted p-8 text-foreground">
         <div className="mx-auto max-w-4xl">
           <Card className="p-6">
             <h1 className="font-semibold text-xl">Cinema — disabled</h1>
@@ -55,7 +55,7 @@ export default async function CinemaDemoPage() {
   );
 
   return (
-    <main className="min-h-screen bg-muted p-8 text-foreground">
+    <main className="min-h-dvh bg-muted p-8 text-foreground">
       <div className="mx-auto flex max-w-4xl flex-col gap-6">
         <header>
           <h1 className="font-semibold text-2xl">Cinema — film-director pipeline</h1>

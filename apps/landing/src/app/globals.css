@@ -34,29 +34,11 @@
 
 /* Custom overrides for landing page */
 @layer base {
-  /* Smooth page transitions */
-  html {
-    scroll-behavior: smooth;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
-    *,
-    ::before,
-    ::after {
-      /* biome-ignore lint/complexity/noImportantStyles: reduced-motion safety must override component animation utilities. */
-      animation-duration: 0.01ms !important;
-      /* biome-ignore lint/complexity/noImportantStyles: reduced-motion safety must override component animation utilities. */
-      animation-iteration-count: 1 !important;
-      /* biome-ignore lint/complexity/noImportantStyles: reduced-motion safety must override component animation utilities. */
-      scroll-behavior: auto !important;
-      /* biome-ignore lint/complexity/noImportantStyles: reduced-motion safety must override component animation utilities. */
-      transition-duration: 0.01ms !important;
-    }
-  }
+  /* Smooth scrolling and the reduced-motion policy are owned by
+   * @nebutra/tokens/styles.css (imported above) so every app shares one
+   * implementation. Do not re-declare them here — a layered copy would lose
+   * to the unlayered token rule anyway, which is how this file previously
+   * carried a second, silently-dead copy. */
 
   @view-transition {
     navigation: auto;
@@ -166,26 +148,6 @@
     }
   }
   --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
-
-  /* Accordion animations */
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
-  }
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
 
   /* Loader animations */
   @keyframes typing {

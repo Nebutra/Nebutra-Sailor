@@ -48,7 +48,7 @@ export default async function GetLicensePage({ params }: { params: Promise<{ lan
   setRequestLocale(lang as Locale);
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-dvh bg-background">
       <Navbar />
       <Suspense fallback={null}>
         <RequireAuth>

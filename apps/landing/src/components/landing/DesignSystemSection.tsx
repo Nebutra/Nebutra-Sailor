@@ -28,7 +28,7 @@ export function DesignSystemSection() {
             </span>
           </div>
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-balance opacity-0 translate-y-4 animate-[fade-in_0.7s_ease-out_0.2s_forwards]"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-balance tracking-heading opacity-0 translate-y-4 animate-[fade-in_0.7s_ease-out_0.2s_forwards]"
             style={{
               letterSpacing: "var(--tracking-heading)",
               lineHeight: "var(--leading-heading)",

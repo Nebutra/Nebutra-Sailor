@@ -114,7 +114,7 @@ export const COMPONENTS: ComponentEntry[] = [
     name: "Button",
     group: "primitives",
     entry: "primitives/button.tsx",
-    covers: ["Button", "ButtonLink", "BaseButton", "buttonVariants"],
+    covers: ["Button", "ButtonLink", "buttonVariants"],
     consumers: 145,
     blurb: "The action control. Carries loading, prefix/suffix and an anchor twin.",
     cva: [{ as: "button", name: "buttonVariants" }],

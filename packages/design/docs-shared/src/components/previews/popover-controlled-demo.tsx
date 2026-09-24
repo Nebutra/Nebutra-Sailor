@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  BaseButton as Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@nebutra/ui/primitives";
+import { Button, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 import * as React from "react";
 
 export function PopoverControlledDemo() {

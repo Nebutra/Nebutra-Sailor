@@ -9,7 +9,6 @@ const nonCanonicalSpecifiers = [
   "avatar-circles",
   "badge-1",
   "base-badge",
-  "base-button",
   "interactive-frosted-glass-card",
   "apple-liquid-glass-switcher",
 ] as const;

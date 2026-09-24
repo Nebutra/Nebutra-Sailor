@@ -350,7 +350,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
   };
 
   return (
-    <main id="main-content" className="flex flex-col min-h-screen bg-background">
+    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
       <Navbar />
 
       {/* 1. Hero — R&D Manifesto */}

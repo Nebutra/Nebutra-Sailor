@@ -21,7 +21,7 @@ export function FinalCTA() {
       />
       <div className="relative z-10 mx-auto w-full min-w-0 max-w-4xl px-4 text-center sm:px-6">
         <AnimateIn preset="emerge" inView className="w-full min-w-0">
-          <h2 className="w-full text-balance text-3xl font-bold text-neutral-12 md:text-5xl lg:text-6xl">
+          <h2 className="w-full text-balance text-3xl font-bold text-neutral-12 tracking-heading md:text-5xl lg:text-6xl">
             {t("heading")}
           </h2>
         </AnimateIn>

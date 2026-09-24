@@ -371,7 +371,7 @@
     "ring": {
       "$value": "222 47% 11%",
       "$type": "string",
-      "$description": "Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring) / 0.5)."
+      "$description": "Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring))."
     },
     "sidebar": {
       "$value": "210 40% 98%",

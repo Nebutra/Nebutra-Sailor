@@ -36,7 +36,7 @@ export function MobileDrawer() {
       </button>
 
       <Presence
-        className="fixed inset-x-0 top-[64px] z-50 h-[calc(100vh-64px)] overflow-y-auto border-border border-t bg-background/95 backdrop-blur-xl"
+        className="fixed inset-x-0 top-[64px] z-50 h-[calc(100dvh-64px)] overflow-y-auto border-border border-t bg-background/95 backdrop-blur-xl"
         show={open}
       >
         <div style={{ boxShadow: "var(--ring-hairline)" }}>

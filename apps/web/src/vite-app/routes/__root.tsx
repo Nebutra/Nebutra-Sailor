@@ -18,7 +18,7 @@ function ProductShell() {
 
   if (!isLoaded) {
     return (
-      <main className="grid min-h-screen place-items-center bg-neutral-1 text-neutral-12">
+      <main className="grid min-h-dvh place-items-center bg-neutral-1 text-neutral-12">
         <p className="text-sm text-neutral-11">Loading session...</p>
       </main>
     );
@@ -26,7 +26,7 @@ function ProductShell() {
 
   if (!isSignedIn && !isAuthRoute) {
     return (
-      <main className="grid min-h-screen place-items-center bg-neutral-1 px-6 text-neutral-12">
+      <main className="grid min-h-dvh place-items-center bg-neutral-1 px-6 text-neutral-12">
         <section className="w-full max-w-md rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-2 p-6">
           <p className="text-xs font-medium uppercase tracking-[0.16em] text-neutral-10">
             Product App
@@ -48,7 +48,7 @@ function ProductShell() {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen bg-neutral-1 text-neutral-12">
+      <div className="min-h-dvh bg-neutral-1 text-neutral-12">
         <header className="sticky top-0 z-30 border-neutral-7 border-b bg-neutral-1/90 backdrop-blur">
           <div className="mx-auto flex h-14 w-full max-w-wide items-center justify-between px-4">
             <Link

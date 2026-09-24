@@ -47,7 +47,7 @@ export async function PricingSection({ hideHeader = false }: { hideHeader?: bool
         {!hideHeader && (
           <div className="text-center mb-16 md:mb-24">
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-heading mb-6"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",
@@ -97,7 +97,9 @@ export async function PricingSection({ hideHeader = false }: { hideHeader?: bool
                 <span
                   className={[
                     "whitespace-nowrap font-semibold",
-                    tier.dynamicPrice.length > 8 ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl",
+                    tier.dynamicPrice.length > 8
+                      ? "text-3xl md:text-4xl tracking-heading"
+                      : "text-4xl md:text-5xl tracking-heading",
                   ].join(" ")}
                   style={{ letterSpacing: "var(--tracking-heading)" }}
                 >
