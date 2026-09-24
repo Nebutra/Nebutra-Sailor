@@ -1,0 +1,8 @@
+# Redis + serverless-redis-http (Upstash REST protocol) in one Machine.
+# One Machine instead of two: the org is at its Fly machine limit, and SRH
+# talking to Redis over loopback is simpler than over 6PN anyway.
+FROM hiett/serverless-redis-http:0.0.10
+RUN apk add --no-cache redis
+COPY redis-start.sh /usr/local/bin/redis-start.sh
+RUN chmod +x /usr/local/bin/redis-start.sh
+CMD ["/usr/local/bin/redis-start.sh"]

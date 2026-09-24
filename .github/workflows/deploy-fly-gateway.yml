@@ -89,7 +89,7 @@ jobs:
           # REDIS_URL=redis://127.0.0.1:6379 describe the local Redis on the VM;
           # imported onto a Machine that has none, every Redis call fails and
           # every rate-limited route answers 500 while health stays 200
-          # (2026-09-02). Upstash REST is the Redis of the origin here.
+          # (2026-09-02). The origin reaches Redis over REST via the REST front in nebutra-redis.
           # No apostrophes in this block: it lives inside a single-quoted
           # python -c string, and one ended it on the first run.
           skip = {"HOSTNAME", "PORT", "HOST", "PWD", "CACHE_BACKEND", "REDIS_URL"}
