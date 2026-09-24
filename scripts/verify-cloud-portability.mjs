@@ -139,21 +139,12 @@ includesAll(
   failures,
 );
 
-const createSailorDeploy = readText("packages/ops/create-sailor/src/utils/deploy.ts");
-// The scaffold holds no target list of its own — it imports the map type and
-// the defaults from the preset, so a target added there reaches create-sailor
-// without a second edit. Grepping for the literal "gcp" here asserted the
-// duplication that import removed, and went red the moment the two were
-// deduplicated. Assert the derivation instead.
+// create-sailor holds no deploy targets at all (ADR 2026-09-24 Sailor
+// convergence): scaffolds ship a portable container, and the selectors above
+// belong to Nebutra's own instance.
 assert(
-  createSailorDeploy.includes('from "@nebutra/preset/deploy-target"') &&
-    createSailorDeploy.includes("getDefaultDeployTargets"),
-  "create-sailor must derive its deploy target map from @nebutra/preset",
-  failures,
-);
-assert(
-  !/originBackend:\s*\[/.test(createSailorDeploy),
-  "create-sailor must not re-declare the deploy target list",
+  !existsSync(resolve(root, "packages/ops/create-sailor/src/utils/deploy.ts")),
+  "create-sailor must not reintroduce a deploy-target selector",
   failures,
 );
 

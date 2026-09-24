@@ -17,8 +17,6 @@ interface Props {
 
 function getModeLabel(runtime: NotificationRuntimeStatus): string {
   switch (runtime.mode) {
-    case "managed":
-      return "Managed";
     case "self_hosted":
       return "Self-hosted";
     default:
@@ -28,8 +26,6 @@ function getModeLabel(runtime: NotificationRuntimeStatus): string {
 
 function getModeClasses(runtime: NotificationRuntimeStatus): string {
   switch (runtime.mode) {
-    case "managed":
-      return "border-success/30 bg-success/10 text-[hsl(var(--success-strong))]";
     case "self_hosted":
       return "border-primary/25 bg-primary/5 text-primary";
     default:
