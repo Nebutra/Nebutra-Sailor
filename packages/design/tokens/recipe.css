@@ -67,6 +67,11 @@
   --elevation-card: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
   --elevation-control: var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04));
   --elevation-raised: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+  --elevation-overlay: var(
+    --shadow-xl,
+    0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1)
+  );
 
   /* ── Badge default = brand mark (AI / identity chips; not CTA) ─── */
   --badge-default-bg: hsl(var(--brand-mark));
@@ -356,6 +361,11 @@
 }
 
 @property --elevation-raised {
+  syntax: "*";
+  inherits: true;
+}
+
+@property --elevation-overlay {
   syntax: "*";
   inherits: true;
 }

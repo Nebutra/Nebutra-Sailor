@@ -31,35 +31,37 @@ export function DashboardCommandSurface({
     <section
       data-pattern="nebutra-dashboard-command"
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card p-4 text-card-foreground shadow-sm",
-        "before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,transparent,hsl(var(--primary)/0.58),transparent)]",
-        "after:pointer-events-none after:absolute after:inset-0 after:bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.08),transparent_42%)]",
+        // Same surface rails as Card: --radius-card, --edge-soft hairline and
+        // --elevation-card, so a Brand Package retargets a command header and a
+        // card together. The gradient hairline + radial wash that used to sit
+        // here were decoration no language could retarget.
+        "rounded-[var(--radius-card)] bg-card p-4 text-card-foreground shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-card)]",
         "sm:p-5",
         className,
       )}
     >
-      <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="min-w-0">
           {status ? (
             <div className="flex items-center gap-2">
-              <span className="size-1.5 rounded-full bg-success shadow-[0_0_0_3px_hsl(var(--success)/0.18)]" />
-              <p className="text-[11px] font-medium uppercase text-muted-foreground">{status}</p>
+              <span className="size-1.5 rounded-full bg-success" />
+              <p className="text-xs font-medium uppercase tracking-label text-muted-foreground">
+                {status}
+              </p>
             </div>
           ) : null}
-          <h1 className="mt-2 text-2xl font-semibold tracking-normal text-card-foreground sm:text-[28px]">
+          <h1 className="mt-2 text-2xl font-semibold tracking-heading text-card-foreground sm:text-3xl">
             {title}
           </h1>
           {description ? (
-            <p className="mt-2 max-w-2xl text-[13px] leading-5 text-muted-foreground">
-              {description}
-            </p>
+            <p className="mt-2 max-w-2xl text-sm leading-5 text-muted-foreground">{description}</p>
           ) : null}
         </div>
         {actions ? (
           <div className="flex shrink-0 flex-wrap items-center gap-1.5">{actions}</div>
         ) : null}
       </div>
-      {children ? <div className="relative z-10 mt-4">{children}</div> : null}
+      {children ? <div className="mt-4">{children}</div> : null}
     </section>
   );
 }
@@ -87,7 +89,7 @@ export function DashboardPanel({
     <section
       data-pattern="nebutra-dashboard-panel"
       className={cn(
-        "rounded-[var(--radius-lg)] border border-border bg-card p-3.5 text-card-foreground shadow-sm sm:p-4",
+        "rounded-[var(--radius-card)] bg-card p-3.5 text-card-foreground shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-card)] sm:p-4",
         className,
       )}
     >
@@ -98,7 +100,7 @@ export function DashboardPanel({
         )}
       >
         <div className="min-w-0">
-          <h2 className="text-sm font-semibold tracking-normal text-card-foreground">{title}</h2>
+          <h2 className="text-sm font-semibold text-card-foreground">{title}</h2>
           {description ? (
             <p className="mt-0.5 text-xs leading-5 text-muted-foreground">{description}</p>
           ) : null}
@@ -138,8 +140,8 @@ export function DashboardMetricTile({
     <div
       data-pattern="nebutra-dashboard-metric"
       className={cn(
-        "group h-full rounded-[var(--radius-lg)] border border-border bg-muted/40 p-3 transition-colors duration-micro",
-        "hover:border-muted-foreground/30 hover:bg-muted/65",
+        "group h-full rounded-[var(--radius-card)] bg-muted/40 p-3 shadow-[0_0_0_1px_var(--edge-soft)] transition-[background-color,box-shadow] duration-micro",
+        "hover:bg-muted/65 hover:shadow-[0_0_0_1px_var(--edge-medium)]",
         className,
       )}
     >
@@ -156,15 +158,11 @@ export function DashboardMetricTile({
           </span>
         ) : null}
       </div>
-      <p className="mt-2 text-2xl font-semibold tabular-nums tracking-normal text-card-foreground">
-        {value}
-      </p>
+      <p className="mt-2 text-2xl font-semibold tabular-nums text-card-foreground">{value}</p>
       {(detail || source) && (
         <div className="mt-1.5 space-y-0.5 text-xs leading-5 text-muted-foreground">
           {detail ? <span className="block">{detail}</span> : null}
-          {source ? (
-            <span className="block text-[11px] text-muted-foreground/70">{source}</span>
-          ) : null}
+          {source ? <span className="block text-xs text-muted-foreground/70">{source}</span> : null}
         </div>
       )}
     </div>
