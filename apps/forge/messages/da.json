@@ -93,8 +93,8 @@
       "hint": "Tokens · omkostning · skema"
     },
     "net": {
-      "label": "Network",
-      "hint": "DNS · TLS · IP · leak check"
+      "label": "Netværk",
+      "hint": "DNS · TLS · IP · lækagekontrol"
     },
     "security": {
       "label": "Sikkerhed",
@@ -184,22 +184,22 @@
       "original": "Original",
       "result": "Resultat",
       "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
+      "openTab": "Åbn i ny fane",
+      "pdfPreview": "PDF-forhåndsvisning",
+      "pdfPreviewTitle": "PDF-forhåndsvisning",
+      "pdfPreviewHint": "Browserens indbyggede PDF-fremviser. Nogle mobile browsere understøtter kun download.",
+      "single": "Enkelt",
       "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "privacyUpload": "Filer sendes til Forge-værten til behandling og gemmes ikke efter anmodningen.",
+      "dragDrop": "Slip en fil her eller klik for at vælge",
+      "resultMeta": "Resultat",
+      "before": "Før",
+      "after": "Efter",
+      "liveHint": "Opdateres, mens du skriver",
+      "tablePreview": "Tabelvisning",
+      "sourcePreview": "Kildevisning",
+      "metrics": "Målinger",
+      "thumbnail": "Forhåndsvisning"
     },
     "base64": {
       "encodeDir": "Tekst → Base64",
@@ -250,10 +250,10 @@
     "creditCardLuhn": {
       "number": "Kortnummer",
       "note": "Luhn-tjek · offline, aldrig gemt",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "digits": "cifre",
+      "specimenLabel": "Prøve",
+      "structureOnly": "Kun Luhn-struktur",
+      "unknownBrand": "Kort"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -430,13 +430,13 @@
       "fg": "Forgrund (#hex)",
       "bg": "Baggrund (#hex)",
       "note": "Farvekontrast · WCAG 2.x",
-      "sampleHeadline": "Sample text",
-      "pass": "pass",
-      "fail": "fail",
+      "sampleHeadline": "Eksempeltekst",
+      "pass": "bestået",
+      "fail": "fejlet",
       "aaNormal": "AA normal",
-      "aaLarge": "AA large",
+      "aaLarge": "AA stor",
       "aaaNormal": "AAA normal",
-      "aaaLarge": "AAA large"
+      "aaaLarge": "AAA stor"
     },
     "exif": {
       "file": "Billedfil",
@@ -467,8 +467,8 @@
       "note": "JWT-generering · HS256 (kun udvikling/test)",
       "header": "Header",
       "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "signature": "Signatur",
+      "emptySignature": "(tom signatursegment)"
     },
     "rand": {
       "min": "Min",
@@ -505,6 +505,7 @@
     },
     "pdfCompress": {
       "file": "PDF-fil",
+      "drop": "Drop en PDF her, eller gennemse",
       "quality": "Kvalitet",
       "engine": "Motor",
       "qStructural": "Strukturel (qpdf, lossless streams)",
@@ -514,14 +515,13 @@
       "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
       "download": "Download PDF",
       "needFile": "Vælg en PDF-fil først",
+      "needPdf": "Drop venligst en .pdf-fil",
+      "privacy": "Filen sendes til Forge-serveren til komprimering og slettes derefter efter svaret. Foretræk strukturel tilstand, når du skal bevare tabsfri streams.",
+      "barHint": "Baren viser outputstørrelse i forhold til input (kortere = mere komprimering).",
       "in": "Input",
       "out": "Output",
       "saved": "Gemt",
-      "note": "PDF Compress · qpdf / Ghostscript på host · pdf-lib fallback",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "note": "PDF Compress · qpdf / Ghostscript på host · pdf-lib fallback"
     },
     "jsonFormat": {
       "indent": "Indryk",
@@ -538,10 +538,10 @@
       "invalid": "Ugyldig JSON",
       "line": "linje",
       "column": "kolonne",
-      "note": "Motor: JSON.parse/stringify · øjeblikkeligt lokalt · samme sti som API",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "sortKeys": "Sorter nøgler",
+      "stats": "{chars} tegn · {lines} linjer",
+      "liveOff": "live-validering fra (stor input)",
+      "note": "Motor: JSON.parse/stringify · øjeblikkeligt lokalt · samme sti som API"
     },
     "qr": {
       "size": "Størrelse",
@@ -845,12 +845,12 @@
       "generate": "Generer PDF",
       "generating": "Genererer…",
       "download": "Download PDF",
-      "note": "marked → HTML → Playwright Chromium print. Hvis Chromium mangler, falder det automatisk tilbage til simpel struktureret PDF — tjek renderEngine; simpel er ikke print-grade layout.",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "openTab": "Åbn i ny fane",
+      "preview": "PDF-forhåndsvisning",
+      "previewTitle": "Genereret PDF-forhåndsvisning",
+      "previewHint": "Browserbaseret PDF-fremviser. Nogle mobile browsere understøtter kun download.",
+      "noPayload": "Ingen PDF-payload returneret",
+      "note": "marked → HTML → Playwright Chromium print. Hvis Chromium mangler, falder det automatisk tilbage til simpel struktureret PDF — tjek renderEngine; simpel er ikke print-grade layout."
     },
     "tokenCount": {
       "count": "Tæl tokens",
@@ -895,8 +895,8 @@
       "dims": " · {w}×{h}",
       "original": "Original",
       "result": "Result",
-      "note": "Motor: sharp (libvips) · server-side · samme sti som API (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "privacy": "Billeder uploades til Forge-serveren (sharp). Foretræk Batch til mange filer. Intet gemmes efter svaret.",
+      "note": "Motor: sharp (libvips) · server-side · samme sti som API (imageBase64)"
     },
     "pptxText": {
       "file": "PPTX-fil",
@@ -1306,10 +1306,10 @@
         "nonBookland": "13-cifrede ISBN'er skal starte med 978 eller 979",
         "ismn": "979-0 er ISMN-området (trykt musik), ikke ISBN"
       },
-      "specimenTitle": "ISBN · structure specimen",
-      "segPrefix": "Prefix",
+      "specimenTitle": "ISBN · struktureksemplar",
+      "segPrefix": "Præfiks",
       "segBody": "Body",
-      "segCheck": "Check"
+      "segCheck": "Kontrol"
     },
     "languageDetect": {
       "inputLabel": "Kodesnit",
@@ -1377,9 +1377,9 @@
         "fail": "fejl",
         "skipped": "ikke nået"
       },
-      "specimenTitle": "IBAN · structure specimen",
-      "segCountry": "Country",
-      "segCheck": "Check",
+      "specimenTitle": "IBAN · struktureksempel",
+      "segCountry": "Land",
+      "segCheck": "Kontrol",
       "segBban": "BBAN"
     },
     "secretScan": {
@@ -1459,9 +1459,9 @@
       "truncatedRows": "Viser de første {shown} af {total} rækker. Kopier og download inkluderer alle.",
       "privacy": "Koder sendes til Forge API til kontrol og gemmes ikke.",
       "scopeNote": "En korrekt kontrolciffer betyder, at nummeret er velstruktureret. Det betyder ikke, at GS1 nogensinde har tildelt det til et ægte produkt, virksomhed eller sted — kun en GEPIR-registrering kan besvare det.",
-      "specimenTitle": "GTIN · structure specimen",
-      "segPayload": "Payload",
-      "segCheck": "Check"
+      "specimenTitle": "GTIN · struktureksempel",
+      "segPayload": "Nyttelast",
+      "segCheck": "Kontrol"
     },
     "vin": {
       "inputLabel": "VIN (17 tegn)",
@@ -1509,7 +1509,7 @@
         },
         "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  kontrolciffer {expected}"
       },
-      "specimenTitle": "VIN · structure specimen"
+      "specimenTitle": "VIN · struktureksempel"
     },
     "envDiff": {
       "envA": "Miljø A",
@@ -1671,7 +1671,7 @@
         "disclaimer": "Disse koder er strukturelt gyldige, men tilhører ikke nogen registreret organisation. Brug dem ikke til at repræsentere en reel enhed.",
         "note": "Genereringen er seedet: de samme indstillinger og seed giver altid den samme batch, så en fixture forbliver reproducerbar. Hver kode er markeret som isTestData i JSON samt her."
       },
-      "specimenTitle": "Unified social credit code · structure specimen"
+      "specimenTitle": "Unified social credit code · struktureksempel"
     },
     "yamlDiff": {
       "original": "Original",
@@ -2029,20 +2029,20 @@
       "summaryClean": "Ingen fjernbare metadata fundet. Filen returneres uændret."
     },
     "validate": {
-      "valid": "Valid",
+      "valid": "Gyldig",
       "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
+      "summary": "{valid} / {total} gyldige",
       "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
+      "mismatch": "Uoverensstemmelse",
+      "luhnCaveat": "Luhn-pass kontrollerer kun cifferstrukturen – ikke at kortet findes eller har midler.",
       "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
+        "length_or_digits": "Kræver 12–19 cifre",
         "luhn_failed": "Luhn checksum failed"
       }
     },
     "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
+      "zones": "Tidszoner (én pr. linje)",
+      "at": "Øjeblik (valgfrit ISO / unix)"
     },
     "dns": {
       "name": "이름 / 호스트",
@@ -2060,32 +2060,32 @@
       "note": "Forge가 본 IP. 라이선스 geo 없음."
     },
     "mermaid": {
-      "source": "Mermaid source",
-      "idle": "Valid diagrams render here",
-      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
-      "sample": "Sample",
-      "theme": "Theme",
-      "theme_default": "Default",
-      "theme_dark": "Dark",
-      "theme_forest": "Forest",
+      "source": "Mermaid-kilde",
+      "idle": "Gyldige diagrammer gengives her",
+      "note": "Officiel mermaid 11 (securityLevel=strict). Live-klientforhåndsvisning · Agent SVG via Playwright. Ikke et DBML ERD-produkt.",
+      "sample": "Eksempel",
+      "theme": "Tema",
+      "theme_default": "Standard",
+      "theme_dark": "Mørk",
+      "theme_forest": "Skov",
       "theme_neutral": "Neutral",
-      "theme_base": "Base",
+      "theme_base": "Basis",
       "sample_flowchart": "Flowchart",
-      "sample_sequence": "Sequence",
-      "sample_class": "Class",
-      "sample_er": "ER diagram",
-      "sample_state": "State",
+      "sample_sequence": "Sekvens",
+      "sample_class": "Klasse",
+      "sample_er": "ER-diagram",
+      "sample_state": "Tilstand",
       "sample_gantt": "Gantt",
-      "sample_pie": "Pie",
+      "sample_pie": "Cirkel",
       "sample_mindmap": "Mindmap",
-      "zoomIn": "Zoom in",
-      "zoomOut": "Zoom out",
-      "zoomReset": "Reset view",
-      "copySvg": "Copy SVG",
+      "zoomIn": "Zoom ind",
+      "zoomOut": "Zoom ud",
+      "zoomReset": "Nulstil visning",
+      "copySvg": "Kopiér SVG",
       "downloadSvg": "Download SVG",
       "downloadPng": "Download PNG",
-      "previewAria": "Mermaid diagram preview",
-      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
+      "previewAria": "Forhåndsvisning af Mermaid-diagram",
+      "canvasHint": "Træk for at panorere · ⌘/Ctrl+scroll for at zoome"
     },
     "colorDeltaE": {
       "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
@@ -2097,114 +2097,114 @@
       "convertNote": "@dbml/core — API와 동일 경로."
     },
     "dnsLeak": {
-      "probeHost": "Compare host (advanced)",
-      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
-      "run": "Start DNS leak check",
-      "retest": "Run again",
-      "showAdvanced": "Advanced options",
-      "hideAdvanced": "Hide advanced",
-      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
-      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
-      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
-      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
-      "edgeIp": "Your edge IP",
+      "probeHost": "Sammenlign vært (avanceret)",
+      "probeHostHint": "Bruges kun til multi-resolver / browser DoH A-record sammenligning — ikke dine lækage-probe navne.",
+      "run": "Start DNS-lækage kontrol",
+      "retest": "Kør igen",
+      "showAdvanced": "Avancerede indstillinger",
+      "hideAdvanced": "Skjul avancerede",
+      "idle": "Start en kontrol for at sammenligne multi-resolver stier, browser DoH og WebRTC-kandidater.",
+      "idleOnline": "Autoritetszonen er online. Ét klik fanger dine system-DNS-rekursive resolvere, derefter DoH / WebRTC til sammenligning.",
+      "note": "Fuld OS-system DNS-lækagekort kræver en autoritativ lækagezone. Forge opfinder aldrig Geo/ASN.",
+      "noteOnline": "Unikke probenavne under leak.nebutra.com afslører, hvilke rekursive resolvere der forespørger på din OS-DNS-sti.",
+      "edgeIp": "Din edge-IP",
       "authorityHits": "Recursive IPs",
       "forgePaths": "Forge resolver hits",
-      "dohPaths": "Browser DoH hits",
-      "webrtcCount": "WebRTC IPs",
+      "dohPaths": "Browser DoH-trafik",
+      "webrtcCount": "WebRTC-IP'er",
       "forgeResolvers": "Forge multi-resolver (server-side)",
-      "forgeNote": "These queries leave from the Forge host — not your laptop.",
+      "forgeNote": "Disse forespørgsler sendes fra Forge-værten — ikke fra din bærbare computer.",
       "browserDoh": "Browser DoH",
       "webrtc": "WebRTC ICE",
-      "egressMarkers": "Forge egress markers",
-      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
+      "egressMarkers": "Forge egress-markører",
+      "egressNote": "Hvad OpenDNS/Google ser for Forge-værtens egress, ikke din enhed.",
       "honestyPrefix": "Honesty:",
-      "verdictConsistent": "Paths look consistent on this check",
-      "verdictSplit": "Split answers across DNS paths",
-      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
-      "verdictIncomplete": "Incomplete — browser probes missing",
-      "verdictAuthority": "System DNS recursives captured",
-      "infraOn": "Authority online",
-      "infraOff": "Authority offline — multi-path only",
-      "infraChecking": "Checking…",
-      "authorityResolvers": "System DNS recursive resolvers",
-      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
-      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
-      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
-      "authorityDetail": "Authority session detail",
-      "phaseSession": "Creating session…",
+      "verdictConsistent": "Stierne ser konsistente ud i denne kontrol",
+      "verdictSplit": "Opdelte svar på tværs af DNS-stier",
+      "verdictIpMismatch": "WebRTC-offentlig IP adskiller sig fra edge-IP",
+      "verdictIncomplete": "Ufuldstændig — browserprober mangler",
+      "verdictAuthority": "Systemets DNS-rekursive fanget",
+      "infraOn": "Autoritet online",
+      "infraOff": "Autoritet offline — kun multi-path",
+      "infraChecking": "Kontrollerer…",
+      "authorityResolvers": "Systemets DNS-rekursive resolvere",
+      "authorityNote": "IP'er, der forespurgte dine unikke probe-navne (OS-systemets DNS-sti). Sammenlign med VPN/DNS-udbyder.",
+      "authorityNoHits": "Ingen rekursive hits denne runde. Prøv at deaktivere browserens Secure DNS, og kør derefter igen.",
+      "authorityOfflineHint": "Autoritetszonen er offline — system-DNS-optagelse er ikke tilgængelig.",
+      "authorityDetail": "Autoritetssessionsdetalje",
+      "phaseSession": "Opretter session…",
       "phaseSystemDns": "Triggering system DNS…",
-      "phasePoll": "Listening for recursive hits ({n}/{total})…",
+      "phasePoll": "Lytter efter rekursive hits ({n}/{total})…",
       "phaseBrowser": "Browser DoH + WebRTC…",
       "phaseServer": "Forge multi-resolver…",
       "stepSession": "Session",
       "stepSystemDns": "System DNS",
-      "stepPoll": "Listen",
+      "stepPoll": "Lyt",
       "stepBrowser": "Browser",
       "stepServer": "Server",
-      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
-      "liveHits": "Live recursive hits",
-      "sectionSystemDns": "System DNS (what you came for)",
+      "pollHint": "Afstemning {n}/{total} · forespørgsler {hits} · resolvere {resolvers}",
+      "liveHits": "Live rekursive hits",
+      "sectionSystemDns": "System-DNS (det, du kom for)",
       "sectionComplementary": "Complementary paths",
-      "sectionTech": "Technical session detail",
-      "copyIps": "Copy IPs",
-      "copied": "Copied",
-      "queryCount": "{n} queries",
-      "colPath": "Path",
+      "sectionTech": "Teknisk session detalje",
+      "copyIps": "Kopiér IP-adresser",
+      "copied": "Kopieret",
+      "queryCount": "{n} forespørgsler",
+      "colPath": "Sti",
       "colAnswers": "Answers",
       "colMs": "ms",
-      "ipPublic": "public",
-      "ipPrivate": "private",
+      "ipPublic": "offentlig",
+      "ipPrivate": "privat",
       "sig": {
-        "captured": "System DNS captured",
-        "onlineNoHits": "Authority online · no hits yet",
-        "offline": "Authority offline",
-        "forgeSplit": "Forge resolvers disagree",
-        "dohSplit": "Browser DoH disagree",
-        "webrtcMismatch": "WebRTC ≠ edge IP",
-        "webrtcLocal": "Local WebRTC candidates",
-        "noBrowser": "No browser probes"
+        "captured": "Systemets DNS fanget",
+        "onlineNoHits": "Autoritet online · ingen hits endnu",
+        "offline": "Autoritet offline",
+        "forgeSplit": "Forge-opløsere er uenige",
+        "dohSplit": "Browser-DoH er uenige",
+        "webrtcMismatch": "WebRTC ≠ edge-IP",
+        "webrtcLocal": "Lokale WebRTC-kandidater",
+        "noBrowser": "Ingen browser-prober"
       }
     },
     "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
+      "algorithmOnly": "Kun algoritmekontrol · ikke et register- eller banksøg",
+      "signatureNotVerified": "{engine} · kun afkodning · signatur ikke verificeret",
+      "localOnly": "Behandlet for denne anmodning · ikke gemt som kort eller legitimationsoplysning"
     },
     "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
+      "number": "CPR-nummer",
+      "note": "GB 11643-kontrolciffer · ingen husstandsregisteropslag · samme sti som API",
+      "specimenTitle": "CPR-nummer · struktureksempel",
       "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
+      "segBirth": "Fødsel",
+      "segSeq": "Sekvens",
+      "segCheck": "Kontrol",
+      "metaBirth": "Fødsel",
+      "metaGender": "Køn",
+      "metaRegion": "Regionskode",
+      "genderMale": "Mand",
+      "genderFemale": "Kvinde",
+      "reasonFormat": "Formatet skal være 18 tegn (sidste kan være X)",
+      "reasonBirth": "Fødselsdato-segmentet er ugyldigt",
       "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
+      "reasonCheckExpected": "Kontrolcifferet er forkert · forventet {expected}"
     },
     "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
+      "lines": "{n} linjer",
+      "chars": "{n} tegn",
+      "empty": "(tom fil)",
+      "readyToShip": "Klar til at lægge i repoet"
     },
     "textTransform": {
-      "mode": "Mode",
+      "mode": "Tilstand",
       "input": "Input",
       "output": "Output",
-      "emptyResult": "Result appears here",
-      "runLocal": "Run locally",
-      "runServer": "Run on server",
-      "statusLocalLive": "Local · live",
-      "statusLocal": "Local",
-      "statusServer": "Server · same path as API",
+      "emptyResult": "Resultatet vises her",
+      "runLocal": "Kør lokalt",
+      "runServer": "Kør på server",
+      "statusLocalLive": "Lokal · live",
+      "statusLocal": "Lokal",
+      "statusServer": "Server · samme sti som API",
       "noteDefault": "Same path as API"
     }
   },
