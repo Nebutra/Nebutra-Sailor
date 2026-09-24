@@ -104,50 +104,50 @@
     },
     "nebutra-neutral": {
       "50": {
-        "$value": "#f8fafc",
+        "$value": "#f9fafb",
         "$type": "color"
       },
       "100": {
-        "$value": "#f1f5f9",
+        "$value": "#f3f4f6",
         "$type": "color"
       },
       "200": {
-        "$value": "#e2e8f0",
+        "$value": "#e4e5e8",
         "$type": "color"
       },
       "300": {
-        "$value": "#cbd5e1",
+        "$value": "#d2d4d8",
         "$type": "color"
       },
       "400": {
-        "$value": "#94a3b8",
+        "$value": "#9fa1a5",
         "$type": "color"
       },
       "500": {
-        "$value": "#64748b",
+        "$value": "#717377",
         "$type": "color"
       },
       "600": {
-        "$value": "#475569",
+        "$value": "#515357",
         "$type": "color"
       },
       "700": {
-        "$value": "#334155",
+        "$value": "#3f4044",
         "$type": "color"
       },
       "800": {
-        "$value": "#1e293b",
+        "$value": "#26272a",
         "$type": "color"
       },
       "900": {
-        "$value": "#0f172a",
+        "$value": "#18191c",
         "$type": "color"
       },
       "950": {
-        "$value": "#020617",
+        "$value": "#0b0c0d",
         "$type": "color"
       },
-      "$description": "Slate (Tailwind) — cool blue-undertone gray. SSOT decision: Slate over Zinc. See docs/design-system/token-drift-audit.md."
+      "$description": "House gray — OKLCH hue 264 (the VI hue), chroma 0.002–0.007, lightness steps of Tailwind v4 neutral. Near-achromatic on purpose: every measured reference (Linear C 0.003, Vercel C 0, Mistral/Deel C 0.003–0.03) keeps grays almost colourless, and the previous Slate (C up to 0.04, hue 257) read as the stock shadcn template. Replaces Slate 2026-09-24."
     },
     "nebutra-gray": {
       "50": {
@@ -389,9 +389,9 @@
       "$description": "Body emphasis"
     },
     "label": {
-      "$value": "0.06em",
+      "$value": "0.07em",
       "$type": "string",
-      "$description": "Micro-caps / section labels — positive tracking keeps small uppercase legible without the loose 2020-era 0.1em."
+      "$description": "Uppercase micro-labels. 0.07em is Vercel's measured eyebrow value (0.071em); open tracking keeps small caps legible."
     }
   },
   "leading": {
@@ -403,6 +403,223 @@
     "heading": {
       "$value": "1.15",
       "$type": "string"
+    }
+  },
+  "type": {
+    "$description": "Type scale — size, line-height and tracking travel together, so text-2xl alone is a finished heading. Sizes keep Tailwind's names and values (1,900+ call sites keep their size); what changes is that every step now carries its own leading and a tracking curve: slightly open below 14px, neutral at 13–14, tightening to -0.045em at display sizes. Curve measured across Cursor (+0.01em@14 → -0.03em@72), Linear (-0.022em@48–72) and Vercel (-0.06em@64). Emitted as --type-<step>-size|leading|tracking and wired into Tailwind --text-* indirectly, so a Brand Package can retune the scale.",
+    "2xs": {
+      "size": {
+        "$value": "0.6875rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.45",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "0.01em",
+        "$type": "string"
+      },
+      "$description": "New. Micro captions and badges, replacing the 9–11px arbitrary sizes."
+    },
+    "xs": {
+      "size": {
+        "$value": "0.75rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.4",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "0.005em",
+        "$type": "string"
+      }
+    },
+    "ui": {
+      "size": {
+        "$value": "0.8125rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.45",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "0em",
+        "$type": "string"
+      },
+      "$description": "New. Dense product UI — table cells, sidebar rows, controls (Linear's caption step)."
+    },
+    "sm": {
+      "size": {
+        "$value": "0.875rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.5",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "0em",
+        "$type": "string"
+      },
+      "$description": "Product body. 1.5 rather than Tailwind's 1.43 so CJK lines do not crowd."
+    },
+    "base": {
+      "size": {
+        "$value": "1rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.6",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.005em",
+        "$type": "string"
+      },
+      "$description": "Marketing and reading body."
+    },
+    "lg": {
+      "size": {
+        "$value": "1.125rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.55",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.01em",
+        "$type": "string"
+      }
+    },
+    "xl": {
+      "size": {
+        "$value": "1.25rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.45",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.012em",
+        "$type": "string"
+      }
+    },
+    "2xl": {
+      "size": {
+        "$value": "1.5rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.33",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.015em",
+        "$type": "string"
+      }
+    },
+    "3xl": {
+      "size": {
+        "$value": "1.875rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.25",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.02em",
+        "$type": "string"
+      }
+    },
+    "4xl": {
+      "size": {
+        "$value": "2.25rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.15",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.022em",
+        "$type": "string"
+      }
+    },
+    "5xl": {
+      "size": {
+        "$value": "3rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.08",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.028em",
+        "$type": "string"
+      }
+    },
+    "6xl": {
+      "size": {
+        "$value": "3.75rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1.04",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.032em",
+        "$type": "string"
+      }
+    },
+    "7xl": {
+      "size": {
+        "$value": "4.5rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.035em",
+        "$type": "string"
+      }
+    },
+    "8xl": {
+      "size": {
+        "$value": "6rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.04em",
+        "$type": "string"
+      }
+    },
+    "9xl": {
+      "size": {
+        "$value": "8rem",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "1",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "-0.045em",
+        "$type": "string"
+      }
     }
   },
   "ring": {

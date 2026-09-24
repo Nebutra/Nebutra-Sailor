@@ -283,61 +283,62 @@
   },
   "shadcn": {
     "background": {
-      "$value": "222 14% 9%",
-      "$type": "string"
+      "$value": "220 11.1% 5.3%",
+      "$type": "string",
+      "$description": "House canvas. Light is gray-50 under white cards (two-surface layering, as Vercel #fafafa/#fff); dark is OKLCH L 0.16, inside the near-black band every reference measures (Linear L 0.14, Raycast #040506)."
     },
     "foreground": {
-      "$value": "210 18% 96%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string"
     },
     "card": {
-      "$value": "222 12% 13%",
+      "$value": "220 7.3% 8%",
       "$type": "string"
     },
     "card-foreground": {
-      "$value": "210 18% 96%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string"
     },
     "popover": {
-      "$value": "222 12% 13%",
+      "$value": "225 7.7% 10.2%",
       "$type": "string"
     },
     "popover-foreground": {
-      "$value": "210 18% 96%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string"
     },
     "primary": {
-      "$value": "222.6 74.4% 55.5%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string",
-      "$description": "Dark-mode action blue, paired with the near-black --primary-foreground, not white. #396ae2 keeps the VI hue and sits at L*55.9 C0.191."
+      "$description": "House action fill = ink, not blue (owner decision 2026-09-24). Every measured reference ships a solid near-black primary (Vercel #171717, Figma #000) and keeps its one saturated hue for a single signal. Blue now lives on --ring (focus, selection) only."
     },
     "primary-foreground": {
-      "$value": "0 0% 100%",
+      "$value": "220 11.1% 5.3%",
       "$type": "string",
       "$description": "White, matching light mode and matching --blue-contrast. It was near-black (222 14% 9%) when --primary was a LIGHT fill at L* 68.3, where dark ink read 6.20:1. Once --primary became a deep fill at L* 55.9 the pairing inverted and measured 3.74:1, below AA — the fill moved and the ink did not. The deep-fill tier takes white in both modes; --blue-contrast says the same thing, and they must agree because --primary and --blue-9 are now the same value."
     },
     "secondary": {
-      "$value": "222 10% 18%",
+      "$value": "225 6.2% 12.5%",
       "$type": "string"
     },
     "secondary-foreground": {
-      "$value": "210 18% 96%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string"
     },
     "muted": {
-      "$value": "222 10% 17%",
+      "$value": "225 6.2% 12.5%",
       "$type": "string"
     },
     "muted-foreground": {
-      "$value": "220 8% 65%",
+      "$value": "228 2.6% 62.5%",
       "$type": "string"
     },
     "accent": {
-      "$value": "228 38% 22%",
+      "$value": "225 6.2% 12.5%",
       "$type": "string"
     },
     "accent-foreground": {
-      "$value": "228 95% 80%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string"
     },
     "destructive": {
@@ -388,49 +389,49 @@
       "$type": "string"
     },
     "border": {
-      "$value": "220 8% 22%",
+      "$value": "220 3.6% 16.3%",
       "$type": "string"
     },
     "input": {
-      "$value": "220 8% 22%",
+      "$value": "220 3.6% 16.3%",
       "$type": "string"
     },
     "ring": {
-      "$value": "0 0% 88%",
+      "$value": "222.6 87.3% 69%",
       "$type": "string",
-      "$description": "Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice."
+      "$description": "The House blue. Focus rings, selection and links — the one saturated hue on a product screen. #2e65ee light / #6b93f5 dark."
     },
     "sidebar": {
-      "$value": "222 16% 8%",
+      "$value": "220 11.1% 5.3%",
       "$type": "string"
     },
     "sidebar-foreground": {
-      "$value": "210 18% 94%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string"
     },
     "sidebar-primary": {
-      "$value": "220.4 74.8% 73.5%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string",
       "$description": "Current-page accent in the sidebar. = blue-11 (#89aaee, L* 74.0, C 0.106), the ramp's measured secondary-text tier on dark (8.62:1 on step 1). Was 228 95% 72% — 95% chroma sat outside every measured band and matched no ramp step."
     },
     "sidebar-primary-foreground": {
-      "$value": "222 14% 9%",
+      "$value": "220 11.1% 5.3%",
       "$type": "string"
     },
     "sidebar-accent": {
-      "$value": "228 38% 22%",
+      "$value": "225 6.2% 12.5%",
       "$type": "string"
     },
     "sidebar-accent-foreground": {
-      "$value": "220.5 91.5% 90.8%",
+      "$value": "228 23.8% 95.9%",
       "$type": "string"
     },
     "sidebar-border": {
-      "$value": "220 8% 18%",
+      "$value": "225 6.2% 12.5%",
       "$type": "string"
     },
     "sidebar-ring": {
-      "$value": "220.4 74.8% 73.5%",
+      "$value": "222.6 87.3% 69%",
       "$type": "string"
     },
     "chart-1": {

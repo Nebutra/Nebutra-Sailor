@@ -218,7 +218,7 @@ export default function BrandPage() {
       >
         <Swatches name="colors.primary — 云毓蓝" scale={colors.primary} />
         <Swatches name="colors.accent — 云毓青" scale={colors.accent} />
-        <Swatches name="colors.neutral — Slate" scale={colors.neutral} />
+        <Swatches name="colors.neutral — House gray" scale={colors.neutral} />
       </Section>
 
       <Section

@@ -862,6 +862,54 @@ function buildTailwindThemeInline() {
   --ease-in-out: var(--motion-ease-in-out);
   --ease-spring: var(--motion-ease-spring);
 
+  /* Type scale — see core.json:type. Indirect so a Brand Package can retune size,
+     leading and tracking; each text-* utility sets all three. */
+  --text-2xs: var(--type-2xs-size);
+  --text-2xs--line-height: var(--type-2xs-leading);
+  --text-2xs--letter-spacing: var(--type-2xs-tracking);
+  --text-xs: var(--type-xs-size);
+  --text-xs--line-height: var(--type-xs-leading);
+  --text-xs--letter-spacing: var(--type-xs-tracking);
+  --text-ui: var(--type-ui-size);
+  --text-ui--line-height: var(--type-ui-leading);
+  --text-ui--letter-spacing: var(--type-ui-tracking);
+  --text-sm: var(--type-sm-size);
+  --text-sm--line-height: var(--type-sm-leading);
+  --text-sm--letter-spacing: var(--type-sm-tracking);
+  --text-base: var(--type-base-size);
+  --text-base--line-height: var(--type-base-leading);
+  --text-base--letter-spacing: var(--type-base-tracking);
+  --text-lg: var(--type-lg-size);
+  --text-lg--line-height: var(--type-lg-leading);
+  --text-lg--letter-spacing: var(--type-lg-tracking);
+  --text-xl: var(--type-xl-size);
+  --text-xl--line-height: var(--type-xl-leading);
+  --text-xl--letter-spacing: var(--type-xl-tracking);
+  --text-2xl: var(--type-2xl-size);
+  --text-2xl--line-height: var(--type-2xl-leading);
+  --text-2xl--letter-spacing: var(--type-2xl-tracking);
+  --text-3xl: var(--type-3xl-size);
+  --text-3xl--line-height: var(--type-3xl-leading);
+  --text-3xl--letter-spacing: var(--type-3xl-tracking);
+  --text-4xl: var(--type-4xl-size);
+  --text-4xl--line-height: var(--type-4xl-leading);
+  --text-4xl--letter-spacing: var(--type-4xl-tracking);
+  --text-5xl: var(--type-5xl-size);
+  --text-5xl--line-height: var(--type-5xl-leading);
+  --text-5xl--letter-spacing: var(--type-5xl-tracking);
+  --text-6xl: var(--type-6xl-size);
+  --text-6xl--line-height: var(--type-6xl-leading);
+  --text-6xl--letter-spacing: var(--type-6xl-tracking);
+  --text-7xl: var(--type-7xl-size);
+  --text-7xl--line-height: var(--type-7xl-leading);
+  --text-7xl--letter-spacing: var(--type-7xl-tracking);
+  --text-8xl: var(--type-8xl-size);
+  --text-8xl--line-height: var(--type-8xl-leading);
+  --text-8xl--letter-spacing: var(--type-8xl-tracking);
+  --text-9xl: var(--type-9xl-size);
+  --text-9xl--line-height: var(--type-9xl-leading);
+  --text-9xl--letter-spacing: var(--type-9xl-tracking);
+
   /* Motion — Durations (four-rail; see core.json:duration). Names denote intent, not relative speed. */
   --duration-micro: var(--motion-duration-micro);
   --duration-flow: var(--motion-duration-flow);

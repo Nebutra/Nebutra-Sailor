@@ -481,6 +481,43 @@ export function fontStacks(mode: Mode): SimpleToken[] {
   }));
 }
 
+/** One step of core.json:type — size, leading and tracking travel together. */
+export interface TypeStep {
+  step: string;
+  /** Tailwind utility that applies all three. */
+  utility: string;
+  size: Token;
+  leading: Token;
+  tracking: Token;
+  description?: string;
+}
+
+/**
+ * The type scale, read from the source. Each step is a DTCG group with three
+ * leaves; a step missing a leaf is a source bug and throws rather than render
+ * half a row.
+ */
+export function typeScale(mode: Mode): TypeStep[] {
+  const byStep = new Map<string, Partial<Record<"size" | "leading" | "tracking", Token>>>();
+  for (const token of group(mode, "type")) {
+    const [step, leaf] = token.name.split(".");
+    if (!step || (leaf !== "size" && leaf !== "leading" && leaf !== "tracking")) continue;
+    byStep.set(step, { ...byStep.get(step), [leaf]: token });
+  }
+  return [...byStep.entries()].map(([step, leaves]) => {
+    if (!leaves.size || !leaves.leading || !leaves.tracking) {
+      throw new Error(`[apps/design] core.json:type.${step} is missing size, leading or tracking`);
+    }
+    return {
+      step,
+      utility: `text-${step}`,
+      size: leaves.size,
+      leading: leaves.leading,
+      tracking: leaves.tracking,
+    };
+  });
+}
+
 export function tracking(mode: Mode): SimpleToken[] {
   return withUtility(group(mode, "tracking"), (token) => ({
     themeVar: `tracking-${token.name}`,
@@ -544,8 +581,9 @@ export interface MissingFamily {
 /**
  * Declared absences.
  *
- * The brief asks for spacing and a type scale. Neither is in
- * `packages/design/design-tokens/tokens/**`, so neither gets a generated page.
+ * The brief asks for spacing and a type scale. The type scale is in the source
+ * (core.json:type, 2026-09-24) and renders on the type page; spacing is not in
+ * `packages/design/design-tokens/tokens/**`, so it gets no generated page.
  * Saying so is the correct output: a spacing page built by hand here would be a
  * second, unverified scale, and the first time Tailwind's changed the two would
  * silently disagree.
@@ -562,13 +600,6 @@ export const MISSING_FAMILIES: MissingFamily[] = [
     consequence:
       "Adding a `spacing` group to core.json would give the ramp a name, a description per step, and a page on this site — and would let a rebrand retune density. Until then the scale is Tailwind's, not the design system's.",
   },
-  {
-    family: "font size / type scale",
-    actualSource:
-      "Tailwind v4's built-in text-* scale. The source declares font FAMILIES (fontFamily), letter-spacing (tracking) and line-height (leading) — the three families rendered on the type page — but no font-size ramp.",
-    consequence:
-      "A `fontSize` group in core.json would make heading sizes reviewable and rebrandable. The absence is why tracking and leading are tokenised but the size they apply to is not.",
-  },
 ];
 
 /**
@@ -579,12 +610,7 @@ export const MISSING_FAMILIES: MissingFamily[] = [
  */
 export function assertStillMissing(mode: Mode): void {
   const present = new Set(tokenSet(mode).tokens.map((token) => token.group));
-  const nowPresent = (
-    [
-      ["spacing", "spacing"],
-      ["fontSize", "font size / type scale"],
-    ] as const
-  ).filter(([group]) => present.has(group));
+  const nowPresent = ([["spacing", "spacing"]] as const).filter(([group]) => present.has(group));
 
   if (nowPresent.length > 0) {
     throw new Error(

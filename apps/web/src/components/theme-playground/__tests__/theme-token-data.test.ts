@@ -62,14 +62,14 @@ describe("getSwatchesFromTokenSet", () => {
 
 describe("getThemeSwatches", () => {
   it("reads factory swatches from the mode SSOT, not a hardcoded palette", () => {
-    // light.json shadcn.primary is 222.8 85% 55.7% — the same value styles.css
-    // declares. The old hardcoded palette carried hsl(228 85% 56%).
+    // light.json shadcn.primary is the House ink, 225 7.7% 10.2% — the same
+    // value styles.css declares. The old hardcoded palette carried hsl(228 85% 56%).
     const light = getThemeSwatches("factory", "light");
-    expect(light[0]).toBe("hsl(222.8 85% 55.7%)");
+    expect(light[0]).toBe("hsl(225 7.7% 10.2%)");
     expect(light).toContain("hsl(0 0% 100%)");
 
     const dark = getThemeSwatches("factory", "dark");
-    expect(dark[0]).toBe("hsl(222.6 74.4% 55.5%)");
+    expect(dark[0]).toBe("hsl(228 23.8% 95.9%)");
     expect(dark[0]).not.toBe(light[0]);
   });
 
