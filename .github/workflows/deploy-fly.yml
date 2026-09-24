@@ -486,7 +486,7 @@ jobs:
               UPSTASH_REDIS_TOKEN="$UPSTASH_REDIS_REST_TOKEN" \
               -a nebutra-gateway --stage
           else
-            echo "::warning::UPSTASH_REDIS_* secrets missing — origin cache stays degraded"
+            echo "::warning::UPSTASH_REDIS_* secrets missing — origin cache stays degraded (see infra/fly/redis.toml)"
           fi
 
       - name: Setup Node and pnpm
@@ -550,7 +550,7 @@ jobs:
         run: bash infra/ops/scripts/point-origin-dns-fly.sh
 
   sync-gateway-cache:
-    name: Fly origin cache (Upstash)
+    name: Fly origin cache (self-hosted Redis)
     needs: matrix
     if: needs.matrix.outputs.want_cache == 'true' && needs.matrix.outputs.want_gateway != 'true'
     runs-on: ubuntu-latest
@@ -558,7 +558,7 @@ jobs:
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
 
-      - name: Point origin cache at Upstash
+      - name: Point origin cache at nebutra-redis
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
@@ -569,6 +569,8 @@ jobs:
             echo "::error::UPSTASH_REDIS_REST_URL / TOKEN secrets are not set"
             exit 1
           fi
+          # UPSTASH_REDIS_REST_* now point at our own nebutra-redis (Upstash REST
+          # protocol over self-hosted Redis, infra/fly/redis.toml), not at Upstash.
           # ECS .env imported REDIS_URL=localhost and sometimes CACHE_BACKEND=ioredis.
           # Those win the health ping and keep the origin degraded.
           flyctl secrets unset REDIS_URL CACHE_BACKEND -a nebutra-gateway || true

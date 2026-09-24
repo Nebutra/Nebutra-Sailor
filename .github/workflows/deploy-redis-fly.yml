@@ -1,0 +1,43 @@
+name: Deploy Redis to Fly
+
+# Self-hosted Redis plus its Upstash-REST front (serverless-redis-http) in one
+# private Machine, nebutra-redis. 6PN only. Replaces Upstash (2026-09-24).
+#
+# Secrets live on the Fly app, not here: REDIS_PASSWORD, SRH_TOKEN.
+# Consumers read UPSTASH_REDIS_REST_URL=http://nebutra-redis.internal:8080 and
+# UPSTASH_REDIS_REST_TOKEN=<SRH_TOKEN> (repository secrets of the same names).
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - infra/fly/redis.toml
+      - infra/fly/Dockerfile.redis
+      - infra/fly/redis-start.sh
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-redis-fly
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Fly redis
+    runs-on: ubuntu-latest
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - name: Require FLY_API_TOKEN
+        run: '[ -n "${FLY_API_TOKEN:-}" ] || { echo "::error::Set repository secret FLY_API_TOKEN."; exit 1; }'
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Deploy nebutra-redis
+        run: flyctl deploy -c infra/fly/redis.toml --ha=false --no-public-ips -y

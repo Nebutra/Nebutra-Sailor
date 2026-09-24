@@ -296,6 +296,7 @@ tests/architecture/nebutra/
 .github/workflows/deploy-auth-cloudflare.yml
 .github/workflows/deploy-fly-gateway.yml
 .github/workflows/deploy-fly.yml
+.github/workflows/deploy-redis-fly.yml
 .github/workflows/deploy-kuanlan-nginx.yml
 .github/workflows/issue-fly-certs.yml
 .github/workflows/ops-cloudflare-whoami.yml
@@ -333,12 +334,15 @@ infra/fly/landing.toml
 infra/fly/new-api.toml
 infra/fly/para.toml
 infra/fly/pebble.toml
+infra/fly/redis.toml
 infra/fly/router.toml
 infra/fly/sailor-docs.toml
 infra/fly/web.toml
 infra/fly/Dockerfile.carina
 infra/fly/Dockerfile.dns-leak
 infra/fly/carina.nginx.conf
+infra/fly/Dockerfile.redis
+infra/fly/redis-start.sh
 # Dormant deploy kits — not part of the default topology (ADR 2026-06-04);
 # the k8s configmaps and ingress carry nebutra.com hosts.
 infra/iac/k8s/

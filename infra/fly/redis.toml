@@ -1,0 +1,43 @@
+# Self-hosted Redis (replaces Upstash, 2026-09-24). No public IP — 6PN only.
+#   TCP  (ioredis):  redis://default:$REDIS_PASSWORD@nebutra-redis.internal:6379?family=6
+#   REST (@upstash/redis, @upstash/ratelimit):
+#        UPSTASH_REDIS_REST_URL=http://nebutra-redis.internal:8080
+#        UPSTASH_REDIS_REST_TOKEN=$SRH_TOKEN
+# The UPSTASH_* names stay because those clients read them; the service behind
+# them is serverless-redis-http in this Machine (see Dockerfile.redis).
+# ioredis needs family=6: .internal names resolve to IPv6 only.
+# Secrets: REDIS_PASSWORD, SRH_TOKEN. Deploy: .github/workflows/deploy-redis-fly.yml
+app = "nebutra-redis"
+primary_region = "sin"
+
+[build]
+  dockerfile = "Dockerfile.redis"
+
+[env]
+  SRH_PORT = "8080"
+  SRH_IPV6 = "true"
+
+# TCP without published ports = 6PN / .internal only.
+[[services]]
+  protocol = "tcp"
+  internal_port = 6379
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[mounts]
+  source = "redis_data"
+  destination = "/data"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
