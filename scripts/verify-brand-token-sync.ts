@@ -227,16 +227,19 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
   if (accentDrift === 0) ok("accent scale (50–950) — all 11 steps match SSOT");
 }
 
-// ─── 3. Neutral family (Slate, not Zinc) ────────────────────────────────────
+// ─── 3. Neutral family (House gray, 2026-09-24; was Slate) ──────────────────
 {
   const ssotNeutral50 = core.color["nebutra-neutral"]["50"].$value.toLowerCase();
-  const expectedSlate50 = "#f8fafc";
+  const expectedHouse50 = "#f9fafb";
   if (colors.neutral[50]?.toLowerCase() !== ssotNeutral50) {
     fail("brand.neutral[50]", `metadata.ts ${colors.neutral[50]} ≠ SSOT ${ssotNeutral50}`);
-  } else if (ssotNeutral50 !== expectedSlate50) {
-    fail("brand.neutral[50]", `SSOT is ${ssotNeutral50} but Slate-50 should be ${expectedSlate50}`);
+  } else if (ssotNeutral50 !== expectedHouse50) {
+    fail(
+      "brand.neutral[50]",
+      `SSOT is ${ssotNeutral50} but House gray-50 should be ${expectedHouse50}`,
+    );
   } else {
-    ok("brand.neutral family is Slate (not Zinc)");
+    ok("brand.neutral family is House gray (OKLCH hue 264, C ≤ 0.007)");
   }
 
   // Verify nebutraNeutralScale (guidelines/color.ts re-export) also aligns.
@@ -246,7 +249,7 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
       "nebutraNeutralScale must redirect to colors.neutral (metadata.ts)",
     );
   } else {
-    ok("guidelines/color.ts: nebutraNeutralScale → colors.neutral (Slate)");
+    ok("guidelines/color.ts: nebutraNeutralScale → colors.neutral (House gray)");
   }
 }
 

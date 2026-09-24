@@ -171,7 +171,7 @@ export default function TypePage() {
                   letterSpacing: `var(--${step.tracking.cssVar})`,
                 }}
               >
-                云毓智能 Nebutra — ship the product
+                排版系统 Type system — ship the product
               </p>
             </div>
           ))}
