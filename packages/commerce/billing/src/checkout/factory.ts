@@ -13,7 +13,7 @@ import type { CheckoutConfig, CheckoutProvider, CheckoutProviderType } from "./t
 /**
  * Detect which checkout provider to use based on environment variables.
  *
- * Precedence when multiple are set: stripe → polar → lemonsqueezy → chinapay.
+ * Precedence when multiple are set: stripe → chinapay.
  * Set `BILLING_PROVIDER` to override.
  */
 export function detectProvider(): CheckoutProviderType {
@@ -22,8 +22,6 @@ export function detectProvider(): CheckoutProviderType {
     return explicit as CheckoutProviderType;
   }
   if (process.env.STRIPE_SECRET_KEY) return "stripe";
-  if (process.env.POLAR_ACCESS_TOKEN) return "polar";
-  if (process.env.LEMONSQUEEZY_API_KEY) return "lemonsqueezy";
   if (process.env.CHINAPAY_APP_ID) return "chinapay";
   return "manual";
 }
@@ -53,14 +51,6 @@ export async function getCheckout(config?: CheckoutConfig): Promise<CheckoutProv
     case "stripe": {
       const { StripeCheckoutProvider } = await import("./stripe");
       return new StripeCheckoutProvider();
-    }
-    case "polar": {
-      const { PolarCheckoutProvider } = await import("./polar");
-      return new PolarCheckoutProvider();
-    }
-    case "lemonsqueezy": {
-      const { LemonCheckoutProvider } = await import("./lemonsqueezy");
-      return new LemonCheckoutProvider();
     }
     case "chinapay": {
       const { ChinaPayCheckoutProvider } = await import("./chinapay");

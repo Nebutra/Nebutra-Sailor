@@ -4,7 +4,7 @@ export interface SmsProvider {
 }
 
 export interface SmsConfig {
-  provider: "aliyun" | "tencent" | "custom";
+  provider: "aliyun" | "twilio-verify" | "custom";
   /** Code length, default 6 */
   codeLength?: number;
   /** TTL in seconds, default 300 (5 minutes) */

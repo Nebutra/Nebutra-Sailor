@@ -6,8 +6,8 @@ import { DesignTokenLeafSchema, type DesignTokenSet, type DesignTokenTree } from
 // DTCG Filesystem I/O
 // =============================================================================
 // Shared helpers used by every provider. Reading and writing the canonical
-// W3C DTCG JSON tree on disk is identical across Figma / Penpot / git-only —
-// the only thing that differs is what the provider does AFTER it has the data.
+// W3C DTCG JSON tree on disk is identical across every provider — the only
+// thing that differs is what the provider does AFTER it has the data.
 // =============================================================================
 
 const TOKEN_FILE_EXT = ".json";

@@ -25,8 +25,6 @@ describe("injectEnv", () => {
 
     await injectEnv(dir, {
       databaseUrl: "postgresql://postgres:postgres@localhost:5432/nebutra",
-      clerkPublishable: "",
-      clerkSecret: "",
     });
 
     const envLocal = fs.readFileSync(path.join(dir, ".env.local"), "utf8");

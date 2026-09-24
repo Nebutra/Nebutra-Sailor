@@ -4,23 +4,14 @@ import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
-import { addCommand } from "./commands/add";
-import { registerAdminCommand } from "./commands/admin";
 import { registerAiCommand } from "./commands/ai";
-import { registerAuthCommand } from "./commands/auth";
-import { registerBackendCommand } from "./commands/backend";
-import { registerBillingCommand } from "./commands/billing";
 import { registerBrandCommand } from "./commands/brand";
-import { registerCommunityCommand } from "./commands/community";
 import { registerCompletionsCommand } from "./commands/completions";
-import { registerCreateCommand } from "./commands/create";
 import { registerDbCommand } from "./commands/db";
 import { registerDevCommand } from "./commands/dev";
 import { registerE2eCommand } from "./commands/e2e";
-import { registerEcosystemCommand } from "./commands/ecosystem";
 import { registerEnvCommand } from "./commands/env";
 import { registerGenerateCommand } from "./commands/generate";
-import { registerGrowthCommand } from "./commands/growth";
 import { registerI18nCommand } from "./commands/i18n";
 import { registerInfraCommand } from "./commands/infra";
 import { initCommand } from "./commands/init";
@@ -29,16 +20,14 @@ import { registerLinkCommand } from "./commands/link";
 import { registerLogoutCommand } from "./commands/logout";
 import { registerMcpCommand } from "./commands/mcp-server";
 import { registerSchemaCommand } from "./commands/schema";
-import { registerSearchCommand } from "./commands/search-mgmt";
 import { registerSecretsCommand } from "./commands/secrets";
 import { registerServicesCommand } from "./commands/services";
-import { registerStatsCommand } from "./commands/stats";
+import { registerStatusCommand } from "./commands/status";
 import { registerTestCommand } from "./commands/test";
 import { registerThemeCommand } from "./commands/theme";
 import { registerUiCommand } from "./commands/ui";
 import { registerUnlinkCommand } from "./commands/unlink";
 import { registerUpgradeCommand } from "./commands/upgrade";
-import { registerWorkflowCommand } from "./commands/workflow";
 import { CommandError, reportCommandError, runCommand } from "./utils/command-error";
 import { ExitCode } from "./utils/exit-codes";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
@@ -76,9 +65,7 @@ export function buildProgram(options: BuildProgramOptions): Command {
 
   program
     .name("nebutra")
-    .description(
-      "Nebutra — governance-first CLI for topology scaffolding, registry features, and platform operations",
-    )
+    .description("Nebutra — the CLI for Sailor projects: status, dev, db, and codegen")
     .version(options.version)
     // Existing options
     .option("--verbose", "Enable verbose output")
@@ -107,26 +94,8 @@ export function buildProgram(options: BuildProgramOptions): Command {
       }),
     );
 
-  program
-    .command("add [components...]")
-    .description("Add a registry-backed platform feature or external UI component")
-    .option("--21st <id>", "Fetch and install a component from 21st.dev")
-    .option("--v0 <url>", "Fetch and install a component from v0.dev")
-    .option("--provider <id>", "Specify a backend provider for a system feature (e.g. upstash)")
-    .option("--dry-run", "Preview what would be installed without making changes (exit code 10)")
-    .option("--yes", "Skip all interactive prompts and use defaults (Agent mode)")
-    .option("--if-not-exists", "Skip installation if component already exists")
-    .action(async (components, options) => {
-      const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
-      await addCommand(components, {
-        ...options,
-        yes: globalOptions.yes || !isInteractive,
-      });
-    });
-
   // ─── Delegated commands ──────────────────────────────────
 
-  registerCreateCommand(program);
   registerMcpCommand(program);
   registerSchemaCommand(program);
   registerBrandCommand(program);
@@ -135,37 +104,28 @@ export function buildProgram(options: BuildProgramOptions): Command {
   registerEnvCommand(program);
   registerLicenseCommand(program);
   registerAiCommand(program);
-  registerAuthCommand(program);
-  registerBillingCommand(program);
-  registerStatsCommand(program);
   registerDbCommand(program);
   registerGenerateCommand(program);
   registerDevCommand(program);
   registerTestCommand(program);
-  registerWorkflowCommand(program);
-  registerBackendCommand(program);
   registerE2eCommand(program);
   registerThemeCommand(program);
   registerUiCommand(program);
 
-  // ─── Platform & ecosystem commands ──────────────────────
-  registerAdminCommand(program);
-  registerCommunityCommand(program);
-  registerGrowthCommand(program);
-  registerEcosystemCommand(program);
+  // ─── Platform commands ───────────────────────────────────
   registerServicesCommand(program);
-  registerSearchCommand(program);
   registerSecretsCommand(program);
 
   // ─── Utility commands ────────────────────────────────────
 
   registerCompletionsCommand(program);
 
-  // ─── Lifecycle commands (logout / upgrade / link / unlink) ─
+  // ─── Lifecycle commands (logout / upgrade / link / unlink / status) ─
   registerLogoutCommand(program);
   registerUpgradeCommand(program);
   registerLinkCommand(program);
   registerUnlinkCommand(program);
+  registerStatusCommand(program);
 
   program
     .command("doctor")
@@ -329,8 +289,8 @@ export function buildProgram(options: BuildProgramOptions): Command {
     `
 Examples:
   $ nebutra init                          Initialize a new project
-  $ nebutra add cache --provider upstash-redis --yes  Install a registry feature
-  $ nebutra create ./my-app               Scaffold a new project
+  $ nebutra status                        Show capability readiness (live/local-fallback/missing-key)
+  $ nebutra status --json                 Machine-readable capability status
   $ nebutra dev --app=web                 Start dev for the web app
   $ nebutra db migrate                    Run pending database migrations
   $ nebutra generate app blog             Scaffold a new app
@@ -339,22 +299,10 @@ Examples:
   $ nebutra theme inspect nebutra       Inspect a theme governance manifest
   $ nebutra infra up --lite               Start PostgreSQL + Redis
   $ nebutra test e2e                      Run Playwright E2E tests
-  $ nebutra stats                         Monorepo overview
   $ nebutra schema --all                  Full CLI schema (for Agents)
 
-  Platform & Ecosystem:
-  $ nebutra admin tenants                 List all tenants
-  $ nebutra admin health                  Platform-wide health check
-  $ nebutra community health --period 30d Community health score
-  $ nebutra community showcase list       Browse project showcase
-  $ nebutra growth dashboard              Growth metrics overview
-  $ nebutra growth funnel --segment paid  Conversion funnel by segment
-  $ nebutra growth pulse --focus retention AI growth insights
-  $ nebutra ecosystem status              Ecosystem overview dashboard
-  $ nebutra ecosystem publish --tag latest Publish to template marketplace
-  $ nebutra ecosystem ideas list          Browse ideas marketplace
+  Platform:
   $ nebutra services status               Microservice health overview
-  $ nebutra search reindex products       Reindex search index
   $ nebutra secrets list --tenant org_123 List encrypted secrets
 
 Exit Codes:

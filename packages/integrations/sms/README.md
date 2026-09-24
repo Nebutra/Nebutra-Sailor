@@ -1,6 +1,6 @@
 # @nebutra/sms
 
-> SMS verification service with Aliyun and Tencent Cloud provider support, including rate-limited code generation and verification.
+> SMS verification service with Aliyun and Twilio Verify provider support, including rate-limited code generation and verification. Aliyun and Twilio Verify are kept as a hard-constraint pair (mainland China phone login requires Aliyun; Twilio Verify is the default elsewhere) — see ADR 2026-09-24 (Sailor Convergence).
 
 ## Installation
 
@@ -44,7 +44,7 @@ const result = await verifyCode("+8613800138000", "123456");
 | `sendVerificationCode(phone)` | `.` | Generate and send a verification code |
 | `verifyCode(phone, code)` | `.` | Verify a submitted code |
 | `createAliyunProvider(config)` | `./aliyun` | Create Aliyun SMS provider |
-| `createTencentProvider(config)` | `./tencent` | Create Tencent Cloud SMS provider |
+| `createTwilioVerifyProvider(config)` | `./twilio-verify` | Create Twilio Verify provider |
 
 ### Types
 
@@ -53,7 +53,7 @@ const result = await verifyCode("+8613800138000", "123456");
 | `SmsProvider` | Provider interface for sending SMS |
 | `SmsConfig` | Configuration (provider, codeLength, codeTtl, cooldown) |
 | `AliyunSmsConfig` | Aliyun-specific config (accessKeyId, signName, templateCode) |
-| `TencentSmsConfig` | Tencent-specific config |
+| `TwilioVerifyConfig` | Twilio Verify-specific config (accountSid, authToken, serviceSid) |
 
 ## Configuration
 

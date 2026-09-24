@@ -46,6 +46,7 @@ export async function runCli(args: string[]): Promise<{
 export async function runCliInDir(
   args: string[],
   cwd: string,
+  env?: Record<string, string | undefined>,
 ): Promise<{
   stdout: string;
   stderr: string;
@@ -56,6 +57,7 @@ export async function runCliInDir(
 
     const child = spawn("node", [cliPath, ...args], {
       cwd,
+      env: env ?? process.env,
       stdio: ["pipe", "pipe", "pipe"],
       timeout: 30000,
     });

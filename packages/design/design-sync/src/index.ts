@@ -2,8 +2,6 @@
 // @nebutra/design-sync — Provider-agnostic design-tool sync
 // =============================================================================
 // Supports:
-//   - Figma + Tokens Studio  (DTCG via GitHub, plugin owns the transport)
-//   - Penpot                  (REST API, self-hostable, China-friendly)
 //   - git-only                (zero-config default — DTCG files only)
 //   - memory                  (test fixture)
 //   - design-md               (AI-native DESIGN.md, markdown + YAML front matter)
@@ -26,9 +24,6 @@ export {
   resetDesignSync,
   setDesignSync,
 } from "./factory";
-export type { FigmaTokensStudioConfig } from "./figma-config/index";
-// ── Figma config snapshot ───────────────────────────────────────────────────
-export { FIGMA_TOKENS_STUDIO_CONFIG } from "./figma-config/index";
 // ── DTCG I/O helpers (re-exported for advanced consumers) ───────────────────
 export {
   defaultTokensDir,
@@ -46,10 +41,8 @@ export {
 // providers below are value-exported because they carry no such heavyweight
 // static dependency.
 export type { DesignMdProvider } from "./providers/design-md";
-export { FigmaProvider } from "./providers/figma";
 export { GitOnlyProvider } from "./providers/git-only";
 export { MemoryProvider } from "./providers/memory";
-export { PenpotProvider } from "./providers/penpot";
 // ── DTCG → Brand Package (Create Center) ───────────────────────────────────
 export {
   compileBrandFromTokenSets,
@@ -75,11 +68,9 @@ export type {
   DesignTokenLeaf,
   DesignTokenSet,
   DesignTokenTree,
-  FigmaProviderConfig,
   GitOnlyProviderConfig,
   HealthStatus,
   MemoryProviderConfig,
-  PenpotProviderConfig,
   PullOptions,
   PullResult,
   PushOptions,

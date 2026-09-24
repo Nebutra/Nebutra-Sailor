@@ -67,8 +67,7 @@ const CAPABILITIES: Capability[] = [
     icon: ShieldCheck,
     title: "RBAC & ABAC",
     pkg: "@nebutra/permissions",
-    summary:
-      "CASL for in-process role/attribute checks; OpenFGA adapter for Zanzibar-style relationship graphs at enterprise scale.",
+    summary: "CASL for in-process role/attribute checks.",
   },
   {
     icon: FileText,

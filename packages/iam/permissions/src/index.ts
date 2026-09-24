@@ -29,16 +29,6 @@ export {
   getPrismaQuery,
 } from "./providers/casl";
 export {
-  createOpenFGAProvider,
-  type OpenFGACheckRequest,
-  type OpenFGACheckResponse,
-  type OpenFGAListObjectsRequest,
-  OpenFGAProvider,
-  type OpenFGAProviderConfig,
-  type OpenFGATuple,
-  type OpenFGAWriteRequest,
-} from "./providers/openfga";
-export {
   Can,
   Cannot,
   type CannotProps,

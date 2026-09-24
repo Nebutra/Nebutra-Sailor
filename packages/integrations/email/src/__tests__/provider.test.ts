@@ -93,7 +93,6 @@ describe("getEmailProvider (factory)", () => {
     process.env = { ...originalEnv };
     delete process.env.EMAIL_PROVIDER;
     delete process.env.RESEND_API_KEY;
-    delete process.env.SMTP_HOST;
     // Reset cached provider between tests
     const { resetEmailProvider } = await import("../provider");
     resetEmailProvider();
@@ -124,13 +123,5 @@ describe("getEmailProvider (factory)", () => {
     resetEmailProvider();
     const provider = getEmailProvider();
     expect(provider.name).toBe("resend");
-  });
-
-  it("returns nodemailer provider when SMTP_HOST is set", async () => {
-    process.env.SMTP_HOST = "smtp.example.com";
-    const { resetEmailProvider, getEmailProvider } = await import("../provider");
-    resetEmailProvider();
-    const provider = getEmailProvider();
-    expect(provider.name).toBe("nodemailer");
   });
 });

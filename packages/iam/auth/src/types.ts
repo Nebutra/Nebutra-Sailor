@@ -1,19 +1,14 @@
 /**
  * @nebutra/auth — Unified auth type definitions
  *
- * These types define the provider-agnostic interface that all auth providers
- * (Clerk, Better Auth, Auth.js / NextAuth) must implement.
+ * These types define the provider-agnostic interface that the Better Auth
+ * provider (and the local `dev` fallback) must implement.
  */
 
 // ─── Provider ID ───
 
-/**
- * Supported auth provider identifiers.
- *
- * - `"nextauth"` — **Auth.js** (formerly NextAuth.js). npm package remains
- *   `next-auth` (v5 = Auth.js v5). Id kept as `nextauth` for env/compat stability.
- */
-export type AuthProviderId = "clerk" | "better-auth" | "nextauth" | "supabase" | "dev";
+/** Supported auth provider identifiers. */
+export type AuthProviderId = "better-auth" | "dev";
 
 // ─── Configuration ───
 
@@ -96,7 +91,7 @@ export type SignInMethod =
  * `result.ok` without try/catch. Reserved error codes:
  *   • "invalid-credentials" — bad email/password
  *   • "client-side-only"    — method requires browser-side completion
- *                              (Clerk OAuth redirects, etc.)
+ *                              (OAuth redirects, etc.)
  *   • "unsupported"         — provider does not support this method
  *   • "unknown"             — anything else; `message` carries detail
  */
@@ -179,10 +174,7 @@ export interface CreateOrgInput {
 //     await auth.organizations.create({ name: "Acme" });
 //   }
 //
-// Per ADR D2, Better Auth is the only provider that exposes these shapes.
-// Clerk reports `capabilities.passkeys === true` but `provider.passkeys` is
-// `undefined` — consumers go through `@clerk/nextjs` directly. NextAuth's
-// capabilities are all false; its shapes are likewise undefined.
+// Better Auth is the only provider and exposes these shapes.
 
 /**
  * Result of {@link OrganizationCapability.setActive}.

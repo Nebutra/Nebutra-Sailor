@@ -175,7 +175,7 @@ async function handleReset(options: InfraCommandOptions): Promise<void> {
 export function registerInfraCommand(program: Command): void {
   const infraCommand = program
     .command("infra <verb> [service]")
-    .description("Manage Docker Compose infrastructure (PostgreSQL, Redis, Meilisearch, etc.)")
+    .description("Manage Docker Compose infrastructure (PostgreSQL, Redis, etc.)")
     .option("--dry-run", "Show what would be run without executing")
     .option("--yes", "Skip confirmations (especially for reset)")
     .option("--lite", "Use lite stack (PostgreSQL + Redis only)")

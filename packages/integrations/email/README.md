@@ -2,8 +2,8 @@
 
 Multi-provider transactional email for Nebutra products.
 
-The package auto-detects Resend, Nodemailer SMTP, or a console development
-provider, then sends branded HTML templates through a single API.
+The package auto-detects Resend or a console development provider, then sends
+branded HTML templates through a single API.
 
 ## Installation
 
@@ -55,10 +55,8 @@ await sendApiKeyCreatedEmail({
 
 | Environment Variable | Description |
 |---------------------|-------------|
-| `EMAIL_PROVIDER` | Optional explicit provider: `resend`, `nodemailer`, or `console` |
+| `EMAIL_PROVIDER` | Optional explicit provider: `resend` or `console` |
 | `RESEND_API_KEY` | Resend API key from https://resend.com/api-keys |
-| `SMTP_HOST` | Enables Nodemailer SMTP provider when Resend is not configured |
-| `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SMTP_SECURE` | SMTP provider settings |
 | `EMAIL_FROM` | Verified sender address (default: `Nebutra <noreply@nebutra.com>`) |
 
 ## Providers
@@ -66,7 +64,6 @@ await sendApiKeyCreatedEmail({
 | Provider | Selection |
 | --- | --- |
 | `resend` | `EMAIL_PROVIDER=resend` or `RESEND_API_KEY` present |
-| `nodemailer` | `EMAIL_PROVIDER=nodemailer` or `SMTP_HOST` present |
 | `console` | Explicit `EMAIL_PROVIDER=console` or development/test fallback |
 
 ## License

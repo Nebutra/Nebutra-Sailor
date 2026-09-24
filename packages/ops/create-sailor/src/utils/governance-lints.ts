@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { NebutraConfig } from "./config";
 
 // applyGovernanceLints — wires the generalized, config-driven governance lints
 // (shipped into the output under scripts/governance/ via cloneTemplate) into the
@@ -311,17 +310,10 @@ function filterBrandLiteralBaseline(targetDir: string): string[] {
   });
 }
 
-export async function applyGovernanceLints(
-  targetDir: string,
-  config: NebutraConfig,
-): Promise<GovernanceLintsResult> {
-  // -- 1. decide which lints are enabled (feature-gated) --
-  const databaseEnabled = config.database !== "none";
-
-  const lints: string[] = [RAW_INPUTS_CMD]; // always
-  if (databaseEnabled) lints.push(REPOSITORY_SEAM_CMD);
-  lints.push(BRAND_LITERALS_CMD); // always — enforce single-source brand identity
-  lints.push(MICROCOPY_CMD); // always — enforce seven-prohibition microcopy rule
+export async function applyGovernanceLints(targetDir: string): Promise<GovernanceLintsResult> {
+  // -- 1. lints — every scaffold ships Postgres + Prisma, so the repository
+  // seam is always governed alongside inputs, brand literals and microcopy --
+  const lints: string[] = [RAW_INPUTS_CMD, REPOSITORY_SEAM_CMD, BRAND_LITERALS_CMD, MICROCOPY_CMD];
 
   // -- 2. write governance.config.json with only enabled sections --
   const brandLiterals = {
@@ -332,10 +324,8 @@ export async function applyGovernanceLints(
     rawInputs: RAW_INPUTS_DEFAULTS,
     brandLiterals,
     microcopyRules: MICROCOPY_DEFAULTS,
+    repositorySeam: REPOSITORY_SEAM_DEFAULTS,
   };
-  if (databaseEnabled) {
-    governanceConfig.repositorySeam = REPOSITORY_SEAM_DEFAULTS;
-  }
 
   const configPath = path.join(targetDir, "governance.config.json");
   fs.writeFileSync(configPath, JSON.stringify(governanceConfig, null, 2) + "\n");

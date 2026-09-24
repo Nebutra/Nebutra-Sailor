@@ -18,11 +18,9 @@ export type NotificationChannel = "in_app" | "email" | "push" | "sms" | "chat";
 /**
  * Supported notification backend providers.
  *
- * - `novu`   — Managed Novu platform
- * - `knock`  — Managed Knock platform
  * - `direct` — Self-hosted direct dispatchers (Resend, Pusher, SMS, webhooks)
  */
-export type NotificationProviderType = "novu" | "knock" | "direct";
+export type NotificationProviderType = "direct";
 
 // ── Notification Payload ────────────────────────────────────────────────────
 
@@ -218,23 +216,6 @@ export interface NotificationProvider {
 
 // ── Provider Configuration ──────────────────────────────────────────────────
 
-export interface NovuProviderConfig {
-  provider: "novu";
-
-  /** Novu API key (defaults to `process.env.NOVU_API_KEY`) */
-  apiKey?: string;
-
-  /** Optional Novu API base URL (for self-hosted Novu) */
-  baseUrl?: string;
-}
-
-export interface KnockProviderConfig {
-  provider: "knock";
-
-  /** Knock API key — server-side. Defaults to `process.env.KNOCK_API_KEY`. */
-  apiKey?: string;
-}
-
 export interface DirectProviderConfig {
   provider: "direct";
 
@@ -269,7 +250,7 @@ export interface DirectProviderConfig {
   deliveryObserver?: NotificationDeliveryObserver;
 }
 
-export type NotificationConfig = NovuProviderConfig | KnockProviderConfig | DirectProviderConfig;
+export type NotificationConfig = DirectProviderConfig;
 
 // ── Direct Provider Dispatcher Interfaces ───────────────────────────────────
 

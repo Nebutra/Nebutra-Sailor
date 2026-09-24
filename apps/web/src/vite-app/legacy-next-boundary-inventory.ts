@@ -5,7 +5,6 @@ export const legacyNextBoundaryInventory = {
       "/api/auth/current-session",
       "/api/auth/desktop/exchange",
       "/api/auth/desktop/me",
-      "/api/auth/google-one-tap",
       "/api/auth/list-accounts",
       "/api/auth/list-sessions",
       "/api/auth/passkey/rename",

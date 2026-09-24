@@ -2,7 +2,6 @@
  * Tests for the DesignMdProvider (DESIGN.md ↔ DTCG sync).
  *
  * Fixtures: tmpdir via mkdtemp — isolated per run.
- * Mirrors penpot.test.ts structure and conventions.
  */
 
 import { mkdir, mkdtemp, readFile, stat, writeFile } from "node:fs/promises";

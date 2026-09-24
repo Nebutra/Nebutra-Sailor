@@ -5,7 +5,7 @@
 //
 // Schedule activation is decoupled from job definition: jobs are registered
 // here with their cron expression, and an external scheduler (Vercel Cron,
-// QStash schedules, BullMQ repeatable jobs) triggers them via HTTP route or
+// QStash schedules) triggers them via HTTP route or
 // worker.
 //
 // Default activation in this codebase is Vercel Cron — see

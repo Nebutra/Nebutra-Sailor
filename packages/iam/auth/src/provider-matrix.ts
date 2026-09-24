@@ -1,18 +1,17 @@
 /**
- * Static multi-provider matrix — product-facing contract for parallel providers.
+ * Static provider matrix — product-facing contract for the auth provider.
  *
  * Two layers of truth:
  *   1. **Declared matrix** (this file) — what we *intend* each provider to support
- *      and its product tier (first-class vs migration-only).
+ *      and its product tier.
  *   2. **Runtime probe** (`AuthProvider.capabilities`) — what the live adapter
  *      actually mounted (plugins, env, SDK availability).
  *
  * UI / product code must AND both:
  *   declared.supports.X && runtime.capabilities.X
  *
- * Multi-provider parallel is intentional (platform scaffolding). The single
- * product import surface remains `@nebutra/auth` — apps must not import
- * `@clerk/*`, `better-auth`, or `next-auth` outside allowlisted adapter paths.
+ * The single product import surface remains `@nebutra/auth` — apps must not
+ * import `better-auth` outside allowlisted adapter paths.
  */
 
 import type { AuthCapabilities, AuthProviderId } from "./types";
@@ -40,14 +39,6 @@ export interface AuthProviderProfile {
   readonly notes: string;
 }
 
-const none: AuthCapabilities = {
-  passkeys: false,
-  organizations: false,
-  twoFactor: false,
-  magicLink: false,
-  impersonation: false,
-};
-
 /**
  * Canonical matrix. Keep in sync with adapter implementations and README.
  * Impersonation is intentionally **unsupported** across the board until a
@@ -65,32 +56,6 @@ export const AUTH_PROVIDER_MATRIX: Readonly<Record<AuthProviderId, AuthProviderP
       impersonation: false,
     },
     notes: "Default self-hosted path. Runtime probe reflects mounted plugins.",
-  },
-  clerk: {
-    id: "clerk",
-    tier: "optional-enterprise",
-    supports: {
-      passkeys: true,
-      organizations: true,
-      twoFactor: true,
-      magicLink: false,
-      impersonation: false,
-    },
-    notes:
-      "Enterprise option. Bridge adapter; some flows use Clerk-native client APIs via package wrappers.",
-  },
-  nextauth: {
-    id: "nextauth",
-    tier: "migration",
-    supports: { ...none },
-    notes:
-      "Auth.js (formerly NextAuth.js; npm package `next-auth`). Migration/scaffold only — core session only; optional capabilities stay off.",
-  },
-  supabase: {
-    id: "supabase",
-    tier: "migration",
-    supports: { ...none },
-    notes: "Scaffold / experimental. Not a product CI path.",
   },
   dev: {
     id: "dev",

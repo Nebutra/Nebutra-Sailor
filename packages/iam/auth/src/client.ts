@@ -4,8 +4,7 @@
  * @nebutra/auth/client — Provider-agnostic auth hooks for React.
  *
  * Re-exports hooks and types from the react subpackage. These hooks are
- * built on a unified AuthContext that normalizes state across Clerk
- * and Better Auth providers.
+ * built on a unified AuthContext backed by the Better Auth provider.
  *
  * @example
  * ```tsx
@@ -22,11 +21,11 @@
  */
 
 // Provider configuration helpers — also pure (env-read only).
-export { getConfiguredAuthProvider, isClerkProvider } from "./config";
+export { getConfiguredAuthProvider } from "./config";
 // Feature flag helpers — pure / client-safe (no server-only deps).
 // Re-exported here so client components can stay on the /client subpath
 // instead of pulling the root entrypoint (which transitively imports
-// middleware → @clerk/nextjs/server → 'server-only').
+// middleware → 'server-only').
 export type { AuthFeature, AuthFeatureContext } from "./features";
 export { isAuthFeatureEnabled, isAuthFeatureEnabledSync } from "./features";
 // Re-export context for advanced use cases

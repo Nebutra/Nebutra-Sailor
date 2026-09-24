@@ -3,7 +3,6 @@
  */
 
 import { logger } from "@nebutra/logger";
-import { createVercelBlobProvider, VercelBlobProvider } from "./providers/blob";
 import { createLocalProvider, LocalUploadProvider } from "./providers/local";
 import { createS3Provider, S3UploadProvider } from "./providers/s3";
 import type { ProviderConfig, UploadProvider, UploadProviderType } from "./types";
@@ -33,10 +32,6 @@ function createUploadProviderByType(
       return createS3Provider();
     }
     return new S3UploadProvider(config.s3);
-  }
-
-  if (type === "blob") {
-    return createVercelBlobProvider();
   }
 
   if (type === "local") {
@@ -71,13 +66,7 @@ function autoDetectProvider(config?: ProviderConfig): UploadProvider {
     return createUploadProviderByType(explicitProvider, config);
   }
 
-  // Priority 2: Check for Vercel Blob token (zero-config on Vercel)
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    logger.info("Auto-detected Vercel Blob token, using Blob provider");
-    return createVercelBlobProvider();
-  }
-
-  // Priority 3: Check for R2 credentials
+  // Priority 2: Check for R2 credentials
   if (process.env.R2_ACCESS_KEY_ID || process.env.R2_SECRET_ACCESS_KEY) {
     logger.info("Auto-detected R2 credentials, using S3 provider");
     return new S3UploadProvider({
@@ -95,7 +84,7 @@ function autoDetectProvider(config?: ProviderConfig): UploadProvider {
     return createS3Provider();
   }
 
-  // Priority 4: Check for custom S3 endpoint (Minio, etc.)
+  // Priority 4: Check for custom S3 endpoint (Minio, Aliyun OSS, etc.)
   if (process.env.S3_ENDPOINT) {
     logger.info("Using custom S3 endpoint", { endpoint: process.env.S3_ENDPOINT });
     return new S3UploadProvider({
@@ -143,15 +132,8 @@ export function getActiveProviderType(): UploadProviderType {
   if (instance instanceof S3UploadProvider) {
     return "s3";
   }
-  if (instance instanceof VercelBlobProvider) {
-    return "blob";
-  }
   if (instance instanceof LocalUploadProvider) {
     return "local";
-  }
-
-  if (process.env.UPLOAD_PROVIDER === "blob" || process.env.BLOB_READ_WRITE_TOKEN) {
-    return "blob";
   }
 
   if (

@@ -1,6 +1,6 @@
 // @brand-exempt: documents canonical auth.nebutra.com host for operators
 /**
- * Auth-center catch-all — Better Auth / NextAuth surface for all first-party apps.
+ * Auth-center catch-all — Better Auth surface for all first-party apps.
  * Canonical host: auth.nebutra.com (BETTER_AUTH_URL).
  *
  * Also handles GET /api/auth/oauth/:provider?callbackURL=… (same contract as apps/web).
@@ -41,10 +41,7 @@ async function bindCloudflareEnv(): Promise<void> {
   }
 }
 
-const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set([
-  "better-auth",
-  "nextauth",
-]);
+const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set(["better-auth"]);
 
 const provider = getConfiguredAuthProvider();
 let authInstance: AuthProvider | null = null;

@@ -7,10 +7,9 @@ import { z } from "zod";
 /**
  * Supported webhook provider backends.
  *
- * - `svix`   — Managed webhook infrastructure (recommended)
  * - `custom` — Self-hosted webhook delivery via queue + Redis state
  */
-export type WebhookProviderType = "svix" | "custom";
+export type WebhookProviderType = "custom";
 
 // ── Event Type ──────────────────────────────────────────────────────────────
 
@@ -254,16 +253,6 @@ export interface WebhookProvider {
 
 // ── Factory Config ──────────────────────────────────────────────────────────
 
-export interface SvixProviderConfig {
-  provider: "svix";
-
-  /** Svix API key (defaults to `process.env.SVIX_API_KEY`) */
-  apiKey?: string;
-
-  /** Optional: Svix server URL (defaults to production) */
-  serverUrl?: string;
-}
-
 export interface CustomProviderConfig {
   provider: "custom";
 
@@ -286,4 +275,4 @@ export interface CustomProviderConfig {
   deadLetterStore?: WebhookDeadLetterStore;
 }
 
-export type WebhookConfig = SvixProviderConfig | CustomProviderConfig;
+export type WebhookConfig = CustomProviderConfig;

@@ -571,7 +571,7 @@ const heroAnimation = brandMotion.emerge; // brand motion language`,
     "design-sync.ts",
     `import { getDesignSync } from "@nebutra/design-sync";
 
-// Auto-detects Figma / Penpot / git-only from env.
+// Auto-detects git-only / design-md from env.
 const sync = await getDesignSync();
 
 await sync.healthcheck();

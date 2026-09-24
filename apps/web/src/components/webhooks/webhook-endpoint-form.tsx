@@ -19,8 +19,8 @@ import { z } from "zod";
  * The webhook events a customer can subscribe to, with their display labels.
  * These ids mirror `WebhookEventType` in `@nebutra/webhooks` one-for-one and
  * must be kept in sync when an event is added there. The enum is not imported:
- * its barrel pulls in the provider implementations (node crypto, the Svix
- * client), which do not belong in a client bundle.
+ * its barrel pulls in the provider implementation (node crypto), which does
+ * not belong in a client bundle.
  */
 export const STANDARD_WEBHOOK_EVENTS: ReadonlyArray<{ id: string; label: string }> = [
   { id: "user.created", label: "User created" },

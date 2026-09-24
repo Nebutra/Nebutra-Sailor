@@ -2,33 +2,17 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import type { NebutraConfig } from "./config";
-import { resolveScaffoldDeployTargets } from "./deploy";
 import { applyGovernanceLints } from "./governance-lints";
 
 // Wiring tests for applyGovernanceLints — proves the scaffold step:
 //   (a) always wires no-raw-inputs into the output's lint chain,
-//   (b) gates repository-seam on a scaffolded database,
-//   (b2) always wires microcopy lint regardless of database setting,
+//   (b) always wires repository-seam (every scaffold has Postgres + Prisma),
+//   (b2) always wires microcopy lint,
 //   (c) writes governance.config.json with only the enabled sections (seeded
 //       shrink-only ratchet baselines for the current scaffold),
 //   (c2) microcopyRules section present with empty bannedPatterns + allowlist,
 //   (d) strips inherited monorepo path-hardcoded lint commands while preserving
 //       the biome head.
-
-function baseConfig(overrides: Partial<NebutraConfig> = {}): NebutraConfig {
-  return {
-    region: "global",
-    orm: "prisma",
-    database: "postgresql",
-    payment: "none",
-    aiProviders: [],
-    deployTarget: "none",
-    deployTargets: resolveScaffoldDeployTargets("none"),
-    i18n: false,
-    ...overrides,
-  };
-}
 
 function writePkg(dir: string, lint: string) {
   fs.writeFileSync(
@@ -61,11 +45,11 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
     }
   });
 
-  it("(a)+(b) wires raw-inputs, repository-seam, brand-literals, and microcopy when a database is scaffolded", async () => {
+  it("(a)+(b) wires raw-inputs, repository-seam, brand-literals, and microcopy ", async () => {
     dir = fs.mkdtempSync(path.join(os.tmpdir(), "gov-wire-db-"));
     writePkg(dir, "biome check .");
 
-    const result = await applyGovernanceLints(dir, baseConfig({ database: "postgresql" }));
+    const result = await applyGovernanceLints(dir);
 
     expect(result.lints).toEqual([
       "node scripts/governance/lint-no-raw-inputs.mjs",
@@ -79,22 +63,6 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
     );
   });
 
-  it("(b) omits repository-seam but keeps brand-literals and microcopy when database=none", async () => {
-    dir = fs.mkdtempSync(path.join(os.tmpdir(), "gov-wire-nodb-"));
-    writePkg(dir, "biome check .");
-
-    const result = await applyGovernanceLints(dir, baseConfig({ database: "none" }));
-
-    expect(result.lints).toEqual([
-      "node scripts/governance/lint-no-raw-inputs.mjs",
-      "node scripts/governance/lint-brand-literals.mjs",
-      "node scripts/governance/lint-microcopy.mjs",
-    ]);
-    expect(readPkgLint(dir)).toBe(
-      "biome check . && node scripts/governance/lint-no-raw-inputs.mjs && node scripts/governance/lint-brand-literals.mjs && node scripts/governance/lint-microcopy.mjs",
-    );
-  });
-
   it("(c)+(c2) writes governance.config.json with enabled sections + seeded ratchet baselines", async () => {
     dir = fs.mkdtempSync(path.join(os.tmpdir(), "gov-wire-cfg-"));
     writePkg(dir, "biome check .");
@@ -105,7 +73,7 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
     );
     writeFile(dir, "apps/web/src/lib/api/client.ts", `export const title = "Product API";\n`);
 
-    await applyGovernanceLints(dir, baseConfig({ database: "postgresql" }));
+    await applyGovernanceLints(dir);
     const cfg = readGovernance(dir) as {
       rawInputs?: { whitelist?: unknown };
       repositorySeam?: { allowlist?: unknown[] };
@@ -155,7 +123,7 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
     expect(cfg.microcopyRules?.scanRoots).toContain("apps/web/src");
   });
 
-  it("(c) omits repositorySeam section from config when database=none, keeps brandLiterals and microcopyRules", async () => {
+  it("(c) always writes repositorySeam, brandLiterals and microcopyRules", async () => {
     dir = fs.mkdtempSync(path.join(os.tmpdir(), "gov-wire-cfg-nodb-"));
     writePkg(dir, "biome check .");
     writeFile(
@@ -164,7 +132,7 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
       `export const brand = "Nebutra";\n`,
     );
 
-    await applyGovernanceLints(dir, baseConfig({ database: "none" }));
+    await applyGovernanceLints(dir);
     const cfg = readGovernance(dir) as {
       rawInputs?: unknown;
       repositorySeam?: unknown;
@@ -173,7 +141,7 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
     };
 
     expect(cfg.rawInputs).toBeDefined();
-    expect(cfg.repositorySeam).toBeUndefined();
+    expect(cfg.repositorySeam).toBeDefined();
     // Brand-literals is always present.
     expect(cfg.brandLiterals).toBeDefined();
     expect((cfg.brandLiterals?.allowlist as string[]).length).toBeGreaterThan(0);
@@ -194,7 +162,7 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
       "biome check . && node scripts/lint-no-raw-inputs.mjs && node scripts/lint-no-dark-overrides.mjs && node scripts/lint-repository-seam.mjs && node scripts/lint-microcopy.mjs",
     );
 
-    await applyGovernanceLints(dir, baseConfig({ database: "postgresql" }));
+    await applyGovernanceLints(dir);
 
     expect(readPkgLint(dir)).toBe(
       "biome check . && node scripts/governance/lint-no-raw-inputs.mjs && node scripts/governance/lint-repository-seam.mjs && node scripts/governance/lint-brand-literals.mjs && node scripts/governance/lint-microcopy.mjs",
@@ -208,10 +176,10 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
       JSON.stringify({ name: "scaffold", scripts: {} }, null, 2) + "\n",
     );
 
-    await applyGovernanceLints(dir, baseConfig({ database: "none" }));
+    await applyGovernanceLints(dir);
 
     expect(readPkgLint(dir)).toBe(
-      "biome check . && node scripts/governance/lint-no-raw-inputs.mjs && node scripts/governance/lint-brand-literals.mjs && node scripts/governance/lint-microcopy.mjs",
+      "biome check . && node scripts/governance/lint-no-raw-inputs.mjs && node scripts/governance/lint-repository-seam.mjs && node scripts/governance/lint-brand-literals.mjs && node scripts/governance/lint-microcopy.mjs",
     );
   });
 });

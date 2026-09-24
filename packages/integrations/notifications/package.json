@@ -9,8 +9,7 @@
     "status": "stable",
     "productionReady": true,
     "requires": [
-      "NOVU_API_KEY (managed)",
-      "or Prisma-backed direct notification stores"
+      "Prisma-backed direct notification stores"
     ],
     "gaps": []
   },
@@ -20,14 +19,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    },
-    "./novu": {
-      "types": "./dist/providers/novu.d.ts",
-      "import": "./dist/providers/novu.js"
-    },
-    "./knock": {
-      "types": "./dist/providers/knock.d.ts",
-      "import": "./dist/providers/knock.js"
     },
     "./direct": {
       "types": "./dist/providers/direct.d.ts",
@@ -50,7 +41,6 @@
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
-    "@novu/node": "^2.0.0",
     "p-limit": "^7.3.0",
     "zod": "catalog:"
   },

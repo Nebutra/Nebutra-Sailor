@@ -5,14 +5,12 @@ import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
 import { ExitCode } from "../utils/exit-codes";
-import { createSailorValueDomains, nebultraCommand } from "./metadata";
+import { nebultraCommand } from "./metadata";
 
 const KNOWN_COMMANDS = (nebultraCommand.subcommands ?? []).map((command) => command.name);
 
 const COMMAND_DESCRIPTIONS: Record<string, string> = {
   init: "Initialize a Nebutra project and create nebutra.config.json",
-  add: "Add a registry-backed platform feature or external UI component",
-  create: "Scaffold a topology-first Nebutra Sailor project",
   mcp: "Start the Nebutra MCP server for AI agents and editors",
   completions: "Generate shell completions",
   doctor: "Check your Nebutra project setup",
@@ -29,32 +27,21 @@ const COMMAND_DESCRIPTIONS: Record<string, string> = {
   lint: "Run lint workflows",
   typecheck: "Run TypeScript checks",
   test: "Run unit and E2E tests",
-  workflow: "Workflow provider scaffolding",
-  backend: "Backend runtime service workflows",
   e2e: "Run browser E2E suites",
   theme: "Theme registry and governance metadata",
   ai: "AI provider and gateway routing configuration",
-  auth: "Authentication setup",
-  billing: "Billing and subscription management",
-  stats: "Project statistics and health checks",
-  admin: "Platform administration",
-  community: "Community health and showcase",
-  growth: "Growth analytics and insights",
-  ecosystem: "Template marketplace, ideas, showcase, and ecosystem sync",
   services: "Microservice management",
-  search: "Search index management",
   secrets: "Encrypted secrets management",
   logout: "Clear local session state",
   upgrade: "Upgrade local CLI tooling",
   link: "Link local project metadata",
   unlink: "Unlink local project metadata",
+  status: "Show capability readiness (live/local-fallback/missing-key)",
 };
 
 const KNOWN_FLAGS = [
   "--help",
   "--version",
-  "--21st",
-  "--v0",
   "--stdio",
   "--format",
   "--yes",
@@ -64,128 +51,12 @@ const KNOWN_FLAGS = [
   "--quiet",
   "--dry-run",
   "--if-not-exists",
-  "--provider",
-  "-p",
-  "--pm",
-  "--region",
-  "--orm",
-  "--db",
-  "--auth",
-  "--social-login",
-  "--payment",
-  "--ai",
-  "--deploy",
-  "--docs",
-  "--email",
-  "--storage",
-  "--monitoring",
-  "--analytics",
-  "--sms",
-  "--queue",
-  "--search",
-  "--cache",
-  "--notifications",
-  "--webhooks",
-  "--cms",
-  "--feature-flags",
-  "--captcha",
-  "--mcp",
-  "--metering",
-  "--billing-mode",
-  "--idp",
-  "--i18n",
-  "--no-i18n",
-  "--no-install",
-  "--no-git",
   "--json",
 ];
-
-const CREATE_FLAGS = [
-  "-p",
-  "--pm",
-  "--region",
-  "--orm",
-  "--db",
-  "--auth",
-  "--social-login",
-  "--payment",
-  "--ai",
-  "--deploy",
-  "--docs",
-  "--email",
-  "--storage",
-  "--monitoring",
-  "--analytics",
-  "--sms",
-  "--queue",
-  "--search",
-  "--cache",
-  "--notifications",
-  "--webhooks",
-  "--cms",
-  "--feature-flags",
-  "--captcha",
-  "--mcp",
-  "--metering",
-  "--billing-mode",
-  "--idp",
-  "--i18n",
-  "--no-i18n",
-  "--no-install",
-  "--no-git",
-  "--dry-run",
-  "--json",
-  "--yes",
-];
-
-const CREATE_VALUE_FLAGS: Record<string, readonly string[]> = {
-  "-p": createSailorValueDomains.pm,
-  "--pm": createSailorValueDomains.pm,
-  "--region": createSailorValueDomains.region,
-  "--orm": createSailorValueDomains.orm,
-  "--db": createSailorValueDomains.db,
-  "--auth": createSailorValueDomains.auth,
-  "--payment": createSailorValueDomains.payment,
-  "--deploy": createSailorValueDomains.deploy,
-  "--docs": createSailorValueDomains.docs,
-  "--email": createSailorValueDomains.email,
-  "--storage": createSailorValueDomains.storage,
-  "--monitoring": createSailorValueDomains.monitoring,
-  "--analytics": createSailorValueDomains.analytics,
-  "--sms": createSailorValueDomains.sms,
-  "--queue": createSailorValueDomains.queue,
-  "--search": createSailorValueDomains.search,
-  "--cache": createSailorValueDomains.cache,
-  "--notifications": createSailorValueDomains.notifications,
-  "--webhooks": createSailorValueDomains.webhooks,
-  "--cms": createSailorValueDomains.cms,
-  "--feature-flags": createSailorValueDomains.featureFlags,
-  "--captcha": createSailorValueDomains.captcha,
-  "--mcp": createSailorValueDomains.mcp,
-  "--metering": createSailorValueDomains.metering,
-  "--billing-mode": createSailorValueDomains.billingMode,
-  "--idp": createSailorValueDomains.idp,
-};
-
-const createFlagValueCases = Object.entries(CREATE_VALUE_FLAGS)
-  .map(
-    ([flag, values]) => `    ${flag})
-      COMPREPLY=( $(compgen -W "${values.join(" ")}" -- \${cur}) )
-      return 0
-      ;;`,
-  )
-  .join("\n");
-
-const zshCreateFlags = CREATE_FLAGS.map((flag) => `    "${flag}"`).join("\n");
 
 const fishSubcommands = KNOWN_COMMANDS.map(
   (command) =>
     `complete -c nebutra -n "__fish_use_subcommand_only" -f -a "${command}" -d "${COMMAND_DESCRIPTIONS[command]}"`,
-).join("\n");
-
-const fishCreateFlags = CREATE_FLAGS.map(
-  (flag) =>
-    `complete -c nebutra -n "__fish_seen_subcommand_from create" -f -a "${flag}" -d "create-sailor option"`,
 ).join("\n");
 
 /**
@@ -207,22 +78,12 @@ _nebutra_completions() {
   # Flags
   local flags="${KNOWN_FLAGS.join(" ")}"
 
-  case "\${prev}" in
-${createFlagValueCases}
-  esac
-
   if [[ \${cur} == -* ]]; then
     # Complete flags
     COMPREPLY=( $(compgen -W "\${flags}" -- \${cur}) )
   elif [[ \${COMP_CWORD} -eq 1 ]]; then
     # Complete subcommands at position 1
     COMPREPLY=( $(compgen -W "\${subcommands}" -- \${cur}) )
-  elif [[ "\${prev}" == "add" ]]; then
-    # add command takes component names
-    COMPREPLY=( $(compgen -W "--21st --v0 --provider --dry-run --yes --if-not-exists" -- \${cur}) )
-  elif [[ "\${prev}" == "create" ]]; then
-    # create delegates to create-sailor
-    COMPREPLY=( $(compgen -W "${CREATE_FLAGS.join(" ")}" -- \${cur}) )
   elif [[ "\${prev}" == "completions" ]]; then
     # completions command takes shell type
     COMPREPLY=( $(compgen -W "bash zsh fish install" -- \${cur}) )
@@ -252,15 +113,8 @@ _nebutra() {
     "--version[Show version]"
   )
 
-  local -a add_flags=(
-    "--21st[Fetch and install a component from 21st.dev]:component ID"
-    "--v0[Fetch and install a component from v0.dev]:URL"
-    "--provider[Specify a backend provider for a local feature]:provider"
-    "--dry-run[Preview local feature install plan]"
-  )
-
-  local -a create_flags=(
-${zshCreateFlags}
+  local -a status_flags=(
+    "--json[Emit machine-readable JSON]"
   )
 
   local -a mcp_flags=(
@@ -278,12 +132,6 @@ ${zshCreateFlags}
     _describe "command" commands
   else
     case "\${words[2]}" in
-      add)
-        _arguments "*:component:($global_flags $add_flags)"
-        ;;
-      create)
-        _arguments "*:options:($global_flags $create_flags)"
-        ;;
       completions)
         _values "shell type" bash zsh fish install
         ;;
@@ -292,6 +140,9 @@ ${zshCreateFlags}
         ;;
       schema)
         _arguments "*:options:($global_flags $schema_flags)"
+        ;;
+      status)
+        _arguments "*:options:($global_flags $status_flags)"
         ;;
       *)
         _arguments "*:options:($global_flags)"
@@ -320,13 +171,8 @@ ${fishSubcommands}
 complete -c nebutra -f -a "--help" -d "Show help message"
 complete -c nebutra -f -a "--version" -d "Show version"
 
-# add command flags
-complete -c nebutra -n "__fish_seen_subcommand_from add" -f -a "--21st" -d "Fetch and install a component from 21st.dev"
-complete -c nebutra -n "__fish_seen_subcommand_from add" -f -a "--v0" -d "Fetch and install a component from v0.dev"
-complete -c nebutra -n "__fish_seen_subcommand_from add" -f -a "--provider" -d "Specify a backend provider"
-
-# create command flags
-${fishCreateFlags}
+# status command flags
+complete -c nebutra -n "__fish_seen_subcommand_from status" -f -a "--json" -d "Emit machine-readable JSON"
 
 # mcp command flags
 complete -c nebutra -n "__fish_seen_subcommand_from mcp" -f -a "--stdio" -d "Use stdio transport (default)"

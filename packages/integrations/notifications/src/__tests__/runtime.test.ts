@@ -7,29 +7,22 @@ describe("notification runtime status", () => {
     vi.unstubAllEnvs();
   });
 
-  it("reports degraded runtime when Novu is selected without an API key", () => {
-    const status = resolveNotificationRuntimeStatus({
-      env: {
-        NOTIFICATION_PROVIDER: "novu",
-      } as NodeJS.ProcessEnv,
-    });
+  it("reports preview mode for the default direct provider with no durable adapters", () => {
+    const status = resolveNotificationRuntimeStatus();
 
     expect(status).toEqual(
       expect.objectContaining({
-        provider: "novu",
-        mode: "degraded",
+        provider: "direct",
+        mode: "preview",
         canManagePreferences: false,
         canViewInbox: false,
         canMarkInboxRead: false,
-        missing: ["NOVU_API_KEY"],
+        missing: ["Persistent preference storage", "Persistent in-app inbox storage"],
       }),
     );
   });
 
-  it("surfaces degraded Novu status in settings when provider creation fails", async () => {
-    vi.stubEnv("NOTIFICATION_PROVIDER", "novu");
-    vi.stubEnv("NOVU_API_KEY", "");
-
+  it("surfaces preview status in settings when no durable adapters are configured", async () => {
     const snapshot = await loadNotificationSettingsSnapshot({
       userId: "user_alpha",
       tenantId: "org_alpha",
@@ -37,9 +30,8 @@ describe("notification runtime status", () => {
 
     expect(snapshot.runtime).toEqual(
       expect.objectContaining({
-        provider: "novu",
-        mode: "degraded",
-        missing: ["NOVU_API_KEY"],
+        provider: "direct",
+        mode: "preview",
       }),
     );
     expect(snapshot.preferenceSource).toBe("catalog-defaults");

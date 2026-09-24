@@ -4692,10 +4692,10 @@ export interface paths {
             "application/json": {
               runtime: {
                 /** @enum {string} */
-                provider: "novu" | "knock" | "direct";
+                provider: "direct";
                 providerLabel: string;
                 /** @enum {string} */
-                mode: "managed" | "self_hosted" | "preview" | "degraded";
+                mode: "self_hosted" | "preview";
                 canManagePreferences: boolean;
                 canViewInbox: boolean;
                 canMarkInboxRead: boolean;

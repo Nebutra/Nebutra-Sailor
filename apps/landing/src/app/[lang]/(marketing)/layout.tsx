@@ -14,7 +14,6 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
     <MarketingClientProviders
       appUrl={env.NEXT_PUBLIC_APP_URL}
       authProvider={env.NEXT_PUBLIC_AUTH_PROVIDER}
-      clerkPublishableKey={env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
       googleClientId={env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
       googleOneTapEnabled={env.NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP !== "false"}
     >

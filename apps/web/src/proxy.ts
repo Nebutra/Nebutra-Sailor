@@ -2,85 +2,22 @@ import {
   buildAuthCenterSignInUrl,
   buildAuthCenterSignUpUrl,
   getAuthCenterOrigin,
-  getConfiguredAuthProvider,
 } from "@nebutra/auth";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
-import { logger } from "@nebutra/logger";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-
-/**
- * Define public routes that don't require authentication.
- * Used by both Clerk and custom auth middlewares.
- */
-const publicRoutePaths = [
-  "/",
-  "/sign-in",
-  "/sign-up",
-  "/forgot-password",
-  "/reset-password",
-  "/login/success",
-  "/desktop-auth",
-  "/onboarding",
-  "/select-org",
-  "/sso-callback",
-  "/demo",
-  "/api/webhook",
-];
-
-function isPublicPathname(pathname: string): boolean {
-  // Cookie-based i18n: no locale prefix in URLs — compare pathname directly.
-  if (pathname === "/") {
-    return true;
-  }
-
-  return publicRoutePaths.some(
-    (publicPath) =>
-      publicPath !== "/" && (pathname === publicPath || pathname.startsWith(`${publicPath}/`)),
-  );
-}
 
 function isDesktopAuthRemotePath(pathname: string): boolean {
   return pathname === "/signup/remote" || pathname === "/login/remote";
 }
 
-const authProvider = getConfiguredAuthProvider();
-
-// Only require Clerk key if using Clerk provider
-const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-if (authProvider === "clerk" && !hasClerkKey && process.env.NODE_ENV === "production") {
-  throw new Error(
-    "[auth] NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is required when using Clerk auth provider. " +
-      "Set this env var or change NEXT_PUBLIC_AUTH_PROVIDER.",
-  );
-}
-
 function buildCsp(nonce: string): string {
   const isDev = process.env.NODE_ENV === "development";
-  const isClerk = authProvider === "clerk";
-
-  const clerkDirectives = isClerk
-    ? ["https://clerk.accounts.dev", "https://*.clerk.accounts.dev"]
-    : [];
-
-  const clerkImg = isClerk ? ["https://img.clerk.com", "https://*.clerk.accounts.dev"] : [];
-
-  const clerkConnect = isClerk
-    ? [
-        "https://clerk.accounts.dev",
-        "https://*.clerk.accounts.dev",
-        "https://api.clerk.com",
-        "wss://*.clerk.accounts.dev",
-      ]
-    : [];
-
-  const clerkFrame = isClerk ? ["https://clerk.accounts.dev", "https://*.clerk.accounts.dev"] : [];
 
   const scriptSrc = [
     "'self'",
     `'nonce-${nonce}'`,
     "'strict-dynamic'",
-    ...clerkDirectives,
     ...(isDev ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
   ].join(" ");
 
@@ -90,10 +27,10 @@ function buildCsp(nonce: string): string {
     "default-src 'self'",
     `script-src ${scriptSrc}`,
     `style-src ${styleSrc}`,
-    `img-src 'self' data: blob: ${getBrandOrigin("cdn")} ${clerkImg.join(" ")}`,
+    `img-src 'self' data: blob: ${getBrandOrigin("cdn")}`,
     "font-src 'self' data:",
-    `connect-src 'self' ${clerkConnect.join(" ")}`,
-    `frame-src ${clerkFrame.join(" ") || "'none'"}`,
+    "connect-src 'self'",
+    "frame-src 'none'",
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
@@ -121,15 +58,12 @@ function withNonce(request: NextRequest, response: NextResponse): NextResponse {
 }
 
 /**
- * Middleware handler — routes to Clerk or generic auth based on provider.
+ * Middleware handler — auth-center redirects + CSP nonce injection.
  *
  * Cookie-based i18n: no next-intl locale middleware runs here. Locale is
  * resolved from the NEXT_LOCALE cookie in getRequestConfig (request.ts).
- *
- * For Clerk: requires eager import of clerkMiddleware (top of file if using Clerk in prod)
- * For others: simple CSP handler
  */
-export async function proxy(req: NextRequest, event: NextFetchEvent) {
+export async function proxy(req: NextRequest, _event: NextFetchEvent) {
   const { pathname } = req.nextUrl;
 
   if (isDesktopAuthRemotePath(pathname)) {
@@ -181,7 +115,6 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
   // Keep web APIs + desktop remotes local; UI always funnels to brand auth origin.
   if (
     !isAuthCenterHost &&
-    authProvider !== "clerk" &&
     (pathname === "/sign-in" ||
       pathname.startsWith("/sign-in/") ||
       pathname === "/sign-up" ||
@@ -215,31 +148,7 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
     return NextResponse.redirect(target, 307);
   }
 
-  if (authProvider === "clerk" && hasClerkKey) {
-    // For Clerk provider, dynamically import and use clerkMiddleware
-    // Note: In production with Clerk, consider importing clerkMiddleware at the top
-    // for better performance instead of dynamic import
-    try {
-      const { clerkMiddleware } = await import("@clerk/nextjs/server");
-
-      // Create Clerk middleware handler
-      const clerk = clerkMiddleware(async (auth, innerReq) => {
-        if (!isPublicPathname(innerReq.nextUrl.pathname)) {
-          await auth.protect();
-        }
-
-        return withNonce(innerReq, NextResponse.next());
-      });
-
-      return clerk(req, event);
-    } catch (error) {
-      logger.error("Failed to load Clerk middleware:", error);
-      // Fallback to generic handler
-    }
-  }
-
-  // For non-Clerk providers or Clerk import failure, use simple CSP handler.
-  // The AuthProvider in layout.tsx handles session management for non-Clerk providers.
+  // The AuthProvider in layout.tsx handles session management.
   // Cookie-based i18n: no intl middleware or locale redirects needed.
 
   // Skip CSP injection for API routes — they don't need nonce processing.

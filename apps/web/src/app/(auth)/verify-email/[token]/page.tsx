@@ -1,5 +1,4 @@
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { connection } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -8,7 +7,6 @@ import { VerifyEmailResult } from "@/components/auth/verify-email-result";
 import { resolveServerRequestOrigin } from "@/lib/auth";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
-import { getSecurityCapabilities } from "@/lib/auth/security-capabilities";
 
 interface PageProps {
   params: Promise<{ locale: string; token: string }>;
@@ -39,11 +37,6 @@ async function verifyEmailServerSide(
 
 async function VerifyEmailPageContent({ params }: PageProps) {
   await connection();
-
-  const capabilities = getSecurityCapabilities();
-  if (capabilities.provider === "clerk" && capabilities.providerProfileUrl) {
-    redirect(capabilities.providerProfileUrl);
-  }
 
   const { token } = await params;
   const t = await getTranslations("auth.verifyEmail");

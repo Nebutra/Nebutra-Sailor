@@ -4,7 +4,7 @@ import { type CheckoutProviderType, CREDIT_PURCHASE_METADATA_TYPE } from "./type
 // =============================================================================
 // Shared credit-purchase webhook handler
 // =============================================================================
-// Each payment provider's webhook route (Stripe, Polar, LemonSqueezy, ChinaPay)
+// Each payment provider's webhook route (Stripe, ChinaPay)
 // invokes this function when it detects a checkout session carrying the
 // `type: "credit_purchase"` metadata. Centralizing the credit-granting logic
 // guarantees identical behavior across providers and a single place to evolve

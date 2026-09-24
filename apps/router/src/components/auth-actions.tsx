@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  buildAuthCenterSignInUrl,
-  buildAuthCenterSignUpUrl,
-  getConfiguredAuthProvider,
-  useAuth,
-} from "@nebutra/auth/client";
+import { buildAuthCenterSignInUrl, buildAuthCenterSignUpUrl, useAuth } from "@nebutra/auth/client";
 import { useEffect, useState } from "react";
 
 type Variant = "header" | "compact" | "cta";
@@ -79,9 +74,8 @@ export function AuthActions({
     );
   }
 
-  const provider = getConfiguredAuthProvider();
-  const signInHref = provider === "clerk" ? "/sign-in" : buildAuthCenterSignInUrl(returnTo);
-  const signUpHref = provider === "clerk" ? "/sign-up" : buildAuthCenterSignUpUrl(returnTo);
+  const signInHref = buildAuthCenterSignInUrl(returnTo);
+  const signUpHref = buildAuthCenterSignUpUrl(returnTo);
 
   if (variant === "cta") {
     return (

@@ -22,11 +22,7 @@ function resolveQueueProvider(explicit?: QueueProviderType): QueueProviderType {
   return resolveProviderType<QueueProviderType>({
     explicit,
     envVarName: "QUEUE_PROVIDER",
-    detectors: [
-      { provider: "qstash", when: envPresent("QSTASH_TOKEN") },
-      { provider: "bullmq", when: envPresent("REDIS_URL") },
-      { provider: "sqs", when: envPresent("AWS_SQS_QUEUE_URL") },
-    ],
+    detectors: [{ provider: "qstash", when: envPresent("QSTASH_TOKEN") }],
     fallback: "memory",
   });
 }
@@ -36,7 +32,7 @@ function assertMemoryProviderAllowed(): void {
     disallowedInProd: ["memory"],
     overrideEnv: "ALLOW_MEMORY_QUEUE_IN_PRODUCTION",
     message:
-      "Refusing to use the in-memory queue provider in production. Configure QSTASH_TOKEN or REDIS_URL, or set ALLOW_MEMORY_QUEUE_IN_PRODUCTION=true for an explicit temporary override.",
+      "Refusing to use the in-memory queue provider in production. Configure QSTASH_TOKEN, or set ALLOW_MEMORY_QUEUE_IN_PRODUCTION=true for an explicit temporary override.",
   });
 }
 
@@ -53,12 +49,6 @@ function assertMemoryProviderAllowed(): void {
  *   provider: "qstash",
  *   callbackBaseUrl: "https://api.nebutra.com",
  * });
- *
- * // Explicit BullMQ
- * const queue = await createQueue({
- *   provider: "bullmq",
- *   redisUrl: "redis://localhost:6379",
- * });
  * ```
  */
 export async function createQueue(config?: QueueConfig): Promise<QueueProvider> {
@@ -69,9 +59,7 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
   switch (providerType) {
     case "qstash": {
       const { QStashProvider } = await import("./providers/qstash");
-      const qstashConfig = config as
-        | Exclude<QueueConfig, { provider: "bullmq" | "sqs" | "memory" }>
-        | undefined;
+      const qstashConfig = config as Exclude<QueueConfig, { provider: "memory" }> | undefined;
       return new QStashProvider({
         callbackBaseUrl:
           qstashConfig?.callbackBaseUrl ??
@@ -89,40 +77,6 @@ export async function createQueue(config?: QueueConfig): Promise<QueueProvider> 
           ? { dlqEndpoint: qstashConfig.dlqEndpoint }
           : {}),
         ...(qstashConfig?.dlqFetcher !== undefined ? { dlqFetcher: qstashConfig.dlqFetcher } : {}),
-      });
-    }
-
-    case "bullmq": {
-      const { BullMQProvider } = await import("./providers/bullmq");
-      const bullConfig = config as
-        | Exclude<QueueConfig, { provider: "qstash" | "sqs" | "memory" }>
-        | undefined;
-      return new BullMQProvider({
-        ...(bullConfig?.redisUrl !== undefined ? { redisUrl: bullConfig.redisUrl } : {}),
-        ...(bullConfig?.concurrency !== undefined ? { concurrency: bullConfig.concurrency } : {}),
-        ...(bullConfig?.prefix !== undefined ? { prefix: bullConfig.prefix } : {}),
-      });
-    }
-
-    case "sqs": {
-      const { SQSProvider } = await import("./providers/sqs");
-      const sqsConfig = config as
-        | Exclude<QueueConfig, { provider: "qstash" | "bullmq" | "memory" }>
-        | undefined;
-      return new SQSProvider({
-        ...(sqsConfig?.region !== undefined ? { region: sqsConfig.region } : {}),
-        ...(sqsConfig?.queueUrl !== undefined ? { queueUrl: sqsConfig.queueUrl } : {}),
-        ...(sqsConfig?.accessKeyId !== undefined ? { accessKeyId: sqsConfig.accessKeyId } : {}),
-        ...(sqsConfig?.secretAccessKey !== undefined
-          ? { secretAccessKey: sqsConfig.secretAccessKey }
-          : {}),
-        ...(sqsConfig?.waitTimeSeconds !== undefined
-          ? { waitTimeSeconds: sqsConfig.waitTimeSeconds }
-          : {}),
-        ...(sqsConfig?.maxMessages !== undefined ? { maxMessages: sqsConfig.maxMessages } : {}),
-        ...(sqsConfig?.visibilityTimeoutSeconds !== undefined
-          ? { visibilityTimeoutSeconds: sqsConfig.visibilityTimeoutSeconds }
-          : {}),
       });
     }
 

@@ -147,8 +147,8 @@ describe("handleCreditPurchaseWebhook", () => {
     });
 
     const result = await handleCreditPurchaseWebhook({
-      provider: "polar",
-      sessionId: "sess_polar_1",
+      provider: "chinapay",
+      sessionId: "sess_chinapay_1",
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,
         organizationId: "org_123",
@@ -184,7 +184,7 @@ describe("handleCreditPurchaseWebhook", () => {
     mockedAddCredits.mockRejectedValueOnce(new Error("already_processed for this relatedId"));
 
     const result = await handleCreditPurchaseWebhook({
-      provider: "lemonsqueezy",
+      provider: "chinapay",
       sessionId: "sess_dup2",
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,

@@ -24,59 +24,14 @@ export interface OrganizationSummary {
   image: string | null;
 }
 
-function asRecord(value: unknown): Record<string, unknown> | null {
-  return value && typeof value === "object" ? (value as Record<string, unknown>) : null;
-}
-
-function readString(value: unknown) {
-  return typeof value === "string" ? value : "";
-}
-
 export function canAttemptOrganizationOperations(capabilities: { organizations: boolean }) {
   // Better Auth mounts and probes plugins lazily inside organization methods.
   return provider === "better-auth" || capabilities.organizations;
 }
 
-function normalizeClerkOrganizations(input: unknown): OrganizationSummary[] {
-  const payload = asRecord(input);
-  const items = Array.isArray(payload?.data) ? payload.data : Array.isArray(input) ? input : [];
-
-  return items
-    .map((item) => {
-      const membership = asRecord(item);
-      const org =
-        asRecord(membership?.organization) ??
-        asRecord(membership?.publicOrganizationData) ??
-        membership;
-
-      if (!org) return null;
-
-      const id = readString(org.id);
-      if (!id) return null;
-
-      return {
-        id,
-        name: readString(org.name) || "Untitled workspace",
-        slug: readString(org.slug),
-        image: readString(org.imageUrl) || null,
-      } satisfies OrganizationSummary;
-    })
-    .filter((org): org is OrganizationSummary => Boolean(org));
-}
-
 export async function getOrganizationsForRequest(
   request: Request,
 ): Promise<OrganizationSummary[] | null> {
-  if (provider === "clerk") {
-    const { auth, clerkClient } = await import("@clerk/nextjs/server");
-    const { userId } = await auth();
-    if (!userId) return null;
-
-    const client = await clerkClient();
-    const memberships = await client.users.getOrganizationMembershipList({ userId });
-    return normalizeClerkOrganizations(memberships);
-  }
-
   const auth = await createAuth({ provider });
   const session = await auth.getSession(request);
   if (!session?.userId) return null;

@@ -30,8 +30,7 @@ that should live in the owning workspace package.
 - CLI test harness:
   `tests/`,
   command-local `*.test.ts`
-- Published `@nebutra/*` caret ranges emitted by `nebutra add`:
-  re-export only from
+- Published `@nebutra/*` caret ranges: re-export only from
   `packages/ops/preset/src/nebutra-package-versions.ts`
   via `src/utils/nebutra-versions.ts`. **Never** maintain a local version map.
 

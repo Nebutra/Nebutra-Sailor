@@ -7,7 +7,7 @@
     "graph": "core",
     "productionReady": false
   },
-  "description": "Provider-agnostic auth abstraction layer (Clerk, Better Auth, NextAuth/Auth.js v5, Supabase)",
+  "description": "Provider-agnostic auth abstraction layer (Better Auth)",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -52,11 +52,6 @@
       "import": "./dist/react/index.js",
       "default": "./dist/react/index.js"
     },
-    "./react/clerk-enterprise-sso": {
-      "types": "./dist/react/use-clerk-enterprise-sso.d.ts",
-      "import": "./dist/react/use-clerk-enterprise-sso.js",
-      "default": "./dist/react/use-clerk-enterprise-sso.js"
-    },
     "./components": {
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js",
@@ -85,24 +80,12 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@clerk/nextjs": ">=6.0.0",
     "@nebutra/db": "workspace:*",
     "@nebutra/feature-flags": "workspace:*",
-    "@supabase/supabase-js": ">=2.0.0",
-    "next-auth": "^5.0.0-beta.32",
     "react": "^19.0.0",
     "@nebutra/ui": "workspace:*"
   },
   "peerDependenciesMeta": {
-    "@clerk/nextjs": {
-      "optional": true
-    },
-    "next-auth": {
-      "optional": true
-    },
-    "@supabase/supabase-js": {
-      "optional": true
-    },
     "@nebutra/db": {
       "optional": true
     },

@@ -42,17 +42,6 @@ export async function createTeamOrganization(
 ): Promise<CreateTeamOrgResult> {
   const provider = getConfiguredAuthProvider();
 
-  if (provider === "clerk") {
-    const { clerkClient } = await import("@clerk/nextjs/server");
-    const client = await clerkClient();
-    const org = await client.organizations.createOrganization({
-      name: input.name,
-      slug: input.slug,
-      createdBy: input.creatorUserId,
-    });
-    return { status: "created", organizationId: org.id, slug: org.slug ?? input.slug };
-  }
-
   const auth = await createAuth({ provider });
   if (!auth.capabilities.organizations) {
     return { status: "unsupported" };
@@ -78,17 +67,6 @@ export async function inviteCofounderToTeam(input: {
   email: string;
   inviterUserId: string;
 }): Promise<void> {
-  const provider = getConfiguredAuthProvider();
-
-  if (provider === "clerk") {
-    const { clerkClient } = await import("@clerk/nextjs/server");
-    const client = await clerkClient();
-    await client.organizations.createOrganizationInvitationBulk(input.organizationId, [
-      { emailAddress: input.email, role: "org:admin", inviterUserId: input.inviterUserId },
-    ]);
-    return;
-  }
-
   const systemDb = getSystemDb();
   const existing = await systemDb.organizationInvitation.findFirst({
     where: { email: input.email, organizationId: input.organizationId, status: "pending" },

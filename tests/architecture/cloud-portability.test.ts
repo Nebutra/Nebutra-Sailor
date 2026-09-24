@@ -60,7 +60,6 @@ describe("cloud platform portability contract", () => {
     const gatewayWorkflow = readText(".github/workflows/deploy-gateway.yml");
     const originWorkflow = readText(".github/workflows/deploy-origin-ecs.yml");
     const deployTargets = readText("packages/ops/preset/src/deploy-target.ts");
-    const createSailorDeploy = readText("packages/ops/create-sailor/src/utils/deploy.ts");
 
     expect(gatewayWorkflow).toContain("          - gcp");
     expect(originWorkflow).toContain("          - gcp");
@@ -69,14 +68,8 @@ describe("cloud platform portability contract", () => {
     // The origin default moved from ecs-docker to fly on 2026-09-22; the
     // dormant adapters (gcp/aws/k8s/railway) stay selectable.
     expect(deployTargets).toContain('originBackend: "fly"');
-    // The scaffold deliberately holds no target list of its own — it imports
-    // the map type and the defaults from the preset, so a target added there
-    // reaches create-sailor without a second edit. Grepping for the literal
-    // "gcp" here asserted the duplication that import removed, and went red the
-    // moment the two were deduplicated.
-    expect(createSailorDeploy).toContain('from "@nebutra/preset/deploy-target"');
-    expect(createSailorDeploy).toContain("getDefaultDeployTargets");
-    expect(createSailorDeploy).not.toMatch(/originBackend:\s*\[/);
+    // The scaffold holds no deploy targets at all (ADR 2026-09-24): the
+    // selectors live in the preset for Nebutra's own instance.
   });
 
   it("adds a GCP Terraform scaffold while preserving AWS as an active provider option", () => {

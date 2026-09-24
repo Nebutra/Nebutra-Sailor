@@ -20,11 +20,6 @@
       "import": "./dist/providers/aliyun.js",
       "default": "./dist/providers/aliyun.js"
     },
-    "./tencent": {
-      "types": "./dist/providers/tencent.d.ts",
-      "import": "./dist/providers/tencent.js",
-      "default": "./dist/providers/tencent.js"
-    },
     "./twilio-verify": {
       "types": "./dist/providers/twilio-verify.d.ts",
       "import": "./dist/providers/twilio-verify.js",

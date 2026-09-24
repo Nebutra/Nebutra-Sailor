@@ -1,7 +1,0 @@
-node_modules/
-.docusaurus/
-build/
-.cache-loader/
-.env.local
-.DS_Store
-*.log

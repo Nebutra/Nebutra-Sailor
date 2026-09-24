@@ -2,10 +2,9 @@
  * @nebutra/email — Multi-provider transactional email
  *
  * Provider-agnostic email system with auto-detection:
- *   1. EMAIL_PROVIDER env var (explicit: "resend" | "nodemailer" | "console")
+ *   1. EMAIL_PROVIDER env var (explicit: "resend" | "console")
  *   2. RESEND_API_KEY present → Resend
- *   3. SMTP_HOST present → Nodemailer (SMTP)
- *   4. Fallback → Console (dev/test, no API key needed)
+ *   3. Fallback → Console (dev/test, no API key needed)
  *
  * Usage:
  *   import { sendWelcomeEmail, sendApiKeyCreatedEmail } from "@nebutra/email";
@@ -15,7 +14,6 @@
  *   EMAIL_PROVIDER  — explicit provider override (optional)
  *   EMAIL_FROM      — verified sender (e.g. getBrandMailFrom() example)
  *   RESEND_API_KEY  — for Resend provider
- *   SMTP_HOST       — for Nodemailer provider (+ SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE)
  */
 
 import { brand, colors } from "@nebutra/brand/metadata";
@@ -25,7 +23,6 @@ import { getEmailProvider, type SendResult } from "./provider";
 export type { EmailProvider, EmailProviderType, SendOptions, SendResult } from "./provider";
 export { getEmailProvider, resetEmailProvider } from "./provider";
 export { ConsoleEmailProvider } from "./providers/console";
-export { NodemailerEmailProvider } from "./providers/nodemailer";
 export { ResendEmailProvider } from "./providers/resend";
 
 const FROM = process.env.EMAIL_FROM ?? getBrandMailFrom();

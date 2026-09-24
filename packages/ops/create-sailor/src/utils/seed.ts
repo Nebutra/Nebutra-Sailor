@@ -4,10 +4,10 @@ import path from "node:path";
 /**
  * Seed data generator for create-sailor.
  *
- * Writes an auth-provider-aware `prisma/seed.ts` into the scaffolded
+ * Writes an `prisma/seed.ts` into the scaffolded
  * project. The seed creates:
  *  - 3 example tenants (free / startup / pro plans)
- *  - 1 admin user (auth-aware: Clerk id / BetterAuth email+password / skipped)
+ *  - 1 admin user (Better Auth email+password)
  *  - 2 sample projects per tenant
  *
  * The generated seed wraps each block in try/catch so that projects with
@@ -23,8 +23,6 @@ import path from "node:path";
  * Works. For an `apps/web` layout we update `apps/web/package.json`
  * instead.
  */
-
-export type AuthChoice = "clerk" | "betterauth" | "none" | string;
 
 interface PrismaTarget {
   /** Directory that contains `prisma/schema.prisma`. */
@@ -72,28 +70,12 @@ function detectModels(schemaPath: string): Set<string> {
   }
 }
 
-function renderAdminUserBlock(auth: AuthChoice, hasUserModel: boolean): string {
-  if (!hasUserModel || auth === "none") {
-    return `    // Skipping admin user — auth=${JSON.stringify(auth)} (or no User model).`;
+function renderAdminUserBlock(hasUserModel: boolean): string {
+  if (!hasUserModel) {
+    return `    // Skipping admin user — no User model.`;
   }
 
-  if (auth === "clerk") {
-    return `    try {
-      const admin = await prisma.user.create({
-        data: {
-          clerkId: "user_mock_admin",
-          email: "admin@example.com",
-          name: "Admin",
-        },
-      });
-      console.log("\\u2713 Created admin user:", admin.email);
-    } catch (err) {
-      console.warn("\\u26A0 Admin user creation skipped:", (err as Error).message);
-    }`;
-  }
-
-  if (auth === "betterauth") {
-    return `    try {
+  return `    try {
       // NOTE: in production hash passwords with the project's password hasher
       // (e.g. argon2id via @nebutra/auth). This is a scaffold placeholder.
       const admin = await prisma.user.create({
@@ -107,25 +89,14 @@ function renderAdminUserBlock(auth: AuthChoice, hasUserModel: boolean): string {
     } catch (err) {
       console.warn("\\u26A0 Admin user creation skipped:", (err as Error).message);
     }`;
-  }
-
-  // Unknown provider — best-effort email-only record.
-  return `    try {
-      const admin = await prisma.user.create({
-        data: { email: "admin@example.com", name: "Admin" },
-      });
-      console.log("\\u2713 Created admin user:", admin.email);
-    } catch (err) {
-      console.warn("\\u26A0 Admin user creation skipped:", (err as Error).message);
-    }`;
 }
 
-function renderSeedFile(auth: AuthChoice, models: Set<string>): string {
+function renderSeedFile(models: Set<string>): string {
   const hasTenant = models.has("Tenant");
   const hasUser = models.has("User");
   const hasProject = models.has("Project");
 
-  const adminBlock = renderAdminUserBlock(auth, hasUser);
+  const adminBlock = renderAdminUserBlock(hasUser);
 
   const tenantBlock = hasTenant
     ? `  let tenants: Array<{ id: string; name: string }> = [];
@@ -172,7 +143,7 @@ function renderSeedFile(auth: AuthChoice, models: Set<string>): string {
  *
  * Run with:  pnpm db:seed
  *
- * Auth provider: ${auth}
+ * Auth provider: Better Auth
  * Detected models at scaffold time: ${[...models].sort().join(", ") || "(none)"}
  *
  * Each block is wrapped in try/catch so evolving the schema does not
@@ -239,7 +210,7 @@ function ensurePackageJsonScripts(packageJsonPath: string): void {
   }
 }
 
-export async function generateSeedData(targetDir: string, auth: AuthChoice): Promise<void> {
+export async function generateSeedData(targetDir: string): Promise<void> {
   const target = resolvePrismaTarget(targetDir);
   if (!target) {
     // No Prisma schema found — likely `--db=none` or a variant template.
@@ -251,7 +222,7 @@ export async function generateSeedData(targetDir: string, auth: AuthChoice): Pro
     const schemaPath = path.join(target.packageDir, "prisma", "schema.prisma");
     const models = detectModels(schemaPath);
 
-    const seedSource = renderSeedFile(auth, models);
+    const seedSource = renderSeedFile(models);
 
     const seedDir = path.dirname(target.seedPath);
     if (!fs.existsSync(seedDir)) {

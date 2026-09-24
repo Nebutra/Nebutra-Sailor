@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       {
         error: "ledger_topup_via_billing",
         message:
-          "Production CreditLedger top-ups go through billing checkout (Stripe/Polar/etc.), not this mock endpoint.",
+          "Production CreditLedger top-ups go through billing checkout (Stripe/ChinaPay), not this mock endpoint.",
       },
       { status: 501 },
     );

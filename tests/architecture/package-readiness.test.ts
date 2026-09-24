@@ -110,12 +110,7 @@ describe("package readiness governance", () => {
     }
 
     for (const manifest of documented) {
-      const packageName = manifest.name.replace("@nebutra/", "");
       const readmePath = join(manifest.__packageDir, "README.md");
-      const cliStatusRegistry = await readFile(
-        join(ROOT, "packages/ops/create-sailor/src/utils/package-status.ts"),
-        "utf8",
-      );
       const readme = existsSync(readmePath) ? await readFile(readmePath, "utf8") : "";
       const status = manifest.nebutra?.status;
 
@@ -133,14 +128,6 @@ describe("package readiness governance", () => {
           expect(previewDocPackages.has(manifest.name), `${manifest.name} preview docs`).toBe(
             false,
           );
-          expect(
-            cliStatusRegistry,
-            `${manifest.name} should not be listed in create-sailor preview registry`,
-          ).not.toContain(`${packageName}:`);
-          expect(
-            cliStatusRegistry,
-            `${manifest.name} should not be listed in create-sailor preview registry`,
-          ).not.toContain(`"${packageName}":`);
           break;
         case "foundation":
           expect(manifest.nebutra?.productionReady, `${manifest.name} productionReady`).toBe(false);

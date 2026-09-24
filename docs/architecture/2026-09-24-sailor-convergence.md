@@ -123,7 +123,7 @@ unchanged.
 `db`, `upgrade`. Every public command must pass against a freshly scaffolded project outside this
 monorepo (new golden e2e gate).
 
-- Move out of the published package into `ops/nebutra/`: `admin`, `community`, `growth`, `stats`.
+- Remove from the published package: `admin`, `community`, `growth`, `stats` (operator work belongs to the admin desk, not a CLI buyers install).
 - Remove until the backing API exists: `ecosystem`.
 - `create` stops wrapping `create-sailor`; there is one creation entry point.
 - `nebutra add` is replaced by `sync` against a declared capability list in `nebutra.json`
@@ -166,6 +166,19 @@ added to the allowed grants, implemented with Better Auth's device-authorization
 4. Gateway mount in Next + route-handler ratchet.
 5. CLI split (`ops/nebutra/` operator tools), `status` / `sync`.
 6. IdP device flow + `nebutra login`.
+
+## Status (2026-09-24)
+
+Landed in the first batch: §1 adapter deletions, §2 pairs, §3 region removal,
+§4 zero-question scaffold, §5 (template deploy files reduced to a portable
+`Dockerfile.web` + `docker-compose.yml`), the §6 route-handler ratchet, and §7
+(12 commands removed, `nebutra status` added).
+
+Deferred to the second batch: §6 mounting the gateway in Next (changes
+production routing, ships on its own), §7 `sync`, and §8 device-flow login
+(amends the IdP contract, needs its own security review). `apps/sleptons` keeps
+its direct Clerk integration — it is Nebutra's own product and is stripped from
+the template.
 
 ## Open questions
 

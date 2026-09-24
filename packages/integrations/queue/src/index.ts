@@ -3,7 +3,6 @@
 // =============================================================================
 // Supports:
 //   - Upstash QStash  (serverless, HTTP-based)
-//   - BullMQ          (self-hosted Redis)
 //   - In-memory       (dev/test only)
 //
 // Usage:
@@ -23,7 +22,6 @@ export {
 } from "./factory";
 // ── Middleware ───────────────────────────────────────────────────────────────
 export { createQStashWebhookHandler } from "./middleware/qstash-verify";
-export { BullMQProvider } from "./providers/bullmq";
 export { MemoryProvider } from "./providers/memory";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
 export { getQStashHandler, getQStashHandlerKeys, QStashProvider } from "./providers/qstash";
@@ -76,7 +74,6 @@ export {
 } from "./scheduled/index";
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
-  BullMQProviderConfig,
   DeadLetterJob,
   JobHandler,
   JobLifecycleAction,

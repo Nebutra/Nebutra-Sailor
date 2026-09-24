@@ -4,7 +4,55 @@ import type { Command } from "commander";
 import type { DelegateResult } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
-import { createSailorValueDomains } from "./metadata";
+
+/**
+ * Runtime AI provider ids this command can enable/disable in
+ * nebutra.config.json. This used to be sourced from the (removed)
+ * create-sailor `--ai` scaffold flag's value domain in ./metadata; that
+ * scaffold surface is gone (ADR 2026-09-24 Sailor convergence §4/§7), so the
+ * list now lives here as the local source of truth for `nebutra ai`.
+ */
+const AI_PROVIDER_CATALOG_IDS = [
+  "openai",
+  "anthropic",
+  "deepseek",
+  "xai",
+  "moonshot",
+  "google",
+  "mistral",
+  "cohere",
+  "perplexity",
+  "ai21",
+  "upstage",
+  "siliconflow",
+  "volcengine-ark",
+  "bailian",
+  "zhipu",
+  "baichuan",
+  "minimax",
+  "stepfun",
+  "sensetime",
+  "tencent",
+  "lingyi",
+  "openrouter",
+  "vercel-gateway",
+  "litellm",
+  "portkey",
+  "aws-bedrock",
+  "azure-openai",
+  "gcp-vertex",
+  "groq",
+  "fireworks",
+  "together",
+  "huggingface",
+  "replicate",
+  "lepton",
+  "anyscale",
+  "octoai",
+  "deepinfra",
+  "novita",
+  "custom",
+] as const;
 
 interface AiCommandOptions {
   dryRun?: boolean;
@@ -74,7 +122,7 @@ interface CommanderOptionSource {
 }
 
 const CONFIG_FILE = "nebutra.config.json";
-const AI_PROVIDER_IDS = createSailorValueDomains.ai.filter((id) => id !== "none");
+const AI_PROVIDER_IDS: readonly string[] = AI_PROVIDER_CATALOG_IDS;
 const PROVIDER_ENV_OVERRIDES: Record<string, string[]> = {
   "aws-bedrock": ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION"],
   "azure-openai": ["AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT"],

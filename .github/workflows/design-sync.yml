@@ -1,17 +1,15 @@
-name: Design Sync (Figma | Penpot | Git-only)
+name: Design Sync (git-only | design-md)
 
-# Provider-agnostic design-tool sync. Replaces the legacy `tokens-sync.yml` —
-# the CLI in `@nebutra/design-sync` owns DTCG validation, healthcheck, pull,
-# and push. The workflow is a thin wrapper that runs the CLI in CI.
+# Provider-agnostic design-tool sync. The CLI in `@nebutra/design-sync` owns
+# DTCG validation, healthcheck, pull, and push. The workflow is a thin
+# wrapper that runs the CLI in CI.
 #
 # Provider resolution mirrors `@nebutra/design-sync`:
 #   1. DESIGN_SYNC_PROVIDER env var
-#   2. FIGMA_PERSONAL_ACCESS_TOKEN + FIGMA_FILE_ID  → "figma"
-#   3. PENPOT_API_URL + PENPOT_TOKEN                → "penpot"
-#   4. fallback                                      → "git-only"
+#   2. fallback                                      → "git-only"
 #
-# Push to remote design tools requires explicit workflow_dispatch with
-# `pushToDesignTool=true` AND credentials configured as repo secrets.
+# Push (design-md only) requires explicit workflow_dispatch with
+# `pushToDesignTool=true`.
 
 on:
   push:
@@ -19,19 +17,17 @@ on:
     paths:
       - "packages/design/design-tokens/tokens/**"
       - "packages/design/design-sync/**"
-      - ".tokens-studio/**"
       - ".github/workflows/design-sync.yml"
   pull_request:
     branches: [main, develop]
     paths:
       - "packages/design/design-tokens/tokens/**"
       - "packages/design/design-sync/**"
-      - ".tokens-studio/**"
       - ".github/workflows/design-sync.yml"
   workflow_dispatch:
     inputs:
       pushToDesignTool:
-        description: "Push to remote design tool (requires provider creds)"
+        description: "Push to design-md (writes DESIGN.md)"
         required: false
         default: "false"
         type: choice
@@ -45,9 +41,8 @@ on:
         type: choice
         options:
           - "auto"
-          - "figma"
-          - "penpot"
           - "git-only"
+          - "design-md"
 
 permissions:
   contents: read
@@ -76,10 +71,6 @@ jobs:
         id: detect
         env:
           DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider == 'auto' && '' || github.event.inputs.provider }}
-          FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
-          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
-          PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
-          PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
         run: |
           if [ -d "packages/design/design-tokens/tokens" ] && \
              [ -n "$(find packages/design/design-tokens/tokens -name '*.json' -type f -print -quit)" ]; then
@@ -109,11 +100,6 @@ jobs:
       - name: design-sync healthcheck
         env:
           DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider == 'auto' && '' || github.event.inputs.provider }}
-          FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
-          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
-          PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
-          PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
-          PENPOT_FILE_ID: ${{ secrets.PENPOT_FILE_ID }}
         run: |
           pnpm --filter @nebutra/design-sync exec tsx src/cli/index.ts healthcheck --json || {
             echo "::warning::healthcheck reported a misconfiguration — see output above."
@@ -122,10 +108,6 @@ jobs:
       - name: design-sync pull (read DTCG)
         env:
           DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider == 'auto' && '' || github.event.inputs.provider }}
-          FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
-          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
-          PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
-          PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
         run: pnpm --filter @nebutra/design-sync exec tsx src/cli/index.ts pull --json
 
   # ── 3. Build @nebutra/design-tokens (Style Dictionary) ────────────────
@@ -192,10 +174,10 @@ jobs:
           head="${{ github.event.pull_request.head.sha }}"
           {
             echo "diff<<__EOF__"
-            git diff --stat "$base" "$head" -- packages/design/design-tokens/tokens .tokens-studio || true
+            git diff --stat "$base" "$head" -- packages/design/design-tokens/tokens || true
             echo
             echo "Files changed:"
-            git diff --name-only "$base" "$head" -- packages/design/design-tokens/tokens .tokens-studio || true
+            git diff --name-only "$base" "$head" -- packages/design/design-tokens/tokens || true
             echo "__EOF__"
           } >> "$GITHUB_OUTPUT"
 
@@ -216,12 +198,12 @@ jobs:
             - design-tokens build: green
             - parity vs `packages/design/tokens/styles.css`: green
 
-            > Push to remote design tool is **disabled** in PR runs.
+            > Push to design-md is **disabled** in PR runs.
             > See `packages/design/design-sync/README.md` to enable.
 
-  # ── 6. Push to remote design tool (manual approval gate) ──────────────
+  # ── 6. Push to design-md (manual approval gate) ────────────────────────
   push-to-design-tool:
-    name: Push to design tool
+    name: Push to design-md
     runs-on: ubuntu-latest
     needs: [detect, build, parity]
     if: >
@@ -239,14 +221,9 @@ jobs:
       - name: design-sync push
         env:
           DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider == 'auto' && '' || github.event.inputs.provider }}
-          FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
-          FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
-          PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
-          PENPOT_TOKEN: ${{ secrets.PENPOT_TOKEN }}
-          PENPOT_FILE_ID: ${{ secrets.PENPOT_FILE_ID }}
         run: |
           pnpm --filter @nebutra/design-sync exec tsx src/cli/index.ts push --json || {
-            echo "::warning::push reported an issue — current providers throw on live push until wired up."
-            echo "::warning::See packages/design/design-sync/DESIGN.md for the rollout plan."
+            echo "::warning::push reported an issue — see output above."
+            echo "::warning::See packages/design/design-sync/DESIGN.md for the design-md lint gate."
             exit 0
           }

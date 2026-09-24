@@ -11,11 +11,8 @@ function readText(relativePath: string): string {
 }
 
 describe("Enterprise SSO infrastructure contract", () => {
-  it("keeps SSO discovery, Clerk handoff, and provider parsing wired together", () => {
+  it("keeps SSO discovery and provider parsing wired together", () => {
     const discoveryRoute = readText("apps/web/src/app/api/auth/sso/discovery/route.ts");
-    const signInPage = readText("apps/web/src/app/(auth)/sign-in/[[...sign-in]]/page.tsx");
-    const handoff = readText("apps/web/src/components/auth/clerk-enterprise-sso-handoff.tsx");
-    const clerkSsoHook = readText("packages/iam/auth/src/react/use-clerk-enterprise-sso.ts");
     const parser = readText("apps/web/src/lib/auth/sso-discovery.ts");
     const oauthProviders = readText("apps/web/src/lib/auth/oauth-providers.ts");
     const betterAuth = readText("packages/iam/auth/src/providers/better-auth.ts");
@@ -27,15 +24,6 @@ describe("Enterprise SSO infrastructure contract", () => {
     expect(parser).toContain('FEISHU_OAUTH_START_PATH = "/api/auth/oauth/feishu"');
     expect(parser).toContain("allowSubdomains: z.boolean().default(false)");
     expect(oauthProviders).toContain('"feishu"');
-    expect(signInPage).toContain('subroute === "sso"');
-    expect(signInPage).toContain("ClerkEnterpriseSsoHandoff");
-    // Kickoff SSOT lives in @nebutra/auth; web is UI-only (no direct Clerk SDK import).
-    expect(handoff).toContain("useClerkEnterpriseSso");
-    expect(handoff).toContain("@nebutra/auth/react/clerk-enterprise-sso");
-    expect(handoff).not.toMatch(/from\s+["']@clerk\//);
-    expect(clerkSsoHook).toContain('CLERK_ENTERPRISE_SSO_STRATEGY = "enterprise_sso"');
-    expect(clerkSsoHook).toContain('DEFAULT_CLERK_ENTERPRISE_SSO_CALLBACK = "/sign-in"');
-    expect(clerkSsoHook).toContain("strategy: CLERK_ENTERPRISE_SSO_STRATEGY");
     expect(betterAuth).toContain("loadBetterAuthFeishuOAuthPlugin");
     expect(feishuOAuth).toContain("providerId: FEISHU_PROVIDER_ID");
     expect(feishuOAuth).toContain("normalizeFeishuOAuthTokens");

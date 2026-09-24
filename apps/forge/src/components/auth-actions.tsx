@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  buildAuthCenterSignInUrl,
-  buildAuthCenterSignUpUrl,
-  getConfiguredAuthProvider,
-  useAuth,
-} from "@nebutra/auth/client";
+import { buildAuthCenterSignInUrl, buildAuthCenterSignUpUrl, useAuth } from "@nebutra/auth/client";
 import { Logout } from "@nebutra/icons";
 import {
   Avatar,
@@ -36,22 +31,18 @@ export function AuthActions({ signInHref, signUpHref }: AuthActionsProps = {}) {
     if (typeof window !== "undefined") setReturnTo(window.location.href);
   }, []);
 
-  const provider = getConfiguredAuthProvider();
-
   // Prefer live returnTo once mounted; fall back to server-injected URLs so the
   // first paint never points at localhost:3101 when NEXT_PUBLIC_AUTH_URL was
   // missing from a misconfigured client bundle.
   const resolvedSignIn = useMemo(() => {
-    if (provider === "clerk") return "/sign-in";
     if (returnTo) return buildAuthCenterSignInUrl(returnTo);
     return signInHref ?? buildAuthCenterSignInUrl();
-  }, [provider, returnTo, signInHref]);
+  }, [returnTo, signInHref]);
 
   const resolvedSignUp = useMemo(() => {
-    if (provider === "clerk") return "/sign-up";
     if (returnTo) return buildAuthCenterSignUpUrl(returnTo);
     return signUpHref ?? buildAuthCenterSignUpUrl();
-  }, [provider, returnTo, signUpHref]);
+  }, [returnTo, signUpHref]);
 
   if (!isLoaded) {
     return <div className="h-8 w-8 animate-pulse rounded-full bg-neutral-3" aria-hidden />;

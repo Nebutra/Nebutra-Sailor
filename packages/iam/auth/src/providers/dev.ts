@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === "production") {
   throw new Error(
     "[@nebutra/auth] The `dev` provider MUST NOT be loaded in production. " +
       "Unset AUTH_PROVIDER / NEXT_PUBLIC_AUTH_PROVIDER or set it to a real provider " +
-      "(clerk | better-auth | nextauth | supabase).",
+      "(better-auth).",
   );
 }
 

@@ -15,7 +15,7 @@
       "Host-injected getTenantDb via configureBillingTenantDb for credits/usage ledger"
     ],
     "gaps": [
-      "Provider adapters need credentials before they do anything: STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET, POLAR_ACCESS_TOKEN, LEMONSQUEEZY_API_KEY, CHINAPAY_APP_SECRET",
+      "Provider adapters need credentials before they do anything: STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET, CHINAPAY_APP_SECRET",
       "Persistence is host-owned — the package ships no prisma/ schema and reads the client through @nebutra/db",
       "No UI surface: checkout, portal and invoice screens are the consuming app's"
     ]
@@ -30,10 +30,6 @@
     "./stripe": {
       "import": "./dist/stripe/index.js",
       "types": "./dist/stripe/index.d.ts"
-    },
-    "./polar": {
-      "import": "./dist/polar/index.js",
-      "types": "./dist/polar/index.d.ts"
     },
     "./subscriptions": {
       "import": "./dist/subscriptions/index.js",
@@ -50,10 +46,6 @@
     "./entitlements": {
       "import": "./dist/entitlements/index.js",
       "types": "./dist/entitlements/index.d.ts"
-    },
-    "./lemonsqueezy": {
-      "import": "./dist/lemonsqueezy/index.js",
-      "types": "./dist/lemonsqueezy/index.d.ts"
     },
     "./chinapay": {
       "import": "./dist/chinapay/index.js",
@@ -72,11 +64,9 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
     "@nebutra/contracts": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/metering": "workspace:*",
-    "@polar-sh/sdk": "^0.46.7",
     "date-fns": "^4.1.0",
     "stripe": "^20.4.0",
     "zod": "catalog:"

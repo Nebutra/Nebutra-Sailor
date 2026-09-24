@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import { describeStatus, formatStatusBadge, type PreviewSelection } from "./package-status";
 
 /**
  * Welcome page generator for create-sailor.
@@ -18,21 +17,8 @@ import { describeStatus, formatStatusBadge, type PreviewSelection } from "./pack
  * skipped but the cheat sheet is still written.
  */
 
-interface WaveFeatureSummary {
-  cronJobs?: boolean;
-  auditLog?: boolean;
-  apiKeys?: boolean;
-  commandPalette?: boolean;
-  cookieConsent?: boolean;
-  legalPages?: boolean;
-  chinaCompliance?: boolean;
-}
-
 interface WelcomeOptions {
   projectName: string;
-  region: string;
-  previewSelections?: PreviewSelection[];
-  waveFeatures?: WaveFeatureSummary;
 }
 
 function renderWelcomePageTsx(projectName: string): string {
@@ -152,67 +138,25 @@ function Step({
 `;
 }
 
-function renderWhatYouCanDoNext(features: WaveFeatureSummary = {}): string {
-  // All bullets are listed unconditionally so the cheat sheet stays useful
-  // even when a feature was opted out — the user still benefits from
-  // discoverability when they later flip the flag back on.
-  const bullets = [
-    features.apiKeys === false
-      ? "- Manage API keys at `/settings/api-keys` (disabled — re-enable with `--api-keys=true`)"
-      : "- Manage API keys at `/settings/api-keys`",
-    features.auditLog === false
-      ? "- View audit log at `/settings/audit-log` (disabled — re-enable with `--audit-log=true`)"
-      : "- View audit log at `/settings/audit-log`",
-    "- Configure webhooks at `/settings/webhooks`",
-    features.commandPalette === false
-      ? "- Press ⌘K to open the command palette (disabled — re-enable with `--command-palette=true`)"
-      : "- Press ⌘K to open the command palette",
-    "- Edit notification preferences at `/settings/notifications`",
-    "- Export your data at `/settings/account`",
-    "- For China deployments, see `packages/ops/china-compliance/README.md`",
-  ];
+function renderWhatYouCanDoNext(): string {
   return `
 ## What you can do next
 
-${bullets.join("\n")}
+- See which capabilities are live and which keys they need: \`nebutra status\`
+- Manage API keys at \`/settings/api-keys\`
+- Configure webhooks at \`/settings/webhooks\`
+- Press ⌘K to open the command palette
+- For China deployments, set \`NEBUTRA_LOCALE=cn\` and see \`packages/ops/china-compliance/README.md\`
 `;
 }
 
-function renderReadinessHolds(previewSelections: PreviewSelection[] = []): string {
-  if (previewSelections.length === 0) return "";
-
-  const rows = previewSelections
-    .map((selection) => {
-      const badge = formatStatusBadge(selection.status);
-      return `- ${selection.flag}=${selection.provider} ${badge} — ${describeStatus(selection.status)}`;
-    })
-    .join("\n");
-
-  return `
-## Production readiness holds
-
-Do not enable these in production until provider credentials, adapter wiring, and the integration contract are verified:
-
-${rows}
-
-Review the package readiness matrix before handoff: [docs/package-status.md](docs/package-status.md)
-`;
-}
-
-function renderNextStepsMd(
-  projectName: string,
-  region: string,
-  previewSelections: PreviewSelection[] = [],
-  waveFeatures: WaveFeatureSummary = {},
-): string {
+function renderNextStepsMd(projectName: string): string {
   return `# Next steps — ${projectName}
-
-Region: ${region}
 
 Your AI-native SaaS scaffold is ready. Complete these four steps to go from template to running dev server:
 
 1. **Configure environment** — fill in \`.env.local\`
-   > Random cryptographic secrets have been generated for you. Add your provider keys (DB, auth, payments, AI).
+   > Random cryptographic secrets have been generated for you. Every capability runs locally without keys; add a provider key to take it live.
 
 2. **Run database migrations** — sync your Prisma schema with your database
    \`\`\`bash
@@ -231,7 +175,7 @@ Your AI-native SaaS scaffold is ready. Complete these four steps to go from temp
    \`\`\`
 
 After setup, delete the welcome route at \`apps/web/src/app/[locale]/welcome/\`.
-${renderWhatYouCanDoNext(waveFeatures)}${renderReadinessHolds(previewSelections)}
+${renderWhatYouCanDoNext()}
 
 ## Resources
 
@@ -242,7 +186,7 @@ ${renderWhatYouCanDoNext(waveFeatures)}${renderReadinessHolds(previewSelections)
 }
 
 export async function generateWelcomePage(targetDir: string, opts: WelcomeOptions): Promise<void> {
-  const { projectName, region, previewSelections = [], waveFeatures = {} } = opts;
+  const { projectName } = opts;
 
   // 1. Cheat sheet — always written (small, no deps on apps/web existing).
   try {
@@ -250,10 +194,7 @@ export async function generateWelcomePage(targetDir: string, opts: WelcomeOption
     if (!fs.existsSync(sailorDir)) {
       fs.mkdirSync(sailorDir, { recursive: true });
     }
-    fs.writeFileSync(
-      path.join(sailorDir, "next-steps.md"),
-      renderNextStepsMd(projectName, region, previewSelections, waveFeatures),
-    );
+    fs.writeFileSync(path.join(sailorDir, "next-steps.md"), renderNextStepsMd(projectName));
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.warn(`[create-sailor] Failed to write .sailor/next-steps.md: ${message}`);

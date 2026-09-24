@@ -1,9 +1,4 @@
-import {
-  buildAuthCenterSignUpUrl,
-  getAuthCenterOrigin,
-  getConfiguredAuthProvider,
-  sanitizeReturnUrl,
-} from "@nebutra/auth";
+import { buildAuthCenterSignUpUrl, getAuthCenterOrigin, sanitizeReturnUrl } from "@nebutra/auth";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -37,26 +32,23 @@ async function SignUpPageContent({ searchParams }: { searchParams: Promise<Searc
   const [query, headerStore] = await Promise.all([searchParams, headers()]);
   const sanitized = sanitizeReturnUrl(query.returnUrl ?? query.returnTo ?? query.redirect);
   const returnUrl = sanitized === "/" ? undefined : sanitized;
-  const provider = getConfiguredAuthProvider();
 
-  if (provider !== "clerk") {
-    const authOrigin = getAuthCenterOrigin();
-    const thisOrigin = resolveAppOrigin(headerStore);
-    let isAuthCenterHost = false;
-    try {
-      isAuthCenterHost = new URL(authOrigin).host === new URL(thisOrigin).host;
-    } catch {
-      isAuthCenterHost = false;
-    }
-    if (!isAuthCenterHost) {
-      const returnTo = returnUrl || `${thisOrigin}/onboarding`;
-      const dest = new URL(buildAuthCenterSignUpUrl(returnTo));
-      const invite = query.invite?.trim();
-      const tenantId = query.tenantId?.trim();
-      if (invite) dest.searchParams.set("invite", invite);
-      if (tenantId) dest.searchParams.set("tenantId", tenantId);
-      redirect(dest.toString());
-    }
+  const authOrigin = getAuthCenterOrigin();
+  const thisOrigin = resolveAppOrigin(headerStore);
+  let isAuthCenterHost = false;
+  try {
+    isAuthCenterHost = new URL(authOrigin).host === new URL(thisOrigin).host;
+  } catch {
+    isAuthCenterHost = false;
+  }
+  if (!isAuthCenterHost) {
+    const returnTo = returnUrl || `${thisOrigin}/onboarding`;
+    const dest = new URL(buildAuthCenterSignUpUrl(returnTo));
+    const invite = query.invite?.trim();
+    const tenantId = query.tenantId?.trim();
+    if (invite) dest.searchParams.set("invite", invite);
+    if (tenantId) dest.searchParams.set("tenantId", tenantId);
+    redirect(dest.toString());
   }
 
   return (

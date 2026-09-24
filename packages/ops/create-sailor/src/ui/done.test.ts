@@ -34,7 +34,7 @@ describe("showDone", () => {
     expect(output).toContain("pnpm install");
     expect(output).toContain("pnpm db:migrate");
     expect(output).toContain("pnpm dev");
-    expect(output).toContain("nebutra doctor");
+    expect(output).toContain("nebutra status");
     // Advanced noise removed from golden path
     expect(output).not.toContain("pnpm brand:init");
     expect(output).not.toContain("pnpm audit");

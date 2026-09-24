@@ -5,7 +5,7 @@
  * ```ts
  * import { createAuth } from "@nebutra/auth/server";
  *
- * const auth = await createAuth({ provider: "clerk" });
+ * const auth = await createAuth({ provider: "better-auth" });
  * const session = await auth.getSession(request);
  * ```
  */
@@ -20,14 +20,8 @@ import type { AuthConfig, AuthProvider } from "./types";
  */
 export async function createAuth(config: AuthConfig): Promise<AuthProvider> {
   switch (config.provider) {
-    case "clerk":
-      return (await import("./providers/clerk")).createClerkAuth(config);
     case "better-auth":
       return (await import("./providers/better-auth")).createBetterAuthProvider(config);
-    case "nextauth":
-      return (await import("./providers/nextauth")).createNextAuthProvider(config);
-    case "supabase":
-      return (await import("./providers/supabase")).createSupabaseAuthProvider(config);
     case "dev":
       return (await import("./providers/dev")).createDevAuthProvider(config);
     default:

@@ -17,11 +17,6 @@ import { emitScaffoldCompleted, isTelemetryDisabled } from "./analytics-emit";
 const baseProps = {
   template_version: "1.3.1",
   package_manager: "pnpm",
-  region: "global",
-  auth: "clerk",
-  payment: "stripe",
-  ai_providers: ["openai", "anthropic"],
-  deploy_target: "vercel",
   duration_ms: 12345,
 };
 

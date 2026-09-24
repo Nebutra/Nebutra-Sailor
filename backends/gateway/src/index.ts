@@ -358,7 +358,7 @@ if (isOrpcEnabled) {
 }
 
 // SMS auth (enabled when SMS provider is configured)
-if (process.env.ALIYUN_SMS_ACCESS_KEY_ID || process.env.TENCENT_SMS_SECRET_ID) {
+if (process.env.ALIYUN_SMS_ACCESS_KEY_ID || process.env.TWILIO_VERIFY_SERVICE_SID) {
   const { smsAuthRoutes } = await import("./routes/auth/sms.js");
   app.route("/api/v1/auth/sms", smsAuthRoutes);
 }

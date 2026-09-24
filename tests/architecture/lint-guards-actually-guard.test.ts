@@ -41,6 +41,15 @@ type Case = {
 
 const CASES: Case[] = [
   {
+    // A business endpoint in apps/web instead of the gateway (ADR 2026-09-24
+    // Sailor convergence §6). The probe path is under api/ but not auth/, so
+    // no intrinsic pattern excuses it.
+    guard: "lint-route-handlers",
+    violation: "export async function GET() {\n  return Response.json({ ok: true });\n}\n",
+    // api/admin/ exists and has no route of its own, so the probe needs no mkdir.
+    path: "apps/web/src/app/api/admin/route.ts",
+  },
+  {
     // Slowest guard in the set by an order of magnitude — a single run walks
     // the whole tree in ~65s, and this case runs it twice. Worth knowing on its
     // own: every `pnpm lint` pays that, and the other seventeen finish in

@@ -22,9 +22,9 @@ describe("CLI", () => {
     const result = await runCli(["--help"]);
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("Nebutra — governance-first CLI");
+    expect(result.stdout).toContain("Nebutra — the CLI for Sailor projects");
     expect(result.stdout).toContain("init");
-    expect(result.stdout).toContain("add");
+    expect(result.stdout).toContain("status");
   });
 
   it("should show usage information when run without args", async () => {
@@ -41,19 +41,11 @@ describe("CLI", () => {
     expect(result.stdout).toContain("Initialize a Nebutra project");
   });
 
-  it("should handle add command with --help", async () => {
-    const result = await runCli(["add", "--help"]);
+  it("should handle status command with --help", async () => {
+    const result = await runCli(["status", "--help"]);
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("Add a registry-backed platform feature");
-  });
-
-  it("should handle create command with --help", async () => {
-    const result = await runCli(["create", "--help"]);
-
-    expect(result.exitCode).toBe(0);
-    // Create command help should be shown
-    expect(result.stdout.length).toBeGreaterThan(0);
+    expect(result.stdout).toContain("capability readiness");
   });
 
   it("should show error for unknown command", async () => {
@@ -67,7 +59,7 @@ describe("CLI", () => {
     const result = await runCli(["--help"]);
 
     expect(result.stdout).toContain("init");
-    expect(result.stdout).toContain("add");
+    expect(result.stdout).toContain("status");
     expect(result.stdout).toContain("Commands:");
   });
 });

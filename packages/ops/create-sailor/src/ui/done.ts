@@ -1,5 +1,4 @@
 import pc from "picocolors";
-import { describeStatus, formatStatusBadge, type PreviewSelection } from "../utils/package-status";
 
 export interface DoneOptions {
   elapsedSec: number;
@@ -9,7 +8,6 @@ export interface DoneOptions {
   skippedInstall: boolean;
   /** When false, hide db:migrate / db:seed. Default true for backward compat. */
   hasDatabase?: boolean;
-  previewSelections?: PreviewSelection[];
 }
 
 function shouldUseDecor(): boolean {
@@ -51,7 +49,7 @@ export function showDone(opts: DoneOptions): void {
     lines.push(`     ${arrow} ${pm} install`);
   }
 
-  lines.push(`     ${arrow} fill .env.local  ${dim("→ provider keys from .env.example")}`);
+  lines.push(`     ${arrow} nebutra status   ${dim("→ what is live, what needs a key")}`);
 
   if (hasDatabase) {
     lines.push(
@@ -63,22 +61,8 @@ export function showDone(opts: DoneOptions): void {
   lines.push(
     `     ${arrow} ${pm} dev          ${dim("→ http://localhost:3000")}`,
     "",
-    `   ${dim("More:")} ${dim("nebutra doctor")} ${dim("·")} ${dim("nebutra.com/docs")}`,
+    `   ${dim("More:")} ${dim("nebutra status")} ${dim("·")} ${dim("nebutra.com/docs")}`,
   );
-
-  const preview = opts.previewSelections ?? [];
-  if (preview.length > 0) {
-    const header = decor
-      ? pc.bold(pc.yellow("⚠  Preview / foundation providers:"))
-      : "!! Preview / foundation providers:";
-    lines.push("", `   ${header}`);
-    for (const sel of preview) {
-      const badge = formatStatusBadge(sel.status);
-      const line = `     ${arrow} ${sel.flag}=${sel.provider} ${badge}`;
-      lines.push(decor ? pc.yellow(line) : line);
-    }
-    lines.push(`     ${dim(describeStatus("foundation"))}`);
-  }
 
   lines.push("");
   process.stdout.write(lines.join("\n") + "\n");

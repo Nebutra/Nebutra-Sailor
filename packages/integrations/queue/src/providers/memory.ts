@@ -15,7 +15,7 @@ import type {
 // Memory Provider — in-memory queue for local dev & testing
 // =============================================================================
 // Processes jobs inline (synchronously after enqueue) with no persistence.
-// NOT for production — use QStash or BullMQ instead.
+// NOT for production — use QStash instead.
 //
 // Useful for:
 //   - Unit tests that need queue behaviour without Redis/QStash

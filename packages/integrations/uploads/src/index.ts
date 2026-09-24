@@ -11,7 +11,6 @@ export {
   resetUploadProvider,
 } from "./factory";
 // Providers
-export { createVercelBlobProvider, VercelBlobProvider } from "./providers/blob";
 export { createLocalProvider, LocalUploadProvider } from "./providers/local";
 export { createS3Provider, S3UploadProvider } from "./providers/s3";
 // Types

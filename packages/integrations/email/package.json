@@ -1,7 +1,7 @@
 {
   "name": "@nebutra/email",
   "version": "2.0.0",
-  "description": "Multi-provider transactional email (Resend, Nodemailer, Console)",
+  "description": "Multi-provider transactional email (Resend, Console)",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -10,7 +10,7 @@
     "graph": "core",
     "featureId": "email",
     "category": "integrations",
-    "summary": "Multi-provider transactional email (Resend, Nodemailer, Console)"
+    "summary": "Multi-provider transactional email (Resend, Console)"
   },
   "main": "./dist/index.js",
   "exports": {
@@ -29,14 +29,6 @@
   "dependencies": {
     "@nebutra/brand": "workspace:*",
     "resend": "^4.0.1"
-  },
-  "peerDependencies": {
-    "nodemailer": "^9.1.0"
-  },
-  "peerDependenciesMeta": {
-    "nodemailer": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "tsup": "^8.5.0",

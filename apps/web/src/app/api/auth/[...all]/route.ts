@@ -3,8 +3,7 @@
  *
  * Routes /api/auth/* requests to the configured provider's middleware:
  *  - Better Auth — delegates sign-up / sign-in / sign-out / session / OAuth
- *  - NextAuth (Auth.js v5) — delegates the same surface via Auth.js handlers
- *  - Clerk — Clerk owns its own routing (clerkMiddleware), so this route 404s
+ *  - dev — no routed API surface; this route 404s
  *
  * The provider is resolved from `AUTH_PROVIDER` (or `NEXT_PUBLIC_AUTH_PROVIDER`)
  * and the resulting handler is cached for the lifetime of the worker.
@@ -33,10 +32,7 @@ import { applySessionHint } from "@/lib/session-hint";
 type AuditableMaybe = Awaited<ReturnType<typeof getAuditableContext>>;
 type LogInput = Parameters<ReturnType<typeof auditLogger>["log"]>[0];
 
-const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set([
-  "better-auth",
-  "nextauth",
-]);
+const PROVIDERS_USING_THIS_ROUTE: ReadonlySet<AuthProviderId> = new Set(["better-auth"]);
 
 const provider = getConfiguredAuthProvider();
 
@@ -364,7 +360,7 @@ async function emitAudit(
 
 async function handler(request: Request): Promise<Response> {
   if (!PROVIDERS_USING_THIS_ROUTE.has(provider)) {
-    // Clerk and other non-routed providers don't use this catch-all.
+    // Non-routed providers (e.g. dev) don't use this catch-all.
     return new Response(JSON.stringify({ error: "Not found" }), {
       status: 404,
       headers: { "Content-Type": "application/json" },

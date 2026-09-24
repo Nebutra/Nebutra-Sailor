@@ -12,7 +12,7 @@ import {
   buildNotificationPreferenceUpdate,
   createNotificationProvider,
   createPrismaNotificationStores,
-  getNotificationProvider,
+  type getNotificationProvider,
   loadNotificationSettingsSnapshot,
   resolveNotificationRuntimeStatus,
 } from "@nebutra/notifications";
@@ -25,21 +25,7 @@ type RouteNotificationProvider = Awaited<ReturnType<typeof getNotificationProvid
 
 let prismaDirectProvider: Promise<RouteNotificationProvider> | undefined;
 
-function shouldUseManagedNotificationProvider(): boolean {
-  const configuredProvider = process.env.NOTIFICATION_PROVIDER;
-  return (
-    configuredProvider === "novu" ||
-    configuredProvider === "knock" ||
-    Boolean(process.env.NOVU_API_KEY) ||
-    Boolean(process.env.KNOCK_API_KEY)
-  );
-}
-
 async function getRouteNotificationProvider(): Promise<RouteNotificationProvider> {
-  if (shouldUseManagedNotificationProvider()) {
-    return getNotificationProvider();
-  }
-
   prismaDirectProvider ??= (async () => {
     const stores = createPrismaNotificationStores(getSystemDb());
     return createNotificationProvider({
@@ -62,9 +48,9 @@ const ErrorResponseSchema = z.object({
 });
 
 const RuntimeStatusSchema = z.object({
-  provider: z.enum(["novu", "knock", "direct"]),
+  provider: z.enum(["direct"]),
   providerLabel: z.string(),
-  mode: z.enum(["managed", "self_hosted", "preview", "degraded"]),
+  mode: z.enum(["self_hosted", "preview"]),
   canManagePreferences: z.boolean(),
   canViewInbox: z.boolean(),
   canMarkInboxRead: z.boolean(),

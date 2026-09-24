@@ -55,10 +55,14 @@ vi.mock("@nebutra/logger", () => ({
 }));
 
 import { tenantContextMiddleware } from "@/middlewares/tenantContext.js";
-import { notificationRoutes } from "../routes/notifications/index.js";
 import { s2sHeaders, TEST_SERVICE_SECRET } from "./helpers/s2s-token.js";
 
-function buildApp(): OpenAPIHono {
+// The route module memoizes its Prisma-backed direct provider at module
+// scope, so each test resets the module registry and re-imports the routes
+// to get a fresh, unmemoized provider.
+async function buildApp(): Promise<OpenAPIHono> {
+  vi.resetModules();
+  const { notificationRoutes } = await import("../routes/notifications/index.js");
   const app = new OpenAPIHono();
   app.use("*", tenantContextMiddleware);
   app.route("/", notificationRoutes);
@@ -80,23 +84,49 @@ async function readJson(response: Response) {
 
 function runtimeStatus() {
   return {
-    provider: "novu",
-    providerLabel: "Novu",
-    mode: "managed",
+    provider: "direct",
+    providerLabel: "Direct",
+    mode: "self_hosted",
     canManagePreferences: true,
     canViewInbox: true,
     canMarkInboxRead: true,
-    summary: "Managed notification delivery is active.",
+    summary: "Direct delivery adapters are connected.",
     missing: [],
   };
+}
+
+/**
+ * Wire up the standard Prisma-backed direct provider path: the route always
+ * builds its provider through `createPrismaNotificationStores` +
+ * `createNotificationProvider`.
+ */
+function mockDirectProvider(overrides: Record<string, unknown> = {}) {
+  const db = { notification: {}, notificationPreference: {} };
+  const stores = {
+    inAppStore: { kind: "in-app-store" },
+    preferenceStore: { kind: "preference-store" },
+  };
+  const provider = {
+    name: "direct",
+    getRuntimeMetadata: vi.fn().mockReturnValue({
+      provider: "direct",
+      preferenceStoreMode: "adapter",
+      inAppStoreMode: "adapter",
+    }),
+    ...overrides,
+  };
+  getSystemDbMock.mockReturnValue(db);
+  createPrismaNotificationStoresMock.mockReturnValue(stores);
+  createNotificationProviderMock.mockResolvedValue(provider);
+  return { db, stores, provider };
 }
 
 describe("notification routes", () => {
   let app: OpenAPIHono;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
-    process.env.NOTIFICATION_PROVIDER = "novu";
+    delete process.env.NOTIFICATION_PROVIDER;
     buildNotificationPreferenceUpdateMock.mockReset();
     createNotificationProviderMock.mockReset();
     createPrismaNotificationStoresMock.mockReset();
@@ -107,34 +137,17 @@ describe("notification routes", () => {
     verifyServiceTokenMock.mockReset();
     verifyServiceTokenMock.mockReturnValue(true);
     resolveNotificationRuntimeStatusMock.mockReturnValue(runtimeStatus());
-    app = buildApp();
+    app = await buildApp();
   });
 
   it("uses Prisma-backed direct stores for the default self-hosted notification provider", async () => {
-    delete process.env.NOTIFICATION_PROVIDER;
-    delete process.env.NOVU_API_KEY;
-    delete process.env.KNOCK_API_KEY;
-    const db = { notification: {}, notificationPreference: {} };
-    const stores = {
-      inAppStore: { kind: "in-app-store" },
-      preferenceStore: { kind: "preference-store" },
-    };
-    const provider = {
-      name: "direct",
-      getRuntimeMetadata: vi.fn().mockReturnValue({
-        provider: "direct",
-        preferenceStoreMode: "adapter",
-        inAppStoreMode: "adapter",
-      }),
+    const { db, stores, provider } = mockDirectProvider({
       getInAppNotifications: vi.fn().mockResolvedValue({
         notifications: [],
         total: 0,
         unreadCount: 0,
       }),
-    };
-    getSystemDbMock.mockReturnValue(db);
-    createPrismaNotificationStoresMock.mockReturnValue(stores);
-    createNotificationProviderMock.mockResolvedValue(provider);
+    });
 
     const response = await app.request("/?limit=10", {
       headers: await authHeaders(),
@@ -157,8 +170,7 @@ describe("notification routes", () => {
   });
 
   it("lists notifications through the provider for the authenticated tenant", async () => {
-    const provider = {
-      name: "novu",
+    const { provider } = mockDirectProvider({
       getInAppNotifications: vi.fn().mockResolvedValue({
         notifications: [
           {
@@ -177,8 +189,7 @@ describe("notification routes", () => {
         total: 1,
         unreadCount: 1,
       }),
-    };
-    getNotificationProviderMock.mockResolvedValue(provider);
+    });
 
     const response = await app.request("/?limit=10&offset=2&unreadOnly=true", {
       headers: await authHeaders(),
@@ -211,6 +222,7 @@ describe("notification routes", () => {
   });
 
   it("returns notification settings from the shared settings snapshot service", async () => {
+    mockDirectProvider();
     loadNotificationSettingsSnapshotMock.mockResolvedValue({
       runtime: runtimeStatus(),
       channels: [],
@@ -227,11 +239,13 @@ describe("notification routes", () => {
     });
 
     expect(response.status).toBe(200);
-    expect(loadNotificationSettingsSnapshotMock).toHaveBeenCalledWith({
-      userId: "user_alpha",
-      tenantId: "org_alpha",
-      inboxLimit: 20,
-    });
+    expect(loadNotificationSettingsSnapshotMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        userId: "user_alpha",
+        tenantId: "org_alpha",
+        inboxLimit: 20,
+      }),
+    );
     await expect(readJson(response)).resolves.toMatchObject({
       preferenceSource: "provider",
       unreadCount: 0,
@@ -239,15 +253,13 @@ describe("notification routes", () => {
   });
 
   it("returns unread notification count without fetching the full settings matrix", async () => {
-    const provider = {
-      name: "novu",
+    const { provider } = mockDirectProvider({
       getInAppNotifications: vi.fn().mockResolvedValue({
         notifications: [],
         total: 7,
         unreadCount: 3,
       }),
-    };
-    getNotificationProviderMock.mockResolvedValue(provider);
+    });
 
     const response = await app.request("/unread-count", {
       headers: await authHeaders(),
@@ -263,11 +275,9 @@ describe("notification routes", () => {
   });
 
   it("marks selected notifications as read", async () => {
-    const provider = {
-      name: "novu",
+    const { provider } = mockDirectProvider({
       markAsReadBatch: vi.fn().mockResolvedValue(undefined),
-    };
-    getNotificationProviderMock.mockResolvedValue(provider);
+    });
 
     const response = await app.request("/mark-read", {
       method: "POST",
@@ -288,11 +298,9 @@ describe("notification routes", () => {
   });
 
   it("marks all notifications as read", async () => {
-    const provider = {
-      name: "novu",
+    const { provider } = mockDirectProvider({
       markAllAsRead: vi.fn().mockResolvedValue(5),
-    };
-    getNotificationProviderMock.mockResolvedValue(provider);
+    });
 
     const response = await app.request("/mark-all-read", {
       method: "POST",
@@ -305,8 +313,16 @@ describe("notification routes", () => {
   });
 
   it("updates notification settings through the provider preference service", async () => {
-    const provider = {
-      name: "novu",
+    const update = {
+      userId: "user_alpha",
+      tenantId: "org_alpha",
+      channel: "email",
+      enabled: true,
+      frequency: "immediate",
+      disabledCategories: ["workspace.invitation"],
+      updatedAt: "2026-04-29T01:00:00.000Z",
+    };
+    const { provider } = mockDirectProvider({
       getPreferences: vi.fn().mockResolvedValue([
         {
           userId: "user_alpha",
@@ -318,17 +334,7 @@ describe("notification routes", () => {
         },
       ]),
       updatePreferences: vi.fn().mockResolvedValue(undefined),
-    };
-    const update = {
-      userId: "user_alpha",
-      tenantId: "org_alpha",
-      channel: "email",
-      enabled: true,
-      frequency: "immediate",
-      disabledCategories: ["workspace.invitation"],
-      updatedAt: "2026-04-29T01:00:00.000Z",
-    };
-    getNotificationProviderMock.mockResolvedValue(provider);
+    });
     buildNotificationPreferenceUpdateMock.mockReturnValue(update);
 
     const response = await app.request("/settings", {
@@ -375,6 +381,7 @@ describe("notification routes", () => {
       openapi: "3.0.3",
       info: { title: "Notifications contract test", version: "0.0.0" },
     });
+    const { notificationRoutes } = await import("../routes/notifications/index.js");
     contractApp.route("/", notificationRoutes);
 
     const response = await contractApp.request("/openapi.json");
@@ -416,7 +423,7 @@ describe("notification routes", () => {
         runtime: {
           properties: {
             mode: {
-              enum: expect.arrayContaining(["managed", "self_hosted", "preview", "degraded"]),
+              enum: expect.arrayContaining(["self_hosted", "preview"]),
             },
           },
           type: "object",

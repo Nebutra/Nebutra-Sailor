@@ -1,7 +1,7 @@
 {
   "name": "@nebutra/design-sync",
   "version": "2.0.0",
-  "description": "Provider-agnostic design-tool sync. Figma + Tokens Studio | Penpot | git-only | design-md | memory.",
+  "description": "Provider-agnostic design-tool sync. git-only | design-md | memory.",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -10,19 +10,15 @@
     "status": "foundation",
     "productionReady": false,
     "requires": [
-      "FIGMA_PERSONAL_ACCESS_TOKEN + FIGMA_FILE_ID for Figma + Tokens Studio",
-      "or PENPOT_API_URL + PENPOT_TOKEN for Penpot (self-hostable, China-friendly)",
-      "or nothing — git-only is the zero-config default"
+      "nothing — git-only is the zero-config default"
     ],
     "gaps": [
-      "Figma push (Variables REST API) is dry-run; manual enable required",
-      "Penpot adapter implements healthcheck + pull; push is dry-run scaffolding",
       "No real-time webhook listeners (manual pull/push only)",
       "design-md provider depends on @google/design.md (alpha v0.x); pinned exactly — a 0.x bump may change linter rules and require re-validating the serializer output"
     ],
     "featureId": "design-sync",
     "category": "design",
-    "summary": "Provider-agnostic design-tool sync (Figma | Penpot | git-only | design-md)"
+    "summary": "Provider-agnostic design-tool sync (git-only | design-md)"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -38,14 +34,6 @@
     "./serialize/from-design-md": {
       "types": "./dist/serialize/from-design-md.d.ts",
       "import": "./dist/serialize/from-design-md.js"
-    },
-    "./figma": {
-      "types": "./dist/providers/figma.d.ts",
-      "import": "./dist/providers/figma.js"
-    },
-    "./penpot": {
-      "types": "./dist/providers/penpot.d.ts",
-      "import": "./dist/providers/penpot.js"
     },
     "./git-only": {
       "types": "./dist/providers/git-only.d.ts",

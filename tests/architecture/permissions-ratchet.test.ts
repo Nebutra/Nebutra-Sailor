@@ -19,7 +19,7 @@
  * guard is recognised by what it does, not by its name.
  *
  * Guard vocabulary (see AUTHZ_MARKERS) — what counts as "guarded":
- *   - requirePermission(…)                middlewares/permissions.ts (CASL/OpenFGA)
+ *   - requirePermission(…)                middlewares/permissions.ts (CASL)
  *   - requireRole(…)                      middlewares/tenantContext.ts
  *   - mapTenantRoleToPermissionRoles(…)   role check built on the tenantContext
  *                                         mapping (billing `requireBillingManage`)
@@ -305,7 +305,7 @@ const AUTHZ_MARKERS: readonly Marker[] = [
   {
     id: "requirePermission",
     test: (t) => /\brequirePermission\s*\(/.test(t),
-    why: "middlewares/permissions.ts — CASL/OpenFGA (action, resource) check, 401/403",
+    why: "middlewares/permissions.ts — CASL (action, resource) check, 401/403",
   },
   {
     id: "requireRole",
@@ -380,21 +380,6 @@ const WEBHOOK_VERIFICATION: Readonly<
 > = {
   // stripe.webhooks.constructEvent(rawBody, sig, webhookSecret) → 400 on failure.
   "webhooks/stripe.ts": (_r, f) => /\bstripe\.webhooks\.constructEvent\s*\(/.test(f.masked),
-  // Svix: new Webhook(secret).verify(rawBody, { "svix-id", "svix-timestamp",
-  // "svix-signature" }) → 400 on failure.
-  "webhooks/clerk.ts": (_r, f) =>
-    /\bfrom\s+["']svix["']/.test(f.masked) &&
-    /\bnew\s+Webhook\s*\(/.test(f.masked) &&
-    /\.verify\s*\(/.test(f.masked) &&
-    /["']svix-signature["']/.test(f.masked),
-  // POST /supabase: the inline handler calls auth.handleWebhook(c.req.raw) on
-  // createAuth({ provider: "supabase" }) — packages/iam/auth/src/providers/
-  // supabase.ts: HMAC of the raw body vs x-supabase-signature, timingSafeEqual.
-  // Checked on the route's own chain (the handler is inline), not the file.
-  "webhooks/auth-webhooks.ts": (r, f, chain) =>
-    r.path === "/supabase" &&
-    /\bcreateAuth\s*\(\s*\{\s*provider:\s*["']supabase["']/.test(f.masked) &&
-    /\bauth\.handleWebhook\s*\(\s*c\.req\.raw\s*\)/.test(chain),
   // Stub: the handler unconditionally returns c.json({...}, 501). The OpenAPI
   // `501: {` responses entry alone does not match — the return statement must.
   "webhooks/better-auth-webhooks.ts": (_r, f) =>
@@ -1101,8 +1086,6 @@ describe("permissions ratchet (gateway mutation routes)", () => {
       });
       for (const [file, path] of [
         ["webhooks/stripe.ts", "/stripe"],
-        ["webhooks/clerk.ts", "/clerk"],
-        ["webhooks/auth-webhooks.ts", "/supabase"],
         ["webhooks/better-auth-webhooks.ts", "/"],
       ] as const) {
         expect(anchor(file, "POST", path), file).toMatchObject({

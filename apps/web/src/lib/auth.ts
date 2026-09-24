@@ -95,88 +95,11 @@ async function resolveActiveOrganizationId(
   });
 }
 
-function asRecord(value: unknown): Record<string, unknown> | null {
-  return value && typeof value === "object" ? (value as Record<string, unknown>) : null;
-}
-
-function normalizeClerkOrganizationCandidates(input: unknown): Array<{ id: string }> {
-  const payload = asRecord(input);
-  const items = Array.isArray(payload?.data) ? payload.data : Array.isArray(input) ? input : [];
-
-  return items
-    .map((item) => {
-      const membership = asRecord(item);
-      const org =
-        asRecord(membership?.organization) ??
-        asRecord(membership?.publicOrganizationData) ??
-        membership;
-      const id = typeof org?.id === "string" ? org.id : null;
-      return id ? { id } : null;
-    })
-    .filter((organization): organization is { id: string } => Boolean(organization));
-}
-
-async function resolveClerkActiveOrganizationId(userId: string, sessionOrgId?: string | null) {
-  if (sessionOrgId) {
-    return sessionOrgId;
-  }
-
-  const cookieStore = await cookies();
-  const selectedOrganizationId = cookieStore.get(ACTIVE_ORG_COOKIE)?.value ?? null;
-  const { clerkClient } = await import("@clerk/nextjs/server");
-  const client = await clerkClient();
-  const memberships = await client.users.getOrganizationMembershipList({ userId });
-
-  return resolveActiveOrganizationSelection({
-    sessionOrganizationId: sessionOrgId != null ? sessionOrgId : null,
-    cookieOrganizationId: selectedOrganizationId,
-    organizations: normalizeClerkOrganizationCandidates(memberships),
-  });
-}
-
-async function getClerkAuth(): Promise<ServerAuthState> {
-  const { auth } = await import("@clerk/nextjs/server");
-  const session = await auth();
-  const userId = session.userId ?? null;
-
-  if (!userId) {
-    return {
-      userId: null,
-      orgId: null,
-      sessionClaims: {},
-      isSignedIn: false,
-    };
-  }
-
-  const orgId = await resolveClerkActiveOrganizationId(userId, session.orgId ?? null);
-  const rawClaims = asRecord(session.sessionClaims) ?? {};
-  const orgRole =
-    typeof session.orgRole === "string"
-      ? session.orgRole
-      : typeof rawClaims.org_role === "string"
-        ? rawClaims.org_role
-        : DEFAULT_ORG_ROLE;
-
-  return {
-    userId,
-    orgId,
-    sessionClaims: {
-      ...rawClaims,
-      org_role: orgRole,
-    } as ServerSessionClaims,
-    isSignedIn: true,
-  };
-}
-
 /**
  * Get the current user's auth state (server-side)
  * Use in Server Components or Route Handlers
  */
 export async function getAuth(request?: Request) {
-  if (getConfiguredAuthProvider() === "clerk") {
-    return getClerkAuth();
-  }
-
   const auth = await getAuthInstance();
   const requestContext = request ?? (await buildServerRequest());
   const session = await auth.getSession(requestContext);
@@ -244,14 +167,7 @@ export async function requireOrg() {
  */
 export async function getTenantContext() {
   const request = await buildServerRequest();
-  const { orgId, sessionClaims } = await getAuth(request);
-
-  if (getConfiguredAuthProvider() === "clerk") {
-    return {
-      tenantId: orgId,
-      plan: typeof sessionClaims.org_plan === "string" ? sessionClaims.org_plan : "FREE",
-    };
-  }
+  const { orgId } = await getAuth(request);
 
   let plan = "FREE";
   if (orgId) {

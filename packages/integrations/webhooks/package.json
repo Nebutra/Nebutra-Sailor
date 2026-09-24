@@ -9,8 +9,7 @@
     "status": "stable",
     "productionReady": true,
     "requires": [
-      "SVIX_API_TOKEN (managed)",
-      "or WEBHOOK_SIGNING_SECRET for custom self-hosted delivery"
+      "WEBHOOK_SIGNING_SECRET for custom self-hosted delivery"
     ],
     "gaps": []
   },
@@ -20,10 +19,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    },
-    "./svix": {
-      "types": "./dist/providers/svix.d.ts",
-      "import": "./dist/providers/svix.js"
     },
     "./custom": {
       "types": "./dist/providers/custom.d.ts",
@@ -46,7 +41,6 @@
   "dependencies": {
     "@nebutra/logger": "workspace:*",
     "p-queue": "^9.3.0",
-    "svix": "^1.42.0",
     "zod": "catalog:"
   },
   "devDependencies": {

@@ -39,9 +39,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   const authProvider = getConfiguredAuthProvider();
   const authProviderConfig: Record<string, unknown> = {};
-  if (authProvider === "clerk") {
-    authProviderConfig.publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  } else if (authProvider === "better-auth") {
+  if (authProvider === "better-auth") {
     authProviderConfig.apiUrl =
       process.env.NEXT_PUBLIC_AUTH_URL?.trim() ||
       process.env.BETTER_AUTH_URL?.trim() ||

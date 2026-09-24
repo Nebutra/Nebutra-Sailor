@@ -1,19 +1,25 @@
 # @nebutra/design-sync — DESIGN.md
 
-> Companion: [`README.md`](./README.md) (operator-facing) · cross-reference: [`packages/integrations/queue/AGENTS.md`](../../integrations/queue/AGENTS.md), [`packages/integrations/search/AGENTS.md`](../../integrations/search/AGENTS.md), [`packages/iam/permissions/AGENTS.md`](../../iam/permissions/AGENTS.md), [`packages/integrations/webhooks/AGENTS.md`](../../integrations/webhooks/AGENTS.md). Same multi-provider pattern, different domain.
+> Companion: [`README.md`](./README.md) (operator-facing). See
+> [ADR 2026-09-24 — Sailor Convergence](../../../docs/architecture/2026-09-24-sailor-convergence.md)
+> for why Figma and Penpot were deleted outright rather than kept as stubs.
 
 ## Why this package exists
 
-Nebutra-Sailor is a SaaS *template*. The customer base is heterogeneous:
+Nebutra-Sailor is a SaaS *template*. Design tokens are the canonical W3C DTCG JSON files
+committed to the repo (`packages/design/design-tokens/tokens`). This package is the bridge
+between those files and whatever else needs to read or write them:
 
-| Segment | Tooling reality | Default provider |
-|---------|-----------------|------------------|
-| North-American / global enterprises with a Figma seat | designers own colour decisions in Figma; engineers consume DTCG | `figma` |
-| Indie hackers / solo founders / AI-first dev workflows | no designer, no Figma, "git is the design tool" | `git-only` |
-| Chinese compliance teams / privacy-first orgs | Figma is blocked or banned; need self-hostable DTCG-native tool | `penpot` |
+| Segment | Tooling reality | Provider |
+|---------|-----------------|----------|
+| Indie hackers / solo founders / AI-first dev workflows | no designer, "git is the design tool" | `git-only` |
+| AI-native workflows | DESIGN.md as a human- and model-readable design surface, official lint gate | `design-md` |
 | CI / unit tests | hermetic, no network, no filesystem | `memory` |
 
-Hard-wiring the design system to one tool would alienate two of the three customer segments. The same pattern that `@nebutra/queue` uses for queue backends — provider interface + auto-detection + per-customer override — applies cleanly to design tools.
+Per the convergence ADR, a domain keeps at most one production-used provider plus a
+China/legal hard-constraint pair where the law forces a second adapter. Design sync has no
+such constraint — Figma and Penpot were dev-tool integrations that nothing in production ever
+configured, so both were deleted rather than demoted to `stub`.
 
 ## Architecture
 
@@ -28,21 +34,21 @@ Hard-wiring the design system to one tool would alienate two of the three custom
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │  Factory  (src/factory.ts)                                      │
-│    detectProvider() → "figma" | "penpot" | "git-only" | "memory" │
+│    detectProvider() → "git-only" | "design-md" | "memory"        │
 │    createDesignSync(config?) → DesignSyncProvider                │
-└──────┬──────────────┬──────────────┬──────────────┬─────────────┘
-       │              │              │              │
-       ▼              ▼              ▼              ▼
-┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐
-│ FigmaProvider│ │PenpotProvider│ │GitOnlyProvider│ │MemoryProvider│
-│              │ │              │ │              │ │              │
-│ + Tokens     │ │ DTCG-native  │ │ Local DTCG   │ │ In-memory    │
-│ Studio plugin│ │ REST API     │ │ files only   │ │ test fixture │
-└──────┬───────┘ └──────┬───────┘ └──────┬───────┘ └──────────────┘
-       │                │                │
-       └────────────────┴────────────────┘
-                       │
-                       ▼
+└──────┬──────────────────────┬──────────────────┬─────────────────┘
+       │                      │                  │
+       ▼                      ▼                  ▼
+┌──────────────┐    ┌──────────────────┐   ┌──────────────┐
+│GitOnlyProvider│    │ DesignMdProvider │   │MemoryProvider│
+│               │    │                  │   │              │
+│ Local DTCG    │    │ DESIGN.md ↔ DTCG │   │ In-memory    │
+│ files only    │    │ + lint gate      │   │ test fixture │
+└──────┬────────┘    └────────┬─────────┘   └──────────────┘
+       │                      │
+       └──────────────────────┘
+                  │
+                  ▼
        packages/design/design-tokens/tokens/*.json
             (W3C DTCG — single source of truth)
 ```
@@ -51,69 +57,65 @@ Hard-wiring the design system to one tool would alienate two of the three custom
 
 ```ts
 interface DesignSyncProvider {
-  readonly name: "figma" | "penpot" | "git-only" | "memory";
+  readonly name: "git-only" | "design-md" | "memory";
   pull(options?: PullOptions): Promise<PullResult>;
   push(options?: PushOptions): Promise<PushResult>;
   healthcheck(): Promise<HealthStatus>;
 }
 ```
 
-- **`pull`** — design-tool → repo. Always returns `DesignTokenSet[]`. Live providers fall back to local DTCG when credentials are missing rather than throwing — this lets a half-configured environment still produce useful diagnostics.
-- **`push`** — repo → design-tool. **Always defaults to `dryRun: true` on `figma` and `penpot`** until the operator explicitly opts in. The package never silently writes to a remote design tool.
-- **`healthcheck`** — returns the provider name, an `ok` boolean, and which env vars were detected/missing. Used by the `design-sync healthcheck` CLI and by CI gates.
+- **`pull`** — design-tool → repo. Always returns `DesignTokenSet[]`.
+- **`push`** — repo → design-tool. `design-md` always runs the official
+  `@google/design.md` lint gate before writing, and fails closed on any error-severity
+  finding.
+- **`healthcheck`** — returns the provider name, an `ok` boolean, and which env vars were
+  detected/missing. Used by the `design-sync healthcheck` CLI and by CI gates.
 
 ## Resolution order
 
 1. Explicit `config.provider` passed to `createDesignSync({ provider: "..." })`.
 2. `DESIGN_SYNC_PROVIDER` env var (must match a known provider; junk values are ignored).
-3. `FIGMA_PERSONAL_ACCESS_TOKEN` **and** `FIGMA_FILE_ID` → `figma`.
-4. `PENPOT_API_URL` **and** `PENPOT_TOKEN` → `penpot`.
-5. Fallback → `git-only` (zero config, always works).
+3. Fallback → `git-only` (zero config, always works).
 
 `memory` is intentionally absent from auto-detection — it is a test fixture, never a default.
+`design-md` is also never auto-selected; it must be requested explicitly, matching its
+dry-run-by-default push semantics.
 
 ## Why default to `git-only`?
 
 Three reasons:
 
-1. **Zero-config onboarding.** A developer who clones the template and runs the install script gets a working design system immediately. The DTCG files in `packages/design/design-tokens/tokens` are already the source of truth.
-2. **AI-first compatibility.** Tools like Claude Code can read/write DTCG JSON deterministically; round-tripping through Figma adds friction without value when there is no human designer.
-3. **Compliance friendly.** No external API calls, no cross-border data flows. Fits a self-hosted Sailor install behind a corporate firewall.
+1. **Zero-config onboarding.** A developer who clones the template and runs the install script
+   gets a working design system immediately. The DTCG files in
+   `packages/design/design-tokens/tokens` are already the source of truth.
+2. **AI-first compatibility.** Tools like Claude Code can read/write DTCG JSON deterministically
+   without round-tripping through an external design tool.
+3. **Compliance friendly.** No external API calls, no cross-border data flows. Fits a self-hosted
+   Sailor install behind a corporate firewall.
 
-## Why a Figma push is dry-run by default
+## Why `design-md` exists
 
-The Figma Variables REST API (`PATCH /v1/files/:file_key/variables`) is destructive — a bad payload can erase a designer's variable collections. The provider therefore:
+`@google/design.md` is an AI-native format: markdown + YAML front matter that both humans and
+models can read and edit directly, with an official lint gate (broken-ref, contrast) run before
+every write. It gives indie/AI-first teams a design surface without depending on an external
+design tool's API or credentials — the "design tool" is a file in the repo.
 
-- validates DTCG **before** any remote call,
-- requires *both* `FIGMA_PERSONAL_ACCESS_TOKEN` and `FIGMA_FILE_ID` (one is not enough),
-- still exits as a dry-run if `dryRun: true` is passed explicitly,
-- throws a "not yet implemented" error on the live path until the operator wires up the integration.
+## Why Figma and Penpot were removed
 
-This matches how `.github/workflows/tokens-sync.yml` handled push gating before the refactor.
-
-## Why Penpot matters
-
-Penpot is the only mainstream design tool that:
-
-- speaks DTCG natively (no translation layer),
-- is self-hostable (Docker image, Kubernetes chart),
-- is GPL-licensed (no vendor lock-in),
-- is reachable from mainland China (Figma is blocked at the network edge for many enterprise CN tenants).
-
-For Nebutra's CN compliance segment this is not an optional alternative; it is the only path. The provider scaffolding is intentionally complete (interface, healthcheck, dry-run) so a CN team can `DESIGN_SYNC_PROVIDER=penpot` from day one and only the live RPC calls remain.
-
-## Migration from `.tokens-studio/`
-
-- `.tokens-studio/config.json` — kept at the repo root because the plugin's discovery path is non-configurable. Mirror committed at `src/figma-config/tokens-studio.config.json` so the `FigmaProvider` ships with its own canonical copy.
-- `.tokens-studio/themes.json` and `.tokens-studio/metadata.json` — kept at the root, validated by `FigmaProvider.healthcheck()`.
-- `.github/workflows/tokens-sync.yml` — replaced by `.github/workflows/design-sync.yml`, which delegates pull/push/healthcheck to the CLI instead of inlining DTCG validation in shell.
+Both were figma/penpot-specific adapters (Tokens Studio plugin sync, Penpot REST API) that
+nothing in Nebutra's production deployment ever configured — no `FIGMA_*` or `PENPOT_*`
+credentials existed in any deploy workflow. Per the convergence ADR's rule ("one provider per
+domain; production usage is the tiebreak, and non-kept adapters are deleted, not demoted"), they
+were deleted outright: `src/providers/figma.ts`, `src/providers/penpot.ts`,
+`src/figma-config/`, their tests, factory branches, CLI provider names, and package.json
+subpath exports. The repo-root `.tokens-studio/{config,metadata,themes}.json` snapshot was left
+in place (out of this package's scope) but nothing in this package reads it anymore.
 
 ## Cross-reference
 
 | Same pattern | This package | Notes |
 |--------------|--------------|-------|
 | `@nebutra/queue` | `@nebutra/design-sync` | Auto-detect order, factory pattern, dry-run safety, singleton getter |
-| `@nebutra/search` | `@nebutra/design-sync` | Three real providers + memory fallback |
 | `@nebutra/permissions` | `@nebutra/design-sync` | `vitest.config.ts`, `src/__tests__/`, `vitest catalog:` dep |
 | `@nebutra/webhooks` | `@nebutra/design-sync` | Provider name as discriminated union literal |
 

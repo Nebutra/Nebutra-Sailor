@@ -25,7 +25,7 @@ const PROVIDERS_FOR_SLUG: Record<string, string[]> = {
   email: ["Resend", "SES", "Postmark", "SMTP"],
   uploads: ["S3", "R2", "Tigris", "Tus"],
   storage: ["S3", "R2", "GCS", "Filebase"],
-  notifications: ["Novu", "Knock", "Direct"],
+  notifications: ["Direct"],
   collab: ["Liveblocks", "Yjs", "Custom"],
   "event-bus": ["NATS", "Kafka", "Inngest"],
   sms: ["Twilio", "AWS SNS", "Vonage"],

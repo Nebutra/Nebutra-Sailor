@@ -235,7 +235,6 @@ async function markExportFailed(exportId: string, failedReason: string): Promise
  * Register the build handler on the active queue provider.
  *
  * - memory: processes inline on the next tick (dev/test).
- * - bullmq: starts an in-process Worker.
  * - qstash: the handler registry is read by the QStash webhook route.
  */
 export function ensureExportWorker(runtime: ExportRuntime): void {

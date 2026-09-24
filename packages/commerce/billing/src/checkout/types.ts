@@ -7,12 +7,11 @@ import { z } from "zod";
 // initiating credit purchases (or other one-time payments) regardless of which
 // payment provider the customer has configured.
 //
-// Customers pick a provider via env vars (STRIPE_SECRET_KEY / POLAR_ACCESS_TOKEN
-// / LEMONSQUEEZY_API_KEY / CHINAPAY_APP_ID / BILLING_PROVIDER override) and the
-// factory wires the right adapter at runtime.
+// Customers pick a provider via env vars (STRIPE_SECRET_KEY / CHINAPAY_APP_ID /
+// BILLING_PROVIDER override) and the factory wires the right adapter at runtime.
 // =============================================================================
 
-export type CheckoutProviderType = "stripe" | "polar" | "lemonsqueezy" | "chinapay" | "manual";
+export type CheckoutProviderType = "stripe" | "chinapay" | "manual";
 
 export const CreditPurchaseInputSchema = z.object({
   organizationId: z.string().min(1),
@@ -21,7 +20,7 @@ export const CreditPurchaseInputSchema = z.object({
   currency: z.string().length(3).default("USD"),
   customerEmail: z.string().email().optional(),
   customerId: z.string().optional(), // Pre-existing provider customer id
-  priceId: z.string().optional(), // Stripe price / Polar product / Lemon variant id
+  priceId: z.string().optional(), // Stripe price id
   successUrl: z.string().url(),
   cancelUrl: z.string().url(),
   referenceId: z.string().optional(), // Idempotency / tracking key
@@ -44,8 +43,6 @@ export interface CheckoutProvider {
 
 export type CheckoutConfig =
   | { provider: "stripe"; secretKey?: string }
-  | { provider: "polar"; accessToken?: string; sandbox?: boolean }
-  | { provider: "lemonsqueezy"; apiKey?: string; storeId?: string }
   | { provider: "chinapay"; appId?: string; appSecret?: string; method?: "alipay" | "wechat" }
   | { provider: "manual" };
 

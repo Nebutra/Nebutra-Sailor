@@ -23,16 +23,12 @@ function detectProviderFromEnv(env: Record<string, string | undefined>): Checkou
   const previous = {
     BILLING_PROVIDER: process.env.BILLING_PROVIDER,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
-    POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
-    LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY,
     CHINAPAY_APP_ID: process.env.CHINAPAY_APP_ID,
   };
 
   try {
     process.env.BILLING_PROVIDER = env.BILLING_PROVIDER ?? "";
     process.env.STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY ?? "";
-    process.env.POLAR_ACCESS_TOKEN = env.POLAR_ACCESS_TOKEN ?? "";
-    process.env.LEMONSQUEEZY_API_KEY = env.LEMONSQUEEZY_API_KEY ?? "";
     process.env.CHINAPAY_APP_ID = env.CHINAPAY_APP_ID ?? "";
     return detectProvider();
   } finally {

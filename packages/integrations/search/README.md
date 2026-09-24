@@ -1,8 +1,8 @@
-> **Status: Foundation** — Type definitions, factory pattern, and provider stubs are complete. Provider implementations require external service credentials to activate. See inline TODOs for integration points.
+> **Status: Foundation** — Type definitions, factory pattern, and the pgvector provider are complete. See inline TODOs for integration points.
 
 # @nebutra/search
 
-Provider-agnostic full-text search package for Nebutra-Sailor. Supports **Meilisearch**, **Typesense**, and **Algolia** backends with the same API.
+Single-provider full-text + vector search package for Nebutra-Sailor: **pgvector** (Postgres + the `pgvector` extension) — BM25 keyword search and vector cosine search over your own Postgres, with no external search infra to operate.
 
 ## Quick Start
 
@@ -17,7 +17,7 @@ pnpm add @nebutra/search
 ```typescript
 import { getSearch } from "@nebutra/search";
 
-// Auto-detects provider from environment
+// Auto-detects the pgvector provider from DATABASE_URL
 const search = await getSearch();
 
 // Index a document
@@ -41,65 +41,23 @@ const results = await search.search("products", {
 await search.deleteDocument("products", "prod_123", "org_456");
 ```
 
-## Provider Auto-Detection
+## Provider Configuration
 
-The factory auto-detects the correct provider based on environment variables:
-
-| Priority | Env Variable | Provider |
-|----------|---|---|
-| 1 | `SEARCH_PROVIDER` | As specified |
-| 2 | `MEILISEARCH_URL` | meilisearch |
-| 3 | `TYPESENSE_URL` | typesense |
-| 4 | `ALGOLIA_APP_ID` | algolia |
-| 5 | — | meilisearch (default) |
-
-### Meilisearch Setup
+`pgvector` is the only supported provider. It reads `DATABASE_URL` by default, or accepts an explicit config:
 
 ```bash
 # .env
-MEILISEARCH_URL=http://localhost:7700
-MEILISEARCH_API_KEY=your-api-key
+DATABASE_URL=postgres://localhost/nebutra
 ```
 
 ```typescript
+import { createSearch } from "@nebutra/search";
+
 const search = await createSearch({
-  provider: "meilisearch",
-  url: "http://localhost:7700",
-  apiKey: process.env.MEILISEARCH_API_KEY,
-});
-```
-
-### Typesense Setup
-
-```bash
-# .env
-TYPESENSE_URL=http://localhost:8108
-TYPESENSE_API_KEY=your-api-key
-```
-
-```typescript
-const search = await createSearch({
-  provider: "typesense",
-  url: "http://localhost:8108",
-  apiKey: process.env.TYPESENSE_API_KEY,
-});
-```
-
-### Algolia Setup
-
-```bash
-# .env
-ALGOLIA_APP_ID=your-app-id
-ALGOLIA_SEARCH_KEY=your-search-key
-ALGOLIA_ADMIN_KEY=your-admin-key
-```
-
-```typescript
-const search = await createSearch({
-  provider: "algolia",
-  appId: process.env.ALGOLIA_APP_ID,
-  searchKey: process.env.ALGOLIA_SEARCH_KEY,
-  adminKey: process.env.ALGOLIA_ADMIN_KEY,
+  provider: "pgvector",
+  connectionString: process.env.DATABASE_URL,
+  embeddingDim: 1536, // defaults to 1536 (OpenAI text-embedding-3-small)
+  tablePrefix: "nebutra_search", // defaults to "nebutra_search"
 });
 ```
 
@@ -198,7 +156,7 @@ await search.createIndex("products", {
 
 ### `updateSettings(index, settings)`
 
-Update index settings (not supported by all providers after creation).
+Update index settings.
 
 ```typescript
 await search.updateSettings("products", {
@@ -216,7 +174,7 @@ await search.close();
 
 ## Multi-Tenancy
 
-All providers support tenant isolation via `tenantId`:
+The pgvector provider supports tenant isolation via `tenantId`:
 
 ```typescript
 // Index with tenant
@@ -238,21 +196,17 @@ await search.deleteByFilter("products", {
 });
 ```
 
-**Under the hood:**
-- **Meilisearch** / **Typesense**: Separate indices per tenant (e.g., `products__org_456`)
-- **Algolia**: Facet-based filtering within shared indices
+**Under the hood:** `pgvector` filters by a `tenant_id` column on the shared table for each index (table named `<prefix>_<index>`).
 
-## Direct Provider Imports
+## Direct Provider Import
 
 For advanced use or testing:
 
 ```typescript
-import { MeilisearchProvider } from "@nebutra/search/meilisearch";
-import { TypesenseProvider } from "@nebutra/search/typesense";
-import { AlgoliaProvider } from "@nebutra/search/algolia";
+import { PgvectorProvider } from "@nebutra/search/pgvector";
 
 // Use directly
-const search = new MeilisearchProvider();
+const search = new PgvectorProvider({ provider: "pgvector" });
 ```
 
 ## Type Safety
@@ -275,21 +229,11 @@ Uses `@nebutra/logger` for structured logging. All operations log at debug level
 ## Environment Variables
 
 ```bash
-# Provider selection (optional)
-SEARCH_PROVIDER=meilisearch
+# Provider selection (optional — pgvector is the only supported provider)
+SEARCH_PROVIDER=pgvector
 
-# Meilisearch
-MEILISEARCH_URL=http://localhost:7700
-MEILISEARCH_API_KEY=xyz
-
-# Typesense
-TYPESENSE_URL=http://localhost:8108
-TYPESENSE_API_KEY=xyz
-
-# Algolia
-ALGOLIA_APP_ID=xyz
-ALGOLIA_SEARCH_KEY=xyz
-ALGOLIA_ADMIN_KEY=xyz
+# pgvector
+DATABASE_URL=postgres://localhost/nebutra
 ```
 
 ## Testing

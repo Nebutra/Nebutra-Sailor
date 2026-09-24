@@ -144,8 +144,8 @@ function checkOptionalServices(): CheckResult[] {
       fallback: "Errors logged to console",
     },
     {
-      key: "BLOB_READ_WRITE_TOKEN",
-      name: "File Uploads (Vercel Blob)",
+      key: "S3_ACCESS_KEY_ID",
+      name: "File Uploads (R2/S3)",
       fallback: "Local filesystem used",
     },
     { key: "OPENROUTER_API_KEY", name: "AI Chat (OpenRouter)", fallback: "AI features disabled" },

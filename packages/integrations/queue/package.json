@@ -11,8 +11,6 @@
     "requires": [
       "QSTASH_TOKEN (+ signing keys) for serverless",
       "Configured QStash dlqFetcher/dlqEndpoint for provider-side DLQ observability",
-      "REDIS_URL for BullMQ self-hosted",
-      "AWS_SQS_QUEUE_URL (+ AWS credentials) for SQS",
       "Host-injected getSystemDb for registerDefaultScheduledJobs (optional scheduled jobs)"
     ],
     "gaps": [
@@ -29,14 +27,6 @@
     "./qstash": {
       "types": "./dist/providers/qstash.d.ts",
       "import": "./dist/providers/qstash.js"
-    },
-    "./bullmq": {
-      "types": "./dist/providers/bullmq.d.ts",
-      "import": "./dist/providers/bullmq.js"
-    },
-    "./sqs": {
-      "types": "./dist/providers/sqs.d.ts",
-      "import": "./dist/providers/sqs.js"
     },
     "./queuebase": {
       "types": "./dist/queuebase.d.ts",
@@ -61,12 +51,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.700.0",
     "@nebutra/logger": "workspace:*",
     "@nebutra/provider-factory": "workspace:*",
     "@upstash/qstash": "^2.7.17",
-    "bullmq": "^5.34.8",
-    "ioredis": "^5.4.2",
     "zod": "catalog:"
   },
   "devDependencies": {

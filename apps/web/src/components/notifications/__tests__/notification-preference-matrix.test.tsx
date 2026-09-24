@@ -11,13 +11,13 @@ vi.mock("@/app/(app)/settings/notifications/actions", () => ({
 }));
 
 const runtime = {
-  provider: "novu",
-  providerLabel: "Novu",
-  mode: "managed",
+  provider: "direct",
+  providerLabel: "Direct",
+  mode: "self_hosted",
   canManagePreferences: true,
   canViewInbox: true,
   canMarkInboxRead: true,
-  summary: "Managed notification delivery is active.",
+  summary: "Direct delivery adapters are connected.",
   missing: [],
 } satisfies NotificationRuntimeStatus;
 

@@ -1,12 +1,6 @@
 import type { AuthProviderId } from "@nebutra/auth";
 
-const supportedAuthProviders = new Set<AuthProviderId>([
-  "clerk",
-  "better-auth",
-  "nextauth",
-  "supabase",
-  "dev",
-]);
+const supportedAuthProviders = new Set<AuthProviderId>(["better-auth", "dev"]);
 
 export function getViteAuthProvider(): AuthProviderId {
   const raw = import.meta.env.VITE_AUTH_PROVIDER;
@@ -17,11 +11,7 @@ export function getViteAuthProvider(): AuthProviderId {
 
 export function getViteAuthConfig(): Record<string, unknown> {
   return {
-    publishableKey: import.meta.env.VITE_CLERK_PUBLISHABLE_KEY,
-    clerkJSUrl: import.meta.env.VITE_CLERK_JS_URL,
     apiUrl: import.meta.env.VITE_AUTH_API_URL ?? "/api/auth",
-    supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
-    supabaseAnonKey: import.meta.env.VITE_SUPABASE_ANON_KEY,
   };
 }
 

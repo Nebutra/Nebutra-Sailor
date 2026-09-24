@@ -10,7 +10,6 @@ interface MarketingClientProvidersProps {
   appUrl: string;
   authProvider: string;
   children: ReactNode;
-  clerkPublishableKey?: string;
   googleClientId?: string;
   googleOneTapEnabled: boolean;
 }
@@ -19,7 +18,6 @@ export function MarketingClientProviders({
   appUrl,
   authProvider,
   children,
-  clerkPublishableKey,
   googleClientId,
   googleOneTapEnabled,
 }: MarketingClientProvidersProps) {
@@ -32,7 +30,6 @@ export function MarketingClientProviders({
       <GoogleOneTap
         appUrl={appUrl}
         authProvider={authProvider}
-        clerkPublishableKey={clerkPublishableKey}
         clientId={googleClientId}
         enabled={shouldMountOneTap}
       />

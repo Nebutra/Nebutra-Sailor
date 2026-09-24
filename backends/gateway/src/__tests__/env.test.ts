@@ -10,8 +10,8 @@ describe("gateway env normalization", () => {
     vi.stubEnv("DATABASE_URL", "https://example.com/db");
     vi.stubEnv("UPSTASH_REDIS_REST_URL", "https://example.upstash.io");
     vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "token-rest");
-    vi.stubEnv("AUTH_PROVIDER", "clerk");
-    vi.stubEnv("CLERK_SECRET_KEY", "sk_test_placeholder");
+    vi.stubEnv("AUTH_PROVIDER", "better-auth");
+    vi.stubEnv("BETTER_AUTH_SECRET", "test-secret");
 
     const { validateEnv } = await import("../config/env.js");
     const env = validateEnv();

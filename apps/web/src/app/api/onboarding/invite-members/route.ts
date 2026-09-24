@@ -1,4 +1,3 @@
-import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
@@ -17,20 +16,6 @@ type InviteRole = z.infer<typeof inviteSchema>["role"];
 
 const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
-function normalizeClerkRole(role: InviteRole): "org:admin" | "org:member" | "org:viewer" {
-  switch (role) {
-    case "admin":
-    case "org:admin":
-      return "org:admin";
-    case "viewer":
-    case "org:viewer":
-      return "org:viewer";
-    case "member":
-    case "org:member":
-      return "org:member";
-  }
-}
-
 function normalizeInvitationRole(role: InviteRole): "admin" | "member" | "viewer" {
   return role.replace("org:", "") as "admin" | "member" | "viewer";
 }
@@ -38,28 +23,6 @@ function normalizeInvitationRole(role: InviteRole): "admin" | "member" | "viewer
 function generateToken(): string {
   // crypto.randomUUID is available in modern Node and the edge runtime.
   return globalThis.crypto.randomUUID();
-}
-
-async function createClerkInvitations(input: {
-  emails: string[];
-  organizationId: string;
-  role: InviteRole;
-  inviterUserId: string;
-}) {
-  const { clerkClient } = await import("@clerk/nextjs/server");
-  const client = await clerkClient();
-  const role = normalizeClerkRole(input.role);
-
-  await client.organizations.createOrganizationInvitationBulk(
-    input.organizationId,
-    input.emails.map((email) => ({
-      emailAddress: email,
-      role,
-      inviterUserId: input.inviterUserId,
-    })),
-  );
-
-  return { invited: input.emails.length, skipped: [] as Array<{ email: string; reason: string }> };
 }
 
 async function createDatabaseInvitations(input: {
@@ -127,20 +90,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Insufficient permissions." }, { status: 403 });
     }
 
-    const result =
-      getConfiguredAuthProvider() === "clerk"
-        ? await createClerkInvitations({
-            emails: parsed.data.emails,
-            organizationId: authState.orgId,
-            role: parsed.data.role,
-            inviterUserId: authState.userId,
-          })
-        : await createDatabaseInvitations({
-            emails: parsed.data.emails,
-            organizationId: authState.orgId,
-            role: parsed.data.role,
-            inviterUserId: authState.userId,
-          });
+    const result = await createDatabaseInvitations({
+      emails: parsed.data.emails,
+      organizationId: authState.orgId,
+      role: parsed.data.role,
+      inviterUserId: authState.userId,
+    });
 
     return NextResponse.json(result);
   } catch (error) {

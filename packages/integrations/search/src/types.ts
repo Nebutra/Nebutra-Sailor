@@ -7,15 +7,11 @@ import { z } from "zod";
 /**
  * Supported search backend providers.
  *
- * - `meilisearch` — Self-hosted, developer-friendly, typo-tolerant
- * - `typesense`   — Self-hosted, optimised for geo search and faceting
- * - `algolia`     — Managed SaaS, zero-ops, global CDN
  * - `pgvector`    — Postgres + pgvector extension; BM25 keyword + vector
- *                   cosine search. Choose this when AI/RAG over your own
- *                   Postgres is the primary use case (no external search
- *                   infra to operate).
+ *                   cosine search. AI/RAG over your own Postgres, no
+ *                   external search infra to operate.
  */
-export type SearchProviderType = "meilisearch" | "typesense" | "algolia" | "pgvector";
+export type SearchProviderType = "pgvector";
 
 // ── Search Document ────────────────────────────────────────────────────────
 
@@ -194,45 +190,6 @@ export interface IndexSettings {
 
 // ── Provider Configurations ────────────────────────────────────────────────
 
-export interface MeilisearchConfig {
-  provider: "meilisearch";
-
-  /** Meilisearch server URL (defaults to `process.env.MEILISEARCH_URL`) */
-  url?: string;
-
-  /** API key with at least search + indexing permissions (defaults to `process.env.MEILISEARCH_API_KEY`) */
-  apiKey?: string;
-
-  /** Default timeout for requests (in milliseconds, default: 30000) */
-  timeout?: number;
-}
-
-export interface TypesenseConfig {
-  provider: "typesense";
-
-  /** Typesense server URL (defaults to `process.env.TYPESENSE_URL`) */
-  url?: string;
-
-  /** API key for authentication (defaults to `process.env.TYPESENSE_API_KEY`) */
-  apiKey?: string;
-
-  /** Default timeout for requests (in milliseconds, default: 30000) */
-  timeout?: number;
-}
-
-export interface AlgoliaConfig {
-  provider: "algolia";
-
-  /** Algolia app ID (defaults to `process.env.ALGOLIA_APP_ID`) */
-  appId?: string;
-
-  /** Algolia search API key (defaults to `process.env.ALGOLIA_SEARCH_KEY`) */
-  searchKey?: string;
-
-  /** Algolia admin API key for indexing (defaults to `process.env.ALGOLIA_ADMIN_KEY`) */
-  adminKey?: string;
-}
-
 export interface PgvectorConfig {
   provider: "pgvector";
 
@@ -252,4 +209,4 @@ export interface PgvectorConfig {
   tablePrefix?: string;
 }
 
-export type SearchConfig = MeilisearchConfig | TypesenseConfig | AlgoliaConfig | PgvectorConfig;
+export type SearchConfig = PgvectorConfig;

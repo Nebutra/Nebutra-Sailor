@@ -2,8 +2,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const getAuthMock = vi.fn();
 const getSystemDbMock = vi.fn();
-const clerkAuthMock = vi.fn();
-const createInvitationBulkMock = vi.fn();
 const loggerErrorMock = vi.fn();
 
 const systemDbMock = {
@@ -21,15 +19,6 @@ vi.mock("@nebutra/db", () => ({
   getSystemDb: getSystemDbMock,
 }));
 
-vi.mock("@clerk/nextjs/server", () => ({
-  auth: clerkAuthMock,
-  clerkClient: vi.fn(async () => ({
-    organizations: {
-      createOrganizationInvitationBulk: createInvitationBulkMock,
-    },
-  })),
-}));
-
 vi.mock("@nebutra/logger", () => ({
   logger: {
     error: loggerErrorMock,
@@ -45,10 +34,6 @@ describe("POST /api/onboarding/invite-members", () => {
     vi.resetModules();
     getAuthMock.mockReset();
     getSystemDbMock.mockReset().mockReturnValue(systemDbMock);
-    clerkAuthMock.mockReset().mockResolvedValue({ userId: "user_admin" });
-    createInvitationBulkMock
-      .mockReset()
-      .mockResolvedValue([{ id: "inv_1", emailAddress: "ada@example.com" }]);
     loggerErrorMock.mockReset();
     systemDbMock.organizationInvitation.create.mockReset().mockResolvedValue({ id: "invite_1" });
     systemDbMock.organizationInvitation.findFirst.mockReset().mockResolvedValue(null);
@@ -69,37 +54,6 @@ describe("POST /api/onboarding/invite-members", () => {
     expect(response.status).toBe(400);
     expect(getAuthMock).not.toHaveBeenCalled();
     await expect(response.json()).resolves.toEqual({ error: "Invalid invitation details." });
-  });
-
-  it("creates Clerk organization invitations for the active organization", async () => {
-    process.env.AUTH_PROVIDER = "clerk";
-    getAuthMock.mockResolvedValue({
-      userId: "user_admin",
-      orgId: "org_alpha",
-      sessionClaims: { org_role: "org:admin" },
-    });
-
-    const { POST } = await loadRoute();
-    const response = await POST(
-      new Request("http://localhost/api/onboarding/invite-members", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ emails: ["ada@example.com"], role: "org:member" }),
-      }),
-    );
-
-    expect(response.status).toBe(200);
-    expect(createInvitationBulkMock).toHaveBeenCalledWith("org_alpha", [
-      {
-        emailAddress: "ada@example.com",
-        role: "org:member",
-        inviterUserId: "user_admin",
-      },
-    ]);
-    await expect(response.json()).resolves.toEqual({
-      invited: 1,
-      skipped: [],
-    });
   });
 
   it("creates a pending OrganizationInvitation row for the database fallback", async () => {

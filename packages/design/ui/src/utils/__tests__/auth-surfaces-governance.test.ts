@@ -22,7 +22,6 @@ const AUTH_SURFACES = [
   "apps/auth/src/components/reset-password-form.tsx",
   "apps/web/src/components/auth/sign-in-form.tsx",
   "apps/web/src/components/auth/passkey-panel.tsx",
-  "apps/web/src/components/auth/clerk-enterprise-sso-handoff.tsx",
 ] as const;
 
 const OAUTH_BUTTONS = [

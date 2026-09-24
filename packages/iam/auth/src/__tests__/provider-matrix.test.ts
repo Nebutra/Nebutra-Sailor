@@ -17,22 +17,14 @@ describe("AUTH_PROVIDER_MATRIX", () => {
     expect(ba.supports.impersonation).toBe(false);
   });
 
-  it("marks clerk as optional-enterprise", () => {
-    expect(AUTH_PROVIDER_MATRIX.clerk.tier).toBe("optional-enterprise");
-  });
-
-  it("marks nextauth and supabase as migration-only with no optional capabilities", () => {
-    expect(AUTH_PROVIDER_MATRIX.nextauth.tier).toBe("migration");
-    expect(AUTH_PROVIDER_MATRIX.supabase.tier).toBe("migration");
-    expect(isCapabilityDeclared("nextauth", "organizations")).toBe(false);
-    expect(isCapabilityDeclared("supabase", "passkeys")).toBe(false);
+  it("marks dev as dev-only", () => {
+    expect(AUTH_PROVIDER_MATRIX.dev.tier).toBe("dev-only");
+    expect(isCapabilityDeclared("dev", "passkeys")).toBe(false);
   });
 
   it("lists first-class + optional-enterprise for product recommendations", () => {
     const list = listFirstClassAuthProviders();
-    expect(list).toEqual(expect.arrayContaining(["better-auth", "clerk"]));
-    expect(list).not.toContain("nextauth");
-    expect(list).not.toContain("supabase");
+    expect(list).toEqual(expect.arrayContaining(["better-auth"]));
     expect(list).not.toContain("dev");
   });
 

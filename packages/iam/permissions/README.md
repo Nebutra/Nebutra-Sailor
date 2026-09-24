@@ -1,19 +1,17 @@
-> **Status: Foundation** — CASL in-process evaluation supports deterministic role inheritance, ABAC conditions, and field-level rules. OpenFGA support now uses the store-scoped REST API, but model and tuple lifecycle management remain external to this package.
+> **Status: Foundation** — CASL in-process evaluation supports deterministic role inheritance, ABAC conditions, and field-level rules.
 
 # @nebutra/permissions
 
-RBAC (Role-Based Access Control) and ABAC (Attribute-Based Access Control) permissions engine for the Nebutra-Sailor monorepo. Built on CASL with optional OpenFGA support for relationship-based access at scale.
+RBAC (Role-Based Access Control) and ABAC (Attribute-Based Access Control) permissions engine for the Nebutra-Sailor monorepo. Built on CASL — the only supported provider.
 
 ## Features
 
 - **CASL-based in-process evaluation** — Fast, no network calls, great for UI + API middleware
-- **OpenFGA integration** — Store-scoped REST checks, writes, deletes, and list-objects calls for managed/self-hosted Zanzibar relationship graphs
 - **Role hierarchy** — Roles inherit permissions from parent roles; child rules override inherited grants deterministically
 - **ABAC conditions** — Dynamic field resolution at evaluation time
 - **Field-level permissions** — Restrict access to specific fields through CASL-backed checks
 - **React hooks & components** — `usePermission()`, `<Can>` component for UI gate-keeping
 - **Hono middleware** — Automatic permission checks in API routes
-- **Provider auto-detection** — Automatically picks CASL or OpenFGA based on env vars
 
 ## Installation
 
@@ -172,7 +170,7 @@ permissions.can(context, "read", "Document", undefined, "internalNotes"); // fal
 
 ## Provider Configuration
 
-### CASL (Default, In-Process)
+### CASL (In-Process, only supported provider)
 
 Fast, no network calls. Great for UI and API middleware.
 
@@ -182,50 +180,11 @@ import { createCASLProvider } from "@nebutra/permissions/casl";
 const provider = createCASLProvider();
 ```
 
-**Auto-detection:** Uses CASL if no `OPENFGA_API_URL` env var is set.
-
-### OpenFGA (Relationship-Based)
-
-OpenFGA uses the store-scoped REST API and fails closed when configuration or network calls are invalid. This package does not manage OpenFGA authorization models or tuple migrations.
-
-```typescript
-import { createOpenFGAProvider } from "@nebutra/permissions/openfga";
-
-const provider = createOpenFGAProvider(
-  {
-    apiUrl: "http://openfga.internal:8080",
-    storeId: "store_abc123",
-    authToken: process.env.OPENFGA_AUTH_TOKEN,
-  },
-  roles
-);
-
-// Write relationship tuples
-await provider.write([
-  { user: "user_123", relation: "member", object: "team:acme" },
-  { user: "team:acme", relation: "parent", object: "org:company" },
-]);
-
-// Check access
-const allowed = await provider.check(
-  "user_123",
-  "can_edit",
-  "document:doc_456"
-);
-```
-
-**Auto-detection:** Uses OpenFGA if `OPENFGA_API_URL` env var is set.
-
 ## Environment Variables
 
 ```env
-# Provider selection (auto-detects if empty)
-PERMISSIONS_PROVIDER=casl              # "casl" | "openfga"
-
-# OpenFGA configuration
-OPENFGA_API_URL=http://openfga:8080    # Triggers OpenFGA provider
-OPENFGA_STORE_ID=abc123                # Required for OpenFGA REST calls
-OPENFGA_AUTH_TOKEN=secret              # Optional for managed OpenFGA
+# Provider selection (optional — casl is the only supported provider)
+PERMISSIONS_PROVIDER=casl
 ```
 
 ## API Reference
@@ -236,11 +195,8 @@ Initialize the global permissions manager (singleton).
 
 ```typescript
 const permissions = createPermissions({
-  provider: "openfga",
+  provider: "casl",
   roles: customRoles,
-  openFgaApiUrl: "http://openfga:8080",
-  openFgaStoreId: "abc123",
-  openFgaAuthToken: process.env.OPENFGA_AUTH_TOKEN,
 });
 ```
 
@@ -405,16 +361,6 @@ import { CASLProvider } from "@nebutra/permissions/casl";
 const provider = new CASLProvider();
 provider.clearCache();
 ```
-
-### OpenFGA connection errors
-
-Verify `OPENFGA_API_URL` is reachable:
-
-```bash
-curl http://openfga:8080/health
-```
-
-Check logs for `OpenFGA check error` messages.
 
 ## License
 

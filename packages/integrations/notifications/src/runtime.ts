@@ -1,6 +1,6 @@
 import type { NotificationProvider, NotificationProviderType } from "./types";
 
-export type NotificationRuntimeMode = "managed" | "self_hosted" | "preview" | "degraded";
+export type NotificationRuntimeMode = "self_hosted" | "preview";
 
 export interface NotificationProviderRuntimeMetadata {
   provider: NotificationProviderType;
@@ -24,59 +24,17 @@ type RuntimeAwareProvider = NotificationProvider & {
   getRuntimeMetadata?: () => NotificationProviderRuntimeMetadata;
 };
 
-function detectProviderType(env: NodeJS.ProcessEnv): NotificationProviderType {
-  if (env.NOTIFICATION_PROVIDER === "novu") return "novu";
-  if (env.NOTIFICATION_PROVIDER === "direct") return "direct";
-  if (env.NOVU_API_KEY) return "novu";
-  return "direct";
-}
-
 function getProviderLabel(provider: NotificationProviderType): string {
-  return provider === "novu" ? "Novu" : "Direct";
-}
-
-function hasNovuApiKey(env: NodeJS.ProcessEnv): boolean {
-  return typeof env.NOVU_API_KEY === "string" && env.NOVU_API_KEY.trim().length > 0;
+  return provider === "direct" ? "Direct" : provider;
 }
 
 export function resolveNotificationRuntimeStatus(input?: {
   provider?: NotificationProvider;
   env?: NodeJS.ProcessEnv;
 }): NotificationRuntimeStatus {
-  const env = input?.env ?? process.env;
   const provider = input?.provider as RuntimeAwareProvider | undefined;
   const metadata = provider?.getRuntimeMetadata?.();
-  const providerType = metadata?.provider ?? provider?.name ?? detectProviderType(env);
-
-  if (providerType === "novu") {
-    if (!provider && !hasNovuApiKey(env)) {
-      return {
-        provider: "novu",
-        providerLabel: getProviderLabel("novu"),
-        mode: "degraded",
-        canManagePreferences: false,
-        canViewInbox: false,
-        canMarkInboxRead: false,
-        summary:
-          "Novu is selected, but notification delivery is unavailable until credentials are configured.",
-        reason:
-          "Set NOVU_API_KEY or switch NOTIFICATION_PROVIDER to direct with durable adapters before enabling writable notification flows.",
-        missing: ["NOVU_API_KEY"],
-      };
-    }
-
-    return {
-      provider: "novu",
-      providerLabel: getProviderLabel("novu"),
-      mode: "managed",
-      canManagePreferences: true,
-      canViewInbox: true,
-      canMarkInboxRead: true,
-      summary:
-        "Managed notification delivery is active. Preferences and inbox state can be updated from Nebutra.",
-      missing: [],
-    };
-  }
+  const providerType = metadata?.provider ?? provider?.name ?? "direct";
 
   const preferenceStoreMode = metadata?.preferenceStoreMode ?? "memory";
   const inAppStoreMode = metadata?.inAppStoreMode ?? "memory";
@@ -95,8 +53,8 @@ export function resolveNotificationRuntimeStatus(input?: {
 
   if (canManagePreferences || canViewInbox) {
     return {
-      provider: "direct",
-      providerLabel: getProviderLabel("direct"),
+      provider: providerType,
+      providerLabel: getProviderLabel(providerType),
       mode: "self_hosted",
       canManagePreferences,
       canViewInbox,
@@ -109,8 +67,8 @@ export function resolveNotificationRuntimeStatus(input?: {
   }
 
   return {
-    provider: "direct",
-    providerLabel: getProviderLabel("direct"),
+    provider: providerType,
+    providerLabel: getProviderLabel(providerType),
     mode: "preview",
     canManagePreferences: false,
     canViewInbox: false,
@@ -118,7 +76,7 @@ export function resolveNotificationRuntimeStatus(input?: {
     summary:
       "Nebutra is currently using the direct fallback provider. Preferences and inbox views are shown as product defaults until persistent adapters are wired in.",
     reason:
-      "The default direct provider only ships in-memory stores. Connect Novu or inject durable preference and inbox adapters to make this page writable.",
+      "The default direct provider only ships in-memory stores. Inject durable preference and inbox adapters to make this page writable.",
     missing,
   };
 }

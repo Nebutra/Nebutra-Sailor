@@ -512,8 +512,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     },
     title: copy("Design System Supply Chain", "设计系统供应链"),
     summary: copy(
-      "Brand assets, DTCG tokens, Tailwind v4 theme exports, Geist icons, UI primitives, registry builds, and Figma/Penpot sync operate as a pipeline.",
-      "品牌资产、DTCG tokens、Tailwind v4 theme 导出、Geist icons、UI primitives、registry build 与 Figma/Penpot sync 构成一条流水线。",
+      "Brand assets, DTCG tokens, Tailwind v4 theme exports, Geist icons, UI primitives, registry builds, and git-only/design-md sync operate as a pipeline.",
+      "品牌资产、DTCG tokens、Tailwind v4 theme 导出、Geist icons、UI primitives、registry build 与 git-only/design-md sync 构成一条流水线。",
     ),
     designIntent: copy(
       "The card is a supply chain, not a component gallery: tokens move through theme, icons, UI, registry, docs, and finally apps.",
@@ -582,12 +582,9 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
         ),
       },
       {
-        value: "5",
+        value: "3",
         label: copy("design-sync tests", "design-sync 测试"),
-        detail: copy(
-          "Figma, Penpot, git-only, IO, detection",
-          "Figma、Penpot、git-only、IO、detect",
-        ),
+        detail: copy("git-only, design-md, IO, detection", "git-only、design-md、IO、detect"),
       },
       {
         value: "6",
@@ -681,10 +678,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
         },
         {
           label: "@nebutra/email",
-          detail: copy(
-            "Resend, Nodemailer, Console transports",
-            "Resend、Nodemailer、Console 传输",
-          ),
+          detail: copy("Resend, Console transports", "Resend、Console 传输"),
           tone: "adapter",
         },
         {

@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createAliyunProvider } from "./aliyun";
-import { createTencentProvider } from "./tencent";
 
 describe("SMS provider initialization", () => {
   afterEach(() => {
@@ -16,16 +15,6 @@ describe("SMS provider initialization", () => {
     expect(() => createAliyunProvider()).toThrow(/Aliyun SMS configuration missing/i);
   });
 
-  it("fails closed when Tencent credentials or template config are missing", () => {
-    vi.stubEnv("TENCENT_SMS_SECRET_ID", "");
-    vi.stubEnv("TENCENT_SMS_SECRET_KEY", "");
-    vi.stubEnv("TENCENT_SMS_APP_ID", "");
-    vi.stubEnv("TENCENT_SMS_SIGN_NAME", "");
-    vi.stubEnv("TENCENT_SMS_TEMPLATE_ID", "");
-
-    expect(() => createTencentProvider()).toThrow(/Tencent SMS configuration missing/i);
-  });
-
   it("creates providers when all required SMS config values are present", () => {
     expect(
       createAliyunProvider({
@@ -35,15 +24,5 @@ describe("SMS provider initialization", () => {
         templateCode: "SMS_123456",
       }).name,
     ).toBe("aliyun");
-
-    expect(
-      createTencentProvider({
-        secretId: "tencent-secret-id",
-        secretKey: "tencent-secret-key",
-        appId: "1400000000",
-        signName: "Nebutra",
-        templateId: "123456",
-      }).name,
-    ).toBe("tencent");
   });
 });

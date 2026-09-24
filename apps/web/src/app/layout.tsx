@@ -93,15 +93,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   // Detect auth provider from environment
   const authProvider = getConfiguredAuthProvider();
 
-  // Prepare provider config based on selected provider
+  // Better Auth reads its own env directly; the dev provider takes no config.
   const authProviderConfig: Record<string, unknown> = {};
-  if (authProvider === "clerk") {
-    authProviderConfig.publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  } else if (authProvider === "supabase") {
-    authProviderConfig.supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    authProviderConfig.supabaseAnonKey =
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  }
 
   return (
     <html

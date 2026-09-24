@@ -79,14 +79,7 @@ vi.mock("../inngest/client.js", () => ({
   inngest: { send: vi.fn() },
 }));
 
-import { createClerkWebhookRoutes } from "../routes/webhooks/clerk.js";
 import { stripeWebhookRoutes } from "../routes/webhooks/stripe.js";
-
-const clerkHeaders = {
-  "svix-id": "msg_1",
-  "svix-timestamp": "1710000000",
-  "svix-signature": "v1,sig",
-};
 
 describe("webhook inbox HTTP mapping", () => {
   beforeEach(() => {
@@ -102,100 +95,6 @@ describe("webhook inbox HTTP mapping", () => {
     markProcessedMock.mockResolvedValue({});
     markFailedMock.mockResolvedValue({});
     userCreateMock.mockResolvedValue({});
-  });
-
-  it("acks Clerk only after a processed inbox row", async () => {
-    verifyMock.mockReturnValue({
-      type: "user.created",
-      data: {
-        id: "user_1",
-        email_addresses: [{ id: "email_1", email_address: "a@example.com", verification: null }],
-        first_name: "A",
-        last_name: "B",
-        image_url: null,
-        profile_image_url: null,
-      },
-    });
-    acceptWebhookEventMock.mockResolvedValue({
-      outcome: "process",
-      event: { id: "row_1" },
-    });
-
-    const app = createClerkWebhookRoutes({
-      userRepo: { create: userCreateMock } as never,
-      webhookEventRepo: {
-        markProcessed: markProcessedMock,
-        markFailed: markFailedMock,
-      } as never,
-    });
-
-    const response = await app.request("/clerk", {
-      method: "POST",
-      headers: clerkHeaders,
-      body: "{}",
-    });
-
-    expect(response.status).toBe(200);
-    expect(markProcessedMock).toHaveBeenCalledWith("clerk", "msg_1");
-    await expect(response.json()).resolves.toEqual({ received: true });
-  });
-
-  it("returns 503 while a Clerk event is still in-flight", async () => {
-    verifyMock.mockReturnValue({ type: "user.updated", data: { id: "user_1" } });
-    acceptWebhookEventMock.mockResolvedValue({ outcome: "in_flight" });
-
-    const app = createClerkWebhookRoutes({
-      webhookEventRepo: {
-        markProcessed: markProcessedMock,
-        markFailed: markFailedMock,
-      } as never,
-    });
-
-    const response = await app.request("/clerk", {
-      method: "POST",
-      headers: clerkHeaders,
-      body: "{}",
-    });
-
-    expect(response.status).toBe(503);
-    expect(markProcessedMock).not.toHaveBeenCalled();
-  });
-
-  it("returns 500 so Clerk retries after a handler failure", async () => {
-    verifyMock.mockReturnValue({
-      type: "user.created",
-      data: {
-        id: "user_1",
-        email_addresses: [],
-        first_name: null,
-        last_name: null,
-        image_url: null,
-        profile_image_url: null,
-      },
-    });
-    acceptWebhookEventMock.mockResolvedValue({
-      outcome: "process",
-      event: { id: "row_1" },
-    });
-    userCreateMock.mockRejectedValue(new Error("db down"));
-
-    const app = createClerkWebhookRoutes({
-      userRepo: { create: userCreateMock } as never,
-      webhookEventRepo: {
-        markProcessed: markProcessedMock,
-        markFailed: markFailedMock,
-      } as never,
-    });
-
-    const response = await app.request("/clerk", {
-      method: "POST",
-      headers: clerkHeaders,
-      body: "{}",
-    });
-
-    expect(response.status).toBe(500);
-    expect(markFailedMock).toHaveBeenCalledWith("clerk", "msg_1", "db down");
-    expect(markProcessedMock).not.toHaveBeenCalled();
   });
 
   it("returns 503 while a Stripe event is still in-flight", async () => {

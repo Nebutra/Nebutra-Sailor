@@ -17,11 +17,6 @@ const POSTHOG_DEFAULT_HOST = getBrandOrigin("analytics");
 export interface ScaffoldCompletionProps {
   template_version: string;
   package_manager: string;
-  region: string;
-  auth: string;
-  payment: string;
-  ai_providers: string[];
-  deploy_target: string;
   duration_ms: number;
 }
 

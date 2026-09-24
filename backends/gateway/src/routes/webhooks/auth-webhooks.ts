@@ -1,9 +1,8 @@
 /**
- * Provider-agnostic auth webhook router.
+ * Auth webhook router.
  *
- * Routes incoming webhooks to the appropriate provider handler based on
- * the AUTH_PROVIDER environment variable. This allows switching between
- * Clerk, Better Auth, NextAuth, and Supabase without changing route configuration.
+ * Better Auth is the sole auth provider (see ADR 2026-09-24 Sailor
+ * convergence); it uses an events API rather than traditional webhooks.
  */
 
 import { OpenAPIHono } from "@hono/zod-openapi";
@@ -21,26 +20,11 @@ export async function createAuthWebhookRoutes(): Promise<OpenAPIHono> {
 
   log.info("Creating auth webhook routes", { provider });
 
-  if (provider === "clerk") {
-    // Clerk uses Svix for webhook delivery
-    const { createClerkWebhookRoutes } = await import("./clerk.js");
-    const clerkRoutes = createClerkWebhookRoutes();
-    app.route("/", clerkRoutes);
-  } else if (provider === "better-auth") {
+  if (provider === "better-auth") {
     // Better Auth uses events API, not traditional webhooks
     const { createBetterAuthWebhookRoutes } = await import("./better-auth-webhooks.js");
     const betterAuthRoutes = createBetterAuthWebhookRoutes();
     app.route("/", betterAuthRoutes);
-  } else if (provider === "nextauth") {
-    // Auth.js does not own provider webhooks; OAuth/webhook events stay app-specific.
-    log.info("NextAuth selected; no auth webhook routes mounted");
-  } else if (provider === "supabase") {
-    const { createAuth } = await import("@nebutra/auth/server");
-    const auth = await createAuth({ provider: "supabase" });
-    app.post("/supabase", async (c) => {
-      await auth.handleWebhook(c.req.raw);
-      return c.json({ ok: true });
-    });
   }
 
   return app;

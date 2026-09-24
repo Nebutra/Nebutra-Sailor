@@ -8,9 +8,10 @@ import type { DesignSyncConfig, DesignSyncProvider, DesignSyncProviderType } fro
 // The factory resolves the correct provider at runtime based on:
 //   1. Explicit config passed to `createDesignSync()`
 //   2. `DESIGN_SYNC_PROVIDER` environment variable
-//   3. Auto-detection from FIGMA_* / PENPOT_* env vars
+//   3. fallback → git-only
 //
-// This lets customers switch design tools without changing application code.
+// This lets customers switch between the git-only workflow and the AI-native
+// DESIGN.md serialization without changing application code.
 // =============================================================================
 
 let defaultProvider: DesignSyncProvider | null = null;
@@ -23,22 +24,11 @@ let defaultProvider: DesignSyncProvider | null = null;
  * // Auto-detect from environment
  * const sync = await createDesignSync();
  *
- * // Explicit Figma
- * const sync = await createDesignSync({
- *   provider: "figma",
- *   personalAccessToken: process.env.FIGMA_PERSONAL_ACCESS_TOKEN,
- *   fileId: "abc123",
- * });
- *
- * // Explicit Penpot
- * const sync = await createDesignSync({
- *   provider: "penpot",
- *   apiUrl: "https://design.penpot.app/api",
- *   token: process.env.PENPOT_TOKEN,
- * });
- *
  * // Explicit git-only (zero config)
  * const sync = await createDesignSync({ provider: "git-only" });
+ *
+ * // Explicit design-md
+ * const sync = await createDesignSync({ provider: "design-md" });
  * ```
  */
 export async function createDesignSync(config?: DesignSyncConfig): Promise<DesignSyncProvider> {
@@ -47,18 +37,6 @@ export async function createDesignSync(config?: DesignSyncConfig): Promise<Desig
   logger.info("[design-sync] Creating provider", { provider: providerType });
 
   switch (providerType) {
-    case "figma": {
-      const { FigmaProvider } = await import("./providers/figma");
-      const figmaConfig = config?.provider === "figma" ? config : undefined;
-      return new FigmaProvider(figmaConfig ?? { provider: "figma" });
-    }
-
-    case "penpot": {
-      const { PenpotProvider } = await import("./providers/penpot");
-      const penpotConfig = config?.provider === "penpot" ? config : undefined;
-      return new PenpotProvider(penpotConfig ?? { provider: "penpot" });
-    }
-
     case "git-only": {
       const { GitOnlyProvider } = await import("./providers/git-only");
       const gitConfig = config?.provider === "git-only" ? config : undefined;

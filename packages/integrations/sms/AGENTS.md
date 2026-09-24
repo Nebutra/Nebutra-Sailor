@@ -18,7 +18,7 @@ policy.
 - Verification-code init, generation, cooldown, storage, and verification
   semantics: `src/verify.ts`
 - Provider-specific API signing and transport behavior:
-  `src/providers/aliyun.ts`, `src/providers/tencent.ts`
+  `src/providers/aliyun.ts`, `src/providers/twilio-verify.ts`
 
 Treat `README.md` as descriptive only. If examples drift, update the source
 files above instead of preserving stale docs.

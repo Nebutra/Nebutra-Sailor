@@ -14,8 +14,8 @@ async function getAuthInstance(): Promise<AuthProvider | null> {
   if (state.status === "unavailable") return null;
 
   const provider = (process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "better-auth") as
-    | "clerk"
-    | "better-auth";
+    | "better-auth"
+    | "dev";
 
   try {
     const instance = await createAuth({ provider });

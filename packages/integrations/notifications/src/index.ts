@@ -2,7 +2,6 @@
 // @nebutra/notifications — Provider-agnostic notification center
 // =============================================================================
 // Supports:
-//   - Novu          (managed notification infrastructure)
 //   - Direct        (self-hosted with pluggable dispatchers)
 //
 // Usage:
@@ -47,7 +46,6 @@ export type { PrismaNotificationClient, PrismaNotificationStores } from "./prism
 export { createPrismaNotificationStores } from "./prisma";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
 export { DirectProvider } from "./providers/direct";
-export { NovuProvider } from "./providers/novu";
 export type {
   NotificationProviderRuntimeMetadata,
   NotificationRuntimeMode,
@@ -85,7 +83,6 @@ export type {
   NotificationProvider,
   NotificationProviderType,
   NotificationResult,
-  NovuProviderConfig,
   PreferenceStore,
   PushDispatcher,
   SMSDispatcher,

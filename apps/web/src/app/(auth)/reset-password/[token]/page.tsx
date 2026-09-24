@@ -1,10 +1,8 @@
-import { redirect } from "next/navigation";
 import { connection } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { ResetPasswordForm } from "@/components/auth/reset-password-form";
-import { getSecurityCapabilities } from "@/lib/auth/security-capabilities";
 
 interface PageProps {
   params: Promise<{ locale: string; token: string }>;
@@ -14,11 +12,6 @@ const TOKEN_REGEX = /^[A-Za-z0-9._-]{8,}$/;
 
 async function ResetPasswordPageContent({ params }: PageProps) {
   await connection();
-
-  const capabilities = getSecurityCapabilities();
-  if (capabilities.provider === "clerk" && capabilities.providerProfileUrl) {
-    redirect(capabilities.providerProfileUrl);
-  }
 
   const { token } = await params;
   const t = await getTranslations("auth.resetPassword");

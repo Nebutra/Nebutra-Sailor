@@ -12,19 +12,25 @@ interface InitOptions {
   ifNotExists?: boolean;
 }
 
+// Keep in lockstep with create-sailor's `defaultConfig()`
+// (packages/ops/create-sailor/src/utils/config.ts) — this is the same
+// nebutra.config.json shape `nebutra status` reads.
+const DEFAULT_CAPABILITIES = [
+  "auth",
+  "billing",
+  "email",
+  "storage",
+  "queue",
+  "cache",
+  "notifications",
+  "webhooks",
+  "ai",
+  "mcp",
+];
+
 const DEFAULT_CONFIG = {
-  $schema: "https://nebutra.com/schema.json",
-  componentsDirectory: "packages/design/ui/src/components",
-  tailwind: {
-    config: "tailwind.config.ts",
-    css: "packages/design/tokens/styles.css",
-    baseColor: "slate",
-    cssVariables: true,
-  },
-  aliases: {
-    components: "@nebutra/ui",
-    utils: "@nebutra/ui/utils",
-  },
+  stack: "sailor-2026-09",
+  capabilities: [...DEFAULT_CAPABILITIES],
 };
 
 /**
@@ -121,15 +127,11 @@ export async function initCommand(options: InitOptions = {}) {
     await new Promise((resolve) => setTimeout(resolve, 800));
     p.spinner().stop(pc.green("Configuration saved to nebutra.config.json"));
     p.outro(
-      pc.cyan(
-        'Initialization complete! You can now use "nebutra add" to start injecting components.',
-      ),
+      pc.cyan('Initialization complete! Run "nebutra status" to check capability readiness.'),
     );
   } else {
     logger.success("Configuration saved to nebutra.config.json");
-    logger.info(
-      'Initialization complete! You can now use "nebutra add" to start injecting components.',
-    );
+    logger.info('Initialization complete! Run "nebutra status" to check capability readiness.');
   }
 
   process.exit(ExitCode.SUCCESS);

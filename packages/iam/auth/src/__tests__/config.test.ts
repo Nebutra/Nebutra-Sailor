@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getConfiguredAuthProvider, isClerkProvider } from "../config";
+import { getConfiguredAuthProvider } from "../config";
 
 describe("getConfiguredAuthProvider", () => {
   it("returns better-auth when env is empty", () => {
@@ -15,14 +15,14 @@ describe("getConfiguredAuthProvider", () => {
   it("server-only AUTH_PROVIDER wins over NEXT_PUBLIC_AUTH_PROVIDER", () => {
     expect(
       getConfiguredAuthProvider({
-        AUTH_PROVIDER: "clerk",
+        AUTH_PROVIDER: "dev",
         NEXT_PUBLIC_AUTH_PROVIDER: "better-auth",
       }),
-    ).toBe("clerk");
+    ).toBe("dev");
   });
 
   it("falls back to NEXT_PUBLIC_AUTH_PROVIDER when AUTH_PROVIDER missing", () => {
-    expect(getConfiguredAuthProvider({ NEXT_PUBLIC_AUTH_PROVIDER: "clerk" })).toBe("clerk");
+    expect(getConfiguredAuthProvider({ NEXT_PUBLIC_AUTH_PROVIDER: "dev" })).toBe("dev");
   });
 
   it("rejects unknown values and falls back to default", () => {
@@ -30,19 +30,8 @@ describe("getConfiguredAuthProvider", () => {
   });
 
   it("accepts all supported providers", () => {
-    expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "clerk" })).toBe("clerk");
     expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "better-auth" })).toBe("better-auth");
-    expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "nextauth" })).toBe("nextauth");
-    expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "supabase" })).toBe("supabase");
-    expect(getConfiguredAuthProvider({ NEXT_PUBLIC_AUTH_PROVIDER: "supabase" })).toBe("supabase");
-  });
-});
-
-describe("isClerkProvider", () => {
-  it("returns true only for clerk", () => {
-    expect(isClerkProvider("clerk")).toBe(true);
-    expect(isClerkProvider("better-auth")).toBe(false);
-    expect(isClerkProvider("nextauth")).toBe(false);
-    expect(isClerkProvider("supabase")).toBe(false);
+    expect(getConfiguredAuthProvider({ AUTH_PROVIDER: "dev" })).toBe("dev");
+    expect(getConfiguredAuthProvider({ NEXT_PUBLIC_AUTH_PROVIDER: "dev" })).toBe("dev");
   });
 });

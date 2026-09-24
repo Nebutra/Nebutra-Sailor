@@ -1,6 +1,5 @@
 import { logger } from "@nebutra/logger";
 import { CASLProvider } from "./providers/casl";
-import { OpenFGAProvider } from "./providers/openfga";
 import { getDefaultRoles } from "./roles";
 import type {
   Action,
@@ -25,23 +24,8 @@ export class PermissionsManager {
 
     const roles = config?.roles || getDefaultRoles();
 
-    if (detectedType === "openfga") {
-      // exactOptionalPropertyTypes: only set keys that have defined values so
-      // the optional `?:` modifier on OpenFGAProviderConfig stays satisfied.
-      const openFgaConfig: {
-        apiUrl?: string;
-        authToken?: string;
-        storeId?: string;
-      } = {};
-      if (config?.openFgaApiUrl !== undefined) openFgaConfig.apiUrl = config.openFgaApiUrl;
-      if (config?.openFgaAuthToken !== undefined) openFgaConfig.authToken = config.openFgaAuthToken;
-      if (config?.openFgaStoreId !== undefined) openFgaConfig.storeId = config.openFgaStoreId;
-      this.provider = new OpenFGAProvider(openFgaConfig, roles);
-      logger.info("Initialized OpenFGA permissions provider");
-    } else {
-      this.provider = new CASLProvider(roles);
-      logger.info("Initialized CASL permissions provider");
-    }
+    this.provider = new CASLProvider(roles);
+    logger.info("Initialized CASL permissions provider");
   }
 
   private detectProvider(explicit?: PermissionProviderType): PermissionProviderType {
@@ -51,13 +35,9 @@ export class PermissionsManager {
 
     if (process.env.PERMISSIONS_PROVIDER) {
       const provider = process.env.PERMISSIONS_PROVIDER as PermissionProviderType;
-      if (["casl", "openfga"].includes(provider)) {
+      if (provider === "casl") {
         return provider;
       }
-    }
-
-    if (process.env.OPENFGA_API_URL) {
-      return "openfga";
     }
 
     return "casl";

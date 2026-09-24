@@ -1,7 +1,6 @@
 import {
   buildAuthCenterSignInUrl,
   getAuthCenterOrigin,
-  getConfiguredAuthProvider,
   isAuthFeatureEnabled,
   sanitizeReturnUrl,
 } from "@nebutra/auth";
@@ -11,18 +10,15 @@ import { redirect } from "next/navigation";
 import { connection } from "next/server";
 import { Suspense } from "react";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
-import { ClerkEnterpriseSsoHandoff } from "@/components/auth/clerk-enterprise-sso-handoff";
 import { MagicLinkPanel } from "@/components/auth/magic-link-panel";
 import { PasskeyPanel } from "@/components/auth/passkey-panel";
 import { SignInForm } from "@/components/auth/sign-in-form";
 import { detectEnabledOAuthProviders } from "@/lib/auth/oauth-providers";
-import { extractEmailDomain } from "@/lib/auth/sso-discovery";
 
 /**
- * Better Auth multi-app RP: this route only renders a local UI for Clerk.
- * Default (better-auth) always soft-redirects to brand auth origin so there
- * is a single login entry. Proxy already 307s; this is a belt-and-suspenders
- * fallback if middleware is bypassed.
+ * Better Auth multi-app RP: this route always soft-redirects to the brand
+ * auth origin so there is a single login entry. Proxy already 307s; this is
+ * a belt-and-suspenders fallback if middleware is bypassed.
  */
 
 type SearchParams = {
@@ -60,34 +56,28 @@ async function SignInPageContent({
   const sanitized = sanitizeReturnUrl(query.returnUrl ?? query.returnTo ?? query.redirect);
   const returnUrl = sanitized === "/" ? undefined : sanitized;
   const subroute = slug?.[0];
-  const provider = getConfiguredAuthProvider();
 
-  // Single entry: funnel to auth-center unless this host IS the auth center
-  // (shared code) or we are on Clerk (hosted UI stays on app).
-  if (provider !== "clerk") {
-    const authOrigin = getAuthCenterOrigin();
-    const thisOrigin = resolveAppOrigin(headerStore);
-    let isAuthCenterHost = false;
-    try {
-      isAuthCenterHost = new URL(authOrigin).host === new URL(thisOrigin).host;
-    } catch {
-      isAuthCenterHost = false;
+  // Single entry: funnel to auth-center unless this host IS the auth center.
+  const authOrigin = getAuthCenterOrigin();
+  const thisOrigin = resolveAppOrigin(headerStore);
+  let isAuthCenterHost = false;
+  try {
+    isAuthCenterHost = new URL(authOrigin).host === new URL(thisOrigin).host;
+  } catch {
+    isAuthCenterHost = false;
+  }
+  if (!isAuthCenterHost) {
+    const returnTo = returnUrl || `${thisOrigin}/workspace`;
+    // Preserve subroutes as query only — magic/passkey live on auth-center.
+    if (subroute === "magic-link") {
+      redirect(
+        `${authOrigin.replace(/\/$/, "")}/sign-in/magic-link?returnTo=${encodeURIComponent(returnTo)}`,
+      );
     }
-    if (!isAuthCenterHost) {
-      const returnTo = returnUrl || `${thisOrigin}/workspace`;
-      // Preserve subroutes as query only — magic/passkey live on auth-center.
-      if (subroute === "magic-link") {
-        redirect(
-          `${authOrigin.replace(/\/$/, "")}/sign-in/magic-link?returnTo=${encodeURIComponent(returnTo)}`,
-        );
-      }
-      if (subroute === "passkey") {
-        redirect(
-          `${authOrigin.replace(/\/$/, "")}/sign-in?returnTo=${encodeURIComponent(returnTo)}`,
-        );
-      }
-      redirect(buildAuthCenterSignInUrl(returnTo));
+    if (subroute === "passkey") {
+      redirect(`${authOrigin.replace(/\/$/, "")}/sign-in?returnTo=${encodeURIComponent(returnTo)}`);
     }
+    redirect(buildAuthCenterSignInUrl(returnTo));
   }
 
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
@@ -104,23 +94,6 @@ async function SignInPageContent({
     return (
       <AuthSplitLayout>
         <PasskeyPanel returnUrl={returnUrl} />
-      </AuthSplitLayout>
-    );
-  }
-
-  if (subroute === "sso") {
-    const identifier = query.identifier?.trim().toLowerCase() ?? "";
-    if (provider !== "clerk" || !extractEmailDomain(identifier)) {
-      redirect(returnUrl ? `/sign-in?returnUrl=${encodeURIComponent(returnUrl)}` : "/sign-in");
-    }
-
-    return (
-      <AuthSplitLayout>
-        <ClerkEnterpriseSsoHandoff
-          identifier={identifier}
-          providerName={query.providerName?.trim() || "Enterprise SSO"}
-          returnUrl={returnUrl}
-        />
       </AuthSplitLayout>
     );
   }

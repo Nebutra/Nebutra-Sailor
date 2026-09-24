@@ -6,7 +6,7 @@
     "graph": "core",
     "productionReady": false
   },
-  "description": "Governed AI-native SaaS scaffolder for Nebutra Sailor. Bootstrap a production-ready Next.js + Hono + Prisma monorepo with multi-tenant foundations, region-aware defaults, and AI integrations.",
+  "description": "Governed AI-native SaaS scaffolder for Nebutra Sailor. One converged Next.js + Hono + Prisma stack, zero questions — providers go live from env keys.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {

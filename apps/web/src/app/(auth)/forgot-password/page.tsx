@@ -5,16 +5,9 @@ import { Suspense } from "react";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { ForgotPasswordForm } from "@/components/auth/forgot-password-form";
 import { getAuth } from "@/lib/auth";
-import { getSecurityCapabilities } from "@/lib/auth/security-capabilities";
 
 async function ForgotPasswordPageContent() {
   await connection();
-
-  // Clerk owns its own hosted forgot-password flow.
-  const capabilities = getSecurityCapabilities();
-  if (capabilities.provider === "clerk" && capabilities.providerProfileUrl) {
-    redirect(capabilities.providerProfileUrl);
-  }
 
   const { isSignedIn } = await getAuth();
   if (isSignedIn) {

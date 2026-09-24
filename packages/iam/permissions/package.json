@@ -9,15 +9,14 @@
     "status": "foundation",
     "productionReady": false,
     "requires": [
-      "CASL (in-process, no external creds)",
-      "or OPENFGA_API_URL + OPENFGA_STORE_ID for Zanzibar-style"
+      "CASL (in-process, no external creds)"
     ],
     "gaps": [
-      "OpenFGA model and tuple lifecycle management remain external"
+      "Policies are evaluated in-process only; there is no external relationship store for cross-service authorization"
     ],
     "featureId": "permissions",
     "category": "iam",
-    "summary": "RBAC/ABAC engine — CASL (in-process) + OpenFGA (Zanzibar)"
+    "summary": "RBAC/ABAC engine — CASL (in-process)"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -29,10 +28,6 @@
     "./casl": {
       "types": "./dist/providers/casl.d.ts",
       "import": "./dist/providers/casl.js"
-    },
-    "./openfga": {
-      "types": "./dist/providers/openfga.d.ts",
-      "import": "./dist/providers/openfga.js"
     },
     "./react": {
       "types": "./dist/react.d.ts",

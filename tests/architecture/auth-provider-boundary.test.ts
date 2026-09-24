@@ -9,9 +9,8 @@ describe("auth provider boundary", () => {
       "utf8",
     );
 
-    expect(authProvider).toContain('createUnauthenticatedAuthContext("clerk", false)');
     expect(authProvider).toContain('createUnauthenticatedAuthContext("better-auth", false)');
-    expect(authProvider).toContain('createUnauthenticatedAuthContext("nextauth", false)');
+    expect(authProvider).toContain('createUnauthenticatedAuthContext("dev", false)');
   });
 
   it("concrete auth providers do not render children outside AuthContextProvider during init", async () => {
@@ -19,71 +18,56 @@ describe("auth provider boundary", () => {
       join(process.cwd(), "packages/iam/auth/src/react/providers/better-auth-provider.tsx"),
       "utf8",
     );
-    const clerkProvider = await readFile(
-      join(process.cwd(), "packages/iam/auth/src/react/providers/clerk-provider.tsx"),
-      "utf8",
-    );
-    const nextAuthProvider = await readFile(
-      join(process.cwd(), "packages/iam/auth/src/react/providers/nextauth-provider.tsx"),
-      "utf8",
-    );
 
     expect(betterAuthProvider).not.toContain("return <>{children}</>;");
-    expect(clerkProvider).not.toContain("return <>{children}</>;");
-    expect(nextAuthProvider).not.toContain("return <>{children}</>;");
   });
 
-  it("AuthProviderId includes clerk + better-auth + nextauth", async () => {
+  it("AuthProviderId is Better Auth plus the dev fallback, nothing else (ADR 2026-09-24)", async () => {
     const types = await readFile(join(process.cwd(), "packages/iam/auth/src/types.ts"), "utf8");
 
-    expect(types).toMatch(/export type AuthProviderId\s*=/);
-    expect(types).toContain('"clerk"');
-    expect(types).toContain('"better-auth"');
-    expect(types).toContain('"nextauth"');
+    expect(types).toMatch(/export type AuthProviderId\s*=\s*"better-auth"\s*\|\s*"dev";/);
   });
 
-  it("all three provider files exist in packages/auth", async () => {
+  it("ships only the Better Auth and dev provider files", async () => {
     const serverProviders = await readdir(join(process.cwd(), "packages/iam/auth/src/providers"));
     const reactProviders = await readdir(
       join(process.cwd(), "packages/iam/auth/src/react/providers"),
     );
 
-    expect(serverProviders).toEqual(
-      expect.arrayContaining(["clerk.ts", "better-auth.ts", "nextauth.ts"]),
-    );
-    expect(reactProviders).toEqual(
-      expect.arrayContaining([
-        "clerk-provider.tsx",
-        "better-auth-provider.tsx",
-        "nextauth-provider.tsx",
-      ]),
-    );
+    expect(serverProviders.filter((f) => /\.ts$/.test(f) && !f.includes(".test.")).sort()).toEqual([
+      "better-auth.ts",
+      "dev.ts",
+    ]);
+    expect(reactProviders.filter((f) => !f.includes(".test.")).sort()).toEqual([
+      "better-auth-provider.tsx",
+      "dev-provider.tsx",
+    ]);
   });
 
-  it("@nebutra/auth declares next-auth as an optional peer dependency, not a hard dep", async () => {
+  it("@nebutra/auth does not depend on removed provider SDKs", async () => {
     const pkg = await readFile(join(process.cwd(), "packages/iam/auth/package.json"), "utf8");
-
     const parsed = JSON.parse(pkg) as {
       dependencies?: Record<string, string>;
       peerDependencies?: Record<string, string>;
-      peerDependenciesMeta?: Record<string, { optional?: boolean }>;
     };
+    const declared = [
+      ...Object.keys(parsed.dependencies ?? {}),
+      ...Object.keys(parsed.peerDependencies ?? {}),
+    ];
 
-    // next-auth must NOT be a hard dependency — it's an optional integration.
-    expect(Object.keys(parsed.dependencies ?? {})).not.toContain("next-auth");
-    expect(Object.keys(parsed.peerDependencies ?? {})).toContain("next-auth");
-    expect(parsed.peerDependenciesMeta?.["next-auth"]?.optional).toBe(true);
+    for (const sdk of ["next-auth", "@clerk/nextjs", "@supabase/supabase-js"]) {
+      expect(declared).not.toContain(sdk);
+    }
   });
 
-  it("ships a static multi-provider matrix with tiers and declared capabilities", async () => {
+  it("ships a static provider matrix with tiers and declared capabilities", async () => {
     const matrix = await readFile(
       join(process.cwd(), "packages/iam/auth/src/provider-matrix.ts"),
       "utf8",
     );
     expect(matrix).toContain("AUTH_PROVIDER_MATRIX");
     expect(matrix).toContain('tier: "first-class"');
-    expect(matrix).toContain('tier: "optional-enterprise"');
-    expect(matrix).toContain('tier: "migration"');
+    expect(matrix).toContain('tier: "dev-only"');
     expect(matrix).toContain("impersonation: false");
     expect(matrix).toContain("isCapabilityEffective");
   });

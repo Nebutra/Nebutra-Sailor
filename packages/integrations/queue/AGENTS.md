@@ -20,7 +20,6 @@ is a foundation async-execution layer, not an app-specific workflow package.
   `src/middleware/qstash-verify.ts`
 - Provider implementations:
   `src/providers/qstash.ts`,
-  `src/providers/bullmq.ts`,
   `src/providers/memory.ts`
 
 If job semantics, provider selection, or handler behavior changes, update the
@@ -32,14 +31,13 @@ source of truth here rather than patching consumers.
   `JobOptions`, `QueueProvider`, `JobHandler`, and provider config types define
   the package boundary.
 - Preserve provider selection inside `src/factory.ts`. Do not scatter
-  `QUEUE_PROVIDER`, `QSTASH_TOKEN`, or `REDIS_URL` detection logic across
+  `QUEUE_PROVIDER` or `QSTASH_TOKEN` detection logic across
   consuming packages.
 - Keep `createJob` simple and contract-focused. App-specific defaults,
   workflow policies, and queue naming conventions belong outside this package.
 - Preserve the distinction between provider behavior:
   QStash is HTTP-callback based and depends on registered handler lookup plus
   webhook verification,
-  BullMQ is Redis worker based with polling workers and status inspection,
   Memory is dev/test only and intentionally simplified.
 - Keep QStash signature verification centralized in
   `src/middleware/qstash-verify.ts`. Do not duplicate verification or handler
@@ -66,8 +64,8 @@ source of truth here rather than patching consumers.
   `pnpm --filter @nebutra/queue typecheck`
 - Run the package-local suite before changing provider semantics:
   `pnpm --filter @nebutra/queue test` (`vitest run`). It covers the
-  provider-agnostic factory/detection logic, each provider (QStash, BullMQ,
+  provider-agnostic factory/detection logic, each provider (QStash,
   in-memory), the QStash webhook signature verification middleware, and the
   scheduled-job handlers (scheduler, invitation cleanup, session cleanup).
   Verify the narrowest downstream consumer as well for behavior the local
-  suite does not reach (e.g. real Redis/QStash wiring).
+  suite does not reach (e.g. real QStash wiring).

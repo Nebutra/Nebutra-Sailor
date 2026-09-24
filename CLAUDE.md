@@ -11,6 +11,18 @@ Read it in full before writing any code.
 
 ---
 
+## One stack — no provider choices
+
+ADR [2026-09-24 Sailor convergence](docs/architecture/2026-09-24-sailor-convergence.md):
+every domain has exactly one provider (what Nebutra production runs); a second
+adapter exists only where law or network forces it (payments: Stripe + WeChat
+Pay/Alipay; SMS: Twilio Verify + Aliyun; storage: one S3-compatible adapter for
+R2 and OSS). Keys in the env decide what is live; `nebutra status` reports it.
+Do not add alternative adapters, provider flags, or region switches — amend the
+ADR first. Mainland-China surfaces switch on at runtime with `NEBUTRA_LOCALE=cn`.
+Business endpoints go in `backends/gateway`, not `apps/web` route handlers
+(`scripts/lint-route-handlers.mjs`, shrink-only allowlist).
+
 ## Project Structure
 
 
@@ -40,27 +52,27 @@ packages/              # Shared TypeScript libraries — categorized layout: <ca
     theme/             Design-language catalog — Brand Packages on html[data-brand],
                        7 built-in (gsap linear notion raycast stripe vanta vercel)
     icons/             541 Geist icons as tree-shakable TSX components
-    design-sync/       Provider-agnostic design-tool sync (Figma | Penpot | git-only)
+    design-sync/       DTCG token sync — git-only (+ DESIGN.md serializer)
   iam/
-    auth/              Multi-provider auth (Clerk | Better Auth | NextAuth)
+    auth/              Better Auth (dev provider as local fallback)
     audit/             SOC 2-grade audit logging
     vault/             Application-layer secrets — envelope encryption (AWS KMS + local HKDF)
     tenant/            Multi-tenancy context — AsyncLocalStorage + RLS + schema isolation
-    permissions/       RBAC/ABAC engine — CASL (in-process) + OpenFGA (Zanzibar)
+    permissions/       RBAC/ABAC engine — CASL (in-process)
     identity/          Shared identity primitives
   commerce/
-    billing/           Multi-provider billing (Stripe | Polar | LemonSqueezy | ChinaPay | Manual)
+    billing/           Stripe + ChinaPay (WeChat Pay / Alipay) — legal pair
     contracts/         Cross-package event/identity/billing/notification contracts
     license/           License key generation + validation
     marketing/         Marketing-site shared components/hooks/utils
     metering/          Usage metering pipeline — ClickHouse real-time aggregation
     waitlist/          Pre-launch waitlist (foundation tier)
   integrations/
-    queue/             Provider-agnostic message queue — QStash + BullMQ
-    search/            Full-text search — Meilisearch + Typesense + Algolia
-    notifications/     Multi-channel notification center — Novu + direct dispatchers
-    webhooks/          Outbound webhook management — Svix + custom
-    uploads/           Large file uploads — S3/R2 multipart + Tus resumable + presigned URLs
+    queue/             QStash (memory fallback in dev)
+    search/            Postgres search — pgvector
+    notifications/     Multi-channel notification center — direct dispatchers
+    webhooks/          Outbound webhook delivery — built-in
+    uploads/           Large file uploads — S3-compatible (R2 / OSS) multipart + presigned URLs
     storage/           Lower-tier object storage (L3 simpler tier vs L4 uploads)
     email/             Email rendering + send (React Email + Resend/SES/SMTP)
     saga/              Distributed transactions (WIP — not yet integrated)
@@ -416,37 +428,19 @@ node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 
 ## Message Queue (`@nebutra/queue`)
 
-Provider-agnostic message queue supporting **Upstash QStash** (serverless) and **BullMQ** (self-hosted Redis). Customers choose their backend; application code stays the same.
-
-### Provider auto-detection
-
-| Priority | Condition | Provider |
-|----------|-----------|----------|
-| 1 | `QUEUE_PROVIDER` env var | As specified |
-| 2 | `QSTASH_TOKEN` exists | `qstash` |
-| 3 | `REDIS_URL` exists | `bullmq` |
-| 4 | Fallback | `memory` (dev/test only) |
-
-### Usage (TypeScript — Node.js)
+**Upstash QStash**. With no `QSTASH_TOKEN` the queue falls back to an in-memory
+provider for dev and tests.
 
 ```ts
 import { getQueue, createJob } from "@nebutra/queue";
 
-// Auto-detects provider from env
 const queue = await getQueue();
-
-// Enqueue a job
 await queue.enqueue(
   createJob("email", "send", { to: "user@example.com" }, { tenantId: "org_123" })
 );
-
-// Register a handler (BullMQ: starts a Worker; QStash: use webhook route)
-queue.registerHandler("email", "send", async (job) => {
-  await sendEmail(job.data.to);
-});
 ```
 
-### QStash webhook route (Hono / backends/gateway)
+QStash delivers to a webhook route (Hono / backends/gateway):
 
 ```ts
 import { createQStashWebhookHandler } from "@nebutra/queue";
@@ -457,101 +451,32 @@ app.post("/api/queue/:queue/:type", async (c) => {
 });
 ```
 
-### Usage (Python — microservices)
-
-```python
-from _shared.queue import get_queue, create_job
-
-queue = await get_queue()
-await queue.enqueue(create_job("report", "generate", {"tenant_id": "org_123"}))
-
-@queue.handler("report", "generate")
-async def handle_report(job):
-    await generate_report(job.data["tenant_id"])
-```
-
-### Environment variables
-
 ```env
-QUEUE_PROVIDER=""                    # "qstash" | "bullmq" | "memory" (auto-detect if empty)
-QSTASH_TOKEN=""                      # Upstash QStash REST token
-QSTASH_CURRENT_SIGNING_KEY=""        # Webhook signature verification
-QSTASH_NEXT_SIGNING_KEY=""           # Key rotation support
+QSTASH_TOKEN=""
+QSTASH_CURRENT_SIGNING_KEY=""
+QSTASH_NEXT_SIGNING_KEY=""
 QSTASH_CALLBACK_BASE_URL=""          # e.g. https://api.nebutra.com
-# BullMQ reuses REDIS_URL — no extra config
 ```
 
 ---
 
 ## Design Sync (`@nebutra/design-sync`)
 
-Provider-agnostic design-tool sync. Keeps the W3C DTCG token files in `packages/design/design-tokens/tokens/` in lock-step with the customer's design tool. Customers swap providers without changing application code.
-
-### Provider auto-detection
-
-| Priority | Condition | Provider | Customer profile |
-|----------|-----------|----------|------------------|
-| 1 | `DESIGN_SYNC_PROVIDER` env var | as specified | — |
-| 2 | `FIGMA_PERSONAL_ACCESS_TOKEN` + `FIGMA_FILE_ID` | `figma` | NA / global w/ Figma seat |
-| 3 | `PENPOT_API_URL` + `PENPOT_TOKEN` | `penpot` | self-host / China-friendly |
-| 4 | fallback | `git-only` | indie hackers, AI-driven dev |
-
-`memory` is never auto-detected; reserved for tests.
-
-### Usage (TypeScript)
-
-```ts
-import { getDesignSync } from "@nebutra/design-sync";
-
-const sync = await getDesignSync();         // auto-detects provider
-await sync.healthcheck();                   // diagnose env / creds
-await sync.pull();                          // design-tool → repo (DTCG)
-await sync.push({ dryRun: true });          // repo → design-tool (dry-run safe)
-```
-
-### CLI
+Keeps the W3C DTCG token files in `packages/design/design-tokens/tokens/` as the
+single source of truth, **git-only** — the repo is the design tool of record.
+Figma and Penpot providers were deleted (ADR 2026-09-24). `design-md` serializes
+tokens to and from an AI-readable `DESIGN.md`.
 
 ```bash
-pnpm --filter @nebutra/design-sync exec design-sync detect       # which provider + env diag
-pnpm --filter @nebutra/design-sync exec design-sync healthcheck  # provider readiness
-pnpm --filter @nebutra/design-sync exec design-sync pull         # design-tool → repo
-pnpm --filter @nebutra/design-sync exec design-sync push --dry-run  # repo → design-tool
+pnpm --filter @nebutra/design-sync exec design-sync healthcheck
 ```
-
-### Environment variables
-
-```env
-DESIGN_SYNC_PROVIDER=""              # figma | penpot | git-only | memory (auto-detect if empty)
-
-# Figma
-FIGMA_PERSONAL_ACCESS_TOKEN=""
-FIGMA_FILE_ID=""
-FIGMA_GITHUB_REPO="Nebutra/Nebutra-Sailor"
-FIGMA_GITHUB_BRANCH="main"
-
-# Penpot
-PENPOT_API_URL="https://design.penpot.app/api"
-PENPOT_TOKEN=""
-PENPOT_FILE_ID=""
-PENPOT_TEAM_ID=""
-```
-
-### Safety
-
-`figma.push()` and `penpot.push()` default to **dry-run** until the operator opts in by providing credentials AND omitting `dryRun: true`. The package never silently writes to a remote design tool. CI workflow: `.github/workflows/design-sync.yml`.
 
 ---
 
-## Full-Text Search (`@nebutra/search`)
+## Search (`@nebutra/search`)
 
-Provider-agnostic search supporting **Meilisearch**, **Typesense**, and **Algolia**.
-
-| Priority | Condition | Provider |
-|----------|-----------|----------|
-| 1 | `SEARCH_PROVIDER` env var | As specified |
-| 2 | `MEILISEARCH_URL` exists | `meilisearch` |
-| 3 | `TYPESENSE_URL` exists | `typesense` |
-| 4 | `ALGOLIA_APP_ID` exists | `algolia` |
+Postgres — **pgvector** plus full-text search in the same database. No external
+search engine.
 
 ```ts
 import { getSearch } from "@nebutra/search";
@@ -585,7 +510,7 @@ await notifications.send({
 
 ## Permissions (`@nebutra/permissions`)
 
-RBAC/ABAC with **CASL** (in-process) or **OpenFGA** (Zanzibar-style).
+RBAC/ABAC with **CASL**, in-process.
 
 ```ts
 // API middleware (Hono)
@@ -603,7 +528,7 @@ import { Can } from "@nebutra/permissions/react";
 
 ## Webhooks (`@nebutra/webhooks`)
 
-Outbound webhook management with **Svix** (managed) or custom delivery.
+Outbound webhook delivery, built in: signing, retries and replay protection.
 
 ```ts
 import { getWebhooks } from "@nebutra/webhooks";
@@ -637,7 +562,7 @@ const quota = await metering.getQuota("org_123", "api_calls");
 
 ## Uploads (`@nebutra/uploads`)
 
-Large file uploads with **S3/R2 multipart**, **Tus resumable**, and **presigned URLs**.
+Large file uploads to any **S3-compatible** bucket (Cloudflare R2, Aliyun OSS) — multipart and presigned URLs. Local disk in dev.
 
 ```ts
 import { getUploadProvider } from "@nebutra/uploads";
@@ -1083,7 +1008,11 @@ Status: as of 2026-05-12, after a follow-up audit, `backends/python/` contains o
 
 > See [ADR 2026-06-04 — Production Runtime Closure and Deploy Target Switchability](docs/architecture/2026-06-04-production-runtime-closure.md).
 
-Production topology (Vercel retired 2026-09-22):
+The **template** does not choose a platform: it ships Next `standalone` builds and
+Dockerfiles, and create-sailor asks nothing about deployment (ADR 2026-09-24).
+What follows is **Nebutra's own instance**, not a template default.
+
+Nebutra production topology (Vercel retired 2026-09-22):
 
 ```text
 Fly Machines (landing + product edges) -> Cloudflare Workers gateway -> Fly/ECS Origin -> PlanetScale Postgres / Upstash / R2 or OSS

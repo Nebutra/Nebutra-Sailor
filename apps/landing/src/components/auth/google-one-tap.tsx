@@ -1,25 +1,13 @@
 "use client";
 
 import { brand } from "@nebutra/brand/metadata";
-import Script from "next/script";
-import { type ComponentType, type ReactNode, useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface GoogleOneTapProps {
   appUrl: string;
   authProvider: string;
   clientId?: string;
-  clerkPublishableKey?: string;
   enabled?: boolean;
-}
-
-interface ClerkOneTapRuntime {
-  ClerkProvider: ComponentType<{ children: ReactNode; publishableKey: string }>;
-  GoogleOneTap: ComponentType<{
-    cancelOnTapOutside?: boolean;
-    fedCmSupport?: boolean;
-    signInForceRedirectUrl?: string;
-    signUpForceRedirectUrl?: string;
-  }>;
 }
 
 interface BetterAuthClient {
@@ -115,96 +103,14 @@ function BetterAuthOneTap({ appUrl, clientId }: { appUrl: string; clientId: stri
   );
 }
 
-function ClerkOneTap({ appUrl, publishableKey }: { appUrl: string; publishableKey: string }) {
-  const postLoginUrl = getPostLoginUrl(appUrl);
-  const [runtime, setRuntime] = useState<ClerkOneTapRuntime | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    void import("@clerk/nextjs")
-      .then((module) => {
-        if (!cancelled) {
-          setRuntime({
-            ClerkProvider: module.ClerkProvider as ClerkOneTapRuntime["ClerkProvider"],
-            GoogleOneTap: module.GoogleOneTap as ClerkOneTapRuntime["GoogleOneTap"],
-          });
-        }
-      })
-      .catch(() => undefined);
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const renderedOneTap = runtime ? (
-    <runtime.ClerkProvider publishableKey={publishableKey}>
-      <runtime.GoogleOneTap
-        cancelOnTapOutside
-        fedCmSupport
-        signInForceRedirectUrl={postLoginUrl}
-        signUpForceRedirectUrl={postLoginUrl}
-      />
-    </runtime.ClerkProvider>
-  ) : null;
-
-  return (
-    <>
-      <span
-        data-dashboard-url={postLoginUrl}
-        data-publishable-key={publishableKey}
-        data-testid="clerk-google-one-tap"
-        hidden
-      />
-      {renderedOneTap}
-    </>
-  );
-}
-
 export function GoogleOneTap({
   appUrl,
   authProvider,
   clientId,
-  clerkPublishableKey,
   enabled = true,
 }: GoogleOneTapProps) {
   if (!enabled) return null;
+  if (authProvider !== "better-auth" || !clientId) return null;
 
-  if (authProvider === "better-auth") {
-    if (!clientId) return null;
-    return <BetterAuthOneTap appUrl={appUrl} clientId={clientId} />;
-  }
-
-  if (authProvider === "clerk") {
-    if (!clerkPublishableKey) return null;
-    return <ClerkOneTap appUrl={appUrl} publishableKey={clerkPublishableKey} />;
-  }
-
-  if (authProvider !== "nextauth" || !clientId) return null;
-
-  const loginUri = new URL("/api/auth/google-one-tap", appUrl).toString();
-  const stateCookieDomain = getParentDomain(appUrl);
-
-  return (
-    <>
-      <div
-        data-auto_prompt="true"
-        data-cancel_on_tap_outside="true"
-        data-client_id={clientId}
-        data-context="signin"
-        data-itp_support="true"
-        data-login_uri={loginUri}
-        data-state_cookie_domain={stateCookieDomain}
-        data-testid="google-one-tap-onload"
-        id="g_id_onload"
-      />
-      <Script
-        async
-        defer
-        src="https://accounts.google.com/gsi/client"
-        strategy="afterInteractive"
-      />
-    </>
-  );
+  return <BetterAuthOneTap appUrl={appUrl} clientId={clientId} />;
 }

@@ -3,8 +3,7 @@ import type { Command } from "commander";
 import pc from "picocolors";
 import { EXIT_CODE_DESCRIPTIONS, ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
-import { listFeatureDescriptors } from "../utils/registry";
-import { type CommandMeta, createSailorValueDomains, nebultraCommand } from "./metadata";
+import { type CommandMeta, nebultraCommand } from "./metadata";
 
 const EXIT_CODES: Record<string, string> = Object.fromEntries(
   Object.entries(EXIT_CODE_DESCRIPTIONS).map(([code, description]) => [code, description]),
@@ -54,97 +53,6 @@ function optionType(defaultValue: string | boolean | undefined): string {
   return typeof defaultValue === "boolean" ? "boolean" : "string";
 }
 
-function buildAddExtensions(): Record<string, unknown> {
-  const features = listFeatureDescriptors().map((feature) => ({
-    name: feature.name,
-    description: feature.description,
-    envFile: feature.envFile ?? ".env.local",
-    providers: (feature.providers ?? []).map((provider) => ({
-      id: provider.id,
-      description: provider.description,
-      dependencies: provider.dependencies ?? [],
-      devDependencies: provider.devDependencies ?? [],
-      env: provider.env ?? [],
-    })),
-    files: (feature.files ?? []).map((file) => file.path),
-  }));
-
-  const providerValues = Array.from(
-    new Set(features.flatMap((feature) => feature.providers.map((provider) => provider.id))),
-  );
-
-  return {
-    localFeatures: features,
-    valueDomains: {
-      components: features.map((feature) => feature.name),
-      provider: providerValues,
-    },
-  };
-}
-
-function augmentAddSchema(schema: CommandSchema): CommandSchema {
-  const nextArguments = schema.arguments.map((argument) =>
-    argument.name === "components"
-      ? {
-          ...argument,
-          description: "Local feature names to install from the Nebutra registry",
-        }
-      : argument,
-  );
-
-  const hasProviderOption = schema.options.some((option) => option.flags.includes("--provider"));
-  const nextOptions = hasProviderOption
-    ? schema.options
-    : [
-        ...schema.options,
-        {
-          flags: "--provider <id>",
-          description: "Specify a provider for a local feature install",
-          required: false,
-          type: "string",
-        },
-      ];
-
-  const nextExamples = [
-    {
-      command: "nebutra add queue --provider upstash",
-      description: "Install the local queue feature starter with the Upstash provider",
-    },
-    {
-      command: "nebutra add search --provider meilisearch --dry-run",
-      description: "Preview the local search feature install plan as JSON",
-    },
-    ...schema.examples.filter(
-      (example) => example.command.includes("--21st") || example.command.includes("--v0"),
-    ),
-  ];
-
-  return {
-    ...schema,
-    arguments: nextArguments,
-    options: nextOptions,
-    examples: nextExamples,
-    extensions: buildAddExtensions(),
-  };
-}
-
-function augmentCreateSchema(schema: CommandSchema): CommandSchema {
-  return {
-    ...schema,
-    extensions: {
-      valueDomains: createSailorValueDomains,
-      aliases: {
-        storage: {
-          supabase: "supabase-storage",
-        },
-        payment: {
-          lemonsqueezy: "lemon",
-        },
-      },
-    },
-  };
-}
-
 function metaToSchema(meta: CommandMeta): CommandSchema {
   const schema: CommandSchema = {
     name: meta.name,
@@ -160,14 +68,6 @@ function metaToSchema(meta: CommandMeta): CommandSchema {
     })),
     examples: meta.examples || [],
   };
-
-  if (meta.name === "add") {
-    return augmentAddSchema(schema);
-  }
-
-  if (meta.name === "create") {
-    return augmentCreateSchema(schema);
-  }
 
   return schema;
 }
@@ -273,7 +173,7 @@ export async function schemaCommand(
       p.log.message(pc.dim("  nebutra schema --exit-codes         Show exit codes reference"));
       p.log.message("");
       p.log.info(pc.bold("Example:"));
-      p.log.message(pc.dim("  nebutra schema add"));
+      p.log.message(pc.dim("  nebutra schema status"));
       p.log.message(pc.dim("  nebutra schema --all | jq '.commands[0]'"));
       p.outro(pc.cyan("All output is JSON for easy parsing by agents and automation tools."));
     }

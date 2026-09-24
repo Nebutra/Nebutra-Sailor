@@ -18,7 +18,6 @@ let defaultProvider: WebhookProvider | null = null;
  * Detect which provider to use based on available environment variables.
  */
 function detectProvider(): WebhookProviderType {
-  if (process.env.SVIX_API_KEY) return "svix";
   return "custom";
 }
 
@@ -34,12 +33,6 @@ function shouldAllowMemoryCustomProvider(): boolean {
  * ```ts
  * // Auto-detect from environment
  * const webhooks = await createWebhooks();
- *
- * // Explicit Svix
- * const webhooks = await createWebhooks({
- *   provider: "svix",
- *   apiKey: "svix_test_...",
- * });
  *
  * // Explicit Custom (self-hosted)
  * const webhooks = await createWebhooks({
@@ -58,21 +51,12 @@ export async function createWebhooks(config?: WebhookConfig): Promise<WebhookPro
   logger.info("[webhooks] Creating provider", { provider: providerType });
 
   switch (providerType) {
-    case "svix": {
-      const { SvixProvider } = await import("./providers/svix");
-      const svixConfig = config?.provider === "svix" ? config : undefined;
-      return new SvixProvider({
-        ...(svixConfig?.apiKey !== undefined ? { apiKey: svixConfig.apiKey } : {}),
-        ...(svixConfig?.serverUrl !== undefined ? { serverUrl: svixConfig.serverUrl } : {}),
-      });
-    }
-
     case "custom": {
       const { CustomProvider } = await import("./providers/custom");
       const customConfig = config?.provider === "custom" ? config : undefined;
       if (!shouldAllowMemoryCustomProvider()) {
         throw new Error(
-          "Refusing to use in-memory webhook delivery in production. Configure Svix or set ALLOW_MEMORY_WEBHOOKS_IN_PRODUCTION=true for an explicit temporary override.",
+          "Refusing to use in-memory webhook delivery in production. Set ALLOW_MEMORY_WEBHOOKS_IN_PRODUCTION=true for an explicit temporary override.",
         );
       }
       return new CustomProvider({

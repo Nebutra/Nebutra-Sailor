@@ -6,7 +6,7 @@
     "graph": "core",
     "productionReady": false
   },
-  "description": "Governance-first CLI for Nebutra Sailor topology scaffolding, registry-backed feature installs, and platform operations.",
+  "description": "Nebutra — the CLI for Sailor projects: status, dev, db, and codegen.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {

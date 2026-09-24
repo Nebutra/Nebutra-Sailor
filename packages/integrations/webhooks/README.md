@@ -1,8 +1,8 @@
 # @nebutra/webhooks
 
-Provider-agnostic webhook outbound management system for Nebutra. Supports **Svix** (managed) and **custom** (self-hosted) webhook delivery.
+Single-provider webhook outbound management system for Nebutra: **custom** (self-hosted) webhook delivery.
 
-> **Status: Stable** — Svix-managed outbound webhooks are production-capable. The custom self-hosted provider exposes retry/dead-letter seams and refuses memory-backed production delivery unless explicitly overridden.
+> **Status: Stable** — The custom self-hosted provider exposes retry/dead-letter seams and refuses memory-backed production delivery unless explicitly overridden.
 
 ## Installation
 
@@ -24,8 +24,8 @@ const webhooks = await getWebhooks();
 import { createWebhooks } from "@nebutra/webhooks";
 
 const webhooks = await createWebhooks({
-  provider: "svix",
-  apiKey: "svix_test_...",
+  provider: "custom",
+  maxRetries: 6,
 });
 ```
 
@@ -86,39 +86,11 @@ export async function POST(req: Request) {
 }
 ```
 
-## Providers
-
-### Svix (Managed)
-
-**Best for:** SaaS products, managed infrastructure, enterprise features.
-
-Auto-detects if `SVIX_API_KEY` is set. Otherwise, pass config:
-
-```typescript
-const webhooks = await createWebhooks({
-  provider: "svix",
-  apiKey: "svix_test_...",
-});
-```
-
-**Features:**
-- ✅ Managed retry logic (exponential backoff)
-- ✅ Built-in rate limiting & security
-- ✅ Event replay and retry UI
-- ✅ Webhook signing (Svix format)
-- ✅ Application isolation per tenant
-- ❌ No direct access to delivery attempts (API limitation)
-
-**Environment variables:**
-```env
-SVIX_API_KEY=svix_test_...
-```
+## Provider
 
 ### Custom (Self-Hosted)
 
-**Best for:** Full control, on-premise deployments, fine-grained observability.
-
-Auto-detects if `SVIX_API_KEY` is not set. Otherwise:
+**Best for:** Full control, on-premise deployments, fine-grained observability. This is the only supported provider.
 
 ```typescript
 const webhooks = await createWebhooks({
@@ -140,9 +112,9 @@ const webhooks = await createWebhooks({
 **Note:** The custom provider is a self-hosted adapter seam. Its bundled
 endpoint/message state is in-memory, so the factory refuses this mode in
 production unless `ALLOW_MEMORY_WEBHOOKS_IN_PRODUCTION=true` is set as an
-explicit temporary override. Prefer Svix for production until a durable
-endpoint/message store is injected alongside a Redis/PostgreSQL-backed
-dead-letter implementation and distributed queue.
+explicit temporary override. Inject a durable endpoint/message store alongside
+a Redis/PostgreSQL-backed dead-letter implementation and distributed queue
+before enabling this in production.
 
 ```typescript
 import { createWebhooks, type WebhookDeadLetterStore } from "@nebutra/webhooks";
@@ -175,7 +147,7 @@ Create a webhooks provider.
 
 ```typescript
 interface WebhookConfig {
-  provider: "svix" | "custom";
+  provider: "custom";
   // ... provider-specific options
 }
 ```
@@ -425,25 +397,14 @@ const newSecret = await webhooks.rotateSecret(endpoint.id);
 
 ## Environment Variables
 
-### Svix
-
-```env
-SVIX_API_KEY=svix_test_...
-WEBHOOK_PROVIDER=svix  # optional, auto-detected
-```
-
 ### Custom
 
 ```env
 REDIS_URL=redis://localhost:6379  # optional, for persistence
-WEBHOOK_PROVIDER=custom             # optional, auto-detected
+WEBHOOK_PROVIDER=custom             # optional — custom is the only supported provider
 ```
 
 ## Production Checklist
-
-For **Svix**:
-- Set `SVIX_API_KEY` in production environment
-- No additional setup required
 
 For **Custom**:
 - Deploy Redis or use managed Redis (AWS ElastiCache, etc.)
@@ -457,7 +418,7 @@ For **Custom**:
 
 When adding new features:
 1. Update types in `src/types.ts`
-2. Implement in both providers (`src/providers/svix.ts`, `src/providers/custom.ts`)
+2. Implement in the custom provider (`src/providers/custom.ts`)
 3. Add tests (if applicable)
 4. Update this README with examples
 

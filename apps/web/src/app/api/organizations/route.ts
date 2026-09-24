@@ -36,30 +36,6 @@ async function createOrganizationForRequest(
   request: Request,
   input: z.infer<typeof CreateOrganizationSchema>,
 ): Promise<CreateOrganizationResult> {
-  if (provider === "clerk") {
-    const { auth, clerkClient } = await import("@clerk/nextjs/server");
-    const { userId } = await auth();
-    if (!userId) return { status: "unauthenticated" };
-
-    const client = await clerkClient();
-    const organization = await client.organizations.createOrganization({
-      name: input.name,
-      slug: input.slug,
-      createdBy: userId,
-    });
-
-    return {
-      status: "created",
-      organization: {
-        id: organization.id,
-        name: organization.name,
-        slug: organization.slug ?? input.slug,
-        image: organization.imageUrl ?? null,
-      },
-      creatorUserId: userId,
-    };
-  }
-
   const auth = await createAuth({ provider });
   const session = await auth.getSession(request);
   if (!session?.userId) return { status: "unauthenticated" };

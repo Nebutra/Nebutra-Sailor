@@ -20,17 +20,6 @@ describe("public dashboard SEO and access boundaries", () => {
     expect(privateLayout).toContain("await requireAuth()");
   });
 
-  it("lets Clerk treat localized public information pages as anonymous routes", () => {
-    const proxy = readFromRepo("apps/web/src/proxy.ts");
-
-    // Cookie-based i18n: isPublicPathname compares raw pathname directly (no stripLocalePrefix).
-    expect(proxy).toContain("function isPublicPathname");
-    expect(proxy).toContain('pathname === "/"');
-    expect(proxy).toContain('"/demo"');
-    expect(proxy).toContain("if (!isPublicPathname(innerReq.nextUrl.pathname))");
-    expect(proxy).toContain("txt|xml");
-  });
-
   it("keeps the whole dashboard origin out of search from a single robots source", () => {
     const rootLayout = readFromRepo("apps/web/src/app/layout.tsx");
     const privateLayout = readFromRepo("apps/web/src/app/(app)/layout.tsx");

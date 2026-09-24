@@ -3,7 +3,7 @@
  *
  * This is a thin re-export of `requirePermission` from `@nebutra/permissions`.
  * It is the PREFERRED guard for new routes that need fine-grained
- * (action, resource) authorization backed by the CASL/OpenFGA engine, as
+ * (action, resource) authorization backed by the CASL engine, as
  * opposed to the coarse-grained `requireRole` guard in `./tenantContext`.
  *
  * The PermissionContext consumed by `requirePermission` is populated on the

@@ -42,17 +42,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const authProvider = getConfiguredAuthProvider();
   const authProviderConfig: Record<string, unknown> = {};
-  if (authProvider === "clerk") {
-    authProviderConfig.publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  } else if (authProvider === "better-auth") {
+  if (authProvider === "better-auth") {
     authProviderConfig.apiUrl =
       process.env.NEXT_PUBLIC_AUTH_URL?.trim() ||
       process.env.BETTER_AUTH_URL?.trim() ||
       process.env.NEXT_PUBLIC_AUTH_API_URL?.trim();
-  } else if (authProvider === "supabase") {
-    authProviderConfig.supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    authProviderConfig.supabaseAnonKey =
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   }
 
   const locale = await getLocale();

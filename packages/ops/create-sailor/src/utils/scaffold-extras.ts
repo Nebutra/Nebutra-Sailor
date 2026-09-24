@@ -9,19 +9,16 @@ const COPYABLE_EXT = /\.(md|mdx|json|ts|tsx|js|mjs|cjs|yaml|yml|css|html|toml|py
 
 export interface ScaffoldExtrasOptions {
   projectName: string;
-  withWorkflows: boolean;
-  withPythonBackend: boolean;
 }
 
 /**
- * Always-on top-level scaffold folders matching the Nebutra-Sailor layout:
- *   backends/gateway, infra, e2e, tests
- *
- * Opt-in via flag:
- *   workflows         (--with-workflows)
- *   backends/python   (--with-python-backend)
+ * Top-level scaffold folders matching the Nebutra-Sailor layout. Every
+ * scaffold gets all of them — there are no opt-in folders. `deploy` holds the
+ * portable container build (Dockerfile.web + docker-compose.yml) and lands at
+ * the project root: the scaffold ships a container, not a platform choice.
  */
-const ALWAYS_ON: readonly string[] = ["backends/gateway", "infra", "e2e", "tests"];
+const FOLDERS: readonly string[] = ["backends/gateway", "infra", "e2e", "tests", "deploy"];
+const ROOT_FOLDERS: ReadonlySet<string> = new Set(["deploy"]);
 
 function resolveTemplatesRoot(): string {
   const candidates = [
@@ -42,21 +39,17 @@ export async function applyScaffoldExtras(
   const applied: string[] = [];
   const skipped: string[] = [];
 
-  const folders = [
-    ...ALWAYS_ON,
-    ...(options.withWorkflows ? ["workflows"] : []),
-    ...(options.withPythonBackend ? ["backends/python"] : []),
-  ];
-
-  for (const folder of folders) {
+  for (const folder of FOLDERS) {
     const src = path.join(templatesRoot, folder);
     if (!fs.existsSync(src)) {
       skipped.push(folder);
       continue;
     }
-    const dst = path.join(targetDir, folder);
+    const dst = ROOT_FOLDERS.has(folder) ? targetDir : path.join(targetDir, folder);
     copyRecursive(src, dst);
-    replacePlaceholders(dst, { "{PRODUCT_NAME}": options.projectName });
+    if (!ROOT_FOLDERS.has(folder)) {
+      replacePlaceholders(dst, { "{PRODUCT_NAME}": options.projectName });
+    }
     applied.push(folder);
   }
 

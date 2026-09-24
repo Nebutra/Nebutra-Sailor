@@ -2,9 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 interface EnvConfig {
-  databaseUrl: string | symbol;
-  clerkPublishable: string | symbol;
-  clerkSecret: string | symbol;
+  databaseUrl: string;
 }
 
 function hasEnvVar(content: string, name: string): boolean {
@@ -25,15 +23,15 @@ export async function injectEnv(targetDir: string, envConfig: EnvConfig) {
   const missingLines = [
     {
       name: "DATABASE_URL",
-      value: String(envConfig.databaseUrl),
+      value: envConfig.databaseUrl,
     },
     {
-      name: "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
-      value: String(envConfig.clerkPublishable),
+      name: "AUTH_PROVIDER",
+      value: "better-auth",
     },
     {
-      name: "CLERK_SECRET_KEY",
-      value: String(envConfig.clerkSecret),
+      name: "NEXT_PUBLIC_AUTH_PROVIDER",
+      value: "better-auth",
     },
     {
       name: "NEXT_PUBLIC_SITE_URL",

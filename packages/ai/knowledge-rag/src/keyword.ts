@@ -114,7 +114,7 @@ export class SearchKeywordIndex implements KeywordIndex {
           code: "E_KEYWORD_SEARCH",
           cause: err,
           suggestion:
-            "Check the @nebutra/search backend (MEILISEARCH_URL / TYPESENSE_URL / ALGOLIA_APP_ID), or set { disableKeyword: true } for vector-only retrieval.",
+            "Check the @nebutra/search backend (DATABASE_URL for the pgvector provider), or set { disableKeyword: true } for vector-only retrieval.",
         },
       );
     }

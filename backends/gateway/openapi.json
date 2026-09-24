@@ -9453,14 +9453,14 @@
                       "properties": {
                         "provider": {
                           "type": "string",
-                          "enum": ["novu", "knock", "direct"]
+                          "enum": ["direct"]
                         },
                         "providerLabel": {
                           "type": "string"
                         },
                         "mode": {
                           "type": "string",
-                          "enum": ["managed", "self_hosted", "preview", "degraded"]
+                          "enum": ["self_hosted", "preview"]
                         },
                         "canManagePreferences": {
                           "type": "boolean"

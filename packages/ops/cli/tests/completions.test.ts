@@ -24,7 +24,7 @@ describe("Completions Command", () => {
     expect(result.stdout).toContain("#compdef nebutra");
     expect(result.stdout).toContain("_nebutra()");
     expect(result.stdout).toContain("init:");
-    expect(result.stdout).toContain("add:");
+    expect(result.stdout).toContain("status:");
   });
 
   it("should generate fish completions", async () => {
@@ -57,9 +57,8 @@ describe("Completions Command", () => {
     const result = await runCli(["completions", "zsh"]);
 
     expect(result.stdout).toContain("Initialize a Nebutra project");
-    expect(result.stdout).toContain("registry-backed platform feature");
     expect(result.stdout).toContain("AI provider and gateway");
-    expect(result.stdout).toContain("Template marketplace, ideas, showcase");
+    expect(result.stdout).toContain("capability readiness");
   });
 
   it("fish completions should include all subcommands", async () => {

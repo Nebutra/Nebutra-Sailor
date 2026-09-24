@@ -18,13 +18,7 @@ let defaultProvider: SearchProvider | null = null;
  * Detect which provider to use based on available environment variables.
  */
 function detectProvider(): SearchProviderType {
-  if (process.env.MEILISEARCH_URL) return "meilisearch";
-  if (process.env.TYPESENSE_URL) return "typesense";
-  if (process.env.ALGOLIA_APP_ID) return "algolia";
-  // Only fall back to pgvector when DATABASE_URL is set — otherwise default to
-  // meilisearch (developer-friendly local default).
-  if (process.env.SEARCH_PROVIDER === "pgvector" && process.env.DATABASE_URL) return "pgvector";
-  return "meilisearch";
+  return "pgvector";
 }
 
 /**
@@ -35,18 +29,10 @@ function detectProvider(): SearchProviderType {
  * // Auto-detect from environment
  * const search = await createSearch();
  *
- * // Explicit Meilisearch
+ * // Explicit pgvector
  * const search = await createSearch({
- *   provider: "meilisearch",
- *   url: "http://localhost:7700",
- * });
- *
- * // Explicit Algolia
- * const search = await createSearch({
- *   provider: "algolia",
- *   appId: "YOUR_APP_ID",
- *   searchKey: "YOUR_SEARCH_KEY",
- *   adminKey: "YOUR_ADMIN_KEY",
+ *   provider: "pgvector",
+ *   connectionString: "postgres://localhost/nebutra",
  * });
  * ```
  */
@@ -59,47 +45,9 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
   logger.info("[search] Creating provider", { provider: providerType });
 
   switch (providerType) {
-    case "meilisearch": {
-      const { MeilisearchProvider } = await import("./providers/meilisearch");
-      const meilisearchConfig = config as
-        | Exclude<SearchConfig, { provider: "typesense" | "algolia" | "pgvector" }>
-        | undefined;
-      const configObj: any = { provider: "meilisearch" };
-      if (meilisearchConfig?.url !== undefined) configObj.url = meilisearchConfig.url;
-      if (meilisearchConfig?.apiKey !== undefined) configObj.apiKey = meilisearchConfig.apiKey;
-      if (meilisearchConfig?.timeout !== undefined) configObj.timeout = meilisearchConfig.timeout;
-      return new MeilisearchProvider(configObj);
-    }
-
-    case "typesense": {
-      const { TypesenseProvider } = await import("./providers/typesense");
-      const typesenseConfig = config as
-        | Exclude<SearchConfig, { provider: "meilisearch" | "algolia" | "pgvector" }>
-        | undefined;
-      const configObj: any = { provider: "typesense" };
-      if (typesenseConfig?.url !== undefined) configObj.url = typesenseConfig.url;
-      if (typesenseConfig?.apiKey !== undefined) configObj.apiKey = typesenseConfig.apiKey;
-      if (typesenseConfig?.timeout !== undefined) configObj.timeout = typesenseConfig.timeout;
-      return new TypesenseProvider(configObj);
-    }
-
-    case "algolia": {
-      const { AlgoliaProvider } = await import("./providers/algolia");
-      const algoliaConfig = config as
-        | Exclude<SearchConfig, { provider: "meilisearch" | "typesense" | "pgvector" }>
-        | undefined;
-      const configObj: any = { provider: "algolia" };
-      if (algoliaConfig?.appId !== undefined) configObj.appId = algoliaConfig.appId;
-      if (algoliaConfig?.searchKey !== undefined) configObj.searchKey = algoliaConfig.searchKey;
-      if (algoliaConfig?.adminKey !== undefined) configObj.adminKey = algoliaConfig.adminKey;
-      return new AlgoliaProvider(configObj);
-    }
-
     case "pgvector": {
       const { PgvectorProvider } = await import("./providers/pgvector");
-      const pgvectorConfig = config as
-        | Exclude<SearchConfig, { provider: "meilisearch" | "typesense" | "algolia" }>
-        | undefined;
+      const pgvectorConfig = config;
       return new PgvectorProvider({
         provider: "pgvector",
         ...(pgvectorConfig?.connectionString !== undefined

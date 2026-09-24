@@ -171,8 +171,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "自建 OAuth 2.1 / OIDC provider；授权码 + PKCE、refresh 轮换、三方应用同意、JWT 默认 1h TTL。",
   },
   permissions: {
-    en: "RBAC + ABAC engine — CASL for in-process checks, OpenFGA for Zanzibar-style relationships. defineAbility() server, <Can /> in React.",
-    zh: "RBAC + ABAC 引擎 — CASL 处理进程内 check，OpenFGA 处理 Zanzibar 关系图；服务端 defineAbility()，React 用 <Can /> 包裹。",
+    en: "RBAC + ABAC engine — CASL for in-process checks. defineAbility() server, <Can /> in React.",
+    zh: "RBAC + ABAC 引擎 — CASL 处理进程内 check；服务端 defineAbility()，React 用 <Can /> 包裹。",
   },
   tenant: {
     en: "Request-scoped tenant context via AsyncLocalStorage, with Prisma RLS bridge. One tenantId resolves through middleware and propagates the whole stack.",
@@ -215,20 +215,20 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "基于 tag 的缓存 — Redis / Upstash / 内存 三种 backend；serverless 与自托管复用同一 get/set/invalidate(tags) 接口。",
   },
   queue: {
-    en: "Provider-agnostic queue — Upstash QStash (serverless) or BullMQ (self-host). Customers swap by env; application code stays the same.",
-    zh: "Provider 无关的消息队列 — Upstash QStash（serverless）/ BullMQ（自托管）；环境变量切换 provider，业务代码不动。",
+    en: "Message queue — Upstash QStash (serverless), with an in-memory fallback for local dev and tests.",
+    zh: "消息队列 — Upstash QStash（serverless），本地开发与测试使用内存回退。",
   },
   search: {
-    en: "Full-text search — Meilisearch, Typesense, or Algolia behind one indexer + searcher pair. Per-tenant filters baked in.",
-    zh: "全文搜索 — Meilisearch / Typesense / Algolia 三选一，统一 indexer + searcher；按租户过滤内建。",
+    en: "Full-text + vector search — pgvector (Postgres). BM25 keyword search and vector cosine search over your own database, no external search infra.",
+    zh: "全文 + 向量搜索 — pgvector（Postgres）；BM25 关键词搜索与向量余弦搜索直接跑在自有数据库上，无需外部搜索基础设施。",
   },
   notifications: {
-    en: "Multi-channel notifications — in-app, email, push, SMS, chat — with Novu + direct dispatchers and recipient-preference resolution.",
-    zh: "多通道通知 — in_app / email / push / sms / chat — Novu + 直发通道并存,按收件人偏好路由。",
+    en: "Multi-channel notifications — in-app, email, push, SMS, chat — with self-hosted direct dispatchers and recipient-preference resolution.",
+    zh: "多通道通知 — in_app / email / push / sms / chat — 自托管直发通道,按收件人偏好路由。",
   },
   webhooks: {
-    en: "Outbound webhook delivery — Svix or custom, signed payloads, retry with exponential backoff, subscriber portal for self-serve.",
-    zh: "出站 webhook 投递 — Svix 或自实现,负载签名、指数退避重试、用户自助订阅 portal。",
+    en: "Outbound webhook delivery — self-hosted custom dispatcher, signed payloads, retry with exponential backoff, subscriber portal for self-serve.",
+    zh: "出站 webhook 投递 — 自实现分发,负载签名、指数退避重试、用户自助订阅 portal。",
   },
   uploads: {
     en: "Large-file uploads — S3 / R2 multipart, Tus resumable, presigned URLs. Picks the right strategy by file size automatically.",

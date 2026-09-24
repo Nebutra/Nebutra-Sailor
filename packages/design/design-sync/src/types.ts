@@ -3,8 +3,9 @@ import { z } from "zod";
 // =============================================================================
 // Core Design-Sync Abstraction — Provider-agnostic design-tool sync
 // =============================================================================
-// Purpose: keep design-tool token sources (Figma + Tokens Studio, Penpot, etc.)
-// in lock-step with the canonical W3C DTCG JSON files committed to the repo.
+// Purpose: keep the canonical W3C DTCG JSON files committed to the repo as the
+// single source of truth for design tokens, with an optional AI-native
+// DESIGN.md serialization.
 //
 // The application code never imports a provider directly — it imports
 // `getDesignSync()` and the runtime resolves the correct backend.
@@ -13,13 +14,11 @@ import { z } from "zod";
 /**
  * Supported design-sync backend providers.
  *
- * - `figma`      — Figma + Tokens Studio plugin (DTCG via GitHub provider sync)
- * - `penpot`     — Penpot REST API (self-hostable, China-friendly)
  * - `git-only`   — No design tool; reads/writes local DTCG files directly
  * - `memory`     — In-memory test fixture (CI / unit tests only)
  * - `design-md`  — AI-native DESIGN.md format (@google/design.md) — markdown + YAML front matter
  */
-export type DesignSyncProviderType = "figma" | "penpot" | "git-only" | "memory" | "design-md";
+export type DesignSyncProviderType = "git-only" | "memory" | "design-md";
 
 // ── DTCG Token Schema ───────────────────────────────────────────────────────
 
@@ -65,7 +64,7 @@ export interface DesignTokenSet {
 export interface PullOptions {
   /**
    * Optional theme/token-set filter. When omitted, all sets are pulled.
-   * Provider-specific naming applies (e.g. Figma collection IDs).
+   * Provider-specific naming applies.
    */
   themes?: string[];
   /**
@@ -82,7 +81,7 @@ export interface PushOptions {
   themes?: string[];
   /**
    * If true, the provider should compute the diff but NOT call the remote API.
-   * `figma.push({ dryRun: true })` is the default until the user opts in.
+   * `design-md.push({ dryRun: true })` is the default until the user opts in.
    */
   dryRun?: boolean;
   /** Tenant scoping */
@@ -178,30 +177,6 @@ export interface BaseProviderConfig {
   tokensStudioDir?: string;
 }
 
-export interface FigmaProviderConfig extends BaseProviderConfig {
-  provider: "figma";
-  /** Figma personal access token. Defaults to `process.env.FIGMA_PERSONAL_ACCESS_TOKEN`. */
-  personalAccessToken?: string;
-  /** Figma file ID (the `:file_key` segment in the URL). */
-  fileId?: string;
-  /** GitHub repo (owner/name) used by the Tokens Studio plugin sync. */
-  githubRepo?: string;
-  /** GitHub branch the plugin pushes to. Defaults to `main`. */
-  githubBranch?: string;
-}
-
-export interface PenpotProviderConfig extends BaseProviderConfig {
-  provider: "penpot";
-  /** Penpot API URL — public cloud or self-hosted. */
-  apiUrl?: string;
-  /** Penpot personal access token. */
-  token?: string;
-  /** Penpot file ID. */
-  fileId?: string;
-  /** Penpot team / workspace ID. */
-  teamId?: string;
-}
-
 export interface GitOnlyProviderConfig extends BaseProviderConfig {
   provider: "git-only";
 }
@@ -229,8 +204,6 @@ export interface DesignMdProviderConfig extends BaseProviderConfig {
 }
 
 export type DesignSyncConfig =
-  | FigmaProviderConfig
-  | PenpotProviderConfig
   | GitOnlyProviderConfig
   | MemoryProviderConfig
   | DesignMdProviderConfig;

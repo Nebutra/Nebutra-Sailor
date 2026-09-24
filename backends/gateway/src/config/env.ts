@@ -1,57 +1,11 @@
 import { getBrandPublicUrls } from "@nebutra/brand/metadata-helpers";
 import { z } from "zod";
 
-// Auth provider discriminated union — validates that the appropriate secret is set for the selected provider
-const clerkSchema = z.object({
-  AUTH_PROVIDER: z.literal("clerk").optional(),
-  CLERK_SECRET_KEY: z.string().min(1),
-  CLERK_WEBHOOK_SECRET: z.string().optional(),
-  BETTER_AUTH_SECRET: z.string().optional(),
-});
-
-const betterAuthSchema = z.object({
-  AUTH_PROVIDER: z.literal("better-auth"),
-  CLERK_SECRET_KEY: z.string().optional(),
-  CLERK_WEBHOOK_SECRET: z.string().optional(),
+// Better Auth is the only auth provider (ADR 2026-09-24 Sailor convergence).
+const authConfigSchema = z.object({
+  AUTH_PROVIDER: z.literal("better-auth").optional(),
   BETTER_AUTH_SECRET: z.string().min(1),
 });
-
-const nextAuthSchema = z
-  .object({
-    AUTH_PROVIDER: z.literal("nextauth"),
-    CLERK_SECRET_KEY: z.string().optional(),
-    CLERK_WEBHOOK_SECRET: z.string().optional(),
-    BETTER_AUTH_SECRET: z.string().optional(),
-    AUTH_SECRET: z.string().optional(),
-    NEXTAUTH_SECRET: z.string().optional(),
-  })
-  .superRefine((value, ctx) => {
-    if (value.AUTH_SECRET || value.NEXTAUTH_SECRET) return;
-    ctx.addIssue({
-      code: "custom",
-      message: "AUTH_SECRET or NEXTAUTH_SECRET is required when AUTH_PROVIDER=nextauth",
-      path: ["AUTH_SECRET"],
-    });
-  });
-
-const supabaseSchema = z
-  .object({
-    AUTH_PROVIDER: z.literal("supabase"),
-    CLERK_SECRET_KEY: z.string().optional(),
-    CLERK_WEBHOOK_SECRET: z.string().optional(),
-    BETTER_AUTH_SECRET: z.string().optional(),
-    SUPABASE_URL: z.string().url(),
-    SUPABASE_PUBLISHABLE_KEY: z.string().min(1).optional(),
-    SUPABASE_ANON_KEY: z.string().min(1).optional(),
-    SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
-    SUPABASE_WEBHOOK_SECRET: z.string().optional(),
-  })
-  .refine((value) => value.SUPABASE_PUBLISHABLE_KEY || value.SUPABASE_ANON_KEY, {
-    message: "SUPABASE_PUBLISHABLE_KEY or SUPABASE_ANON_KEY is required",
-    path: ["SUPABASE_PUBLISHABLE_KEY"],
-  });
-
-const authConfigUnion = z.union([clerkSchema, betterAuthSchema, nextAuthSchema, supabaseSchema]);
 
 const baseSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
@@ -123,7 +77,7 @@ const baseSchema = z.object({
   DOMAIN_STUDIO: z.string().url().optional(),
 });
 
-const envSchema = z.intersection(baseSchema, authConfigUnion);
+const envSchema = z.intersection(baseSchema, authConfigSchema);
 
 // Production domain constants — defaults dogfood brand.domains.
 const brandUrls = getBrandPublicUrls();
@@ -153,45 +107,7 @@ function withRedisAliases(source: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
   return normalized;
 }
 
-/**
- * Determine the active auth provider from environment variables.
- * Priority:
- * 1. AUTH_PROVIDER env var (explicit override)
- * 2. CLERK_SECRET_KEY present → "clerk" (backward compatibility)
- * 3. AUTH_SECRET / NEXTAUTH_SECRET present → "nextauth"
- * 4. SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY present → "supabase"
- * 5. BETTER_AUTH_SECRET present → "better-auth"
- * 6. Default to "better-auth" if none are present
- */
-export function getAuthProvider(): "clerk" | "better-auth" | "nextauth" | "supabase" {
-  const explicit = process.env.AUTH_PROVIDER;
-  if (
-    explicit === "clerk" ||
-    explicit === "better-auth" ||
-    explicit === "nextauth" ||
-    explicit === "supabase"
-  ) {
-    return explicit;
-  }
-
-  // Backward compatibility: if CLERK_SECRET_KEY is set, assume Clerk
-  if (process.env.CLERK_SECRET_KEY) {
-    return "clerk";
-  }
-
-  if (process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET) {
-    return "nextauth";
-  }
-
-  if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    return "supabase";
-  }
-
-  if (process.env.BETTER_AUTH_SECRET) {
-    return "better-auth";
-  }
-
-  // Default fallback (dev mode)
+export function getAuthProvider(): "better-auth" {
   return "better-auth";
 }
 
@@ -204,17 +120,7 @@ export function validateEnv(): Env {
       NODE_ENV: normalizedEnv.NODE_ENV ?? "development",
       PORT: normalizedEnv.PORT ?? "3002",
       DATABASE_URL: normalizedEnv.DATABASE_URL ?? "postgresql://localhost/dev",
-      AUTH_PROVIDER: normalizedEnv.AUTH_PROVIDER ?? "clerk",
-      CLERK_SECRET_KEY: normalizedEnv.CLERK_SECRET_KEY ?? "sk_test_placeholder",
-      AUTH_SECRET: normalizedEnv.AUTH_SECRET ?? "dev_nextauth_secret_placeholder",
-      SUPABASE_URL: normalizedEnv.SUPABASE_URL ?? "http://localhost:54321",
-      SUPABASE_PUBLISHABLE_KEY:
-        normalizedEnv.SUPABASE_PUBLISHABLE_KEY ??
-        normalizedEnv.SUPABASE_ANON_KEY ??
-        "dev_anon_placeholder",
-      SUPABASE_ANON_KEY: normalizedEnv.SUPABASE_ANON_KEY ?? "dev_anon_placeholder",
-      SUPABASE_SERVICE_ROLE_KEY:
-        normalizedEnv.SUPABASE_SERVICE_ROLE_KEY ?? "dev_service_role_placeholder",
+      BETTER_AUTH_SECRET: normalizedEnv.BETTER_AUTH_SECRET ?? "dev_better_auth_secret_placeholder",
     });
   }
 

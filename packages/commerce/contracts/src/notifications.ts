@@ -12,9 +12,9 @@ export const NotificationFrequencyContractSchema = z.enum([
 export type NotificationFrequencyContract = z.infer<typeof NotificationFrequencyContractSchema>;
 
 export const NotificationRuntimeStatusContractSchema = z.object({
-  provider: z.enum(["novu", "direct"]),
+  provider: z.enum(["direct"]),
   providerLabel: z.string().min(1),
-  mode: z.enum(["managed", "self_hosted", "preview", "degraded"]),
+  mode: z.enum(["self_hosted", "preview"]),
   canManagePreferences: z.boolean(),
   canViewInbox: z.boolean(),
   canMarkInboxRead: z.boolean(),

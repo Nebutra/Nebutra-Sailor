@@ -1,13 +1,13 @@
-> **Status: Stable** — Managed Novu/Knock providers and direct self-hosted dispatchers are production-capable when credentials or durable stores are configured. Memory-backed direct stores fail closed in production unless explicitly overridden.
+> **Status: Stable** — The direct self-hosted provider is production-capable when durable stores are configured. Memory-backed direct stores fail closed in production unless explicitly overridden.
 
 # @nebutra/notifications
 
-Provider-agnostic notification center for the Nebutra platform. Supports multiple channels (in-app, email, push, SMS, chat) and multiple backends (Novu, Knock, or self-hosted direct dispatchers).
+Single-provider notification center for the Nebutra platform. Supports multiple channels (in-app, email, push, SMS, chat) via the self-hosted **direct** dispatcher provider.
 
 ## Features
 
 - **Multi-channel**: Send notifications across in-app, email, push, SMS, and chat
-- **Provider-agnostic**: Switch between Novu and self-hosted without changing application code
+- **Self-hosted**: Pluggable dispatchers — bring your own email/SMS/push/chat services
 - **Multi-tenant**: Built-in support for tenant isolation
 - **Preferences**: User-controlled notification preferences per channel
 - **In-app feed**: Native in-app notification center with read/unread tracking
@@ -44,29 +44,15 @@ await notifier.send(
 );
 ```
 
-The provider is auto-detected based on environment:
-- If `NOVU_API_KEY` is set → Novu
-- Else if `KNOCK_API_KEY` is set → Knock
-- Otherwise → Direct preview mode with in-memory stores
+The direct provider is always used. Without durable store adapters it falls
+back to in-memory stores (preview mode, suitable for development and tests).
 
 In production, the factory fails closed instead of silently using memory-backed
-direct stores. Configure Novu, inject both direct-provider stores, or set
+direct stores. Inject both direct-provider stores, or set
 `ALLOW_MEMORY_NOTIFICATIONS_IN_PRODUCTION=true` as an explicit temporary
 escape hatch.
 
 ### Explicit Configuration
-
-#### Using Novu
-
-```typescript
-import { createNotificationProvider } from "@nebutra/notifications";
-
-const notifier = await createNotificationProvider({
-  provider: "novu",
-  apiKey: "your-novu-api-key",
-  baseUrl: "https://api.novu.co", // optional, for self-hosted
-});
-```
 
 #### Using Direct Provider with Custom Dispatchers and Stores
 
@@ -114,10 +100,8 @@ const notifier = await createNotificationProvider({
 Use `resolveNotificationRuntimeStatus()` or the API gateway settings endpoint to
 drive UI and operational readiness:
 
-- `managed`: Novu provider is active.
 - `self_hosted`: Direct provider has durable adapters for at least one writable surface.
 - `preview`: Direct provider is using memory stores for development and tests.
-- `degraded`: A provider is selected but cannot run, such as `NOTIFICATION_PROVIDER=novu` without `NOVU_API_KEY`.
 
 ## API Reference
 
@@ -191,21 +175,6 @@ interface NotificationPayload {
 ```
 
 ## Providers
-
-### Novu
-
-Managed notification infrastructure with templates, delivery guarantees, and built-in preference management.
-
-**Setup:**
-1. Sign up at https://novu.co
-2. Get your API key from the dashboard
-3. Create templates in Novu dashboard
-
-**Env vars:**
-```env
-NOVU_API_KEY=your-api-key
-NOTIFICATION_PROVIDER=novu # optional
-```
 
 ### Direct
 
@@ -283,12 +252,8 @@ await notifier.getPreferences(userId, tenantId);
 ## Environment Variables
 
 ```env
-# Provider selection (optional, auto-detected)
-NOTIFICATION_PROVIDER=novu|direct
-
-# Novu configuration
-NOVU_API_KEY=your-api-key
-NOVU_BASE_URL=https://api.novu.co # optional, for self-hosted
+# Provider selection (optional — direct is the only supported provider)
+NOTIFICATION_PROVIDER=direct
 
 # Logging
 LOG_LEVEL=info|debug|warn|error

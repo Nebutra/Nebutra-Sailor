@@ -10,8 +10,6 @@
  *   • The Better Auth provider gates each shape on its probe result —
  *     when a plugin sentinel is missing, the corresponding property is
  *     `undefined`.
- *   • Clerk + NextAuth deliberately do NOT expose canonical shapes
- *     (per ADR D2 — Clerk is "Maintain" tier, NextAuth is "core only").
  *
  * Builder-level tests use a synthetic `getApi` closure so we bypass the
  * lazy Prisma adapter init that `createBetterAuthProvider` performs.
@@ -384,66 +382,5 @@ describe("Better Auth provider — shape gating (no plugins probed yet)", () => 
     }
     // Safe call site even without a guard (just verifies the optional chain compiles).
     expect(provider.organizations?.create).toBeUndefined();
-  });
-});
-
-// ─── Clerk: deliberately no canonical shapes (per ADR D2) ───
-
-describe("Clerk provider — does NOT expose canonical capability shapes (D2)", () => {
-  it("capabilities.passkeys is true but provider.passkeys is undefined", async () => {
-    const { createClerkAuth } = await import("../../providers/clerk");
-    const provider = createClerkAuth({ provider: "clerk" });
-    expect(provider.capabilities.passkeys).toBe(true);
-    expect(provider.passkeys).toBeUndefined();
-  });
-
-  it("capabilities.organizations is true but provider.organizations is undefined", async () => {
-    const { createClerkAuth } = await import("../../providers/clerk");
-    const provider = createClerkAuth({ provider: "clerk" });
-    expect(provider.capabilities.organizations).toBe(true);
-    expect(provider.organizations).toBeUndefined();
-  });
-
-  it("capabilities.twoFactor is true but provider.twoFactor is undefined", async () => {
-    const { createClerkAuth } = await import("../../providers/clerk");
-    const provider = createClerkAuth({ provider: "clerk" });
-    expect(provider.capabilities.twoFactor).toBe(true);
-    expect(provider.twoFactor).toBeUndefined();
-  });
-
-  it("capabilities.magicLink is true but provider.magicLink is undefined", async () => {
-    const { createClerkAuth } = await import("../../providers/clerk");
-    const provider = createClerkAuth({ provider: "clerk" });
-    expect(provider.capabilities.magicLink).toBe(true);
-    expect(provider.magicLink).toBeUndefined();
-  });
-});
-
-// ─── NextAuth: all undefined (capabilities all false) ───
-
-describe("NextAuth provider — all capability shapes undefined (D2)", () => {
-  it("provider.organizations is undefined (capabilities.organizations === false)", async () => {
-    const { createNextAuthProvider } = await import("../../providers/nextauth");
-    const provider = createNextAuthProvider({ provider: "nextauth" });
-    expect(provider.capabilities.organizations).toBe(false);
-    expect(provider.organizations).toBeUndefined();
-  });
-
-  it("provider.passkeys is undefined", async () => {
-    const { createNextAuthProvider } = await import("../../providers/nextauth");
-    const provider = createNextAuthProvider({ provider: "nextauth" });
-    expect(provider.passkeys).toBeUndefined();
-  });
-
-  it("provider.twoFactor is undefined", async () => {
-    const { createNextAuthProvider } = await import("../../providers/nextauth");
-    const provider = createNextAuthProvider({ provider: "nextauth" });
-    expect(provider.twoFactor).toBeUndefined();
-  });
-
-  it("provider.magicLink is undefined", async () => {
-    const { createNextAuthProvider } = await import("../../providers/nextauth");
-    const provider = createNextAuthProvider({ provider: "nextauth" });
-    expect(provider.magicLink).toBeUndefined();
   });
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { buildAuthCenterSignInUrl, getConfiguredAuthProvider, useAuth } from "@nebutra/auth/client";
+import { buildAuthCenterSignInUrl, useAuth } from "@nebutra/auth/client";
 import { useEffect, useMemo, useState } from "react";
 
 /**
@@ -16,7 +16,6 @@ export function AuthActions({ onNavigate }: { onNavigate?: () => void }) {
   }, []);
 
   const href = useMemo(() => {
-    if (getConfiguredAuthProvider() === "clerk") return "/sign-in";
     return returnTo ? buildAuthCenterSignInUrl(returnTo) : buildAuthCenterSignInUrl();
   }, [returnTo]);
 

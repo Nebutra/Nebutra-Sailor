@@ -16,14 +16,7 @@
 import type { AuthProviderId } from "./types";
 
 /** Env values for AUTH_PROVIDER / NEXT_PUBLIC_AUTH_PROVIDER. */
-const SUPPORTED: readonly AuthProviderId[] = [
-  "clerk",
-  "better-auth",
-  /** Auth.js (ex-NextAuth.js); npm still `next-auth` */
-  "nextauth",
-  "supabase",
-  "dev",
-];
+const SUPPORTED: readonly AuthProviderId[] = ["better-auth", "dev"];
 
 /**
  * Read the active auth provider from environment. Falls back to `better-auth`
@@ -52,12 +45,4 @@ export function getConfiguredAuthProvider(
     return raw as AuthProviderId;
   }
   return "better-auth";
-}
-
-/**
- * Type-narrowing convenience: true when the active provider is Clerk.
- * Use to gate Clerk-native bridge code per ADR D2 (Clerk "Maintain" tier).
- */
-export function isClerkProvider(provider?: AuthProviderId): boolean {
-  return (provider ?? getConfiguredAuthProvider()) === "clerk";
 }

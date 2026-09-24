@@ -1,6 +1,6 @@
 # nebutra
 
-> Governance-first CLI for Nebutra Sailor topology scaffolding, registry-backed feature installs, and platform operations.
+> The CLI for Sailor projects: status, dev, db, and codegen.
 
 ## Installation
 
@@ -16,11 +16,11 @@ npx nebutra
 # Initialize a new project
 nebutra init
 
-# Add platform capabilities from the local registry
-nebutra add cache --provider upstash-redis --yes
+# Check capability readiness (live / local-fallback / missing-key)
+nebutra status
 
-# Scaffold a topology-first app with the create-sailor flag surface
-nebutra create ./my-app --region=hybrid --ai=openai,deepseek
+# Scaffold a new project (separate tool — one creation entry point)
+npx create-sailor ./my-app
 
 # Start dev server
 nebutra dev --preset=ai-saas
@@ -43,8 +43,7 @@ nebutra doctor
 | Command | Description |
 |---------|-------------|
 | `init` | Initialize project with `nebutra.config.json` |
-| `add [components...]` | Add registry-backed platform features or external UI components (`--21st`, `--v0`) |
-| `create` | Scaffold a topology-first Nebutra Sailor project through create-sailor |
+| `status` | Show capability readiness — live, local-fallback, or missing-key, per env (`--json`) |
 | `mcp` | Start the MCP server for AI agents and editors |
 | `dev` | Start development server |
 | `generate` | Scaffold apps, modules, and code |
@@ -55,20 +54,20 @@ nebutra doctor
 | `env` | Environment variable management |
 | `license` | License activation and management |
 | `ai` | AI provider and gateway routing configuration |
-| `auth` | Authentication setup |
-| `billing` | Billing and subscription management |
-| `preset` | List and apply SaaS presets |
 | `test` | Run unit/E2E tests |
-| `stats` | Monorepo overview and metrics |
 | `schema` | Output full CLI schema (for agents) |
 | `doctor` | Check project health |
-| `admin` | Platform administration (tenants, health) |
-| `community` | Community health and showcase |
-| `ecosystem` | Template marketplace, ideas, showcase, and sync workflows |
 | `services` | Microservice management |
-| `search` | Search index management |
 | `secrets` | Encrypted secrets management |
 | `completions` | Generate shell completions for the current command surface |
+| `link` / `unlink` | Link or unlink the project to Nebutra platform metadata |
+| `logout` / `upgrade` | Session and CLI lifecycle |
+
+Scaffolding, registry, and platform-operations commands (`create`, `add`,
+`auth`, `billing`, `admin`, `community`, `growth`, `ecosystem`, `search`,
+`stats`, `workflow`, `backend`) have moved out of this published package —
+project creation is `create-sailor`; the rest are internal Nebutra tooling
+(ADR 2026-09-24 Sailor convergence §7).
 
 ## Global Options
 
@@ -92,12 +91,12 @@ nebutra doctor
 ## Agent Schema
 
 ```bash
-nebutra schema create
-nebutra schema add
+nebutra schema status
 nebutra schema --all
+nebutra status --json
 ```
 
-`schema create` exposes the current `create-sailor` value domains, including
-region, auth, AI, storage, cache, webhooks, CMS, captcha, metering, and MCP
-options. `schema add` exposes local registry features such as `queue`, `search`,
-`cache`, `notifications`, `webhooks`, `cms`, `feature-flags`, and `captcha`.
+`schema <command>` exposes a single command's arguments, options, and
+examples as JSON. `status --json` exposes live project state — per-capability
+readiness for the capabilities declared in `nebutra.config.json` — not static
+command metadata.

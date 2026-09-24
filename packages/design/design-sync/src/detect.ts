@@ -5,17 +5,13 @@ import type { DesignSyncProviderType } from "./types";
 // =============================================================================
 // Resolution order (highest priority first):
 //   1. DESIGN_SYNC_PROVIDER env var (explicit)
-//   2. FIGMA_PERSONAL_ACCESS_TOKEN + FIGMA_FILE_ID  → "figma"
-//   3. PENPOT_API_URL + PENPOT_TOKEN                → "penpot"
-//   4. fallback                                      → "git-only"
+//   2. fallback                                      → "git-only"
 //
 // `memory` and `design-md` are never auto-detected; they must be requested
 // explicitly via the DESIGN_SYNC_PROVIDER env var or a config object.
 // =============================================================================
 
 const VALID_PROVIDERS: ReadonlySet<DesignSyncProviderType> = new Set([
-  "figma",
-  "penpot",
   "git-only",
   "memory",
   "design-md",
@@ -44,14 +40,6 @@ export function detectProvider(env: NodeJS.ProcessEnv = process.env): DesignSync
   const explicit = readConfiguredProvider(env);
   if (explicit) return explicit;
 
-  const figmaToken = env.FIGMA_PERSONAL_ACCESS_TOKEN?.trim();
-  const figmaFileId = env.FIGMA_FILE_ID?.trim();
-  if (figmaToken && figmaFileId) return "figma";
-
-  const penpotUrl = env.PENPOT_API_URL?.trim();
-  const penpotToken = env.PENPOT_TOKEN?.trim();
-  if (penpotUrl && penpotToken) return "penpot";
-
   return "git-only";
 }
 
@@ -67,18 +55,7 @@ export function describeEnv(env: NodeJS.ProcessEnv = process.env): {
   const detected: string[] = [];
   const missing: string[] = [];
 
-  const known = [
-    "DESIGN_SYNC_PROVIDER",
-    "FIGMA_PERSONAL_ACCESS_TOKEN",
-    "FIGMA_FILE_ID",
-    "FIGMA_GITHUB_REPO",
-    "FIGMA_GITHUB_BRANCH",
-    "PENPOT_API_URL",
-    "PENPOT_TOKEN",
-    "PENPOT_FILE_ID",
-    "PENPOT_TEAM_ID",
-    "DESIGN_MD_PATH",
-  ] as const;
+  const known = ["DESIGN_SYNC_PROVIDER", "DESIGN_MD_PATH"] as const;
 
   for (const key of known) {
     if (env[key]?.trim()) detected.push(key);

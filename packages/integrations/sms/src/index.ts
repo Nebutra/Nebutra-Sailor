@@ -1,7 +1,5 @@
 export type { AliyunSmsConfig } from "./providers/aliyun";
 export { createAliyunProvider } from "./providers/aliyun";
-export type { TencentSmsConfig } from "./providers/tencent";
-export { createTencentProvider } from "./providers/tencent";
 export type {
   TwilioVerifyConfig,
   TwilioVerifyProvider,

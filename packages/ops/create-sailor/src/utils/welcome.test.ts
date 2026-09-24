@@ -22,7 +22,6 @@ describe("generateWelcomePage", () => {
 
     await generateWelcomePage(targetDir, {
       projectName: "Acme",
-      region: "global",
     });
 
     const nextSteps = fs.readFileSync(path.join(targetDir, ".sailor", "next-steps.md"), "utf8");
@@ -43,27 +42,5 @@ describe("generateWelcomePage", () => {
     expect(welcomePage).toContain("https://nebutra.com/licensing");
     expect(nextSteps).not.toContain("get-license");
     expect(nextSteps).toContain("https://nebutra.com/licensing");
-  });
-
-  it("documents preview-status provider selections in the scaffold handoff", async () => {
-    const targetDir = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-welcome-"));
-    tempDirs.push(targetDir);
-
-    await generateWelcomePage(targetDir, {
-      projectName: "Acme",
-      region: "global",
-      previewSelections: [
-        { flag: "feature-flags", provider: "growthbook", status: "foundation" },
-        { flag: "queue", provider: "bullmq", status: "foundation" },
-      ],
-    });
-
-    const nextSteps = fs.readFileSync(path.join(targetDir, ".sailor", "next-steps.md"), "utf8");
-
-    expect(nextSteps).toContain("## Production readiness holds");
-    expect(nextSteps).toContain("feature-flags=growthbook [Foundation]");
-    expect(nextSteps).toContain("queue=bullmq [Foundation]");
-    expect(nextSteps).toContain("docs/package-status.md");
-    expect(nextSteps).toContain("Do not enable these in production until provider credentials");
   });
 });

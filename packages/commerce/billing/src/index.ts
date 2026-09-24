@@ -158,24 +158,6 @@ export {
   revokeEntitlement,
   type UsageEntitlementResult,
 } from "./entitlements/index";
-// LemonSqueezy
-export {
-  cancelLemonSubscription,
-  createLemonCheckout,
-  getLemonCustomerPortalUrl,
-  getLemonSqueezyConfig,
-  getLemonSubscription,
-  initLemonSqueezy,
-} from "./lemonsqueezy/index";
-// Polar
-export {
-  cancelPolarSubscription,
-  createPolarCheckout,
-  getPolar,
-  getPolarSubscription,
-  initPolar,
-  listPolarProducts,
-} from "./polar/index";
 export {
   createBillingPortalSession,
   createCheckoutSession,

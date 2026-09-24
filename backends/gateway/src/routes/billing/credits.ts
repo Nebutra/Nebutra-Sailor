@@ -2,7 +2,7 @@
  * /api/v1/billing/credits — Credit purchase, balance & history routes
  *
  * Provider-agnostic credit purchase flow backed by @nebutra/billing.
- * The checkout provider (Stripe / Polar / LemonSqueezy / ChinaPay / Manual)
+ * The checkout provider (Stripe / ChinaPay / Manual)
  * is auto-detected from environment variables via `getCheckout()`.
  *
  * Auth + tenant context applied upstream via `tenantContextMiddleware`.
@@ -140,7 +140,7 @@ const checkoutRoute = createRoute({
   tags: ["Billing", "Credits"],
   summary: "Create a credit purchase checkout session",
   description:
-    "Creates a provider-agnostic checkout session (Stripe / Polar / LemonSqueezy / ChinaPay). Provider is auto-detected from env.",
+    "Creates a provider-agnostic checkout session (Stripe / ChinaPay). Provider is auto-detected from env.",
   request: { body: { content: { "application/json": { schema: CheckoutRequestSchema } } } },
   responses: {
     200: {

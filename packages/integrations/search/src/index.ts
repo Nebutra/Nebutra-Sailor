@@ -2,9 +2,7 @@
 // @nebutra/search — Provider-agnostic full-text search
 // =============================================================================
 // Supports:
-//   - Meilisearch        (self-hosted, developer-friendly)
-//   - Typesense          (self-hosted, geo + instant faceting)
-//   - Algolia            (managed SaaS, zero-ops)
+//   - pgvector           (Postgres + pgvector extension; BM25 + vector search)
 //
 // Usage:
 //   import { getSearch } from "@nebutra/search";
@@ -18,15 +16,12 @@
 export { closeSearch, createSearch, getSearch, setSearch } from "./factory";
 
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
-export { AlgoliaProvider } from "./providers/algolia";
-export { MeilisearchProvider } from "./providers/meilisearch";
-export { TypesenseProvider } from "./providers/typesense";
+export { PgvectorProvider } from "./providers/pgvector";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 export type {
-  AlgoliaConfig,
   IndexSettings,
-  MeilisearchConfig,
+  PgvectorConfig,
   SearchConfig,
   SearchDocument,
   SearchHit,
@@ -34,6 +29,5 @@ export type {
   SearchProviderType,
   SearchQuery,
   SearchResult,
-  TypesenseConfig,
 } from "./types";
 export { SearchDocumentSchema, SearchQuerySchema } from "./types";
