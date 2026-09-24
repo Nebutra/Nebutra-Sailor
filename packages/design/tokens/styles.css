@@ -96,6 +96,7 @@
   --tracking-display: -0.04em; /** Hero H1 */
   --tracking-heading: -0.03em; /** Section H2/H3 */
   --tracking-tight: -0.015em; /** Body emphasis */
+  --tracking-label: 0.06em; /** Micro-caps / section labels — positive tracking keeps small uppercase legible without the loose 2020-era 0.1em. */
   --leading-display: 1.05;
   --leading-heading: 1.15;
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
@@ -217,7 +218,7 @@
   --info-foreground: 0 0% 100%;
   --border: 240 5.9% 90%;
   --input: 240 5.9% 90%;
-  --ring: 222 47% 11%; /** Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring) / 0.5). */
+  --ring: 222 47% 11%; /** Focus ring — neutral foreground (Vercel/Linear/Cursor 2026 pattern). Brand blue is reserved for selected/active states; focus indication is chrome and stays neutral. Consumed by global :focus-visible outline as hsl(var(--ring)). */
   --sidebar: 210 40% 98%;
   --sidebar-foreground: 215 25% 27%;
   --sidebar-primary: 222.8 85% 55.7%; /** Current-page accent in the sidebar (icon tint + edge). Same value as --primary: the sidebar carried the superseded 228 85% 56% (#2f56ee, C 0.232), which the action-blue measurement trimmed to C 0.215. */
@@ -423,6 +424,7 @@
   --tracking-display: -0.04em; /** Hero H1 */
   --tracking-heading: -0.03em; /** Section H2/H3 */
   --tracking-tight: -0.015em; /** Body emphasis */
+  --tracking-label: 0.06em; /** Micro-caps / section labels — positive tracking keeps small uppercase legible without the loose 2020-era 0.1em. */
   --leading-display: 1.05;
   --leading-heading: 1.15;
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.06); /** Hairline override — more visible on dark background */
@@ -1090,8 +1092,15 @@ body {
     "calt" 1;
 }
 
-html {
-  scroll-behavior: smooth;
+/* Smooth scrolling is an enhancement, never the default the whole document
+ * inherits: it hijacks every programmatic scroll (route changes, focus jumps,
+ * scrollIntoView) and turns them into long animated sweeps. The preference
+ * gate makes the intent explicit; the reduced-motion block below forces
+ * `auto` for users who ask for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /*
@@ -1113,7 +1122,7 @@ html {
 :focus-visible:not(
     :where(input, textarea, select, [cmdk-input], [role="textbox"], [contenteditable="true"])
   ) {
-  outline: 2px solid hsl(var(--ring) / 0.5);
+  outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
   border-radius: inherit;
 }
@@ -1130,24 +1139,6 @@ html {
 @keyframes spinner {
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--radix-accordion-content-height);
-  }
-}
-
-@keyframes accordion-up {
-  from {
-    height: var(--radix-accordion-content-height);
-  }
-  to {
-    height: 0;
   }
 }
 
@@ -1392,6 +1383,34 @@ html {
   line-height: 1.25;
   letter-spacing: 0.01em;
   font-weight: 500;
+}
+
+/* Tracking utilities over the tracking tokens — the scale itself is
+ * Tailwind's, so per-size letter-spacing has to be applied where a heading
+ * is rendered. Exposing the token as a utility keeps that application in
+ * one vocabulary instead of every surface re-deriving an em value. */
+@utility tracking-display {
+  letter-spacing: var(--tracking-display);
+}
+
+@utility tracking-heading {
+  letter-spacing: var(--tracking-heading);
+}
+
+@utility tracking-label {
+  letter-spacing: var(--tracking-label);
+}
+
+@utility tracking-tight-body {
+  letter-spacing: var(--tracking-tight);
+}
+
+@utility leading-display {
+  line-height: var(--leading-display);
+}
+
+@utility leading-heading {
+  line-height: var(--leading-heading);
 }
 
 @utility text-label-20-strong {
@@ -1827,16 +1846,21 @@ html {
 }
 
 /* ─── Reduced Motion ─────────────────────────────────────── */
-/* Honors OS preference EXCEPT for functional progress indicators
- * (spinners / pulses / pings). Per WCAG 2.3.3, those are excluded
- * from the "animation from interactions" reduction requirement. */
+/* Reduce, don't remove (WCAG 2.3.3, Apple HIG): movement and layout
+ * animation stop, while opacity/colour transitions stay short so a state
+ * change still reads as a change instead of an instant swap. Restricting
+ * `transition-property` is what kills transform/height transitions without
+ * touching the feedback that aids comprehension. Spinners and pulses are
+ * functional progress indicators and keep their motion. */
 @media (prefers-reduced-motion: reduce) {
   *:not(.animate-spin):not(.animate-pulse):not(.animate-ping),
   *:not(.animate-spin):not(.animate-pulse):not(.animate-ping)::before,
   *:not(.animate-spin):not(.animate-pulse):not(.animate-ping)::after {
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
-    transition-duration: 0.01ms;
+    transition-property:
+      opacity, color, background-color, border-color, outline-color, fill, stroke, box-shadow;
+    transition-duration: 120ms;
     scroll-behavior: auto;
   }
 }
