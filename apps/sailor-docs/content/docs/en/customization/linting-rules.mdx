@@ -92,7 +92,7 @@ Three icon libraries are allowed; each has exactly one slot:
 | Tier | Package | Where to use |
 |------|---------|--------------|
 | 1 — default | `@nebutra/icons` (Geist 541) | All product / app / dashboard surfaces. Same visual as Vercel & v0. |
-| 2 — marketing | `@phosphor-icons/react/light` | **Only** inside `packages/design/ui/src/marketing/**` for thin / duotone AI-brand emphasis. |
+| 2 — marketing | `@phosphor-icons/react/light` | **Only** inside `apps/landing/**` for thin / duotone AI-brand emphasis. |
 | 3 — deprecated | `lucide-react` | **Zero new imports allowed.** Existing references were swept on 2026-05-14; further additions fail lint. |
 
 ```tsx
@@ -106,7 +106,7 @@ import {
 
 // ✅ Marketing (thin / duotone for AI brand emphasis) — restricted folder
 import { Brain } from "@phosphor-icons/react/dist/ssr";
-// allowed ONLY inside packages/design/ui/src/marketing/**
+// allowed ONLY inside apps/landing/**
 
 // ❌ Banned in new code
 import { Search } from "lucide-react";

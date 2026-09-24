@@ -223,7 +223,6 @@
     "packages/design/ui/src/editorial/editorial-author-bio.stories.tsx",
     "packages/design/ui/src/editorial/editorial-embed-card.stories.tsx",
     "packages/design/ui/src/layout/FullPageStatus.tsx",
-    "packages/design/ui/src/marketing/faq-block.tsx",
     "packages/design/ui/src/patterns/workspace-switcher.stories.tsx",
     "packages/design/ui/src/primitives/browser-mockup.stories.tsx",
     "packages/design/ui/src/primitives/button.stories.tsx",

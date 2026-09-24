@@ -91,7 +91,7 @@ import {
 | 层级 | 包 | 适用场景 |
 |------|----|----------|
 | 1 —— 默认 | `@nebutra/icons`（Geist 541） | 全部产品 / 应用 / 控制台界面。视觉与 Vercel、v0 一致。 |
-| 2 —— 营销 | `@phosphor-icons/react/light` | **仅限** `packages/design/ui/src/marketing/**`，提供 AI 品牌的细描 / 双色调表现。 |
+| 2 —— 营销 | `@phosphor-icons/react/light` | **仅限** `apps/landing/**`，提供 AI 品牌的细描 / 双色调表现。 |
 | 3 —— 弃用 | `lucide-react` | **禁止新增任何引用。** 已于 2026-05-14 清扫所有历史用例；后续新增直接 lint 失败。 |
 
 ```tsx
@@ -105,7 +105,7 @@ import {
 
 // ✅ 营销（AI 品牌强调使用的细描 / 双色调） —— 仅允许在受限目录
 import { Brain } from "@phosphor-icons/react/dist/ssr";
-// 仅允许在 packages/design/ui/src/marketing/** 内
+// 仅允许在 apps/landing/** 内
 
 // ❌ 新代码中禁止
 import { Search } from "lucide-react";

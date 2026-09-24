@@ -70,8 +70,6 @@ export { Badge, type BadgeProps, badgeVariants } from "./badge";
 export * from "./badge-1";
 export * from "./base-badge";
 export { baseBadgeVariants } from "./base-badge-variants";
-export * from "./base-button";
-export { baseButtonVariants } from "./base-button-variants";
 /**
  * @registry https://ui.nebutra.com/r/bento-grid.json
  * @distribution dual-track (npm + shadcn registry) until 2026-11-09.

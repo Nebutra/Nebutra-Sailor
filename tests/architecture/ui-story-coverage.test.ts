@@ -222,7 +222,6 @@ const MISSING_STORY_ALLOWLIST: readonly string[] = [
   "BaseBadge @ packages/design/ui/src/primitives/base-badge.tsx",
   "BaseBadgeButton @ packages/design/ui/src/primitives/base-badge-button.tsx",
   "BaseBadgeDot @ packages/design/ui/src/primitives/base-badge-dot.tsx",
-  "BaseButton @ packages/design/ui/src/primitives/base-button.tsx",
   "Book @ packages/design/ui/src/primitives/book.tsx",
   "BrandMark @ packages/design/ui/src/primitives/brand-mark.tsx",
   "BulkActionBar @ packages/design/ui/src/primitives/bulk-action-bar.tsx",

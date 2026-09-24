@@ -12,7 +12,6 @@
 //
 // Allowed Phosphor zones:
 //   • apps/landing/**                — the public marketing site
-//   • packages/design/ui/src/marketing/** — marketing component library
 //   • *.stories.tsx, **/previews/**, tests — demos / docs, not shipped product
 //
 // Run: node scripts/lint-phosphor-marketing-only.mjs
@@ -82,7 +81,7 @@ process.stderr.write(
     "weight degrades at small/dense sizes — keep it to large marketing display only.\n" +
     "Fix:\n" +
     '  • Product/dashboard icons → import from "@nebutra/icons" (Geist).\n' +
-    "  • Phosphor is allowed only in: apps/landing/**, packages/design/ui/src/marketing/**,\n" +
+    "  • Phosphor is allowed only in: apps/landing/**,\n" +
     "    and *.stories.tsx / **/previews/** / test files.\n\n",
 );
 process.exit(1);
