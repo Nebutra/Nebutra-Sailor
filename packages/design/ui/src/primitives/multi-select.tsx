@@ -316,7 +316,7 @@ export const MultiSelectContent = ({
           className={cn(
             "z-50 max-h-[var(--multi-select-content-max-height)] w-[var(--multi-select-width)] overflow-y-auto",
             "rounded-[var(--multi-select-content-radius)] border border-border bg-popover p-[var(--multi-select-content-padding)] text-popover-foreground shadow-md outline-none",
-            "transition-[opacity,transform,display] duration-[var(--multi-select-popover-duration)] ease-[var(--multi-select-easing)]",
+            "transition-[opacity,transform] duration-[var(--multi-select-popover-duration)] ease-[var(--multi-select-easing)]",
             "data-starting-style:translate-y-1 data-starting-style:opacity-0 data-ending-style:translate-y-1 data-ending-style:opacity-0",
             "motion-reduce:transition-none motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-ending-style:translate-y-0",
             className,

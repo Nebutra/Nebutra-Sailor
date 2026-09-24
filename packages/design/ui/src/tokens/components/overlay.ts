@@ -93,7 +93,7 @@ export const overlayClassNames = {
   ].join(" "),
   sheetBackdrop: [
     "fixed inset-0 bg-[var(--sheet-overlay-background)] backdrop-blur-[var(--sheet-overlay-blur)]",
-    "transition-[opacity,backdrop-filter] duration-[var(--motion-duration-flow)] ease-[var(--ease-brand)]",
+    "transition-[opacity] duration-[var(--motion-duration-flow)] ease-[var(--ease-brand)]",
     "data-ending-style:opacity-0 data-starting-style:opacity-0 data-ending-style:duration-[var(--motion-duration-micro)] motion-reduce:transition-none",
   ].join(" "),
   sheetSurface: [
