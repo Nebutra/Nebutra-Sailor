@@ -1,12 +1,13 @@
 // @brand-exempt: global-error.tsx renders OUTSIDE the root layout, so no stylesheet and no CSS
-// custom properties are available. CLAUDE.md documents the hardcoded hex as the sanctioned
-// exception for exactly this file.
+// custom properties are available. Colours come from @nebutra/tokens/values as literal strings.
 
 "use client";
 
+import { tokenColor } from "@nebutra/tokens/values";
+
 /**
  * Minimal global-error — must not depend on root layout / next-intl.
- * Hardcoded styles OK: renders outside the token tree (see Claude.md).
+ * Inline styles: renders outside the token tree, so values are read as strings.
  */
 export default function GlobalError({
   error,
@@ -25,13 +26,19 @@ export default function GlobalError({
           alignItems: "center",
           justifyContent: "center",
           fontFamily: "system-ui, sans-serif",
-          background: "#0a0a0a",
-          color: "#fafafa",
+          background: tokenColor("--background", "dark"),
+          color: tokenColor("--foreground", "dark"),
         }}
       >
         <div style={{ maxWidth: 420, padding: 24, textAlign: "center" }}>
           <h1 style={{ fontSize: 20, fontWeight: 600, margin: "0 0 8px" }}>Something went wrong</h1>
-          <p style={{ fontSize: 14, color: "#a3a3a3", margin: "0 0 20px" }}>
+          <p
+            style={{
+              fontSize: 14,
+              color: tokenColor("--muted-foreground", "dark"),
+              margin: "0 0 20px",
+            }}
+          >
             {error.digest ? `Error id: ${error.digest}` : "An unexpected error occurred."}
           </p>
           <button
@@ -41,8 +48,8 @@ export default function GlobalError({
               border: 0,
               borderRadius: 8,
               padding: "10px 16px",
-              background: "#0033FE",
-              color: "#fff",
+              background: tokenColor("--primary", "dark"),
+              color: tokenColor("--primary-foreground", "dark"),
               fontWeight: 600,
               cursor: "pointer",
             }}

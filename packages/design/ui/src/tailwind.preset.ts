@@ -27,7 +27,7 @@ import {
 // blue (#3B82F6) or purple (#A855F7) which were incorrectly present before.
 
 export const nebutraColors = {
-  // 云毓蓝 (Nebutra Blue) — primary brand color — VI: #0033FE
+  // 云毓蓝 (Nebutra Blue) — primary brand color
   blue: {
     50: primitiveColors.blue50,
     100: primitiveColors.blue100,
@@ -44,7 +44,7 @@ export const nebutraColors = {
     foreground: primitiveColors.white,
   },
 
-  // 云毓青 (Nebutra Cyan) — secondary brand color — VI: #0BF1C3
+  // 云毓青 (Nebutra Cyan) — secondary brand color
   cyan: {
     50: primitiveColors.cyan50,
     100: primitiveColors.cyan100,
@@ -77,10 +77,10 @@ export const nebutraColors = {
   },
 
   // Semantic colors — VI §Color Specifications
-  success: primitiveColors.green500, // #22c55e — VI specifies this exact value
-  warning: primitiveColors.amber500, // #f59e0b
-  error: primitiveColors.red500, // #ef4444
-  info: primitiveColors.blue500, // #0033FE — VI: Info = Brand Blue
+  success: primitiveColors.green500, // --status-success
+  warning: primitiveColors.amber500, // --status-warning
+  error: primitiveColors.red500, // --status-danger
+  info: primitiveColors.blue500, // VI: Info = Brand Blue
 } as const;
 
 // ─── Brand Gradients ──────────────────────────────────────────────────────────

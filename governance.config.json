@@ -2615,27 +2615,13 @@
       "scripts/generate-palette.mjs": "The palette generator: example seeds for a rebrand.",
       "packages/design/tokens/src/brand-package/presets/vercel.ts": "Another design language's own palette; overlap with House hex is coincidence, not a copy.",
       "packages/design/tokens/src/brand-package/presets/generic.ts": "Another design language's own palette; overlap with House hex is coincidence, not a copy.",
-      "scripts/lint-token-mirrors.mjs": "This guard."
+      "scripts/lint-token-mirrors.mjs": "This guard.",
+      "packages/design/ui/src/primitives/safari.tsx": "Draws Safari's own window chrome; its greys are Apple's, not ours.",
+      "apps/router/src/components/brand-marks.tsx": "Per-product cover washes — art direction for each product card, not token restatements.",
+      "packages/design/ui/scripts/build-registry.ts": "Registry builder: documents and asserts the legacy-name → token mapping.",
+      "scripts/verify-brand-token-sync.ts": "The brand:apply drift verifier: names the values it asserts.",
+      "apps/web/src/components/appearance/store.ts": "The user-selectable accent presets — a catalogue of choices, read by both pickers."
     },
-    "allowlist": {
-      "apps/forge/src/app/global-error.tsx": 4,
-      "apps/router/src/components/brand-marks.tsx": 4,
-      "apps/sailor-docs/src/components/color-usage.tsx": 9,
-      "apps/web/src/components/appearance/accent-swatch-picker.tsx": 3,
-      "apps/web/src/components/appearance/color-picker-row.tsx": 3,
-      "apps/web/src/components/theme-playground/theme-token-data.ts": 4,
-      "packages/design/brand/src/components/LogoSVG.tsx": 3,
-      "packages/design/brand/src/guidelines/color.ts": 3,
-      "packages/design/brand/src/og/og-template.tsx": 3,
-      "packages/design/design-sync/src/serialize/to-preview-html.ts": 8,
-      "packages/design/ui/scripts/build-registry.ts": 3,
-      "packages/design/ui/src/primitives/safari.tsx": 4,
-      "packages/design/ui/src/styles/brand-override.css": 22,
-      "packages/design/ui/src/tailwind.preset.ts": 5,
-      "packages/design/ui/src/tokens/primitive.ts": 5,
-      "packages/design/ui/src/tokens/semantic.ts": 3,
-      "packages/design/ui/src/utils/brand-colors.ts": 5,
-      "scripts/verify-brand-token-sync.ts": 9
-    }
+    "allowlist": {}
   }
 }

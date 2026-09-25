@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import type { AppearanceState } from "./store";
-import { useAppearance } from "./store";
+import { ACCENT_SWATCHES, useAppearance } from "./store";
 
 type ColorKey = Extract<keyof AppearanceState, "backgroundColor" | "foregroundColor">;
 
@@ -16,16 +16,11 @@ interface ColorPickerRowProps {
   valueKey: ColorKey;
 }
 
-// Mirror accent-swatch-picker palette so users get a consistent preset set.
+// Black and white, then the same accent presets the swatch picker offers.
 const PRESETS: ReadonlyArray<string> = [
   "#ffffff",
   "#0a0a0a",
-  "#3b82f6",
-  "#06b6d4",
-  "#8b5cf6",
-  "#ec4899",
-  "#f59e0b",
-  "#10b981",
+  ...Object.values(ACCENT_SWATCHES).filter((hex) => hex !== ACCENT_SWATCHES.red),
 ];
 
 const HEX_RE = /^#[0-9a-fA-F]{6}$/;

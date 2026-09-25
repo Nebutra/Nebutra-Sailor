@@ -85,10 +85,6 @@ const EXEMPT_PATH = [
   // The value table generated from styles.css (@nebutra/tokens/values).
   /^packages\/design\/tokens\/src\/values\.generated\.ts$/,
   /^packages\/design\/brand\/src\//,
-  /^packages\/design\/ui\/src\/tokens\//,
-  /^packages\/design\/ui\/src\/theme\/tokens\.ts$/,
-  /^packages\/design\/ui\/src\/tailwind\.preset\.ts$/,
-  /^packages\/design\/ui\/src\/utils\/brand-colors\.ts$/,
   // design-md / DTCG / preview-HTML serialization: the wire format is hex.
   /^packages\/design\/design-sync\//,
   // Build tooling, not a rendered surface (build-registry asserts the mapping).
@@ -103,7 +99,8 @@ const EXEMPT_PATH = [
   /\/api\/changelog\/webhook\//, // email HTML body
 
   // ── Structural: the domain IS hex input ─────────────────────────────────
-  /appearance\/(?:color-picker-row|accent-swatch-picker)\.tsx$/,
+  // The user-selectable accent presets (ACCENT_SWATCHES), read by both pickers.
+  /appearance\/store\.ts$/,
   /forge\/src\/components\/(?:catalog-runners|p0-runners)\.tsx$/,
 ];
 

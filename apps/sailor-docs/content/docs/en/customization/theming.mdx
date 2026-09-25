@@ -72,7 +72,7 @@ packages/design/tokens/styles.css
 
 ## Rebrand with the palette generator
 
-The fastest way to change the entire brand palette is the generator script. It rewrites all token aliases in `packages/design/tokens/styles.css`:
+The fastest way to change the entire brand palette is the generator script. It derives both scales from two colours and hands them to the token source through `brand:apply`, so every generated file follows:
 
 <Steps>
   <Step title="Run the palette generator">
@@ -80,6 +80,12 @@ The fastest way to change the entire brand palette is the generator script. It r
     node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
     ```
     Pass any valid hex color for `--primary` (main brand) and `--secondary` (accent).
+  </Step>
+  <Step title="Apply it to the token source">
+    Paste the printed `colors` block into `brand.config.ts`, then run:
+    ```bash
+    pnpm brand:apply
+    ```
   </Step>
   <Step title="Restart the dev server">
     ```bash

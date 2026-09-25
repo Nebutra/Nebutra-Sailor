@@ -422,10 +422,9 @@ Same shape elsewhere, two steps rather than one: `emit-skins.mjs` writes
 `@property` registrations and the `.btn-brand-default` / `.badge-brand-default`
 recipes are hand-maintained there.
 
-Or use the palette generator:
-```bash
-node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
-```
+Or derive both scales from two colours: `node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B`
+prints the `colors` block of `brand.config.ts`; paste it and run `pnpm brand:apply`. It is a seed
+for the token source, not an override — there is no stylesheet to layer on top of `styles.css`.
 
 ---
 
@@ -868,7 +867,7 @@ used to recommend both, which is how one decided number reached 98 hardcoded cal
 
 ### Exception: `global-error.tsx`
 
-`global-error.tsx` renders **outside the root layout** (no CSS imports). Hardcoded hex values are allowed here because CSS variables are unavailable.
+`global-error.tsx` renders **outside the root layout** (no CSS imports), so `var()` does not resolve there — `hsl(var(--primary))` voids the declaration. Read the values as strings instead: `tokenColor("--primary")` from `@nebutra/tokens/values` (light-dark() for both modes). No hex needs to be hardcoded.
 
 ---
 
@@ -946,7 +945,7 @@ pnpm --filter @nebutra/storybook dev          # start Storybook
 pnpm --filter @nebutra/storybook typecheck    # typecheck stories
 pnpm --filter @nebutra/landing dev       # start landing page
 pnpm --filter @nebutra/web dev                # start dashboard
-node scripts/generate-palette.mjs --primary=#HEX --secondary=#HEX  # rebrand
+node scripts/generate-palette.mjs --primary=#HEX --secondary=#HEX  # brand.config.ts colors → pnpm brand:apply
 ```
 
 ---

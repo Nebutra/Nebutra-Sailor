@@ -27,7 +27,7 @@
  * ```
  */
 
-export type { NebutraThemeProviderProps, NebutraTokens, ThemeMode } from "./theme";
+export type { NebutraThemeProviderProps, ThemeMode } from "./theme";
 // Theme — compatibility bridge
 export { NebutraThemeProvider } from "./theme";
 

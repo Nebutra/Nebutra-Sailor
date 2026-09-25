@@ -33,6 +33,8 @@
  * Source assets: packages/design/brand/assets/logo/
  */
 
+import { brandGradient } from "../guidelines/color";
+
 /** Default logo fill = brand-mark (not product CTA primary). */
 const LOGO_MARK_CLASS = "text-brand-mark";
 
@@ -301,9 +303,9 @@ export function LogoEnColorSVG({
     <>
       <defs>
         <linearGradient id={gradId} gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#0033FE" />
-          <stop offset="0.5" stopColor="#00A2E9" />
-          <stop offset="1" stopColor="#0BF1C3" />
+          {brandGradient.primary.stops.map((stop) => (
+            <stop key={stop.position} offset={stop.position / 100} stopColor={stop.color} />
+          ))}
         </linearGradient>
       </defs>
       <g transform={`scale(${logomarkW / 535.71}, ${h / 500})`}>

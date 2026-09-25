@@ -1,4 +1,5 @@
-// @brand-exempt: renders outside root layout; CSS vars unavailable
+// @brand-exempt: renders outside root layout; CSS vars unavailable — colours come
+// from @nebutra/tokens/values as literal strings instead.
 "use client";
 
 /**
@@ -10,8 +11,12 @@
  * Hardcoded hex is permitted here per CLAUDE.md "Exception: global-error.tsx".
  */
 
+import { type TokenName, tokenColor } from "@nebutra/tokens/values";
 import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
+
+/** The token's light and dark values as a CSS light-dark() pair. */
+const pair = (name: TokenName) => `light-dark(${tokenColor(name)}, ${tokenColor(name, "dark")})`;
 
 interface GlobalErrorProps {
   error: Error & { digest?: string };
@@ -38,8 +43,8 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           alignItems: "center",
           justifyContent: "center",
           fontFamily: SYSTEM_STACK,
-          background: "light-dark(#fafafa, #0a0a0a)",
-          color: "light-dark(#0a0a0a, #fafafa)",
+          background: pair("--background"),
+          color: pair("--foreground"),
           colorScheme: "light dark",
           padding: "24px",
           WebkitFontSmoothing: "antialiased",
@@ -91,8 +96,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               type="button"
               onClick={reset}
               style={{
-                background: "hsl(var(--primary))",
-                color: "#ffffff",
+                // No stylesheet here, so hsl(var(--primary)) voided the whole
+                // declaration and the button had no fill. Token values instead.
+                background: pair("--primary"),
+                color: pair("--primary-foreground"),
                 border: 0,
                 padding: "10px 20px",
                 borderRadius: 8,

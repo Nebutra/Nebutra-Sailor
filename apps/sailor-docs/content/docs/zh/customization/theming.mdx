@@ -72,7 +72,7 @@ packages/design/tokens/styles.css
 
 ## 使用调色板生成器重新品牌化
 
-更改整个品牌调色板最快的方式是使用生成器脚本。它会重写 `packages/design/tokens/styles.css` 中的所有 token 别名：
+更改整个品牌调色板最快的方式是使用生成器脚本。它从两个颜色推导出两条色阶，经 `brand:apply` 写入 token 源，所有生成文件随之更新：
 
 <Steps>
   <Step title="运行调色板生成器">
@@ -80,6 +80,12 @@ packages/design/tokens/styles.css
     node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
     ```
     为 `--primary`（主品牌色）和 `--secondary`（强调色）传入任意有效的十六进制颜色值。
+  </Step>
+  <Step title="写入 token 源">
+    把打印出的 `colors` 块粘贴进 `brand.config.ts`，然后运行：
+    ```bash
+    pnpm brand:apply
+    ```
   </Step>
   <Step title="重启开发服务器">
     ```bash

@@ -4,11 +4,11 @@ import { ComponentPreview } from "./component-preview";
 
 function UsageRow({
   colorName,
-  hex,
+  swatch,
   description,
 }: {
   colorName: string;
-  hex: string;
+  swatch: string;
   description: string;
 }) {
   return (
@@ -16,7 +16,7 @@ function UsageRow({
       <div className="flex items-center gap-4 w-48 font-mono">
         <div
           className="h-4 w-4 rounded-full border border-black/10 shadow-sm dark:border-white/10"
-          style={{ backgroundColor: hex }}
+          style={{ backgroundColor: swatch }}
         />
         {colorName}
       </div>
@@ -39,12 +39,12 @@ export function ColorUsageDemos() {
         <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow
             colorName="Background 1"
-            hex="hsl(var(--background))"
+            swatch="hsl(var(--background))"
             description="Default element and page background"
           />
           <UsageRow
             colorName="Background 2"
-            hex="hsl(var(--muted))"
+            swatch="hsl(var(--muted))"
             description="Secondary background for subtle contrast"
           />
         </div>
@@ -69,19 +69,31 @@ export function ColorUsageDemos() {
           content.
         </p>
         <div className="mb-8 border border-border rounded-xl px-4 bg-card">
-          <UsageRow colorName="blue-50" hex="#f0f4ff" description="Default soft background" />
-          <UsageRow colorName="blue-100" hex="#dbe4ff" description="Hover soft background" />
-          <UsageRow colorName="blue-200" hex="#bac8ff" description="Active soft background" />
+          <UsageRow
+            colorName="blue-50"
+            swatch="var(--nebutra-blue-50)"
+            description="Default soft background"
+          />
+          <UsageRow
+            colorName="blue-100"
+            swatch="var(--nebutra-blue-100)"
+            description="Hover soft background"
+          />
+          <UsageRow
+            colorName="blue-200"
+            swatch="var(--nebutra-blue-200)"
+            description="Active soft background"
+          />
         </div>
         <ComponentPreview className="py-20">
           <div className="flex gap-6">
-            <div className="inline-flex items-center rounded-full bg-[#f0f4ff] px-3 py-1 text-xs font-semibold text-[#0021ab] transition-colors hover:bg-[#dbe4ff] cursor-pointer">
+            <div className="inline-flex items-center rounded-full bg-[var(--nebutra-blue-50)] px-3 py-1 text-xs font-semibold text-[var(--nebutra-blue-700)] transition-colors hover:bg-[var(--nebutra-blue-100)] cursor-pointer">
               Default Badge (50)
             </div>
-            <div className="inline-flex items-center rounded-full bg-[#dbe4ff] px-3 py-1 text-xs font-semibold text-[#001882] cursor-pointer">
+            <div className="inline-flex items-center rounded-full bg-[var(--nebutra-blue-100)] px-3 py-1 text-xs font-semibold text-[var(--nebutra-blue-800)] cursor-pointer">
               Hover Badge (100)
             </div>
-            <div className="inline-flex items-center rounded-full bg-[#bac8ff] px-3 py-1 text-xs font-semibold text-[#000f59] cursor-pointer">
+            <div className="inline-flex items-center rounded-full bg-[var(--nebutra-blue-200)] px-3 py-1 text-xs font-semibold text-[var(--nebutra-blue-900)] cursor-pointer">
               Active Badge (200)
             </div>
           </div>
@@ -96,14 +108,22 @@ export function ColorUsageDemos() {
           rings. They provide crisp definition against both dark and light backgrounds.
         </p>
         <div className="mb-8 border border-border rounded-xl px-4 bg-card">
-          <UsageRow colorName="blue-300" hex="#91a7ff" description="Default UI border" />
-          <UsageRow colorName="blue-400" hex="#5c7cfa" description="Hover UI border / Focus ring" />
+          <UsageRow
+            colorName="blue-300"
+            swatch="var(--nebutra-blue-300)"
+            description="Default UI border"
+          />
+          <UsageRow
+            colorName="blue-400"
+            swatch="var(--nebutra-blue-400)"
+            description="Hover UI border / Focus ring"
+          />
         </div>
         <ComponentPreview className="py-20">
           <div className="flex gap-6">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none ring-offset-background border-2 border-[#91a7ff] text-[#0021ab] hover:bg-[#f0f4ff] hover:border-[#5c7cfa] h-10 py-2 px-6"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none ring-offset-background border-2 border-[var(--nebutra-blue-300)] text-[var(--nebutra-blue-700)] hover:bg-[var(--nebutra-blue-50)] hover:border-[var(--nebutra-blue-400)] h-10 py-2 px-6"
             >
               Outlined Action
             </button>
@@ -123,12 +143,12 @@ export function ColorUsageDemos() {
         <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow
             colorName="blue-500"
-            hex="hsl(var(--primary))"
+            swatch="hsl(var(--primary))"
             description="High contrast background (Brand Primary)"
           />
           <UsageRow
             colorName="blue-600"
-            hex="#002ad4"
+            swatch="var(--nebutra-blue-600)"
             description="Hover high contrast background"
           />
         </div>
@@ -156,15 +176,21 @@ export function ColorUsageDemos() {
         <div className="mb-8 border border-border rounded-xl px-4 bg-card">
           <UsageRow
             colorName="blue-700"
-            hex="#0021ab"
+            swatch="var(--nebutra-blue-700)"
             description="Secondary text and bold icons"
           />
-          <UsageRow colorName="blue-900" hex="#000f59" description="Primary text and heading" />
+          <UsageRow
+            colorName="blue-900"
+            swatch="var(--nebutra-blue-900)"
+            description="Primary text and heading"
+          />
         </div>
         <ComponentPreview className="py-20 flex-col gap-6">
           <div className="flex flex-col gap-4 max-w-md w-full p-8 border border-black/5 rounded-2xl bg-white shadow-sm">
-            <h4 className="text-2xl font-bold tracking-tight text-[#000f59]">Data Aggregation</h4>
-            <p className="text-[#0021ab] leading-relaxed">
+            <h4 className="text-2xl font-bold tracking-tight text-[var(--nebutra-blue-900)]">
+              Data Aggregation
+            </h4>
+            <p className="text-[var(--nebutra-blue-700)] leading-relaxed">
               Connect and manage all your external data sources seamlessly with Nebutra's
               enterprise-grade integration engine.
             </p>

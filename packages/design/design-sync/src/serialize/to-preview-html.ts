@@ -15,6 +15,7 @@
  * Only imports from `../types`, `./to-design-md.resolve`, and `./to-preview-html.template`.
  */
 
+import { tokenColor } from "@nebutra/tokens/values";
 import type { DesignTokenSet } from "../types";
 import {
   buildIndex,
@@ -113,16 +114,21 @@ export function serializeToPreviewHtml(
 
 // ─── CSS variable builder ──────────────────────────────────────────────────────
 
-function buildCssVars(colors: ResolvedColors["roles"], _mode: "light" | "dark"): CssVarBlock {
+/**
+ * A role the DESIGN.md does not set falls back to the House token for that
+ * mode, read from @nebutra/tokens/values — the value the apps render — rather
+ * than a hex restated here (the old dark fallbacks were pre-House Slate).
+ */
+function buildCssVars(colors: ResolvedColors["roles"], mode: "light" | "dark"): CssVarBlock {
   return {
-    primary: colors.primary ?? "#0033fe",
-    accent: colors.accent ?? "#0bf1c3",
-    tertiary: colors.tertiary ?? "#8b5cf6",
-    danger: colors.danger ?? "#ef4444",
-    warning: colors.warning ?? "#f59e0b",
-    success: colors.success ?? "#22c55e",
-    background: colors.background ?? (_mode === "light" ? "#ffffff" : "#0a0a0a"),
-    foreground: colors.foreground ?? (_mode === "light" ? "#0f172a" : "#fafafa"),
+    primary: colors.primary ?? tokenColor("--brand-primary", mode),
+    accent: colors.accent ?? tokenColor("--brand-accent", mode),
+    tertiary: colors.tertiary ?? tokenColor("--brand-tertiary", mode),
+    danger: colors.danger ?? tokenColor("--status-danger", mode),
+    warning: colors.warning ?? tokenColor("--status-warning", mode),
+    success: colors.success ?? tokenColor("--status-success", mode),
+    background: colors.background ?? tokenColor("--background", mode),
+    foreground: colors.foreground ?? tokenColor("--foreground", mode),
   };
 }
 

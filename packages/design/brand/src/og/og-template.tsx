@@ -11,6 +11,8 @@
  * The component renders the brand name as text; operators who need precise
  * wordmark letterforms must supply replacement SVGs via brand.config/assets/logo/.
  */
+
+import { colors } from "../metadata";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface OgThemePalette {
@@ -43,32 +45,38 @@ export interface OgTemplateProps {
 
 // ─── Default palettes (using brand color values, NOT var()) ──────────────────
 
+/** `#rrggbb` at an alpha, as rgba() — satori cannot resolve var() or color-mix(). */
+function withAlpha(hex: string, alpha: number): string {
+  const n = Number.parseInt(hex.replace("#", ""), 16);
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
+}
+
 /**
- * Dark-theme palette.
- * Colors are sourced from @nebutra/brand/metadata colors object — callers
- * may import from there to keep them in sync with brand:apply changes.
+ * Dark-theme palette, read from the brand colours (brand:apply's output).
+ * The comments here used to name the source while the values had drifted
+ * from it — bg was pre-House Slate while claiming to be neutral-950.
  */
 export const OG_PALETTE_DARK: OgThemePalette = {
-  bg: "#020617", // colors.neutral["950"]
+  bg: colors.neutral["950"],
   grid: "rgba(255,255,255,0.04)",
-  glowA: "rgba(0,51,254,0.28)", // colors.primary["500"] at 28% opacity
-  glowB: "rgba(11,241,195,0.22)", // colors.accent["500"] at 22% opacity
-  title: "#ffffff",
+  glowA: withAlpha(colors.primary["500"], 0.28),
+  glowB: withAlpha(colors.accent["500"], 0.22),
+  title: colors.white,
   subtitle: "rgba(255,255,255,0.72)",
-  accent: "#0bf1c3", // colors.accent["500"]
+  accent: colors.accent["500"],
 };
 
 /**
  * Light-theme palette.
  */
 export const OG_PALETTE_LIGHT: OgThemePalette = {
-  bg: "#ffffff",
+  bg: colors.white,
   grid: "rgba(0,0,0,0.05)",
-  glowA: "rgba(0,51,254,0.22)", // colors.primary["500"] at 22% opacity
-  glowB: "rgba(11,241,195,0.20)", // colors.accent["500"] at 20% opacity
-  title: "#0a0a0a",
-  subtitle: "rgba(10,10,10,0.66)",
-  accent: "#0033fe", // colors.primary["500"]
+  glowA: withAlpha(colors.primary["500"], 0.22),
+  glowB: withAlpha(colors.accent["500"], 0.2),
+  title: colors.neutral["950"],
+  subtitle: withAlpha(colors.neutral["950"], 0.66),
+  accent: colors.primary["500"],
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
