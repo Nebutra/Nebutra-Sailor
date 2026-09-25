@@ -60,7 +60,9 @@ afterAll(() => {
   vi.unstubAllEnvs();
 });
 
-describe("createGatewayApp", () => {
+// Each case cold-imports the whole gateway app graph (~3s locally, over the
+// 5s default on CI runners), so the suite gets an explicit budget.
+describe("createGatewayApp", { timeout: 60_000 }, () => {
   it("startWorkers: false does not register background workers, but still serves routes", async () => {
     const { registerParaAgentWorker } = await import("../lib/para-agent-worker.js");
     const { registerCompletionWorker } = await import("@nebutra/gateway-core");

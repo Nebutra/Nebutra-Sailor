@@ -8,6 +8,13 @@
   "compatibility_date": "2026-06-04",
   "compatibility_flags": ["nodejs_compat"],
   "minify": true,
+  // The deploy job builds only @nebutra/brand and @nebutra/sms. This one
+  // subpath is a zero-runtime-import options module, so bundle it from source
+  // rather than building @nebutra/auth and its 15-package graph (Prisma
+  // included) just to resolve its dist/.
+  "alias": {
+    "@nebutra/auth/device-authorization-config": "../../packages/iam/auth/src/providers/better-auth/device-authorization-config.ts"
+  },
   "observability": {
     "enabled": true
   },
