@@ -64,21 +64,22 @@ export interface BrandColorPalette {
   info: string;
 }
 
+/** Font stacks as the brand VI reports them — derived from core.json:fontFamily by brand:apply. */
+export interface BrandFontFamily {
+  en: string;
+  cn: string;
+  sans: string;
+  mono: string;
+  display: string;
+  heading: string;
+}
+
+/**
+ * The brand VI's typography knobs that are not font faces. Faces are chosen in
+ * packages/design/design-tokens/tokens/core.json:fontFamily (one source; the
+ * VI metadata reads them from there).
+ */
 export interface BrandTypographyConfig {
-  fontFamily: {
-    en: string;
-    cn: string;
-    sans: string;
-    mono: string;
-    display: string;
-    heading: string;
-    brandPrint: string;
-  };
-  cssVars: {
-    sans: string;
-    mono: string;
-    cnSans: string;
-  };
   fontWeight: {
     thin: number;
     extraLight: number;
@@ -469,20 +470,6 @@ export const DEFAULT_BRAND: BrandConfig = {
     info: "#0033FE",
   },
   typography: {
-    fontFamily: {
-      en: '"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
-      cn: '"MiSans", "PingFang SC", "Microsoft YaHei", sans-serif',
-      sans: '"Geist", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-      mono: '"Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
-      display: '"DM Sans", "MiSans", "PingFang SC", sans-serif',
-      heading: '"DM Sans", "MiSans", "PingFang SC", sans-serif',
-      brandPrint: '"MiSans", "PingFang SC", sans-serif',
-    },
-    cssVars: {
-      sans: "var(--font-geist-sans)",
-      mono: "var(--font-geist-mono)",
-      cnSans: "var(--font-misans)",
-    },
     fontWeight: {
       thin: 100,
       extraLight: 200,

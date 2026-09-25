@@ -112,6 +112,19 @@ const CASES: Case[] = [
     violation: 'export const C = () => <div className="fixed z-[150]" />;\n',
   },
   {
+    // A display surface restating the palette instead of reading
+    // @nebutra/tokens/values.
+    guard: "lint-token-mirrors",
+    violation: 'export const SCALE = ["#f0f4ff", "#dbe4ff", "#bac8ff"];\n',
+  },
+  {
+    // The same guard on font stacks alone: three stacks pasted as literals.
+    // Kept separate so the colour half cannot carry a broken font half.
+    guard: "lint-token-mirrors",
+    violation:
+      'export const A = \'"DM Sans", "MiSans"\';\nexport const B = \'"Geist", "MiSans"\';\nexport const C = \'"MiSans", "PingFang SC"\';\n',
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

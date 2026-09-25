@@ -23,6 +23,7 @@ export default defineConfig({
     index: "src/index.ts",
     "brand-package/index": "src/brand-package/index.ts",
     "brand-package/use-brand": "src/brand-package/use-brand.ts",
+    values: "src/values.ts",
   },
   format: ["esm"],
   dts: true,

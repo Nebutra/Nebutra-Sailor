@@ -1,3 +1,4 @@
+import { fontFamilies } from "@nebutra/tokens/values";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
@@ -81,7 +82,7 @@ export const FontFamilies: StoryObj = {
           The quick brown fox jumps over the lazy dog
         </p>
         <p className="mt-1 text-sm text-[hsl(var(--muted-foreground))]">
-          Geist Sans → MiSans → PingFang SC → system-ui
+          {fontFamilies("--font-sans").join(" → ")}
         </p>
       </div>
       <div>
@@ -92,7 +93,7 @@ export const FontFamilies: StoryObj = {
           const deploy = () =&gt; ship()
         </p>
         <p className="mt-1 text-sm text-[hsl(var(--muted-foreground))]">
-          Geist Mono → Fira Code → monospace
+          {fontFamilies("--font-mono").join(" → ")}
         </p>
       </div>
     </div>

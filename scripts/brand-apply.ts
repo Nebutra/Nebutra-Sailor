@@ -12,7 +12,12 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { generateFavicons } from "../packages/design/brand/scripts/generate-favicons";
-import { type BrandColorPalette, type BrandConfig, DEFAULT_BRAND } from "./brand-types";
+import {
+  type BrandColorPalette,
+  type BrandConfig,
+  type BrandFontFamily,
+  DEFAULT_BRAND,
+} from "./brand-types";
 
 // `import.meta.dirname` is unset under tsx CJS transform on Node 25.
 // Compute it from `import.meta.url` for cross-runtime compatibility.
@@ -478,6 +483,47 @@ function copyCustomAssets(_config: BrandConfig): void {
 }
 
 /**
+ * The brand VI's font stacks, read from core.json:fontFamily rather than
+ * restated in DEFAULT_BRAND. The token source decides the faces; the VI object
+ * reports them. next/font variables are dropped (they exist only in a running
+ * app) and `var(--x, "Face")` keeps its literal fallback.
+ *
+ * `en` is the Latin half of `sans`: `cn` is sans' CJK-locale stack, so the
+ * faces `cn` adds after its first family are the CJK ones.
+ */
+export function deriveTypographyFontFamily(core: {
+  fontFamily: Record<string, { $value?: string }>;
+}): BrandFontFamily {
+  const families = (key: string): string[] => {
+    const raw = core.fontFamily[key]?.$value;
+    if (!raw) throw new Error(`core.json fontFamily.${key} is missing`);
+    return raw
+      .replace(
+        /var\(--[\w-]+(?:,\s*([^)]+))?\)/g,
+        (_m, fallback: string | undefined) => fallback ?? "",
+      )
+      .split(",")
+      .map((f) => f.trim())
+      .filter(Boolean);
+  };
+  const stack = (list: string[]) => list.join(", ");
+  const generic = /^(sans-serif|serif|monospace|system-ui)$/;
+  const cjk = new Set(
+    families("cn")
+      .slice(1)
+      .filter((f) => !generic.test(f)),
+  );
+  return {
+    en: stack(families("sans").filter((f) => !cjk.has(f))),
+    cn: stack(families("cn").filter((f) => cjk.has(f) || generic.test(f))),
+    sans: stack(families("sans")),
+    mono: stack(families("mono")),
+    display: stack(families("display")),
+    heading: stack(families("heading")),
+  };
+}
+
+/**
  * Update packages/design/brand/src/metadata.ts
  */
 function updateBrandMetadata(config: BrandConfig): void {
@@ -549,9 +595,13 @@ ${storyBlock}  domains: ${serialize(config.domains)},
 export const colors = ${serialize(config.colors)} as const;
 
 /**
- * Typography — Geist (Latin UI), DM Sans (headings), MiSans (Chinese), Geist Mono.
+ * Typography. fontFamily is read from design-tokens core.json:fontFamily by
+ * brand:apply — change faces there, not here.
  */
-export const typography = ${serialize(config.typography)} as const;
+export const typography = ${serialize({
+    fontFamily: deriveTypographyFontFamily(JSON.parse(fs.readFileSync(CORE_JSON_PATH, "utf-8"))),
+    ...config.typography,
+  })} as const;
 
 /**
  * Logo asset paths (relative to package), dual-edition structure:

@@ -1,5 +1,6 @@
 "use client";
 
+import { fontFamilies } from "@nebutra/tokens/values";
 export function FontFaceDemo({
   fontName,
   fontClass,
@@ -258,30 +259,49 @@ export function TypeScaleDemo({ scaleType }: { scaleType: "heading" | "copy" | "
   );
 }
 
+/**
+ * One face per role, named from the token the role renders with — the demo
+ * cannot name a face the stylesheet does not use. The CJK role shows the first
+ * face the cn stack adds behind the Latin one.
+ */
+const LATIN_BODY = fontFamilies("--font-sans")[0] ?? "";
+const HIERARCHY = [
+  {
+    fontName: LATIN_BODY,
+    fontClass: "font-sans",
+    letters: "Aa",
+    sampleText: "Enterprise SaaS Platform for AI-Native Products",
+    usage: "English · UI & Body",
+  },
+  {
+    fontName: fontFamilies("--font-heading")[0] ?? "",
+    fontClass: "font-heading",
+    letters: "Aa",
+    sampleText: "Ship your startup on an Agent OS.",
+    usage: "Headings · h1–h3",
+  },
+  {
+    fontName: fontFamilies("--font-cn").find((face) => face !== LATIN_BODY) ?? "",
+    fontClass: "font-cn",
+    letters: "啊",
+    sampleText: "云端聚合 · 引领未来",
+    usage: "Chinese · UI & Body",
+  },
+  {
+    fontName: fontFamilies("--font-mono")[0] ?? "",
+    fontClass: "font-mono",
+    letters: "</>",
+    sampleText: "npm install @nebutra/ui",
+    usage: "Code & Data",
+  },
+];
+
 export function TypographyHierarchyDemos() {
   return (
     <div className="mt-8 flex flex-col gap-8">
-      <FontFaceDemo
-        fontName="Geist Sans"
-        fontClass="font-sans"
-        letters="Aa"
-        sampleText="Enterprise SaaS Platform for AI-Native Products"
-        usage="English · UI & Body"
-      />
-      <FontFaceDemo
-        fontName="MiSans"
-        fontClass="font-cn"
-        letters="啊"
-        sampleText="云端聚合 · 引领未来"
-        usage="Chinese · UI & Body"
-      />
-      <FontFaceDemo
-        fontName="Geist Mono"
-        fontClass="font-mono"
-        letters="</>"
-        sampleText="npm install @nebutra/ui"
-        usage="Code & Data"
-      />
+      {HIERARCHY.map((face) => (
+        <FontFaceDemo key={face.fontClass} {...face} />
+      ))}
     </div>
   );
 }

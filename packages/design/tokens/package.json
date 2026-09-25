@@ -36,15 +36,21 @@
       "types": "./dist/brand-package/use-brand.d.ts",
       "import": "./dist/brand-package/use-brand.js",
       "default": "./dist/brand-package/use-brand.js"
+    },
+    "./values": {
+      "types": "./dist/values.d.ts",
+      "import": "./dist/values.js",
+      "default": "./dist/values.js"
     }
   },
   "scripts": {
-    "build": "node scripts/sync-styles.mjs && node scripts/emit-skins.mjs && tsup",
+    "build": "node scripts/sync-styles.mjs && node scripts/emit-values.mjs && node scripts/emit-skins.mjs && tsup",
     "sync": "node scripts/sync-styles.mjs",
     "emit-skins": "node scripts/emit-skins.mjs",
     "compile-brand": "node scripts/compile-brand.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/brand-package/__tests__/*.test.ts"
+    "test": "tsx --test src/brand-package/__tests__/*.test.ts src/__tests__/*.test.ts",
+    "emit-values": "node scripts/emit-values.mjs"
   },
   "dependencies": {
     "@nebutra/design-tokens": "workspace:*",
