@@ -138,7 +138,7 @@ type ChunkCardProps = { chunk: Chunk; scoreLabel: string; tokensLabel: string };
 
 function ChunkCard({ chunk, scoreLabel, tokensLabel }: ChunkCardProps) {
   return (
-    <Card className="border-border/60 shadow-none">
+    <Card>
       <CardContent className="space-y-2.5 p-3">
         <p className="text-xs leading-relaxed text-foreground">{chunk.excerpt}</p>
         <div className="flex flex-wrap items-center gap-1.5">

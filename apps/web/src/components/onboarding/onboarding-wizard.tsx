@@ -53,7 +53,7 @@ export function OnboardingWizard() {
               <span
                 className={cn(
                   "text-xs",
-                  i === currentStep ? "font-medium text-foreground" : "text-muted-foreground",
+                  i === currentStep ? "text-foreground" : "text-muted-foreground",
                 )}
               >
                 {step.label}

@@ -229,7 +229,7 @@ export function StartupBuilderHome({
                   >
                     <SelectTrigger
                       aria-label="Startup arena"
-                      className="h-auto w-fit rounded-full bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 shadow-none transition-colors hover:bg-neutral-3 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="h-auto w-fit rounded-full bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 transition-colors hover:bg-neutral-3 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       <SelectValue />
                     </SelectTrigger>

@@ -50,7 +50,7 @@ export const skipLinkStyle: StyleObject = {
     whiteSpace: "normal",
     backgroundColor: "canvas.default",
     color: "fg.default",
-    zIndex: 9999,
+    zIndex: "var(--layer-devtools)",
     ...focusRing,
   },
 };

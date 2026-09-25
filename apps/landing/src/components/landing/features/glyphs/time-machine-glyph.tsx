@@ -54,8 +54,8 @@ export function TimeMachineGlyph(_props: SubpackageGlyphProps) {
                 <div className="h-1.5 w-1.5 rounded-full bg-neutral-8" />
               )}
               <span
-                className={`font-mono text-[9px] ${
-                  marker.active ? "font-semibold text-[hsl(var(--primary))]" : "text-neutral-10"
+                className={`font-mono font-semibold text-[9px] ${
+                  marker.active ? "text-primary" : "text-neutral-10"
                 }`}
               >
                 {marker.label}

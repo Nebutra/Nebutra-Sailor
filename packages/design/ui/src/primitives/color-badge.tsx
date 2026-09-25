@@ -11,7 +11,7 @@ import { cn } from "../utils/cn";
  * If not defined, fallback to standard Tailwind colors.
  */
 const colorBadgeVariants = {
-  gray: "bg-muted text-white fill-white",
+  gray: "bg-muted text-muted-foreground fill-muted-foreground",
   "gray-subtle": "bg-muted text-muted-foreground fill-gray-900",
   blue: "bg-blue-700 text-white fill-white",
   "blue-subtle": "bg-blue-200 text-blue-900 fill-blue-900",

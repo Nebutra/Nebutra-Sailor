@@ -424,7 +424,8 @@ export function BlogComments({
               rows={4}
               aria-label={labels.placeholder}
               placeholder={labels.placeholder}
-              className="min-h-28 w-full resize-y border-0 bg-transparent px-1 py-1 text-sm leading-6 shadow-none"
+              tone="bare"
+              className="min-h-28 w-full resize-y px-1 py-1 text-sm leading-6"
             />
             <div className="flex items-center justify-between gap-4 border-t border-border pt-3">
               <span className="text-xs text-muted-foreground">{body.trim().length}/1200</span>

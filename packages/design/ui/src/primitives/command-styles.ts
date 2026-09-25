@@ -11,11 +11,10 @@ export const commandFrameClassName = cn(
   "[&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4",
 );
 
-export const commandInputWrapperClassName = cn(
-  "flex items-center border-b border-border px-3",
-  "transition-[border-color] duration-micro ease-out",
-  "has-[:focus-visible]:border-ring/60",
-);
+// The divider stays neutral. A command palette's input is focused the moment
+// it opens, so a focus-coloured divider is not a signal — it is a permanent
+// blue line under the field (PARA, 2026-09-25). The caret shows focus.
+export const commandInputWrapperClassName = cn("flex items-center border-b border-border px-3");
 
 export const commandInputClassName = cn(
   "flex h-11 w-full appearance-none border-0 bg-transparent py-3 text-sm text-foreground shadow-none outline-none",

@@ -56,7 +56,7 @@ export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
                 href={href}
                 className={cn(
                   "shrink-0 rounded-[var(--radius-md)] px-2 py-2 text-[13px] sm:px-3",
-                  active ? "font-medium text-[var(--neutral-12)]" : "text-[var(--neutral-11)]",
+                  active ? "text-[var(--neutral-12)]" : "text-[var(--neutral-11)]",
                 )}
               >
                 {t(key)}

@@ -9,6 +9,7 @@ import {
   m,
   useReducedMotion,
 } from "../shared/animation/motion";
+import { overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
 export type GeistTooltipType = "default" | "success" | "warning" | "error" | "violet";
@@ -98,6 +99,7 @@ export const GeistTooltip = ({
             {open && (
               <BaseTooltip.Portal>
                 <BaseTooltip.Positioner
+                  style={{ zIndex: overlayZIndex.tooltip }}
                   side={position}
                   align={getBaseAlign(boxAlign)}
                   sideOffset={tip ? 5 : 8}

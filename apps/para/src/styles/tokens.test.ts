@@ -69,11 +69,17 @@ describe("PARA token layer", () => {
   });
 
   it("keeps the four-size type ladder the visual language settled", () => {
+    // The four roles are the shared type scale's role aliases (core.json:type),
+    // so cn() knows them as sizes and a Brand Package can retune them. A private
+    // --text-* here is what let tailwind-merge drop PARA's sizes as colours.
+    const core = JSON.parse(
+      readFileSync(join(SRC, "../../../packages/design/design-tokens/tokens/core.json"), "utf-8"),
+    ) as { type: Record<string, unknown> };
     for (const role of ["display", "body", "label", "meta"]) {
-      expect(shell, `--text-${role} must stay on the ladder`).toContain(`--text-${role}:`);
+      expect(core.type, `core.json:type.${role} must stay on the ladder`).toHaveProperty(role);
     }
-    // A fifth role has to be argued for here, not typed into a className.
-    const roles = [...shell.matchAll(/--text-([a-z]+):/g)].map((m) => m[1]);
-    expect(new Set(roles).size).toBe(4);
+    expect([...shell.matchAll(/--text-([a-z]+):/g)], "PARA declares no private text size").toEqual(
+      [],
+    );
   });
 });

@@ -55,7 +55,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
       )}
     >
       <div className="mx-auto flex h-16 max-w-wide items-center justify-between px-6">
-        <a href={homeHref} className="flex items-center gap-2 relative z-[60]">
+        <a href={homeHref} className="flex items-center gap-2 relative z-[var(--layer-drawer)]">
           <Logomark size={32} variant={isDark ? "mono" : "color"} className="md:hidden" />
           <Logo variant="en" size={150} inverted={isDark} className="hidden md:block" />
         </a>

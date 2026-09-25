@@ -144,6 +144,31 @@
   --type-9xl-size: 8rem;
   --type-9xl-leading: 1;
   --type-9xl-tracking: -0.045em;
+  --type-display-size: 1.25rem;
+  --type-display-leading: 1.45;
+  --type-display-tracking: -0.012em;
+  --type-body-size: 0.875rem;
+  --type-body-leading: 1.5;
+  --type-body-tracking: 0em;
+  --type-label-size: 0.75rem;
+  --type-label-leading: 1.4;
+  --type-label-tracking: 0.005em;
+  --type-meta-size: 0.6875rem;
+  --type-meta-leading: 1.45;
+  --type-meta-tracking: 0.01em;
+  --layer-raised: 10; /** Within a component: an element lifted over its siblings. */
+  --layer-sticky: 20; /** Sticky headers and table heads. */
+  --layer-floating: 30; /** Floating toolbars and canvas chrome anchored to content. */
+  --layer-nav: 40; /** App navigation and the shell's top bar. */
+  --layer-drawer: 60; /** Mobile navigation drawers and their toggles. */
+  --layer-banner: 90; /** Page-level banners: cookie consent, announcements. */
+  --layer-skip-link: 100; /** The skip link — above page chrome whenever it is focused. */
+  --layer-panel: 200; /** App-owned floating panels that are not overlays (locale switcher, search flyouts). */
+  --layer-backdrop: 1040; /** Overlay tier. Mirrors overlayZIndex in @nebutra/ui; a test keeps them equal. */
+  --layer-modal: 1050; /** Dialogs and sheets. */
+  --layer-popover: 1060; /** Popovers, menus, selects. */
+  --layer-tooltip: 1070; /** Tooltips. */
+  --layer-devtools: 9999; /** Developer and debug surfaces only — never product UI. */
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
   --overlay-faint: rgb(0 0 0 / 0.06); /** Light-mode faint overlay (6% black) */
   --font-sans:
@@ -517,6 +542,31 @@
   --type-9xl-size: 8rem;
   --type-9xl-leading: 1;
   --type-9xl-tracking: -0.045em;
+  --type-display-size: 1.25rem;
+  --type-display-leading: 1.45;
+  --type-display-tracking: -0.012em;
+  --type-body-size: 0.875rem;
+  --type-body-leading: 1.5;
+  --type-body-tracking: 0em;
+  --type-label-size: 0.75rem;
+  --type-label-leading: 1.4;
+  --type-label-tracking: 0.005em;
+  --type-meta-size: 0.6875rem;
+  --type-meta-leading: 1.45;
+  --type-meta-tracking: 0.01em;
+  --layer-raised: 10; /** Within a component: an element lifted over its siblings. */
+  --layer-sticky: 20; /** Sticky headers and table heads. */
+  --layer-floating: 30; /** Floating toolbars and canvas chrome anchored to content. */
+  --layer-nav: 40; /** App navigation and the shell's top bar. */
+  --layer-drawer: 60; /** Mobile navigation drawers and their toggles. */
+  --layer-banner: 90; /** Page-level banners: cookie consent, announcements. */
+  --layer-skip-link: 100; /** The skip link — above page chrome whenever it is focused. */
+  --layer-panel: 200; /** App-owned floating panels that are not overlays (locale switcher, search flyouts). */
+  --layer-backdrop: 1040; /** Overlay tier. Mirrors overlayZIndex in @nebutra/ui; a test keeps them equal. */
+  --layer-modal: 1050; /** Dialogs and sheets. */
+  --layer-popover: 1060; /** Popovers, menus, selects. */
+  --layer-tooltip: 1070; /** Tooltips. */
+  --layer-devtools: 9999; /** Developer and debug surfaces only — never product UI. */
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.06); /** Hairline override — more visible on dark background */
   --overlay-faint: rgb(
     255 255 255 / 0.06
@@ -1028,6 +1078,18 @@
   --text-9xl: var(--type-9xl-size);
   --text-9xl--line-height: var(--type-9xl-leading);
   --text-9xl--letter-spacing: var(--type-9xl-tracking);
+  --text-display: var(--type-display-size);
+  --text-display--line-height: var(--type-display-leading);
+  --text-display--letter-spacing: var(--type-display-tracking);
+  --text-body: var(--type-body-size);
+  --text-body--line-height: var(--type-body-leading);
+  --text-body--letter-spacing: var(--type-body-tracking);
+  --text-label: var(--type-label-size);
+  --text-label--line-height: var(--type-label-leading);
+  --text-label--letter-spacing: var(--type-label-tracking);
+  --text-meta: var(--type-meta-size);
+  --text-meta--line-height: var(--type-meta-leading);
+  --text-meta--letter-spacing: var(--type-meta-tracking);
 
   /* Motion — Durations (four-rail; see core.json:duration). Names denote intent, not relative speed. */
   --duration-micro: var(--motion-duration-micro);

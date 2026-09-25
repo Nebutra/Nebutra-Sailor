@@ -30,6 +30,14 @@ type TextareaOwnProps = {
   onValueChange?: (value: string) => void;
   /** Applied to the label/helper/error field wrapper. */
   fieldClassName?: string;
+  /**
+   * `bare` drops the field's own stroke, fill, lift and focus ring so it can
+   * sit inside a container that provides them — a composer, a chat box, a
+   * prompt well. Same contract as Input's `tone="bare"`: the container owns
+   * focus (`focus-within:`), so the ring surrounds the whole group rather
+   * than a box inside it.
+   */
+  tone?: "bordered" | "bare";
 };
 
 export type TextareaProps = NativeTextareaProps &
@@ -97,6 +105,7 @@ const Textarea = ({
   description,
   error,
   fieldClassName,
+  tone = "bordered",
   id,
   onChange,
   onValueChange,
@@ -123,10 +132,12 @@ const Textarea = ({
   const control = (
     <textarea
       className={cn(
-        "flex min-h-[var(--textarea-min-height)] w-full resize-y rounded-[var(--textarea-radius)] border border-input bg-background",
-        "px-[var(--textarea-padding-x)] py-[var(--textarea-padding-y)] text-[length:var(--textarea-font-size)] text-foreground shadow-xs",
+        "flex min-h-[var(--textarea-min-height)] w-full resize-y rounded-[var(--textarea-radius)]",
+        "px-[var(--textarea-padding-x)] py-[var(--textarea-padding-y)] text-[length:var(--textarea-font-size)] text-foreground",
         "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
-        formControlFocusClassNames.textarea,
+        tone === "bordered"
+          ? `border border-input bg-background ${formControlFocusClassNames.textarea}`
+          : "border-0 bg-transparent shadow-none",
         "disabled:cursor-not-allowed disabled:opacity-50 read-only:cursor-default read-only:bg-muted/70",
         formControlInvalidClassNames.textarea,
         className,

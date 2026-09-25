@@ -157,7 +157,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                 onClick={() => setActiveFilter(null)}
                 className={`px-3 py-1 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                   activeFilter === null
-                    ? "bg-[hsl(var(--primary))] text-white"
+                    ? "bg-primary text-primary-foreground"
                     : "bg-muted text-foreground hover:bg-muted dark:bg-muted dark:hover:bg-muted"
                 }`}
               >

@@ -4,6 +4,7 @@ import { Popover as BasePopover } from "@base-ui/react/popover";
 import { Check, ChevronDown } from "@nebutra/icons";
 import * as React from "react";
 import { type MultiSelectWidth, multiSelectTokens } from "../tokens/components/multi-select";
+import { overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
 type MultiSelectCssVar =
@@ -305,7 +306,7 @@ export const MultiSelectContent = ({
       <BasePopover.Positioner
         align={align}
         alignOffset={alignOffset}
-        className="z-50"
+        style={{ zIndex: overlayZIndex.popover }}
         side={side}
         sideOffset={sideOffset}
       >

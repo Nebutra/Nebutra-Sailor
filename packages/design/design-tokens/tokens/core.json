@@ -406,7 +406,7 @@
     }
   },
   "type": {
-    "$description": "Type scale — size, line-height and tracking travel together, so text-2xl alone is a finished heading. Sizes keep Tailwind's names and values (1,900+ call sites keep their size); what changes is that every step now carries its own leading and a tracking curve: slightly open below 14px, neutral at 13–14, tightening to -0.045em at display sizes. Curve measured across Cursor (+0.01em@14 → -0.03em@72), Linear (-0.022em@48–72) and Vercel (-0.06em@64). Emitted as --type-<step>-size|leading|tracking and wired into Tailwind --text-* indirectly, so a Brand Package can retune the scale.",
+    "$description": "Type scale — size, line-height and tracking travel together, so text-2xl alone is a finished heading. Sizes keep Tailwind's names and values (1,900+ call sites keep their size); what changes is that every step now carries its own leading and a tracking curve: slightly open below 14px, neutral at 13–14, tightening to -0.045em at display sizes. Curve measured across Cursor (+0.01em@14 → -0.03em@72), Linear (-0.022em@48–72) and Vercel (-0.06em@64). Emitted as --type-<step>-size|leading|tracking and wired into Tailwind --text-* indirectly, so a Brand Package can retune the scale. Role aliases (display, body, label, meta) name the four sizes a product surface needs and point at steps, so an app caps its ladder by role without declaring a private scale (PARA did, and tailwind-merge dropped its sizes).",
     "2xs": {
       "size": {
         "$value": "0.6875rem",
@@ -620,6 +620,134 @@
         "$value": "-0.045em",
         "$type": "string"
       }
+    },
+    "display": {
+      "$description": "Role alias for type.xl. Dialog and empty-state headlines — the top of a product surface's ladder, not a hero.",
+      "size": {
+        "$value": "{type.xl.size}",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "{type.xl.leading}",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "{type.xl.tracking}",
+        "$type": "string"
+      }
+    },
+    "body": {
+      "$description": "Role alias for type.sm. Product body copy.",
+      "size": {
+        "$value": "{type.sm.size}",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "{type.sm.leading}",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "{type.sm.tracking}",
+        "$type": "string"
+      }
+    },
+    "label": {
+      "$description": "Role alias for type.xs. Control labels, table headers, secondary UI.",
+      "size": {
+        "$value": "{type.xs.size}",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "{type.xs.leading}",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "{type.xs.tracking}",
+        "$type": "string"
+      }
+    },
+    "meta": {
+      "$description": "Role alias for type.2xs. Machine facts only: dimensions, cost, zoom %, timestamps, key hints.",
+      "size": {
+        "$value": "{type.2xs.size}",
+        "$type": "string"
+      },
+      "leading": {
+        "$value": "{type.2xs.leading}",
+        "$type": "string"
+      },
+      "tracking": {
+        "$value": "{type.2xs.tracking}",
+        "$type": "string"
+      }
+    }
+  },
+  "layer": {
+    "$description": "Stacking roles. One ladder for the whole repo so a layer is chosen by what it is, not by picking a number: before this, apps invented 60 / 90 / 100 / 200 independently and nothing said which sat above which. Page chrome lives below 1000, overlays at 1040–1070 with 100–1039 kept empty. Use as z-[var(--layer-<role>)].",
+    "raised": {
+      "$value": "10",
+      "$type": "string",
+      "$description": "Within a component: an element lifted over its siblings."
+    },
+    "sticky": {
+      "$value": "20",
+      "$type": "string",
+      "$description": "Sticky headers and table heads."
+    },
+    "floating": {
+      "$value": "30",
+      "$type": "string",
+      "$description": "Floating toolbars and canvas chrome anchored to content."
+    },
+    "nav": {
+      "$value": "40",
+      "$type": "string",
+      "$description": "App navigation and the shell's top bar."
+    },
+    "drawer": {
+      "$value": "60",
+      "$type": "string",
+      "$description": "Mobile navigation drawers and their toggles."
+    },
+    "banner": {
+      "$value": "90",
+      "$type": "string",
+      "$description": "Page-level banners: cookie consent, announcements."
+    },
+    "skip-link": {
+      "$value": "100",
+      "$type": "string",
+      "$description": "The skip link — above page chrome whenever it is focused."
+    },
+    "panel": {
+      "$value": "200",
+      "$type": "string",
+      "$description": "App-owned floating panels that are not overlays (locale switcher, search flyouts)."
+    },
+    "backdrop": {
+      "$value": "1040",
+      "$type": "string",
+      "$description": "Overlay tier. Mirrors overlayZIndex in @nebutra/ui; a test keeps them equal."
+    },
+    "modal": {
+      "$value": "1050",
+      "$type": "string",
+      "$description": "Dialogs and sheets."
+    },
+    "popover": {
+      "$value": "1060",
+      "$type": "string",
+      "$description": "Popovers, menus, selects."
+    },
+    "tooltip": {
+      "$value": "1070",
+      "$type": "string",
+      "$description": "Tooltips."
+    },
+    "devtools": {
+      "$value": "9999",
+      "$type": "string",
+      "$description": "Developer and debug surfaces only — never product UI."
     }
   },
   "ring": {

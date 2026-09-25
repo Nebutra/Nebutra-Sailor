@@ -378,8 +378,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 8,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 103,
-      testFiles: 38,
+      sourceFiles: 94,
+      testFiles: 35,
       readmes: 8,
     },
     title: copy("Identity, Access & Tenant Trust", "身份、访问与租户信任"),
@@ -506,7 +506,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 10,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 1428,
+      sourceFiles: 1425,
       testFiles: 55,
       readmes: 14,
     },
@@ -638,8 +638,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 17,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 105,
-      testFiles: 38,
+      sourceFiles: 94,
+      testFiles: 36,
       readmes: 14,
     },
     title: copy("Integration Runtime Layer", "集成运行时层"),
@@ -764,7 +764,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 9,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 94,
+      sourceFiles: 85,
       testFiles: 29,
       readmes: 9,
     },
@@ -902,7 +902,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 1,
       unitLabel: copy("backend", "后端"),
-      sourceFiles: 104,
+      sourceFiles: 103,
       testFiles: 44,
       readmes: 0,
     },

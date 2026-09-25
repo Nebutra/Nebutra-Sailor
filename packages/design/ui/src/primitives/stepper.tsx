@@ -195,7 +195,7 @@ export function Stepper({
                 className={cn(
                   "relative flex items-center justify-center rounded-full border-2 transition-[background-color,border-color,box-shadow,color,opacity,transform]",
                   config.icon,
-                  status === "completed" && "border-primary bg-primary text-white",
+                  status === "completed" && "border-primary bg-primary text-primary-foreground",
                   status === "current" && "border-primary bg-background text-primary",
                   status === "pending" && "border-neutral-6 bg-background text-muted-foreground",
                   status === "error" &&
@@ -433,7 +433,13 @@ export function ProgressStepper({
       {labels && labels.length > 0 && (
         <div className="flex justify-between text-xs text-muted-foreground">
           {labels.map((label, index) => (
-            <span key={index} className={cn(index <= currentStep && "text-primary/90 font-medium")}>
+            <span
+              key={index}
+              className={cn(
+                "font-medium",
+                index <= currentStep ? "text-primary/90" : "text-muted-foreground",
+              )}
+            >
               {label}
             </span>
           ))}

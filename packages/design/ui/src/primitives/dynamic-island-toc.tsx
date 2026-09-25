@@ -404,7 +404,7 @@ function TocMenuItem({
       className={cn(
         "group flex w-full shrink-0 cursor-pointer items-center rounded-[var(--radius-lg)] border-none py-2 pr-3 text-left text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-out",
         "focus-visible:outline-none",
-        isActive && "bg-foreground/10 font-medium text-foreground",
+        isActive && "bg-foreground/10 text-foreground",
         !isActive && isHovered && "bg-foreground/5 text-foreground/85",
         !isActive && !isHovered && "bg-transparent text-foreground/45",
       )}

@@ -47,7 +47,7 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
             <Link
               key={m}
               href={`/works?mood=${m}`}
-              className="border border-[var(--tl-ink)]/20 px-3.5 py-1.5 text-xs font-semibold tracking-[0.12em] uppercase no-underline transition-colors hover:border-[var(--tl-ink)] hover:bg-[var(--tl-ink)] hover:text-white"
+              className="border border-[var(--tl-ink)]/20 px-3.5 py-1.5 text-xs font-semibold tracking-[0.12em] uppercase no-underline transition-colors hover:border-[var(--tl-ink)] hover:bg-[var(--tl-ink)] hover:text-[var(--tl-paper)]"
             >
               {m}
             </Link>

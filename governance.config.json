@@ -2594,5 +2594,14 @@
       "apps/web/src/app/api/webhooks/queuebase/route.ts",
       "apps/web/src/app/api/webhooks/route.ts"
     ]
+  },
+  "primitiveOverride": {
+    "$description": "Shrink-only: call sites that erase a shared primitive's surface through className (scripts/lint-primitive-override.mjs). Migrate to the primitive's variant on touch.",
+    "allowlist": [
+      {
+        "file": "apps/sailor-docs/src/components/theming-demos.tsx",
+        "count": 2
+      }
+    ]
   }
 }

@@ -289,6 +289,7 @@ export function ColorDeltaERunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="flex flex-wrap items-end gap-2">
+          {/* allow-primitive-override: native colour swatch, not a text field */}
           <Input
             label="A"
             id="de-a"
@@ -307,6 +308,7 @@ export function ColorDeltaERunner({ toolId }: { toolId: string }) {
           />
         </div>
         <div className="flex flex-wrap items-end gap-2">
+          {/* allow-primitive-override: native colour swatch, not a text field */}
           <Input
             label="B"
             id="de-b"

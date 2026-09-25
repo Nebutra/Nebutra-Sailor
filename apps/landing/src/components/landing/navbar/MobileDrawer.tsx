@@ -29,7 +29,7 @@ export function MobileDrawer() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="relative z-[60] flex size-11 items-center justify-center rounded-[var(--radius-lg)] text-neutral-11 transition-colors hover:text-neutral-12"
+        className="relative z-[var(--layer-drawer)] flex size-11 items-center justify-center rounded-[var(--radius-lg)] text-neutral-11 transition-colors hover:text-neutral-12"
         aria-label="Toggle menu"
       >
         {open ? <Cross className="size-6" /> : <Menu className="size-6" />}

@@ -91,6 +91,7 @@ export function rebrandManagementConsole(html: string): string {
   const note = [
     '<style id="nebutra-skin">',
     "  :root { color-scheme: light dark; }",
+    // allow-z-index: injected into CLIProxyAPI's own console, which has no tokens
     "  #nebutra-note { position: fixed; top: 0; left: 0; right: 0; z-index: 2147483647;",
     "    font: 12px/18px system-ui, sans-serif; padding: 6px 12px; text-align: center;",
     "    background: #171717; color: #fff; }",

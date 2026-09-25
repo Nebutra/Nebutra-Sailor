@@ -357,7 +357,7 @@ export function ProductDetail({
               </p>
               <Link
                 href={`/use?model=${encodeURIComponent(model.publicModel)}`}
-                className="mt-4 inline-flex h-10 items-center rounded-full bg-[var(--neutral-12)] px-5 text-[13px] font-medium text-white transition hover:bg-[var(--neutral-11)]"
+                className="mt-4 inline-flex h-10 items-center rounded-full bg-foreground px-5 text-[13px] font-medium text-background transition hover:bg-foreground/90"
               >
                 打开 Playground · {model.publicModel}
               </Link>

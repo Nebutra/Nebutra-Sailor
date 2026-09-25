@@ -172,7 +172,7 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
               <span className="text-[11px] tracking-wide text-[var(--neutral-9)]">
                 API 集市 · 可售货架
               </span>
-              <span className="rounded-full bg-[var(--neutral-12)] px-3.5 py-1.5 text-[12px] font-medium text-white shadow-sm">
+              <span className="rounded-full bg-foreground px-3.5 py-1.5 text-[12px] font-medium text-background shadow-sm">
                 查看全部
               </span>
             </div>
@@ -229,7 +229,7 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
                   </span>
                 ) : null}
               </div>
-              <span className="rounded-full bg-[var(--neutral-12)] px-3.5 py-1.5 text-[12px] font-medium text-white shadow-sm">
+              <span className="rounded-full bg-foreground px-3.5 py-1.5 text-[12px] font-medium text-background shadow-sm">
                 立即体验
               </span>
             </div>

@@ -194,8 +194,8 @@ function WorkspaceItem({ workspace, isActive, onSelect }: WorkspaceItemProps) {
       <div className="flex min-w-0 flex-1 flex-col">
         <span
           className={cn(
-            "truncate text-sm text-foreground",
-            isActive ? "font-semibold" : "font-medium",
+            "truncate font-medium text-sm",
+            isActive ? "text-foreground" : "text-foreground/80",
           )}
         >
           {workspace.name}

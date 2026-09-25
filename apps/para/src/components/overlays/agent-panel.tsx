@@ -296,7 +296,8 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 }
                 if (e.key === "Escape") close();
               }}
-              className="resize-none border-0 bg-transparent px-3 py-2 pr-12 text-body shadow-none"
+              tone="bare"
+              className="resize-none px-3 py-2 pr-12 text-body"
             />
             <button
               type="button"

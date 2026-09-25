@@ -252,7 +252,7 @@ export function MarketHome({
           // biome-ignore lint/a11y/noStaticElementInteractions: portal flyout hover bridge
           <section
             aria-label={hoverRow.label}
-            className="fixed z-[200] hidden w-[min(520px,calc(100vw-240px))] lg:block"
+            className="fixed z-[var(--layer-panel)] hidden w-[min(520px,calc(100vw-240px))] lg:block"
             style={{ top: flyoutPos.top, left: flyoutPos.left }}
             onMouseEnter={() => openCat(hoverRow.id)}
             onMouseLeave={scheduleClose}

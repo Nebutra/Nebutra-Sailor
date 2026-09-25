@@ -101,7 +101,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
               onKeyUp={onKeyEvent}
               autoComplete="new-password"
               size="lg"
-              className="h-12 border-border bg-background pr-12 text-foreground shadow-none"
+              className="pr-12"
               placeholder={tSignIn("passwordPlaceholder")}
               aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
             />
@@ -144,7 +144,6 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             onChange={(e) => setConfirm(e.target.value)}
             autoComplete="new-password"
             size="lg"
-            className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={tSignIn("passwordPlaceholder")}
           />
         </div>

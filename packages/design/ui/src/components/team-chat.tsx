@@ -255,7 +255,7 @@ export function TeamChat({
                         className={cn(
                           "px-2 py-1 rounded-[var(--radius-md)] text-sm transition-colors",
                           reaction.reacted
-                            ? "bg-[var(--neutral-5)] text-black"
+                            ? "bg-muted text-foreground"
                             : "bg-muted text-muted-foreground",
                           "hover:bg-muted",
                         )}

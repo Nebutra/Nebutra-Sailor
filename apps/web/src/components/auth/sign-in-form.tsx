@@ -231,7 +231,6 @@ export function SignInForm({
                     {...field}
                     type="email"
                     size="lg"
-                    className="h-12 border-border bg-background text-foreground shadow-none"
                     placeholder={t("emailPlaceholder")}
                     onChange={(e) => {
                       field.onChange(e);
@@ -255,7 +254,8 @@ export function SignInForm({
             <Button
               type="button"
               variant="outline"
-              className="h-11 w-full justify-center border-border bg-background text-foreground shadow-none hover:bg-muted"
+              size="lg"
+              className="w-full justify-center"
               onClick={() => {
                 window.location.href = ssoProvider.loginUrl;
               }}
@@ -284,7 +284,7 @@ export function SignInForm({
                       {...field}
                       type={showPassword ? "text" : "password"}
                       size="lg"
-                      className="h-12 border-border bg-background pr-12 text-foreground shadow-none"
+                      className="pr-12"
                       placeholder={t("passwordPlaceholder")}
                       onKeyDown={onKeyEvent}
                       onKeyUp={onKeyEvent}

@@ -10,14 +10,11 @@
   /* 随视口变宽：窄屏 ≥24px，常见桌面 ~48–64px，超宽封顶 80px */
   --rm-gutter: clamp(1.5rem, 4.2vw, 5rem);
   --rm-canvas: color-mix(in srgb, var(--blue-2) 38%, #f5f6fa 62%);
-  --rm-panel: #ffffff;
   --rm-panel-border: color-mix(in srgb, var(--neutral-6) 72%, transparent);
   --rm-panel-shadow: 0 1px 2px rgb(15 23 42 / 0.035), 0 12px 36px rgb(15 23 42 / 0.045);
   --rm-panel-shadow-hover: 0 8px 20px rgb(15 23 42 / 0.06), 0 24px 56px rgb(15 23 42 / 0.07);
   --rm-radius: 20px;
   --rm-radius-sm: 14px;
-  --rm-ink: var(--neutral-12);
-  --rm-muted: var(--neutral-10);
   --rm-line: color-mix(in srgb, var(--neutral-6) 90%, transparent);
   background:
     radial-gradient(
@@ -31,7 +28,7 @@
       transparent 65%
     ),
     linear-gradient(180deg, var(--rm-canvas) 0%, #f7f8fb 320px, #f7f8fb 100%);
-  color: var(--rm-ink);
+  color: hsl(var(--foreground));
   min-height: 100vh;
 }
 
@@ -45,7 +42,7 @@
 }
 
 .router-market-panel {
-  background: var(--rm-panel);
+  background: hsl(var(--card));
   border: 1px solid var(--rm-panel-border);
   border-radius: var(--rm-radius);
   box-shadow: var(--rm-panel-shadow);

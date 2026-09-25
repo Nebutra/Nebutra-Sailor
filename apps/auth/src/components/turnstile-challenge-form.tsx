@@ -198,10 +198,11 @@ export function TurnstileChallengeForm({
         ) : null}
 
         <Button
+          size="lg"
           type="button"
           variant="outline"
           disabled={loading}
-          className="h-11 w-full"
+          className="w-full"
           onClick={() => {
             clearPendingAuth();
             router.push(cancelTo);

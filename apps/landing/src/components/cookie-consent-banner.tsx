@@ -22,7 +22,7 @@ export function CookieConsentBanner() {
       role="dialog"
       aria-labelledby="cookie-consent-title"
       aria-describedby="cookie-consent-desc"
-      className="fixed inset-x-0 bottom-0 z-[90] border-t border-border bg-background/95 p-4 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/80 md:p-5"
+      className="fixed inset-x-0 bottom-0 z-[var(--layer-banner)] border-t border-border bg-background/95 p-4 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/80 md:p-5"
     >
       <div className="mx-auto flex max-w-wide flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="min-w-0 space-y-1">
