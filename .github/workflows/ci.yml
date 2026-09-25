@@ -548,8 +548,8 @@ jobs:
           pnpm turbo build "${filters[@]}"
         env:
           SKIP_ENV_VALIDATION: "true"
-          AUTH_PROVIDER: "clerk"
-          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_TELEMETRY_DISABLED: "1"
           # Dummy DATABASE_URL so Next.js collect-page-data doesn't fail env
           # validation when SKIP_ENV_VALIDATION isn't honored inside the build
@@ -696,16 +696,16 @@ jobs:
         run: pnpm turbo build --filter="@nebutra/web^..."
         env:
           SKIP_ENV_VALIDATION: "true"
-          AUTH_PROVIDER: "clerk"
-          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
       - name: Verify web release
         run: pnpm verify:web-release
         env:
-          AUTH_PROVIDER: "clerk"
-          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
@@ -1117,8 +1117,8 @@ jobs:
       - name: Preflight Playwright runtime
         run: pnpm check:e2e-env
         env:
-          AUTH_PROVIDER: "clerk"
-          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_TELEMETRY_DISABLED: "1"
           PLAYWRIGHT_BASE_URL: "http://127.0.0.1:3100"
           APP_BASE_URL: "http://127.0.0.1:3101"
@@ -1144,8 +1144,8 @@ jobs:
           E2E_SLEPTONS_PORT: "3103"
           E2E_AUTH_SMOKE: "0"
           SKIP_ENV_VALIDATION: "true"
-          AUTH_PROVIDER: "clerk"
-          NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
+          AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: ${{ secrets.CI_DATABASE_URL || 'postgresql://stub:stub@localhost:5432/stub' }}
           CLERK_SECRET_KEY: ${{ secrets.CI_CLERK_SECRET_KEY || 'sk_test_placeholder' }}

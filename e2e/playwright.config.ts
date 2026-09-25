@@ -92,8 +92,8 @@ export default defineConfig({
       env: {
         ...nextDevWatcherEnv,
         SKIP_ENV_VALIDATION: "true",
-        AUTH_PROVIDER: process.env.AUTH_PROVIDER ?? "clerk",
-        NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "clerk",
+        AUTH_PROVIDER: process.env.AUTH_PROVIDER ?? "better-auth",
+        NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "better-auth",
         NEXT_PUBLIC_SITE_URL: landingBaseUrl,
         NEXT_PUBLIC_APP_URL: appBaseUrl,
         NEXT_PUBLIC_API_URL: apiBaseUrl,

@@ -5,7 +5,7 @@ import process from "node:process";
 
 const MIN_NODE_MAJOR = 22;
 const MIN_PNPM_MAJOR = 10;
-const VALID_AUTH_PROVIDERS = new Set(["clerk", "better-auth", "nextauth", "dev"]);
+const VALID_AUTH_PROVIDERS = new Set(["better-auth", "dev"]);
 
 function fail(message, details) {
   process.stderr.write(`[e2e-preflight] ${message}\n`);
@@ -57,7 +57,8 @@ function checkPnpm() {
 }
 
 function checkAuthProviderEnv() {
-  const provider = process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? process.env.AUTH_PROVIDER ?? "clerk";
+  const provider =
+    process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? process.env.AUTH_PROVIDER ?? "better-auth";
 
   if (!VALID_AUTH_PROVIDERS.has(provider)) {
     fail(

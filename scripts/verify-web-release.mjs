@@ -13,8 +13,8 @@ const WEB_BUILD_COMMAND = "next build --webpack";
 
 const releaseEnv = {
   ...process.env,
-  AUTH_PROVIDER: process.env.AUTH_PROVIDER ?? "clerk",
-  NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "clerk",
+  AUTH_PROVIDER: process.env.AUTH_PROVIDER ?? "better-auth",
+  NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "better-auth",
   NEXT_TELEMETRY_DISABLED: process.env.NEXT_TELEMETRY_DISABLED ?? "1",
 };
 

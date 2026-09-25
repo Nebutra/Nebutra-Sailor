@@ -121,7 +121,7 @@ function readAuthProvider(env: Env = process.env): AuthProvider {
     readEnv("E2E_AUTH_PROVIDER", env) ??
     readEnv("NEXT_PUBLIC_AUTH_PROVIDER", env) ??
     readEnv("AUTH_PROVIDER", env) ??
-    "clerk";
+    "better-auth";
   const normalized = raw.toLowerCase();
 
   if (
