@@ -3,7 +3,7 @@
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
 import type { AppearanceAccent } from "./store";
-import { useAppearance } from "./store";
+import { ACCENT_SWATCHES, useAppearance } from "./store";
 
 type Swatch = {
   value: AppearanceAccent;
@@ -13,13 +13,10 @@ type Swatch = {
 
 const SWATCHES: ReadonlyArray<Swatch> = [
   { value: "default", color: "hsl(var(--foreground))", ring: true },
-  { value: "blue", color: "#3b82f6" },
-  { value: "cyan", color: "#06b6d4" },
-  { value: "violet", color: "#8b5cf6" },
-  { value: "pink", color: "#ec4899" },
-  { value: "amber", color: "#f59e0b" },
-  { value: "green", color: "#10b981" },
-  { value: "red", color: "#ef4444" },
+  ...Object.entries(ACCENT_SWATCHES).map(([value, color]) => ({
+    value: value as AppearanceAccent,
+    color,
+  })),
 ];
 
 export function AccentSwatchPicker() {

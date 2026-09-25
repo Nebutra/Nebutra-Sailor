@@ -124,7 +124,6 @@ const typographyTs = read("packages/design/ui/src/typography/tokens.ts");
 const typographyFontsCss = read("packages/design/ui/src/typography/fonts.css");
 const typographyFontsTs = read("packages/design/ui/src/typography/fonts.ts");
 const tailwindPresetTs = read("packages/design/ui/src/tailwind.preset.ts");
-const uiThemeTokensTs = read("packages/design/ui/src/theme/tokens.ts");
 const docsDriftSources = [
   "apps/sailor-docs/content/docs/en/customization/theming.mdx",
   "apps/sailor-docs/content/docs/zh/customization/theming.mdx",
@@ -152,7 +151,6 @@ const runtimeFontSources = [
   { relativePath: "packages/design/ui/src/typography/tokens.ts", content: typographyTs },
   { relativePath: "packages/design/ui/src/typography/fonts.css", content: typographyFontsCss },
   { relativePath: "packages/design/ui/src/tailwind.preset.ts", content: tailwindPresetTs },
-  { relativePath: "packages/design/ui/src/theme/tokens.ts", content: uiThemeTokensTs },
   {
     relativePath: "apps/landing/src/components/ui/mockups/MatrixLogOcean.tsx",
     content: read("apps/landing/src/components/ui/mockups/MatrixLogOcean.tsx"),

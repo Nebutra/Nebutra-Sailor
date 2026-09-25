@@ -15,22 +15,30 @@
  * @see packages/design/tokens/recipe.css
  */
 
-/** SSR fallbacks when document is unavailable */
+import { tokenColor, tokenValue } from "@nebutra/tokens/values";
+
+/**
+ * SSR fallbacks when document is unavailable — the light-mode token values,
+ * read from @nebutra/tokens/values rather than restated. Hand-copied, these
+ * had drifted: the product action was still the old blue after --primary
+ * became ink (a shader painted blue on the server and flipped to ink on
+ * hydration) and tertiary named a colour --brand-tertiary does not hold.
+ */
 export const BRAND_FALLBACK = {
   /** VI 云毓蓝 — identity only */
-  primary: "#0033FE",
-  accent: "#0BF1C3",
-  tertiary: "#5c7cfa",
-  primaryDark: "#002ad4",
-  backDark: "#000830",
-  /** Soft product action (matches themes/light --primary ≈ #254bfa) */
-  productPrimary: "#254bfa",
+  primary: tokenColor("--brand-primary"),
+  accent: tokenColor("--brand-accent"),
+  tertiary: tokenColor("--brand-tertiary"),
+  primaryDark: tokenColor("--nebutra-blue-600"),
+  backDark: tokenColor("--nebutra-blue-950"),
+  /** Product action — semantic --primary */
+  productPrimary: tokenColor("--primary"),
   /**
-   * Brand mark fallback (= product action when factory brand has action≡brand).
-   * Skins may diverge (e.g. Linear purple action + indigo mark).
+   * Brand mark fallback (= product action: the factory recipe sets
+   * --brand-mark: var(--primary)). Skins may diverge.
    */
-  brandMark: "#254bfa",
-  brandMarkForeground: "#ffffff",
+  brandMark: tokenColor("--primary"),
+  brandMarkForeground: tokenColor("--primary-foreground"),
 } as const;
 
 /**
@@ -65,7 +73,10 @@ function asCssColor(value: string, fallback: string): string {
  * Use for shaders/canvas that must match buttons/CTAs.
  */
 export function getProductPrimary(): string {
-  return asCssColor(readCssVar("--primary", "228 85% 56%"), BRAND_FALLBACK.productPrimary);
+  return asCssColor(
+    readCssVar("--primary", tokenValue("--primary")),
+    BRAND_FALLBACK.productPrimary,
+  );
 }
 
 /** VI lock color — legal / print lockups only (not product chrome). */
@@ -78,7 +89,7 @@ export function getBrandPrimary(): string {
  * Never use for default CTA (that is getProductPrimary / --primary).
  */
 export function getBrandMark(): string {
-  const raw = readCssVar("--brand-mark", "228 85% 56%");
+  const raw = readCssVar("--brand-mark", tokenValue("--primary"));
   // Factory recipe defaults `--brand-mark: var(--primary)` — resolve to action color.
   if (/var\(\s*--primary\s*\)/u.test(raw)) {
     return getProductPrimary();
@@ -88,10 +99,10 @@ export function getBrandMark(): string {
 
 /** Foreground on brand-mark surfaces. */
 export function getBrandMarkForeground(): string {
-  const raw = readCssVar("--brand-mark-foreground", "0 0% 100%");
+  const raw = readCssVar("--brand-mark-foreground", tokenValue("--primary-foreground"));
   if (/var\(\s*--primary-foreground\s*\)/u.test(raw)) {
     return asCssColor(
-      readCssVar("--primary-foreground", "0 0% 100%"),
+      readCssVar("--primary-foreground", tokenValue("--primary-foreground")),
       BRAND_FALLBACK.brandMarkForeground,
     );
   }

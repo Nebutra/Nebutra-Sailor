@@ -10,7 +10,6 @@
 
 export type { NebutraThemeProviderProps } from "./provider";
 export { NebutraThemeProvider } from "./provider";
-export type { NebutraTokens } from "./tokens";
 /**
  * Theme mode type used by DesignSystemProvider / layout components.
  * Matches next-themes convention.

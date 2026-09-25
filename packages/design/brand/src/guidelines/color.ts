@@ -11,6 +11,42 @@
  */
 import { colors } from "../metadata";
 
+// The VI records below read their colours from `colors` (the brand:apply
+// seed). rgb / hsl / gradient stops are computed from it, not restated: a
+// restated triple silently disagrees with its hex the day the seed changes.
+// CMYK stays literal — it is a print specification with no token.
+
+function rgbOf(hex: string) {
+  const n = Number.parseInt(hex.replace("#", ""), 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
+function hslOf(hex: string) {
+  const { r, g, b } = rgbOf(hex);
+  const [rr, gg, bb] = [r / 255, g / 255, b / 255];
+  const max = Math.max(rr, gg, bb);
+  const min = Math.min(rr, gg, bb);
+  const l = (max + min) / 2;
+  const d = max - min;
+  let h = 0;
+  if (d !== 0) {
+    if (max === rr) h = ((gg - bb) / d) % 6;
+    else if (max === gg) h = (bb - rr) / d + 2;
+    else h = (rr - gg) / d + 4;
+  }
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  return { h: Math.round((h * 60 + 360) % 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+
+/** `linear-gradient(135deg, #a 0%, #b 50%, #c 100%)` → its stops; the 50% stop is the OKLab midpoint. */
+function stopsOf(css: string) {
+  return [...css.matchAll(/(#[0-9a-fA-F]{6})\s+(\d+)%/g)].map(([, color, position]) =>
+    Number(position) === 50
+      ? { color: color as string, position: 50, note: "OKLab midpoint" }
+      : { color: color as string, position: Number(position) },
+  );
+}
+
 /**
  * Brand Primary Color - 云毓蓝 (Nebutra Blue)
  *
@@ -22,9 +58,9 @@ export const nebutraBlue = {
   nameEn: "Nebutra Blue",
 
   /** Color values */
-  hex: "#0033FE",
-  rgb: { r: 0, g: 51, b: 254 },
-  hsl: { h: 228, s: 100, l: 50 },
+  hex: colors.primary[500],
+  rgb: rgbOf(colors.primary[500]),
+  hsl: hslOf(colors.primary[500]),
 
   /** Print color values (if needed) */
   cmyk: { c: 100, m: 80, y: 0, k: 0 },
@@ -47,9 +83,9 @@ export const nebutraCyan = {
   nameEn: "Nebutra Cyan",
 
   /** Color values */
-  hex: "#0BF1C3",
-  rgb: { r: 11, g: 241, b: 195 },
-  hsl: { h: 168, s: 91, l: 49 },
+  hex: colors.accent[500],
+  rgb: rgbOf(colors.accent[500]),
+  hsl: hslOf(colors.accent[500]),
 
   /** Print color values (if needed) */
   cmyk: { c: 55, m: 0, y: 35, k: 0 },
@@ -70,49 +106,33 @@ export const nebutraCyan = {
 export const brandGradient = {
   /** Primary gradient (135°) - Logo标准渐变；中点为 OKLab 感知中点，控中段避免脏灰 */
   primary: {
-    css: "linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
+    css: colors.gradient.primary,
     angle: 135,
-    stops: [
-      { color: "#0033FE", position: 0 },
-      { color: "#00A2E9", position: 50, note: "OKLab midpoint" },
-      { color: "#0BF1C3", position: 100 },
-    ],
+    stops: stopsOf(colors.gradient.primary),
     usage: "Logo、Hero区域、VI 品牌资产（产品 CTA 用 solid primary）",
   },
 
   /** Reverse gradient */
   reverse: {
-    css: "linear-gradient(135deg, #0BF1C3 0%, #00A2E9 50%, #0033FE 100%)",
+    css: colors.gradient.primaryReverse,
     angle: 135,
-    stops: [
-      { color: "#0BF1C3", position: 0 },
-      { color: "#00A2E9", position: 50, note: "OKLab midpoint" },
-      { color: "#0033FE", position: 100 },
-    ],
+    stops: stopsOf(colors.gradient.primaryReverse),
     usage: "次要元素、hover状态",
   },
 
   /** Vertical gradient */
   vertical: {
-    css: "linear-gradient(180deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
+    css: colors.gradient.primaryVertical,
     angle: 180,
-    stops: [
-      { color: "#0033FE", position: 0 },
-      { color: "#00A2E9", position: 50, note: "OKLab midpoint" },
-      { color: "#0BF1C3", position: 100 },
-    ],
+    stops: stopsOf(colors.gradient.primaryVertical),
     usage: "垂直布局元素、页面分割",
   },
 
   /** Radial gradient */
   radial: {
-    css: "radial-gradient(circle, #0BF1C3 0%, #00A2E9 50%, #0033FE 100%)",
+    css: colors.gradient.primaryRadial,
     type: "radial",
-    stops: [
-      { color: "#0BF1C3", position: 0 },
-      { color: "#00A2E9", position: 50, note: "OKLab midpoint" },
-      { color: "#0033FE", position: 100 },
-    ],
+    stops: stopsOf(colors.gradient.primaryRadial),
     usage: "背景光晕、焦点效果",
   },
 } as const;

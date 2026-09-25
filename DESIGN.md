@@ -440,7 +440,7 @@ Brand colors can be regenerated without touching components:
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 ```
 
-This rewrites `packages/tokens/styles.css` and `packages/brand/src/guidelines/color.ts`. All components automatically pick up the new palette.
+It prints the `colors` block of `brand.config.ts`; paste it and run `pnpm brand:apply`, which writes the scales into `packages/design/design-tokens/tokens/core.json` and regenerates `styles.css`, the brand metadata and `@nebutra/tokens/values`. All components and every display surface pick up the new palette from that one source.
 
 ---
 
@@ -489,7 +489,7 @@ Chromatic runs on every PR to `main`. Diff threshold: 0.2% per snapshot.
 |--------|---------|
 | `scripts/validate-ui-governance-policy.ts` | Enforces the policy schema |
 | `scripts/codemod-tokens.ts` | Migrates raw hex → token references |
-| `scripts/generate-palette.mjs` | Generates a full palette from primary + accent input |
+| `scripts/generate-palette.mjs` | Derives the `brand.config.ts` colour seed from primary + accent input |
 | `scripts/check-legal-keys.js` | Locks brand metadata |
 | `pnpm --filter @nebutra/ui typecheck` | Type-checks the component library |
 

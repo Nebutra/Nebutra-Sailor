@@ -107,6 +107,21 @@ export const APPEARANCE_DEFAULTS: AppearanceState = {
   fontSmoothing: true,
 };
 
+/**
+ * The accent presets a user can pick — one list, read by the swatch picker and
+ * the colour-picker row. (They each used to carry a copy, one commented
+ * "mirror accent-swatch-picker palette".)
+ */
+export const ACCENT_SWATCHES: Record<Exclude<AppearanceAccent, "default">, string> = {
+  blue: "#3b82f6",
+  cyan: "#06b6d4",
+  violet: "#8b5cf6",
+  pink: "#ec4899",
+  amber: "#f59e0b",
+  green: "#10b981",
+  red: "#ef4444",
+};
+
 const ACCENT_VALUES: AppearanceAccent[] = [
   "default",
   "blue",

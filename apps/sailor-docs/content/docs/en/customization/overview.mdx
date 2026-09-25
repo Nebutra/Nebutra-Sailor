@@ -46,7 +46,7 @@ Because every color and spacing value in `@nebutra/ui` is a CSS variable referen
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 ```
 
-The script prints a `brand-override.css` file to stdout — it does not write anything to disk itself. Redirect it to a file and `@import` it after `@nebutra/tokens/styles.css`, or fold the values into the DTCG token source at `packages/design/design-tokens/tokens/*.json` and rebuild.
+The script derives both 11-step scales and prints them as the `colors` block of `brand.config.ts`. Paste it in and run `pnpm brand:apply`: that writes the scales into the token source (`packages/design/design-tokens/tokens/core.json`) and regenerates everything downstream — `styles.css`, the brand metadata, and the values Storybook and the docs display. There is no override stylesheet to layer on top; the source changes, so every surface agrees.
 
 ### Switch the active Brand Package
 

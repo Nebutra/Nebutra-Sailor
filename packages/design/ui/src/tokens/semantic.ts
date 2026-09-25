@@ -5,10 +5,10 @@
  * This file is the bridge between primitive.ts and globals.css.
  *
  * VI rules applied:
- * - Info = Brand Blue (#0033FE), not sky/teal
+ * - Info = Brand Blue, not sky/teal
  * - Light background = pure white (#FFFFFF)
  * - Dark background = neutral-950 (#020617) with blue undertone
- * - Success = #22c55e per VI manual
+ * - Success = --status-success per VI manual
  */
 
 import {
@@ -63,11 +63,11 @@ export const semanticLight: SemanticColorScale = {
   popover: primitiveColors.white,
   popoverForeground: primitiveColors.neutral900,
 
-  // VI: Primary = 云毓蓝 #0033FE
+  // VI: Primary = 云毓蓝
   primary: primitiveColors.blue500,
   primaryForeground: primitiveColors.white,
 
-  // VI: Secondary = 云毓青 #0BF1C3
+  // VI: Secondary = 云毓青
   secondary: primitiveColors.cyan500,
   secondaryForeground: primitiveColors.neutral900,
 
@@ -80,7 +80,7 @@ export const semanticLight: SemanticColorScale = {
   destructive: primitiveColors.red500,
   destructiveForeground: primitiveColors.white,
 
-  // VI: success = #22c55e (VI manual specifies exact value)
+  // VI: success = --status-success
   success: primitiveColors.green500,
   successForeground: primitiveColors.white,
 

@@ -11,6 +11,7 @@
 import { MODE_TOKEN_SETS, type ModeTokenSetId } from "@nebutra/design-tokens/themes";
 import { getBuiltInBrandPackage } from "@nebutra/theme/client";
 import type { BrandPackage } from "@nebutra/tokens/brand-package";
+import { tokenColor } from "@nebutra/tokens/values";
 
 export type ThemeMode = "light" | "dark";
 /** Design language id or factory alias. */
@@ -74,12 +75,13 @@ function semanticForMode(brand: BrandPackage, mode: ThemeMode): BrandPackage["se
 function swatchesFromBrand(brand: BrandPackage, mode: ThemeMode): string[] {
   const s = semanticForMode(brand, mode);
   return [
-    channelsToCss(s.primary, "#3b82f6"),
-    channelsToCss(s.secondary, "#e5e5e5"),
-    channelsToCss(s.accent, "#a3a3a3"),
-    channelsToCss(s.background, "#0a0a0a"),
-    channelsToCss(s.card, "#171717"),
-    channelsToCss(s.border, "#333333"),
+    // A role the package leaves unset shows the factory token for this mode.
+    channelsToCss(s.primary, tokenColor("--primary", mode)),
+    channelsToCss(s.secondary, tokenColor("--secondary", mode)),
+    channelsToCss(s.accent, tokenColor("--accent", mode)),
+    channelsToCss(s.background, tokenColor("--background", mode)),
+    channelsToCss(s.card, tokenColor("--card", mode)),
+    channelsToCss(s.border, tokenColor("--border", mode)),
   ];
 }
 

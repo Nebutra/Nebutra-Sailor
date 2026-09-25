@@ -10,12 +10,12 @@
  */
 
 import { colors } from "@nebutra/brand";
-import { fontStack } from "@nebutra/tokens/values";
+import { fontStack, tokenColor } from "@nebutra/tokens/values";
 
 // ─── Color Palette ────────────────────────────────────────────────────────────
 
 export const primitiveColors = {
-  // Nebutra Blue (云毓蓝) — technology & trust — VI: #0033FE
+  // Nebutra Blue (云毓蓝) — technology & trust
   blue50: colors.primary[50],
   blue100: colors.primary[100],
   blue200: colors.primary[200],
@@ -28,7 +28,7 @@ export const primitiveColors = {
   blue900: colors.primary[900],
   blue950: colors.primary[950],
 
-  // Nebutra Cyan (云毓青) — data flow & intelligence — VI: #0BF1C3
+  // Nebutra Cyan (云毓青) — data flow & intelligence
   cyan50: colors.accent[50],
   cyan100: colors.accent[100],
   cyan200: colors.accent[200],
@@ -54,13 +54,14 @@ export const primitiveColors = {
   neutral900: colors.neutral[900],
   neutral950: colors.neutral[950], // deepest — used as dark background
 
-  // Semantic raw colors — VI §Color Specifications
-  // NOTE: info = brand blue (#0033FE), not sky/teal
-  red500: "#ef4444",
+  // Semantic raw colors — VI §Color Specifications. The 500s are the status
+  // tokens; the 600 hover steps have no token of their own.
+  // NOTE: info = brand blue, not sky/teal
+  red500: tokenColor("--status-danger"),
   red600: "#dc2626",
-  green500: "#22c55e", // VI manual specifies this exact value for success
+  green500: tokenColor("--status-success"),
   green600: "#16a34a",
-  amber500: "#f59e0b",
+  amber500: tokenColor("--status-warning"),
   amber600: "#d97706",
 
   white: colors.white,

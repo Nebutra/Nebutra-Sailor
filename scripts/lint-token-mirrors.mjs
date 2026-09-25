@@ -99,10 +99,19 @@ function* files(dir) {
 
 const problems = [];
 const seen = new Set();
+const seenSources = new Set();
 for (const base of ["apps", "packages", "scripts"]) {
   for (const rel of files(join(ROOT, base))) {
-    if (rel in SOURCES) continue;
     const n = count(readFileSync(join(ROOT, rel), "utf8"));
+    if (rel in SOURCES) {
+      seenSources.add(rel);
+      // A declared source that no longer restates anything is a stale exemption.
+      if (n < THRESHOLD && !rel.startsWith("scripts/lint-"))
+        problems.push(
+          `${rel}: declared a source but restates ${n} — delete its tokenMirrors.sources entry`,
+        );
+      continue;
+    }
     const allowed = ALLOWLIST[rel];
     if (allowed !== undefined) seen.add(rel);
     if (n < THRESHOLD) {
@@ -121,6 +130,9 @@ for (const base of ["apps", "packages", "scripts"]) {
     else if (n < allowed)
       problems.push(`${rel}: down to ${n} — ratchet its allowlist entry from ${allowed} to ${n}`);
   }
+}
+for (const rel of Object.keys(SOURCES)) {
+  if (!seenSources.has(rel)) problems.push(`${rel}: declared a source but gone — delete the entry`);
 }
 for (const rel of Object.keys(ALLOWLIST)) {
   if (!seen.has(rel)) problems.push(`${rel}: allowlisted but gone — delete the entry`);

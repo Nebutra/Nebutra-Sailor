@@ -48,7 +48,7 @@ token 构建会据此重新生成（generated）`packages/design/tokens/styles.c
 node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
 ```
 
-该脚本会将 `brand-override.css` 打印到标准输出——它本身不会写入任何磁盘文件。将输出重定向到一个文件并在 `@nebutra/tokens/styles.css` 之后 `@import` 它，或者将数值并入 `packages/design/design-tokens/tokens/*.json` 中的 DTCG token 源后重新构建。
+该脚本会推导出两条 11 阶色阶，并以 `brand.config.ts` 中 `colors` 块的形式打印出来。粘贴进去后运行 `pnpm brand:apply`：它会把色阶写入 token 源（`packages/design/design-tokens/tokens/core.json`），并重新生成下游的一切——`styles.css`、品牌元数据，以及 Storybook 和文档展示的数值。不存在叠加在上面的覆盖样式表；改的是源头，所以每个界面都一致。
 
 ### 切换活跃的 Brand Package
 
