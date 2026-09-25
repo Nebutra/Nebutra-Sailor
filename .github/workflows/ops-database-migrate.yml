@@ -137,7 +137,9 @@ jobs:
         if: ${{ inputs.dry_run }}
         run: |
           set -euo pipefail
-          docker run --rm -e PGURL="$DATABASE_URL" postgres:18 \
+          # PlanetScale verifies the server certificate; the container has no
+          # root.crt of its own, so point libpq at the system trust store.
+          docker run --rm -e PGURL="$DATABASE_URL" -e PGSSLROOTCERT=system postgres:18 \
             sh -c 'pg_dump "$PGURL" --schema-only --no-comments' > live-schema.sql
           echo "Exported $(grep -c 'CREATE TABLE' live-schema.sql) tables, $(grep -c 'CREATE POLICY' live-schema.sql) policies"
 
