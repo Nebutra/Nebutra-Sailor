@@ -287,7 +287,7 @@ export default function IntegrationsPage() {
                       type="button"
                       disabled={isConnecting_}
                       onClick={() => handleConnect(item.type, item.name)}
-                      className="flex items-center gap-1 rounded-[var(--radius-md)] bg-primary px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-primary/90 disabled:opacity-50"
+                      className="flex items-center gap-1 rounded-[var(--radius-md)] bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
                     >
                       {isConnecting_ ? (
                         <Loader2 className="h-3 w-3 animate-spin" />

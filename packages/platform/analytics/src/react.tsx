@@ -304,7 +304,7 @@ function CookieBanner({ onAccept, onDecline }: CookieBannerProps) {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        zIndex: 9999,
+        zIndex: "var(--layer-devtools)",
       }}
     >
       <p style={{ margin: 0 }}>

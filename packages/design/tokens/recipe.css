@@ -64,7 +64,11 @@
   --font-weight-heading: 600;
 
   /* ── Elevation (free CSS; brand package replaces these) ───────── */
-  --elevation-card: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  /* House: a card is a hairline (--edge-soft), not a lifted object. Measured
+     consensus — Vercel, OpenAI, Resend, Ramp ban card shadows outright; the
+     one float shadow is for overlays (--elevation-overlay). Seventeen call
+     sites were flattening Card by hand; a Brand Package can lift it again. */
+  --elevation-card: 0 0 #0000;
   --elevation-control: var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04));
   --elevation-raised: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
   --elevation-overlay: var(

@@ -327,7 +327,6 @@ export function CredentialsForm({
                 onChange={(e) => setFirstName(e.target.value)}
                 autoComplete="given-name"
                 size="lg"
-                className="h-12 border-border bg-background text-foreground shadow-none"
                 placeholder={tSignUp("firstNamePlaceholder")}
               />
             </div>
@@ -341,7 +340,6 @@ export function CredentialsForm({
                 onChange={(e) => setLastName(e.target.value)}
                 autoComplete="family-name"
                 size="lg"
-                className="h-12 border-border bg-background text-foreground shadow-none"
                 placeholder={tSignUp("lastNamePlaceholder")}
               />
             </div>
@@ -366,16 +364,16 @@ export function CredentialsForm({
             }}
             autoComplete={passkeyEnabled ? "username webauthn" : "email"}
             size="lg"
-            className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={tSignIn("emailPlaceholder")}
           />
         </div>
 
         {ssoProvider ? (
           <Button
+            size="lg"
             type="button"
             variant="outline"
-            className="h-11 w-full justify-center border-border bg-background text-foreground shadow-none hover:bg-muted"
+            className="w-full justify-center"
             onClick={() => {
               window.location.href = ssoProvider.loginUrl;
             }}
@@ -410,7 +408,7 @@ export function CredentialsForm({
               onKeyUp={onKeyEvent}
               autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
               size="lg"
-              className="h-12 border-border bg-background pr-12 text-foreground shadow-none"
+              className="pr-12"
               placeholder={tSignIn("passwordPlaceholder")}
               aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
             />
@@ -453,7 +451,6 @@ export function CredentialsForm({
               onChange={(e) => setInviteCode(e.target.value)}
               autoComplete="off"
               size="lg"
-              className="h-12 border-border bg-background text-foreground shadow-none"
               placeholder={tSignUp("invitePlaceholder")}
             />
             <p className="text-xs text-muted-foreground">{tSignUp("inviteHint")}</p>

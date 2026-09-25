@@ -150,10 +150,10 @@ export function AgentRuntimeShowcase({ locale }: PackageShowcaseProps) {
 
   return (
     <ShowcaseFrame>
-      <Card className="border-border/60 shadow-none">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-primary-foreground">
               <Cpu className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="text-sm font-semibold text-foreground">{copy.agentRun}</span>

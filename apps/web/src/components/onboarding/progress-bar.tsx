@@ -38,7 +38,7 @@ const DOT_BY_STATE: Record<StepState, string> = {
 
 const LABEL_BY_STATE: Record<StepState, string> = {
   complete: "text-foreground",
-  current: "text-foreground font-medium",
+  current: "text-foreground",
   upcoming: "text-muted-foreground",
 };
 

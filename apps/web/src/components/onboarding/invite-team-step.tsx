@@ -79,7 +79,6 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
                 <Input
                   type="email"
                   size="lg"
-                  className="h-12 border-border bg-background text-foreground shadow-none"
                   placeholder={t("emailPlaceholder")}
                   value={email}
                   onChange={(e) => updateEmail(i, e.target.value)}

@@ -170,13 +170,7 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
               <FormItem className="flex flex-col gap-1.5">
                 <FormLabel>{t("nameLabel")}</FormLabel>
                 <FormControl>
-                  <Input
-                    size="lg"
-                    className="h-12 border-border bg-background text-foreground shadow-none"
-                    placeholder={t("namePlaceholder")}
-                    required
-                    {...field}
-                  />
+                  <Input size="lg" placeholder={t("namePlaceholder")} required {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -192,7 +186,6 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
                 <FormControl>
                   <Input
                     size="lg"
-                    className="h-12 border-border bg-background text-foreground shadow-none"
                     placeholder={t("slugPlaceholder")}
                     pattern="[a-z0-9][a-z0-9\-]{1,46}[a-z0-9]"
                     required

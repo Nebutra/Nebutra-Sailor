@@ -76,7 +76,6 @@ export function PasskeyPanel({ returnUrl }: PasskeyPanelProps) {
             id="passkey-email"
             type="email"
             size="lg"
-            className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={t("emailPlaceholder")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}

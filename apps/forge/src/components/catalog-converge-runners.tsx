@@ -95,6 +95,7 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="flex flex-wrap items-end gap-2">
+          {/* allow-primitive-override: native colour swatch, not a text field */}
           <Input
             label={t("contrast.fg")}
             id="cc-fg"
@@ -113,6 +114,7 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
           />
         </div>
         <div className="flex flex-wrap items-end gap-2">
+          {/* allow-primitive-override: native colour swatch, not a text field */}
           <Input
             label={t("contrast.bg")}
             id="cc-bg"

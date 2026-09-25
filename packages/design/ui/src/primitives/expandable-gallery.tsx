@@ -259,14 +259,14 @@ export const ExpandableGallery = function ExpandableGallery({
                           scale: 1.05,
                           y: y - 15,
                           rotate: rotation * 0.8,
-                          zIndex: 50,
+                          zIndex: 20,
                           transition: hoverTransition,
                         },
                         whileFocus: {
                           scale: 1.05,
                           y: y - 15,
                           rotate: rotation * 0.8,
-                          zIndex: 50,
+                          zIndex: 20,
                           transition: hoverTransition,
                         },
                       })}

@@ -136,7 +136,7 @@ const Textarea = ({
         "px-[var(--textarea-padding-x)] py-[var(--textarea-padding-y)] text-[length:var(--textarea-font-size)] text-foreground",
         "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
         tone === "bordered"
-          ? `border border-input bg-background shadow-xs ${formControlFocusClassNames.textarea}`
+          ? `border border-input bg-background ${formControlFocusClassNames.textarea}`
           : "border-0 bg-transparent shadow-none",
         "disabled:cursor-not-allowed disabled:opacity-50 read-only:cursor-default read-only:bg-muted/70",
         formControlInvalidClassNames.textarea,

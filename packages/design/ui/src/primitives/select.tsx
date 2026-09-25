@@ -269,7 +269,7 @@ function NativeSelect({
           style={{ borderRadius: "var(--select-radius)" }}
           className={cn(
             "h-[var(--select-height)] w-full appearance-none rounded-[var(--select-radius)] border font-sans",
-            "bg-background text-[length:var(--select-font-size)] text-foreground shadow-xs outline-none",
+            "bg-background text-[length:var(--select-font-size)] text-foreground outline-none",
             "transition-[background-color,border-color,box-shadow,color] duration-[var(--select-duration)] ease-[var(--select-easing)]",
             formControlFocusClassNames.select,
             "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
@@ -512,7 +512,7 @@ const SelectTrigger = ({
     ref={ref}
     className={cn(
       "flex h-[var(--select-height)] w-full items-center justify-between whitespace-nowrap rounded-[var(--select-radius)] border border-input bg-background",
-      "px-[var(--select-padding-x)] text-[length:var(--select-font-size)] text-foreground shadow-xs",
+      "px-[var(--select-padding-x)] text-[length:var(--select-font-size)] text-foreground",
       "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
       formControlFocusClassNames.select,
       "disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",

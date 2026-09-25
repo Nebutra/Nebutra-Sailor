@@ -22,11 +22,11 @@ export interface ChangelogWidgetProps {
 }
 
 const TAG_COLOR_MAP: Record<string, string> = {
-  feature: "bg-[hsl(var(--primary))] text-white",
-  fix: "bg-[var(--status-success)] text-white",
-  breaking: "bg-[var(--status-danger)] text-white",
-  improvement: "bg-[var(--status-warning)] text-white",
-  security: "bg-[var(--status-danger)] text-white",
+  feature: "bg-primary text-primary-foreground",
+  fix: "bg-success text-success-foreground",
+  breaking: "bg-destructive text-destructive-foreground",
+  improvement: "bg-warning text-warning-foreground",
+  security: "bg-destructive text-destructive-foreground",
   experimental: "bg-[var(--neutral-8)] text-foreground",
 };
 
@@ -72,7 +72,7 @@ export function ChangelogWidget({
       >
         <Bell className="h-5 w-5 text-muted-foreground" />
         {unreadCount > 0 && (
-          <span className="absolute right-0 top-0 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--status-danger)] text-xs font-bold text-white">
+          <span className="absolute right-0 top-0 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs font-bold text-destructive-foreground">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}

@@ -222,7 +222,7 @@ function SyncLayout({ copy }: { copy: Copy }) {
     <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-2">
       {nodes.map((n, i) => (
         <Fragment key={n.label}>
-          <Card className="border-border/60 bg-muted/30 shadow-none">
+          <Card className="bg-muted/30">
             <CardContent className="flex flex-col items-center gap-1.5 p-3">
               <n.Icon className="h-4 w-4 text-foreground" aria-hidden="true" />
               <span className="text-center text-[11px] font-medium text-foreground">{n.label}</span>
@@ -281,10 +281,10 @@ export function DesignGroupShowcase(props: PackageShowcaseProps) {
 
   return (
     <ShowcaseFrame>
-      <Card className="border-border/60 shadow-none">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] bg-primary text-primary-foreground">
               <Droplet className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{entry.label}</span>

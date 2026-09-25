@@ -129,7 +129,7 @@ export function WebhooksShowcase({ locale }: PackageShowcaseProps) {
 
   return (
     <ShowcaseFrame className="flex flex-col gap-4">
-      <Card className="border-border/60 shadow-none">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
             <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] border border-border bg-muted/40 text-muted-foreground">

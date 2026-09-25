@@ -322,6 +322,7 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-2">
+        {/* allow-primitive-override: native colour swatch, not a text field */}
         <Input
           label={t("colorConvert.color")}
           id="color-in"

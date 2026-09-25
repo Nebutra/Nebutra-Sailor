@@ -156,6 +156,19 @@
   --type-meta-size: 0.6875rem;
   --type-meta-leading: 1.45;
   --type-meta-tracking: 0.01em;
+  --layer-raised: 10; /** Within a component: an element lifted over its siblings. */
+  --layer-sticky: 20; /** Sticky headers and table heads. */
+  --layer-floating: 30; /** Floating toolbars and canvas chrome anchored to content. */
+  --layer-nav: 40; /** App navigation and the shell's top bar. */
+  --layer-drawer: 60; /** Mobile navigation drawers and their toggles. */
+  --layer-banner: 90; /** Page-level banners: cookie consent, announcements. */
+  --layer-skip-link: 100; /** The skip link — above page chrome whenever it is focused. */
+  --layer-panel: 200; /** App-owned floating panels that are not overlays (locale switcher, search flyouts). */
+  --layer-backdrop: 1040; /** Overlay tier. Mirrors overlayZIndex in @nebutra/ui; a test keeps them equal. */
+  --layer-modal: 1050; /** Dialogs and sheets. */
+  --layer-popover: 1060; /** Popovers, menus, selects. */
+  --layer-tooltip: 1070; /** Tooltips. */
+  --layer-devtools: 9999; /** Developer and debug surfaces only — never product UI. */
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
   --overlay-faint: rgb(0 0 0 / 0.06); /** Light-mode faint overlay (6% black) */
   --font-sans:
@@ -541,6 +554,19 @@
   --type-meta-size: 0.6875rem;
   --type-meta-leading: 1.45;
   --type-meta-tracking: 0.01em;
+  --layer-raised: 10; /** Within a component: an element lifted over its siblings. */
+  --layer-sticky: 20; /** Sticky headers and table heads. */
+  --layer-floating: 30; /** Floating toolbars and canvas chrome anchored to content. */
+  --layer-nav: 40; /** App navigation and the shell's top bar. */
+  --layer-drawer: 60; /** Mobile navigation drawers and their toggles. */
+  --layer-banner: 90; /** Page-level banners: cookie consent, announcements. */
+  --layer-skip-link: 100; /** The skip link — above page chrome whenever it is focused. */
+  --layer-panel: 200; /** App-owned floating panels that are not overlays (locale switcher, search flyouts). */
+  --layer-backdrop: 1040; /** Overlay tier. Mirrors overlayZIndex in @nebutra/ui; a test keeps them equal. */
+  --layer-modal: 1050; /** Dialogs and sheets. */
+  --layer-popover: 1060; /** Popovers, menus, selects. */
+  --layer-tooltip: 1070; /** Tooltips. */
+  --layer-devtools: 9999; /** Developer and debug surfaces only — never product UI. */
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.06); /** Hairline override — more visible on dark background */
   --overlay-faint: rgb(
     255 255 255 / 0.06

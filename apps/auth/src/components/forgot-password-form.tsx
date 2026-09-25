@@ -110,7 +110,6 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             size="lg"
-            className="h-12 border-border bg-background text-foreground shadow-none"
             placeholder={tSignIn("emailPlaceholder")}
           />
         </div>

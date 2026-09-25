@@ -60,7 +60,7 @@ export function McpGlyph(_props: SubpackageGlyphProps) {
             </code>
             <Badge
               variant="outline"
-              className="ml-auto shrink-0 border-border bg-transparent px-1 py-0 font-mono text-[9px] text-muted-foreground"
+              className="ml-auto shrink-0 px-1 py-0 font-mono text-[9px] text-muted-foreground"
             >
               {latency}
             </Badge>

@@ -27,7 +27,7 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
         </div>
 
         <div className="flex items-center gap-1">
-          <Badge className="h-4 bg-[hsl(var(--primary))] px-1.5 text-[9px] font-medium text-white">
+          <Badge className="h-4 bg-primary px-1.5 text-[9px] font-medium text-primary-foreground">
             New
           </Badge>
           <Badge
@@ -44,7 +44,7 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
           </Badge>
         </div>
 
-        <Card className="border-border bg-background p-2 shadow-none">
+        <Card className="p-2">
           <div className="flex items-center gap-1 text-[10px] font-semibold text-foreground">
             <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
             Composable Card

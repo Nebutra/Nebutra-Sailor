@@ -168,7 +168,7 @@ export function LocalePanel({
         top: "max(0.75rem, env(safe-area-inset-top))",
         bottom: "max(0.75rem, env(safe-area-inset-bottom))",
         marginTop: 0,
-        zIndex: 200,
+        zIndex: "var(--layer-panel)",
         width: "auto",
         maxHeight: "none",
         display: "flex",
@@ -187,8 +187,8 @@ export function LocalePanel({
         ...(desktopLeft === null ? { right: 0 } : { left: desktopLeft }),
         top: "100%",
         marginTop: 8,
-        // Above password-toggle / form chrome on auth split layout (z-10–ish).
-        zIndex: 100,
+        // A dropdown: the popover tier, so it clears form chrome and page layers.
+        zIndex: "var(--layer-popover)",
         width,
         maxHeight: desktopMaxHeight,
         display: "flex",
@@ -246,7 +246,7 @@ export function LocalePanel({
         <button
           type="button"
           aria-label={copy.closeAria}
-          className="fixed inset-0 z-[190] bg-black/40"
+          className="fixed inset-0 z-[calc(var(--layer-panel)-10)] bg-black/40"
           onClick={close}
         />
       ) : null}

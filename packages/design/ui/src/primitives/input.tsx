@@ -71,7 +71,7 @@ const inputVariants = cva(
        * the ring surrounds the whole group rather than a box inside it.
        */
       tone: {
-        bordered: `border border-input bg-background shadow-xs ${formControlFocusClassNames.input}`,
+        bordered: `border border-input bg-background ${formControlFocusClassNames.input}`,
         bare: "border-0 bg-transparent shadow-none",
       },
     },

@@ -184,7 +184,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
       <body className="antialiased">
         <a
           href="#main-content"
-          className="sr-only fixed left-3 top-3 z-[100] rounded-[var(--radius-md)] bg-[color:hsl(var(--primary))] px-3 py-2 text-sm font-medium text-white focus:not-sr-only"
+          className="sr-only fixed left-3 top-3 z-[var(--layer-skip-link)] rounded-[var(--radius-md)] bg-[color:hsl(var(--primary))] px-3 py-2 text-sm font-medium text-white focus:not-sr-only"
         >
           Skip to content
         </a>

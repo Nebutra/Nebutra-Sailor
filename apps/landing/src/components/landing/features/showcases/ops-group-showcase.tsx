@@ -111,9 +111,9 @@ function CliBody({ slug }: { slug: string }) {
 function ConnectionBody({ slug }: { slug: string }) {
   const Icon = slug === "supabase" ? Database : Box;
   return (
-    <Card className="border-border/60 shadow-none">
+    <Card>
       <CardContent className="flex items-center gap-4 p-4 md:p-5">
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
+        <span className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-primary text-primary-foreground">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         <div className="flex min-w-0 flex-col gap-1">
@@ -171,7 +171,7 @@ function PresetBody({ copy }: { copy: OpsCopy }) {
 
 function ComplianceBody({ locale, copy }: { locale: "en" | "zh"; copy: OpsCopy }) {
   return (
-    <Card className="border-border/60 shadow-none">
+    <Card>
       <CardContent className="divide-y divide-border/60 p-0">
         {COMPLIANCE_ITEMS[locale].map(([label, passed]) => (
           <div key={label} className="flex items-center justify-between gap-3 px-4 py-2.5">
@@ -214,10 +214,10 @@ export function OpsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
 
   return (
     <ShowcaseFrame>
-      <Card className="border-border/60 shadow-none">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-primary-foreground">
               <Terminal className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="text-sm font-semibold text-foreground">{entry.label}</span>

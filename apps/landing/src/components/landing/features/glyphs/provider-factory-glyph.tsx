@@ -43,7 +43,7 @@ export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
             <Badge
               key={provider.name}
               variant="outline"
-              className="rounded-full border-border bg-transparent px-2.5 py-1 text-[11px] font-normal text-muted-foreground"
+              className="rounded-full px-2.5 py-1 text-[11px] font-normal text-muted-foreground"
             >
               {provider.name}
             </Badge>

@@ -136,7 +136,7 @@ export function ColorUsageDemos() {
           <div className="flex gap-6">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium shadow transition-colors disabled:opacity-50 disabled:pointer-events-none bg-[hsl(var(--primary))] text-white hover:bg-[#002ad4] h-10 py-2 px-6"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium shadow transition-colors disabled:opacity-50 disabled:pointer-events-none bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-6"
             >
               Primary Button
             </button>

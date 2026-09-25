@@ -317,10 +317,11 @@ export function PhoneLoginForm({ returnTo, turnstileSiteKey }: PhoneLoginFormPro
                 />
               </div>
               <Button
+                size="lg"
                 type="button"
                 variant="outline"
                 disabled={loading || !captchaToken}
-                className="h-11 w-full"
+                className="w-full"
                 onClick={() => void sendCode()}
               >
                 {copy.resend}
@@ -359,11 +360,7 @@ export function PhoneLoginForm({ returnTo, turnstileSiteKey }: PhoneLoginFormPro
                 }}
                 items={countryItems}
               >
-                <SelectTrigger
-                  id="phone-country"
-                  size="large"
-                  className="h-12 min-w-0 border-border bg-background text-foreground shadow-none"
-                >
+                <SelectTrigger id="phone-country" size="large" className="min-w-0">
                   <SelectValue placeholder={selectedCountryLabel}>
                     {() => selectedCountryLabel}
                   </SelectValue>
@@ -390,7 +387,7 @@ export function PhoneLoginForm({ returnTo, turnstileSiteKey }: PhoneLoginFormPro
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
                 size="lg"
-                className="h-12 min-w-0 border-border bg-background text-foreground shadow-none"
+                className="min-w-0"
                 placeholder="415 555 2671"
               />
             </div>

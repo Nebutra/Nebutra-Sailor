@@ -96,7 +96,7 @@ const COPY: Record<"en" | "zh", Copy> = {
 
 function SecretRow({ secret, revealLabel }: { secret: Secret; revealLabel: string }) {
   return (
-    <Card className="border-border/60 p-3 shadow-none">
+    <Card className="p-3">
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
@@ -152,7 +152,7 @@ export function VaultShowcase({ locale }: PackageShowcaseProps) {
     <ShowcaseFrame>
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-white">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-primary text-primary-foreground">
             <LockClosed className="h-3.5 w-3.5" aria-hidden="true" />
           </span>
           <span className="text-sm font-semibold text-foreground">{copy.headerTitle}</span>

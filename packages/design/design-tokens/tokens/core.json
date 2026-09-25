@@ -682,6 +682,74 @@
       }
     }
   },
+  "layer": {
+    "$description": "Stacking roles. One ladder for the whole repo so a layer is chosen by what it is, not by picking a number: before this, apps invented 60 / 90 / 100 / 200 independently and nothing said which sat above which. Page chrome lives below 1000, overlays at 1040–1070 with 100–1039 kept empty. Use as z-[var(--layer-<role>)].",
+    "raised": {
+      "$value": "10",
+      "$type": "string",
+      "$description": "Within a component: an element lifted over its siblings."
+    },
+    "sticky": {
+      "$value": "20",
+      "$type": "string",
+      "$description": "Sticky headers and table heads."
+    },
+    "floating": {
+      "$value": "30",
+      "$type": "string",
+      "$description": "Floating toolbars and canvas chrome anchored to content."
+    },
+    "nav": {
+      "$value": "40",
+      "$type": "string",
+      "$description": "App navigation and the shell's top bar."
+    },
+    "drawer": {
+      "$value": "60",
+      "$type": "string",
+      "$description": "Mobile navigation drawers and their toggles."
+    },
+    "banner": {
+      "$value": "90",
+      "$type": "string",
+      "$description": "Page-level banners: cookie consent, announcements."
+    },
+    "skip-link": {
+      "$value": "100",
+      "$type": "string",
+      "$description": "The skip link — above page chrome whenever it is focused."
+    },
+    "panel": {
+      "$value": "200",
+      "$type": "string",
+      "$description": "App-owned floating panels that are not overlays (locale switcher, search flyouts)."
+    },
+    "backdrop": {
+      "$value": "1040",
+      "$type": "string",
+      "$description": "Overlay tier. Mirrors overlayZIndex in @nebutra/ui; a test keeps them equal."
+    },
+    "modal": {
+      "$value": "1050",
+      "$type": "string",
+      "$description": "Dialogs and sheets."
+    },
+    "popover": {
+      "$value": "1060",
+      "$type": "string",
+      "$description": "Popovers, menus, selects."
+    },
+    "tooltip": {
+      "$value": "1070",
+      "$type": "string",
+      "$description": "Tooltips."
+    },
+    "devtools": {
+      "$value": "9999",
+      "$type": "string",
+      "$description": "Developer and debug surfaces only — never product UI."
+    }
+  },
   "ring": {
     "$description": "Inset ring shorthand recipes — replaces shadow-2xl elevation per 2026 convention.",
     "hairline": {
