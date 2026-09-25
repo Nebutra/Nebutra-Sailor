@@ -1,18 +1,31 @@
 "use client";
 /**
- * Checkbox — 21st.dev Geist implementation
- * Source: https://21st.dev / Geist Design System
+ * Checkbox — native input, painted proxy, on the semantic tokens.
  *
- * Uses --ds-gray-* / --ds-background-* CSS variables (registered in globals.css)
- * mapped to Tailwind via `geist-gray-*` / `geist-background-*` theme colors.
+ * It was a copy of Geist's checkbox and kept Geist's palette: the checked box
+ * was geist-gray-1000 whatever the brand, so under a Brand Package with an
+ * indigo action (Stripe) the button was indigo and the checkbox black. Checked
+ * and indeterminate now fill with --primary like every other "on" control
+ * (toggle, slider, choicebox); unchecked is the --input border on the
+ * background. The tick inherits currentColor, so it is primary-foreground on
+ * the fill and transparent when unchecked.
+ *
+ * Native input props (aria-*, required, value, …) are forwarded; they used to
+ * be dropped, and the accessible name fell back to the literal "checkbox".
  */
 import React from "react";
 import { cn } from "../utils/cn";
 import { CheckGlyph, IndeterminateGlyph } from "./control-glyph";
+import { controlFocusProxyClassName } from "./form-control";
+
 // =============================================================================
 // Types
 // =============================================================================
-export interface CheckboxProps {
+export interface CheckboxProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "type" | "checked" | "defaultChecked" | "onChange" | "children"
+  > {
   checked?: boolean;
   defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
@@ -20,8 +33,6 @@ export interface CheckboxProps {
   indeterminate?: boolean;
   children?: React.ReactNode;
   className?: string;
-  id?: string;
-  name?: string;
 }
 export interface CheckboxGroupProps {
   /** Accessible group label */
@@ -31,35 +42,18 @@ export interface CheckboxGroupProps {
   children: React.ReactNode;
   className?: string;
 }
-// =============================================================================
-// Checkbox indicator styles (Geist DS color logic)
-// =============================================================================
-const getInputClasses = (checked: boolean, disabled: boolean, indeterminate: boolean) => {
-  let className =
-    "relative border w-4 h-4 duration-micro rounded inline-flex items-center justify-center";
-  if (disabled) {
-    if (!checked || indeterminate) {
-      className += " bg-geist-gray-100 border-geist-gray-500";
-      className += indeterminate
-        ? " stroke-geist-gray-500"
-        : " fill-geist-gray-100 stroke-geist-gray-100";
-    } else {
-      className +=
-        " bg-geist-gray-600 border-geist-gray-600 fill-geist-gray-600 stroke-geist-gray-100";
-    }
-  } else {
-    if (!checked || indeterminate) {
-      className += " bg-geist-background-100 border-geist-gray-700 group-hover:bg-geist-gray-200";
-      className += indeterminate
-        ? " stroke-geist-gray-700"
-        : " fill-geist-background-100 stroke-geist-background-100 group-hover:stroke-geist-gray-200 group-hover:fill-geist-gray-200";
-    } else {
-      className +=
-        " bg-geist-gray-1000 border-geist-gray-1000 fill-geist-gray-1000 stroke-geist-gray-100";
-    }
-  }
-  return className;
-};
+
+const boxClassName = (on: boolean) =>
+  cn(
+    "relative inline-flex size-4 shrink-0 items-center justify-center rounded-[4px] border",
+    "stroke-current fill-none transition-[background-color,border-color,color] duration-micro",
+    on
+      ? "border-primary bg-primary text-primary-foreground"
+      : "border-[var(--control-border)] bg-background text-transparent group-hover:border-muted-foreground",
+    "peer-disabled:opacity-50",
+    controlFocusProxyClassName,
+  );
+
 // =============================================================================
 // Checkbox
 // =============================================================================
@@ -71,8 +65,7 @@ export const Checkbox = ({
   indeterminate = false,
   children,
   className,
-  id,
-  name,
+  ...inputProps
 }: CheckboxProps) => {
   const [internalChecked, setInternalChecked] = React.useState(defaultChecked);
   const isControlled = controlledChecked !== undefined;
@@ -80,31 +73,25 @@ export const Checkbox = ({
   return (
     <label
       className={cn(
-        "flex items-center text-[13px] font-sans group",
-        disabled ? "text-geist-gray-500 cursor-not-allowed" : "text-geist-gray-1000 cursor-pointer",
+        "group flex items-center text-[13px] font-sans",
+        disabled ? "cursor-not-allowed text-muted-foreground" : "cursor-pointer text-foreground",
         className,
       )}
     >
       <input
-        id={id}
-        name={name}
+        {...inputProps}
         disabled={disabled}
         type="checkbox"
         checked={checked}
+        aria-checked={indeterminate ? "mixed" : undefined}
         onChange={(e) => {
-          if (!indeterminate) {
-            if (!isControlled) {
-              setInternalChecked(e.target.checked);
-            }
-            if (onChange) {
-              onChange(e.target.checked);
-            }
-          }
+          if (indeterminate) return;
+          if (!isControlled) setInternalChecked(e.target.checked);
+          onChange?.(e.target.checked);
         }}
-        aria-label={typeof children === "string" ? children : "checkbox"}
-        className="sr-only"
+        className="peer sr-only"
       />
-      <span className={getInputClasses(checked, disabled, indeterminate)}>
+      <span aria-hidden="true" className={boxClassName(checked || indeterminate)}>
         {indeterminate ? <IndeterminateGlyph /> : <CheckGlyph />}
       </span>
       {children && <span className="ml-2">{children}</span>}

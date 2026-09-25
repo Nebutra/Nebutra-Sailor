@@ -673,10 +673,9 @@ function FormsPanel() {
         <FormInput label="Full name" value="Ava Johnson" />
         <FormInput label="Email" value="ava.johnson@example.com" />
         <FormInput label="Password" value="************" type="password" />
-        <div className="flex items-center gap-2 text-muted-foreground text-xs">
-          <Checkbox defaultChecked aria-label="Agree to the terms" />I agree to the Terms of Service
-          and Privacy Policy
-        </div>
+        <Checkbox defaultChecked className="text-muted-foreground text-xs">
+          I agree to the Terms of Service and Privacy Policy
+        </Checkbox>
         <Button type="button">Create account</Button>
       </div>
     </PreviewCard>

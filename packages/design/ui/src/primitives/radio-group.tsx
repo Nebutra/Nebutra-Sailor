@@ -15,6 +15,7 @@ import {
 } from "react";
 import { type RadioOrientation, radioTokens } from "../tokens/components/radio";
 import { cn } from "../utils/cn";
+import { controlFocusProxyClassName } from "./form-control";
 
 type RadioValue = string;
 
@@ -129,12 +130,14 @@ const itemStyle: RadioItemStyle = {
 };
 
 const radioControlClassName = cn(
-  "relative inline-flex shrink-0 items-center justify-center rounded-[var(--radius-full)] border-[length:var(--radio-border-width)] border-border bg-background text-foreground",
+  "relative inline-flex shrink-0 items-center justify-center rounded-[var(--radius-full)] border-[length:var(--radio-border-width)] border-[var(--control-border)] bg-background text-foreground",
   "size-[var(--radio-control-size)]",
   "transition-[background-color,border-color,box-shadow] duration-[var(--radio-motion-duration)] ease-[var(--radio-motion-easing)]",
   "after:size-[var(--radio-dot-size)] after:scale-95 after:rounded-[var(--radius-full)] after:bg-current after:opacity-0 after:transition-[opacity,transform] after:duration-[var(--radio-motion-duration)] after:ease-[var(--radio-motion-easing)] after:content-['']",
-  "peer-checked:border-[var(--neutral-12)] peer-checked:after:scale-100 peer-checked:after:opacity-100",
-  "peer-focus-visible:outline-none",
+  // "On" is the action colour, as for checkbox / toggle / slider / choicebox —
+  // it was --neutral-12, which only matched the House ink by coincidence.
+  "peer-checked:border-primary peer-checked:text-primary peer-checked:after:scale-100 peer-checked:after:opacity-100",
+  controlFocusProxyClassName,
   "peer-disabled:border-[var(--neutral-5)] peer-disabled:bg-muted peer-disabled:text-[var(--neutral-8)]",
 );
 
