@@ -47,6 +47,7 @@ import {
   shouldResolveSessionAtAuthCenter,
 } from "./better-auth/auth-center-session";
 import { ALL_FALSE_CAPABILITIES, probeBetterAuthCapabilities } from "./better-auth/capabilities";
+import { loadBetterAuthDeviceAuthorizationPlugins } from "./better-auth/device-authorization";
 import { buildMagicLinkCapability } from "./better-auth/magic-link";
 import { mapSession, mapUser, normalizeOrganization } from "./better-auth/mappers";
 import { buildOrganizationsCapability } from "./better-auth/organization";
@@ -255,6 +256,24 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     const { loadBetterAuthFeishuOAuthPlugin } = await import("./better-auth/feishu-oauth");
     const feishuOAuthPlugin = await loadBetterAuthFeishuOAuthPlugin();
 
+    // Device authorization (`nebutra login`) — opt-in only, see
+    // ./better-auth/device-authorization.ts for why. Only apps/auth passes
+    // `options.deviceAuthorization`.
+    const deviceAuthOptions = (config.options as Record<string, unknown> | undefined)
+      ?.deviceAuthorization as boolean | { allowedClientIds?: readonly string[] } | undefined;
+    // BETTER_AUTH_URL is already this instance's own base (set to
+    // auth.nebutra.com in production for the auth center) — reuse it rather
+    // than importing @nebutra/brand into this package for one URL.
+    const deviceAuthBaseUrl = (process.env.BETTER_AUTH_URL ?? "http://localhost:3101").replace(
+      /\/$/,
+      "",
+    );
+    const deviceVerificationUri = `${deviceAuthBaseUrl}/device`;
+    const deviceAuthorizationPlugins = await loadBetterAuthDeviceAuthorizationPlugins(
+      deviceAuthOptions,
+      deviceVerificationUri,
+    );
+
     const plugins: BetterAuthPlugin[] = [];
     if (orgPlugin) plugins.push(orgPlugin);
     if (twoFactorPlugin) plugins.push(twoFactorPlugin);
@@ -263,6 +282,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     if (captchaPlugin) plugins.push(captchaPlugin);
     if (oneTapPlugin) plugins.push(oneTapPlugin);
     if (feishuOAuthPlugin) plugins.push(feishuOAuthPlugin);
+    plugins.push(...deviceAuthorizationPlugins);
 
     const prismaClient = await resolveBetterAuthPrismaClient(config);
 
@@ -305,11 +325,31 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         }
       : {};
 
+    // Device flow endpoints are unauthenticated-by-design (a device polls
+    // before anyone has signed in) — tighter-than-default rate limits so
+    // /device/code can't be used to mint an unbounded number of pending rows
+    // and /device/token can't be brute-forced for a valid device_code.
+    // Better Auth's own global default is 100 req / 60s per IP+path.
+    const deviceRateLimit =
+      deviceAuthorizationPlugins.length > 0
+        ? {
+            rateLimit: {
+              customRules: {
+                "/device/code": { window: 60, max: 10 },
+                "/device/token": { window: 60, max: 30 },
+                "/device/approve": { window: 60, max: 10 },
+                "/device/deny": { window: 60, max: 10 },
+              },
+            },
+          }
+        : {};
+
     const auth = betterAuth({
       secret,
       baseURL: process.env.BETTER_AUTH_URL,
       ...(trustedOrigins.length > 0 ? { trustedOrigins } : {}),
       ...crossSubDomainCookies,
+      ...deviceRateLimit,
       // OAuth / API failures must land on the login UX, not `/api/auth/error`
       // (JSON) or bare `/?error=` with no copy. Sign-in page renders `?error=`.
       onAPIError: {

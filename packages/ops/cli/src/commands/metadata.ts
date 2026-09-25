@@ -334,9 +334,47 @@ export const nebultraCommand: CommandMeta = {
       ],
     },
     {
+      name: "login",
+      description: "Authorize this machine with your Nebutra account (device flow)",
+      usage: "nebutra login [options]",
+      options: [
+        {
+          flags: "--json",
+          description: "Print verification details as JSON and exit immediately (agent mode)",
+        },
+        { flags: "--no-browser", description: "Don't try to open a browser" },
+        {
+          flags: "--poll",
+          description:
+            "Poll until approved/denied/expired, resuming a pending `login --json` if present",
+        },
+        { flags: "--format <type>", description: "Output format: json or plain" },
+      ],
+      examples: [
+        { command: "nebutra login", description: "Human flow: open browser, wait for approval" },
+        {
+          command: "nebutra login --json",
+          description: "Agent flow: print verification link/code and exit immediately",
+        },
+        {
+          command: "nebutra login --poll --json",
+          description: "Resume and wait for a pending login",
+        },
+      ],
+    },
+    {
       name: "logout",
       description: "Clear local Nebutra CLI session state",
       usage: "nebutra logout",
+    },
+    {
+      name: "whoami",
+      description: "Show the Nebutra identity this machine is authorized as",
+      usage: "nebutra whoami [options]",
+      options: [
+        { flags: "--json", description: "Output as JSON" },
+        { flags: "--format <type>", description: "Output format: json or plain" },
+      ],
     },
     {
       name: "upgrade",

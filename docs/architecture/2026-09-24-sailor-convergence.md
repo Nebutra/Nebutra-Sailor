@@ -136,17 +136,31 @@ monorepo (new golden e2e gate).
 `nebutra login` authenticates the **buyer identity** (license, template updates, future paid
 registry), modelled on Vercel / `gh`:
 
-- Browser available: open the page and complete over a localhost callback, no code typed.
-- `nebutra login --json` returns `{ verification_uri, user_code }` immediately and exits; the agent
-  hands the link to the user, then `nebutra login --poll` or `whoami --json` confirms. One
-  authorization click by the user, no repeated steps.
-- Refresh token in the OS keychain (fallback `~/.nebutra/credentials`, mode 0600); access tokens
-  refresh silently. `NEBUTRA_TOKEN` for CI.
+- Browser available: open the verification page (`/device` on the auth center) and confirm the
+  device code shown in the terminal; no code typed unless the browser can't be opened.
+- `nebutra login --json` returns `{ verification_uri, verification_uri_complete, user_code,
+  expires_in, interval }` immediately and exits 0; the agent hands the link to the user, then
+  `nebutra login --poll --json` resumes and blocks to completion. One authorization click by the
+  user, no repeated steps.
+- Session token in the OS keychain (fallback `~/.config/nebutra/credentials.json`, mode 0600).
+  `NEBUTRA_TOKEN` for CI. Better Auth's `deviceAuthorization` plugin returns a session token with
+  an expiry, not an OAuth refresh-token pair — there is no silent refresh; the CLI re-prompts with
+  `nebutra login` once the stored token's `expiresAt` passes.
 - `license` becomes an internal check on the logged-in identity.
 
-This **amends `apps/idp/AGENTS.md`**: `urn:ietf:params:oauth:grant-type:device_code` (RFC 8628) is
-added to the allowed grants, implemented with Better Auth's device-authorization plugin, with a
-`cli` client and a narrow scope set. The rest of the grant-type freeze stands.
+**Landed 2026-09-25, on `apps/auth` (the Better Auth "auth center"), not `apps/idp`.** The device
+flow is Better Auth's own `deviceAuthorization` (+ `bearer`) plugin, mounted only when
+`apps/auth`'s Better Auth instance opts in via `AuthConfig.options.deviceAuthorization` (see
+`packages/iam/auth/src/providers/better-auth/device-authorization.ts`) — every other app that
+constructs a Better Auth instance from the same shared provider (`apps/web`, `apps/forge`,
+`apps/kuanlan`, …) does not set that flag, so `/api/auth/device/*` exists nowhere else. Client id
+is the fixed public `nebutra-cli`, validated server-side; no dynamic client registration.
+
+**`apps/idp/AGENTS.md`'s grant-type freeze is untouched — no amendment needed.** The original plan
+above assumed the OIDC-flavoured IdP app would gain the grant; instead the whole flow lives beside
+Better Auth's own session issuance on the auth center, which already has its own (separate,
+cookie/session-based, not OIDC-token-based) auth surface. `apps/idp`'s `authorization_code` +
+`refresh_token`-only OIDC grants are exactly as frozen as before this ADR's §8 landed.
 
 ## Consequences
 
@@ -174,10 +188,9 @@ Landed in the first batch: §1 adapter deletions, §2 pairs, §3 region removal,
 `Dockerfile.web` + `docker-compose.yml`), the §6 route-handler ratchet, and §7
 (12 commands removed, `nebutra status` added).
 
-Deferred to the second batch: §7 `sync`, and §8 device-flow login (amends the
-IdP contract, needs its own security review). `apps/sleptons` keeps its direct
-Clerk integration — it is Nebutra's own product and is stripped from the
-template.
+Second batch (2026-09-25): §6 gateway mount, §7 `nebutra sync`, and §8
+device-flow login. `apps/sleptons` keeps its direct Clerk integration — it is
+Nebutra's own product and is stripped from the template.
 
 §6 landed: `apps/web` mounts the gateway (`backends/gateway`, via a new
 `createGatewayApp({ startWorkers })` factory in `src/app.ts` — `src/index.ts`
@@ -193,6 +206,12 @@ request-handling process — those still run via the QStash webhook delivery
 route the app mounts either way. The catch-all is intrinsic to the
 route-handler ratchet (`governance.config.json` →
 `routeHandlers.intrinsic`), not a business handler of its own.
+
+§8 device-flow login landed 2026-09-25 on `apps/auth`, not `apps/idp` — see §8 above for why no
+IdP contract amendment was needed. Still pending: the security review noted there (see the
+feature branch's own report for the checklist run so far) and a live end-to-end run against a
+real Postgres (verified only via `npx tsc --noEmit` / unit + mock-server tests in that branch, not
+against a running auth-center + database).
 
 ## Open questions
 

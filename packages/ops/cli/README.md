@@ -65,6 +65,8 @@ nebutra doctor
 | `secrets` | Encrypted secrets management |
 | `completions` | Generate shell completions for the current command surface |
 | `link` / `unlink` | Link or unlink the project to Nebutra platform metadata |
+| `login` | Authorize this machine with your Nebutra account (device flow, agent-friendly with `--json`) |
+| `whoami` | Show the Nebutra identity this machine is authorized as |
 | `logout` / `upgrade` | Session and CLI lifecycle |
 
 Scaffolding, registry, and platform-operations commands (`create`, `add`,

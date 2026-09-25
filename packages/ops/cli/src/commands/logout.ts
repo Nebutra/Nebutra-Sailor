@@ -1,22 +1,14 @@
 import { existsSync, rmSync, unlinkSync } from "node:fs";
-import { homedir, platform } from "node:os";
 import { join } from "node:path";
 import type { Command } from "commander";
+import { getConfigDir } from "../utils/config-dir";
+import { deleteStoredCredentials } from "../utils/credentials-store";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 
 interface LogoutOptions {
   all?: boolean;
   format?: string;
-}
-
-function getConfigDir(): string {
-  if (platform() === "win32") {
-    const base = process.env.LOCALAPPDATA || join(homedir(), "AppData", "Local");
-    return join(base, "nebutra");
-  }
-  const xdg = process.env.XDG_CONFIG_HOME;
-  return xdg ? join(xdg, "nebutra") : join(homedir(), ".config", "nebutra");
 }
 
 const AUTH_FILES = ["auth.json", "session.json", "token", "credentials.json"];
@@ -26,6 +18,13 @@ async function handleLogout(options: LogoutOptions) {
   const isJson = options.format === "json";
   let removed = 0;
   const removedPaths: string[] = [];
+
+  // `nebutra login`'s credentials — OS keychain entry, credentials.json, and
+  // any not-yet-completed device-code poll state. Best-effort: a keychain
+  // delete failing (or no keychain in this environment) never blocks logout.
+  const deviceAuthRemoved = await deleteStoredCredentials();
+  removed += deviceAuthRemoved.length;
+  removedPaths.push(...deviceAuthRemoved);
 
   if (options.all) {
     if (existsSync(dir)) {

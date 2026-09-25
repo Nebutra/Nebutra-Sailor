@@ -32,7 +32,9 @@ const COMMAND_DESCRIPTIONS: Record<string, string> = {
   ai: "AI provider and gateway routing configuration",
   services: "Microservice management",
   secrets: "Encrypted secrets management",
+  login: "Authorize this machine with your Nebutra account (device flow)",
   logout: "Clear local session state",
+  whoami: "Show the authorized Nebutra identity",
   upgrade: "Upgrade local CLI tooling",
   link: "Link local project metadata",
   unlink: "Unlink local project metadata",
@@ -53,6 +55,8 @@ const KNOWN_FLAGS = [
   "--dry-run",
   "--if-not-exists",
   "--json",
+  "--no-browser",
+  "--poll",
 ];
 
 const fishSubcommands = KNOWN_COMMANDS.map(

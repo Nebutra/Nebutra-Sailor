@@ -17,6 +17,7 @@ import { registerInfraCommand } from "./commands/infra";
 import { initCommand } from "./commands/init";
 import { registerLicenseCommand } from "./commands/license";
 import { registerLinkCommand } from "./commands/link";
+import { registerLoginCommand } from "./commands/login";
 import { registerLogoutCommand } from "./commands/logout";
 import { registerMcpCommand } from "./commands/mcp-server";
 import { registerSchemaCommand } from "./commands/schema";
@@ -29,6 +30,7 @@ import { registerThemeCommand } from "./commands/theme";
 import { registerUiCommand } from "./commands/ui";
 import { registerUnlinkCommand } from "./commands/unlink";
 import { registerUpgradeCommand } from "./commands/upgrade";
+import { registerWhoamiCommand } from "./commands/whoami";
 import { CommandError, reportCommandError, runCommand } from "./utils/command-error";
 import { ExitCode } from "./utils/exit-codes";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
@@ -121,8 +123,10 @@ export function buildProgram(options: BuildProgramOptions): Command {
 
   registerCompletionsCommand(program);
 
-  // ─── Lifecycle commands (logout / upgrade / link / unlink / status) ─
+  // ─── Lifecycle commands (login / logout / whoami / upgrade / link / unlink / status) ─
+  registerLoginCommand(program);
   registerLogoutCommand(program);
+  registerWhoamiCommand(program);
   registerUpgradeCommand(program);
   registerLinkCommand(program);
   registerUnlinkCommand(program);

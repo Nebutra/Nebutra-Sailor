@@ -2107,6 +2107,7 @@ model AuthUser {
   // and do not alter `public.auth_users` itself.
   baMembers           BAMember[]
   baPasskeys          BAPasskey[]
+  baDeviceCodes       BADeviceCode[]
   chatSessions        ChatSession[]
 
   @@map("auth_users")
@@ -2855,6 +2856,35 @@ model BAPasskey {
 
   @@index([userId])
   @@map("passkey")
+  @@schema("better_auth")
+}
+
+/// @conditional(auth=betterauth)
+// RFC 8628 device-authorization codes — Better Auth's `deviceAuthorization`
+// plugin, mounted only on the auth center (apps/auth), backs `nebutra login`.
+// Field/model names mirror the plugin's own defaults verbatim (see
+// better-auth/dist/plugins/device-authorization/schema.mjs) — only @map/@@map
+// give the columns/table this repo's snake_case convention; the plugin's
+// generic Prisma adapter resolves records by these unmapped field/model keys.
+// `userCode` is short-lived (default 10m TTL, enforced app-side too) and
+// human-typed (XXXX-XXXX, unambiguous charset) — see apps/auth `/device`.
+model BADeviceCode {
+  id              String    @id @default(cuid())
+  deviceCode      String    @unique @map("device_code")
+  userCode        String    @unique @map("user_code")
+  userId          String?   @map("user_id")
+  expiresAt       DateTime  @map("expires_at")
+  status          String    @default("pending")
+  lastPolledAt    DateTime? @map("last_polled_at")
+  pollingInterval Int?      @map("polling_interval")
+  clientId        String?   @map("client_id")
+  scope           String?
+
+  user AuthUser? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("deviceCode")
   @@schema("better_auth")
 }
 

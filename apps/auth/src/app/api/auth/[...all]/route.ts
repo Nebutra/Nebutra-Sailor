@@ -48,7 +48,11 @@ let authInstance: AuthProvider | null = null;
 
 async function getAuth(): Promise<AuthProvider> {
   if (!authInstance) {
-    authInstance = await createAuth({ provider });
+    // `nebutra login` (RFC 8628 device authorization) mounts ONLY here —
+    // this route IS the auth center's Better Auth surface. See
+    // packages/iam/auth/src/providers/better-auth/device-authorization.ts
+    // and docs/architecture/2026-09-24-sailor-convergence.md §8.
+    authInstance = await createAuth({ provider, options: { deviceAuthorization: true } });
   }
   return authInstance;
 }
