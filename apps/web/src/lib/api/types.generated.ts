@@ -4323,7 +4323,7 @@ export interface paths {
     put?: never;
     /**
      * Create a credit purchase checkout session
-     * @description Creates a provider-agnostic checkout session (Stripe / Polar / LemonSqueezy / ChinaPay). Provider is auto-detected from env.
+     * @description Creates a provider-agnostic checkout session (Stripe / ChinaPay). Provider is auto-detected from env.
      */
     post: {
       parameters: {
@@ -6093,7 +6093,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/webhooks/clerk": {
+  "/api/webhooks": {
     parameters: {
       query?: never;
       header?: never;
@@ -6103,8 +6103,8 @@ export interface paths {
     get?: never;
     put?: never;
     /**
-     * Clerk webhook handler
-     * @description Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK. 2xx is returned only after the inbox row is marked processed.
+     * Better Auth event handler (stub)
+     * @description Better Auth does not use traditional webhooks. Events are handled via the built-in events API. See: https://www.better-auth.com/docs/concepts/events
      */
     post: {
       parameters: {
@@ -6121,49 +6121,14 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Webhook processed, or already processed */
-        200: {
+        /** @description Better Auth uses events API, not webhooks */
+        501: {
           headers: {
             [name: string]: unknown;
           };
           content: {
             "application/json": {
-              /** @enum {boolean} */
-              received: true;
-              skipped?: boolean;
-            };
-          };
-        };
-        /** @description Invalid signature or missing svix headers */
-        400: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": {
-              error: string;
-            };
-          };
-        };
-        /** @description Webhook not configured or handler failed */
-        500: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": {
-              error: string;
-            };
-          };
-        };
-        /** @description Event is still being processed; provider should retry */
-        503: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": {
-              error: string;
+              message: string;
             };
           };
         };

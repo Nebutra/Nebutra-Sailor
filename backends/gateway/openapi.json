@@ -8960,7 +8960,7 @@
       "post": {
         "tags": ["Billing", "Credits"],
         "summary": "Create a credit purchase checkout session",
-        "description": "Creates a provider-agnostic checkout session (Stripe / Polar / LemonSqueezy / ChinaPay). Provider is auto-detected from env.",
+        "description": "Creates a provider-agnostic checkout session (Stripe / ChinaPay). Provider is auto-detected from env.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -11112,11 +11112,11 @@
         }
       }
     },
-    "/api/webhooks/clerk": {
+    "/api/webhooks": {
       "post": {
         "tags": ["Webhooks"],
-        "summary": "Clerk webhook handler",
-        "description": "Receives Clerk webhook events for user and organization lifecycle management. Signature verification is handled by the Svix SDK. 2xx is returned only after the inbox row is marked processed.",
+        "summary": "Better Auth event handler (stub)",
+        "description": "Better Auth does not use traditional webhooks. Events are handled via the built-in events API. See: https://www.better-auth.com/docs/concepts/events",
         "requestBody": {
           "content": {
             "application/json": {
@@ -11129,70 +11129,18 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Webhook processed, or already processed",
+          "501": {
+            "description": "Better Auth uses events API, not webhooks",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "received": {
-                      "type": "boolean",
-                      "enum": [true]
-                    },
-                    "skipped": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": ["received"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid signature or missing svix headers",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
+                    "message": {
                       "type": "string"
                     }
                   },
-                  "required": ["error"]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Webhook not configured or handler failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["error"]
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Event is still being processed; provider should retry",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["error"]
+                  "required": ["message"]
                 }
               }
             }
