@@ -14,6 +14,7 @@ export { emptyStateTokens } from "./empty-state";
 export { feedbackTokens } from "./feedback";
 export { type GridBreakpoint, gridTokens } from "./grid";
 export { inputTokens } from "./input";
+export { type Interaction, interaction } from "./interaction";
 export { messageContentTokens } from "./message-content";
 export { type MultiSelectWidth, multiSelectTokens } from "./multi-select";
 export { type NoteSize, type NoteTone, noteSizes, noteTokens, noteTones } from "./note";
