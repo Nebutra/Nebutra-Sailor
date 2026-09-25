@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Contraste",
-        "description": "Ajuste fino do contraste do texto (50 = sem alteração).",
-        "label": "Nível de contraste"
-      },
       "pointerCursor": {
         "title": "Usar cursor de ponteiro",
         "description": "Alterne para um cursor de ponteiro em elementos interativos ao passar o mouse.",
@@ -961,8 +956,7 @@
         "description": "Reduzir animações ou seguir a preferência do sistema.",
         "label": "Preferência de movimento",
         "system": "Sistema",
-        "on": "Ativado",
-        "off": "Desativado"
+        "on": "Ativado"
       },
       "surface": {
         "title": "Barra lateral translúcida",

@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontras",
-        "description": "Sesuaikan kontras teks (50 = tanpa perubahan).",
-        "label": "Tingkat kontras"
-      },
       "pointerCursor": {
         "title": "Gunakan kursor pointer",
         "description": "Beralih ke kursor pointer pada elemen interaktif saat diarahkan.",
@@ -961,8 +956,7 @@
         "description": "Kurangi animasi atau sesuaikan dengan preferensi sistem.",
         "label": "Preferensi gerakan",
         "system": "Sistem",
-        "on": "Aktif",
-        "off": "Nonaktif"
+        "on": "Aktif"
       },
       "surface": {
         "title": "Sidebar transparan",

@@ -4,6 +4,7 @@ import { withRegistryFont } from "@nebutra/fonts";
 import { useEffect } from "react";
 
 import {
+  accentRingChannels,
   CODE_FONT_STACKS,
   isFactoryLanguageId,
   UI_FONT_STACKS,
@@ -15,7 +16,7 @@ import {
 
 /**
  * Applies Appearance store → DOM:
- *   - user overrides (--user-*, data-accent, motion classes)
+ *   - user overrides (--user-*, the accent's --ring, the motion-reduce class)
  *   - design language / DESIGN.md import via Brand Package carrier only
  *     (applyLanguage / applyImportedBrandPackage → inject skin + data-brand)
  *
@@ -77,9 +78,9 @@ export default function AppearanceVarsProvider(): null {
       const stack = CODE_FONT_STACKS[state.codeFontFamily];
       root.style.setProperty("--user-code-font", withRegistryFont(stack) ?? stack);
     }
-    root.style.setProperty("--user-contrast", `${state.contrast}`);
-
-    root.dataset.accent = state.accent;
+    const ring = accentRingChannels(state.accent);
+    if (ring) root.style.setProperty("--ring", ring);
+    else root.style.removeProperty("--ring");
     root.classList.toggle("surface-translucent", state.transparency);
     root.classList.toggle("cursor-pointer-interactive", state.pointerCursor);
     root.classList.toggle("font-smoothing-mac", state.fontSmoothing);
@@ -89,11 +90,8 @@ export default function AppearanceVarsProvider(): null {
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-    const reduce = state.motion === "off" || (state.motion === "system" && prefersReduced);
-    const allow = state.motion === "on";
-
-    root.classList.toggle("motion-reduce", reduce);
-    root.classList.toggle("motion-allow", allow);
+    // "Reduce motion: On" reduces; "System" follows the OS.
+    root.classList.toggle("motion-reduce", state.motion === "on" || prefersReduced);
   }, [state]);
 
   // Apply design language (Brand Package carrier) or imported DESIGN.md.
@@ -146,7 +144,6 @@ export default function AppearanceVarsProvider(): null {
     const onChange = () => {
       const root = document.documentElement;
       root.classList.toggle("motion-reduce", mq.matches);
-      root.classList.toggle("motion-allow", false);
     };
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);

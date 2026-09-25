@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontraszt",
-        "description": "Szöveg kontrasztjának finomhangolása (50 = nincs változás).",
-        "label": "Kontraszt szint"
-      },
       "pointerCursor": {
         "title": "Mutató kurzor használata",
         "description": "Kattintásra interaktív elemeknél mutató kurzor használata.",
@@ -961,8 +956,7 @@
         "description": "Csökkentse az animációkat vagy illessze a rendszer beállításaihoz.",
         "label": "Mozgásbeállítás",
         "system": "Rendszer",
-        "on": "Be",
-        "off": "Ki"
+        "on": "Be"
       },
       "surface": {
         "title": "Áttetsző oldalsáv",

@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontrast",
-        "description": "Upravte kontrast textu (50 = žádná změna).",
-        "label": "Úroveň kontrastu"
-      },
       "pointerCursor": {
         "title": "Použít kurzor ukazováku",
         "description": "Přepnout na kurzor ve tvaru ukazatele u prvků reagujících na najetí myší.",
@@ -961,8 +956,7 @@
         "description": "Omezte animace nebo přizpůsobte systémovým předvolbám.",
         "label": "Předvolba pohybů",
         "system": "Systém",
-        "on": "Zapnuto",
-        "off": "Vypnuto"
+        "on": "Zapnuto"
       },
       "surface": {
         "title": "Průsvitné postranní panel",

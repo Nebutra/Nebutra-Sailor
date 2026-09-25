@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontrast",
-        "description": "Dopasuj kontrast tekstu (50 = bez zmian).",
-        "label": "Poziom kontrastu"
-      },
       "pointerCursor": {
         "title": "Użyj kursora wskaźnika",
         "description": "Przełącz na kursor wskaźnika przy elementach interaktywnych.",
@@ -961,8 +956,7 @@
         "description": "Zmniejsz animacje lub dopasuj do preferencji systemu.",
         "label": "Preferencje ruchu",
         "system": "Systemowy",
-        "on": "Włączone",
-        "off": "Wyłączone"
+        "on": "Włączone"
       },
       "surface": {
         "title": "Półprzezroczysty pasek boczny",

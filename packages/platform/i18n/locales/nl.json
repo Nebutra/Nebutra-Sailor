@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Contrast",
-        "description": "Fijnafstemmen van tekstcontrast (50 = geen wijziging).",
-        "label": "Contrastniveau"
-      },
       "pointerCursor": {
         "title": "Pointer-cursor gebruiken",
         "description": "Schakel over naar een aanwijzercurser bij interactieve elementen.",
@@ -961,8 +956,7 @@
         "description": "Verminder animaties of volg de systeemvoorkeur.",
         "label": "Voorkeur beweging",
         "system": "Systeem",
-        "on": "Aan",
-        "off": "Uit"
+        "on": "Aan"
       },
       "surface": {
         "title": "Transparante zijbalk",

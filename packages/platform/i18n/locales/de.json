@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontrast",
-        "description": "Passen Sie den Textkontrasast an (50 = keine Änderung).",
-        "label": "Kontraststufe"
-      },
       "pointerCursor": {
         "title": "Zeigercursor verwenden",
         "description": "Wechseln Sie zu Zeiger-Cursor beim Hover interaktiver Elemente.",
@@ -961,8 +956,7 @@
         "description": "Reduzieren Sie Animationen oder stimmen Sie System-Einstellung ab.",
         "label": "Bewegungseinstellung",
         "system": "System",
-        "on": "Ein",
-        "off": "Aus"
+        "on": "Ein"
       },
       "surface": {
         "title": "Halbtransparente Seitenleiste",

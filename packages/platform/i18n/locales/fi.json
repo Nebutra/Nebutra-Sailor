@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontrasti",
-        "description": "Säädä tekstin kontrastia tarkasti (50 = ei muutosta).",
-        "label": "Kontrastitaso"
-      },
       "pointerCursor": {
         "title": "Käytä osoitinta",
         "description": "Käytä osoitinta hiiren vieraillessa vuorovaikutteisilla elementeillä.",
@@ -961,8 +956,7 @@
         "description": "Vähennä animaatioita tai käytä järjestelmän asetuksia.",
         "label": "Liikeasetus",
         "system": "Järjestelmä",
-        "on": "Päällä",
-        "off": "Pois"
+        "on": "Päällä"
       },
       "surface": {
         "title": "Läpinäkyvä sivupalkki",

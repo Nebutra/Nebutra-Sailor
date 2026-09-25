@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Contrast",
-        "description": "Fine-tune text contrast (50 = no change).",
-        "label": "Contrast level"
-      },
       "pointerCursor": {
         "title": "Use pointer cursor",
         "description": "Switch to a pointer cursor on hover-interactive elements.",
@@ -961,8 +956,7 @@
         "description": "Reduce animations or match system preference.",
         "label": "Motion preference",
         "system": "System",
-        "on": "On",
-        "off": "Off"
+        "on": "On"
       },
       "surface": {
         "title": "Translucent sidebar",

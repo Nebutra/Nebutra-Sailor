@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Độ tương phản",
-        "description": "Điều chỉnh độ tương phản văn bản (50 = không thay đổi).",
-        "label": "Mức độ tương phản"
-      },
       "pointerCursor": {
         "title": "Sử dụng con trỏ pointer",
         "description": "Chuyển sang con trỏ mũi tên trên các phần tử có thể tương tác khi di chuột.",
@@ -961,8 +956,7 @@
         "description": "Giảm hiệu ứng chuyển động hoặc đồng bộ với cài đặt hệ thống.",
         "label": "Tùy chọn chuyển động",
         "system": "Hệ thống",
-        "on": "Bật",
-        "off": "Tắt"
+        "on": "Bật"
       },
       "surface": {
         "title": "Thanh bên trong suốt",

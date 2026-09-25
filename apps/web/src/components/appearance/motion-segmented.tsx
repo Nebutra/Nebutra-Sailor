@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import type { AppearanceMotion } from "./store";
 import { useAppearance } from "./store";
 
-const OPTIONS: ReadonlyArray<AppearanceMotion> = ["system", "on", "off"];
+const OPTIONS: ReadonlyArray<AppearanceMotion> = ["system", "on"];
 
 export function MotionSegmented() {
   const t = useTranslations("settings.appearance.motion");

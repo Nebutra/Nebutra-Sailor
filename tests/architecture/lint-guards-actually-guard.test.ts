@@ -125,6 +125,12 @@ const CASES: Case[] = [
       'export const A = \'"DM Sans", "MiSans"\';\nexport const B = \'"Geist", "MiSans"\';\nexport const C = \'"MiSans", "PingFang SC"\';\n',
   },
   {
+    // A setting that writes state onto <html> that nothing reads — how the
+    // Appearance accent, contrast and motion-"on" switches shipped dead.
+    guard: "lint-unread-dom",
+    violation: 'document.documentElement.dataset.lintProbeUnread = "on";\n',
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

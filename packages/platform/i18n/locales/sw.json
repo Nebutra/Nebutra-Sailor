@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Tofauti",
-        "description": "Rekebisha tofauti ya maandishi (50 = hakuna mabadiliko).",
-        "label": "Kiwango cha tofauti"
-      },
       "pointerCursor": {
         "title": "Tumia kichwa cha kidirisha",
         "description": "Badilisha kuwa kipeo cha pointer juu ya vipengele vinavyoweza kuingiliana.",
@@ -961,8 +956,7 @@
         "description": "Punguza animesheni au fuata mpangilio wa mfumo.",
         "label": "Mpangilio wa mwendo",
         "system": "Mfumo",
-        "on": "Imewashwa",
-        "off": "Imezimwa"
+        "on": "Imewashwa"
       },
       "surface": {
         "title": "Upau wa pembeni wa kioo",

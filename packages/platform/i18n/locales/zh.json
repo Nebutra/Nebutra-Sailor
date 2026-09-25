@@ -912,11 +912,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "对比度",
-        "description": "微调文字对比度（50 表示不调整）。",
-        "label": "对比度"
-      },
       "pointerCursor": {
         "title": "使用指针光标",
         "description": "悬停交互元素时切换为指针光标。",
@@ -951,8 +946,7 @@
         "description": "减少动画或匹配系统设置。",
         "label": "动效偏好",
         "system": "系统",
-        "on": "开启",
-        "off": "关闭"
+        "on": "开启"
       },
       "surface": {
         "title": "半透明侧边栏",

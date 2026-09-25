@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontrast",
-        "description": "Metin kontrastını ince ayarla (50 = değişiklik yok).",
-        "label": "Kontrast seviyesi"
-      },
       "pointerCursor": {
         "title": "İmleç işaretini kullan",
         "description": "Etkileşimli öğelerin üzerine gelindiğinde işaretçi imlecine geç.",
@@ -961,8 +956,7 @@
         "description": "Animasyonları azaltın veya sistem tercihine uyun.",
         "label": "Hareket tercihi",
         "system": "Sistem",
-        "on": "Açık",
-        "off": "Kapalı"
+        "on": "Açık"
       },
       "surface": {
         "title": "Yarı saydam kenar çubuğu",
