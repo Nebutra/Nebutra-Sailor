@@ -25,11 +25,25 @@ const LEGAL_ROUTES = [
   { path: "/terms", title: /terms/i },
 ] as const;
 
+/**
+ * `page.addInitScript` re-runs on every future navigation in this page,
+ * including reloads the test itself triggers later (the accept button's own
+ * `window.location.reload()`, and the explicit `page.reload()` below). Left
+ * unguarded, it wipes the consent choice right back out on each of those
+ * reloads, which makes "persists across reload" fail unconditionally
+ * regardless of product behavior. Gate it on a sessionStorage flag — that
+ * storage survives reloads of the same tab (unlike a fresh navigation to a
+ * new context) — so the clear only happens once, before the test's first
+ * navigation.
+ */
 async function clearCookieConsent(page: Page): Promise<void> {
   await page.context().clearCookies();
   await page.addInitScript((key) => {
     try {
+      const initFlag = "__e2e_consent_init_done__";
+      if (window.sessionStorage.getItem(initFlag)) return;
       window.localStorage.removeItem(key);
+      window.sessionStorage.setItem(initFlag, "1");
     } catch {
       /* noop — storage may be unavailable in some contexts */
     }
