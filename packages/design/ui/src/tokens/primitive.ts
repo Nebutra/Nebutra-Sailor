@@ -10,6 +10,7 @@
  */
 
 import { colors } from "@nebutra/brand";
+import { fontStack } from "@nebutra/tokens/values";
 
 // ─── Color Palette ────────────────────────────────────────────────────────────
 
@@ -178,22 +179,21 @@ export const primitiveFontWeight = {
 export type PrimitiveFontWeight = keyof typeof primitiveFontWeight;
 
 // ─── Font Families — VI §Typography ──────────────────────────────────────────
-// Aligned with @nebutra/design-tokens SSOT (tokens/core.json fontFamily.*).
-// EN primary: Geist (Vercel variable, 100–900)
-// EN mono:    Geist Mono
-// CN primary: MiSans → PingFang SC → Microsoft YaHei
+// Read from @nebutra/tokens/values (generated from the styles.css apps import);
+// the faces are chosen in design-tokens core.json:fontFamily. next/font
+// variables are dropped here — these are the literal stacks.
 
 export const primitiveFontFamily = {
-  /** Default body/UI stack — Geist with CJK auto-fallbacks */
-  sans: '"Geist", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-  /** Chinese body/UI stack */
-  cnSans: '"MiSans", "PingFang SC", "Microsoft YaHei", sans-serif',
+  /** Default body/UI stack — Geist with CJK falling through to MiSans */
+  sans: fontStack("--font-sans"),
+  /** CJK-locale stack (same order as sans, minus Latin-only system faces) */
+  cnSans: fontStack("--font-cn"),
   /** Display / hero headlines */
-  display: '"DM Sans", "MiSans", sans-serif',
-  /** Heading (alias of display) */
-  heading: '"DM Sans", "MiSans", sans-serif',
-  /** Code / monospace — Geist Mono pairs with Geist for full family coverage */
-  mono: '"Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
+  display: fontStack("--font-display"),
+  /** Headings */
+  heading: fontStack("--font-heading"),
+  /** Code / monospace */
+  mono: fontStack("--font-mono"),
 } as const;
 
 export type PrimitiveFontFamily = keyof typeof primitiveFontFamily;

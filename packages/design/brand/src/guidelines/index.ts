@@ -9,6 +9,8 @@
  * - Documentation generation
  */
 
+import { colors, typography } from "../metadata";
+
 export type { AllowedColorCombination, ColorProhibitedUse } from "./color";
 // Color Guidelines
 export {
@@ -39,6 +41,10 @@ export {
   productChromeLogoRule,
 } from "./logo";
 
+function firstFamily(stack: string): string {
+  return (stack.split(",")[0] ?? "").trim().replace(/^["']|["']$/g, "");
+}
+
 /**
  * Complete Brand Guidelines Object
  *
@@ -61,19 +67,21 @@ export const brandGuidelines = {
   colors: {
     primary: {
       name: "云毓蓝",
-      hex: "#0033FE",
+      hex: colors.primary["500"],
     },
     secondary: {
       name: "云毓青",
-      hex: "#0BF1C3",
+      hex: colors.accent["500"],
     },
-    gradient: "linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)",
+    gradient: colors.gradient.primary,
   },
 
-  // Typography
+  // Typography — the faces the token source chose (metadata.ts reads them
+  // from core.json:fontFamily).
   typography: {
-    cn: "MiSans",
-    en: "Geist",
+    cn: firstFamily(typography.fontFamily.cn),
+    en: firstFamily(typography.fontFamily.en),
+    heading: firstFamily(typography.fontFamily.heading),
     weights: ["Regular", "Medium", "SemiBold", "Bold"],
   },
 } as const;

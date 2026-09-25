@@ -82,6 +82,8 @@ const EXEMPT_PATH = [
   /content\/docs\//, // mdx token docs may print the literal
 
   // ── Structural: the token / brand SSOT defines the hex ───────────────────
+  // The value table generated from styles.css (@nebutra/tokens/values).
+  /^packages\/design\/tokens\/src\/values\.generated\.ts$/,
   /^packages\/design\/brand\/src\//,
   /^packages\/design\/ui\/src\/tokens\//,
   /^packages\/design\/ui\/src\/theme\/tokens\.ts$/,

@@ -32,7 +32,6 @@ import {
   nebutraCyanScale,
   nebutraNeutralScale,
 } from "../packages/design/brand/src/guidelines/color.ts";
-import { brandGuidelines } from "../packages/design/brand/src/guidelines/index.ts";
 import { colors, typography } from "../packages/design/brand/src/metadata.ts";
 import { FONT_REGISTRY } from "../packages/design/fonts/src/index.ts";
 
@@ -281,43 +280,17 @@ if (nebutraCyanScale[500] !== colors.accent[500]) {
     }
   }
 
-  if (!typography.fontFamily.sans.includes("Geist")) {
+  // metadata.ts, brand guidelines, ui primitive.ts and ui typography/tokens.ts
+  // no longer hold font stacks of their own: brand:apply derives the VI stacks
+  // from core.json, and the ui files read @nebutra/tokens/values. There is no
+  // copy left to compare; scripts/lint-token-mirrors.mjs fails a new one.
+  if (!typography.fontFamily.sans.startsWith('"Geist"')) {
     fail(
       "metadata.fontFamily.sans",
-      `metadata.ts sans must include "Geist", got: ${typography.fontFamily.sans}`,
+      `derived sans should lead with Geist, got: ${typography.fontFamily.sans}`,
     );
   } else {
-    ok("metadata.ts: typography.fontFamily.sans includes Geist");
-  }
-
-  if (typography.fontFamily.sans.includes("Poppins")) {
-    fail("metadata.fontFamily.sans", "metadata.ts sans still references Poppins");
-  } else {
-    ok("metadata.ts: Poppins removed from sans stack");
-  }
-
-  if (brandGuidelines.typography.en !== "Geist") {
-    fail(
-      "guidelines.typography.en",
-      `brand guidelines must name Geist as the English UI face, got ${brandGuidelines.typography.en}`,
-    );
-  } else {
-    ok("guidelines/index.ts: typography.en === Geist");
-  }
-
-  if (!primitiveTs.includes('"Geist"') || primitiveTs.includes('"Poppins"')) {
-    fail("ui.primitive.fontFamily", "primitive.ts must use Geist and must NOT use Poppins");
-  } else {
-    ok("ui/primitive.ts: Geist primary, Poppins removed");
-  }
-
-  if (typographyTs.includes("Poppins") || !typographyTs.includes("var(--font-mono,")) {
-    fail(
-      "ui.typography.fontFamily",
-      "typography/tokens.ts must use token-first Geist stacks and must NOT reference Poppins",
-    );
-  } else {
-    ok("ui/typography/tokens.ts: token-first Geist stacks, Poppins removed");
+    ok("metadata.ts: typography derived from core.json (Geist body)");
   }
 
   const legacyMonoFallbackFragments = [

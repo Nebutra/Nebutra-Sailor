@@ -129,22 +129,17 @@ export const colors = {
 } as const;
 
 /**
- * Typography — Geist (Latin UI), DM Sans (headings), MiSans (Chinese), Geist Mono.
+ * Typography. fontFamily is read from design-tokens core.json:fontFamily by
+ * brand:apply — change faces there, not here.
  */
 export const typography = {
   fontFamily: {
-    en: '"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
+    en: '"Geist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
     cn: '"MiSans", "PingFang SC", "Microsoft YaHei", sans-serif',
     sans: '"Geist", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
     mono: '"Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
     display: '"DM Sans", "MiSans", "PingFang SC", sans-serif',
     heading: '"DM Sans", "MiSans", "PingFang SC", sans-serif',
-    brandPrint: '"MiSans", "PingFang SC", sans-serif',
-  },
-  cssVars: {
-    sans: "var(--font-geist-sans)",
-    mono: "var(--font-geist-mono)",
-    cnSans: "var(--font-misans)",
   },
   fontWeight: {
     thin: 100,

@@ -5,41 +5,31 @@
  * All font-related values should come from here.
  */
 
+import { tokenValue } from "@nebutra/tokens/values";
+
 // ============================================
 // Font Families
 // ============================================
 
 /**
- * Primary font stack - Used for body text and UI.
- *
- * Token-first so next/font's generated face wins when available; the literal
- * family stack remains as a standalone fallback for docs/tests.
+ * Font stacks as CSS values: the token first, then — for a surface that never
+ * loaded the token stylesheet — the token's own declared value, read from
+ * @nebutra/tokens/values. The fallback is the stylesheet, not a copy of it.
  */
-export const FONT_FAMILY_PRIMARY =
-  'var(--font-sans, var(--font-geist-sans, "Geist", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif))';
+const tokenFirst = (name: "--font-sans" | "--font-heading" | "--font-mono" | "--font-cn") =>
+  `var(${name}, ${tokenValue(name)})`;
 
-/**
- * Heading font stack - Used for titles and emphasis
- *
- * Geist Sans is the primary display typeface.
- */
-export const FONT_FAMILY_HEADING =
-  'var(--font-heading, var(--font-dm-sans, "DM Sans", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif))';
+/** Primary font stack — body text and UI. */
+export const FONT_FAMILY_PRIMARY = tokenFirst("--font-sans");
 
-/**
- * Monospace font stack - Used for code and technical content
- */
-export const FONT_FAMILY_MONO =
-  'var(--font-mono, var(--font-geist-mono, "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace))';
+/** Heading font stack — titles and emphasis (DM Sans, CJK through MiSans). */
+export const FONT_FAMILY_HEADING = tokenFirst("--font-heading");
 
-/**
- * CJK (Chinese/Japanese/Korean) fallback stack
- *
- * MiSans is the primary Chinese font.
- * Provides consistent rendering for Chinese, Japanese, and Korean text.
- */
-export const FONT_FAMILY_CJK =
-  '"MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
+/** Monospace font stack — code and technical content. */
+export const FONT_FAMILY_MONO = tokenFirst("--font-mono");
+
+/** CJK-locale stack — MiSans behind the Latin face, system CJK faces after it. */
+export const FONT_FAMILY_CJK = tokenFirst("--font-cn");
 
 /**
  * Complete font stacks with CJK fallback
