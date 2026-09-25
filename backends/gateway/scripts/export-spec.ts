@@ -15,8 +15,11 @@ import { resolve } from "node:path";
 // Stub environment variables so the app module loads without crashing.
 // The spec export only calls app.request() — no DB queries are executed.
 process.env.DATABASE_URL ??= "postgresql://stub:stub@localhost:5432/stub";
-process.env.REDIS_URL ??= "redis://localhost:6379";
-process.env.CLERK_SECRET_KEY ??= "sk_test_stub";
+process.env.BETTER_AUTH_SECRET ??= "stub_secret_for_spec_export";
+// Without QSTASH_TOKEN the AI gateway deps refuse the memory queue in
+// production mode and their routes never mount, so they would vanish from
+// the spec. Routes only need to register here, not run.
+process.env.ALLOW_MEMORY_QUEUE_IN_PRODUCTION ??= "true";
 process.env.NODE_ENV ??= "production";
 process.env.RESEND_API_KEY ??= "re_stub_key_for_spec_export";
 process.env.UPSTASH_REDIS_REST_URL ??= "https://stub.upstash.io";

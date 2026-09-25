@@ -64,8 +64,6 @@ if (gatewayUrl) {
     env: {
       ...process.env,
       DATABASE_URL: process.env.DATABASE_URL ?? "postgresql://stub:stub@localhost:5432/stub",
-      REDIS_URL: process.env.REDIS_URL ?? "redis://localhost:6379",
-      CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? "sk_test_stub",
     },
   });
 

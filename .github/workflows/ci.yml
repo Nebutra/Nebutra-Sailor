@@ -254,7 +254,6 @@ jobs:
         env:
           CI: true
           DATABASE_URL: "postgresql://stub:stub@localhost:5432/stub"
-          CLERK_SECRET_KEY: "sk_test_placeholder"
 
   # ── License compliance ───────────────────────────────────────────────────
   # Ensures no production dependency uses a copyleft license incompatible
@@ -1200,11 +1199,6 @@ jobs:
         run: pnpm --filter @nebutra/gateway generate:spec
         env:
           DATABASE_URL: "postgresql://stub:stub@localhost:5432/stub"
-          BETTER_AUTH_SECRET: "stub_secret_for_spec_export"
-          # The spec only needs routes mounted, not a working queue: without
-          # QSTASH_TOKEN the AI gateway's deps refuse the memory queue in
-          # production mode and the route never registers.
-          ALLOW_MEMORY_QUEUE_IN_PRODUCTION: "true"
 
       - name: Validate spec with Redocly
         run: pnpm --filter @nebutra/gateway lint:spec
