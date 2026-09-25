@@ -19,6 +19,9 @@ nebutra init
 # Check capability readiness (live / local-fallback / missing-key)
 nebutra status
 
+# Sync .env.example / .env.local with the capabilities declared in nebutra.config.json
+nebutra sync
+
 # Scaffold a new project (separate tool — one creation entry point)
 npx create-sailor ./my-app
 
@@ -44,6 +47,7 @@ nebutra doctor
 |---------|-------------|
 | `init` | Initialize project with `nebutra.config.json` |
 | `status` | Show capability readiness — live, local-fallback, or missing-key, per env (`--json`) |
+| `sync` | Make `.env.example`/`.env.local` agree with declared capabilities, idempotently (`--dry-run`, `--json`) |
 | `mcp` | Start the MCP server for AI agents and editors |
 | `dev` | Start development server |
 | `generate` | Scaffold apps, modules, and code |

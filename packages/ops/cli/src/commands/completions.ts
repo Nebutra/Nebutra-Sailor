@@ -37,6 +37,7 @@ const COMMAND_DESCRIPTIONS: Record<string, string> = {
   link: "Link local project metadata",
   unlink: "Unlink local project metadata",
   status: "Show capability readiness (live/local-fallback/missing-key)",
+  sync: "Sync .env.example/.env.local with declared capabilities",
 };
 
 const KNOWN_FLAGS = [
@@ -117,6 +118,11 @@ _nebutra() {
     "--json[Emit machine-readable JSON]"
   )
 
+  local -a sync_flags=(
+    "--dry-run[Preview planned additions without writing files]"
+    "--json[Emit machine-readable JSON]"
+  )
+
   local -a mcp_flags=(
     "--stdio[Use stdio transport (default)]"
   )
@@ -143,6 +149,9 @@ _nebutra() {
         ;;
       status)
         _arguments "*:options:($global_flags $status_flags)"
+        ;;
+      sync)
+        _arguments "*:options:($global_flags $sync_flags)"
         ;;
       *)
         _arguments "*:options:($global_flags)"
@@ -173,6 +182,10 @@ complete -c nebutra -f -a "--version" -d "Show version"
 
 # status command flags
 complete -c nebutra -n "__fish_seen_subcommand_from status" -f -a "--json" -d "Emit machine-readable JSON"
+
+# sync command flags
+complete -c nebutra -n "__fish_seen_subcommand_from sync" -f -a "--dry-run" -d "Preview planned additions without writing files"
+complete -c nebutra -n "__fish_seen_subcommand_from sync" -f -a "--json" -d "Emit machine-readable JSON"
 
 # mcp command flags
 complete -c nebutra -n "__fish_seen_subcommand_from mcp" -f -a "--stdio" -d "Use stdio transport (default)"

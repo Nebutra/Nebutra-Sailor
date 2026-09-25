@@ -377,6 +377,38 @@ export const nebultraCommand: CommandMeta = {
       ],
     },
     {
+      name: "sync",
+      description:
+        "Make .env.example / .env.local agree with the declared capabilities (idempotent)",
+      usage: "nebutra sync [options]",
+      arguments: [],
+      options: [
+        {
+          flags: "--dry-run",
+          description: "Preview planned additions without writing files (exits with code 10)",
+        },
+        {
+          flags: "--json",
+          description: "Emit machine-readable JSON",
+        },
+      ],
+      examples: [
+        {
+          command: "nebutra sync",
+          description:
+            "Add any env keys required by declared capabilities to .env.example, create .env.local if missing",
+        },
+        {
+          command: "nebutra sync --dry-run",
+          description: "Preview planned additions without writing files",
+        },
+        {
+          command: "nebutra sync --json",
+          description: "Emit { added, unchanged, warnings } as JSON for agents",
+        },
+      ],
+    },
+    {
       name: "doctor",
       description: "Check local project setup and common Nebutra configuration issues",
       usage: "nebutra doctor",

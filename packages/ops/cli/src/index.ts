@@ -23,6 +23,7 @@ import { registerSchemaCommand } from "./commands/schema";
 import { registerSecretsCommand } from "./commands/secrets";
 import { registerServicesCommand } from "./commands/services";
 import { registerStatusCommand } from "./commands/status";
+import { registerSyncCommand } from "./commands/sync";
 import { registerTestCommand } from "./commands/test";
 import { registerThemeCommand } from "./commands/theme";
 import { registerUiCommand } from "./commands/ui";
@@ -126,6 +127,7 @@ export function buildProgram(options: BuildProgramOptions): Command {
   registerLinkCommand(program);
   registerUnlinkCommand(program);
   registerStatusCommand(program);
+  registerSyncCommand(program);
 
   program
     .command("doctor")
@@ -291,6 +293,8 @@ Examples:
   $ nebutra init                          Initialize a new project
   $ nebutra status                        Show capability readiness (live/local-fallback/missing-key)
   $ nebutra status --json                 Machine-readable capability status
+  $ nebutra sync                          Sync .env.example/.env.local with declared capabilities
+  $ nebutra sync --dry-run                Preview env-file additions without writing
   $ nebutra dev --app=web                 Start dev for the web app
   $ nebutra db migrate                    Run pending database migrations
   $ nebutra generate app blog             Scaffold a new app
