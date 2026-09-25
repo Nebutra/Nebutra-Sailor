@@ -48,6 +48,7 @@ import {
 } from "./better-auth/auth-center-session";
 import { ALL_FALSE_CAPABILITIES, probeBetterAuthCapabilities } from "./better-auth/capabilities";
 import { loadBetterAuthDeviceAuthorizationPlugins } from "./better-auth/device-authorization";
+import { DEVICE_AUTH_RATE_LIMIT_RULES } from "./better-auth/device-authorization-config";
 import { buildMagicLinkCapability } from "./better-auth/magic-link";
 import { mapSession, mapUser, normalizeOrganization } from "./better-auth/mappers";
 import { buildOrganizationsCapability } from "./better-auth/organization";
@@ -329,19 +330,12 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     // before anyone has signed in) — tighter-than-default rate limits so
     // /device/code can't be used to mint an unbounded number of pending rows
     // and /device/token can't be brute-forced for a valid device_code.
-    // Better Auth's own global default is 100 req / 60s per IP+path.
+    // Better Auth's own global default is 100 req / 60s per IP+path. Same
+    // rules the Cloudflare Workers edge applies — DEVICE_AUTH_RATE_LIMIT_RULES
+    // in ./better-auth/device-authorization-config.ts.
     const deviceRateLimit =
       deviceAuthorizationPlugins.length > 0
-        ? {
-            rateLimit: {
-              customRules: {
-                "/device/code": { window: 60, max: 10 },
-                "/device/token": { window: 60, max: 30 },
-                "/device/approve": { window: 60, max: 10 },
-                "/device/deny": { window: 60, max: 10 },
-              },
-            },
-          }
+        ? { rateLimit: { customRules: DEVICE_AUTH_RATE_LIMIT_RULES } }
         : {};
 
     const auth = betterAuth({

@@ -16,10 +16,14 @@
  * sessions minted here are accepted by app RPs.
  */
 
+import {
+  buildDeviceAuthorizationOptions,
+  DEVICE_AUTH_RATE_LIMIT_RULES,
+} from "@nebutra/auth/device-authorization-config";
 import { brand } from "@nebutra/brand/metadata";
 import { createTwilioVerifyProvider } from "@nebutra/sms/twilio-verify";
 import { betterAuth } from "better-auth";
-import { captcha, phoneNumber } from "better-auth/plugins";
+import { bearer, captcha, deviceAuthorization, phoneNumber } from "better-auth/plugins";
 import { Pool } from "pg";
 import { applyEdgeAuthCors } from "./lib/auth-edge-cors";
 import {
@@ -230,6 +234,18 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
     `.${brand.domains.landing}`;
   const phoneAuth = resolvePhoneAuthConfig(env);
   const plugins = [];
+  // `nebutra login` (RFC 8628 device authorization) — production auth-center
+  // traffic runs THIS instance, not the Node/Next route in
+  // packages/iam/auth/src/providers/better-auth/device-authorization.ts, so
+  // it must mount the same plugin pair here too. One options builder shared
+  // between both — see device-authorization-config.ts's header for why the
+  // shared file has to stay import-free (this Worker's ~200 KiB gzip budget).
+  // `bearer` lets `nebutra whoami` authenticate with `Authorization: Bearer
+  // <token>` instead of a cookie jar.
+  plugins.push(
+    bearer(),
+    deviceAuthorization(buildDeviceAuthorizationOptions({ verificationUri: `${baseURL}/device` })),
+  );
   if (phoneAuth) {
     const twilio = createTwilioVerifyProvider(phoneAuth.twilio);
     plugins.push(
@@ -267,6 +283,9 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
     socialProviders,
     plugins,
     onAPIError: { errorURL: "/sign-in" },
+    // Same tighter-than-default limits on the device-flow endpoints as the
+    // Node path — see DEVICE_AUTH_RATE_LIMIT_RULES's docstring.
+    rateLimit: { customRules: DEVICE_AUTH_RATE_LIMIT_RULES },
     advanced: {
       crossSubDomainCookies: {
         enabled: true,

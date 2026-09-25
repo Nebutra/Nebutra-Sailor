@@ -5,9 +5,17 @@
  * (`apps/web`, `apps/forge`, `apps/kuanlan`, …) constructs its own Better
  * Auth instance from this same provider factory against the same database —
  * mounting the plugin unconditionally would expose `/api/auth/device/*` on
- * every one of them. Only `apps/auth` (the auth center) passes the flag, per
+ * every one of them. Only `apps/auth`'s Next route passes the flag, per
  * docs/architecture/2026-09-24-sailor-convergence.md §8. `apps/idp`'s OIDC
  * grant-type freeze is untouched — this never runs there.
+ *
+ * Production auth-center traffic does NOT run this file — it runs
+ * the Cloudflare Workers edge (apps/auth/src/worker-edge.ts, Kysely on a
+ * raw `pg.Pool`, not Prisma), which mounts the identical plugin pair from
+ * the SAME options builder in ./device-authorization-config.ts. This file
+ * (the Prisma/Next path) still matters for local dev and any deployment
+ * where DEPLOY_TARGET_AUTH isn't `cloudflare-workers`. Both paths must
+ * resolve to the one physical table — see that file's header.
  *
  * The `bearer` plugin is mounted alongside it so `nebutra whoami` (and any
  * other CLI call) can authenticate with `Authorization: Bearer <token>`
@@ -16,32 +24,18 @@
 
 import { logger } from "@nebutra/logger";
 import type { BetterAuthPlugin } from "better-auth/types";
+import {
+  buildDeviceAuthorizationOptions,
+  type DeviceAuthorizationPluginOptions,
+} from "./device-authorization-config";
 
-/** Public client id CLI device flow is validated against. No client secret —
- * the device-code + user-approval step is the credential, exactly as gh/az/
- * Vercel's CLIs do it. */
-export const NEBUTRA_CLI_CLIENT_ID = "nebutra-cli";
-
-/**
- * Human-friendly display of a device user code: `WCQM9PDH` → `WCQM-9PDH`.
- *
- * The plugin's `/device`, `/device/approve` and `/device/deny` endpoints all
- * strip hyphens from whatever the caller submits before comparing it against
- * the STORED code (`userCode.replace(/-/g, "")`), but do NOT strip hyphens
- * from the value `/device/code` stores in the first place. So the code must
- * be GENERATED flat (no hyphen) — this repo intentionally does not override
- * `generateUserCode`, leaving the plugin's own default generator in place,
- * which already draws from the same unambiguous charset (no 0/O/1/I/L) this
- * design calls for. The hyphen is purely a display-layer insertion, applied
- * here and by the CLI (packages/ops/cli/src/utils/device-auth.ts), and
- * stripped again before submission — which every endpoint above already does
- * regardless, so a user typing either `WCQM9PDH` or `WCQM-9PDH` both work.
- */
-export function formatUserCodeForDisplay(rawUserCode: string): string {
-  const clean = rawUserCode.replace(/-/g, "").toUpperCase();
-  if (clean.length <= 4) return clean;
-  return `${clean.slice(0, 4)}-${clean.slice(4)}`;
-}
+export {
+  DEVICE_AUTH_MODEL_NAME,
+  DEVICE_AUTH_RATE_LIMIT_RULES,
+  DEVICE_AUTH_SCHEMA_FIELDS,
+  formatUserCodeForDisplay,
+  NEBUTRA_CLI_CLIENT_ID,
+} from "./device-authorization-config";
 
 export interface DeviceAuthorizationFlagOptions {
   /** Public client ids allowed to start a device flow. Defaults to just the
@@ -55,33 +49,20 @@ export async function loadBetterAuthDeviceAuthorizationPlugins(
   verificationUri: string,
 ): Promise<BetterAuthPlugin[]> {
   if (!flag) return [];
-  const allowedClientIds = new Set(
-    (typeof flag === "object" ? flag.allowedClientIds : undefined) ?? [NEBUTRA_CLI_CLIENT_ID],
-  );
+  const allowedClientIds = typeof flag === "object" ? flag.allowedClientIds : undefined;
 
   try {
     const { deviceAuthorization, bearer } = (await import("better-auth/plugins")) as {
-      deviceAuthorization: (options: {
-        expiresIn: string;
-        interval: string;
-        userCodeLength: number;
-        validateClient: (clientId: string) => boolean;
-        verificationUri: string;
-      }) => BetterAuthPlugin;
+      deviceAuthorization: (options: DeviceAuthorizationPluginOptions) => BetterAuthPlugin;
       bearer: () => BetterAuthPlugin;
     };
 
-    const device = deviceAuthorization({
-      // TTL + poll interval per the design doc: short-lived code, 5s poll.
-      expiresIn: "10m",
-      interval: "5s",
-      // 8 chars from the plugin's own default unambiguous charset
-      // (ABCDEFGHJKLMNPQRSTUVWXYZ23456789 — no 0/O/1/I/L) — displayed as
-      // XXXX-XXXX by formatUserCodeForDisplay() above.
-      userCodeLength: 8,
-      validateClient: (clientId) => allowedClientIds.has(clientId),
-      verificationUri,
-    });
+    const device = deviceAuthorization(
+      buildDeviceAuthorizationOptions({
+        verificationUri,
+        ...(allowedClientIds ? { allowedClientIds } : {}),
+      }),
+    );
 
     // Bearer must come before other plugins that read session cookies so a
     // `Authorization: Bearer <token>` header is converted early. Order here

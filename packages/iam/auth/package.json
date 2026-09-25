@@ -17,6 +17,11 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./device-authorization-config": {
+      "types": "./dist/providers/better-auth/device-authorization-config.d.ts",
+      "import": "./dist/providers/better-auth/device-authorization-config.js",
+      "default": "./dist/providers/better-auth/device-authorization-config.js"
+    },
     "./client": {
       "types": "./dist/client.d.ts",
       "import": "./dist/client.js",

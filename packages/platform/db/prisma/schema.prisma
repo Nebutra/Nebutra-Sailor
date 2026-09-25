@@ -2107,7 +2107,9 @@ model AuthUser {
   // and do not alter `public.auth_users` itself.
   baMembers           BAMember[]
   baPasskeys          BAPasskey[]
-  baDeviceCodes       BADeviceCode[]
+  // `public.auth_device_codes` — not a `better_auth`-schema BA plugin table,
+  // see AuthDeviceCode's own doc comment for why.
+  deviceCodes         AuthDeviceCode[]
   chatSessions        ChatSession[]
 
   @@map("auth_users")
@@ -2861,14 +2863,30 @@ model BAPasskey {
 
 /// @conditional(auth=betterauth)
 // RFC 8628 device-authorization codes — Better Auth's `deviceAuthorization`
-// plugin, mounted only on the auth center (apps/auth), backs `nebutra login`.
-// Field/model names mirror the plugin's own defaults verbatim (see
-// better-auth/dist/plugins/device-authorization/schema.mjs) — only @map/@@map
-// give the columns/table this repo's snake_case convention; the plugin's
-// generic Prisma adapter resolves records by these unmapped field/model keys.
+// plugin, backing `nebutra login`. Lives in `public`, snake_case, alongside
+// AuthUser/AuthSession/AuthAccount/AuthVerification — NOT in the
+// `better_auth` schema BAOrganization/BAMember/BAPasskey use, because this
+// table must be reachable from TWO adapters that both mount the plugin:
+//
+//   - the Node/Next route (packages/iam/auth/.../providers/better-auth.ts,
+//     Prisma adapter, this model)
+//   - production auth.nebutra.com, which actually serves /api/auth/device/*:
+//     apps/auth/src/worker-edge.ts, a Cloudflare Workers edge on Kysely +
+//     raw `pg.Pool` at the default search_path — it can only see `public`
+//     tables, and addresses them by their literal name, not by Prisma
+//     @@map resolution.
+//
+// Both call sites pass the SAME plugin `schema: { deviceCode: { modelName:
+// "auth_device_codes", fields: {...} } }` option, built by one shared
+// function (packages/iam/auth/src/providers/better-auth/
+// device-authorization-config.ts) — that string has to be this table's name
+// literally, and its field map has to be this table's columns literally.
+// Do not rename either without updating that file.
+//
 // `userCode` is short-lived (default 10m TTL, enforced app-side too) and
-// human-typed (XXXX-XXXX, unambiguous charset) — see apps/auth `/device`.
-model BADeviceCode {
+// human-typed (XXXX-XXXX display format, unambiguous charset) — see
+// apps/auth `/device`.
+model AuthDeviceCode {
   id              String    @id @default(cuid())
   deviceCode      String    @unique @map("device_code")
   userCode        String    @unique @map("user_code")
@@ -2884,8 +2902,8 @@ model BADeviceCode {
 
   @@index([userId])
   @@index([expiresAt])
-  @@map("deviceCode")
-  @@schema("better_auth")
+  @@map("auth_device_codes")
+  @@schema("public")
 }
 
 // ============================================

@@ -156,6 +156,16 @@ constructs a Better Auth instance from the same shared provider (`apps/web`, `ap
 `apps/kuanlan`, …) does not set that flag, so `/api/auth/device/*` exists nowhere else. Client id
 is the fixed public `nebutra-cli`, validated server-side; no dynamic client registration.
 
+Production auth-center traffic does not run that Node route at all — `auth.<brand-apex>` is a
+Cloudflare Workers edge (`apps/auth/src/worker-edge.ts`, Kysely on a raw `pg.Pool`, not Prisma;
+see ADR 2026-06-04) that mounts the identical plugin pair from the same options builder
+(`packages/iam/auth/src/providers/better-auth/device-authorization-config.ts`, a zero-runtime-import
+file exported as `@nebutra/auth/device-authorization-config` so the edge's size-constrained bundle
+can import just it — not the rest of `@nebutra/auth` — without pulling in Prisma). The backing
+table (`public.auth_device_codes`, snake_case) therefore lives beside `auth_users`/`auth_sessions`
+rather than in the `better_auth`-schema tables Better Auth's `organization`/`passkey` plugins use,
+because the edge's Kysely adapter can only see `public`-schema tables addressed by literal name.
+
 **`apps/idp/AGENTS.md`'s grant-type freeze is untouched — no amendment needed.** The original plan
 above assumed the OIDC-flavoured IdP app would gain the grant; instead the whole flow lives beside
 Better Auth's own session issuance on the auth center, which already has its own (separate,
