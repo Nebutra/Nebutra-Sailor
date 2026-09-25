@@ -130,6 +130,25 @@ jobs:
             pnpm exec prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --script || true
           fi
 
+      - name: Export the live schema (dry run only)
+        # Structure only: tables, indexes, RLS policies, functions, grants. No
+        # rows (--schema-only) and no passwords (pg_dump never emits them).
+        # The artifact is the reference a new baseline is diffed against.
+        if: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          docker run --rm -e PGURL="$DATABASE_URL" postgres:18 \
+            sh -c 'pg_dump "$PGURL" --schema-only --no-comments' > live-schema.sql
+          echo "Exported $(grep -c 'CREATE TABLE' live-schema.sql) tables, $(grep -c 'CREATE POLICY' live-schema.sql) policies"
+
+      - name: Upload the live schema
+        if: ${{ inputs.dry_run }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: live-schema
+          path: live-schema.sql
+          retention-days: 7
+
       - name: Clear a failed migration so deploy can retry it
         # Postgres runs each migration file in one transaction, so a migration
         # that errored left nothing behind. Prisma still records it as failed
