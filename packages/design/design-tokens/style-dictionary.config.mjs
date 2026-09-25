@@ -909,6 +909,18 @@ function buildTailwindThemeInline() {
   --text-9xl: var(--type-9xl-size);
   --text-9xl--line-height: var(--type-9xl-leading);
   --text-9xl--letter-spacing: var(--type-9xl-tracking);
+  --text-display: var(--type-display-size);
+  --text-display--line-height: var(--type-display-leading);
+  --text-display--letter-spacing: var(--type-display-tracking);
+  --text-body: var(--type-body-size);
+  --text-body--line-height: var(--type-body-leading);
+  --text-body--letter-spacing: var(--type-body-tracking);
+  --text-label: var(--type-label-size);
+  --text-label--line-height: var(--type-label-leading);
+  --text-label--letter-spacing: var(--type-label-tracking);
+  --text-meta: var(--type-meta-size);
+  --text-meta--line-height: var(--type-meta-leading);
+  --text-meta--letter-spacing: var(--type-meta-tracking);
 
   /* Motion — Durations (four-rail; see core.json:duration). Names denote intent, not relative speed. */
   --duration-micro: var(--motion-duration-micro);

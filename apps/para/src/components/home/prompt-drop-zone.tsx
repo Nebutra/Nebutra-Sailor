@@ -50,8 +50,9 @@ export function PromptDropZone() {
         void submit();
       }}
       className={[
-        "flex items-end gap-2 rounded-xl border bg-popover py-2.5 pr-2.5 pl-4 transition-colors",
-        over ? "border-[hsl(var(--ring))]" : "border-border",
+        "flex items-end gap-2 rounded-xl border bg-popover py-2.5 pr-2.5 pl-4 transition-[border-color,box-shadow]",
+        "focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/20",
+        over ? "border-ring" : "border-border",
       ].join(" ")}
     >
       <Textarea
@@ -70,7 +71,8 @@ export function PromptDropZone() {
           }
         }}
         rows={1}
-        className="max-h-none min-h-0 flex-1 resize-none border-0 bg-transparent px-0 py-1 text-body shadow-none"
+        tone="bare"
+        className="max-h-none min-h-0 flex-1 resize-none px-0 py-1 text-body"
       />
       {/* Only appears once there is something to send: an always-lit action on an empty field is
           the brightest thing on the page pointing at nothing. */}

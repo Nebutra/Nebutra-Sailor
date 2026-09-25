@@ -19,16 +19,9 @@
  * rather than typed into a className.
  */
 @theme {
-  /* Modal and empty-state headlines only — the top of the ladder, not a hero size. */
-  --text-display: 20px;
-  --text-display--line-height: 28px;
-  --text-body: 14px;
-  --text-body--line-height: 20px;
-  --text-label: 12px;
-  --text-label--line-height: 16px;
-  /* Machine facts only: dimensions, credit cost, zoom %, queue position, timestamps, key hints. */
-  --text-meta: 11px;
-  --text-meta--line-height: 16px;
+  /* The four text roles (display, body, label, meta) are the shared type scale's
+     role aliases in core.json:type — declared there, not here, so cn() knows them
+     as sizes and a Brand Package can retune them. */
 
   /* The wordmark is a lockup, not type in the system — the one place tracking is set by hand. */
   --tracking-wordmark: 0.18em;

@@ -552,6 +552,9 @@ const SelectContent = ({
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <BaseSelect.Portal>
     <BaseSelect.Positioner
+      // z-index on the positioned element — the Popup inside is static, so a
+      // z-index there is ignored and any z-10 layer on the page covers the list.
+      style={{ zIndex: overlayZIndex.popover }}
       alignItemWithTrigger={position === "item-aligned"}
       sideOffset={selectTokens.content.sideOffset}
     >

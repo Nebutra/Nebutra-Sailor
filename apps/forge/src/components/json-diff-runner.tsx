@@ -147,7 +147,8 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
             value={left}
             onChange={(e) => setLeft(e.target.value)}
             rows={14}
-            className="border-0 bg-transparent font-mono text-sm shadow-none"
+            tone="bare"
+            className="font-mono text-sm"
           />
         </div>
         <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[color-mix(in_srgb,var(--status-success)_4%,transparent)] p-1">
@@ -157,7 +158,8 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
             value={right}
             onChange={(e) => setRight(e.target.value)}
             rows={14}
-            className="border-0 bg-transparent font-mono text-sm shadow-none"
+            tone="bare"
+            className="font-mono text-sm"
           />
         </div>
       </div>

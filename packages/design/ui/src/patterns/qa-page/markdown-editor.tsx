@@ -155,7 +155,8 @@ export function MarkdownEditor({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
-            className="resize-none rounded-none border-0 font-mono text-sm shadow-none"
+            tone="bare"
+            className="resize-none rounded-none font-mono text-sm"
             style={{ minHeight }}
           />
         </TabsContent>

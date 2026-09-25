@@ -20,7 +20,12 @@ const HoverCardContent = ({
   side?: "top" | "right" | "bottom" | "left";
 } & { ref?: React.Ref<React.ElementRef<typeof BasePopover.Popup>> | undefined }) => (
   <BasePopover.Portal>
-    <BasePopover.Positioner side={side} align={align} sideOffset={sideOffset}>
+    <BasePopover.Positioner
+      style={{ zIndex: overlayZIndex.popover }}
+      side={side}
+      align={align}
+      sideOffset={sideOffset}
+    >
       <BasePopover.Popup
         ref={ref}
         className={cn(

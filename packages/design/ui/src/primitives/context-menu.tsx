@@ -158,6 +158,7 @@ export const ContextMenuContent = ({
 }) => (
   <BaseContextMenu.Portal>
     <BaseContextMenu.Positioner
+      style={{ zIndex: overlayZIndex.popover }}
       alignOffset={alignOffset}
       align={align}
       sideOffset={sideOffset}

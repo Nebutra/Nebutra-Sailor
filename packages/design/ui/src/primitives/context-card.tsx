@@ -3,6 +3,7 @@
 import { Popover as BasePopover } from "@base-ui/react/popover";
 import * as React from "react";
 import { type ContextCardWidth, contextCardTokens } from "../tokens/components/context-card";
+import { overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
 // =============================================================================
@@ -183,7 +184,7 @@ const ContextCardTrigger = ({
           align={align}
           sideOffset={sideOffset}
           alignOffset={alignOffset}
-          className="z-50"
+          style={{ zIndex: overlayZIndex.popover }}
         >
           <BasePopover.Popup
             ref={panelRef}

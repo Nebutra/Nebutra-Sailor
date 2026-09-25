@@ -63,6 +63,7 @@ function PopoverContent({
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Positioner
+        style={{ zIndex: overlayZIndex.popover }}
         data-slot="popover-positioner"
         sideOffset={sideOffset}
         align={align}
@@ -76,7 +77,7 @@ function PopoverContent({
             overlayPrimitiveClassNames.popoverSurface,
             className,
           )}
-          style={{ zIndex: overlayZIndex.popover, ...style }}
+          style={style}
           {...props}
         >
           {children}
