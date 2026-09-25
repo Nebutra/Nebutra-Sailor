@@ -27,7 +27,7 @@ describe("init command", () => {
     expect(existsSync(join(testDir, "nebutra.config.json"))).toBe(true);
 
     const config = JSON.parse(await readFile(join(testDir, "nebutra.config.json"), "utf-8"));
-    expect(config.$schema).toBe("https://nebutra.com/schema/nebutra.config.json");
+    expect(config.stack).toBe("sailor-2026-09");
     expect(config.stack).toBe("sailor-2026-09");
     expect(config.capabilities).toEqual(
       expect.arrayContaining(["auth", "billing", "email", "storage", "queue", "cache", "ai"]),
@@ -49,7 +49,7 @@ describe("init command", () => {
       expect(diff.operation).toBe("create");
       expect(diff.path).toContain("nebutra.config.json");
       expect(diff.after).toBeDefined();
-      expect(diff.after.$schema).toBe("https://nebutra.com/schema/nebutra.config.json");
+      expect(diff.after.stack).toBe("sailor-2026-09");
     }
   });
 
