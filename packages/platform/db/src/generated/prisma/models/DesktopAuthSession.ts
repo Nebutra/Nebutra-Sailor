@@ -15,6 +15,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model DesktopAuthSession
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type DesktopAuthSessionModel = runtime.Types.Result.DefaultSelection<Prisma.$DesktopAuthSessionPayload>
 

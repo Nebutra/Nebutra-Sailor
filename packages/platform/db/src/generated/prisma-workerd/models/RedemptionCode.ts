@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model RedemptionCode
- * 
+ * @rls global
  */
 export type RedemptionCodeModel = runtime.Types.Result.DefaultSelection<Prisma.$RedemptionCodePayload>
 

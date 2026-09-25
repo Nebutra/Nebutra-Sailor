@@ -15,6 +15,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model AuthAccount
  * @conditional(auth=betterauth)
+ * @rls global
  */
 export type AuthAccountModel = runtime.Types.Result.DefaultSelection<Prisma.$AuthAccountPayload>
 

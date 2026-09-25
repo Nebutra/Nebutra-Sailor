@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Organization
- * 
+ * @rls self
  */
 export type OrganizationModel = runtime.Types.Result.DefaultSelection<Prisma.$OrganizationPayload>
 

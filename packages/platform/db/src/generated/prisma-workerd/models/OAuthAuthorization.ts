@@ -15,6 +15,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model OAuthAuthorization
  * @conditional(idp=oauth-server)
+ * @rls via(client)
  */
 export type OAuthAuthorizationModel = runtime.Types.Result.DefaultSelection<Prisma.$OAuthAuthorizationPayload>
 

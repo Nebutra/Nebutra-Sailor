@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model SleptonsaMemberProfile
- * 
+ * @rls global
  */
 export type SleptonsaMemberProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$SleptonsaMemberProfilePayload>
 

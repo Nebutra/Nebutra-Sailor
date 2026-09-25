@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model SleptonsUpvote
- * 
+ * @rls global
  */
 export type SleptonsUpvoteModel = runtime.Types.Result.DefaultSelection<Prisma.$SleptonsUpvotePayload>
 

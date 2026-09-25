@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model UserProfile
- * 
+ * @rls global
  */
 export type UserProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$UserProfilePayload>
 

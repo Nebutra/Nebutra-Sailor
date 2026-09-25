@@ -15,6 +15,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model AuthDeviceCode
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type AuthDeviceCodeModel = runtime.Types.Result.DefaultSelection<Prisma.$AuthDeviceCodePayload>
 

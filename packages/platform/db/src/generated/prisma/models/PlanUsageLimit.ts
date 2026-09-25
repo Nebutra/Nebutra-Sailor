@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PlanUsageLimit
- * 
+ * @rls global
  */
 export type PlanUsageLimitModel = runtime.Types.Result.DefaultSelection<Prisma.$PlanUsageLimitPayload>
 

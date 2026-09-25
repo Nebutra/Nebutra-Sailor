@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Referral
- * 
+ * @rls global
  */
 export type ReferralModel = runtime.Types.Result.DefaultSelection<Prisma.$ReferralPayload>
 

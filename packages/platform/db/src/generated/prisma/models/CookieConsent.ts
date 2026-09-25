@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model CookieConsent
- * 
+ * @rls global
  */
 export type CookieConsentModel = runtime.Types.Result.DefaultSelection<Prisma.$CookieConsentPayload>
 

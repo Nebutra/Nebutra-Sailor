@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model CofounderProfile
- * 
+ * @rls read(((is_active = true) OR (tenant_id = public.current_tenant_id()))) write((tenant_id = public.current_tenant_id()))
  */
 export type CofounderProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$CofounderProfilePayload>
 

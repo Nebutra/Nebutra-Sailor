@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PebbleDiagnosticTicket
- * 
+ * @rls off
  */
 export type PebbleDiagnosticTicketModel = runtime.Types.Result.DefaultSelection<Prisma.$PebbleDiagnosticTicketPayload>
 

@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model SleptonsConnection
- * 
+ * @rls global
  */
 export type SleptonsConnectionModel = runtime.Types.Result.DefaultSelection<Prisma.$SleptonsConnectionPayload>
 

@@ -43,7 +43,7 @@ export { Prisma }
 
 /**
  * Model Organization
- * 
+ * @rls self
  */
 export type Organization = Prisma.OrganizationModel
 /**
@@ -54,6 +54,7 @@ export type Organization = Prisma.OrganizationModel
  * existing owning-id values stay valid as tenant ids. RLS scopes data rows via
  * `app.current_tenant_id` = Tenant.id. Owned-data back-relations are added as
  * the data models retarget their FK from Organization to Tenant.
+ * @rls self
  */
 export type Tenant = Prisma.TenantModel
 /**
@@ -64,6 +65,7 @@ export type Tenant = Prisma.TenantModel
  * known `toOrganizationId`. The provisioning worker fills `toTenantId`,
  * re-points the named asset, and marks the row `applied` (or `failed` with
  * `error`). No implicit copy — each row is an explicit ownership change.
+ * @rls read(((from_tenant_id = public.current_tenant_id()) OR (to_tenant_id = public.current_tenant_id()))) write((from_tenant_id = public.current_tenant_id()))
  */
 export type TenantTransferJournal = Prisma.TenantTransferJournalModel
 /**
@@ -73,7 +75,7 @@ export type TenantTransferJournal = Prisma.TenantTransferJournalModel
 export type APIKey = Prisma.APIKeyModel
 /**
  * Model User
- * 
+ * @rls global
  */
 export type User = Prisma.UserModel
 /**
@@ -124,6 +126,7 @@ export type Order = Prisma.OrderModel
 /**
  * Model OrderItem
  * @conditional(template=ecommerce)
+ * @rls via(order)
  */
 export type OrderItem = Prisma.OrderItemModel
 /**
@@ -194,7 +197,7 @@ export type WorkflowDefinition = Prisma.WorkflowDefinitionModel
 export type WorkflowRun = Prisma.WorkflowRunModel
 /**
  * Model ModelConfig
- * 
+ * @rls global
  */
 export type ModelConfig = Prisma.ModelConfigModel
 /**
@@ -216,27 +219,27 @@ export type ModelConfig = Prisma.ModelConfigModel
 export type RequestLog = Prisma.RequestLogModel
 /**
  * Model FeatureDefinition
- * 
+ * @rls global
  */
 export type FeatureDefinition = Prisma.FeatureDefinitionModel
 /**
  * Model UsageLimitDefinition
- * 
+ * @rls global
  */
 export type UsageLimitDefinition = Prisma.UsageLimitDefinitionModel
 /**
  * Model PricingPlan
- * 
+ * @rls global
  */
 export type PricingPlan = Prisma.PricingPlanModel
 /**
  * Model PlanFeature
- * 
+ * @rls global
  */
 export type PlanFeature = Prisma.PlanFeatureModel
 /**
  * Model PlanUsageLimit
- * 
+ * @rls global
  */
 export type PlanUsageLimit = Prisma.PlanUsageLimitModel
 /**
@@ -310,6 +313,7 @@ export type CreditTransaction = Prisma.CreditTransactionModel
  * transaction as the decrement and deleted in the same transaction as the
  * settle, the release, or the sweep that refunds it. `id` is the edge's
  * `requestId`, so a retried admit collides instead of holding twice.
+ * @rls off
  */
 export type RouterReservation = Prisma.RouterReservationModel
 /**
@@ -318,8 +322,17 @@ export type RouterReservation = Prisma.RouterReservationModel
  */
 export type StripeCustomer = Prisma.StripeCustomerModel
 /**
+ * Model RetentionPolicy
+ * How long each table keeps its rows. `purge_expired_rows()` (platform.sql)
+ * reads this; the gateway's retention worker calls it. Change a window here
+ * or in the row — no code deploy needed. keep_days > 0 is a CHECK in the
+ * baseline migration, which Prisma cannot express.
+ * @rls off
+ */
+export type RetentionPolicy = Prisma.RetentionPolicyModel
+/**
  * Model WebhookEvent
- * 
+ * @rls global
  */
 export type WebhookEvent = Prisma.WebhookEventModel
 /**
@@ -329,7 +342,7 @@ export type WebhookEvent = Prisma.WebhookEventModel
 export type AuditLog = Prisma.AuditLogModel
 /**
  * Model LegalDocument
- * 
+ * @rls global
  */
 export type LegalDocument = Prisma.LegalDocumentModel
 /**
@@ -339,17 +352,17 @@ export type LegalDocument = Prisma.LegalDocumentModel
 export type UserConsent = Prisma.UserConsentModel
 /**
  * Model CookieConsent
- * 
+ * @rls global
  */
 export type CookieConsent = Prisma.CookieConsentModel
 /**
  * Model ContactSubmission
- * 
+ * @rls global
  */
 export type ContactSubmission = Prisma.ContactSubmissionModel
 /**
  * Model WaitlistEntry
- * 
+ * @rls off
  */
 export type WaitlistEntry = Prisma.WaitlistEntryModel
 /**
@@ -370,6 +383,7 @@ export type OAuthClient = Prisma.OAuthClientModel
 /**
  * Model OAuthAuthorization
  * @conditional(idp=oauth-server)
+ * @rls via(client)
  */
 export type OAuthAuthorization = Prisma.OAuthAuthorizationModel
 /**
@@ -380,6 +394,7 @@ export type OAuthAccessToken = Prisma.OAuthAccessTokenModel
 /**
  * Model AuthUser
  * @conditional(auth=betterauth)
+ * @rls global
  */
 export type AuthUser = Prisma.AuthUserModel
 /**
@@ -394,12 +409,12 @@ export type ChatSession = Prisma.ChatSessionModel
 export type Thread = Prisma.ThreadModel
 /**
  * Model UserProfile
- * 
+ * @rls global
  */
 export type UserProfile = Prisma.UserProfileModel
 /**
  * Model Skill
- * 
+ * @rls global
  */
 export type Skill = Prisma.SkillModel
 /**
@@ -414,12 +429,12 @@ export type UserSkill = Prisma.UserSkillModel
 export type Connector = Prisma.ConnectorModel
 /**
  * Model CofounderProfile
- * 
+ * @rls read(((is_active = true) OR (tenant_id = public.current_tenant_id()))) write((tenant_id = public.current_tenant_id()))
  */
 export type CofounderProfile = Prisma.CofounderProfileModel
 /**
  * Model CofounderInterest
- * 
+ * @rls read((EXISTS ( SELECT 1 FROM cofounder_profiles p WHERE (((p.id = cofounder_interests.from_profile_id) OR (p.id = cofounder_interests.to_profile_id)) AND (p.tenant_id = public.current_tenant_id()))))) write((EXISTS ( SELECT 1 FROM cofounder_profiles p WHERE ((p.id = cofounder_interests.from_profile_id) AND (p.tenant_id = public.current_tenant_id())))))
  */
 export type CofounderInterest = Prisma.CofounderInterestModel
 /**
@@ -434,12 +449,12 @@ export type AccessInviteCode = Prisma.AccessInviteCodeModel
 export type AccessInviteRedemption = Prisma.AccessInviteRedemptionModel
 /**
  * Model Referral
- * 
+ * @rls global
  */
 export type Referral = Prisma.ReferralModel
 /**
  * Model RedemptionCode
- * 
+ * @rls global
  */
 export type RedemptionCode = Prisma.RedemptionCodeModel
 /**
@@ -455,86 +470,96 @@ export type FeedbackReport = Prisma.FeedbackReportModel
 /**
  * Model AuthAccount
  * @conditional(auth=betterauth)
+ * @rls global
  */
 export type AuthAccount = Prisma.AuthAccountModel
 /**
  * Model AuthSession
  * @conditional(auth=betterauth)
+ * @rls global
  */
 export type AuthSession = Prisma.AuthSessionModel
 /**
  * Model DesktopAuthHandoff
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type DesktopAuthHandoff = Prisma.DesktopAuthHandoffModel
 /**
  * Model DesktopAuthSession
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type DesktopAuthSession = Prisma.DesktopAuthSessionModel
 /**
  * Model AuthVerification
  * @conditional(auth=betterauth)
+ * @rls global
  */
 export type AuthVerification = Prisma.AuthVerificationModel
 /**
  * Model CommunityProfile
- * 
+ * @rls global
  */
 export type CommunityProfile = Prisma.CommunityProfileModel
 /**
  * Model License
- * 
+ * @rls using("stripe_customer_id" IN (SELECT "stripe_id" FROM "public"."stripe_customers" WHERE "tenant_id" = public.current_tenant_id()))
  */
 export type License = Prisma.LicenseModel
 /**
  * Model SleptonsaMemberProfile
- * 
+ * @rls global
  */
 export type SleptonsaMemberProfile = Prisma.SleptonsaMemberProfileModel
 /**
  * Model SleptonsProduct
- * 
+ * @rls global
  */
 export type SleptonsProduct = Prisma.SleptonsProductModel
 /**
  * Model SleptonsUpvote
- * 
+ * @rls global
  */
 export type SleptonsUpvote = Prisma.SleptonsUpvoteModel
 /**
  * Model SleptonsConnection
- * 
+ * @rls global
  */
 export type SleptonsConnection = Prisma.SleptonsConnectionModel
 /**
  * Model SleptonsResume
- * 
+ * @rls off
  */
 export type SleptonsResume = Prisma.SleptonsResumeModel
 /**
  * Model BAOrganization
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type BAOrganization = Prisma.BAOrganizationModel
 /**
  * Model BAMember
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type BAMember = Prisma.BAMemberModel
 /**
  * Model BAInvitation
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type BAInvitation = Prisma.BAInvitationModel
 /**
  * Model BAPasskey
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type BAPasskey = Prisma.BAPasskeyModel
 /**
  * Model AuthDeviceCode
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type AuthDeviceCode = Prisma.AuthDeviceCodeModel
 /**
@@ -549,16 +574,16 @@ export type AtelierCanvas = Prisma.AtelierCanvasModel
 export type AgentRolloutLine = Prisma.AgentRolloutLineModel
 /**
  * Model PebbleDiagnosticTicket
- * 
+ * @rls off
  */
 export type PebbleDiagnosticTicket = Prisma.PebbleDiagnosticTicketModel
 /**
  * Model PebbleFeedback
- * 
+ * @rls off
  */
 export type PebbleFeedback = Prisma.PebbleFeedbackModel
 /**
  * Model PlatformStaff
- * 
+ * @rls deny
  */
 export type PlatformStaff = Prisma.PlatformStaffModel

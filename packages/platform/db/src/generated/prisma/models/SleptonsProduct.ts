@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model SleptonsProduct
- * 
+ * @rls global
  */
 export type SleptonsProductModel = runtime.Types.Result.DefaultSelection<Prisma.$SleptonsProductPayload>
 

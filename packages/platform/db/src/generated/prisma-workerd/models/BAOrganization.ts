@@ -15,6 +15,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model BAOrganization
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type BAOrganizationModel = runtime.Types.Result.DefaultSelection<Prisma.$BAOrganizationPayload>
 

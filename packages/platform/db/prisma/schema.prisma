@@ -19,6 +19,13 @@ generator clientWorkerd {
   previewFeatures = ["postgresqlExtensions"]
 }
 
+// Row-level security for every model, generated from the `/// @rls` comments
+// below (or inferred from a tenant column). See prisma/generators/rls.mjs.
+generator rls {
+  provider = "node prisma/generators/rls.mjs"
+  output   = "./generated/rls.sql"
+}
+
 datasource db {
   provider   = "postgresql"
   extensions = [vector, uuid_ossp(map: "uuid-ossp")]
@@ -140,6 +147,7 @@ enum UploadStatus {
 // Multi-Tenant Core
 // ============================================
 
+/// @rls self
 model Organization {
   id        String   @id @default(cuid())
   clerkId   String   @unique @map("clerk_id")
@@ -201,6 +209,7 @@ enum TenantTransferStatus {
 /// existing owning-id values stay valid as tenant ids. RLS scopes data rows via
 /// `app.current_tenant_id` = Tenant.id. Owned-data back-relations are added as
 /// the data models retarget their FK from Organization to Tenant.
+/// @rls self
 model Tenant {
   id             String               @id @default(cuid())
   kind           TenantKind
@@ -267,6 +276,7 @@ model Tenant {
 /// known `toOrganizationId`. The provisioning worker fills `toTenantId`,
 /// re-points the named asset, and marks the row `applied` (or `failed` with
 /// `error`). No implicit copy — each row is an explicit ownership change.
+/// @rls read(((from_tenant_id = public.current_tenant_id()) OR (to_tenant_id = public.current_tenant_id()))) write((from_tenant_id = public.current_tenant_id()))
 model TenantTransferJournal {
   id                 String               @id @default(cuid())
   fromTenantId       String               @map("from_tenant_id")
@@ -331,6 +341,7 @@ model APIKey {
   @@schema("public")
 }
 
+/// @rls global
 model User {
   id        String   @id @default(cuid())
   clerkId   String?  @unique @map("clerk_id")
@@ -554,6 +565,7 @@ model Order {
 }
 
 /// @conditional(template=ecommerce)
+/// @rls via(order)
 model OrderItem {
   id        String  @id @default(cuid())
   orderId   String  @map("order_id")
@@ -1037,6 +1049,7 @@ enum PriceUnit {
   @@schema("public")
 }
 
+/// @rls global
 model ModelConfig {
   id                    String     @id @default(cuid())
   modelName             String     @unique @map("model_name") @db.VarChar(128)
@@ -1212,6 +1225,7 @@ enum UsageLedgerSource {
 // ============================================
 
 // Feature Definitions - All possible features in the system
+/// @rls global
 model FeatureDefinition {
   id           String   @id @default(cuid())
   key          String   @unique @db.VarChar(100) // ai.chat, ai.embeddings, web3.nft
@@ -1234,6 +1248,7 @@ model FeatureDefinition {
 }
 
 // Usage Limit Definitions - All possible usage metrics
+/// @rls global
 model UsageLimitDefinition {
   id          String   @id @default(cuid())
   key         String   @unique @db.VarChar(50) // ai_tokens, api_calls, storage_bytes
@@ -1256,6 +1271,7 @@ model UsageLimitDefinition {
 }
 
 // Price/Plan Configuration (Versioned)
+/// @rls global
 model PricingPlan {
   id          String          @id @default(cuid())
   stripeId    String?         @unique @map("stripe_id")
@@ -1304,6 +1320,7 @@ model PricingPlan {
 }
 
 // Plan Features - Many-to-many with values
+/// @rls global
 model PlanFeature {
   id        String   @id @default(cuid())
   planId    String   @map("plan_id")
@@ -1322,6 +1339,7 @@ model PlanFeature {
 }
 
 // Plan Usage Limits
+/// @rls global
 model PlanUsageLimit {
   id          String   @id @default(cuid())
   planId      String   @map("plan_id")
@@ -1635,6 +1653,7 @@ model CreditTransaction {
 /// transaction as the decrement and deleted in the same transaction as the
 /// settle, the release, or the sweep that refunds it. `id` is the edge's
 /// `requestId`, so a retried admit collides instead of holding twice.
+/// @rls off
 model RouterReservation {
   id        String   @id
   tenantId  String   @map("tenant_id")
@@ -1673,6 +1692,23 @@ model StripeCustomer {
 }
 
 // Webhook Events (for idempotency)
+/// How long each table keeps its rows. `purge_expired_rows()` (platform.sql)
+/// reads this; the gateway's retention worker calls it. Change a window here
+/// or in the row — no code deploy needed. keep_days > 0 is a CHECK in the
+/// baseline migration, which Prisma cannot express.
+/// @rls off
+model RetentionPolicy {
+  tableName  String  @id @map("table_name")
+  keepDays   Int     @map("keep_days")
+  timeColumn String  @default("created_at") @map("time_column")
+  enabled    Boolean @default(true)
+  note       String?
+
+  @@map("retention_policies")
+  @@schema("public")
+}
+
+/// @rls global
 model WebhookEvent {
   id           String    @id @default(cuid())
   provider     String    @db.VarChar(20) // stripe, paypal, etc.
@@ -1753,6 +1789,7 @@ enum LegalDocumentType {
 }
 
 // Legal Document Versions (tracked for compliance)
+/// @rls global
 model LegalDocument {
   id          String            @id @default(cuid())
   slug        String            @db.VarChar(100) // privacy-policy, terms-of-service
@@ -1814,6 +1851,7 @@ model UserConsent {
 }
 
 // Cookie Consent (GDPR/CCPA compliance)
+/// @rls global
 model CookieConsent {
   id          String   @id @default(cuid())
   visitorId   String   @map("visitor_id") // Anonymous visitor fingerprint
@@ -1839,6 +1877,7 @@ model CookieConsent {
 }
 
 // Contact Form Submissions
+/// @rls global
 model ContactSubmission {
   id          String    @id @default(cuid())
   name        String
@@ -1866,6 +1905,7 @@ model ContactSubmission {
 // Public PLG waitlist + referral loop. Global by design: this is a pre-auth
 // acquisition surface, not tenant-owned application data. `position` is backed
 // by a database sequence so concurrent signups cannot claim the same rank.
+/// @rls off
 model WaitlistEntry {
   id            String    @id @default(cuid())
   email         String    @unique @db.VarChar(254)
@@ -2039,6 +2079,7 @@ model OAuthClient {
 
 // User consent records — "User X granted App Y these scopes"
 /// @conditional(idp=oauth-server)
+/// @rls via(client)
 model OAuthAuthorization {
   id        String    @id @default(cuid())
   userId    String    @map("user_id")
@@ -2084,6 +2125,7 @@ model OAuthAccessToken {
 // When using Clerk, user data lives in Clerk's infrastructure.
 
 /// @conditional(auth=betterauth)
+/// @rls global
 model AuthUser {
   id                  String               @id @default(cuid())
   email               String?              @unique
@@ -2174,6 +2216,7 @@ model Thread {
 //
 // One row per user (unique constraint on userId). Created lazily on first
 // edit — we don't pre-create empty rows.
+/// @rls global
 model UserProfile {
   id                 String   @id @default(cuid())
   userId             String   @unique @map("user_id")
@@ -2194,6 +2237,7 @@ model UserProfile {
 // Modular agent capabilities. `Skill` is the catalogue entry (official or
 // community); `UserSkill` is a user's installation + config + enabled state.
 // Skill activation is checked when building the chat agent's tool list.
+/// @rls global
 model Skill {
   id          String   @id @default(cuid())
   slug        String   @unique @db.VarChar(80)
@@ -2262,6 +2306,7 @@ model Connector {
 // ── Match Your Cofounder (opt-in cofounder matching) ─────────────────────────
 // CofounderProfile = a tenant's OPT-IN entry into the cofounder pool. No row ⇒
 // not in the pool (privacy: opt-OUT by default). One profile per tenant (OPC).
+/// @rls read(((is_active = true) OR (tenant_id = public.current_tenant_id()))) write((tenant_id = public.current_tenant_id()))
 model CofounderProfile {
   id        String   @id @default(cuid())
   tenantId  String   @unique @map("tenant_id")
@@ -2284,6 +2329,7 @@ model CofounderProfile {
 
 // CofounderInterest = a directional signal between two pool profiles. Mutual
 // INTERESTED (both directions) is a match. PASS hides; PITCH carries a note.
+/// @rls read((EXISTS ( SELECT 1 FROM cofounder_profiles p WHERE (((p.id = cofounder_interests.from_profile_id) OR (p.id = cofounder_interests.to_profile_id)) AND (p.tenant_id = public.current_tenant_id()))))) write((EXISTS ( SELECT 1 FROM cofounder_profiles p WHERE ((p.id = cofounder_interests.from_profile_id) AND (p.tenant_id = public.current_tenant_id())))))
 model CofounderInterest {
   id            String                @id @default(cuid())
   fromProfileId String                @map("from_profile_id")
@@ -2370,6 +2416,7 @@ model AccessInviteRedemption {
 //   pending → expired (after expiresAt)
 // Reward credits land in @nebutra/metering once metering grows a credits API
 // — for now this is just provenance.
+/// @rls global
 model Referral {
   id             String    @id @default(cuid())
   code           String    @unique @db.VarChar(20)
@@ -2394,6 +2441,7 @@ model Referral {
 // definition; each `CodeRedemption` is a user's claim of it. The unique
 // (codeId, userId) constraint enforces "one claim per user per code", even
 // when maxRedemptions > 1 (i.e. the code is shareable but personal).
+/// @rls global
 model RedemptionCode {
   id              String    @id @default(cuid())
   code            String    @unique @db.VarChar(40)
@@ -2460,6 +2508,7 @@ model FeedbackReport {
 }
 
 /// @conditional(auth=betterauth)
+/// @rls global
 model AuthAccount {
   id                    String    @id @default(cuid())
   userId                String    @map("user_id")
@@ -2483,6 +2532,7 @@ model AuthAccount {
 }
 
 /// @conditional(auth=betterauth)
+/// @rls global
 model AuthSession {
   id                   String   @id @default(cuid())
   userId               String   @map("user_id")
@@ -2506,6 +2556,7 @@ model AuthSession {
 }
 
 /// @conditional(auth=betterauth)
+/// @rls off
 model DesktopAuthHandoff {
   id         String    @id @default(cuid())
   tokenHash  String    @unique @map("token_hash") @db.VarChar(64)
@@ -2529,6 +2580,7 @@ model DesktopAuthHandoff {
 }
 
 /// @conditional(auth=betterauth)
+/// @rls off
 model DesktopAuthSession {
   id         String    @id @default(cuid())
   tokenHash  String    @unique @map("token_hash") @db.VarChar(64)
@@ -2554,6 +2606,7 @@ model DesktopAuthSession {
 }
 
 /// @conditional(auth=betterauth)
+/// @rls global
 model AuthVerification {
   id         String   @id @default(cuid())
   identifier String
@@ -2587,6 +2640,7 @@ enum LicenseType {
   @@schema("public")
 }
 
+/// @rls global
 model CommunityProfile {
   id     String @id @default(cuid())
   userId String @unique @map("user_id") // Clerk user ID
@@ -2617,6 +2671,7 @@ model CommunityProfile {
   @@schema("public")
 }
 
+/// @rls using("stripe_customer_id" IN (SELECT "stripe_id" FROM "public"."stripe_customers" WHERE "tenant_id" = public.current_tenant_id()))
 model License {
   id     String @id @default(cuid())
   userId String @map("user_id") // Clerk user ID
@@ -2656,6 +2711,7 @@ model License {
 // Sleptons Community
 // ============================================
 
+/// @rls global
 model SleptonsaMemberProfile {
   id                  String                       @id @default(cuid())
   member_number       Int                          @unique @default(autoincrement())
@@ -2691,6 +2747,7 @@ model SleptonsaMemberProfile {
   @@schema("public")
 }
 
+/// @rls global
 model SleptonsProduct {
   id            String       @id @default(cuid())
   member_id     String       @map("member_id")
@@ -2715,6 +2772,7 @@ model SleptonsProduct {
   @@schema("public")
 }
 
+/// @rls global
 model SleptonsUpvote {
   member_id  String   @map("member_id")
   product_id String   @map("product_id")
@@ -2727,6 +2785,7 @@ model SleptonsUpvote {
   @@schema("public")
 }
 
+/// @rls global
 model SleptonsConnection {
   follower_id  String   @map("follower_id")
   following_id String   @map("following_id")
@@ -2740,6 +2799,7 @@ model SleptonsConnection {
   @@schema("public")
 }
 
+/// @rls off
 model SleptonsResume {
   id               String     @id @default(cuid())
   member_id        String     @unique @map("member_id")
@@ -2786,6 +2846,7 @@ enum ResumeLang {
 // `passkey`) so the BA Prisma adapter resolves them without remapping.
 
 /// @conditional(auth=betterauth)
+/// @rls off
 model BAOrganization {
   id        String   @id @default(cuid())
   name      String
@@ -2802,6 +2863,7 @@ model BAOrganization {
 }
 
 /// @conditional(auth=betterauth)
+/// @rls off
 model BAMember {
   id             String   @id @default(cuid())
   userId         String   @map("user_id")
@@ -2819,6 +2881,7 @@ model BAMember {
 }
 
 /// @conditional(auth=betterauth)
+/// @rls off
 model BAInvitation {
   id             String    @id @default(cuid())
   email          String
@@ -2842,6 +2905,7 @@ model BAInvitation {
 }
 
 /// @conditional(auth=betterauth)
+/// @rls off
 model BAPasskey {
   id           String   @id @default(cuid())
   name         String?
@@ -2886,6 +2950,7 @@ model BAPasskey {
 // `userCode` is short-lived (default 10m TTL, enforced app-side too) and
 // human-typed (XXXX-XXXX display format, unambiguous charset) — see
 // apps/auth `/device`.
+/// @rls off
 model AuthDeviceCode {
   id              String    @id @default(cuid())
   deviceCode      String    @unique @map("device_code")
@@ -2968,6 +3033,7 @@ enum PebbleDiagnosticStatus {
   @@schema("public")
 }
 
+/// @rls off
 model PebbleDiagnosticTicket {
   id String @id @default(cuid())
 
@@ -3013,6 +3079,7 @@ enum PebbleFeedbackKind {
   @@schema("public")
 }
 
+/// @rls off
 model PebbleFeedback {
   id String @id @default(cuid())
 
@@ -3060,6 +3127,7 @@ enum PlatformStaffRole {
   @@schema("public")
 }
 
+/// @rls deny
 model PlatformStaff {
   userId String            @id @map("user_id")
   role   PlatformStaffRole

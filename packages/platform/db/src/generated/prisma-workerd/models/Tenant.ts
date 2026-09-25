@@ -20,6 +20,7 @@ import type * as Prisma from "../internal/prismaNamespace"
  * existing owning-id values stay valid as tenant ids. RLS scopes data rows via
  * `app.current_tenant_id` = Tenant.id. Owned-data back-relations are added as
  * the data models retarget their FK from Organization to Tenant.
+ * @rls self
  */
 export type TenantModel = runtime.Types.Result.DefaultSelection<Prisma.$TenantPayload>
 

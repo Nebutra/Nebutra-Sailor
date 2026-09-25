@@ -1,19 +1,21 @@
 /**
- * P1.4 — parametrised cross-tenant matrix for every table covered by
- * 20260903000000_rls_full_tenant_coverage/migration.sql.
+ * P1.4 — parametrised cross-tenant matrix, run against the policies that
+ * actually ship: prisma/generated/rls.sql, which the rls generator writes from
+ * schema.prisma on every `prisma generate` (ADR 2026-09-25 database
+ * convergence).
  *
- * This test does not retype the migration's policy SQL: it reads the real
- * migration file off disk and extracts each table's `ALTER TABLE ... ENABLE
- * ROW LEVEL SECURITY` + `CREATE POLICY` statements verbatim (see
- * extractTablePolicySql below), then applies those exact statements to a
- * throwaway table of the same name carrying only the columns the policy
- * predicate touches. A typo or a dropped WITH CHECK in the shipped migration
- * breaks this test; a hand-retyped copy of the policy text would not.
+ * This test does not retype policy SQL: it reads the generated file off disk
+ * and extracts each table's `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` +
+ * `CREATE POLICY` statements verbatim (see extractTablePolicySql below), then
+ * applies those exact statements to a throwaway table of the same name carrying
+ * only the columns the policy predicate touches. A wrong `/// @rls` directive,
+ * or a generator that drops a WITH CHECK, breaks this test; a hand-retyped copy
+ * of the policy text would not.
  *
  * Same dual-backend contract as rls-dual-tenant-attack.test.ts: PGlite always
  * runs in CI; RLS_ATTACK_DATABASE_URL (or a localhost DATABASE_URL) replays
  * the identical assertions against real PostgreSQL — see the `postgres`
- * service now on the `test` job in .github/workflows/ci.yml.
+ * service on the `test` job in .github/workflows/ci.yml.
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -27,47 +29,36 @@ import {
 } from "./support/rls-sql-client";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const migrationsDir = join(here, "..", "prisma", "migrations");
+const rlsSql = readFileSync(join(here, "..", "prisma", "generated", "rls.sql"), "utf8");
 
-const currentOrgIdFunctionSql = extractCurrentOrgIdFunction(
-  readFileSync(join(migrationsDir, "20260313000000_enable_rls", "migration.sql"), "utf8"),
-);
-
-const coverageMigrationSql = readFileSync(
-  join(migrationsDir, "20260903000000_rls_full_tenant_coverage", "migration.sql"),
-  "utf8",
-);
-
-/** The `CREATE OR REPLACE FUNCTION current_org_id() ... $$;` block, verbatim. */
-function extractCurrentOrgIdFunction(migrationSql: string): string {
-  const match = migrationSql.match(/CREATE OR REPLACE FUNCTION current_org_id\(\)[\s\S]*?\$\$;/);
+/** The `CREATE OR REPLACE FUNCTION public.current_tenant_id() ... $$;` block, verbatim. */
+function extractTenantFunction(sql: string): string {
+  const match = sql.match(/CREATE OR REPLACE FUNCTION public\.current_tenant_id\(\)[\s\S]*?\$\$;/);
   if (!match) {
-    throw new Error("current_org_id() definition not found in 20260313000000_enable_rls");
+    throw new Error("current_tenant_id() definition not found in prisma/generated/rls.sql");
   }
   return match[0];
 }
 
+const currentTenantFunctionSql = extractTenantFunction(rlsSql);
+
 /**
- * `ALTER TABLE "table" ENABLE ROW LEVEL SECURITY;` plus every
- * `CREATE POLICY "..." ON "table" ...;` statement for that table, verbatim
- * from the migration file, concatenated in source order.
+ * `ALTER TABLE ... ENABLE ROW LEVEL SECURITY;` plus every `CREATE POLICY ...`
+ * statement for that table, verbatim from the generated file, in source order.
  */
 function extractTablePolicySql(table: string): string {
-  const alterMatch = coverageMigrationSql.match(
-    new RegExp(`ALTER TABLE "${table}" ENABLE ROW LEVEL SECURITY;`),
-  );
-  if (!alterMatch) {
-    throw new Error(`ENABLE ROW LEVEL SECURITY not found for "${table}" in the coverage migration`);
+  const target = `"public"."${table}"`;
+  const alter = `ALTER TABLE ${target} ENABLE ROW LEVEL SECURITY;`;
+  if (!rlsSql.includes(alter)) {
+    throw new Error(`ENABLE ROW LEVEL SECURITY not generated for "${table}"`);
   }
-  const policyMatches = [
-    ...coverageMigrationSql.matchAll(
-      new RegExp(`CREATE POLICY "[^"]+" ON "${table}"[\\s\\S]*?;`, "g"),
-    ),
+  const policies = [
+    ...rlsSql.matchAll(new RegExp(`CREATE POLICY "[^"]+" ON "public"\\."${table}"[^;]*;`, "g")),
   ];
-  if (policyMatches.length === 0) {
-    throw new Error(`No CREATE POLICY statements found for "${table}" in the coverage migration`);
+  if (policies.length === 0) {
+    throw new Error(`No CREATE POLICY generated for "${table}"`);
   }
-  return [alterMatch[0], ...policyMatches.map((m) => m[0])].join("\n");
+  return [alter, ...policies.map((m) => m[0])].join("\n");
 }
 
 type Shape =
@@ -89,7 +80,7 @@ interface TableCase {
 // hypothetical) — throwawayTableDdl gives these three a nullable column
 // instead of the NOT NULL every other standard table gets, and the dedicated
 // "NULL tenant_id" describe block below exercises that exact case: RLS
-// predicates compare with `=`, so NULL never matches current_org_id() for
+// predicates compare with `=`, so NULL never matches current_tenant_id() for
 // ANY caller, including one presenting what would otherwise be that row's
 // own tenant — a NULL-tenant row is bypass-only once RLS is enforced.
 const NULLABLE_TENANT_TABLES = new Set(["user_skills", "connectors", "code_redemptions"]);
@@ -175,7 +166,7 @@ describe.each(availableBackends("rls_coverage"))("RLS migration coverage ($name)
     role = randomRoleName("app_coverage");
     db = await open();
     await db.exec(`CREATE ROLE ${role} NOSUPERUSER NOBYPASSRLS LOGIN;`);
-    await db.exec(currentOrgIdFunctionSql);
+    await db.exec(currentTenantFunctionSql);
     for (const t of TABLE_CASES) {
       await db.exec(throwawayTableDdl(t));
       await db.exec(extractTablePolicySql(t.table));
@@ -481,7 +472,7 @@ describe.each(availableBackends("rls_coverage"))("RLS migration coverage ($name)
       expect(rows).toHaveLength(1);
     });
 
-    it("is invisible to every non-bypass caller regardless of tenant context — NULL never equals current_org_id()", async () => {
+    it("is invisible to every non-bypass caller regardless of tenant context — NULL never equals current_tenant_id()", async () => {
       await becomeTenant(db, role, `some_unrelated_tenant_${table}`);
       const visible = await db.query<{ id: string }>(
         `SELECT id FROM "${table}" WHERE id = '${rowId}'`,

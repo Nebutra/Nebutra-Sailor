@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Skill
- * 
+ * @rls global
  */
 export type SkillModel = runtime.Types.Result.DefaultSelection<Prisma.$SkillPayload>
 
