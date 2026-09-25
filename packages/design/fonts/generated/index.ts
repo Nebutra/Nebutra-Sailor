@@ -1,25 +1,28 @@
 /**
- * GENERATED FILE — face metadata for `@nebutra/fonts/next/cjk`.
- * Current binaries are SIL OFL Noto Sans SC (chinese-simplified) woff2 files.
- * Rebuild with `pnpm --filter @nebutra/fonts subset:cjk` when FONTTOOLS_PYTHON
- * is available, or replace the woff2 files from an OFL source.
+ * GENERATED FILE, DO NOT EDIT.
+ * Written by packages/design/fonts/scripts/subset-cjk.mjs.
+ *
+ * Metadata for the CDN-hosted MiSans subsets. <CjkFontFace /> in
+ * ../src/cjk-font-face.tsx turns it into @font-face rules at render time.
+ *
+ * The registry key is "misans" (see FONT_REGISTRY in ../src/index.ts);
+ * the CSS variable is "--font-misans".
  */
 
-export const NOTO_SANS_SC_VARIABLE = "--font-noto-sans-sc" as const;
+export const MISANS_VARIABLE = "--font-misans" as const;
 
-export const NOTO_SANS_SC_FAMILY = "Noto Sans SC" as const;
+export const MISANS_FAMILY = "MiSans" as const;
 
 /** Characters covered per face (catalogs ∪ CJK punctuation ∪ GB2312 level-1). */
-export const NOTO_SANS_SC_CHAR_COUNT = 4282 as const;
+export const MISANS_CHAR_COUNT = 4330 as const;
 
 /** `unicode-range` of every generated @font-face — CJK only, no Latin. */
-export const NOTO_SANS_SC_UNICODE_RANGE =
-  "U+3000-303F, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF" as const;
+export const MISANS_UNICODE_RANGE = "U+3000-303F, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF" as const;
 
-/** Sources for `next/font/local({ src: [...] })`, paths relative to this file. */
-export const NOTO_SANS_SC_SOURCES = [
-  { path: "./noto-sans-sc-400.woff2", weight: "400", style: "normal", bytes: 1142552 },
-  { path: "./noto-sans-sc-500.woff2", weight: "500", style: "normal", bytes: 1159128 },
-  { path: "./noto-sans-sc-600.woff2", weight: "600", style: "normal", bytes: 1162352 },
-  { path: "./noto-sans-sc-700.woff2", weight: "700", style: "normal", bytes: 1172244 },
+/** Public-asset keys, one per weight (content-hashed names). No host: see publicAssetUrl(). */
+export const MISANS_FILES = [
+  { key: "fonts/misans/misans-400.6bf25dfdf3.woff2", weight: "400", bytes: 535408 },
+  { key: "fonts/misans/misans-500.442041bb9d.woff2", weight: "500", bytes: 537060 },
+  { key: "fonts/misans/misans-600.2590c17c53.woff2", weight: "600", bytes: 540540 },
+  { key: "fonts/misans/misans-700.ddd8bf8017.woff2", weight: "700", bytes: 545728 },
 ] as const;

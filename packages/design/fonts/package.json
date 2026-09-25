@@ -25,10 +25,10 @@
   "files": [
     "dist",
     "src",
-    "generated/noto-sans-sc.css",
     "generated/subset-manifest.json",
     "generated/index.ts",
-    "vendor/noto-sans-sc/OFL.txt",
+    "vendor/misans/LICENSE.txt",
+    "vendor/dm-sans/OFL.txt",
     "NOTICE-FONTS.md",
     "README.md",
     "LICENSE",
@@ -57,18 +57,25 @@
       "import": "./src/next-cjk.ts",
       "default": "./src/next-cjk.ts"
     },
+    "./font-face": {
+      "types": "./src/cjk-font-face.tsx",
+      "import": "./src/cjk-font-face.tsx",
+      "default": "./src/cjk-font-face.tsx"
+    },
     "./cjk": {
       "types": "./dist/generated/index.d.ts",
       "import": "./dist/generated/index.js",
       "default": "./dist/generated/index.js"
-    },
-    "./cjk.css": "./generated/noto-sans-sc.css"
+    }
   },
   "scripts": {
     "subset:cjk": "node scripts/subset-cjk.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "build": "tsup"
+  },
+  "dependencies": {
+    "@nebutra/brand": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",

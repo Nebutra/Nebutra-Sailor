@@ -139,6 +139,15 @@
        border-r-transparent can override it. */
     border-color: hsl(var(--border));
   }
+
+  /* Headings take the display face. Layered (base) so any utility — font-*,
+     font-semibold, a text-heading-* recipe — still wins; zero-specificity
+     :where() so a component's own heading styles are never fought. The face
+     and weight are variables, so a Brand Package retunes both. */
+  :where(h1, h2, h3) {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-heading, 500);
+  }
 }
 
 body {

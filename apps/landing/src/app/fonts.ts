@@ -4,11 +4,11 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
-// cjkFontClassName → --font-noto-sans-sc (self-hosted Noto Sans SC subset,
-// next/font/local, so no build-time fetch and no sandboxed-dev-server failure).
-// Geist stays FIRST in --font-sans so it keeps Latin and the numerals; only CJK
-// falls through to Noto Sans SC, whose subset contains no Latin glyphs at all.
-// Weights 400/500/600 are real files — see @nebutra/fonts/next/cjk.
+// cjkFontClassName → --font-dm-sans, the heading face (next/font/local, so no
+// build-time fetch and no sandboxed-dev-server failure). MiSans comes from
+// <CjkFontFace /> in the root layout, served by the asset CDN. Geist stays FIRST
+// in --font-sans so it keeps Latin and the numerals; only CJK falls through to
+// MiSans, whose unicode-range contains no Latin at all.
 //
 // Design-language webfonts — the registry in @nebutra/fonts/next, self-hosted at
 // build time. Declaring the whole set is cheap: a file is only fetched when an

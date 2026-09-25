@@ -269,7 +269,7 @@ export function TypographyHierarchyDemos() {
         usage="English · UI & Body"
       />
       <FontFaceDemo
-        fontName="Noto Sans SC"
+        fontName="MiSans"
         fontClass="font-cn"
         letters="啊"
         sampleText="云端聚合 · 引领未来"

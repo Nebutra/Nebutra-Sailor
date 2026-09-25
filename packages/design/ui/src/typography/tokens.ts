@@ -16,7 +16,7 @@
  * family stack remains as a standalone fallback for docs/tests.
  */
 export const FONT_FAMILY_PRIMARY =
-  'var(--font-sans, var(--font-geist-sans, "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif))';
+  'var(--font-sans, var(--font-geist-sans, "Geist", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif))';
 
 /**
  * Heading font stack - Used for titles and emphasis
@@ -24,7 +24,7 @@ export const FONT_FAMILY_PRIMARY =
  * Geist Sans is the primary display typeface.
  */
 export const FONT_FAMILY_HEADING =
-  'var(--font-heading, var(--font-geist-sans, "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif))';
+  'var(--font-heading, var(--font-dm-sans, "DM Sans", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif))';
 
 /**
  * Monospace font stack - Used for code and technical content
@@ -35,11 +35,11 @@ export const FONT_FAMILY_MONO =
 /**
  * CJK (Chinese/Japanese/Korean) fallback stack
  *
- * Noto Sans SC is the primary Chinese font.
+ * MiSans is the primary Chinese font.
  * Provides consistent rendering for Chinese, Japanese, and Korean text.
  */
 export const FONT_FAMILY_CJK =
-  '"Noto Sans SC", "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
+  '"MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
 
 /**
  * Complete font stacks with CJK fallback

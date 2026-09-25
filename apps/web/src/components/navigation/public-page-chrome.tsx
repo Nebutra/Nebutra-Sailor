@@ -59,6 +59,8 @@ export function PublicPageFooter() {
           Governed AI infrastructure with predictable recovery surfaces.
         </p>
         <p className={styles.statusDot}>Recovery surface online</p>
+        {/* MiSans licence: the product must credit the typeface. */}
+        <p className={styles.footerNote}>Chinese typeface: MiSans by Xiaomi</p>
       </div>
       <div className={styles.footerGrid}>
         <div>

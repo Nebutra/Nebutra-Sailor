@@ -7,14 +7,17 @@
  * back to whatever the OS ships (PingFang on macOS, Microsoft YaHei on Windows,
  * something else again on Android). Chinese copy is a first-class surface here
  * (see docs/microcopy/), so the CJK face has to be ours and it has to be
- * self-hosted. Noto Sans SC (SIL OFL) covers the common set and may be
- * redistributed. This script cuts each static instance down to the characters
- * the product can actually render.
+ * self-hosted. MiSans (Xiaomi; free for commercial use, embedding allowed with
+ * attribution — see vendor/misans/LICENSE.txt) is the face the Chinese AI
+ * products we measure against ship (MiniMax, Moonshot). This script cuts each
+ * static weight down to the characters the product can actually render —
+ * subsetting removes glyphs and never alters one, which the MiSans FAQ permits
+ * ("不得…进行外观上的更改" forbids changing appearance, not trimming coverage).
  *
  * WHY THE *STATIC* FACES, NOT THE VARIABLE ONE
- * The upstream Noto Sans SC variable face is large. Instantiating static
- * weights and subsetting each one keeps Latin-only pages from downloading a
- * variable CJK file, and the browser only fetches the weights a page uses.
+ * The MiSans variable face is ~20MB. Xiaomi ships static weights; subsetting
+ * each one keeps Latin-only pages from downloading a variable CJK file, and the
+ * browser only fetches the weights a page uses.
  *
  * CHARACTER SET = catalogs (glob) ∪ punctuation ∪ GB2312 level-1 floor
  * See collectCharacterSet() for the reasoning on each of the three inputs.
@@ -35,49 +38,49 @@ import { fileURLToPath } from "node:url";
 
 const PKG_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO_ROOT = resolve(PKG_DIR, "../../..");
-const VENDOR_DIR = join(PKG_DIR, "vendor", "noto-sans-sc");
+const VENDOR_DIR = join(PKG_DIR, "vendor", "misans");
 const OUT_DIR = join(PKG_DIR, "generated");
 const MANIFEST_PATH = join(OUT_DIR, "subset-manifest.json");
-const CSS_PATH = join(OUT_DIR, "noto-sans-sc.css");
 const TS_PATH = join(OUT_DIR, "index.ts");
 const PYTHON = process.env.FONTTOOLS_PYTHON ?? "python3";
-const NOTO_VF_URL =
-  process.env.NOTO_SANS_SC_VF_URL ??
-  "https://github.com/notofonts/noto-cjk/raw/Sans2.004/Sans/Variable/TTF/Subset/NotoSansSC-VF.ttf";
-const NOTO_OFL_URL =
-  process.env.NOTO_SANS_SC_OFL_URL ??
-  "https://raw.githubusercontent.com/notofonts/noto-cjk/Sans2.004/LICENSE";
+/** Xiaomi's official package (~220MB). MISANS_ZIP points at a local copy to skip the download. */
+const MISANS_ZIP_URL =
+  process.env.MISANS_ZIP_URL ?? "https://hyperos.mi.com/font-download/MiSans.zip";
+const MISANS_ZIP = process.env.MISANS_ZIP;
+
+/**
+ * MiSans binaries are NEVER committed. The repo is public and mirrored as a
+ * template, and the MiSans licence forbids distributing the font software on
+ * its own — the same reason vivo Sans was removed (b5e73db35). The subsets are
+ * uploaded to the deployment's public asset bucket under R2_PREFIX, and only
+ * their keys are committed: <CjkFontFace /> (../src/cjk-font-face.tsx) joins
+ * each key with publicAssetUrl(), so the host comes from the brand config and
+ * env like every other public asset, never from this file. Filenames carry a
+ * content hash so the CDN can cache them forever.
+ */
+const R2_BUCKET = process.env.MISANS_R2_BUCKET;
+const R2_PREFIX = "fonts/misans";
+const UPLOAD = process.argv.includes("--upload");
 
 const FORCE = process.argv.includes("--force");
 
-const VENDOR_LICENCE = join(VENDOR_DIR, "OFL.txt");
-const VENDOR_VF = join(VENDOR_DIR, "NotoSansSC-VF.ttf");
+const VENDOR_LICENCE = join(VENDOR_DIR, "LICENSE.txt");
 
 /**
- * The weights we ship — deliberately three, not nine.
+ * The weights we ship — four static faces, not nine.
  *
- * The design system's numeric slots are `--font-weight-medium: 500` and
- * `--font-weight-heading: 600` (packages/design/tokens/recipe.css), and the
- * token CSS writes literal `font-weight` in only four values, by frequency:
- * 500 (43×), 600 (35×), 400 (27×), 700 (10×).
- *
- * So: 400 body, 500 UI/medium, 600 heading. 700 is dropped and resolves to the
- * 600 face via normal CSS font matching — and because the matched face is itself
- * >= 600, no browser applies synthetic (faux) bold, which is exactly why the
- * third face is DemiBold 600 rather than Bold 700. Picking 700 instead would
- * leave the *default* heading weight (600, the most common heading value in the
- * system) synthesising or jumping a step.
- *
- * The skins also declare fractional weights (300 / 450 / 510) — those are
- * variable-font values and likewise resolve into this set. A CJK face costs
- * ~490KB per weight; shipping all nine static faces would be ~4.4MB for no
- * visible gain.
+ * 400 body, 500 headings (`--font-weight-heading`, packages/design/tokens/
+ * recipe.css) and UI medium, 600 and 700 because the token CSS writes both as
+ * literal `font-weight`. Skin-declared fractional weights (300 / 450 / 510)
+ * resolve into this set by normal CSS font matching. A CJK face costs ~525KB
+ * per weight, and unicode-range plus per-weight @font-face mean a page only
+ * downloads the weights it renders.
  */
 const FACES = [
-  { weight: 400, file: "NotoSansSC-400.ttf", out: "noto-sans-sc-400.woff2" },
-  { weight: 500, file: "NotoSansSC-500.ttf", out: "noto-sans-sc-500.woff2" },
-  { weight: 600, file: "NotoSansSC-600.ttf", out: "noto-sans-sc-600.woff2" },
-  { weight: 700, file: "NotoSansSC-700.ttf", out: "noto-sans-sc-700.woff2" },
+  { weight: 400, file: "MiSans-Regular.ttf", out: "misans-400.woff2" },
+  { weight: 500, file: "MiSans-Medium.ttf", out: "misans-500.woff2" },
+  { weight: 600, file: "MiSans-Semibold.ttf", out: "misans-600.woff2" },
+  { weight: 700, file: "MiSans-Bold.ttf", out: "misans-700.woff2" },
 ];
 
 /**
@@ -86,9 +89,9 @@ const FACES = [
  * THE ORDER IS THE DESIGN DECISION, and this range is its enforcement. Geist
  * keeps Latin and the numerals — its tabular figures and tighter x-height are
  * what dense dashboard tables need, and it is the locked UI face. The app stack
- * is therefore "Geist, Noto Sans SC, …": both faces cover Latin, so whichever
- * comes FIRST wins Latin, and CJK falls through to Noto. Reversed, Noto would
- * also take the Latin, and its Latin is not as good as Geist's for UI.
+ * is therefore "Geist, MiSans, …": both faces cover Latin, so whichever
+ * comes FIRST wins Latin, and CJK falls through to MiSans. Reversed, MiSans would
+ * also take the Latin, and its Latin is not Geist's for UI.
  *
  * Belt and braces: the range below contains NO Latin, no ASCII and no
  * general-punctuation codepoints, so a purely Latin page can never trigger a
@@ -260,29 +263,37 @@ async function downloadFile(url, target) {
   return bytes.length;
 }
 
-/** Download the OFL variable face and instantiate the static weights we ship. */
+/**
+ * Extract the static weights we ship from Xiaomi's official package.
+ * The licence text is committed (vendor/misans/LICENSE.txt); the .ttf sources
+ * are gitignored and re-extracted on demand.
+ */
 async function ensureVendoredSources() {
   mkdirSync(VENDOR_DIR, { recursive: true });
-
   if (!existsSync(VENDOR_LICENCE)) {
-    log(`downloading OFL from ${NOTO_OFL_URL}`);
-    await downloadFile(NOTO_OFL_URL, VENDOR_LICENCE);
-  }
-
-  if (!existsSync(VENDOR_VF)) {
-    log(`downloading Noto Sans SC VF from ${NOTO_VF_URL}`);
-    await downloadFile(NOTO_VF_URL, VENDOR_VF);
-  }
-
-  for (const face of FACES) {
-    const target = join(VENDOR_DIR, face.file);
-    if (existsSync(target)) continue;
-    log(`instancing wght=${face.weight} → ${face.file}`);
-    execFileSync(
-      PYTHON,
-      ["-m", "fontTools.varLib.instancer", VENDOR_VF, `wght=${face.weight}`, "--output", target],
-      { stdio: ["ignore", "ignore", "inherit"] },
+    throw new Error(
+      `${VENDOR_LICENCE} is missing — it is committed with the package; restore it from git.`,
     );
+  }
+  const missing = FACES.filter((face) => !existsSync(join(VENDOR_DIR, face.file)));
+  if (missing.length === 0) return;
+
+  let zip = MISANS_ZIP;
+  if (!zip) {
+    zip = join(VENDOR_DIR, "MiSans.zip");
+    if (!existsSync(zip)) {
+      log(
+        `downloading MiSans from ${MISANS_ZIP_URL} (~220MB; set MISANS_ZIP to reuse a local copy)`,
+      );
+      await downloadFile(MISANS_ZIP_URL, zip);
+    }
+  }
+  for (const face of missing) {
+    log(`extracting ${face.file}`);
+    const bytes = execFileSync("unzip", ["-p", zip, `MiSans/ttf/${face.file}`], {
+      maxBuffer: 64 * 1024 * 1024,
+    });
+    writeFileSync(join(VENDOR_DIR, face.file), bytes);
   }
 }
 
@@ -342,78 +353,41 @@ function fingerprint(charsetFingerprint) {
   return hash.digest("hex");
 }
 
-function renderCss(results, charCount) {
-  const ranges = UNICODE_RANGES.join(", ");
-  return `/*
- * noto-sans-sc.css — GENERATED FILE, DO NOT EDIT.
- * Written by packages/design/fonts/scripts/subset-cjk.mjs (\`pnpm --filter
- * @nebutra/fonts subset:cjk\`). Re-run it after adding Chinese copy; the
- * character set is collected from the repo's zh* message catalogs by glob.
- *
- * ${charCount} characters per face. Source: Noto Sans SC (SIL Open Font License),
- * see vendor/noto-sans-sc/OFL.txt.
- *
- * STACK ORDER: use "Geist, Noto Sans SC, …" — Geist first so it keeps Latin and
- * the numerals (tabular figures, tighter x-height), with CJK falling through to
- * Noto Sans SC. The unicode-range below contains no Latin, ASCII or general
- * punctuation, so Latin-only text never downloads a CJK file.
- *
- * font-display: swap — the fallback (PingFang / YaHei) paints immediately and is
- * replaced when the subset arrives; CJK text must never be invisible.
- */
-${results
-  .map(
-    (face) => `
-@font-face {
-  font-family: "Noto Sans SC";
-  font-style: normal;
-  font-weight: ${face.weight};
-  font-display: swap;
-  src: url("./${face.out}") format("woff2");
-  unicode-range: ${ranges};
-}`,
-  )
-  .join("\n")}
-`;
-}
-
 function renderTs(results, charCount) {
   return `/**
  * GENERATED FILE, DO NOT EDIT.
  * Written by packages/design/fonts/scripts/subset-cjk.mjs.
  *
- * Metadata for the self-hosted Simplified-Chinese faces, in the shape
- * \`next/font/local\` expects, so the server entry (\`@nebutra/fonts/next\`) can
- * declare the face without re-stating weights or file names. The plain
- * \`noto-sans-sc.css\` next to this file is the non-Next consumer path.
+ * Metadata for the CDN-hosted MiSans subsets. <CjkFontFace /> in
+ * ../src/cjk-font-face.tsx turns it into @font-face rules at render time.
  *
- * The registry key is "noto sans sc" (see FONT_REGISTRY in ../src/index.ts);
+ * The registry key is "misans" (see FONT_REGISTRY in ../src/index.ts);
  * the CSS variable is ${JSON.stringify(cssVariable())}.
  */
 
-export const NOTO_SANS_SC_VARIABLE = ${JSON.stringify(cssVariable())} as const;
+export const MISANS_VARIABLE = ${JSON.stringify(cssVariable())} as const;
 
-export const NOTO_SANS_SC_FAMILY = "Noto Sans SC" as const;
+export const MISANS_FAMILY = "MiSans" as const;
 
 /** Characters covered per face (catalogs ∪ CJK punctuation ∪ GB2312 level-1). */
-export const NOTO_SANS_SC_CHAR_COUNT = ${charCount} as const;
+export const MISANS_CHAR_COUNT = ${charCount} as const;
 
 /** \`unicode-range\` of every generated @font-face — CJK only, no Latin. */
-export const NOTO_SANS_SC_UNICODE_RANGE = ${JSON.stringify(UNICODE_RANGES.join(", "))} as const;
+export const MISANS_UNICODE_RANGE = ${JSON.stringify(UNICODE_RANGES.join(", "))} as const;
 
-/** Sources for \`next/font/local({ src: [...] })\`, paths relative to this file. */
-export const NOTO_SANS_SC_SOURCES = [
+/** Public-asset keys, one per weight (content-hashed names). No host: see publicAssetUrl(). */
+export const MISANS_FILES = [
 ${results
   .map(
     (face) =>
-      `  { path: "./${face.out}", weight: "${face.weight}", style: "normal", bytes: ${face.bytes} },`,
+      `  { key: "${R2_PREFIX}/${face.cdnName}", weight: "${face.weight}", bytes: ${face.bytes} },`,
   )
   .join("\n")}
 ] as const;
 `;
 }
 
-const cssVariable = () => "--font-noto-sans-sc";
+const cssVariable = () => "--font-misans";
 
 async function main() {
   await ensureVendoredSources();
@@ -424,7 +398,7 @@ async function main() {
   const charsetHash = createHash("sha256").update(charsetText).digest("hex");
 
   log("");
-  log("Noto Sans SC — CJK subset build");
+  log("MiSans — CJK subset build");
   log(`  zh catalogs found      ${set.catalogs.length}`);
   for (const file of set.catalogs) log(`    - ${relative(REPO_ROOT, file)}`);
   log(`  chars from catalogs    ${set.fromCatalogs.size}`);
@@ -471,14 +445,42 @@ async function main() {
         { stdio: ["ignore", "ignore", "inherit"] },
       );
     }
+    const hash = createHash("sha256").update(readFileSync(output)).digest("hex").slice(0, 10);
     results.push({
       ...face,
       bytes: statSync(output).size,
       sourceBytes: statSync(source).size,
+      cdnName: face.out.replace(/\.woff2$/, `.${hash}.woff2`),
     });
   }
 
-  writeFileSync(CSS_PATH, renderCss(results, set.chars.length), "utf8");
+  if (UPLOAD) {
+    if (!R2_BUCKET)
+      throw new Error(
+        "--upload needs MISANS_R2_BUCKET (the bucket behind your public asset origin)",
+      );
+    for (const face of results) {
+      log(`uploading ${face.cdnName} → r2://${R2_BUCKET}/${R2_PREFIX}/`);
+      execFileSync(
+        "npx",
+        [
+          "wrangler",
+          "r2",
+          "object",
+          "put",
+          `${R2_BUCKET}/${R2_PREFIX}/${face.cdnName}`,
+          "--file",
+          join(OUT_DIR, face.out),
+          "--content-type",
+          "font/woff2",
+          "--cache-control",
+          "public, max-age=31536000, immutable",
+          "--remote",
+        ],
+        { stdio: ["ignore", "ignore", "inherit"] },
+      );
+    }
+  }
   writeFileSync(TS_PATH, renderTs(results, set.chars.length), "utf8");
   writeFileSync(
     MANIFEST_PATH,
@@ -524,7 +526,7 @@ async function main() {
     const ratio = ((face.bytes / face.sourceBytes) * 100).toFixed(2);
     log(`  ${face.out.padEnd(24)} ${fmtBytes(face.bytes)}   ${ratio}% of ${face.file}`);
   }
-  for (const file of [CSS_PATH, TS_PATH, MANIFEST_PATH]) {
+  for (const file of [TS_PATH, MANIFEST_PATH]) {
     log(`  ${basename(file).padEnd(24)} ${fmtBytes(statSync(file).size)}`);
   }
   log("");

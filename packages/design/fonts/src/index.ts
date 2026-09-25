@@ -23,10 +23,11 @@ export const FONT_REGISTRY: Record<string, string> = {
   geist: "--font-geist-sans",
   "geist sans": "--font-geist-sans",
   "geist mono": "--font-geist-mono",
-  // Self-hosted via next/font/local from the subset built in ./generated (see
-  // ./next-cjk). The Simplified-Chinese face — CJK only via unicode-range, so it
-  // cannot take Latin away from Geist.
-  "noto sans sc": "--font-noto-sans-sc",
+  // Self-hosted via next/font/local (see ./next-cjk). MiSans is the
+  // Simplified-Chinese face — CJK only via unicode-range, so it cannot take
+  // Latin away from Geist. DM Sans is the Latin display/heading face.
+  misans: "--font-misans",
+  "dm sans display": "--font-dm-sans",
   // Self-hosted via next/font/google (see ./next)
   inter: "--font-inter",
   "inter tight": "--font-reg-inter-tight",

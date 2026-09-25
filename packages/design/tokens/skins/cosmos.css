@@ -117,17 +117,17 @@ html[data-brand="cosmos"] {
 
   /* Typography */
   --font-sans:
-    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia, var(--font-misans, "MiSans"),
+    "PingFang SC", ui-serif, serif;
   --font-cn:
-    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia, var(--font-misans, "MiSans"),
+    "PingFang SC", ui-serif, serif;
   --font-heading:
-    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia, var(--font-misans, "MiSans"),
+    "PingFang SC", ui-serif, serif;
   --font-display:
-    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia, var(--font-misans, "MiSans"),
+    "PingFang SC", ui-serif, serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
   --font-weight-heading: 350;
 

@@ -72,7 +72,7 @@ export const brandGuidelines = {
 
   // Typography
   typography: {
-    cn: "Noto Sans SC",
+    cn: "MiSans",
     en: "Geist",
     weights: ["Regular", "Medium", "SemiBold", "Bold"],
   },

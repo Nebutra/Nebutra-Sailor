@@ -549,7 +549,7 @@ ${storyBlock}  domains: ${serialize(config.domains)},
 export const colors = ${serialize(config.colors)} as const;
 
 /**
- * Typography — "Precision Stack" (Geist + Noto Sans SC + Geist Mono).
+ * Typography — Geist (Latin UI), DM Sans (headings), MiSans (Chinese), Geist Mono.
  */
 export const typography = ${serialize(config.typography)} as const;
 

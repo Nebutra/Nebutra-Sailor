@@ -2,7 +2,7 @@
 import { LogomarkSVG, WordmarkEnSVG } from "@nebutra/brand";
 import logoColorMark from "@nebutra/brand/assets/logo/logo-color.svg";
 import { brand } from "@nebutra/brand/metadata";
-import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
+import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { Banner } from "fumadocs-ui/components/banner";
 import { I18nProvider } from "fumadocs-ui/contexts/i18n";
@@ -32,10 +32,10 @@ const logoColorMarkSrc =
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
 // Matches the Precision Stack used across apps/web and apps/landing
-// cjkFontClassName -> --font-noto-sans-sc: self-hosted Noto Sans SC subset via
-// next/font/local (files ship in @nebutra/fonts, so no build-time fetch). Geist has
-// no CJK coverage; it stays first in --font-sans and keeps Latin + numerals, and only
-// CJK falls through to Noto Sans SC — whose subset carries no Latin glyphs at all.
+// cjkFontClassName -> --font-dm-sans (headings, next/font/local — no build-time
+// fetch); <CjkFontFace /> declares MiSans from the asset CDN. Geist has no CJK
+// coverage; it stays first in --font-sans and keeps Latin + numerals, and only
+// CJK falls through to MiSans — whose unicode-range carries no Latin at all.
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL || "https://nebutra.com/docs"),
@@ -107,6 +107,8 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>
+        <CjkFontFace />
+
         <RootProvider
           search={{
             options: {

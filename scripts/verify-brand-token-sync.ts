@@ -265,13 +265,19 @@ if (nebutraCyanScale[500] !== colors.accent[500]) {
   ok("guidelines/color.ts: nebutraCyanScale → colors.accent");
 }
 
-// ─── 5. Font stack — Geist + CJK fallbacks ──────────────────────────────────
+// ─── 5. Font stack — Geist body, DM Sans headings, MiSans CJK ─────────────────
 {
   const ssotSans = core.fontFamily.sans.$value;
-  const expectedFonts = ["Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei"];
+  const expectedFonts = ["Geist", "MiSans", "PingFang SC", "Microsoft YaHei"];
   for (const font of expectedFonts) {
     if (!ssotSans.includes(font)) {
       fail("fontFamily.sans (SSOT)", `SSOT sans missing required font "${font}"`);
+    }
+  }
+  for (const slot of ["display", "heading"] as const) {
+    const stack = core.fontFamily[slot].$value;
+    if (!stack.includes("DM Sans") || !stack.includes("MiSans")) {
+      fail(`fontFamily.${slot} (SSOT)`, `SSOT ${slot} must be DM Sans with MiSans for CJK`);
     }
   }
 

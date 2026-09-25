@@ -57,7 +57,8 @@ const FONT_REGISTRY = {
   geist: "--font-geist-sans",
   "geist sans": "--font-geist-sans",
   "geist mono": "--font-geist-mono",
-  "vivo sans sc": "--font-noto-sans-sc",
+  misans: "--font-misans",
+  "dm sans display": "--font-dm-sans",
   inter: "--font-inter",
   "space grotesk": "--font-space-grotesk",
   "playfair display": "--font-playfair-display",
@@ -953,14 +954,15 @@ function buildTailwindThemeInline() {
      --spacing-{step} alias. --spacing itself (0.25rem arithmetic base) stays
      untouched. See static/base.css. */
 
-  /* Font family — Geist keeps Latin + numerals, self-hosted Noto Sans SC takes
-     CJK, system CJK faces behind it. Order is the design decision; see the
-     fontFamily $description in tokens/core.json. Mirror of those tokens — keep
-     the two in sync (verify:parity compares them). */
-  --font-sans: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-cn: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-display: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
-  --font-heading: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc, "Noto Sans SC"), sans-serif;
+  /* Font family — Geist keeps Latin + numerals for body/UI, DM Sans sets Latin
+     display and headings, self-hosted MiSans takes CJK, system CJK faces behind
+     it. Order is the design decision; see the fontFamily $description in
+     tokens/core.json. Mirror of those tokens — keep the two in sync
+     (verify:parity compares them). */
+  --font-sans: var(--font-geist-sans), "Geist", var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-cn: var(--font-geist-sans), "Geist", var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-display: var(--font-dm-sans), "DM Sans", var(--font-misans, "MiSans"), "PingFang SC", sans-serif;
+  --font-heading: var(--font-dm-sans), "DM Sans", var(--font-misans, "MiSans"), "PingFang SC", sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }
 `;

@@ -1,7 +1,7 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
-import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
+import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { Fraunces } from "next/font/google";
 import type { ReactNode } from "react";
 import { BRAND } from "@/lib/brand";
@@ -49,6 +49,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-CN" data-brand="cosmos" className={`${fraunces.variable} ${cjkFontClassName}`}>
       <body className="shell">
+        <CjkFontFace />
+
         <AuthProvider provider={authProvider} config={authProviderConfig}>
           {children}
         </AuthProvider>

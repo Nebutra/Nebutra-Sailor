@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
+import { CjkFontFace } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 
 export const metadata: Metadata = {
@@ -18,6 +19,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={toHtmlLang(locale)} dir={toTextDir(locale)}>
       <body className="min-h-screen antialiased">
+        <CjkFontFace />
+
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>

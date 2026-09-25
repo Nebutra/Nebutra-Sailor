@@ -94,7 +94,11 @@ function LegalFooter() {
               {t("links.refund")}
             </Link>
           </nav>
-          <p className="text-[13px] text-muted-foreground">{t("copyright")}</p>
+          <div className="flex flex-col items-center gap-1 sm:items-end">
+            <p className="text-[13px] text-muted-foreground">{t("copyright")}</p>
+            {/* MiSans licence: the product must credit the typeface. */}
+            <p className="text-xs text-muted-foreground">{t("fontCredit")}</p>
+          </div>
         </div>
       </div>
     </footer>
@@ -247,6 +251,8 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[color:hsl(var(--muted))] pt-6 md:flex-row">
           <div className="flex flex-col items-center gap-1 md:items-start">
             <p className="text-xs text-[color:hsl(var(--muted-foreground))]">{t("copyright")}</p>
+            {/* MiSans licence: the product must credit the typeface. */}
+            <p className="text-xs text-[color:hsl(var(--muted-foreground))]">{t("fontCredit")}</p>
             {/* ICP 备案 — required for websites operated in mainland China */}
             {process.env.NEXT_PUBLIC_ICP_NUMBER && (
               <a

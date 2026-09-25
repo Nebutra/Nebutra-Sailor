@@ -19,7 +19,7 @@
  * const headingStyle = typeStyles.h1;
  *
  * // Get optional CJK Google Fonts URL; Geist itself is loaded by next/font.
- * const fontsUrl = getGoogleFontsUrl(["sourceHanSans"]);
+ * const fontsUrl = getGoogleFontsUrl(["inter"]);
  * ```
  */
 

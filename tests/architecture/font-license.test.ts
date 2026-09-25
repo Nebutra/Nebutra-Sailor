@@ -27,13 +27,23 @@ describe("CJK face redistribution", () => {
     expect(existsSync(join(ROOT, "packages/design/brand/assets/fonts/vivo-sans"))).toBe(false);
   });
 
-  it("ships an OFL notice for the self-hosted CJK face", () => {
-    expect(existsSync(join(FONTS_DIR, "vendor/noto-sans-sc/OFL.txt"))).toBe(true);
-    expect(existsSync(join(FONTS_DIR, "NOTICE-FONTS.md"))).toBe(true);
+  it("ships the licence notices for the brand faces", () => {
+    expect(existsSync(join(FONTS_DIR, "vendor/misans/LICENSE.txt"))).toBe(true);
+    expect(existsSync(join(FONTS_DIR, "vendor/dm-sans/OFL.txt"))).toBe(true);
     const notice = readFileSync(join(FONTS_DIR, "NOTICE-FONTS.md"), "utf8");
-    expect(notice).toMatch(/Noto Sans SC/);
+    expect(notice).toMatch(/MiSans/);
+    expect(notice).toMatch(/DM Sans/);
     expect(notice).toMatch(/SIL Open Font License|OFL/i);
     expect(notice).not.toMatch(/vivo Sans/);
+  });
+
+  it("never tracks MiSans binaries — the licence forbids redistributing the font", () => {
+    // Same class of restriction that removed vivo Sans (b5e73db35). The subsets
+    // are served from the asset CDN; only their keys are committed.
+    const tracked = gitTrackedFiles().filter(
+      (path) => /misans/i.test(path) && FONT_BINARY.test(path),
+    );
+    expect(tracked).toEqual([]);
   });
 
   it("does not publish font binaries in the npm files list", () => {
@@ -46,7 +56,7 @@ describe("CJK face redistribution", () => {
     const binaries = files.filter((entry) => FONT_BINARY.test(entry) || entry.includes("*.woff"));
     expect(binaries).toEqual([]);
     expect(files).toContain("NOTICE-FONTS.md");
-    expect(files).toContain("vendor/noto-sans-sc/OFL.txt");
+    expect(files).toContain("vendor/misans/LICENSE.txt");
     expect(files.some((entry) => /vivo/i.test(entry))).toBe(false);
     expect(JSON.stringify(manifest.exports ?? {})).not.toMatch(/vivo/i);
   });

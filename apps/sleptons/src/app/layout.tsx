@@ -1,7 +1,7 @@
 /* tokens loaded once via globals.css → @nebutra/ui/styles/preset.css */
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
+import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { ReactNode } from "react";
@@ -15,7 +15,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}>
-        <body className="bg-background text-foreground">{children}</body>
+        <body className="bg-background text-foreground">
+          <CjkFontFace />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );

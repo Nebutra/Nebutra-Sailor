@@ -471,17 +471,17 @@ export const DEFAULT_BRAND: BrandConfig = {
   typography: {
     fontFamily: {
       en: '"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
-      cn: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif',
-      sans: '"Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+      cn: '"MiSans", "PingFang SC", "Microsoft YaHei", sans-serif',
+      sans: '"Geist", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       mono: '"Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
-      display: '"Geist", "Noto Sans SC", sans-serif',
-      heading: '"Geist", "Noto Sans SC", sans-serif',
-      brandPrint: '"Noto Sans SC", "PingFang SC", sans-serif',
+      display: '"DM Sans", "MiSans", "PingFang SC", sans-serif',
+      heading: '"DM Sans", "MiSans", "PingFang SC", sans-serif',
+      brandPrint: '"MiSans", "PingFang SC", sans-serif',
     },
     cssVars: {
       sans: "var(--font-geist-sans)",
       mono: "var(--font-geist-mono)",
-      cnSans: "var(--font-noto-sc)",
+      cnSans: "var(--font-misans)",
     },
     fontWeight: {
       thin: 100,
