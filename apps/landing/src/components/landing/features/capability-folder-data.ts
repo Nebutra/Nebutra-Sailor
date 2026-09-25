@@ -378,7 +378,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 8,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 94,
+      sourceFiles: 96,
       testFiles: 35,
       readmes: 8,
     },

@@ -509,6 +509,11 @@ export type BAInvitation = Prisma.BAInvitationModel
  */
 export type BAPasskey = Prisma.BAPasskeyModel
 /**
+ * Model AuthDeviceCode
+ * @conditional(auth=betterauth)
+ */
+export type AuthDeviceCode = Prisma.AuthDeviceCodeModel
+/**
  * Model AtelierCanvas
  * 
  */

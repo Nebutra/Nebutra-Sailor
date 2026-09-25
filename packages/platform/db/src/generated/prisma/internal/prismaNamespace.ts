@@ -474,6 +474,7 @@ export const ModelName = {
   BAMember: 'BAMember',
   BAInvitation: 'BAInvitation',
   BAPasskey: 'BAPasskey',
+  AuthDeviceCode: 'AuthDeviceCode',
   AtelierCanvas: 'AtelierCanvas',
   AgentRolloutLine: 'AgentRolloutLine',
   PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
@@ -494,7 +495,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "routerReservation" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "routerReservation" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -7142,6 +7143,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AuthDeviceCode: {
+      payload: Prisma.$AuthDeviceCodePayload<ExtArgs>
+      fields: Prisma.AuthDeviceCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuthDeviceCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuthDeviceCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>
+        }
+        findFirst: {
+          args: Prisma.AuthDeviceCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuthDeviceCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>
+        }
+        findMany: {
+          args: Prisma.AuthDeviceCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>[]
+        }
+        create: {
+          args: Prisma.AuthDeviceCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>
+        }
+        createMany: {
+          args: Prisma.AuthDeviceCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AuthDeviceCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>[]
+        }
+        delete: {
+          args: Prisma.AuthDeviceCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>
+        }
+        update: {
+          args: Prisma.AuthDeviceCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.AuthDeviceCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuthDeviceCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AuthDeviceCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>[]
+        }
+        upsert: {
+          args: Prisma.AuthDeviceCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthDeviceCodePayload>
+        }
+        aggregate: {
+          args: Prisma.AuthDeviceCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuthDeviceCode>
+        }
+        groupBy: {
+          args: Prisma.AuthDeviceCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthDeviceCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuthDeviceCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthDeviceCodeCountAggregateOutputType> | number
+        }
+      }
+    }
     AtelierCanvas: {
       payload: Prisma.$AtelierCanvasPayload<ExtArgs>
       fields: Prisma.AtelierCanvasFieldRefs
@@ -9102,6 +9177,22 @@ export const BAPasskeyScalarFieldEnum = {
 export type BAPasskeyScalarFieldEnum = (typeof BAPasskeyScalarFieldEnum)[keyof typeof BAPasskeyScalarFieldEnum]
 
 
+export const AuthDeviceCodeScalarFieldEnum = {
+  id: 'id',
+  deviceCode: 'deviceCode',
+  userCode: 'userCode',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  status: 'status',
+  lastPolledAt: 'lastPolledAt',
+  pollingInterval: 'pollingInterval',
+  clientId: 'clientId',
+  scope: 'scope'
+} as const
+
+export type AuthDeviceCodeScalarFieldEnum = (typeof AuthDeviceCodeScalarFieldEnum)[keyof typeof AuthDeviceCodeScalarFieldEnum]
+
+
 export const AtelierCanvasScalarFieldEnum = {
   pk: 'pk',
   id: 'id',
@@ -10192,6 +10283,7 @@ export type GlobalOmitConfig = {
   bAMember?: Prisma.BAMemberOmit
   bAInvitation?: Prisma.BAInvitationOmit
   bAPasskey?: Prisma.BAPasskeyOmit
+  authDeviceCode?: Prisma.AuthDeviceCodeOmit
   atelierCanvas?: Prisma.AtelierCanvasOmit
   agentRolloutLine?: Prisma.AgentRolloutLineOmit
   pebbleDiagnosticTicket?: Prisma.PebbleDiagnosticTicketOmit

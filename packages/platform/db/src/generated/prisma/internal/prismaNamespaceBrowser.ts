@@ -141,6 +141,7 @@ export const ModelName = {
   BAMember: 'BAMember',
   BAInvitation: 'BAInvitation',
   BAPasskey: 'BAPasskey',
+  AuthDeviceCode: 'AuthDeviceCode',
   AtelierCanvas: 'AtelierCanvas',
   AgentRolloutLine: 'AgentRolloutLine',
   PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
@@ -1713,6 +1714,22 @@ export const BAPasskeyScalarFieldEnum = {
 } as const
 
 export type BAPasskeyScalarFieldEnum = (typeof BAPasskeyScalarFieldEnum)[keyof typeof BAPasskeyScalarFieldEnum]
+
+
+export const AuthDeviceCodeScalarFieldEnum = {
+  id: 'id',
+  deviceCode: 'deviceCode',
+  userCode: 'userCode',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  status: 'status',
+  lastPolledAt: 'lastPolledAt',
+  pollingInterval: 'pollingInterval',
+  clientId: 'clientId',
+  scope: 'scope'
+} as const
+
+export type AuthDeviceCodeScalarFieldEnum = (typeof AuthDeviceCodeScalarFieldEnum)[keyof typeof AuthDeviceCodeScalarFieldEnum]
 
 
 export const AtelierCanvasScalarFieldEnum = {
