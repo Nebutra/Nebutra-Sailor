@@ -1,5 +1,30 @@
 # nebutra
 
+## 0.6.0
+
+### Minor Changes
+
+- [`b25ba64`](https://github.com/Nebutra/Nebutra-Sailor/commit/b25ba64f86fdc5cfe3718fa379d1f50b6bc46053) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add `nebutra login` (RFC 8628 device authorization) and `nebutra whoami`. `login` requests a
+  device code from the auth center, opens a browser for the user to confirm it, and stores the
+  resulting session in the OS keychain (falling back to `~/.config/nebutra/credentials.json`,
+  mode 0600). `login --json` prints the verification link/code and exits immediately without
+  blocking — for agents; `login --poll` resumes and blocks to completion. `NEBUTRA_TOKEN`
+  overrides stored credentials for CI. `logout` now also clears the keychain entry and any
+  pending device-code state.
+
+- [`edfaafc`](https://github.com/Nebutra/Nebutra-Sailor/commit/edfaafc93f3532c536568c5bcfbdc8074a45c977) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Add `nebutra sync` — makes a project's `.env.example` / `.env.local` agree with
+  the capabilities declared in `nebutra.config.json`, idempotently. It reuses the
+  same capability→provider→env-key table `nebutra status` already reads (now
+  factored into `src/utils/capabilities.ts`, the single source of truth for
+  both commands), appends any env key a declared capability's providers read
+  that isn't already present anywhere in `.env.example` (grouped under a
+  `# <capability> (<provider>)` comment, values left empty — never a real
+  secret), and creates an empty `.env.local` with a header comment if missing.
+  Unknown capability names in the manifest fail with `CONFIG_ERROR` and list the
+  valid names; duplicates are deduped with a warning. Supports `--dry-run`
+  (prints the planned additions, writes nothing, exits `10`) and `--json` for
+  agent-consumable output shaped `{ added, unchanged, warnings }`.
+
 ## 0.5.0
 
 ### Minor Changes
