@@ -44,7 +44,7 @@ export function ContactForm() {
     <form action={action} className="space-y-6">
       {/* Tinted fill carries the error, so the dark: overrides are gone — the
           alpha tint and the red-900 ramp are both theme-aware. red-900 is
-          5.32:1 light / 5.84:1 dark; `text-destructive` would be 2.36:1 in
+          5.32:1 light / 5.84:1 dark; `text-destructive-strong` would be 2.36:1 in
           dark. TODO: --destructive-strong once that token lands. */}
       {state.status === "error" && (
         <div

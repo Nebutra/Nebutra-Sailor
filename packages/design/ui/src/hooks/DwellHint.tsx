@@ -94,7 +94,7 @@ export const DwellHint = React.forwardRef<HTMLDivElement, DwellHintProps>(
                 "flex items-center gap-2 px-4 py-2.5",
                 "bg-background/95 backdrop-blur-md",
                 "border border-border/50 rounded-[var(--radius-lg)]",
-                "shadow-lg shadow-black/5",
+                "shadow-lg shadow-foreground/5",
                 "text-sm text-muted-foreground",
               )}
             >

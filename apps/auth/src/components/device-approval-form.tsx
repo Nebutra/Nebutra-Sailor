@@ -181,7 +181,7 @@ export function DeviceApprovalForm({
 
       {step.kind === "error" && (
         <div className="grid gap-3">
-          <p className="text-sm text-destructive">{step.message}</p>
+          <p className="text-sm text-destructive-strong">{step.message}</p>
           <Button type="button" variant="outline" onClick={() => setStep({ kind: "enter-code" })}>
             Try again
           </Button>

@@ -50,7 +50,7 @@ export function CanvasRevealEffect({
   showGradient = true,
 }: CanvasRevealEffectProps) {
   return (
-    <div className={cn("h-full relative bg-white w-full", containerClassName)}>
+    <div className={cn("h-full relative bg-background w-full", containerClassName)}>
       <div className="h-full w-full">
         <DotMatrix
           colors={colors}
@@ -65,7 +65,9 @@ export function CanvasRevealEffect({
           center={["x", "y"]}
         />
       </div>
-      {showGradient && <div className="absolute inset-0 bg-gradient-to-t from-gray-950 to-[84%]" />}
+      {showGradient && (
+        <div className="absolute inset-0 bg-gradient-to-t from-background to-[84%]" />
+      )}
     </div>
   );
 }

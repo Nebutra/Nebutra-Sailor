@@ -33,6 +33,12 @@ export interface AppShellProps {
   contentClassName?: string;
   /** Extra classes for the outer wrapper. */
   className?: string;
+  /** Accessible name for the primary sidebar landmark. Pass a translated string. */
+  primaryNavLabel?: string;
+  /** Accessible name for the overlay-collapse button. Pass a translated string. */
+  collapseNavigationLabel?: string;
+  /** Accessible name for the mobile hamburger button. Pass a translated string. */
+  openNavigationMenuLabel?: string;
 }
 
 const DEFAULT_SIDEBAR_WIDTH = 224;
@@ -75,6 +81,9 @@ export function AppShell({
   contentClassName,
   className,
   overlay = false,
+  primaryNavLabel = "Primary",
+  collapseNavigationLabel = "Collapse navigation",
+  openNavigationMenuLabel = "Open navigation menu",
 }: AppShellProps) {
   const isControlled = collapsed !== undefined;
   const [internalCollapsed] = React.useState(defaultCollapsed);
@@ -96,7 +105,7 @@ export function AppShell({
           width collapses to 0 (e.g. a full-bleed route that drives its own
           navigation toggle), drop the border so no seam line remains. */}
       <aside
-        aria-label="Primary"
+        aria-label={primaryNavLabel}
         className={cn(
           "hidden h-dvh overflow-hidden bg-sidebar text-sidebar-foreground md:block",
           "transition-[width] duration-flow ease-out",
@@ -119,7 +128,7 @@ export function AppShell({
       {overlay && !isCollapsed ? (
         <button
           type="button"
-          aria-label="Collapse navigation"
+          aria-label={collapseNavigationLabel}
           onClick={() => onCollapsedChange?.(true)}
           className="absolute inset-0 z-30 hidden cursor-default bg-foreground/25 backdrop-blur-xs md:block"
         />
@@ -144,7 +153,7 @@ export function AppShell({
           >
             <button
               type="button"
-              aria-label="Open navigation menu"
+              aria-label={openNavigationMenuLabel}
               onClick={() => setMobileOpen(true)}
               className={cn(
                 "relative inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
@@ -162,7 +171,7 @@ export function AppShell({
           <div className="flex shrink-0 items-center border-b border-border bg-background px-4 py-2 md:hidden">
             <button
               type="button"
-              aria-label="Open navigation menu"
+              aria-label={openNavigationMenuLabel}
               onClick={() => setMobileOpen(true)}
               className={cn(
                 "relative inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",

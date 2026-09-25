@@ -209,7 +209,7 @@ export const EdgeStates: Story = {
           </DemoCell>
         </Grid.Cell>
         <Grid.Cell column={{ sm: 1, md: "2/4" }} solid>
-          <DemoCell tone="strong" className="text-destructive">
+          <DemoCell tone="strong" className="text-destructive-strong">
             Error: invalid track configuration
           </DemoCell>
         </Grid.Cell>

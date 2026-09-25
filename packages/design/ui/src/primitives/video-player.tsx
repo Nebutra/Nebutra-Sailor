@@ -95,10 +95,12 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ value, onChange, className 
 
   return (
     <motion.div
+      // allow-palette: slider track sits on the dark video control scrim, not on the app surface
       className={cn("relative h-1 w-full cursor-pointer rounded-full bg-white/20", className)}
       onClick={handleClick}
     >
       <motion.div
+        // allow-palette: slider fill sits on the dark video control scrim, not on the app surface
         className="absolute left-0 top-0 h-full rounded-full bg-white"
         style={{ width: `${value}%` }}
         initial={shouldReduceMotion ? { width: `${value}%` } : { width: 0 }}
@@ -225,6 +227,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   return (
     <motion.div
       className={cn(
+        // allow-palette: frame scrim sits over arbitrary video content, not the app surface
         "relative mx-auto w-full max-w-4xl overflow-hidden rounded-[var(--radius-xl)] bg-black/60 shadow-lg backdrop-blur-sm",
         className,
       )}
@@ -253,6 +256,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       <AnimatePresence initial={!shouldReduceMotion}>
         {showControls && (
           <motion.div
+            // allow-palette: control bar scrim sits over arbitrary video content, not the app surface
             className="absolute bottom-0 left-0 right-0 m-2 mx-auto max-w-xl rounded-[var(--radius-2xl)] bg-black/60 p-4 backdrop-blur-md"
             initial={
               shouldReduceMotion ? { opacity: 0 } : { y: 20, opacity: 0, filter: "blur(10px)" }
@@ -265,8 +269,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
           >
             {/* Progress bar */}
             <div className="mb-2 flex items-center gap-2">
+              {/* allow-palette: timestamp sits on the dark video control scrim, not the app surface */}
               <span className="text-sm text-white">{formatTime(currentTime)}</span>
               <CustomSlider value={progress} onChange={handleSeek} className="flex-1" />
+              {/* allow-palette: timestamp sits on the dark video control scrim, not the app surface */}
               <span className="text-sm text-white">{formatTime(duration)}</span>
             </div>
 
@@ -283,6 +289,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                     onClick={togglePlay}
                     variant="ghost"
                     size="icon"
+                    // allow-palette: control button sits on the dark video control scrim, not the app surface
                     className="text-white hover:bg-white/10 hover:text-white"
                     aria-label={isPlaying ? "Pause" : "Play"}
                   >
@@ -301,6 +308,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                       onClick={toggleMute}
                       variant="ghost"
                       size="icon"
+                      // allow-palette: control button sits on the dark video control scrim, not the app surface
                       className="text-white hover:bg-white/10 hover:text-white"
                       aria-label={isMuted ? "Unmute" : "Mute"}
                     >
@@ -327,7 +335,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                       variant="ghost"
                       size="icon"
                       className={cn(
+                        // allow-palette: control button sits on the dark video control scrim, not the app surface
                         "text-white hover:bg-white/10 hover:text-white",
+                        // allow-palette: active-speed highlight sits on the dark video control scrim
                         playbackSpeed === speed && "bg-white/20",
                       )}
                       aria-label={`${speed}x speed`}

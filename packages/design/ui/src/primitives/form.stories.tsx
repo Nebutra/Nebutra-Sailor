@@ -209,7 +209,7 @@ function ProfileForm({
             its own announcement — a field message is only read when the field
             takes focus. */}
         {formError ? (
-          <p role="alert" className="text-sm font-medium text-destructive">
+          <p role="alert" className="text-sm font-medium text-destructive-strong">
             {formError}
           </p>
         ) : null}

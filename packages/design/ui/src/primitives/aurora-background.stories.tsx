@@ -35,12 +35,12 @@ type Story = StoryObj<typeof meta>;
 
 const Frame = ({ children, label }: { children: React.ReactNode; label: string }) => (
   <div
-    className="relative overflow-hidden rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)]"
+    className="relative overflow-hidden rounded-xl border border-neutral-7 bg-neutral-1"
     style={{ width: 800, height: 400 }}
   >
     {children}
     <div className="relative z-10 flex h-full w-full items-center justify-center">
-      <span className="text-2xl font-semibold text-[var(--neutral-12)]">{label}</span>
+      <span className="text-2xl font-semibold text-neutral-12">{label}</span>
     </div>
   </div>
 );

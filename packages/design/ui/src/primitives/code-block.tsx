@@ -92,6 +92,8 @@ interface CommonCodeBlockProps {
   hideHeader?: boolean;
   /** Accessible label for the code block. Pass via the standard `aria-label` attribute. */
   "aria-label"?: string;
+  /** Accessible name for the copy-code button. Pass a translated string. */
+  copyLabel?: string;
 }
 
 /** Multi-file (legacy) shape — tabs across `files[]`. */
@@ -385,6 +387,7 @@ export function CodeBlock(props: CodeBlockProps) {
     languageIcons,
     showLanguageIcon = true,
     "aria-label": ariaLabel,
+    copyLabel = "Copy code",
   } = props;
 
   // Line numbers default differs by form: Geist shows them by default
@@ -731,7 +734,7 @@ export function CodeBlock(props: CodeBlockProps) {
               type="button"
               onClick={() => copyToClipboard(code)}
               className="inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] hover:bg-accent hover:text-accent-foreground"
-              aria-label="Copy code"
+              aria-label={copyLabel}
             >
               {copied ? (
                 <motion.div

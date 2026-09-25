@@ -109,7 +109,7 @@ export const ColorInheritance: Story = {
       <div className="text-green-500">
         <LoadingDots size={5} />
       </div>
-      <div className="text-destructive">
+      <div className="text-destructive-strong">
         <LoadingDots size={5} />
       </div>
     </div>

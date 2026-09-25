@@ -35,4 +35,6 @@ export type DataTableProps<TData> = {
   columnResizeMode?: "onChange" | "onEnd";
   /** Enable drag/click multi-cell selection & copy shortcuts */
   enableCellSelection?: boolean;
+  /** Accessible name for the column resize handle. Pass a translated string. */
+  resizeColumnLabel?: string;
 };

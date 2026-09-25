@@ -166,7 +166,7 @@ function DefaultErrorFallback({
 
     case "inline":
       return (
-        <span className="inline-flex items-center gap-1 text-sm text-red-600 dark:text-red-400">
+        <span className="inline-flex items-center gap-1 text-sm text-destructive-strong">
           <AlertCircle className="size-3" />
           <span>Error</span>
           {showRetry && (
@@ -179,16 +179,14 @@ function DefaultErrorFallback({
 
     case "compact":
       return (
-        <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[var(--radius-lg)]">
-          <AlertCircle className="size-5 text-red-600 dark:text-red-400 shrink-0" />
+        <div className="flex items-center gap-3 p-3 bg-destructive/10 border border-destructive/20 rounded-[var(--radius-lg)]">
+          <AlertCircle className="size-5 text-destructive-strong shrink-0" />
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-red-800 dark:text-red-200 truncate">
+            <p className="text-sm font-medium text-destructive-strong truncate">
               {componentName ? `${componentName} 加载失败` : "组件加载失败"}
             </p>
             {process.env.NODE_ENV === "development" && (
-              <p className="text-xs text-red-600 dark:text-red-400 truncate mt-0.5">
-                {error.message}
-              </p>
+              <p className="text-xs text-destructive-strong truncate mt-0.5">{error.message}</p>
             )}
           </div>
           {showRetry && (
@@ -203,8 +201,8 @@ function DefaultErrorFallback({
     default:
       return (
         <div className="flex flex-col items-center justify-center p-6 bg-muted/50 border border-border rounded-[var(--radius-lg)]">
-          <div className="size-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4">
-            <AlertCircle className="size-6 text-red-600 dark:text-red-400" />
+          <div className="size-12 rounded-full bg-destructive/15 flex items-center justify-center mb-4">
+            <AlertCircle className="size-6 text-destructive-strong" />
           </div>
           <h3 className="text-base font-medium text-foreground mb-1">
             {componentName ? `${componentName} 出错了` : "组件出错了"}
@@ -248,10 +246,10 @@ export function TableErrorBoundary({
       variant="compact"
       fallback={({ error, resetError }) => (
         <div className="border border-border rounded-[var(--radius-lg)] overflow-hidden">
-          <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20">
+          <div className="flex items-center justify-between p-4 bg-destructive/10">
             <div className="flex items-center gap-2">
-              <AlertCircle className="size-4 text-red-600 dark:text-red-400" />
-              <span className="text-sm font-medium text-red-800 dark:text-red-200">
+              <AlertCircle className="size-4 text-destructive-strong" />
+              <span className="text-sm font-medium text-destructive-strong">
                 {tableName ? `${tableName}加载失败` : "表格加载失败"}
               </span>
             </div>

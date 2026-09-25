@@ -68,6 +68,8 @@ export type SearchToolProps = {
   /** Scroll-container cap. @default 200 */
   maxResultsHeightPx?: number;
   className?: string;
+  /** Accessible name for the results list. Pass a translated string. */
+  resultsLabel?: string;
 };
 
 const EMPTY_SEARCH_RESULTS: readonly SearchResult[] = [];
@@ -140,6 +142,7 @@ export function SearchTool({
   onExpandedChange,
   maxResultsHeightPx = SEARCH_DEFAULT_MAX_HEIGHT_PX,
   className,
+  resultsLabel = "Search results",
 }: SearchToolProps): ReactElement {
   const panelId = useId();
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
@@ -210,7 +213,7 @@ export function SearchTool({
             <span className="truncate text-muted-foreground">&ldquo;{query}&rdquo;</span>
           </header>
           <div className="overflow-y-auto bg-card" style={{ maxHeight: `${maxResultsHeightPx}px` }}>
-            <ul aria-label="Search results" className="flex flex-col gap-1 p-1">
+            <ul aria-label={resultsLabel} className="flex flex-col gap-1 p-1">
               {results.map((result) => (
                 <SearchResultRow key={getSearchResultKey(result)} result={result} />
               ))}

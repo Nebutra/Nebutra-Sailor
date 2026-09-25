@@ -8,7 +8,12 @@ import type { DataTableProps } from "./types";
 import { getPinnedStyles } from "./utils";
 
 export function DataTable<TData>(props: DataTableProps<TData>) {
-  const { showToolbar = true, enableColumnVisibility = true, extraActions } = props;
+  const {
+    showToolbar = true,
+    enableColumnVisibility = true,
+    extraActions,
+    resizeColumnLabel = "Resize column",
+  } = props;
 
   const { table, state, refs, virtualization, helpers, data: tableData, t } = useDataTable(props);
   const { scrollContainerRef } = refs;
@@ -43,16 +48,16 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
         />
       ) : null}
 
-      <div className="rounded-[var(--radius-xl)] border border-slate-200 bg-white shadow-inner dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
+      <div className="rounded-[var(--radius-xl)] border border-border bg-card shadow-inner overflow-hidden">
         <div className="relative">
           <div ref={scrollContainerRef} className="max-h-[60vh] overflow-auto">
             <table
               className="min-w-[900px] table-fixed caption-bottom text-sm"
               style={{ width: tableDisplayWidth }}
             >
-              <thead className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-900 [&_tr]:border-b shadow-header-sticky">
+              <thead className="sticky top-0 z-10 bg-muted [&_tr]:border-b shadow-header-sticky">
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id} className="border-b border-slate-200">
+                  <tr key={headerGroup.id} className="border-b border-border">
                     {headerGroup.headers.map((header) => {
                       const isGroupHeader =
                         Array.isArray(
@@ -67,13 +72,13 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                         (header.column.columnDef.meta as { headerClassName?: string }) ?? {};
                       const colorClass = headerMeta.headerClassName;
                       const defaultColorClass = isPinned
-                        ? "bg-white text-slate-600 dark:bg-slate-900 dark:text-slate-100"
-                        : "bg-slate-50 text-slate-600 dark:bg-slate-900 dark:text-slate-200";
+                        ? "bg-card text-muted-foreground"
+                        : "bg-muted text-muted-foreground";
                       const appliedColorClass = colorClass ?? defaultColorClass;
                       return (
                         <th
                           key={header.id}
-                          className={`group relative select-none border-b border-slate-200 px-4 py-4 text-left text-xs font-semibold dark:border-slate-700 align-middle whitespace-nowrap overflow-hidden ${appliedColorClass}`}
+                          className={`group relative select-none border-b border-border px-4 py-4 text-left text-xs font-semibold align-middle whitespace-nowrap overflow-hidden ${appliedColorClass}`}
                           style={{
                             width: isGroupHeader ? undefined : header.getSize(),
                             minWidth: isGroupHeader ? undefined : header.getSize(),
@@ -98,14 +103,14 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                           {header.column.getCanResize() ? (
                             <button
                               type="button"
-                              aria-label="Resize column"
+                              aria-label={resizeColumnLabel}
                               onMouseDown={header.getResizeHandler()}
                               onTouchStart={header.getResizeHandler()}
                               onDoubleClick={() => header.column.resetSize()}
                               className={`absolute -right-1 top-0 h-full w-2 cursor-col-resize select-none touch-none transition ${
                                 header.column.getIsResizing()
-                                  ? "bg-blue-400"
-                                  : "bg-transparent group-hover:bg-blue-300/70"
+                                  ? "bg-primary"
+                                  : "bg-transparent group-hover:bg-primary/50"
                               }`}
                             />
                           ) : null}
@@ -117,13 +122,9 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
               </thead>
               <tbody className="[&_tr:last-child]:border-0">
                 {shouldVirtualize && paddingTop > 0 ? (
-                  <tr
-                    aria-label="Virtualized rows above"
-                    className="pointer-events-none border-b border-slate-200 hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors"
-                  >
+                  <tr className="pointer-events-none border-b border-border hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors">
                     <td
                       colSpan={table.getAllLeafColumns().length}
-                      aria-label="Virtualized rows above"
                       className="h-0 p-0 align-middle whitespace-nowrap"
                       style={{ height: `${paddingTop}px` }}
                     />
@@ -165,23 +166,19 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                     ))
                   )
                 ) : (
-                  <tr className="border-b border-slate-200 hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors">
+                  <tr className="border-b border-border hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors">
                     <td
                       colSpan={table.getAllLeafColumns().length}
-                      className="h-24 text-center text-sm text-slate-500 p-2 align-middle whitespace-nowrap"
+                      className="h-24 text-center text-sm text-muted-foreground p-2 align-middle whitespace-nowrap"
                     >
                       {resolvedNoResultsMessage}
                     </td>
                   </tr>
                 )}
                 {shouldVirtualize && paddingBottom > 0 ? (
-                  <tr
-                    aria-label="Virtualized rows below"
-                    className="pointer-events-none border-b border-slate-200 hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors"
-                  >
+                  <tr className="pointer-events-none border-b border-border hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors">
                     <td
                       colSpan={table.getAllLeafColumns().length}
-                      aria-label="Virtualized rows below"
                       className="h-0 p-0 align-middle whitespace-nowrap"
                       style={{ height: `${paddingBottom}px` }}
                     />
@@ -191,14 +188,14 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             </table>
           </div>
           {scrollIndicators.left ? (
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-linear-to-r from-white via-white/80 to-transparent dark:from-slate-900 dark:via-slate-900/80" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-linear-to-r from-card via-card/80 to-transparent" />
           ) : null}
           {scrollIndicators.right ? (
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-linear-to-l from-white via-white/80 to-transparent dark:from-slate-900 dark:via-slate-900/80" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-linear-to-l from-card via-card/80 to-transparent" />
           ) : null}
         </div>
       </div>
-      <p className="pt-2 text-xs text-slate-400 dark:text-slate-500">{t("common.table.tip")}</p>
+      <p className="pt-2 text-xs text-muted-foreground">{t("common.table.tip")}</p>
     </div>
   );
 }

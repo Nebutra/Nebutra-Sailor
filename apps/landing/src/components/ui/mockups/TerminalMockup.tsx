@@ -19,7 +19,7 @@ export function TerminalMockup() {
               key={i}
               className={`block ${
                 line.type === "key"
-                  ? "text-success font-medium"
+                  ? "text-success-strong font-medium"
                   : line.text.includes("test") || line.text.includes("fc.")
                     ? "text-blue-600 dark:text-blue-400"
                     : "text-foreground/80"

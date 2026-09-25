@@ -247,14 +247,14 @@ const promptModeToneClassName: Record<
     label: "text-info",
   },
   think: {
-    active: "bg-indigo-500/15 border-indigo-500 text-indigo-500",
-    icon: "text-indigo-500",
-    label: "text-indigo-500",
+    active: "bg-cyan-9/15 border-cyan-9 text-cyan-9",
+    icon: "text-cyan-9",
+    label: "text-cyan-9",
   },
   canvas: {
-    active: "bg-warning/15 border-warning text-warning",
-    icon: "text-warning",
-    label: "text-warning",
+    active: "bg-warning/15 border-warning text-warning-strong",
+    icon: "text-warning-strong",
+    label: "text-warning-strong",
   },
 };
 
@@ -339,6 +339,7 @@ type PromptModeActionsProps = {
   onToggleMode: (mode: Exclude<PromptMode, "canvas">) => void;
   onToggleCanvas: () => void;
   onProcessFile: (file: File) => void;
+  labels: PromptInputBoxLabels;
 };
 
 function PromptModeActions({
@@ -348,6 +349,7 @@ function PromptModeActions({
   onToggleMode,
   onToggleCanvas,
   onProcessFile,
+  labels,
 }: PromptModeActionsProps) {
   return (
     <div
@@ -356,10 +358,10 @@ function PromptModeActions({
         isRecording ? "opacity-0 invisible h-0" : "opacity-100 visible",
       )}
     >
-      <PromptInputAction tooltip="Upload image">
+      <PromptInputAction tooltip={labels.upload}>
         <button
           type="button"
-          aria-label="Upload image"
+          aria-label={labels.upload}
           onClick={() => uploadInputRef.current?.click()}
           className="flex h-8 w-8 text-muted-foreground cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-accent hover:text-foreground"
           disabled={isRecording}
@@ -377,26 +379,25 @@ function PromptModeActions({
           if (event.target) event.target.value = "";
         }}
         accept="image/*"
-        aria-label="Upload image"
       />
       <div className="flex items-center">
         <PromptModeButton
           active={modes.search}
-          label="Search"
+          label={labels.search}
           tone="search"
           onClick={() => onToggleMode("search")}
         />
         <CustomDivider />
         <PromptModeButton
           active={modes.think}
-          label="Think"
+          label={labels.think}
           tone="think"
           onClick={() => onToggleMode("think")}
         />
         <CustomDivider />
         <PromptModeButton
           active={modes.canvas}
-          label="Canvas"
+          label={labels.canvas}
           tone="canvas"
           onClick={onToggleCanvas}
         />
@@ -411,6 +412,7 @@ type PromptSubmitActionProps = {
   isRecording: boolean;
   hasContent: boolean;
   onActivate: () => void;
+  labels: PromptInputBoxLabels;
 };
 
 function PromptSubmitAction({
@@ -418,6 +420,7 @@ function PromptSubmitAction({
   isRecording,
   hasContent,
   onActivate,
+  labels,
 }: PromptSubmitActionProps) {
   const shouldReduceMotion = useReducedMotion();
 
@@ -425,12 +428,12 @@ function PromptSubmitAction({
     <PromptInputAction
       tooltip={
         isLoading
-          ? "Stop generation"
+          ? labels.stopGeneration
           : isRecording
-            ? "Stop recording"
+            ? labels.stopRecording
             : hasContent
-              ? "Send message"
-              : "Voice message"
+              ? labels.sendMessage
+              : labels.voiceMessage
       }
     >
       <Button
@@ -439,7 +442,7 @@ function PromptSubmitAction({
         className={cn(
           "h-8 w-8 rounded-full transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-micro",
           isRecording
-            ? "bg-transparent hover:bg-accent text-destructive hover:text-destructive/80"
+            ? "bg-transparent hover:bg-accent text-destructive-strong hover:text-destructive-strong/80"
             : hasContent
               ? "bg-primary hover:bg-primary/90 text-primary-foreground"
               : "bg-transparent hover:bg-accent text-muted-foreground hover:text-accent-foreground",
@@ -450,16 +453,16 @@ function PromptSubmitAction({
         {isLoading ? (
           <StopFill
             className={cn(
-              "h-4 w-4 fill-primary-foreground",
+              "h-4 w-4 fill-current",
               shouldReduceMotion ? "opacity-100" : "animate-pulse",
             )}
           />
         ) : isRecording ? (
-          <StopCircle className="h-5 w-5 text-destructive" />
+          <StopCircle className="h-5 w-5 text-destructive-strong" />
         ) : hasContent ? (
-          <ArrowUp className="h-4 w-4 text-primary-foreground" />
+          <ArrowUp className="h-4 w-4" />
         ) : (
-          <Mic className="h-5 w-5 text-primary-foreground transition-colors" />
+          <Mic className="h-5 w-5 transition-colors" />
         )}
       </Button>
     </PromptInputAction>
@@ -467,10 +470,41 @@ function PromptSubmitAction({
 }
 
 // PromptInputBox — State & Reducer
+/** Every visible and accessible string the prompt box renders. */
+export interface PromptInputBoxLabels {
+  upload: string;
+  search: string;
+  think: string;
+  canvas: string;
+  searchPlaceholder: string;
+  thinkPlaceholder: string;
+  canvasPlaceholder: string;
+  stopGeneration: string;
+  stopRecording: string;
+  sendMessage: string;
+  voiceMessage: string;
+}
+
+export const DEFAULT_PROMPT_INPUT_BOX_LABELS: PromptInputBoxLabels = {
+  upload: "Upload image",
+  search: "Search",
+  think: "Think",
+  canvas: "Canvas",
+  searchPlaceholder: "Search the web...",
+  thinkPlaceholder: "Think deeply...",
+  canvasPlaceholder: "Create on canvas...",
+  stopGeneration: "Stop generation",
+  stopRecording: "Stop recording",
+  sendMessage: "Send message",
+  voiceMessage: "Voice message",
+};
+
 export interface PromptInputBoxProps {
   onSend?: (message: string, files?: File[]) => void;
   isLoading?: boolean;
   placeholder?: string;
+  /** Override any string the box renders — pass translations here. */
+  labels?: Partial<PromptInputBoxLabels>;
   className?: string;
   ref?: React.Ref<HTMLDivElement>;
 }
@@ -561,6 +595,7 @@ export const PromptInputBox: React.FC<PromptInputBoxProps> = (props) => {
     className,
     ref,
   } = props;
+  const labels = { ...DEFAULT_PROMPT_INPUT_BOX_LABELS, ...props.labels };
   const [state, dispatch] = React.useReducer(promptInputBoxReducer, promptInputBoxInitialState);
   const {
     input,
@@ -689,11 +724,11 @@ export const PromptInputBox: React.FC<PromptInputBoxProps> = (props) => {
           <PromptInputTextarea
             placeholder={
               showSearch
-                ? "Search the web..."
+                ? labels.searchPlaceholder
                 : showThink
-                  ? "Think deeply..."
+                  ? labels.thinkPlaceholder
                   : showCanvas
-                    ? "Create on canvas..."
+                    ? labels.canvasPlaceholder
                     : placeholder
             }
             className="text-base"
@@ -708,6 +743,7 @@ export const PromptInputBox: React.FC<PromptInputBoxProps> = (props) => {
             onToggleMode={handleToggleChange}
             onToggleCanvas={handleCanvasToggle}
             onProcessFile={processFile}
+            labels={labels}
           />
           <PromptSubmitAction
             isLoading={isLoading}
@@ -718,6 +754,7 @@ export const PromptInputBox: React.FC<PromptInputBoxProps> = (props) => {
               else if (hasContent) handleSubmit();
               else startRecording();
             }}
+            labels={labels}
           />
         </PromptInputActions>
       </PromptInput>

@@ -34,7 +34,7 @@ export function DesignMdImportSection() {
       {state.importedTheme && (
         <div className="flex items-center justify-between gap-3 rounded-[var(--radius-md)] border border-success/30 bg-success/10 px-3 py-2">
           <div className="flex items-center gap-2 text-xs text-foreground">
-            <Check className="size-3.5 shrink-0 text-success" />
+            <Check className="size-3.5 shrink-0 text-success-strong" />
             <span>
               {t("applied")} <span className="font-medium">{state.importedTheme.name}</span>
             </span>

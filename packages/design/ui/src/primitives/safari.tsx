@@ -156,6 +156,7 @@ export function Safari({
             fillRule="evenodd"
             clipRule="evenodd"
             d="M1.06738 12C1.06738 5.92487 5.99225 1 12.0674 1H1189.93C1196.01 1 1200.93 5.92487 1200.93 12V51H1.06738V12Z"
+            // allow-palette: depicts Safari's own chrome (Apple's window bar colours), not app UI
             className="fill-white dark:fill-[#262626]"
           />
           <circle cx="27" cy="25" r="6" className="fill-[#E5E5E5] dark:fill-[#404040]" />

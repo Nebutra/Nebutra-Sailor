@@ -50,12 +50,13 @@ export function UserInfo({ author, timestamp, verb = "asked", className }: UserI
             {author.reputation.toLocaleString()}
           </span>
           {author.badges.gold > 0 && (
-            <Badge color="bg-yellow-500" count={author.badges.gold} label="gold" />
+            <Badge color="bg-warning" count={author.badges.gold} label="gold" />
           )}
           {author.badges.silver > 0 && (
-            <Badge color="bg-gray-400" count={author.badges.silver} label="silver" />
+            <Badge color="bg-neutral-9" count={author.badges.silver} label="silver" />
           )}
           {author.badges.bronze > 0 && (
+            // allow-palette: bronze medal tier has no design-system equivalent; amber-600 is the closest fixed hue and is distinct from the gold (warning) dot above
             <Badge color="bg-amber-600" count={author.badges.bronze} label="bronze" />
           )}
         </div>

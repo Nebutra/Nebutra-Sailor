@@ -41,8 +41,8 @@ function NewsletterFormLoading() {
 function NewsletterFormSuccess() {
   return (
     <div className="flex items-center gap-1.5">
-      <CheckCircle className="size-4 text-success" />
-      <p className="text-sm text-success">Thanks for subscribing! Check your inbox.</p>
+      <CheckCircle className="size-4 text-success-strong" />
+      <p className="text-sm text-success-strong">Thanks for subscribing! Check your inbox.</p>
     </div>
   );
 }
@@ -54,7 +54,9 @@ function NewsletterFormError() {
       <button type="button" className={primaryButtonClassName}>
         Subscribe
       </button>
-      <p className="self-center text-xs text-destructive">Something went wrong. Try again.</p>
+      <p className="self-center text-xs text-destructive-strong">
+        Something went wrong. Try again.
+      </p>
     </form>
   );
 }

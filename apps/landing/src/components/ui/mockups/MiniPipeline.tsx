@@ -11,7 +11,7 @@ export function MiniPipeline() {
           <div key={step} className="flex items-center flex-1">
             <div className="flex flex-col items-center flex-1">
               <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-xl)] bg-emerald-500/10 border border-success/20 mb-2">
-                <span className="text-success text-sm font-semibold">{"\u2713"}</span>
+                <span className="text-success-strong text-sm font-semibold">{"\u2713"}</span>
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80">
                 {step}

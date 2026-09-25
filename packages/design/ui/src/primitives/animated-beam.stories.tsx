@@ -36,14 +36,14 @@ function FlowNode({
   return (
     <div
       ref={ref}
-      className="relative z-10 flex min-w-28 flex-col items-center gap-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-3 text-center shadow-sm dark:bg-[var(--neutral-2)]"
+      className="relative z-10 flex min-w-28 flex-col items-center gap-2 rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-3 text-center shadow-sm dark:bg-neutral-2"
     >
-      <div className="flex size-9 items-center justify-center rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-2)] text-[var(--neutral-12)]">
+      <div className="flex size-9 items-center justify-center rounded-md border border-neutral-6 bg-neutral-2 text-neutral-12">
         {icon}
       </div>
       <div className="space-y-0.5">
-        <p className="text-xs font-medium text-[var(--neutral-12)]">{title}</p>
-        <p className="text-[11px] text-[var(--neutral-11)]">{description}</p>
+        <p className="text-xs font-medium text-neutral-12">{title}</p>
+        <p className="text-[11px] text-neutral-11">{description}</p>
       </div>
     </div>
   );
@@ -52,7 +52,7 @@ function FlowNode({
 function FlowSurface({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <div
-      className={`relative min-h-[260px] w-[680px] overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-neutral-1 bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%)] p-8 ${className ?? ""}`}
+      className={`relative min-h-[260px] w-[680px] overflow-hidden rounded-lg border border-neutral-7 bg-neutral-1 bg-[radial-gradient(circle_at_50%_0%,var(--blue-2),transparent_42%)] p-8 ${className ?? ""}`}
     >
       {children}
     </div>

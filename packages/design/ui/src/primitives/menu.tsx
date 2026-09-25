@@ -299,7 +299,7 @@ export const MenuItem = function MenuItem({
 
   const errorClass =
     type === "error"
-      ? "text-destructive data-[highlighted]:bg-destructive/10 data-[highlighted]:text-destructive"
+      ? "text-destructive-strong data-[highlighted]:bg-destructive/10 data-[highlighted]:text-destructive-strong"
       : "";
 
   // exactOptionalPropertyTypes: only forward props that are defined.

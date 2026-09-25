@@ -335,8 +335,8 @@ export function EditTool({
         </div>
         {stats && !isPending && !isWaiting && (stats.added > 0 || stats.removed > 0) && (
           <span className="inline-flex shrink-0 gap-2 font-mono text-[11px] text-muted-foreground">
-            {stats.added > 0 && <span className="text-success">+{stats.added}</span>}
-            {stats.removed > 0 && <span className="text-destructive">-{stats.removed}</span>}
+            {stats.added > 0 && <span className="text-success-strong">+{stats.added}</span>}
+            {stats.removed > 0 && <span className="text-destructive-strong">-{stats.removed}</span>}
           </span>
         )}
       </header>
@@ -356,8 +356,9 @@ export function EditTool({
                 key={stableKey}
                 className={cn(
                   "flex min-w-0 items-start",
-                  op.type === "add" && "bg-[hsl(var(--success)/0.1)] text-success",
-                  op.type === "remove" && "bg-[hsl(var(--destructive)/0.1)] text-destructive",
+                  op.type === "add" && "bg-[hsl(var(--success)/0.1)] text-success-strong",
+                  op.type === "remove" &&
+                    "bg-[hsl(var(--destructive)/0.1)] text-destructive-strong",
                   op.type === "context" && "text-foreground/80",
                 )}
               >
@@ -365,8 +366,8 @@ export function EditTool({
                   aria-hidden="true"
                   className={cn(
                     "w-4 shrink-0 select-none text-center",
-                    op.type === "add" && "text-success",
-                    op.type === "remove" && "text-destructive",
+                    op.type === "add" && "text-success-strong",
+                    op.type === "remove" && "text-destructive-strong",
                     op.type === "context" && "text-muted-foreground/60",
                   )}
                 >

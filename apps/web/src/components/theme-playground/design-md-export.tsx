@@ -81,7 +81,7 @@ export function DesignMdExport({ themeId, themeName }: DesignMdExportProps) {
 
       {error !== null && (
         <div
-          className="flex items-start gap-2 rounded-[var(--radius-md)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-destructive text-xs"
+          className="flex items-start gap-2 rounded-[var(--radius-md)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-destructive-strong text-xs"
           role="alert"
         >
           <Warning className="mt-0.5 size-3.5 shrink-0" />

@@ -113,7 +113,7 @@ function PermissionCell({ state, highlighted }: { state: CellState; highlighted:
   if (state === "allow") {
     return (
       <span
-        className={`inline-flex h-7 w-7 items-center justify-center rounded-full bg-success/15 text-success ${ring}`}
+        className={`inline-flex h-7 w-7 items-center justify-center rounded-full bg-success/15 text-success-strong ${ring}`}
         aria-label="allowed"
       >
         <Check className="h-3.5 w-3.5" />
@@ -124,7 +124,7 @@ function PermissionCell({ state, highlighted }: { state: CellState; highlighted:
   if (state === "deny") {
     return (
       <span
-        className={`inline-flex h-7 w-7 items-center justify-center rounded-full bg-destructive/15 text-destructive ${ring}`}
+        className={`inline-flex h-7 w-7 items-center justify-center rounded-full bg-destructive/15 text-destructive-strong ${ring}`}
         aria-label="denied"
       >
         <Cross className="h-3.5 w-3.5" />

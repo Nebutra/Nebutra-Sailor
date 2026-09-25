@@ -93,7 +93,7 @@ const FormLabel = ({
   return (
     <Label
       ref={ref}
-      className={cn(error && "text-destructive", className)}
+      className={cn(error && "text-destructive-strong", className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -160,7 +160,7 @@ const FormMessage = ({
     <p
       ref={ref}
       id={formMessageId}
-      className={cn("text-sm font-medium text-destructive", className)}
+      className={cn("text-sm font-medium text-destructive-strong", className)}
       {...props}
     >
       {body}

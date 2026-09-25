@@ -188,7 +188,7 @@ export const AsyncStates: Story = {
             <SheetDescription>Unable to load this panel.</SheetDescription>
           </SheetHeader>
           <SheetBody>
-            <div className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 p-4 text-destructive text-sm">
+            <div className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 p-4 text-destructive-strong text-sm">
               Workspace metadata could not be loaded. Try again from the project page.
             </div>
           </SheetBody>

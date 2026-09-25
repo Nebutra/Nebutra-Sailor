@@ -115,7 +115,7 @@ export function ResumeEditor({ initial }: ResumeEditorProps) {
           <div className="flex items-center gap-3">
             <span
               role="status"
-              className={`text-xs ${status === "invalid" || status === "error" ? "text-destructive" : "text-muted-foreground"}`}
+              className={`text-xs ${status === "invalid" || status === "error" ? "text-destructive-strong" : "text-muted-foreground"}`}
             >
               {STATUS_LABEL[status]}
             </span>

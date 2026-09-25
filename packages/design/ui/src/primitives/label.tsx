@@ -44,7 +44,7 @@ export interface LabelProps
  * @example Required field indicator
  * ```tsx
  * <Label htmlFor="name">
- *   Name <span className="text-destructive">*</span>
+ *   Name <span className="text-destructive-strong">*</span>
  * </Label>
  * ```
  */

@@ -6,7 +6,7 @@ import { TW_MERGE_CLASS_GROUPS, TW_MERGE_THEME } from "./tw-merge-theme.generate
  * tailwind-merge only knows Tailwind's default scale. Every utility the design
  * tokens add (text-label, shadow-ambient-md, rounded-card, ease-brand,
  * max-w-wide, …) was otherwise an unknown class: `cn("text-label
- * text-destructive")` returned "text-destructive" and the size fell away, and
+ * text-destructive-strong")` returned "text-destructive-strong" and the size fell away, and
  * `cn("rounded-card", "rounded-lg")` kept both so the winner depended on
  * stylesheet order. The theme below is generated from the tokens' @theme blocks
  * (scripts/gen-tw-merge-theme.mjs), so a new token utility is known here the

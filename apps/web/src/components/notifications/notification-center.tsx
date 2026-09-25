@@ -219,7 +219,7 @@ export function NotificationCenter({
         <div className="border-t border-neutral-7 px-4 py-3">
           <Link
             href={`/${locale}/settings/notifications`}
-            className="text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary-foreground"
+            className="text-xs font-medium text-primary underline-offset-4 hover:underline"
           >
             Notification settings
           </Link>

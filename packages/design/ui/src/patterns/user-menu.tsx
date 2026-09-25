@@ -59,6 +59,8 @@ export interface UserMenuProps {
   className?: string;
   /** Dropdown align (default "end") */
   align?: "start" | "center" | "end";
+  /** Accessible name for the default trigger button. Pass a translated string. */
+  triggerLabel?: string;
 }
 
 // =============================================================================
@@ -80,12 +82,18 @@ function computeInitials(user: UserMenuUser): string {
   return source.slice(0, 2).toUpperCase();
 }
 
-function DefaultTrigger({ user }: { user: UserMenuUser }) {
+function DefaultTrigger({
+  user,
+  triggerLabel = "Open user menu",
+}: {
+  user: UserMenuUser;
+  triggerLabel?: string;
+}) {
   const initials = computeInitials(user);
   return (
     <button
       type="button"
-      aria-label="Open user menu"
+      aria-label={triggerLabel}
       className={cn(
         "inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full",
         "outline-none transition-[box-shadow,opacity] hover:opacity-90",
@@ -135,6 +143,7 @@ export function UserMenu(props: UserMenuProps): React.ReactElement {
     renderLink,
     className,
     align = "end",
+    triggerLabel,
   } = props;
 
   const initials = computeInitials(user);
@@ -142,7 +151,11 @@ export function UserMenu(props: UserMenuProps): React.ReactElement {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {renderTrigger ? renderTrigger(user) : <DefaultTrigger user={user} />}
+        {renderTrigger ? (
+          renderTrigger(user)
+        ) : (
+          <DefaultTrigger user={user} {...(triggerLabel !== undefined ? { triggerLabel } : {})} />
+        )}
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align={align} sideOffset={8} className={cn("w-[280px] p-1", className)}>
@@ -187,7 +200,7 @@ export function UserMenu(props: UserMenuProps): React.ReactElement {
                 const itemClassName = cn(
                   "flex w-full cursor-pointer items-center",
                   item.destructive &&
-                    "text-destructive focus:bg-destructive focus:text-destructive-foreground data-[highlighted]:bg-destructive data-[highlighted]:text-destructive-foreground",
+                    "text-destructive-strong focus:bg-destructive focus:text-destructive-foreground data-[highlighted]:bg-destructive data-[highlighted]:text-destructive-foreground",
                 );
 
                 // Link variant

@@ -289,6 +289,7 @@ export const MultiSelectContent = ({
   alignOffset = 0,
   width = "md",
   onKeyDown,
+  "aria-label": ariaLabel = "Multi select options",
   ref,
   ...props
 }: MultiSelectContentProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
@@ -313,7 +314,7 @@ export const MultiSelectContent = ({
         <BasePopover.Popup
           ref={composeRefs(contentRef, ref)}
           role="dialog"
-          aria-label="Multi select options"
+          aria-label={ariaLabel}
           className={cn(
             "z-50 max-h-[var(--multi-select-content-max-height)] w-[var(--multi-select-width)] overflow-y-auto",
             "rounded-[var(--multi-select-content-radius)] border border-border bg-popover p-[var(--multi-select-content-padding)] text-popover-foreground shadow-md outline-none",

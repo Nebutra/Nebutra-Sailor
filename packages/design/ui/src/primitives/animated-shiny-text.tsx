@@ -100,7 +100,7 @@ export function AnimatedShinyText({
       className={cn(
         "mx-auto max-w-md text-muted-foreground/70",
         // Shine gradient
-        "bg-gradient-to-r from-transparent via-black/80 via-50% to-transparent dark:via-white/80",
+        "bg-gradient-to-r from-transparent via-foreground/80 via-50% to-transparent",
         className,
       )}
       {...props}

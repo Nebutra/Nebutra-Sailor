@@ -10,6 +10,8 @@ export interface StoryProgressProps extends Omit<React.HTMLAttributes<HTMLElemen
   position?: "left" | "right";
   /** Whether to show section labels on hover (default: true) */
   showLabels?: boolean;
+  /** Accessible name for the section-navigation landmark. Pass a translated string. */
+  navLabel?: string;
 }
 
 /**
@@ -25,7 +27,10 @@ export interface StoryProgressProps extends Omit<React.HTMLAttributes<HTMLElemen
  * </ScrollSpyProvider>
  */
 export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
-  ({ position = "right", showLabels = true, className, ...props }, ref) => {
+  (
+    { position = "right", showLabels = true, className, navLabel = "Page sections", ...props },
+    ref,
+  ) => {
     const { sections, activeSection, scrollToSection, scrollProgress } = useScrollSpy();
     const shouldReduceMotion = useReducedMotion();
 
@@ -40,7 +45,7 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
           position === "right" ? "right-6" : "left-6",
           className,
         )}
-        aria-label="Page sections"
+        aria-label={navLabel}
         {...props}
       >
         {/* Progress line */}

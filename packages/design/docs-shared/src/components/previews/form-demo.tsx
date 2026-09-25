@@ -40,7 +40,11 @@ export function FormDemo() {
         <p id="form-demo-description" className="text-sm text-muted-foreground">
           This is your public display name.
         </p>
-        <p id="form-demo-message" className="min-h-5 text-sm text-destructive" aria-live="polite">
+        <p
+          id="form-demo-message"
+          className="min-h-5 text-sm text-destructive-strong"
+          aria-live="polite"
+        >
           {error ?? ""}
         </p>
       </div>

@@ -46,7 +46,7 @@ const typeStyles: Record<GeistTooltipType, string> = {
   success: "bg-success text-success-foreground",
   warning: "bg-warning text-warning-foreground",
   error: "bg-destructive text-destructive-foreground",
-  violet: "bg-violet text-white", // Violet is often custom in Geist
+  violet: "bg-info text-info-foreground",
 };
 
 // Map Geist API to Base-UI align property
@@ -150,10 +150,10 @@ export const GeistTooltip = ({
                             className={cn(
                               "w-2.5 h-2.5 rotate-45 border-none",
                               type === "default" && "bg-primary text-primary",
-                              type === "success" && "bg-success text-success",
-                              type === "warning" && "bg-warning text-warning",
-                              type === "error" && "bg-destructive text-destructive",
-                              type === "violet" && "bg-violet text-violet",
+                              type === "success" && "bg-success text-success-strong",
+                              type === "warning" && "bg-warning text-warning-strong",
+                              type === "error" && "bg-destructive text-destructive-strong",
+                              type === "violet" && "bg-info text-info",
                             )}
                             style={{
                               // Base UI naturally positions the arrow, but we add visual flair

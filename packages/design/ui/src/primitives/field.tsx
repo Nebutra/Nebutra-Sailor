@@ -23,12 +23,12 @@ export const Field = ({
 }: FieldProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
   return (
     <div ref={ref} className={cn("grid gap-2", className)} {...props}>
-      <Label htmlFor={htmlFor} className={cn(error && "text-destructive")}>
+      <Label htmlFor={htmlFor} className={cn(error && "text-destructive-strong")}>
         {label}
       </Label>
       {children}
       {description && !error && <p className="text-sm text-muted-foreground">{description}</p>}
-      {error && <p className="text-sm font-medium text-destructive">{error}</p>}
+      {error && <p className="text-sm font-medium text-destructive-strong">{error}</p>}
     </div>
   );
 };

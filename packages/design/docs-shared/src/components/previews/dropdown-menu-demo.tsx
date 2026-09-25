@@ -30,7 +30,7 @@ export function DropdownMenuDemo() {
         </DropdownMenuItem>
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive">
+        <DropdownMenuItem className="text-destructive-strong">
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

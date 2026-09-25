@@ -269,6 +269,7 @@ export function FallbackCard({
       ? ["rgb(120 180 255)", "rgb(160 196 255)", "rgb(199 210 254)", "rgb(224 231 255)"]
       : ["rgb(55 65 81)", "rgb(107 114 128)", "rgb(156 163 175)", "rgb(209 213 219)"];
 
+  // allow-palette: `theme` is an explicit fixed dark/light placeholder state, independent of the app's brand or dark-mode setting — it must stay black-on-white or white-on-black regardless of the active Brand Package
   const baseBg = theme === "dark" ? "bg-black text-white/90" : "bg-white text-black/80";
 
   return (

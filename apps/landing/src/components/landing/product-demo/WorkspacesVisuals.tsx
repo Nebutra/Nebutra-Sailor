@@ -123,7 +123,7 @@ export function TenantDiagram() {
             <div className="w-16 h-px bg-gradient-to-r from-border/50 to-emerald-500/50 relative overflow-hidden">
               <div className="w-4 h-full bg-emerald-500 absolute top-0 left-0 blur-[2px] animate-wire-pulse motion-reduce:animate-none" />
             </div>
-            <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-emerald-500/20 bg-emerald-500/10 text-success text-[10px] font-mono tracking-wide shadow-sm">
+            <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-emerald-500/20 bg-emerald-500/10 text-success-strong text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Globex
             </div>
           </div>

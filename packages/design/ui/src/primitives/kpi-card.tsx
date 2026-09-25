@@ -33,8 +33,8 @@ export function KpiCard({ title, value, icon, trend, description, className }: K
               <div className="mt-2 flex items-center gap-1">
                 {trend.isPositive ? (
                   <>
-                    <TrendingUp className="size-4 text-green-600" />
-                    <span className="text-sm font-medium text-green-600">
+                    <TrendingUp className="size-4 text-success-strong" />
+                    <span className="text-sm font-medium text-success-strong">
                       +{Math.abs(trend.value)}%
                     </span>
                   </>
@@ -45,8 +45,10 @@ export function KpiCard({ title, value, icon, trend, description, className }: K
                   </>
                 ) : (
                   <>
-                    <TrendingDown className="size-4 text-red-600" />
-                    <span className="text-sm font-medium text-red-600">{trend.value}%</span>
+                    <TrendingDown className="size-4 text-destructive-strong" />
+                    <span className="text-sm font-medium text-destructive-strong">
+                      {trend.value}%
+                    </span>
                   </>
                 )}
                 <span className="text-sm text-muted-foreground">vs last week</span>

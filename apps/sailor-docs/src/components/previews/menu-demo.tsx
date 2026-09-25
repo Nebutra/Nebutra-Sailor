@@ -35,7 +35,7 @@ export function MenuDemo() {
           Keyboard shortcuts
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-destructive-foreground">
+        <DropdownMenuItem className="text-destructive-strong focus:bg-destructive focus:text-destructive-foreground">
           <LogOut className="mr-2 h-4 w-4" />
           Log out
         </DropdownMenuItem>

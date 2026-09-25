@@ -49,9 +49,23 @@ export interface GithubInlineDiffProps {
   onResolveChange?: (lineIndex: number, resolved: boolean) => void;
   /** Current user info for new comments */
   currentUser?: { name: string; initials: string };
+  /** Accessible names for the diff's controls. Pass translated strings. */
+  labels?: Partial<GithubInlineDiffLabels>;
   /** Additional CSS classes */
   className?: string;
 }
+
+export interface GithubInlineDiffLabels {
+  diff: (fileName: string) => string;
+  addComment: string;
+  closeThread: string;
+}
+
+export const DEFAULT_GITHUB_INLINE_DIFF_LABELS: GithubInlineDiffLabels = {
+  diff: (fileName) => `Diff of ${fileName}`,
+  addComment: "Add inline comment",
+  closeThread: "Close thread",
+};
 
 // =============================================================================
 // InlineThread Component
@@ -64,6 +78,7 @@ interface InlineThreadProps {
   onClose: () => void;
   onAddComment: (comment: DiffComment) => void;
   currentUser: { name: string; initials: string };
+  closeLabel: string;
 }
 
 function InlineThread({
@@ -73,6 +88,7 @@ function InlineThread({
   onClose,
   onAddComment,
   currentUser,
+  closeLabel,
 }: InlineThreadProps) {
   const [draft, setDraft] = useState("");
   const textRef = useRef<HTMLTextAreaElement | null>(null);
@@ -112,8 +128,8 @@ function InlineThread({
             className={cn(
               "h-5 gap-1 px-1.5 text-[11px]",
               resolved
-                ? "bg-emerald-600 text-white hover:bg-emerald-600/90 dark:bg-emerald-500 dark:hover:bg-emerald-500/90"
-                : "bg-secondary text-foreground dark:bg-muted dark:text-foreground",
+                ? "bg-success text-success-foreground hover:bg-success/90"
+                : "bg-secondary text-foreground",
             )}
           >
             {resolved ? <CheckCircle2 className="h-3.5 w-3.5" /> : null}
@@ -134,7 +150,7 @@ function InlineThread({
           <Button
             variant="ghost"
             size="icon"
-            aria-label="Close thread"
+            aria-label={closeLabel}
             onClick={onClose}
             className="h-7 w-7"
           >
@@ -240,8 +256,10 @@ export function GithubInlineDiff({
   onAddComment,
   onResolveChange,
   currentUser = { name: "You", initials: "YO" },
+  labels: labelOverrides,
   className,
 }: GithubInlineDiffProps) {
+  const labels = { ...DEFAULT_GITHUB_INLINE_DIFF_LABELS, ...labelOverrides };
   const rows = Array.isArray(diff) ? diff : ([] as readonly DiffLine[]);
 
   const [openThreadAt, setOpenThreadAt] = useState<number | null>(null);
@@ -267,13 +285,13 @@ export function GithubInlineDiff({
       {/* biome-ignore lint/a11y/useSemanticElements: ARIA custom grid */}
       <div
         role="table"
-        aria-label={`Diff of ${fileName}`}
+        aria-label={labels.diff(fileName)}
         className={cn("rounded-[var(--radius-md)] border bg-card", className)}
       >
         <div className="flex items-center justify-between border-b px-2 py-1">
           <div className="flex items-center gap-2">
             <span className="text-[13px] font-medium">{fileName}</span>
-            <Badge variant="secondary" aria-label="File status" className="h-5 px-1.5 text-[11px]">
+            <Badge variant="secondary" className="h-5 px-1.5 text-[11px]">
               {fileStatus}
             </Badge>
           </div>
@@ -293,8 +311,8 @@ export function GithubInlineDiff({
                 className={cn(
                   "group relative flex items-stretch text-[13px]",
                   line.kind === "hunk" && "bg-muted/50 text-muted-foreground",
-                  line.kind === "add" && "bg-emerald-50/60 dark:bg-emerald-950/20",
-                  line.kind === "del" && "bg-rose-50/60 dark:bg-rose-950/20",
+                  line.kind === "add" && "bg-success/10",
+                  line.kind === "del" && "bg-destructive/10",
                 )}
               >
                 <div className="absolute -left-4 top-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
@@ -304,7 +322,7 @@ export function GithubInlineDiff({
                         <Button
                           size="icon"
                           variant="secondary"
-                          aria-label="Add inline comment"
+                          aria-label={labels.addComment}
                           className="h-5 w-5 rounded-full shadow-sm"
                           onClick={() => setOpenThreadAt(isOpen ? null : idx)}
                         >
@@ -344,8 +362,8 @@ export function GithubInlineDiff({
                       aria-hidden
                       className={cn(
                         "mr-1 inline-block w-2 text-center font-semibold",
-                        line.kind === "add" && "text-emerald-600",
-                        line.kind === "del" && "text-rose-600",
+                        line.kind === "add" && "text-success-strong",
+                        line.kind === "del" && "text-destructive-strong",
                       )}
                     >
                       {line.kind === "add" ? "+" : line.kind === "del" ? "-" : " "}
@@ -362,6 +380,7 @@ export function GithubInlineDiff({
                         onClose={() => setOpenThreadAt(null)}
                         onAddComment={(comment) => handleAddComment(idx, comment)}
                         currentUser={currentUser}
+                        closeLabel={labels.closeThread}
                       />
                     </div>
                   )}

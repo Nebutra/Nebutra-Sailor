@@ -204,7 +204,7 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
           />
 
           {rootError ? (
-            <p className="text-sm text-destructive" role="alert">
+            <p className="text-sm text-destructive-strong" role="alert">
               {rootError}
             </p>
           ) : null}

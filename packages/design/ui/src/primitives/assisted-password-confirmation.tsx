@@ -18,6 +18,8 @@ export interface AssistedPasswordConfirmationProps {
   className?: string;
   /** Whether to show the password hint */
   showHint?: boolean;
+  /** Accessible name of the confirmation field. Pass a translated string. */
+  inputLabel?: string;
 }
 
 /**
@@ -41,6 +43,7 @@ export function AssistedPasswordConfirmation({
   onMatch,
   className,
   showHint = true,
+  inputLabel = "Confirm password",
 }: AssistedPasswordConfirmationProps) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [shake, setShake] = useState(false);
@@ -75,7 +78,7 @@ export function AssistedPasswordConfirmation({
 
   const getLetterStatus = (letter: string, index: number) => {
     if (!confirmPassword[index]) return "";
-    return confirmPassword[index] === letter ? "bg-emerald-500/20" : "bg-red-500/20";
+    return confirmPassword[index] === letter ? "bg-success/20" : "bg-destructive/20";
   };
 
   const bounceAnimation = {
@@ -156,7 +159,7 @@ export function AssistedPasswordConfirmation({
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           animate={borderAnimation}
-          aria-label="Confirm password"
+          aria-label={inputLabel}
         />
       </motion.div>
     </div>

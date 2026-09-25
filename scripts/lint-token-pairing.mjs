@@ -53,7 +53,40 @@ export function scan() {
   return hits;
 }
 
+/**
+ * The inverse fault: a status FILL used as ink. --destructive, --warning and
+ * --success are tuned to sit under their -foreground; as text or an icon
+ * stroke amber reads 2.0:1 in light and red 2.5:1 in dark. The ink variants
+ * are text-/fill-/stroke-{destructive,warning,success}-strong (~5:1 both
+ * themes). 221 call sites had it the wrong way round on 2026-09-25.
+ * Exempt a line with `// allow-status-fill-ink: <reason>` above it.
+ */
+const STATUS_INK =
+  /(?<![\w-])(?:[\w[\]=&:.-]+:)*(?:text|fill|stroke)-(?:destructive|warning|success)(?![\w-])/;
+
+export function scanStatusInk() {
+  const hits = [];
+  for (const base of SCAN) {
+    for (const file of files(join(ROOT, base))) {
+      const lines = readFileSync(file, "utf8").split("\n");
+      lines.forEach((line, i) => {
+        if (!STATUS_INK.test(line)) return;
+        if (/allow-status-fill-ink:/.test(lines[i - 1] ?? "")) return;
+        hits.push(`${relative(ROOT, file)}:${i + 1}`);
+      });
+    }
+  }
+  return hits;
+}
+
 if (process.argv[1] === import.meta.filename) {
+  const ink = scanStatusInk();
+  if (ink.length) {
+    console.error(
+      "❌ Status fill used as ink — use text-/fill-/stroke-{destructive,warning,success}-strong:",
+    );
+    for (const h of ink) console.error(`   ${h}`);
+  }
   const config = JSON.parse(readFileSync(join(ROOT, "governance.config.json"), "utf8"));
   const allow = Object.fromEntries(
     (config.tokenPairing?.allowlist ?? []).map((e) => [e.file, e.count]),
@@ -73,6 +106,6 @@ if (process.argv[1] === import.meta.filename) {
     console.error("❌ tokenPairing.allowlist is stale (shrink-only) — lower or remove:");
     for (const [f, n] of stale) console.error(`   ${f}: allowed ${n}, found ${hits.get(f) ?? 0}`);
   }
-  if (fresh.length || stale.length) process.exit(1);
+  if (fresh.length || stale.length || ink.length) process.exit(1);
   console.log(`✓ token-pairing: ${hits.size} allowlisted file(s), 0 new.`);
 }

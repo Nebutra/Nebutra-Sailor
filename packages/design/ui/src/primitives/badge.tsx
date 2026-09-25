@@ -53,9 +53,11 @@ const badgeVariants = cva(
         inverted: "bg-foreground text-background fill-current",
         // Special visual treatments (intentional product design, not brand hex)
         trial:
-          "bg-gradient-to-br from-trial-start to-trial-end text-primary-foreground fill-current",
+          // allow-palette: the trial gradient is fixed and vivid in both themes, so its ink is fixed white
+          "bg-gradient-to-br from-trial-start to-trial-end text-white fill-current",
         turbo:
-          "bg-gradient-to-br from-turbo-start to-turbo-end text-primary-foreground fill-current",
+          // allow-palette: the turbo gradient is fixed and vivid in both themes, so its ink is fixed white
+          "bg-gradient-to-br from-turbo-start to-turbo-end text-white fill-current",
         pill: "bg-background text-foreground fill-foreground border-border hover:bg-muted/50 focus-visible:bg-muted/50",
         beta: "border-transparent bg-muted text-muted-foreground",
         new: "border-transparent bg-primary/10 text-primary",

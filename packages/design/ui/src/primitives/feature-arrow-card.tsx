@@ -18,6 +18,8 @@ export interface FeatureArrowCardProps extends React.HTMLAttributes<HTMLDivEleme
   cardContent?: React.ReactNode;
   /** Click handler for the arrow button */
   onArrowClick?: () => void;
+  /** Accessible name for the arrow button. Pass a translated string. */
+  arrowLabel?: string;
 }
 
 /**
@@ -34,6 +36,7 @@ export function FeatureArrowCard({
   cardContent,
   onArrowClick,
   className,
+  arrowLabel = "Go to feature",
   ...props
 }: FeatureArrowCardProps) {
   return (
@@ -63,7 +66,7 @@ export function FeatureArrowCard({
         type="button"
         onClick={onArrowClick}
         className="absolute bottom-2 right-2 z-10 flex items-center gap-2 rounded-full border bg-background p-3 transition hover:-rotate-45"
-        aria-label="Go to feature"
+        aria-label={arrowLabel}
       >
         <ArrowRight className="size-4 text-primary" />
       </button>

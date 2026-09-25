@@ -77,6 +77,10 @@ export interface MultipleSelectorProps {
   >;
   /** Hide clear all button */
   hideClearAllButton?: boolean;
+  /** Accessible name for an option's remove button. Pass a translated string. */
+  removeLabel?: (optionLabel: string) => string;
+  /** Accessible name for the clear-all button. Pass a translated string. */
+  clearAllLabel?: string;
 }
 
 export interface MultipleSelectorRef {
@@ -229,6 +233,8 @@ const MultipleSelector = ({
   commandProps,
   inputProps,
   hideClearAllButton = false,
+  removeLabel = (optionLabel) => `Remove ${optionLabel}`,
+  clearAllLabel = "Clear all",
 }: MultipleSelectorProps & { ref?: React.Ref<MultipleSelectorRef> | undefined }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -477,7 +483,7 @@ const MultipleSelector = ({
                     e.stopPropagation();
                   }}
                   onClick={() => handleUnselect(option)}
-                  aria-label="Remove"
+                  aria-label={removeLabel(option.label)}
                 >
                   <XIcon size={14} strokeWidth={2} aria-hidden="true" />
                 </button>
@@ -527,7 +533,7 @@ const MultipleSelector = ({
                 selected.filter((s) => s.fixed).length === selected.length) &&
                 "hidden",
             )}
-            aria-label="Clear all"
+            aria-label={clearAllLabel}
           >
             <XIcon size={16} strokeWidth={2} aria-hidden="true" />
           </button>
@@ -544,7 +550,7 @@ const MultipleSelector = ({
         >
           {open && (
             <CommandList
-              className="bg-popover text-popover-foreground shadow-lg shadow-black/5 outline-none"
+              className="bg-popover text-popover-foreground shadow-lg shadow-foreground/5 outline-none"
               onMouseLeave={() => setOnScrollbar(false)}
               onMouseEnter={() => setOnScrollbar(true)}
               onMouseUp={() => inputRef?.current?.focus()}

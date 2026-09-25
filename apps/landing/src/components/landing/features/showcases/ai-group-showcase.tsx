@@ -121,7 +121,7 @@ function LedgerRow({
           className={cn(
             "flex size-6 items-center justify-center rounded-full border font-mono text-[10px]",
             done
-              ? "border-[hsl(var(--success)/0.35)] bg-success/10 text-success"
+              ? "border-[hsl(var(--success)/0.35)] bg-success/10 text-success-strong"
               : "border-border bg-background text-muted-foreground",
           )}
         >

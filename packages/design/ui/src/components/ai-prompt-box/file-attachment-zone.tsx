@@ -98,9 +98,9 @@ export function PromptAttachmentPreviews({
                     event.stopPropagation();
                     onRemove(file);
                   }}
-                  className="absolute top-1 right-1 rounded-full bg-black/70 p-0.5 opacity-100 transition-opacity motion-reduce:transition-none"
+                  className="absolute top-1 right-1 rounded-full bg-foreground/70 p-0.5 opacity-100 transition-opacity motion-reduce:transition-none"
                 >
-                  <X className="h-3 w-3 text-white" />
+                  <X className="h-3 w-3 text-background" />
                 </button>
               </>
             )}

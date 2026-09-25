@@ -75,7 +75,7 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
         {...props}
       >
         {/* Prefix */}
-        <span className="text-emerald-400 shrink-0 select-none">{prefix}</span>
+        <span className="text-success-strong shrink-0 select-none">{prefix}</span>
         {/* Command text */}
         <span className="flex-1 text-muted-foreground truncate">{command}</span>
         {/* Copy indicator */}
@@ -84,7 +84,7 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
             className={cn(
               "shrink-0 text-xs transition-colors",
               copied
-                ? "text-emerald-400"
+                ? "text-success-strong"
                 : "text-muted-foreground group-hover:text-muted-foreground",
             )}
           >
@@ -94,7 +94,7 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
         {/* Copy tooltip */}
         <span
           className={cn(
-            "absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded bg-zinc-700 text-muted-foreground opacity-0 transition-opacity pointer-events-none",
+            "absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded bg-popover text-popover-foreground opacity-0 transition-opacity pointer-events-none",
             "group-hover:opacity-100",
             copied && "opacity-100",
           )}

@@ -232,14 +232,13 @@ export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G exte
                 id={statusId}
                 role="alert"
                 aria-live="assertive"
-                className="flex items-center gap-2 rounded-[var(--radius-md)] border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive"
+                className="flex items-center gap-2 rounded-[var(--radius-md)] border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive-strong"
               >
                 <span>{rejection}</span>
                 <Button
                   size="sm"
                   variant="ghost"
                   prefix={<CrossSmall size={14} />}
-                  aria-label="Dismiss connection error"
                   onClick={() => setRejection(null)}
                 >
                   Dismiss

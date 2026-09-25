@@ -22,8 +22,8 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
     return (
       <div className="flex min-h-screen items-center justify-center p-4">
         <div className="rounded-[var(--radius-xl)] border border-destructive/20 bg-destructive/10 px-8 py-6 text-center">
-          <h1 className="text-xl font-semibold text-destructive">Invalid Request</h1>
-          <p className="mt-2 text-sm text-destructive/80">Missing interaction ID.</p>
+          <h1 className="text-xl font-semibold text-destructive-strong">Invalid Request</h1>
+          <p className="mt-2 text-sm text-destructive-strong/80">Missing interaction ID.</p>
         </div>
       </div>
     );

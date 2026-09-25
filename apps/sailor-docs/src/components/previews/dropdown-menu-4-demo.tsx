@@ -29,7 +29,7 @@ export function DropdownMenu4Demo() {
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-destructive-foreground">
+        <DropdownMenuItem className="text-destructive-strong focus:bg-destructive focus:text-destructive-foreground">
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>

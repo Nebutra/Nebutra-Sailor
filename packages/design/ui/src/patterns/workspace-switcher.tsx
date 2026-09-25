@@ -46,6 +46,8 @@ export interface WorkspaceSwitcherProps {
   showRoleBadge?: boolean;
   /** Disable trigger (e.g. only one workspace) */
   disabled?: boolean;
+  /** Accessible name for the trigger button. Pass a translated string. */
+  switchLabel?: string;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -111,6 +113,7 @@ interface TriggerProps {
   showRoleBadge: boolean;
   disabled: boolean;
   className?: string | undefined;
+  switchLabel?: string;
 }
 
 function TriggerButton({
@@ -119,6 +122,7 @@ function TriggerButton({
   showRoleBadge,
   disabled,
   className,
+  switchLabel = "Switch workspace",
   ref,
 }: TriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) {
   const isOwner = activeWorkspace.role === "owner";
@@ -128,7 +132,7 @@ function TriggerButton({
       <button
         ref={ref}
         type="button"
-        aria-label="Switch workspace"
+        aria-label={switchLabel}
         disabled={disabled}
         className={cn(
           "inline-flex items-center gap-1 rounded-[var(--radius-md)] p-1 outline-none transition-colors",
@@ -148,7 +152,7 @@ function TriggerButton({
     <button
       ref={ref}
       type="button"
-      aria-label="Switch workspace"
+      aria-label={switchLabel}
       disabled={disabled}
       className={cn(
         "inline-flex w-full items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background px-2 py-1 text-left outline-none transition-colors",
@@ -231,6 +235,7 @@ export function WorkspaceSwitcher({
   className,
   showRoleBadge = true,
   disabled = false,
+  switchLabel,
 }: WorkspaceSwitcherProps): React.ReactElement {
   const activeWorkspace = workspaces.find((ws) => ws.id === activeWorkspaceId) ?? workspaces[0];
 
@@ -267,6 +272,7 @@ export function WorkspaceSwitcher({
           showRoleBadge={showRoleBadge}
           disabled={disabled}
           className={className}
+          {...(switchLabel !== undefined ? { switchLabel } : {})}
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent

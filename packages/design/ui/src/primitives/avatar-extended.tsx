@@ -21,10 +21,12 @@ const GitHubIcon = () => (
 
 const GitLabIcon = () => (
   <svg
-    aria-label="gitlab"
+    // allow-aria-literal: brand name (GitLab), not translatable copy
+    aria-label="GitLab"
     height="14"
     viewBox="0 0 24 22"
     width="14"
+    // allow-palette: depicts the GitLab brand mark, not app chrome
     className="scale-75 fill-white"
   >
     <path d="M1.279 8.29L.044 12.294c-.117.367 0 .78.325 1.014l11.323 8.23-.009-.012-.03-.039L1.279 8.29zM22.992 13.308a.905.905 0 00.325-1.014L22.085 8.29 11.693 21.52l11.299-8.212z" />
@@ -60,6 +62,7 @@ const BitbucketIcon = () => {
       <path
         d="M2 .82a2 2 0 00-2 2.32l8.49 51.54a2.7 2.7 0 00.91 1.61 2.71 2.71 0 001.75.66l15.76-18.88H24.7l-3.47-18.39h38.44l2.7-16.53a2 2 0 00-2-2.32L2 .82z"
         fillRule="nonzero"
+        // allow-palette: depicts the Bitbucket brand mark, not app chrome
         className="fill-white"
       />
     </svg>

@@ -2623,5 +2623,9 @@
       "apps/web/src/components/appearance/store.ts": "The user-selectable accent presets — a catalogue of choices, read by both pickers."
     },
     "allowlist": {}
+  },
+  "primitiveHygiene": {
+    "$description": "scripts/lint-primitive-hygiene.mjs — raw palette classes and English aria-label literals in packages/design/ui/src, per file. Shrink-only.",
+    "allowlist": {}
   }
 }

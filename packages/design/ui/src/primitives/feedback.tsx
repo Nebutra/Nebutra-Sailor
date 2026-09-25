@@ -45,11 +45,15 @@ interface FeedbackBaseProps {
   dryRun?: boolean;
   disabled?: boolean;
   className?: string;
+  /** Accessible name for the topic select. Pass a translated string. */
+  topicLabel?: string;
 }
 
 export interface FeedbackDefaultProps extends FeedbackBaseProps {
   type?: "default";
   defaultOpen?: boolean;
+  /** Accessible name for the popover's close button. Pass a translated string. */
+  closeLabel?: string;
 }
 
 export interface FeedbackInlineProps extends FeedbackBaseProps {
@@ -172,6 +176,7 @@ interface FeedbackFormProps {
   disabled?: boolean | undefined;
   initialEmotion?: FeedbackEmotion | undefined;
   onDone: () => void;
+  topicLabel?: string;
 }
 
 function FeedbackForm({
@@ -184,6 +189,7 @@ function FeedbackForm({
   disabled,
   initialEmotion,
   onDone,
+  topicLabel = "Feedback topic",
 }: FeedbackFormProps) {
   const promptId = React.useId();
   const emotionName = React.useId();
@@ -255,7 +261,7 @@ function FeedbackForm({
           onValueChange={(nextTopic) => setTopic(typeof nextTopic === "string" ? nextTopic : "")}
           disabled={disabled || submitting}
         >
-          <SelectTrigger aria-label="Feedback topic">
+          <SelectTrigger aria-label={topicLabel}>
             <SelectValue placeholder="Select a topic..." />
           </SelectTrigger>
           <SelectContent>
@@ -283,7 +289,7 @@ function FeedbackForm({
         <div className="flex items-center justify-between gap-[var(--feedback-row-gap)]">
           <MarkdownHint />
           {error ? (
-            <p className="text-destructive text-xs" id={errorId} role="alert">
+            <p className="text-destructive-strong text-xs" id={errorId} role="alert">
               {error}
             </p>
           ) : null}
@@ -310,6 +316,8 @@ function FeedbackDefault({
   disabled,
   defaultOpen = false,
   className,
+  topicLabel,
+  closeLabel = "Close feedback",
 }: FeedbackDefaultProps) {
   const triggerRef = React.useRef<HTMLButtonElement | null>(null);
   const [open, setOpen] = React.useState(defaultOpen);
@@ -346,7 +354,7 @@ function FeedbackDefault({
         <div className="mb-[var(--feedback-gap)] flex items-center justify-between gap-[var(--feedback-row-gap)]">
           <h2 className="font-medium text-foreground text-sm">{label}</h2>
           <button
-            aria-label="Close feedback"
+            aria-label={closeLabel}
             className="inline-flex size-7 items-center justify-center rounded-[var(--feedback-radius)] text-muted-foreground transition-[background-color,color] duration-[var(--feedback-duration)] ease-[var(--feedback-easing)] hover:bg-accent hover:text-accent-foreground focus-visible:outline-none"
             onClick={closeAndReturnFocus}
             type="button"
@@ -362,6 +370,7 @@ function FeedbackDefault({
           {...(onSubmit ? { onSubmit } : {})}
           {...(dryRun !== undefined ? { dryRun } : {})}
           {...(disabled !== undefined ? { disabled } : {})}
+          {...(topicLabel !== undefined ? { topicLabel } : {})}
           onDone={closeAndReturnFocus}
         />
       </PopoverContent>
@@ -380,6 +389,7 @@ function FeedbackInline({
   disabled,
   defaultExpanded = false,
   className,
+  topicLabel,
 }: FeedbackInlineProps) {
   const rootRef = React.useRef<HTMLFieldSetElement | null>(null);
   const emotionName = React.useId();
@@ -451,6 +461,7 @@ function FeedbackInline({
             {...(onSubmit ? { onSubmit } : {})}
             {...(dryRun !== undefined ? { dryRun } : {})}
             {...(disabled !== undefined ? { disabled } : {})}
+            {...(topicLabel !== undefined ? { topicLabel } : {})}
             onDone={() => {
               setExpanded(false);
               setSelectedEmotion(undefined);

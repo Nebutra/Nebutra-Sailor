@@ -53,7 +53,8 @@ export function InteractiveFrostedGlassCard({
 
   const cardClasses = isElevated
     ? `group relative w-full overflow-hidden rounded-[var(--radius-3xl)] border border-cyan/25 bg-neutral-950/60 p-8 backdrop-blur-3xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-cyan/40 shadow-glow-accent hover:shadow-glow-accent-lg`
-    : `group relative w-full overflow-hidden rounded-[var(--radius-3xl)] border border-white/10 bg-white/5 p-8 backdrop-blur-2xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-white/20 shadow-none hover:shadow-[0_4px_16px_rgba(255,255,255,0.05)]`;
+    : // allow-palette: fixed frosted-glass surface, same design category as shadow-glow-accent
+      `group relative w-full overflow-hidden rounded-[var(--radius-3xl)] border border-white/10 bg-white/5 p-8 backdrop-blur-2xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-white/20 shadow-none hover:shadow-[0_4px_16px_rgba(255,255,255,0.05)]`;
 
   const glowColor = isElevated
     ? `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, color-mix(in srgb, var(--brand-accent) 15%, transparent), transparent 40%)`
@@ -61,7 +62,8 @@ export function InteractiveFrostedGlassCard({
 
   const iconBgClass = isElevated
     ? "flex h-12 w-12 items-center justify-center rounded-[var(--radius-2xl)] bg-cyan/10 text-cyan backdrop-blur-md border border-cyan/20 shadow-glow-accent-sm"
-    : "flex h-12 w-12 items-center justify-center rounded-[var(--radius-2xl)] bg-white/5 text-white/80 backdrop-blur-md border border-white/10";
+    : // allow-palette: fixed frosted-glass surface, same design category as shadow-glow-accent
+      "flex h-12 w-12 items-center justify-center rounded-[var(--radius-2xl)] bg-white/5 text-white/80 backdrop-blur-md border border-white/10";
 
   const noiseFilterId = `cardNoise_${variant}`;
 
@@ -113,6 +115,7 @@ export function InteractiveFrostedGlassCard({
         <div className="flex items-start justify-between">
           <div className={iconBgClass}>{icon}</div>
           <div
+            // allow-palette: fixed frosted-glass surface, same design category as shadow-glow-accent
             className={`flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 ${isElevated ? "bg-cyan/5 text-cyan/50 group-hover:bg-cyan/20 group-hover:text-cyan" : "bg-white/5 text-white/30 group-hover:bg-white/10 group-hover:text-white/60"}`}
           >
             <MoveUpRight className="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -121,11 +124,13 @@ export function InteractiveFrostedGlassCard({
 
         <div>
           <h3
+            // allow-palette: fixed frosted-glass surface, same design category as shadow-glow-accent
             className={`mb-2 text-2xl font-semibold tracking-tight ${isElevated ? "text-white" : "text-white/90"}`}
           >
             {title}
           </h3>
           <p
+            // allow-palette: fixed frosted-glass surface, same design category as shadow-glow-accent
             className={`text-sm font-medium leading-relaxed ${isElevated ? "text-white/50" : "text-white/40"}`}
           >
             {description}

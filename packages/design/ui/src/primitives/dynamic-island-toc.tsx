@@ -97,6 +97,11 @@ export type DynamicIslandTOCProps = {
    * Optional className for the outer fixed wrapper.
    */
   className?: string;
+  /**
+   * Accessible name for the expanded menu's close button.
+   * @default "Close table of contents"
+   */
+  closeLabel?: string;
 };
 
 const DEFAULT_SELECTOR =
@@ -296,6 +301,7 @@ type TocExpandedMenuProps = {
   onClose: () => void;
   onHover: (id: string | null) => void;
   onJump: (heading: HeadingData) => void;
+  closeLabel?: string;
 };
 
 function TocExpandedMenu({
@@ -312,6 +318,7 @@ function TocExpandedMenu({
   onClose,
   onHover,
   onJump,
+  closeLabel = "Close table of contents",
 }: TocExpandedMenuProps) {
   return (
     <m.div
@@ -336,7 +343,7 @@ function TocExpandedMenu({
         </span>
         <button
           type="button"
-          aria-label="Close table of contents"
+          aria-label={closeLabel}
           onClick={onClose}
           className="text-muted-foreground transition-colors duration-micro hover:text-foreground focus-visible:text-foreground focus-visible:outline-none"
         >
@@ -433,6 +440,7 @@ export function DynamicIslandTOC({
   menuHeading = "TABLE OF CONTENTS",
   emptyLabel = "Contents",
   className,
+  closeLabel = "Close table of contents",
 }: DynamicIslandTOCProps): ReactElement {
   const reduceMotion = useReducedMotion() ?? false;
   const menuLabelId = useId();
@@ -642,6 +650,7 @@ export function DynamicIslandTOC({
             <TocExpandedMenu
               isExpanded={isExpanded}
               ariaLabel={ariaLabel}
+              closeLabel={closeLabel}
               menuLabelId={menuLabelId}
               menuHeading={menuHeading}
               headings={headings}

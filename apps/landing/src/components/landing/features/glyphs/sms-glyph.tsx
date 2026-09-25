@@ -45,7 +45,7 @@ export function SmsGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Delivery check just below the bubble, right-aligned */}
         <div className="mt-1 flex items-center justify-end gap-1 text-[9px] text-muted-foreground">
-          <Check className="h-2.5 w-2.5 text-success" />
+          <Check className="h-2.5 w-2.5 text-success-strong" />
           <span>{deliveredLabel}</span>
         </div>
       </div>

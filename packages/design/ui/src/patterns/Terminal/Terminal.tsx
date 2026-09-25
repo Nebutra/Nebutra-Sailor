@@ -81,8 +81,11 @@ const TerminalHeader = React.forwardRef<HTMLDivElement, TerminalHeaderProps>(
       >
         {showControls && (
           <div className="flex items-center gap-1.5">
+            {/* allow-palette: depicts macOS traffic-light window controls, a fixed third-party chrome convention */}
             <span className="w-3 h-3 rounded-full bg-red-500/80" aria-hidden />
+            {/* allow-palette: depicts macOS traffic-light window controls, a fixed third-party chrome convention */}
             <span className="w-3 h-3 rounded-full bg-yellow-500/80" aria-hidden />
+            {/* allow-palette: depicts macOS traffic-light window controls, a fixed third-party chrome convention */}
             <span className="w-3 h-3 rounded-full bg-green-500/80" aria-hidden />
           </div>
         )}
@@ -129,7 +132,7 @@ const TerminalLine = React.forwardRef<HTMLDivElement, TerminalLineProps>(
         )}
         {...props}
       >
-        {!output && <span className="text-emerald-400 shrink-0 select-none">{prompt}</span>}
+        {!output && <span className="text-success-strong shrink-0 select-none">{prompt}</span>}
         <span className={cn("flex-1", output ? "text-muted-foreground" : "text-muted-foreground")}>
           {children}
         </span>

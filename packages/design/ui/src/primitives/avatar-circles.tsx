@@ -98,7 +98,7 @@ export function AvatarCircles({
           className="transition-transform hover:z-10 hover:scale-110"
         >
           <Image
-            className="rounded-full border-2 border-white"
+            className="rounded-full border-2 border-background"
             src={avatar.imageUrl}
             width={size}
             height={size}

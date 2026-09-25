@@ -138,7 +138,7 @@ const radioControlClassName = cn(
   // it was --neutral-12, which only matched the House ink by coincidence.
   "peer-checked:border-primary peer-checked:text-primary peer-checked:after:scale-100 peer-checked:after:opacity-100",
   controlFocusProxyClassName,
-  "peer-disabled:border-[var(--neutral-5)] peer-disabled:bg-muted peer-disabled:text-[var(--neutral-8)]",
+  "peer-disabled:border-neutral-5 peer-disabled:bg-muted peer-disabled:text-neutral-8",
 );
 
 function useRadioGroupContext() {

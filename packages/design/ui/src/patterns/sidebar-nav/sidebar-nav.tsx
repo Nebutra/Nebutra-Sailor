@@ -83,6 +83,8 @@ export interface SidebarNavProps {
   footer?: React.ReactNode;
   /** When provided, this is used to render link items. Default: <a>. */
   renderLink?: (props: SidebarNavRenderLinkProps) => React.ReactElement;
+  /** Accessible name for the sidebar navigation landmark. Pass a translated string. */
+  navLabel?: string;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -361,11 +363,12 @@ export function SidebarNav({
   header,
   footer,
   renderLink = defaultRenderLink,
+  navLabel = "Sidebar",
 }: SidebarNavProps): React.ReactElement {
   return (
     <TooltipProvider delayDuration={200}>
       <nav
-        aria-label="Sidebar"
+        aria-label={navLabel}
         data-ui="nebutra-sidebar-nav"
         className={cn(
           "flex h-full flex-col",

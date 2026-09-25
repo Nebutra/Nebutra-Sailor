@@ -41,7 +41,33 @@ export interface MarkdownEditorProps {
   /** @default 250 */
   minHeight?: number;
   className?: string;
+  /** Accessible names for the toolbar buttons. Pass translated strings. */
+  labels?: Partial<MarkdownEditorLabels>;
 }
+
+export interface MarkdownEditorLabels {
+  bold: string;
+  italic: string;
+  inlineCode: string;
+  heading: string;
+  blockQuote: string;
+  bulletList: string;
+  link: string;
+  image: string;
+  fencedCodeBlock: string;
+}
+
+const DEFAULT_MARKDOWN_EDITOR_LABELS: MarkdownEditorLabels = {
+  bold: "Bold (Ctrl+B)",
+  italic: "Italic (Ctrl+I)",
+  inlineCode: "Inline code",
+  heading: "Heading",
+  blockQuote: "Block quote",
+  bulletList: "Bullet list",
+  link: "Link",
+  image: "Image",
+  fencedCodeBlock: "Fenced code block",
+};
 
 // ---------------------------------------------------------------------------
 // Quote glyph — inline SVG (no Geist equivalent; Phosphor escape hatch is
@@ -67,7 +93,9 @@ export function MarkdownEditor({
   placeholder = "Write your answer here…",
   minHeight = 250,
   className,
+  labels,
 }: MarkdownEditorProps) {
+  const mergedLabels = { ...DEFAULT_MARKDOWN_EDITOR_LABELS, ...labels };
   const [tab, setTab] = useState<"write" | "preview">("write");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -110,38 +138,56 @@ export function MarkdownEditor({
           </TabsList>
 
           <div className="flex flex-wrap items-center gap-1">
-            <ToolbarButton aria-label="Bold (Ctrl+B)" onClick={() => insertMarkdown("**", "**")}>
+            <ToolbarButton
+              aria-label={mergedLabels.bold}
+              onClick={() => insertMarkdown("**", "**")}
+            >
               <TextBold className="h-3.5 w-3.5" aria-hidden="true" />
             </ToolbarButton>
-            <ToolbarButton aria-label="Italic (Ctrl+I)" onClick={() => insertMarkdown("*", "*")}>
+            <ToolbarButton
+              aria-label={mergedLabels.italic}
+              onClick={() => insertMarkdown("*", "*")}
+            >
               <TextItalic className="h-3.5 w-3.5" aria-hidden="true" />
             </ToolbarButton>
-            <ToolbarButton aria-label="Inline code" onClick={() => insertMarkdown("`", "`")}>
+            <ToolbarButton
+              aria-label={mergedLabels.inlineCode}
+              onClick={() => insertMarkdown("`", "`")}
+            >
               <Code className="h-3.5 w-3.5" aria-hidden="true" />
             </ToolbarButton>
-            <ToolbarButton aria-label="Heading" onClick={() => insertMarkdown("\n## ", "", true)}>
+            <ToolbarButton
+              aria-label={mergedLabels.heading}
+              onClick={() => insertMarkdown("\n## ", "", true)}
+            >
               <Hash className="h-3.5 w-3.5" aria-hidden="true" />
             </ToolbarButton>
             <ToolbarButton
-              aria-label="Block quote"
+              aria-label={mergedLabels.blockQuote}
               onClick={() => insertMarkdown("\n> ", "", true)}
             >
               <QuoteGlyph className="h-3.5 w-3.5" />
             </ToolbarButton>
             <ToolbarButton
-              aria-label="Bullet list"
+              aria-label={mergedLabels.bulletList}
               onClick={() => insertMarkdown("\n- ", "", true)}
             >
               <ListUnordered className="h-3.5 w-3.5" aria-hidden="true" />
             </ToolbarButton>
-            <ToolbarButton aria-label="Link" onClick={() => insertMarkdown("[", "](url)")}>
+            <ToolbarButton
+              aria-label={mergedLabels.link}
+              onClick={() => insertMarkdown("[", "](url)")}
+            >
               <LinkIcon className="h-3.5 w-3.5" aria-hidden="true" />
             </ToolbarButton>
-            <ToolbarButton aria-label="Image" onClick={() => insertMarkdown("![alt text](", ")")}>
+            <ToolbarButton
+              aria-label={mergedLabels.image}
+              onClick={() => insertMarkdown("![alt text](", ")")}
+            >
               <ImageIcon className="h-3.5 w-3.5" aria-hidden="true" />
             </ToolbarButton>
             <ToolbarButton
-              aria-label="Fenced code block"
+              aria-label={mergedLabels.fencedCodeBlock}
               onClick={() => insertMarkdown("\n```javascript\n", "\n```\n", true)}
             >
               <FileText className="h-3.5 w-3.5" aria-hidden="true" />

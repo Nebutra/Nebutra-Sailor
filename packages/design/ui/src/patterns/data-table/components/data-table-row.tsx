@@ -35,7 +35,7 @@ function DataTableRow<TData>({
             }
           : undefined
       }
-      className="border-b border-slate-200 last:border-b-0 hover:bg-blue-50/30 dark:border-slate-800 dark:hover:bg-slate-800/50 transition-colors"
+      className="border-b border-border last:border-b-0 hover:bg-accent/50 transition-colors"
     >
       {row.getVisibleCells().map((cell) => {
         const cellValue = cell.getValue();
@@ -53,13 +53,9 @@ function DataTableRow<TData>({
           <td
             key={cell.id}
             data-slot="cell-selectable"
-            className={`whitespace-nowrap overflow-hidden text-ellipsis px-4 py-3 align-middle text-sm text-slate-700 dark:text-slate-200 ${
-              isPinned ? "bg-white dark:bg-slate-900" : ""
-            } ${
-              isSelected
-                ? "!bg-blue-100/70 dark:!bg-blue-900/40 outline outline-1 outline-blue-400/50 dark:outline-blue-500/50"
-                : ""
-            }`}
+            className={`whitespace-nowrap overflow-hidden text-ellipsis px-4 py-3 align-middle text-sm text-foreground ${
+              isPinned ? "bg-background" : ""
+            } ${isSelected ? "!bg-info/15 outline outline-1 outline-info/50" : ""}`}
             style={{
               width: cell.column.getSize(),
               minWidth: cell.column.getSize(),

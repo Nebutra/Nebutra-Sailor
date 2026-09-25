@@ -236,7 +236,9 @@ function CommandFixture({
               </span>
             ) : status === "error" ? (
               <span className="flex min-h-[244px] flex-col items-center justify-center gap-1">
-                <span className="font-medium text-destructive">Commands could not be loaded</span>
+                <span className="font-medium text-destructive-strong">
+                  Commands could not be loaded
+                </span>
                 <span className="text-muted-foreground">Check your connection and try again</span>
               </span>
             ) : (

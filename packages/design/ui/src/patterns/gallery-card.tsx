@@ -80,6 +80,8 @@ export interface GalleryCardProps {
   badge?: GalleryCardBadge;
   /** Pin/star indicator at top-right (boolean) — renders a small Pin icon */
   pinned?: boolean;
+  /** Label for the pin indicator (a shared component cannot pick the product's language) */
+  pinnedLabel?: string;
   metadata?: GalleryCardMetadata;
   /** Dropdown action menu items at top-right (••• kebab) */
   actions?: GalleryCardAction[];
@@ -101,11 +103,13 @@ export interface GalleryCardProps {
  */
 const iconToneStyles: Record<GalleryCardIconTone, string> = {
   neutral: "bg-muted text-muted-foreground",
-  blue: "bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300",
-  cyan: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950/40 dark:text-cyan-300",
+  blue: "bg-blue-3 text-blue-11",
+  cyan: "bg-cyan-3 text-cyan-11",
+  // allow-palette: categorical hue with no token equivalent (purple/violet has no semantic slot)
   purple: "bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300",
-  amber: "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300",
-  green: "bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-300",
+  amber: "bg-warning/15 text-warning-strong",
+  green: "bg-success/15 text-success-strong",
+  // allow-palette: categorical hue with no token equivalent (pink has no semantic slot)
   pink: "bg-pink-50 text-pink-700 dark:bg-pink-950/40 dark:text-pink-300",
 };
 
@@ -175,7 +179,7 @@ function GalleryCardActionsMenu({ actions, title }: GalleryCardActionsMenuProps)
               }}
               className={cn(
                 action.destructive &&
-                  "text-destructive data-[highlighted]:bg-destructive/10 data-[highlighted]:text-destructive",
+                  "text-destructive-strong data-[highlighted]:bg-destructive/10 data-[highlighted]:text-destructive-strong",
               )}
             >
               {action.label}
@@ -194,6 +198,7 @@ interface GalleryCardBodyProps {
   iconTone: GalleryCardIconTone;
   badge?: GalleryCardBadge | undefined;
   pinned?: boolean | undefined;
+  pinnedLabel?: string | undefined;
   metadata?: GalleryCardMetadata | undefined;
   actions?: GalleryCardAction[] | undefined;
 }
@@ -210,6 +215,7 @@ function GalleryCardBody({
   iconTone,
   badge,
   pinned,
+  pinnedLabel = "Pinned",
   metadata,
   actions,
 }: GalleryCardBodyProps) {
@@ -237,7 +243,10 @@ function GalleryCardBody({
         {(pinned || hasActions) && (
           <div className="flex items-center gap-1">
             {pinned && (
-              <Pin className="h-3.5 w-3.5 fill-amber-400 text-amber-500" aria-label="Pinned" />
+              <Pin
+                className="h-3.5 w-3.5 fill-warning-strong text-warning-strong"
+                aria-label={pinnedLabel}
+              />
             )}
             {hasActions && actions ? (
               <GalleryCardActionsMenu actions={actions} title={title} />
@@ -285,6 +294,7 @@ export function GalleryCard(props: GalleryCardProps): React.ReactElement {
     iconTone = "neutral",
     badge,
     pinned,
+    pinnedLabel,
     metadata,
     actions,
     onClick,
@@ -301,6 +311,7 @@ export function GalleryCard(props: GalleryCardProps): React.ReactElement {
       iconTone={iconTone}
       badge={badge}
       pinned={pinned}
+      {...(pinnedLabel !== undefined ? { pinnedLabel } : {})}
       metadata={metadata}
       actions={actions}
     />

@@ -689,6 +689,12 @@ function buildTailwindThemeInline() {
   --color-success-foreground: hsl(var(--success-foreground));
   --color-warning: hsl(var(--warning));
   --color-warning-foreground: hsl(var(--warning-foreground));
+  /* Status colours as INK (text, icon fill/stroke). --destructive / --warning /
+     --success are fills: amber is 2.0:1 as text in light, red 2.5:1 in dark.
+     text-destructive-strong etc. read at ~5:1 in both themes. */
+  --color-destructive-strong: hsl(var(--destructive-strong));
+  --color-warning-strong: hsl(var(--warning-strong));
+  --color-success-strong: hsl(var(--success-strong));
   --color-info: hsl(var(--info));
   --color-info-foreground: hsl(var(--info-foreground));
   --color-border: hsl(var(--border));

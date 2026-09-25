@@ -133,10 +133,7 @@ export const ShowMore = ({
       {...props}
     >
       {!noBorder && (
-        <div
-          aria-hidden="true"
-          className={cn("h-px flex-1 bg-[var(--neutral-7)]", dividerClassName)}
-        />
+        <div aria-hidden="true" className={cn("h-px flex-1 bg-neutral-7", dividerClassName)} />
       )}
 
       <div className="shrink-0 bg-background px-[var(--show-more-gap)]">
@@ -169,10 +166,7 @@ export const ShowMore = ({
       </div>
 
       {!noBorder && (
-        <div
-          aria-hidden="true"
-          className={cn("h-px flex-1 bg-[var(--neutral-7)]", dividerClassName)}
-        />
+        <div aria-hidden="true" className={cn("h-px flex-1 bg-neutral-7", dividerClassName)} />
       )}
     </div>
   );

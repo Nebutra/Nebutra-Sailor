@@ -66,7 +66,7 @@ export function CopyThemeButton() {
       variant="outline"
       disabled={isPending}
       onClick={handleCopy}
-      prefix={copied ? <Check className="text-success" /> : <Copy />}
+      prefix={copied ? <Check className="text-success-strong" /> : <Copy />}
     >
       {copied ? t("copied") : error ? t("copyError") : t("copy")}
     </Button>

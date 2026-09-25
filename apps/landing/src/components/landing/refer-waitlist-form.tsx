@@ -126,7 +126,7 @@ export function ReferWaitlistForm({
         className="w-full rounded-[var(--radius-lg)] border border-border bg-background p-4 shadow-sm md:p-6"
       >
         <div role="status" className="flex items-start gap-3">
-          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-success/12 text-success ring-1 ring-success/25">
+          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-success/12 text-success-strong ring-1 ring-success/25">
             <Check aria-hidden="true" className="h-4 w-4" />
           </span>
           <div>
@@ -226,7 +226,7 @@ export function ReferWaitlistForm({
         <ArrowRight aria-hidden="true" className="h-4 w-4" />
       </Button>
 
-      {/* red-900 ramp, not `text-destructive`: --destructive is 2.36:1 in dark
+      {/* red-900 ramp, not `text-destructive-strong`: --destructive is 2.36:1 in dark
           mode (fill-only), the ramp is 5.32 light / 5.84 dark.
           TODO: use --destructive-strong once @nebutra/tokens defines it. */}
       {status === "error" && (

@@ -106,13 +106,13 @@ const StatusIcon: React.FC<{ status: TaskStatus; size?: "sm" | "md" }> = ({
 
   switch (status) {
     case "completed":
-      return <CheckCircle2 className={cn(sizeClass, "text-green-500")} />;
+      return <CheckCircle2 className={cn(sizeClass, "text-success-strong")} />;
     case "in-progress":
       return <CircleDotDashed className={cn(sizeClass, "text-primary")} />;
     case "need-help":
-      return <CircleAlert className={cn(sizeClass, "text-yellow-500")} />;
+      return <CircleAlert className={cn(sizeClass, "text-warning-strong")} />;
     case "failed":
-      return <CircleX className={cn(sizeClass, "text-red-500")} />;
+      return <CircleX className={cn(sizeClass, "text-destructive-strong")} />;
     default:
       return <Circle className={cn(sizeClass, "text-muted-foreground")} />;
   }
@@ -124,10 +124,10 @@ const StatusIcon: React.FC<{ status: TaskStatus; size?: "sm" | "md" }> = ({
 
 const StatusBadge: React.FC<{ status: TaskStatus }> = ({ status }) => {
   const colorClasses = {
-    completed: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+    completed: "bg-success/15 text-success-strong",
     "in-progress": "bg-primary/10 text-primary",
-    "need-help": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
-    failed: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+    "need-help": "bg-warning/15 text-warning-strong",
+    failed: "bg-destructive/15 text-destructive-strong",
     pending: "bg-muted text-muted-foreground",
   };
 

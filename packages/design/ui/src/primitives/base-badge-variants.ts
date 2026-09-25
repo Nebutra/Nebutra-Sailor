@@ -129,7 +129,7 @@ export const baseBadgeVariants = cva(
       {
         variant: "destructive",
         appearance: "ghost",
-        className: "text-destructive",
+        className: "text-destructive-strong",
       },
       { size: "lg", appearance: "ghost", className: "px-0" },
       { size: "md", appearance: "ghost", className: "px-0" },

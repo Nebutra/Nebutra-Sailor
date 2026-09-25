@@ -34,9 +34,9 @@ export const overlayPrimitiveClassNames = {
     menuItemBaseClassName,
     "min-h-8 gap-2",
     menuHighlightedClassName,
-    "data-[variant=destructive]:text-destructive",
+    "data-[variant=destructive]:text-destructive-strong",
     "data-[variant=destructive]:data-[highlighted]:bg-destructive/10",
-    "data-[variant=destructive]:data-[highlighted]:text-destructive",
+    "data-[variant=destructive]:data-[highlighted]:text-destructive-strong",
   ].join(" "),
   menuItem: [menuItemBaseClassName, menuHighlightedClassName].join(" "),
   menuSubTrigger: [
