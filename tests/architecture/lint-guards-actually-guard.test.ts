@@ -95,6 +95,28 @@ const CASES: Case[] = [
     guard: "lint-primitive-reuse",
     violation: 'export const C = () => <button type="button">x</button>;\n',
   },
+  {
+    // A literal foreground on a token fill: invisible once --primary turns light.
+    guard: "lint-token-pairing",
+    violation: 'export const C = () => <div className="bg-primary text-white">x</div>;\n',
+  },
+  {
+    // A state branch that changes weight: the label widens when it becomes active.
+    guard: "lint-state-shift",
+    violation:
+      'export const C = ({ isActive }: { isActive: boolean }) => (\n  <span className={isActive ? "font-semibold" : "font-medium"}>x</span>\n);\n',
+  },
+  {
+    // A hand-picked stacking number above the local range, instead of a layer role.
+    guard: "lint-z-index",
+    violation: 'export const C = () => <div className="fixed z-[150]" />;\n',
+  },
+  {
+    // Erasing a shared primitive's surface instead of using its variant.
+    guard: "lint-primitive-override",
+    violation:
+      'import { Card } from "@nebutra/ui/primitives";\nexport const C = () => <Card className="shadow-none" />;\n',
+  },
 ];
 
 /**
