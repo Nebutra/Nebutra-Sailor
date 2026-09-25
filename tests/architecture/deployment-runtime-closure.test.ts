@@ -35,11 +35,11 @@ const PYTHON_AI_TASK_DISPATCHER_PATH = resolve(ROOT, "backends/python/ai/app/tas
 const DB_SCHEMA_PATH = resolve(ROOT, "packages/platform/db/prisma/schema.prisma");
 const TASK_MIGRATION_PATH = resolve(
   ROOT,
-  "packages/platform/db/prisma/migrations/20260604010000_add_task_envelope/migration.sql",
+  "packages/platform/db/prisma/migrations/00000000000000_baseline/migration.sql",
 );
 const UPLOAD_MIGRATION_PATH = resolve(
   ROOT,
-  "packages/platform/db/prisma/migrations/20260604020000_add_upload_records/migration.sql",
+  "packages/platform/db/prisma/migrations/00000000000000_baseline/migration.sql",
 );
 const DEPLOY_GATEWAY_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/deploy-gateway.yml");
 const DEPLOY_ORIGIN_ECS_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/deploy-origin-ecs.yml");
@@ -306,7 +306,7 @@ describe("production runtime closure", () => {
     expect(schema).toContain("enum TaskStatus");
     expect(schema).toContain("model Task");
     expect(schema).toContain('@@map("tasks")');
-    expect(migration).toContain('CREATE TABLE "public"."tasks"');
+    expect(migration).toContain('CREATE TABLE "tasks" (');
     expect(migration).toContain("tasks_tenant_id_idempotency_key_key");
     expect(main).toContain("routes_tasks");
     expect(main).toContain('prefix="/api/v1/tasks"');
@@ -350,7 +350,7 @@ describe("production runtime closure", () => {
 
     expect(schema).toContain("enum UploadStatus");
     expect(schema).toContain("model UploadRecord");
-    expect(migration).toContain('CREATE TABLE "public"."uploads"');
+    expect(migration).toContain('CREATE TABLE "uploads" (');
     expect(main).toContain("routes_uploads");
     expect(main).toContain('prefix="/api/v1/uploads"');
     expect(originRoutes).toContain("/presign");

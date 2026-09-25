@@ -209,15 +209,18 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("        image: pgvector/pgvector:pg16");
     expect(workflow).toContain("          POSTGRES_DB: shadow_nebutra");
     expect(workflow).toContain('          --health-cmd "pg_isready -U postgres -d shadow_nebutra"');
-    // Prisma 7 dropped the CLI flag and rejects url === shadowDatabaseUrl.
-    // The job creates a second empty DB and injects it via prisma.config.ts.
-    expect(workflow).toContain("CREATE DATABASE shadow_nebutra_diff");
-    expect(workflow).toContain(
-      "SHADOW_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra_diff",
+    // ADR 2026-09-25 database convergence: the job builds the database from
+    // empty with the same command deploys run — twice, for idempotence — and
+    // proves the generated RLS is committed. The old `db push` workaround for
+    // a history that could not replay is gone and must not come back.
+    const dbCheck = workflow.slice(
+      workflow.indexOf("  db-check:"),
+      workflow.indexOf("  security:"),
     );
-    expect(workflow).toContain("prisma db push --accept-data-loss");
-    expect(workflow).toContain("--from-config-datasource");
-    expect(workflow).toContain("--to-schema ./prisma/schema.prisma");
+    expect(dbCheck).toContain("pnpm --filter @nebutra/db db:generate");
+    expect(dbCheck).toContain("git diff --exit-code -- packages/platform/db/prisma/generated/");
+    expect(dbCheck.match(/pnpm db:deploy/g)?.length).toBe(2);
+    expect(dbCheck).not.toContain("db push");
 
     const prismaConfig = await readFile(
       join(process.cwd(), "packages/platform/db/prisma.config.ts"),

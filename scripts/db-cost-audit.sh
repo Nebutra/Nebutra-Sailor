@@ -92,8 +92,8 @@ ORDER BY rolname;"
 cat <<'EOF'
 
 Reading this:
-  · A role with empty `defaults` has no statement_timeout — apply
-    infra/data/database/policies/cost-guardrails.sql.
+  · A role with empty `defaults` has no statement_timeout — run
+    `pnpm --filter @nebutra/db db:deploy`; platform.sql sets it on APP_DB_ROLE.
   · Anything in "idle in a transaction" for more than a minute is actively
     preventing vacuum across the whole database. Find the caller.
   · An append-only table growing steadily needs a retention decision. Deleting
