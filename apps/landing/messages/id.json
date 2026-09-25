@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Bagaimana multi-tenancy ditangani?",
-          "answer": "Dua lapisan. Konteks tenant yang di-scope permintaan melalui @nebutra/tenant (AsyncLocalStorage menyebarkan organisasi aktif melalui setiap panggilan server, termasuk kueri DB dan webhook keluar), dan isolasi yang dipaksakan database melalui kebijakan Row-Level Security Postgres (infra/data/database/policies/rls.sql) yang terikat ke app.current_tenant_id sesi-lokal. Koneksi peran layanan melewati RLS hanya di dalam layanan internal tepercaya; semua rute yang menghadap pengguna berjalan melalui klien yang di-scope tenant."
+          "answer": "Dua lapisan. Konteks tenant yang di-scope permintaan melalui @nebutra/tenant (AsyncLocalStorage menyebarkan organisasi aktif melalui setiap panggilan server, termasuk kueri DB dan webhook keluar), dan isolasi yang dipaksakan database melalui kebijakan Row-Level Security Postgres (packages/platform/db/prisma/generated/rls.sql) yang terikat ke app.current_tenant_id sesi-lokal. Koneksi peran layanan melewati RLS hanya di dalam layanan internal tepercaya; semua rute yang menghadap pengguna berjalan melalui klien yang di-scope tenant."
         },
         "swap-clerk": {
           "question": "Bisakah saya mengganti Clerk dengan penyedia autentikasi lain?",

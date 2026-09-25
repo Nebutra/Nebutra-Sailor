@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Miten monivuokraisuus on toteutettu?",
-          "answer": "Kaksi kerrosta. Pyyntöön sidottu vuokralaiskonteksti @nebutra/tenant -paketin kautta (AsyncLocalStorage välittää aktiivisen organisaation jokaisen palvelinpäivityksen kautta, mukaan lukien tietokantakyselyt ja ulospäin menevät webhookit) sekä tietokannassa pakotettu eristys Postgres Row-Level Security -sääntöjen kautta (infra/data/database/policies/rls.sql), jotka sidotaan sessioon paikalliseen app.current_tenant_id -muuttujaan. Palveluroolien yhteydet ohittavat RLS:n vain luotettujen sisäisten palveluiden sisällä; kaikki käyttäjäkohtaiset reitit kulkevat vuokralaiskontekstiin sidotun clientin kautta."
+          "answer": "Kaksi kerrosta. Pyyntöön sidottu vuokralaiskonteksti @nebutra/tenant -paketin kautta (AsyncLocalStorage välittää aktiivisen organisaation jokaisen palvelinpäivityksen kautta, mukaan lukien tietokantakyselyt ja ulospäin menevät webhookit) sekä tietokannassa pakotettu eristys Postgres Row-Level Security -sääntöjen kautta (packages/platform/db/prisma/generated/rls.sql), jotka sidotaan sessioon paikalliseen app.current_tenant_id -muuttujaan. Palveluroolien yhteydet ohittavat RLS:n vain luotettujen sisäisten palveluiden sisällä; kaikki käyttäjäkohtaiset reitit kulkevat vuokralaiskontekstiin sidotun clientin kautta."
         },
         "swap-clerk": {
           "question": "Voinko vaihtaa Clerkin toiseen kirjautumispalveluun?",

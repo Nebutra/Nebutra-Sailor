@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Hur hanteras multi-tenancy?",
-          "answer": "Två lager. Begäran-scoped tenant-kontext via @nebutra/tenant (AsyncLocalStorage sprider den aktiva organisationen genom varje serveranrop, inklusive databasfrågor och utgående webhooks), och databas-tvungen isolering via Postgres Row-Level Security-policyer (infra/data/database/policies/rls.sql) bundna till en session-lokal app.current_tenant_id. Service-roll-anslutningar kringgår RLS endast inuti betrodda interna tjänster; alla användarriktade routes går via den tenant-scoped klienten."
+          "answer": "Två lager. Begäran-scoped tenant-kontext via @nebutra/tenant (AsyncLocalStorage sprider den aktiva organisationen genom varje serveranrop, inklusive databasfrågor och utgående webhooks), och databas-tvungen isolering via Postgres Row-Level Security-policyer (packages/platform/db/prisma/generated/rls.sql) bundna till en session-lokal app.current_tenant_id. Service-roll-anslutningar kringgår RLS endast inuti betrodda interna tjänster; alla användarriktade routes går via den tenant-scoped klienten."
         },
         "swap-clerk": {
           "question": "Kan jag byta ut Clerk mot en annan auth-leverantör?",

@@ -271,8 +271,8 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml logs -f --tail=1
 ### 6.3 初始化数据库
 
 ```bash
-# 运行数据库迁移
-bash infra/scripts/setup-db.sh
+# 建库或升级：执行迁移、应用 platform.sql 和生成的 RLS，最后自检
+pnpm db:deploy
 ```
 
 ---
@@ -325,8 +325,8 @@ pnpm --filter @nebutra/web run build:next
 # 重建并重启变更的服务
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
-# 运行数据库迁移（如有）
-bash infra/scripts/setup-db.sh
+# 数据库跟上新代码（没有待执行的迁移时什么也不做）
+pnpm db:deploy
 ```
 
 ### 数据库备份

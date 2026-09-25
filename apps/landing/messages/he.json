@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "איך מתבצעת רב-שכירות?",
-          "answer": "שתי שכבות. הקשר שכיר בטווח בקשה דרך @nebutra/tenant (AsyncLocalStorage מעביר את הארגון הפעיל דרך כל קריאת שרת, כולל שאילתות DB ו-webhooks יוצאים), ובידוד אכיפה במסד דרך מדיניות Postgres Row-Level Security (infra/data/database/policies/rls.sql) קשורה ל-app.current_tenant_id מקומי לסשן. חיבורי תפקיד שירות עוקפים RLS רק בתוך שירותים פנימיים אמורים; כל המסלולים מול משתמשים עוברים דרך הלקוח בטווח השכיר."
+          "answer": "שתי שכבות. הקשר שכיר בטווח בקשה דרך @nebutra/tenant (AsyncLocalStorage מעביר את הארגון הפעיל דרך כל קריאת שרת, כולל שאילתות DB ו-webhooks יוצאים), ובידוד אכיפה במסד דרך מדיניות Postgres Row-Level Security (packages/platform/db/prisma/generated/rls.sql) קשורה ל-app.current_tenant_id מקומי לסשן. חיבורי תפקיד שירות עוקפים RLS רק בתוך שירותים פנימיים אמורים; כל המסלולים מול משתמשים עוברים דרך הלקוח בטווח השכיר."
         },
         "swap-clerk": {
           "question": "האם אפשר להחליף את Clerk בספק אימות אחר?",

@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "จัดการ multi-tenancy อย่างไร?",
-          "answer": "สองชั้น Request-scoped tenant context ผ่าน @nebutra/tenant (AsyncLocalStorage ส่งต่อ active org ผ่านทุกการเรียก server รวมถึง DB queries และ outbound webhooks) และ database-enforced isolation ผ่าน Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) ที่ผูกกับ session-local app.current_tenant_id Service-role connections ข้าม RLS ได้เฉพาะภายใน trusted internal services เท่านั้น; ทุก user-facing routes ทำงานผ่าน tenant-scoped client"
+          "answer": "สองชั้น Request-scoped tenant context ผ่าน @nebutra/tenant (AsyncLocalStorage ส่งต่อ active org ผ่านทุกการเรียก server รวมถึง DB queries และ outbound webhooks) และ database-enforced isolation ผ่าน Postgres Row-Level Security policies (packages/platform/db/prisma/generated/rls.sql) ที่ผูกกับ session-local app.current_tenant_id Service-role connections ข้าม RLS ได้เฉพาะภายใน trusted internal services เท่านั้น; ทุก user-facing routes ทำงานผ่าน tenant-scoped client"
         },
         "swap-clerk": {
           "question": "สามารถเปลี่ยน Clerk เป็น auth provider อื่นได้หรือไม่?",

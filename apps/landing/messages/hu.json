@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Hogyan működik a több bérlős támogatás?",
-          "answer": "Két réteg. Kérés-scope-os bérlő-kontextus az @nebutra/tenant segítségével (az AsyncLocalStorage továbbítja az aktív szervezetet minden szerverhíváson keresztül, beleértve az adatbázis-lekérdezéseket és a kimenő webhookokat), valamint adatbázis-szintű izoláció a Postgres Row-Level Security szabályzatok révén (infra/data/database/policies/rls.sql), amelyek egy session-local app.current_tenant_id-hez vannak kötve. A szolgáltatási szerepkörű kapcsolatok csak megbízható belső szolgáltatásokon belül kerülik meg az RLS-t; minden felhasználó felé nyíló útvonal a bérlő-scope-os kliensen keresztül halad."
+          "answer": "Két réteg. Kérés-scope-os bérlő-kontextus az @nebutra/tenant segítségével (az AsyncLocalStorage továbbítja az aktív szervezetet minden szerverhíváson keresztül, beleértve az adatbázis-lekérdezéseket és a kimenő webhookokat), valamint adatbázis-szintű izoláció a Postgres Row-Level Security szabályzatok révén (packages/platform/db/prisma/generated/rls.sql), amelyek egy session-local app.current_tenant_id-hez vannak kötve. A szolgáltatási szerepkörű kapcsolatok csak megbízható belső szolgáltatásokon belül kerülik meg az RLS-t; minden felhasználó felé nyíló útvonal a bérlő-scope-os kliensen keresztül halad."
         },
         "swap-clerk": {
           "question": "Cserélhetem a Clerk-et másik hitelesítési szolgáltatóra?",

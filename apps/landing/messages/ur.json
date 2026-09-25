@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "ملٹی ٹیننسی کیسے ہینڈل کی جاتی ہے؟",
-          "answer": "دو لیئرز۔ @nebutra/tenant کے ذریعے request-scoped ٹیننٹ کنٹیکسٹ (AsyncLocalStorage ہر سرور کال میں فعال org کو پروپیگیٹ کرتا ہے، بشمول DB کویریز اور آؤٹ باؤنڈ ویب ہکس)، اور Postgres Row-Level Security پالیسیوں کے ذریعے ڈیٹا بیس پر مجبور کردہ انسو لیشن (infra/data/database/policies/rls.sql) جو session-local app.current_tenant_id سے بندھی ہوئی ہیں۔ سروس-رول کنکشنز صرف مستند اندرونی سروسز کے اندر RLS کو بای پاس کرتے ہیں؛ تمام صارف-روبرو روٹس ٹیننٹ-scoped کلائنٹ کے ذریعے جاتے ہیں۔"
+          "answer": "دو لیئرز۔ @nebutra/tenant کے ذریعے request-scoped ٹیننٹ کنٹیکسٹ (AsyncLocalStorage ہر سرور کال میں فعال org کو پروپیگیٹ کرتا ہے، بشمول DB کویریز اور آؤٹ باؤنڈ ویب ہکس)، اور Postgres Row-Level Security پالیسیوں کے ذریعے ڈیٹا بیس پر مجبور کردہ انسو لیشن (packages/platform/db/prisma/generated/rls.sql) جو session-local app.current_tenant_id سے بندھی ہوئی ہیں۔ سروس-رول کنکشنز صرف مستند اندرونی سروسز کے اندر RLS کو بای پاس کرتے ہیں؛ تمام صارف-روبرو روٹس ٹیننٹ-scoped کلائنٹ کے ذریعے جاتے ہیں۔"
         },
         "swap-clerk": {
           "question": "کیا میں Clerk کو کسی دوسرے auth پرووائیڈر سے بدل سکتا ہوں؟",

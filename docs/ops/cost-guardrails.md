@@ -14,7 +14,7 @@ Ranked by how much damage a single bad day can do:
 | Risk | Ceiling | Enforced by |
 | --- | --- | --- |
 | AI token spend | none today | **open — see below** |
-| Postgres storage growth | retention windows | `retention.sql` + Cron Trigger |
+| Postgres storage growth | retention windows | `purge_expired_rows()` (platform.sql) + Cron Trigger |
 | Postgres runaway query CPU | 30s | role `statement_timeout` |
 | Postgres connection exhaustion | 50 | role `CONNECTION LIMIT` |
 | Redis command volume | plan cap | Upstash console budget |
@@ -28,8 +28,9 @@ in that table with nothing in the third column.
 
 ### Enforced in this repo
 
-`infra/data/database/policies/cost-guardrails.sql`, applied to `app_user` by
-`scripts/provision-fresh-database.sh`. These are role defaults, not call-site
+`packages/platform/db/prisma/platform.sql`, applied to `APP_DB_ROLE` (`app_user`)
+by `pnpm db:deploy` on every deploy — so a guardrail changed there reaches every
+database without anyone running SQL by hand. These are role defaults, not call-site
 settings: `@nebutra/db` sets `statement_timeout` with `SET LOCAL` inside
 `getTenantDb`, which covers only queries that go through `getTenantDb`. A raw
 client or a future code path that forgets inherits nothing. Role defaults apply
@@ -47,7 +48,8 @@ Verified on PostgreSQL 17.8: a 35s query on a raw connection that never touched
 `getTenantDb` is cancelled at 30s, and a transaction left idle is terminated by
 the server.
 
-Storage is handled separately by `retention.sql` — eight append-only tables
+Storage is handled separately by `purge_expired_rows()` and the `retention_policies`
+rows the baseline seeds — eight append-only tables
 with windows from 7 days (expired sessions) to 400 days (billing evidence),
 purged nightly by a Cron Trigger on the gateway Worker.
 

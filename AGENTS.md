@@ -227,16 +227,20 @@ pnpm generate:api-types                             # Generate TypeScript types
 
 ## Database
 
-- **ORM**: Prisma v7 with PostgreSQL adapter
-- **Schema**: `packages/db/prisma/schema.prisma` (~1,400 lines)
-- **Schemas**: `public`, `auth`
-- **Extensions**: pgvector, RLS
-- **Key models**: Organization, User, Subscription, AuditLog, ApiKey, Content, Integration
+One source: `packages/platform/db/prisma/` — `schema.prisma` (tables and each
+table's `/// @rls` access rule), `platform.sql` (functions, role settings), and
+generated `generated/rls.sql` + migrations. **Read the contract at the top of
+`packages/platform/db/README.md` before changing the schema.** In short: edit
+schema.prisma, let `db:migrate` generate the migration, never hand-write
+policies/functions/grants into a migration, never `db push` a shared database.
+Deploys run `db:deploy` first; `pnpm lint` and CI enforce the rest
+(ADR 2026-09-25 database convergence).
 
 ```bash
-pnpm db:generate       # Generate Prisma client
-pnpm db:migrate        # Run migrations
-pnpm db:push           # Push schema changes (dev)
+pnpm db:generate       # client + generated/rls.sql
+pnpm db:migrate        # dev: generate a migration from your schema change
+pnpm db:deploy         # any database: migrate + platform.sql + rls.sql, then verify
+pnpm db:check          # read-only drift report
 pnpm db:studio         # Open Prisma Studio
 ```
 

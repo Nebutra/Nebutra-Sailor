@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Çok kiracılık nasıl işleniyor?",
-          "answer": "İki katman. İstek kapsamındaki kiracı bağlamı @nebutra/tenant aracılığıyla (AsyncLocalStorage, aktif kuruluşu her sunucu çağrısı boyunca — veritabanı sorguları ve dışa giden web kancaları dahil — iletir) ve veritabanında zorlanan yalıtım Postgres Satır Düzeyi Güvenlik politikalarıyla (infra/data/database/policies/rls.sql), oturum yerel app.current_tenant_id'ye bağlı olarak. Hizmet rolü bağlantıları yalnızca güvenilir iç hizmetlerin içinde RLS'yi atlar; tüm kullanıcıya yönelik rotalar kiracı kapsamındaki istemci üzerinden geçer."
+          "answer": "İki katman. İstek kapsamındaki kiracı bağlamı @nebutra/tenant aracılığıyla (AsyncLocalStorage, aktif kuruluşu her sunucu çağrısı boyunca — veritabanı sorguları ve dışa giden web kancaları dahil — iletir) ve veritabanında zorlanan yalıtım Postgres Satır Düzeyi Güvenlik politikalarıyla (packages/platform/db/prisma/generated/rls.sql), oturum yerel app.current_tenant_id'ye bağlı olarak. Hizmet rolü bağlantıları yalnızca güvenilir iç hizmetlerin içinde RLS'yi atlar; tüm kullanıcıya yönelik rotalar kiracı kapsamındaki istemci üzerinden geçer."
         },
         "swap-clerk": {
           "question": "Clerk'i başka bir kimlik doğrulama sağlayıcısıyla değiştirebilir miyim?",
