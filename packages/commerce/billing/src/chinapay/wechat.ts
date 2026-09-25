@@ -129,12 +129,61 @@ export async function createWechatNativeOrder(
   return { codeUrl: data.code_url };
 }
 
+// -----------------------------------------------------------------------------
+// H5 pay — for a buyer already on their phone, who cannot scan their own
+// screen. `h5_url` opens the WeChat app; `redirect_url` is where WeChat sends
+// the browser afterwards, and its domain must be the H5 domain registered in
+// the merchant console or WeChat refuses to open the payment.
+// -----------------------------------------------------------------------------
+
+export interface CreateWechatH5OrderInput extends CreateWechatNativeOrderInput {
+  /** The buyer's IP. WeChat Pay H5 rejects an order without one. */
+  clientIp: string;
+  /** Where the browser lands after paying (or abandoning). */
+  redirectUrl?: string;
+}
+
+export async function createWechatH5Order(
+  input: CreateWechatH5OrderInput,
+): Promise<{ h5Url: string }> {
+  const cfg = getWechatPayConfig();
+
+  if (input.attach && Buffer.byteLength(input.attach, "utf8") > 128) {
+    throw new BillingError(
+      "WeChat Pay attach payload exceeds 128 bytes",
+      "WECHATPAY_ATTACH_TOO_LARGE",
+      400,
+    );
+  }
+
+  const data = await wechatRequest<{ h5_url: string }>(cfg, "POST", "/v3/pay/transactions/h5", {
+    mchid: cfg.mchid,
+    appid: cfg.appId,
+    description: input.description,
+    out_trade_no: input.outTradeNo,
+    notify_url: cfg.notifyUrl,
+    amount: { total: input.totalFen, currency: "CNY" },
+    scene_info: { payer_client_ip: input.clientIp, h5_info: { type: "Wap" } },
+    ...(input.attach ? { attach: input.attach } : {}),
+  });
+
+  const h5Url = input.redirectUrl
+    ? `${data.h5_url}&redirect_url=${encodeURIComponent(input.redirectUrl)}`
+    : data.h5_url;
+  return { h5Url };
+}
+
 export async function queryWechatOrder(outTradeNo: string): Promise<{
   status: "paid" | "pending" | "failed";
   amountFen: number;
+  transactionId?: string;
 }> {
   const cfg = getWechatPayConfig();
-  const data = await wechatRequest<{ trade_state: string; amount?: { total?: number } }>(
+  const data = await wechatRequest<{
+    trade_state: string;
+    transaction_id?: string;
+    amount?: { total?: number };
+  }>(
     cfg,
     "GET",
     `/v3/pay/transactions/out-trade-no/${encodeURIComponent(outTradeNo)}?mchid=${cfg.mchid}`,
@@ -147,7 +196,45 @@ export async function queryWechatOrder(outTradeNo: string): Promise<{
         ? "pending"
         : "failed";
 
-  return { status, amountFen: data.amount?.total ?? 0 };
+  return { status, amountFen: data.amount?.total ?? 0, transactionId: data.transaction_id };
+}
+
+// -----------------------------------------------------------------------------
+// Refunds. `out_refund_no` is the idempotency key: retrying with the same one
+// returns the existing refund instead of paying out twice.
+// -----------------------------------------------------------------------------
+
+export interface RefundWechatOrderInput {
+  outTradeNo: string;
+  outRefundNo: string;
+  refundFen: number;
+  totalFen: number;
+  reason?: string;
+}
+
+export async function refundWechatOrder(
+  input: RefundWechatOrderInput,
+): Promise<{ status: "succeeded" | "processing" | "failed"; refundId: string }> {
+  const cfg = getWechatPayConfig();
+  const data = await wechatRequest<{ refund_id: string; status: string }>(
+    cfg,
+    "POST",
+    "/v3/refund/domestic/refunds",
+    {
+      out_trade_no: input.outTradeNo,
+      out_refund_no: input.outRefundNo,
+      ...(input.reason ? { reason: input.reason } : {}),
+      amount: { refund: input.refundFen, total: input.totalFen, currency: "CNY" },
+    },
+  );
+
+  const status =
+    data.status === "SUCCESS"
+      ? "succeeded"
+      : data.status === "PROCESSING"
+        ? "processing"
+        : "failed";
+  return { status, refundId: data.refund_id };
 }
 
 // -----------------------------------------------------------------------------

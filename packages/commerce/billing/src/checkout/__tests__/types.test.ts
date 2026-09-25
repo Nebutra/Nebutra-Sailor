@@ -1,117 +1,58 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_PRICING } from "../../types";
-import { CREDIT_PURCHASE_METADATA_TYPE, CreditPurchaseInputSchema } from "../types";
+import { CREDIT_PURCHASE_METADATA_TYPE, PaymentSessionInputSchema } from "../types";
 
-describe("CreditPurchaseInputSchema", () => {
+describe("PaymentSessionInputSchema", () => {
   const validInput = {
+    orderId: "cmg1abcdefghijklmnopqrstu",
     organizationId: "org_123",
-    creditAmount: 1000,
-    amount: 9.99,
+    title: "10,000 credits",
+    amountMinor: 6800,
+    currency: "CNY",
     successUrl: "https://app.example.com/success",
     cancelUrl: "https://app.example.com/cancel",
   };
 
   it("validates a minimal valid input", () => {
-    const result = CreditPurchaseInputSchema.safeParse(validInput);
-    expect(result.success).toBe(true);
+    expect(PaymentSessionInputSchema.safeParse(validInput).success).toBe(true);
   });
 
-  it("defaults currency to USD", () => {
-    const parsed = CreditPurchaseInputSchema.parse(validInput);
-    expect(parsed.currency).toBe("USD");
-  });
-
-  it("accepts explicit currency override", () => {
-    const parsed = CreditPurchaseInputSchema.parse({ ...validInput, currency: "EUR" });
-    expect(parsed.currency).toBe("EUR");
-  });
-
-  it("rejects non-URL successUrl", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      successUrl: "not-a-url",
-    });
+  it("rejects an order id longer than WeChat Pay's 32-character out_trade_no", () => {
+    const result = PaymentSessionInputSchema.safeParse({ ...validInput, orderId: "o".repeat(33) });
     expect(result.success).toBe(false);
   });
 
-  it("rejects non-URL cancelUrl", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      cancelUrl: "also-not-a-url",
-    });
-    expect(result.success).toBe(false);
+  it("rejects a fractional or non-positive amountMinor", () => {
+    for (const amountMinor of [0, -100, 68.5]) {
+      expect(PaymentSessionInputSchema.safeParse({ ...validInput, amountMinor }).success).toBe(
+        false,
+      );
+    }
   });
 
-  it("rejects zero creditAmount", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      creditAmount: 0,
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it("rejects negative creditAmount", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      creditAmount: -10,
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it("rejects non-integer creditAmount", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      creditAmount: 10.5,
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it("rejects negative amount", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      amount: -1.0,
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it("rejects zero amount", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      amount: 0,
-    });
-    expect(result.success).toBe(false);
+  it("rejects non-URL return urls", () => {
+    expect(
+      PaymentSessionInputSchema.safeParse({ ...validInput, successUrl: "not-a-url" }).success,
+    ).toBe(false);
+    expect(
+      PaymentSessionInputSchema.safeParse({ ...validInput, cancelUrl: "also-not-a-url" }).success,
+    ).toBe(false);
   });
 
   it("rejects currency codes with wrong length", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      currency: "US",
-    });
-    expect(result.success).toBe(false);
+    expect(PaymentSessionInputSchema.safeParse({ ...validInput, currency: "US" }).success).toBe(
+      false,
+    );
   });
 
-  it("rejects empty organizationId", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
+  it("accepts the wallet fields", () => {
+    const parsed = PaymentSessionInputSchema.parse({
       ...validInput,
-      organizationId: "",
+      method: "wechat",
+      channel: "h5",
+      clientIp: "203.0.113.7",
     });
-    expect(result.success).toBe(false);
-  });
-
-  it("rejects invalid customerEmail", () => {
-    const result = CreditPurchaseInputSchema.safeParse({
-      ...validInput,
-      customerEmail: "not-an-email",
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it("accepts optional metadata", () => {
-    const parsed = CreditPurchaseInputSchema.parse({
-      ...validInput,
-      metadata: { campaign: "spring-sale" },
-    });
-    expect(parsed.metadata).toEqual({ campaign: "spring-sale" });
+    expect(parsed.channel).toBe("h5");
   });
 });
 

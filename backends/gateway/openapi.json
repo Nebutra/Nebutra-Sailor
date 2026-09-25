@@ -8908,188 +8908,6 @@
         }
       }
     },
-    "/api/v1/billing/credits/pricing": {
-      "get": {
-        "tags": ["Billing", "Credits"],
-        "summary": "List suggested credit pack tiers",
-        "description": "Public endpoint for marketing display — no authentication required.",
-        "responses": {
-          "200": {
-            "description": "Credit pack pricing",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "packs": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "credits": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "exclusiveMinimum": true
-                          },
-                          "price": {
-                            "type": "number",
-                            "minimum": 0,
-                            "exclusiveMinimum": true
-                          },
-                          "bonus": {
-                            "type": "integer",
-                            "minimum": 0
-                          },
-                          "recommended": {
-                            "type": "boolean"
-                          }
-                        },
-                        "required": ["credits", "price"]
-                      }
-                    }
-                  },
-                  "required": ["packs"]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/billing/credits/checkout": {
-      "post": {
-        "tags": ["Billing", "Credits"],
-        "summary": "Create a credit purchase checkout session",
-        "description": "Creates a provider-agnostic checkout session (Stripe / ChinaPay). Provider is auto-detected from env.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "creditAmount": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "exclusiveMinimum": true
-                  },
-                  "amount": {
-                    "type": "number",
-                    "minimum": 0,
-                    "exclusiveMinimum": true
-                  },
-                  "currency": {
-                    "type": "string",
-                    "minLength": 3,
-                    "maxLength": 3,
-                    "default": "USD"
-                  },
-                  "successUrl": {
-                    "type": "string",
-                    "format": "uri"
-                  },
-                  "cancelUrl": {
-                    "type": "string",
-                    "format": "uri"
-                  },
-                  "priceId": {
-                    "type": "string"
-                  }
-                },
-                "required": ["creditAmount", "amount", "successUrl", "cancelUrl"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Checkout session created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "sessionId": {
-                      "type": "string"
-                    },
-                    "provider": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["url", "sessionId", "provider"]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["error"]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Organization membership required"
-          },
-          "500": {
-            "description": "Checkout provider error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["error"]
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Billing service temporarily unavailable",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["error"]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/billing/credits/balance": {
       "get": {
         "tags": ["Billing", "Credits"],
@@ -9263,6 +9081,308 @@
                       "type": "string"
                     },
                     "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/offers": {
+      "get": {
+        "tags": ["Billing", "Orders"],
+        "summary": "List the offers that can be bought",
+        "responses": {
+          "200": {
+            "description": "Active offers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "offers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "prices": {
+                            "type": "object",
+                            "properties": {
+                              "USD": {
+                                "type": "number"
+                              },
+                              "CNY": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "highlight": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["id", "name", "prices"]
+                      }
+                    }
+                  },
+                  "required": ["offers"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/offers/methods": {
+      "get": {
+        "tags": ["Billing", "Orders"],
+        "summary": "List the payment methods that are live",
+        "description": "A method is live when its provider keys are configured.",
+        "responses": {
+          "200": {
+            "description": "Live payment methods",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "methods": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "enum": ["card", "alipay", "wechat"]
+                          },
+                          "currency": {
+                            "type": "string",
+                            "enum": ["USD", "CNY"]
+                          }
+                        },
+                        "required": ["id", "currency"]
+                      }
+                    }
+                  },
+                  "required": ["methods"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/orders": {
+      "post": {
+        "tags": ["Billing", "Orders"],
+        "summary": "Create a payment order for one offer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "offerId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": ["card", "alipay", "wechat"]
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": ["qr", "h5"],
+                    "default": "qr"
+                  },
+                  "successUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "cancelUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "required": ["offerId", "method", "successUrl", "cancelUrl"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Order created; send the buyer to the payment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orderId": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": ["redirect", "qr"]
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "amountMinor": {
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "type": "string",
+                      "enum": ["USD", "CNY"]
+                    }
+                  },
+                  "required": ["orderId", "kind", "url", "amountMinor", "currency"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unknown offer, unavailable method, or a return URL off the product origin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Payment provider error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Billing service temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/orders/{id}": {
+      "get": {
+        "tags": ["Billing", "Orders"],
+        "summary": "Get a payment order's status",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "offerId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["PENDING", "PAID", "PARTIALLY_REFUNDED", "REFUNDED", "EXPIRED"]
+                    },
+                    "fulfilled": {
+                      "type": "boolean"
+                    },
+                    "amountMinor": {
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "type": "string"
+                    },
+                    "method": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "offerId",
+                    "status",
+                    "fulfilled",
+                    "amountMinor",
+                    "currency",
+                    "method",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such order in this organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
                       "type": "string"
                     }
                   },
@@ -10927,6 +11047,141 @@
                     "runtimeOnlyOverride",
                     "metadata"
                   ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/payment-orders/{id}/refund": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Refund a payment order and revoke what it granted",
+        "description": "Moves the money back through the order's provider, then asks the offer's fulfillment to take back a proportional share. `revocation.revoked: false` means the money went back but the grant could not be (e.g. credits already spent).",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refundId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                  },
+                  "amountMinor": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "reason": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": ["refundId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Refund result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["succeeded", "processing", "failed"]
+                    },
+                    "refundedMinor": {
+                      "type": "integer"
+                    },
+                    "revocation": {
+                      "type": "object",
+                      "properties": {
+                        "revoked": {
+                          "type": "boolean"
+                        },
+                        "reason": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["revoked"]
+                    }
+                  },
+                  "required": ["status", "refundedMinor"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid refund",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "code"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "code"]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Order is not refundable, or changed mid-refund",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "code"]
                 }
               }
             }

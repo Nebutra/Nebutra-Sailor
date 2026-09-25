@@ -22,8 +22,21 @@ export function detectProvider(): CheckoutProviderType {
     return explicit as CheckoutProviderType;
   }
   if (process.env.STRIPE_SECRET_KEY) return "stripe";
-  if (process.env.CHINAPAY_APP_ID) return "chinapay";
+  if (isChinaPayConfigured()) return "chinapay";
   return "manual";
+}
+
+/**
+ * Whether a wallet has merchant credentials. These are the variables
+ * chinapay/client.ts reads — detection used to look at a CHINAPAY_APP_ID
+ * nothing else set, so a fully configured merchant still fell to "manual".
+ */
+export function isChinaPayConfigured(method?: "alipay" | "wechat"): boolean {
+  const alipay = Boolean(process.env.ALIPAY_APP_ID);
+  const wechat = Boolean(process.env.WECHATPAY_MCHID);
+  if (method === "alipay") return alipay;
+  if (method === "wechat") return wechat;
+  return alipay || wechat;
 }
 
 /**
