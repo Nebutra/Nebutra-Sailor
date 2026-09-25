@@ -1,61 +1,34 @@
-import { logger } from "@nebutra/logger";
-import type { CheckoutProvider, CreditPurchaseInput, CreditPurchaseSession } from "./types";
-import { CREDIT_PURCHASE_METADATA_TYPE } from "./types";
-
-const log = logger.child({ service: "chinapay-checkout" });
+import { isChinaPayConfigured } from "./factory";
+import type { CheckoutProvider, PaymentSession, PaymentSessionInput } from "./types";
 
 /**
  * ChinaPayCheckoutProvider — official WeChat Pay APIv3 or Alipay, no
- * aggregator. Returns a `payUrl` meant to be rendered as a QR code on the
- * checkout page (see chinapay/payments.ts).
+ * aggregator. The order id is the merchant order number (out_trade_no), so a
+ * notification or a status query finds the order with no metadata at all.
+ * `kind` says what to do with the url: render a QR code on a desktop, or
+ * redirect into the wallet on a phone (see chinapay/payments.ts).
  */
 export class ChinaPayCheckoutProvider implements CheckoutProvider {
   readonly name = "chinapay" as const;
 
-  async createCreditPurchase(input: CreditPurchaseInput): Promise<CreditPurchaseSession> {
+  async createPaymentSession(input: PaymentSessionInput): Promise<PaymentSession> {
     const { createChinaPayOrder } = await import("../chinapay/index");
 
+    // The buyer picks the wallet; with no choice, use whichever is configured.
     const method: "alipay" | "wechat" =
-      process.env.CHINAPAY_METHOD === "wechat" ? "wechat" : "alipay";
-
-    const tradeOrderId =
-      input.referenceId ?? `credit_${input.creditAmount}_${input.organizationId}_${Date.now()}`;
-
-    // WeChat Pay's `attach` is capped at 128 bytes; keep this compact and
-    // drop the reference id first if the organization id alone is unusually
-    // long, since organizationId and creditAmount are what the webhook needs
-    // to credit the right ledger (see checkout/credit-webhook.ts).
-    const attachPayload = (includeReference: boolean) =>
-      JSON.stringify({
-        t: CREDIT_PURCHASE_METADATA_TYPE,
-        o: input.organizationId,
-        c: String(input.creditAmount),
-        ...(includeReference && input.referenceId ? { r: input.referenceId } : {}),
-      });
-
-    let attach = attachPayload(true);
-    if (Buffer.byteLength(attach, "utf8") > 128) {
-      attach = attachPayload(false);
-    }
-    if (Buffer.byteLength(attach, "utf8") > 128) {
-      log.error("ChinaPay attach payload exceeds 128 bytes even without referenceId", {
-        organizationId: input.organizationId,
-      });
-      throw new Error("Credit purchase metadata is too large for WeChat Pay/Alipay passthrough");
-    }
+      input.method ?? (isChinaPayConfigured("alipay") ? "alipay" : "wechat");
 
     const order = await createChinaPayOrder({
-      tradeOrderId,
-      totalFee: input.amount.toFixed(2),
+      tradeOrderId: input.orderId,
+      totalFee: (input.amountMinor / 100).toFixed(2),
       method,
-      title: `${input.creditAmount} Credits`,
-      attach,
+      title: input.title,
+      channel: input.channel,
+      clientIp: input.clientIp,
+      returnUrl: input.successUrl,
+      quitUrl: input.cancelUrl,
     });
 
-    return {
-      url: order.payUrl,
-      sessionId: order.tradeOrderId,
-      provider: "chinapay",
-    };
+    return { kind: order.kind, url: order.payUrl, provider: "chinapay" };
   }
 }

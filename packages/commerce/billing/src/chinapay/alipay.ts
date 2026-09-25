@@ -109,9 +109,41 @@ export async function createAlipayPrecreateOrder(
   return { qrCode: body.qr_code };
 }
 
+// -----------------------------------------------------------------------------
+// Mobile website pay — `alipay.trade.wap.pay` for a buyer already on their
+// phone. There is no server-to-server call: the signed request itself is the
+// payment page, so the browser is sent to the gateway URL carrying it.
+// -----------------------------------------------------------------------------
+
+export interface CreateAlipayWapOrderInput extends CreateAlipayOrderInput {
+  /** Where Alipay sends the browser after paying. */
+  returnUrl?: string;
+  /** Where the "back" link on Alipay's page goes if the buyer abandons. */
+  quitUrl?: string;
+}
+
+export function buildAlipayWapPayUrl(input: CreateAlipayWapOrderInput): { payUrl: string } {
+  const cfg = getAlipayConfig();
+
+  const params = baseParams(cfg, "alipay.trade.wap.pay", {
+    out_trade_no: input.outTradeNo,
+    total_amount: input.totalAmount,
+    subject: input.subject,
+    product_code: "QUICK_WAP_WAY",
+    ...(input.quitUrl ? { quit_url: input.quitUrl } : {}),
+    ...(input.passbackParams ? { passback_params: encodeURIComponent(input.passbackParams) } : {}),
+  });
+  if (input.returnUrl) params.return_url = input.returnUrl;
+  params.sign = signContent(params, cfg.privateKey);
+
+  const gateway = cfg.gatewayUrl ?? "https://openapi.alipay.com/gateway.do";
+  return { payUrl: `${gateway}?${new URLSearchParams(params).toString()}` };
+}
+
 export async function queryAlipayOrder(outTradeNo: string): Promise<{
   status: "paid" | "pending" | "failed";
   totalAmount: string;
+  tradeNo?: string;
 }> {
   const cfg = getAlipayConfig();
   const params = baseParams(cfg, "alipay.trade.query", { out_trade_no: outTradeNo });
@@ -125,7 +157,7 @@ export async function queryAlipayOrder(outTradeNo: string): Promise<{
 
   const data = (await res.json()) as Record<
     string,
-    { code?: string; trade_status?: string; total_amount?: string }
+    { code?: string; trade_status?: string; total_amount?: string; trade_no?: string }
   >;
   const body = data.alipay_trade_query_response;
 
@@ -139,7 +171,60 @@ export async function queryAlipayOrder(outTradeNo: string): Promise<{
   return {
     status: statusMap[body?.trade_status ?? ""] ?? "pending",
     totalAmount: body?.total_amount ?? "0",
+    tradeNo: body?.trade_no,
   };
+}
+
+// -----------------------------------------------------------------------------
+// Refunds. `out_request_no` is the idempotency key for partial refunds:
+// retrying with the same one does not refund twice.
+// -----------------------------------------------------------------------------
+
+export interface RefundAlipayOrderInput {
+  outTradeNo: string;
+  outRequestNo: string;
+  /** CNY yuan, e.g. "9.90". */
+  refundAmount: string;
+  reason?: string;
+}
+
+export async function refundAlipayOrder(
+  input: RefundAlipayOrderInput,
+): Promise<{ status: "succeeded" | "failed" }> {
+  const cfg = getAlipayConfig();
+  const params = baseParams(cfg, "alipay.trade.refund", {
+    out_trade_no: input.outTradeNo,
+    out_request_no: input.outRequestNo,
+    refund_amount: input.refundAmount,
+    ...(input.reason ? { refund_reason: input.reason } : {}),
+  });
+  params.sign = signContent(params, cfg.privateKey);
+
+  const res = await fetch(cfg.gatewayUrl ?? "https://openapi.alipay.com/gateway.do", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(params).toString(),
+  });
+
+  const data = (await res.json()) as Record<
+    string,
+    { code?: string; msg?: string; sub_msg?: string; fund_change?: string }
+  >;
+  const body = data.alipay_trade_refund_response;
+
+  if (!res.ok || !body || body.code !== "10000") {
+    log.error("Alipay refund failed", { status: res.status, body });
+    throw new BillingError(
+      `Alipay refund failed: ${body?.sub_msg ?? body?.msg ?? "unknown error"}`,
+      "ALIPAY_REFUND_FAILED",
+      400,
+      body,
+    );
+  }
+
+  // code 10000 with fund_change "N" means this out_request_no was already
+  // refunded — the money moved on the earlier call, so it still succeeded.
+  return { status: "succeeded" };
 }
 
 // -----------------------------------------------------------------------------
@@ -157,12 +242,15 @@ export interface AlipayNotificationFields {
   trade_no?: string;
   total_amount?: string;
   passback_params?: string;
+  app_id?: string;
 }
 
 export function verifyAlipayNotification(fields: AlipayNotificationFields): boolean {
   const cfg = getAlipayConfig();
   const sign = fields.sign;
   if (!sign) return false;
+  // A notification signed by Alipay but addressed to another app is still not ours.
+  if (fields.app_id !== undefined && fields.app_id !== cfg.appId) return false;
 
   const toVerify: Record<string, string> = {};
   for (const [key, value] of Object.entries(fields)) {

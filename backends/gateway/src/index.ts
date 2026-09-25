@@ -6,15 +6,25 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { initializeFromEnv, setAlertErrorHandler } from "@nebutra/alerting";
 import { configureAuditSystemDb } from "@nebutra/audit";
-import { configureBillingTenantDb, deductCredits, dollarsToCredits } from "@nebutra/billing";
+import {
+  configureBillingTenantDb,
+  configurePaymentOrderStore,
+  deductCredits,
+  dollarsToCredits,
+} from "@nebutra/billing";
 import { getSystemDb, getTenantDb } from "@nebutra/db";
 import { getStatusCode, toApiError } from "@nebutra/errors";
 import { configureLicenseSystemDb } from "@nebutra/license";
+import { PaymentOrderRepository } from "@nebutra/repositories";
 
 // Host injects durable audit + license + billing storage — packages stay free of private @nebutra/db.
 configureAuditSystemDb(getSystemDb);
 configureLicenseSystemDb(getSystemDb);
 configureBillingTenantDb(getTenantDb);
+// AUDIT(no-tenant): payment orders are settled by provider webhooks and the
+// reconcile job, neither of which has a request tenant; reads that face a
+// tenant (GET /billing/orders/{id}) check the order's tenantId themselves.
+configurePaymentOrderStore(new PaymentOrderRepository(getSystemDb()));
 
 import {
   calculateCost,
@@ -59,6 +69,7 @@ import { usageRoutes } from "./routes/ai/usage.js";
 import { authRoutes } from "./routes/auth/index.js";
 import { creditsRoutes } from "./routes/billing/credits.js";
 import { billingRoutes } from "./routes/billing/index.js";
+import { orderRoutes } from "./routes/billing/orders.js";
 import { usageLedgerRoutes } from "./routes/billing/usage.js";
 import { eventRoutes } from "./routes/events/index.js";
 import { integrationRoutes } from "./routes/integrations/index.js";
@@ -325,6 +336,7 @@ app.route("/api/v1/ai/provider-keys", providerKeyRoutes);
 app.route("/api/v1/ai/usage", usageRoutes);
 app.route("/api/v1/billing", billingRoutes);
 app.route("/api/v1/billing/credits", creditsRoutes);
+app.route("/api/v1/billing", orderRoutes);
 app.route("/api/v1/billing", usageLedgerRoutes);
 app.route("/api/v1/notifications", notificationRoutes);
 app.route("/api/v1/search", searchRoutes);

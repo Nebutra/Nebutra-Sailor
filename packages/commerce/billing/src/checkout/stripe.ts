@@ -1,67 +1,90 @@
-import { dollarsToCents } from "../money";
-import type { CheckoutProvider, CreditPurchaseInput, CreditPurchaseSession } from "./types";
+import type { CheckoutProvider, PaymentSession, PaymentSessionInput } from "./types";
+import { PAYMENT_ORDER_METADATA_KEY } from "./types";
 
 /**
- * StripeCheckoutProvider — bridges the generic checkout API to Stripe Checkout.
- *
- * Credit packs are typically variable-priced, so this provider uses dynamic
- * `price_data` line_items rather than requiring a pre-created Stripe Price.
- * If `customerId` is missing but `customerEmail` is present, it auto-creates
- * (or looks up) a customer via `getOrCreateCustomer`.
+ * StripeCheckoutProvider — opens a Stripe Checkout session for one payment
+ * order. The price is inline `price_data` because it comes from the order,
+ * which took it from the offer catalog; no Stripe Price object is involved.
  */
 export class StripeCheckoutProvider implements CheckoutProvider {
   readonly name = "stripe" as const;
 
-  async createCreditPurchase(input: CreditPurchaseInput): Promise<CreditPurchaseSession> {
-    const { getStripe, getOrCreateCustomer } = await import("../stripe/index");
+  async createPaymentSession(input: PaymentSessionInput): Promise<PaymentSession> {
+    const { getStripe } = await import("../stripe/index");
     const stripe = getStripe();
 
-    // Resolve customer — prefer explicit customerId, else lookup/create by email.
-    let customerId = input.customerId;
-    if (!customerId && input.customerEmail) {
-      const customer = await getOrCreateCustomer(
-        input.organizationId,
-        input.customerEmail,
-        input.customerEmail,
-      );
-      customerId = customer.id;
-    }
-
-    const metadata: Record<string, string> = {
-      type: "credit_purchase",
-      organizationId: input.organizationId,
-      creditAmount: String(input.creditAmount),
-      ...(input.referenceId ? { referenceId: input.referenceId } : {}),
-      ...(input.metadata ?? {}),
-    };
-
-    const session = await stripe.checkout.sessions.create({
-      ...(customerId ? { customer: customerId } : {}),
-      mode: "payment",
-      line_items: [
-        {
-          price_data: {
-            currency: input.currency.toLowerCase(),
-            product_data: { name: `${input.creditAmount} Credits` },
-            unit_amount: dollarsToCents(input.amount),
+    const session = await stripe.checkout.sessions.create(
+      {
+        mode: "payment",
+        client_reference_id: input.orderId,
+        ...(input.customerEmail ? { customer_email: input.customerEmail } : {}),
+        line_items: [
+          {
+            price_data: {
+              currency: input.currency.toLowerCase(),
+              product_data: { name: input.title },
+              unit_amount: input.amountMinor,
+            },
+            quantity: 1,
           },
-          quantity: 1,
+        ],
+        success_url: input.successUrl,
+        cancel_url: input.cancelUrl,
+        metadata: {
+          [PAYMENT_ORDER_METADATA_KEY]: input.orderId,
+          organizationId: input.organizationId,
         },
-      ],
-      success_url: input.successUrl,
-      cancel_url: input.cancelUrl,
-      metadata,
-    });
+      },
+      // One order opens at most one session, however often the request is retried.
+      { idempotencyKey: `payment-order:${input.orderId}` },
+    );
 
     if (!session.url) {
       throw new Error("Stripe did not return a checkout URL");
     }
 
     return {
+      kind: "redirect",
       url: session.url,
-      sessionId: session.id,
+      providerRef: session.id,
       provider: "stripe",
       ...(session.expires_at ? { expiresAt: new Date(session.expires_at * 1000) } : {}),
     };
   }
+}
+
+/**
+ * Refund part or all of what a Checkout session collected. `refundId` is the
+ * idempotency key, so a retried refund never pays out twice.
+ */
+export async function refundStripeCheckoutSession(input: {
+  sessionId: string;
+  amountMinor: number;
+  refundId: string;
+}): Promise<{ status: "succeeded" | "processing" | "failed" }> {
+  const { getStripe } = await import("../stripe/index");
+  const stripe = getStripe();
+
+  const session = await stripe.checkout.sessions.retrieve(input.sessionId);
+  const paymentIntent =
+    typeof session.payment_intent === "string"
+      ? session.payment_intent
+      : session.payment_intent?.id;
+  if (!paymentIntent) {
+    throw new Error(`Stripe session ${input.sessionId} has no payment to refund`);
+  }
+
+  const refund = await stripe.refunds.create(
+    { payment_intent: paymentIntent, amount: input.amountMinor },
+    { idempotencyKey: `refund:${input.refundId}` },
+  );
+
+  return {
+    status:
+      refund.status === "succeeded"
+        ? "succeeded"
+        : refund.status === "pending" || refund.status === "requires_action"
+          ? "processing"
+          : "failed",
+  };
 }

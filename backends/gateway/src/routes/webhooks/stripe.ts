@@ -1,5 +1,10 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { type CreditPurchaseWebhookInput, handleCreditPurchaseWebhook } from "@nebutra/billing";
+import {
+  type CreditPurchaseWebhookInput,
+  handleCreditPurchaseWebhook,
+  PAYMENT_ORDER_METADATA_KEY,
+  settlePaymentOrder,
+} from "@nebutra/billing";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getSystemDb } from "@nebutra/db";
 import { issueLicense } from "@nebutra/license";
@@ -313,7 +318,32 @@ async function handleCheckoutCompleted(
     tier: licenseTier,
   });
 
-  // Credit purchase — unified handler across providers
+  // Payment order — anything bought through the offer catalog. The order holds
+  // the locked price and what to hand over; this only confirms the money.
+  const paymentOrderId = metadata[PAYMENT_ORDER_METADATA_KEY];
+  if (typeof paymentOrderId === "string" && paymentOrderId.length > 0) {
+    if (session.payment_status !== "paid") {
+      log.info("Checkout completed without payment yet", {
+        sessionId: session.id,
+        paymentStatus: session.payment_status,
+      });
+      return;
+    }
+    const outcome = await settlePaymentOrder({
+      orderId: paymentOrderId,
+      paidMinor: session.amount_total ?? 0,
+      currency: session.currency ?? "",
+      providerRef: session.id,
+    });
+    log.info("Payment order settled from Stripe", {
+      sessionId: session.id,
+      paymentOrderId,
+      outcome,
+    });
+    return;
+  }
+
+  // Legacy credit purchase — sessions opened before payment orders existed
   const creditWebhookInput: CreditPurchaseWebhookInput = {
     provider: "stripe",
     sessionId: session.id,

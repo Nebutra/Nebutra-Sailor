@@ -23,13 +23,15 @@ function detectProviderFromEnv(env: Record<string, string | undefined>): Checkou
   const previous = {
     BILLING_PROVIDER: process.env.BILLING_PROVIDER,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
-    CHINAPAY_APP_ID: process.env.CHINAPAY_APP_ID,
+    ALIPAY_APP_ID: process.env.ALIPAY_APP_ID,
+    WECHATPAY_MCHID: process.env.WECHATPAY_MCHID,
   };
 
   try {
     process.env.BILLING_PROVIDER = env.BILLING_PROVIDER ?? "";
     process.env.STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY ?? "";
-    process.env.CHINAPAY_APP_ID = env.CHINAPAY_APP_ID ?? "";
+    process.env.ALIPAY_APP_ID = env.ALIPAY_APP_ID ?? "";
+    process.env.WECHATPAY_MCHID = env.WECHATPAY_MCHID ?? "";
     return detectProvider();
   } finally {
     for (const [key, value] of Object.entries(previous)) {
