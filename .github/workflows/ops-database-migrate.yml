@@ -137,9 +137,11 @@ jobs:
         if: ${{ inputs.dry_run }}
         run: |
           set -euo pipefail
-          # PlanetScale verifies the server certificate; the container has no
-          # root.crt of its own, so point libpq at the system trust store.
-          docker run --rm -e PGURL="$DATABASE_URL" -e PGSSLROOTCERT=system postgres:18 \
+          # Same TLS posture as "Look at the database" above: encrypted, but the
+          # server certificate is not verified — the container has no trust
+          # store PlanetScale's chain resolves against. Read-only either way.
+          PGURL=$(node -e 'const u = new URL(process.env.DATABASE_URL); u.searchParams.delete("sslmode"); u.searchParams.delete("sslrootcert"); process.stdout.write(u.toString())')
+          docker run --rm -e PGURL="$PGURL" -e PGSSLMODE=require postgres:18 \
             sh -c 'pg_dump "$PGURL" --schema-only --no-comments' > live-schema.sql
           echo "Exported $(grep -c 'CREATE TABLE' live-schema.sql) tables, $(grep -c 'CREATE POLICY' live-schema.sql) policies"
 
