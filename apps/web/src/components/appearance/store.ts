@@ -14,7 +14,13 @@ export type AppearanceAccent =
   | "green"
   | "red";
 
-export type AppearanceMotion = "system" | "on" | "off";
+/**
+ * "Reduce motion": follow the OS, or reduce regardless. There is no "always
+ * animate" — overriding an OS reduced-motion request is not ours to offer.
+ * (A former third value, "off", was applied as reduce while labelled "Reduce
+ * motion: Off"; persisted "off" now sanitizes to "system".)
+ */
+export type AppearanceMotion = "system" | "on";
 
 // A concrete px size, or "theme" = follow the active theme/DESIGN type-scale
 // (--text-base via @nebutra/ui fonts.css), falling back to the app default when
@@ -78,7 +84,6 @@ export type AppearanceState = {
   foregroundColor: string | null;
   uiFontFamily: AppearanceUiFontFamily;
   codeFontFamily: AppearanceCodeFontFamily;
-  contrast: number;
   pointerCursor: boolean;
   diffMarkers: AppearanceDiffMarkers;
   fontSmoothing: boolean;
@@ -101,7 +106,6 @@ export const APPEARANCE_DEFAULTS: AppearanceState = {
   foregroundColor: null,
   uiFontFamily: "theme",
   codeFontFamily: "theme",
-  contrast: 50,
   pointerCursor: false,
   diffMarkers: "color",
   fontSmoothing: true,
@@ -122,6 +126,35 @@ export const ACCENT_SWATCHES: Record<Exclude<AppearanceAccent, "default">, strin
   red: "#ef4444",
 };
 
+/**
+ * The accent drives --ring — House's one saturated hue: focus rings, selection,
+ * links. The action fill (--primary, ink) is deliberately left alone. --ring
+ * holds bare HSL channels, so the preset hex is converted; "default" returns
+ * null and the token value stands.
+ */
+export function accentRingChannels(accent: AppearanceAccent): string | null {
+  if (accent === "default") return null;
+  const n = Number.parseInt(ACCENT_SWATCHES[accent].slice(1), 16);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((c) => c / 255) as [
+    number,
+    number,
+    number,
+  ];
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+  let h = 0;
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+  }
+  const sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  const round = (v: number) => Math.round(v * 10) / 10;
+  return `${round((h * 60 + 360) % 360)} ${round(sat * 100)}% ${round(l * 100)}%`;
+}
+
 const ACCENT_VALUES: AppearanceAccent[] = [
   "default",
   "blue",
@@ -133,7 +166,7 @@ const ACCENT_VALUES: AppearanceAccent[] = [
   "red",
 ];
 
-const MOTION_VALUES: AppearanceMotion[] = ["system", "on", "off"];
+const MOTION_VALUES: AppearanceMotion[] = ["system", "on"];
 
 const UI_FONT_FAMILY_VALUES: AppearanceUiFontFamily[] = ["theme", "system", "geist", "inter", "sf"];
 
@@ -212,12 +245,6 @@ function sanitizeImportedTheme(value: unknown): ImportedThemeSnapshot | null {
   return { name: v.name, tokenSet: v.tokenSet as ImportedThemeSnapshot["tokenSet"] };
 }
 
-function clampContrast(value: unknown): number {
-  const n = typeof value === "number" ? value : Number(value);
-  if (!Number.isFinite(n)) return APPEARANCE_DEFAULTS.contrast;
-  return Math.min(100, Math.max(0, Math.round(n)));
-}
-
 function sanitize(raw: unknown): AppearanceState {
   if (!raw || typeof raw !== "object") return APPEARANCE_DEFAULTS;
   const r = raw as Record<string, unknown>;
@@ -251,7 +278,6 @@ function sanitize(raw: unknown): AppearanceState {
     foregroundColor: sanitizeHexColor(r.foregroundColor),
     uiFontFamily,
     codeFontFamily,
-    contrast: r.contrast === undefined ? APPEARANCE_DEFAULTS.contrast : clampContrast(r.contrast),
     pointerCursor:
       typeof r.pointerCursor === "boolean" ? r.pointerCursor : APPEARANCE_DEFAULTS.pointerCursor,
     diffMarkers,

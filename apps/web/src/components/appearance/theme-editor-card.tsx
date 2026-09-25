@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { AccentSwatchPicker } from "./accent-swatch-picker";
 import { ColorPickerRow } from "./color-picker-row";
-import { ContrastSlider } from "./contrast-slider";
 import { CopyThemeButton } from "./copy-theme-button";
 import { FontFamilyPicker } from "./font-family-picker";
 import { ThemeImportButton } from "./theme-import-button";
@@ -34,7 +33,7 @@ function EditorRow({
 
 /**
  * Consolidated theme editor — the single card that replaces the former
- * standalone preset gallery, colors, font-family, contrast and surface
+ * standalone preset gallery, colors, font-family and surface
  * sections. Header carries the preset selector plus import/copy actions; the
  * body stacks the per-token fine-tuning rows.
  */
@@ -89,9 +88,6 @@ export function ThemeEditorCard() {
         </div>
         <div className="px-4 py-3">
           <TransparencyToggle />
-        </div>
-        <div className="px-4 py-3">
-          <ContrastSlider />
         </div>
       </div>
     </section>

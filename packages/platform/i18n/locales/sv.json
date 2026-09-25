@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontrast",
-        "description": "Justera textkontrasten (50 = ingen förändring).",
-        "label": "Kontrastnivå"
-      },
       "pointerCursor": {
         "title": "Använd pekare",
         "description": "Byt till pekaremarkör vid interaktiva element.",
@@ -961,8 +956,7 @@
         "description": "Minska animationer eller följ systemets inställning.",
         "label": "Rörelseinställning",
         "system": "System",
-        "on": "På",
-        "off": "Av"
+        "on": "På"
       },
       "surface": {
         "title": "Genomskinlig sidofält",

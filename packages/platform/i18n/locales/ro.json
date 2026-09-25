@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Contrast",
-        "description": "Ajustați fin contrastul textului (50 = fără modificare).",
-        "label": "Nivel de contrast"
-      },
       "pointerCursor": {
         "title": "Folosește cursor pointer",
         "description": "Comută la un cursor de tip pointer pe elementele interactive la hover.",
@@ -961,8 +956,7 @@
         "description": "Reduce animațiile sau folosește preferința sistemului.",
         "label": "Preferință mișcare",
         "system": "Sistem",
-        "on": "Activat",
-        "off": "Dezactivat"
+        "on": "Activat"
       },
       "surface": {
         "title": "Bară laterală translucidă",

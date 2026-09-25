@@ -1,7 +1,6 @@
 export { AccentSwatchPicker } from "./accent-swatch-picker";
 // new (phase 2)
 export { ColorPickerRow } from "./color-picker-row";
-export { ContrastSlider } from "./contrast-slider";
 export { CopyThemeButton } from "./copy-theme-button";
 export { DesignMdImportSection } from "./design-md-import-section";
 export { DiffMarkerSegmented } from "./diff-marker-segmented";

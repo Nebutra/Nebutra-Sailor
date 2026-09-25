@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontras",
-        "description": "Sesuaikan kontras teks (50 = tiada perubahan).",
-        "label": "Tahap kontras"
-      },
       "pointerCursor": {
         "title": "Gunakan kursor pointer",
         "description": "Tukar kepada kursor penunjuk pada elemen interaktif hover.",
@@ -961,8 +956,7 @@
         "description": "Kurangkan animasi atau ikut pilihan sistem.",
         "label": "Keutamaan gerakan",
         "system": "Sistem",
-        "on": "Hidup",
-        "off": "Mati"
+        "on": "Hidup"
       },
       "surface": {
         "title": "Bar sisi lutsinar",

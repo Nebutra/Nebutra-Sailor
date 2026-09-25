@@ -922,11 +922,6 @@
           }
         }
       },
-      "contrast": {
-        "title": "Kontrast",
-        "description": "Juster tekstkontrast (50 = ingen endring).",
-        "label": "Kontrastnivå"
-      },
       "pointerCursor": {
         "title": "Bruk pekermarkør",
         "description": "Bytt til pekermarkør på elementer som reagerer på hover.",
@@ -961,8 +956,7 @@
         "description": "Reduser animasjoner eller følg systempreferanse.",
         "label": "Bevegelsespreferanse",
         "system": "System",
-        "on": "På",
-        "off": "Av"
+        "on": "På"
       },
       "surface": {
         "title": "Gjennomsiktig sidepanel",
