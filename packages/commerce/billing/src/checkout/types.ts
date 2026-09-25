@@ -3,52 +3,64 @@ import { z } from "zod";
 // =============================================================================
 // Checkout types — provider-agnostic abstraction over payment checkout flows
 // =============================================================================
-// The purpose of this layer is to give application code a single interface for
-// initiating credit purchases (or other one-time payments) regardless of which
-// payment provider the customer has configured.
+// A provider opens a payment session for one PaymentOrder (see ../orders). It
+// knows the order id, what to call it and how much to charge — never what is
+// being sold. That lives in the order's fulfillment spec.
 //
-// Customers pick a provider via env vars (STRIPE_SECRET_KEY / CHINAPAY_APP_ID /
-// BILLING_PROVIDER override) and the factory wires the right adapter at runtime.
+// Which providers are live is decided by the keys in the env (STRIPE_SECRET_KEY,
+// ALIPAY_APP_ID, WECHATPAY_MCHID); the buyer's chosen method picks among them.
 // =============================================================================
 
 export type CheckoutProviderType = "stripe" | "chinapay" | "manual";
 
-export const CreditPurchaseInputSchema = z.object({
+export const PaymentSessionInputSchema = z.object({
+  /** The PaymentOrder id — also the provider's merchant order number. */
+  orderId: z.string().min(1).max(32),
   organizationId: z.string().min(1),
-  creditAmount: z.number().int().positive(), // Number of credits to grant
-  amount: z.number().positive(), // Dollar amount to charge
-  currency: z.string().length(3).default("USD"),
-  customerEmail: z.string().email().optional(),
-  customerId: z.string().optional(), // Pre-existing provider customer id
-  priceId: z.string().optional(), // Stripe price id
+  /** Shown to the buyer on the provider's page. */
+  title: z.string().min(1),
+  amountMinor: z.number().int().positive(),
+  currency: z.string().length(3),
   successUrl: z.string().url(),
   cancelUrl: z.string().url(),
-  referenceId: z.string().optional(), // Idempotency / tracking key
-  metadata: z.record(z.string(), z.string()).optional(),
+  customerEmail: z.string().email().optional(),
+  /** ChinaPay only: which wallet the buyer chose. */
+  method: z.enum(["alipay", "wechat"]).optional(),
+  /** ChinaPay only: `qr` for a desktop to scan, `h5` to open the wallet on this phone. */
+  channel: z.enum(["qr", "h5"]).optional(),
+  /** ChinaPay H5 only: the buyer's IP, which WeChat Pay H5 requires. */
+  clientIp: z.string().optional(),
 });
 
-export type CreditPurchaseInput = z.infer<typeof CreditPurchaseInputSchema>;
+export type PaymentSessionInput = z.infer<typeof PaymentSessionInputSchema>;
 
-export interface CreditPurchaseSession {
+export interface PaymentSession {
+  /** `redirect`: send the browser to `url`. `qr`: render `url` as a QR code. */
+  kind: "redirect" | "qr";
   url: string;
-  sessionId: string;
+  /** The provider's own id for this session, when it differs from the order id. */
+  providerRef?: string;
   provider: CheckoutProviderType;
   expiresAt?: Date;
 }
 
 export interface CheckoutProvider {
   readonly name: CheckoutProviderType;
-  createCreditPurchase(input: CreditPurchaseInput): Promise<CreditPurchaseSession>;
+  createPaymentSession(input: PaymentSessionInput): Promise<PaymentSession>;
 }
 
 export type CheckoutConfig =
   | { provider: "stripe"; secretKey?: string }
-  | { provider: "chinapay"; appId?: string; appSecret?: string; method?: "alipay" | "wechat" }
+  | { provider: "chinapay" }
   | { provider: "manual" };
 
+/** Stripe metadata key carrying the PaymentOrder id back to the webhook. */
+export const PAYMENT_ORDER_METADATA_KEY = "paymentOrderId" as const;
+
 /**
- * Metadata marker embedded in every checkout session so that webhook handlers
- * can distinguish credit purchases from subscriptions or other payment intents.
+ * Legacy marker from before payment orders: a Stripe session carrying it
+ * credits the organization straight from its metadata. Kept only so a session
+ * opened before the upgrade still completes; nothing creates one any more.
  */
 export const CREDIT_PURCHASE_METADATA_TYPE = "credit_purchase" as const;
 

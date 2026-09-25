@@ -1,9 +1,8 @@
 /**
- * /api/v1/billing/credits — Credit purchase, balance & history routes
+ * /api/v1/billing/credits — credit balance & history
  *
- * Provider-agnostic credit purchase flow backed by @nebutra/billing.
- * The checkout provider (Stripe / ChinaPay / Manual)
- * is auto-detected from environment variables via `getCheckout()`.
+ * Buying credits is an ordinary payment order for a credits offer — see
+ * ./orders.ts. This file only reads the ledger.
  *
  * Auth + tenant context applied upstream via `tenantContextMiddleware`.
  */
@@ -11,36 +10,18 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import {
   creditsToDollars,
-  detectProvider,
   dollarsToCredits,
   formatCredits,
-  getCheckout,
   getCreditBalance,
   getCreditTransactions,
 } from "@nebutra/billing";
 import { toApiError } from "@nebutra/errors";
 import { logger } from "@nebutra/logger";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
-import { billingServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
 
 export const creditsRoutes = new OpenAPIHono();
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
-
-const CheckoutRequestSchema = z.object({
-  creditAmount: z.number().int().positive(),
-  amount: z.number().positive(),
-  currency: z.string().length(3).default("USD"),
-  successUrl: z.string().url(),
-  cancelUrl: z.string().url(),
-  priceId: z.string().optional(),
-});
-
-const CheckoutResponseSchema = z.object({
-  url: z.string().url(),
-  sessionId: z.string(),
-  provider: z.string(),
-});
 
 const BalanceResponseSchema = z.object({
   balance: z.number(),
@@ -75,140 +56,16 @@ const TransactionsResponseSchema = z.object({
   }),
 });
 
-const PricingPackSchema = z.object({
-  credits: z.number().int().positive(),
-  price: z.number().positive(),
-  bonus: z.number().int().nonnegative().optional(),
-  recommended: z.boolean().optional(),
-});
-
-const PricingResponseSchema = z.object({
-  packs: z.array(PricingPackSchema),
-});
-
 const ErrorSchema = z.object({
   error: z.string(),
   message: z.string().optional(),
 });
 
-// ── Static Pricing Tiers ──────────────────────────────────────────────────────
-
-/**
- * Suggested credit packs for marketing display.
- * 1 credit = $0.01 (so $10 = 1,000 credits at base rate, but we show bonus tiers).
- *
- * Per spec:
- *   $10  → 10,000 credits (baseline x10 multiplier for display)
- *   $50  → 55,000 credits (10% bonus)
- *   $200 → 250,000 credits (25% bonus)
- */
-const CREDIT_PACKS = [
-  { credits: 10_000, price: 10 },
-  { credits: 55_000, price: 50, bonus: 5_000, recommended: true },
-  { credits: 250_000, price: 200, bonus: 50_000 },
-] as const;
-
 // ── Routes ────────────────────────────────────────────────────────────────────
 
-// Public: /pricing — no auth required
-const pricingRoute = createRoute({
-  method: "get",
-  path: "/pricing",
-  tags: ["Billing", "Credits"],
-  summary: "List suggested credit pack tiers",
-  description: "Public endpoint for marketing display — no authentication required.",
-  responses: {
-    200: {
-      description: "Credit pack pricing",
-      content: { "application/json": { schema: PricingResponseSchema } },
-    },
-  },
-});
-
-creditsRoutes.openapi(pricingRoute, (c) => {
-  return c.json({ packs: [...CREDIT_PACKS] });
-});
-
 // Authenticated routes — require org membership
-creditsRoutes.use("/checkout", requireAuth, requireOrganization);
 creditsRoutes.use("/balance", requireAuth, requireOrganization);
 creditsRoutes.use("/transactions", requireAuth, requireOrganization);
-
-const checkoutRoute = createRoute({
-  method: "post",
-  path: "/checkout",
-  tags: ["Billing", "Credits"],
-  summary: "Create a credit purchase checkout session",
-  description:
-    "Creates a provider-agnostic checkout session (Stripe / ChinaPay). Provider is auto-detected from env.",
-  request: { body: { content: { "application/json": { schema: CheckoutRequestSchema } } } },
-  responses: {
-    200: {
-      description: "Checkout session created",
-      content: { "application/json": { schema: CheckoutResponseSchema } },
-    },
-    400: {
-      description: "Invalid request",
-      content: { "application/json": { schema: ErrorSchema } },
-    },
-    401: { description: "Unauthorized" },
-    403: { description: "Organization membership required" },
-    500: {
-      description: "Checkout provider error",
-      content: { "application/json": { schema: ErrorSchema } },
-    },
-    503: {
-      description: "Billing service temporarily unavailable",
-      content: { "application/json": { schema: ErrorSchema } },
-    },
-  },
-});
-
-creditsRoutes.openapi(checkoutRoute, async (c) => {
-  const tenant = c.get("tenant");
-  const organizationId = tenant.organizationId!;
-  const body = c.req.valid("json");
-
-  try {
-    const checkout = await getCheckout();
-    const session = await billingServiceBreaker.call(() =>
-      checkout.createCreditPurchase({
-        organizationId,
-        creditAmount: body.creditAmount,
-        amount: body.amount,
-        currency: body.currency,
-        successUrl: body.successUrl,
-        cancelUrl: body.cancelUrl,
-        ...(body.priceId && { priceId: body.priceId }),
-      }),
-    );
-
-    logger.info("Credit purchase session created", {
-      organizationId,
-      provider: session.provider,
-      sessionId: session.sessionId,
-      creditAmount: body.creditAmount,
-      amount: body.amount,
-    });
-
-    return c.json({
-      url: session.url,
-      sessionId: session.sessionId,
-      provider: session.provider,
-    });
-  } catch (err) {
-    if (err instanceof CircuitOpenError) {
-      logger.warn("Credit checkout circuit open", { organizationId });
-      return c.json({ error: "Billing service temporarily unavailable" }, 503);
-    }
-    logger.error("Credit checkout failed", err, {
-      organizationId,
-      provider: detectProvider(),
-    });
-    const apiError = toApiError(err);
-    return c.json({ error: apiError.error.message }, 500);
-  }
-});
 
 const balanceRoute = createRoute({
   method: "get",

@@ -3,6 +3,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const ADMIN_KEY = "test-admin-key-that-is-at-least-32-chars";
 const mockLoggerInfo = vi.fn();
+const { refundPaymentOrderMock } = vi.hoisted(() => ({ refundPaymentOrderMock: vi.fn() }));
+
+vi.mock("@nebutra/billing", async () => {
+  const { BillingError } = await import("../../../../../packages/commerce/billing/src/types.js");
+  return {
+    BillingError,
+    refundPaymentOrder: (input: unknown) => refundPaymentOrderMock(input),
+  };
+});
 
 vi.mock("@nebutra/db", () => ({
   getSystemDb: () => ({}),
@@ -153,5 +162,70 @@ describe("admin feature flag runtime-only overrides", () => {
         appliesToFeatureEvaluation: false,
       }),
     );
+  });
+});
+
+describe("admin payment order refund", () => {
+  beforeEach(() => {
+    vi.stubEnv("ADMIN_API_KEY", ADMIN_KEY);
+    refundPaymentOrderMock.mockReset();
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("refunds and reports whether the grant was taken back", async () => {
+    refundPaymentOrderMock.mockResolvedValue({
+      status: "succeeded",
+      refundedMinor: 6800,
+      revocation: { revoked: false, reason: "credits_already_spent" },
+    });
+    const app = await createApp();
+
+    const res = await app.request("/payment-orders/order_1/refund", {
+      method: "POST",
+      headers: adminHeaders(),
+      body: JSON.stringify({ refundId: "r1", reason: "duplicate charge" }),
+    });
+
+    expect(res.status).toBe(200);
+    expect(refundPaymentOrderMock).toHaveBeenCalledWith({
+      orderId: "order_1",
+      refundId: "r1",
+      reason: "duplicate charge",
+    });
+    expect(await res.json()).toMatchObject({ revocation: { revoked: false } });
+  });
+
+  it("maps a refusal to its status and code", async () => {
+    const app = await createApp();
+    // The route's own BillingError, so `instanceof` sees the same class.
+    const { BillingError } = await import("@nebutra/billing");
+    refundPaymentOrderMock.mockRejectedValue(
+      new BillingError("not refundable", "ORDER_NOT_REFUNDABLE", 409),
+    );
+
+    const res = await app.request("/payment-orders/order_1/refund", {
+      method: "POST",
+      headers: adminHeaders(),
+      body: JSON.stringify({ refundId: "r1" }),
+    });
+
+    expect(res.status).toBe(409);
+    expect(await res.json()).toMatchObject({ code: "ORDER_NOT_REFUNDABLE" });
+  });
+
+  it("refuses a caller without the admin key", async () => {
+    const app = await createApp();
+
+    const res = await app.request("/payment-orders/order_1/refund", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ refundId: "r1" }),
+    });
+
+    expect(res.status).toBe(401);
+    expect(refundPaymentOrderMock).not.toHaveBeenCalled();
   });
 });
