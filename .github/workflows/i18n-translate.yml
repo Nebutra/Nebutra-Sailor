@@ -64,6 +64,8 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # Dispatch CI + CodeQL on the bot branch; see the last step of open-pr.
+  actions: write
 
 concurrency:
   group: i18n-translate-global
@@ -337,3 +339,18 @@ jobs:
             echo "::error::Could not open the PR. The translations are safe on '$BRANCH'."
             exit 1
           fi
+
+      # The branch was pushed with GITHUB_TOKEN, and GitHub starts no workflow
+      # for a push made with that token — so the PR sat BLOCKED with zero
+      # checks (#625), the two required CodeQL contexts never appearing.
+      # workflow_dispatch is the one event this token may fire, and the runs
+      # it starts report on the branch head, which is the PR head.
+      - name: Run CI and CodeQL on the locale branch
+        if: steps.branch.outputs.exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          for wf in ci.yml codeql.yml; do
+            gh workflow run "$wf" --ref chore/i18n-auto-translate
+          done
