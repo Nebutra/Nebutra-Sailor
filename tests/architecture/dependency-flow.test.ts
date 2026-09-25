@@ -80,6 +80,28 @@ function discoverWorkspacePackages(): WorkspacePackage[] {
     }
   }
 
+  // backends/<name> — deployable no-UI services (Hono gateway, Python
+  // services). Layered as "app": each is a deployable, not a reusable
+  // library, so the same "no package depends on an app" invariant applies —
+  // nothing under packages/ should depend on the gateway.
+  const backendsRoot = resolve(ROOT, "backends");
+  for (const backend of readdirSync(backendsRoot, { withFileTypes: true })) {
+    if (!backend.isDirectory()) continue;
+    const pkgJsonPath = resolve(backendsRoot, backend.name, "package.json");
+    try {
+      const json: PackageJson = JSON.parse(readFileSync(pkgJsonPath, "utf-8"));
+      if (json.name?.startsWith("@nebutra/")) {
+        results.push({
+          name: json.name,
+          pkgJsonPath: `backends/${backend.name}/package.json`,
+          layer: "app",
+        });
+      }
+    } catch {
+      /* not a workspace member (e.g. backends/python) */
+    }
+  }
+
   return results;
 }
 

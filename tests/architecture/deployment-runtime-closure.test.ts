@@ -11,7 +11,10 @@ import {
 
 const ROOT = process.cwd();
 const ADR_PATH = resolve(ROOT, "docs/architecture/2026-06-04-production-runtime-closure.md");
-const GATEWAY_INDEX_PATH = resolve(ROOT, "backends/gateway/src/index.ts");
+// Route/middleware registration lives in app.ts (createGatewayApp factory);
+// src/index.ts is now a thin standalone-entry wrapper around it (Sailor
+// Convergence ADR §6 — gateway mount in Next).
+const GATEWAY_INDEX_PATH = resolve(ROOT, "backends/gateway/src/app.ts");
 const GATEWAY_NODE_PATH = resolve(ROOT, "backends/gateway/src/node.ts");
 const GATEWAY_WORKER_PATH = resolve(ROOT, "backends/gateway/src/worker.ts");
 const GATEWAY_WRANGLER_PATH = resolve(ROOT, "backends/gateway/wrangler.toml");
@@ -103,7 +106,11 @@ describe("production runtime closure", () => {
   });
 
   it("keeps the gateway Hono app importable by Workers without starting the Node server", () => {
-    const index = readFileSync(GATEWAY_INDEX_PATH, "utf8");
+    // This one specifically checks the real standalone-entry file (thin
+    // wrapper around createGatewayApp — see src/app.ts), not the route
+    // wiring GATEWAY_INDEX_PATH now points at.
+    const realIndexPath = resolve(ROOT, "backends/gateway/src/index.ts");
+    const index = readFileSync(realIndexPath, "utf8");
     expect(index).not.toContain("@hono/node-server");
     expect(index).not.toContain("serve({");
     expect(index).not.toContain('process.on("SIGTERM"');

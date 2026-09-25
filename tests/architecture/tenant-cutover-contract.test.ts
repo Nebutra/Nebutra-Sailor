@@ -82,7 +82,9 @@ describe("Tenant cutover contract", () => {
     const [tenantContext, gatewayIndex, rateLimit, idempotency, auditMutation, usageMetering] =
       await Promise.all([
         readFile(join(process.cwd(), "backends/gateway/src/middlewares/tenantContext.ts"), "utf8"),
-        readFile(join(process.cwd(), "backends/gateway/src/index.ts"), "utf8"),
+        // Route/middleware wiring lives in app.ts (createGatewayApp factory);
+        // src/index.ts is a thin standalone-entry wrapper (ADR §6).
+        readFile(join(process.cwd(), "backends/gateway/src/app.ts"), "utf8"),
         readFile(join(process.cwd(), "backends/gateway/src/middlewares/rateLimit.ts"), "utf8"),
         readFile(join(process.cwd(), "backends/gateway/src/middlewares/idempotency.ts"), "utf8"),
         readFile(join(process.cwd(), "backends/gateway/src/middlewares/auditMutation.ts"), "utf8"),

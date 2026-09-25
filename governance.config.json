@@ -175,7 +175,7 @@
       "apps/web/src/components/theme-playground/design-md-import.tsx",
       "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
       "backends/gateway/src/agents/default-agents.ts",
-      "backends/gateway/src/index.ts",
+      "backends/gateway/src/app.ts",
       "backends/gateway/src/routes/ai/gateway.ts",
       "packages/commerce/contracts/src/identity.ts",
       "packages/commerce/legal/src/components/CookieBanner.tsx",
@@ -2517,7 +2517,8 @@
       "/app/api/auth/",
       "/app/(?:\\[locale\\]/)?(?:login|signup)/remote/route\\.ts$",
       "/opengraph-image|/twitter-image|/icon|/apple-icon|/sitemap|/robots|/manifest",
-      "/app/api/og/"
+      "/app/api/og/",
+      "/app/api/\\[\\[\\.\\.\\.route\\]\\]/route\\.ts$"
     ],
     "allowlist": [
       "apps/web/src/app/(app)/feature-flags/route.ts",

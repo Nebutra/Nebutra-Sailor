@@ -79,6 +79,7 @@ const nextConfig: NextConfig = {
     "@nebutra/design-tokens",
     "@nebutra/feature-flags",
     "@nebutra/fonts",
+    "@nebutra/gateway",
     "@nebutra/i18n",
     "@nebutra/icons",
     "@nebutra/logger",

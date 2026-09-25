@@ -45,6 +45,7 @@
     "@nebutra/email": "workspace:*",
     "@nebutra/feature-flags": "workspace:*",
     "@nebutra/fonts": "workspace:*",
+    "@nebutra/gateway": "workspace:*",
     "@nebutra/health": "workspace:*",
     "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",

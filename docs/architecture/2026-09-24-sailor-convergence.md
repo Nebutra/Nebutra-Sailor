@@ -174,11 +174,25 @@ Landed in the first batch: §1 adapter deletions, §2 pairs, §3 region removal,
 `Dockerfile.web` + `docker-compose.yml`), the §6 route-handler ratchet, and §7
 (12 commands removed, `nebutra status` added).
 
-Deferred to the second batch: §6 mounting the gateway in Next (changes
-production routing, ships on its own), §7 `sync`, and §8 device-flow login
-(amends the IdP contract, needs its own security review). `apps/sleptons` keeps
-its direct Clerk integration — it is Nebutra's own product and is stripped from
-the template.
+Deferred to the second batch: §7 `sync`, and §8 device-flow login (amends the
+IdP contract, needs its own security review). `apps/sleptons` keeps its direct
+Clerk integration — it is Nebutra's own product and is stripped from the
+template.
+
+§6 landed: `apps/web` mounts the gateway (`backends/gateway`, via a new
+`createGatewayApp({ startWorkers })` factory in `src/app.ts` — `src/index.ts`
+is now a thin standalone-entry wrapper around it) at the optional catch-all
+`app/api/[[...route]]/route.ts`, gated by `GATEWAY_MODE` (`embedded` default;
+`external` 404s every unmatched `/api/*` path and mounts nothing). Nebutra's
+own production sets `GATEWAY_MODE=external` (`infra/fly/web.toml`) — the
+gateway keeps running standalone on Cloudflare Workers + Fly, unchanged; the
+browser already calls it directly via `NEXT_PUBLIC_API_GATEWAY_URL` /
+`NEXT_PUBLIC_API_URL`, so external mode has nothing to proxy. Embedded mode
+never starts the gateway's background queue workers inside Next's
+request-handling process — those still run via the QStash webhook delivery
+route the app mounts either way. The catch-all is intrinsic to the
+route-handler ratchet (`governance.config.json` →
+`routeHandlers.intrinsic`), not a business handler of its own.
 
 ## Open questions
 

@@ -1015,6 +1015,12 @@ The **template** does not choose a platform: it ships Next `standalone` builds a
 Dockerfiles, and create-sailor asks nothing about deployment (ADR 2026-09-24).
 What follows is **Nebutra's own instance**, not a template default.
 
+The template's default scaffold also mounts the Hono gateway (`backends/gateway`)
+inside `apps/web` at `app/api/[[...route]]/route.ts` — one process, one origin
+— controlled by `GATEWAY_MODE` (`embedded` default; `external` 404s unmatched
+`/api/*` and mounts nothing). Nebutra's own deploy sets `GATEWAY_MODE=external`
+in `infra/fly/web.toml`, since the gateway below runs standalone.
+
 Nebutra production topology (Vercel retired 2026-09-22):
 
 ```text

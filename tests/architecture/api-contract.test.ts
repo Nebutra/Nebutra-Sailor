@@ -76,7 +76,7 @@ function isVersionedRoute(routePath: string): boolean {
 // ---------------------------------------------------------------------------
 
 describe("Property 5a: API Route Versioning", () => {
-  const indexPath = resolve(API_GATEWAY_SRC, "index.ts");
+  const indexPath = resolve(API_GATEWAY_SRC, "app.ts");
   const indexContent = readFileSync(indexPath, "utf-8");
   const allRoutes = getRouteRegistrations(indexContent);
 
@@ -246,7 +246,7 @@ describe("Property 5b: OpenAPI Spec File", () => {
 // ---------------------------------------------------------------------------
 
 describe("Property 5c: API Versioning Middleware", () => {
-  const indexPath = resolve(API_GATEWAY_SRC, "index.ts");
+  const indexPath = resolve(API_GATEWAY_SRC, "app.ts");
   const indexContent = readFileSync(indexPath, "utf-8");
 
   it("apiVersionMiddleware is imported and applied", () => {

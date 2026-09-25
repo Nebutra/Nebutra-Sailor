@@ -176,6 +176,12 @@ jobs:
           NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
+          # Nebutra's own production keeps the gateway standalone (Cloudflare
+          # Workers + Fly origin, deploy-gateway job below) — apps/web's
+          # optional catch-all (app/api/[[...route]]/route.ts) must not embed
+          # it. Only `web` reads GATEWAY_MODE; harmless no-op for other apps
+          # in this matrix. See docs/architecture/2026-09-24-sailor-convergence.md §6.
+          GATEWAY_MODE: "external"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_PUBLIC_AUTH_URL: "https://auth.nebutra.com"
           BETTER_AUTH_URL: "https://auth.nebutra.com"

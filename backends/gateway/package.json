@@ -8,6 +8,12 @@
     "productionReady": false
   },
   "type": "module",
+  "exports": {
+    "./app": {
+      "types": "./dist/app.d.ts",
+      "import": "./dist/app.js"
+    }
+  },
   "scripts": {
     "dev": "tsx watch src/node.ts",
     "build": "tsc",

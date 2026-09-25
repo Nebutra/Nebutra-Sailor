@@ -4,6 +4,10 @@ primary_region = "sin"
 [env]
   HOSTNAME = "0.0.0.0"
   PORT = "8080"
+  # Gateway runs standalone (Cloudflare Workers + Fly nebutra-gateway) — do
+  # not mount it in this process. See app/api/[[...route]]/route.ts and
+  # docs/architecture/2026-09-24-sailor-convergence.md §6.
+  GATEWAY_MODE = "external"
 
 [http_service]
   internal_port = 8080
