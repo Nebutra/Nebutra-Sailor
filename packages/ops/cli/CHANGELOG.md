@@ -1,5 +1,21 @@
 # nebutra
 
+## 0.5.0
+
+### Minor Changes
+
+- [`46fa1fe`](https://github.com/Nebutra/Nebutra-Sailor/commit/46fa1fee122c9e922776a08c6587efaa4a716a7d) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - One stack, zero questions (ADR 2026-09-24 Sailor convergence).
+
+  `create-sailor` no longer asks anything but where to put the project. All stack
+  flags (`--region`, `--auth`, `--payment`, `--email`, `--storage`, `--queue`,
+  `--search`, `--deploy`, …) are removed; every project is the same converged
+  stack and each capability goes live when its key is set. Projects now ship a
+  portable `Dockerfile.web` + `docker-compose.yml` instead of a platform choice.
+
+  `nebutra` drops `create`, `add`, `auth`, `billing`, `search`, `workflow`,
+  `backend`, `admin`, `community`, `growth`, `stats` and `ecosystem`, and adds
+  `nebutra status [--json]` — what is live, what each capability still needs.
+
 ## 0.4.3
 
 ### Patch Changes
