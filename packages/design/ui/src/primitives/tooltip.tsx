@@ -3,6 +3,7 @@
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
+import { interaction } from "../tokens/components/interaction";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
@@ -12,8 +13,9 @@ import { cn } from "../utils/cn";
  *  Geist behavior contract (verified in this wrapper, document at top so
  *  drift gets called out at code review):
  *    - Opens on hover AND keyboard focus (Base UI default — don't override).
- *    - Default entry delay ≈ 150ms so the tooltip doesn't flicker on a
- *      sweeping mouse. Subsequent tooltips in a group skip delay + duration.
+ *    - The first tooltip waits interaction.tooltip.delayMs (700, Radix's
+ *      default) so a sweeping pointer doesn't strobe; a neighbour reached
+ *      within skipWindowMs (300) opens instantly. 150ms read as flicker.
  *    - Escape closes the tooltip and returns focus to the trigger (Base UI).
  *
  *  Content rules (Geist):
@@ -35,8 +37,9 @@ import { cn } from "../utils/cn";
  *      action — the tooltip body adds context, it doesn't replace the label.
 \* -------------------------------------------------------------------------- */
 
-const DEFAULT_TOOLTIP_DELAY_MS = 150;
-const SKIP_DELAY_WINDOW_MS = 400;
+// From the interaction contract: first tooltip waits, neighbours open at once.
+const DEFAULT_TOOLTIP_DELAY_MS = interaction.tooltip.delayMs;
+const SKIP_DELAY_WINDOW_MS = interaction.tooltip.skipWindowMs;
 
 let lastTooltipOpenAt = 0;
 const skipDelayListeners = new Set<() => void>();
