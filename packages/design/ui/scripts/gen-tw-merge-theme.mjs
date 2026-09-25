@@ -72,8 +72,11 @@ ${groups.map(([ns, keys]) => `  ${JSON.stringify(CLASS_GROUPS[ns])}: [{ ${ns}: $
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const next = render(collect());
   if (process.argv.includes("--check")) {
+    // Compare content, not layout: biome reformats the committed file
+    // (unquoted keys, wrapped arrays), which is fine.
+    const normalize = (text) => text.replace(/\/\/.*$/gm, "").replace(/[\s"',]/g, "");
     const current = readFileSync(out, "utf8");
-    if (current !== next) {
+    if (normalize(current) !== normalize(next)) {
       console.error(
         `${out} is stale — run: node packages/design/ui/scripts/gen-tw-merge-theme.mjs`,
       );
