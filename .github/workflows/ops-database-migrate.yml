@@ -93,7 +93,13 @@ jobs:
             const { rows: [t] } = await client.query("select count(*)::int as n from pg_tables where schemaname = \x27public\x27");
             const { rows: [r] } = await client.query("select bool_or(rolname = \x27postgres\x27) as postgres, bool_or(rolname = \x27app_user\x27) as app_user from pg_roles");
             const { rows: [p] } = await client.query("select count(*)::int as n from pg_policies where schemaname = \x27public\x27");
+            // Who may skip RLS, and who runs this job. Policies are only as
+            // strong as these attributes: an owner or a BYPASSRLS role is exempt.
+            const { rows: roleAttrs } = await client.query("select rolname, rolsuper, rolbypassrls, rolcanlogin from pg_roles where rolname in (\x27postgres\x27, \x27app_user\x27, current_user) or rolname like \x27pscale_api_%\x27 order by rolname");
+            const { rows: [me] } = await client.query("select current_user as me");
             await client.end();
+            console.log(`connected as ${me.me}`);
+            for (const r of roleAttrs) console.log(`role ${r.rolname}: super=${r.rolsuper} bypassrls=${r.rolbypassrls} login=${r.rolcanlogin}`);
             const out = process.env.GITHUB_OUTPUT;
             const fs = await import("node:fs");
             fs.appendFileSync(out, `has_history=${h.has_history}\napplied=${applied}\nlast=${last}\ntables=${t.n}\nhost=${url.hostname}:${url.port || 5432}\nfailed=${failed.join(" ")}\n`);

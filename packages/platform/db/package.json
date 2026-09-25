@@ -67,12 +67,13 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.15",
+    "@electric-sql/pglite-socket": "^0.0.20",
+    "@prisma/generator-helper": "7.4.2",
     "@types/pg": "^8.18.0",
     "prisma": "catalog:",
     "tsx": "^4.21.0",
     "typescript": "catalog:",
-    "vitest": "catalog:",
-    "@electric-sql/pglite-socket": "^0.0.20"
+    "vitest": "catalog:"
   },
   "license": "AGPL-3.0-only",
   "files": [
