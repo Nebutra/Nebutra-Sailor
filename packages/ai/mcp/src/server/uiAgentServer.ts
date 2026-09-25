@@ -1,13 +1,15 @@
-import {
-  type AgentComponentSummary,
-  type AgentDocsMaturity,
-  type AgentDocsStatus,
-  loadAgentComponentContract,
-  loadAgentManifest,
-  searchAgentComponents,
-  validateAgentComponent,
-} from "@nebutra/ui/agent";
+import type { AgentComponentSummary, AgentDocsMaturity, AgentDocsStatus } from "@nebutra/ui/agent";
 import type { MCPServerConfig } from "../types";
+
+// @nebutra/ui is an optional peer of this package. A static import made every
+// consumer of @nebutra/mcp — the gateway included — fail at startup wherever
+// @nebutra/ui was not installed (the ECS api bundle: ERR_MODULE_NOT_FOUND).
+// Load it on first tool call instead, so only these tools need it.
+let uiAgentModule: Promise<typeof import("@nebutra/ui/agent")> | undefined;
+function loadUiAgent(): Promise<typeof import("@nebutra/ui/agent")> {
+  uiAgentModule ??= import("@nebutra/ui/agent");
+  return uiAgentModule;
+}
 
 function readContractOptions(args: Record<string, unknown>) {
   const options: { root: string; manifestPath?: string } = {
@@ -27,7 +29,9 @@ function readName(args: Record<string, unknown>): string {
   return name;
 }
 
-function validateAll(args: Record<string, unknown>) {
+async function validateAll(args: Record<string, unknown>) {
+  const { loadAgentComponentContract, loadAgentManifest, validateAgentComponent } =
+    await loadUiAgent();
   const options = readContractOptions(args);
   const manifest = loadAgentManifest(options);
   const results = manifest.components.map((component: AgentComponentSummary) =>
@@ -119,6 +123,7 @@ export function createUiAgentMcpServer(): MCPServerConfig {
     ],
     handlers: {
       nebutra_ui_search_components: async (args) => {
+        const { loadAgentManifest, searchAgentComponents } = await loadUiAgent();
         const manifest = loadAgentManifest(readContractOptions(args));
         const searchOptions: {
           limit: number;
@@ -141,9 +146,12 @@ export function createUiAgentMcpServer(): MCPServerConfig {
           searchOptions,
         );
       },
-      nebutra_ui_get_component: async (args) =>
-        loadAgentComponentContract(readName(args), readContractOptions(args)),
+      nebutra_ui_get_component: async (args) => {
+        const { loadAgentComponentContract } = await loadUiAgent();
+        return loadAgentComponentContract(readName(args), readContractOptions(args));
+      },
       nebutra_ui_validate_component: async (args) => {
+        const { loadAgentComponentContract, validateAgentComponent } = await loadUiAgent();
         if (typeof args.name === "string" && args.name.trim().length > 0) {
           return validateAgentComponent(
             loadAgentComponentContract(args.name, readContractOptions(args)),
@@ -152,6 +160,7 @@ export function createUiAgentMcpServer(): MCPServerConfig {
         return validateAll(args);
       },
       nebutra_ui_get_migration_hints: async (args) => {
+        const { loadAgentComponentContract } = await loadUiAgent();
         const contract = loadAgentComponentContract(readName(args), readContractOptions(args));
         return {
           component: contract.name,

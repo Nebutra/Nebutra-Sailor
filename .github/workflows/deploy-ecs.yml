@@ -688,7 +688,9 @@ jobs:
       (needs.build-api.result  == 'success' || needs.build-api.result  == 'skipped') &&
       !(needs.build-next.result == 'skipped' && needs.build-api.result == 'skipped')
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # Six resumable upload attempts (see the upload step) need more than the
+    # old 45-minute budget in the worst case; a healthy run still takes minutes.
+    timeout-minutes: 75
     environment: ecs-prod
     env:
       VM_PROVIDER:       ${{ vars.VM_PROVIDER || vars.CLOUD_VM_PROVIDER || vars.ECS_PROVIDER || 'unknown' }}
@@ -944,27 +946,41 @@ jobs:
           # Ten minutes is roughly twenty times the normal transfer, so a
           # legitimately slow link still lands; anything past it is stuck, and
           # saying so beats waiting another half hour to be ambiguous about it.
-          SCP_TIMEOUT=600
+          # rsync --partial resumes where the last attempt stopped; scp restarted
+          # every retry from byte zero, so on this link a 297M bundle could fail
+          # three full 10-minute attempts without ever finishing (9 of 15 runs
+          # failed on upload before this). --timeout=120 drops a transfer that
+          # has moved no data for two minutes, and the next attempt picks up
+          # from the partial file. The overall cap per attempt stays generous so
+          # a slow-but-moving link still lands.
+          SSH_CMD="ssh -i $HOME/.ssh/id_deploy -p ${ECS_SSH_PORT} -o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6"
+          if ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" -o StrictHostKeyChecking=yes \
+               -o ConnectTimeout=20 "${ECS_USER}@${ECS_HOST}" 'command -v rsync >/dev/null'; then
+            HAVE_RSYNC=1
+          else
+            HAVE_RSYNC=""
+            echo "::warning::rsync not found on ${ECS_HOST}; falling back to scp (no resume)"
+          fi
+          ATTEMPT_TIMEOUT=900
           for bundle in "$BUNDLES_DIR"/*.tar.gz; do
             base=$(basename "$bundle")
             size=$(du -h "$bundle" | cut -f1)
             uploaded=""
-            for attempt in 1 2 3; do
-              echo "→ scp $base ($size) -> $REMOTE_BUNDLE_DIR/ (attempt $attempt, ${SCP_TIMEOUT}s cap)"
-              if timeout "$SCP_TIMEOUT" scp "${SCP_OPTS[@]}" "$bundle" "${ECS_USER}@${ECS_HOST}:${REMOTE_BUNDLE_DIR}/"; then
-                uploaded=1
-                break
-              fi
-              rc=$?
-              if [ "$rc" -eq 124 ]; then
-                echo "::warning::$base stalled past ${SCP_TIMEOUT}s on attempt $attempt"
+            for attempt in 1 2 3 4 5 6; do
+              echo "→ upload $base ($size) -> $REMOTE_BUNDLE_DIR/ (attempt $attempt)"
+              if [ -n "$HAVE_RSYNC" ]; then
+                timeout "$ATTEMPT_TIMEOUT" rsync --partial --append-verify --timeout=120 \
+                  -e "$SSH_CMD" "$bundle" "${ECS_USER}@${ECS_HOST}:${REMOTE_BUNDLE_DIR}/" && uploaded=1
               else
-                echo "::warning::$base failed with exit $rc on attempt $attempt"
+                timeout "$ATTEMPT_TIMEOUT" scp "${SCP_OPTS[@]}" "$bundle" \
+                  "${ECS_USER}@${ECS_HOST}:${REMOTE_BUNDLE_DIR}/" && uploaded=1
               fi
+              [ -n "$uploaded" ] && break
+              echo "::warning::$base attempt $attempt did not finish; retrying${HAVE_RSYNC:+ from the partial file}"
               sleep 10
             done
             if [ -z "$uploaded" ]; then
-              echo "::error::Could not upload $base ($size) after 3 attempts of ${SCP_TIMEOUT}s each. The link to ${ECS_HOST} is stalling, not just slow."
+              echo "::error::Could not upload $base ($size) after 6 attempts. The link to ${ECS_HOST} is stalling, not just slow."
               exit 1
             fi
           done
