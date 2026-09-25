@@ -1,6 +1,6 @@
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
-import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
+import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { THEME_STORAGE_KEY, ThemeProvider } from "@nebutra/tokens";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -82,6 +82,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         className="min-h-screen bg-background font-sans text-foreground antialiased"
         suppressHydrationWarning
       >
+        <CjkFontFace />
+
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {body}
         </ThemeProvider>

@@ -54,17 +54,13 @@ const stack = withRegistryFont("Space Grotesk, sans-serif");
 // "var(--font-space-grotesk), Space Grotesk, sans-serif"
 ```
 
-## Simplified Chinese — self-hosted Noto Sans SC
+## Brand faces — DM Sans (headings) and MiSans (Chinese)
 
-Geist has no CJK coverage at all, so without a CJK face every Chinese character
-falls back to whatever the OS supplies: PingFang on macOS, Microsoft YaHei on
-Windows, something else again on Android. Chinese copy is a first-class surface
-in this product (see `docs/microcopy/`), so the CJK face is self-hosted and
-subset here.
+Chosen 2026-09-25 by measuring what competitors ship: MiniMax and Moonshot set
+Chinese in MiSans, DeepSeek and Databricks set Latin in DM Sans. Geist stays the
+body/UI face for its tabular figures.
 
 ### Wiring an app
-
-Two lines in the root layout, beside the Geist loaders:
 
 ```tsx
 import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
@@ -74,28 +70,35 @@ import { GeistSans } from "geist/font/sans";
 <html className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}>
 ```
 
-That defines `--font-noto-sans-sc`. Nothing else is needed: the token stacks in
-`@nebutra/tokens` (`--font-sans`, `--font-cn`, `--font-display`, `--font-heading`)
-already reference the variable in the right position. The app also needs
-`"@nebutra/fonts"` in `dependencies` and in `transpilePackages` (the package ships
-TypeScript source).
+`cjkFontClassName` defines `--font-dm-sans` (self-hosted variable subset, SIL
+OFL). MiSans arrives through `<CjkFontFace />` from the same entry — render it
+once in the root layout. It builds the `@font-face` rules at render time from
+the committed keys and `publicAssetUrl()` (`NEXT_PUBLIC_R2_PUBLIC_URL`, then
+`R2_PUBLIC_URL`, then the brand's `cdn` origin), so no host is hardcoded and a
+scaffold resolves to its own CDN. The token stacks in `@nebutra/tokens` already
+reference both. Non-Next hosts (Storybook) import `@nebutra/fonts/font-face` and
+pass `origin` explicitly.
 
-Do **not** re-declare `--font-sans` and friends downstream. `@nebutra/ui`'s
-`typography/fonts.css` used to, and being the later import its Geist-only copies
-won, so the CJK half of the token stack never reached `--font-sans` at all. That
-duplication is gone; the file now only carries derived aliases.
+### Why MiSans is on the CDN, not in this package
+
+The MiSans licence allows free commercial use and embedding **with attribution**,
+but forbids distributing the font software on its own. This repository is public
+and mirrored as a template, so committing the subsets would distribute them —
+the reason vivo Sans was removed (b5e73db35). `pnpm subset:cjk --upload` writes
+content-hashed subsets to the bucket behind your public asset origin
+(`MISANS_R2_BUCKET`, under `fonts/misans/`) and commits only their keys. Until
+they are uploaded, or offline, the requests fail and the stack falls back to
+PingFang / YaHei. Credit MiSans on product surfaces (see NOTICE-FONTS.md).
 
 ### Stack order is the design decision
 
 ```css
-font-family: var(--font-geist-sans), "Geist", var(--font-noto-sans-sc), "Noto Sans SC", …;
+font-family: var(--font-geist-sans), "Geist", var(--font-misans, "MiSans"), …;
 ```
 
-Geist comes **first** and keeps Latin and the numerals — its tabular figures and
-tighter x-height are what dense dashboard tables need, and it is the locked UI
-face. Noto Sans SC takes CJK. Both faces cover Latin, so the *order* is what
-decides: reversed, Noto would take the Latin too, and its Latin is not as
-good as Geist's for UI.
+The Latin face comes **first** and keeps Latin and the numerals; MiSans takes
+CJK. Both cover Latin, so the order decides: reversed, MiSans would take the
+Latin too.
 
 Belt and braces: the generated `@font-face` rules carry a `unicode-range` with
 no Latin, no ASCII and no general-punctuation codepoints in it, so a Latin-only
@@ -105,40 +108,37 @@ wrong way round. Geist Mono remains the code face.
 ### Building the subsets
 
 ```bash
-FONTTOOLS_PYTHON=/path/to/python \
-  pnpm --filter @nebutra/fonts subset:cjk -- --force
+FONTTOOLS_PYTHON=/path/to/python MISANS_ZIP=/path/to/MiSans.zip \
+  pnpm --filter @nebutra/fonts subset:cjk -- --force --upload
 ```
 
-Requires Python with `fontTools` and `brotli` (for `--flavor=woff2`).
-The script downloads the OFL Noto Sans SC variable face, instances 400 / 500 /
-600 / 700, then subsets. Outputs land in `generated/`. The committed woff2
-files are the SIL OFL Noto Sans SC chinese-simplified faces used by
-`next/font/local` so a clean clone does not need fontTools to render text.
+Requires Python with `fontTools` and `brotli` (for `--flavor=woff2`) and a
+logged-in `wrangler`. Without `MISANS_ZIP` the script downloads Xiaomi's official
+package (`MISANS_ZIP_URL`). It subsets the static Regular / Medium / Semibold /
+Bold faces, names each output by content hash, and with `--upload` puts them in
+R2 (`MISANS_R2_BUCKET`) with an immutable cache header. Only `index.ts` (the
+keys) and the manifest are committed; the woff2 files are gitignored. A hash change means a new URL, so
+the CDN never serves a stale face. The bucket's CORS allowlist lives in
+`infra/iac/cloudflare/r2/cors.json`: an app on a new origin gets no MiSans (the
+stack silently falls back to PingFang) until its origin is added there.
 
-### Why three weights
+### Why four weights
 
-The design system's numeric slots are `--font-weight-medium: 500` and
-`--font-weight-heading: 600` (`packages/design/tokens/recipe.css`), and the token
-CSS writes literal `font-weight` in only four values: 500 (43×), 600 (35×),
-400 (27×), 700 (10×). So 400 / 500 / 600 ship. 700 resolves to the 600 face by
-normal CSS font matching, and because that matched face is itself ≥ 600 no
-browser applies synthetic bold — which is precisely why the third face is
-DemiBold 600 rather than Bold 700. Choosing 700 instead would leave the *default*
-heading weight, the most common heading value in the system, a step out of place.
-Skin-declared fractional weights (300 / 450 / 510) resolve into the same set.
-Each weight costs ~490 KB, so shipping all nine static faces would be ~4.4 MB.
+`--font-weight-heading` is 500 (`packages/design/tokens/recipe.css`), body is
+400, and the token CSS writes literal 600 and 700 as well. Each static face
+costs ~525 KB, and `unicode-range` plus per-weight `@font-face` means a page
+only downloads the weights it renders.
 
 ### Why the static faces, not the variable one
 
 A variable CJK font carries per-weight deltas for every glyph it keeps, so one
-variable file costs more than the static weights a page actually uses. The
-pipeline instances 400 / 500 / 600 / 700 and subsets each one.
+variable file costs more than the static weights a page actually uses.
 
 ### Character set
 
-Three inputs, unioned — 4,282 characters in the current build:
+Three inputs, unioned — 4,330 characters in the current build:
 
-1. **The zh catalogs, by glob** (1,586 chars) — every `zh*.json` under any
+1. **The zh catalogs, by glob** (1,662 chars) — every `zh*.json` under any
    `messages/` or `locales/` directory, walked at build time, so new Chinese copy
    is covered on the next run instead of drifting away from a hardcoded list.
 2. **CJK punctuation and fullwidth forms, wholesale** (197 chars) — U+3000–303F,
@@ -158,32 +158,22 @@ Three inputs, unioned — 4,282 characters in the current build:
    characters that appear in a fraction of a percent of text, which is exactly
    what OS fallback is for.
 
-The floor is what costs the bytes: the catalog set alone subsets to 191,108 B per
-weight, the full set to ~498,000 B.
-
-> Possible follow-up, measured but **not** implemented here: splitting each
-> weight into a hot tier (catalogs + punctuation, 1,777 chars, 197,028 B) and an
-> extended tier (the GB2312 remainder, 2,509 chars, 312,644 B) with complementary
-> `unicode-range`s would drop the common path from ~1.47 MB to ~591 KB across
-> three weights, and only fetch the extended tier when user data actually renders
-> a character outside our own copy. It costs two files per weight and (on the
-> `next/font/local` path) a per-tier `declarations` entry to carry the range.
-
 ### Vendored sources
 
-`vendor/noto-sans-sc/OFL.txt` is committed. Full source TTFs are downloaded by
-`subset:cjk` and gitignored. Do not commit unmodified CJK source faces.
+`vendor/misans/LICENSE.txt` (licence text and the FAQ answers on embedding) and
+`vendor/dm-sans/OFL.txt` are committed. The MiSans zip and TTFs are gitignored.
+Never commit a MiSans binary: the licence forbids distributing it on its own.
 
 ## Third-party font attribution
 
-本软件使用了 **Noto Sans SC** 字体。
-This software uses the **Noto Sans SC** typeface.
+本产品使用了小米 **MiSans** 字体。
+This product uses the **MiSans** typeface by Xiaomi.
 
-Noto Sans SC is licensed under the SIL Open Font License 1.1
-(`vendor/noto-sans-sc/OFL.txt`). That licence is separate from this package's
-MIT licence, which applies to first-party code only. Generated `.woff2` files
-stay in the workspace for first-party apps and are excluded from the npm
-tarball. See `NOTICE-FONTS.md`.
+MiSans is free for commercial use under the MiSans Font Intellectual Property
+License Agreement, which requires this attribution
+(`vendor/misans/LICENSE.txt`). DM Sans is SIL OFL 1.1 (`vendor/dm-sans/OFL.txt`).
+Both licences are separate from this package's MIT licence. See
+`NOTICE-FONTS.md`.
 
 ## Registered Families
 
@@ -199,5 +189,5 @@ uses the corresponding CSS variable.
 
 ## License
 
-MIT for first-party code. Noto Sans SC binaries are SIL OFL 1.1 and are not
-published to npm.
+MIT for first-party code. DM Sans is SIL OFL 1.1. MiSans binaries are never
+committed or published to npm; they are served from the deployment's asset CDN.

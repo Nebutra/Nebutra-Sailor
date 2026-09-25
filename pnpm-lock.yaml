@@ -364,6 +364,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/health':
         specifier: workspace:*
         version: link:../../packages/platform/health
@@ -601,6 +604,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/health':
         specifier: workspace:*
         version: link:../../packages/platform/health
@@ -1426,6 +1432,12 @@ importers:
 
   apps/storybook:
     dependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../packages/design/brand
+      '@nebutra/fonts':
+        specifier: workspace:*
+        version: link:../../packages/design/fonts
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -3795,6 +3807,9 @@ importers:
 
   packages/design/fonts:
     dependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../brand
       next:
         specifier: ^16.3.3
         version: 16.3.4(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

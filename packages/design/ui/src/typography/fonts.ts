@@ -89,15 +89,26 @@ export const fonts: Record<string, FontConfig> = {
     licenseUrl: "https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt",
   },
 
-  sourceHanSans: {
-    family: "Noto Sans SC",
-    weights: [400, 500, 700],
+  dmSans: {
+    family: "DM Sans",
+    weights: [400, 500, 600],
+    italic: false,
+    display: "swap",
+    variable: true,
+    selfHostUrl: "@nebutra/fonts/next/cjk (dmSans)",
+    license: "OFL",
+    licenseUrl: "https://github.com/googlefonts/dm-fonts/blob/main/OFL.txt",
+  },
+
+  misans: {
+    family: "MiSans",
+    weights: [400, 500, 600, 700],
     italic: false,
     display: "swap",
     variable: false,
-    googleFontsParam: "Noto+Sans+SC:wght@400;500;700",
-    license: "OFL",
-    licenseUrl: "https://github.com/adobe-fonts/source-han-sans/blob/master/LICENSE.txt",
+    selfHostUrl: "@nebutra/fonts/next/cjk (misans)",
+    license: "Other",
+    licenseUrl: "https://hyperos.mi.com/font/zh/download/",
   },
 };
 
@@ -127,7 +138,7 @@ export const defaultFonts: (keyof typeof fonts)[] = ["geistSans", "geistMono"];
 /**
  * Fonts for CJK (Chinese) support
  */
-export const cjkFonts: (keyof typeof fonts)[] = ["sourceHanSans"];
+export const cjkFonts: (keyof typeof fonts)[] = ["misans"];
 
 /**
  * All fonts including CJK
@@ -252,7 +263,8 @@ Fonts used in this project are licensed under open-source licenses:
 - Geist: SIL Open Font License 1.1
 - Geist Mono: SIL Open Font License 1.1
 - JetBrains Mono: SIL Open Font License 1.1
-- Noto Sans SC (Source Han Sans): SIL Open Font License 1.1
+- DM Sans: SIL Open Font License 1.1
+- MiSans (Xiaomi): free for commercial use; embedding requires stating that MiSans is used
 
 All fonts are free for commercial use. See individual license files for details.
 `.trim();

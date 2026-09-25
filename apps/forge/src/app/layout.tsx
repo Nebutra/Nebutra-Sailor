@@ -7,7 +7,7 @@ import {
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin, publicAssetUrl } from "@nebutra/brand/metadata-helpers";
-import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
+import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -130,6 +130,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <meta name="msvalidate.01" content={bingVerificationContent} />
       ) : null}
       <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
+        <CjkFontFace />
+
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider provider={authProvider} config={authProviderConfig}>
             <SiteHeader signInHref={signInHref} signUpHref={signUpHref} />

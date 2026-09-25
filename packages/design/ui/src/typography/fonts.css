@@ -6,9 +6,11 @@
  * Font loading (Next.js apps): each app's layout.tsx applies the loader classes
  *   GeistSans        → --font-geist-sans     (variable, 100–900)   Latin + numerals
  *   GeistMono        → --font-geist-mono     (variable, 100–900)   code
- *   cjkFontClassName → --font-noto-sans-sc   (@nebutra/fonts/next/cjk)  CJK
- * and the token stacks reference those variables in that order, so Geist keeps
- * Latin and only CJK falls through to Noto Sans SC.
+ *   cjkFontClassName → --font-dm-sans   (@nebutra/fonts/next/cjk)  Latin headings
+ *   <CjkFontFace />  → MiSans @font-face, CDN-hosted (licence forbids shipping
+ *                      the file in this public repo)                   CJK
+ * and the token stacks reference those in order, so Geist keeps Latin body and
+ * numerals, DM Sans takes headings, and only CJK falls through to MiSans.
  *
  * IMPORT ORDER MATTERS: this file must come AFTER @nebutra/tokens/styles.css
  * (see ../styles/preset.css). It used to re-declare --font-sans / --font-heading /
@@ -29,7 +31,7 @@
      token already leads with the self-hosted face; the system families repeat
      here so this alias still degrades on its own. */
   --font-cjk:
-    var(--font-cn), "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    var(--font-cn), "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 
   /* Not a token: no Nebutra surface uses a serif, this exists for shadcn parity. */
   --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;

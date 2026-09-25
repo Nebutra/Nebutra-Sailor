@@ -13,6 +13,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
+    "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",

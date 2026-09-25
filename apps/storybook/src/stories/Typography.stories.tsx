@@ -81,7 +81,7 @@ export const FontFamilies: StoryObj = {
           The quick brown fox jumps over the lazy dog
         </p>
         <p className="mt-1 text-sm text-[hsl(var(--muted-foreground))]">
-          Geist Sans → Noto Sans SC → system-ui
+          Geist Sans → MiSans → PingFang SC → system-ui
         </p>
       </div>
       <div>

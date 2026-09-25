@@ -40,8 +40,8 @@ export function escapeHtml(value: string): string {
  *     remaining angle brackets become `&lt;`/`&gt;`.
  *
  * Example:
- *   cssAttrValue('"Geist", "Noto Sans SC", sans-serif')
- *   → '&quot;Geist&quot;, &quot;Noto Sans SC&quot;, sans-serif'
+ *   cssAttrValue('"Geist", "MiSans", sans-serif')
+ *   → '&quot;Geist&quot;, &quot;MiSans&quot;, sans-serif'
  *
  *   cssAttrValue('red;display:none')
  *   → 'reddisplay:none'   (semicolon stripped before HTML-escape)

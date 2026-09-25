@@ -767,22 +767,22 @@
     }
   },
   "fontFamily": {
-    "$description": "Geist + Geist Mono for Latin, self-hosted Noto Sans SC (SIL OFL) for CJK, system CJK faces (PingFang SC / Microsoft YaHei) as the fallback behind it. ORDER IS THE DESIGN DECISION: Geist comes first so it keeps Latin and the numerals (tabular figures, tighter x-height — what dense dashboard tables need, and the locked UI face); Noto Sans SC follows so only CJK falls through to it. Reversed, Noto would take the Latin too and its Latin is not as good as Geist's for UI. Each stack prefixes the next/font variable (--font-geist-sans / --font-geist-mono / --font-noto-sans-sc) so the actual loaded face wins over the literal family name, which the browser cannot resolve directly once next/font assigns a generated unique font-family identifier. The Noto entry carries a literal fallback inside var() so a surface that never applies cjkFontClassName degrades to the family name instead of making the whole declaration invalid at computed-value time. `cn` is kept rather than deleted because it still has a job: the `font-cn` utility and the `html:lang(zh|ja|ko) body` auto-activation rule in static/base.css both set font-family to that token ALONE (they exist for the CJK line-height / word-break metrics), so it governs Chinese pages entirely — including their Latin.",
+    "$description": "Geist + Geist Mono for Latin body/UI, DM Sans (self-hosted, SIL OFL) for Latin display and headings, self-hosted MiSans (Xiaomi, free commercial use with attribution) for CJK, system CJK faces as the fallback behind it. Chosen 2026-09-25 by measuring what competitors ship: MiniMax and Moonshot set Chinese in MiSans; DeepSeek and Databricks set Latin in DM Sans. Chinese serifs were tried and rejected. ORDER IS THE DESIGN DECISION: the Latin face comes first so it keeps Latin and the numerals; MiSans follows so only CJK falls through to it (its @font-face unicode-range carries no Latin either). Each stack prefixes the next/font variable so the loaded face wins over the literal family name; the MiSans entry carries a literal fallback inside var() so a surface that never applies cjkFontClassName degrades to the family name instead of voiding the declaration. `cn` is kept because the `font-cn` utility and the `html:lang(zh|ja|ko) body` rule in static/base.css set font-family to it alone (they exist for CJK line-height / word-break metrics).",
     "sans": {
-      "$value": "var(--font-geist-sans), \"Geist\", var(--font-noto-sans-sc, \"Noto Sans SC\"), \"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-misans, \"MiSans\"), \"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
       "$type": "fontFamily"
     },
     "cn": {
-      "$value": "var(--font-geist-sans), \"Geist\", var(--font-noto-sans-sc, \"Noto Sans SC\"), \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "$value": "var(--font-geist-sans), \"Geist\", var(--font-misans, \"MiSans\"), \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
       "$type": "fontFamily",
       "$description": "CJK-locale stack — same order as sans, minus the Latin-only system faces"
     },
     "display": {
-      "$value": "var(--font-geist-sans), \"Geist\", var(--font-noto-sans-sc, \"Noto Sans SC\"), sans-serif",
+      "$value": "var(--font-dm-sans), \"DM Sans\", var(--font-misans, \"MiSans\"), \"PingFang SC\", sans-serif",
       "$type": "fontFamily"
     },
     "heading": {
-      "$value": "var(--font-geist-sans), \"Geist\", var(--font-noto-sans-sc, \"Noto Sans SC\"), sans-serif",
+      "$value": "var(--font-dm-sans), \"DM Sans\", var(--font-misans, \"MiSans\"), \"PingFang SC\", sans-serif",
       "$type": "fontFamily"
     },
     "mono": {

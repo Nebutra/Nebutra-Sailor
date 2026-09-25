@@ -1,10 +1,68 @@
 {
   "generatedBy": "packages/design/fonts/scripts/subset-cjk.mjs",
-  "source": "Noto Sans SC (SIL Open Font License 1.1)",
+  "inputHash": "9cf44b4c3896fbc5b675202e08ca3cf1ea50512a25e55f17e93249a5616e9894",
+  "charsetHash": "47ee971a6d79454b67b4a160bede9bc8f845d7efcf5ed5d88c1abe703bdae6f5",
+  "charCount": 4330,
+  "charsFromCatalogs": 1663,
+  "punctuationFloor": 197,
+  "gb2312Level1Floor": 3755,
+  "uncoveredBySourceFace": "〄〘〙〚〛〜〟〠〪〭〮〯〫〬〰〱〲〳〴〵〶〷〸〹〺〻〼〽〿︲﹅﹆﹇﹈￦",
+  "catalogs": [
+    "apps/forge/messages/zh-Hans.json",
+    "apps/forge/messages/zh-Hant.json",
+    "apps/landing/messages/zh-Hans.json",
+    "apps/landing/messages/zh-Hant.json",
+    "apps/landing/messages/zh.json",
+    "apps/router/messages/zh-Hans.json",
+    "apps/router/messages/zh-Hant.json",
+    "packages/platform/i18n/locales/zh-Hans.json",
+    "packages/platform/i18n/locales/zh-Hant.json",
+    "packages/platform/i18n/locales/zh.json"
+  ],
+  "unicodeRange": [
+    "U+3000-303F",
+    "U+3400-4DBF",
+    "U+4E00-9FFF",
+    "U+F900-FAFF",
+    "U+FE30-FE4F",
+    "U+FF00-FFEF"
+  ],
+  "subsetOptions": [
+    "--flavor=woff2",
+    "--layout-features=kern,liga,clig,calt,ccmp,locl,palt,halt,vert,vrt2",
+    "--no-subset-tables+=DSIG",
+    "--drop-tables+=DSIG",
+    "--recalc-bounds",
+    "--recalc-average-width"
+  ],
   "faces": [
-    { "weight": 400, "output": "noto-sans-sc-400.woff2", "bytes": 1142552 },
-    { "weight": 500, "output": "noto-sans-sc-500.woff2", "bytes": 1159128 },
-    { "weight": 600, "output": "noto-sans-sc-600.woff2", "bytes": 1162352 },
-    { "weight": 700, "output": "noto-sans-sc-700.woff2", "bytes": 1172244 }
+    {
+      "weight": 400,
+      "source": "MiSans-Regular.ttf",
+      "sourceBytes": 8122324,
+      "output": "misans-400.woff2",
+      "bytes": 535408
+    },
+    {
+      "weight": 500,
+      "source": "MiSans-Medium.ttf",
+      "sourceBytes": 8103840,
+      "output": "misans-500.woff2",
+      "bytes": 537060
+    },
+    {
+      "weight": 600,
+      "source": "MiSans-Semibold.ttf",
+      "sourceBytes": 8034980,
+      "output": "misans-600.woff2",
+      "bytes": 540540
+    },
+    {
+      "weight": 700,
+      "source": "MiSans-Bold.ttf",
+      "sourceBytes": 8009316,
+      "output": "misans-700.woff2",
+      "bytes": 545728
+    }
   ]
 }

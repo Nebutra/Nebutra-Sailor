@@ -1,6 +1,7 @@
 // @brand-exempt: IdP document title until brand metadata wiring
 import type { Metadata } from "next";
 import "./globals.css";
+import { CjkFontFace } from "@nebutra/fonts/next/cjk";
 
 export const metadata: Metadata = {
   title: "Nebutra Identity",
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-muted text-foreground antialiased">{children}</body>
+      <body className="min-h-screen bg-muted text-foreground antialiased">
+        <CjkFontFace />
+        {children}
+      </body>
     </html>
   );
 }

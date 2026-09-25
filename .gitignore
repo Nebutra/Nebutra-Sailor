@@ -136,6 +136,10 @@ docs/research/
 # Full CJK source faces downloaded by subset:cjk. Generated OFL woff2 files
 # under packages/design/fonts/generated/ ARE committed so next/font/local works
 # on a clean clone without fontTools.
+# MiSans may not be redistributed as a font file (see packages/design/fonts/NOTICE-FONTS.md);
+# its subsets live on the asset CDN, never in this public repo.
+packages/design/fonts/generated/misans-*.woff2
+packages/design/fonts/vendor/misans/*.zip
 packages/design/fonts/vendor/**/*.ttf
 packages/design/fonts/vendor/**/*.otf
 

@@ -88,15 +88,21 @@ That path is an implementation detail of `packages/design/ui/src/styles/sources.
 
 | Role | Family | CSS variable | Notes |
 |------|--------|-------------|-------|
-| Display / heading | Geist Sans → Noto Sans SC → Noto Sans SC | `--font-display` | Loaded through `--font-geist-sans` / `--font-noto-sans-sc` |
-| UI sans (body, label, button) | Geist Sans → Noto Sans SC → Noto Sans SC → PingFang SC → Microsoft YaHei → system | `--font-sans` | Order is the decision: Geist keeps Latin + numerals, only CJK falls through |
+| Display / heading | DM Sans → MiSans → PingFang SC | `--font-display` / `--font-heading` | `--font-dm-sans` (self-hosted, OFL) and MiSans (CDN). `h1–h3` take `--font-heading` at `--font-weight-heading` (500) by default |
+| UI sans (body, label, button) | Geist Sans → MiSans → PingFang SC → Microsoft YaHei → system | `--font-sans` | Order is the decision: Geist keeps Latin + numerals, only CJK falls through |
 | CJK body | same order as `--font-sans`, minus the Latin-only system faces | `--font-cn` | Consumed by the `font-cn` utility and the `html:lang(zh\|ja\|ko)` rule, which set it alone — so it must lead with Geist too |
 | Mono | Geist Mono → ui-monospace → SF Mono / Menlo | `--font-mono` | Code, tabular figures |
 
-Loaded via `next/font` per app — never via `<link>` or `@import`. Latin comes from
-`geist/font`; CJK from `cjkFontClassName` (`@nebutra/fonts/next/cjk`), a self-hosted
-Noto Sans SC subset in weights 400/500/600 with a CJK-only `unicode-range`, so a
-Latin-only page downloads none of it. Stacks are declared ONLY in
+Latin loads via `next/font` per app: Geist from `geist/font`, DM Sans from
+`cjkFontClassName` (`@nebutra/fonts/next/cjk`, self-hosted OFL variable subset).
+CJK is MiSans (Xiaomi), subset to the product's charset in weights 400/500/600/700
+with a CJK-only `unicode-range`, so a Latin-only page downloads none of it. Its
+files are served from the asset CDN under `fonts/misans/` and declared by
+`<CjkFontFace />` (`@nebutra/fonts/next/cjk`, rendered in every root layout):
+the MiSans licence forbids distributing the font on its own and this repository
+is public, so the binaries are never committed. Chosen
+2026-09-25 by measuring competitors (MiniMax and Moonshot ship MiSans; DeepSeek
+and Databricks ship DM Sans). Stacks are declared ONLY in
 `packages/design/design-tokens/tokens/core.json` — never re-declared downstream,
 where a later import would silently win.
 

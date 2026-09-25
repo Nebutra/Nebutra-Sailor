@@ -163,6 +163,7 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
+    "fontCredit": "Chinese typeface: MiSans by Xiaomi",
     "statusOnline": "All systems operational",
     "statusDegraded": "Degraded performance",
     "statusOutage": "Major service outage",

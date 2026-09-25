@@ -16,11 +16,12 @@
  * the call, so the config must NOT be computed. Variable fonts omit `weight`.
  * Keep the `variable` names in sync with FONT_REGISTRY in `../index.ts`.
  *
- * The self-hosted Simplified-Chinese face lives in `./next-cjk` (next/font/local,
- * no Google fetch) and is re-exported here for discoverability. It is NOT folded
- * into `fontRegistryClassName`: the CJK face is core typography, not an optional
- * theme face, and every app wires it the same way — `${cjkFontClassName}` on
- * <html> beside the Geist loaders. Apps that only need the CJK face should import
+ * The brand faces live in `./next-cjk` — DM Sans (next/font/local, no Google
+ * fetch) and <CjkFontFace /> for the CDN-hosted MiSans — and are re-exported
+ * here for discoverability. They are NOT folded into `fontRegistryClassName`:
+ * they are core typography, not optional theme faces, and every app wires them
+ * the same way — `${cjkFontClassName}` on <html> beside the Geist loaders and
+ * <CjkFontFace /> in the root layout. Apps that only need them should import
  * `@nebutra/fonts/next/cjk` directly so they don't pull in the Google faces below.
  */
 
@@ -46,7 +47,7 @@ import {
   Work_Sans,
 } from "next/font/google";
 
-export { cjkFontClassName, notoSansSc } from "./next-cjk";
+export { brandFontClassName, CjkFontFace, cjkFontClassName, dmSans } from "./next-cjk";
 
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
 const interTight = Inter_Tight({

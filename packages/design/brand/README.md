@@ -77,7 +77,7 @@ const accent = colors.accent[500];   // "#0BF1C3" 云毓青
 const gradient = colors.gradient.primary; // "linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)"
 
 // Typography
-const fontCn = typography.fontFamily.cn; // Noto Sans SC
+const fontCn = typography.fontFamily.cn; // MiSans
 const fontEn = typography.fontFamily.en; // Geist
 ```
 
@@ -169,10 +169,13 @@ linear-gradient(135deg, #0033FE 0%, #00A2E9 50%, #0BF1C3 100%)
 
 ## Typography (品牌字体)
 
-### 中文 - Noto Sans SC
+### 中文 - MiSans
 - Light (300) / Regular (400) / Medium (500) / DemiBold (600) / Bold (700)
 
-### 英文 - Geist
+### 英文标题 - DM Sans
+- 标题 500（`--font-weight-heading`），可变字体 100–1000
+
+### 英文正文与界面 - Geist
 - Regular (400) / Medium (500) / SemiBold (600) / Bold (700)
 
 ## Logo Usage Rules (标志使用规范)

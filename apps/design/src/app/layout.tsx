@@ -1,7 +1,7 @@
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
 import { fontRegistryClassName } from "@nebutra/fonts/next";
-import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
+import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -36,6 +36,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <CjkFontFace />
+
         {/* The header carries identity and the language switch only. Navigation
             moved into the sidebar, where the whole inventory is visible at once
             rather than five representatives of it. */}

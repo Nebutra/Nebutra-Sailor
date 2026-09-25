@@ -61,7 +61,9 @@
   --control-font-size-md: 0.875rem; /* 14 */
   --control-font-size-lg: 1rem; /* 16 */
   --font-weight-medium: 500;
-  --font-weight-heading: 600;
+  /* 500, not 600: headings in DM Sans read confident at 500 and the measured
+     consensus caps heading weight at 400–510 (Linear 510, Vercel 400). */
+  --font-weight-heading: 500;
 
   /* ── Elevation (free CSS; brand package replaces these) ───────── */
   /* House: a card is a hairline (--edge-soft), not a lifted object. Measured

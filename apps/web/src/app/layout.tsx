@@ -3,7 +3,7 @@ import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
 import { getSiteMetadata } from "@nebutra/brand/metadata-helpers";
 import { fontRegistryClassName } from "@nebutra/fonts/next";
-import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
+import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { THEME_STORAGE_KEY } from "@nebutra/tokens";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
@@ -27,13 +27,14 @@ import "./globals.css";
 // GeistMono → --font-geist-mono (variable font, 100–900)
 // Referenced in packages/design/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
 //
-// cjkFontClassName → --font-noto-sans-sc: the self-hosted Noto Sans SC subset
-// (next/font/local — files ship in @nebutra/fonts, so no build-time fetch). Geist
-// has zero CJK coverage, so without it every Chinese character fell back to the
-// OS face (PingFang / YaHei / whatever Android ships). ORDER: --font-sans lists
-// Geist first and Noto Sans SC after it, so Geist keeps Latin and the numerals
-// (tabular figures in dense tables) and only CJK falls through — and the subset
-// carries no Latin glyphs at all, so that holds even if a stack is mis-ordered.
+// cjkFontClassName → --font-dm-sans, the heading face (next/font/local — the file
+// ships in @nebutra/fonts, so no build-time fetch). <CjkFontFace /> declares
+// MiSans from the asset CDN: Geist has zero CJK coverage, so without it every
+// Chinese character falls back to the OS face (PingFang / YaHei / whatever
+// Android ships). ORDER: --font-sans lists Geist first and MiSans after it, so
+// Geist keeps Latin and the numerals (tabular figures in dense tables) and only
+// CJK falls through — and MiSans' unicode-range carries no Latin at all, so that
+// holds even if a stack is mis-ordered.
 //
 // Theme / DESIGN.md webfonts — the self-hosted OSS font registry (@nebutra/fonts)
 // declares ~16 common faces via next/font (build-time self-host, ZERO runtime
@@ -104,6 +105,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       suppressHydrationWarning
     >
       <body className="antialiased">
+        <CjkFontFace />
+
         <a
           href="#main-content"
           className="fixed left-3 top-3 z-[var(--layer-skip-link)] -translate-y-20 rounded-[var(--radius-md)] bg-primary px-3 py-2 text-sm font-medium text-primary-foreground opacity-0 transition focus:translate-y-0 focus:opacity-100"

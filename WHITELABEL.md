@@ -210,7 +210,7 @@ The design system uses open-source fonts by default:
 | **UI / Body** | Inter          | OFL 1.1 |
 | **Headings**  | Inter          | OFL 1.1 |
 | **Code**      | JetBrains Mono | OFL 1.1 |
-| **CJK**       | Noto Sans SC   | OFL 1.1 |
+| **CJK**       | MiSans (Nebutra instance, CDN-hosted) — self-host your own CJK face | Free commercial use, attribution required, no redistribution |
 
 ### Using Custom Brand Fonts
 

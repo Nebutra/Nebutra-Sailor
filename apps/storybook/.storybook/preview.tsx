@@ -1,3 +1,5 @@
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { CjkFontFace } from "@nebutra/fonts/font-face";
 import type { Preview, StoryContext, StoryFn } from "@storybook/react";
 import { NextIntlClientProvider } from "next-intl";
 // Single stylesheet — Tailwind v4 + tokens + fonts + @source scan directives.
@@ -48,6 +50,15 @@ const preview: Preview = {
       }
       return Story(context.args, context);
     },
+
+    // MiSans. Next apps render <CjkFontFace /> in the root layout; Vite has no
+    // process.env, so the origin is passed from the brand config explicitly.
+    (Story: StoryFn, context: StoryContext) => (
+      <>
+        <CjkFontFace origin={getBrandOrigin("cdn")} />
+        {Story(context.args, context)}
+      </>
+    ),
 
     // Any story reaching a component that calls `useTranslations` throws
     // without this — and the throw is caught by Storybook's error boundary, so

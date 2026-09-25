@@ -5,7 +5,7 @@
  * These are the "atoms" of the design system.
  *
  * Color source: @nebutra/brand `colors` → @nebutra/design-tokens `tokens/core.json` (SSOT).
- * Typography:   Geist + Geist Mono (Vercel) with Noto Sans SC + PingFang SC + Microsoft YaHei CJK fallbacks.
+ * Typography:   Geist + Geist Mono body/UI, DM Sans headings, MiSans for CJK (PingFang SC / Microsoft YaHei fallbacks).
  *               Aligned with @nebutra/design-tokens SSOT.
  */
 
@@ -181,17 +181,17 @@ export type PrimitiveFontWeight = keyof typeof primitiveFontWeight;
 // Aligned with @nebutra/design-tokens SSOT (tokens/core.json fontFamily.*).
 // EN primary: Geist (Vercel variable, 100–900)
 // EN mono:    Geist Mono
-// CN primary: Noto Sans SC → PingFang SC → Microsoft YaHei
+// CN primary: MiSans → PingFang SC → Microsoft YaHei
 
 export const primitiveFontFamily = {
   /** Default body/UI stack — Geist with CJK auto-fallbacks */
-  sans: '"Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+  sans: '"Geist", "MiSans", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
   /** Chinese body/UI stack */
-  cnSans: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif',
+  cnSans: '"MiSans", "PingFang SC", "Microsoft YaHei", sans-serif',
   /** Display / hero headlines */
-  display: '"Geist", "Noto Sans SC", sans-serif',
+  display: '"DM Sans", "MiSans", sans-serif',
   /** Heading (alias of display) */
-  heading: '"Geist", "Noto Sans SC", sans-serif',
+  heading: '"DM Sans", "MiSans", sans-serif',
   /** Code / monospace — Geist Mono pairs with Geist for full family coverage */
   mono: '"Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
 } as const;

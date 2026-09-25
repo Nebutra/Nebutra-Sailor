@@ -1,36 +1,36 @@
 {
-  "generatedAt": "2026-08-14T02:43:36.584Z",
+  "generatedAt": "2026-09-25T11:54:21.795Z",
   "source": "scripts/lint-inert-dimensions.mjs",
   "knownInert": [],
   "dimensions": [
     {
       "id": "colour",
       "declared": true,
-      "consumers": 360,
+      "consumers": 369,
       "status": "live"
     },
     {
       "id": "radius",
       "declared": true,
-      "consumers": 588,
+      "consumers": 563,
       "status": "live"
     },
     {
       "id": "elevation",
       "declared": true,
-      "consumers": 185,
+      "consumers": 168,
       "status": "live"
     },
     {
       "id": "typography",
       "declared": true,
-      "consumers": 10,
+      "consumers": 11,
       "status": "live"
     },
     {
       "id": "motion",
       "declared": true,
-      "consumers": 62,
+      "consumers": 68,
       "status": "live"
     },
     {
@@ -48,7 +48,7 @@
     {
       "id": "controls",
       "declared": true,
-      "consumers": 1,
+      "consumers": 3,
       "status": "live"
     }
   ]

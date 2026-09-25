@@ -128,17 +128,17 @@ html[data-brand="cosmos"] {
 
   /* Typography */
   --font-sans:
-    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia, var(--font-misans, "MiSans"),
+    "PingFang SC", ui-serif, serif;
   --font-cn:
-    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia, var(--font-misans, "MiSans"),
+    "PingFang SC", ui-serif, serif;
   --font-heading:
-    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia, var(--font-misans, "MiSans"),
+    "PingFang SC", ui-serif, serif;
   --font-display:
-    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia,
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, serif;
+    var(--font-reg-fraunces), "Fraunces", "GT Super", Georgia, var(--font-misans, "MiSans"),
+    "PingFang SC", ui-serif, serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
   --font-weight-heading: 350;
 
@@ -373,17 +373,17 @@ html[data-brand="gsap"] {
 
   /* Typography */
   --font-sans:
-    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans",
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans", var(--font-misans, "MiSans"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-cn:
-    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans",
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", "DM Sans", var(--font-misans, "MiSans"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
-    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-inter-tight), "Mori", "Inter Tight", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 600;
 
   /* Motion */
@@ -543,17 +543,17 @@ html[data-brand="linear"] {
 
   /* Typography */
   --font-sans:
-    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter Variable", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-cn:
-    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter Variable", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-heading:
-    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter Variable", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter Variable", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     var(--font-jetbrains-mono), "Berkeley Mono", "JetBrains Mono", ui-monospace, monospace;
   --font-weight-heading: 510;
@@ -772,17 +772,17 @@ html[data-brand="notion"] {
 
   /* Typography */
   --font-sans:
-    var(--font-inter), "NotionInter", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "NotionInter", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-cn:
-    var(--font-inter), "NotionInter", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "NotionInter", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-heading:
-    var(--font-inter), "NotionInter", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "NotionInter", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-inter), "NotionInter", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "NotionInter", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 700;
 
   /* Motion */
@@ -981,17 +981,17 @@ html[data-brand="raycast"] {
 
   /* Typography */
   --font-sans:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
-    ui-sans-serif, system-ui, -apple-system, sans-serif;
+    var(--font-inter), "Inter", var(--font-misans, "MiSans"), "PingFang SC", ui-sans-serif,
+    system-ui, -apple-system, sans-serif;
   --font-cn:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
-    ui-sans-serif, system-ui, -apple-system, sans-serif;
+    var(--font-inter), "Inter", var(--font-misans, "MiSans"), "PingFang SC", ui-sans-serif,
+    system-ui, -apple-system, sans-serif;
   --font-heading:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
-    ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter", var(--font-misans, "MiSans"), "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
   --font-display:
-    var(--font-inter), "Inter", var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC",
-    ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter", var(--font-misans, "MiSans"), "PingFang SC", ui-sans-serif,
+    system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 400;
 
@@ -1141,17 +1141,17 @@ html[data-brand="stripe"] {
 
   /* Typography */
   --font-sans:
-    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter", var(--font-misans, "MiSans"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-cn:
-    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter",
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", "Inter", var(--font-misans, "MiSans"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-heading:
-    var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", var(--font-misans, "MiSans"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-reg-inter-tight), "sohne-var", "Inter Tight",
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-reg-inter-tight), "sohne-var", "Inter Tight", var(--font-misans, "MiSans"),
+    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 300;
 
   /* Motion */
@@ -1308,17 +1308,17 @@ html[data-brand="vanta"] {
 
   /* Typography */
   --font-sans:
-    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter Variable", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-cn:
-    var(--font-inter), "Inter Variable", "Inter", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-inter), "Inter Variable", "Inter", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-heading:
     var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, Georgia, serif;
+    var(--font-misans, "MiSans"), "PingFang SC", ui-serif, Georgia, serif;
   --font-display:
     var(--font-reg-source-serif-4), "Reckless", "Source Serif 4", "Lora",
-    var(--font-noto-sans-sc, "Noto Sans SC"), "PingFang SC", ui-serif, Georgia, serif;
+    var(--font-misans, "MiSans"), "PingFang SC", ui-serif, Georgia, serif;
   --font-weight-heading: 500;
 
   /* Motion */
@@ -1478,17 +1478,17 @@ html[data-brand="vercel"] {
 
   /* Typography */
   --font-sans:
-    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-cn:
-    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-heading:
-    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-noto-sans-sc, "Noto Sans SC"),
-    "PingFang SC", ui-sans-serif, system-ui, sans-serif;
+    var(--font-geist-sans), "Geist Sans", "Geist", var(--font-misans, "MiSans"), "PingFang SC",
+    ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, Menlo, monospace;
   --font-weight-heading: 450;
 
