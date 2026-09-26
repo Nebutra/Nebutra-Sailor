@@ -1,12 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { createPaymentSessionMock, queryChinaPayOrderMock, refundChinaPayOrderMock } = vi.hoisted(
-  () => ({
-    createPaymentSessionMock: vi.fn(),
-    queryChinaPayOrderMock: vi.fn(),
-    refundChinaPayOrderMock: vi.fn(),
-  }),
-);
+const {
+  createPaymentSessionMock,
+  queryChinaPayOrderMock,
+  refundChinaPayOrderMock,
+  getCreemCheckoutMock,
+  refundCreemOrderMock,
+} = vi.hoisted(() => ({
+  createPaymentSessionMock: vi.fn(),
+  queryChinaPayOrderMock: vi.fn(),
+  refundChinaPayOrderMock: vi.fn(),
+  getCreemCheckoutMock: vi.fn(),
+  refundCreemOrderMock: vi.fn(),
+}));
 
 vi.mock("../../checkout/factory.js", () => ({
   getCheckout: vi.fn(async ({ provider }: { provider: string }) => ({
@@ -15,6 +21,11 @@ vi.mock("../../checkout/factory.js", () => ({
   })),
   isChinaPayConfigured: (method: string) =>
     method === "alipay" ? Boolean(process.env.ALIPAY_APP_ID) : Boolean(process.env.WECHATPAY_MCHID),
+}));
+
+vi.mock("../../creem/index.js", () => ({
+  getCreemCheckout: getCreemCheckoutMock,
+  refundCreemOrder: refundCreemOrderMock,
 }));
 
 vi.mock("../../chinapay/index.js", () => ({
@@ -154,7 +165,10 @@ beforeEach(() => {
   });
   vi.stubEnv("ALIPAY_APP_ID", "2021000000000000");
   vi.stubEnv("WECHATPAY_MCHID", "");
-  vi.stubEnv("STRIPE_SECRET_KEY", "");
+  vi.stubEnv("CREEM_API_KEY", "");
+  vi.stubEnv("CREEM_PRODUCT_ID", "");
+  getCreemCheckoutMock.mockReset();
+  refundCreemOrderMock.mockReset();
 });
 
 afterEach(() => {
@@ -193,19 +207,21 @@ describe("createPaymentOrder", () => {
     );
   });
 
-  it("stores the provider's session id when it has one", async () => {
-    vi.stubEnv("STRIPE_SECRET_KEY", "sk_test_1");
+  it("sends a card through Creem in USD and stores its checkout id", async () => {
+    vi.stubEnv("CREEM_API_KEY", "creem_key");
+    vi.stubEnv("CREEM_PRODUCT_ID", "prod_onetime");
     createPaymentSessionMock.mockResolvedValue({
       kind: "redirect",
-      url: "https://checkout.stripe.com/c/pay/cs_1",
-      providerRef: "cs_1",
-      provider: "stripe",
+      url: "https://checkout.creem.io/ch_1",
+      providerRef: "ch_1",
+      provider: "creem",
     });
 
     const created = await buy("card");
 
     expect(rows.get(created.orderId)).toMatchObject({
-      providerRef: "cs_1",
+      provider: "creem",
+      providerRef: "ch_1",
       amountMinor: 1000,
       currency: "USD",
     });
@@ -406,5 +422,54 @@ describe("refundPaymentOrder", () => {
     expect(result).toMatchObject({ status: "failed", refundedMinor: 0 });
     expect(rows.get(orderId)?.status).toBe("PAID");
     expect(revoked).toEqual([]);
+  });
+});
+
+describe("Creem orders", () => {
+  beforeEach(() => {
+    vi.stubEnv("CREEM_API_KEY", "creem_key");
+    vi.stubEnv("CREEM_PRODUCT_ID", "prod_onetime");
+    createPaymentSessionMock.mockResolvedValue({
+      kind: "redirect",
+      url: "https://checkout.creem.io/ch_1",
+      providerRef: "ch_1",
+      provider: "creem",
+    });
+  });
+
+  it("reconciles a lost checkout.completed by asking Creem for the checkout", async () => {
+    const { orderId } = await buy("card");
+    getCreemCheckoutMock.mockResolvedValue({
+      status: "completed",
+      order: { id: "ord_1", amount: 1000, currency: "USD", status: "paid" },
+    });
+
+    const result = await reconcilePaymentOrders({ now: new Date(Date.now() + 5 * 60 * 1000) });
+
+    expect(getCreemCheckoutMock).toHaveBeenCalledWith("ch_1");
+    expect(result.settled).toBe(1);
+    expect(rows.get(orderId)).toMatchObject({ status: "PAID", providerRef: "ord_1" });
+  });
+
+  it("refunds in full through Creem, by the Creem order", async () => {
+    const { orderId } = await buy("card");
+    await settlePaymentOrder({ orderId, paidMinor: 1000, currency: "USD", providerRef: "ord_1" });
+    refundCreemOrderMock.mockResolvedValue({ status: "succeeded" });
+
+    const result = await refundPaymentOrder({ orderId, refundId: "r1" });
+
+    expect(refundCreemOrderMock).toHaveBeenCalledWith("ord_1");
+    expect(result).toMatchObject({ status: "succeeded", refundedMinor: 1000 });
+    expect(rows.get(orderId)?.status).toBe("REFUNDED");
+  });
+
+  it("refuses a partial refund before calling Creem, which only refunds in full", async () => {
+    const { orderId } = await buy("card");
+    await settlePaymentOrder({ orderId, paidMinor: 1000, currency: "USD", providerRef: "ord_1" });
+
+    await expect(
+      refundPaymentOrder({ orderId, refundId: "r1", amountMinor: 500 }),
+    ).rejects.toMatchObject({ code: "REFUND_PARTIAL_UNSUPPORTED" });
+    expect(refundCreemOrderMock).not.toHaveBeenCalled();
   });
 });

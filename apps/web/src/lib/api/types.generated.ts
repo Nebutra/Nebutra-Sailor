@@ -6281,6 +6281,64 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/webhooks/creem": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Creem webhook
+     * @description Verifies `creem-signature` (hex HMAC-SHA256 of the raw body) and settles the payment order a `checkout.completed` names. 2xx only after the inbox row is marked processed.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            [key: string]: unknown;
+          };
+        };
+      };
+      responses: {
+        /** @description Accepted */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              ok: boolean;
+            };
+          };
+        };
+        /** @description Bad signature */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              ok: boolean;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/webhooks": {
     parameters: {
       query?: never;

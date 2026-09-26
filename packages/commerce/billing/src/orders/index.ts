@@ -102,7 +102,8 @@ function currencyFor(method: PaymentMethod): OfferCurrency {
 
 /** Whether a method has credentials behind it right now. */
 export function isPaymentMethodAvailable(method: PaymentMethod): boolean {
-  if (method === "card") return Boolean(process.env.STRIPE_SECRET_KEY);
+  // Cards go through Creem, the merchant of record (ADR 2026-09-26).
+  if (method === "card") return Boolean(process.env.CREEM_API_KEY && process.env.CREEM_PRODUCT_ID);
   return isChinaPayConfigured(method);
 }
 
@@ -160,7 +161,7 @@ export async function createPaymentOrder(
 
   const orders = requireStore();
   const amountMinor = toMinorUnits(price);
-  const provider = input.method === "card" ? "stripe" : "chinapay";
+  const provider = input.method === "card" ? "creem" : "chinapay";
 
   const order = await orders.create({
     tenantId: input.organizationId,
@@ -271,7 +272,8 @@ export interface ReconcileResult {
  * Wallet notifications get lost — a buyer pays, the callback never lands, and
  * the purchase never arrives. This asks the wallet directly about every order
  * pending past RECONCILE_AFTER_MS, and retries fulfillment for any order paid
- * but not handed over. Stripe orders are left to Stripe's own webhook retries.
+ * but not handed over. Wallet orders are asked by out_trade_no, Creem orders by
+ * their checkout id; Stripe orders are left to Stripe's own webhook retries.
  */
 export async function reconcilePaymentOrders(
   options: { limit?: number; now?: Date } = {},
@@ -291,6 +293,20 @@ export async function reconcilePaymentOrders(
   for (const order of pending) {
     result.checked += 1;
     try {
+      if (order.provider === "creem" && order.providerRef) {
+        const { getCreemCheckout } = await import("../creem/index");
+        const checkout = await getCreemCheckout(order.providerRef);
+        if (checkout.status === "completed" && checkout.order) {
+          const outcome = await settlePaymentOrder({
+            orderId: order.id,
+            paidMinor: checkout.order.amount,
+            currency: checkout.order.currency,
+            providerRef: checkout.order.id,
+          });
+          if (outcome === "settled") result.settled += 1;
+          continue;
+        }
+      }
       if (order.provider === "chinapay") {
         const status = await queryChinaPayOrder(order.id, order.method as "alipay" | "wechat");
         if (status.status === "paid") {
@@ -382,6 +398,17 @@ export async function refundPaymentOrder(
       totalFee: toMajorString(paidMinor),
       reason: input.reason,
     }));
+  } else if (order.provider === "creem" && order.providerRef) {
+    // Creem refunds a transaction in full and nothing less.
+    if (amountMinor !== remaining) {
+      throw new BillingError(
+        "Creem refunds only the full remaining amount; refund it all or settle the difference outside Creem",
+        "REFUND_PARTIAL_UNSUPPORTED",
+        400,
+      );
+    }
+    const { refundCreemOrder } = await import("../creem/index");
+    ({ status } = await refundCreemOrder(order.providerRef));
   } else if (order.provider === "stripe" && order.providerRef) {
     ({ status } = await refundStripeCheckoutSession({
       sessionId: order.providerRef,

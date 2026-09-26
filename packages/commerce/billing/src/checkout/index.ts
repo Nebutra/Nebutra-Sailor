@@ -6,6 +6,7 @@ export {
   type CreditPurchaseWebhookResult,
   handleCreditPurchaseWebhook,
 } from "./credit-webhook";
+export { CreemCheckoutProvider } from "./creem";
 export { detectProvider, getCheckout, isChinaPayConfigured } from "./factory";
 export { ManualCheckoutProvider } from "./manual";
 export {
