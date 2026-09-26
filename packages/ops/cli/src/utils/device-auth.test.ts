@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { type MockAuthServer, startMockAuthServer } from "../../tests/device-auth-mock-server";
 import {
   fetchWhoami,
+  fetchWithRetry,
   isTransientPollFailure,
   pollUntilComplete,
   requestDeviceCode,
@@ -188,6 +189,63 @@ describe("device-auth", () => {
       expect(isTransientPollFailure(timeout())).toBe(true);
       expect(isTransientPollFailure(new TypeError("fetch failed"))).toBe(true);
       expect(isTransientPollFailure(new Error("boom"))).toBe(false);
+    });
+  });
+
+  describe("fetchWithRetry (one-shot requests over a flaky network)", () => {
+    const timeout = () =>
+      Object.assign(new Error("aborted due to timeout"), { name: "TimeoutError" });
+    const ok = () => new Response("{}", { status: 200 });
+
+    it("retries a timeout and a 5xx, then returns the answer", async () => {
+      const answers: Array<() => Response> = [
+        () => {
+          throw timeout();
+        },
+        () => new Response("{}", { status: 502 }),
+        ok,
+      ];
+      const slept: number[] = [];
+      const res = await fetchWithRetry(
+        (async () => answers.shift()!()) as unknown as typeof fetch,
+        "https://x",
+        {},
+        {
+          sleep: async (ms) => {
+            slept.push(ms);
+          },
+        },
+      );
+      expect(res.status).toBe(200);
+      expect(slept).toEqual([1000, 2000]);
+    });
+
+    it("returns a 4xx at once — the server has answered", async () => {
+      let calls = 0;
+      const res = await fetchWithRetry(
+        (async () => {
+          calls++;
+          return new Response("{}", { status: 401 });
+        }) as unknown as typeof fetch,
+        "https://x",
+        {},
+        { sleep: async () => {} },
+      );
+      expect(res.status).toBe(401);
+      expect(calls).toBe(1);
+    });
+
+    it("gives up after the last attempt with the underlying error", async () => {
+      await expect(
+        fetchWithRetry(
+          (async () => {
+            throw timeout();
+          }) as unknown as typeof fetch,
+          "https://x",
+          {},
+          { attempts: 3, sleep: async () => {} },
+        ),
+      ).rejects.toMatchObject({ name: "TimeoutError" });
     });
   });
 });
