@@ -24,7 +24,8 @@ import { requireAuth, requireOrganization } from "../../middlewares/tenantContex
 export const usageLedgerRoutes = new OpenAPIHono();
 
 // Auth + org guards run on every request into this sub-app.
-usageLedgerRoutes.use("*", requireAuth, requireOrganization);
+// Its own path only: it shares the /api/v1/billing mount with other routers.
+usageLedgerRoutes.use("/usage", requireAuth, requireOrganization);
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 
