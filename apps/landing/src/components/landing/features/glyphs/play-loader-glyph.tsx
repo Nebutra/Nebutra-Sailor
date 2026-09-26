@@ -27,7 +27,7 @@ export function PlayLoaderGlyph(_props: SubpackageGlyphProps) {
     >
       {/* Header: playbook identity */}
       <div className="flex items-center gap-1.5 text-muted-foreground">
-        <Play className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <Play className="h-3 w-3 text-primary" />
         <span className="truncate">
           playbook
           <span className="mx-1 text-muted-foreground">·</span>
@@ -67,7 +67,7 @@ function StepRow({ step }: { step: Step }) {
   if (step.state === "done") {
     return (
       <div className="flex items-center gap-1.5 text-muted-foreground">
-        <span className="inline-flex h-3 w-3 items-center justify-center rounded-full bg-[var(--status-success)]/15 text-[var(--status-success)]">
+        <span className="inline-flex h-3 w-3 items-center justify-center rounded-full bg-success/15 text-success-strong">
           <Check className="h-2 w-2" />
         </span>
         <span className="truncate text-foreground">{step.label}</span>
@@ -79,13 +79,13 @@ function StepRow({ step }: { step: Step }) {
 
   if (step.state === "running") {
     return (
-      <div className="flex items-center gap-1.5 text-[hsl(var(--primary))]">
+      <div className="flex items-center gap-1.5 text-primary">
         <span className="inline-flex h-3 w-3 items-center justify-center">
           <Clock className="h-2.5 w-2.5 animate-spin" />
         </span>
         <span className="truncate font-medium">{step.label}</span>
         <span className="text-muted-foreground">·</span>
-        <span className="text-[hsl(var(--primary))]">{step.duration}</span>
+        <span className="text-primary">{step.duration}</span>
       </div>
     );
   }

@@ -178,7 +178,7 @@ export function AxisMatrix({
 
 export function MissingAxis({ axisName }: { axisName: string }) {
   return (
-    <p className="text-sm text-[hsl(var(--destructive-strong))]">
+    <p className="text-sm text-destructive-strong">
       No <code className="font-mono">{axisName}</code> values were found in the library source. This
       page derives them at build time, so an empty axis means the source moved and the extractor in{" "}
       <code className="font-mono">src/lib/components/ui-source.ts</code> needs updating — it does

@@ -132,7 +132,7 @@ export default function BrandPage() {
 
         <div className="mb-8 grid gap-3 sm:grid-cols-2">
           <div className="flex min-h-[150px] flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] bg-card p-6 shadow-ambient-sm">
-            <span className="text-[hsl(var(--foreground))]">
+            <span className="text-foreground">
               <Asset asset="logo-mono" height={52} />
             </span>
             <div className="text-center">
@@ -141,7 +141,7 @@ export default function BrandPage() {
             </div>
           </div>
           <div className="flex min-h-[150px] flex-col items-center justify-center gap-4 rounded-[var(--radius-lg)] bg-foreground p-6">
-            <span className="text-[hsl(var(--background))]">
+            <span className="text-background">
               <Asset asset="logo-inverse" height={52} />
             </span>
             <div className="text-center">
@@ -235,6 +235,7 @@ export default function BrandPage() {
           className="mb-4 flex h-32 items-end rounded-[var(--radius-lg)] p-4"
           style={{ background: brandGradient.primary.css }}
         >
+          {/* allow-palette: ink pinned to read on an arbitrary computed brand gradient swatch */}
           <span className="font-medium text-[13px] text-white">{brandGradient.primary.angle}°</span>
         </div>
         <div className="flex flex-wrap gap-4">

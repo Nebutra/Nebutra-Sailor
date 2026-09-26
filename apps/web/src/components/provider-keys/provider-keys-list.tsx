@@ -48,7 +48,7 @@ function DeleteButton({
       disabled={pending}
       onClick={handleClick}
       data-testid={`provider-key-remove-${provider}`}
-      className="text-xs font-medium text-[hsl(var(--destructive-strong))] transition-colors hover:text-[hsl(var(--destructive-strong))]/80 disabled:opacity-50"
+      className="text-xs font-medium text-destructive-strong transition-colors hover:text-destructive-strong/80 disabled:opacity-50"
     >
       {pending ? "Removing…" : "Remove"}
     </button>
@@ -167,8 +167,7 @@ export function ProviderKeysList({
                   type="button"
                   onClick={onAdd}
                   data-testid="provider-keys-empty-add"
-                  className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                  style={{ background: "hsl(var(--primary))" }}
+                  className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-opacity hover:opacity-90"
                 >
                   Add your first provider key
                 </button>

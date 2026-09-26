@@ -38,7 +38,7 @@ export function MeteringGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Top: tenant + plan */}
         <div className="flex items-center justify-between">
           <span className="truncate font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
@@ -77,7 +77,7 @@ export function MeteringGlyph({ locale }: SubpackageGlyphProps) {
         {/* Footer */}
         <div className="mt-0.5 flex items-center justify-between">
           <span className="font-mono text-[9px] text-muted-foreground">{copy.footer}</span>
-          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
         </div>
       </div>
     </div>

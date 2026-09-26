@@ -21,7 +21,7 @@ export function DynamicCodeBlock({ lang, code, className }: Props) {
       data-language={lang || "text"}
       className={
         className ??
-        "overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-950 p-4 text-sm leading-relaxed text-zinc-100"
+        "overflow-x-auto rounded-lg border border-border bg-muted p-4 text-sm leading-relaxed text-foreground"
       }
     >
       <code className={lang ? `language-${lang}` : undefined}>{code}</code>

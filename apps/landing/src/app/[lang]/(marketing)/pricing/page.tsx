@@ -106,7 +106,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
                   ))}
                 </div>
                 <div className="flex flex-col items-center sm:items-start gap-1">
-                  <div className="flex text-amber-500">
+                  <div className="flex text-warning-strong">
                     {RATING_STARS.map((star) => (
                       <StarFill key={star.id} className="h-4 w-4" />
                     ))}
@@ -170,7 +170,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
           <p className="mt-16 text-center text-sm text-muted-foreground">
             <Link
               href="/contact"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               {faq("contactNudge")}
             </Link>

@@ -149,14 +149,14 @@ function CsvDiffExports({ output }: { output: Output }) {
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs text-[var(--neutral-10)]">{t("csvDiff.exportChanged")}</span>
+        <span className="text-xs text-neutral-10">{t("csvDiff.exportChanged")}</span>
         <ShellExitActions
           exit={{ text: changed, filename: "changed-rows.csv", mimeType: "text/csv;charset=utf-8" }}
           idPrefix="csv-diff-changed"
         />
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs text-[var(--neutral-10)]">{t("csvDiff.exportFull")}</span>
+        <span className="text-xs text-neutral-10">{t("csvDiff.exportFull")}</span>
         <ShellExitActions
           exit={{ text: full, filename: "csv-diff.csv", mimeType: "text/csv;charset=utf-8" }}
           idPrefix="csv-diff-full"
@@ -398,7 +398,7 @@ export function W3CsvDiffRunner({ toolId }: { toolId: string }) {
                     >
                       {t(`csvDiff.level.${f.level}`)}
                     </ShellBadge>
-                    <span className="flex-1 text-sm text-[var(--neutral-11)]">{f.message}</span>
+                    <span className="flex-1 text-sm text-neutral-11">{f.message}</span>
                   </li>
                 ))}
               </ul>

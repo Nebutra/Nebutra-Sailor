@@ -120,7 +120,7 @@ function rollUp(output: Output): YearRow[] {
 }
 
 const CELL = "px-3 py-1.5 text-right font-mono tabular-nums whitespace-nowrap";
-const HEAD = "px-3 py-2 text-right text-xs font-medium text-[var(--neutral-11)]";
+const HEAD = "px-3 py-2 text-right text-xs font-medium text-neutral-11";
 
 export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
   const t = useTranslations("runners");
@@ -261,10 +261,10 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
               ].map((item) => (
                 <div
                   key={item.key}
-                  className="min-w-0 rounded-[var(--radius-lg)] bg-[var(--neutral-3)] px-4 py-3"
+                  className="min-w-0 rounded-[var(--radius-lg)] bg-neutral-3 px-4 py-3"
                 >
-                  <p className="text-xs text-[var(--neutral-11)]">{item.label}</p>
-                  <p className="mt-1.5 truncate font-mono text-lg font-semibold tracking-tight text-[var(--neutral-12)] tabular-nums whitespace-nowrap sm:text-xl">
+                  <p className="text-xs text-neutral-11">{item.label}</p>
+                  <p className="mt-1.5 truncate font-mono text-lg font-semibold tracking-tight text-neutral-12 tabular-nums whitespace-nowrap sm:text-xl">
                     {item.value}
                   </p>
                 </div>
@@ -302,7 +302,7 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
               </div>
             </div>
 
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+            <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2">
               {view === "monthly" ? (
                 <table className="w-full min-w-[34rem] text-sm">
                   <caption className="sr-only">{t("loanAmortization.tableCaption")}</caption>
@@ -334,20 +334,16 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
                     {shown.map((row) => (
                       <tr
                         key={row.period}
-                        className={
-                          row.period === o.crossoverPeriod
-                            ? "bg-[color-mix(in_srgb,var(--status-info)_12%,transparent)]"
-                            : undefined
-                        }
+                        className={row.period === o.crossoverPeriod ? "bg-info/12" : undefined}
                       >
                         <th
                           scope="row"
-                          className="px-3 py-1.5 text-left font-normal tabular-nums text-[var(--neutral-11)]"
+                          className="px-3 py-1.5 text-left font-normal tabular-nums text-neutral-11"
                         >
                           {row.period}
                         </th>
                         {dated ? (
-                          <td className="hidden px-3 py-1.5 text-left text-[var(--neutral-11)] sm:table-cell">
+                          <td className="hidden px-3 py-1.5 text-left text-neutral-11 sm:table-cell">
                             {row.date}
                           </td>
                         ) : null}
@@ -383,7 +379,7 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
                       <tr key={year.key}>
                         <th
                           scope="row"
-                          className="px-3 py-1.5 text-left font-normal tabular-nums text-[var(--neutral-11)]"
+                          className="px-3 py-1.5 text-left font-normal tabular-nums text-neutral-11"
                         >
                           {year.label}
                         </th>

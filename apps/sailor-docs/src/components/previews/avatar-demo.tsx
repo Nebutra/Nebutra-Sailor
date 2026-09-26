@@ -111,7 +111,7 @@ export function AvatarWithIconDemo() {
         <AvatarWithIcon
           src={gh("rauchg")}
           alt="rauchg"
-          icon={<span className="h-2 w-2 bg-green-500 block rounded-full" />}
+          icon={<span className="h-2 w-2 bg-success block rounded-full" />}
           iconBackground="bg-background"
           size="md"
         />
@@ -122,7 +122,7 @@ export function AvatarWithIconDemo() {
         <AvatarWithIcon
           src={gh("shuding")}
           alt="shuding"
-          icon={<span className="h-2 w-2 bg-yellow-500 block rounded-full" />}
+          icon={<span className="h-2 w-2 bg-warning block rounded-full" />}
           iconBackground="bg-background"
           size="md"
         />

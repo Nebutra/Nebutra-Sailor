@@ -42,6 +42,7 @@ export const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonPr
           } as CSSProperties
         }
         className={cn(
+          // allow-palette: shimmer CTA renders a fixed dark pill via --bg (defaults to rgba(0,0,0,1)), not the themed surface — ink stays fixed with it
           "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden [border-radius:var(--radius)] border border-white/10 px-6 py-3 whitespace-nowrap text-white [background:var(--bg)]",
           "transform-gpu transition-transform duration-300 ease-in-out active:translate-y-px",
           className,

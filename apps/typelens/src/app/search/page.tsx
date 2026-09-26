@@ -21,32 +21,32 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
           defaultValue={query}
           placeholder="Typeface, mood, medium…"
           data-allow-native
-          className="min-w-0 flex-1 rounded border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+          className="min-w-0 flex-1 rounded border border-border px-3 py-2 text-sm outline-none focus:border-foreground"
         />
         <button
           type="submit"
-          className="rounded bg-neutral-900 px-4 py-2 text-sm font-medium text-white"
+          className="rounded bg-foreground px-4 py-2 text-sm font-medium text-background"
         >
           Search
         </button>
       </form>
       {query ? (
-        <p className="mt-4 text-sm text-neutral-500">
+        <p className="mt-4 text-sm text-muted-foreground">
           {hits.length} results for “{query}”
         </p>
       ) : (
-        <p className="mt-4 text-sm text-neutral-500">Try “控制台”, “poster”, or “Fraunces”.</p>
+        <p className="mt-4 text-sm text-muted-foreground">Try “控制台”, “poster”, or “Fraunces”.</p>
       )}
       <ul className="mt-8 space-y-4">
         {hits.map((s) => {
           const work = getWork(s.workId);
           if (!work) return null;
           return (
-            <li key={s.id} className="border-b border-neutral-100 pb-4">
+            <li key={s.id} className="border-b border-border pb-4">
               <Link href={`/works/${work.slug}`} className="text-xl font-semibold hover:underline">
                 {work.title}
               </Link>
-              <p className="mt-1 text-sm text-neutral-600">{s.summary}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{s.summary}</p>
             </li>
           );
         })}

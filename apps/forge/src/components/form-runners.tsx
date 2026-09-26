@@ -96,7 +96,7 @@ export function BmiRunner({ toolId }: { toolId: string }) {
       {bmi != null ? (
         <RunnerPanel>
           <p className="text-3xl font-semibold tabular-nums tracking-tight">{bmi}</p>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">{categoryLabel(category)}</p>
+          <p className="mt-1 text-sm text-neutral-11">{categoryLabel(category)}</p>
         </RunnerPanel>
       ) : null}
       <RunnerNote>{t("bmi.note")}</RunnerNote>
@@ -252,9 +252,7 @@ export function DataSizeRunner({ toolId }: { toolId: string }) {
           <p className="font-mono text-xl tabular-nums break-all">
             {result} {to}
           </p>
-          <p className="mt-1 text-xs text-[var(--neutral-10)]">
-            {t("dataSize.binary", { value, from })}
-          </p>
+          <p className="mt-1 text-xs text-neutral-10">{t("dataSize.binary", { value, from })}</p>
         </RunnerPanel>
       ) : null}
       <RunnerNote>{t("dataSize.note")}</RunnerNote>
@@ -364,11 +362,9 @@ export function DateDiffRunner({ toolId }: { toolId: string }) {
         <RunnerPanel>
           <p className="text-3xl font-semibold tabular-nums tracking-tight">
             {days}
-            <span className="ml-2 text-base font-normal text-[var(--neutral-11)]">
-              {t("dateDiff.days")}
-            </span>
+            <span className="ml-2 text-base font-normal text-neutral-11">{t("dateDiff.days")}</span>
           </p>
-          <p className="mt-1 text-xs text-[var(--neutral-10)]">
+          <p className="mt-1 text-xs text-neutral-10">
             {from} → {to}
           </p>
         </RunnerPanel>

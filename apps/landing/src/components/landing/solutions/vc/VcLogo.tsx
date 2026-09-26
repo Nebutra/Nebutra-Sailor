@@ -35,6 +35,7 @@ export function VcLogo({
     return (
       <span
         className={cn(
+          // allow-palette: third-party logo mark — fixed white mat so any institution's logo (light or dark) stays legible regardless of theme
           "flex shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-white p-1.5",
           s.box,
         )}
@@ -60,10 +61,11 @@ export function VcLogo({
     >
       {/* biome-ignore lint/performance/noImgElement: inline data-uri avatar, no network */}
       <img src={glassUri} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full" />
-      {/* scrim keeps white initials legible on the palest glass gradients */}
+      {/* allow-palette: scrim over the generated glass-gradient avatar image, keeps white initials legible on the palest gradients */}
       <span aria-hidden="true" className="absolute inset-0 bg-black/20" />
       <span
         className={cn(
+          // allow-palette: ink over the generated glass-gradient avatar image above
           "relative font-bold text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.6)]",
           s.text,
         )}

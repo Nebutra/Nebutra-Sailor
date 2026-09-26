@@ -23,17 +23,17 @@ export function CreateSailorGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       style={{ height: 160 }}
-      className="relative w-full overflow-hidden rounded-[var(--radius-lg)] bg-[oklch(0.16_0.012_250)]"
+      className="relative w-full overflow-hidden dark rounded-[var(--radius-lg)] bg-[oklch(0.16_0.012_250)] text-foreground"
     >
-      {/* Title bar */}
-      <div className="flex items-center justify-between border-b border-white/5 px-3 py-1.5">
-        <div className="flex items-center gap-1.5 text-white/40">
+      {/* Title bar — the `dark` class above scopes dark token values to the terminal */}
+      <div className="flex items-center justify-between border-b border-foreground/5 px-3 py-1.5">
+        <div className="flex items-center gap-1.5 text-foreground/40">
           <Box className="h-3.5 w-3.5" />
           <span className="font-mono text-[10px] uppercase tracking-wider">scaffold</span>
         </div>
         <Badge
           variant="outline"
-          className="h-5 border-white/10 px-1.5 font-mono text-[10px] text-white/60"
+          className="h-5 border-foreground/10 px-1.5 font-mono text-[10px] text-foreground/60"
         >
           create-sailor
         </Badge>
@@ -60,7 +60,7 @@ export function CreateSailorGlyph(_props: SubpackageGlyphProps) {
           return (
             <div key={i} className="mt-0.5 flex items-center gap-1.5 truncate">
               <Sparkles className="h-3 w-3 shrink-0 text-[var(--brand-accent)]" />
-              <span className="truncate font-semibold text-white/90">{line.text}</span>
+              <span className="truncate font-semibold text-foreground/90">{line.text}</span>
             </div>
           );
         })}
@@ -77,7 +77,7 @@ export function CreateSailorGlyph(_props: SubpackageGlyphProps) {
             <Badge
               key={tier.label}
               variant="outline"
-              className="h-5 border-white/10 px-1.5 font-mono text-[10px] text-white/50"
+              className="h-5 border-foreground/10 px-1.5 font-mono text-[10px] text-foreground/50"
             >
               {tier.label}
             </Badge>

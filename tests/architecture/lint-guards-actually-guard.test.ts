@@ -114,6 +114,12 @@ const CASES: Case[] = [
       'export const C = ({ isActive }: { isActive: boolean }) => (\n  <span className={isActive ? "font-semibold" : "font-medium"}>x</span>\n);\n',
   },
   {
+    // The same shift wrapped by the formatter — 17 of these hid from a per-line scan.
+    guard: "lint-state-shift",
+    violation:
+      'export const C = ({ active }: { active: boolean }) => (\n  <span\n    className={\n      active\n        ? "bg-muted font-medium text-foreground"\n        : "text-muted-foreground"\n    }\n  >\n    x\n  </span>\n);\n',
+  },
+  {
     // A hand-picked stacking number above the local range, instead of a layer role.
     guard: "lint-z-index",
     violation: 'export const C = () => <div className="fixed z-[150]" />;\n',
@@ -136,6 +142,16 @@ const CASES: Case[] = [
     // Appearance accent, contrast and motion-"on" switches shipped dead.
     guard: "lint-unread-dom",
     violation: 'document.documentElement.dataset.lintProbeUnread = "on";\n',
+  },
+  {
+    // An app speaking around the design system: a status fill var as ink.
+    guard: "lint-app-consumption",
+    violation: 'export const C = () => <p className="text-[var(--status-danger)]">Failed</p>;\n',
+  },
+  {
+    // The long form of a registered 12-step colour, invisible to tailwind-merge.
+    guard: "lint-app-consumption",
+    violation: 'export const C = () => <p className="bg-[var(--neutral-2)]">Muted</p>;\n',
   },
   {
     // A status fill used as ink: text-warning is 2.0:1 in light mode.

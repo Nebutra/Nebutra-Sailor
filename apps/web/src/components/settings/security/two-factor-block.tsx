@@ -300,11 +300,7 @@ export function TwoFactorBlock({
       />
 
       {errorMessage && (
-        <p
-          className="mb-4 text-sm text-[hsl(var(--destructive))]"
-          id="two-factor-error"
-          role="alert"
-        >
+        <p className="mb-4 text-sm text-destructive-strong" id="two-factor-error" role="alert">
           {errorMessage}
         </p>
       )}
@@ -541,6 +537,7 @@ function VerifyTotpForm({
       <div className="flex flex-col items-start gap-3 rounded-[var(--radius-lg)] border border-border bg-muted p-4 sm:flex-row sm:items-center">
         <NextImage
           alt="Two-factor QR code"
+          // allow-palette: QR modules need a fixed light backdrop to stay camera-scannable in dark mode
           className="size-[200px] rounded bg-white p-2"
           height={200}
           unoptimized

@@ -87,10 +87,13 @@ export function NewsRailCarousel({ slides, isZh }: { slides: NewsRailSlide[]; is
             </div>
           ))}
 
+          {/* allow-palette: scrim + ink over the carousel photo, not a themed surface */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 via-black/25 to-transparent p-4">
             {current.category && (
+              // allow-palette: ink over the carousel photo scrim above
               <p className="text-xs font-medium text-white/80">{current.category}</p>
             )}
+            {/* allow-palette: ink over the carousel photo scrim above */}
             <p className="mt-1 inline-flex items-start gap-1.5 text-sm font-semibold leading-snug text-white">
               <span className="line-clamp-2">{current.title}</span>
               <ArrowUpRight
@@ -113,9 +116,7 @@ export function NewsRailCarousel({ slides, isZh }: { slides: NewsRailSlide[]; is
                   aria-current={isActive}
                   onClick={() => setActive(index)}
                   className={`h-1.5 rounded-full [transition-property:width,background-color] [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none ${
-                    isActive
-                      ? "w-5 bg-[hsl(var(--primary))]"
-                      : "w-1.5 bg-[hsl(var(--border))] hover:bg-[hsl(var(--muted-foreground))]"
+                    isActive ? "w-5 bg-primary" : "w-1.5 bg-border hover:bg-muted-foreground"
                   }`}
                 />
               );

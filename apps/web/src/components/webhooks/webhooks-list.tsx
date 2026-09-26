@@ -180,7 +180,7 @@ export function WebhooksList({
             <button
               type="button"
               onClick={() => onEdit(endpoint)}
-              className="text-[hsl(var(--primary))] hover:underline"
+              className="text-primary hover:underline"
             >
               Edit
             </button>
@@ -207,7 +207,7 @@ export function WebhooksList({
             <button
               type="button"
               onClick={() => handleDelete(endpoint)}
-              className="text-[hsl(var(--destructive-strong))] hover:text-[hsl(var(--destructive-strong))]/80"
+              className="text-destructive-strong hover:text-destructive-strong/80"
             >
               Delete
             </button>

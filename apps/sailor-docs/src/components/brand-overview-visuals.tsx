@@ -23,7 +23,7 @@ export function LogoShowcase() {
             className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
             gradientColor="hsl(var(--muted))"
           >
-            <div className="h-40 w-full flex items-center justify-center p-8 bg-zinc-50 dark:bg-black relative">
+            <div className="h-40 w-full flex items-center justify-center p-8 bg-muted relative">
               <Image
                 src={brandLogoSrc("logo-color.svg")}
                 alt="Nebutra Color Logo"
@@ -40,12 +40,13 @@ export function LogoShowcase() {
 
           {/* Inverse Logo */}
           <MagicCard
-            className="p-0 rounded border-zinc-800 flex flex-col overflow-hidden"
+            // The inverse asset is shown on dark in both themes: `dark` scopes the dark token values.
+            className="dark p-0 rounded border-border flex flex-col overflow-hidden"
             gradientColor="#1a1a1a"
             gradientFrom="hsl(var(--primary))"
             gradientTo="var(--brand-accent)"
           >
-            <div className="h-40 w-full flex items-center justify-center p-8 bg-[#0a0a0a] relative">
+            <div className="h-40 w-full flex items-center justify-center p-8 bg-background relative">
               <Image
                 src={brandLogoSrc("logo-inverse.svg")}
                 alt="Nebutra Inverse Logo"
@@ -54,9 +55,9 @@ export function LogoShowcase() {
                 unoptimized
               />
             </div>
-            <div className="p-3 border-t border-zinc-800 flex justify-between items-center bg-zinc-950">
-              <span className="text-sm font-medium text-white">Inverse (Dark Mode)</span>
-              <code className="text-[10px] text-zinc-500 font-mono">/logo-inverse.svg</code>
+            <div className="p-3 border-t border-border flex justify-between items-center bg-card">
+              <span className="text-sm font-medium text-foreground">Inverse (Dark Mode)</span>
+              <code className="text-[10px] text-muted-foreground font-mono">/logo-inverse.svg</code>
             </div>
           </MagicCard>
 
@@ -65,7 +66,7 @@ export function LogoShowcase() {
             className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
             gradientColor="hsl(var(--muted))"
           >
-            <div className="h-40 w-full flex items-center justify-center p-8 bg-zinc-100 dark:bg-zinc-900 border-b border-border">
+            <div className="h-40 w-full flex items-center justify-center p-8 bg-muted border-b border-border">
               <Image
                 src={brandLogoSrc("logo-mono.svg")}
                 alt="Nebutra Mono Logo"
@@ -158,7 +159,7 @@ export function LogoShowcase() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Horizontal EN */}
           <MagicCard
-            className="p-0 rounded border-border flex flex-col overflow-hidden bg-white dark:bg-black"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
             gradientColor="hsl(var(--muted))"
           >
             <div className="h-24 w-full flex items-center justify-center p-4">
@@ -177,7 +178,7 @@ export function LogoShowcase() {
 
           {/* Horizontal ZH */}
           <MagicCard
-            className="p-0 rounded border-border flex flex-col overflow-hidden bg-white dark:bg-black"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
             gradientColor="hsl(var(--muted))"
           >
             <div className="h-24 w-full flex items-center justify-center p-4">
@@ -196,7 +197,7 @@ export function LogoShowcase() {
 
           {/* Vertical EN */}
           <MagicCard
-            className="p-0 rounded border-border flex flex-col overflow-hidden bg-white dark:bg-black"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
             gradientColor="hsl(var(--muted))"
           >
             <div className="h-32 w-full flex items-center justify-center p-4 border-b border-border">
@@ -215,7 +216,7 @@ export function LogoShowcase() {
 
           {/* Vertical ZH */}
           <MagicCard
-            className="p-0 rounded border-border flex flex-col overflow-hidden bg-white dark:bg-black"
+            className="p-0 rounded border-border flex flex-col overflow-hidden bg-background"
             gradientColor="hsl(var(--muted))"
           >
             <div className="h-32 w-full flex items-center justify-center p-4 border-b border-border">
@@ -249,7 +250,7 @@ export function LogoShowcase() {
               <LogomarkSVG
                 width={48}
                 height={48}
-                className="text-[hsl(var(--primary))] dark:text-[var(--brand-accent)]"
+                className="text-primary dark:text-[var(--brand-accent)]"
                 aria-label="Nebutra logomark"
               />
               <div className="flex items-center gap-4 opacity-60">
@@ -268,7 +269,7 @@ export function LogoShowcase() {
                 <LogomarkSVG
                   width={16}
                   height={16}
-                  className="text-[hsl(var(--primary))]"
+                  className="text-primary"
                   aria-label="Blue Nebutra logomark"
                 />
                 <LogomarkSVG
@@ -364,8 +365,8 @@ export function BrandPhilosophyVisual() {
           {/* Subtle gradient orb */}
           <div className="absolute -top-12 -right-12 w-48 h-48 bg-[image:var(--brand-gradient-logo)] opacity-10 dark:opacity-20 blur-[50px] rounded-full pointer-events-none" />
 
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[hsl(var(--primary))]/20 bg-[hsl(var(--primary))]/5 shadow-sm mb-2 relative z-10">
-            <Sparkles className="h-6 w-6 text-[hsl(var(--primary))] dark:text-[var(--brand-accent)]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-primary/20 bg-primary/5 shadow-sm mb-2 relative z-10">
+            <Sparkles className="h-6 w-6 text-primary dark:text-[var(--brand-accent)]" />
           </div>
           <h4 className="text-xl font-semibold text-foreground relative z-10">Gradient Sign</h4>
           <p className="text-muted-foreground leading-relaxed text-base relative z-10">

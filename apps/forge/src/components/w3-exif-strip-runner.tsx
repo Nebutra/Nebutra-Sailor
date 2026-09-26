@@ -136,7 +136,7 @@ export function W3ExifStripRunner({ toolId }: { toolId: string }) {
             <Download className="h-4 w-4" />
             {t("exifStrip.download")}
           </Button>
-          <span className="text-xs text-[var(--neutral-10)]">
+          <span className="text-xs text-neutral-10">
             {t("exifStrip.sizes", { before: kb(out.bytesIn), after: kb(out.bytesOut) })}
           </span>
         </div>
@@ -149,8 +149,8 @@ export function W3ExifStripRunner({ toolId }: { toolId: string }) {
       {out.removedDetail.length > 0 ? (
         <div className="space-y-1">
           {out.removedDetail.map((d) => (
-            <p key={d.container} className="text-sm text-[var(--neutral-11)]">
-              <span className="font-mono text-[var(--neutral-12)]">{d.container}</span>
+            <p key={d.container} className="text-sm text-neutral-11">
+              <span className="font-mono text-neutral-12">{d.container}</span>
               {" · "}
               {t(SEGMENT_LABEL[d.segment])}
               {" · "}

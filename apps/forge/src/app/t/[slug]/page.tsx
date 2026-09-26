@@ -77,20 +77,20 @@ export default async function ToolPage({ params }: Props) {
         <div className="space-y-4">
           <nav
             aria-label={t("breadcrumbAria")}
-            className="flex flex-wrap items-center gap-2 text-sm text-[var(--neutral-11)]"
+            className="flex flex-wrap items-center gap-2 text-sm text-neutral-11"
           >
             <Link
               href="/"
-              className="rounded-[var(--radius-md)] px-1.5 py-0.5 transition hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+              className="rounded-[var(--radius-md)] px-1.5 py-0.5 transition hover:bg-neutral-3 hover:text-neutral-12"
             >
               {tNav("tools")}
             </Link>
-            <span className="text-[var(--neutral-7)]" aria-hidden>
+            <span className="text-neutral-7" aria-hidden>
               /
             </span>
             <Link
               href={`/#${page.category}`}
-              className="rounded-[var(--radius-md)] px-1.5 py-0.5 transition hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+              className="rounded-[var(--radius-md)] px-1.5 py-0.5 transition hover:bg-neutral-3 hover:text-neutral-12"
             >
               {categoryLabel}
             </Link>
@@ -98,7 +98,7 @@ export default async function ToolPage({ params }: Props) {
 
           <PageHeader title={title} description={description} />
 
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-[var(--neutral-10)]">
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-neutral-10">
             <span>{page.engine.name}</span>
             <span aria-hidden>·</span>
             <span>v{page.engine.version}</span>
@@ -107,35 +107,35 @@ export default async function ToolPage({ params }: Props) {
           </p>
         </div>
 
-        <Card className="border-[var(--neutral-6)] p-5 md:p-6">
-          <div className="mb-5 flex items-center justify-between gap-3 border-b border-[var(--neutral-6)] pb-4">
+        <Card className="border-neutral-6 p-5 md:p-6">
+          <div className="mb-5 flex items-center justify-between gap-3 border-b border-neutral-6 pb-4">
             <div>
-              <p className="text-sm font-semibold text-[var(--neutral-12)]">{t("workspace")}</p>
-              <p className="text-xs text-[var(--neutral-10)]">{t("workspaceHint")}</p>
+              <p className="text-sm font-semibold text-neutral-12">{t("workspace")}</p>
+              <p className="text-xs text-neutral-10">{t("workspaceHint")}</p>
             </div>
-            <code className="rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-2.5 py-1 font-mono text-[11px] text-[var(--neutral-11)]">
+            <code className="rounded-[var(--radius-md)] bg-neutral-2 px-2.5 py-1 font-mono text-[11px] text-neutral-11">
               {page.id}
             </code>
           </div>
           <ToolWorkspace slug={page.slug} toolId={page.id} category={page.category} />
         </Card>
 
-        <Card className="border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 p-5">
+        <Card className="border-neutral-6 bg-neutral-2/40 p-5">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-sm font-semibold">{t("api")}</h2>
-            <code className="rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2.5 py-1 font-mono text-[11px] text-[var(--neutral-11)]">
+            <code className="rounded-[var(--radius-md)] bg-neutral-1 px-2.5 py-1 font-mono text-[11px] text-neutral-11">
               {page.meterId}
             </code>
           </div>
-          <p className="mb-3 text-sm text-[var(--neutral-11)]">{t("apiHint")}</p>
-          <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 font-mono text-[11px] leading-relaxed">
+          <p className="mb-3 text-sm text-neutral-11">{t("apiHint")}</p>
+          <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4 font-mono text-[11px] leading-relaxed">
             {page.api.exampleCurl}
           </pre>
         </Card>
 
         {page.related.length > 0 ? (
           <section aria-labelledby="related-tools">
-            <h2 id="related-tools" className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
+            <h2 id="related-tools" className="mb-3 text-sm font-semibold text-neutral-12">
               {page.compose?.next?.length ? `${t("related")} · next` : t("related")}
             </h2>
             <ul className="flex flex-wrap gap-2">
@@ -147,8 +147,8 @@ export default async function ToolPage({ params }: Props) {
                       href={rel.path}
                       className={
                         isNext
-                          ? "inline-flex h-9 items-center rounded-full border border-[hsl(var(--primary)/0.35)] bg-[hsl(var(--primary)/0.08)] px-4 text-sm text-[var(--neutral-12)] transition-colors hover:border-[hsl(var(--primary)/0.55)]"
-                          : "inline-flex h-9 items-center rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 text-sm text-[var(--neutral-11)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
+                          ? "inline-flex h-9 items-center rounded-full border border-primary/35 bg-primary/8 px-4 text-sm text-neutral-12 transition-colors hover:border-primary/55.00000000000001"
+                          : "inline-flex h-9 items-center rounded-full border border-neutral-6 bg-neutral-1 px-4 text-sm text-neutral-11 transition-colors hover:border-neutral-8 hover:bg-neutral-2 hover:text-neutral-12"
                       }
                     >
                       {isNext ? "→ " : ""}

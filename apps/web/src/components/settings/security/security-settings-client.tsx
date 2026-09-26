@@ -108,19 +108,19 @@ export function SecuritySettingsClient() {
   );
 
   if (!isLoaded) {
-    return <div className="text-sm text-[var(--neutral-11)]">Loading security settings…</div>;
+    return <div className="text-sm text-neutral-11">Loading security settings…</div>;
   }
 
   if (!isBetterAuth) {
     return (
       <div className="space-y-6">
-        <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-          <h2 className="text-lg font-semibold text-[var(--neutral-12)]">Security</h2>
-          <p className="mt-2 text-sm text-[var(--neutral-11)]">
+        <section className="rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-6">
+          <h2 className="text-lg font-semibold text-neutral-12">Security</h2>
+          <p className="mt-2 text-sm text-neutral-11">
             This workspace is using {authProvider}. Advanced security controls are still being
             migrated into the shared Nebutra auth layer.
           </p>
-          <p className="mt-3 text-sm text-[var(--neutral-11)]">
+          <p className="mt-3 text-sm text-neutral-11">
             For now, manage password resets, MFA, and session policies from your auth provider
             dashboard.
           </p>
@@ -131,20 +131,19 @@ export function SecuritySettingsClient() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
-        <h2 className="text-lg font-semibold text-[var(--neutral-12)]">Security</h2>
-        <p className="mt-1 text-sm text-[var(--neutral-11)]">
-          Signed in as{" "}
-          <span className="font-medium text-[var(--neutral-12)]">{user?.email || "—"}</span>
+      <section className="rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-6">
+        <h2 className="text-lg font-semibold text-neutral-12">Security</h2>
+        <p className="mt-1 text-sm text-neutral-11">
+          Signed in as <span className="font-medium text-neutral-12">{user?.email || "—"}</span>
         </p>
-        <p className="mt-2 text-sm text-[var(--neutral-11)]">
+        <p className="mt-2 text-sm text-neutral-11">
           Nebutra shows every security capability in one place, only enabling controls that the
           current auth layer can execute safely.
         </p>
       </section>
 
       {error && (
-        <section className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 p-4 text-sm text-[hsl(var(--destructive-strong))]">
+        <section className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive-strong">
           {error}
         </section>
       )}

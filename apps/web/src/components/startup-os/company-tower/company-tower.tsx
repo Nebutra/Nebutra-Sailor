@@ -132,8 +132,7 @@ export function CompanyTower({
               disabled={onCompile === undefined}
               aria-label="Compile the company tower"
               onClick={() => onCompile?.()}
-              className="border-0 text-white disabled:opacity-50"
-              style={{ background: "hsl(var(--primary))" }}
+              className="border-0 bg-primary text-primary-foreground disabled:opacity-50"
             >
               Compile
             </Button>

@@ -27,13 +27,11 @@ export function PageFrame({
         .join(" ")}
     >
       {title ? (
-        <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border-b border-[var(--neutral-6)] pb-3">
+        <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border-b border-neutral-6 pb-3">
           <div className="min-w-0">
-            <h1 className="text-[15px] font-semibold tracking-tight text-[var(--neutral-12)]">
-              {title}
-            </h1>
+            <h1 className="text-[15px] font-semibold tracking-tight text-neutral-12">{title}</h1>
             {description ? (
-              <p className="mt-0.5 max-w-3xl text-[12px] leading-snug text-[var(--neutral-10)]">
+              <p className="mt-0.5 max-w-3xl text-[12px] leading-snug text-neutral-10">
                 {description}
               </p>
             ) : null}

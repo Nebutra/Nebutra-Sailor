@@ -63,7 +63,7 @@ export function ImpersonateButton({ userId, userLabel, className }: ImpersonateB
         {pending ? "Starting…" : "Impersonate"}
       </button>
       {error ? (
-        <p role="alert" className="mt-1 text-xs text-[color:var(--status-danger)]">
+        <p role="alert" className="mt-1 text-xs text-destructive-strong">
           {error}
         </p>
       ) : null}

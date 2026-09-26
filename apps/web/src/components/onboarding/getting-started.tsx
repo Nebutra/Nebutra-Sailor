@@ -142,9 +142,7 @@ export async function GettingStarted() {
               >
                 <div
                   className={`flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] ${
-                    task.done
-                      ? "bg-success/10 text-[hsl(var(--success-strong))]"
-                      : "bg-neutral-2 text-neutral-11"
+                    task.done ? "bg-success/10 text-success-strong" : "bg-neutral-2 text-neutral-11"
                   }`}
                 >
                   {task.done ? (
@@ -157,14 +155,14 @@ export async function GettingStarted() {
                   <div className="flex items-center justify-between gap-2">
                     <p
                       className={`truncate text-sm font-medium ${
-                        task.done ? "text-[hsl(var(--success-strong))]" : "text-neutral-12"
+                        task.done ? "text-success-strong" : "text-neutral-12"
                       }`}
                     >
                       {task.label}
                     </p>
                     <ArrowRight
                       className={`size-3.5 shrink-0 opacity-0 transition-[opacity,transform] duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 motion-reduce:group-hover:translate-x-0 ${
-                        task.done ? "text-[hsl(var(--success-strong))]" : "text-neutral-11"
+                        task.done ? "text-success-strong" : "text-neutral-11"
                       }`}
                       aria-hidden="true"
                     />

@@ -136,8 +136,8 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
                     ? "h-3.5 w-3.5 text-primary"
                     : "h-3.5 w-3.5 text-muted-foreground";
                   const lblCls = active
-                    ? "flex-1 truncate font-mono text-xs font-semibold text-foreground"
-                    : "flex-1 truncate font-mono text-xs text-muted-foreground";
+                    ? "flex-1 truncate font-mono text-xs font-medium text-foreground"
+                    : "font-medium flex-1 truncate font-mono text-xs text-muted-foreground";
                   return (
                     <li
                       key={layer.id}

@@ -27,8 +27,8 @@ function toCurrency(value: number) {
 function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
   const tone =
     notice.tone === "success"
-      ? "border-success/30 bg-success/10 text-[hsl(var(--success-strong))]"
-      : "border-warning/30 bg-warning/10 text-[hsl(var(--warning-strong))]";
+      ? "border-success/30 bg-success/10 text-success-strong"
+      : "border-warning/30 bg-warning/10 text-warning-strong";
 
   return (
     <div className={`rounded-[var(--radius-2xl)] border p-4 ${tone}`}>
@@ -40,14 +40,14 @@ function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
           <Link
             href={notice.primaryAction.href}
-            className="inline-flex items-center justify-center rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-11 dark:text-black"
+            className="inline-flex items-center justify-center rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2 text-sm font-medium text-neutral-1 transition hover:bg-neutral-11"
           >
             {notice.primaryAction.label}
           </Link>
           {notice.secondaryAction && (
             <Link
               href={notice.secondaryAction.href}
-              className="inline-flex items-center justify-center rounded-[var(--radius-xl)] border border-current/30 px-4 py-2 text-sm font-medium transition hover:bg-white/20"
+              className="inline-flex items-center justify-center rounded-[var(--radius-xl)] border border-current/30 px-4 py-2 text-sm font-medium transition hover:bg-current/10"
             >
               {notice.secondaryAction.label}
             </Link>

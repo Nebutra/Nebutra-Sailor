@@ -113,13 +113,13 @@ export function PdfResultPanel({
           </a>
         </Button>
       </div>
-      {meta ? <div className="text-xs text-[var(--neutral-10)]">{meta}</div> : null}
-      <p className="text-sm font-medium text-[var(--neutral-12)]">{t("pdfPreview")}</p>
-      <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]">
+      {meta ? <div className="text-xs text-neutral-10">{meta}</div> : null}
+      <p className="text-sm font-medium text-neutral-12">{t("pdfPreview")}</p>
+      <div className="overflow-hidden rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2">
         <iframe
           title={t("pdfPreviewTitle")}
           src={url}
-          className="h-[min(70vh,720px)] w-full bg-[var(--neutral-1)]"
+          className="h-[min(70vh,720px)] w-full bg-neutral-1"
         />
       </div>
       <RunnerNote>{t("pdfPreviewHint")}</RunnerNote>
@@ -165,7 +165,7 @@ export function ImageResultPanel({
       <img
         src={src}
         alt={alt}
-        className="max-h-80 max-w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] object-contain"
+        className="max-h-80 max-w-full rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 object-contain"
       />
     </div>
   );
@@ -178,12 +178,9 @@ export function MetaCards({ items }: { items: readonly { label: string; value: R
   return (
     <dl className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => (
-        <div
-          key={item.label}
-          className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
-        >
-          <dt className="text-xs text-[var(--neutral-10)]">{item.label}</dt>
-          <dd className="mt-0.5 font-mono text-sm text-[var(--neutral-12)]">{item.value}</dd>
+        <div key={item.label} className="rounded-[var(--radius-lg)] bg-neutral-2 px-3 py-2">
+          <dt className="text-xs text-neutral-10">{item.label}</dt>
+          <dd className="mt-0.5 font-mono text-sm text-neutral-12">{item.value}</dd>
         </div>
       ))}
     </dl>
@@ -213,7 +210,7 @@ export function FileDropZone({
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: drag-drop surface around a real label+input
     <div
-      className="flex min-h-28 flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--neutral-6)] bg-[var(--neutral-1)] p-6 text-sm text-[var(--neutral-10)]"
+      className="flex min-h-28 flex-col items-center justify-center rounded-xl border-2 border-dashed border-neutral-6 bg-neutral-1 p-6 text-sm text-neutral-10"
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => {
         e.preventDefault();
@@ -238,9 +235,9 @@ export function FileDropZone({
             if (list.length) onFiles(list);
           }}
         />
-        <span className="font-medium text-[var(--neutral-12)]">{label}</span>
+        <span className="font-medium text-neutral-12">{label}</span>
         {fileLabel ? (
-          <span className="mt-1 font-mono text-xs text-[var(--neutral-11)]">{fileLabel}</span>
+          <span className="mt-1 font-mono text-xs text-neutral-11">{fileLabel}</span>
         ) : null}
         {hint ? <span className="mt-2 text-xs">{hint}</span> : null}
       </label>
@@ -304,16 +301,14 @@ export function CodeDualPane({
       ) : null}
       <div className="grid gap-3 lg:grid-cols-2">
         <div className="space-y-1">
-          <p className="text-xs font-medium text-[var(--neutral-10)]">{inputLabel ?? t("input")}</p>
-          <pre className="max-h-80 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap">
+          <p className="text-xs font-medium text-neutral-10">{inputLabel ?? t("input")}</p>
+          <pre className="max-h-80 overflow-auto rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap">
             {input || "—"}
           </pre>
         </div>
         <div className="space-y-1">
-          <p className="text-xs font-medium text-[var(--neutral-10)]">
-            {outputLabel ?? t("output")}
-          </p>
-          <pre className="max-h-80 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap">
+          <p className="text-xs font-medium text-neutral-10">{outputLabel ?? t("output")}</p>
+          <pre className="max-h-80 overflow-auto rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap">
             {output || "—"}
           </pre>
         </div>

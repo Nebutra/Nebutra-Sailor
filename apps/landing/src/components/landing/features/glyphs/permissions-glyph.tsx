@@ -24,7 +24,7 @@ function Cell({ allow }: { allow: Allow }) {
   return allow === "yes" ? (
     <Check className="h-3.5 w-3.5 text-success-strong" aria-label="allow" />
   ) : (
-    <Cross className="h-3.5 w-3.5 text-red-500" aria-label="deny" />
+    <Cross className="h-3.5 w-3.5 text-destructive-strong" aria-label="deny" />
   );
 }
 

@@ -177,7 +177,7 @@ export function MarketHome({
           <aside className="router-market-panel p-1.5">
             <div className="mb-0.5 flex items-center justify-between px-2 py-1.5">
               <span className="text-[12px] font-semibold">{tMarket("categories")}</span>
-              <span className="rounded-full bg-[var(--neutral-12)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--neutral-1)]">
+              <span className="rounded-full bg-neutral-12 px-1.5 py-0.5 text-[10px] font-medium text-neutral-1">
                 {tMarket("apps")}
               </span>
             </div>
@@ -192,24 +192,22 @@ export function MarketHome({
                 <a
                   key={row.id}
                   href={row.href}
-                  className="group flex w-full items-center gap-2 rounded-lg py-1.5 pr-1.5 pl-1.5 text-left transition hover:bg-[var(--neutral-2)]/90"
+                  className="group flex w-full items-center gap-2 rounded-lg py-1.5 pr-1.5 pl-1.5 text-left transition hover:bg-neutral-2/90"
                 >
                   <span
-                    className="h-7 w-0.5 shrink-0 rounded-full bg-transparent group-hover:bg-[var(--neutral-6)]"
+                    className="h-7 w-0.5 shrink-0 rounded-full bg-transparent group-hover:bg-neutral-6"
                     aria-hidden
                   />
-                  <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[var(--neutral-10)] group-hover:bg-[var(--neutral-3)]/80 group-hover:text-[var(--neutral-12)]">
+                  <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-neutral-10 group-hover:bg-neutral-3/80 group-hover:text-neutral-12">
                     <MarketIcon name={row.icon} className="h-3.5 w-3.5" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[13px] font-medium text-[var(--neutral-12)]">
-                      {label}
-                    </span>
-                    <span className="mt-0.5 block truncate text-[11px] text-[var(--neutral-9)]">
+                    <span className="block text-[13px] font-medium text-neutral-12">{label}</span>
+                    <span className="mt-0.5 block truncate text-[11px] text-neutral-9">
                       {chips}
                     </span>
                   </span>
-                  <span className="text-[11px] text-[var(--neutral-8)] opacity-0 group-hover:opacity-100">
+                  <span className="text-[11px] text-neutral-8 opacity-0 group-hover:opacity-100">
                     ›
                   </span>
                 </a>
@@ -217,22 +215,20 @@ export function MarketHome({
             })}
           </aside>
 
-          <section className="flex min-h-[220px] flex-col justify-between overflow-hidden rounded-2xl bg-[var(--neutral-12)] p-6 text-[var(--neutral-1)]">
+          <section className="flex min-h-[220px] flex-col justify-between overflow-hidden rounded-2xl bg-neutral-12 p-6 text-neutral-1">
             <div>
               <div className="flex items-center gap-2">
                 <ForgeMark className="h-8 w-8" />
-                <p className="text-[12px] text-[var(--neutral-8)]">{tMarket("newRelease")}</p>
+                <p className="text-[12px] text-neutral-8">{tMarket("newRelease")}</p>
               </div>
               <h1 className="mt-2 text-[26px] font-semibold tracking-tight md:text-[30px]">
                 {tMarket("forgeTitle")}
               </h1>
-              <p className="mt-2 max-w-lg text-[13px] text-[var(--neutral-7)]">
-                {tMarket("forgeBlurb")}
-              </p>
+              <p className="mt-2 max-w-lg text-[13px] text-neutral-7">{tMarket("forgeBlurb")}</p>
             </div>
             <a
               href={process.env.NEXT_PUBLIC_FORGE_URL ?? "http://localhost:3105"}
-              className="inline-flex w-fit items-center gap-1.5 rounded-full bg-[var(--neutral-1)] px-3.5 py-1.5 text-[12px] font-medium text-[var(--neutral-12)]"
+              className="inline-flex w-fit items-center gap-1.5 rounded-full bg-neutral-1 px-3.5 py-1.5 text-[12px] font-medium text-neutral-12"
             >
               <ForgeMark className="h-4 w-4" />
               {tMarket("openForge")}
@@ -241,7 +237,7 @@ export function MarketHome({
 
           <HiPanel sellableCount={sellableCount} />
         </div>
-        <p className="mt-6 text-[11px] text-[var(--neutral-10)]">{sourceNote}</p>
+        <p className="mt-6 text-[11px] text-neutral-10">{sourceNote}</p>
       </div>
     );
   }
@@ -275,12 +271,12 @@ export function MarketHome({
           <div className="mb-0.5 flex items-center justify-between px-2 py-1.5">
             <span className="text-[12px] font-semibold">{tMarket("categories")}</span>
             <div className="flex gap-1">
-              <span className="rounded-full bg-[var(--neutral-12)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--neutral-1)]">
+              <span className="rounded-full bg-neutral-12 px-1.5 py-0.5 text-[10px] font-medium text-neutral-1">
                 API
               </span>
               <Link
                 href="/?product_type=tool"
-                className="rounded-full bg-[var(--neutral-3)] px-1.5 py-0.5 text-[10px] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)]"
+                className="rounded-full bg-neutral-3 px-1.5 py-0.5 text-[10px] text-neutral-11 hover:bg-neutral-4"
               >
                 {tMarket("apps")}
               </Link>
@@ -297,7 +293,7 @@ export function MarketHome({
                     href={`/models?cate=api&tag=${encodeURIComponent(primaryTag)}`}
                     className={[
                       "group flex w-full items-center gap-2 rounded-lg py-1.5 pr-1.5 pl-1 text-left transition",
-                      active ? "bg-[var(--neutral-3)]/80" : "hover:bg-[var(--neutral-2)]/90",
+                      active ? "bg-neutral-3/80" : "hover:bg-neutral-2/90",
                     ].join(" ")}
                     onMouseEnter={() => openCat(row.id)}
                     onFocus={() => openCat(row.id)}
@@ -305,36 +301,36 @@ export function MarketHome({
                     <span
                       className={[
                         "h-7 w-0.5 shrink-0 rounded-full transition",
-                        active ? "bg-primary" : "bg-transparent group-hover:bg-[var(--neutral-6)]",
+                        active ? "bg-primary" : "bg-transparent group-hover:bg-neutral-6",
                       ].join(" ")}
                       aria-hidden
                     />
                     <span
                       className={[
-                        "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[var(--neutral-10)] transition",
+                        "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-neutral-10 transition",
                         active
-                          ? "bg-white/80 text-[var(--neutral-12)]"
-                          : "group-hover:bg-[var(--neutral-3)]/80 group-hover:text-[var(--neutral-12)]",
+                          ? "bg-neutral-1/80 text-neutral-12"
+                          : "group-hover:bg-neutral-3/80 group-hover:text-neutral-12",
                       ].join(" ")}
                     >
                       <MarketIcon name={row.icon} className="h-3.5 w-3.5" />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center gap-1">
-                        <span className="truncate text-[13px] font-medium tracking-tight text-[var(--neutral-12)]">
+                        <span className="truncate text-[13px] font-medium tracking-tight text-neutral-12">
                           {row.label}
                         </span>
                         {row.count > 0 ? (
-                          <span className="shrink-0 text-[10px] tabular-nums text-[var(--neutral-9)]">
+                          <span className="shrink-0 text-[10px] tabular-nums text-neutral-9">
                             {row.count}
                           </span>
                         ) : null}
                       </span>
-                      <span className="mt-0.5 block truncate text-[11px] text-[var(--neutral-9)]">
+                      <span className="mt-0.5 block truncate text-[11px] text-neutral-9">
                         {row.hint}
                       </span>
                     </span>
-                    <span className="text-[11px] text-[var(--neutral-8)] opacity-0 transition group-hover:opacity-100">
+                    <span className="text-[11px] text-neutral-8 opacity-0 transition group-hover:opacity-100">
                       ›
                     </span>
                   </Link>
@@ -345,7 +341,7 @@ export function MarketHome({
 
           <Link
             href="/models?cate=api"
-            className="mt-auto flex h-8 items-center px-2 text-[12px] text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
+            className="mt-auto flex h-8 items-center px-2 text-[12px] text-neutral-11 hover:text-neutral-12"
           >
             {tMarket("allApi")}
           </Link>
@@ -378,8 +374,8 @@ export function MarketHome({
               className={[
                 "relative pb-1 transition",
                 tab === id
-                  ? "font-semibold text-[var(--neutral-12)] after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-primary"
-                  : "text-[var(--neutral-10)] hover:text-[var(--neutral-12)]",
+                  ? "font-semibold text-neutral-12 after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-primary"
+                  : "text-neutral-10 hover:text-neutral-12",
               ].join(" ")}
             >
               {label}
@@ -387,7 +383,7 @@ export function MarketHome({
           ))}
 
           <div className="ml-auto flex items-center gap-2">
-            <div className="flex rounded-[10px] border border-[var(--rm-panel-border)] bg-white p-0.5 shadow-[0_1px_2px_rgb(15_23_42/0.03)]">
+            <div className="flex rounded-[10px] border border-[var(--rm-panel-border)] bg-neutral-1 p-0.5 shadow-[0_1px_2px_rgb(15_23_42/0.03)]">
               <button
                 type="button"
                 aria-label={tMarket("gridView")}
@@ -396,8 +392,8 @@ export function MarketHome({
                 className={[
                   "inline-flex h-7 w-7 items-center justify-center rounded-lg transition",
                   view === "grid"
-                    ? "bg-[var(--neutral-12)] text-[var(--neutral-1)]"
-                    : "text-[var(--neutral-10)] hover:text-[var(--neutral-12)]",
+                    ? "bg-neutral-12 text-neutral-1"
+                    : "text-neutral-10 hover:text-neutral-12",
                 ].join(" ")}
               >
                 <MarketIcon name="grid" className="h-3.5 w-3.5" />
@@ -410,8 +406,8 @@ export function MarketHome({
                 className={[
                   "inline-flex h-7 w-7 items-center justify-center rounded-lg transition",
                   view === "list"
-                    ? "bg-[var(--neutral-12)] text-[var(--neutral-1)]"
-                    : "text-[var(--neutral-10)] hover:text-[var(--neutral-12)]",
+                    ? "bg-neutral-12 text-neutral-1"
+                    : "text-neutral-10 hover:text-neutral-12",
                 ].join(" ")}
               >
                 <MarketIcon name="list" className="h-3.5 w-3.5" />
@@ -419,7 +415,7 @@ export function MarketHome({
             </div>
             <Link
               href="/models?cate=api"
-              className="text-[12px] font-medium text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
+              className="text-[12px] font-medium text-neutral-11 hover:text-neutral-12"
             >
               {tMarket("all")}
             </Link>
@@ -440,9 +436,7 @@ export function MarketHome({
           </div>
         )}
         {/* 货架说明弱化为脚注，避免 lab 感抢戏 */}
-        <p className="mt-8 text-center text-[11px] tracking-wide text-[var(--neutral-9)]">
-          {sourceNote}
-        </p>
+        <p className="mt-8 text-center text-[11px] tracking-wide text-neutral-9">{sourceNote}</p>
       </div>
     </div>
   );
@@ -451,8 +445,8 @@ export function MarketHome({
 function CategoryFlyout({ row }: { row: CategoryRow }) {
   const tMarket = useTranslations("market");
   return (
-    <div className="rounded-2xl border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 shadow-[0_20px_56px_rgb(15_23_42/0.18)]">
-      <p className="px-1 pb-2.5 text-[13px] font-semibold text-[var(--neutral-12)]">{row.label}</p>
+    <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-3 shadow-[0_20px_56px_rgb(15_23_42/0.18)]">
+      <p className="px-1 pb-2.5 text-[13px] font-semibold text-neutral-12">{row.label}</p>
       <div className="grid max-h-[min(440px,70vh)] grid-cols-2 gap-2 overflow-y-auto pr-0.5 xl:grid-cols-3">
         {row.brands.map((b) => {
           const primaryTag = row.listingTags[0] ?? "chat";
@@ -460,27 +454,27 @@ function CategoryFlyout({ row }: { row: CategoryRow }) {
             <Link
               key={b.provider}
               href={`/models?cate=api&tag=${encodeURIComponent(primaryTag)}&brand=${encodeURIComponent(b.provider)}`}
-              className="group flex min-h-[88px] items-start gap-2.5 rounded-xl border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 transition hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-2)]/60 hover:shadow-sm"
+              className="group flex min-h-[88px] items-start gap-2.5 rounded-xl border border-neutral-6 bg-neutral-1 p-3 transition hover:border-neutral-7 hover:bg-neutral-2/60 hover:shadow-sm"
             >
               <span className="min-w-0 flex-1">
                 <span className="flex items-center gap-1.5">
-                  <span className="truncate text-[13px] font-semibold text-[var(--neutral-12)]">
+                  <span className="truncate text-[13px] font-semibold text-neutral-12">
                     {b.label}
                   </span>
                   {b.count > 0 ? (
-                    <span className="shrink-0 text-[10px] tabular-nums text-[var(--neutral-9)]">
+                    <span className="shrink-0 text-[10px] tabular-nums text-neutral-9">
                       {b.count}
                     </span>
                   ) : null}
                 </span>
                 <span
-                  className="mt-1.5 line-clamp-2 text-[11px] leading-snug text-[var(--neutral-10)]"
+                  className="mt-1.5 line-clamp-2 text-[11px] leading-snug text-neutral-10"
                   title={b.blurb}
                 >
                   {b.blurb}
                 </span>
               </span>
-              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--neutral-2)] ring-1 ring-[var(--neutral-6)]/80">
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-neutral-2 ring-1 ring-neutral-6/80">
                 <BrandMark provider={b.provider} size={26} surface="light" />
               </span>
             </Link>
@@ -489,7 +483,7 @@ function CategoryFlyout({ row }: { row: CategoryRow }) {
       </div>
       <Link
         href={`/models?cate=api&tag=${encodeURIComponent(row.listingTags[0] ?? "chat")}`}
-        className="mt-2 flex h-8 items-center px-1 text-[12px] text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
+        className="mt-2 flex h-8 items-center px-1 text-[12px] text-neutral-11 hover:text-neutral-12"
       >
         {tMarket("viewAll", { label: row.label })}
       </Link>
@@ -508,15 +502,13 @@ function HiPanel({ sellableCount }: { sellableCount: number }) {
     <aside className="router-market-panel flex h-full min-h-0 flex-1 flex-col bg-[linear-gradient(165deg,color-mix(in_srgb,var(--blue-3)_22%,white)_0%,#fff_60%)] p-4 xl:p-5">
       <div className="flex items-center gap-2.5">
         <BrandLogo variant="mark" className="h-8 w-8 [&_img]:h-8 [&_img]:w-8" />
-        <p className="text-[16px] font-semibold tracking-tight text-[var(--neutral-12)]">Hi~</p>
+        <p className="text-[16px] font-semibold tracking-tight text-neutral-12">Hi~</p>
       </div>
 
-      <p className="mt-3 text-[13px] leading-snug font-semibold text-[var(--neutral-12)]">
+      <p className="mt-3 text-[13px] leading-snug font-semibold text-neutral-12">
         {tMarket("hiTitle")}
       </p>
-      <p className="mt-1 text-[12px] leading-relaxed text-[var(--neutral-10)]">
-        {tMarket("hiSubtitle")}
-      </p>
+      <p className="mt-1 text-[12px] leading-relaxed text-neutral-10">{tMarket("hiSubtitle")}</p>
 
       <div className="mt-3.5">
         <AuthActions variant="cta" />
@@ -540,10 +532,10 @@ function HiPanel({ sellableCount }: { sellableCount: number }) {
               aria-label={shortLabel}
               className="group flex flex-col items-center gap-1 text-center"
             >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--neutral-2)] text-[var(--neutral-11)] transition group-hover:bg-[var(--neutral-3)] group-hover:text-[var(--neutral-12)]">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-neutral-2 text-neutral-11 transition group-hover:bg-neutral-3 group-hover:text-neutral-12">
                 <MarketIcon name={s.icon} className="h-4 w-4" />
               </span>
-              <span className="w-full truncate text-center text-[11px] leading-none font-medium text-[var(--neutral-11)]">
+              <span className="w-full truncate text-center text-[11px] leading-none font-medium text-neutral-11">
                 {shortLabel}
               </span>
             </Link>
@@ -552,22 +544,22 @@ function HiPanel({ sellableCount }: { sellableCount: number }) {
       </div>
 
       {/* 底栏：单行双指标，不再叠大卡 */}
-      <div className="mt-auto grid grid-cols-2 gap-2 border-t border-[var(--neutral-5)]/80 pt-3">
+      <div className="mt-auto grid grid-cols-2 gap-2 border-t border-neutral-5/80 pt-3">
         <Link
           href="/models?cate=api"
-          className="rounded-xl bg-[var(--neutral-2)]/80 px-2.5 py-2 transition hover:bg-[var(--neutral-3)]"
+          className="rounded-xl bg-neutral-2/80 px-2.5 py-2 transition hover:bg-neutral-3"
         >
-          <p className="text-[10px] tracking-wide text-[var(--neutral-9)]">{tMarket("sellable")}</p>
-          <p className="mt-0.5 text-[17px] font-semibold tabular-nums tracking-tight text-[var(--neutral-12)]">
+          <p className="text-[10px] tracking-wide text-neutral-9">{tMarket("sellable")}</p>
+          <p className="mt-0.5 text-[17px] font-semibold tabular-nums tracking-tight text-neutral-12">
             {sellableCount}
           </p>
         </Link>
         <Link
           href="/wallet"
-          className="rounded-xl bg-[var(--neutral-2)]/80 px-2.5 py-2 transition hover:bg-[var(--neutral-3)]"
+          className="rounded-xl bg-neutral-2/80 px-2.5 py-2 transition hover:bg-neutral-3"
         >
-          <p className="text-[10px] tracking-wide text-[var(--neutral-9)]">{tShort("wallet")}</p>
-          <p className="mt-0.5 text-[13px] font-semibold text-[var(--neutral-12)]">
+          <p className="text-[10px] tracking-wide text-neutral-9">{tShort("wallet")}</p>
+          <p className="mt-0.5 text-[13px] font-semibold text-neutral-12">
             {tMarket("walletTopup")}
           </p>
         </Link>

@@ -17,9 +17,9 @@ export function CopyField({
   const [ok, setOk] = useState(false);
   return (
     <div className={["min-w-0", className].filter(Boolean).join(" ")}>
-      <p className="mb-1 text-[11px] font-medium text-[var(--neutral-10)]">{label}</p>
+      <p className="mb-1 text-[11px] font-medium text-neutral-10">{label}</p>
       <div className="flex items-stretch gap-1.5">
-        <code className="flex min-h-8 min-w-0 flex-1 items-center overflow-x-auto rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2.5 font-mono text-[11px] text-[var(--neutral-12)]">
+        <code className="flex min-h-8 min-w-0 flex-1 items-center overflow-x-auto rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 px-2.5 font-mono text-[11px] text-neutral-12">
           {value}
         </code>
         <Button

@@ -8,7 +8,7 @@
  * colour, background, opacity and shadow — never font weight/size, padding,
  * letter-spacing or border width. Keep those in the base class.
  *
- * Checks single-line `<state> ? "a" : "b"` and `<state> && "a"` where <state>
+ * Checks `<state> ? "a" : "b"` (on one line or wrapped) and `<state> && "a"` where <state>
  * reads as UI state (active, selected, current, pressed, checked, open, …).
  * SHRINK-ONLY via governance.config.json → stateShift.allowlist.
  * Exempt a line with `// allow-state-shift: <reason>` above it.
@@ -40,20 +40,25 @@ export function scan() {
   const hits = new Map();
   for (const base of ["apps", "packages"]) {
     for (const file of files(join(ROOT, base))) {
-      const lines = readFileSync(file, "utf8").split("\n");
-      lines.forEach((line, i) => {
-        if (/allow-state-shift:/.test(lines[i - 1] ?? "")) return;
-        let bad = false;
-        for (const [, a, b] of line.matchAll(TERNARY)) {
-          const la = layoutOf(a);
-          const lb = layoutOf(b);
-          if ([...la].some((c) => !lb.has(c)) || [...lb].some((c) => !la.has(c))) bad = true;
-        }
-        for (const [, a] of line.matchAll(AND)) if (layoutOf(a).size) bad = true;
-        if (!bad) return;
+      // Whole-file matching: the formatter wraps a long ternary across lines,
+      // and a per-line scan never saw those — which is where they hid.
+      const src = readFileSync(file, "utf8");
+      const lines = src.split("\n");
+      // The state pattern may open on the whitespace before the word; count from the word.
+      const lineAt = (m) =>
+        src.slice(0, m.index + m[0].length - m[0].trimStart().length).split("\n").length;
+      const bad = new Set();
+      for (const m of src.matchAll(TERNARY)) {
+        const la = layoutOf(m[1]);
+        const lb = layoutOf(m[2]);
+        if ([...la].some((c) => !lb.has(c)) || [...lb].some((c) => !la.has(c))) bad.add(lineAt(m));
+      }
+      for (const m of src.matchAll(AND)) if (layoutOf(m[1]).size) bad.add(lineAt(m));
+      for (const line of bad) {
+        if (/allow-state-shift:/.test(lines[line - 2] ?? "")) continue;
         const rel = relative(ROOT, file);
-        hits.set(rel, [...(hits.get(rel) ?? []), i + 1]);
-      });
+        hits.set(rel, [...(hits.get(rel) ?? []), line]);
+      }
     }
   }
   return hits;

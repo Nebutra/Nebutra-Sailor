@@ -22,7 +22,7 @@ type Swatch = {
 const SWATCHES: ReadonlyArray<Swatch> = [
   { token: "brand.primary", color: "hsl(var(--primary))" },
   { token: "brand.accent", color: "var(--brand-accent)" },
-  { token: "status.success", color: "var(--status-success)" },
+  { token: "status.success", color: "hsl(var(--success-strong))" },
 ];
 
 export function DesignTokensGlyph(_props: SubpackageGlyphProps) {
@@ -40,7 +40,7 @@ export function DesignTokensGlyph(_props: SubpackageGlyphProps) {
         <Badge
           variant="secondary"
           size="sm"
-          className="bg-[var(--blue-3)] font-mono text-[9px] text-primary"
+          className="bg-blue-3 font-mono text-[9px] text-primary"
         >
           DTCG v0.7
         </Badge>

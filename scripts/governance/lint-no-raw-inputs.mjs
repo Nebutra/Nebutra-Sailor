@@ -24,6 +24,7 @@
 
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { stripComments as blankSourceComments } from "../lib/strip-comments.mjs";
 import { config } from "./_config.mjs";
 
 const { scanRoots, primitivesImport, whitelist } = config.rawInputs;
@@ -51,11 +52,9 @@ const ATTR_BODY_RE = /<(input|textarea|select)\b((?:[^<>{}]|\{(?:[^{}]|\{[^{}]*\
 // Strip JS line + block comments so commented-out tags don't false-positive.
 // Replace each comment with same-length whitespace to preserve byte offsets /
 // line numbers.
-const stripComments = (src) => {
-  return src
-    .replace(/\/\/[^\n]*/g, (m) => " ".repeat(m.length))
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
-};
+function stripComments(src) {
+  return blankSourceComments(src);
+}
 
 for (const file of files) {
   const raw = readFileSync(file, "utf-8");

@@ -191,7 +191,7 @@ export function createMarketLocalePicker(
                       "flex min-h-11 w-full items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-2 text-left text-sm transition-colors",
                       isActive
                         ? "bg-accent font-medium text-accent-foreground"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                        : "font-medium text-muted-foreground hover:bg-muted hover:text-foreground",
                       entry.planned && !isActive ? "opacity-80" : "",
                     ].join(" ")}
                   >

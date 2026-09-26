@@ -76,7 +76,7 @@ function ServiceCell({ row }: ServiceCellProps) {
   const badgeVariant = isOk ? "green-subtle" : "amber-subtle";
 
   return (
-    <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-background px-2 py-1 ring-1 ring-[hsl(var(--border))]">
+    <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-background px-2 py-1 ring-1 ring-border">
       <row.Icon className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
       <span className="truncate font-mono text-[10px] text-foreground">{row.label}</span>
       <Badge variant={badgeVariant} size="sm" className="ml-auto gap-1 font-mono text-[9px]">

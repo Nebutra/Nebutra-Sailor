@@ -15,27 +15,41 @@ import type { SubpackageGlyphProps } from "./types";
 
 type Collaborator = {
   initial: string;
-  /** Tailwind background class for the avatar circle. */
+  /** Tailwind background class for the solid avatar dot. */
   bg: string;
+  /** Tailwind classes for the tinted avatar chip (bg + ink). */
+  chip: string;
 };
 
 const COLLABORATORS: ReadonlyArray<Collaborator> = [
-  { initial: "M", bg: "bg-blue-500" },
-  { initial: "K", bg: "bg-pink-500" },
-  { initial: "J", bg: "bg-amber-500" },
+  { initial: "M", bg: "bg-chart-1", chip: "bg-chart-1/15 text-chart-1" },
+  { initial: "K", bg: "bg-chart-3", chip: "bg-chart-3/15 text-chart-3" },
+  { initial: "J", bg: "bg-warning", chip: "bg-warning/15 text-warning-strong" },
 ];
 
 type GhostCursor = {
   name: string;
-  /** Tailwind background class for the cursor dot + label bg. */
+  /** Tailwind background class for the cursor dot (solid). */
   bg: string;
+  /** Tailwind classes for the name label (tint + ink). */
+  chip: string;
   /** Absolute position offset from container. */
   style: React.CSSProperties;
 };
 
 const GHOST_CURSORS: ReadonlyArray<GhostCursor> = [
-  { name: "Mira", bg: "bg-blue-500", style: { left: "14%", top: "8%" } },
-  { name: "Kenji", bg: "bg-pink-500", style: { right: "12%", top: "30%" } },
+  {
+    name: "Mira",
+    bg: "bg-chart-1",
+    chip: "bg-chart-1/15 text-chart-1",
+    style: { left: "14%", top: "8%" },
+  },
+  {
+    name: "Kenji",
+    bg: "bg-chart-3",
+    chip: "bg-chart-3/15 text-chart-3",
+    style: { right: "12%", top: "30%" },
+  },
 ];
 
 export function CollabGlyph(_props: SubpackageGlyphProps) {
@@ -62,12 +76,12 @@ export function CollabGlyph(_props: SubpackageGlyphProps) {
         {COLLABORATORS.map((c) => (
           <div
             key={c.initial}
-            className={`flex h-7 w-7 items-center justify-center rounded-full border-2 border-[hsl(var(--background))] text-[11px] font-semibold text-white ${c.bg}`}
+            className={`flex h-7 w-7 items-center justify-center rounded-full border-2 border-background text-[11px] font-semibold ${c.chip}`}
           >
             {c.initial}
           </div>
         ))}
-        <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-[hsl(var(--background))] bg-[hsl(var(--foreground))] text-[10px] font-semibold text-[hsl(var(--background))]">
+        <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-background bg-foreground text-[10px] font-semibold text-background">
           +1
         </div>
       </div>
@@ -80,9 +94,7 @@ export function CollabGlyph(_props: SubpackageGlyphProps) {
           style={g.style}
         >
           <span className={`h-1.5 w-1.5 rounded-full ${g.bg}`} />
-          <span
-            className={`rounded-[var(--radius-sm)] px-1 py-px font-mono text-[9px] text-white ${g.bg}`}
-          >
+          <span className={`rounded-[var(--radius-sm)] px-1 py-px font-mono text-[9px] ${g.chip}`}>
             {g.name}
           </span>
         </div>

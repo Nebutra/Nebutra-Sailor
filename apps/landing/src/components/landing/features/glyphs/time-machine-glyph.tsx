@@ -44,7 +44,7 @@ export function TimeMachineGlyph(_props: SubpackageGlyphProps) {
             <div key={marker.label} className="relative flex flex-col items-center gap-1">
               {marker.active ? (
                 <div className="relative flex h-4 w-4 items-center justify-center">
-                  <div className="absolute inset-0 rounded-full ring-2 ring-[hsl(var(--primary))] ring-offset-1 ring-offset-background" />
+                  <div className="absolute inset-0 rounded-full ring-2 ring-primary ring-offset-1 ring-offset-background" />
                   <div
                     className="h-2 w-2 rounded-full"
                     style={{ background: "hsl(var(--primary))" }}
@@ -69,7 +69,7 @@ export function TimeMachineGlyph(_props: SubpackageGlyphProps) {
       <div className="flex items-center justify-center">
         <Badge
           variant="outline"
-          className="h-5 gap-1 border-[hsl(var(--primary))]/40 px-1.5 font-mono text-[9px] text-[hsl(var(--primary))]"
+          className="h-5 gap-1 border-primary/40 px-1.5 font-mono text-[9px] text-primary"
         >
           <span
             className="inline-block h-1.5 w-1.5 rounded-full"

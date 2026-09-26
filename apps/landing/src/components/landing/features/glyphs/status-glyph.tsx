@@ -20,7 +20,7 @@ export function StatusGlyph(_props: SubpackageGlyphProps) {
         </div>
         <Badge
           variant="outline"
-          className="gap-1 border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0 text-[10px] font-medium text-success-strong"
+          className="gap-1 border-success/30 bg-success/10 px-1.5 py-0 text-[10px] font-medium text-success-strong"
         >
           <Check className="h-2.5 w-2.5" />
           All systems operational
@@ -34,7 +34,7 @@ export function StatusGlyph(_props: SubpackageGlyphProps) {
             <div
               key={index}
               className={`h-full flex-1 rounded-[1px] ${
-                isAmber ? "bg-amber-500/70" : "bg-emerald-500/70"
+                isAmber ? "bg-warning/70" : "bg-success/70"
               }`}
               style={{ minWidth: 2 }}
             />

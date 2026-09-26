@@ -28,7 +28,7 @@ function cellClasses(enabled: boolean, busy: boolean): string {
     return "border-border bg-muted text-muted-foreground cursor-progress";
   }
   if (enabled) {
-    return "border-success/30 bg-success/10/70 text-[hsl(var(--success-strong))] hover:bg-success/10";
+    return "border-success/30 bg-success/10/70 text-success-strong hover:bg-success/10";
   }
   return "border-border bg-background text-muted-foreground hover:bg-muted";
 }
@@ -95,7 +95,7 @@ export function NotificationPreferencesRow({
               )}`}
             >
               <span
-                className={`inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                className={`inline-block h-4 w-4 rounded-full bg-background shadow transition-transform ${
                   enabled ? "translate-x-5" : "translate-x-0"
                 }`}
                 aria-hidden="true"

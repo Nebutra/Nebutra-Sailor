@@ -278,8 +278,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
                 value.bio.length > BIO_MAX ||
                 value.customInstructions.length > CUSTOM_INSTRUCTIONS_MAX
               }
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-              style={{ background: "hsl(var(--primary))" }}
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-semibold bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {submitting ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -310,7 +309,7 @@ function FieldHeader({ id, label, hint, overLimit }: FieldHeaderProps) {
       </FormLabel>
       {hint && (
         <span
-          className={`text-[10px] tabular-nums ${overLimit ? "text-[hsl(var(--destructive-strong))]" : "text-neutral-10"}`}
+          className={`text-[10px] tabular-nums ${overLimit ? "text-destructive-strong" : "text-neutral-10"}`}
         >
           {hint}
         </span>

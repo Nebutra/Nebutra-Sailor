@@ -101,10 +101,10 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--status-danger)] bg-background p-6">
+    <section className="rounded-[var(--radius-lg)] border border-destructive bg-background p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-sm font-medium text-[var(--status-danger)]">
+          <h3 className="text-sm font-medium text-destructive-strong">
             {t("auth.security.deleteAccount.title")}
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -164,7 +164,7 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
               )}
             />
 
-            {errorMessage && <p className="text-sm text-[var(--status-danger)]">{errorMessage}</p>}
+            {errorMessage && <p className="text-sm text-destructive-strong">{errorMessage}</p>}
 
             <div className="flex flex-col gap-2 md:flex-row md:justify-end">
               <Button type="button" onClick={resetForm} disabled={pending} variant="outline">

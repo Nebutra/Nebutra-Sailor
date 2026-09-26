@@ -201,7 +201,7 @@ function BlogRailPostCard({
         className="group block h-full rounded-[var(--radius-md)] outline-none"
       >
         <p className="text-xs font-medium text-muted-foreground">{post.dateLabel ?? "Undated"}</p>
-        <h2 className="mt-3 line-clamp-3 text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-[hsl(var(--primary))]">
+        <h2 className="mt-3 line-clamp-3 text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
           {post.title}
         </h2>
         <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">

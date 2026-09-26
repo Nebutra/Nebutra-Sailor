@@ -20,6 +20,7 @@
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { findFiles, grepExcludes } from "./lib/scan.mjs";
+import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 
 /** Trees whose code is governed. */
 const SCAN_ROOTS = ["apps", "packages/design", "backends/gateway"];
@@ -163,9 +164,7 @@ const BASE_UI_VARS = baseUiRuntimeVars();
  * explains what the scanner looks for is not a reference to anything.
  */
 function blankComments(src) {
-  return src
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
-    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p) => p + " ".repeat(m.length - p.length));
+  return blankSourceComments(src);
 }
 
 const isExternal = (name) =>

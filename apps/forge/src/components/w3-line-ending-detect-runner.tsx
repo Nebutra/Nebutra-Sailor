@@ -138,7 +138,7 @@ export function W3LineEndingDetectRunner({ toolId }: { toolId: string }) {
             o.decodeWarning ? (
               <>
                 {o.decodeWarning}{" "}
-                <a className="text-[var(--blue-11)] underline" href="/t/encoding-detect">
+                <a className="text-blue-11 underline" href="/t/encoding-detect">
                   {t("lineEndingDetect.encodingLink")}
                 </a>
               </>
@@ -162,13 +162,13 @@ export function W3LineEndingDetectRunner({ toolId }: { toolId: string }) {
         <div className="space-y-4">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-xs text-[var(--neutral-10)]">
+              <tr className="text-left text-xs text-neutral-10">
                 <th className="py-1 font-medium">{t("lineEndingDetect.colStyle")}</th>
                 <th className="py-1 font-medium">{t("lineEndingDetect.colCount")}</th>
                 <th className="py-1 font-medium">{t("lineEndingDetect.colShare")}</th>
               </tr>
             </thead>
-            <tbody className="font-mono text-[var(--neutral-12)]">
+            <tbody className="font-mono text-neutral-12">
               {STYLES.map((style: StyleKey) => (
                 <tr key={style}>
                   <td className="py-1">{t(`lineEndingDetect.style.${style.toUpperCase()}`)}</td>
@@ -180,7 +180,7 @@ export function W3LineEndingDetectRunner({ toolId }: { toolId: string }) {
           </table>
 
           {o.minorityLines.length > 0 ? (
-            <p className="text-sm text-[var(--neutral-11)]">
+            <p className="text-sm text-neutral-11">
               {t("lineEndingDetect.minorityLines", {
                 lines: o.minorityLines.join(", "),
               })}
@@ -199,7 +199,7 @@ export function W3LineEndingDetectRunner({ toolId }: { toolId: string }) {
                   >
                     {t(`lineEndingDetect.level.${f.level}`)}
                   </ShellBadge>
-                  <span className="flex-1 text-sm text-[var(--neutral-11)]">{f.message}</span>
+                  <span className="flex-1 text-sm text-neutral-11">{f.message}</span>
                 </li>
               ))}
             </ul>

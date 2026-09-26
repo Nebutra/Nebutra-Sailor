@@ -48,7 +48,7 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <label className="block text-sm text-[var(--neutral-11)]">
+      <label className="block text-sm text-neutral-11">
         {t("common.length", { n: length })}
         <input
           data-allow-native
@@ -60,7 +60,7 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
           className="mt-2 w-full accent-primary"
         />
       </label>
-      <div className="flex flex-wrap gap-4 text-sm text-[var(--neutral-11)]">
+      <div className="flex flex-wrap gap-4 text-sm text-neutral-11">
         {options.map(({ key, label, checked, set }) => (
           <label key={key} className="inline-flex items-center gap-2">
             <input
@@ -92,8 +92,8 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
       <RunnerNote>{t("password.note")}</RunnerNote>
       {history.length > 1 ? (
         <div className="space-y-1">
-          <p className="text-xs text-[var(--neutral-10)]">{t("password.recent")}</p>
-          <ul className="space-y-1 font-mono text-xs text-[var(--neutral-11)]">
+          <p className="text-xs text-neutral-10">{t("password.recent")}</p>
+          <ul className="space-y-1 font-mono text-xs text-neutral-11">
             {history.slice(1).map((p) => (
               <li key={p}>{p}</li>
             ))}

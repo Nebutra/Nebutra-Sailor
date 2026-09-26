@@ -129,7 +129,7 @@ export function AdminDirectoryPanel({
           />
           <button
             type="submit"
-            className="rounded-[var(--radius-xl)] bg-[color:hsl(var(--primary))] px-4 py-2 font-medium text-[hsl(var(--background))] text-sm transition hover:opacity-90"
+            className="rounded-[var(--radius-xl)] bg-[color:hsl(var(--primary))] px-4 py-2 font-medium text-background text-sm transition hover:opacity-90"
           >
             Search
           </button>
@@ -388,7 +388,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                 <button
                   type="submit"
                   disabled={pending}
-                  className="rounded-[var(--radius-lg)] bg-[color:hsl(var(--primary))] px-3 py-2 font-medium text-[hsl(var(--background))] text-sm disabled:opacity-50"
+                  className="rounded-[var(--radius-lg)] bg-[color:hsl(var(--primary))] px-3 py-2 font-medium text-background text-sm disabled:opacity-50"
                 >
                   {pending ? "Saving…" : row.kind === "user" ? "Save user" : "Save organization"}
                 </button>

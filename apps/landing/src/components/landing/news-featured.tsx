@@ -73,7 +73,7 @@ export function NewsFeatured({
         </div>
 
         <div className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
-          <h2 className="text-3xl font-semibold leading-tight text-foreground [transition-duration:var(--motion-duration-flow)] [transition-property:color] [transition-timing-function:var(--ease-out)] group-hover:text-[hsl(var(--primary))] motion-reduce:transition-none sm:text-4xl">
+          <h2 className="text-3xl font-semibold leading-tight text-foreground [transition-duration:var(--motion-duration-flow)] [transition-property:color] [transition-timing-function:var(--ease-out)] group-hover:text-primary motion-reduce:transition-none sm:text-4xl">
             {featured.title}
           </h2>
           <div className="flex flex-col gap-3">
@@ -96,7 +96,7 @@ export function NewsFeatured({
             className="group flex flex-col border-t border-border py-6 first:border-t-0 first:pt-0 lg:first:pt-1"
           >
             <CategoryDate category={item.category} dateLabel={item.dateLabel} />
-            <h3 className="mt-2 text-lg font-semibold leading-snug text-foreground [transition-duration:var(--motion-duration-flow)] [transition-property:color] [transition-timing-function:var(--ease-out)] group-hover:text-[hsl(var(--primary))] motion-reduce:transition-none">
+            <h3 className="mt-2 text-lg font-semibold leading-snug text-foreground [transition-duration:var(--motion-duration-flow)] [transition-property:color] [transition-timing-function:var(--ease-out)] group-hover:text-primary motion-reduce:transition-none">
               {item.title}
             </h3>
             {item.excerpt && (

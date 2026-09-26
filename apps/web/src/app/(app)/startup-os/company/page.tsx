@@ -218,9 +218,7 @@ export default function CompanyContextPage() {
               <span className="font-mono text-xs text-neutral-11">
                 {editing.layerId} · {editing.fieldKey}
               </span>
-              {error ? (
-                <span className="text-xs text-[hsl(var(--destructive-strong))]">{error}</span>
-              ) : null}
+              {error ? <span className="text-xs text-destructive-strong">{error}</span> : null}
             </div>
             <Field label={editingLabel} htmlFor="tower-field-edit">
               <Input

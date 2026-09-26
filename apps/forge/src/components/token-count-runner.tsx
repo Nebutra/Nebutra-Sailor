@@ -104,7 +104,7 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="outline" onClick={() => void count()} disabled={loading}>
           {loading ? t("tokenCount.counting") : t("tokenCount.count")}
         </Button>
-        <span className="text-sm text-[var(--neutral-11)]">
+        <span className="text-sm text-neutral-11">
           {t("tokenCount.chars", { n: text.length })} · {t("common.liveHint")}
         </span>
       </div>
@@ -112,7 +112,7 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
       {tokens !== null ? (
         <RunnerPanel>
           <p className="text-3xl font-bold tabular-nums">{tokens}</p>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">tokens</p>
+          <p className="mt-1 text-sm text-neutral-11">tokens</p>
           <RunnerNote>{note}</RunnerNote>
         </RunnerPanel>
       ) : null}

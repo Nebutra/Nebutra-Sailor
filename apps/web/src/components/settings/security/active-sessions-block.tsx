@@ -250,20 +250,20 @@ export function ActiveSessionsBlock({
   const showEmpty = sessions.length === 0 || otherSessionsCount === 0;
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-sm font-medium text-[var(--neutral-12)]">{SESSION_STRINGS.title}</h3>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">{SESSION_STRINGS.description}</p>
+          <h3 className="text-sm font-medium text-neutral-12">{SESSION_STRINGS.title}</h3>
+          <p className="mt-1 text-sm text-neutral-11">{SESSION_STRINGS.description}</p>
         </div>
-        <span className="w-fit rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]">
+        <span className="w-fit rounded-full border border-neutral-7 px-2.5 py-1 text-xs font-medium text-neutral-11">
           {capability.available ? SESSION_STRINGS.revokeEnabled : SESSION_STRINGS.providerManaged}
         </span>
       </div>
 
-      {state.error && <p className="mb-4 text-sm text-[hsl(var(--destructive))]">{state.error}</p>}
+      {state.error && <p className="mb-4 text-sm text-destructive-strong">{state.error}</p>}
       {state.successMessage && (
-        <p className="mb-4 text-sm text-[var(--status-success)]" role="status">
+        <p className="mb-4 text-sm text-success-strong" role="status">
           {state.successMessage}
         </p>
       )}
@@ -272,14 +272,14 @@ export function ActiveSessionsBlock({
         <div className="mb-4">
           {state.confirmingAll ? (
             <div
-              className="flex flex-col gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3 md:flex-row md:items-center md:justify-between"
+              className="flex flex-col gap-2 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-2 p-3 md:flex-row md:items-center md:justify-between"
               role="alertdialog"
             >
               <div>
-                <p className="text-sm font-medium text-[var(--neutral-12)]">
+                <p className="text-sm font-medium text-neutral-12">
                   {SESSION_STRINGS.confirmPrompt}
                 </p>
-                <p className="mt-1 text-xs leading-5 text-[var(--neutral-10)]">
+                <p className="mt-1 text-xs leading-5 text-neutral-10">
                   {SESSION_STRINGS.confirmHelp}
                 </p>
               </div>
@@ -320,12 +320,12 @@ export function ActiveSessionsBlock({
           {[1, 2].map((item) => (
             <div
               key={item}
-              className="h-20 animate-pulse rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]"
+              className="h-20 animate-pulse rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2"
             />
           ))}
         </div>
       ) : showEmpty ? (
-        <p className="text-sm text-[var(--neutral-11)]">{SESSION_STRINGS.empty}</p>
+        <p className="text-sm text-neutral-11">{SESSION_STRINGS.empty}</p>
       ) : (
         <div className="space-y-3">
           {sessions.map((session) => {
@@ -334,19 +334,19 @@ export function ActiveSessionsBlock({
             return (
               <div
                 key={session.id}
-                className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-4 md:flex-row md:items-start md:justify-between"
+                className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-neutral-7 p-4 md:flex-row md:items-start md:justify-between"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-[var(--neutral-12)]">
+                  <p className="text-sm font-medium text-neutral-12">
                     {session.label || session.ipAddress || SESSION_STRINGS.unknownIp}
                     {isCurrent && (
-                      <span className="ml-2 text-xs font-normal text-[var(--neutral-10)]">
+                      <span className="ml-2 text-xs font-normal text-neutral-10">
                         {SESSION_STRINGS.currentSession}
                       </span>
                     )}
                   </p>
-                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[var(--neutral-10)]">
-                    <span className="rounded-full border border-[var(--neutral-7)] px-2 py-0.5">
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-neutral-10">
+                    <span className="rounded-full border border-neutral-7 px-2 py-0.5">
                       {session.kind === "desktop"
                         ? SESSION_STRINGS.desktopKind
                         : SESSION_STRINGS.webKind}
@@ -354,18 +354,16 @@ export function ActiveSessionsBlock({
                     {session.ipAddress && <span>{session.ipAddress}</span>}
                     {session.platform && <span>{session.platform}</span>}
                   </div>
-                  <p className="mt-1 text-xs text-[var(--neutral-10)]">
+                  <p className="mt-1 text-xs text-neutral-10">
                     {SESSION_STRINGS.lastActiveLabel}:{" "}
                     {parseSessionDate(lastActiveAt)
                       ? format.relativeTime(parseSessionDate(lastActiveAt) as Date)
                       : "Unknown time"}
                   </p>
                   {session.userAgent && (
-                    <p className="mt-2 break-words text-xs text-[var(--neutral-11)]">
-                      {session.userAgent}
-                    </p>
+                    <p className="mt-2 break-words text-xs text-neutral-11">{session.userAgent}</p>
                   )}
-                  <p className="mt-2 text-xs text-[var(--neutral-10)]">
+                  <p className="mt-2 text-xs text-neutral-10">
                     {SESSION_STRINGS.expiresLabel}:{" "}
                     {parseSessionDate(session.expiresAt)
                       ? format.dateTime(parseSessionDate(session.expiresAt) as Date, {
@@ -396,7 +394,7 @@ export function ActiveSessionsBlock({
         </div>
       )}
 
-      <p className="mt-4 text-xs leading-5 text-[var(--neutral-10)]">{capability.reason}</p>
+      <p className="mt-4 text-xs leading-5 text-neutral-10">{capability.reason}</p>
     </section>
   );
 }

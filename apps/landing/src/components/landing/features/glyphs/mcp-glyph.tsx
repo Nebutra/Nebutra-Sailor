@@ -44,7 +44,7 @@ export function McpGlyph(_props: SubpackageGlyphProps) {
         <span className="font-mono text-[10px] text-muted-foreground">
           mcp.tool_catalog · 47 tools
         </span>
-        <Connection className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <Connection className="h-3 w-3 text-primary" />
       </div>
 
       <ul className="flex flex-col gap-1">
@@ -53,9 +53,9 @@ export function McpGlyph(_props: SubpackageGlyphProps) {
             key={name}
             className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-background px-2 py-1"
           >
-            <Icon className="h-2.5 w-2.5 shrink-0 text-[hsl(var(--primary))]" />
+            <Icon className="h-2.5 w-2.5 shrink-0 text-primary" />
             <code className="truncate font-mono text-[10px] text-foreground">
-              <span className="text-[hsl(var(--primary))]">{name}</span>
+              <span className="text-primary">{name}</span>
               <span className="text-muted-foreground"> · {desc}</span>
             </code>
             <Badge

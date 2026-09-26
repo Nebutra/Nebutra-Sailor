@@ -120,8 +120,8 @@ export function UsageClient() {
                 className={[
                   "h-7 rounded-full border px-3 text-[11px] transition-colors",
                   active
-                    ? "border-[var(--neutral-8)] bg-[var(--neutral-3)] font-medium"
-                    : "border-[var(--neutral-6)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]",
+                    ? "border-neutral-8 bg-neutral-3 font-medium"
+                    : "font-medium border-neutral-6 text-neutral-11 hover:bg-neutral-2",
                 ].join(" ")}
               >
                 {option.label}
@@ -249,7 +249,7 @@ export function UsageClient() {
                     <TableRow key={row.keyId}>
                       <TableCell alignment="start">
                         {row.name ?? "已删除的 Key"}
-                        <span className="ml-2 font-mono text-[10px] text-[var(--neutral-9)]">
+                        <span className="ml-2 font-mono text-[10px] text-neutral-9">
                           {row.keyPrefix ? `${row.keyPrefix}…` : row.keyId.slice(0, 8)}
                         </span>
                       </TableCell>
@@ -275,7 +275,7 @@ export function UsageClient() {
 
 function HeadRow({ labels }: { labels: readonly string[] }) {
   return (
-    <TableRow className="bg-[var(--neutral-2)]/50 text-[11px] text-[var(--neutral-10)]">
+    <TableRow className="bg-neutral-2/50 text-[11px] text-neutral-10">
       {labels.map((label, index) => (
         <TableHead
           key={label}
@@ -301,10 +301,10 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <section className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
-      <div className="flex items-center gap-2 border-b border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 px-3 py-2">
+    <section className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-6">
+      <div className="flex items-center gap-2 border-b border-neutral-6 bg-neutral-2/40 px-3 py-2">
         <h2 className="text-[12px] font-semibold">{title}</h2>
-        {subtitle ? <span className="text-[11px] text-[var(--neutral-10)]">{subtitle}</span> : null}
+        {subtitle ? <span className="text-[11px] text-neutral-10">{subtitle}</span> : null}
         {actions ? <div className="ml-auto">{actions}</div> : null}
       </div>
       {children}
@@ -320,7 +320,7 @@ function SummaryTiles({
   onRetry: () => void;
 }) {
   return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
+    <div className="rounded-[var(--radius-md)] border border-neutral-6">
       <AsyncSection
         resource={resource}
         onRetry={onRetry}
@@ -358,10 +358,10 @@ function SummaryTiles({
 
 function Tile({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div className="rounded-[var(--radius-md)] bg-[var(--neutral-2)]/50 px-3 py-2">
-      <p className="text-[11px] text-[var(--neutral-10)]">{label}</p>
+    <div className="rounded-[var(--radius-md)] bg-neutral-2/50 px-3 py-2">
+      <p className="text-[11px] text-neutral-10">{label}</p>
       <p className="mt-0.5 text-lg font-semibold tabular-nums tracking-tight">{value}</p>
-      {hint ? <p className="mt-0.5 text-[10px] text-[var(--neutral-10)]">{hint}</p> : null}
+      {hint ? <p className="mt-0.5 text-[10px] text-neutral-10">{hint}</p> : null}
     </div>
   );
 }
@@ -383,7 +383,7 @@ function HistoryChart({ history }: { history: UsageHistory }) {
           return (
             <li
               key={bucket.bucket}
-              className="min-w-[3px] flex-1 rounded-t-[2px] bg-[var(--neutral-8)]"
+              className="min-w-[3px] flex-1 rounded-t-[2px] bg-neutral-8"
               style={{ height: `${height}%` }}
               title={label}
               aria-label={label}
@@ -391,7 +391,7 @@ function HistoryChart({ history }: { history: UsageHistory }) {
           );
         })}
       </ul>
-      <div className="mt-1 flex justify-between text-[10px] text-[var(--neutral-10)]">
+      <div className="mt-1 flex justify-between text-[10px] text-neutral-10">
         <span>{formatBucket(history.buckets[0]?.bucket ?? "", history.granularity)}</span>
         <span>峰值 {formatAmount(peak)}</span>
         <span>
@@ -462,7 +462,7 @@ function RecordsPanel({
                       <TableCell alignment="start" className="whitespace-nowrap text-[11px]">
                         {formatDateTime(row.occurredAt)}
                         {row.requestId ? (
-                          <span className="ml-2 font-mono text-[10px] text-[var(--neutral-9)]">
+                          <span className="ml-2 font-mono text-[10px] text-neutral-9">
                             {row.requestId.slice(0, 8)}
                           </span>
                         ) : null}
@@ -490,12 +490,10 @@ function RecordsPanel({
                 </TableBody>
               </Table>
             </div>
-            <div className="flex items-center gap-2 border-t border-[var(--neutral-6)] px-3 py-2">
-              <span className="text-[11px] text-[var(--neutral-10)]">
-                已加载 {data.rows.length} 行
-              </span>
+            <div className="flex items-center gap-2 border-t border-neutral-6 px-3 py-2">
+              <span className="text-[11px] text-neutral-10">已加载 {data.rows.length} 行</span>
               {moreError ? (
-                <span role="alert" className="text-[11px] text-[var(--status-danger)]">
+                <span role="alert" className="text-[11px] text-destructive-strong">
                   {moreError}
                 </span>
               ) : null}
@@ -511,7 +509,7 @@ function RecordsPanel({
                   {loadingMore ? "加载中…" : "加载更多"}
                 </Button>
               ) : (
-                <span className="ml-auto text-[11px] text-[var(--neutral-9)]">已经到底了</span>
+                <span className="ml-auto text-[11px] text-neutral-9">已经到底了</span>
               )}
             </div>
           </>
@@ -522,15 +520,13 @@ function RecordsPanel({
 }
 
 function StatusPill({ status }: { status: number | null }) {
-  if (status === null) return <span className="text-[var(--neutral-9)]">—</span>;
+  if (status === null) return <span className="text-neutral-9">—</span>;
   const ok = status >= 200 && status < 300;
   return (
     <span
       className={[
         "rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums",
-        ok
-          ? "bg-[color-mix(in_srgb,var(--status-success)_14%,transparent)] text-[var(--status-success)]"
-          : "bg-[color-mix(in_srgb,var(--status-danger)_14%,transparent)] text-[var(--status-danger)]",
+        ok ? "bg-success/14 text-success-strong" : "bg-destructive/14 text-destructive-strong",
       ].join(" ")}
     >
       {status}

@@ -44,11 +44,8 @@ export function LoginSuccessHandoff({ redirectTo = "/" }: LoginSuccessHandoffPro
       />
 
       <div className="flex items-start gap-4">
-        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--status-success)_16%,transparent)] text-[color:var(--status-success)]">
-          <span
-            aria-hidden
-            className="absolute inset-0 rounded-full border border-[color-mix(in_srgb,var(--status-success)_35%,transparent)]"
-          />
+        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-success/16 text-success-strong">
+          <span aria-hidden className="absolute inset-0 rounded-full border border-success/35" />
           <Check className="h-5 w-5" aria-hidden />
         </div>
 
@@ -77,7 +74,7 @@ export function LoginSuccessHandoff({ redirectTo = "/" }: LoginSuccessHandoffPro
           <span className="text-muted-foreground">{t("secureHandoff")}</span>
         </div>
         <div className="h-1.5 overflow-hidden rounded-full bg-muted">
-          <div className="h-full w-full origin-left animate-[login-success-progress_4s_linear_forwards] rounded-full bg-[hsl(var(--foreground))]" />
+          <div className="h-full w-full origin-left animate-[login-success-progress_4s_linear_forwards] rounded-full bg-foreground" />
         </div>
       </div>
 
@@ -110,7 +107,7 @@ function StatusRow({ icon: Icon, label, state, muted = false }: StatusRowProps) 
         <Icon
           className={cn(
             "h-4 w-4 shrink-0",
-            muted ? "text-muted-foreground" : "text-[color:var(--status-success)]",
+            muted ? "text-muted-foreground" : "text-success-strong",
           )}
           aria-hidden
         />

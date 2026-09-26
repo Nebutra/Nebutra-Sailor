@@ -45,14 +45,14 @@ export function InteractiveDocsCard() {
               <TerminalSquare className="w-3 h-3 text-muted-foreground" />
             </div>
             <div className="text-[10px] text-foreground leading-relaxed font-medium mt-1">
-              <span className="text-fuchsia-600 dark:text-fuchsia-400">export const</span>{" "}
-              <span className="text-blue-600 dark:text-blue-400">Button</span> ={" "}
-              <span className="text-amber-600 dark:text-amber-400">cva</span>(<br />
+              <span className="text-chart-3">export const</span>{" "}
+              <span className="text-info">Button</span> ={" "}
+              <span className="text-warning-strong">cva</span>(<br />
               &nbsp;&nbsp;
               <span className="text-success-strong">"inline-flex font-medium"</span>
               ,<br />
-              &nbsp;&nbsp;&#123; variants: &#123;{" "}
-              <span className="text-blue-500 dark:text-blue-300">size</span>: ... &#125; &#125;
+              &nbsp;&nbsp;&#123; variants: &#123; <span className="text-info">size</span>: ...
+              &#125; &#125;
               <br />
               );
             </div>

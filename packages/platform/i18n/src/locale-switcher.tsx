@@ -221,7 +221,7 @@ export function createLocaleSwitcher<TLocale extends string>(
             "flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-2 text-sm transition-colors",
             isActive
               ? "bg-accent font-medium text-accent-foreground"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground",
+              : "font-medium text-muted-foreground hover:bg-muted hover:text-foreground",
           )}
         >
           <span className="min-w-0 flex-1 truncate text-start">{label}</span>

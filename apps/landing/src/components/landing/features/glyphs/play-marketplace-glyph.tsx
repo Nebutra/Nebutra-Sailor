@@ -26,7 +26,7 @@ export function PlayMarketplaceGlyph(_props: SubpackageGlyphProps) {
         >
           marketplace · 1,247 playbooks
         </Badge>
-        <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <Sparkles className="h-3 w-3 text-primary" />
       </div>
 
       <ul className="grid grid-cols-2 gap-1.5">
@@ -36,7 +36,7 @@ export function PlayMarketplaceGlyph(_props: SubpackageGlyphProps) {
             className="flex flex-col gap-0.5 rounded-[var(--radius-sm)] bg-background px-1.5 py-1"
           >
             <div className="flex items-center gap-1">
-              <Box className="h-2.5 w-2.5 shrink-0 text-[hsl(var(--primary))]" />
+              <Box className="h-2.5 w-2.5 shrink-0 text-primary" />
               <span className="truncate text-[10px] font-medium text-foreground">{name}</span>
             </div>
             <div className="flex items-center justify-between font-mono text-[9px] text-muted-foreground">
@@ -44,7 +44,7 @@ export function PlayMarketplaceGlyph(_props: SubpackageGlyphProps) {
                 <Users className="h-2 w-2" />
                 {installs}
               </span>
-              <span className="text-[hsl(var(--primary))]">★ {rating}</span>
+              <span className="text-primary">★ {rating}</span>
             </div>
           </li>
         ))}

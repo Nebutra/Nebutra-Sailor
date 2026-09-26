@@ -74,19 +74,15 @@ export function MarketFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-12 border-t border-[var(--rm-panel-border,var(--neutral-6))] bg-white/80">
+    <footer className="mt-12 border-t border-[var(--rm-panel-border,var(--neutral-6))] bg-neutral-1/80">
       <div className="router-market-shell grid gap-10 py-14 md:grid-cols-[1.15fr_1fr] md:gap-14 lg:grid-cols-[1.2fr_1.6fr]">
         {/* Brand column */}
         <div className="min-w-0">
           <Link href="/" className="inline-flex items-center" aria-label={brand.name}>
             <BrandLogo variant="horizontal" className="h-7 w-auto" />
           </Link>
-          <p className="mt-4 text-[13px] leading-relaxed text-[var(--neutral-10)]">
-            Need more information?
-          </p>
-          <p className="mt-1 text-[12px] text-[var(--neutral-9)]">
-            {brand.name} · Router API 集市（lab）
-          </p>
+          <p className="mt-4 text-[13px] leading-relaxed text-neutral-10">Need more information?</p>
+          <p className="mt-1 text-[12px] text-neutral-9">{brand.name} · Router API 集市（lab）</p>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {SOCIAL.map((s) => {
@@ -98,7 +94,7 @@ export function MarketFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--neutral-3)] text-[var(--neutral-12)] transition hover:bg-[var(--neutral-4)]"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-3 text-neutral-12 transition hover:bg-neutral-4"
                 >
                   <Icon size={15} className="h-[15px] w-[15px]" />
                 </a>
@@ -115,7 +111,8 @@ export function MarketFooter() {
                   title={p.label}
                   aria-label={p.label}
                   className={[
-                    "inline-flex h-7 items-center justify-center overflow-hidden rounded-md border border-[var(--neutral-6)] bg-white shadow-[0_1px_1px_rgb(15_23_42/0.04)]",
+                    // allow-palette: payment network mark (Visa/MC/Amex) badge requires fixed white per brand guidelines
+                    "inline-flex h-7 items-center justify-center overflow-hidden rounded-md border border-neutral-6 bg-white shadow-[0_1px_1px_rgb(15_23_42/0.04)]",
                     p.wide ? "px-1.5" : "w-10",
                   ].join(" ")}
                 >
@@ -139,11 +136,11 @@ export function MarketFooter() {
       </div>
 
       <div className="border-t border-[var(--rm-panel-border,var(--neutral-6))]">
-        <div className="router-market-shell flex flex-col gap-1 py-5 text-[12px] text-[var(--neutral-9)] md:flex-row md:items-center md:justify-between">
+        <div className="router-market-shell flex flex-col gap-1 py-5 text-[12px] text-neutral-9 md:flex-row md:items-center md:justify-between">
           <p>
             © {year} {brand.name}. All rights reserved.
           </p>
-          <p className="text-[var(--neutral-8)]">API 集市 · 按量付费 · 多模型统一接入</p>
+          <p className="text-neutral-8">API 集市 · 按量付费 · 多模型统一接入</p>
         </div>
       </div>
     </footer>
@@ -159,21 +156,21 @@ function FooterCol({
 }) {
   return (
     <div>
-      <p className="text-[13px] font-semibold text-[var(--neutral-12)]">{title}</p>
+      <p className="text-[13px] font-semibold text-neutral-12">{title}</p>
       <ul className="mt-3 space-y-2">
         {links.map((l) => (
           <li key={l.label}>
             {l.external ? (
               <a
                 href={l.href}
-                className="text-[12px] text-[var(--neutral-10)] transition hover:text-[var(--neutral-12)]"
+                className="text-[12px] text-neutral-10 transition hover:text-neutral-12"
               >
                 {l.label}
               </a>
             ) : (
               <Link
                 href={l.href}
-                className="text-[12px] text-[var(--neutral-10)] transition hover:text-[var(--neutral-12)]"
+                className="text-[12px] text-neutral-10 transition hover:text-neutral-12"
               >
                 {l.label}
               </Link>

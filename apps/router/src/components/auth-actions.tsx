@@ -27,7 +27,7 @@ export function AuthActions({
 
   if (!isLoaded) {
     return (
-      <span className={`text-[12px] text-[var(--neutral-10)] ${className}`} aria-hidden>
+      <span className={`text-[12px] text-neutral-10 ${className}`} aria-hidden>
         …
       </span>
     );
@@ -38,12 +38,12 @@ export function AuthActions({
     if (variant === "cta") {
       return (
         <div className={`flex flex-col gap-2 ${className}`}>
-          <p className="truncate text-[12px] text-[var(--neutral-11)]" title={label}>
+          <p className="truncate text-[12px] text-neutral-11" title={label}>
             {label}
           </p>
           <button
             type="button"
-            className="flex h-10 items-center justify-center rounded-full border border-[var(--neutral-6)] bg-white text-[13px] font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
+            className="flex h-10 items-center justify-center rounded-full border border-neutral-6 bg-neutral-1 text-[13px] font-medium text-neutral-12 transition hover:bg-neutral-2"
             onClick={() => {
               void signOut();
             }}
@@ -56,14 +56,14 @@ export function AuthActions({
     return (
       <div className={`flex items-center gap-2 ${className}`}>
         <span
-          className="hidden max-w-[140px] truncate text-[12px] text-[var(--neutral-11)] sm:inline"
+          className="hidden max-w-[140px] truncate text-[12px] text-neutral-11 sm:inline"
           title={label}
         >
           {label}
         </span>
         <button
           type="button"
-          className="font-medium text-[var(--neutral-12)] hover:opacity-80"
+          className="font-medium text-neutral-12 hover:opacity-80"
           onClick={() => {
             void signOut();
           }}
@@ -82,13 +82,13 @@ export function AuthActions({
       <div className={`flex flex-col gap-2 ${className}`}>
         <a
           href={signInHref}
-          className="flex h-10 items-center justify-center rounded-full bg-[var(--neutral-12)] text-[13px] font-medium text-[var(--neutral-1)] transition hover:bg-[var(--neutral-11)]"
+          className="flex h-10 items-center justify-center rounded-full bg-neutral-12 text-[13px] font-medium text-neutral-1 transition hover:bg-neutral-11"
         >
           登录 / 注册
         </a>
         <a
           href={signUpHref}
-          className="text-center text-[12px] font-medium text-[var(--blue-11)] underline-offset-2 hover:underline"
+          className="text-center text-[12px] font-medium text-blue-11 underline-offset-2 hover:underline"
         >
           没有账号？注册
         </a>
@@ -100,7 +100,7 @@ export function AuthActions({
     return (
       <a
         href={signInHref}
-        className={`font-medium text-[var(--blue-11)] underline-offset-2 hover:underline ${className}`}
+        className={`font-medium text-blue-11 underline-offset-2 hover:underline ${className}`}
       >
         点击登录
       </a>
@@ -109,10 +109,10 @@ export function AuthActions({
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <a href={signInHref} className="font-medium text-[var(--neutral-12)] hover:opacity-80">
+      <a href={signInHref} className="font-medium text-neutral-12 hover:opacity-80">
         登录
       </a>
-      <a href={signUpHref} className="hover:text-[var(--neutral-12)]">
+      <a href={signUpHref} className="hover:text-neutral-12">
         注册
       </a>
     </div>

@@ -52,7 +52,7 @@ export function RateLimitGlyph({ locale }: SubpackageGlyphProps) {
       style={{ height: 160 }}
     >
       <header className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
-        <Lightning className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <Lightning className="h-3 w-3 text-primary" />
         <span className="truncate text-foreground">{copy.header}</span>
       </header>
 

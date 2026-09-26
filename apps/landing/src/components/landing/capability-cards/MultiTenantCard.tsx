@@ -41,7 +41,7 @@ function getLineClass(type: string, text: string): string {
     return "text-primary dark:text-[var(--brand-accent)]";
   }
   if (text.includes("'@nebutra/rls'")) {
-    return "text-amber-600 dark:text-amber-400";
+    return "text-success-strong";
   }
   return "text-foreground";
 }
@@ -72,15 +72,15 @@ export function MultiTenantCard() {
         {/* File Tabs */}
         <div className="flex border-b border-border/60 bg-muted/10/[0.02]">
           <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground bg-background dark:bg-muted border-b-2 border-primary dark:border-[var(--brand-accent)]">
-            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-blue-500/60" />
+            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-info/60" />
             query.ts
           </div>
           <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-medium text-muted-foreground">
-            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-emerald-500/40" />
+            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-success/40" />
             schema.prisma
           </div>
           <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-medium text-muted-foreground">
-            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-amber-500/40" />
+            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-warning/40" />
             middleware.ts
           </div>
         </div>
@@ -91,7 +91,7 @@ export function MultiTenantCard() {
             {CODE_LINES.map((line) => (
               <div
                 key={line.num}
-                className={`flex ${line.type === "key" ? "bg-success/10 border-l-[3px] border-emerald-500/50" : ""}`}
+                className={`flex ${line.type === "key" ? "bg-success/10 border-l-[3px] border-success/50" : ""}`}
               >
                 <span className="w-10 shrink-0 text-right pr-3 select-none text-[11px] text-muted-foreground">
                   {line.num}

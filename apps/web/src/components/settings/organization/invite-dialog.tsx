@@ -156,7 +156,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
             {rootErrorMessage && (
               <p
                 role="alert"
-                className="rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
+                className="rounded-[var(--radius-sm)] bg-destructive/10 px-3 py-2 text-xs text-destructive-strong"
               >
                 {rootErrorMessage}
               </p>

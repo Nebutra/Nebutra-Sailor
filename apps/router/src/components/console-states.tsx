@@ -17,7 +17,7 @@ export function Skeleton({ className = "" }: { className?: string }) {
   return (
     <div
       aria-hidden
-      className={`animate-pulse rounded-[var(--radius-sm)] bg-[var(--neutral-3)] ${className}`}
+      className={`animate-pulse rounded-[var(--radius-sm)] bg-neutral-3 ${className}`}
     />
   );
 }
@@ -57,12 +57,12 @@ export function StatePanel({
       role={isError ? "alert" : undefined}
       className={[
         "flex flex-col items-center justify-center gap-2 px-4 py-10 text-center",
-        isError ? "text-[var(--status-danger)]" : "text-[var(--neutral-11)]",
+        isError ? "text-destructive-strong" : "text-neutral-11",
       ].join(" ")}
     >
       <p className="text-[13px] font-medium">{title}</p>
       {description ? (
-        <p className="max-w-md text-[12px] leading-snug text-[var(--neutral-10)]">{description}</p>
+        <p className="max-w-md text-[12px] leading-snug text-neutral-10">{description}</p>
       ) : null}
       {action ? <div className="mt-1">{action}</div> : null}
     </div>

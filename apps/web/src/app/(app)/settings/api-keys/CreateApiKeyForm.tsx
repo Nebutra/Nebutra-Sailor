@@ -16,18 +16,18 @@ export function CreateApiKeyForm({ orgId }: Props) {
 
   if (state.status === "success") {
     return (
-      <div className="rounded-[var(--radius-md)] border border-warning/60 bg-amber-50 p-4">
-        <p className="mb-2 text-sm font-medium text-[hsl(var(--warning-strong))]">
+      <div className="rounded-[var(--radius-md)] border border-warning/60 bg-warning/10 p-4">
+        <p className="mb-2 text-sm font-medium text-warning-strong">
           This key appears once. Store it before closing.
         </p>
         <div className="flex items-center gap-2">
-          <code className="flex-1 rounded bg-white px-3 py-2 font-mono text-xs text-amber-800 shadow-inner">
+          <code className="flex-1 rounded bg-background px-3 py-2 font-mono text-xs text-warning-strong shadow-inner">
             {state.key}
           </code>
           <button
             type="button"
             onClick={() => copy(state.key)}
-            className="rounded-[var(--radius-md)] border border-amber-300/70 px-3 py-2 text-xs font-medium text-amber-800 transition-colors hover:bg-amber-100"
+            className="rounded-[var(--radius-md)] border border-warning/40 px-3 py-2 text-xs font-medium text-warning-strong transition-colors hover:bg-warning/15"
           >
             {copied ? "Copied" : "Copy"}
           </button>
@@ -49,14 +49,13 @@ export function CreateApiKeyForm({ orgId }: Props) {
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
-        style={{ background: "hsl(var(--primary))" }}
+        className="rounded-[var(--radius-md)] bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity disabled:opacity-50"
       >
         {isPending ? "Creating…" : "Create key"}
       </button>
 
       {state.status === "error" && (
-        <p className="self-center text-sm text-[hsl(var(--destructive-strong))]">{state.message}</p>
+        <p className="self-center text-sm text-destructive-strong">{state.message}</p>
       )}
     </form>
   );

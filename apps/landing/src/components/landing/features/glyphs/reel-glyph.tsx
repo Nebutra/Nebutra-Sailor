@@ -47,13 +47,19 @@ export function ReelGlyph(_props: SubpackageGlyphProps) {
             style={{ background: "hsl(var(--primary))", opacity: 0.85 }}
             aria-hidden
           />
-          <div className="absolute inset-x-2 top-2 h-1 rounded-full bg-white/40" aria-hidden />
-          <div className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full bg-white/95 text-foreground shadow">
+          <div
+            className="absolute inset-x-2 top-2 h-1 rounded-full bg-primary-foreground/40"
+            aria-hidden
+          />
+          <div className="relative z-10 flex h-5 w-5 items-center justify-center rounded-full bg-primary-foreground/95 text-foreground shadow">
             <Play className="h-2.5 w-2.5" />
           </div>
-          <div className="absolute inset-x-2 bottom-2 h-1 rounded-full bg-white/30" aria-hidden />
           <div
-            className="absolute inset-x-2 bottom-2 h-1 w-1/3 rounded-full bg-white"
+            className="absolute inset-x-2 bottom-2 h-1 rounded-full bg-primary-foreground/30"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-x-2 bottom-2 h-1 w-1/3 rounded-full bg-primary-foreground"
             aria-hidden
           />
         </div>

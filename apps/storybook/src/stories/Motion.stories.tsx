@@ -22,7 +22,7 @@ export default meta;
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-24 w-48 items-center justify-center rounded-[var(--radius-card)] border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-sm font-medium text-[hsl(var(--foreground))] shadow-sm">
+    <div className="flex h-24 w-48 items-center justify-center rounded-[var(--radius-card)] border border-border bg-background text-sm font-medium text-foreground shadow-sm">
       {children}
     </div>
   );
@@ -33,7 +33,7 @@ function ReplayButton({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="mt-6 rounded-md bg-[hsl(var(--muted))] px-4 py-2 text-sm font-medium text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--muted))]"
+      className="mt-6 rounded-md bg-muted px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-muted"
     >
       Replay ↺
     </button>
@@ -44,14 +44,14 @@ function AllPresetsDemo() {
   const [key, setKey] = useState(0);
 
   return (
-    <div className="bg-[hsl(var(--muted))] p-8">
+    <div className="bg-muted p-8">
       <div className="flex flex-wrap gap-6">
         {(["emerge", "flow", "fade", "fadeUp", "scale"] as const).map((preset, i) => (
           <div key={`${preset}-${key}`} className="flex flex-col items-center gap-2">
             <AnimateIn preset={preset} delay={i * 0.1}>
               <Card>{preset}</Card>
             </AnimateIn>
-            <span className="font-mono text-xs text-[hsl(var(--muted-foreground))]">{preset}</span>
+            <span className="font-mono text-xs text-muted-foreground">{preset}</span>
           </div>
         ))}
       </div>
@@ -69,7 +69,7 @@ function StaggerDemo() {
   const [key, setKey] = useState(0);
 
   return (
-    <div className="bg-[hsl(var(--muted))] p-8">
+    <div className="bg-muted p-8">
       <AnimateInGroup key={key} stagger="normal" className="flex gap-4">
         {["One", "Two", "Three", "Four", "Five"].map((label) => (
           <AnimateIn key={label} preset="fadeUp">
@@ -134,19 +134,17 @@ export const DurationScale: StoryObj = {
     },
   },
   render: () => (
-    <div className="space-y-6 bg-[hsl(var(--background))] p-8">
+    <div className="space-y-6 bg-background p-8">
       {RAILS.map(({ name, ms, token, tw, intent, examples }) => (
         <div
           key={name}
-          className="grid grid-cols-[140px_1fr_auto] items-center gap-6 border-b border-[hsl(var(--border))] pb-4 last:border-b-0"
+          className="grid grid-cols-[140px_1fr_auto] items-center gap-6 border-b border-border pb-4 last:border-b-0"
         >
           <div>
-            <div className="font-mono text-sm font-medium text-[hsl(var(--foreground))]">
-              {name}
-            </div>
-            <div className="font-mono text-xs text-[hsl(var(--muted-foreground))]">{ms}ms</div>
+            <div className="font-mono text-sm font-medium text-foreground">{name}</div>
+            <div className="font-mono text-xs text-muted-foreground">{ms}ms</div>
           </div>
-          <div className="relative h-2 overflow-hidden rounded-full bg-[hsl(var(--muted))]">
+          <div className="relative h-2 overflow-hidden rounded-full bg-muted">
             <div
               className="h-full rounded-full"
               style={{
@@ -156,15 +154,15 @@ export const DurationScale: StoryObj = {
             />
           </div>
           <div className="text-right">
-            <div className="text-sm font-medium text-[hsl(var(--foreground))]">{intent}</div>
-            <div className="text-xs text-[hsl(var(--muted-foreground))]">{examples}</div>
+            <div className="text-sm font-medium text-foreground">{intent}</div>
+            <div className="text-xs text-muted-foreground">{examples}</div>
           </div>
-          <div className="col-span-3 -mt-2 grid grid-cols-2 gap-4 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+          <div className="col-span-3 -mt-2 grid grid-cols-2 gap-4 font-mono text-[10px] text-muted-foreground">
             <span>
-              CSS var: <code className="text-[hsl(var(--muted-foreground))]">{token}</code>
+              CSS var: <code className="text-muted-foreground">{token}</code>
             </span>
             <span>
-              Tailwind: <code className="text-[hsl(var(--muted-foreground))]">{tw}</code>
+              Tailwind: <code className="text-muted-foreground">{tw}</code>
             </span>
           </div>
         </div>
@@ -241,9 +239,9 @@ export const IntentMapping: StoryObj = {
     ];
 
     return (
-      <div className="bg-[hsl(var(--background))] p-8">
+      <div className="bg-background p-8">
         <table className="w-full max-w-wide text-left text-sm">
-          <thead className="border-b border-[hsl(var(--border))] text-xs uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+          <thead className="border-b border-border text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
               <th className="px-3 py-2 font-medium">Scenario</th>
               <th className="px-3 py-2 font-medium">Rail</th>
@@ -252,14 +250,14 @@ export const IntentMapping: StoryObj = {
           </thead>
           <tbody>
             {rows.map((r) => (
-              <tr key={r.scenario} className="border-b border-[hsl(var(--border))] last:border-b-0">
-                <td className="p-3 text-[hsl(var(--foreground))]">{r.scenario}</td>
+              <tr key={r.scenario} className="border-b border-border last:border-b-0">
+                <td className="p-3 text-foreground">{r.scenario}</td>
                 <td className="p-3">
-                  <code className="rounded bg-[hsl(var(--muted))] px-2 py-0.5 font-mono text-xs text-[hsl(var(--foreground))]">
+                  <code className="rounded bg-muted px-2 py-0.5 font-mono text-xs text-foreground">
                     {r.rail}
                   </code>
                 </td>
-                <td className="p-3 text-[hsl(var(--muted-foreground))]">{r.rationale}</td>
+                <td className="p-3 text-muted-foreground">{r.rationale}</td>
               </tr>
             ))}
           </tbody>
@@ -287,7 +285,7 @@ function ReducedMotionDemo() {
   const [key, setKey] = useState(0);
 
   return (
-    <div className="bg-[hsl(var(--muted))] p-8">
+    <div className="bg-muted p-8">
       <div className="flex flex-wrap gap-6">
         {(["emerge", "flow", "fadeUp"] as const).map((preset, i) => (
           <AnimateIn key={`${preset}-${key}`} preset={preset} delay={i * 0.1}>

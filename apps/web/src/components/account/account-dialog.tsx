@@ -179,7 +179,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                       className={`flex w-full items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-left text-[13px] leading-5 transition-[background-color,color] duration-micro ease-brand ${
                         isActive
                           ? "bg-accent font-medium text-foreground"
-                          : "text-muted-foreground hover:bg-accent/55 hover:text-foreground"
+                          : "font-medium text-muted-foreground hover:bg-accent/55 hover:text-foreground"
                       }`}
                     >
                       <Icon

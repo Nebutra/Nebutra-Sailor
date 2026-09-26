@@ -29,6 +29,7 @@
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 
 // Repo-wide across product apps. packages/** is deliberately absent: primitives are
 // built from raw elements by definition, and this guard is about call sites.
@@ -56,9 +57,7 @@ function loadAllowlist() {
 }
 
 function blankComments(src) {
-  return src
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
-    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p) => p + " ".repeat(m.length - p.length));
+  return blankSourceComments(src);
 }
 
 function violationsInFile(file) {

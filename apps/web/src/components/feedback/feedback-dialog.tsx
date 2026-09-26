@@ -226,7 +226,7 @@ export function FeedbackDialog() {
                     <span
                       className={`tabular-nums ${
                         descLength < MIN_DESCRIPTION || descLength > MAX_DESCRIPTION
-                          ? "text-[hsl(var(--destructive-strong))]"
+                          ? "text-destructive-strong"
                           : "text-neutral-10"
                       }`}
                     >
@@ -280,8 +280,7 @@ export function FeedbackDialog() {
               <button
                 type="submit"
                 disabled={!canSubmit}
-                className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-                style={{ background: "hsl(var(--primary))" }}
+                className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-semibold bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {submitting ? (
                   <Loader2 className="h-3 w-3 animate-spin" />

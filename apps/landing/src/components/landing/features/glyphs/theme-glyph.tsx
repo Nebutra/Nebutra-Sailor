@@ -71,7 +71,7 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 shadow-sm ring-1 ring-[hsl(var(--border))]">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 shadow-sm ring-1 ring-border">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 font-mono text-[10px] text-foreground">
@@ -105,10 +105,7 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
                   {theme.label}
                 </span>
                 {isActive ? (
-                  <div
-                    className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full text-white shadow-sm"
-                    style={{ background: "hsl(var(--primary))" }}
-                  >
+                  <div className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm">
                     <Check className="h-2 w-2" aria-hidden="true" />
                   </div>
                 ) : null}

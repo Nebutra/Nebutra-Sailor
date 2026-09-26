@@ -29,7 +29,7 @@ function getModeClasses(runtime: NotificationRuntimeStatus): string {
     case "self_hosted":
       return "border-primary/25 bg-primary/5 text-primary";
     default:
-      return "border-warning/30 bg-warning/10 text-[hsl(var(--warning-strong))]";
+      return "border-warning/30 bg-warning/10 text-warning-strong";
   }
 }
 

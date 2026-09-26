@@ -70,7 +70,7 @@ function outcomeBadgeProps(outcome: string | null): {
     case "failure":
       return { variant: "destructive" };
     case "pending":
-      return { variant: "amber-subtle", className: "text-[hsl(var(--warning-strong))]" };
+      return { variant: "amber-subtle", className: "text-warning-strong" };
     default:
       return { variant: "gray-subtle" };
   }

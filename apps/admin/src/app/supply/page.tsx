@@ -44,7 +44,7 @@ export default async function SupplyPage() {
       <>
         <PageTitle title="Supply" />
         <Panel title="Router manifest">
-          <p className="px-4 py-4 text-[hsl(var(--destructive-strong))] text-sm">
+          <p className="px-4 py-4 text-destructive-strong text-sm">
             {loadError ? (
               <>
                 <span className="font-mono text-xs">{loadError.code}</span> · {loadError.message}

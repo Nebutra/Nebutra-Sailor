@@ -94,7 +94,7 @@ export function NewsletterForm() {
         The blog article aside is 280px with padding; a locked 20rem row shoved
         Subscribe off the card. Footer still gets the 20rem cap when it has room.
       */}
-      <div className="flex w-full min-w-0 items-center gap-1 rounded-full bg-muted p-0.5 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)]">
+      <div className="flex w-full min-w-0 items-center gap-1 rounded-full bg-muted p-0.5 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring/50">
         <Input
           type="email"
           size="sm"

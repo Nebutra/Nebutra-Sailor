@@ -52,7 +52,7 @@ export function ConsentForm({ uid }: ConsentFormProps) {
         type="button"
         onClick={() => handleConsent(true)}
         disabled={isLoading}
-        className="flex-1 rounded-[var(--radius-lg)] bg-[hsl(var(--foreground))] py-3 text-sm font-semibold text-[hsl(var(--background))] transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="flex-1 rounded-[var(--radius-lg)] bg-foreground py-3 text-sm font-semibold text-background transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {isLoading ? "Authorizing…" : "Authorize"}
       </button>

@@ -32,13 +32,13 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
           </Badge>
           <Badge
             variant="outline"
-            className="h-4 border-purple-700/40 bg-purple-200 px-1.5 text-[9px] font-medium text-purple-900"
+            className="h-4 border-chart-3/40 bg-chart-3/15 px-1.5 text-[9px] font-medium text-chart-3"
           >
             Beta
           </Badge>
           <Badge
             variant="outline"
-            className="h-4 border-green-700/40 bg-green-200 px-1.5 text-[9px] font-medium text-green-900"
+            className="h-4 border-success/40 bg-success/15 px-1.5 text-[9px] font-medium text-success-strong"
           >
             Stable
           </Badge>
@@ -46,7 +46,7 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
 
         <Card className="p-2">
           <div className="flex items-center gap-1 text-[10px] font-semibold text-foreground">
-            <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
+            <Sparkles className="h-3 w-3 text-primary" />
             Composable Card
           </div>
           <p className="mt-0.5 text-[9px] leading-tight text-muted-foreground">

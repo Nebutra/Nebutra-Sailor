@@ -12,18 +12,18 @@ export function BillingTerminal() {
         <TypingAnimation delay={100} className="text-muted-foreground/80">
           &gt; stripe listen --forward-to localhost
         </TypingAnimation>
-        <AnimatedSpan delay={1200} className="text-amber-600 dark:text-amber-400">
+        <AnimatedSpan delay={1200} className="text-warning-strong">
           ⚠ Ready! Waiting for events...
         </AnimatedSpan>
 
-        <AnimatedSpan delay={2500} className="text-primary dark:text-blue-400 mt-2">
+        <AnimatedSpan delay={2500} className="text-primary mt-2">
           ↳ [Webhook] customer.subscription.created
         </AnimatedSpan>
         <AnimatedSpan delay={3200} className="text-success-strong">
           {"  "}✔ Provisioned limits.
         </AnimatedSpan>
 
-        <AnimatedSpan delay={4000} className="text-primary dark:text-blue-400 mt-2">
+        <AnimatedSpan delay={4000} className="text-primary mt-2">
           ↳ [Webhook] invoice.paid - $4,200.00
         </AnimatedSpan>
         <AnimatedSpan delay={4800} className="text-success-strong">
@@ -47,7 +47,7 @@ export function BillingTerminal() {
             type="button"
             className="px-4 py-1.5 rounded-full bg-background border border-border/50 text-[10px] font-mono font-bold text-foreground shadow-sm flex items-center gap-2 cursor-default group"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             Listening :4242
           </button>
         </div>

@@ -168,6 +168,7 @@ export const ExpandableGallery = function ExpandableGallery({
           transition={activeTransition}
           className={cn(
             "relative w-full",
+            // allow-state-shift: open and closed are two different layouts — the expansion is the point
             isOpen
               ? "grid grid-cols-2 gap-6 px-4 md:gap-8 lg:grid-cols-3"
               : "flex flex-col items-center justify-start pt-4",
@@ -190,6 +191,7 @@ export const ExpandableGallery = function ExpandableGallery({
 
               const sharedClass = cn(
                 "overflow-hidden bg-muted",
+                // allow-state-shift: the tile resizes as the gallery opens — the expansion is the point
                 isOpen
                   ? "relative aspect-square rounded-[2rem] border-4 border-background shadow-lg md:rounded-[3rem] md:border-[6px]"
                   : "absolute h-44 w-44 cursor-pointer rounded-[2.5rem] border-[6px] border-background shadow-[0_20px_50px_rgba(0,0,0,0.15)] md:h-60 md:w-60 md:rounded-[3rem]",

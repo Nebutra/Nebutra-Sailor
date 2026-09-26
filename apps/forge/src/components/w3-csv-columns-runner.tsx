@@ -226,7 +226,7 @@ export function W3CsvColumnsRunner({ toolId }: { toolId: string }) {
             {ragged.length > 0 ? (
               <ul className="space-y-1" aria-label={t("csvColumns.raggedListLabel")}>
                 {ragged.slice(0, MAX_LISTED_RAGGED).map((r) => (
-                  <li key={r.line} className="text-sm text-[var(--neutral-11)]">
+                  <li key={r.line} className="text-sm text-neutral-11">
                     {t("csvColumns.raggedRow", {
                       line: r.line,
                       actual: r.actual,
@@ -321,7 +321,7 @@ export function W3CsvColumnsRunner({ toolId }: { toolId: string }) {
       {columns.length > 0 ? (
         <div className="space-y-2">
           <div className="flex flex-wrap items-baseline gap-2">
-            <p className="text-xs font-medium text-[var(--neutral-11)]">
+            <p className="text-xs font-medium text-neutral-11">
               {t("csvColumns.columnsTitle", { kept: keptCount, total: columns.length })}
             </p>
             <Button
@@ -338,7 +338,7 @@ export function W3CsvColumnsRunner({ toolId }: { toolId: string }) {
             {columns.map((column, position) => (
               <li
                 key={column.index}
-                className="flex flex-wrap items-end gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-3)] p-2"
+                className="flex flex-wrap items-end gap-2 rounded-[var(--radius-lg)] bg-neutral-3 p-2"
               >
                 <Checkbox
                   id={`${uid}-keep-${column.index}`}

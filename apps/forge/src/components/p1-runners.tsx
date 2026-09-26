@@ -90,7 +90,7 @@ export function MarkdownPreviewRunner({
   return (
     <div className="space-y-4">
       {mode === "html" ? (
-        <label className="inline-flex items-center gap-2 text-sm text-[var(--neutral-11)]">
+        <label className="inline-flex items-center gap-2 text-sm text-neutral-11">
           <input
             data-allow-native
             type="checkbox"
@@ -114,15 +114,15 @@ export function MarkdownPreviewRunner({
           spellCheck={false}
         />
         <div className="space-y-2">
-          <p className="text-xs font-medium text-[var(--neutral-11)]">
+          <p className="text-xs font-medium text-neutral-11">
             {mode === "html" ? t("markdown.html") : t("markdown.preview")}
           </p>
           {mode === "html" ? (
             <RunnerOutput className="min-h-[280px] whitespace-pre-wrap break-all">
-              {html || <span className="text-[var(--neutral-9)]">{t("markdown.emptyHtml")}</span>}
+              {html || <span className="text-neutral-9">{t("markdown.emptyHtml")}</span>}
             </RunnerOutput>
           ) : (
-            <div className="min-h-[280px] overflow-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4">
+            <div className="min-h-[280px] overflow-auto rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4">
               {html ? (
                 <iframe
                   title="Markdown preview"
@@ -131,7 +131,7 @@ export function MarkdownPreviewRunner({
                   className="h-[280px] w-full border-0"
                 />
               ) : (
-                <p className="text-sm text-[var(--neutral-9)]">{t("markdown.emptyPreview")}</p>
+                <p className="text-sm text-neutral-9">{t("markdown.emptyPreview")}</p>
               )}
             </div>
           )}
@@ -411,12 +411,12 @@ export function PasswordStrengthRunner({ toolId }: { toolId: string }) {
             ))}
           </div>
           {crack ? (
-            <p className="mt-3 text-xs text-[var(--neutral-10)]">
+            <p className="mt-3 text-xs text-neutral-10">
               {t("passwordStrength.crack", { time: crack })}
             </p>
           ) : null}
           {feedback.length > 0 ? (
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[var(--neutral-11)]">
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-neutral-11">
               {feedback.map((tip) => (
                 <li key={tip}>{tip}</li>
               ))}
@@ -614,15 +614,15 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
           setDragging(false);
         }}
         onDrop={onDrop}
-        className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[var(--radius-lg)] border-2 border-dashed px-4 py-10 text-center transition-colors focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)] ${
+        className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[var(--radius-lg)] border-2 border-dashed px-4 py-10 text-center transition-colors focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring/50 ${
           dragging
-            ? "border-primary bg-[var(--blue-3)]/40"
-            : "border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 hover:border-[var(--neutral-8)]"
+            ? "border-primary bg-blue-3/40"
+            : "border-neutral-6 bg-neutral-2/40 hover:border-neutral-8"
         }`}
       >
-        <p className="text-sm font-medium text-[var(--neutral-12)]">{t("fileChecksum.drop")}</p>
+        <p className="text-sm font-medium text-neutral-12">{t("fileChecksum.drop")}</p>
         {file ? (
-          <p className="max-w-full truncate font-mono text-xs text-[var(--neutral-11)]">
+          <p className="max-w-full truncate font-mono text-xs text-neutral-11">
             {file.name} · {t("common.bytes", { bytes: file.size })}
           </p>
         ) : null}
@@ -636,10 +636,8 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
       </label>
 
       <div className="space-y-2">
-        <p className="text-xs font-medium text-[var(--neutral-11)]">
-          {t("fileChecksum.algorithms")}
-        </p>
-        <div className="flex flex-wrap gap-4 text-sm text-[var(--neutral-11)]">
+        <p className="text-xs font-medium text-neutral-11">{t("fileChecksum.algorithms")}</p>
+        <div className="flex flex-wrap gap-4 text-sm text-neutral-11">
           {CHECKSUM_ALGOS.map((algo) => (
             <label key={algo} className="inline-flex items-center gap-2">
               <input
@@ -680,17 +678,17 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
       {Object.keys(hashes).length > 0 ? (
         <div className="space-y-2">
           {bytes != null ? (
-            <p className="text-xs text-[var(--neutral-10)]">{t("common.bytes", { bytes })}</p>
+            <p className="text-xs text-neutral-10">{t("common.bytes", { bytes })}</p>
           ) : null}
           {Object.entries(hashes).map(([algo, value]) => (
             <div
               key={algo}
-              className="flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2"
+              className="flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 px-3 py-2"
             >
-              <span className="w-16 font-mono text-xs font-semibold uppercase text-[var(--neutral-11)]">
+              <span className="w-16 font-mono text-xs font-semibold uppercase text-neutral-11">
                 {algo}
               </span>
-              <code className="min-w-0 flex-1 break-all font-mono text-xs text-[var(--neutral-12)]">
+              <code className="min-w-0 flex-1 break-all font-mono text-xs text-neutral-12">
                 {value}
               </code>
               <Button
@@ -792,10 +790,10 @@ export function CostEstimateRunner({ toolId }: { toolId: string }) {
           <p className="text-2xl font-semibold tabular-nums tracking-tight">
             ${String(result.totalUsd ?? "—")}
           </p>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">
+          <p className="mt-1 text-sm text-neutral-11">
             {String(result.label ?? result.model ?? "")} · {String(result.provider ?? "")}
           </p>
-          <dl className="mt-3 grid grid-cols-2 gap-2 text-xs tabular-nums text-[var(--neutral-11)]">
+          <dl className="mt-3 grid grid-cols-2 gap-2 text-xs tabular-nums text-neutral-11">
             <div>input tokens: {String(result.inputTokens)}</div>
             <div>output tokens: {String(result.outputTokens)}</div>
             <div>input $: {String(result.inputUsd)}</div>
@@ -930,9 +928,7 @@ export function ZhCnTwRunner({ toolId }: { toolId: string }) {
         />
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-[var(--neutral-11)]">
-              {t("common.output")}
-            </span>
+            <span className="text-xs font-medium text-neutral-11">{t("common.output")}</span>
             <Button
               type="button"
               variant="ghost"

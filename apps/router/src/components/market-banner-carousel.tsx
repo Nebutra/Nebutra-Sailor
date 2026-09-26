@@ -37,7 +37,7 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
 
   if (len === 0) {
     return (
-      <section className="flex min-h-[300px] items-center justify-center rounded-[20px] bg-[var(--neutral-12)] text-[var(--neutral-8)] md:min-h-[340px]">
+      <section className="flex min-h-[300px] items-center justify-center rounded-[20px] bg-neutral-12 text-neutral-8 md:min-h-[340px]">
         <p className="text-[14px]">暂无轮播物料</p>
       </section>
     );
@@ -50,7 +50,8 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
 
   return (
     <section
-      className="relative h-full min-h-[300px] overflow-hidden rounded-[22px] bg-[color-mix(in_srgb,var(--blue-3)_22%,white)] text-[var(--neutral-12)] shadow-[0_16px_48px_rgb(15_23_42/0.09)] ring-1 ring-black/[0.04] md:min-h-[320px] xl:min-h-[340px]"
+      // allow-palette: subtle depth ring on fixed-light promo banner artwork, not app chrome
+      className="relative h-full min-h-[300px] overflow-hidden rounded-[22px] bg-[color-mix(in_srgb,var(--blue-3)_22%,white)] text-neutral-12 shadow-[0_16px_48px_rgb(15_23_42/0.09)] ring-1 ring-black/[0.04] md:min-h-[320px] xl:min-h-[340px]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
@@ -67,7 +68,8 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
             type="button"
             aria-label="上一帧"
             onClick={() => go(-1)}
-            className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/55 text-[var(--neutral-12)] shadow-sm backdrop-blur-md transition hover:bg-white/80"
+            // allow-palette: glass nav chip over promo banner art, must read on any banner regardless of theme
+            className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/55 text-neutral-12 shadow-sm backdrop-blur-md transition hover:bg-white/80"
           >
             <ChevronLeft className="h-4 w-4" aria-hidden />
           </button>
@@ -75,7 +77,8 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
             type="button"
             aria-label="下一帧"
             onClick={() => go(1)}
-            className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/55 text-[var(--neutral-12)] shadow-sm backdrop-blur-md transition hover:bg-white/80"
+            // allow-palette: glass nav chip over promo banner art, must read on any banner regardless of theme
+            className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/55 text-neutral-12 shadow-sm backdrop-blur-md transition hover:bg-white/80"
           >
             <ChevronRight className="h-4 w-4" aria-hidden />
           </button>
@@ -95,8 +98,8 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
               className={[
                 "h-1.5 rounded-full transition-all",
                 i === index
-                  ? "w-5 bg-[var(--neutral-12)]/80"
-                  : "w-1.5 bg-[var(--neutral-12)]/25 hover:bg-[var(--neutral-12)]/45",
+                  ? "w-5 bg-neutral-12/80"
+                  : "w-1.5 bg-neutral-12/25 hover:bg-neutral-12/45",
               ].join(" ")}
             />
           ))}
@@ -158,20 +161,18 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
           /* 模态叙事帧：深色字叠在浅弥散物料上 */
           <>
             <div className="max-w-[54%]">
-              <p className="text-[13px] font-medium tracking-wide text-[var(--neutral-10)]">
+              <p className="text-[13px] font-medium tracking-wide text-neutral-10">
                 {banner.kicker}
               </p>
-              <h2 className="mt-3.5 text-[32px] leading-[1.12] font-semibold tracking-tight text-[var(--neutral-12)] md:text-[40px]">
+              <h2 className="mt-3.5 text-[32px] leading-[1.12] font-semibold tracking-tight text-neutral-12 md:text-[40px]">
                 {banner.title}
               </h2>
-              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-[var(--neutral-11)] md:text-[15px]">
+              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-neutral-11 md:text-[15px]">
                 {banner.subtitle}
               </p>
             </div>
             <div className="flex items-end justify-between gap-3">
-              <span className="text-[11px] tracking-wide text-[var(--neutral-9)]">
-                API 集市 · 可售货架
-              </span>
+              <span className="text-[11px] tracking-wide text-neutral-9">API 集市 · 可售货架</span>
               <span className="rounded-full bg-foreground px-3.5 py-1.5 text-[12px] font-medium text-background shadow-sm">
                 查看全部
               </span>
@@ -182,19 +183,20 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
           <>
             <div className="flex items-start justify-between gap-4">
               <div className="flex min-w-0 flex-1 flex-col gap-3">
-                <p className="text-[12px] font-medium tracking-wide text-[var(--neutral-10)]">
+                <p className="text-[12px] font-medium tracking-wide text-neutral-10">
                   {PROVIDER_LABEL[banner.provider]} · {banner.kicker}
                 </p>
                 <div className="flex items-center gap-3.5">
+                  {/* allow-palette: chip surface pinned to match BrandMark surface="light" */}
                   <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl border border-white/70 bg-white/70 shadow-sm ring-1 ring-black/[0.04] backdrop-blur-md">
                     <BrandMark provider={banner.provider} size={36} surface="light" />
                   </span>
                   <div className="min-w-0">
-                    <h2 className="truncate font-mono text-[28px] leading-none font-semibold tracking-tight text-[var(--neutral-12)] md:text-[36px]">
+                    <h2 className="truncate font-mono text-[28px] leading-none font-semibold tracking-tight text-neutral-12 md:text-[36px]">
                       {banner.title}
                     </h2>
                     <p
-                      className="mt-2 line-clamp-1 text-[14px] text-[var(--neutral-10)]"
+                      className="mt-2 line-clamp-1 text-[14px] text-neutral-10"
                       title={banner.subtitle}
                     >
                       {banner.subtitle}
@@ -203,12 +205,12 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
                 </div>
               </div>
               <div className="hidden min-w-0 max-w-[42%] shrink flex-col items-end text-right sm:flex">
-                <p className="text-[11px] font-medium tracking-[0.14em] text-[var(--neutral-9)] uppercase">
+                <p className="text-[11px] font-medium tracking-[0.14em] text-neutral-9 uppercase">
                   Model Review
                 </p>
                 {/* 大号型号字：不 truncate，用 clamp 字号 + 可换行保证完整可见 */}
                 <p
-                  className="mt-1 w-full text-right font-bold leading-[1.05] tracking-tight break-words text-[var(--neutral-12)]"
+                  className="mt-1 w-full text-right font-bold leading-[1.05] tracking-tight break-words text-neutral-12"
                   style={{
                     fontSize: "clamp(1.5rem, 2.6vw, 2.75rem)",
                   }}
@@ -220,13 +222,12 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
             </div>
             <div className="flex items-end justify-between gap-3">
               <div className="flex items-center gap-2">
+                {/* allow-palette: chip surface pinned to match BrandPill tone="light" */}
                 <span className="inline-flex items-center rounded-xl border border-white/80 bg-white/85 px-2 py-1.5 shadow-sm backdrop-blur-sm">
                   <BrandPill provider={banner.provider} size={16} tone="light" />
                 </span>
                 {banner.priceLine ? (
-                  <span className="font-mono text-[11px] text-[var(--neutral-10)]">
-                    {banner.priceLine}
-                  </span>
+                  <span className="font-mono text-[11px] text-neutral-10">{banner.priceLine}</span>
                 ) : null}
               </div>
               <span className="rounded-full bg-foreground px-3.5 py-1.5 text-[12px] font-medium text-background shadow-sm">

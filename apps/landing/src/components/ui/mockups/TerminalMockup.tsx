@@ -21,7 +21,7 @@ export function TerminalMockup() {
                 line.type === "key"
                   ? "text-success-strong font-medium"
                   : line.text.includes("test") || line.text.includes("fc.")
-                    ? "text-blue-600 dark:text-blue-400"
+                    ? "text-info"
                     : "text-foreground/80"
               }`}
             >

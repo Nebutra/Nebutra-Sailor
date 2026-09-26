@@ -415,7 +415,7 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
         {output.illegalCharacters.length > 0 ? (
           <ul className="space-y-1">
             {output.illegalCharacters.map((c) => (
-              <li key={`${c.position}-${c.char}`} className="text-sm text-[var(--status-danger)]">
+              <li key={`${c.position}-${c.char}`} className="text-sm text-destructive-strong">
                 {t("uscc.illegalAt", { position: c.position, char: c.char })}
               </li>
             ))}
@@ -426,16 +426,12 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
           <ShellDrill summary={t("uscc.detail")}>
             <dl className="grid gap-2 text-sm sm:grid-cols-2">
               <div>
-                <dt className="text-xs text-[var(--neutral-10)]">
-                  {t("uscc.field.adminDivision")}
-                </dt>
-                <dd className="text-[var(--neutral-12)]">
-                  {t(`uscc.depth.${fields.adminDivision.depth}`)}
-                </dd>
+                <dt className="text-xs text-neutral-10">{t("uscc.field.adminDivision")}</dt>
+                <dd className="text-neutral-12">{t(`uscc.depth.${fields.adminDivision.depth}`)}</dd>
               </div>
               <div>
-                <dt className="text-xs text-[var(--neutral-10)]">{t("uscc.legacyTitle")}</dt>
-                <dd className="text-[var(--neutral-12)]">
+                <dt className="text-xs text-neutral-10">{t("uscc.legacyTitle")}</dt>
+                <dd className="text-neutral-12">
                   {!fields.orgIdentifier.legacyChecksumChecked
                     ? t("uscc.legacy.unchecked")
                     : fields.orgIdentifier.legacyChecksumValid
@@ -446,7 +442,7 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
                 </dd>
               </div>
             </dl>
-            <p className="mt-2 text-xs text-[var(--neutral-10)]">{t("uscc.divisionScope")}</p>
+            <p className="mt-2 text-xs text-neutral-10">{t("uscc.divisionScope")}</p>
           </ShellDrill>
         ) : null}
       </div>
@@ -466,8 +462,8 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
         <ul className="space-y-1">
           {shown.map((entry) => (
             <li key={entry.code} className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-sm text-[var(--neutral-12)]">{entry.code}</span>
-              <span className="text-xs text-[var(--neutral-10)]">
+              <span className="font-mono text-sm text-neutral-12">{entry.code}</span>
+              <span className="text-xs text-neutral-10">
                 {pick(entry.fields.adminDivision.region)} · {pick(entry.fields.orgCategory.label)}
               </span>
               <Button
@@ -517,7 +513,7 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
           ))}
         </TabsList>
 
-        <TabsContent value="verify" className="text-[var(--neutral-12)]">
+        <TabsContent value="verify" className="text-neutral-12">
           <InstantTransformShell<VerifyOutput>
             engine={{ toolId, parse: (o) => o as unknown as VerifyOutput }}
             inputLabel={t("uscc.inputLabel")}
@@ -543,7 +539,7 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
           />
         </TabsContent>
 
-        <TabsContent value="generate" className="text-[var(--neutral-12)]">
+        <TabsContent value="generate" className="text-neutral-12">
           <ConfigureGenerateShell<GenerateOutput>
             engine={{ toolId, parse: (o) => o as unknown as GenerateOutput }}
             input={generateInput}

@@ -2631,5 +2631,9 @@
   "database": {
     "_comment": "ADR 2026-09-25 database convergence. baselineSha256 pins the migration every existing database adopted; scripts/lint-database.mjs fails if it changes.",
     "baselineSha256": "c364b2a9cfc72c5aac525fb140c123120e76a36d12caa5d8fb90b813ea7d2638"
+  },
+  "appConsumption": {
+    "$description": "scripts/lint-app-consumption.mjs — raw palette classes in apps/**, per file. Shrink-only.",
+    "allowlist": {}
   }
 }

@@ -52,14 +52,14 @@ function ColorSwatch({
             {hex.toUpperCase()}
           </div>
           {/* Subtle inset border on hover for definition in seamless grids */}
-          <div className="pointer-events-none absolute inset-0 border border-black/10 opacity-0 mix-blend-overlay transition-opacity group-hover:opacity-100 dark:border-white/10" />
+          <div className="pointer-events-none absolute inset-0 border border-foreground/10 opacity-0 mix-blend-overlay transition-opacity group-hover:opacity-100" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem onClick={() => handleCopy(hex, "hex")}>
           <span className="flex-1">Copy HEX</span>
           {copiedData === "hex" ? (
-            <Check className="h-4 w-4 text-green-500" />
+            <Check className="h-4 w-4 text-success-strong" />
           ) : (
             <Copy className="h-4 w-4 text-muted-foreground" />
           )}
@@ -67,7 +67,7 @@ function ColorSwatch({
         <DropdownMenuItem onClick={() => handleCopy(cssVar, "var")}>
           <span className="flex-1">Copy CSS Var</span>
           {copiedData === "var" ? (
-            <Check className="h-4 w-4 text-green-500" />
+            <Check className="h-4 w-4 text-success-strong" />
           ) : (
             <Copy className="h-4 w-4 text-muted-foreground" />
           )}
@@ -76,7 +76,7 @@ function ColorSwatch({
           <DropdownMenuItem onClick={() => handleCopy(tailwindClass, "tw")}>
             <span className="flex-1">Copy Tailwind</span>
             {copiedData === "tw" ? (
-              <Check className="h-4 w-4 text-green-500" />
+              <Check className="h-4 w-4 text-success-strong" />
             ) : (
               <Copy className="h-4 w-4 text-muted-foreground" />
             )}

@@ -15,6 +15,6 @@ describe("TierBadge", () => {
 
   it("applies correct color class for V2 tier", () => {
     const { container } = render(<TierBadge tier="V2" />);
-    expect(container.firstChild).toHaveClass("bg-[var(--blue-3)]");
+    expect(container.firstChild).toHaveClass("bg-blue-3");
   });
 });

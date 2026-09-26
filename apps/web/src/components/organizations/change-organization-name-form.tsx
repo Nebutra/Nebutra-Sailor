@@ -134,9 +134,9 @@ export function ChangeOrganizationNameForm({
             )}
           />
 
-          {errorMessage && <p className="text-sm text-[var(--status-danger)]">{errorMessage}</p>}
+          {errorMessage && <p className="text-sm text-destructive-strong">{errorMessage}</p>}
           {showSuccess && (
-            <p className="text-sm text-[color:var(--status-success)]">
+            <p className="text-sm text-success-strong">
               {t("organizations.settings.name.success")}
             </p>
           )}
@@ -145,8 +145,7 @@ export function ChangeOrganizationNameForm({
             <Button
               type="submit"
               disabled={!canSubmit}
-              className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
-              style={{ background: "hsl(var(--primary))" }}
+              className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-opacity disabled:opacity-50"
             >
               {pending
                 ? t("organizations.settings.name.saving")

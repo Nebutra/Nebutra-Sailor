@@ -180,9 +180,7 @@ export function TextTransformRunner({
         />
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-[var(--neutral-11)]">
-              {t("textTransform.output")}
-            </span>
+            <span className="text-xs font-medium text-neutral-11">{t("textTransform.output")}</span>
             <Button
               type="button"
               variant="ghost"
@@ -202,9 +200,7 @@ export function TextTransformRunner({
             </Button>
           </div>
           <RunnerOutput className="min-h-[220px] whitespace-pre-wrap break-all">
-            {result || (
-              <span className="text-[var(--neutral-9)]">{t("textTransform.emptyResult")}</span>
-            )}
+            {result || <span className="text-neutral-9">{t("textTransform.emptyResult")}</span>}
           </RunnerOutput>
         </div>
       </div>

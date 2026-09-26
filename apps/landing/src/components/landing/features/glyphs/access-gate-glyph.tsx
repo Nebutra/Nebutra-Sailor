@@ -40,7 +40,7 @@ export function AccessGateGlyph({ locale }: SubpackageGlyphProps) {
       {/* Header: feature title + lock */}
       <div className="flex items-center justify-between">
         <div className="flex min-w-0 items-center gap-1.5">
-          <Sparkles className="h-3 w-3 shrink-0 text-[hsl(var(--primary))]" aria-hidden="true" />
+          <Sparkles className="h-3 w-3 shrink-0 text-primary" aria-hidden="true" />
           <span className="truncate text-[11px] font-semibold text-foreground">{t.feature}</span>
         </div>
         <LockClosed className="h-3 w-3 text-muted-foreground" aria-hidden="true" />

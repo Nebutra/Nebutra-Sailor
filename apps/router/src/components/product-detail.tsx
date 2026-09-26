@@ -168,37 +168,39 @@ export function ProductDetail({
   return (
     <div className="router-market-shell py-5 md:py-7">
       {/* 面包屑 */}
-      <nav className="mb-5 flex flex-wrap items-center gap-1.5 text-[13px] text-[var(--neutral-10)]">
-        <Link href="/?product_type=api" className="hover:text-[var(--neutral-12)]">
+      <nav className="mb-5 flex flex-wrap items-center gap-1.5 text-[13px] text-neutral-10">
+        <Link href="/?product_type=api" className="hover:text-neutral-12">
           API
         </Link>
-        <span className="text-[var(--neutral-7)]">/</span>
+        <span className="text-neutral-7">/</span>
         <Link
           href={`/models?cate=api&tag=${encodeURIComponent(model.category)}`}
-          className="hover:text-[var(--neutral-12)]"
+          className="hover:text-neutral-12"
         >
           {categoryLabel}
         </Link>
-        <span className="text-[var(--neutral-7)]">/</span>
+        <span className="text-neutral-7">/</span>
         <Link
           href={`/models?cate=api&brand=${encodeURIComponent(provider)}`}
-          className="hover:text-[var(--neutral-12)]"
+          className="hover:text-neutral-12"
         >
           {providerLabel}
         </Link>
-        <span className="text-[var(--neutral-7)]">/</span>
-        <span className="font-medium text-[var(--neutral-12)]">{model.publicModel}</span>
+        <span className="text-neutral-7">/</span>
+        <span className="font-medium text-neutral-12">{model.publicModel}</span>
       </nav>
 
       {/* 顶区：封面 + 信息 + 指标 */}
       <section className="grid gap-5 lg:grid-cols-[240px_minmax(0,1.1fr)_minmax(240px,280px)] xl:grid-cols-[260px_minmax(0,1.15fr)_minmax(260px,300px)] xl:gap-6">
         <div
+          // allow-palette: depth ring on provider cover wash artwork, not app chrome
           className="flex min-h-[200px] items-center justify-center overflow-hidden rounded-[20px] p-6 shadow-[0_8px_28px_rgb(15_23_42/0.06)] ring-1 ring-black/[0.04]"
           style={{ background: cover.wash }}
         >
           <span
             className={[
               "inline-flex max-w-full items-center rounded-2xl px-4 py-3 shadow-md ring-1",
+              // allow-palette: chip surface pinned to provider cover art (light/dark chosen by cover.dark, not app theme)
               cover.dark ? "bg-white ring-white/10" : "bg-white/96 ring-black/[0.04]",
             ].join(" ")}
           >
@@ -208,68 +210,62 @@ export function ProductDetail({
 
         <div className="min-w-0">
           <div className="flex flex-wrap items-start justify-between gap-3">
-            <h1 className="font-mono text-[22px] font-semibold tracking-tight text-[var(--neutral-12)] md:text-[26px]">
+            <h1 className="font-mono text-[22px] font-semibold tracking-tight text-neutral-12 md:text-[26px]">
               {model.publicModel}
             </h1>
             <button
               type="button"
               onClick={() => void copyForAi()}
-              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--neutral-6)] bg-white px-3.5 text-[12px] font-medium text-[var(--neutral-11)] transition hover:border-[var(--neutral-7)] hover:text-[var(--neutral-12)]"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-3.5 text-[12px] font-medium text-neutral-11 transition hover:border-neutral-7 hover:text-neutral-12"
             >
               <Copy className="h-3.5 w-3.5" aria-hidden />
               {copied ? "已复制" : "复制给 AI"}
             </button>
           </div>
 
-          <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-[var(--neutral-11)]">
-            {blurb}
-          </p>
+          <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-neutral-11">{blurb}</p>
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--neutral-3)] px-2.5 py-1 text-[11px] font-medium text-[var(--neutral-11)]">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-3 px-2.5 py-1 text-[11px] font-medium text-neutral-11">
               <BrandMark provider={provider} size={14} surface="light" />
               {categoryLabel}
             </span>
             {model.sellable || model.routed ? (
-              <span className="rounded-full bg-[color-mix(in_srgb,var(--status-success)_16%,white)] px-2.5 py-1 text-[11px] font-medium text-[var(--status-success)]">
+              <span className="rounded-full bg-success/16 px-2.5 py-1 text-[11px] font-medium text-success-strong">
                 可售
               </span>
             ) : (
-              <span className="rounded-full bg-[var(--neutral-3)] px-2.5 py-1 text-[11px] text-[var(--neutral-10)]">
+              <span className="rounded-full bg-neutral-3 px-2.5 py-1 text-[11px] text-neutral-10">
                 目录
               </span>
             )}
-            <span className="text-[12px] text-[var(--neutral-9)]">
-              上下文 {model.context || "—"}
-            </span>
+            <span className="text-[12px] text-neutral-9">上下文 {model.context || "—"}</span>
           </div>
 
           <dl className="mt-5 space-y-1.5 text-[13px]">
-            <div className="flex items-center justify-between gap-4 border-b border-[var(--neutral-4)]/80 py-1.5">
-              <dt className="text-[var(--neutral-10)]">输入</dt>
-              <dd className="font-mono font-medium text-[var(--blue-11)]">
+            <div className="flex items-center justify-between gap-4 border-b border-neutral-4/80 py-1.5">
+              <dt className="text-neutral-10">输入</dt>
+              <dd className="font-mono font-medium text-blue-11">
                 {formatPrice(model.inputPerMTok)}/1M tokens
               </dd>
             </div>
-            <div className="flex items-center justify-between gap-4 border-b border-[var(--neutral-4)]/80 py-1.5">
-              <dt className="text-[var(--neutral-10)]">输出</dt>
-              <dd className="font-mono font-medium text-[var(--blue-11)]">
+            <div className="flex items-center justify-between gap-4 border-b border-neutral-4/80 py-1.5">
+              <dt className="text-neutral-10">输出</dt>
+              <dd className="font-mono font-medium text-blue-11">
                 {formatPrice(model.outputPerMTok)}/1M tokens
               </dd>
             </div>
             <div className="flex items-center justify-between gap-4 py-1.5">
-              <dt className="text-[var(--neutral-10)]">厂商</dt>
-              <dd className="font-medium text-[var(--neutral-12)]">{providerLabel}</dd>
+              <dt className="text-neutral-10">厂商</dt>
+              <dd className="font-medium text-neutral-12">{providerLabel}</dd>
             </div>
           </dl>
-          <p className="mt-2 text-[12px] text-[color:var(--status-warning)]">
-            大额采购可联系支持获取专属价
-          </p>
+          <p className="mt-2 text-[12px] text-warning-strong">大额采购可联系支持获取专属价</p>
 
           <div className="mt-5 flex flex-wrap items-center gap-2.5">
             <Link
               href="/docs"
-              className="inline-flex h-10 items-center gap-1.5 rounded-full border border-[var(--neutral-6)] bg-white px-4 text-[13px] font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
+              className="inline-flex h-10 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-4 text-[13px] font-medium text-neutral-12 transition hover:bg-neutral-2"
             >
               <BookOpen className="h-4 w-4" aria-hidden />
               查看文档
@@ -281,19 +277,19 @@ export function ProductDetail({
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/docs"
-              className="inline-flex h-10 items-center gap-1.5 rounded-full border border-[var(--neutral-6)] bg-white px-4 text-[13px] font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-2)]"
+              className="inline-flex h-10 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-4 text-[13px] font-medium text-neutral-12 transition hover:bg-neutral-2"
             >
               <BookOpen className="h-4 w-4" aria-hidden />
               查看文档
             </Link>
             <Link
               href={`/use?model=${encodeURIComponent(model.publicModel)}`}
-              className="inline-flex h-10 items-center rounded-full bg-[var(--neutral-12)] px-5 text-[13px] font-medium text-[var(--neutral-1)] transition hover:bg-[var(--neutral-11)]"
+              className="inline-flex h-10 items-center rounded-full bg-neutral-12 px-5 text-[13px] font-medium text-neutral-1 transition hover:bg-neutral-11"
             >
               Playground
             </Link>
           </div>
-          <p className="text-[11px] leading-relaxed text-[var(--neutral-9)]">
+          <p className="text-[11px] leading-relaxed text-neutral-9">
             运行探针（成功率 / 延迟 / TPS）接入后在此展示；当前无上报数据。
           </p>
         </aside>
@@ -310,8 +306,8 @@ export function ProductDetail({
               className={[
                 "flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[13px] transition",
                 tab === t.id
-                  ? "bg-[var(--neutral-3)] font-semibold text-[var(--neutral-12)]"
-                  : "text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]",
+                  ? "bg-neutral-3 font-semibold text-neutral-12"
+                  : "text-neutral-11 hover:bg-neutral-2",
               ].join(" ")}
             >
               <span
@@ -328,14 +324,14 @@ export function ProductDetail({
 
         <div className="min-w-0 space-y-4">
           <article id="pd-intro" className="router-market-panel scroll-mt-6 p-5 md:p-6">
-            <h2 className="text-[16px] font-semibold text-[var(--neutral-12)]">API介绍</h2>
-            <p className="mt-3 text-[14px] leading-relaxed text-[var(--neutral-11)]">{intro}</p>
-            <hr className="my-5 border-[var(--neutral-5)]" />
-            <h3 className="text-[14px] font-semibold text-[var(--blue-11)]">核心能力</h3>
+            <h2 className="text-[16px] font-semibold text-neutral-12">API介绍</h2>
+            <p className="mt-3 text-[14px] leading-relaxed text-neutral-11">{intro}</p>
+            <hr className="my-5 border-neutral-5" />
+            <h3 className="text-[14px] font-semibold text-blue-11">核心能力</h3>
             <ul className="mt-3 space-y-3">
               {capabilities.map((c) => (
-                <li key={c.title} className="text-[13px] leading-relaxed text-[var(--neutral-11)]">
-                  <span className="font-semibold text-[var(--neutral-12)]">{c.title}：</span>
+                <li key={c.title} className="text-[13px] leading-relaxed text-neutral-11">
+                  <span className="font-semibold text-neutral-12">{c.title}：</span>
                   {c.body}
                 </li>
               ))}
@@ -347,12 +343,12 @@ export function ProductDetail({
             id="pd-playground"
             className="router-market-panel scroll-mt-6 overflow-hidden p-0"
           >
-            <div className="border-b border-[var(--neutral-5)] px-5 py-4 md:px-6">
-              <h2 className="text-[16px] font-semibold text-[var(--neutral-12)]">Playground</h2>
+            <div className="border-b border-neutral-5 px-5 py-4 md:px-6">
+              <h2 className="text-[16px] font-semibold text-neutral-12">Playground</h2>
             </div>
             <div className="flex flex-col items-center justify-center px-6 py-14 text-center md:py-16">
               <PlaygroundEmptyArt />
-              <p className="mt-6 text-[14px] text-[var(--neutral-10)]">
+              <p className="mt-6 text-[14px] text-neutral-10">
                 登录后探索更多功能！ <AuthActions variant="compact" className="inline" />
               </p>
               <Link
@@ -368,18 +364,16 @@ export function ProductDetail({
             id="pd-apis"
             className="router-market-panel scroll-mt-6 overflow-hidden p-0 md:p-0"
           >
-            <div className="border-b border-[var(--neutral-5)] px-5 py-4 md:px-6">
-              <h2 className="text-[16px] font-semibold text-[var(--neutral-12)]">
+            <div className="border-b border-neutral-5 px-5 py-4 md:px-6">
+              <h2 className="text-[16px] font-semibold text-neutral-12">
                 API列表
-                <span className="ml-2 text-[13px] font-normal text-[var(--neutral-9)]">
-                  ({apis.length})
-                </span>
+                <span className="ml-2 text-[13px] font-normal text-neutral-9">({apis.length})</span>
               </h2>
             </div>
             <div className="overflow-x-auto">
               <Table bare className="w-full min-w-[640px] text-[13px]">
                 <TableHeader>
-                  <TableRow className="bg-[var(--neutral-2)]/80 text-[12px] text-[var(--neutral-10)]">
+                  <TableRow className="bg-neutral-2/80 text-[12px] text-neutral-10">
                     <TableHead alignment="start" className="px-5 font-medium md:px-6">
                       API描述
                     </TableHead>
@@ -402,29 +396,26 @@ export function ProductDetail({
                     <TableRow key={a.name}>
                       <TableCell
                         alignment="start"
-                        className="px-5 py-3.5 font-medium text-[var(--neutral-12)] md:px-6"
+                        className="px-5 py-3.5 font-medium text-neutral-12 md:px-6"
                       >
                         {a.name}
                       </TableCell>
                       <TableCell
                         alignment="start"
-                        className="max-w-[280px] truncate px-3 py-3.5 font-mono text-[12px] text-[var(--neutral-11)]"
+                        className="max-w-[280px] truncate px-3 py-3.5 font-mono text-[12px] text-neutral-11"
                       >
                         {a.path}
                       </TableCell>
                       <TableCell alignment="start" className="px-3 py-3.5">
-                        <span className="rounded-md bg-[var(--neutral-3)] px-1.5 py-0.5 text-[11px] font-semibold">
+                        <span className="rounded-md bg-neutral-3 px-1.5 py-0.5 text-[11px] font-semibold">
                           {a.method}
                         </span>
                       </TableCell>
-                      <TableCell
-                        alignment="start"
-                        className="px-3 py-3.5 text-[var(--status-success)]"
-                      >
+                      <TableCell alignment="start" className="px-3 py-3.5 text-success-strong">
                         {a.stability}
                       </TableCell>
                       <TableCell alignment="start" className="px-5 py-3.5 md:px-6">
-                        <Link href="/docs" className="text-[var(--blue-11)] hover:underline">
+                        <Link href="/docs" className="text-blue-11 hover:underline">
                           查看详情
                         </Link>
                       </TableCell>
@@ -436,13 +427,13 @@ export function ProductDetail({
           </article>
 
           <article id="pd-pricing" className="router-market-panel scroll-mt-6 overflow-hidden p-0">
-            <div className="border-b border-[var(--neutral-5)] px-5 py-4 md:px-6">
-              <h2 className="text-[16px] font-semibold text-[var(--neutral-12)]">API价格表</h2>
+            <div className="border-b border-neutral-5 px-5 py-4 md:px-6">
+              <h2 className="text-[16px] font-semibold text-neutral-12">API价格表</h2>
             </div>
             <div className="overflow-x-auto">
               <Table bare className="w-full min-w-[560px] text-[13px]">
                 <TableHeader>
-                  <TableRow className="bg-[var(--neutral-2)]/80 text-[12px] text-[var(--neutral-10)]">
+                  <TableRow className="bg-neutral-2/80 text-[12px] text-neutral-10">
                     <TableHead alignment="start" className="px-5 font-medium md:px-6">
                       模型
                     </TableHead>
@@ -464,29 +455,20 @@ export function ProductDetail({
                   <TableRow>
                     <TableCell
                       alignment="start"
-                      className="px-5 py-3.5 font-mono font-medium text-[var(--neutral-12)] md:px-6"
+                      className="px-5 py-3.5 font-mono font-medium text-neutral-12 md:px-6"
                     >
                       {model.publicModel}
                     </TableCell>
                     <TableCell alignment="start" className="px-3 py-3.5 tabular-nums">
                       {model.context || "—"}
                     </TableCell>
-                    <TableCell
-                      alignment="start"
-                      className="px-3 py-3.5 font-mono text-[var(--blue-11)]"
-                    >
+                    <TableCell alignment="start" className="px-3 py-3.5 font-mono text-blue-11">
                       {formatPrice(model.inputPerMTok)}/1M
                     </TableCell>
-                    <TableCell
-                      alignment="start"
-                      className="px-3 py-3.5 font-mono text-[var(--blue-11)]"
-                    >
+                    <TableCell alignment="start" className="px-3 py-3.5 font-mono text-blue-11">
                       {formatPrice(model.outputPerMTok)}/1M
                     </TableCell>
-                    <TableCell
-                      alignment="start"
-                      className="px-5 py-3.5 text-[var(--neutral-10)] md:px-6"
-                    >
+                    <TableCell alignment="start" className="px-5 py-3.5 text-neutral-10 md:px-6">
                       目录价 · 按量
                     </TableCell>
                   </TableRow>
@@ -496,9 +478,9 @@ export function ProductDetail({
           </article>
 
           <section id="pd-related" className="scroll-mt-6">
-            <h2 className="mb-4 text-[16px] font-semibold text-[var(--neutral-12)]">猜你喜欢</h2>
+            <h2 className="mb-4 text-[16px] font-semibold text-neutral-12">猜你喜欢</h2>
             {related.length === 0 ? (
-              <p className="text-[13px] text-[var(--neutral-10)]">暂无相关模型</p>
+              <p className="text-[13px] text-neutral-10">暂无相关模型</p>
             ) : (
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
                 {related.map((m) => (

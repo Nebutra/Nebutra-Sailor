@@ -171,10 +171,10 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
   };
 
   return (
-    <div className="router-market text-[var(--neutral-12)]">
+    <div className="router-market text-neutral-12">
       {/* utility bar — hairline, quieter */}
       <div className="border-b border-[var(--rm-line)]/80 bg-background/40 backdrop-blur-sm">
-        <div className="router-market-shell flex h-9 items-center justify-between gap-3 text-[12px] text-[var(--neutral-11)]">
+        <div className="router-market-shell flex h-9 items-center justify-between gap-3 text-[12px] text-neutral-11">
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Settlement currency. A picker used to sit here that changed a
                 piece of local state and converted nothing — every price on the
@@ -182,7 +182,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
                 (Batch D); until it exists this says what is true. */}
             <span title="计价与结算均为美元">USD $</span>
             <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
-            <span className="text-[var(--neutral-7)]" aria-hidden>
+            <span className="text-neutral-7" aria-hidden>
               |
             </span>
             <AuthActions variant="header" />
@@ -190,14 +190,14 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
 
           <div className="flex items-center gap-3.5">
             {!isHome ? (
-              <Link href="/" className="hover:text-[var(--neutral-12)]">
+              <Link href="/" className="hover:text-neutral-12">
                 {t("home")}
               </Link>
             ) : null}
-            <Link href="/dashboard" className="hover:text-[var(--neutral-12)]">
+            <Link href="/dashboard" className="hover:text-neutral-12">
               {t("adminConsole")}
             </Link>
-            <Link href="/use" className="hover:text-[var(--neutral-12)]">
+            <Link href="/use" className="hover:text-neutral-12">
               {t("quickUse")}
             </Link>
             <HeaderMenu
@@ -219,14 +219,14 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
           aria-label={`${brand.name} Router`}
         >
           <BrandLogo variant="horizontal" className="h-8 w-auto md:h-9" />
-          <span className="hidden h-5 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
+          <span className="hidden h-5 w-px bg-neutral-6 sm:block" aria-hidden />
           <RouterMark className="h-7 w-7 md:h-8 md:w-8" />
           <span className="sr-only">Router</span>
         </Link>
         <form onSubmit={onSearch} className="flex min-w-0 flex-1 gap-2.5">
           <div className="relative min-w-0 flex-1">
             <MagnifyingGlass
-              className="pointer-events-none absolute top-1/2 left-4 h-[18px] w-[18px] -translate-y-1/2 text-[var(--neutral-9)]"
+              className="pointer-events-none absolute top-1/2 left-4 h-[18px] w-[18px] -translate-y-1/2 text-neutral-9"
               aria-hidden
             />
             <input
@@ -235,18 +235,18 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
               name="q"
               defaultValue={seededQuery}
               placeholder={t("searchPlaceholder")}
-              className="h-12 w-full rounded-full border border-[var(--rm-panel-border)] bg-white pr-[6rem] pl-11 text-[15px] shadow-[0_1px_2px_rgb(15_23_42/0.03)] outline-none transition placeholder:text-[var(--neutral-9)] focus:border-[var(--neutral-8)] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--neutral-6)_65%,transparent)]"
+              className="h-12 w-full rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 pr-[6rem] pl-11 text-[15px] shadow-[0_1px_2px_rgb(15_23_42/0.03)] outline-none transition placeholder:text-neutral-9 focus:border-neutral-8 focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--neutral-6)_65%,transparent)]"
             />
             <button
               type="submit"
-              className="absolute top-1/2 right-1.5 h-9 -translate-y-1/2 rounded-full bg-[var(--neutral-12)] px-4 text-[13px] font-medium text-[var(--neutral-1)] transition hover:bg-[var(--neutral-11)]"
+              className="absolute top-1/2 right-1.5 h-9 -translate-y-1/2 rounded-full bg-neutral-12 px-4 text-[13px] font-medium text-neutral-1 transition hover:bg-neutral-11"
             >
               {t("search")}
             </button>
           </div>
           <Link
             href="/models"
-            className="hidden h-12 shrink-0 items-center rounded-full border border-[var(--rm-panel-border)] bg-white px-5 text-[14px] font-medium text-[var(--neutral-11)] shadow-[0_1px_2px_rgb(15_23_42/0.03)] transition hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)] sm:inline-flex"
+            className="hidden h-12 shrink-0 items-center rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 px-5 text-[14px] font-medium text-neutral-11 shadow-[0_1px_2px_rgb(15_23_42/0.03)] transition hover:border-neutral-7 hover:bg-neutral-2 hover:text-neutral-12 sm:inline-flex"
           >
             {t("aiRecommend")}
           </Link>
@@ -261,10 +261,10 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
               (ch.match === "api" && isApiChannel && isHome) ||
               (ch.match === "models" && isModels);
             const className = cn(
-              "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[14px] transition",
+              "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-medium transition",
               active
-                ? "bg-[var(--neutral-12)] font-medium text-[var(--neutral-1)] shadow-sm"
-                : "text-[var(--neutral-11)] hover:bg-black/[0.03] hover:text-[var(--neutral-12)]",
+                ? "bg-neutral-12 text-neutral-1 shadow-sm"
+                : "text-neutral-11 hover:bg-neutral-12/[0.03] hover:text-neutral-12",
             );
             const label = tCh.has(ch.id as never) ? tCh(ch.id as never) : ch.label;
             const body = (
@@ -314,19 +314,19 @@ function AdminShell({
   const [isCollapsed, setCollapsed] = useState(initialCollapsed);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--neutral-1)] text-[var(--neutral-12)]">
-      <div className="border-b border-[var(--neutral-6)]">
+    <div className="flex min-h-screen flex-col bg-neutral-1 text-neutral-12">
+      <div className="border-b border-neutral-6">
         <div className="mx-auto flex h-11 max-w-[1280px] items-center gap-3 px-4 md:px-6">
           <Link href="/dashboard" className="flex items-center gap-2">
             <BrandLogo variant="mark" className="h-6 w-6" />
             <span className="text-[13px] font-semibold">{t("title")}</span>
           </Link>
-          <div className="ml-auto flex items-center gap-2 text-[12px] text-[var(--neutral-11)] sm:gap-3">
+          <div className="ml-auto flex items-center gap-2 text-[12px] text-neutral-11 sm:gap-3">
             <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
-            <Link href="/" className="hover:text-[var(--neutral-12)]">
+            <Link href="/" className="hover:text-neutral-12">
               {t("backToMarket")}
             </Link>
-            <Link href="/use" className="hover:text-[var(--neutral-12)]">
+            <Link href="/use" className="hover:text-neutral-12">
               {t("quickUse")}
             </Link>
           </div>
@@ -335,7 +335,7 @@ function AdminShell({
       <div className="mx-auto flex w-full max-w-[1280px] flex-1">
         <aside
           className={cn(
-            "sticky top-0 hidden h-[calc(100vh-2.75rem)] shrink-0 border-r border-[var(--neutral-6)] md:flex md:flex-col",
+            "sticky top-0 hidden h-[calc(100vh-2.75rem)] shrink-0 border-r border-neutral-6 md:flex md:flex-col",
             isCollapsed ? "w-12" : "w-[200px]",
           )}
         >
@@ -349,11 +349,9 @@ function AdminShell({
                   href={href}
                   title={label}
                   className={cn(
-                    "flex h-8 items-center rounded-lg text-[13px]",
+                    "flex h-8 items-center rounded-lg text-[13px] font-medium",
                     isCollapsed ? "justify-center" : "gap-2 px-2",
-                    active
-                      ? "bg-[var(--neutral-3)] font-medium"
-                      : "text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]",
+                    active ? "bg-neutral-3 text-neutral-12" : "text-neutral-11 hover:bg-neutral-2",
                   )}
                 >
                   <Icon className="h-3.5 w-3.5" aria-hidden />
@@ -364,7 +362,7 @@ function AdminShell({
           </nav>
           <button
             type="button"
-            className="m-2 flex h-8 items-center justify-center rounded-lg text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
+            className="m-2 flex h-8 items-center justify-center rounded-lg text-neutral-11 hover:bg-neutral-2"
             onClick={() => {
               setCollapsed((c) => {
                 const next = !c;
@@ -393,19 +391,19 @@ function AdminShell({
 function UsageShell({ children }: { children: ReactNode }) {
   const t = useTranslations("chrome");
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--neutral-1)] text-[var(--neutral-12)]">
-      <div className="border-b border-[var(--neutral-6)]">
+    <div className="flex min-h-screen flex-col bg-neutral-1 text-neutral-12">
+      <div className="border-b border-neutral-6">
         <div className="mx-auto flex h-11 max-w-[1280px] items-center gap-3 px-4 md:px-6">
           <Link href="/use" className="flex items-center gap-2">
             <BrandLogo variant="mark" className="h-6 w-6" />
             <span className="text-[13px] font-semibold">{t("usageTitle")}</span>
           </Link>
-          <div className="ml-auto flex items-center gap-2 text-[12px] text-[var(--neutral-11)] sm:gap-3">
+          <div className="ml-auto flex items-center gap-2 text-[12px] text-neutral-11 sm:gap-3">
             <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
-            <Link href="/" className="hover:text-[var(--neutral-12)]">
+            <Link href="/" className="hover:text-neutral-12">
               {t("market")}
             </Link>
-            <Link href="/dashboard" className="hover:text-[var(--neutral-12)]">
+            <Link href="/dashboard" className="hover:text-neutral-12">
               {t("adminConsole")}
             </Link>
           </div>

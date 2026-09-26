@@ -124,7 +124,7 @@ export async function ResourceTable({
               <tr>
                 <td
                   colSpan={resource.columns.length}
-                  className="h-11 px-3 text-[hsl(var(--destructive-strong))] text-xs"
+                  className="h-11 px-3 text-destructive-strong text-xs"
                 >
                   <span className="font-mono">{error.code}</span> · {error.message}
                 </td>

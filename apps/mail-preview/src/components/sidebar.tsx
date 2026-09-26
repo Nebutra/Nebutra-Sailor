@@ -18,10 +18,7 @@ export function Sidebar({ templates, selectedId, onSelect }: SidebarProps) {
       aria-label="Email template navigation"
     >
       <header className="flex items-center gap-2 border-b border-border px-4 py-4">
-        <span
-          className="flex h-8 w-8 items-center justify-center rounded-md text-white"
-          style={{ background: "hsl(var(--primary))" }}
-        >
+        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
           <Mail className="h-4 w-4" aria-hidden="true" />
         </span>
         <div>
@@ -47,8 +44,8 @@ export function Sidebar({ templates, selectedId, onSelect }: SidebarProps) {
                       className={[
                         "w-full rounded-md px-3 py-2 text-left text-sm transition-colors",
                         active
-                          ? "bg-[var(--blue-3)] text-primary font-medium"
-                          : "text-muted-foreground hover:bg-muted",
+                          ? "bg-blue-3 text-primary font-medium"
+                          : "font-medium text-muted-foreground hover:bg-muted",
                       ].join(" ")}
                       aria-current={active ? "page" : undefined}
                     >

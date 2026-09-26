@@ -68,11 +68,7 @@ export function SetPasswordForm({ email, onSubmit }: SetPasswordFormProps) {
       </div>
 
       {errorMessage && (
-        <p
-          className="mb-4 text-sm text-[hsl(var(--destructive))]"
-          id="set-password-error"
-          role="alert"
-        >
+        <p className="mb-4 text-sm text-destructive-strong" id="set-password-error" role="alert">
           {errorMessage}
         </p>
       )}

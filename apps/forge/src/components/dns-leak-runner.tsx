@@ -545,7 +545,7 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
         )}
         <button
           type="button"
-          className="text-xs text-[var(--neutral-11)] underline-offset-2 hover:underline"
+          className="text-xs text-neutral-11 underline-offset-2 hover:underline"
           onClick={() => setShowAdvanced((v) => !v)}
         >
           {showAdvanced ? t("dnsLeak.hideAdvanced") : t("dnsLeak.showAdvanced")}
@@ -568,8 +568,8 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
 
       {/* Progress */}
       {loading ? (
-        <div className="space-y-3 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4">
-          <p className="text-sm font-medium text-[var(--neutral-12)]">{activePhaseLabel()}</p>
+        <div className="space-y-3 rounded-[var(--radius-lg)] bg-neutral-2 p-4">
+          <p className="text-sm font-medium text-neutral-12">{activePhaseLabel()}</p>
           <ol className="flex flex-wrap gap-2">
             {STEPS.map((id, i) => {
               const done = currentStep > i || phase === "done";
@@ -580,10 +580,10 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
                     className={[
                       "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs",
                       done
-                        ? "bg-[color-mix(in_srgb,var(--status-success)_18%,transparent)] text-[var(--status-success)]"
+                        ? "bg-success/18 font-medium text-success-strong"
                         : active
-                          ? "bg-[var(--neutral-3)] font-medium text-[var(--neutral-12)]"
-                          : "bg-[var(--neutral-3)] text-[var(--neutral-10)]",
+                          ? "bg-neutral-3 font-medium text-neutral-12"
+                          : "font-medium bg-neutral-3 text-neutral-10",
                     ].join(" ")}
                   >
                     {i + 1}. {stepChipLabel(id)}
@@ -595,18 +595,18 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
           {phase === "poll" ? (
             <div className="space-y-1.5">
               <div
-                className="h-1.5 overflow-hidden rounded-full bg-[var(--neutral-4)]"
+                className="h-1.5 overflow-hidden rounded-full bg-neutral-4"
                 role="progressbar"
                 aria-valuenow={pollAttempt}
                 aria-valuemin={0}
                 aria-valuemax={POLL_ATTEMPTS}
               >
                 <div
-                  className="h-full rounded-full bg-[var(--neutral-11)] transition-[width] duration-300"
+                  className="h-full rounded-full bg-neutral-11 transition-[width] duration-300"
                   style={{ width: `${pollPct}%` }}
                 />
               </div>
-              <p className="text-xs text-[var(--neutral-10)]">
+              <p className="text-xs text-neutral-10">
                 {t("dnsLeak.pollHint", {
                   n: pollAttempt,
                   total: POLL_ATTEMPTS,
@@ -619,18 +619,13 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
 
           {liveResolvers.length > 0 ? (
             <div className="space-y-1">
-              <p className="text-xs font-medium text-[var(--status-success)]">
-                {t("dnsLeak.liveHits")}
-              </p>
+              <p className="text-xs font-medium text-success-strong">{t("dnsLeak.liveHits")}</p>
               <ul className="flex flex-wrap gap-2 font-mono text-sm">
                 {liveResolvers.map((r) => (
-                  <li
-                    key={r.ip}
-                    className="rounded-md bg-[color-mix(in_srgb,var(--status-success)_12%,transparent)] px-2 py-0.5 text-[var(--neutral-12)]"
-                  >
+                  <li key={r.ip} className="rounded-md bg-success/12 px-2 py-0.5 text-neutral-12">
                     {r.ip}
                     {typeof r.count === "number" ? (
-                      <span className="text-[var(--neutral-11)]"> ×{r.count}</span>
+                      <span className="text-neutral-11"> ×{r.count}</span>
                     ) : null}
                   </li>
                 ))}
@@ -655,10 +650,10 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
           <RunnerPanel>
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <div>
-                <p className="text-sm font-medium text-[var(--neutral-12)]">
+                <p className="text-sm font-medium text-neutral-12">
                   {t("dnsLeak.sectionSystemDns")}
                 </p>
-                <p className="text-xs text-[var(--neutral-10)]">{t("dnsLeak.authorityNote")}</p>
+                <p className="text-xs text-neutral-10">{t("dnsLeak.authorityNote")}</p>
               </div>
               {liveResolvers.length > 0 ? (
                 <Button
@@ -680,21 +675,21 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
               ) : null}
             </div>
             {liveResolvers.length > 0 ? (
-              <ul className="divide-y divide-[var(--neutral-5)] rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
+              <ul className="divide-y divide-neutral-5 rounded-[var(--radius-md)] border border-neutral-6">
                 {liveResolvers.map((r) => (
                   <li
                     key={r.ip}
                     className="flex items-center justify-between gap-3 px-3 py-2.5 font-mono text-sm"
                   >
-                    <span className="text-[var(--neutral-12)]">{r.ip}</span>
-                    <span className="text-xs text-[var(--neutral-10)]">
+                    <span className="text-neutral-12">{r.ip}</span>
+                    <span className="text-xs text-neutral-10">
                       {typeof r.count === "number" ? t("dnsLeak.queryCount", { n: r.count }) : "—"}
                     </span>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-[var(--neutral-11)]">
+              <p className="text-sm text-neutral-11">
                 {authorityOnline ? t("dnsLeak.authorityNoHits") : t("dnsLeak.authorityOfflineHint")}
               </p>
             )}
@@ -742,29 +737,26 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
 
           {/* Complementary paths — human tables */}
           <div className="space-y-2">
-            <p className="text-sm font-medium text-[var(--neutral-12)]">
+            <p className="text-sm font-medium text-neutral-12">
               {t("dnsLeak.sectionComplementary")}
             </p>
             <div className="grid gap-3 lg:grid-cols-2">
               <RunnerPanel>
-                <p className="mb-2 text-xs font-medium text-[var(--neutral-11)]">
+                <p className="mb-2 text-xs font-medium text-neutral-11">
                   {t("dnsLeak.forgeResolvers")}
                 </p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="text-[var(--neutral-10)]">
+                    <thead className="text-neutral-10">
                       <tr>
                         <th className="pb-1 font-medium">{t("dnsLeak.colPath")}</th>
                         <th className="pb-1 font-medium">{t("dnsLeak.colAnswers")}</th>
                         <th className="pb-1 font-medium">{t("dnsLeak.colMs")}</th>
                       </tr>
                     </thead>
-                    <tbody className="font-mono text-[var(--neutral-12)]">
+                    <tbody className="font-mono text-neutral-12">
                       {forgeResolvers.map((r) => (
-                        <tr
-                          key={String(r.resolverId)}
-                          className="border-t border-[var(--neutral-5)]"
-                        >
+                        <tr key={String(r.resolverId)} className="border-t border-neutral-5">
                           <td className="py-1.5 pr-2 align-top">{String(r.resolverId ?? "—")}</td>
                           <td className="py-1.5 pr-2 align-top break-all">
                             {Array.isArray(r.answers) && r.answers.length > 0
@@ -781,27 +773,25 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
                     </tbody>
                   </table>
                 </div>
-                <p className="mt-2 text-[11px] text-[var(--neutral-10)]">
-                  {t("dnsLeak.forgeNote")}
-                </p>
+                <p className="mt-2 text-[11px] text-neutral-10">{t("dnsLeak.forgeNote")}</p>
               </RunnerPanel>
 
               <RunnerPanel>
-                <p className="mb-2 text-xs font-medium text-[var(--neutral-11)]">
+                <p className="mb-2 text-xs font-medium text-neutral-11">
                   {t("dnsLeak.browserDoh")}
                 </p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="text-[var(--neutral-10)]">
+                    <thead className="text-neutral-10">
                       <tr>
                         <th className="pb-1 font-medium">{t("dnsLeak.colPath")}</th>
                         <th className="pb-1 font-medium">{t("dnsLeak.colAnswers")}</th>
                         <th className="pb-1 font-medium">{t("dnsLeak.colMs")}</th>
                       </tr>
                     </thead>
-                    <tbody className="font-mono text-[var(--neutral-12)]">
+                    <tbody className="font-mono text-neutral-12">
                       {clientProbes.map((p) => (
-                        <tr key={p.path} className="border-t border-[var(--neutral-5)]">
+                        <tr key={p.path} className="border-t border-neutral-5">
                           <td className="py-1.5 pr-2 align-top">{dohLabel(p.path)}</td>
                           <td className="py-1.5 pr-2 align-top break-all">
                             {p.answers?.length
@@ -823,24 +813,18 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
 
             <div className="grid gap-3 sm:grid-cols-2">
               <RunnerPanel>
-                <p className="mb-1 text-xs font-medium text-[var(--neutral-11)]">
-                  {t("dnsLeak.webrtc")}
-                </p>
+                <p className="mb-1 text-xs font-medium text-neutral-11">{t("dnsLeak.webrtc")}</p>
                 {webrtcAll.length === 0 ? (
-                  <p className="text-xs text-[var(--neutral-10)]">—</p>
+                  <p className="text-xs text-neutral-10">—</p>
                 ) : (
-                  <ul className="space-y-1 font-mono text-xs text-[var(--neutral-12)]">
+                  <ul className="space-y-1 font-mono text-xs text-neutral-12">
                     {webrtcAll.map((ip) => (
                       <li key={ip}>
                         {ip}
                         {webrtcPublic.includes(ip) ? (
-                          <span className="ml-1 text-[var(--neutral-10)]">
-                            ({t("dnsLeak.ipPublic")})
-                          </span>
+                          <span className="ml-1 text-neutral-10">({t("dnsLeak.ipPublic")})</span>
                         ) : webrtcPrivate.includes(ip) ? (
-                          <span className="ml-1 text-[var(--neutral-10)]">
-                            ({t("dnsLeak.ipPrivate")})
-                          </span>
+                          <span className="ml-1 text-neutral-10">({t("dnsLeak.ipPrivate")})</span>
                         ) : null}
                       </li>
                     ))}
@@ -848,11 +832,11 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
                 )}
               </RunnerPanel>
               <RunnerPanel>
-                <p className="mb-1 text-xs font-medium text-[var(--neutral-11)]">
+                <p className="mb-1 text-xs font-medium text-neutral-11">
                   {t("dnsLeak.egressMarkers")}
                 </p>
-                <p className="text-[11px] text-[var(--neutral-10)]">{t("dnsLeak.egressNote")}</p>
-                <pre className="mt-2 max-h-36 overflow-auto font-mono text-[11px] text-[var(--neutral-12)]">
+                <p className="text-[11px] text-neutral-10">{t("dnsLeak.egressNote")}</p>
+                <pre className="mt-2 max-h-36 overflow-auto font-mono text-[11px] text-neutral-12">
                   {JSON.stringify(
                     {
                       opendnsMyIp: markers?.opendnsMyIp ?? null,
@@ -872,11 +856,11 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
             </RunnerNote>
           ) : null}
 
-          <details className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3">
-            <summary className="cursor-pointer text-xs font-medium text-[var(--neutral-11)]">
+          <details className="rounded-[var(--radius-lg)] bg-neutral-2 p-3">
+            <summary className="cursor-pointer text-xs font-medium text-neutral-11">
               {t("dnsLeak.sectionTech")}
             </summary>
-            <pre className="mt-2 max-h-80 overflow-auto font-mono text-[11px] leading-relaxed text-[var(--neutral-12)]">
+            <pre className="mt-2 max-h-80 overflow-auto font-mono text-[11px] leading-relaxed text-neutral-12">
               {JSON.stringify(
                 {
                   sessionId: authBlock?.id ?? null,
@@ -896,11 +880,11 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
           </details>
         </div>
       ) : !loading ? (
-        <div className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4">
-          <p className="text-sm text-[var(--neutral-12)]">
+        <div className="rounded-[var(--radius-lg)] bg-neutral-2 p-4">
+          <p className="text-sm text-neutral-12">
             {infraStatus === "online" ? t("dnsLeak.idleOnline") : t("dnsLeak.idle")}
           </p>
-          <p className="mt-1 text-xs text-[var(--neutral-10)]">
+          <p className="mt-1 text-xs text-neutral-10">
             {authorityOnline ? t("dnsLeak.noteOnline") : t("dnsLeak.note")}
           </p>
         </div>

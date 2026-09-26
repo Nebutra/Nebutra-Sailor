@@ -29,11 +29,8 @@ export function DesktopAuthCompleteHandoff({
       />
 
       <div className="flex items-start gap-4">
-        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--status-success)_16%,transparent)] text-[color:var(--status-success)]">
-          <span
-            aria-hidden
-            className="absolute inset-0 rounded-full border border-[color-mix(in_srgb,var(--status-success)_35%,transparent)]"
-          />
+        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-success/16 text-success-strong">
+          <span aria-hidden className="absolute inset-0 rounded-full border border-success/35" />
           <Check className="h-5 w-5" aria-hidden />
         </div>
 
@@ -53,7 +50,7 @@ export function DesktopAuthCompleteHandoff({
 
       <div className="mt-6 grid gap-2">
         <StatusRow
-          icon={<ShieldCheck className="h-4 w-4 text-[color:var(--status-success)]" />}
+          icon={<ShieldCheck className="h-4 w-4 text-success-strong" />}
           label="Web session"
           state="Verified"
         />

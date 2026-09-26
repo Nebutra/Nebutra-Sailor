@@ -39,7 +39,8 @@ export function ResumeDocument({ content, mode = "design", hideContact }: Resume
       style={sheet}
       className={
         mode === "print"
-          ? "mx-auto bg-white text-[11pt] leading-snug text-black print:m-0 print:shadow-none"
+          ? // allow-palette: print media is physical paper, must render white/black ink regardless of app theme
+            "mx-auto bg-white text-[11pt] leading-snug text-black print:m-0 print:shadow-none"
           : "text-sm text-foreground"
       }
     >

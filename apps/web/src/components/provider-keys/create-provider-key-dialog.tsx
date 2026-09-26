@@ -211,7 +211,7 @@ export function CreateProviderKeyDialog({
                       checked={field.value}
                       onChange={(e) => field.onChange(e.target.checked)}
                       disabled={submitting}
-                      className="mt-0.5 h-4 w-4 rounded border-border text-[hsl(var(--primary))]"
+                      className="mt-0.5 h-4 w-4 rounded border-border text-primary"
                     />
                     <span>
                       Always use this key
@@ -226,9 +226,7 @@ export function CreateProviderKeyDialog({
               )}
             />
 
-            {rootError ? (
-              <p className="text-sm text-[hsl(var(--destructive-strong))]">{rootError}</p>
-            ) : null}
+            {rootError ? <p className="text-sm text-destructive-strong">{rootError}</p> : null}
 
             <DialogFooter>
               <Button

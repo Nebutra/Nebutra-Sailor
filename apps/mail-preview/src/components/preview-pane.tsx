@@ -169,8 +169,8 @@ function Tabs({ current, onChange }: { current: Tab; onChange: (tab: Tab) => voi
             className={[
               "rounded-t-md px-3 py-2 text-sm transition-colors",
               active
-                ? "border-b-2 border-[hsl(var(--primary))] font-medium text-foreground"
-                : "border-b-2 border-transparent text-muted-foreground hover:text-foreground",
+                ? "border-b-2 border-primary font-medium text-foreground"
+                : "font-medium border-b-2 border-transparent text-muted-foreground hover:text-foreground",
             ].join(" ")}
           >
             {t.label}
@@ -183,7 +183,7 @@ function Tabs({ current, onChange }: { current: Tab; onChange: (tab: Tab) => voi
 
 function ErrorBanner({ message }: { message: string }) {
   return (
-    <div className="border-b border-border bg-[color:var(--status-danger)]/10 px-6 py-2 text-sm text-[color:var(--status-danger)]">
+    <div className="border-b border-border bg-destructive/10 px-6 py-2 text-sm text-destructive-strong">
       <span className="inline-flex items-center gap-2">
         <AlertCircle className="h-4 w-4" aria-hidden="true" />
         {message}
@@ -202,6 +202,7 @@ function IframePreview({ html }: { html: string }) {
         title="Email preview"
         sandbox="allow-same-origin"
         srcDoc={html}
+        // allow-palette: fixed light canvas behind arbitrary email HTML content, not app chrome
         className="mx-auto block h-[80vh] w-full max-w-3xl rounded-lg border border-border bg-white shadow-sm"
       />
     </div>
@@ -218,7 +219,7 @@ function PlainTextView({ text }: { text: string }) {
 
 function HtmlSourceView({ html }: { html: string }) {
   return (
-    <pre className="h-full overflow-auto bg-[hsl(var(--foreground))] p-6 text-xs leading-relaxed text-[hsl(var(--muted))]">
+    <pre className="h-full overflow-auto bg-foreground p-6 text-xs leading-relaxed text-muted">
       <code>{html || "(no html yet)"}</code>
     </pre>
   );
@@ -251,9 +252,7 @@ function PropsEditor({
           spellCheck={false}
         />
         {parseError ? (
-          <p className="mt-2 text-xs text-[color:var(--status-danger)]">
-            JSON parse error: {parseError}
-          </p>
+          <p className="mt-2 text-xs text-destructive-strong">JSON parse error: {parseError}</p>
         ) : (
           <p className="mt-2 text-xs text-muted-foreground">
             Edits apply automatically (debounced 250ms).
@@ -327,8 +326,7 @@ function SendTestPanel({
           type="button"
           onClick={() => void send()}
           disabled={disabled || pending || !to}
-          className="inline-flex items-center gap-1.5 rounded-md px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
-          style={{ background: "hsl(var(--primary))" }}
+          className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50"
         >
           {pending ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -341,9 +339,7 @@ function SendTestPanel({
       {status ? (
         <p
           className={`mt-2 text-xs ${
-            status.tone === "ok"
-              ? "text-[color:var(--status-success)]"
-              : "text-[color:var(--status-danger)]"
+            status.tone === "ok" ? "text-success-strong" : "text-destructive-strong"
           }`}
         >
           {status.message}

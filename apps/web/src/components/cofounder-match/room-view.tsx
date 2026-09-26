@@ -82,8 +82,7 @@ export function RoomView({ profileId }: { profileId: string }) {
         action={
           <Link
             href={`/${locale}/cofounder/discover`}
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
-            style={{ background: "hsl(var(--primary))" }}
+            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
             Discover cofounders
             <ArrowRight className="size-4" aria-hidden="true" />
@@ -120,7 +119,7 @@ export function RoomView({ profileId }: { profileId: string }) {
             compiled company carries over and your cofounder is invited as an equal founder.
           </p>
           {formState === "formed" ? (
-            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-4 py-2 text-sm font-semibold text-[hsl(var(--success-strong))]">
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-4 py-2 text-sm font-semibold text-success-strong">
               <Sparkles className="size-4" aria-hidden="true" />
               Team forming — invitation sent
             </div>
@@ -137,7 +136,7 @@ export function RoomView({ profileId }: { profileId: string }) {
             </Button>
           )}
           {formState === "error" ? (
-            <p className="mt-2 text-xs text-[color:var(--status-danger)]">
+            <p className="mt-2 text-xs text-destructive-strong">
               Couldn't form the team. Please try again.
             </p>
           ) : null}
@@ -157,8 +156,7 @@ export function RoomView({ profileId }: { profileId: string }) {
           </p>
           <Link
             href={`/${locale}/choose-plan`}
-            className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
-            style={{ background: "hsl(var(--primary))" }}
+            className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
             Upgrade to open the room
             <ArrowRight className="size-4" aria-hidden="true" />

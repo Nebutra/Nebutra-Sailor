@@ -139,11 +139,11 @@ export function AriaPatternsDemo() {
           </p>
           <Input
             defaultValue="wrong-email@"
-            className="border-red-500"
+            className="border-destructive"
             {...ariaPatterns.invalid("Please enter a valid email address")}
             {...ariaPatterns.required}
           />
-          <div className="flex items-center gap-1.5 text-xs text-red-500 font-medium">
+          <div className="flex items-center gap-1.5 text-xs text-destructive-strong font-medium">
             <AlertCircle className="w-3.5 h-3.5" />
             Please enter a valid email address
           </div>
@@ -165,9 +165,9 @@ export function MinTouchTargetDemo() {
         <div className="flex flex-col sm:flex-row gap-12 sm:gap-24 items-center justify-center">
           <div className="flex flex-col items-center gap-4">
             <span className="text-sm font-medium">With minTouchTarget (Correct)</span>
-            <div className="relative border border-dashed border-green-500/50 rounded-md bg-green-500/10 p-4">
+            <div className="relative border border-dashed border-success/50 rounded-md bg-success/10 p-4">
               {/* This represents the touch area visually */}
-              <div className="absolute inset-0 flex items-center justify-center text-[10px] text-green-600 font-medium opacity-50">
+              <div className="absolute inset-0 flex items-center justify-center text-[10px] text-success-strong font-medium opacity-50">
                 44x44
               </div>
 
@@ -184,8 +184,8 @@ export function MinTouchTargetDemo() {
 
           <div className="flex flex-col items-center gap-4">
             <span className="text-sm font-medium">Without minTouchTarget (Wrong)</span>
-            <div className="relative border border-dashed border-red-500/50 rounded-md bg-red-500/10 p-4">
-              <div className="absolute inset-0 flex items-center justify-center text-[10px] text-red-600 font-medium opacity-50">
+            <div className="relative border border-dashed border-destructive/50 rounded-md bg-destructive/10 p-4">
+              <div className="absolute inset-0 flex items-center justify-center text-[10px] text-destructive-strong font-medium opacity-50">
                 16x16
               </div>
 
@@ -261,12 +261,15 @@ export function ContrastRequirementsDemo() {
             Normal Text (WCAG AA: {contrastRequirements.normalText}:1)
           </div>
           <div className="flex flex-col rounded-lg overflow-hidden border border-fd-border">
+            {/* allow-palette: depicts the literal WCAG contrast pair claimed by the "8.5:1" label — a token substitute wouldn't match the advertised ratio */}
             <div className="p-4 bg-white text-slate-800 flex justify-between items-center">
               <span className="text-sm">Pass (8.5:1)</span>
               <CheckCircleIcon />
             </div>
+            {/* allow-palette: depicts the literal WCAG contrast pair claimed by the "2.8:1" label — a token substitute wouldn't match the advertised ratio */}
             <div className="p-4 bg-white text-slate-400 flex justify-between items-center bg-stripes-red">
               <span className="text-sm">Fail (2.8:1)</span>
+              {/* allow-palette: same fixed-contrast example above */}
               <XCircle className="text-red-600 w-5 h-5" />
             </div>
           </div>
@@ -277,12 +280,16 @@ export function ContrastRequirementsDemo() {
             Large Text (WCAG AA: {contrastRequirements.largeText}:1)
           </div>
           <div className="flex flex-col rounded-lg overflow-hidden border border-fd-border">
+            {/* allow-palette: depicts the literal WCAG contrast pair claimed by the "4.8:1" label — a token substitute wouldn't match the advertised ratio */}
             <div className="p-4 bg-blue-600 text-white flex justify-between items-center">
               <span className="text-xl font-bold">Pass (4.8:1)</span>
+              {/* allow-palette: same fixed-contrast example above */}
               <CheckCircleIcon className="text-white" />
             </div>
+            {/* allow-palette: depicts the literal WCAG contrast pair claimed by the "2.5:1" label — a token substitute wouldn't match the advertised ratio */}
             <div className="p-4 bg-blue-400 text-white flex justify-between items-center bg-stripes-red">
               <span className="text-xl font-bold">Fail (2.5:1)</span>
+              {/* allow-palette: same fixed-contrast example above */}
               <XCircle className="text-red-900 w-6 h-6" />
             </div>
           </div>

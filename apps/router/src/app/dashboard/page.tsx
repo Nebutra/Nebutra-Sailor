@@ -19,11 +19,11 @@ export const metadata = { title: "数据汇总" };
 
 function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: string }) {
   return (
-    <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2.5">
-      <p className="text-[11px] text-[var(--neutral-10)]">{label}</p>
+    <div className="rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 px-3 py-2.5">
+      <p className="text-[11px] text-neutral-10">{label}</p>
       <p className="mt-0.5 text-lg font-semibold tabular-nums tracking-tight">{value}</p>
       {hint ? (
-        <p className="mt-0.5 truncate font-mono text-[10px] text-[var(--neutral-10)]">{hint}</p>
+        <p className="mt-0.5 truncate font-mono text-[10px] text-neutral-10">{hint}</p>
       ) : null}
     </div>
   );
@@ -101,9 +101,7 @@ export default async function DashboardPage() {
           value={
             <>
               {balance.balance.toFixed(2)}
-              <span className="ml-1 text-xs font-medium text-[var(--neutral-10)]">
-                {balance.currency}
-              </span>
+              <span className="ml-1 text-xs font-medium text-neutral-10">{balance.currency}</span>
             </>
           }
           hint="prepaid wallet"
@@ -118,9 +116,7 @@ export default async function DashboardPage() {
           value={
             <>
               {usage.totalCost.toFixed(usage.totalCost > 0 && usage.totalCost < 0.01 ? 6 : 2)}
-              <span className="ml-1 text-xs font-medium text-[var(--neutral-10)]">
-                {usage.currency}
-              </span>
+              <span className="ml-1 text-xs font-medium text-neutral-10">{usage.currency}</span>
             </>
           }
           hint={`${usage.requestCount} 次请求`}
@@ -129,33 +125,33 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mb-4 grid gap-3 lg:grid-cols-[1.4fr_1fr]">
-        <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3">
+        <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
           <p className="mb-2 text-[12px] font-semibold">接入参数</p>
           <div className="space-y-2">
             <CopyField label="baseURL" value={baseUrl} />
             <CopyField label="示例 model" value={sample} />
           </div>
-          <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-2 font-mono text-[10px] leading-relaxed text-[var(--neutral-11)]">
+          <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] bg-neutral-2 p-2 font-mono text-[10px] leading-relaxed text-neutral-11">
             {`curl ${baseUrl}/chat/completions \\
   -H "Authorization: Bearer sk-sailor-…" \\
   -d '{"model":"${sample}","messages":[{"role":"user","content":"ping"}]}'`}
           </pre>
         </div>
-        <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3">
+        <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
           <p className="mb-2 text-[12px] font-semibold">上线检查</p>
           <ul className="space-y-1">
             {checklist.map((c) => (
               <li key={c.label}>
                 <Link
                   href={c.href}
-                  className="flex h-8 items-center justify-between gap-2 rounded-[var(--radius-md)] px-2 text-[12px] hover:bg-[var(--neutral-3)]"
+                  className="flex h-8 items-center justify-between gap-2 rounded-[var(--radius-md)] px-2 text-[12px] hover:bg-neutral-3"
                 >
                   <span className="inline-flex items-center gap-2">
                     <span
                       className={
                         c.ok
-                          ? "inline-flex h-4 w-4 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--status-success)_18%,transparent)] text-[var(--status-success)]"
-                          : "inline-flex h-4 w-4 rounded-full bg-[var(--neutral-3)]"
+                          ? "inline-flex h-4 w-4 items-center justify-center rounded-full bg-success/18 text-success-strong"
+                          : "inline-flex h-4 w-4 rounded-full bg-neutral-3"
                       }
                     >
                       {c.ok ? <Check className="h-2.5 w-2.5" /> : null}
@@ -165,7 +161,7 @@ export default async function DashboardPage() {
                         reads the same done and not-done to a screen reader. */}
                     <span className="sr-only">{c.ok ? "已完成" : "未完成"}</span>
                   </span>
-                  <ArrowRight className="h-3 w-3 text-[var(--neutral-9)]" />
+                  <ArrowRight className="h-3 w-3 text-neutral-9" />
                 </Link>
               </li>
             ))}
@@ -175,10 +171,7 @@ export default async function DashboardPage() {
 
       <div className="mb-2 flex items-center justify-between">
         <p className="text-[12px] font-semibold">目录精选</p>
-        <Link
-          href="/"
-          className="text-[11px] text-[var(--neutral-11)] hover:text-[var(--neutral-12)]"
-        >
+        <Link href="/" className="text-[11px] text-neutral-11 hover:text-neutral-12">
           打开 API 集市 →
         </Link>
       </div>
@@ -187,16 +180,14 @@ export default async function DashboardPage() {
           <Link
             key={m.publicModel}
             href={`/use?model=${encodeURIComponent(m.publicModel)}`}
-            className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] p-3 hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]/40"
+            className="rounded-[var(--radius-lg)] border border-neutral-6 p-3 hover:border-neutral-8 hover:bg-neutral-2/40"
           >
             <div className="flex items-start justify-between gap-2">
               <p className="font-mono text-[12px] font-semibold">{m.publicModel}</p>
-              <span className="text-[10px] text-[var(--neutral-10)]">
-                {PROVIDER_LABEL[m.provider]}
-              </span>
+              <span className="text-[10px] text-neutral-10">{PROVIDER_LABEL[m.provider]}</span>
             </div>
-            <p className="mt-1 line-clamp-2 text-[11px] text-[var(--neutral-10)]">{m.name}</p>
-            <p className="mt-2 font-mono text-[10px] tabular-nums text-[var(--neutral-11)]">
+            <p className="mt-1 line-clamp-2 text-[11px] text-neutral-10">{m.name}</p>
+            <p className="mt-2 font-mono text-[10px] tabular-nums text-neutral-11">
               入 {formatPrice(m.inputPerMTok)} · 出 {formatPrice(m.outputPerMTok)} /1M
             </p>
           </Link>

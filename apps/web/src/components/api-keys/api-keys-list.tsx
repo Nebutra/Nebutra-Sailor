@@ -89,7 +89,7 @@ function RevokeButton({
       // blue and cyan have 12-step scales, so red-11/red-3 resolve to nothing —
       // the registered red ramp is the AA-safe step that carries text (5.32 light
       // / 5.27 dark).
-      className="px-2 text-xs font-medium text-[hsl(var(--destructive-strong))] hover:bg-destructive/10 hover:text-[hsl(var(--destructive-strong))]/80"
+      className="px-2 text-xs font-medium text-destructive-strong hover:bg-destructive/10 hover:text-destructive-strong/80"
     >
       {pending ? revokingLabel : revokeLabel}
     </Button>

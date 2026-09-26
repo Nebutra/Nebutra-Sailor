@@ -67,7 +67,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider provider={authProvider} config={authProviderConfig}>
-            <Suspense fallback={<div className="min-h-screen bg-[var(--neutral-1)]" />}>
+            <Suspense fallback={<div className="min-h-screen bg-neutral-1" />}>
               <ConsoleShell sidebarCollapsed={sidebarCollapsed}>{children}</ConsoleShell>
             </Suspense>
           </AuthProvider>

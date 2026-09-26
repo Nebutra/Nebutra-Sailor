@@ -1,12 +1,15 @@
 export function FauxTerminal({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-full w-full rounded-[2rem] overflow-hidden border border-border/60 bg-background/80 shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)] ring-1 ring-black/5 flex flex-col transition-[background-color,border-color,box-shadow] duration-700">
+    <div className="h-full w-full rounded-[2rem] overflow-hidden border border-border/60 bg-background/80 shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)] ring-1 ring-foreground/5 flex flex-col transition-[background-color,border-color,box-shadow] duration-700">
       {/* macOS Control Header */}
       <div className="flex flex-none items-center px-5 h-14 border-b border-border/60 bg-muted/40/[0.02]">
         <div className="flex gap-2">
-          <div className="w-3 h-3 rounded-full bg-border/80 shadow-sm border border-black/5 hover:bg-red-400 transition-colors"></div>
-          <div className="w-3 h-3 rounded-full bg-border/80 shadow-sm border border-black/5 hover:bg-amber-400 transition-colors"></div>
-          <div className="w-3 h-3 rounded-full bg-border/80 shadow-sm border border-black/5 hover:bg-emerald-400 transition-colors"></div>
+          {/* allow-palette: macOS traffic-light dot — OS chrome's own fixed colour */}
+          <div className="w-3 h-3 rounded-full bg-border/80 shadow-sm border border-foreground/5 hover:bg-red-400 transition-colors"></div>
+          {/* allow-palette: macOS traffic-light dot — OS chrome's own fixed colour */}
+          <div className="w-3 h-3 rounded-full bg-border/80 shadow-sm border border-foreground/5 hover:bg-amber-400 transition-colors"></div>
+          {/* allow-palette: macOS traffic-light dot — OS chrome's own fixed colour */}
+          <div className="w-3 h-3 rounded-full bg-border/80 shadow-sm border border-foreground/5 hover:bg-emerald-400 transition-colors"></div>
         </div>
         <div className="ml-6 flex-1 text-center pr-12">
           <div className="inline-flex items-center gap-2 px-4 py-1 rounded-[var(--radius-md)] bg-background border border-border/40 shadow-sm">

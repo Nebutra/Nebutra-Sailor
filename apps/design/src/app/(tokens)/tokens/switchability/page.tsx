@@ -36,9 +36,9 @@ const STATUS_LABEL: Record<DimensionStatus, string> = {
 };
 
 const STATUS_TONE: Record<DimensionStatus, string> = {
-  live: "bg-emerald-500/15 text-emerald-800 dark:text-emerald-300",
-  "known-inert": "bg-amber-500/15 text-amber-900 dark:text-amber-200",
-  inert: "bg-red-500/15 text-red-800 dark:text-red-300",
+  live: "bg-success/15 text-success-strong",
+  "known-inert": "bg-warning/15 text-warning-strong",
+  inert: "bg-destructive/15 text-destructive-strong",
   undeclared: "bg-muted text-muted-foreground",
 };
 

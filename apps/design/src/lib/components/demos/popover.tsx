@@ -92,7 +92,7 @@ export default function PopoverDemo() {
                 ) : null}
                 {phase === "error" ? (
                   <div className="flex flex-col gap-2">
-                    <p className="text-[hsl(var(--destructive-strong))] text-sm">
+                    <p className="text-destructive-strong text-sm">
                       Could not reach the deployments API.
                     </p>
                     <Button size="sm" variant="outline">

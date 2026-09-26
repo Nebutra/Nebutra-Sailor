@@ -18,9 +18,8 @@ const STEPS: Step[] = [
 ];
 
 const STEP_STYLES: Record<StepState, string> = {
-  done: "border-[color:var(--status-success)]/30 bg-[color:var(--status-success)]/10 text-[color:var(--status-success)]",
-  current:
-    "border-[color:var(--status-warning)]/40 bg-[color:var(--status-warning)]/10 text-[color:var(--status-warning)]",
+  done: "border-success/30 bg-success/10 text-success-strong",
+  current: "border-warning/40 bg-warning/10 text-warning-strong",
   pending: "border-neutral-7 bg-transparent text-neutral-11",
 };
 
@@ -44,17 +43,14 @@ export function OutreachEngineGlyph({ locale }: SubpackageGlyphProps) {
     >
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5">
-          <Envelope className="h-3.5 w-3.5 shrink-0 text-[hsl(var(--primary))]" />
+          <Envelope className="h-3.5 w-3.5 shrink-0 text-primary" />
           <span className="truncate font-mono text-[11px] text-neutral-12">{campaignName}</span>
         </div>
         <Badge
           variant="outline"
-          className="shrink-0 gap-1 border-[color:var(--status-success)]/30 bg-[color:var(--status-success)]/10 px-1.5 py-0 text-[10px] font-normal text-[color:var(--status-success)]"
+          className="shrink-0 gap-1 border-success/30 bg-success/10 px-1.5 py-0 text-[10px] font-normal text-success-strong"
         >
-          <span
-            className="block h-1.5 w-1.5 rounded-full bg-[color:var(--status-success)]"
-            aria-hidden
-          />
+          <span className="block h-1.5 w-1.5 rounded-full bg-success" aria-hidden />
           <Users className="h-2.5 w-2.5" />
           <span>{statusText}</span>
         </Badge>

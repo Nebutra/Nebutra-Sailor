@@ -38,10 +38,10 @@ export function RepositoriesGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-2.5 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-2.5 ring-1 ring-border shadow-sm">
         {/* Interface header */}
         <div className="flex items-center gap-1.5">
-          <Code className="h-3 w-3 shrink-0 text-[hsl(var(--primary))]" aria-hidden="true" />
+          <Code className="h-3 w-3 shrink-0 text-primary" aria-hidden="true" />
           <code className="font-mono text-[10px] leading-none">
             <span className="text-primary">interface</span>
             <span className="text-muted-foreground"> </span>
@@ -50,13 +50,13 @@ export function RepositoriesGlyph({ locale }: SubpackageGlyphProps) {
         </div>
 
         {/* Method rows */}
-        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
+        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-border">
           {METHODS.map((m) => (
             <code
               key={m.name}
               className="flex items-center gap-1 font-mono text-[9px] leading-tight"
             >
-              <span className="text-[var(--cyan-11)]">{m.name}</span>
+              <span className="text-cyan-11">{m.name}</span>
               <span className="text-muted-foreground">(</span>
               <span className="text-muted-foreground">{m.args}</span>
               <span className="text-muted-foreground">)</span>

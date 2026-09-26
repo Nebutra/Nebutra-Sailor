@@ -64,7 +64,7 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
@@ -114,7 +114,7 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
             <Lightning className="h-2.5 w-2.5" />
             {copy.footer}
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
         </div>
       </div>
     </div>

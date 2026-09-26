@@ -62,7 +62,7 @@ export function TtsGlyph(_props: SubpackageGlyphProps) {
           <button
             type="button"
             aria-label="Play voice preview"
-            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[hsl(var(--foreground))] text-[hsl(var(--background))]"
+            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-foreground text-background"
           >
             <Play className="h-3 w-3" />
           </button>

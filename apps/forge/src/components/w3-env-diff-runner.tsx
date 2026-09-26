@@ -182,7 +182,7 @@ export function W3EnvDiffRunner({ toolId }: { toolId: string }) {
                     <ShellBadge tone={w.type === "unparsableLine" ? "danger" : "warning"}>
                       {t(`envDiff.warningType.${w.type}`, { file: w.file })}
                     </ShellBadge>
-                    <span className="flex-1 text-sm text-[var(--neutral-11)]">{w.message}</span>
+                    <span className="flex-1 text-sm text-neutral-11">{w.message}</span>
                   </li>
                 ))}
               </ul>
@@ -191,12 +191,12 @@ export function W3EnvDiffRunner({ toolId }: { toolId: string }) {
 
           {output.counts.unchanged > 0 ? (
             <ShellDrill summary={t("envDiff.showUnchanged", { n: output.counts.unchanged })}>
-              <ul className="space-y-1 font-mono text-xs text-[var(--neutral-11)]">
+              <ul className="space-y-1 font-mono text-xs text-neutral-11">
                 {output.entries
                   .filter((e) => e.status === "unchanged")
                   .map((e) => (
                     <li key={e.key} className="flex flex-wrap gap-2">
-                      <span className="text-[var(--neutral-12)]">{e.key}</span>
+                      <span className="text-neutral-12">{e.key}</span>
                       <span>{e.valueA ?? e.valueB ?? ABSENT}</span>
                       {e.commentedIn ? (
                         <span>{t(`envDiff.commentedIn.${e.commentedIn}`)}</span>

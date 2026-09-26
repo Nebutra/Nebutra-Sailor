@@ -120,7 +120,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
       </div>
 
       {errorMessage && (
-        <p className="mb-4 text-sm text-[hsl(var(--destructive))]" id={errorId} role="alert">
+        <p className="mb-4 text-sm text-destructive-strong" id={errorId} role="alert">
           {errorMessage}
         </p>
       )}

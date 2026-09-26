@@ -13,10 +13,10 @@ export function VoiceRealtimeGlyph(_props: SubpackageGlyphProps) {
       {/* Top row: live indicator + timer + status */}
       <div className="flex items-center gap-2">
         <span className="relative inline-flex h-2.5 w-2.5 items-center justify-center">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--status-danger)] opacity-60" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--status-danger)]" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-60" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive" />
         </span>
-        <Bell className="h-3.5 w-3.5 text-[var(--status-danger)]" aria-hidden />
+        <Bell className="h-3.5 w-3.5 text-destructive-strong" aria-hidden />
         <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-foreground">
           LIVE · 0:42
         </span>

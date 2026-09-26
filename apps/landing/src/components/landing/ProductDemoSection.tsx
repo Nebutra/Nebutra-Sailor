@@ -69,7 +69,7 @@ export function ProductDemoSection() {
 
             <SlidingIndicator
               activeKey={activeId}
-              className="z-10 hidden rounded-full border-2 border-background bg-foreground md:block dark:border-[#0A0A0B]"
+              className="z-10 hidden rounded-full border-2 border-background bg-foreground md:block"
               style={{ boxShadow: "var(--ring-hairline)" }}
             />
 

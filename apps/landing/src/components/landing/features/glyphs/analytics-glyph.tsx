@@ -27,7 +27,7 @@ export function AnalyticsGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* KPI tiles row */}
         <div className="grid grid-cols-3 gap-2">
           <div className="flex flex-col gap-0.5">
@@ -58,7 +58,7 @@ export function AnalyticsGlyph({ locale }: SubpackageGlyphProps) {
           {BARS.map((h, i) => (
             <div
               key={`bar-${i}`}
-              className="flex-1 rounded-[var(--radius-sm)] bg-[hsl(var(--primary))]"
+              className="flex-1 rounded-[var(--radius-sm)] bg-primary"
               style={{ height: `${h}%`, opacity: 0.55 + (h / 100) * 0.45 }}
             />
           ))}
@@ -67,7 +67,7 @@ export function AnalyticsGlyph({ locale }: SubpackageGlyphProps) {
         {/* Footer */}
         <div className="flex items-center justify-between">
           <span className="font-mono text-[9px] text-muted-foreground">{copy.footer}</span>
-          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
         </div>
       </div>
     </div>

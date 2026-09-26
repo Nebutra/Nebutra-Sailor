@@ -297,7 +297,7 @@ export function DiscoverDeck() {
               className="pointer-events-none absolute right-4 top-4 rotate-12 rounded-md border-2 px-2 py-0.5 text-sm font-extrabold uppercase tracking-wider"
               style={{
                 opacity: nopeOpacity,
-                color: "var(--status-danger)",
+                color: "hsl(var(--destructive-strong))",
                 borderColor: "var(--status-danger)",
               }}
             >

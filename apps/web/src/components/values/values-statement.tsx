@@ -111,10 +111,7 @@ export function ValuesStatement({
             className="flex h-full flex-col gap-2 rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-4"
           >
             <div className="flex items-center justify-between">
-              <div
-                className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] text-white"
-                style={{ background: "hsl(var(--primary))" }}
-              >
+              <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary text-primary-foreground">
                 <Icon className="h-4 w-4" />
               </div>
               {metric && (

@@ -186,10 +186,10 @@ export function W3IsbnRunner({ toolId }: { toolId: string }) {
         })}
 
         {output.results.length > 0 ? (
-          <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2">
             <table className="w-full min-w-[44rem] text-left text-sm">
               <thead>
-                <tr className="text-xs text-[var(--neutral-10)]">
+                <tr className="text-xs text-neutral-10">
                   <th scope="col" className="px-4 py-2 font-medium">
                     {t("isbn.col.input")}
                   </th>
@@ -215,22 +215,20 @@ export function W3IsbnRunner({ toolId }: { toolId: string }) {
                   <tr
                     // Rows are positional: the same ISBN may legitimately repeat.
                     key={`${i}-${row.normalized}`}
-                    className={i % 2 === 1 ? "bg-[var(--neutral-3)]" : undefined}
+                    className={i % 2 === 1 ? "bg-neutral-3" : undefined}
                   >
-                    <td className="px-4 py-2 font-mono text-[var(--neutral-11)]">{row.input}</td>
-                    <td className="px-4 py-2 font-mono text-[var(--neutral-12)]">
-                      {row.normalized}
-                    </td>
-                    <td className="px-4 py-2 text-[var(--neutral-11)]">{typeLabel(row)}</td>
+                    <td className="px-4 py-2 font-mono text-neutral-11">{row.input}</td>
+                    <td className="px-4 py-2 font-mono text-neutral-12">{row.normalized}</td>
+                    <td className="px-4 py-2 text-neutral-11">{typeLabel(row)}</td>
                     <td className="px-4 py-2">
                       <ShellBadge tone={row.valid ? "success" : "danger"}>
                         {row.valid ? t("isbn.valid") : t("isbn.invalid")}
                       </ShellBadge>
                     </td>
-                    <td className="px-4 py-2 font-mono text-[var(--neutral-11)]">
+                    <td className="px-4 py-2 font-mono text-neutral-11">
                       {row.converted?.value ?? "—"}
                     </td>
-                    <td className="px-4 py-2 text-[var(--neutral-11)]">{noteLabel(row) ?? "—"}</td>
+                    <td className="px-4 py-2 text-neutral-11">{noteLabel(row) ?? "—"}</td>
                   </tr>
                 ))}
               </tbody>

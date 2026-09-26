@@ -203,7 +203,7 @@ export function W3ImageRotateFlipRunner({ toolId }: { toolId: string }) {
       {/* biome-ignore lint/a11y/noStaticElementInteractions: drop target; the button inside carries keyboard + click */}
       <div
         className={`flex flex-col items-center gap-2 rounded-[var(--radius-lg)] p-6 text-center transition-colors ${
-          dragging ? "bg-[var(--blue-3)]" : "bg-[var(--neutral-2)]"
+          dragging ? "bg-blue-3" : "bg-neutral-2"
         }`}
         onDragOver={(e) => {
           e.preventDefault();
@@ -216,7 +216,7 @@ export function W3ImageRotateFlipRunner({ toolId }: { toolId: string }) {
           void take(e.dataTransfer.files?.[0] ?? null);
         }}
       >
-        <p className="text-sm text-[var(--neutral-11)]">{t("imageRotateFlip.drop")}</p>
+        <p className="text-sm text-neutral-11">{t("imageRotateFlip.drop")}</p>
         <input
           data-allow-native
           ref={fileInput}
@@ -229,20 +229,20 @@ export function W3ImageRotateFlipRunner({ toolId }: { toolId: string }) {
           {t("imageRotateFlip.browse")}
         </Button>
         {picked ? (
-          <p className="text-xs text-[var(--neutral-10)]">
+          <p className="text-xs text-neutral-10">
             {t("imageRotateFlip.selected", {
               name: picked.name,
               kb: (picked.size / 1024).toFixed(1),
             })}
           </p>
         ) : null}
-        <p className="text-xs text-[var(--neutral-10)]">{t("imageRotateFlip.privacy")}</p>
+        <p className="text-xs text-neutral-10">{t("imageRotateFlip.privacy")}</p>
       </div>
 
       {readError ? <ShellError message={readError} /> : null}
 
       {/* ── controls ───────────────────────────────────────────────────── */}
-      <div className="space-y-4 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4">
+      <div className="space-y-4 rounded-[var(--radius-lg)] bg-neutral-2 p-4">
         <div className="flex flex-wrap items-center gap-2">
           <Button type="button" variant="ghost" size="sm" onClick={() => applyAngle(angle - 90)}>
             <RotateCounterClockwise className="h-4 w-4" />
@@ -262,7 +262,7 @@ export function W3ImageRotateFlipRunner({ toolId }: { toolId: string }) {
           ) : null}
         </div>
 
-        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[var(--neutral-11)]">
+        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-neutral-11">
           <Checkbox
             id={`${uid}-flip-h`}
             checked={flipHorizontal}
@@ -361,7 +361,7 @@ export function W3ImageRotateFlipRunner({ toolId }: { toolId: string }) {
           <div className={state.status === "running" ? "space-y-3 opacity-60" : "space-y-3"}>
             <div className="grid gap-3 sm:grid-cols-2">
               <figure className="m-0 space-y-1">
-                <figcaption className="text-xs text-[var(--neutral-10)]">
+                <figcaption className="text-xs text-neutral-10">
                   {t("imageRotateFlip.original", {
                     w: output.inputWidth,
                     h: output.inputHeight,
@@ -370,17 +370,17 @@ export function W3ImageRotateFlipRunner({ toolId }: { toolId: string }) {
                 <img
                   src={picked.previewUrl}
                   alt={t("imageRotateFlip.originalAlt")}
-                  className="max-h-72 w-full rounded-[var(--radius-lg)] bg-[var(--neutral-2)] object-contain"
+                  className="max-h-72 w-full rounded-[var(--radius-lg)] bg-neutral-2 object-contain"
                 />
               </figure>
               <figure className="m-0 space-y-1">
-                <figcaption className="text-xs text-[var(--neutral-10)]">
+                <figcaption className="text-xs text-neutral-10">
                   {t("imageRotateFlip.result", { w: output.width, h: output.height })}
                 </figcaption>
                 <img
                   src={outUrl}
                   alt={t("imageRotateFlip.resultAlt")}
-                  className="max-h-72 w-full rounded-[var(--radius-lg)] bg-[var(--neutral-2)] object-contain"
+                  className="max-h-72 w-full rounded-[var(--radius-lg)] bg-neutral-2 object-contain"
                 />
               </figure>
             </div>

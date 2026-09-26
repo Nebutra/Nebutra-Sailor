@@ -12,7 +12,7 @@ export function AnalyticsTerminal() {
         <TypingAnimation delay={100} className="text-muted-foreground/80">
           &gt; nebutra telemetry --live
         </TypingAnimation>
-        <AnimatedSpan delay={1500} className="text-cyan-600 dark:text-cyan-400">
+        <AnimatedSpan delay={1500} className="text-info">
           ⚡ Connecting to real-time stream...
         </AnimatedSpan>
         <AnimatedSpan delay={2200} className="text-success-strong font-medium">

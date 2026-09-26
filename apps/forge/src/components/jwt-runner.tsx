@@ -77,22 +77,16 @@ export function JwtRunner({ toolId }: { toolId: string }) {
             ]}
             claimsSummary={
               claims.exp != null || claims.iat != null ? (
-                <div className="flex flex-wrap gap-3 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2 text-xs text-[var(--neutral-11)]">
+                <div className="flex flex-wrap gap-3 rounded-[var(--radius-lg)] bg-neutral-2 px-3 py-2 text-xs text-neutral-11">
                   {claims.iat != null ? (
                     <span>
-                      iat:{" "}
-                      <span className="font-mono text-[var(--neutral-12)]">
-                        {String(claims.iat)}
-                      </span>
+                      iat: <span className="font-mono text-neutral-12">{String(claims.iat)}</span>
                       {iatHuman ? ` · ${iatHuman}` : ""}
                     </span>
                   ) : null}
                   {claims.exp != null ? (
                     <span>
-                      exp:{" "}
-                      <span className="font-mono text-[var(--neutral-12)]">
-                        {String(claims.exp)}
-                      </span>
+                      exp: <span className="font-mono text-neutral-12">{String(claims.exp)}</span>
                       {expHuman ? ` · ${expHuman}` : ""}
                     </span>
                   ) : null}

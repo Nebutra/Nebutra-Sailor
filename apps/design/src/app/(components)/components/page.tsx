@@ -104,10 +104,7 @@ export default function ComponentsIndexPage() {
 
       {drift.length > 0 ? (
         <section className="rounded-xl bg-destructive/10 p-6" aria-labelledby="drift-heading">
-          <h2
-            className="font-medium text-[hsl(var(--destructive-strong))] text-base"
-            id="drift-heading"
-          >
+          <h2 className="font-medium text-destructive-strong text-base" id="drift-heading">
             Registry drift — {drift.length} claimed export{drift.length === 1 ? "" : "s"} not found
           </h2>
           <p className="mt-2 max-w-prose text-muted-foreground text-sm">

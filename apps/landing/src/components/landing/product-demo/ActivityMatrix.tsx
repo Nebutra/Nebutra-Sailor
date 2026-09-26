@@ -99,7 +99,7 @@ export function ActivityMatrix() {
       </div>
 
       {/* Background ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-emerald-500/5 blur-[40px] pointer-events-none group-hover:bg-emerald-500/10 transition-colors duration-1000" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-success/5 blur-[40px] pointer-events-none group-hover:bg-success/10 transition-colors duration-1000" />
     </div>
   );
 }

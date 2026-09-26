@@ -173,13 +173,15 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
       ) : null}
 
       {extract ? (
-        <section className="mx-auto mt-16 max-w-[52rem] border-2 border-[var(--tl-ink)] bg-white p-8 md:p-10">
+        <section className="mx-auto mt-16 max-w-[52rem] border-2 border-[var(--tl-ink)] bg-[var(--tl-paper)] p-8 md:p-10">
           <p className="tl-kicker mb-2">For agents</p>
           <h2 className="text-2xl font-semibold tracking-tight">Extract pack</h2>
           <p className="mt-2 text-sm text-[var(--tl-muted)]">
             schema v{extract.schemaVersion} · faces as listed by the source · licenses included
           </p>
-          <pre className="mt-6 max-h-80 overflow-auto bg-[var(--tl-ink)] p-5 text-xs leading-relaxed text-neutral-200">
+          <pre // allow-palette: ink fixed against the static (non-theme-reactive) tl-ink code block background
+            className="mt-6 max-h-80 overflow-auto bg-[var(--tl-ink)] p-5 text-xs leading-relaxed text-neutral-200"
+          >
             {JSON.stringify(extract, null, 2)}
           </pre>
           <p className="mt-4 text-sm">

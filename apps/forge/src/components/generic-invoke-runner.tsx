@@ -222,7 +222,7 @@ export function GenericInvokeRunner({
         if (f.kind === "file-base64") {
           return (
             <div key={f.key} className="space-y-1">
-              <p className="text-sm font-medium text-[var(--neutral-12)]">{f.label}</p>
+              <p className="text-sm font-medium text-neutral-12">{f.label}</p>
               <input
                 data-allow-native
                 type="file"
@@ -231,7 +231,7 @@ export function GenericInvokeRunner({
                 onChange={(e) => void onFile(f.key, e.target.files?.[0] ?? null)}
               />
               {values[f.key] ? (
-                <p className="text-xs text-[var(--neutral-11)]">{t("base64Loaded")}</p>
+                <p className="text-xs text-neutral-11">{t("base64Loaded")}</p>
               ) : null}
             </div>
           );
@@ -309,7 +309,7 @@ export function GenericInvokeRunner({
         <img
           src={previewUrl}
           alt={t("outputPreview")}
-          className="max-h-64 rounded border border-[var(--neutral-6)]"
+          className="max-h-64 rounded border border-neutral-6"
         />
       ) : null}
       {result ? <RunnerOutput>{result}</RunnerOutput> : null}

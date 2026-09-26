@@ -106,7 +106,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
             placeholder="Search skills…"
           />
         </div>
-        <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 dark:bg-black/40">
+        <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11">
           <BadgeCheck
             className={`h-3.5 w-3.5 ${officialOnly ? "text-primary" : "text-neutral-10"}`}
           />
@@ -116,7 +116,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
             type="checkbox"
             checked={officialOnly}
             onChange={(e) => setOfficialOnly(e.target.checked)}
-            className="ml-1 h-3 w-3 rounded border-neutral-7 text-primary dark:bg-black/40"
+            className="ml-1 h-3 w-3 rounded border-neutral-7 text-primary"
           />
         </label>
       </div>
@@ -129,10 +129,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
           className="group flex w-full items-center justify-between gap-3 rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-1 p-4 text-left transition-colors hover:border-neutral-9 hover:bg-neutral-2"
         >
           <div className="flex items-center gap-3">
-            <div
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
-              style={{ background: "hsl(var(--primary))" }}
-            >
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] bg-primary text-primary-foreground">
               <Plus className="h-4 w-4" />
             </div>
             <div>
@@ -245,7 +242,7 @@ function Toggle({ checked, onChange, disabled, label }: ToggleProps) {
       }`}
     >
       <span
-        className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow-sm transition-transform ${
+        className={`inline-block h-3.5 w-3.5 transform rounded-full bg-background shadow-sm transition-transform ${
           checked ? "translate-x-4" : "translate-x-1"
         }`}
       />

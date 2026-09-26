@@ -15,7 +15,7 @@ function UsageRow({
     <div className="flex items-center gap-4 py-2.5 text-sm border-b border-border last:border-0">
       <div className="flex items-center gap-4 w-48 font-mono">
         <div
-          className="h-4 w-4 rounded-full border border-black/10 shadow-sm dark:border-white/10"
+          className="h-4 w-4 rounded-full border border-foreground/10 shadow-sm"
           style={{ backgroundColor: swatch }}
         />
         {colorName}
@@ -186,6 +186,7 @@ export function ColorUsageDemos() {
           />
         </div>
         <ComponentPreview className="py-20 flex-col gap-6">
+          {/* allow-palette: this card demonstrates the 700-950 scale specifically against a light background (the section's own claim), not the site's own surface */}
           <div className="flex flex-col gap-4 max-w-md w-full p-8 border border-black/5 rounded-2xl bg-white shadow-sm">
             <h4 className="text-2xl font-bold tracking-tight text-[var(--nebutra-blue-900)]">
               Data Aggregation
@@ -194,7 +195,7 @@ export function ColorUsageDemos() {
               Connect and manage all your external data sources seamlessly with Nebutra's
               enterprise-grade integration engine.
             </p>
-            <div className="mt-4 flex gap-3 text-[hsl(var(--primary))]">
+            <div className="mt-4 flex gap-3 text-primary">
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"

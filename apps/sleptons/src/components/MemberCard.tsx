@@ -32,7 +32,7 @@ export function MemberCard({ member }: MemberCardProps) {
   return (
     <Link
       href={`/members/${member.slug}`}
-      className="group flex flex-col gap-3 rounded-xl border border-border bg-background p-5 transition-[border-color,box-shadow] hover:border-[hsl(var(--primary))] hover:shadow-md"
+      className="group flex flex-col gap-3 rounded-xl border border-border bg-background p-5 transition-[border-color,box-shadow] hover:border-primary hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-3">
@@ -43,7 +43,7 @@ export function MemberCard({ member }: MemberCardProps) {
               className="h-10 w-10 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--blue-3)] text-sm font-bold text-[hsl(var(--primary))]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-3 text-sm font-bold text-primary">
               {initials}
             </div>
           )}

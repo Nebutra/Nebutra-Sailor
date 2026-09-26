@@ -156,12 +156,14 @@ export default async function RootLayout({
                         width={24}
                         height={24}
                         aria-label="Nebutra"
+                        // allow-palette: mono VI mark is fixed white ink on the dark-mode chrome, not theme-restylable
                         className="hidden h-6 w-6 shrink-0 !text-white dark:block"
                       />
                       <WordmarkEnSVG
                         width={100}
                         height={18}
-                        className="h-[1.125rem] w-auto !text-[var(--neutral-12)] dark:!text-white"
+                        // allow-palette: wordmark ink matches the fixed mono mark above in dark mode
+                        className="h-[1.125rem] w-auto !text-neutral-12 dark:!text-white"
                         aria-label={`${brand.name} Sailor Docs`}
                       />
                     </span>

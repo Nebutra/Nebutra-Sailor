@@ -212,7 +212,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
             />
           </div>
 
-          {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
+          {error && <p className="text-sm text-destructive-strong">{error}</p>}
 
           <Button type="submit" className="w-full" disabled={loading || code.length !== 6}>
             {loading ? "Verifying…" : "Verify"}
@@ -340,7 +340,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
             />
           ) : null}
 
-          {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
+          {error && <p className="text-sm text-destructive-strong">{error}</p>}
 
           <Button
             type="submit"

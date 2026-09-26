@@ -9,9 +9,9 @@ const LAYERS = [
 ] as const;
 
 const TILE_TINTS = [
-  "bg-[var(--blue-4)] border-[var(--blue-7)]",
-  "bg-[var(--cyan-4)] border-[var(--cyan-7)]",
-  "bg-purple-200 border-purple-700/40",
+  "bg-blue-4 border-blue-7",
+  "bg-cyan-4 border-cyan-7",
+  "bg-chart-3/20 border-chart-3/40",
 ] as const;
 
 export function AtelierCanvasGlyph(_props: SubpackageGlyphProps) {

@@ -108,7 +108,7 @@ export function NumberBaseRunner({ toolId }: { toolId: string }) {
       {result ? (
         <RunnerPanel>
           <p className="font-mono text-xl break-all">{result}</p>
-          <p className="mt-1 text-xs text-[var(--neutral-10)]">十进制：{decimal}</p>
+          <p className="mt-1 text-xs text-neutral-10">十进制：{decimal}</p>
         </RunnerPanel>
       ) : null}
       <RunnerNote>

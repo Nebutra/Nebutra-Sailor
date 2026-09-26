@@ -282,7 +282,7 @@ export function ExifViewerRunner({ toolId }: { toolId: string }) {
         <div className="space-y-3">
           {gps ? (
             <a
-              className="text-sm text-[hsl(var(--primary))] underline"
+              className="text-sm text-primary underline"
               href={`https://www.openstreetmap.org/?mlat=${gps.lat}&mlon=${gps.lon}#map=15/${gps.lat}/${gps.lon}`}
               target="_blank"
               rel="noopener noreferrer"

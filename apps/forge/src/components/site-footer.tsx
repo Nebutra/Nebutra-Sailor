@@ -47,7 +47,7 @@ export function SiteFooter() {
   ] as const;
 
   return (
-    <footer className="mt-auto w-full border-t border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+    <footer className="mt-auto w-full border-t border-neutral-6 bg-neutral-1">
       <div className="mx-auto w-full max-w-wide px-6 pt-14 pb-8 md:pt-16">
         {/*
           First track needs a real min (not minmax(0,…)): CJK soft-wrap makes
@@ -63,7 +63,7 @@ export function SiteFooter() {
             >
               <BrandLogo variant="horizontal" className="h-6 w-auto" />
             </Link>
-            <p className="w-full max-w-sm text-[13px] leading-relaxed break-words text-[var(--neutral-11)]">
+            <p className="w-full max-w-sm text-[13px] leading-relaxed break-words text-neutral-11">
               {t("blurb")}
             </p>
             <div className="flex items-center gap-1">
@@ -74,7 +74,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="rounded-[var(--radius-md)] p-2 text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+                  className="rounded-[var(--radius-md)] p-2 text-neutral-10 transition-colors hover:bg-neutral-3 hover:text-neutral-12"
                 >
                   <Icon className="size-[18px]" />
                 </a>
@@ -88,13 +88,13 @@ export function SiteFooter() {
           >
             {cols.map((col) => (
               <div key={col.title} className="flex flex-col gap-3">
-                <h2 className="text-[11px] font-semibold tracking-[0.08em] text-[var(--neutral-10)] uppercase">
+                <h2 className="text-[11px] font-semibold tracking-[0.08em] text-neutral-10 uppercase">
                   {col.title}
                 </h2>
                 <ul className="flex flex-col gap-2.5">
                   {col.links.map((link) => {
                     const className =
-                      "text-[13px] text-[var(--neutral-11)] transition-colors hover:text-[var(--neutral-12)]";
+                      "text-[13px] text-neutral-11 transition-colors hover:text-neutral-12";
                     if (link.external) {
                       return (
                         <li key={link.href + link.label}>
@@ -124,11 +124,11 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-[var(--neutral-6)] pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[12px] text-[var(--neutral-10)]">
+        <div className="mt-12 flex flex-col gap-2 border-t border-neutral-6 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[12px] text-neutral-10">
             © {year} {brand.name}
           </p>
-          <p className="text-[12px] text-[var(--neutral-10)]">{brand.nameCn}</p>
+          <p className="text-[12px] text-neutral-10">{brand.nameCn}</p>
         </div>
       </div>
     </footer>

@@ -38,6 +38,7 @@ export default async function ResumePrintPage() {
       <style>{`@page { size: ${PAPER_SIZE[paper]}; margin: ${margins.top} ${margins.right} ${margins.bottom} ${margins.left}; }
 @media print { body { background: white; } [data-print-toolbar] { display: none; } [data-resume-mode="print"] { padding: 0 !important; min-height: 0 !important; width: auto !important; } }`}</style>
       <PrintToolbar />
+      {/* allow-palette: print media is physical paper, must render white regardless of app theme */}
       <main className="bg-muted/30 py-8 print:bg-white print:py-0">
         <div className="mx-auto w-fit shadow-md print:shadow-none">
           <ResumeDocument content={parsed.data} mode="print" />

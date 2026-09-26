@@ -11,12 +11,12 @@ import { AnimateIn } from "../../AnimateIn";
 
 const filters = ["All", "Images", "Documents", "Video"];
 const assets = [
-  { name: "hero-banner.png", size: "2.4 MB", date: "Mar 12", color: "bg-blue-100" },
-  { name: "brand-guide.pdf", size: "1.1 MB", date: "Mar 10", color: "bg-amber-100" },
-  { name: "promo-reel.mp4", size: "48 MB", date: "Mar 8", color: "bg-purple-100" },
-  { name: "icon-set.svg", size: "320 KB", date: "Mar 5", color: "bg-emerald-100" },
-  { name: "og-image.png", size: "890 KB", date: "Feb 28", color: "bg-rose-100" },
-  { name: "whitepaper.pdf", size: "3.2 MB", date: "Feb 20", color: "bg-sky-100" },
+  { name: "hero-banner.png", size: "2.4 MB", date: "Mar 12", color: "bg-chart-1/20" },
+  { name: "brand-guide.pdf", size: "1.1 MB", date: "Mar 10", color: "bg-warning/20" },
+  { name: "promo-reel.mp4", size: "48 MB", date: "Mar 8", color: "bg-chart-3/20" },
+  { name: "icon-set.svg", size: "320 KB", date: "Mar 5", color: "bg-success/20" },
+  { name: "og-image.png", size: "890 KB", date: "Feb 28", color: "bg-destructive/15" },
+  { name: "whitepaper.pdf", size: "3.2 MB", date: "Feb 20", color: "bg-info/20" },
 ];
 
 export function EDAMMockup() {

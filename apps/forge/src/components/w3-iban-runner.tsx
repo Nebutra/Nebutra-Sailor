@@ -167,17 +167,17 @@ export function W3IbanRunner({ toolId }: { toolId: string }) {
 
           <ShellDrill summary={t("iban.details")}>
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
-              <dt className="text-[var(--neutral-10)]">{t("iban.field.normalized")}</dt>
+              <dt className="text-neutral-10">{t("iban.field.normalized")}</dt>
               <dd className="font-mono break-all">{output.normalized || "—"}</dd>
-              <dt className="text-[var(--neutral-10)]">{t("iban.field.country")}</dt>
+              <dt className="text-neutral-10">{t("iban.field.country")}</dt>
               <dd>{output.country?.name ?? output.country?.code ?? "—"}</dd>
-              <dt className="text-[var(--neutral-10)]">{t("iban.field.checkDigits")}</dt>
+              <dt className="text-neutral-10">{t("iban.field.checkDigits")}</dt>
               <dd className="font-mono">{output.checkDigits ?? "—"}</dd>
-              <dt className="text-[var(--neutral-10)]">{t("iban.field.bban")}</dt>
+              <dt className="text-neutral-10">{t("iban.field.bban")}</dt>
               <dd className="font-mono break-all">{output.bban ?? "—"}</dd>
-              <dt className="text-[var(--neutral-10)]">{t("iban.field.bbanFormat")}</dt>
+              <dt className="text-neutral-10">{t("iban.field.bbanFormat")}</dt>
               <dd className="font-mono">{output.country?.bbanFormat ?? "—"}</dd>
-              <dt className="text-[var(--neutral-10)]">{t("iban.field.bankCode")}</dt>
+              <dt className="text-neutral-10">{t("iban.field.bankCode")}</dt>
               <dd className="font-mono">{output.bankCode ?? t("iban.notEncoded")}</dd>
             </dl>
 

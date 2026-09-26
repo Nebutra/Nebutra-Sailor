@@ -19,6 +19,7 @@
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 
 const ROOT = join(import.meta.dirname, "..");
 const SKIP_DIR =
@@ -44,9 +45,7 @@ walk(join(ROOT, "packages"));
  * line count, so write positions stay right) before anything is matched.
  */
 function stripComments(src) {
-  return src
-    .replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, " "))
-    .replace(/(^|[^:"'`\\])\/\/[^\n]*/g, "$1");
+  return blankSourceComments(src);
 }
 
 const raw = new Map(files.map((f) => [f, readFileSync(join(ROOT, f), "utf8")]));

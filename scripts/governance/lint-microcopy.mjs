@@ -39,6 +39,7 @@
 
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { stripComments as blankSourceComments } from "../lib/strip-comments.mjs";
 import { loadGovernanceConfig } from "./_config.mjs";
 
 const cfg = loadGovernanceConfig("microcopyRules");
@@ -50,10 +51,9 @@ const allowlist = new Set(cfg.allowlist ?? []);
 
 // Strip JS line + block comments so commented-out strings don't false-positive.
 // Replace each comment with same-length whitespace to preserve byte offsets.
-const stripComments = (src) =>
-  src
-    .replace(/\/\/[^\n]*/g, (m) => " ".repeat(m.length))
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
+function stripComments(src) {
+  return blankSourceComments(src);
+}
 
 const isExcluded = (p) => excludePaths.some((re) => re.test(p));
 

@@ -16,17 +16,16 @@ export function CliGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       style={{ height: 160 }}
-      className="relative w-full overflow-hidden rounded-[var(--radius-lg)] bg-[oklch(0.16_0.012_250)]"
+      className="relative w-full overflow-hidden dark rounded-[var(--radius-lg)] bg-[oklch(0.16_0.012_250)] text-foreground"
     >
-      {/* Title bar */}
-      <div className="flex items-center justify-between border-b border-white/5 px-3 py-1.5">
-        <div className="flex items-center gap-1.5 text-white/40">
+      <div className="flex items-center justify-between border-b border-foreground/5 px-3 py-1.5">
+        <div className="flex items-center gap-1.5 text-foreground/40">
           <TerminalWindow className="h-3.5 w-3.5" />
           <span className="font-mono text-[10px] uppercase tracking-wider">terminal</span>
         </div>
         <Badge
           variant="outline"
-          className="h-5 border-white/10 px-1.5 font-mono text-[10px] text-white/60"
+          className="h-5 border-foreground/10 px-1.5 font-mono text-[10px] text-foreground/60"
         >
           cli@1.4.2
         </Badge>

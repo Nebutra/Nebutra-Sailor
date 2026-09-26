@@ -16,8 +16,8 @@ export const metadata = { title: "接入" };
 
 function Snippet({ title, code }: { title: string; code: string }) {
   return (
-    <section className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
-      <div className="border-b border-[var(--neutral-6)] bg-[var(--neutral-2)]/50 px-3 py-1.5 text-[11px] font-semibold">
+    <section className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-6">
+      <div className="border-b border-neutral-6 bg-neutral-2/50 px-3 py-1.5 text-[11px] font-semibold">
         {title}
       </div>
       <pre className="overflow-x-auto p-3 font-mono text-[11px] leading-relaxed">{code}</pre>
@@ -114,8 +114,8 @@ const r = await client.responses.create({
         <Snippet title="图片生成" code={images} />
       </div>
 
-      <section className="mt-3 rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3 text-[12px] leading-relaxed text-[var(--neutral-11)]">
-        <h2 className="mb-1 text-[13px] font-semibold text-[var(--neutral-12)]">限额</h2>
+      <section className="mt-3 rounded-[var(--radius-md)] border border-neutral-6 p-3 text-[12px] leading-relaxed text-neutral-11">
+        <h2 className="mb-1 text-[13px] font-semibold text-neutral-12">限额</h2>
         <p>
           每把 Key 默认 <span className="font-mono">10</span> 次/秒。超出时返回{" "}
           <span className="font-mono">429</span>，并带上{" "}
@@ -132,10 +132,10 @@ const r = await client.responses.create({
         </p>
       </section>
 
-      <div className="mt-3 overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
+      <div className="mt-3 overflow-hidden rounded-[var(--radius-md)] border border-neutral-6">
         <Table bare className="w-full text-[12px]">
           <TableHeader>
-            <TableRow className="bg-[var(--neutral-2)]/50 text-[11px] text-[var(--neutral-10)]">
+            <TableRow className="bg-neutral-2/50 text-[11px] text-neutral-10">
               <TableHead alignment="start" className="font-medium">
                 Method
               </TableHead>
@@ -152,7 +152,7 @@ const r = await client.responses.create({
               <TableRow key={path}>
                 <TableCell alignment="start">{method}</TableCell>
                 <TableCell alignment="start">{path}</TableCell>
-                <TableCell alignment="start" className="font-sans text-[var(--neutral-11)]">
+                <TableCell alignment="start" className="font-sans text-neutral-11">
                   {note}
                 </TableCell>
               </TableRow>

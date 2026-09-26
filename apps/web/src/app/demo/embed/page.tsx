@@ -62,7 +62,7 @@ export default async function DemoEmbedPage({
                 href={`/demo/embed?view=${tab.id}`}
                 className={`rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-medium transition-colors ${
                   activeTab === tab.id
-                    ? "bg-[color:hsl(var(--primary))] text-white"
+                    ? "bg-primary text-primary-foreground"
                     : "bg-background text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -141,7 +141,7 @@ export default async function DemoEmbedPage({
               <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-3">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-semibold">{summary.tenantId}</p>
-                  <span className="inline-flex rounded-full bg-[color:var(--cyan-3)] px-2.5 py-1 text-xs font-medium text-[color:var(--cyan-11)] dark:bg-[color:var(--cyan-9)]/20 dark:text-[color:var(--cyan-9)]">
+                  <span className="inline-flex rounded-full bg-cyan-3 px-2.5 py-1 text-xs font-medium text-cyan-11 dark:bg-cyan-9/20 dark:text-cyan-9">
                     Healthy
                   </span>
                 </div>
@@ -161,7 +161,7 @@ export default async function DemoEmbedPage({
               <div className="grid grid-cols-12 items-center p-4 text-sm">
                 <div className="col-span-4 font-medium">{summary.tenantId}</div>
                 <div className="col-span-2">
-                  <span className="inline-flex rounded-full bg-[color:var(--cyan-3)] px-2.5 py-1 text-xs font-medium text-[color:var(--cyan-11)] dark:bg-[color:var(--cyan-9)]/20 dark:text-[color:var(--cyan-9)]">
+                  <span className="inline-flex rounded-full bg-cyan-3 px-2.5 py-1 text-xs font-medium text-cyan-11 dark:bg-cyan-9/20 dark:text-cyan-9">
                     Healthy
                   </span>
                 </div>

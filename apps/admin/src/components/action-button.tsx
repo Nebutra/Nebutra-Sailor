@@ -64,9 +64,9 @@ function toError(error: unknown): ActionError {
 
 const OP_MARK = { add: "+", remove: "−", change: "~" } as const;
 const OP_INK = {
-  add: "text-[hsl(var(--success-strong))]",
-  remove: "text-[hsl(var(--destructive-strong))]",
-  change: "text-[hsl(var(--warning-strong))]",
+  add: "text-success-strong",
+  remove: "text-destructive-strong",
+  change: "text-warning-strong",
 } as const;
 
 export function ActionButton({
@@ -190,7 +190,7 @@ export function ActionButton({
                   </p>
                 ) : null}
                 {plan.warnings.length > 0 ? (
-                  <ul className="space-y-1 text-[hsl(var(--warning-strong))] text-xs">
+                  <ul className="space-y-1 text-warning-strong text-xs">
                     {plan.warnings.map((w) => (
                       <li key={w}>{w}</li>
                     ))}
@@ -214,7 +214,7 @@ export function ActionButton({
             {error ? (
               <p
                 role="alert"
-                className="rounded-md border border-[hsl(var(--destructive-strong))]/30 px-3 py-2 text-[hsl(var(--destructive-strong))] text-xs"
+                className="rounded-md border border-destructive-strong/30 px-3 py-2 text-destructive-strong text-xs"
               >
                 <span className="font-mono">{error.code}</span> · {error.message}
               </p>

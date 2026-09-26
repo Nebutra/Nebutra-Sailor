@@ -254,7 +254,7 @@ export function InboxBell({
           <span
             aria-hidden="true"
             data-testid="inbox-bell-badge"
-            className="absolute -right-0.5 -top-0.5 inline-flex min-w-[1rem] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold leading-none text-white"
+            className="absolute -right-0.5 -top-0.5 inline-flex min-w-[1rem] items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-semibold leading-none text-destructive-foreground"
           >
             {badgeLabel}
           </span>
@@ -273,7 +273,7 @@ export function InboxBell({
               type="button"
               onClick={handleMarkAllRead}
               disabled={unreadCount === 0 || markAllReadMutation.isPending}
-              className="text-xs font-medium text-[hsl(var(--primary))] hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+              className="text-xs font-medium text-primary hover:underline disabled:cursor-not-allowed disabled:opacity-50"
             >
               Mark all as read
             </button>
@@ -287,7 +287,7 @@ export function InboxBell({
             <Link
               href={viewAllHref}
               onClick={() => setOpen(false)}
-              className="text-xs font-medium text-[hsl(var(--primary))] hover:underline"
+              className="text-xs font-medium text-primary hover:underline"
             >
               View all
             </Link>

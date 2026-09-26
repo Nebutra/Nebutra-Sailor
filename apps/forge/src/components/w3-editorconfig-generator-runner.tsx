@@ -200,7 +200,7 @@ export function W3EditorconfigGeneratorRunner({ toolId }: { toolId: string }) {
                   <ShellBadge tone={w.level === "warning" ? "warning" : "info"}>
                     {w.property ?? w.code}
                   </ShellBadge>
-                  <span className="text-sm text-[var(--neutral-11)]">{w.message}</span>
+                  <span className="text-sm text-neutral-11">{w.message}</span>
                 </li>
               ))}
             </ul>
@@ -209,7 +209,7 @@ export function W3EditorconfigGeneratorRunner({ toolId }: { toolId: string }) {
       )}
     >
       <div className="space-y-2">
-        <p className="text-xs font-medium text-[var(--neutral-11)]">{t("editorconfig.presets")}</p>
+        <p className="text-xs font-medium text-neutral-11">{t("editorconfig.presets")}</p>
         <div className="flex flex-wrap gap-1.5">
           {(["spaces2", "spaces4", "tabs", "repo"] as const).map((id) => (
             <Button
@@ -231,10 +231,7 @@ export function W3EditorconfigGeneratorRunner({ toolId }: { toolId: string }) {
 
       <div className="space-y-4">
         {sections.map((section, index) => (
-          <div
-            key={section.id}
-            className="space-y-3 rounded-[var(--radius-lg)] bg-[var(--neutral-3)] p-3"
-          >
+          <div key={section.id} className="space-y-3 rounded-[var(--radius-lg)] bg-neutral-3 p-3">
             <div className="flex flex-wrap items-end gap-2">
               <Input
                 id={`${uid}-glob-${section.id}`}

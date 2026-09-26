@@ -12,7 +12,7 @@ export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
     >
       <div className="flex items-center justify-between">
         <span className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
-          <Users className="h-3 w-3 text-[hsl(var(--primary))]" />
+          <Users className="h-3 w-3 text-primary" />
           cofounder match
         </span>
         <Badge
@@ -25,17 +25,17 @@ export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
 
       <div className="flex items-center justify-center gap-2">
         <div
-          className="flex h-7 w-7 items-center justify-center rounded-full border border-[var(--blue-6)] bg-[var(--blue-3)] font-mono text-[11px] font-semibold text-primary"
+          className="flex h-7 w-7 items-center justify-center rounded-full border border-blue-6 bg-blue-3 font-mono text-[11px] font-semibold text-primary"
           role="img"
           aria-label="Candidate M"
         >
           M
         </div>
-        <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[hsl(var(--primary))] bg-background">
-          <Check className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <div className="flex h-5 w-5 items-center justify-center rounded-full border border-primary bg-background">
+          <Check className="h-3 w-3 text-primary" />
         </div>
         <div
-          className="flex h-7 w-7 items-center justify-center rounded-full border border-emerald-300 bg-emerald-100 font-mono text-[11px] font-semibold text-emerald-700"
+          className="flex h-7 w-7 items-center justify-center rounded-full border border-success/40 bg-success/15 font-mono text-[11px] font-semibold text-success-strong"
           role="img"
           aria-label="Candidate K"
         >
@@ -46,7 +46,7 @@ export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between font-mono text-[10px]">
           <span className="flex items-center gap-1 text-foreground">
-            <Sparkles className="h-2.5 w-2.5 text-[hsl(var(--primary))]" />
+            <Sparkles className="h-2.5 w-2.5 text-primary" />
             92% compatibility match
           </span>
         </div>
@@ -58,7 +58,7 @@ export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
           <Badge
             key={trait}
             variant="outline"
-            className="border-[var(--blue-6)] bg-[var(--blue-3)] px-1.5 py-0 font-mono text-[9px] text-primary"
+            className="border-blue-6 bg-blue-3 px-1.5 py-0 font-mono text-[9px] text-primary"
           >
             {trait}
           </Badge>

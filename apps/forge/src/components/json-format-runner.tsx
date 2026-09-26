@@ -164,13 +164,13 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
             </option>
           ))}
         </RunnerSelect>
-        <label className="flex h-9 items-center gap-2 text-sm text-[var(--neutral-11)]">
+        <label className="flex h-9 items-center gap-2 text-sm text-neutral-11">
           <input
             data-allow-native
             type="checkbox"
             checked={sortKeys}
             onChange={(e) => setSortKeys(e.target.checked)}
-            className="size-4 accent-[hsl(var(--primary))]"
+            className="size-4 accent-primary"
           />
           {t("jsonFormat.sortKeys")}
         </label>
@@ -224,8 +224,8 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
           <span
             className={`rounded-full px-3 py-1 text-xs font-medium ${
               valid
-                ? "bg-[color-mix(in_srgb,var(--status-success)_15%,transparent)] text-[var(--status-success)]"
-                : "bg-[color-mix(in_srgb,var(--status-danger)_15%,transparent)] text-[var(--status-danger)]"
+                ? "bg-success/15 text-success-strong"
+                : "bg-destructive/15 text-destructive-strong"
             }`}
           >
             {valid ? t("jsonFormat.valid") : t("jsonFormat.invalid")}
@@ -252,7 +252,7 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
         placeholder={t("jsonFormat.placeholder")}
       />
 
-      <p className="text-xs tabular-nums text-[var(--neutral-10)]">
+      <p className="text-xs tabular-nums text-neutral-10">
         {t("jsonFormat.stats", { chars: charCount, lines: lineCount })}
         {text.length > LIVE_VALIDATE_MAX ? ` · ${t("jsonFormat.liveOff")}` : ""}
       </p>

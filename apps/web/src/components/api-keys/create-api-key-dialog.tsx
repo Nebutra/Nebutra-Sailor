@@ -160,11 +160,9 @@ export function CreateApiKeyDialog({
         {created ? (
           <div className="space-y-4">
             <div className="rounded-[var(--radius-md)] border border-warning/30 bg-warning/10 p-4">
-              <p className="mb-2 text-sm font-medium text-[hsl(var(--warning-strong))]">
-                {text.successWarning}
-              </p>
+              <p className="mb-2 text-sm font-medium text-warning-strong">{text.successWarning}</p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 break-all rounded bg-background px-3 py-2 font-mono text-[hsl(var(--warning-strong))] text-xs shadow-inner">
+                <code className="flex-1 break-all rounded bg-background px-3 py-2 font-mono text-warning-strong text-xs shadow-inner">
                   {created.key}
                 </code>
                 <Button
@@ -172,7 +170,7 @@ export function CreateApiKeyDialog({
                   variant="outline"
                   size="sm"
                   onClick={handleCopy}
-                  className="border-warning/40 text-[hsl(var(--warning-strong))] hover:bg-warning/10/70"
+                  className="border-warning/40 text-warning-strong hover:bg-warning/10/70"
                 >
                   {copied ? text.copied : text.copy}
                 </Button>
@@ -233,7 +231,7 @@ export function CreateApiKeyDialog({
                               checked={field.value.includes(scope)}
                               onChange={() => toggleScope(scope, field.value)}
                               disabled={submitting}
-                              className="h-4 w-4 rounded border-border text-[hsl(var(--primary))]"
+                              className="h-4 w-4 rounded border-border text-primary"
                             />
                             <span>{scope}</span>
                           </label>
@@ -245,9 +243,7 @@ export function CreateApiKeyDialog({
                 )}
               />
 
-              {rootError ? (
-                <p className="text-sm text-[hsl(var(--destructive-strong))]">{rootError}</p>
-              ) : null}
+              {rootError ? <p className="text-sm text-destructive-strong">{rootError}</p> : null}
 
               <DialogFooter>
                 <Button

@@ -51,17 +51,17 @@ export default async function RootHubPage({ params }: Props) {
   return (
     <PageFrame className="py-10 md:py-12">
       <div className="space-y-8">
-        <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--neutral-11)]">
+        <nav className="flex flex-wrap items-center gap-2 text-sm text-neutral-11">
           <Link
             href="/"
-            className="rounded-[var(--radius-md)] px-1.5 py-0.5 transition hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+            className="rounded-[var(--radius-md)] px-1.5 py-0.5 transition hover:bg-neutral-3 hover:text-neutral-12"
           >
             {tNav("tools")}
           </Link>
-          <span className="text-[var(--neutral-7)]" aria-hidden>
+          <span className="text-neutral-7" aria-hidden>
             /
           </span>
-          <span className="text-[var(--neutral-12)]">{tRoot("hubLabel")}</span>
+          <span className="text-neutral-12">{tRoot("hubLabel")}</span>
         </nav>
 
         <PageHeader
@@ -69,9 +69,9 @@ export default async function RootHubPage({ params }: Props) {
           description={`${description} · ${hub.tools.length} ${tRoot("tools")}`}
         />
 
-        <p className="font-mono text-xs text-[var(--neutral-10)]">
-          root:<span className="text-[var(--neutral-12)]">{hub.root}</span>
-          <span className="mx-2 text-[var(--neutral-7)]">·</span>
+        <p className="font-mono text-xs text-neutral-10">
+          root:<span className="text-neutral-12">{hub.root}</span>
+          <span className="mx-2 text-neutral-7">·</span>
           {tRoot("dualSurface")}
         </p>
 
@@ -82,7 +82,7 @@ export default async function RootHubPage({ params }: Props) {
         </Section>
 
         <section aria-labelledby="other-roots" className="space-y-3">
-          <h2 id="other-roots" className="text-sm font-semibold text-[var(--neutral-12)]">
+          <h2 id="other-roots" className="text-sm font-semibold text-neutral-12">
             {tRoot("otherRoots")}
           </h2>
           <ul className="flex flex-wrap gap-2">
@@ -95,14 +95,12 @@ export default async function RootHubPage({ params }: Props) {
                     href={`/r/${r}`}
                     className={`inline-flex h-9 items-center rounded-full border px-4 text-sm transition-colors ${
                       r === hub.root
-                        ? "border-primary bg-[var(--blue-3)] text-[var(--neutral-12)]"
-                        : "border-[var(--neutral-6)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]"
+                        ? "border-primary bg-blue-3 text-neutral-12"
+                        : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:border-neutral-8 hover:bg-neutral-2"
                     }`}
                   >
                     {r}
-                    <span className="ml-1.5 font-mono text-[11px] text-[var(--neutral-10)]">
-                      {count}
-                    </span>
+                    <span className="ml-1.5 font-mono text-[11px] text-neutral-10">{count}</span>
                   </Link>
                 </li>
               );

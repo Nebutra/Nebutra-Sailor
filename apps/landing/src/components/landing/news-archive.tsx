@@ -101,7 +101,7 @@ export function NewsArchive({
                     >
                       <span className="text-sm text-muted-foreground">{item.dateLabel ?? "—"}</span>
                       <span className="text-sm text-muted-foreground">{item.category ?? "—"}</span>
-                      <span className="text-base font-medium leading-snug text-foreground [transition-duration:var(--motion-duration-flow)] [transition-property:color] [transition-timing-function:var(--ease-out)] group-hover:text-[hsl(var(--primary))] motion-reduce:transition-none">
+                      <span className="text-base font-medium leading-snug text-foreground [transition-duration:var(--motion-duration-flow)] [transition-property:color] [transition-timing-function:var(--ease-out)] group-hover:text-primary motion-reduce:transition-none">
                         {item.title}
                       </span>
                     </Link>

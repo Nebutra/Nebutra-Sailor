@@ -337,19 +337,19 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
           aria-label={t("colorConvert.pick")}
           value={hex && /^#[0-9a-fA-F]{6}$/.test(hex) ? hex : "#0033FE"}
           onChange={(e) => setColor(e.target.value)}
-          className="h-10 w-14 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"
+          className="h-10 w-14 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
         />
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("colorConvert.converting") : t("colorConvert.convert")}
         </Button>
-        <span className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</span>
+        <span className="text-xs text-neutral-10">{t("common.liveHint")}</span>
       </div>
       <RunnerError>{error}</RunnerError>
       {result ? (
         <RunnerPanel className="flex flex-wrap items-start gap-4">
           {hex ? (
             <div
-              className="h-16 w-16 shrink-0 rounded-lg border border-[var(--neutral-6)]"
+              className="h-16 w-16 shrink-0 rounded-lg border border-neutral-6"
               style={{ background: hex }}
               title={hex}
             />
@@ -423,7 +423,8 @@ export function QrGenerateRunner({ toolId }: { toolId: string }) {
         <img
           src={preview}
           alt="QR code"
-          className="h-48 w-48 rounded-lg border border-[var(--neutral-6)] bg-white p-2"
+          // allow-palette: QR modules need a fixed light backdrop to stay camera-scannable in dark mode
+          className="h-48 w-48 rounded-lg border border-neutral-6 bg-white p-2"
         />
       ) : null}
       <RunnerNote>{t("qrGen.note")}</RunnerNote>
@@ -463,7 +464,7 @@ export function QrDecodeRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
+      <label className="flex flex-col gap-1.5 text-sm text-neutral-11">
         <span className="text-xs font-medium">{t("qrDecode.upload")}</span>
         <input
           data-allow-native
@@ -536,7 +537,7 @@ export function CronExplainRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("cron.parsing") : t("cron.parse")}
         </Button>
-        <span className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</span>
+        <span className="text-xs text-neutral-10">{t("common.liveHint")}</span>
       </div>
       <RunnerError>{error}</RunnerError>
       {next.length > 0 ? (
@@ -637,13 +638,13 @@ export function TimezoneRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("timezone.converting") : t("timezone.convert")}
         </Button>
-        <span className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</span>
+        <span className="text-xs text-neutral-10">{t("common.liveHint")}</span>
       </div>
       <RunnerError>{error}</RunnerError>
       {result ? (
         <RunnerPanel>
           <p className="text-xl font-semibold tabular-nums tracking-tight">{result}</p>
-          {meta ? <p className="mt-1 text-xs text-[var(--neutral-10)]">{meta}</p> : null}
+          {meta ? <p className="mt-1 text-xs text-neutral-10">{meta}</p> : null}
         </RunnerPanel>
       ) : null}
       <RunnerNote>{t("timezone.note")}</RunnerNote>
@@ -691,9 +692,9 @@ export function CsvPreviewRunner({ toolId }: { toolId: string }) {
       </Button>
       <RunnerError>{error}</RunnerError>
       {headers.length > 0 || rows.length > 0 ? (
-        <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)]">
+        <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-neutral-6">
           <table className="w-full min-w-[20rem] text-left text-sm">
-            <thead className="bg-[var(--neutral-2)]">
+            <thead className="bg-neutral-2">
               <tr>
                 {headers.map((h, i) => (
                   <th key={`${h}-${i}`} className="px-3 py-2 font-medium">
@@ -704,7 +705,7 @@ export function CsvPreviewRunner({ toolId }: { toolId: string }) {
             </thead>
             <tbody>
               {rows.map((row, ri) => (
-                <tr key={ri} className="border-t border-[var(--neutral-6)]">
+                <tr key={ri} className="border-t border-neutral-6">
                   {row.map((cell, ci) => (
                     <td key={ci} className="px-3 py-1.5 font-mono text-[13px]">
                       {cell}
@@ -714,7 +715,7 @@ export function CsvPreviewRunner({ toolId }: { toolId: string }) {
               ))}
             </tbody>
           </table>
-          <p className="border-t border-[var(--neutral-6)] px-3 py-2 text-xs text-[var(--neutral-10)]">
+          <p className="border-t border-neutral-6 px-3 py-2 text-xs text-neutral-10">
             {t("csvPreview.rows", { shown: rows.length, total: totalRows })}
           </p>
         </div>

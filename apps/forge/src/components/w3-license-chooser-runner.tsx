@@ -169,7 +169,7 @@ export function W3LicenseChooserRunner({ toolId }: { toolId: string }) {
       onChange={setScenario}
       aside={
         <ShellDrill summary={t("licenseChooser.noLicense.summary")}>
-          <p className="text-sm text-[var(--neutral-11)]">{t("licenseChooser.noLicense.body")}</p>
+          <p className="text-sm text-neutral-11">{t("licenseChooser.noLicense.body")}</p>
         </ShellDrill>
       }
     >
@@ -201,7 +201,7 @@ function FlagRow({ tone, label, flags }: { tone: ShellTone; label: string; flags
   if (flags.length === 0) return null;
   return (
     <div className="flex flex-wrap items-center gap-1.5">
-      <span className="text-xs text-[var(--neutral-10)]">{label}</span>
+      <span className="text-xs text-neutral-10">{label}</span>
       {flags.map((flag) => (
         <ShellBadge key={flag} tone={tone}>
           {t(`licenseChooser.flag.${flag}` as never)}
@@ -263,25 +263,25 @@ function RecommendationPanel({
 
       {rec.alternates.length > 0 ? (
         <div className="space-y-2">
-          <p className="text-xs text-[var(--neutral-10)]">{t("licenseChooser.alternates")}</p>
+          <p className="text-xs text-neutral-10">{t("licenseChooser.alternates")}</p>
           <ul className="space-y-2">
             {rec.alternates.map((alt) => (
-              <li key={alt.spdxId} className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3">
+              <li key={alt.spdxId} className="rounded-[var(--radius-lg)] bg-neutral-2 p-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-medium text-[var(--neutral-12)]">{alt.name}</span>
+                  <span className="text-sm font-medium text-neutral-12">{alt.name}</span>
                   <ShellBadge tone="neutral">{alt.spdxId}</ShellBadge>
                   {rec.generatable ? (
                     <button
                       type="button"
                       onClick={() => setSelected(alt.spdxId)}
                       aria-pressed={selected === alt.spdxId}
-                      className="rounded-full bg-[var(--neutral-3)] px-3 py-1 text-xs text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-4)] aria-pressed:bg-[var(--blue-3)] aria-pressed:text-[var(--neutral-12)]"
+                      className="rounded-full bg-neutral-3 px-3 py-1 text-xs text-neutral-11 transition-colors hover:bg-neutral-4 aria-pressed:bg-blue-3 aria-pressed:text-neutral-12"
                     >
                       {t("licenseChooser.useThis")}
                     </button>
                   ) : null}
                 </div>
-                <p className="mt-1 text-xs text-[var(--neutral-11)]">
+                <p className="mt-1 text-xs text-neutral-11">
                   {pickBilingual(locale, { zh: alt.whyZh, en: alt.why })}
                 </p>
               </li>

@@ -126,7 +126,7 @@ export function ConnectedAccountsBlock({
 
       {errorMessage && (
         <p
-          className="mb-4 text-sm text-[hsl(var(--destructive))]"
+          className="mb-4 text-sm text-destructive-strong"
           id="connected-accounts-error"
           role="alert"
         >

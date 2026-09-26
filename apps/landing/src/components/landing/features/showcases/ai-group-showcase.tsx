@@ -121,7 +121,7 @@ function LedgerRow({
           className={cn(
             "flex size-6 items-center justify-center rounded-full border font-mono text-[10px]",
             done
-              ? "border-[hsl(var(--success)/0.35)] bg-success/10 text-success-strong"
+              ? "border-success/35 bg-success/10 text-success-strong"
               : "border-border bg-background text-muted-foreground",
           )}
         >
@@ -156,7 +156,10 @@ function CapabilityNode({
       )}
     >
       <Icon
-        className={cn("size-4 shrink-0", active ? "text-white" : "text-muted-foreground")}
+        className={cn(
+          "size-4 shrink-0",
+          active ? "text-primary-foreground" : "text-muted-foreground",
+        )}
         aria-hidden="true"
       />
       <span className="truncate text-xs font-semibold">{label}</span>

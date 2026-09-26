@@ -159,7 +159,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
               <dt className="sr-only">{COPY.govStability[locale]}</dt>
               <dd className="flex items-center gap-1.5">
                 <span
-                  className="inline-block size-1.5 rounded-full bg-emerald-500"
+                  className="inline-block size-1.5 rounded-full bg-success"
                   aria-hidden="true"
                 />
                 <span className="text-foreground/85">{COPY.govStable[locale]}</span>

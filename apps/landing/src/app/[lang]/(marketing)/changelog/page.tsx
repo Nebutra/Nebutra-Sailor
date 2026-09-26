@@ -43,15 +43,6 @@ export async function generateMetadata({
   };
 }
 
-const TAG_COLORS: Record<string, string> = {
-  feat: "var(--brand-accent)",
-  feature: "var(--brand-accent)",
-  improvement: "var(--status-warning)",
-  fix: "var(--status-success)",
-  breaking: "var(--status-danger)",
-  security: "var(--brand-accent)",
-};
-
 const FALLBACK_RELEASE_IMAGE = landingPublicSrc("screenshots/demo-dashboard-command.webp");
 
 interface PortableTextChild {
@@ -171,7 +162,6 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           version: entry.version,
           date: entry.publishedAt?.split("T")[0] ?? "",
           tag: entry.type || "feature",
-          tagColor: TAG_COLORS[entry.type || "feature"] || TAG_COLORS.feature,
           excerpt: entry.summary ?? entry.title,
           image: firstBodyImage || FALLBACK_RELEASE_IMAGE,
           content: entry.body ? (
@@ -197,7 +187,6 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           version: r.version,
           date: r.date,
           tag: r.tag.toLowerCase(),
-          tagColor: r.tagColor,
           excerpt: r.summary,
           image: FALLBACK_RELEASE_IMAGE,
           content: (
@@ -225,14 +214,14 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
             Subscribe to release notes via{" "}
             <Link
               href="/api/changelog/rss"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               RSS
             </Link>{" "}
             or{" "}
             <Link
               href="/api/changelog/atom"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               Atom
             </Link>{" "}
@@ -241,7 +230,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
               href="https://x.com/nebutra_ai"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               @nebutra_ai
             </a>

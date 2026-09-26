@@ -49,7 +49,7 @@ export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 shadow-sm ring-1 ring-[hsl(var(--border))]">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 shadow-sm ring-1 ring-border">
         {ROWS.map((row) => (
           <div key={row.name} className="flex flex-col gap-0.5">
             {/* Top row: name · toggle · rollout % */}
@@ -66,7 +66,7 @@ export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
                 }}
               >
                 <span
-                  className="absolute top-0.5 h-2 w-2 rounded-full bg-white shadow-sm transition-[left,transform]"
+                  className="absolute top-0.5 h-2 w-2 rounded-full bg-background shadow-sm transition-[left,transform]"
                   style={{ left: row.on ? "calc(100% - 10px)" : "2px" }}
                 />
               </div>

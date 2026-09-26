@@ -23,7 +23,7 @@ export function FAQSection() {
     >
       <div className="mx-auto max-w-4xl px-4 md:px-6">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(var(--primary))]">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             {t("badge")}
           </p>
           <h2
@@ -70,9 +70,7 @@ export function FAQSection() {
                     </span>
                     <span
                       aria-hidden="true"
-                      className={`text-[hsl(var(--primary))] transition-transform ${
-                        isOpen ? "rotate-45" : ""
-                      }`}
+                      className={`text-primary transition-transform ${isOpen ? "rotate-45" : ""}`}
                     >
                       +
                     </span>

@@ -58,7 +58,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
           Email{" "}
           <a
             href={`mailto:${getBrandEmail("legal")}?subject=DPA%20Request`}
-            className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+            className="font-medium text-primary underline-offset-4 hover:underline"
           >
             {getBrandEmail("legal")}
           </a>{" "}
@@ -78,7 +78,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
           <li>
             <Link
               href="/security"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               Security overview
             </Link>
@@ -86,7 +86,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
           <li>
             <Link
               href="/privacy"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               Privacy Policy
             </Link>
@@ -94,7 +94,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
           <li>
             <Link
               href="/terms"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               Terms of Service
             </Link>
@@ -102,7 +102,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
           <li>
             <Link
               href="/cookies"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               Cookie Policy
             </Link>

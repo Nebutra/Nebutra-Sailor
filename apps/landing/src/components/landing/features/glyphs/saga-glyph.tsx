@@ -71,7 +71,7 @@ export function SagaGlyph({ locale }: SubpackageGlyphProps) {
 
       {/* Rollback path */}
       <div className="flex items-center gap-1.5 border-t border-dashed border-border pt-2">
-        <RefreshCounterClockwise className="h-3 w-3 text-[color:var(--status-danger)]" />
+        <RefreshCounterClockwise className="h-3 w-3 text-destructive-strong" />
         <span className="font-mono text-[10px] text-muted-foreground">{copy.compensate}</span>
       </div>
     </div>

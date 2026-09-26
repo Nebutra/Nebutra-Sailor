@@ -62,7 +62,7 @@ export function ExecutionPolicyGlyph({ locale }: SubpackageGlyphProps) {
     >
       {/* Header: policy id + rule count */}
       <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted-foreground/80">
-        <Shield className="h-2.5 w-2.5 text-[hsl(var(--primary))]" aria-hidden="true" />
+        <Shield className="h-2.5 w-2.5 text-primary" aria-hidden="true" />
         <span className="truncate">{t.header}</span>
       </div>
 

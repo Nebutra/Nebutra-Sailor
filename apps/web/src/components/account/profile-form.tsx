@@ -265,12 +265,12 @@ export function ProfileForm({
           </div>
 
           {errorMessage && (
-            <p role="alert" className="text-sm text-[var(--status-danger)]">
+            <p role="alert" className="text-sm text-destructive-strong">
               {errorMessage}
             </p>
           )}
           {statusMessage && (
-            <p role="status" className="text-sm text-[color:var(--status-success)]">
+            <p role="status" className="text-sm text-success-strong">
               {statusMessage}
             </p>
           )}

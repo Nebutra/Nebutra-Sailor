@@ -62,8 +62,8 @@ export function InvoiceCard() {
           <div
             className={`absolute inset-y-1 left-1 right-1 rounded-full flex items-center justify-center shadow-sm ${
               status === "paid"
-                ? "bg-emerald-500/10 border border-emerald-500/20 text-success-strong"
-                : "bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400"
+                ? "bg-success/10 border border-success/20 text-success-strong"
+                : "bg-warning/10 border border-warning/20 text-warning-strong"
             }`}
           >
             <span

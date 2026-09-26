@@ -39,7 +39,7 @@ export function WaitlistGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Position + progress header */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-baseline gap-1.5">
@@ -88,7 +88,7 @@ export function WaitlistGlyph({ locale }: SubpackageGlyphProps) {
               +{ADDED_TODAY} {copy.addedToday}
             </span>
           </Badge>
-          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
         </div>
       </div>
     </div>

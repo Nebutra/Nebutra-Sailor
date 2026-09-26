@@ -45,6 +45,7 @@
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 
 const SCAN_ROOT = "packages/design/ui/src";
 
@@ -69,9 +70,7 @@ function loadAllowlist() {
 
 /** Comments are prose, not styling — blank them before scanning. */
 function blankComments(src) {
-  return src
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
-    .replace(/(^|[^:])\/\/[^\n]*/g, (m, p) => p + " ".repeat(m.length - p.length));
+  return blankSourceComments(src);
 }
 
 const DURATION_UTILITY_RE = /\bduration-(\d{2,4})\b/g;

@@ -106,7 +106,7 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
               className={`rounded-[var(--radius-md)] px-2.5 py-1 font-mono text-[12px] ${
                 entry.exists
                   ? "bg-muted text-foreground"
-                  : "bg-destructive/10 text-[hsl(var(--destructive-strong))] line-through"
+                  : "bg-destructive/10 text-destructive-strong line-through"
               }`}
               key={entry.name}
             >

@@ -99,16 +99,16 @@ function InstallTab({ name }: { name: string }) {
         <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
           Install via CLI
         </p>
-        <div className="gap-2 bg-zinc-950 px-4 py-3 text-xs text-zinc-100 flex items-center rounded-lg border font-mono">
+        <div className="gap-2 bg-muted px-4 py-3 text-xs text-foreground flex items-center rounded-lg border font-mono">
           <span className="flex-1 overflow-x-auto whitespace-nowrap select-all">{cmd}</span>
           <button
             type="button"
             onClick={() => copyCmd(cmd)}
-            className="ml-2 text-zinc-400 hover:text-zinc-100 shrink-0 transition-colors"
+            className="ml-2 text-muted-foreground hover:text-foreground shrink-0 transition-colors"
             aria-label="Copy install command"
           >
             {cmdCopied ? (
-              <Check className="h-3.5 w-3.5 text-green-400" />
+              <Check className="h-3.5 w-3.5 text-success-strong" />
             ) : (
               <Copy className="h-3.5 w-3.5" />
             )}
@@ -119,16 +119,16 @@ function InstallTab({ name }: { name: string }) {
         <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
           Or install dependencies manually
         </p>
-        <div className="gap-2 bg-zinc-950 px-4 py-3 text-xs text-zinc-100 flex items-center rounded-lg border font-mono">
+        <div className="gap-2 bg-muted px-4 py-3 text-xs text-foreground flex items-center rounded-lg border font-mono">
           <span className="flex-1 overflow-x-auto whitespace-nowrap select-all">{depCmd}</span>
           <button
             type="button"
             onClick={() => copyDep(depCmd)}
-            className="ml-2 text-zinc-400 hover:text-zinc-100 shrink-0 transition-colors"
+            className="ml-2 text-muted-foreground hover:text-foreground shrink-0 transition-colors"
             aria-label="Copy dependency install command"
           >
             {depCopied ? (
-              <Check className="h-3.5 w-3.5 text-green-400" />
+              <Check className="h-3.5 w-3.5 text-success-strong" />
             ) : (
               <Copy className="h-3.5 w-3.5" />
             )}
@@ -219,7 +219,8 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
             className={cn(
               "not-prose p-10 relative flex min-h-[350px] w-full flex-wrap items-center justify-center",
               "bg-[radial-gradient(hsl(var(--border))_1px,transparent_1px)] [background-size:16px_16px]",
-              previewTheme === "dark" ? "dark bg-zinc-950" : "bg-white",
+              // allow-palette: tokens have a .dark scope but no class-level light scope, so a forced light preview needs a literal white
+              previewTheme === "dark" ? "dark bg-background" : "bg-white",
               className,
             )}
           >
@@ -270,7 +271,8 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
           className={cn(
             "not-prose p-10 relative flex min-h-[350px] w-full flex-wrap items-center justify-center",
             "bg-[radial-gradient(hsl(var(--border))_1px,transparent_1px)] [background-size:16px_16px]",
-            previewTheme === "dark" ? "dark bg-zinc-950" : "bg-white",
+            // allow-palette: tokens have a .dark scope but no class-level light scope, so a forced light preview needs a literal white
+            previewTheme === "dark" ? "dark bg-background" : "bg-white",
             className,
           )}
         >
@@ -278,7 +280,7 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
         </div>
       </TabsContent>
 
-      <TabsContent value="code" className="m-0 bg-zinc-950 dark:bg-zinc-950/50 border-none">
+      <TabsContent value="code" className="m-0 bg-muted border-none">
         <div className="[&_figure]:m-0 max-h-[600px] w-full overflow-hidden overflow-y-auto [&_figure]:rounded-none [&_figure]:border-0 [&_pre]:bg-transparent">
           <DynamicCodeBlock lang="tsx" code={code} />
         </div>

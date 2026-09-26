@@ -15,7 +15,7 @@ export function AiProvidersGlyph(_props: SubpackageGlyphProps) {
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
-          <Brain className="h-3 w-3 text-[hsl(var(--primary))]" />
+          <Brain className="h-3 w-3 text-primary" />
           <span>Provider Matrix</span>
         </div>
         <Badge variant="outline" className="h-4 gap-1 px-1.5 text-[9px] font-medium">
@@ -39,9 +39,7 @@ export function AiProvidersGlyph(_props: SubpackageGlyphProps) {
           >
             <span className="truncate font-mono text-foreground">{row.model}</span>
             <span className="text-right font-mono text-muted-foreground">{row.context}</span>
-            <span className="text-right font-mono font-medium text-[hsl(var(--primary))]">
-              {row.price}
-            </span>
+            <span className="text-right font-mono font-medium text-primary">{row.price}</span>
           </div>
         ))}
       </div>

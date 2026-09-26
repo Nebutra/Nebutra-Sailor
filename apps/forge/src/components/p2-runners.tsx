@@ -211,7 +211,7 @@ export function UnitConvertRunner({
           <p className="text-3xl font-semibold tabular-nums tracking-tight">
             {Number.isInteger(result) ? result : Number(result.toPrecision(12))}
           </p>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">
+          <p className="mt-1 text-sm text-neutral-11">
             {value} {unitLabel(from)} ={" "}
             {Number.isInteger(result) ? result : Number(result.toPrecision(12))} {unitLabel(to)}
           </p>
@@ -462,7 +462,7 @@ export function ImageBase64Runner({ toolId }: { toolId: string }) {
         <img
           src={dataUrl}
           alt="preview"
-          className="max-h-64 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
+          className="max-h-64 rounded-[var(--radius-lg)] border border-neutral-6 object-contain"
         />
       ) : null}
       <RunnerNote>Node Buffer · 与 API 同一路径</RunnerNote>
@@ -585,7 +585,7 @@ export function TextReplaceRunner({ toolId }: { toolId: string }) {
         />
       </div>
       <div className="flex flex-wrap items-end gap-4">
-        <label className="inline-flex items-center gap-2 text-sm text-[var(--neutral-11)]">
+        <label className="inline-flex items-center gap-2 text-sm text-neutral-11">
           <input
             data-allow-native
             type="checkbox"
@@ -683,7 +683,7 @@ export function LinePrefixSuffixRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
       </div>
-      <label className="inline-flex items-center gap-2 text-sm text-[var(--neutral-11)]">
+      <label className="inline-flex items-center gap-2 text-sm text-neutral-11">
         <input
           data-allow-native
           type="checkbox"
@@ -862,7 +862,7 @@ export function NanoidRunner({ toolId }: { toolId: string }) {
           {ids.map((id) => (
             <li
               key={id}
-              className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2"
+              className="rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 px-3 py-2"
             >
               {id}
             </li>
@@ -993,7 +993,7 @@ export function MortgageRunner({ toolId }: { toolId: string }) {
             <p className="text-2xl font-semibold tabular-nums">¥ {fmt(out.totalPayment)}</p>
           </RunnerPanel>
           <RunnerPanel title="总利息">
-            <p className="text-2xl font-semibold tabular-nums text-[var(--status-warning)]">
+            <p className="text-2xl font-semibold tabular-nums text-warning-strong">
               ¥ {fmt(out.totalInterest)}
             </p>
           </RunnerPanel>
@@ -1084,7 +1084,7 @@ export function LunarRunner({ toolId }: { toolId: string }) {
         />
       </div>
       {mode === "lunar_to_solar" ? (
-        <label className="inline-flex items-center gap-2 text-sm text-[var(--neutral-11)]">
+        <label className="inline-flex items-center gap-2 text-sm text-neutral-11">
           <input
             data-allow-native
             type="checkbox"
@@ -1104,37 +1104,37 @@ export function LunarRunner({ toolId }: { toolId: string }) {
           <dl className="grid gap-2 text-sm sm:grid-cols-2">
             {typeof out.solar === "string" ? (
               <>
-                <dt className="text-[var(--neutral-10)]">公历</dt>
+                <dt className="text-neutral-10">公历</dt>
                 <dd className="font-mono font-medium">{out.solar}</dd>
               </>
             ) : null}
             {typeof out.lunar === "string" ? (
               <>
-                <dt className="text-[var(--neutral-10)]">农历</dt>
+                <dt className="text-neutral-10">农历</dt>
                 <dd className="font-medium">{out.lunar}</dd>
               </>
             ) : null}
             {typeof out.lunarYmd === "string" ? (
               <>
-                <dt className="text-[var(--neutral-10)]">农历 Y-M-D</dt>
+                <dt className="text-neutral-10">农历 Y-M-D</dt>
                 <dd className="font-mono">{out.lunarYmd}</dd>
               </>
             ) : null}
             {typeof out.ganZhi === "string" ? (
               <>
-                <dt className="text-[var(--neutral-10)]">干支年</dt>
+                <dt className="text-neutral-10">干支年</dt>
                 <dd>{out.ganZhi}</dd>
               </>
             ) : null}
             {typeof out.week === "string" || typeof out.week === "number" ? (
               <>
-                <dt className="text-[var(--neutral-10)]">星期</dt>
+                <dt className="text-neutral-10">星期</dt>
                 <dd>{String(out.week)}</dd>
               </>
             ) : null}
           </dl>
           {Array.isArray(out.festival) && out.festival.length > 0 ? (
-            <p className="mt-3 text-sm text-[var(--neutral-11)]">
+            <p className="mt-3 text-sm text-neutral-11">
               节日：{(out.festival as string[]).join("、")}
             </p>
           ) : null}
@@ -1183,7 +1183,7 @@ export function PhoneLookupRunner({ toolId }: { toolId: string }) {
       {out ? (
         <RunnerPanel>
           <p
-            className={`font-semibold ${out.valid === true ? "text-[var(--status-success)]" : "text-[var(--status-danger)]"}`}
+            className={`font-semibold ${out.valid === true ? "text-success-strong" : "text-destructive-strong"}`}
           >
             {out.valid === true ? "格式有效" : "无效"}
           </p>
@@ -1191,7 +1191,7 @@ export function PhoneLookupRunner({ toolId }: { toolId: string }) {
             <p className="mt-2 text-lg">运营商：{out.carrier}</p>
           ) : null}
           {typeof out.reason === "string" ? (
-            <p className="mt-1 text-sm text-[var(--neutral-11)]">{out.reason}</p>
+            <p className="mt-1 text-sm text-neutral-11">{out.reason}</p>
           ) : null}
           {typeof out.note === "string" ? <RunnerNote>{out.note}</RunnerNote> : null}
         </RunnerPanel>
