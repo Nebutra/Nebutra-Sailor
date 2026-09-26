@@ -60,6 +60,9 @@ export {
   ParaWorkspaceRepository,
   type PutDocumentResult,
 } from "./para-workspace.repository";
+// PaymentOrder
+export type { CreatePaymentOrderData } from "./payment-order.repository";
+export { PaymentOrderRepository } from "./payment-order.repository";
 export type {
   OpenTicketData,
   RecordFeedbackData,

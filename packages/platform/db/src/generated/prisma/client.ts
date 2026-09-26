@@ -278,6 +278,15 @@ export type InvoiceItem = Prisma.InvoiceItemModel
  */
 export type Payment = Prisma.PaymentModel
 /**
+ * Model PaymentOrder
+ * One attempt to pay for one offer, whatever the provider. The price is
+ * locked here at checkout; a provider notification only confirms that this
+ * order was paid, and must match `amountMinor` to be accepted. `offerId` and
+ * `fulfillment` are a snapshot, so changing the catalog later never changes
+ * what an existing order grants.
+ */
+export type PaymentOrder = Prisma.PaymentOrderModel
+/**
  * Model PaymentMethod
  * @conditional(payment=wechat|alipay)
  */

@@ -1539,6 +1539,50 @@ model Payment {
   @@schema("public")
 }
 
+/// One attempt to pay for one offer, whatever the provider. The price is
+/// locked here at checkout; a provider notification only confirms that this
+/// order was paid, and must match `amountMinor` to be accepted. `offerId` and
+/// `fulfillment` are a snapshot, so changing the catalog later never changes
+/// what an existing order grants.
+model PaymentOrder {
+  id            String             @id @default(cuid())
+  tenantId      String             @map("tenant_id")
+  offerId       String             @map("offer_id") @db.VarChar(64)
+  /// The offer's fulfillment spec at purchase time: { type, params }.
+  fulfillment   Json
+  /// Integer minor units: cents for USD, fen for CNY.
+  amountMinor   Int                @map("amount_minor")
+  currency      String             @db.VarChar(3)
+  provider      String             @db.VarChar(20) // stripe | chinapay
+  method        String             @db.VarChar(20) // card | alipay | wechat
+  /// Stripe checkout session id, or the wallet's own transaction id once paid.
+  providerRef   String?            @map("provider_ref")
+  status        PaymentOrderStatus @default(PENDING)
+  paidMinor     Int?               @map("paid_minor")
+  paidAt        DateTime?          @map("paid_at")
+  fulfilledAt   DateTime?          @map("fulfilled_at")
+  refundedMinor Int                @default(0) @map("refunded_minor")
+  expiresAt     DateTime           @map("expires_at")
+  metadata      Json               @default("{}")
+  createdAt     DateTime           @default(now()) @map("created_at")
+  updatedAt     DateTime           @updatedAt @map("updated_at")
+
+  @@index([tenantId, createdAt])
+  @@index([status, createdAt])
+  @@map("payment_orders")
+  @@schema("public")
+}
+
+enum PaymentOrderStatus {
+  PENDING
+  PAID
+  PARTIALLY_REFUNDED
+  REFUNDED
+  EXPIRED
+
+  @@schema("public")
+}
+
 // Payment Methods
 /// @conditional(payment=wechat|alipay)
 model PaymentMethod {

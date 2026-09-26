@@ -42,6 +42,8 @@ export type {
   ParaRunStatus,
   ParaThread,
   ParaWorkspace,
+  PaymentOrder,
+  PaymentOrderStatus,
   // Pebble support intake (not tenant-scoped — anonymous desktop clients)
   PebbleDiagnosticStatus,
   PebbleDiagnosticTicket,
