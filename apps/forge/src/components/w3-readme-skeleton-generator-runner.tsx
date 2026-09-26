@@ -149,13 +149,13 @@ export function W3ReadmeSkeletonGeneratorRunner({ toolId }: { toolId: string }) 
         return (
           <div className="space-y-2">
             <div className="flex flex-wrap gap-4">
-              <Checkbox checked={badgeLicense} onChange={setBadgeLicense}>
+              <Checkbox checked={badgeLicense} onCheckedChange={setBadgeLicense}>
                 {t("readmeSkeleton.badgeLicense")}
               </Checkbox>
-              <Checkbox checked={badgeNpm} onChange={setBadgeNpm}>
+              <Checkbox checked={badgeNpm} onCheckedChange={setBadgeNpm}>
                 {t("readmeSkeleton.badgeNpm")}
               </Checkbox>
-              <Checkbox checked={badgeBuild} onChange={setBadgeBuild}>
+              <Checkbox checked={badgeBuild} onCheckedChange={setBadgeBuild}>
                 {t("readmeSkeleton.badgeBuild")}
               </Checkbox>
             </div>
@@ -346,7 +346,7 @@ export function W3ReadmeSkeletonGeneratorRunner({ toolId }: { toolId: string }) 
             </legend>
             {group.sections.map((id) => (
               <div key={id} className="space-y-2">
-                <Checkbox checked={on(id)} onChange={(next) => toggle(id, next)}>
+                <Checkbox checked={on(id)} onCheckedChange={(next) => toggle(id, next)}>
                   {t(`readmeSkeleton.section.${id}`)}
                 </Checkbox>
                 {detail(id)}

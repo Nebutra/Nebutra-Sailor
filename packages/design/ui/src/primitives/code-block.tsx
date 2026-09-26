@@ -65,11 +65,17 @@ export interface CodeBlockSwitcherOption {
  * The single-file form accepts this directly; the multi-file form keeps the
  * legacy uncontrolled `showLanguageSwitcher` + `languages` for back-compat.
  */
-export interface CodeBlockSwitcher {
+export type CodeBlockSwitcher = {
   options: ReadonlyArray<CodeBlockSwitcherOption>;
   value: string;
-  onChange: (next: string) => void;
-}
+} & (
+  | { onValueChange: (next: string) => void; onChange?: never }
+  | {
+      /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
+      onChange: (next: string) => void;
+      onValueChange?: never;
+    }
+);
 
 interface CommonCodeBlockProps {
   /** Additional CSS classes on the outer container. */
@@ -331,7 +337,7 @@ function HeaderIcon({
  *   switcher={{
  *     options: [{ label: "JS", value: "js" }, { label: "TS", value: "ts" }],
  *     value: lang,
- *     onChange: setLang,
+ *     onValueChange: setLang,
  *   }}
  * >
  *   {code}
@@ -669,7 +675,11 @@ export function CodeBlock(props: CodeBlockProps) {
                   {controlledSwitcher.options.map((opt) => (
                     <DropdownMenuItem
                       key={opt.value}
-                      onClick={() => controlledSwitcher.onChange(opt.value)}
+                      onClick={() =>
+                        (controlledSwitcher.onValueChange ?? controlledSwitcher.onChange)?.(
+                          opt.value,
+                        )
+                      }
                       className={cn(
                         "text-xs",
                         opt.value === controlledSwitcher.value && "bg-accent font-medium",

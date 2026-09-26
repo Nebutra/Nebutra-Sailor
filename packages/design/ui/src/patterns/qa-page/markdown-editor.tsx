@@ -34,9 +34,18 @@ import { MarkdownRenderer } from "./markdown-renderer";
 // Public types
 // ---------------------------------------------------------------------------
 
-export interface MarkdownEditorProps {
+export type MarkdownEditorProps = MarkdownEditorBaseProps &
+  (
+    | { onValueChange: (next: string) => void; onChange?: never }
+    | {
+        /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
+        onChange: (next: string) => void;
+        onValueChange?: never;
+      }
+  );
+
+interface MarkdownEditorBaseProps {
   value: string;
-  onChange: (next: string) => void;
   placeholder?: string;
   /** @default 250 */
   minHeight?: number;
@@ -89,12 +98,15 @@ function QuoteGlyph(props: { className?: string }) {
 
 export function MarkdownEditor({
   value,
-  onChange,
+  onValueChange,
+  onChange: legacyOnChange,
   placeholder = "Write your answer here…",
   minHeight = 250,
   className,
   labels,
 }: MarkdownEditorProps) {
+  // The type admits exactly one of the two; the canonical name wins.
+  const onChange = (onValueChange ?? legacyOnChange) as (next: string) => void;
   const mergedLabels = { ...DEFAULT_MARKDOWN_EDITOR_LABELS, ...labels };
   const [tab, setTab] = useState<"write" | "preview">("write");
   const textareaRef = useRef<HTMLTextAreaElement>(null);

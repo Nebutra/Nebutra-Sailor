@@ -3,6 +3,7 @@
 import * as React from "react";
 import { emptyStateTokens } from "../tokens/components/empty-state";
 import { cn } from "../utils/cn";
+import { BrandMark } from "./brand-mark";
 
 export type EmptyStateVariant =
   | "blank-slate"
@@ -188,9 +189,78 @@ const EmptyStateRoot = ({
 };
 EmptyStateRoot.displayName = "EmptyState.Root";
 
-export const EmptyState = {
+type EmptyStateTone = "default" | "branded" | "subtle";
+
+export interface EmptyStateProps {
+  /** Primary message. */
+  title: string;
+  /** Supporting description. */
+  description?: string;
+  /** Visual anchor. When omitted and `tone="branded"`, a default `<BrandMark>` is rendered. */
+  mascot?: React.ReactNode;
+  /** Inline icon shown above the title. Ignored when `mascot` is provided. */
+  icon?: React.ReactNode;
+  /** Primary call-to-action node. */
+  action?: React.ReactNode;
+  /** Secondary call-to-action node. */
+  secondaryAction?: React.ReactNode;
+  /**
+   * Visual tone.
+   * - `default`: neutral bordered state
+   * - `branded`: BrandMark anchor for first-touch panels
+   * - `subtle`: quieter inline state
+   */
+  tone?: EmptyStateTone;
+  size?: EmptyStateSize;
+  className?: string;
+}
+
+const toneVariant: Record<EmptyStateTone, EmptyStateVariant> = {
+  default: "blank-slate",
+  branded: "informational",
+  subtle: "guide",
+};
+
+/** The simple form: props in, a composed Root out. */
+function EmptyStateSimple({
+  title,
+  description,
+  mascot,
+  icon,
+  action,
+  secondaryAction,
+  tone = "default",
+  size = "md",
+  className,
+}: EmptyStateProps) {
+  const visual =
+    mascot ??
+    icon ??
+    (tone === "branded" ? <BrandMark size={size === "lg" ? "lg" : "md"} /> : null);
+  return (
+    <EmptyStateRoot
+      action={action}
+      className={cn(tone === "subtle" && "border-0 bg-transparent", className)}
+      description={description}
+      icon={visual ? <EmptyStateIcon icon={visual} /> : undefined}
+      link={secondaryAction}
+      size={size}
+      title={title}
+      variant={toneVariant[tone]}
+    />
+  );
+}
+
+/**
+ * One EmptyState, two forms. `<EmptyState title … />` renders the simple form;
+ * `EmptyState.Root` / `EmptyState.Icon` compose it by hand. It used to be two
+ * symbols with one name — a component from @nebutra/ui/layout and a plain
+ * `{ Root, Icon }` object from /primitives — so the import path decided
+ * whether `<EmptyState />` rendered or threw.
+ */
+export const EmptyState = Object.assign(EmptyStateSimple, {
   Root: EmptyStateRoot,
   Icon: EmptyStateIcon,
-} as const;
+});
 
 export { EmptyStateIcon, EmptyStateRoot };

@@ -16,7 +16,7 @@ export function ExpandableTabsDemo() {
 
   return (
     <div className="p-8 gap-4 flex w-full flex-col items-center justify-center">
-      <ExpandableTabs tabs={tabs} onChange={setActiveTab} />
+      <ExpandableTabs tabs={tabs} onValueChange={setActiveTab} />
       <p className="text-sm text-muted-foreground">
         Active tab: <strong>{activeTab !== null ? tabs[activeTab]?.title : "None"}</strong>
       </p>

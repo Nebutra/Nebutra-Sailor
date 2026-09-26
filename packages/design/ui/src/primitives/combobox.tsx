@@ -106,15 +106,25 @@ interface ComboboxBaseProps
   "aria-label"?: string;
 }
 
-interface ControlledComboboxProps extends ComboboxBaseProps {
+type ComboboxChange =
+  | { onValueChange: (value: ComboboxValue) => void; onChange?: never }
+  | {
+      /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
+      onChange: (value: ComboboxValue) => void;
+      onValueChange?: never;
+    };
+
+/** Controlled: a value and exactly one change callback. */
+type ControlledComboboxProps = ComboboxBaseProps & {
   value: ComboboxValue;
-  onChange: (value: ComboboxValue) => void;
   defaultValue?: never;
-}
+} & ComboboxChange;
 
 interface UncontrolledComboboxProps extends ComboboxBaseProps {
   value?: never;
+  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (value: ComboboxValue) => void;
+  onValueChange?: (value: ComboboxValue) => void;
   defaultValue?: ComboboxValue;
 }
 
@@ -316,7 +326,8 @@ function toCssLength(value: ComboboxWidth): string {
 function ComboboxRoot({
   options,
   value: controlledValue,
-  onChange,
+  onChange: legacyOnChange,
+  onValueChange: onChange = legacyOnChange,
   defaultValue = null,
   disabled = false,
   errored,
@@ -501,14 +512,14 @@ ComboboxRoot.displayName = "Combobox";
  *     { value: "remix", label: "Remix" },
  *   ]}
  *   value={value}
- *   onChange={setValue}
+ *   onValueChange={setValue}
  *   placeholder="Select framework..."
  * />
  * ```
  *
  * @example Composition mode (manual children)
  * ```tsx
- * <Combobox value={value} onChange={setValue} placeholder="Search...">
+ * <Combobox value={value} onValueChange={setValue} placeholder="Search...">
  *   <Combobox.Input placeholder="Search frameworks..." />
  *   <Combobox.List emptyMessage="Nothing here.">
  *     <Combobox.Group heading="Frontend">

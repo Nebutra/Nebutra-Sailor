@@ -80,7 +80,7 @@ export const ControlledCompatibility: Story = {
 
     return (
       <div className="grid gap-3">
-        <ThemeSwitcher value={theme} onChange={setTheme} />
+        <ThemeSwitcher value={theme} onValueChange={setTheme} />
         <p className="text-sm text-muted-foreground">
           Selected: <span className="font-medium text-foreground">{theme}</span>
         </p>

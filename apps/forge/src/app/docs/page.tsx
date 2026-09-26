@@ -1,5 +1,6 @@
 import { brand } from "@nebutra/brand/metadata";
-import { Card, PageHeader } from "@nebutra/ui/layout";
+import { PageHeader } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageFrame } from "@/components/page-frame";

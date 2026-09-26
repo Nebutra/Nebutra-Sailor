@@ -65,7 +65,7 @@ export type RadioGroupProps = RadioGroupBaseProps & {
   value?: RadioValue;
   /** Uncontrolled initial selected value. */
   defaultValue?: RadioValue;
-  /** Geist-compatible change callback. */
+  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (value: RadioValue) => void;
   /** Base UI / Radix-compatible change callback. */
   onValueChange?: (value: RadioValue) => void;

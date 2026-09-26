@@ -49,7 +49,7 @@ export const Controlled: Story = {
     const [value, setValue] = useState("monthly");
 
     return (
-      <RadioGroup label="Billing Cycle" onChange={setValue} value={value}>
+      <RadioGroup label="Billing Cycle" onValueChange={setValue} value={value}>
         <RadioGroup.Item value="monthly" description="Pay at the start of each month.">
           Monthly
         </RadioGroup.Item>

@@ -500,7 +500,11 @@ export function W3RetryBackoffScheduleRunner({ toolId }: { toolId: string }) {
       </div>
 
       <div className="space-y-1">
-        <Checkbox id={`${uid}-convention`} checked={excludeInitial} onChange={setExcludeInitial}>
+        <Checkbox
+          id={`${uid}-convention`}
+          checked={excludeInitial}
+          onCheckedChange={setExcludeInitial}
+        >
           <span className="text-sm">{t("retryBackoff.excludeInitial")}</span>
         </Checkbox>
         <ShellNote>{t("retryBackoff.excludeInitialNote")}</ShellNote>

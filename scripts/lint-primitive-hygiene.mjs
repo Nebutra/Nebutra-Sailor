@@ -38,6 +38,12 @@ const ALLOW = JSON.parse(readFileSync(join(ROOT, "governance.config.json"), "utf
 const PALETTE =
   /\b(?:bg|text|border|fill|stroke|ring|from|to|via|outline|divide|shadow|placeholder|caret|accent|decoration)-(?:(?:gray|zinc|slate|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|[1-9]00|950)|white|black|geist-[\w-]+)\b/g;
 const ARIA = /aria-label(?:=|:)\s*(?:\{\s*)?["'`]([A-Za-z][^"'`{}]{2,})["'`]/g;
+// A prop named onChange that receives a value, not an event. Base UI and the
+// DOM use onChange for events; value callbacks are onValueChange /
+// onCheckedChange. The 2026-09-25 migration kept each legacy onChange as a
+// deprecated alias — a line whose previous line says @deprecated is exempt.
+const VALUE_ONCHANGE =
+  /^\s*onChange\??\s*:\s*\(\s*(?!e\b|event\b|ev\b)\w+\s*:\s*(?!React\.)[\w[\]| ]+\)\s*=>/;
 
 function strip(src) {
   return src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/[^\n]*/g, "$1");
@@ -67,18 +73,27 @@ for (const file of files(SRC)) {
   const code = strip(keptPalette.join("\n"));
   const ariaCode = strip(keptAria.join("\n"));
   const counts = {
+    onchange: raw.filter(
+      (line, i) => VALUE_ONCHANGE.test(line) && !/@deprecated/.test(raw[i - 1] ?? ""),
+    ).length,
     palette: (code.match(PALETTE) ?? []).length,
     aria: [...ariaCode.matchAll(ARIA)].length,
   };
   const allowed = ALLOW[rel];
   if (allowed) seen.add(rel);
-  for (const kind of ["palette", "aria"]) {
+  for (const kind of ["palette", "aria", "onchange"]) {
     const n = counts[kind];
     const cap = allowed?.[kind] ?? 0;
     if (n > cap) {
       problems.push(
         cap === 0
-          ? `${rel}: ${n} ${kind} violation(s) — ${kind === "palette" ? "use semantic tokens (bg-muted, text-foreground, bg-primary…)" : "take the label as a prop with an English default"}`
+          ? `${rel}: ${n} ${kind} violation(s) — ${
+              {
+                palette: "use semantic tokens (bg-muted, text-foreground, bg-primary…)",
+                aria: "take the label as a prop with an English default",
+                onchange: "name a value callback onValueChange / onCheckedChange",
+              }[kind]
+            }`
           : `${rel}: ${kind} ${n}, allowlist says ${cap} — it may only shrink`,
       );
     } else if (allowed && n < cap) {
@@ -87,7 +102,7 @@ for (const file of files(SRC)) {
       );
     }
   }
-  if (allowed && counts.palette === 0 && counts.aria === 0)
+  if (allowed && counts.palette === 0 && counts.aria === 0 && counts.onchange === 0)
     problems.push(`${rel}: clean — delete its primitiveHygiene.allowlist entry`);
 }
 for (const rel of Object.keys(ALLOW)) {
@@ -99,7 +114,10 @@ if (problems.length) {
   for (const p of problems) console.error(`   ${p}`);
   process.exit(1);
 }
-const left = Object.values(ALLOW).reduce((s, c) => s + (c.palette ?? 0) + (c.aria ?? 0), 0);
+const left = Object.values(ALLOW).reduce(
+  (s, c) => s + (c.palette ?? 0) + (c.aria ?? 0) + (c.onchange ?? 0),
+  0,
+);
 console.log(
   `✓ primitive-hygiene: ${Object.keys(ALLOW).length} file(s), ${left} known violation(s), 0 new. Shrink on-touch.`,
 );

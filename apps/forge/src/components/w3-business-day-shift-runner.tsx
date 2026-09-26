@@ -280,7 +280,11 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
       {mode === "shift" ? <ShellNote>{t("businessDayShift.daysHint")}</ShellNote> : null}
 
       {mode === "countBetween" ? (
-        <Checkbox id={`${uid}-include`} checked={includeEndDate} onChange={setIncludeEndDate}>
+        <Checkbox
+          id={`${uid}-include`}
+          checked={includeEndDate}
+          onCheckedChange={setIncludeEndDate}
+        >
           <span className="text-sm">{t("businessDayShift.includeEndDate")}</span>
         </Checkbox>
       ) : null}

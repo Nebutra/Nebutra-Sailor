@@ -24,7 +24,7 @@ type Story = StoryObj<typeof InputOTP>;
 function ControlledOTP({ maxLength = 6 }: { maxLength?: number }) {
   const [value, setValue] = useState("");
   return (
-    <InputOTP maxLength={maxLength} value={value} onChange={setValue}>
+    <InputOTP maxLength={maxLength} value={value} onValueChange={setValue}>
       <InputOTPGroup>
         {Array.from({ length: maxLength }, (_, i) => (
           <InputOTPSlot key={i} index={i} />
@@ -53,7 +53,7 @@ export const GroupedWithSeparator: Story = {
   render: () => {
     const [value, setValue] = useState("");
     return (
-      <InputOTP maxLength={6} value={value} onChange={setValue}>
+      <InputOTP maxLength={6} value={value} onValueChange={setValue}>
         <InputOTPGroup>
           <InputOTPSlot index={0} />
           <InputOTPSlot index={1} />

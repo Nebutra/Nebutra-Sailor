@@ -6,8 +6,8 @@ import {
   Lightning as Rocket,
   Users,
 } from "@nebutra/icons";
-import { Card } from "@nebutra/ui/layout";
 import { DashboardMetricTile, DashboardPanel } from "@nebutra/ui/patterns";
+import { Card } from "@nebutra/ui/primitives";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { AccessInviteIssuer } from "@/components/admin/access-invite-issuer";

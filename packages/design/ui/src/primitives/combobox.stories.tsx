@@ -87,7 +87,7 @@ export const Controlled: Story = {
         aria-label="Deployment region"
         options={REGIONS}
         value={value}
-        onChange={setValue}
+        onValueChange={setValue}
         placeholder="Search regions..."
         width={256}
       />
@@ -238,7 +238,7 @@ export const CompositionMode: Story = {
       <Combobox
         aria-label="Framework"
         value={value}
-        onChange={setValue}
+        onValueChange={setValue}
         placeholder="Search frameworks..."
         width={256}
       >

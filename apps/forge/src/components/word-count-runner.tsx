@@ -1,7 +1,6 @@
 "use client";
 
-import { Card } from "@nebutra/ui/layout";
-import { Button, Textarea } from "@nebutra/ui/primitives";
+import { Button, Card, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { RunnerError, RunnerNote } from "@/components/runner-ui";
@@ -84,6 +83,7 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
       <div className="grid gap-2.5 sm:grid-cols-3">
         {stats.map((s) => (
           <Card
+            padding="sm"
             key={s.label}
             className={`border-[var(--neutral-6)] px-3.5 py-3 ${
               s.primary

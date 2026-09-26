@@ -1,17 +1,17 @@
 "use client";
 
 import {
+  Button,
   Card,
   CardBody,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@nebutra/ui/patterns";
-import { Button } from "@nebutra/ui/primitives";
+} from "@nebutra/ui/primitives";
 export function Card2Demo() {
   return (
-    <Card variant="gradient" padding="lg">
+    <Card variant="elevated" padding="lg">
       <CardHeader>
         <CardTitle>Pro Plan</CardTitle>
         <CardDescription>Everything you need to ship faster.</CardDescription>

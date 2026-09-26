@@ -10,11 +10,11 @@ import {
   type VisibilityState,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useTranslations } from "next-intl";
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useDebounceValue } from "usehooks-ts";
+import { createDataTableTranslator } from "../labels";
 import type { DataTableProps } from "../types";
 import { getFilterValue, getPinnedStyles } from "../utils";
 import { useCellSelection } from "./use-cell-selection";
@@ -39,7 +39,7 @@ export function useDataTable<TData>(props: DataTableProps<TData>) {
     enableCellSelection = false,
   } = props;
 
-  const t = useTranslations();
+  const t = useMemo(() => createDataTableTranslator(props.labels), [props.labels]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery] = useDebounceValue(searchQuery, 300);

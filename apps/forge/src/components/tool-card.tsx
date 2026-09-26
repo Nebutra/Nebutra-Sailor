@@ -2,7 +2,7 @@
 
 import type { ForgeToolSummary } from "@nebutra/forge-runtime";
 import { ArrowRight } from "@nebutra/icons";
-import { Card } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { pickBilingual } from "@/lib/bilingual";
@@ -17,7 +17,7 @@ export function ToolCard({ tool }: { tool: ForgeToolSummary }) {
   return (
     <Link href={tool.path} className="group block h-full">
       <Card
-        isInteractive
+        interactive
         className="flex h-full flex-col border-border p-5 transition duration-200 group-hover:-translate-y-0.5 group-hover:border-[color-mix(in_srgb,hsl(var(--primary))_30%,hsl(var(--border)))] group-hover:shadow-md"
       >
         <div className="mb-3 flex items-start justify-between gap-2">

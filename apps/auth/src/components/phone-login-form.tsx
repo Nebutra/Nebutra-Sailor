@@ -266,7 +266,7 @@ export function PhoneLoginForm({ returnTo, turnstileSiteKey }: PhoneLoginFormPro
               maxLength={6}
               pattern="^[0-9]+$"
               value={code}
-              onChange={(value) => setCode(value.replace(/\D/gu, "").slice(0, 6))}
+              onValueChange={(value) => setCode(value.replace(/\D/gu, "").slice(0, 6))}
               containerClassName="w-full"
             >
               <InputOTPGroup className="grid w-full grid-cols-6 gap-2">

@@ -1,5 +1,5 @@
 import { BarChart as BarChart3, Coins, Database, Users } from "@nebutra/icons";
-import { Card } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";

@@ -157,29 +157,23 @@ export const COMPONENTS: ComponentEntry[] = [
   {
     slug: "card",
     name: "Card",
-    group: "patterns",
-    entry: "patterns/Card/Card.tsx",
+    group: "primitives",
+    entry: "primitives/card.tsx",
     covers: [
       "Card",
       "CardRoot",
       "CardHeader",
       "CardTitle",
       "CardDescription",
+      "CardContent",
       "CardBody",
       "CardFooter",
       "CardIcon",
     ],
     consumers: 30,
-    blurb: "Compound surface container. Note there is a second Card in @nebutra/ui/layout.",
-    axes: [
-      {
-        as: "variant",
-        file: "patterns/Card/Card.tsx",
-        kind: "objectKeys",
-        name: "variantStyles",
-      },
-      { as: "padding", file: "patterns/Card/Card.tsx", kind: "objectKeys", name: "paddingMap" },
-    ],
+    blurb:
+      "The one card surface — variant, padding, interactive, and parts that read the card's padding. @nebutra/ui/layout and /patterns re-export it.",
+    cva: [{ as: "card", name: "cardVariants" }],
   },
   {
     slug: "combobox",

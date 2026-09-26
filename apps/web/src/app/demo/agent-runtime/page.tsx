@@ -9,8 +9,7 @@ import {
   scopeKey,
 } from "@nebutra/agent-runtime";
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
-import { Card } from "@nebutra/ui/layout";
-import { Table } from "@nebutra/ui/primitives";
+import { Card, Table } from "@nebutra/ui/primitives";
 import { connection } from "next/server";
 
 /**

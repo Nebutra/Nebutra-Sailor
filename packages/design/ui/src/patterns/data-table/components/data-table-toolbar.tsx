@@ -1,7 +1,6 @@
 import { Copy, ListFilter, MagnifyingGlass as Search } from "@nebutra/icons";
 import type { Table } from "@tanstack/react-table";
 import type { ReactNode } from "react";
-
 import { Button } from "../../../primitives/button";
 import {
   DropdownMenu,
@@ -11,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "../../../primitives/dropdown-menu";
 import { Input } from "../../../primitives/input";
+import type { DataTableTranslate } from "../labels";
 import type { DataTableFilter } from "../types";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 
@@ -41,7 +41,7 @@ interface DataTableToolbarProps<TData> {
   };
   enableColumnVisibility: boolean;
   extraActions?: ReactNode;
-  t: any;
+  t: DataTableTranslate;
 }
 
 export function DataTableToolbar<TData>({

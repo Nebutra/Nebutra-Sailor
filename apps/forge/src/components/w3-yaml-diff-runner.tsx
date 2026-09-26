@@ -197,7 +197,7 @@ export function W3YamlDiffRunner({ toolId }: { toolId: string }) {
             <Checkbox
               id="yaml-diff-resolve-anchors"
               checked={resolveAnchors}
-              onChange={setResolveAnchors}
+              onCheckedChange={setResolveAnchors}
             >
               {t("yamlDiff.resolveAnchors")}
             </Checkbox>

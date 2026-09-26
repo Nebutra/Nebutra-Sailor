@@ -112,13 +112,13 @@ export function W3EnvDiffRunner({ toolId }: { toolId: string }) {
       optionsKey={`${ignoreComments}|${caseInsensitiveKeys}|${redactSecrets}`}
       options={
         <>
-          <Checkbox checked={ignoreComments} onChange={setIgnoreComments}>
+          <Checkbox checked={ignoreComments} onCheckedChange={setIgnoreComments}>
             {t("envDiff.optIgnoreComments")}
           </Checkbox>
-          <Checkbox checked={caseInsensitiveKeys} onChange={setCaseInsensitiveKeys}>
+          <Checkbox checked={caseInsensitiveKeys} onCheckedChange={setCaseInsensitiveKeys}>
             {t("envDiff.optCaseInsensitive")}
           </Checkbox>
-          <Checkbox checked={redactSecrets} onChange={setRedactSecrets}>
+          <Checkbox checked={redactSecrets} onCheckedChange={setRedactSecrets}>
             {t("envDiff.optRedactSecrets")}
           </Checkbox>
         </>

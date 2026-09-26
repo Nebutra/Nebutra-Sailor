@@ -25,7 +25,9 @@ export interface ChoiceboxGroupProps {
   /** Default value for uncontrolled usage */
   defaultValue?: string | string[];
   /** Callback when value changes */
+  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (value: string | string[]) => void;
+  onValueChange?: (value: string | string[]) => void;
   /** Disable all items */
   disabled?: boolean;
   /** Additional CSS classes for the group container */
@@ -343,7 +345,8 @@ function ChoiceboxGroupRoot({
   showLabel = false,
   value: controlledValue,
   defaultValue,
-  onChange,
+  onChange: legacyOnChange,
+  onValueChange: onChange = legacyOnChange,
   disabled = false,
   className,
   children,

@@ -1,4 +1,4 @@
-import { Card } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof Card> = {
@@ -9,12 +9,12 @@ const meta: Meta<typeof Card> = {
     docs: {
       description: {
         component:
-          "Surface container with a border, background, and subtle shadow. Use `isInteractive` for clickable cards.",
+          "Surface container with a border, background, and subtle shadow. Use `interactive` for clickable cards.",
       },
     },
   },
   argTypes: {
-    isInteractive: { control: "boolean" },
+    interactive: { control: "boolean" },
   },
 };
 export default meta;
@@ -34,7 +34,7 @@ export const Default: Story = {
 
 export const Interactive: Story = {
   args: {
-    isInteractive: true,
+    interactive: true,
     children: (
       <div>
         <p className="text-sm font-semibold">Interactive card</p>
@@ -47,11 +47,11 @@ export const Interactive: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-4 p-4">
-      <Card>
+      <Card padding="sm">
         <p className="text-sm font-semibold">Default card</p>
         <p className="mt-1 text-sm text-neutral-500">Standard surface container.</p>
       </Card>
-      <Card isInteractive>
+      <Card padding="sm" interactive>
         <p className="text-sm font-semibold">Interactive card</p>
         <p className="mt-1 text-sm text-neutral-500">Hover to see elevated shadow.</p>
       </Card>

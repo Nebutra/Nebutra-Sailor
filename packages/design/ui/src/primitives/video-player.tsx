@@ -62,7 +62,7 @@ export interface VideoPlayerProps {
  */
 interface CustomSliderProps {
   value: number;
-  onChange: (value: number) => void;
+  onValueChange: (value: number) => void;
   className?: string;
 }
 
@@ -84,13 +84,13 @@ const formatTime = (seconds: number): string => {
 /**
  * CustomSlider - Animated progress/volume slider
  */
-const CustomSlider: React.FC<CustomSliderProps> = ({ value, onChange, className }) => {
+const CustomSlider: React.FC<CustomSliderProps> = ({ value, onValueChange, className }) => {
   const shouldReduceMotion = useReducedMotion() ?? false;
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const percentage = (x / rect.width) * 100;
-    onChange(Math.min(Math.max(percentage, 0), 100));
+    onValueChange(Math.min(Math.max(percentage, 0), 100));
   };
 
   return (
@@ -271,7 +271,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             <div className="mb-2 flex items-center gap-2">
               {/* allow-palette: timestamp sits on the dark video control scrim, not the app surface */}
               <span className="text-sm text-white">{formatTime(currentTime)}</span>
-              <CustomSlider value={progress} onChange={handleSeek} className="flex-1" />
+              <CustomSlider value={progress} onValueChange={handleSeek} className="flex-1" />
               {/* allow-palette: timestamp sits on the dark video control scrim, not the app surface */}
               <span className="text-sm text-white">{formatTime(duration)}</span>
             </div>
@@ -316,7 +316,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                     </Button>
                   </motion.div>
                   <div className="w-24">
-                    <CustomSlider value={volume * 100} onChange={handleVolumeChange} />
+                    <CustomSlider value={volume * 100} onValueChange={handleVolumeChange} />
                   </div>
                 </div>
               </div>

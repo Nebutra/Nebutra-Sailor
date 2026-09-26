@@ -1,4 +1,5 @@
-import { Card, PageHeader } from "@nebutra/ui/layout";
+import { PageHeader } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import { createRoute } from "@tanstack/react-router";
 import {
   ActivePlanCard,

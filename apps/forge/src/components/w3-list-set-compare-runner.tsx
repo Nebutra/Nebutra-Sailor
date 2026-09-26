@@ -154,16 +154,19 @@ export function W3ListSetCompareRunner({ toolId }: { toolId: string }) {
               { value: "byCount", label: t("listSetCompare.sortOption.byCount") },
             ]}
           />
-          <Checkbox checked={caseSensitive} onChange={setCaseSensitive}>
+          <Checkbox checked={caseSensitive} onCheckedChange={setCaseSensitive}>
             {t("listSetCompare.optCaseSensitive")}
           </Checkbox>
-          <Checkbox checked={trimWhitespace} onChange={setTrimWhitespace}>
+          <Checkbox checked={trimWhitespace} onCheckedChange={setTrimWhitespace}>
             {t("listSetCompare.optTrim")}
           </Checkbox>
-          <Checkbox checked={collapseInternalWhitespace} onChange={setCollapseInternalWhitespace}>
+          <Checkbox
+            checked={collapseInternalWhitespace}
+            onCheckedChange={setCollapseInternalWhitespace}
+          >
             {t("listSetCompare.optCollapse")}
           </Checkbox>
-          <Checkbox checked={ignoreLeadingZeros} onChange={setIgnoreLeadingZeros}>
+          <Checkbox checked={ignoreLeadingZeros} onCheckedChange={setIgnoreLeadingZeros}>
             {t("listSetCompare.optIgnoreZeros")}
           </Checkbox>
         </>

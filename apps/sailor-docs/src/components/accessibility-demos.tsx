@@ -226,7 +226,7 @@ export function PrefersReducedMotionDemo() {
               Usually read from OS preference
             </span>
           </div>
-          <Checkbox checked={reduceMotion} onChange={setReduceMotion} />
+          <Checkbox checked={reduceMotion} onCheckedChange={setReduceMotion} />
         </div>
 
         <div className="w-full h-32 flex items-center justify-center border border-dashed border-fd-border rounded-lg relative overflow-hidden bg-fd-muted/30">

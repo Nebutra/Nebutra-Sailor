@@ -37,7 +37,9 @@ export interface ThemeToggleProps extends NativeButtonProps {
   /** Initial binary theme value for uncontrolled usage. Reads the document class on mount when omitted. */
   defaultValue?: ThemeToggleValue;
   /** Fired with the next binary theme value. Integrate with `@nebutra/tokens` or `next-themes`. */
+  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (value: ThemeToggleValue) => void;
+  onValueChange?: (value: ThemeToggleValue) => void;
   /** Compact icon-button size. */
   size?: ThemeToggleSize;
   /** Optional user-gesture sound. Disabled by default to avoid unexpected audio in SaaS surfaces. */
@@ -145,7 +147,8 @@ function playToggleSound(lastPlayedAt: React.MutableRefObject<number>) {
 export const ThemeToggle = ({
   value,
   defaultValue,
-  onChange,
+  onChange: legacyOnChange,
+  onValueChange: onChange = legacyOnChange,
   size = "md",
   sound = false,
   applyToDocument = false,
