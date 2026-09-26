@@ -156,7 +156,11 @@ export const ErrorMessage = ({
     <span
       ref={ref}
       role="alert"
-      className={cn("inline-flex items-center gap-1.5 text-destructive", textSize[sz], className)}
+      className={cn(
+        "inline-flex items-center gap-1.5 text-destructive-strong",
+        textSize[sz],
+        className,
+      )}
     >
       <AlertCircle size={iconSize[sz]} aria-hidden="true" className="shrink-0" />
 
@@ -230,14 +234,14 @@ const ErrorSurface = ({
     >
       <span
         aria-hidden="true"
-        className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-destructive/20 bg-background text-destructive"
+        className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-destructive/20 bg-background text-destructive-strong"
       >
         <AlertCircle size={surfaceIconSize[size]} />
       </span>
 
       <div className="min-w-0 flex-1">
         {label && showLabel ? (
-          <p className="mb-1 text-xs font-medium uppercase tracking-normal text-destructive">
+          <p className="mb-1 text-xs font-medium uppercase tracking-normal text-destructive-strong">
             {label}
           </p>
         ) : null}

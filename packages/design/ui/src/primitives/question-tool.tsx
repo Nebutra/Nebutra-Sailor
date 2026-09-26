@@ -633,6 +633,10 @@ export type QuestionToolProps = {
   toolCallId?: string;
   /** Header label shown in the chrome bar. @default "Question" */
   headerLabel?: string;
+  /** Accessible name for the "previous question" nav button. Pass a translated string. */
+  previousQuestionLabel?: string;
+  /** Accessible name for the "next question" nav button. Pass a translated string. */
+  nextQuestionLabel?: string;
   className?: string;
 };
 
@@ -654,6 +658,8 @@ function QuestionToolState({
   onSubmitAnswer,
   output,
   headerLabel = "Question",
+  previousQuestionLabel = "Previous question",
+  nextQuestionLabel = "Next question",
   className,
 }: QuestionToolProps): ReactElement | null {
   const totalQuestions = totalQuestionsProp ?? questions.length;
@@ -729,7 +735,7 @@ function QuestionToolState({
               onClick={goPrev}
               disabled={!canGoPrev}
               className="inline-flex size-5 items-center justify-center rounded-[var(--radius-sm)] transition-colors duration-micro hover:bg-accent disabled:pointer-events-none disabled:opacity-40"
-              aria-label="Previous question"
+              aria-label={previousQuestionLabel}
             >
               <ChevronUp className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
@@ -741,7 +747,7 @@ function QuestionToolState({
               onClick={goNext}
               disabled={!canGoNext}
               className="inline-flex size-5 items-center justify-center rounded-[var(--radius-sm)] transition-colors duration-micro hover:bg-accent disabled:pointer-events-none disabled:opacity-40"
-              aria-label="Next question"
+              aria-label={nextQuestionLabel}
             >
               <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
             </button>

@@ -56,6 +56,7 @@ export function AppleLiquidGlassSwitcher({
   };
 
   return (
+    // allow-palette: fixed dark liquid-glass pill, deliberately identical across themes
     <fieldset className="relative inline-flex items-center p-1.5 rounded-full bg-black/40 dark:bg-black/60 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] backdrop-blur-[20px] overflow-hidden">
       <legend className="sr-only">Choose theme</legend>
 
@@ -82,6 +83,7 @@ export function AppleLiquidGlassSwitcher({
               key={option.value}
               htmlFor={`theme-switch-${option.value}`}
               className={`relative cursor-pointer p-3 rounded-full transition-colors duration-300 ease-in-out ${
+                // allow-palette: fixed dark liquid-glass pill, deliberately identical across themes
                 isActive ? "text-white" : "text-white/50 hover:text-white/80"
               }`}
               title={option.label}
@@ -100,6 +102,7 @@ export function AppleLiquidGlassSwitcher({
               {isActive && (
                 <motion.div
                   {...(shouldReduceMotion ? {} : { layoutId: "apple-glass-switcher-active" })}
+                  // allow-palette: fixed dark liquid-glass pill, deliberately identical across themes
                   className="absolute inset-0 rounded-full bg-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_2px_10px_rgba(0,0,0,0.2)] backdrop-blur-md"
                   initial={false}
                   transition={

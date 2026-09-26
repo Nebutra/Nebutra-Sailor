@@ -189,7 +189,7 @@ export function TurnstileChallengeForm({
 
         {error ? (
           <p
-            className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive-strong"
             role="alert"
             aria-live="polite"
           >

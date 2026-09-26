@@ -19,6 +19,8 @@ export interface ChangelogWidgetProps {
   entries: ChangelogEntry[];
   changelogUrl?: string;
   className?: string;
+  /** Label for the changelog trigger button (a shared component cannot pick the product's language) */
+  triggerLabel?: string;
 }
 
 const TAG_COLOR_MAP: Record<string, string> = {
@@ -27,11 +29,11 @@ const TAG_COLOR_MAP: Record<string, string> = {
   breaking: "bg-destructive text-destructive-foreground",
   improvement: "bg-warning text-warning-foreground",
   security: "bg-destructive text-destructive-foreground",
-  experimental: "bg-[var(--neutral-8)] text-foreground",
+  experimental: "bg-neutral-8 text-foreground",
 };
 
 const getTagColor = (tag?: string) => {
-  if (!tag) return "bg-[var(--neutral-7)] text-foreground";
+  if (!tag) return "bg-neutral-7 text-foreground";
   return TAG_COLOR_MAP[tag.toLowerCase()] || TAG_COLOR_MAP.feature;
 };
 
@@ -45,6 +47,7 @@ export function ChangelogWidget({
   entries,
   changelogUrl = "/changelog",
   className,
+  triggerLabel = "View changelog",
 }: ChangelogWidgetProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [lastSeenVersion, setLastSeenVersion] = React.useState<string | null>(null);
@@ -64,7 +67,7 @@ export function ChangelogWidget({
   return (
     <Popover open={isOpen} onOpenChange={handleOpenChange}>
       <PopoverTrigger
-        aria-label="View changelog"
+        aria-label={triggerLabel}
         className={cn(
           "relative inline-flex items-center justify-center rounded-[var(--radius-lg)] p-2 transition-colors hover:bg-muted",
           className,
@@ -82,9 +85,9 @@ export function ChangelogWidget({
         align="end"
         side="bottom"
         sideOffset={8}
-        className="w-80 overflow-hidden rounded-[var(--radius-lg)] border-border bg-white p-0 shadow-lg"
+        className="w-80 overflow-hidden rounded-[var(--radius-lg)] border-border bg-popover p-0 shadow-lg"
       >
-        <div className="bg-gradient-to-r from-[var(--blue-3)] to-[var(--cyan-3)] px-4 py-3">
+        <div className="bg-gradient-to-r from-blue-3 to-cyan-3 px-4 py-3">
           <h3 className="font-semibold text-foreground">What's New</h3>
         </div>
 

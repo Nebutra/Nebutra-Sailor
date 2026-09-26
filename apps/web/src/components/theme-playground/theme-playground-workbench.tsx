@@ -546,7 +546,7 @@ function PreviewCanvas({
       />
       <div className="min-h-0 flex-1 overflow-auto p-4">
         {carrier.warning ? (
-          <p className="mx-auto mb-3 max-w-[80ch] rounded-[var(--radius-md)] border border-warning/40 bg-warning/10 px-3 py-2 text-warning text-xs">
+          <p className="mx-auto mb-3 max-w-[80ch] rounded-[var(--radius-md)] border border-warning/40 bg-warning/10 px-3 py-2 text-warning-strong text-xs">
             {carrier.warning}
           </p>
         ) : null}
@@ -673,10 +673,9 @@ function FormsPanel() {
         <FormInput label="Full name" value="Ava Johnson" />
         <FormInput label="Email" value="ava.johnson@example.com" />
         <FormInput label="Password" value="************" type="password" />
-        <div className="flex items-center gap-2 text-muted-foreground text-xs">
-          <Checkbox defaultChecked aria-label="Agree to the terms" />I agree to the Terms of Service
-          and Privacy Policy
-        </div>
+        <Checkbox defaultChecked className="text-muted-foreground text-xs">
+          I agree to the Terms of Service and Privacy Policy
+        </Checkbox>
         <Button type="button">Create account</Button>
       </div>
     </PreviewCard>
@@ -764,7 +763,7 @@ function DashboardPanel() {
           <div key={label} className="p-1">
             <div className="text-muted-foreground text-[11px]">{label}</div>
             <div className="mt-1 font-bold text-lg">{value}</div>
-            <div className="mt-1 text-[11px] text-success">+{delta} vs last 7 days</div>
+            <div className="mt-1 text-[11px] text-success-strong">+{delta} vs last 7 days</div>
           </div>
         ))}
       </div>
@@ -795,7 +794,7 @@ function AiChatPanel() {
         </span>
         <div>
           <div className="font-medium text-xs">Nebutra Agent</div>
-          <div className="text-[11px] text-success">Online</div>
+          <div className="text-[11px] text-success-strong">Online</div>
         </div>
       </div>
       <div className="ml-auto max-w-[72%] rounded-[var(--radius-lg)] bg-primary p-3 text-primary-foreground text-xs">
@@ -1026,7 +1025,7 @@ function TokenInspector({
             </Badge>
           </div>
           <div className="flex items-end gap-2">
-            <span className="font-bold text-2xl text-success">AA</span>
+            <span className="font-bold text-2xl text-success-strong">AA</span>
             <span className="font-semibold text-lg">6.21:1</span>
             <Badge variant="success" size="sm">
               Pass
@@ -1047,7 +1046,7 @@ function TokenInspector({
           <div className="space-y-2 text-xs">
             {["Tokens updated", "Styles generated", "Variables synced"].map((item) => (
               <div key={item} className="flex items-center gap-2 text-muted-foreground">
-                <Check className="size-3 text-success" />
+                <Check className="size-3 text-success-strong" />
                 {item}
               </div>
             ))}

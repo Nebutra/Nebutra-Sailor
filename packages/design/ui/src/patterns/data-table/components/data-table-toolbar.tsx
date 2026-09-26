@@ -73,7 +73,7 @@ export function DataTableToolbar<TData>({
       <div className="flex flex-1 flex-col gap-2">
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative w-full max-w-sm">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
@@ -94,11 +94,11 @@ export function DataTableToolbar<TData>({
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-          <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1 dark:border-slate-700 dark:bg-slate-900/70">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+          <span className="rounded-full border border-border bg-card px-2.5 py-1">
             {t("common.table.summary", { visible: visibleRows, total: totalRows })}
           </span>
-          <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1 dark:border-slate-700 dark:bg-slate-900/70">
+          <span className="rounded-full border border-border bg-card px-2.5 py-1">
             {t("common.table.columnSummary", { count: visibleColumnsCount })}
           </span>
         </div>
@@ -177,8 +177,8 @@ export function DataTableToolbar<TData>({
                         type="button"
                         className={`rounded border px-2 py-0.5 text-2xs uppercase transition ${
                           pinLeftActive
-                            ? "border-blue-600 bg-blue-600 text-white"
-                            : "border-slate-300 text-slate-500 hover:border-blue-400 hover:text-blue-600"
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border text-muted-foreground hover:border-primary/40 hover:text-primary"
                         }`}
                         onClick={(event) => {
                           event.preventDefault();
@@ -193,8 +193,8 @@ export function DataTableToolbar<TData>({
                         type="button"
                         className={`rounded border px-2 py-0.5 text-2xs uppercase transition ${
                           pinRightActive
-                            ? "border-blue-600 bg-blue-600 text-white"
-                            : "border-slate-300 text-slate-500 hover:border-blue-400 hover:text-blue-600"
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border text-muted-foreground hover:border-primary/40 hover:text-primary"
                         }`}
                         onClick={(event) => {
                           event.preventDefault();

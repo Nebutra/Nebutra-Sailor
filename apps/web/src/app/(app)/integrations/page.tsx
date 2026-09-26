@@ -279,7 +279,7 @@ export default function IntegrationsPage() {
 
                 <div className="mt-4 flex items-center gap-2">
                   {isConnected ? (
-                    <span className="flex items-center gap-1 text-xs font-medium text-success">
+                    <span className="flex items-center gap-1 text-xs font-medium text-success-strong">
                       <Check className="h-3.5 w-3.5" /> Connected
                     </span>
                   ) : (

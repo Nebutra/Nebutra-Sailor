@@ -9,9 +9,12 @@ export const SliderNumberFlow = ({
   className,
   value,
   ref,
+  /** Accessible name for the slider thumb. Pass a translated string. */
+  valueLabel = "Slider Value",
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseSlider.Root> & {
   ref?: React.Ref<React.ElementRef<typeof BaseSlider.Root>> | undefined;
+  valueLabel?: string;
 }) => (
   <BaseSlider.Root
     ref={ref}
@@ -24,7 +27,7 @@ export const SliderNumberFlow = ({
     </BaseSlider.Track>
     <BaseSlider.Thumb
       className="relative block h-5 w-5 rounded-full border border-border bg-background shadow-xs ring-1 ring-border/40 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-      aria-label="Slider Value"
+      aria-label={valueLabel}
     >
       {(Array.isArray(value) ? value[0] : value) != null && (
         <NumberFlow

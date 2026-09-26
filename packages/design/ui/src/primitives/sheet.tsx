@@ -185,6 +185,8 @@ export interface SheetContentProps
   showClose?: boolean;
   /** Alias for `showClose`, matching newer generated examples. */
   close?: boolean;
+  /** Accessible name for the built-in close button. Pass a translated string. */
+  closeLabel?: string;
 }
 
 const SheetContent = ({
@@ -195,6 +197,7 @@ const SheetContent = ({
   noOverlay = false,
   showClose,
   close,
+  closeLabel = "Close",
   style,
   ref,
   ...props
@@ -215,7 +218,7 @@ const SheetContent = ({
         {children}
         {shouldRenderClose ? (
           <SheetClose
-            aria-label="Close"
+            aria-label={closeLabel}
             className={cn(
               "absolute right-[var(--sheet-close-offset)] top-[var(--sheet-close-offset)] inline-flex size-[var(--sheet-close-size)] items-center justify-center rounded-[var(--sheet-close-radius)] text-muted-foreground",
               "transition-[background-color,color,box-shadow] duration-[var(--motion-duration-micro)] ease-[var(--ease-out)] hover:bg-muted hover:text-foreground",
@@ -224,7 +227,7 @@ const SheetContent = ({
             )}
           >
             <XIcon aria-hidden="true" className="size-[var(--sheet-close-icon-size)]" />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{closeLabel}</span>
           </SheetClose>
         ) : null}
       </BaseDialog.Popup>

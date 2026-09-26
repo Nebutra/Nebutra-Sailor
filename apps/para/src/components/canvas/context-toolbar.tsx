@@ -69,7 +69,7 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
       <Chip className="px-2.5" onClick={() => duplicateNode(node.id)}>
         Duplicate
       </Chip>
-      <Chip className="px-2.5 text-destructive" onClick={() => deleteNodes([node.id])}>
+      <Chip className="px-2.5 text-destructive-strong" onClick={() => deleteNodes([node.id])}>
         Delete
       </Chip>
       <InfoPopover node={node} />

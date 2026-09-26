@@ -100,10 +100,10 @@ export function DeleteOrganizationForm({
   return (
     <section className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10/60 p-6">
       <div className="mb-4">
-        {/* text-[hsl(var(--destructive-strong))] rather than text-destructive: --destructive is 5.42:1 on
+        {/* text-[hsl(var(--destructive-strong))] rather than text-destructive-strong: --destructive is 5.42:1 on
             white but only 2.13:1 on the dark card, so it is a fill-only token.
             The registered red ramp is 5.32 light / 5.27 dark. TODO: move to
-            text-destructive once a --destructive-strong companion to
+            text-destructive-strong once a --destructive-strong companion to
             --warning-strong lands in @nebutra/tokens. */}
         <h3 className="text-sm font-semibold text-[hsl(var(--destructive-strong))]">
           {t("title")}

@@ -74,6 +74,8 @@ export type TodoToolProps = {
   /** When true, all items render in the muted "soft" treatment. @default false */
   dimmed?: boolean;
   className?: string;
+  /** Accessible name for the to-do list. Pass a translated string. */
+  listLabel?: string;
 };
 
 // ---------------------------------------------------------------------------
@@ -148,6 +150,7 @@ export const TodoTool = memo(function TodoTool({
   todos = [],
   dimmed = false,
   className,
+  listLabel = "To-dos",
 }: TodoToolProps): ReactElement | null {
   if (state === "loading") {
     return (
@@ -163,7 +166,7 @@ export const TodoTool = memo(function TodoTool({
 
   return (
     <ol
-      aria-label="To-dos"
+      aria-label={listLabel}
       className={cn("flex flex-col gap-2 text-sm leading-relaxed", className)}
     >
       {todos.map((todo, idx) => {

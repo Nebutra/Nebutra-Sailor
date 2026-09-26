@@ -65,7 +65,7 @@ function lineTone(line: string) {
   }
 
   if (trimmed.includes(":")) {
-    return "text-emerald-600 dark:text-emerald-400";
+    return "text-success-strong";
   }
 
   return "text-foreground/78";
@@ -209,9 +209,9 @@ export function KineticConsoleFrame({
     >
       <div className="flex h-14 flex-none items-center gap-4 border-b border-border/60 bg-background/70 px-5 backdrop-blur-xl">
         <div className="flex gap-2" aria-hidden>
-          <span className="size-3 rounded-full border border-border/80 bg-muted shadow-sm transition-colors group-hover/kinetic:bg-red-400/80" />
-          <span className="size-3 rounded-full border border-border/80 bg-muted shadow-sm transition-colors group-hover/kinetic:bg-amber-400/80" />
-          <span className="size-3 rounded-full border border-border/80 bg-muted shadow-sm transition-colors group-hover/kinetic:bg-emerald-400/80" />
+          <span className="size-3 rounded-full border border-border/80 bg-muted shadow-sm transition-colors group-hover/kinetic:bg-destructive/80" />
+          <span className="size-3 rounded-full border border-border/80 bg-muted shadow-sm transition-colors group-hover/kinetic:bg-warning/80" />
+          <span className="size-3 rounded-full border border-border/80 bg-muted shadow-sm transition-colors group-hover/kinetic:bg-success/80" />
         </div>
         <div className="min-w-0 flex-1 text-center">
           <span className="inline-flex max-w-full items-center rounded-[var(--radius-md)] border border-border/50 bg-muted/35 px-4 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">

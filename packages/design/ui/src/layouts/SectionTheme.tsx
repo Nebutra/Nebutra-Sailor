@@ -56,7 +56,7 @@ const sectionThemeDefs = {
 
   // Architecture: "Terminal Matrix" - Monochrome with subtle pattern
   architecture: {
-    backgroundColor: "bg-[var(--neutral-1)]",
+    backgroundColor: "bg-neutral-1",
     pattern: "dots",
     patternColor: "currentColor",
     patternOpacity: 0.03,
@@ -69,7 +69,8 @@ const sectionThemeDefs = {
     patternColor: "hsl(var(--accent))",
     patternOpacity: 0.04,
     accentColor: "hsl(var(--accent))",
-    gradient: "bg-gradient-to-br from-cyan-500/5 via-transparent to-fuchsia-500/5",
+    gradient:
+      "bg-gradient-to-br from-[hsl(var(--chart-2))]/5 via-transparent to-[hsl(var(--chart-3))]/5",
   },
 
   // Features: "Capability Map" - Subtle tech pattern
@@ -134,7 +135,7 @@ const sectionThemeDefs = {
 
   // Terminal: "Developer Immersion" - Code environment feel
   terminal: {
-    backgroundColor: "bg-[var(--neutral-1)]",
+    backgroundColor: "bg-neutral-1",
     pattern: "none",
   },
 } satisfies Record<string, SectionThemeConfig>;
@@ -175,7 +176,7 @@ export interface ThemedSectionProps extends Omit<React.HTMLAttributes<HTMLElemen
  * @example
  * <ThemedSection
  *   theme={{
- *     backgroundColor: "bg-[var(--neutral-2)]",
+ *     backgroundColor: "bg-neutral-2",
  *     pattern: "grid",
  *     patternColor: "hsl(var(--accent))",
  *     patternOpacity: 0.05,

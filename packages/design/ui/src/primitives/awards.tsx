@@ -19,10 +19,17 @@ export interface AwardsComponentProps {
 }
 
 const levelColors = {
-  bronze: "from-amber-600 to-amber-800",
-  silver: "from-gray-400 to-gray-600",
-  gold: "from-yellow-400 to-yellow-600",
-  platinum: "from-muted to-muted-foreground",
+  // Bronze, silver and gold are materials, not brand roles: a Brand Package
+  // must not turn a gold medal indigo, so these stay literal.
+  // Each material carries its own ink: the pill used text-primary-foreground,
+  // which flips to near-black with the House ink in dark mode.
+  // allow-palette: medal material colour (bronze) and its ink, not a themeable role
+  bronze: "from-amber-600 to-amber-800 text-white",
+  // allow-palette: medal material colour (silver) and its ink, not a themeable role
+  silver: "from-gray-500 to-gray-700 text-white",
+  // allow-palette: medal material colour (gold) and its ink, not a themeable role
+  gold: "from-yellow-400 to-yellow-600 text-amber-950",
+  platinum: "from-muted to-muted-foreground text-foreground",
 };
 
 export function Awards({
@@ -92,7 +99,7 @@ export function Awards({
           <path
             d={createSerratedPath()}
             strokeWidth="0.2"
-            className="fill-white stroke-black dark:fill-black"
+            className="fill-background stroke-foreground"
           />
 
           {/* Inner circle */}
@@ -100,17 +107,17 @@ export function Awards({
             cx="96"
             cy="96"
             r="78"
-            className="fill-white stroke-black dark:fill-black"
+            className="fill-background stroke-foreground"
             strokeWidth="0.2"
           />
 
           {/* Curved text - top */}
-          <text className="fill-white text-xl font-bold">
+          <text className="fill-background text-xl font-bold">
             <textPath
               href="#top-curve"
               startOffset="50%"
               textAnchor="middle"
-              className="fill-black"
+              className="fill-foreground"
             >
               {title}
             </textPath>
@@ -122,7 +129,7 @@ export function Awards({
               href="#bottom-curve"
               startOffset="50%"
               textAnchor="middle"
-              className="fill-black"
+              className="fill-foreground"
             >
               {subtitle}
             </textPath>
@@ -170,7 +177,7 @@ export function Awards({
         <div className="z-10 px-8 text-center">
           <div
             className={cn(
-              "mt-6 mb-2 inline-block rounded-[var(--radius-md)] px-4 py-1 tracking-wider text-white",
+              "mt-6 mb-2 inline-block rounded-[var(--radius-md)] px-4 py-1 tracking-wider",
               `bg-gradient-to-r ${levelColors[level]}`,
             )}
           >

@@ -58,7 +58,7 @@ const iconToneClassName: Record<EmptyStateVariant, string> = {
   "no-results": "text-muted-foreground",
   cleared: "text-muted-foreground",
   permission: "text-muted-foreground",
-  error: "text-destructive",
+  error: "text-destructive-strong",
 };
 
 type EmptyStateCssVar =

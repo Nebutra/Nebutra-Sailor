@@ -279,7 +279,7 @@ function CreditSummarySection({
 
                 <span
                   className={`text-sm font-semibold ${
-                    transaction.amount >= 0 ? "text-success" : "text-neutral-12"
+                    transaction.amount >= 0 ? "text-success-strong" : "text-neutral-12"
                   }`}
                 >
                   {formatSignedCredits(transaction.amount)}

@@ -5,6 +5,7 @@ import * as React from "react";
 import { type SwitchSize, switchSizes, switchTokens } from "../tokens/components/switch";
 import { cn } from "../utils/cn";
 import { asPlainStyle } from "../utils/primitive-props";
+import { controlFocusProxyClassName } from "./form-control";
 
 type SwitchCssVar =
   | "--switch-height"
@@ -217,6 +218,7 @@ const SwitchControl = function SwitchControl({
           "inline-flex h-full w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-[var(--switch-control-radius)] px-[var(--switch-control-padding-x)] font-medium text-[length:var(--switch-font-size)]",
           "text-muted-foreground transition-[background-color,box-shadow,color] duration-[var(--switch-duration)] ease-[var(--switch-easing)]",
           "peer-checked:bg-background peer-checked:text-foreground peer-checked:shadow-sm",
+          controlFocusProxyClassName,
           "",
           "peer-disabled:pointer-events-none peer-disabled:text-muted-foreground/60",
           "[&_svg]:size-[var(--switch-icon-size)]",

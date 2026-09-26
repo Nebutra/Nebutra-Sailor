@@ -297,7 +297,7 @@ function DatePicker({
       )}
 
       {typeof error === "string" && (
-        <p id={errorId} role="alert" className="text-xs font-medium text-destructive">
+        <p id={errorId} role="alert" className="text-xs font-medium text-destructive-strong">
           {error}
         </p>
       )}

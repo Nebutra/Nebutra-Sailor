@@ -132,64 +132,97 @@ type FolderColorTokens = {
 };
 
 const colorMap: Readonly<Record<FolderColor, FolderColorTokens>> = {
+  // "blue" and "grey"/"black" have a real 12-step token scale (blue-N,
+  // neutral-N) to draw from, so they use it. Yellow/orange/red have no
+  // design-token equivalent -- the scale only covers blue, cyan and neutral --
+  // so those keep the Tailwind default palette (allow-palette per line) to
+  // stay a genuine "red/orange/yellow folder", not a brand-tinted one.
   blue: {
-    folder: "from-blue-400 to-blue-500",
-    flap: "bg-blue-300/50",
-    paperBack: "bg-blue-100/60",
-    paperFront: "bg-blue-50",
-    paperLine: "bg-blue-300/40",
-    paperBorder: "border-blue-200",
-    labelBg: "bg-blue-800/20",
+    folder: "from-blue-7 to-blue-8",
+    flap: "bg-blue-6/50",
+    paperBack: "bg-blue-3/60",
+    paperFront: "bg-blue-2",
+    paperLine: "bg-blue-6/40",
+    paperBorder: "border-blue-4",
+    labelBg: "bg-blue-8/20",
+    // allow-palette: glossy paper-material highlight on the folder edge -- same fixed sheen for every color variant, not brand chrome
     folderBorder: "border-white/30",
   },
   black: {
-    folder: "from-neutral-800 to-neutral-900",
-    flap: "bg-neutral-600/50",
-    paperBack: "bg-neutral-500/60",
-    paperFront: "bg-neutral-100",
-    paperLine: "bg-neutral-300",
-    paperBorder: "border-neutral-500",
+    folder: "from-neutral-8 to-neutral-9",
+    flap: "bg-neutral-6/50",
+    paperBack: "bg-neutral-5/60",
+    paperFront: "bg-neutral-2",
+    paperLine: "bg-neutral-4",
+    paperBorder: "border-neutral-5",
+    // allow-palette: label chip needs a light translucent tint against a near-black folder body regardless of brand or dark mode
     labelBg: "bg-white/10",
+    // allow-palette: glossy paper-material highlight on the folder edge -- same fixed sheen for every color variant, not brand chrome
     folderBorder: "border-white/10",
   },
   yellow: {
+    // allow-palette: categorical folder colour ("yellow folder") -- no yellow step exists in the blue/cyan/neutral token scale
     folder: "from-yellow-400 to-yellow-500",
+    // allow-palette: categorical folder colour, see above
     flap: "bg-yellow-200/50",
+    // allow-palette: categorical folder colour, see above
     paperBack: "bg-yellow-100/60",
+    // allow-palette: categorical folder colour, see above
     paperFront: "bg-yellow-50",
+    // allow-palette: categorical folder colour, see above
     paperLine: "bg-yellow-400/40",
+    // allow-palette: categorical folder colour, see above
     paperBorder: "border-yellow-200",
+    // allow-palette: categorical folder colour, see above
     labelBg: "bg-yellow-800/20",
+    // allow-palette: glossy paper-material highlight on the folder edge -- same fixed sheen for every color variant, not brand chrome
     folderBorder: "border-white/30",
   },
   orange: {
+    // allow-palette: categorical folder colour ("orange folder") -- no orange step exists in the blue/cyan/neutral token scale
     folder: "from-orange-400 to-orange-500",
+    // allow-palette: categorical folder colour, see above
     flap: "bg-orange-300/50",
+    // allow-palette: categorical folder colour, see above
     paperBack: "bg-orange-100/60",
+    // allow-palette: categorical folder colour, see above
     paperFront: "bg-orange-50",
+    // allow-palette: categorical folder colour, see above
     paperLine: "bg-orange-400/40",
+    // allow-palette: categorical folder colour, see above
     paperBorder: "border-orange-200",
+    // allow-palette: categorical folder colour, see above
     labelBg: "bg-orange-900/20",
+    // allow-palette: glossy paper-material highlight on the folder edge -- same fixed sheen for every color variant, not brand chrome
     folderBorder: "border-white/30",
   },
   red: {
+    // allow-palette: categorical folder colour ("red folder") -- no red step exists in the blue/cyan/neutral token scale
     folder: "from-red-400 to-red-500",
+    // allow-palette: categorical folder colour, see above
     flap: "bg-red-300/50",
+    // allow-palette: categorical folder colour, see above
     paperBack: "bg-red-100/60",
+    // allow-palette: categorical folder colour, see above
     paperFront: "bg-red-50",
+    // allow-palette: categorical folder colour, see above
     paperLine: "bg-red-400/40",
+    // allow-palette: categorical folder colour, see above
     paperBorder: "border-red-200",
+    // allow-palette: categorical folder colour, see above
     labelBg: "bg-red-900/20",
+    // allow-palette: glossy paper-material highlight on the folder edge -- same fixed sheen for every color variant, not brand chrome
     folderBorder: "border-white/30",
   },
   grey: {
-    folder: "from-gray-400 to-gray-500",
-    flap: "bg-gray-300/50",
-    paperBack: "bg-gray-200/60",
-    paperFront: "bg-gray-100",
-    paperLine: "bg-gray-400/40",
-    paperBorder: "border-gray-300",
-    labelBg: "bg-gray-800/20",
+    folder: "from-neutral-6 to-neutral-7",
+    flap: "bg-neutral-5/50",
+    paperBack: "bg-neutral-4/60",
+    paperFront: "bg-neutral-2",
+    paperLine: "bg-neutral-6/40",
+    paperBorder: "border-neutral-5",
+    labelBg: "bg-neutral-9/20",
+    // allow-palette: glossy paper-material highlight on the folder edge -- same fixed sheen for every color variant, not brand chrome
     folderBorder: "border-white/40",
   },
 };
@@ -317,6 +350,7 @@ export const Folder = function Folder({
       {/* Label */}
       {label && (
         <div className={cn("absolute z-20 rounded-full", s.label, c.labelBg)}>
+          {/* allow-palette: label chip text needs a fixed light colour against every translucent folder-colour tint (yellow, red, blue...), not the brand foreground */}
           <span className="font-medium text-white">{label}</span>
         </div>
       )}

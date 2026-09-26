@@ -25,6 +25,8 @@ export interface ExpandableTabsProps {
   className?: string;
   activeColor?: string;
   onChange?: (index: number | null) => void;
+  /** Accessible name for the tab list. Pass a translated string. */
+  tabsLabel?: string;
 }
 
 const spanVariants = {
@@ -40,6 +42,7 @@ export function ExpandableTabs({
   className,
   activeColor = "text-primary",
   onChange,
+  tabsLabel = "Navigation tabs",
 }: ExpandableTabsProps) {
   const [selected, setSelected] = React.useState<number | null>(null);
   const outsideClickRef = React.useRef<HTMLDivElement>(null);
@@ -68,7 +71,7 @@ export function ExpandableTabs({
         className,
       )}
       role="tablist"
-      aria-label="Navigation tabs"
+      aria-label={tabsLabel}
     >
       {tabs.map((tab, index) => {
         if (tab.type === "separator") {

@@ -187,7 +187,7 @@ export function QAPage({
               aria-label={question.bookmarked ? "Remove bookmark" : "Bookmark question"}
               aria-pressed={question.bookmarked}
               onClick={handleBookmarkToggle}
-              className={cn("p-2", question.bookmarked && "bg-warning/10 text-warning")}
+              className={cn("p-2", question.bookmarked && "bg-warning/10 text-warning-strong")}
             >
               <Bookmark className="h-4 w-4" aria-hidden="true" />
             </Button>
@@ -234,14 +234,17 @@ export function QAPage({
                     aria-label={answer.isAccepted ? "Unaccept this answer" : "Accept this answer"}
                     aria-pressed={answer.isAccepted}
                     onClick={() => handleAccept(answer.id)}
-                    className={cn("p-2", answer.isAccepted && "bg-success/10 text-success")}
+                    className={cn("p-2", answer.isAccepted && "bg-success/10 text-success-strong")}
                   >
                     <Check className="h-5 w-5" aria-hidden="true" />
                   </Button>
                   {answer.isAccepted && (
                     <div className="text-center">
-                      <StarFill aria-hidden="true" className="mx-auto mb-1 h-4 w-4 text-success" />
-                      <span className="font-medium text-success text-xs">Accepted</span>
+                      <StarFill
+                        aria-hidden="true"
+                        className="mx-auto mb-1 h-4 w-4 text-success-strong"
+                      />
+                      <span className="font-medium text-success-strong text-xs">Accepted</span>
                     </div>
                   )}
                 </div>

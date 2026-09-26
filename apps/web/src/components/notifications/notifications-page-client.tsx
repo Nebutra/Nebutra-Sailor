@@ -517,7 +517,7 @@ function ErrorBanner({ message }: { message: string }): React.ReactElement {
   return (
     <div
       role="alert"
-      className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-4 py-2 text-sm text-destructive"
+      className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-4 py-2 text-sm text-destructive-strong"
     >
       {message}
     </div>

@@ -21,7 +21,7 @@ export const buttonVariants = cva(
       variant: {
         // Recipe-driven via packages/design/tokens/recipe.css (.btn-brand-default)
         default: "btn-brand-default",
-        ink: "bg-[var(--neutral-12)] text-[var(--neutral-1)] ring-1 ring-inset ring-[color:var(--neutral-1)]/5 hover:bg-[var(--neutral-11)] hover:-translate-y-px active:translate-y-0 transition-[transform,background-color] duration-micro",
+        ink: "bg-neutral-12 text-neutral-1 ring-1 ring-inset ring-[color:var(--neutral-1)]/5 hover:bg-neutral-11 hover:-translate-y-px active:translate-y-0 transition-[transform,background-color] duration-micro",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",

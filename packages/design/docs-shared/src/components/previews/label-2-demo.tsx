@@ -6,7 +6,7 @@ export function Label2Demo() {
     <div className="space-y-2 max-w-sm w-full">
       <Label htmlFor="name">
         Full name
-        <span className="ml-1 text-destructive" aria-hidden="true">
+        <span className="ml-1 text-destructive-strong" aria-hidden="true">
           *
         </span>
       </Label>

@@ -288,7 +288,7 @@ export function DiscoverDeck() {
             <CofounderCard data={current} />
             {/* Swipe stamps */}
             <span
-              className="pointer-events-none absolute left-4 top-4 -rotate-12 rounded-md border-2 border-success px-2 py-0.5 text-sm font-extrabold uppercase tracking-wider text-success"
+              className="pointer-events-none absolute left-4 top-4 -rotate-12 rounded-md border-2 border-success px-2 py-0.5 text-sm font-extrabold uppercase tracking-wider text-success-strong"
               style={{ opacity: likeOpacity }}
             >
               Interested
@@ -365,7 +365,7 @@ export function DiscoverDeck() {
             hint="→"
             onClick={() => commit("INTERESTED", 1)}
             disabled={busy || leaving !== 0}
-            className="text-success hover:border-success/40 hover:bg-success/10"
+            className="text-success-strong hover:border-success/40 hover:bg-success/10"
           >
             <Heart className="size-6" aria-hidden="true" />
           </DeckAction>

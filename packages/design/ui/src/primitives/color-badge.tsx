@@ -12,24 +12,32 @@ import { cn } from "../utils/cn";
  */
 const colorBadgeVariants = {
   gray: "bg-muted text-muted-foreground fill-muted-foreground",
-  "gray-subtle": "bg-muted text-muted-foreground fill-gray-900",
-  blue: "bg-blue-700 text-white fill-white",
-  "blue-subtle": "bg-blue-200 text-blue-900 fill-blue-900",
+  "gray-subtle": "bg-muted text-muted-foreground fill-muted-foreground",
+  blue: "bg-info text-info-foreground fill-info-foreground",
+  "blue-subtle": "bg-blue-3 text-blue-11 fill-blue-11",
+  // allow-palette: categorical hue with no token equivalent (purple/violet has no semantic slot; --category-N is too desaturated for a solid badge fill)
   purple: "bg-purple-700 text-white fill-white",
+  // allow-palette: categorical hue with no token equivalent (purple/violet has no semantic slot)
   "purple-subtle": "bg-purple-200 text-purple-900 fill-purple-900",
-  amber: "bg-amber-600 text-black fill-black",
-  "amber-subtle": "bg-amber-200 text-amber-900 fill-amber-900",
-  red: "bg-red-700 text-white fill-white",
-  "red-subtle": "bg-red-200 text-red-900 fill-red-900",
+  amber: "bg-warning text-warning-foreground fill-warning-foreground",
+  "amber-subtle": "bg-warning/15 text-warning-strong fill-warning-strong",
+  red: "bg-destructive text-destructive-foreground fill-destructive-foreground",
+  "red-subtle": "bg-destructive/15 text-destructive-strong fill-destructive-strong",
+  // allow-palette: categorical hue with no token equivalent (pink has no semantic slot)
   pink: "bg-pink-700 text-white fill-white",
+  // allow-palette: categorical hue with no token equivalent (pink has no semantic slot)
   "pink-subtle": "bg-pink-300 text-pink-900 fill-pink-900",
-  green: "bg-green-700 text-white fill-white",
-  "green-subtle": "bg-green-200 text-green-900 fill-green-900",
-  teal: "bg-teal-700 text-white fill-white",
-  "teal-subtle": "bg-teal-300 text-teal-900 fill-teal-900",
-  inverted: "bg-muted text-muted-foreground fill-gray-100 dark:fill-gray-900",
-  trial: "bg-gradient-to-br from-blue-500 to-pink-500 text-white fill-white",
-  turbo: "bg-gradient-to-br from-rose-500 to-blue-500 text-white fill-white",
+  green: "bg-success text-success-foreground fill-success-foreground",
+  "green-subtle": "bg-success/15 text-success-strong fill-success-strong",
+  teal: "bg-cyan-11 text-cyan-1 fill-cyan-1",
+  "teal-subtle": "bg-cyan-3 text-cyan-11 fill-cyan-11",
+  inverted: "bg-muted text-muted-foreground fill-background dark:fill-foreground",
+  // The same trial / turbo gradients Badge uses (--ds-trial-*, --ds-turbo-*),
+  // not a second hand-picked pair. Fixed and vivid in both themes: white ink.
+  // allow-palette: fixed vivid gradient, white ink in both themes
+  trial: "bg-gradient-to-br from-trial-start to-trial-end text-white fill-white",
+  // allow-palette: fixed vivid gradient, white ink in both themes
+  turbo: "bg-gradient-to-br from-turbo-start to-turbo-end text-white fill-white",
   pill: "bg-background text-foreground fill-foreground border border-border",
 } as const;
 

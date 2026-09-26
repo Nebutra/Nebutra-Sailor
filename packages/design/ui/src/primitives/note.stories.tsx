@@ -110,7 +110,7 @@ export const DarkMode: Story = {
     backgrounds: { default: "dark" },
   },
   render: () => (
-    <div className="dark grid max-w-3xl gap-3 rounded-lg bg-[var(--neutral-1)] p-6">
+    <div className="dark grid max-w-3xl gap-3 rounded-lg bg-neutral-1 p-6">
       {tones.map((tone) => (
         <Note key={tone} tone={tone}>
           This {tone} note remains legible in dark mode.

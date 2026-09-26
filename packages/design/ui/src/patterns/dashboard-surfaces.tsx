@@ -6,8 +6,8 @@ type DashboardMetricTone = "neutral" | "blue" | "green" | "amber";
 const metricToneClasses: Record<DashboardMetricTone, string> = {
   neutral: "bg-muted/70 text-muted-foreground ring-border",
   blue: "bg-info/10 text-info ring-info/20",
-  green: "bg-success/10 text-success ring-success/20",
-  amber: "bg-warning/10 text-warning ring-warning/20",
+  green: "bg-success/10 text-success-strong ring-success/20",
+  amber: "bg-warning/10 text-warning-strong ring-warning/20",
 };
 
 export interface DashboardCommandSurfaceProps {

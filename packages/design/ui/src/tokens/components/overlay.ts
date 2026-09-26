@@ -38,6 +38,7 @@ export const overlayTokens = {
 export const overlayClassNames = {
   focusRing: overlayFocusRingClassName,
   backdrop:
+    // allow-palette: dialog backdrop dims arbitrary app content behind it, must stay dark in both themes
     "fixed inset-0 bg-black/40 transition-[opacity] duration-[var(--motion-duration-flow)] ease-[var(--ease-brand)] data-ending-style:opacity-0 data-starting-style:opacity-0 data-ending-style:duration-[var(--motion-duration-micro)] motion-reduce:transition-none",
   modalSurface: [
     "fixed left-1/2 top-1/2 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4",

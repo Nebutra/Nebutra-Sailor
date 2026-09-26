@@ -85,7 +85,7 @@ export const InheritsColour: Story = {
     <div className="flex flex-col gap-3">
       {[
         ["text-primary", "on a checked control"],
-        ["text-destructive", "invalid"],
+        ["text-destructive-strong", "invalid"],
         ["text-muted-foreground", "disabled"],
       ].map(([cls, label]) => (
         <div key={cls} className={`flex items-center gap-3 ${cls}`}>

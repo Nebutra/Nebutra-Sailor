@@ -9,11 +9,12 @@ import { cn } from "../utils/cn";
  *  from FileAttachment (which is an *interactive* chip for chat attachments).
  *  FileCard is purely visual — no hover, no interaction.
  *
- *  Color tokens (categorical, NOT brand chrome):
- *    The 25 format banners (`bg-blue-500` for .doc, `bg-red-500` for .pdf,
- *    etc.) are categorical labels — the same reasoning as Folder. CLAUDE.md's
- *    semantic-token-only rule applies to brand chrome, not to visual props
- *    that encode discriminating categories.
+ *  Banner colour: three families, each a 12-step pair that flips together
+ *  between themes — blue (docs, slides, code), cyan (data, markup, styles),
+ *  neutral (text, archives, media). Step 11/10 fill with step 1 ink measures
+ *  ≥5:1 in light and dark. The label names the format; the hue only groups
+ *  it, so three honest families beat 26 hues whose ink cannot be right on all
+ *  of them (a white label on a bright chart cyan was 1.5:1).
  *
  *  Card background uses `bg-card` (theme-aware) so the off-white "paper" still
  *  reads correctly across light/dark themes; the colored banner provides the
@@ -62,32 +63,32 @@ export type FileCardProps = {
 // ---------------------------------------------------------------------------
 
 const BANNER_COLOR: Readonly<Record<FileFormat, string>> = {
-  doc: "bg-blue-500 text-white",
-  pdf: "bg-red-500 text-white",
-  md: "bg-neutral-600 text-white",
-  mdx: "bg-neutral-600 text-white",
-  txt: "bg-gray-500 text-white",
-  csv: "bg-teal-700 text-white",
-  xls: "bg-emerald-600 text-white",
-  xlsx: "bg-emerald-600 text-white",
-  ppt: "bg-orange-500 text-white",
-  pptx: "bg-orange-500 text-white",
-  zip: "bg-purple-500 text-white",
-  rar: "bg-purple-600 text-white",
-  tar: "bg-yellow-600 text-white",
-  gz: "bg-yellow-700 text-white",
-  html: "bg-orange-600 text-white",
-  js: "bg-yellow-600 text-white",
-  jsx: "bg-blue-600 text-white",
-  css: "bg-blue-600 text-white",
-  json: "bg-yellow-500 text-white",
-  tsx: "bg-blue-600 text-white",
-  code: "bg-orange-600 text-white",
-  img: "bg-pink-500 text-white",
-  png: "bg-neutral-600 text-white",
-  jpg: "bg-green-700 text-white",
-  jpeg: "bg-green-700 text-white",
-  video: "bg-green-700 text-white",
+  doc: "bg-blue-11 text-blue-1",
+  pdf: "bg-neutral-10 text-neutral-1",
+  md: "bg-neutral-10 text-neutral-1",
+  mdx: "bg-neutral-10 text-neutral-1",
+  txt: "bg-neutral-10 text-neutral-1",
+  csv: "bg-cyan-11 text-cyan-1",
+  xls: "bg-cyan-11 text-cyan-1",
+  xlsx: "bg-cyan-11 text-cyan-1",
+  ppt: "bg-blue-11 text-blue-1",
+  pptx: "bg-blue-11 text-blue-1",
+  zip: "bg-neutral-10 text-neutral-1",
+  rar: "bg-neutral-10 text-neutral-1",
+  tar: "bg-neutral-10 text-neutral-1",
+  gz: "bg-neutral-10 text-neutral-1",
+  html: "bg-cyan-11 text-cyan-1",
+  js: "bg-blue-11 text-blue-1",
+  jsx: "bg-blue-11 text-blue-1",
+  css: "bg-cyan-11 text-cyan-1",
+  json: "bg-cyan-11 text-cyan-1",
+  tsx: "bg-blue-11 text-blue-1",
+  code: "bg-blue-11 text-blue-1",
+  img: "bg-neutral-10 text-neutral-1",
+  png: "bg-neutral-10 text-neutral-1",
+  jpg: "bg-neutral-10 text-neutral-1",
+  jpeg: "bg-neutral-10 text-neutral-1",
+  video: "bg-neutral-10 text-neutral-1",
 };
 
 // ---------------------------------------------------------------------------
@@ -224,7 +225,7 @@ function SlidePlaceholder() {
     <>
       <div className="bg-foreground/5 mb-1.5 space-y-1 rounded border p-1">
         <div className="flex justify-center gap-1">
-          <div className="size-3 rounded-[var(--radius-sm)] bg-orange-400/40" />
+          <div className="size-3 rounded-[var(--radius-sm)] bg-[var(--category-3)]/40" />
         </div>
         <div className="bg-foreground/15 mx-auto h-0.75 w-8 rounded-full" />
       </div>
@@ -244,7 +245,7 @@ function ImagePlaceholder() {
   return (
     <div className="bg-foreground/5 mb-1.5 space-y-1 rounded border p-1">
       <div className="flex justify-center gap-1">
-        <div className="size-3 rounded-[var(--radius-sm)] bg-yellow-400/40" />
+        <div className="size-3 rounded-[var(--radius-sm)] bg-[var(--category-4)]/40" />
       </div>
       <div className="bg-foreground/15 mx-auto mt-1 h-0.75 w-4 rounded-full" />
       <div className="bg-foreground/15 mx-auto h-0.75 w-8 rounded-full" />
@@ -256,7 +257,7 @@ function VideoPlaceholder() {
   return (
     <div className="bg-foreground/5 mb-1.5 space-y-1 rounded border p-1">
       <div className="flex justify-center gap-1">
-        <PlayFill className="size-3 text-green-400/70" aria-hidden="true" />
+        <PlayFill className="size-3 text-chart-5/70" aria-hidden="true" />
       </div>
       <div className="bg-foreground/15 mx-auto mt-1 h-0.75 w-4 rounded-full" />
       <div className="bg-foreground/15 mx-auto h-0.75 w-8 rounded-full" />
@@ -269,22 +270,22 @@ function HtmlCodePlaceholder() {
     <div className="space-y-1">
       <div className="flex items-center gap-0.5">
         <div className="text-foreground/30 font-mono text-[5px]">&lt;</div>
-        <div className="h-0.75 w-3 rounded-full bg-emerald-400/60" />
+        <div className="h-0.75 w-3 rounded-full bg-chart-2/60" />
         <div className="text-foreground/30 font-mono text-[5px]">&gt;</div>
       </div>
       <div className="flex items-center gap-0.5 pl-1">
         <div className="text-foreground/30 font-mono text-[5px]">&lt;</div>
-        <div className="h-0.75 w-2.5 rounded-full bg-sky-400/60" />
+        <div className="h-0.75 w-2.5 rounded-full bg-chart-2/60" />
         <div className="text-foreground/30 font-mono text-[5px]">&gt;</div>
       </div>
       <div className="flex items-center gap-0.5 pl-1">
         <div className="text-foreground/30 font-mono text-[5px]">&lt;/</div>
-        <div className="h-0.75 w-2.5 rounded-full bg-sky-400/60" />
+        <div className="h-0.75 w-2.5 rounded-full bg-chart-2/60" />
         <div className="text-foreground/30 font-mono text-[5px]">&gt;</div>
       </div>
       <div className="flex items-center gap-0.5">
         <div className="text-foreground/30 font-mono text-[5px]">&lt;</div>
-        <div className="h-0.75 w-1 rounded-full bg-emerald-400/60" />
+        <div className="h-0.75 w-1 rounded-full bg-chart-2/60" />
         <div className="text-foreground/30 font-mono text-[5px]">/&gt;</div>
       </div>
     </div>
@@ -298,16 +299,16 @@ function CssPlaceholder() {
         <div className="text-foreground/40 font-mono text-[6px]">{"{"}</div>
       </div>
       <div className="flex items-center gap-1 pl-1.5">
-        <div className="h-0.75 w-3 rounded-full bg-sky-400/60" />
-        <div className="h-0.75 w-4 rounded-full bg-sky-400/60" />
+        <div className="h-0.75 w-3 rounded-full bg-chart-2/60" />
+        <div className="h-0.75 w-4 rounded-full bg-chart-2/60" />
       </div>
       <div className="flex items-center gap-1 pl-1.5">
-        <div className="h-0.75 w-4 rounded-full bg-sky-400/60" />
-        <div className="h-0.75 w-2 rounded-full bg-sky-400/60" />
+        <div className="h-0.75 w-4 rounded-full bg-chart-2/60" />
+        <div className="h-0.75 w-2 rounded-full bg-chart-2/60" />
       </div>
       <div className="flex items-center gap-1 pl-1.5">
-        <div className="h-0.75 w-3 rounded-full bg-sky-400/60" />
-        <div className="h-0.75 w-4 rounded-full bg-sky-400/60" />
+        <div className="h-0.75 w-3 rounded-full bg-chart-2/60" />
+        <div className="h-0.75 w-4 rounded-full bg-chart-2/60" />
       </div>
       <div className="flex items-center gap-1">
         <div className="text-foreground/40 font-mono text-[6px]">{"}"}</div>

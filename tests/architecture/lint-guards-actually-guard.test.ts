@@ -131,6 +131,18 @@ const CASES: Case[] = [
     violation: 'document.documentElement.dataset.lintProbeUnread = "on";\n',
   },
   {
+    // A status fill used as ink: text-warning is 2.0:1 in light mode.
+    guard: "lint-token-pairing",
+    violation: 'export const C = () => <p className="text-warning">Quota almost used</p>;\n',
+  },
+  {
+    // A source component carrying a palette of its own — how the checkbox
+    // stayed Geist-black under every Brand Package.
+    guard: "lint-primitive-hygiene",
+    violation: 'export const Box = () => <span className="bg-gray-900 text-white" />;\n',
+    path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

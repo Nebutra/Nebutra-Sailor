@@ -92,7 +92,7 @@ export function DesignMdImport({ onImported }: DesignMdImportProps) {
 
       {error !== null && (
         <div
-          className="flex items-start gap-2 rounded-[var(--radius-md)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-destructive text-xs"
+          className="flex items-start gap-2 rounded-[var(--radius-md)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-destructive-strong text-xs"
           role="alert"
         >
           <Warning className="mt-0.5 size-3.5 shrink-0" />
@@ -122,7 +122,7 @@ export function DesignMdImport({ onImported }: DesignMdImportProps) {
           <div className="mb-2 flex items-center gap-2 font-medium text-foreground">
             {isComplete ? (
               <>
-                <Check className="size-3.5 text-success" />
+                <Check className="size-3.5 text-success-strong" />
                 <span>完整映射 — all required tokens present</span>
               </>
             ) : (
@@ -169,7 +169,7 @@ export function DesignMdImport({ onImported }: DesignMdImportProps) {
                 {lastTheme.report.warnings.map((w, i) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <li key={i} className="flex items-start gap-1.5">
-                    <Warning className="mt-0.5 size-3 shrink-0 text-warning" />
+                    <Warning className="mt-0.5 size-3 shrink-0 text-warning-strong" />
                     {w}
                   </li>
                 ))}

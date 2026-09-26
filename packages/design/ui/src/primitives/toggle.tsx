@@ -9,6 +9,7 @@ import {
 } from "../tokens/components/toggle";
 import { cn } from "../utils";
 import { asPlainStyle } from "../utils/primitive-props";
+import { controlFocusProxyClassName } from "./form-control";
 
 export type ToggleDirection = "label-first" | "switch-first" | "switch-last";
 export type ToggleLabelCasing = "title" | "normal";
@@ -169,6 +170,7 @@ const Toggle = ({
         aria-hidden="true"
         className={cn(
           "relative inline-flex h-[var(--toggle-track-height)] w-[var(--toggle-track-width)] items-center rounded-[var(--toggle-radius)] border bg-[var(--toggle-track-off)] p-px",
+          controlFocusProxyClassName,
           "border-[var(--toggle-track-border)] transition-[background-color,border-color] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
           "peer-checked:bg-[var(--toggle-track-on)]",
           "peer-checked:[&>span]:translate-x-[var(--toggle-thumb-translate)] peer-checked:[&>span]:text-[var(--toggle-icon-on)]",

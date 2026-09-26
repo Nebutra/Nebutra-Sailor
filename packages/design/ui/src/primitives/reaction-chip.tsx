@@ -14,6 +14,8 @@ export interface ReactionChipProps {
   selected?: string | undefined;
   /** Additional CSS classes */
   className?: string;
+  /** Accessible name for the reaction picker group. Pass a translated string. */
+  addReactionLabel?: string;
 }
 export interface ReactionBadgeProps {
   /** Emoji to display */
@@ -65,6 +67,7 @@ export function ReactionChip({
   className,
   emojis = ["👍", "❤️", "😂", "🎉"],
   selected,
+  addReactionLabel = "Add reaction",
 }: ReactionChipProps) {
   return (
     // biome-ignore lint/a11y/useSemanticElements: ARIA pattern
@@ -76,7 +79,7 @@ export function ReactionChip({
         className,
       )}
       role="group"
-      aria-label="Add reaction"
+      aria-label={addReactionLabel}
     >
       {emojis.map((em) => {
         const isActive = selected === em;

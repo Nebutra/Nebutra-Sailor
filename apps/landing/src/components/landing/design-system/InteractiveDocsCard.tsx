@@ -49,7 +49,7 @@ export function InteractiveDocsCard() {
               <span className="text-blue-600 dark:text-blue-400">Button</span> ={" "}
               <span className="text-amber-600 dark:text-amber-400">cva</span>(<br />
               &nbsp;&nbsp;
-              <span className="text-success">"inline-flex font-medium"</span>
+              <span className="text-success-strong">"inline-flex font-medium"</span>
               ,<br />
               &nbsp;&nbsp;&#123; variants: &#123;{" "}
               <span className="text-blue-500 dark:text-blue-300">size</span>: ... &#125; &#125;

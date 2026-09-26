@@ -31,7 +31,7 @@ export const Default: Story = {
 };
 
 /**
- * A `<span className="text-destructive">*</span>` marks a required field —
+ * A `<span className="text-destructive-strong">*</span>` marks a required field —
  * this is a plain child, not a prop, because `Label` renders whatever you
  * give it.
  */
@@ -39,7 +39,7 @@ export const Required: Story = {
   render: () => (
     <div className="flex flex-col gap-2">
       <Label htmlFor="project-name">
-        Project name <span className="text-destructive">*</span>
+        Project name <span className="text-destructive-strong">*</span>
       </Label>
       <Input id="project-name" placeholder="my-awesome-project" required />
     </div>

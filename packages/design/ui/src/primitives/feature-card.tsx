@@ -260,7 +260,7 @@ export function CircularUI({ label, circles, className }: CircularUIProps) {
                   circle.pattern === "border",
                 "border-primary bg-background bg-[repeating-linear-gradient(-45deg,hsl(var(--primary)),hsl(var(--primary))_1px,transparent_1px,transparent_4px)]":
                   circle.pattern === "primary",
-                "z-[1] border-blue-500 bg-background bg-[repeating-linear-gradient(-45deg,theme(colors.blue.500),theme(colors.blue.500)_1px,transparent_1px,transparent_4px)]":
+                "z-[1] border-info bg-background bg-[repeating-linear-gradient(-45deg,hsl(var(--info)),hsl(var(--info))_1px,transparent_1px,transparent_4px)]":
                   circle.pattern === "blue",
               })}
               aria-hidden="true"

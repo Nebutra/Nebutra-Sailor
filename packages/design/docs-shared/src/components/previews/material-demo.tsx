@@ -44,7 +44,7 @@ export function MaterialDemo() {
           <div className="my-1 mx-2 h-px bg-border" />
           <button
             type="button"
-            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-left text-destructive transition-colors hover:bg-destructive/10"
+            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-left text-destructive-strong transition-colors hover:bg-destructive/10"
           >
             <LogOut className="w-4 h-4" /> Logout
           </button>

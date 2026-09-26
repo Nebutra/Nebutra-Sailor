@@ -356,7 +356,7 @@ export const Mobile: Story = {
 };
 
 /**
- * The error text and the errored label both use `text-destructive`, which is a
+ * The error text and the errored label both use `text-destructive-strong`, which is a
  * different hue in dark mode — this is the story that catches it going muddy.
  */
 export const DarkMode: Story = {

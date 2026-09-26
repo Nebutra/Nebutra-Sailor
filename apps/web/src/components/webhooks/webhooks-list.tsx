@@ -147,7 +147,7 @@ export function WebhooksList({
       width: 112,
       loadingWidth: 56,
       cell: (endpoint) =>
-        // green-subtle is bg-success/15 + text-success (5.11:1); gray-subtle is
+        // green-subtle is bg-success/15 + text-success-strong (5.11:1); gray-subtle is
         // muted-on-muted. Both clear AA, unlike the old raw emerald-100/700 pair.
         endpoint.isActive ? (
           <Badge variant="green-subtle" size="sm">

@@ -96,7 +96,7 @@ const alertVariants = cva("flex items-stretch w-full gap-2 group-[.toaster]:w-(-
       variant: "destructive",
       appearance: "outline",
       className:
-        "border border-border bg-background text-destructive [&_[data-slot=alert-close]]:text-foreground",
+        "border border-border bg-background text-destructive-strong [&_[data-slot=alert-close]]:text-foreground",
     },
     {
       variant: "success",
@@ -175,7 +175,7 @@ const alertVariants = cva("flex items-stretch w-full gap-2 group-[.toaster]:w-(-
     {
       variant: "mono",
       icon: "destructive",
-      className: "[&_[data-slot=alert-icon]]:text-destructive",
+      className: "[&_[data-slot=alert-icon]]:text-destructive-strong",
     },
     {
       variant: "mono",
@@ -247,6 +247,8 @@ export interface AlertProps
    * Callback when close button is clicked
    */
   onClose?: () => void;
+  /** Accessible name for the close button. Pass a translated string. */
+  closeLabel?: string;
 }
 
 export interface AlertIconProps
@@ -311,6 +313,7 @@ function Alert({
   appearance,
   close = false,
   onClose,
+  closeLabel = "Dismiss",
   children,
   ...props
 }: AlertProps) {
@@ -326,7 +329,7 @@ function Alert({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Dismiss"
+          aria-label={closeLabel}
           data-slot="alert-close"
           className={cn(
             "group shrink-0 size-4 inline-flex items-center justify-center rounded-[var(--radius-sm)]",

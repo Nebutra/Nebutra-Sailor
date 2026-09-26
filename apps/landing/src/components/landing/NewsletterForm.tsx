@@ -124,7 +124,7 @@ export function NewsletterForm() {
         </Button>
       </div>
       {status === "error" && (
-        <p role="alert" className="self-center text-xs text-destructive sm:ms-0">
+        <p role="alert" className="self-center text-xs text-destructive-strong sm:ms-0">
           {t("newsletterError")}
         </p>
       )}

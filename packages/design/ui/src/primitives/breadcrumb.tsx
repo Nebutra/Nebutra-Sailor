@@ -79,9 +79,10 @@ export type BreadcrumbEllipsisProps = React.ComponentPropsWithoutRef<"span">;
  */
 const Breadcrumb = ({
   ref,
+  "aria-label": ariaLabel = "breadcrumb",
   ...props
 }: BreadcrumbProps & { ref?: React.Ref<HTMLElement> | undefined }) => (
-  <nav ref={ref} aria-label="breadcrumb" {...props} />
+  <nav ref={ref} aria-label={ariaLabel} {...props} />
 );
 Breadcrumb.displayName = "Breadcrumb";
 /**

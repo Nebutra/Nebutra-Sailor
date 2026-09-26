@@ -91,7 +91,7 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
                     size="sm"
                     aria-label={t("removeEmail")}
                     onClick={() => removeField(i)}
-                    className="text-muted-foreground hover:text-destructive"
+                    className="text-muted-foreground hover:text-destructive-strong"
                   >
                     <CrossSmall className="size-4" />
                   </Button>
@@ -113,7 +113,7 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
         ) : null}
 
         {error ? (
-          <p className="text-sm text-destructive" role="alert">
+          <p className="text-sm text-destructive-strong" role="alert">
             {error}
           </p>
         ) : null}

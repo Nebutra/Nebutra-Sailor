@@ -41,14 +41,14 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
       )}
     >
       <div className="flex items-center gap-2 mb-3">
-        <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-        <span className="font-mono text-sm text-white/80">{formatRecordingTime(time)}</span>
+        <div className="h-2 w-2 rounded-full bg-destructive animate-pulse" />
+        <span className="font-mono text-sm text-muted-foreground">{formatRecordingTime(time)}</span>
       </div>
       <div className="w-full h-10 flex items-center justify-center gap-0.5 px-4">
         {barStyles.map((bar) => (
           <div
             key={bar.id}
-            className="w-0.5 rounded-full bg-white/50 animate-pulse"
+            className="w-0.5 rounded-full bg-foreground/50 animate-pulse"
             style={{
               height: bar.height,
               animationDelay: bar.animationDelay,

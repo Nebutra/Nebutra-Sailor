@@ -28,6 +28,8 @@ export interface UpgradeBannerProps {
   secondaryAction?: ReactNode;
   /** Extra classes for the root element. */
   className?: string;
+  /** Accessible name for the dismiss button. Pass a translated string. */
+  dismissLabel?: string;
 }
 
 /**
@@ -51,6 +53,7 @@ export function UpgradeBanner({
   variant = "inline",
   secondaryAction,
   className,
+  dismissLabel = "Dismiss",
 }: UpgradeBannerProps) {
   const [dismissed, setDismissed] = useState(false);
   if (dismissed) return null;
@@ -115,7 +118,7 @@ export function UpgradeBanner({
             <button
               type="button"
               onClick={handleDismiss}
-              aria-label="Dismiss"
+              aria-label={dismissLabel}
               className="rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-3 hover:text-neutral-12"
             >
               <X className="h-3.5 w-3.5" />

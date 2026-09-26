@@ -227,6 +227,8 @@ export type McpToolProps = {
   maxOutputChars?: number;
 
   className?: string;
+  /** Accessible name for the tool output section. Pass a translated string. */
+  outputLabel?: string;
 };
 
 // ---------------------------------------------------------------------------
@@ -245,6 +247,7 @@ export function McpTool({
   maxArgValueChars = MCP_DEFAULT_MAX_ARG_VALUE_CHARS,
   maxOutputChars = MCP_DEFAULT_MAX_OUTPUT_CHARS,
   className,
+  outputLabel = "Tool output",
 }: McpToolProps): ReactElement {
   const outputId = useId();
   const humanized = humanizeToolName(name);
@@ -333,7 +336,7 @@ export function McpTool({
 
       {expandable && isOpen && (
         <section
-          aria-label="Tool output"
+          aria-label={outputLabel}
           className="overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card"
         >
           <pre

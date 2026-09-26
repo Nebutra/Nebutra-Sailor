@@ -65,6 +65,16 @@
      consensus caps heading weight at 400–510 (Linear 510, Vercel 400). */
   --font-weight-heading: 500;
 
+  /*
+   * The boundary of an unchecked checkbox / radio. WCAG 1.4.11 wants 3:1 against
+   * the surface for a control's edge; --input and --border are hairlines at
+   * ~1.2:1 and left an empty checkbox all but invisible. Derived from each
+   * language's own foreground and background — the perceptual midpoint — rather
+   * than a scale step, because a skin's --neutral-8 can be a pale mix (Stripe's
+   * is): measured 3.4:1 light / 5.5:1 dark on House, and it holds per brand.
+   */
+  --control-border: color-mix(in oklab, hsl(var(--foreground)) 50%, hsl(var(--background)));
+
   /* ── Elevation (free CSS; brand package replaces these) ───────── */
   /* House: a card is a hairline (--edge-soft), not a lifted object. Measured
      consensus — Vercel, OpenAI, Resend, Ramp ban card shadows outright; the

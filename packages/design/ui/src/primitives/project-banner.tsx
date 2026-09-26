@@ -72,16 +72,17 @@ type VariantTokens = {
 
 const variantMap: Readonly<Record<ProjectBannerVariant, VariantTokens>> = {
   success: {
-    container: "border-success/40 bg-success/10 text-success fill-success",
-    cta: "text-success decoration-success/50 hover:text-success hover:decoration-success",
+    container: "border-success/40 bg-success/10 text-success-strong fill-success-strong",
+    cta: "text-success-strong decoration-success/50 hover:text-success-strong hover:decoration-success",
   },
   warning: {
-    container: "border-warning/40 bg-warning/10 text-warning fill-warning",
-    cta: "text-warning decoration-warning/50 hover:text-warning hover:decoration-warning",
+    container: "border-warning/40 bg-warning/10 text-warning-strong fill-warning-strong",
+    cta: "text-warning-strong decoration-warning/50 hover:text-warning-strong hover:decoration-warning",
   },
   error: {
-    container: "border-destructive/40 bg-destructive/10 text-destructive fill-destructive",
-    cta: "text-destructive decoration-destructive/50 hover:text-destructive hover:decoration-destructive",
+    container:
+      "border-destructive/40 bg-destructive/10 text-destructive-strong fill-destructive-strong",
+    cta: "text-destructive-strong decoration-destructive/50 hover:text-destructive-strong hover:decoration-destructive",
   },
   info: {
     container: "border-border bg-muted text-foreground fill-foreground",

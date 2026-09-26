@@ -249,7 +249,7 @@ export const ErrorState: Story = {
       <MultiSelectRoot defaultOpen>
         <MultiSelectTrigger aria-label="Selected scopes">Scopes unavailable</MultiSelectTrigger>
         <MultiSelectContent>
-          <div className="px-3 py-6 text-center text-sm text-destructive">
+          <div className="px-3 py-6 text-center text-sm text-destructive-strong">
             Could not load scopes. Retry from the parent filter.
           </div>
         </MultiSelectContent>

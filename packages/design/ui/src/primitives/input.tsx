@@ -113,7 +113,7 @@ const fieldMessageVariants = cva("text-xs", {
   variants: {
     tone: {
       description: "text-muted-foreground",
-      error: "font-medium text-destructive",
+      error: "font-medium text-destructive-strong",
     },
   },
 });
@@ -154,6 +154,8 @@ type InputOwnProps = {
   revealLabel?: string;
   /** Accessible label for the password visibility control when the value is visible. */
   hideLabel?: string;
+  /** Accessible label for the clear-input button. Pass a translated string. */
+  clearLabel?: string;
   /** Clear the current value when Escape is pressed. Defaults to true for search inputs. */
   clearOnEscape?: boolean;
   /** Helper text associated with the input through aria-describedby. */
@@ -247,6 +249,7 @@ const Input = ({
     revealable,
     revealLabel = "Show password",
     hideLabel = "Hide password",
+    clearLabel = "Clear input",
     clearOnEscape,
     wrapperClassName,
     fieldClassName,
@@ -427,7 +430,7 @@ const Input = ({
       {showClear && (
         <button
           type="button"
-          aria-label="Clear input"
+          aria-label={clearLabel}
           disabled={disabled}
           className={inputControlButtonVariants()}
           style={getInputStyle(size, undefined)}

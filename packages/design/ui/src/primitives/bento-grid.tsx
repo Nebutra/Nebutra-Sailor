@@ -168,7 +168,7 @@ export const BentoCard = ({
       )}
 
       {/* Hover overlay */}
-      <div className="pointer-events-none absolute inset-0 transform-gpu transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal group-hover:bg-black/[.03] group-hover:dark:bg-muted/50" />
+      <div className="pointer-events-none absolute inset-0 transform-gpu transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal group-hover:bg-foreground/[.03]" />
     </div>
   );
 };

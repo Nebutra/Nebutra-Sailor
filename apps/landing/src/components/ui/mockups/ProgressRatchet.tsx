@@ -20,7 +20,7 @@ export function ProgressRatchet() {
               <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/80">
                 {bar.label}
               </span>
-              <span className="text-xs font-bold text-success">
+              <span className="text-xs font-bold text-success-strong">
                 {bar.current}/{threshold} {"floor" in bar ? "\u2265" : "\u2264"}{" "}
                 {bar.pass ? "\u2713" : "\u2717"}
               </span>

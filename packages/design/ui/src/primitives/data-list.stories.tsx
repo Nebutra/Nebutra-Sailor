@@ -74,7 +74,7 @@ function StateBadge({ state }: { state: Endpoint["state"] }) {
       </Badge>
     );
   }
-  // amber-subtle is `bg-warning/15 text-warning`, and --warning is the 2.13:1
+  // amber-subtle is `bg-warning/15 text-warning-strong`, and --warning is the 2.13:1
   // fill. Amber text needs the 5.40:1 --warning-strong step to clear AA.
   return (
     <Badge size="sm" variant="amber-subtle" className="text-[hsl(var(--warning-strong))]">

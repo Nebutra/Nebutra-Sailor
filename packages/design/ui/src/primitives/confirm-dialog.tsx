@@ -139,13 +139,13 @@ export function ConfirmDialog({
       confirmVariant: "default" as const,
     },
     destructive: {
-      icon: <Trash2 className="size-6 text-destructive" />,
+      icon: <Trash2 className="size-6 text-destructive-strong" />,
       iconBg: "bg-destructive/10",
       confirmVariant: "destructive" as const,
     },
     warning: {
-      icon: <AlertTriangle className="size-6 text-amber-600" />,
-      iconBg: "bg-amber-100 dark:bg-amber-900/30",
+      icon: <AlertTriangle className="size-6 text-warning-strong" />,
+      iconBg: "bg-warning/10",
       confirmVariant: "default" as const,
     },
   };
@@ -337,7 +337,7 @@ function DestructiveActionModalContent({
                 className="block text-sm leading-6 text-foreground"
               >
                 To confirm, type {verificationLabel ? <span>the {verificationLabel} </span> : null}
-                <span className="font-mono text-destructive">"{verificationPhrase}"</span>.
+                <span className="font-mono text-destructive-strong">"{verificationPhrase}"</span>.
               </Label>
               <Input
                 ref={inputRef}
@@ -352,7 +352,7 @@ function DestructiveActionModalContent({
                 value={value}
               />
               {errorMessage ? (
-                <p id={errorId} className="text-sm text-destructive" role="alert">
+                <p id={errorId} className="text-sm text-destructive-strong" role="alert">
                   {errorMessage}
                 </p>
               ) : null}
@@ -377,7 +377,7 @@ function DestructiveActionModalContent({
             <div
               id={irreversibleId}
               className={cn(
-                "flex items-start gap-2 border-t border-destructive/20 px-6 py-3 text-sm text-destructive",
+                "flex items-start gap-2 border-t border-destructive/20 px-6 py-3 text-sm text-destructive-strong",
                 "bg-[repeating-linear-gradient(-45deg,hsl(var(--destructive)/0.08),hsl(var(--destructive)/0.08)_1px,transparent_1px,transparent_7px)]",
               )}
             >
@@ -531,12 +531,12 @@ function BulkActionConfirmDialogContent({
       iconBg: "bg-primary/10",
     },
     destructive: {
-      icon: <Trash2 className="size-6 text-destructive" />,
+      icon: <Trash2 className="size-6 text-destructive-strong" />,
       iconBg: "bg-destructive/10",
     },
     warning: {
-      icon: <AlertTriangle className="size-6 text-amber-600" />,
-      iconBg: "bg-amber-100 dark:bg-amber-900/30",
+      icon: <AlertTriangle className="size-6 text-warning-strong" />,
+      iconBg: "bg-warning/10",
     },
   };
 
@@ -558,7 +558,7 @@ function BulkActionConfirmDialogContent({
                     You are about to {action}{" "}
                     <strong className="text-foreground">{itemCount}</strong> {itemType}.
                     {variant === "destructive" && (
-                      <span className="font-semibold text-destructive">
+                      <span className="font-semibold text-destructive-strong">
                         {" "}
                         This action cannot be undone.
                       </span>

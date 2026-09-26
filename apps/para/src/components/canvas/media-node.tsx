@@ -64,7 +64,9 @@ export function MediaNode({ node, selected }: { node: WorkspaceNode; selected: b
           {(node.status === "queued" || node.status === "running") && <TaskState node={node} />}
           {node.status === "failed" && (
             <div className="absolute inset-0 flex flex-col items-start justify-end gap-0.5 bg-background/70 p-2.5">
-              <span className="text-meta text-destructive">{node.error?.message ?? "Failed"}</span>
+              <span className="text-meta text-destructive-strong">
+                {node.error?.message ?? "Failed"}
+              </span>
               {node.error?.type && (
                 <span className="font-mono text-meta text-muted-foreground">{node.error.type}</span>
               )}

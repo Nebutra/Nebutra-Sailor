@@ -24,7 +24,7 @@ const CODE_LINES = [
 
 function getLineClass(type: string, text: string): string {
   if (type === "key") {
-    return "text-success font-semibold bg-success/10";
+    return "text-success-strong font-semibold bg-success/10";
   }
   if (type === "import") {
     return "text-primary dark:text-[var(--brand-accent)]";
@@ -112,7 +112,7 @@ export function MultiTenantCard() {
           </div>
           <div className="font-mono text-[11px] leading-relaxed">
             <p className="text-muted-foreground">$ npx nebutra rls-audit --strict</p>
-            <p className="text-success font-semibold">✔ 0 cross-tenant leaks detected</p>
+            <p className="text-success-strong font-semibold">✔ 0 cross-tenant leaks detected</p>
             <p className="text-muted-foreground">14 queries scanned in 0.8s</p>
           </div>
         </div>

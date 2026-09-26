@@ -79,8 +79,10 @@ export const SandboxRuntimeGlyph = ({ locale }: SubpackageGlyphProps) => {
             <span className="font-mono text-[8.5px] text-muted-foreground">{lastExecLabel}</span>
             <span className="font-mono text-[9px] font-semibold text-foreground">87ms</span>
             <div className="flex items-center gap-0.5">
-              <Check className="h-2.5 w-2.5 text-success" />
-              <span className="font-mono text-[8.5px] font-semibold text-success">exit 0</span>
+              <Check className="h-2.5 w-2.5 text-success-strong" />
+              <span className="font-mono text-[8.5px] font-semibold text-success-strong">
+                exit 0
+              </span>
             </div>
           </div>
         </div>

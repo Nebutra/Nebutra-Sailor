@@ -69,8 +69,10 @@ export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
         {/* Result panel */}
         <div className="flex w-[110px] shrink-0 flex-col justify-center gap-1 self-stretch rounded-[var(--radius-md)] border border-border bg-background p-2">
           <div className="flex items-center gap-1">
-            <Check className="h-3 w-3 text-success" />
-            <span className="font-mono text-[10px] font-semibold text-success">{"→ 12,840"}</span>
+            <Check className="h-3 w-3 text-success-strong" />
+            <span className="font-mono text-[10px] font-semibold text-success-strong">
+              {"→ 12,840"}
+            </span>
           </div>
           <span className="font-mono text-[8.5px] text-muted-foreground">{executedLabel}</span>
         </div>

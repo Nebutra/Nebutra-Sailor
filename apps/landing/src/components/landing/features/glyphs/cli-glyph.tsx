@@ -41,7 +41,7 @@ export function CliGlyph(_props: SubpackageGlyphProps) {
             </div>
           ) : (
             <div key={i} className="flex items-center gap-1.5 truncate">
-              <Check className="h-3 w-3 shrink-0 text-success" />
+              <Check className="h-3 w-3 shrink-0 text-success-strong" />
               <span className="truncate text-muted-foreground">{line.text}</span>
             </div>
           ),

@@ -38,6 +38,8 @@ export interface OnboardingChecklistProps {
   videoThumbnailUrl: string;
   /** Embed URL for the video (YouTube, Vimeo, etc.) */
   videoUrl: string;
+  /** Accessible name of the video play button. Pass a translated string. */
+  playVideoLabel?: string;
   /** Additional CSS classes */
   className?: string;
 }
@@ -125,6 +127,7 @@ export function OnboardingChecklist({
   items,
   videoThumbnailUrl,
   videoUrl,
+  playVideoLabel = "Play the video guide",
   className,
 }: OnboardingChecklistProps) {
   const shouldReduceMotion = useReducedMotion();
@@ -150,7 +153,7 @@ export function OnboardingChecklist({
             {items.map((item) => (
               <motion.li key={item.id} variants={activeItemVariants} className="flex flex-col">
                 <div className="flex items-start">
-                  <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-success-strong mt-0.5 flex-shrink-0" />
                   <span className="ml-3 text-sm font-medium">{item.text}</span>
                 </div>
                 {item.helperText && item.helperLink && (
@@ -178,7 +181,7 @@ export function OnboardingChecklist({
             <DialogTrigger asChild>
               <button
                 type="button"
-                aria-label="Play the video guide"
+                aria-label={playVideoLabel}
                 className="w-full h-full rounded-[var(--radius-lg)]"
               >
                 <Image
@@ -187,7 +190,9 @@ export function OnboardingChecklist({
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                   fill
                 />
+                {/* allow-palette: scrim + icon sit over an arbitrary video thumbnail image */}
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                  {/* allow-palette: icon sits over an arbitrary video thumbnail image */}
                   <PlayCircle className="h-16 w-16 text-white/80 transform transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 group-hover:scale-110 group-hover:text-white motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
                 </div>
               </button>
