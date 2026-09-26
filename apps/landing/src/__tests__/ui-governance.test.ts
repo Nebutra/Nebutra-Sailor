@@ -211,7 +211,9 @@ describe("landing UI governance", () => {
     expect(blogPageSource).toContain("<LatestPostMotionRail");
     expect(blogMotionShowcaseSource).toContain("requestAnimationFrame");
     expect(blogMotionShowcaseSource).not.toContain(`from "${["framer", "motion"].join("-")}"`);
-    expect(blogMotionShowcaseSource).toContain("aria-expanded={open}");
+    // The copy menu is the shared DropdownMenu, controlled here; its trigger
+    // carries aria-expanded itself, so the source no longer spells it out.
+    expect(blogMotionShowcaseSource).toContain("<DropdownMenu open={open} onOpenChange={setOpen}>");
     expect(blogMotionShowcaseSource).toContain("copyPageAsMarkdown");
     expect(blogMotionShowcaseSource).toContain("setActivePostId(post.id)");
     expect(blogMotionShowcaseSource).toContain("motionDurationSec");

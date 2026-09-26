@@ -217,9 +217,12 @@ test.describe("FooterMinimal", () => {
   test("footer uses semantic design tokens (not raw hex)", async ({ page }) => {
     const footer = page.getByTestId("footer-minimal");
     const className = await footer.getAttribute("class");
-    // Should use CSS variable tokens, not raw hex colors
-    expect(className).toContain("var(--neutral-");
-    expect(className).not.toMatch(/#[0-9a-f]{6}/i);
+    // The 12-step scale utilities are the canonical form (CLAUDE.md, "CSS
+    // variable syntax in Tailwind"); `bg-[var(--neutral-1)]` was retired for
+    // them in #653. Either way, never a raw hex.
+    expect(className).toMatch(/\bbg-neutral-\d+\b/);
+    expect(className).toMatch(/\btext-neutral-\d+\b/);
+    expect(className).not.toMatch(/#[0-9a-f]{3,8}\b/i);
   });
 
   // ---------------------------------------------------------------------------
