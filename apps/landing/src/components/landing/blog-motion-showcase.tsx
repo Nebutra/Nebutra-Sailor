@@ -148,8 +148,6 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
 }
 
 export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProps) {
-  const [activeTopicIndex, setActiveTopicIndex] = useState(0);
-
   return (
     <div className="border-y border-border py-4 sm:py-5">
       <BlogExploreMenu contactHref={contactHref} isZh={isZh} />
@@ -174,34 +172,29 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
           <p className="mb-4 text-xs font-semibold uppercase text-muted-foreground">
             {isZh ? "按主题浏览" : "Browse by topic"}
           </p>
-          <div className="flex flex-col">
-            {topics.map((topic, index) => {
-              const active = index === activeTopicIndex;
-              return (
-                <Link
-                  key={topic.label}
-                  href={topic.href}
-                  onFocus={() => setActiveTopicIndex(index)}
-                  onPointerEnter={() => setActiveTopicIndex(index)}
-                  className="group relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 outline-none"
-                >
-                  <span
-                    className={`flex min-w-0 items-center gap-3 text-3xl font-semibold leading-display text-foreground transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:text-4xl lg:text-5xl ${
-                      active ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-70"
-                    }`}
-                  >
-                    <span className="min-w-0 text-balance">{topic.label}</span>
-                    <span
-                      className={`shrink-0 transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none ${
-                        active ? "translate-x-1.5 opacity-100" : "translate-x-0 opacity-70"
-                      }`}
-                    >
-                      <ArrowRight className="size-8 sm:size-9 lg:size-10" aria-hidden />
-                    </span>
-                  </span>
-                </Link>
-              );
-            })}
+          {/*
+            At rest every topic sits on the same edge at full strength. Hover
+            (or keyboard focus) on the list dims the others and nudges only the
+            hovered row's arrow — the text never moves. This used to track an
+            "active" index in state that defaulted to the first row and never
+            reset on leave, so one row always stood 8px proud of the rest.
+          */}
+          <div className="group/topics flex flex-col">
+            {topics.map((topic) => (
+              <Link
+                key={topic.label}
+                href={topic.href}
+                className="group/topic relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 transition-opacity duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none group-hover/topics:opacity-45 group-has-[:focus-visible]/topics:opacity-45 hover:opacity-100! focus-visible:opacity-100!"
+              >
+                <span className="flex min-w-0 items-center gap-3 text-3xl font-semibold leading-display text-foreground sm:text-4xl lg:text-5xl">
+                  <span className="min-w-0 text-balance">{topic.label}</span>
+                  <ArrowRight
+                    className="size-8 shrink-0 text-muted-foreground transition-[transform,color] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none group-hover/topic:translate-x-1.5 group-hover/topic:text-foreground group-focus-visible/topic:translate-x-1.5 group-focus-visible/topic:text-foreground sm:size-9 lg:size-10"
+                    aria-hidden
+                  />
+                </span>
+              </Link>
+            ))}
           </div>
         </nav>
       </div>
