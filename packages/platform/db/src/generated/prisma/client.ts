@@ -304,6 +304,21 @@ export type UsageLedgerEntry = Prisma.UsageLedgerEntryModel
  */
 export type CreditBalance = Prisma.CreditBalanceModel
 /**
+ * Model CreditLot
+ * The expiring part of a balance (ADR 2026-09-27): one row per grant that
+ * expires. Spends draw on the soonest expiry first; a job takes back what an
+ * expired lot still holds. A balance's never-expiring part is whatever the
+ * lots do not cover.
+ */
+export type CreditLot = Prisma.CreditLotModel
+/**
+ * Model Membership
+ * A product's paid tier for a period (ADR 2026-09-27): Kuanlan and Para sell
+ * 月卡 / 年卡 memberships that grant credits monthly. One row per organization
+ * per product; the orders that bought it are recorded so a replay is a no-op.
+ */
+export type Membership = Prisma.MembershipModel
+/**
  * Model CreditTransaction
  * @conditional(billing-mode=credits)
  */

@@ -56,6 +56,11 @@ describe("credits service", () => {
         create: vi.fn(),
         findFirst: vi.fn(),
       },
+      creditLot: {
+        create: vi.fn(),
+        findMany: vi.fn().mockResolvedValue([]),
+        update: vi.fn(),
+      },
     };
     type TransactionMock = typeof tx;
     const transactionalDb = {

@@ -1,6 +1,10 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import {
+  configureOffers,
+  DEFAULT_OFFERS,
+} from "../../../packages/commerce/billing/src/offers/index";
 
 const ROOT = process.cwd();
 
@@ -31,6 +35,14 @@ describe("Nebutra offer catalog", () => {
     }
   });
 
+  it("passes the gateway's own boot validation", () => {
+    try {
+      expect(() => configureOffers(offers as never)).not.toThrow();
+    } finally {
+      configureOffers(DEFAULT_OFFERS);
+    }
+  });
+
   it("has unique ids", () => {
     expect(new Set(offers.map((o) => o.id)).size).toBe(offers.length);
   });
@@ -48,6 +60,45 @@ describe("Nebutra offer catalog", () => {
     const topup = offers.find((o) => o.product === "router");
     expect(topup?.fulfillment.type).toBe("balance");
     expect(topup?.customAmount?.USD?.min).toBe(5);
+  });
+
+  it("sells Kuanlan and Para as memberships plus credit packs, like 剪映 and LibTV", () => {
+    for (const product of ["kuanlan", "para"]) {
+      const mine = offers.filter((o) => o.product === product);
+      const memberships = mine.filter((o) => o.fulfillment.type === "membership");
+      const packs = mine.filter((o) => o.fulfillment.type === "credits");
+      expect(memberships.length, product).toBeGreaterThan(0);
+      expect(packs.length, product).toBeGreaterThan(0);
+      for (const m of memberships) {
+        const { tier, days, monthlyCredits } = m.fulfillment.params as Record<string, unknown>;
+        expect(typeof tier, m.id).toBe("string");
+        expect([30, 365], m.id).toContain(days);
+        expect(monthlyCredits, m.id).toSatisfy(
+          (n: unknown) => Number.isInteger(n) && (n as number) > 0,
+        );
+      }
+      // Purchased credits last two years at 剪映, CapCut and 即梦.
+      for (const p of packs) expect(p.fulfillment.params.expiresInDays, p.id).toBe(730);
+    }
+  });
+
+  it("prices every fixed offer in both currencies, so neither rail is left out", () => {
+    for (const offer of offers.filter((o) => o.prices)) {
+      expect(Object.keys(offer.prices ?? {}).sort(), offer.id).toEqual(["CNY", "USD"]);
+    }
+  });
+
+  it("bills each product to the account its benchmark does", () => {
+    // Kuanlan is a consumer app like 剪映: what a person buys is theirs. Para is
+    // a team workspace. A Router key belongs to whichever account is active.
+    const expected: Record<string, string> = {
+      kuanlan: "personal",
+      para: "organization",
+      router: "workspace",
+    };
+    for (const offer of offers) {
+      expect((offer as { account?: string }).account, offer.id).toBe(expected[offer.product]);
+    }
   });
 
   it("reaches the gateway on every deploy", () => {

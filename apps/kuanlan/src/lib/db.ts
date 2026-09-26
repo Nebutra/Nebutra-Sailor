@@ -1,7 +1,7 @@
 import "server-only";
 
 import { getSystemDb, getTenantDb, type PrismaClient } from "@nebutra/db";
-import { UserRepository } from "@nebutra/repositories";
+import { PersonalTenantRepository, UserRepository } from "@nebutra/repositories";
 
 /**
  * 观澜's first database seam.
@@ -85,6 +85,16 @@ export async function ensurePersonalTenant(
   const { userId } = identity;
   if (!USER_ID.test(userId)) {
     throw new InvalidUserIdError();
+  }
+
+  // One canonical path: the gateway bills a personal offer to the same tenant
+  // through the same repository (ADR 2026-09-27 product wallets).
+  if (!io.upsert && !io.ensureUser) {
+    const tenantId = await new PersonalTenantRepository(getSystemDb()).ensure({
+      userId,
+      email: identity.email ?? null,
+    });
+    return { tenantId, userId };
   }
 
   const upsert: UpsertTenant =

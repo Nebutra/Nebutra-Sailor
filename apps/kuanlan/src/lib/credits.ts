@@ -7,6 +7,8 @@ import {
   getCreditAllowanceForPlan,
   getCreditBalance,
   getCreditTransactions,
+  getExpiringCredits as getExpiringLedger,
+  getMembership as getLedgerMembership,
   refundCredits,
 } from "@nebutra/billing";
 import { getTenantDb } from "@nebutra/db";
@@ -164,4 +166,14 @@ function isBillingCode(error: unknown, code: string): boolean {
     "code" in error &&
     (error as { code?: unknown }).code === code
   );
+}
+
+/** 观澜's current membership for this person, or null. */
+export function getMembership(tenantId: string) {
+  return getLedgerMembership(tenantId, WALLET_PRODUCT);
+}
+
+/** The part of this person's credits that expires, soonest first. */
+export function getExpiringCredits(tenantId: string) {
+  return getExpiringLedger(tenantId, WALLET_PRODUCT);
 }

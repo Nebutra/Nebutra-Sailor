@@ -207,6 +207,7 @@ export type TenantWhereInput = {
   cofounderProfile?: Prisma.XOR<Prisma.CofounderProfileNullableScalarRelationFilter, Prisma.CofounderProfileWhereInput> | null
   contents?: Prisma.ContentListRelationFilter
   creditBalances?: Prisma.CreditBalanceListRelationFilter
+  memberships?: Prisma.MembershipListRelationFilter
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideListRelationFilter
   customerPlanVersions?: Prisma.CustomerPlanVersionListRelationFilter
   customerUsageLimits?: Prisma.CustomerUsageLimitListRelationFilter
@@ -261,6 +262,7 @@ export type TenantOrderByWithRelationInput = {
   cofounderProfile?: Prisma.CofounderProfileOrderByWithRelationInput
   contents?: Prisma.ContentOrderByRelationAggregateInput
   creditBalances?: Prisma.CreditBalanceOrderByRelationAggregateInput
+  memberships?: Prisma.MembershipOrderByRelationAggregateInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideOrderByRelationAggregateInput
   customerPlanVersions?: Prisma.CustomerPlanVersionOrderByRelationAggregateInput
   customerUsageLimits?: Prisma.CustomerUsageLimitOrderByRelationAggregateInput
@@ -318,6 +320,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   cofounderProfile?: Prisma.XOR<Prisma.CofounderProfileNullableScalarRelationFilter, Prisma.CofounderProfileWhereInput> | null
   contents?: Prisma.ContentListRelationFilter
   creditBalances?: Prisma.CreditBalanceListRelationFilter
+  memberships?: Prisma.MembershipListRelationFilter
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideListRelationFilter
   customerPlanVersions?: Prisma.CustomerPlanVersionListRelationFilter
   customerUsageLimits?: Prisma.CustomerUsageLimitListRelationFilter
@@ -394,6 +397,7 @@ export type TenantCreateInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -446,6 +450,7 @@ export type TenantUncheckedCreateInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -498,6 +503,7 @@ export type TenantUpdateInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -550,6 +556,7 @@ export type TenantUncheckedUpdateInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -1114,6 +1121,20 @@ export type TenantUpdateOneRequiredWithoutCreditBalancesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutCreditBalancesInput, Prisma.TenantUpdateWithoutCreditBalancesInput>, Prisma.TenantUncheckedUpdateWithoutCreditBalancesInput>
 }
 
+export type TenantCreateNestedOneWithoutMembershipsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutMembershipsInput, Prisma.TenantUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutMembershipsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutMembershipsInput, Prisma.TenantUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutMembershipsInput
+  upsert?: Prisma.TenantUpsertWithoutMembershipsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutMembershipsInput, Prisma.TenantUpdateWithoutMembershipsInput>, Prisma.TenantUncheckedUpdateWithoutMembershipsInput>
+}
+
 export type TenantCreateNestedOneWithoutRouterReservationsInput = {
   create?: Prisma.XOR<Prisma.TenantCreateWithoutRouterReservationsInput, Prisma.TenantUncheckedCreateWithoutRouterReservationsInput>
   connectOrCreate?: Prisma.TenantCreateOrConnectWithoutRouterReservationsInput
@@ -1353,6 +1374,7 @@ export type TenantCreateWithoutOrganizationInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -1404,6 +1426,7 @@ export type TenantUncheckedCreateWithoutOrganizationInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -1471,6 +1494,7 @@ export type TenantUpdateWithoutOrganizationInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -1522,6 +1546,7 @@ export type TenantUncheckedUpdateWithoutOrganizationInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -1574,6 +1599,7 @@ export type TenantCreateWithoutTransferJournalsOutInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -1625,6 +1651,7 @@ export type TenantUncheckedCreateWithoutTransferJournalsOutInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -1681,6 +1708,7 @@ export type TenantCreateWithoutTransferJournalsInInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -1732,6 +1760,7 @@ export type TenantUncheckedCreateWithoutTransferJournalsInInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -1799,6 +1828,7 @@ export type TenantUpdateWithoutTransferJournalsOutInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -1850,6 +1880,7 @@ export type TenantUncheckedUpdateWithoutTransferJournalsOutInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -1912,6 +1943,7 @@ export type TenantUpdateWithoutTransferJournalsInInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -1963,6 +1995,7 @@ export type TenantUncheckedUpdateWithoutTransferJournalsInInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -2013,6 +2046,7 @@ export type TenantCreateWithoutApiKeysInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -2064,6 +2098,7 @@ export type TenantUncheckedCreateWithoutApiKeysInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -2131,6 +2166,7 @@ export type TenantUpdateWithoutApiKeysInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -2182,6 +2218,7 @@ export type TenantUncheckedUpdateWithoutApiKeysInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -2233,6 +2270,7 @@ export type TenantCreateWithoutUserInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -2284,6 +2322,7 @@ export type TenantUncheckedCreateWithoutUserInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -2351,6 +2390,7 @@ export type TenantUpdateWithoutUserInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -2402,6 +2442,7 @@ export type TenantUncheckedUpdateWithoutUserInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -2453,6 +2494,7 @@ export type TenantCreateWithoutContentsInput = {
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -2504,6 +2546,7 @@ export type TenantUncheckedCreateWithoutContentsInput = {
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -2571,6 +2614,7 @@ export type TenantUpdateWithoutContentsInput = {
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -2622,6 +2666,7 @@ export type TenantUncheckedUpdateWithoutContentsInput = {
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -2674,6 +2719,7 @@ export type TenantCreateWithoutProductsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -2725,6 +2771,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -2792,6 +2839,7 @@ export type TenantUpdateWithoutProductsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -2843,6 +2891,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -2894,6 +2943,7 @@ export type TenantCreateWithoutOrdersInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -2945,6 +2995,7 @@ export type TenantUncheckedCreateWithoutOrdersInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -3012,6 +3063,7 @@ export type TenantUpdateWithoutOrdersInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -3063,6 +3115,7 @@ export type TenantUncheckedUpdateWithoutOrdersInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -3114,6 +3167,7 @@ export type TenantCreateWithoutIntegrationsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -3165,6 +3219,7 @@ export type TenantUncheckedCreateWithoutIntegrationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -3232,6 +3287,7 @@ export type TenantUpdateWithoutIntegrationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -3283,6 +3339,7 @@ export type TenantUncheckedUpdateWithoutIntegrationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -3334,6 +3391,7 @@ export type TenantCreateWithoutTenantProviderKeysInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -3385,6 +3443,7 @@ export type TenantUncheckedCreateWithoutTenantProviderKeysInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -3452,6 +3511,7 @@ export type TenantUpdateWithoutTenantProviderKeysInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -3503,6 +3563,7 @@ export type TenantUncheckedUpdateWithoutTenantProviderKeysInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -3554,6 +3615,7 @@ export type TenantCreateWithoutAutomationsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -3605,6 +3667,7 @@ export type TenantUncheckedCreateWithoutAutomationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -3672,6 +3735,7 @@ export type TenantUpdateWithoutAutomationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -3723,6 +3787,7 @@ export type TenantUncheckedUpdateWithoutAutomationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -3774,6 +3839,7 @@ export type TenantCreateWithoutAutomationRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -3825,6 +3891,7 @@ export type TenantUncheckedCreateWithoutAutomationRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -3892,6 +3959,7 @@ export type TenantUpdateWithoutAutomationRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -3943,6 +4011,7 @@ export type TenantUncheckedUpdateWithoutAutomationRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -3994,6 +4063,7 @@ export type TenantCreateWithoutParaProjectsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -4045,6 +4115,7 @@ export type TenantUncheckedCreateWithoutParaProjectsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -4112,6 +4183,7 @@ export type TenantUpdateWithoutParaProjectsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -4163,6 +4235,7 @@ export type TenantUncheckedUpdateWithoutParaProjectsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -4214,6 +4287,7 @@ export type TenantCreateWithoutParaWorkspacesInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -4265,6 +4339,7 @@ export type TenantUncheckedCreateWithoutParaWorkspacesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -4332,6 +4407,7 @@ export type TenantUpdateWithoutParaWorkspacesInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -4383,6 +4459,7 @@ export type TenantUncheckedUpdateWithoutParaWorkspacesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -4434,6 +4511,7 @@ export type TenantCreateWithoutParaAssetsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -4485,6 +4563,7 @@ export type TenantUncheckedCreateWithoutParaAssetsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -4552,6 +4631,7 @@ export type TenantUpdateWithoutParaAssetsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -4603,6 +4683,7 @@ export type TenantUncheckedUpdateWithoutParaAssetsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -4654,6 +4735,7 @@ export type TenantCreateWithoutParaThreadsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -4705,6 +4787,7 @@ export type TenantUncheckedCreateWithoutParaThreadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -4772,6 +4855,7 @@ export type TenantUpdateWithoutParaThreadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -4823,6 +4907,7 @@ export type TenantUncheckedUpdateWithoutParaThreadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -4874,6 +4959,7 @@ export type TenantCreateWithoutParaRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -4925,6 +5011,7 @@ export type TenantUncheckedCreateWithoutParaRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -4992,6 +5079,7 @@ export type TenantUpdateWithoutParaRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -5043,6 +5131,7 @@ export type TenantUncheckedUpdateWithoutParaRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -5094,6 +5183,7 @@ export type TenantCreateWithoutParaApprovalsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -5145,6 +5235,7 @@ export type TenantUncheckedCreateWithoutParaApprovalsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -5212,6 +5303,7 @@ export type TenantUpdateWithoutParaApprovalsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -5263,6 +5355,7 @@ export type TenantUncheckedUpdateWithoutParaApprovalsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -5314,6 +5407,7 @@ export type TenantCreateWithoutWorkflowDefinitionsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -5365,6 +5459,7 @@ export type TenantUncheckedCreateWithoutWorkflowDefinitionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -5432,6 +5527,7 @@ export type TenantUpdateWithoutWorkflowDefinitionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -5483,6 +5579,7 @@ export type TenantUncheckedUpdateWithoutWorkflowDefinitionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -5534,6 +5631,7 @@ export type TenantCreateWithoutWorkflowRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -5585,6 +5683,7 @@ export type TenantUncheckedCreateWithoutWorkflowRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -5652,6 +5751,7 @@ export type TenantUpdateWithoutWorkflowRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -5703,6 +5803,7 @@ export type TenantUncheckedUpdateWithoutWorkflowRunsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -5754,6 +5855,7 @@ export type TenantCreateWithoutRequestLogsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -5805,6 +5907,7 @@ export type TenantUncheckedCreateWithoutRequestLogsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -5872,6 +5975,7 @@ export type TenantUpdateWithoutRequestLogsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -5923,6 +6027,7 @@ export type TenantUncheckedUpdateWithoutRequestLogsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -5974,6 +6079,7 @@ export type TenantCreateWithoutCustomerPlanVersionsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
@@ -6025,6 +6131,7 @@ export type TenantUncheckedCreateWithoutCustomerPlanVersionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
@@ -6092,6 +6199,7 @@ export type TenantUpdateWithoutCustomerPlanVersionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
@@ -6143,6 +6251,7 @@ export type TenantUncheckedUpdateWithoutCustomerPlanVersionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
@@ -6194,6 +6303,7 @@ export type TenantCreateWithoutCustomerFeatureOverridesInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
@@ -6245,6 +6355,7 @@ export type TenantUncheckedCreateWithoutCustomerFeatureOverridesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
@@ -6312,6 +6423,7 @@ export type TenantUpdateWithoutCustomerFeatureOverridesInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
@@ -6363,6 +6475,7 @@ export type TenantUncheckedUpdateWithoutCustomerFeatureOverridesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
@@ -6414,6 +6527,7 @@ export type TenantCreateWithoutCustomerUsageLimitsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
@@ -6465,6 +6579,7 @@ export type TenantUncheckedCreateWithoutCustomerUsageLimitsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
@@ -6532,6 +6647,7 @@ export type TenantUpdateWithoutCustomerUsageLimitsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
@@ -6583,6 +6699,7 @@ export type TenantUncheckedUpdateWithoutCustomerUsageLimitsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
@@ -6634,6 +6751,7 @@ export type TenantCreateWithoutSubscriptionsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -6685,6 +6803,7 @@ export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -6752,6 +6871,7 @@ export type TenantUpdateWithoutSubscriptionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -6803,6 +6923,7 @@ export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -6854,6 +6975,7 @@ export type TenantCreateWithoutInvoicesInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -6905,6 +7027,7 @@ export type TenantUncheckedCreateWithoutInvoicesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -6972,6 +7095,7 @@ export type TenantUpdateWithoutInvoicesInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -7023,6 +7147,7 @@ export type TenantUncheckedUpdateWithoutInvoicesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -7074,6 +7199,7 @@ export type TenantCreateWithoutPaymentsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -7125,6 +7251,7 @@ export type TenantUncheckedCreateWithoutPaymentsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -7192,6 +7319,7 @@ export type TenantUpdateWithoutPaymentsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -7243,6 +7371,7 @@ export type TenantUncheckedUpdateWithoutPaymentsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -7294,6 +7423,7 @@ export type TenantCreateWithoutPaymentMethodsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -7345,6 +7475,7 @@ export type TenantUncheckedCreateWithoutPaymentMethodsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -7412,6 +7543,7 @@ export type TenantUpdateWithoutPaymentMethodsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -7463,6 +7595,7 @@ export type TenantUncheckedUpdateWithoutPaymentMethodsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -7514,6 +7647,7 @@ export type TenantCreateWithoutUsageLedgerEntriesInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -7565,6 +7699,7 @@ export type TenantUncheckedCreateWithoutUsageLedgerEntriesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -7632,6 +7767,7 @@ export type TenantUpdateWithoutUsageLedgerEntriesInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -7683,6 +7819,7 @@ export type TenantUncheckedUpdateWithoutUsageLedgerEntriesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -7733,6 +7870,7 @@ export type TenantCreateWithoutCreditBalancesInput = {
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -7784,6 +7922,7 @@ export type TenantUncheckedCreateWithoutCreditBalancesInput = {
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -7851,6 +7990,7 @@ export type TenantUpdateWithoutCreditBalancesInput = {
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -7902,6 +8042,231 @@ export type TenantUncheckedUpdateWithoutCreditBalancesInput = {
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
+  paraThreads?: Prisma.ParaThreadUncheckedUpdateManyWithoutTenantNestedInput
+  paraRuns?: Prisma.ParaRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraApprovals?: Prisma.ParaApprovalUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  routerReservations?: Prisma.RouterReservationUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantCreateWithoutMembershipsInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
+  paraThreads?: Prisma.ParaThreadCreateNestedManyWithoutTenantInput
+  paraRuns?: Prisma.ParaRunCreateNestedManyWithoutTenantInput
+  paraApprovals?: Prisma.ParaApprovalCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  routerReservations?: Prisma.RouterReservationCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantUncheckedCreateWithoutMembershipsInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
+  paraThreads?: Prisma.ParaThreadUncheckedCreateNestedManyWithoutTenantInput
+  paraRuns?: Prisma.ParaRunUncheckedCreateNestedManyWithoutTenantInput
+  paraApprovals?: Prisma.ParaApprovalUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  routerReservations?: Prisma.RouterReservationUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantCreateOrConnectWithoutMembershipsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutMembershipsInput, Prisma.TenantUncheckedCreateWithoutMembershipsInput>
+}
+
+export type TenantUpsertWithoutMembershipsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutMembershipsInput, Prisma.TenantUncheckedUpdateWithoutMembershipsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutMembershipsInput, Prisma.TenantUncheckedCreateWithoutMembershipsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutMembershipsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutMembershipsInput, Prisma.TenantUncheckedUpdateWithoutMembershipsInput>
+}
+
+export type TenantUpdateWithoutMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
+  paraThreads?: Prisma.ParaThreadUpdateManyWithoutTenantNestedInput
+  paraRuns?: Prisma.ParaRunUpdateManyWithoutTenantNestedInput
+  paraApprovals?: Prisma.ParaApprovalUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  routerReservations?: Prisma.RouterReservationUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -7954,6 +8319,7 @@ export type TenantCreateWithoutRouterReservationsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -8005,6 +8371,7 @@ export type TenantUncheckedCreateWithoutRouterReservationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -8072,6 +8439,7 @@ export type TenantUpdateWithoutRouterReservationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -8123,6 +8491,7 @@ export type TenantUncheckedUpdateWithoutRouterReservationsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -8174,6 +8543,7 @@ export type TenantCreateWithoutStripeCustomersInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -8225,6 +8595,7 @@ export type TenantUncheckedCreateWithoutStripeCustomersInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -8292,6 +8663,7 @@ export type TenantUpdateWithoutStripeCustomersInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -8343,6 +8715,7 @@ export type TenantUncheckedUpdateWithoutStripeCustomersInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -8393,6 +8766,7 @@ export type TenantCreateWithoutAuditLogsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -8444,6 +8818,7 @@ export type TenantUncheckedCreateWithoutAuditLogsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -8511,6 +8886,7 @@ export type TenantUpdateWithoutAuditLogsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -8562,6 +8938,7 @@ export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -8614,6 +8991,7 @@ export type TenantCreateWithoutUserConsentsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -8665,6 +9043,7 @@ export type TenantUncheckedCreateWithoutUserConsentsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -8732,6 +9111,7 @@ export type TenantUpdateWithoutUserConsentsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -8783,6 +9163,7 @@ export type TenantUncheckedUpdateWithoutUserConsentsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -8834,6 +9215,7 @@ export type TenantCreateWithoutTasksInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -8885,6 +9267,7 @@ export type TenantUncheckedCreateWithoutTasksInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -8952,6 +9335,7 @@ export type TenantUpdateWithoutTasksInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -9003,6 +9387,7 @@ export type TenantUncheckedUpdateWithoutTasksInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -9054,6 +9439,7 @@ export type TenantCreateWithoutUploadsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -9105,6 +9491,7 @@ export type TenantUncheckedCreateWithoutUploadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -9172,6 +9559,7 @@ export type TenantUpdateWithoutUploadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -9223,6 +9611,7 @@ export type TenantUncheckedUpdateWithoutUploadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -9274,6 +9663,7 @@ export type TenantCreateWithoutOauthClientsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -9325,6 +9715,7 @@ export type TenantUncheckedCreateWithoutOauthClientsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -9392,6 +9783,7 @@ export type TenantUpdateWithoutOauthClientsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -9443,6 +9835,7 @@ export type TenantUncheckedUpdateWithoutOauthClientsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -9493,6 +9886,7 @@ export type TenantCreateWithoutChatSessionsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -9544,6 +9938,7 @@ export type TenantUncheckedCreateWithoutChatSessionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -9611,6 +10006,7 @@ export type TenantUpdateWithoutChatSessionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -9662,6 +10058,7 @@ export type TenantUncheckedUpdateWithoutChatSessionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -9714,6 +10111,7 @@ export type TenantCreateWithoutThreadsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -9765,6 +10163,7 @@ export type TenantUncheckedCreateWithoutThreadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -9832,6 +10231,7 @@ export type TenantUpdateWithoutThreadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -9883,6 +10283,7 @@ export type TenantUncheckedUpdateWithoutThreadsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -9934,6 +10335,7 @@ export type TenantCreateWithoutUserSkillsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -9985,6 +10387,7 @@ export type TenantUncheckedCreateWithoutUserSkillsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -10052,6 +10455,7 @@ export type TenantUpdateWithoutUserSkillsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -10103,6 +10507,7 @@ export type TenantUncheckedUpdateWithoutUserSkillsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -10153,6 +10558,7 @@ export type TenantCreateWithoutConnectorsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -10204,6 +10610,7 @@ export type TenantUncheckedCreateWithoutConnectorsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -10271,6 +10678,7 @@ export type TenantUpdateWithoutConnectorsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -10322,6 +10730,7 @@ export type TenantUncheckedUpdateWithoutConnectorsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -10373,6 +10782,7 @@ export type TenantCreateWithoutCofounderProfileInput = {
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -10424,6 +10834,7 @@ export type TenantUncheckedCreateWithoutCofounderProfileInput = {
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -10491,6 +10902,7 @@ export type TenantUpdateWithoutCofounderProfileInput = {
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -10542,6 +10954,7 @@ export type TenantUncheckedUpdateWithoutCofounderProfileInput = {
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -10593,6 +11006,7 @@ export type TenantCreateWithoutCodeRedemptionsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -10644,6 +11058,7 @@ export type TenantUncheckedCreateWithoutCodeRedemptionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -10711,6 +11126,7 @@ export type TenantUpdateWithoutCodeRedemptionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -10762,6 +11178,7 @@ export type TenantUncheckedUpdateWithoutCodeRedemptionsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -10814,6 +11231,7 @@ export type TenantCreateWithoutFeedbackReportsInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -10865,6 +11283,7 @@ export type TenantUncheckedCreateWithoutFeedbackReportsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -10932,6 +11351,7 @@ export type TenantUpdateWithoutFeedbackReportsInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -10983,6 +11403,7 @@ export type TenantUncheckedUpdateWithoutFeedbackReportsInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -11033,6 +11454,7 @@ export type TenantCreateWithoutAtelierCanvasesInput = {
   cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
@@ -11084,6 +11506,7 @@ export type TenantUncheckedCreateWithoutAtelierCanvasesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
@@ -11151,6 +11574,7 @@ export type TenantUpdateWithoutAtelierCanvasesInput = {
   cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
@@ -11202,6 +11626,7 @@ export type TenantUncheckedUpdateWithoutAtelierCanvasesInput = {
   cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
@@ -11252,6 +11677,7 @@ export type TenantCountOutputType = {
   connectors: number
   contents: number
   creditBalances: number
+  memberships: number
   customerFeatureOverrides: number
   customerPlanVersions: number
   customerUsageLimits: number
@@ -11297,6 +11723,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   connectors?: boolean | TenantCountOutputTypeCountConnectorsArgs
   contents?: boolean | TenantCountOutputTypeCountContentsArgs
   creditBalances?: boolean | TenantCountOutputTypeCountCreditBalancesArgs
+  memberships?: boolean | TenantCountOutputTypeCountMembershipsArgs
   customerFeatureOverrides?: boolean | TenantCountOutputTypeCountCustomerFeatureOverridesArgs
   customerPlanVersions?: boolean | TenantCountOutputTypeCountCustomerPlanVersionsArgs
   customerUsageLimits?: boolean | TenantCountOutputTypeCountCustomerUsageLimitsArgs
@@ -11397,6 +11824,13 @@ export type TenantCountOutputTypeCountContentsArgs<ExtArgs extends runtime.Types
  */
 export type TenantCountOutputTypeCountCreditBalancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CreditBalanceWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MembershipWhereInput
 }
 
 /**
@@ -11656,6 +12090,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   cofounderProfile?: boolean | Prisma.Tenant$cofounderProfileArgs<ExtArgs>
   contents?: boolean | Prisma.Tenant$contentsArgs<ExtArgs>
   creditBalances?: boolean | Prisma.Tenant$creditBalancesArgs<ExtArgs>
+  memberships?: boolean | Prisma.Tenant$membershipsArgs<ExtArgs>
   customerFeatureOverrides?: boolean | Prisma.Tenant$customerFeatureOverridesArgs<ExtArgs>
   customerPlanVersions?: boolean | Prisma.Tenant$customerPlanVersionsArgs<ExtArgs>
   customerUsageLimits?: boolean | Prisma.Tenant$customerUsageLimitsArgs<ExtArgs>
@@ -11737,6 +12172,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   cofounderProfile?: boolean | Prisma.Tenant$cofounderProfileArgs<ExtArgs>
   contents?: boolean | Prisma.Tenant$contentsArgs<ExtArgs>
   creditBalances?: boolean | Prisma.Tenant$creditBalancesArgs<ExtArgs>
+  memberships?: boolean | Prisma.Tenant$membershipsArgs<ExtArgs>
   customerFeatureOverrides?: boolean | Prisma.Tenant$customerFeatureOverridesArgs<ExtArgs>
   customerPlanVersions?: boolean | Prisma.Tenant$customerPlanVersionsArgs<ExtArgs>
   customerUsageLimits?: boolean | Prisma.Tenant$customerUsageLimitsArgs<ExtArgs>
@@ -11796,6 +12232,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     cofounderProfile: Prisma.$CofounderProfilePayload<ExtArgs> | null
     contents: Prisma.$ContentPayload<ExtArgs>[]
     creditBalances: Prisma.$CreditBalancePayload<ExtArgs>[]
+    memberships: Prisma.$MembershipPayload<ExtArgs>[]
     customerFeatureOverrides: Prisma.$CustomerFeatureOverridePayload<ExtArgs>[]
     customerPlanVersions: Prisma.$CustomerPlanVersionPayload<ExtArgs>[]
     customerUsageLimits: Prisma.$CustomerUsageLimitPayload<ExtArgs>[]
@@ -12243,6 +12680,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   cofounderProfile<T extends Prisma.Tenant$cofounderProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$cofounderProfileArgs<ExtArgs>>): Prisma.Prisma__CofounderProfileClient<runtime.Types.Result.GetResult<Prisma.$CofounderProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   contents<T extends Prisma.Tenant$contentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$contentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   creditBalances<T extends Prisma.Tenant$creditBalancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$creditBalancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreditBalancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  memberships<T extends Prisma.Tenant$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customerFeatureOverrides<T extends Prisma.Tenant$customerFeatureOverridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$customerFeatureOverridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerFeatureOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customerPlanVersions<T extends Prisma.Tenant$customerPlanVersionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$customerPlanVersionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPlanVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customerUsageLimits<T extends Prisma.Tenant$customerUsageLimitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$customerUsageLimitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerUsageLimitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -12954,6 +13392,30 @@ export type Tenant$creditBalancesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.CreditBalanceScalarFieldEnum | Prisma.CreditBalanceScalarFieldEnum[]
+}
+
+/**
+ * Tenant.memberships
+ */
+export type Tenant$membershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Membership
+   */
+  select?: Prisma.MembershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Membership
+   */
+  omit?: Prisma.MembershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MembershipInclude<ExtArgs> | null
+  where?: Prisma.MembershipWhereInput
+  orderBy?: Prisma.MembershipOrderByWithRelationInput | Prisma.MembershipOrderByWithRelationInput[]
+  cursor?: Prisma.MembershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MembershipScalarFieldEnum | Prisma.MembershipScalarFieldEnum[]
 }
 
 /**

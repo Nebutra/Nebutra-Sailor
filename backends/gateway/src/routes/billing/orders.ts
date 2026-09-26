@@ -9,6 +9,11 @@
  *
  * The request names an offer and a way to pay. It never carries a price: the
  * server prices the offer from the catalog and locks it on the order.
+ *
+ * Nor does it say whose account pays. The offer does (ADR 2026-09-27): a
+ * Kuanlan pack is the buyer's own, a Para plan the active organization's, a
+ * Router top-up the organization's when one is active. The server resolves the
+ * paying tenant from the session and the offer, never from the request.
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
@@ -21,33 +26,90 @@ import {
   isPaymentMethodAvailable,
   listOffers,
   listPaymentOrders,
+  type Offer,
+  offerAccount,
   type PaymentMethod,
 } from "@nebutra/billing";
+import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
+import { PersonalTenantRepository } from "@nebutra/repositories";
 import type { Context, Next } from "hono";
-import {
-  requireAuth,
-  requireBillingManage,
-  requireOrganization,
-} from "../../middlewares/tenantContext.js";
+import { requireAuth, requireBillingManage } from "../../middlewares/tenantContext.js";
 import { billingServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
 
 export const orderRoutes = new OpenAPIHono();
 
-orderRoutes.use("/offers", requireAuth, requireOrganization);
-orderRoutes.use("/offers/*", requireAuth, requireOrganization);
-orderRoutes.use("/orders", requireAuth, requireOrganization, guardPurchase);
-orderRoutes.use("/orders/*", requireAuth, requireOrganization);
+// What is for sale, and how it can be paid, is public: a product's pricing
+// page renders before anyone signs in.
+orderRoutes.use("/orders", requireAuth, guardPurchase);
+orderRoutes.use("/orders/*", requireAuth);
 
 const METHODS = ["card", "alipay", "wechat"] as const satisfies readonly PaymentMethod[];
 
+// AUDIT(no-tenant): the tenants table is what tenant scoping derives from;
+// resolving (or provisioning) a buyer's own tenant has no tenant to scope to.
+const personalTenants = () => new PersonalTenantRepository(getSystemDb());
+
+type Payer = { kind: "organization" | "personal"; tenantId: string };
+
+const GRANT_KEYS = ["credits", "tier", "days", "monthlyCredits", "expiresInDays"] as const;
+
+/** The display-safe part of a fulfillment spec: what is granted, not how. */
+function publicGrants(params: Record<string, unknown>) {
+  const grants: Record<string, string | number> = {};
+  for (const key of GRANT_KEYS) {
+    const value = params[key];
+    if (typeof value === "number" || typeof value === "string") grants[key] = value;
+  }
+  return grants;
+}
+
 /**
- * Buying spends the organization's money: billing managers only. Reading an
- * order (the QR page polls it) stays open to any member.
+ * Whose account an order is for. `organization` needs an active organization;
+ * `workspace` falls back to the buyer's own account without one.
+ */
+async function resolvePayer(c: Context, offer: Offer): Promise<Payer | null> {
+  const tenant = c.get("tenant");
+  const account = offerAccount(offer);
+  if (account !== "personal" && tenant.organizationId) {
+    return { kind: "organization", tenantId: tenant.organizationId as string };
+  }
+  if (account === "organization") return null;
+  return {
+    kind: "personal",
+    tenantId: await personalTenants().ensure({ userId: tenant.userId as string }),
+  };
+}
+
+/** The tenants this session may read orders of: its organization and its own. */
+async function readableTenants(c: Context): Promise<string[]> {
+  const tenant = c.get("tenant");
+  const own = await personalTenants().find(tenant.userId as string);
+  return [tenant.organizationId as string | undefined, own ?? undefined].filter(
+    (id): id is string => Boolean(id),
+  );
+}
+
+/**
+ * Buying for an organization spends its money: billing managers only. Buying
+ * for yourself needs nobody's permission. Reading an order (the QR page polls
+ * it) stays open to the buyer and the organization's members.
  */
 async function guardPurchase(c: Context, next: Next) {
-  if (c.req.method === "POST") return requireBillingManage(c, next);
-  await next();
+  if (c.req.method !== "POST") return next();
+  const body = (await c.req.json().catch(() => null)) as { offerId?: unknown } | null;
+  const offer = typeof body?.offerId === "string" ? getOffer(body.offerId) : undefined;
+  // An unknown offer is refused by the handler, with the reason.
+  if (!offer) return next();
+  const tenant = c.get("tenant");
+  const account = offerAccount(offer);
+  if (account === "personal" || (account === "workspace" && !tenant.organizationId)) {
+    return next();
+  }
+  if (!tenant.organizationId) {
+    return c.json({ error: "Forbidden", message: "Organization membership required" }, 403);
+  }
+  return requireBillingManage(c, next);
 }
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
@@ -61,6 +123,18 @@ const OfferSchema = z.object({
   id: z.string(),
   /** The product whose balance this offer feeds. */
   product: z.string(),
+  /** Whose account it is bought for: the buyer's, the organization's, or whichever is active. */
+  account: z.enum(["personal", "organization", "workspace"]),
+  /** What it is: a credit pack, a membership period, or a money top-up. */
+  kind: z.string(),
+  /** What the buyer receives, for a pricing page to show. Never read by the payment path. */
+  grants: z.object({
+    credits: z.number().optional(),
+    tier: z.string().optional(),
+    days: z.number().optional(),
+    monthlyCredits: z.number().optional(),
+    expiresInDays: z.number().optional(),
+  }),
   name: z.string(),
   /** Fixed price, major units. Absent when the buyer names the amount. */
   prices: PerCurrency(z.number()).optional(),
@@ -131,16 +205,17 @@ orderRoutes.openapi(
   }),
   (c) =>
     c.json({
-      offers: listOffers(c.req.valid("query").product).map(
-        ({ id, product, name, prices, customAmount, highlight }) => ({
-          id,
-          product,
-          name,
-          ...(prices ? { prices } : {}),
-          ...(customAmount ? { customAmount } : {}),
-          ...(highlight ? { highlight } : {}),
-        }),
-      ),
+      offers: listOffers(c.req.valid("query").product).map((offer) => ({
+        id: offer.id,
+        product: offer.product,
+        account: offerAccount(offer),
+        kind: offer.fulfillment.type,
+        grants: publicGrants(offer.fulfillment.params),
+        name: offer.name,
+        ...(offer.prices ? { prices: offer.prices } : {}),
+        ...(offer.customAmount ? { customAmount: offer.customAmount } : {}),
+        ...(offer.highlight ? { highlight: offer.highlight } : {}),
+      })),
     }),
 );
 
@@ -196,9 +271,19 @@ orderRoutes.openapi(
     },
   }),
   async (c) => {
-    const tenant = c.get("tenant");
-    const organizationId = tenant.organizationId as string;
     const body = c.req.valid("json");
+    const offer = getOffer(body.offerId);
+    if (!offer) {
+      return c.json({ error: `Unknown offer: ${body.offerId}`, code: "OFFER_NOT_FOUND" }, 400);
+    }
+    const payer = await resolvePayer(c, offer);
+    if (!payer) {
+      return c.json(
+        { error: "Organization membership required", code: "ORGANIZATION_REQUIRED" },
+        400,
+      );
+    }
+    const organizationId = payer.tenantId;
 
     try {
       const successUrl = assertProductReturnUrl(body.successUrl);
@@ -279,9 +364,15 @@ orderRoutes.openapi(
     },
   }),
   async (c) => {
-    const tenant = c.get("tenant");
     const { limit } = c.req.valid("query");
-    const orders = await listPaymentOrders(tenant.organizationId as string, limit ?? 20);
+    const take = limit ?? 20;
+    const lists = await Promise.all(
+      (await readableTenants(c)).map((tenantId) => listPaymentOrders(tenantId, take)),
+    );
+    const orders = lists
+      .flat()
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice(0, take);
     return c.json(
       {
         orders: orders.map((order) => ({
@@ -323,12 +414,11 @@ orderRoutes.openapi(
     },
   }),
   async (c) => {
-    const tenant = c.get("tenant");
     const { id } = c.req.valid("param");
     const order = await getPaymentOrder(id);
 
-    // Another organization's order is indistinguishable from a missing one.
-    if (!order || order.tenantId !== tenant.organizationId) {
+    // Someone else's order is indistinguishable from a missing one.
+    if (!order || !(await readableTenants(c)).includes(order.tenantId)) {
       return c.json({ error: "Order not found" }, 404);
     }
 
