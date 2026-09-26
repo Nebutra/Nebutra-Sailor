@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Enterprise SaaS-automatisering",
-      "description": "Diep geïntegreerde moderne tech stack van Vercel, Supabase en Stripe. Biedt out-of-the-box row-level security, complexe multi-tenant isolatie en wereldwijde abonnementsfacturering."
+      "description": "Diep geïntegreerde moderne tech stack van Postgres, Better Auth en Stripe. Biedt out-of-the-box row-level security, complexe multi-tenant isolatie en wereldwijde abonnementsfacturering."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Sessie"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Autentificatietoken",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Authenticatiesessietoken",
             "duration": "7 dagen"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Infrastructuur",
-              "desc": "Cloudhosting (Vercel, Supabase), databaseservices"
+              "desc": "Cloudhosting (Fly.io, Cloudflare), databaseservices"
             },
             "1": {
               "label": "Betalingsverwerking",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Authenticatie",
-              "desc": "Clerk voor identiteitsbeheer"
+              "desc": "Better Auth voor identiteitsbeheer"
             },
             "3": {
               "label": "Analytics",
@@ -1149,7 +1149,7 @@
         "desc": "Volledig getypt ORM met Row-Level Security (RLS)-beleid standaard ingebouwd."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Aangepaste Identiteit",
+        "title": "Better Auth Multi-Tenant / Aangepaste Identiteit",
         "desc": "SOC2-klare authenticatiegateway met ondersteuning voor B2B-organisatiewisseling en RBAC."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configureren",
-        "desc": "Stel Prisma, Clerk en Stripe in via de interactieve CLI in enkele minuten."
+        "desc": "Stel Prisma, Better Auth en Stripe in via de interactieve CLI in enkele minuten."
       },
       "step3": {
         "title": "3. Bouwen",
@@ -1320,10 +1320,10 @@
       "multi_category": "Multi-tenant platform",
       "multi_f1_title": "Isolatie op organisatie-niveau",
       "multi_f1_desc": "Row-level security in Postgres zorgt ervoor dat tenants nooit toegang hebben tot elkaars gegevens — afgedwongen op databaselayer, niet alleen in de applicatie.",
-      "multi_f2_title": "Multi-provider authenticatie (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus e-mail/wachtwoord en magic-link — wissel tussen Clerk, Better Auth, NextAuth of Supabase Auth via één omgevingsvariabele.",
+      "multi_f2_title": "Multi-provider authenticatie (Better Auth)",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus e-mail/wachtwoord en magic-link — allemaal via één Better Auth-instantie, geen providerwissel nodig.",
       "multi_f3_title": "Automatische tenant-provisioning",
-      "multi_f3_desc": "Wanneer een nieuwe organisatie zich aanmeldt via Clerk, genereren we automatisch hun eerste API-sleutel en sturen we een branded welkomstmail — zonder handmatige stappen.",
+      "multi_f3_desc": "Wanneer een nieuwe organisatie zich aanmeldt, genereren we automatisch hun eerste API-sleutel en sturen we een branded welkomstmail — zonder handmatige stappen.",
       "dx_category": "Ontwikkelaarservaring",
       "dx_f1_title": "Gehashte API-sleutels",
       "dx_f1_desc": "SHA-256 gehashte sleutels met prefixweergave (nbtr_live_…). Slechts één keer in platte tekst getoond bij aanmaken — beveiliging zonder wrijving.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "Multi-protocol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI voor openbare API's, oRPC voor type-safe frontend-aanroepen, tRPC voor T3-stack-compatibiliteit. Alle protocollen delen dezelfde Zod-contracten en middleware-stack. Schakel per protocol in via preset-configuratie.",
       "billing_category": "Facturering & Monetarisatie",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Kies je betaalprovider: Stripe voor wereldwijd enterprise, LemonSqueezy voor indie-devs, Polar voor OSS, of Alipay/WeChat Pay voor de Chinese markt. Eén-klik checkout en zelfbedieningsfactureringsportaal.",
+      "billing_f1_title": "Stripe & China Pay",
+      "billing_f1_desc": "Kies je betaalprovider: Stripe voor wereldwijd enterprise of Alipay/WeChat Pay voor de Chinese markt. Eén-klik checkout en zelfbedieningsfactureringsportaal.",
       "billing_f2_title": "Quota-aafdwinging op basis van gebruik",
       "billing_f2_desc": "Real-time Redis-tellers houden API-aanroepen en tokengebruik per tenant bij. Aanvragen worden op de gateway geblokkeerd zodra limieten zijn bereikt.",
       "billing_f3_title": "Webhook-lifecycle synchronisatie",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Multi-window Google SRE-stijl meldingen worden afgevuurd bij 14,4×, 6× en 3× verbruiktarieven voordat je foutbudget op is.",
       "sec_category": "Beveiliging",
       "sec_f1_title": "CSP nonces-gebaseerde headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy met per-aanvraag nonces gegenereerd in Clerk middleware — nergens unsafe-inline.",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy met per-aanvraag nonces gegenereerd in Auth middleware — nergens unsafe-inline.",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly-modus op elke ingress. Rate limiting op 30 RPS met burst-tolerantie via nginx-annotaties.",
       "sec_f3_title": "SBOM + SLSA-provenance",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps met ArgoCD",
       "infra_f1_desc": "Wijzigingen in de main-branch worden automatisch gesynchroniseerd met de cluster. Zelfherstellend gedrag draait handmatige kubectl-wijzigingen terug. Sync-windows handhaven veilige deploy-tijden.",
       "infra_f2_title": "PgBouncer-verbindingspool",
-      "infra_f2_desc": "PgBouncer in transactiemodus voor Supabase hanteert 1.000 app-verbindingen op 20 Postgres-verbindingen. HA met 2 replica's.",
+      "infra_f2_desc": "PgBouncer in transactiemodus voor Postgres hanteert 1.000 app-verbindingen op 20 Postgres-verbindingen. HA met 2 replica's.",
       "infra_f3_title": "Horizontaal + verticaal autoscaling",
       "infra_f3_desc": "HPA schaal op CPU/geheugen. VPA draait in Off-modus en geeft right-sizing-aanbevelingen. KEDA-custom metrics gepland voor v2."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Werkt het in China?",
-          "answer": "Ja. We leveren een parallelle infrastructuurconfiguratie (Aliyun-compatibele CDN, ICP-vriendelijke domeinen, optioneel Penpot in plaats van Figma) zodat dezelfde codebase probleemloos binnen de Great Firewall kan worden gedeployed."
+          "answer": "Ja. We leveren een parallelle infrastructuurconfiguratie (Aliyun-compatibele CDN, ICP-vriendelijke domeinen) zodat dezelfde codebase probleemloos binnen de Great Firewall kan worden gedeployed."
         },
         "deployment": {
           "question": "Waar kan ik het deployen?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Hoe wordt beveiliging afgehandeld?",
-          "answer": "Toepassingslaag-envelope encryptie voor geheimen (@nebutra/vault), Postgres RLS voor tenant-isolatie, RBAC/ABAC via CASL of OpenFGA (@nebutra/permissions), HMAC-ondertekende inter-service tokens, ondertekende uitgaande webhooks en een SOC 2-uitgelijnde audit-pipeline (@nebutra/audit) inbegrepen in elk plan. Pro en Enterprise voegen SOC 2-attestatie-ondersteuning, toegewijde incidentrespons en langere audit-logretentie toe."
+          "answer": "Toepassingslaag-envelope encryptie voor geheimen (@nebutra/vault), Postgres RLS voor tenant-isolatie, RBAC/ABAC via CASL (@nebutra/permissions), HMAC-ondertekende inter-service tokens, ondertekende uitgaande webhooks en een SOC 2-uitgelijnde audit-pipeline (@nebutra/audit) inbegrepen in elk plan. Pro en Enterprise voegen SOC 2-attestatie-ondersteuning, toegewijde incidentrespons en langere audit-logretentie toe."
         },
         "support": {
           "question": "Welke ondersteuning krijg ik?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Kan ik mijn eigen provider meenemen?",
-          "answer": "Ja. Elke integratie (authenticatie, wachtrij, zoekopdracht, e-mail, betalingen, opslag, facturering) is provider-agnostisch. De fabriek in elk pakket kiest de juiste adapter uit een enkele omgevingsvariabele — vervang Clerk door Better Auth, NextAuth of Supabase Auth, QStash door BullMQ, Resend door SES, Stripe door Polar / LemonSqueezy / ChinaPay — zonder de applicatiecode aan te raken."
+          "answer": "Ja. Elke integratie (authenticatie, wachtrij, zoekopdracht, e-mail, betalingen, opslag, facturering) is provider-agnostisch. De fabriek in elk pakket kiest de juiste adapter uit een enkele omgevingsvariabele — de ingebouwde adapters zijn Better Auth, QStash, Resend en Stripe — zonder de applicatiecode aan te raken."
         },
         "tech-stack": {
           "question": "Wat is de tech stack?",
@@ -1676,8 +1676,8 @@
           "answer": "Twee lagen. Request-scope tenant-context via @nebutra/tenant (AsyncLocalStorage propageert de actieve org door elke serveraanroep, inclusief DB-query's en uitgaande webhooks), en database-afgedwongen isolatie via Postgres Row-Level Security-beleiden (packages/platform/db/prisma/generated/rls.sql) gekoppeld aan een session-lokale app.current_tenant_id. Service-role-verbindingen omzeilen RLS alleen binnen vertrouwde interne services; alle gebruikersgerichte routes gaan via de tenant-scope client."
         },
         "swap-clerk": {
-          "question": "Kan ik Clerk vervangen door een andere auth-provider?",
-          "answer": "Ja. @nebutra/auth levert first-class adapters voor Clerk, Better Auth, NextAuth (Auth.js v5) en Supabase Auth. Schakel via de AUTH_PROVIDER-omgevingsvariabele of kies bij scaffold-tijd met create-sailor --auth=... — server-, React- en middleware-oppervlakken blijven identiek ongeacht de provider. Een vijfde adapter toevoegen betekent het implementeren van één interface (~80 LOC); niets in de omliggende code is gekoppeld aan een specifieke provider."
+          "question": "Kan ik Better Auth vervangen door een andere auth-provider?",
+          "answer": "Ja. @nebutra/auth levert een first-class adapter voor Better Auth. Schakel via de AUTH_PROVIDER-omgevingsvariabele of kies bij scaffold-tijd met create-sailor --auth=... — server-, React- en middleware-oppervlakken blijven identiek ongeacht de provider. Een vijfde adapter toevoegen betekent het implementeren van één interface (~80 LOC); niets in de omliggende code is gekoppeld aan een specifieke provider."
         }
       }
     },

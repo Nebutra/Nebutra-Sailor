@@ -38,10 +38,13 @@ const RESULTS: ReadonlyArray<ResultRow> = [
   },
   {
     id: "r3",
-    title: { en: "Stripe → Polar billing adapter notes", zh: "Stripe → Polar billing 适配器笔记" },
+    title: {
+      en: "Stripe + WeChat Pay billing adapter notes",
+      zh: "Stripe + 微信支付 billing 适配器笔记",
+    },
     excerpt: {
-      en: "Provider-agnostic shape keeps customer code stable across switches.",
-      zh: "Provider-agnostic 形态让客户代码在切换时保持稳定。",
+      en: "One billing contract keeps customer code stable across both rails.",
+      zh: "同一套计费契约让客户代码在两条支付通道上保持稳定。",
     },
     path: "changelog/2026/adapters.md",
     score: 0.81,
@@ -96,14 +99,14 @@ const COPY = {
     placeholder: "Search docs, posts, changelog…",
     indexLabel: "Index",
     tagsLabel: "Tags",
-    footer: (n: string, ms: string) => `Searched ${n} docs in ${ms} · Meilisearch backend`,
+    footer: (n: string, ms: string) => `Searched ${n} docs in ${ms} · Postgres backend`,
     relevance: "score",
   },
   zh: {
     placeholder: "搜索文档、帖子、更新日志……",
     indexLabel: "索引",
     tagsLabel: "标签",
-    footer: (n: string, ms: string) => `检索 ${n} 篇文档 用时 ${ms} · Meilisearch 后端`,
+    footer: (n: string, ms: string) => `检索 ${n} 篇文档 用时 ${ms} · Postgres 后端`,
     relevance: "得分",
   },
 } as const;

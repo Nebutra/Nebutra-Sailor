@@ -130,10 +130,10 @@ const COMPLIANCE_ROWS: ReadonlyArray<{
 ];
 
 // Payment gateways
-const PAYMENTS_TITLE = { zh: "多地区支付", en: "Multi-region Payments" } as const;
+const PAYMENTS_TITLE = { zh: "支付：全球 + 中国", en: "Payments: Global + China" } as const;
 const PAYMENTS_SUB = {
-  zh: "一次接入，覆盖全球主流收单、订阅与加密渠道。",
-  en: "Integrate once; reach all major global acquirers, subscriptions, and crypto rails.",
+  zh: "Stripe 覆盖全球主流卡组织与订阅；微信支付与支付宝原生覆盖中国大陆——都在同一套计费契约背后，配好密钥即可上线。",
+  en: "Stripe covers global cards and subscriptions; WeChat Pay and Alipay cover mainland China natively — both behind one billing contract, live as soon as you add the keys.",
 } as const;
 
 const PAYMENT_GATEWAYS: ReadonlyArray<{
@@ -141,11 +141,8 @@ const PAYMENT_GATEWAYS: ReadonlyArray<{
   region: { zh: string; en: string };
 }> = [
   { name: "Stripe", region: { zh: "全球", en: "Global" } },
-  { name: "LemonSqueezy", region: { zh: "Merchant of Record", en: "Merchant of Record" } },
-  { name: "Polar", region: { zh: "开发者友好", en: "Developer-first" } },
-  { name: "Alipay", region: { zh: "中国大陆", en: "Mainland China" } },
   { name: "WeChat Pay", region: { zh: "中国大陆", en: "Mainland China" } },
-  { name: "Razorpay", region: { zh: "印度 · 东南亚", en: "India · SEA" } },
+  { name: "Alipay", region: { zh: "中国大陆", en: "Mainland China" } },
 ];
 
 // CTA
@@ -412,10 +409,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
             </p>
           </AnimateIn>
 
-          <AnimateInGroup
-            stagger="fast"
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
-          >
+          <AnimateInGroup stagger="fast" className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {PAYMENT_GATEWAYS.map((gw) => (
               <AnimateIn key={gw.name} preset="fadeUp">
                 <div className="group h-full bg-background border border-border/50 rounded-[var(--radius-2xl)] p-6 hover:border-foreground/30 hover:shadow-lg transition-[border-color,box-shadow] duration-300 flex flex-col items-center text-center">

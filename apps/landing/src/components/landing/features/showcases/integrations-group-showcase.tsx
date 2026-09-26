@@ -22,13 +22,13 @@ import type { PackageShowcaseProps } from "./types";
 // ---------------------------------------------------------------------------
 
 const PROVIDERS_FOR_SLUG: Record<string, string[]> = {
-  email: ["Resend", "SES", "Postmark", "SMTP"],
-  uploads: ["S3", "R2", "Tigris", "Tus"],
-  storage: ["S3", "R2", "GCS", "Filebase"],
+  email: ["Resend", "Console"],
+  uploads: ["S3-compatible", "Local"],
+  storage: ["R2", "OSS"],
   notifications: ["Direct"],
   collab: ["Liveblocks", "Yjs", "Custom"],
   "event-bus": ["NATS", "Kafka", "Inngest"],
-  sms: ["Twilio", "AWS SNS", "Vonage"],
+  sms: ["Twilio Verify", "Aliyun"],
 };
 
 const DEFAULT_PROVIDERS = ["Adapter A", "Adapter B", "Adapter C"];

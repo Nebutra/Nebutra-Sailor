@@ -675,15 +675,19 @@ export const GLOBAL_POINTS: ReadonlyArray<
     },
   },
   {
-    zh: { icon: "💳", title: "多地区支付", desc: "Stripe、LemonSqueezy、Polar、Alipay" },
+    zh: { icon: "💳", title: "支付：全球 + 中国", desc: "Stripe、微信支付、支付宝" },
     en: {
       icon: "💳",
-      title: "Multi-region Payments",
-      desc: "Stripe · LemonSqueezy · Polar · Alipay",
+      title: "Payments: Global + China",
+      desc: "Stripe · WeChat Pay · Alipay",
     },
   },
   {
-    zh: { icon: "⚡", title: "全球 Edge", desc: "Vercel Edge Network · 全球 CDN · 毫秒级响应" },
-    en: { icon: "⚡", title: "Global Edge", desc: "Vercel Edge · Global CDN · ms-level response" },
+    zh: { icon: "⚡", title: "全球 Edge", desc: "Cloudflare Workers · 全球 CDN · 毫秒级响应" },
+    en: {
+      icon: "⚡",
+      title: "Global Edge",
+      desc: "Cloudflare Workers · Global CDN · ms-level response",
+    },
   },
 ];

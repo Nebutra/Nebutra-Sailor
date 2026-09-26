@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Check, Clock, Database, Lightning, LockClosed } from "@nebutra/icons";
+import { Box, Check, Clock, Connection, Lightning } from "@nebutra/icons";
 import { Badge, StatusDot } from "@nebutra/ui/primitives";
 import type { ComponentType, SVGProps } from "react";
 import type { SubpackageGlyphProps } from "./types";
@@ -9,8 +9,9 @@ import type { SubpackageGlyphProps } from "./types";
  * SupabaseGlyph
  *
  * Mini Supabase project services card. Header shows the project ref and a
- * READY status dot. A 2×2 grid renders the four core Supabase services
- * (Database, Auth, Storage, Edge fn) with their health icon + a brief
+ * READY status dot. A 2×2 grid renders the Supabase services this package
+ * actually wraps — Realtime, Storage, Edge fn (database and auth stay on
+ * Postgres/Prisma and Better Auth) — with their health icon + a brief
  * metric. Footer pins the region and a note that this provider is opt-in.
  */
 
@@ -27,8 +28,7 @@ type ServiceRow = {
 };
 
 const SERVICE_ROWS: ReadonlyArray<ServiceRow> = [
-  { key: "db", label: "Database", Icon: Database, status: "ok", metric: "12.4 GB" },
-  { key: "auth", label: "Auth", Icon: LockClosed, status: "ok", metric: "847 users" },
+  { key: "realtime", label: "Realtime", Icon: Connection, status: "ok", metric: "312 channels" },
   { key: "storage", label: "Storage", Icon: Box, status: "ok", metric: "4.2 GB" },
   { key: "edge", label: "Edge fn", Icon: Lightning, status: "warn", metric: "cold start" },
 ];

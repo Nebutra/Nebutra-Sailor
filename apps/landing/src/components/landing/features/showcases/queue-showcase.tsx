@@ -118,7 +118,7 @@ export function QueueShowcase(props: PackageShowcaseProps) {
     latency: isZh ? "平均延迟" : "Avg latency",
     healthy: isZh ? "运行正常" : "Healthy",
     last60: isZh ? "过去 60 分钟" : "Last 60 min",
-    live: isZh ? "实时刷新 · QStash / BullMQ" : "Live · QStash / BullMQ",
+    live: isZh ? "实时刷新 · QStash" : "Live · QStash",
   };
 
   return (

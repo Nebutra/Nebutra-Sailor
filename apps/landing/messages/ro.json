@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Automatizare SaaS Enterprise",
-      "description": "Integrare profundă cu stack-ul modern de tehnologie Vercel, Supabase și Stripe. Oferă securitate la nivel de rând, izolare complexă multi-tenant și facturare globală pentru abonamente, gata de utilizare."
+      "description": "Integrare profundă cu stack-ul modern de tehnologie Postgres, Better Auth și Stripe. Oferă securitate la nivel de rând, izolare complexă multi-tenant și facturare globală pentru abonamente, gata de utilizare."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Sesiune"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Token de autentificare",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Token de sesiune de autentificare",
             "duration": "7 zile"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Infrastructură",
-              "desc": "Găzduire cloud (Vercel, Supabase), servicii de bază de date"
+              "desc": "Găzduire cloud (Fly.io, Cloudflare), servicii de bază de date"
             },
             "1": {
               "label": "Procesare plăți",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Autentificare",
-              "desc": "Clerk pentru gestionarea identității"
+              "desc": "Better Auth pentru gestionarea identității"
             },
             "3": {
               "label": "Analitică",
@@ -1149,7 +1149,7 @@
         "desc": "ORM complet tipizat cu politici de securitate la nivel de rând (RLS) integrate nativ."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Identitate Personalizată",
+        "title": "Better Auth Multi-Tenant / Identitate Personalizată",
         "desc": "Gateway de autentificare pregătit pentru SOC2, care suportă comutarea între organizații B2B și RBAC."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configurează",
-        "desc": "Configurează Prisma, Clerk și Stripe prin CLI-ul interactiv în câteva minute."
+        "desc": "Configurează Prisma, Better Auth și Stripe prin CLI-ul interactiv în câteva minute."
       },
       "step3": {
         "title": "3. Construiește",
@@ -1320,10 +1320,10 @@
       "multi_category": "Platformă Multi-tenant",
       "multi_f1_title": "Izolare la nivel de organizație",
       "multi_f1_desc": "Securitatea la nivel de rând în Postgres asigură că tenantii nu pot accesa niciodată datele unora față de alții — aplicată la nivel de bază de date, nu doar aplicație.",
-      "multi_f2_title": "Autentificare multi-provider (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "OAuth multi-provider (Google, GitHub etc.) plus email/parolă și magic-link — comută între Clerk, Better Auth, NextAuth sau Supabase Auth printr-o singură variabilă de mediu.",
+      "multi_f2_title": "Autentificare multi-provider (Better Auth)",
+      "multi_f2_desc": "OAuth multi-provider (Google, GitHub etc.) plus email/parolă și magic-link — totul printr-o singură instanță Better Auth, fără schimbare de furnizor.",
       "multi_f3_title": "Provisionare automată tenant",
-      "multi_f3_desc": "Când o nouă organizație se înregistrează prin Clerk, generăm automat primul lor API key și trimitem un email de bun-venit personalizat — zero pași manuali.",
+      "multi_f3_desc": "Când o nouă organizație se înregistrează, generăm automat primul lor API key și trimitem un email de bun-venit personalizat — zero pași manuali.",
       "dx_category": "Experiența Developer",
       "dx_f1_title": "Chei API hashuite",
       "dx_f1_desc": "Chei hashuite SHA-256 cu afișare prefix (nbtr_live_…). Afișate în clar exact o dată la creare — securitate fără fricțiuni.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "API Multi-Protocol (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI pentru API-uri publice, oRPC pentru apeluri frontend sigure din punct de vedere al tipurilor, tRPC pentru compatibilitate cu stack-ul T3. Toate protocoalele împărtășesc aceleași contracte Zod și același stack de middleware. Activează pe protocol prin configurație presetată.",
       "billing_category": "Facturare & Monetizare",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar și China Pay",
-      "billing_f1_desc": "Alege furnizorul tău de plăți: Stripe pentru enterprise global, LemonSqueezy pentru dezvoltatori indie, Polar pentru OSS sau Alipay/WeChat Pay pentru piața din China. Checkout cu un singur clic și portal de facturare self-serve.",
+      "billing_f1_title": "Stripe și China Pay",
+      "billing_f1_desc": "Alege furnizorul tău de plăți: Stripe pentru enterprise global sau Alipay/WeChat Pay pentru piața din China. Checkout cu un singur clic și portal de facturare self-serve.",
       "billing_f2_title": "Aplicare cotă bazată pe utilizare",
       "billing_f2_desc": "Contoare Redis în timp real urmăresc apelurile API și utilizarea tokenilor per tenant. Cererile sunt blocate la gateway când se ating limitele.",
       "billing_f3_title": "Sincronizare ciclu de viață webhook",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Alerte multi-fereastră în stil Google SRE se declanșează la rate de consum de 14.4×, 6× și 3× înainte ca bugetul de erori să fie epuizat.",
       "sec_category": "Securitate",
       "sec_f1_title": "Antete bazate pe nonce CSP",
-      "sec_f1_desc": "Content Security Policy strict-dynamic cu nonce-uri per cerere generate în middleware-ul Clerk — fără unsafe-inline oriunde.",
+      "sec_f1_desc": "Content Security Policy strict-dynamic cu nonce-uri per cerere generate în middleware-ul Auth — fără unsafe-inline oriunde.",
       "sec_f2_title": "WAF ModSecurity",
       "sec_f2_desc": "OWASP Core Rule Set în modul DetectionOnly pe fiecare intrare. Limitare de rată la 30 RPS cu toleranță la burst prin anotații nginx.",
       "sec_f3_title": "SBOM + proveniență SLSA",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps cu ArgoCD",
       "infra_f1_desc": "Modificările din ramura principală sunt reconciliate automat în cluster. Self-heal revine editările manuale kubectl. Fereestrele de sincronizare impun ore de deploy sigure.",
       "infra_f2_title": "Pool de conexiuni PgBouncer",
-      "infra_f2_desc": "PgBouncer în modul tranzacție în fața Supabase gestionează 1.000 de conexiuni app pe 20 de conexiuni Postgres. HA cu 2 replici.",
+      "infra_f2_desc": "PgBouncer în modul tranzacție în fața Postgres gestionează 1.000 de conexiuni app pe 20 de conexiuni Postgres. HA cu 2 replici.",
       "infra_f3_title": "Autoscaling orizontal + vertical",
       "infra_f3_desc": "HPA scalează după CPU/memorie. VPA rulează în modul Off oferind recomandări de dimensionare. Metrici personalizate KEDA planificate pentru v2."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Funcționează în China?",
-          "answer": "Da. Oferim o configurație infra paralelă (CDN compatibil Aliyun, domenii compatibile ICP, Penpot opțional în locul lui Figma) astfel încât aceeași bază de cod se poate deploya fără probleme în interiorul Great Firewall."
+          "answer": "Da. Oferim o configurație infra paralelă (CDN compatibil Aliyun, domenii compatibile ICP) astfel încât aceeași bază de cod se poate deploya fără probleme în interiorul Great Firewall."
         },
         "deployment": {
           "question": "Unde îl pot deploya?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Cum este gestionată securitatea?",
-          "answer": "Criptare la nivel de aplicație pentru secrete (@nebutra/vault), Postgres RLS pentru izolarea tenantilor, RBAC/ABAC prin CASL sau OpenFGA (@nebutra/permissions), tokeni inter-servicii semnați HMAC, webhooks outbound semnați și un pipeline de audit aliniat SOC 2 (@nebutra/audit) inclus în fiecare plan. Pro și Enterprise adaugă suport pentru atestare SOC 2, răspuns dedicat la incidente și retenție mai lungă a logurilor de audit."
+          "answer": "Criptare la nivel de aplicație pentru secrete (@nebutra/vault), Postgres RLS pentru izolarea tenantilor, RBAC/ABAC prin CASL (@nebutra/permissions), tokeni inter-servicii semnați HMAC, webhooks outbound semnați și un pipeline de audit aliniat SOC 2 (@nebutra/audit) inclus în fiecare plan. Pro și Enterprise adaugă suport pentru atestare SOC 2, răspuns dedicat la incidente și retenție mai lungă a logurilor de audit."
         },
         "support": {
           "question": "Ce suport primesc?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Pot folosi propriul meu provider?",
-          "answer": "Da. Fiecare integrare (autentificare, coadă, căutare, email, plăți, stocare, facturare) este agnostică față de provider. Factory-ul din fiecare pachet selectează adaptorul potrivit dintr-o singură variabilă de mediu — poți înlocui Clerk cu Better Auth, NextAuth sau Supabase Auth, QStash cu BullMQ, Resend cu SES, Stripe cu Polar / LemonSqueezy / ChinaPay — fără a modifica codul aplicației."
+          "answer": "Da. Fiecare integrare (autentificare, coadă, căutare, email, plăți, stocare, facturare) este agnostică față de provider. Factory-ul din fiecare pachet selectează adaptorul potrivit dintr-o singură variabilă de mediu — adaptoarele incluse sunt Better Auth, QStash, Resend și Stripe — fără a modifica codul aplicației."
         },
         "tech-stack": {
           "question": "Care este stack-ul tehnologic?",
@@ -1676,8 +1676,8 @@
           "answer": "Două niveluri. Context tenant scoped la cerere prin @nebutra/tenant (AsyncLocalStorage propagă organizația activă prin fiecare apel server, inclusiv query-uri DB și webhooks outbound), și izolare impusă la nivel de bază de date prin politici Postgres Row-Level Security (packages/platform/db/prisma/generated/rls.sql) legate de app.current_tenant_id local sesiunii. Conexiunile cu rol de serviciu ocolește RLS doar în interiorul serviciilor interne de încredere; toate rutele expuse utilizatorilor trec prin clientul scoped la tenant."
         },
         "swap-clerk": {
-          "question": "Pot înlocui Clerk cu un alt provider de auth?",
-          "answer": "Da. @nebutra/auth include adaptori first-class pentru Clerk, Better Auth, NextAuth (Auth.js v5) și Supabase Auth. Comută prin variabila de mediu AUTH_PROVIDER sau alege la scaffold cu create-sailor --auth=... — suprafețele server, React și middleware rămân identice indiferent de provider. Adăugarea unui al cincilea adaptor înseamnă implementarea unei singure interfețe (~80 LOC); nimic din codul înconjurător nu este cuplat la un provider specific."
+          "question": "Pot înlocui Better Auth cu un alt provider de auth?",
+          "answer": "Da. @nebutra/auth include un adaptor first-class pentru Better Auth. Comută prin variabila de mediu AUTH_PROVIDER sau alege la scaffold cu create-sailor --auth=... — suprafețele server, React și middleware rămân identice indiferent de provider. Adăugarea unui al cincilea adaptor înseamnă implementarea unei singure interfețe (~80 LOC); nimic din codul înconjurător nu este cuplat la un provider specific."
         }
       }
     },

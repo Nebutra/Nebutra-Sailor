@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Tự động hóa SaaS doanh nghiệp",
-      "description": "Tích hợp sâu với bộ công nghệ hiện đại gồm Vercel, Supabase và Stripe. Cung cấp sẵn bảo mật cấp hàng, cách ly đa thuê bao phức tạp và thanh toán đăng ký toàn cầu."
+      "description": "Tích hợp sâu với bộ công nghệ hiện đại gồm Postgres, Better Auth và Stripe. Cung cấp sẵn bảo mật cấp hàng, cách ly đa thuê bao phức tạp và thanh toán đăng ký toàn cầu."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Phiên"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Mã xác thực",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Mã phiên xác thực",
             "duration": "7 ngày"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Hạ tầng",
-              "desc": "Lưu trữ đám mây (Vercel, Supabase), dịch vụ cơ sở dữ liệu"
+              "desc": "Lưu trữ đám mây (Fly.io, Cloudflare), dịch vụ cơ sở dữ liệu"
             },
             "1": {
               "label": "Xử lý thanh toán",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Xác thực",
-              "desc": "Clerk để quản lý danh tính"
+              "desc": "Better Auth để quản lý danh tính"
             },
             "3": {
               "label": "Phân tích",
@@ -1149,7 +1149,7 @@
         "desc": "ORM hoàn toàn có kiểu với chính sách Row-Level Security (RLS) tích hợp sẵn."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Better Auth Multi-Tenant / Custom Identity",
         "desc": "Cổng xác thực chuẩn SOC2 hỗ trợ chuyển đổi tổ chức B2B và RBAC."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Cấu hình",
-        "desc": "Thiết lập Prisma, Clerk và Stripe qua CLI tương tác trong vài phút."
+        "desc": "Thiết lập Prisma, Better Auth và Stripe qua CLI tương tác trong vài phút."
       },
       "step3": {
         "title": "3. Xây dựng",
@@ -1320,10 +1320,10 @@
       "multi_category": "Nền tảng đa thuê bao",
       "multi_f1_title": "Cách ly cấp tổ chức",
       "multi_f1_desc": "Bảo mật cấp hàng trong Postgres đảm bảo các thuê bao không bao giờ truy cập dữ liệu của nhau — thực thi ở lớp cơ sở dữ liệu, không chỉ ứng dụng.",
-      "multi_f2_title": "Xác thực đa nhà cung cấp (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "OAuth đa nhà cung cấp (Google, GitHub, v.v.) cùng email/mật khẩu và magic-link — chuyển đổi giữa Clerk, Better Auth, NextAuth hoặc Supabase Auth qua một biến môi trường duy nhất.",
+      "multi_f2_title": "Xác thực đa nhà cung cấp (Better Auth)",
+      "multi_f2_desc": "OAuth đa nhà cung cấp (Google, GitHub, v.v.) cùng email/mật khẩu và magic-link — tất cả thông qua Better Auth, cấu hình bằng một biến môi trường duy nhất.",
       "multi_f3_title": "Cung cấp thuê bao tự động",
-      "multi_f3_desc": "Khi một tổ chức mới đăng ký qua Clerk, chúng tôi tự động tạo khóa API đầu tiên và gửi email chào mừng có thương hiệu — không cần thao tác thủ công.",
+      "multi_f3_desc": "Khi một tổ chức mới đăng ký, chúng tôi tự động tạo khóa API đầu tiên và gửi email chào mừng có thương hiệu — không cần thao tác thủ công.",
       "dx_category": "Trải nghiệm nhà phát triển",
       "dx_f1_title": "Khóa API đã băm",
       "dx_f1_desc": "Khóa đã băm SHA-256 với hiển thị tiền tố (nbtr_live_…). Hiển thị dạng văn bản thuần túy đúng một lần khi tạo — bảo mật mà không gây cản trở.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "API đa giao thức (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI cho API công khai, oRPC cho các cuộc gọi frontend an toàn kiểu, tRPC cho khả năng tương thích T3-stack. Tất cả giao thức chia sẻ cùng hợp đồng Zod và stack middleware. Bật theo giao thức qua cấu hình preset.",
       "billing_category": "Thanh toán & Monetisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Chọn nhà cung cấp thanh toán: Stripe cho doanh nghiệp toàn cầu, LemonSqueezy cho dev indie, Polar cho OSS, hoặc Alipay/WeChat Pay cho thị trường Trung Quốc. Thanh toán một chạm và cổng thanh toán tự phục vụ.",
+      "billing_f1_title": "Stripe & China Pay",
+      "billing_f1_desc": "Chọn nhà cung cấp thanh toán: Stripe cho doanh nghiệp toàn cầu, hoặc Alipay/WeChat Pay cho thị trường Trung Quốc. Thanh toán một chạm và cổng thanh toán tự phục vụ.",
       "billing_f2_title": "Thực thi hạn ngạch theo mức sử dụng",
       "billing_f2_desc": "Bộ đếm Redis thời gian thực theo dõi cuộc gọi API và mức sử dụng token theo tenant. Yêu cầu bị chặn tại gateway khi đạt giới hạn.",
       "billing_f3_title": "Đồng bộ vòng đời webhook",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Cảnh báo đa cửa sổ theo phong cách Google SRE kích hoạt ở tỷ lệ đốt 14.4×, 6× và 3× trước khi ngân sách lỗi của bạn cạn kiệt.",
       "sec_category": "Bảo mật",
       "sec_f1_title": "Tiêu đề dựa trên nonce CSP",
-      "sec_f1_desc": "Chính sách bảo mật nội dung Strict-dynamic với nonce tạo theo mỗi yêu cầu trong middleware Clerk — không có unsafe-inline ở bất kỳ đâu.",
+      "sec_f1_desc": "Chính sách bảo mật nội dung Strict-dynamic với nonce tạo theo mỗi yêu cầu trong middleware Auth — không có unsafe-inline ở bất kỳ đâu.",
       "sec_f2_title": "WAF ModSecurity",
       "sec_f2_desc": "Bộ quy tắc cốt lõi OWASP ở chế độ DetectionOnly trên mọi điểm vào. Giới hạn tốc độ ở 30 RPS với khả năng chịu xung đột qua chú thích nginx.",
       "sec_f3_title": "SBOM + nguồn gốc SLSA",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps với ArgoCD",
       "infra_f1_desc": "Các thay đổi trên nhánh chính được tự động điều hòa với cụm. Tự phục hồi sẽ hoàn tác các chỉnh sửa kubectl thủ công. Cửa sổ đồng bộ thực thi giờ triển khai an toàn.",
       "infra_f2_title": "Gộp kết nối PgBouncer",
-      "infra_f2_desc": "PgBouncer chế độ giao dịch phía trước Supabase xử lý 1.000 kết nối ứng dụng trên 20 kết nối Postgres. HA với 2 bản sao.",
+      "infra_f2_desc": "PgBouncer chế độ giao dịch phía trước Postgres xử lý 1.000 kết nối ứng dụng trên 20 kết nối Postgres. HA với 2 bản sao.",
       "infra_f3_title": "Tự động mở rộng ngang + dọc",
       "infra_f3_desc": "HPA mở rộng theo CPU/bộ nhớ. VPA chạy ở chế độ Off cung cấp đề xuất điều chỉnh kích thước. KEDA chỉ số tùy chỉnh dự kiến cho v2."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Có hoạt động được ở Trung Quốc không?",
-          "answer": "Có. Chúng tôi cung cấp cấu hình hạ tầng song song (CDN tương thích Aliyun, tên miền thân thiện với ICP, tùy chọn Penpot thay cho Figma) để cùng một mã nguồn có thể triển khai sạch sẽ bên trong Great Firewall."
+          "answer": "Có. Chúng tôi cung cấp cấu hình hạ tầng song song (CDN tương thích Aliyun, tên miền thân thiện với ICP) để cùng một mã nguồn có thể triển khai sạch sẽ bên trong Great Firewall."
         },
         "deployment": {
           "question": "Tôi có thể triển khai ở đâu?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Bảo mật được xử lý như thế nào?",
-          "answer": "Mã hóa envelope ở lớp ứng dụng cho bí mật (@nebutra/vault), Postgres RLS cho cách ly thuê bao, RBAC/ABAC qua CASL hoặc OpenFGA (@nebutra/permissions), token liên dịch vụ ký HMAC, webhook ra ngoài đã ký và pipeline kiểm toán theo chuẩn SOC 2 (@nebutra/audit) được bao gồm trong mọi gói. Gói Pro và Enterprise bổ sung hỗ trợ xác nhận SOC 2, phản ứng sự cố chuyên dụng và thời gian lưu trữ nhật ký kiểm toán dài hơn."
+          "answer": "Mã hóa envelope ở lớp ứng dụng cho bí mật (@nebutra/vault), Postgres RLS cho cách ly thuê bao, RBAC/ABAC qua CASL (@nebutra/permissions), token liên dịch vụ ký HMAC, webhook ra ngoài đã ký và pipeline kiểm toán theo chuẩn SOC 2 (@nebutra/audit) được bao gồm trong mọi gói. Gói Pro và Enterprise bổ sung hỗ trợ xác nhận SOC 2, phản ứng sự cố chuyên dụng và thời gian lưu trữ nhật ký kiểm toán dài hơn."
         },
         "support": {
           "question": "Tôi nhận được hỗ trợ gì?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Tôi có thể sử dụng nhà cung cấp của riêng mình không?",
-          "answer": "Có. Mọi tích hợp (xác thực, hàng đợi, tìm kiếm, email, thanh toán, lưu trữ, hóa đơn) đều không phụ thuộc nhà cung cấp. Factory trong mỗi gói chọn adapter phù hợp từ một biến môi trường duy nhất — thay Clerk bằng Better Auth, NextAuth hoặc Supabase Auth, QStash bằng BullMQ, Resend bằng SES, Stripe bằng Polar / LemonSqueezy / ChinaPay — mà không cần chạm vào mã ứng dụng."
+          "answer": "Có. Mọi tích hợp (xác thực, hàng đợi, tìm kiếm, email, thanh toán, lưu trữ, hóa đơn) đều không phụ thuộc nhà cung cấp. Factory trong mỗi gói chọn adapter phù hợp từ một biến môi trường duy nhất — ví dụ Better Auth, QStash, Resend hoặc Stripe — mà không cần chạm vào mã ứng dụng."
         },
         "tech-stack": {
           "question": "Công nghệ sử dụng là gì?",
@@ -1676,8 +1676,8 @@
           "answer": "Hai lớp. Bối cảnh tenant theo phạm vi request qua @nebutra/tenant (AsyncLocalStorage truyền org đang hoạt động qua mọi cuộc gọi server, bao gồm truy vấn DB và webhook ra ngoài), và cách ly được thực thi ở cơ sở dữ liệu qua chính sách Row-Level Security của Postgres (packages/platform/db/prisma/generated/rls.sql) ràng buộc với app.current_tenant_id cục bộ theo phiên. Kết nối vai trò dịch vụ bỏ qua RLS chỉ bên trong dịch vụ nội bộ đáng tin; mọi route hướng người dùng đều đi qua client theo phạm vi tenant."
         },
         "swap-clerk": {
-          "question": "Tôi có thể thay Clerk bằng nhà cung cấp auth khác không?",
-          "answer": "Có. @nebutra/auth cung cấp adapter cấp một cho Clerk, Better Auth, NextAuth (Auth.js v5) và Supabase Auth. Chuyển đổi qua biến môi trường AUTH_PROVIDER hoặc chọn lúc scaffold với create-sailor --auth=... — bề mặt server, React và middleware giữ nguyên bất kể nhà cung cấp. Thêm adapter thứ năm chỉ cần triển khai một interface (~80 LOC); không có gì trong mã xung quanh gắn cứng với nhà cung cấp cụ thể."
+          "question": "Tôi có thể thay Better Auth bằng nhà cung cấp auth khác không?",
+          "answer": "Có. @nebutra/auth cung cấp adapter cấp một cho Better Auth. Chuyển đổi qua biến môi trường AUTH_PROVIDER hoặc chọn lúc scaffold với create-sailor --auth=... — bề mặt server, React và middleware giữ nguyên bất kể nhà cung cấp. Thêm adapter khác chỉ cần triển khai một interface (~80 LOC); không có gì trong mã xung quanh gắn cứng với nhà cung cấp cụ thể."
         }
       }
     },

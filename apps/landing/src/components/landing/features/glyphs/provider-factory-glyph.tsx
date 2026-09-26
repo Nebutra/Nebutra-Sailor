@@ -9,9 +9,8 @@ type ProviderOption = {
 
 const PROVIDERS: ProviderOption[] = [
   { name: "Stripe", active: true },
-  { name: "Polar" },
-  { name: "LemonSqueezy" },
-  { name: "ChinaPay" },
+  { name: "WeChat Pay", active: true },
+  { name: "Alipay", active: true },
 ];
 
 export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
@@ -52,12 +51,12 @@ export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
 
       <div className="rounded-[var(--radius-md)] border border-border bg-muted px-2.5 py-1.5">
         <div className="font-mono text-[10px] leading-snug text-muted-foreground">
-          <span className="text-muted-foreground">Detected via</span>{" "}
-          <span className="text-foreground">BILLING_PROVIDER</span>
-          <span className="text-muted-foreground"> env</span>
+          <span className="text-muted-foreground">Live once its</span>{" "}
+          <span className="text-foreground">keys</span>
+          <span className="text-muted-foreground"> are set</span>
         </div>
         <div className="font-mono text-[10px] leading-snug text-muted-foreground">
-          falls back to <span className="text-foreground">Stripe</span>
+          both rails can run <span className="text-foreground">at once</span>
         </div>
       </div>
     </div>

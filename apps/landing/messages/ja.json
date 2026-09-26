@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "エンタープライズ SaaS 自動化",
-      "description": "Vercel、Supabase、Stripe を深く統合。行レベルのセキュリティ、複雑なマルチテナント分離、グローバルサブスクリプション課金を標準装備で提供します。"
+      "description": "Postgres、Better Auth、Stripe を深く統合。行レベルのセキュリティ、複雑なマルチテナント分離、グローバルサブスクリプション課金を標準装備で提供します。"
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "セッション"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "認証トークン",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "認証セッショントークン",
             "duration": "7日間"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "インフラ",
-              "desc": "クラウドホスティング（Vercel、Supabase）、データベースサービス"
+              "desc": "クラウドホスティング（Fly.io、Cloudflare）、データベースサービス"
             },
             "1": {
               "label": "決済処理",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "認証",
-              "desc": "ID 管理のための Clerk"
+              "desc": "ID 管理のための Better Auth"
             },
             "3": {
               "label": "分析",
@@ -1149,7 +1149,7 @@
         "desc": "Row-Level Security (RLS) ポリシーをネイティブに組み込んだ完全型 ORM。"
       },
       "auth": {
-        "title": "Clerk マルチテナント / カスタム ID",
+        "title": "Better Auth マルチテナント / カスタム ID",
         "desc": "B2B 組織切り替えと RBAC をサポートする SOC2 対応認証ゲートウェイ。"
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. 設定",
-        "desc": "インタラクティブ CLI で Prisma、Clerk、Stripe を数分でセットアップ。"
+        "desc": "インタラクティブ CLI で Prisma、Better Auth、Stripe を数分でセットアップ。"
       },
       "step3": {
         "title": "3. ビルド",
@@ -1320,10 +1320,10 @@
       "multi_category": "マルチテナントプラットフォーム",
       "multi_f1_title": "組織レベルの分離",
       "multi_f1_desc": "Postgres の行レベルセキュリティにより、テナント間のデータアクセスをデータベースレイヤーで強制 — アプリケーション層だけでなく。",
-      "multi_f2_title": "マルチプロバイダー認証（Clerk / Better Auth / NextAuth / Supabase）",
-      "multi_f2_desc": "マルチプロバイダー OAuth（Google、GitHub 等）、メール/パスワード、マジックリンク — 単一の環境変数で Clerk、Better Auth、NextAuth、Supabase Auth を切り替え可能。",
+      "multi_f2_title": "マルチプロバイダー認証（Better Auth）",
+      "multi_f2_desc": "マルチプロバイダー OAuth（Google、GitHub 等）、メール/パスワード、マジックリンク — すべて単一の Better Auth インスタンスで、プロバイダー切り替え不要。",
       "multi_f3_title": "自動テナントプロビジョニング",
-      "multi_f3_desc": "Clerk 経由で新しい組織がサインアップすると、最初の API キーを自動生成してブランドのウェルカムメールを送信 — 手動ステップは不要。",
+      "multi_f3_desc": "新しい組織がサインアップすると、最初の API キーを自動生成してブランドのウェルカムメールを送信 — 手動ステップは不要。",
       "dx_category": "デベロッパーエクスペリエンス",
       "dx_f1_title": "ハッシュ化 API キー",
       "dx_f1_desc": "プレフィックス表示付きの SHA-256 ハッシュキー（nbtr_live_…）。作成時に一度だけ平文表示 — 摩擦のないセキュリティ。",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "マルチプロトコル API（REST + oRPC + tRPC）",
       "dx_f3_desc": "パブリック API に REST/OpenAPI、タイプセーフなフロントエンド呼び出しに oRPC、T3 スタック互換に tRPC。全プロトコルで同一の Zod コントラクトとミドルウェアスタックを共有。プリセット設定でプロトコルごとに有効化。",
       "billing_category": "課金・マネタイズ",
-      "billing_f1_title": "Stripe、LemonSqueezy、Polar & China Pay",
-      "billing_f1_desc": "決済プロバイダーを選択：グローバルエンタープライズに Stripe、インディー開発者に LemonSqueezy、OSS に Polar、中国市場に Alipay/WeChat Pay。ワンクリックチェックアウトとセルフサービス課金ポータル。",
+      "billing_f1_title": "Stripe & China Pay",
+      "billing_f1_desc": "決済プロバイダーを選択：グローバルエンタープライズに Stripe、中国市場に Alipay/WeChat Pay。ワンクリックチェックアウトとセルフサービス課金ポータル。",
       "billing_f2_title": "使用量ベースのクォータ適用",
       "billing_f2_desc": "リアルタイム Redis カウンターがテナントごとの API コールとトークン使用量を追跡。制限に達するとゲートウェイでリクエストをゲート。",
       "billing_f3_title": "Webhook ライフサイクル同期",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "エラーバジェット枯渇前に 14.4×、6×、3× のバーンレートでマルチウィンドウ Google SRE スタイルアラートが発火。",
       "sec_category": "セキュリティ",
       "sec_f1_title": "CSP ノンスベースヘッダー",
-      "sec_f1_desc": "Clerk ミドルウェアでリクエストごとにノンスを生成する Strict-dynamic Content Security Policy — unsafe-inline は一切なし。",
+      "sec_f1_desc": "auth ミドルウェアでリクエストごとにノンスを生成する Strict-dynamic Content Security Policy — unsafe-inline は一切なし。",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "すべてのイングレスで DetectionOnly モードの OWASP コアルールセット。nginx アノテーション経由でバースト許容付き 30 RPS のレート制限。",
       "sec_f3_title": "SBOM + SLSA プロバナンス",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "ArgoCD による GitOps",
       "infra_f1_desc": "メインブランチの変更がクラスターに自動調整されます。セルフヒールが手動の kubectl 編集を元に戻します。同期ウィンドウで安全なデプロイ時間を強制。",
       "infra_f2_title": "PgBouncer 接続プーリング",
-      "infra_f2_desc": "Supabase 前段のトランザクションモード PgBouncer が 20 本の Postgres 接続で 1,000 本のアプリ接続を処理。2 レプリカで HA 構成。",
+      "infra_f2_desc": "Postgres 前段のトランザクションモード PgBouncer が 20 本の Postgres 接続で 1,000 本のアプリ接続を処理。2 レプリカで HA 構成。",
       "infra_f3_title": "水平 + 垂直オートスケーリング",
       "infra_f3_desc": "HPA が CPU/メモリでスケール。VPA は Off モードで適正サイズの推奨を提供。KEDA カスタムメトリクスは v2 で計画中。"
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "中国国内でも動作しますか？",
-          "answer": "はい。Aliyun 対応 CDN、ICP フレンドリーなドメイン、Figma の代わりに Penpot を使用する並行インフラ設定を提供しており、同一のコードベースでグレートファイアウォール内にクリーンにデプロイできます。"
+          "answer": "はい。Aliyun 対応 CDN、ICP フレンドリーなドメインの並行インフラ設定を提供しており、同一のコードベースでグレートファイアウォール内にクリーンにデプロイできます。"
         },
         "deployment": {
           "question": "どこにデプロイできますか？",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "セキュリティはどのように管理されていますか？",
-          "answer": "シークレットのアプリケーション層エンベロープ暗号化（@nebutra/vault）、テナント分離のための Postgres RLS、CASL または OpenFGA による RBAC/ABAC（@nebutra/permissions）、HMAC 署名によるサービス間トークン、署名付き送信 Webhook、SOC 2 準拠の監査パイプライン（@nebutra/audit）がすべてのプランに含まれます。Pro・Enterprise は SOC 2 認証サポート、専任インシデント対応、長期監査ログ保持が追加されます。"
+          "answer": "シークレットのアプリケーション層エンベロープ暗号化（@nebutra/vault）、テナント分離のための Postgres RLS、CASL による RBAC/ABAC（@nebutra/permissions）、HMAC 署名によるサービス間トークン、署名付き送信 Webhook、SOC 2 準拠の監査パイプライン（@nebutra/audit）がすべてのプランに含まれます。Pro・Enterprise は SOC 2 認証サポート、専任インシデント対応、長期監査ログ保持が追加されます。"
         },
         "support": {
           "question": "どのようなサポートが受けられますか？",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "独自のプロバイダーを使えますか？",
-          "answer": "はい。すべての統合（認証、キュー、検索、メール、決済、ストレージ、課金）はプロバイダー非依存です。各パッケージのファクトリーが単一の環境変数から適切なアダプターを選択します。Clerk を Better Auth・NextAuth・Supabase Auth に、QStash を BullMQ に、Resend を SES に、Stripe を Polar / LemonSqueezy / ChinaPay に——アプリケーションコードを変更せずに切り替えられます。"
+          "answer": "はい。すべての統合（認証、キュー、検索、メール、決済、ストレージ、課金）はプロバイダー非依存です。各パッケージのファクトリーが単一の環境変数から適切なアダプターを選択します。使用されるアダプターは Better Auth、QStash、Resend、Stripe です——アプリケーションコードを変更する必要はありません。"
         },
         "tech-stack": {
           "question": "技術スタックは何ですか？",
@@ -1676,8 +1676,8 @@
           "answer": "2 層構造です。@nebutra/tenant によるリクエストスコープのテナントコンテキスト（AsyncLocalStorage が DB クエリや送信 Webhook を含むすべてのサーバーコールにアクティブ組織を伝播）と、Postgres Row-Level Security ポリシー（packages/platform/db/prisma/generated/rls.sql）による DB 強制分離（セッションローカルの app.current_tenant_id にバインド）です。"
         },
         "swap-clerk": {
-          "question": "Clerk を別の認証プロバイダーに交換できますか？",
-          "answer": "はい。@nebutra/auth は Clerk、Better Auth、NextAuth（Auth.js v5）、Supabase Auth のファーストクラスアダプターを搭載しています。AUTH_PROVIDER 環境変数で切り替えるか、create-sailor --auth=... でスキャフォールド時に選択できます——サーバー・React・ミドルウェアのインターフェースはプロバイダーに関わらず同一です。5 つ目のアダプターを追加する場合は単一インターフェース（約 80 行）を実装するだけです。"
+          "question": "Better Auth を別の認証プロバイダーに交換できますか？",
+          "answer": "はい。@nebutra/auth は Better Auth のファーストクラスアダプターを搭載しています。AUTH_PROVIDER 環境変数で切り替えるか、create-sailor --auth=... でスキャフォールド時に選択できます——サーバー・React・ミドルウェアのインターフェースはプロバイダーに関わらず同一です。5 つ目のアダプターを追加する場合は単一インターフェース（約 80 行）を実装するだけです。"
         }
       }
     },

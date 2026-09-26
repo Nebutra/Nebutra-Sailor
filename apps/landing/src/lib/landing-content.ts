@@ -98,17 +98,17 @@ export const techStackLogos: TechLogo[] = [
     },
   },
   {
-    name: "Supabase",
+    name: "Stripe",
     svgl: {
-      light: "supabase.svg", // Green works on both
-      dark: "supabase.svg",
+      light: "stripe.svg", // Purple works on both
+      dark: "stripe.svg",
     },
   },
   {
-    name: "Clerk",
+    name: "Better Auth",
     svgl: {
-      light: "clerk-icon-light.svg", // Dark icon for light bg (SVGL naming = target bg)
-      dark: "clerk-icon-dark.svg", // White icon for dark bg
+      light: "better-auth_light.svg", // Dark icon for light bg
+      dark: "better-auth_dark.svg", // White icon for dark bg
     },
   },
   {

@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "YritysasaaS-automatisointi",
-      "description": "Syvästi integroitu nykyaikaiseen teknologiaan: Vercel, Supabase ja Stripe. Tarjoaa valmiin rivitasoisen turvallisuuden, monimutkaisen monivuokraisuuden eristelyn ja globaalin tilauslaskutuksen."
+      "description": "Syvästi integroitu nykyaikaiseen teknologiaan: Postgres, Better Auth ja Stripe. Tarjoaa valmiin rivitasoisen turvallisuuden, monimutkaisen monivuokraisuuden eristelyn ja globaalin tilauslaskutuksen."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Istunto"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Autentikointitunniste",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Todennusistunnon tunniste",
             "duration": "7 päivää"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Infrastruktuuri",
-              "desc": "Pilvipalvelut (Vercel, Supabase), tietokantapalvelut"
+              "desc": "Pilvipalvelut (Fly.io, Cloudflare), tietokantapalvelut"
             },
             "1": {
               "label": "Maksujen käsittely",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Autentikointi",
-              "desc": "Clerk henkilöllisyyden hallintaan"
+              "desc": "Better Auth henkilöllisyyden hallintaan"
             },
             "3": {
               "label": "Analytiikka",
@@ -1149,7 +1149,7 @@
         "desc": "Täysin tyypitetty ORM, jossa rivitasoinen turvallisuus (RLS) on sisäänrakennettu."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Better Auth Multi-Tenant / Custom Identity",
         "desc": "SOC2-valmis kirjautumisportti, joka tukee B2B-organisaatioiden vaihtoa ja RBAC-oikeuksia."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Määritä",
-        "desc": "Määritä Prisma, Clerk ja Stripe interaktiivisen CLI:n avulla minuuteissa."
+        "desc": "Määritä Prisma, Better Auth ja Stripe interaktiivisen CLI:n avulla minuuteissa."
       },
       "step3": {
         "title": "3. Rakenna",
@@ -1320,10 +1320,10 @@
       "multi_category": "Monivuokra-alusta",
       "multi_f1_title": "Organisaatiotasoinen eristys",
       "multi_f1_desc": "Postgresin rivitasoinen turvallisuus varmistaa, että vuokralaiset eivät pääse toistensa tietoihin — pakotettuna tietokantatasolla, ei vain sovelluksessa.",
-      "multi_f2_title": "Monivalmistajan todennus (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Monivalmistajan OAuth (Google, GitHub jne.) sekä sähköposti/salasana ja magic-link — vaihda Clerk, Better Auth, NextAuth tai Supabase Auth välillä yhdellä ympäristömuuttujalla.",
+      "multi_f2_title": "Monivalmistajan todennus (Better Auth)",
+      "multi_f2_desc": "Monivalmistajan OAuth (Google, GitHub jne.) sekä sähköposti/salasana ja magic-link — kaikki Better Authin kautta yhdellä ympäristömuuttujalla.",
       "multi_f3_title": "Automaattinen vuokralaisen luonti",
-      "multi_f3_desc": "Kun uusi organisaatio rekisteröityy Clerkissä, luomme automaattisesti ensimmäisen API-avaimen ja lähetämme brändätyn tervetuloviestin — ilman manuaalisia toimia.",
+      "multi_f3_desc": "Kun uusi organisaatio rekisteröityy, luomme automaattisesti ensimmäisen API-avaimen ja lähetämme brändätyn tervetuloviestin — ilman manuaalisia toimia.",
       "dx_category": "Kehittäjän kokemus",
       "dx_f1_title": "Hashatut API-avaimet",
       "dx_f1_desc": "SHA-256 hashatut avaimet etuliitteellä (nbtr_live_…). Näytetään avoimena tarkalleen kerran luonnin yhteydessä — turvallisuus ilman kitkaa.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "Moniprotokollainen API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI julkisille API:ille, oRPC tyypiltään turvallisiin frontend-kutsuihin ja tRPC T3-stack-yhteensopivuuteen. Kaikki protokollat käyttävät samoja Zod-sopimuksia ja välittäjäpinoa. Ota käyttöön protokollakohtaisesti valmiilla määrityksellä.",
       "billing_category": "Laskutus & Monetalisointi",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar ja Kiinan maksut",
-      "billing_f1_desc": "Valitse maksupalveluntarjoaja: Stripe globaaleille yrityksille, LemonSqueezy itsenäisille kehittäjille, Polar avoimen lähdekoodin projekteille tai Alipay/WeChat Pay Kiinan markkinoille. Yhden napsautuksen kassaprosessi ja itsepalvelulaskutusportaali.",
+      "billing_f1_title": "Stripe ja Kiinan maksut",
+      "billing_f1_desc": "Valitse maksupalveluntarjoaja: Stripe globaaleille yrityksille tai Alipay/WeChat Pay Kiinan markkinoille. Yhden napsautuksen kassaprosessi ja itsepalvelulaskutusportaali.",
       "billing_f2_title": "Käyttöön perustuva kiintiönvalvonta",
       "billing_f2_desc": "Reaaliaikaiset Redis-laskurit seuraavat API-kutsuja ja token-käyttöä jokaista vuokra-asiakasta kohti. Pyyntöjen käsittely keskeytetään portissa, kun rajat ylittyvät.",
       "billing_f3_title": "Webhook-elinkaaren synkronointi",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Moni-ikkunaiset Google SRE -tyyliset varoitukset laukeavat 14,4×, 6× ja 3× kulutusnopeuksilla ennen virhebudjetin loppumista.",
       "sec_category": "Turvallisuus",
       "sec_f1_title": "CSP:n nonce-pohjaiset otsikot",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy, jossa Clerk-keskivälittäjän tuottamat pyyntökohtaiset noncet — ei unsafe-inline -käyttöä missään.",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy, jossa Auth-keskivälittäjän tuottamat pyyntökohtaiset noncet — ei unsafe-inline -käyttöä missään.",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "OWASP Core Rule Set DetectionOnly-tilassa jokaisella sisäänkäynnillä. Nopeusrajoitus 30 pyyntöä sekunnissa burst-sietokyvyn kanssa nginx-annotaatioiden kautta.",
       "sec_f3_title": "SBOM + SLSA-lähtöperäisyys",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps ArgoCD:n kanssa",
       "infra_f1_desc": "Päähaaran muutokset yhdenmukaistetaan automaattisesti klusteriin. Itseparantava järjestelmä peruuttaa manuaaliset kubectl-muokkaukset. Synkronointiikkunat määrittävät turvalliset julkaisuaikojen rajat.",
       "infra_f2_title": "PgBouncer-yhteyksien poolaus",
-      "infra_f2_desc": "Supabasen edessä oleva transaktiomieliallinen PgBouncer käsittelee 1 000 sovellusyhteyttä 20 Postgres-yhteydellä. HA 2 replikalla.",
+      "infra_f2_desc": "Postgresin edessä oleva transaktiomieliallinen PgBouncer käsittelee 1 000 sovellusyhteyttä 20 Postgres-yhteydellä. HA 2 replikalla.",
       "infra_f3_title": "Vaakasuuntautunut + pystysuuntainen automaattinen skaalaus",
       "infra_f3_desc": "HPA skaalaa CPU:n ja muistin perusteella. VPA toimii Off-tilassa ja tarjoaa oikean kokoluokan suosituksia. KEDA:n mukautettuja mittareita suunniteltu v2:een."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Toimiiko se Kiinassa?",
-          "answer": "Kyllä. Julkaisemme rinnakkaista infrastruktuurikonfiguraatiota (Aliyun-yhteensopiva CDN, ICP-yhteensopivat verkkotunnukset, valinnainen Penpot Figan sijasta), jotta sama koodipohja voidaan julkaista saumattomasti Great Firewallin sisällä."
+          "answer": "Kyllä. Julkaisemme rinnakkaista infrastruktuurikonfiguraatiota (Aliyun-yhteensopiva CDN, ICP-yhteensopivat verkkotunnukset), jotta sama koodipohja voidaan julkaista saumattomasti Great Firewallin sisällä."
         },
         "deployment": {
           "question": "Minne voin julkaista sen?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Miten turvallisuus hoidetaan?",
-          "answer": "Sovelluskerroksen kuorittu salaus salaisuuksille (@nebutra/vault), Postgres RLS vuokraeristykseen, RBAC/ABAC CASL:n tai OpenFGA:n kautta (@nebutra/permissions), HMAC-merkityt palveluiden väliset tokenit, merkityt lähtevät webhookit ja SOC 2 -yhteensopiva tarkastusputki (@nebutra/audit) sisältyvät jokaiseen suunnitelmaan. Pro ja Enterprise lisäävät SOC 2 -todistuksen tuen, omistetun incident response -palvelun ja pidemmän tarkastuslokin säilytysajan."
+          "answer": "Sovelluskerroksen kuorittu salaus salaisuuksille (@nebutra/vault), Postgres RLS vuokraeristykseen, RBAC/ABAC CASL:n kautta (@nebutra/permissions), HMAC-merkityt palveluiden väliset tokenit, merkityt lähtevät webhookit ja SOC 2 -yhteensopiva tarkastusputki (@nebutra/audit) sisältyvät jokaiseen suunnitelmaan. Pro ja Enterprise lisäävät SOC 2 -todistuksen tuen, omistetun incident response -palvelun ja pidemmän tarkastuslokin säilytysajan."
         },
         "support": {
           "question": "Minkälaista tukea saan?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Voinko tuoda oman palveluntarjoajani?",
-          "answer": "Kyllä. Jokainen integraatio (autentikointi, jono, haku, sähköposti, maksut, tallennus, laskutus) on palveluntarjoajasta riippumaton. Jokaisen paketin factory valitsee oikean adapterin yhdestä env-muuttujasta — vaihda Clerk Better Authiin, NextAuthiin tai Supabase Authiin, QStash BullMQ:han, Resend SES:ään, Stripe Polar / LemonSqueezy / ChinaPay:hin — ilman sovelluskoodin koskemista."
+          "answer": "Kyllä. Jokainen integraatio (autentikointi, jono, haku, sähköposti, maksut, tallennus, laskutus) on palveluntarjoajasta riippumaton. Jokaisen paketin factory valitsee oikean adapterin yhdestä env-muuttujasta — kaikki Better Authin, QStashin, Resendin ja Stripen kautta — ilman sovelluskoodin koskemista."
         },
         "tech-stack": {
           "question": "Mikä on tekninen stack?",
@@ -1676,8 +1676,8 @@
           "answer": "Kaksi kerrosta. Pyyntöön sidottu vuokralaiskonteksti @nebutra/tenant -paketin kautta (AsyncLocalStorage välittää aktiivisen organisaation jokaisen palvelinpäivityksen kautta, mukaan lukien tietokantakyselyt ja ulospäin menevät webhookit) sekä tietokannassa pakotettu eristys Postgres Row-Level Security -sääntöjen kautta (packages/platform/db/prisma/generated/rls.sql), jotka sidotaan sessioon paikalliseen app.current_tenant_id -muuttujaan. Palveluroolien yhteydet ohittavat RLS:n vain luotettujen sisäisten palveluiden sisällä; kaikki käyttäjäkohtaiset reitit kulkevat vuokralaiskontekstiin sidotun clientin kautta."
         },
         "swap-clerk": {
-          "question": "Voinko vaihtaa Clerkin toiseen kirjautumispalveluun?",
-          "answer": "Kyllä. @nebutra/auth sisältää ensiluokkaiset adapterit Clerkille, Better Authille, NextAuthille (Auth.js v5) ja Supabase Authille. Vaihdetaan AUTH_PROVIDER-ympäristömuuttujan kautta tai valitaan luonninhetkellä komennolla create-sailor --auth=... — palvelin, React ja middleware -pinnat pysyvät identtisinä riippumatta palveluntarjoajasta. Viidennen adapterin lisääminen tarkoittaa yhden rajapinnan toteuttamista (~80 LOC); ympäröivässä koodissa ei ole sidoksia tiettyyn palveluntarjoajaan."
+          "question": "Voinko vaihtaa Better Authin toiseen kirjautumispalveluun?",
+          "answer": "Kyllä. @nebutra/auth sisältää ensiluokkaisen adapterin Better Authille. Vaihdetaan AUTH_PROVIDER-ympäristömuuttujan kautta tai valitaan luonninhetkellä komennolla create-sailor --auth=... — palvelin, React ja middleware -pinnat pysyvät identtisinä riippumatta palveluntarjoajasta. Viidennen adapterin lisääminen tarkoittaa yhden rajapinnan toteuttamista (~80 LOC); ympäröivässä koodissa ei ole sidoksia tiettyyn palveluntarjoajaan."
         }
       }
     },

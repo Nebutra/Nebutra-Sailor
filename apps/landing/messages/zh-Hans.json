@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "全自动 SaaS 商业底座",
-      "description": "将 Vercel、Supabase 与 Stripe 的现代技术栈深度熔铸。完全内置开箱即用的访问控制以及订阅式计费。"
+      "description": "将 Postgres、Better Auth 与 Stripe 的现代技术栈深度熔铸。完全内置开箱即用的访问控制以及订阅式计费。"
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "会话期间"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "身份验证令牌",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "身份验证会话令牌",
             "duration": "7 天"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "基础设施",
-              "desc": "云托管服务（Vercel、Supabase）及数据库服务"
+              "desc": "云托管服务（Fly.io、Cloudflare）及数据库托管服务"
             },
             "1": {
               "label": "支付处理",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "身份认证",
-              "desc": "Clerk 提供的身份管理服务"
+              "desc": "Better Auth 提供的身份管理服务"
             },
             "3": {
               "label": "数据分析",
@@ -1149,7 +1149,7 @@
         "desc": "原生内置行级安全 (RLS) 策略的完全强类型 ORM。"
       },
       "auth": {
-        "title": "Clerk 多租户 & 身份网关",
+        "title": "Better Auth 多租户 & 组织身份网关",
         "desc": "支持 B2B 组织切换和细粒度 RBAC 的 SOC2 级认证网关。"
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. 交互式配置",
-        "desc": "几分钟内通过 CLI 引导完成 Prisma、Clerk 和 Stripe 的生产环境级配置。"
+        "desc": "几分钟内通过 CLI 引导完成 Prisma、Better Auth 和 Stripe 的生产环境级配置。"
       },
       "step3": {
         "title": "3. 专注构建",
@@ -1320,10 +1320,10 @@
       "multi_category": "多租户管控中枢",
       "multi_f1_title": "租户级数据隔离墙",
       "multi_f1_desc": "基于 Postgres 的行级安全控制 (RLS) 确保租户之间的数据物理隔离——在数据库最底层强制执行，超越应用层限制。",
-      "multi_f2_title": "多供应商认证（Clerk / Better Auth / NextAuth / Supabase）",
-      "multi_f2_desc": "多 provider OAuth（Google、GitHub 等）加邮箱/密码与魔法链接 —— 通过单个环境变量在 Clerk、Better Auth、NextAuth 或 Supabase Auth 间切换。",
+      "multi_f2_title": "Better Auth，原生组织感知",
+      "multi_f2_desc": "OAuth（Google、GitHub 等）加邮箱/密码、Passkey 与魔法链接——都在同一个 Better Auth 实例里，无需切换供应商。",
       "multi_f3_title": "自动化租户编排",
-      "multi_f3_desc": "当新企业机构通过 Clerk 注册入驻，系统会自动分配首组 API 密钥并下发定制化欢迎函——剔除所有手工步骤。",
+      "multi_f3_desc": "新企业机构注册后，系统会自动分配首组 API 密钥并下发定制化欢迎函——无需任何手工步骤。",
       "dx_category": "开发者使用体验",
       "dx_f1_title": "SHA-256 API 密钥哈希",
       "dx_f1_desc": "带有组织前缀 (例如 nbtr_live_…) 的密文标识加密散列。且仅在首次创建时明文展示一次——兼顾无摩擦的体验与严苛的安全性。",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "多协议 API（REST + oRPC + tRPC）",
       "dx_f3_desc": "REST/OpenAPI 面向公共 API，oRPC 面向类型安全的前端调用，tRPC 面向 T3 技术栈兼容。所有协议共享相同的 Zod 契约和中间件栈。通过 preset 配置按需启用。",
       "billing_category": "订阅与商业计费",
-      "billing_f1_title": "Stripe、LemonSqueezy、Polar 及中国支付",
-      "billing_f1_desc": "选择支付供应商：Stripe 面向全球企业，LemonSqueezy 面向独立开发者，Polar 面向开源项目，支付宝/微信支付面向中国市场。一键结账和自助账单门户。",
+      "billing_f1_title": "Stripe + 微信支付 / 支付宝",
+      "billing_f1_desc": "Stripe 覆盖全球卡组织与订阅；微信支付与支付宝覆盖中国市场——配好密钥即可同时上线。一键结账与自助账单门户。",
       "billing_f2_title": "用量计量与配额执法",
       "billing_f2_desc": "实时的 Redis 哨兵持续监听租户的接口调用与 Token 损耗。一旦突破硬性配额极限，系统将立刻在 API 边缘网关上将后续请求直接拦截阻断。",
       "billing_f3_title": "订阅生命周期 Webhook 联动",
@@ -1637,15 +1637,15 @@
         },
         "china-friendly": {
           "question": "在中国大陆能用吗？",
-          "answer": "可以。我们提供并行的基础设施配置（阿里云兼容 CDN、ICP 友好域名、可选 Penpot 替代 Figma），同一份代码可以无障碍部署在长城防火墙内。"
+          "answer": "可以。支付（微信支付/支付宝与 Stripe 并行）、短信（阿里云与 Twilio Verify 并行）、存储（OSS 与 R2 并行，走同一套 S3 兼容客户端）各自保留了中国市场适配器，再加上阿里云兼容 CDN 与 ICP 友好域名——同一份代码可以无障碍部署在长城防火墙内。"
         },
         "deployment": {
           "question": "可以部署到哪些环境？",
-          "answer": "任何支持 Node 22+ 的环境。营销站默认部署到 Vercel；后台、网关与 Python 服务通过 Docker / PM2 部署（我们目前在阿里云 ECS 上运行，infra/iac/k8s/ 提供完整的 Kubernetes 清单可用于集群）。企业客户还可部署在客户自有的 VPC 内。"
+          "answer": "任何支持 Node 22+ 的环境。Sailor 产出的是可移植构建——Next standalone 与 Dockerfile——本身不绑定运行位置；营销站、后台、网关与 Python 服务都通过 Docker / PM2 运行（我们目前在 Fly Machines 与阿里云 ECS 上运行，infra/iac/k8s/ 提供完整的 Kubernetes 清单可用于集群）。企业客户还可部署在客户自有的 VPC 内。"
         },
         "security": {
           "question": "安全性如何保障？",
-          "answer": "应用层信封加密保管密钥（@nebutra/vault）、Postgres RLS 强制租户隔离、CASL/OpenFGA 实现的 RBAC/ABAC（@nebutra/permissions）、HMAC 签名的服务间令牌、签名出站 Webhook，以及所有套餐都内置的 SOC 2 对齐审计管道（@nebutra/audit）。Pro 与企业版额外提供 SOC 2 认证支持、专属事件响应与更长的审计日志保留。"
+          "answer": "应用层信封加密保管密钥（@nebutra/vault）、Postgres RLS 强制租户隔离、CASL 实现的 RBAC/ABAC（@nebutra/permissions）、HMAC 签名的服务间令牌、签名出站 Webhook，以及所有套餐都内置的 SOC 2 对齐审计管道（@nebutra/audit）。Pro 与企业版额外提供 SOC 2 认证支持、专属事件响应与更长的审计日志保留。"
         },
         "support": {
           "question": "支持服务包括哪些？",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "可以接入我自己的供应商吗？",
-          "answer": "可以。所有集成（认证、队列、搜索、邮件、支付、存储、计费）均为 provider-agnostic。每个包内的工厂方法根据单个环境变量挑选适配器——把 Clerk 换成 Better Auth、NextAuth 或 Supabase Auth、把 QStash 换成 BullMQ、把 Resend 换成 SES、把 Stripe 换成 Polar / LemonSqueezy / 国内支付——业务代码无需改动。"
+          "answer": "每个集成（认证、队列、搜索、邮件、支付、存储、计费）仍然收敛在各自的接口后面，但内置的适配器是 {brandName} 生产环境真正在用的那一个——Better Auth、QStash、Postgres、Resend、Stripe。只有在中国大陆确有必要时，支付、短信与存储才保留第二套适配器（微信支付/支付宝、阿里云、OSS）。要接入自己的供应商，需要自行实现该接口；业务代码本身不会绑定某个具体供应商。"
         },
         "tech-stack": {
           "question": "技术栈是什么？",
@@ -1676,8 +1676,8 @@
           "answer": "两层。请求级租户上下文通过 @nebutra/tenant 实现（AsyncLocalStorage 在每次服务端调用中传播当前组织，含 DB 查询与出站 Webhook）；数据库级隔离通过 Postgres Row-Level Security 策略（packages/platform/db/prisma/generated/rls.sql）绑定到 session-local 的 app.current_tenant_id。Service-role 连接仅在受信任的内部服务中绕过 RLS；所有面向用户的路由都走 tenant-scoped 客户端。"
         },
         "swap-clerk": {
-          "question": "可以把 Clerk 换成其他认证服务吗？",
-          "answer": "可以。@nebutra/auth 内置 Clerk、Better Auth、NextAuth (Auth.js v5) 与 Supabase Auth 四套一等适配器。通过 AUTH_PROVIDER 环境变量切换，或在 create-sailor --auth=... 脚手架时选择——server / React / middleware 接口在不同 provider 下完全一致。要接入第五套只需实现同一接口（约 80 行代码），周边代码不耦合到任何具体 provider。"
+          "question": "为什么是 Better Auth？还能换成别的认证服务吗？",
+          "answer": "Better Auth 是 Sailor 唯一内置的认证后端——它是生产环境实际在跑的方案，因此也是经过测试、有文档、持续维护的那一个。现在没有 Clerk、NextAuth 或 Supabase Auth 适配器可以切换；@nebutra/auth 仍然对外暴露同一套接口（session、React hooks、middleware），如果你需要别的供应商，可以在这套接口后面自己实现一个适配器（约 80 行代码），而不是从列表里挑一个。"
         }
       }
     },

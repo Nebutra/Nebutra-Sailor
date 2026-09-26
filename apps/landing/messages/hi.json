@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "एंटरप्राइज़ SaaS ऑटोमेशन",
-      "description": "Vercel, Supabase और Stripe के आधुनिक टेक स्टैक का गहरा एकीकरण। तैयार row-level security, जटिल multi-tenant isolation और वैश्विक सब्सक्रिप्शन बिलिंग प्रदान करता है।"
+      "description": "Postgres, Better Auth और Stripe के आधुनिक टेक स्टैक का गहरा एकीकरण। तैयार row-level security, जटिल multi-tenant isolation और वैश्विक सब्सक्रिप्शन बिलिंग प्रदान करता है।"
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "सत्र"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "प्रमाणीकरण टोकन",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "प्रमाणीकरण सत्र टोकन",
             "duration": "7 दिन"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "इंफ्रास्ट्रक्चर",
-              "desc": "क्लाउड होस्टिंग (Vercel, Supabase), डेटाबेस सेवाएं"
+              "desc": "क्लाउड होस्टिंग (Fly.io, Cloudflare), डेटाबेस सेवाएं"
             },
             "1": {
               "label": "पेमेंट प्रोसेसिंग",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "प्रमाणीकरण",
-              "desc": "पहचान प्रबंधन के लिए Clerk"
+              "desc": "पहचान प्रबंधन के लिए Better Auth"
             },
             "3": {
               "label": "एनालिटिक्स",
@@ -1149,7 +1149,7 @@
         "desc": "पूर्ण रूप से टाइप किया गया ORM जिसमें Row-Level Security (RLS) नीतियाँ मूल रूप से शामिल हैं।"
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Better Auth Multi-Tenant / Custom Identity",
         "desc": "SOC2-तैयार प्रमाणीकरण गेटवे जो B2B संगठन स्विचिंग और RBAC का समर्थन करता है।"
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. कॉन्फ़िगर करें",
-        "desc": "मिनटों में इंटरैक्टिव CLI के माध्यम से Prisma, Clerk और Stripe सेटअप करें."
+        "desc": "मिनटों में इंटरैक्टिव CLI के माध्यम से Prisma, Better Auth और Stripe सेटअप करें."
       },
       "step3": {
         "title": "3. बिल्ड करें",
@@ -1320,10 +1320,10 @@
       "multi_category": "मल्टी-टेनेंट प्लेटफ़ॉर्म",
       "multi_f1_title": "ऑर्गनाइज़ेशन-स्तरीय अलगाव",
       "multi_f1_desc": "Postgres में रो-लेवल सुरक्षा सुनिश्चित करती है कि टेनेंट एक-दूसरे के डेटा तक कभी नहीं पहुँच सकते — डेटाबेस लेयर पर लागू, सिर्फ़ एप्लिकेशन पर नहीं।",
-      "multi_f2_title": "मल्टी-प्रोवाइडर ऑथ (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "मल्टी-प्रोवाइडर OAuth (Google, GitHub आदि) साथ ही ईमेल/पासवर्ड और मैजिक-लिंक — एकल env var के माध्यम से Clerk, Better Auth, NextAuth या Supabase Auth के बीच स्विच करें।",
+      "multi_f2_title": "मल्टी-प्रोवाइडर ऑथ (Better Auth)",
+      "multi_f2_desc": "मल्टी-प्रोवाइडर OAuth (Google, GitHub आदि) साथ ही ईमेल/पासवर्ड और मैजिक-लिंक — एकल env var के माध्यम से Better Auth के साथ सब कुछ करें।",
       "multi_f3_title": "स्वचालित टेनेंट प्रोविज़निंग",
-      "multi_f3_desc": "जब कोई नया ऑर्गनाइज़ेशन Clerk के माध्यम से साइन अप करता है, हम उनके पहले API की को स्वचालित रूप से जनरेट करते हैं और एक ब्रांडेड स्वागत ईमेल भेजते हैं — शून्य मैनुअल चरण।",
+      "multi_f3_desc": "जब कोई नया ऑर्गनाइज़ेशन साइन अप करता है, हम उनके पहले API की को स्वचालित रूप से जनरेट करते हैं और एक ब्रांडेड स्वागत ईमेल भेजते हैं — शून्य मैनुअल चरण।",
       "dx_category": "डेवलपर अनुभव",
       "dx_f1_title": "Hashed API keys",
       "dx_f1_desc": "SHA-256 हैश किए गए कुंजी, प्रीफिक्स डिस्प्ले के साथ (nbtr_live_…)। बनाने पर प्लेनटेक्स्ट में बस एक बार दिखाई देती हैं — बिना रुकावट के सुरक्षा।",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "सार्वजनिक API के लिए REST/OpenAPI, टाइप-सुरक्षित फ्रंटएंड कॉल के लिए oRPC, T3-स्टैक संगतता के लिए tRPC। सभी प्रोटोकॉल एक ही Zod अनुबंध और मध्यवर्ती स्टैक साझा करते हैं। प्रीसेट कॉन्फ़िग के माध्यम से प्रोटोकॉल के अनुसार सक्षम करें।",
       "billing_category": "Billing & Monetisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "अपना भुगतान प्रदाता चुनें: वैश्विक उद्यम के लिए Stripe, स्वतंत्र डेवलपर्स के लिए LemonSqueezy, OSS के लिए Polar, या चीन बाजार के लिए Alipay/WeChat Pay। एक-क्लिक चेकआउट और स्वयं-सेवा बिलिंग पोर्टल।",
+      "billing_f1_title": "Stripe & China Pay",
+      "billing_f1_desc": "अपना भुगतान प्रदाता चुनें: वैश्विक उद्यम के लिए Stripe, या चीन बाजार के लिए Alipay/WeChat Pay। एक-क्लिक चेकआउट और स्वयं-सेवा बिलिंग पोर्टल।",
       "billing_f2_title": "Usage-based quota enforcement",
       "billing_f2_desc": "रीयल-टाइम Redis काउंटर प्रति टिनेंट API कॉल और टोकन उपयोग ट्रैक करते हैं। सीमाओं पर पहुँचने पर अनुरोध गेटवे पर गेटेड हो जाते हैं।",
       "billing_f3_title": "Webhook lifecycle sync",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "मल्टी-विंडो Google SRE-शैली अलर्ट्स आपके एरर बजेट खत्म होने से पहले 14.4×, 6×, और 3× बर्न रेट्स पर फायर होते हैं।",
       "sec_category": "सुरक्षा",
       "sec_f1_title": "CSP nonce-आधारित हेडर",
-      "sec_f1_desc": "Clerk मीडियवेयर में प्रति-अनुरोध नॉन्स उत्पन्न करने वाले Strict-dynamic Content Security Policy के साथ — कहीं भी unsafe-inline नहीं।",
+      "sec_f1_desc": "Auth मीडियवेयर में प्रति-अनुरोध नॉन्स उत्पन्न करने वाले Strict-dynamic Content Security Policy के साथ — कहीं भी unsafe-inline नहीं।",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "हर इनग्रेस पर DetectionOnly मोड में OWASP Core Rule Set। nginx एनोटेशन के माध्यम से बर्स्ट सहनशीलता के साथ 30 RPS पर रेट लिमिटिंग।",
       "sec_f3_title": "SBOM + SLSA प्रूवेनेंस",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "ArgoCD के साथ GitOps",
       "infra_f1_desc": "मेन ब्रांच में बदलाव स्वचालित रूप से क्लस्टर में रीकॉन्सिल होते हैं। सेल्फ-हील मैनुअल kubectl एडिट्स को रिवर्ट करता है। सिंक विंडो सुरक्षित डिप्लॉय घंटों को लागू करते हैं।",
       "infra_f2_title": "PgBouncer कनेक्शन पूलिंग",
-      "infra_f2_desc": "Supabase के सामने ट्रांज़ैक्शन-मोड PgBouncer 20 Postgres कनेक्शन्स पर 1,000 ऐप कनेक्शन्स को हैंडल करता है। 2 रिप्लिका के साथ HA।",
+      "infra_f2_desc": "Postgres के सामने ट्रांज़ैक्शन-मोड PgBouncer 20 Postgres कनेक्शन्स पर 1,000 ऐप कनेक्शन्स को हैंडल करता है। 2 रिप्लिका के साथ HA।",
       "infra_f3_title": "क्षैतिज + ऊर्ध्वाधर ऑटोस्केलिंग",
       "infra_f3_desc": "HPA CPU/मेमोरी पर स्केल करता है। VPA Off मोड में चलता है और राइट-साइज़िंग सुझाव प्रदान करता है. KEDA कस्टम मेट्रिक्स v2 के लिए योजनाबद्ध हैं।"
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "क्या यह चीन में काम करता है?",
-          "answer": "हाँ। हम एक parallel infra config शिप करते हैं (Aliyun-compatible CDN, ICP-friendly domains, Figma की जगह optional Penpot) ताकि वही codebase Great Firewall के अंदर भी cleanly deploy हो सके।"
+          "answer": "हाँ। हम एक parallel infra config शिप करते हैं (Aliyun-compatible CDN, ICP-friendly domains) ताकि वही codebase Great Firewall के अंदर भी cleanly deploy हो सके।"
         },
         "deployment": {
           "question": "मैं इसे कहाँ deploy कर सकता हूँ?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Security कैसे handle होता है?",
-          "answer": "Secrets के लिए application-layer envelope encryption (@nebutra/vault), tenant isolation के लिए Postgres RLS, CASL या OpenFGA के माध्यम से RBAC/ABAC (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks और हर plan में शामिल SOC 2-aligned audit pipeline (@nebutra/audit)। Pro और Enterprise में SOC 2 attestation support, dedicated incident response और longer audit-log retention जोड़ते हैं।"
+          "answer": "Secrets के लिए application-layer envelope encryption (@nebutra/vault), tenant isolation के लिए Postgres RLS, CASL के माध्यम से RBAC/ABAC (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks और हर plan में शामिल SOC 2-aligned audit pipeline (@nebutra/audit)। Pro और Enterprise में SOC 2 attestation support, dedicated incident response और longer audit-log retention जोड़ते हैं।"
         },
         "support": {
           "question": "मुझे क्या support मिलता है?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "क्या मैं अपना own provider ला सकता हूँ?",
-          "answer": "हाँ। हर integration (auth, queue, search, email, payments, storage, billing) provider-agnostic है। हर package में factory एक single env var से सही adapter चुनता है — Clerk की जगह Better Auth, NextAuth या Supabase Auth, QStash की जगह BullMQ, Resend की जगह SES, Stripe की जगह Polar / LemonSqueezy / ChinaPay — application code को छुए बिना।"
+          "answer": "हाँ। हर integration (auth, queue, search, email, payments, storage, billing) provider-agnostic है। हर package में factory एक single env var से सही adapter चुनता है — Better Auth, QStash, Resend और Stripe के साथ सब कुछ — application code को छुए बिना।"
         },
         "tech-stack": {
           "question": "Tech stack क्या है?",
@@ -1676,8 +1676,8 @@
           "answer": "दो परतें। @nebutra/tenant के माध्यम से रिक्वेस्ट-स्कोप्ड टेनेंट संदर्भ (AsyncLocalStorage हर सर्वर कॉल के माध्यम से सक्रिय संगठन को प्रसारित करता है, जिसमें डेटाबेस क्वेरी और आउटबाउंड वेबहुक शामिल हैं), और Postgres Row-Level Security नीतियों (packages/platform/db/prisma/generated/rls.sql) के माध्यम से डेटाबेस-अमलीकरण वाली अलगाव, जो सेशन-स्थानीय app.current_tenant_id से बंधी हैं। सर्विस-रोल कनेक्शन केवल विश्वसनीय आंतरिक सेवाओं के अंदर RLS को बायपास करते हैं; सभी यूज़र-फेसिंग रूट्स टेनेंट-स्कोप्ड क्लाइंट के माध्यम से जाते हैं।"
         },
         "swap-clerk": {
-          "question": "क्या मैं Clerk को किसी अन्य auth प्रोवाइडर से बदल सकता हूँ?",
-          "answer": "हाँ। @nebutra/auth Clerk, Better Auth, NextAuth (Auth.js v5), और Supabase Auth के लिए फर्स्ट-क्लास एडेप्टर शिप करता है। AUTH_PROVIDER env var के माध्यम से स्विच करें या create-sailor --auth=... के साथ स्कैफोल्ड समय पर चुनें — सर्वर, React, और मीडिलवेयर सतहें प्रोवाइडर की परवाह किए बिना समान रहती हैं. पाँचवाँ एडेप्टर जोड़ने का मतलब एकल इंटरफ़ेस (~80 LOC) लागू करना है; आस-पास के कोड में कुछ भी किसी विशिष्ट प्रोवाइडर से जुड़ा नहीं है।"
+          "question": "क्या मैं Better Auth को किसी अन्य auth प्रोवाइडर से बदल सकता हूँ?",
+          "answer": "हाँ। @nebutra/auth Better Auth के लिए फर्स्ट-क्लास एडेप्टर शिप करता है। AUTH_PROVIDER env var के माध्यम से स्विच करें या create-sailor --auth=... के साथ स्कैफोल्ड समय पर चुनें — सर्वर, React, और मीडिलवेयर सतहें प्रोवाइडर की परवाह किए बिना समान रहती हैं. पाँचवाँ एडेप्टर जोड़ने का मतलब एकल इंटरफ़ेस (~80 LOC) लागू करना है; आस-पास के कोड में कुछ भी किसी विशिष्ट प्रोवाइडर से जुड़ा नहीं है।"
         }
       }
     },

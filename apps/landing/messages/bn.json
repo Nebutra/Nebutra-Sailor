@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "এন্টারপ্রাইজ SaaS অটোমেশন",
-      "description": "Vercel, Supabase এবং Stripe-এর আধুনিক টেক স্ট্যাক গভীরভাবে একীকরণ। বক্স থেকেই রো-লেভেল সিকিউরিটি, জটিল মাল্টি-টেন্যান্ট আইসোলেশন এবং বিশ্বব্যাপী সাবস্ক্রিপশন বিলিং প্রদান করে।"
+      "description": "Postgres, Better Auth এবং Stripe-এর আধুনিক টেক স্ট্যাক গভীরভাবে একীকরণ। বক্স থেকেই রো-লেভেল সিকিউরিটি, জটিল মাল্টি-টেন্যান্ট আইসোলেশন এবং বিশ্বব্যাপী সাবস্ক্রিপশন বিলিং প্রদান করে।"
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "সেশন"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "প্রমাণীকরণ টোকেন",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "প্রমাণীকরণ সেশন টোকেন",
             "duration": "৭ দিন"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "ইনফ্রাস্ট্রাকচার",
-              "desc": "ক্লাউড হোস্টিং (Vercel, Supabase), ডেটাবেস সেবা"
+              "desc": "ক্লাউড হোস্টিং (Fly.io, Cloudflare), ডেটাবেস সেবা"
             },
             "1": {
               "label": "পেমেন্ট প্রসেসিং",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "অথেন্টিকেশন",
-              "desc": "পরিচয় ব্যবস্থাপনার জন্য Clerk"
+              "desc": "পরিচয় ব্যবস্থাপনার জন্য Better Auth"
             },
             "3": {
               "label": "অ্যানালিটিক্স",
@@ -1149,7 +1149,7 @@
         "desc": "ফুলি টাইপেড ORM, যেখানে Row-Level Security (RLS) পলিসি নেটিভলি বেকড ইন আছে।"
       },
       "auth": {
-        "title": "Clerk মাল্টি-টেন্যান্ট / কাস্টম আইডেন্টিটি",
+        "title": "Better Auth মাল্টি-টেন্যান্ট / কাস্টম আইডেন্টিটি",
         "desc": "SOC2-রেডি অথেন্টিকেশন গেটওয়ে, যা B2B অর্গানাইজেশন সুইচিং এবং RBAC সাপোর্ট করে।"
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "২. কনফিগার",
-        "desc": "মিনিটের মধ্যে ইন্টারেক্টিভ CLI এর মাধ্যমে Prisma, Clerk এবং Stripe সেটআপ করুন."
+        "desc": "মিনিটের মধ্যে ইন্টারেক্টিভ CLI এর মাধ্যমে Prisma, Better Auth এবং Stripe সেটআপ করুন."
       },
       "step3": {
         "title": "৩. বিল্ড",
@@ -1320,10 +1320,10 @@
       "multi_category": "মাল্টি-টেন্যান্ট প্ল্যাটফর্ম",
       "multi_f1_title": "অর্গানাইজেশন-স্তরের আইসোলেশন",
       "multi_f1_desc": "Postgres-এ রো-লেভেল সিকিউরিটি নিশ্চিত করে যে টেন্যান্টরা কখনো একে অপরের ডেটা অ্যাক্সেস করতে পারবে না — এটি অ্যাপ্লিকেশন নয়, ডেটাবেস লেয়ারেই জোর করে প্রয়োগ করা হয়।",
-      "multi_f2_title": "মাল্টি-প্রোভাইডার অথ (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "মাল্টি-প্রোভাইডার OAuth (গুগল, GitHub ইত্যাদি) এবং ইমেইল/পাসওয়ার্ড ও ম্যাজিক-লিংক — একটি একক env ভেরিয়েবলের মাধ্যমে Clerk, Better Auth, NextAuth বা Supabase Auth-এর মধ্যে বদলান।",
+      "multi_f2_title": "মাল্টি-প্রোভাইডার অথ (Better Auth)",
+      "multi_f2_desc": "মাল্টি-প্রোভাইডার OAuth (গুগল, GitHub ইত্যাদি) এবং ইমেইল/পাসওয়ার্ড ও ম্যাজিক-লিংক — একটি একক env ভেরিয়েবলের মাধ্যমে Better Auth ব্যবহার করুন।",
       "multi_f3_title": "স্বয়ংক্রিয় টেন্যান্ট প্রোভিশনিং",
-      "multi_f3_desc": "যখন একটি নতুন অর্গানাইজেশন Clerk-এর মাধ্যমে সাইন আপ করে, আমরা তাদের প্রথম API কী স্বয়ংক্রিয়ভাবে তৈরি করি এবং একটি ব্র্যান্ডেড স্বাগত ইমেইল পাঠাই — কোনো ম্যানুয়াল ধাপ নেই।",
+      "multi_f3_desc": "যখন একটি নতুন অর্গানাইজেশন সাইন আপ করে, আমরা তাদের প্রথম API কী স্বয়ংক্রিয়ভাবে তৈরি করি এবং একটি ব্র্যান্ডেড স্বাগত ইমেইল পাঠাই — কোনো ম্যানুয়াল ধাপ নেই।",
       "dx_category": "ডেভেলপার এক্সপেরিয়েন্স",
       "dx_f1_title": "হ্যাশ করা API কী",
       "dx_f1_desc": "SHA-256 হ্যাশ করা কী এবং প্রিফিক্স প্রদর্শন (nbtr_live_…)। তৈরির সময় শুধুমাত্র একবার প্লেইনটেক্সটে দেখানো হয় — ফ্রিকশন ছাড়াই নিরাপত্তা।",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "মাল্টি-প্রোটোকল API (REST + oRPC + tRPC)",
       "dx_f3_desc": "পাবলিক API-এর জন্য REST/OpenAPI, টাইপ-সেফ ফ্রন্টএন্ড কল-এর জন্য oRPC, এবং T3-স্ট্যাক সামঞ্জস্যের জন্য tRPC। সব প্রোটোকল একই Zod কনট্রাক্ট এবং মিডলওয়্যার স্ট্যাক শেয়ার করে। প্রিসেট কনফিগের মাধ্যমে প্রতিটি প্রোটোকল সক্রিয় করুন।",
       "billing_category": "বিলিং ও মনিটাইজেশন",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar এবং চায়না পে",
-      "billing_f1_desc": "আপনার পেমেন্ট প্রদানকারী বেছে নিন: গ্লোবাল এন্টারপ্রাইজের জন্য Stripe, ইন্ডি ডেভদের জন্য LemonSqueezy, OSS-এর জন্য Polar, অথবা চায়না মার্কেটের জন্য Alipay/WeChat Pay। এক-ক্লিক চেকআউট এবং সেলফ-সার্ভ বিলিং পোর্টাল।",
+      "billing_f1_title": "Stripe এবং চায়না পে",
+      "billing_f1_desc": "আপনার পেমেন্ট প্রদানকারী বেছে নিন: গ্লোবাল এন্টারপ্রাইজের জন্য Stripe, অথবা চায়না মার্কেটের জন্য Alipay/WeChat Pay। এক-ক্লিক চেকআউট এবং সেলফ-সার্ভ বিলিং পোর্টাল।",
       "billing_f2_title": "ব্যবহার-ভিত্তিক কোটা প্রয়োগ",
       "billing_f2_desc": "রিয়েল-টাইম Redis কাউন্টার প্রতিটি টেন্যান্টের জন্য API কল এবং টোকেন ব্যবহার ট্র্যাক করে। সীমা অতিক্রম করলে গেটওয়েতে অনুরোধ বন্ধ হয়ে যায়।",
       "billing_f3_title": "ওয়েবহুক লাইফসাইকেল সিঙ্ক",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "আপনার এরর বাজেট শেষ হওয়ার আগে মাল্টি-উইন্ডো Google SRE-স্টাইল অ্যালার্ট 14.4×, 6× এবং 3× বার্ন রেটে ফায়ার করে।",
       "sec_category": "নিরাপত্তা",
       "sec_f1_title": "CSP ননস-ভিত্তিক হেডার",
-      "sec_f1_desc": "Clerk মিডলওয়্যারে প্রতিটি রিকোয়েস্টের জন্য ননস জেনারেট করে স্ট্রিক্ট-ডাইনামিক কন্টেন্ট সিকিউরিটি পলিসি — কোথাও কোনো unsafe-inline নেই।",
+      "sec_f1_desc": "Auth মিডলওয়্যারে প্রতিটি রিকোয়েস্টের জন্য ননস জেনারেট করে স্ট্রিক্ট-ডাইনামিক কন্টেন্ট সিকিউরিটি পলিসি — কোথাও কোনো unsafe-inline নেই।",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "প্রতিটি ইনগ্রেশনে ডিটেকশনঅনলি মোডে OWASP কোর রুল সেট। nginx অ্যানোটেশনের মাধ্যমে 30 RPS হারে রেট লিমিটিং এবং বার্স্ট সহনশীলতা।",
       "sec_f3_title": "SBOM + SLSA প্রোভেন্যান্স",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "ArgoCD সহ GitOps",
       "infra_f1_desc": "মেইন ব্রাঞ্চের পরিবর্তনগুলো স্বয়ংক্রিয়ভাবে ক্লাস্টারে রিকনসিল হয়। সেলফ-হিল ম্যানুয়াল kubectl এডিট রিভার্ট করে। সিঙ্ক উইন্ডো নিরাপদ ডিপ্লয় ঘণ্টা নিশ্চিত করে।",
       "infra_f2_title": "PgBouncer কানেকশন পুলিং",
-      "infra_f2_desc": "Supabase এর সামনে ট্রানজ্যাকশন-মোড PgBouncer ২০টি Postgres কানেকশনে ১,000টি অ্যাপ কানেকশন পরিচালনা করে। ২টি রিপ্লিকা সহ HA।",
+      "infra_f2_desc": "Postgres এর সামনে ট্রানজ্যাকশন-মোড PgBouncer ২০টি Postgres কানেকশনে ১,000টি অ্যাপ কানেকশন পরিচালনা করে। ২টি রিপ্লিকা সহ HA।",
       "infra_f3_title": "হরাইজন্টাল + ভার্টিক্যাল অটোস্কেলিং",
       "infra_f3_desc": "HPA সিপিইউ/মেমোরির ওপর স্কেল করে. VPA অফ মোডে চালু হয়ে রাইট-সাইজিং সুপারিশ দেয়। v2 এর জন্য KEDA কাস্টম মেট্রিক্স পরিকল্পিত।"
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "এটি চীনে কাজ করে?",
-          "answer": "হ্যাঁ। আমরা একটি parallel infra config শিপ করি (Aliyun-compatible CDN, ICP-friendly domains, Figma-এর পরিবর্তে optional Penpot) যাতে একই codebase Great Firewall-এর ভেতরে পরিষ্কারভাবে deploy হয়।"
+          "answer": "হ্যাঁ। আমরা একটি parallel infra config শিপ করি (Aliyun-compatible CDN, ICP-friendly domains) যাতে একই codebase Great Firewall-এর ভেতরে পরিষ্কারভাবে deploy হয়।"
         },
         "deployment": {
           "question": "এটি কোথায় deploy করতে পারি?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "নিরাপত্তা কীভাবে পরিচালিত হয়?",
-          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), tenant isolation-এর জন্য Postgres RLS, CASL বা OpenFGA-এর মাধ্যমে RBAC/ABAC (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks এবং প্রতিটি প্ল্যানের সাথে SOC 2-aligned audit pipeline (@nebutra/audit) অন্তর্ভুক্ত। Pro এবং Enterprise SOC 2 attestation support, dedicated incident response এবং দীর্ঘ audit-log retention যোগ করে।"
+          "answer": "Application-layer envelope encryption for secrets (@nebutra/vault), tenant isolation-এর জন্য Postgres RLS, CASL-এর মাধ্যমে RBAC/ABAC (@nebutra/permissions), HMAC-signed inter-service tokens, signed outbound webhooks এবং প্রতিটি প্ল্যানের সাথে SOC 2-aligned audit pipeline (@nebutra/audit) অন্তর্ভুক্ত। Pro এবং Enterprise SOC 2 attestation support, dedicated incident response এবং দীর্ঘ audit-log retention যোগ করে।"
         },
         "support": {
           "question": "আমি কী সাপোর্ট পাব?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "আমি কি নিজস্ব প্রোভাইডার আনতে পারি?",
-          "answer": "হ্যাঁ। প্রতিটি integration (auth, queue, search, email, payments, storage, billing) provider-agnostic। প্রতিটি প্যাকেজের factory একটি একক env var থেকে সঠিক adapter বেছে নেয় — Clerk-এর পরিবর্তে Better Auth, NextAuth বা Supabase Auth, QStash-এর পরিবর্তে BullMQ, Resend-এর পরিবর্তে SES, Stripe-এর পরিবর্তে Polar / LemonSqueezy / ChinaPay ব্যবহার করুন — application code ছোঁয়ার ছাড়াই।"
+          "answer": "হ্যাঁ। প্রতিটি integration (auth, queue, search, email, payments, storage, billing) provider-agnostic। প্রতিটি প্যাকেজের factory একটি একক env var থেকে সঠিক adapter বেছে নেয় — Better Auth, QStash, Resend, বা Stripe ব্যবহার করুন — application code ছোঁয়ার ছাড়াই।"
         },
         "tech-stack": {
           "question": "টেক স্ট্যাক কী?",
@@ -1676,8 +1676,8 @@
           "answer": "দুটি স্তর। @nebutra/tenant এর মাধ্যমে রিকোয়েস্ট-স্কোপড টেন্যান্ট কনটেক্সট (AsyncLocalStorage প্রতিটি সার্ভার কল, ডেটাবেজ কুয়েরি এবং আউটবউন্ড ওয়েবহুক সহ, সক্রিয় অর্গ প্রপাগেট করে), এবং Postgres Row-Level Security পলিসির মাধ্যমে ডেটাবেজ-এনফোর্সড আইসোলেশন (packages/platform/db/prisma/generated/rls.sql) যা একটি সেশন-লোকাল app.current_tenant_id-এর সাথে বাঁধা থাকে। সার্ভিস-রোল কানেকশন শুধুমাত্র বিশ্বস্ত অভ্যন্তরীণ সার্ভিসের ভিতরে RLS বাইপাস করে; সমস্ত ইউজার-ফেসিং রুট টেন্যান্ট-স্কোপড ক্লায়েন্টের মাধ্যমে যায়।"
         },
         "swap-clerk": {
-          "question": "আমি কি Clerk কে অন্য একটি অথ প্রোভাইডার দিয়ে বদলাতে পারি?",
-          "answer": "হ্যাঁ। @nebutra/auth Clerk, Better Auth, NextAuth (Auth.js v5) এবং Supabase Auth-এর জন্য ফার্স্ট-ক্লাস অ্যাডাপ্টার শিপ করে। AUTH_PROVIDER env var এর মাধ্যমে সুইচ করুন অথবা create-sailor --auth=... দিয়ে স্কাফোল্ড টাইমে পিক করুন — প্রোভাইডার নির্বিশেষে সার্ভার, React এবং মিডলওয়্যার সারফেস একই থাকে। একটি পঞ্চম অ্যাডাপ্টার যোগ করা মানে একটি একক ইন্টারফেস (~80 LOC) ইমপ্লিমেন্ট করা; চারপাশের কোডে কিছুই একটি নির্দিষ্ট প্রোভাইডারের সাথে কাপল করে না।"
+          "question": "আমি কি Better Auth কে অন্য একটি অথ প্রোভাইডার দিয়ে বদলাতে পারি?",
+          "answer": "হ্যাঁ। @nebutra/auth Better Auth-এর জন্য ফার্স্ট-ক্লাস অ্যাডাপ্টার শিপ করে। AUTH_PROVIDER env var এর মাধ্যমে সুইচ করুন অথবা create-sailor --auth=... দিয়ে স্কাফোল্ড টাইমে পিক করুন — প্রোভাইডার নির্বিশেষে সার্ভার, React এবং মিডলওয়্যার সারফেস একই থাকে। একটি পঞ্চম অ্যাডাপ্টার যোগ করা মানে একটি একক ইন্টারফেস (~80 LOC) ইমপ্লিমেন্ট করা; চারপাশের কোডে কিছুই একটি নির্দিষ্ট প্রোভাইডারের সাথে কাপল করে না।"
         }
       }
     },

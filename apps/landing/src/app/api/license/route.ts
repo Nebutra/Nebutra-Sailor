@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
     const displayName = user?.name ?? email?.split("@")[0] ?? "Founder";
     const avatarUrl = user?.imageUrl ?? null;
 
-    // Upsert community profile (keyed by Clerk userId)
+    // Upsert community profile (keyed by the Better Auth user id)
     await prisma.communityProfile.upsert({
       where: { userId },
       create: {

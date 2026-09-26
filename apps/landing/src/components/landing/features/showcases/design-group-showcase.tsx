@@ -69,7 +69,7 @@ const COPY: Record<"en" | "zh", Copy> = {
     metricSync: "Sync status",
     metricTokens: "Tokens shipped",
     syncRepo: "Tokens repo",
-    syncSource: "Figma",
+    syncSource: "DTCG JSON",
     syncTarget: "@nebutra/tokens",
   },
   zh: {
@@ -80,7 +80,7 @@ const COPY: Record<"en" | "zh", Copy> = {
     metricSync: "同步状态",
     metricTokens: "Tokens 数",
     syncRepo: "Tokens 仓库",
-    syncSource: "Figma",
+    syncSource: "DTCG JSON",
     syncTarget: "@nebutra/tokens",
   },
 };

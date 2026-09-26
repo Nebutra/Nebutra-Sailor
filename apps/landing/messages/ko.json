@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "엔터프라이즈 SaaS 자동화",
-      "description": "Vercel, Supabase, Stripe를 긴밀하게 통합합니다. 행 수준 보안, 다중 테넌트 격리 및 구독 청구가 내장되어 있습니다."
+      "description": "Postgres, Better Auth, Stripe를 긴밀하게 통합합니다. 행 수준 보안, 다중 테넌트 격리 및 구독 청구가 내장되어 있습니다."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "세션"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "인증 토큰",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "인증 세션 토큰",
             "duration": "7일"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "인프라",
-              "desc": "클라우드 호스팅(Vercel, Supabase), 데이터베이스 서비스"
+              "desc": "클라우드 호스팅(Fly.io, Cloudflare), 데이터베이스 서비스"
             },
             "1": {
               "label": "결제 처리",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "인증",
-              "desc": "ID 관리를 위한 Clerk"
+              "desc": "ID 관리를 위한 Better Auth"
             },
             "3": {
               "label": "분석",
@@ -1149,7 +1149,7 @@
         "desc": "행 수준 보안(RLS) 정책이 네이티브로 내장된 완전 타입 지원 ORM입니다."
       },
       "auth": {
-        "title": "Clerk 멀티 테넌트 / 커스텀 아이덴티티",
+        "title": "Better Auth 멀티 테넌트 / 커스텀 아이덴티티",
         "desc": "B2B 조직 전환과 RBAC을 지원하는 SOC2 대응 인증 게이트웨이입니다."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. 구성",
-        "desc": "인터랙티브 CLI로 Prisma, Clerk, Stripe를 몇 분 만에 설정하십시오."
+        "desc": "인터랙티브 CLI로 Prisma, Better Auth, Stripe를 몇 분 만에 설정하십시오."
       },
       "step3": {
         "title": "3. 빌드",
@@ -1320,10 +1320,10 @@
       "multi_category": "멀티 테넌트 플랫폼",
       "multi_f1_title": "조직 단위 격리",
       "multi_f1_desc": "Postgres의 행 수준 보안이 테넌트 간 데이터 접근을 원천 차단합니다. 애플리케이션이 아닌 데이터베이스 계층에서 적용됩니다.",
-      "multi_f2_title": "멀티 프로바이더 인증 (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Switch auth providers via preset config. Clerk for managed, Better Auth for self-hosted. Phone + SMS login for China market via Aliyun/Tencent Cloud.",
+      "multi_f2_title": "Better Auth, 조직 인식",
+      "multi_f2_desc": "OAuth(Google, GitHub 등)와 이메일/비밀번호, 패스키, 매직 링크 — 모두 하나의 Better Auth 인스턴스를 통해 제공되며 공급자 전환이 필요 없습니다.",
       "multi_f3_title": "자동 테넌트 프로비저닝",
-      "multi_f3_desc": "새 조직이 Clerk를 통해 가입하면, 최초 API 키를 자동 생성하고 브랜드화된 환영 이메일을 발송합니다. 수동 단계가 전혀 없습니다.",
+      "multi_f3_desc": "새 조직이 가입하면, 최초 API 키를 자동 생성하고 브랜드화된 환영 이메일을 발송합니다. 수동 단계가 전혀 없습니다.",
       "dx_category": "개발자 경험",
       "dx_f1_title": "해시 처리된 API 키",
       "dx_f1_desc": "SHA-256으로 해시 처리되고 프리픽스(nbtr_live_…)가 표시되는 키입니다. 생성 시 평문으로 단 한 번만 표시되어 마찰 없이 보안을 확보합니다.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "멀티 프로토콜 API (REST + oRPC + tRPC)",
       "dx_f3_desc": "공개 API용 REST/OpenAPI, 타입 안전 프런트엔드 호출용 oRPC, T3 스택 호환용 tRPC. 모든 프로토콜이 동일한 Zod 계약과 미들웨어 스택을 공유합니다. 프리셋 구성으로 프로토콜별 활성화가 가능합니다.",
       "billing_category": "결제 및 수익화",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar 및 China Pay",
-      "billing_f1_desc": "결제 프로바이더를 선택하십시오. 글로벌 엔터프라이즈용 Stripe, 인디 개발자용 LemonSqueezy, OSS용 Polar, 중국 시장용 Alipay/WeChat Pay. 원클릭 체크아웃과 셀프 서비스 결제 포털을 제공합니다.",
+      "billing_f1_title": "Stripe 및 China Pay",
+      "billing_f1_desc": "결제 프로바이더를 선택하십시오. 글로벌 엔터프라이즈용 Stripe, 중국 시장용 Alipay/WeChat Pay. 원클릭 체크아웃과 셀프 서비스 결제 포털을 제공합니다.",
       "billing_f2_title": "사용량 기반 할당량 적용",
       "billing_f2_desc": "실시간 Redis 카운터가 테넌트별 API 호출과 토큰 사용량을 추적합니다. 한도에 도달하면 게이트웨이에서 요청이 차단됩니다.",
       "billing_f3_title": "웹훅 라이프사이클 동기화",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Google SRE 방식의 다중 윈도우 알림이 오류 예산 소진 전 14.4배, 6배, 3배 소진율에서 발동합니다.",
       "sec_category": "보안",
       "sec_f1_title": "CSP 논스 기반 헤더",
-      "sec_f1_desc": "Clerk 미들웨어에서 요청별 논스를 생성하는 strict-dynamic 콘텐츠 보안 정책입니다. unsafe-inline은 어디에도 사용되지 않습니다.",
+      "sec_f1_desc": "auth 미들웨어에서 요청별 논스를 생성하는 strict-dynamic 콘텐츠 보안 정책입니다. unsafe-inline은 어디에도 사용되지 않습니다.",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "모든 인그레스에서 DetectionOnly 모드로 OWASP 코어 룰셋을 적용합니다. nginx 어노테이션을 통한 버스트 허용과 함께 초당 30 요청으로 속도 제한합니다.",
       "sec_f3_title": "SBOM + SLSA 출처 증명",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "ArgoCD 기반 GitOps",
       "infra_f1_desc": "Main 브랜치의 변경 사항이 클러스터로 자동 조정됩니다. 자가 치유 기능이 수동 kubectl 편집을 되돌립니다. 동기화 윈도우로 안전한 배포 시간을 강제합니다.",
       "infra_f2_title": "PgBouncer 커넥션 풀링",
-      "infra_f2_desc": "Supabase 앞단에 위치한 트랜잭션 모드 PgBouncer가 20개의 Postgres 커넥션으로 1,000개의 앱 커넥션을 처리합니다. 2개 레플리카로 HA 구성됩니다.",
+      "infra_f2_desc": "Postgres 앞단에 위치한 트랜잭션 모드 PgBouncer가 20개의 Postgres 커넥션으로 1,000개의 앱 커넥션을 처리합니다. 2개 레플리카로 HA 구성됩니다.",
       "infra_f3_title": "수평 + 수직 오토스케일링",
       "infra_f3_desc": "HPA가 CPU/메모리에 따라 스케일링합니다. VPA는 Off 모드에서 라이트사이징 권장 사항을 제공합니다. KEDA 커스텀 메트릭은 v2에서 계획되어 있습니다."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "중국에서 작동합니까?",
-          "answer": "예. 동일한 코드베이스가 만리장성 안에서도 깔끔하게 배포되도록 병렬 인프라 구성(Aliyun 호환 CDN, ICP 친화 도메인, Figma 대신 선택적 Penpot)을 제공합니다."
+          "answer": "예. 동일한 코드베이스가 만리장성 안에서도 깔끔하게 배포되도록 병렬 인프라 구성(Aliyun 호환 CDN, ICP 친화 도메인)을 제공합니다."
         },
         "deployment": {
           "question": "어디에 배포할 수 있습니까?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "보안은 어떻게 처리됩니까?",
-          "answer": "비밀에 대한 애플리케이션 레이어 엔벨로프 암호화(@nebutra/vault), 테넌트 격리를 위한 Postgres RLS, CASL 또는 OpenFGA(@nebutra/permissions)를 통한 RBAC/ABAC, HMAC 서명 서비스 간 토큰, 서명된 아웃바운드 웹훅, 그리고 모든 요금제에 포함된 SOC 2 정렬 감사 파이프라인(@nebutra/audit). Pro와 Enterprise는 SOC 2 인증 지원, 전담 사고 대응, 더 긴 감사 로그 보존 기간을 추가합니다."
+          "answer": "비밀에 대한 애플리케이션 레이어 엔벨로프 암호화(@nebutra/vault), 테넌트 격리를 위한 Postgres RLS, CASL(@nebutra/permissions)를 통한 RBAC/ABAC, HMAC 서명 서비스 간 토큰, 서명된 아웃바운드 웹훅, 그리고 모든 요금제에 포함된 SOC 2 정렬 감사 파이프라인(@nebutra/audit). Pro와 Enterprise는 SOC 2 인증 지원, 전담 사고 대응, 더 긴 감사 로그 보존 기간을 추가합니다."
         },
         "support": {
           "question": "어떤 지원을 받을 수 있습니까?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "자체 공급자를 가져올 수 있습니까?",
-          "answer": "예. 모든 통합(인증, 큐, 검색, 이메일, 결제, 스토리지, 빌링)은 공급자 독립적입니다. 각 패키지의 팩토리는 단일 환경 변수에서 적합한 어댑터를 선택합니다 — Clerk을 Better Auth, NextAuth, Supabase Auth로, QStash를 BullMQ로, Resend를 SES로, Stripe를 Polar / LemonSqueezy / ChinaPay로 — 애플리케이션 코드를 건드리지 않고 교체할 수 있습니다."
+          "answer": "예. 모든 통합(인증, 큐, 검색, 이메일, 결제, 스토리지, 빌링)은 공급자 독립적입니다. 각 패키지의 팩토리는 단일 환경 변수에서 적합한 어댑터를 선택합니다 — 사용되는 어댑터는 Better Auth, QStash, Resend, Stripe입니다 — 애플리케이션 코드를 건드리지 않습니다."
         },
         "tech-stack": {
           "question": "기술 스택은 무엇입니까?",
@@ -1676,8 +1676,8 @@
           "answer": "두 가지 레이어가 있습니다. @nebutra/tenant를 통한 요청 범위 테넌트 컨텍스트(AsyncLocalStorage가 DB 쿼리 및 아웃바운드 웹훅을 포함한 모든 서버 호출에서 활성 조직을 전파), 그리고 세션 로컬 app.current_tenant_id에 바인딩된 Postgres Row-Level Security 정책(packages/platform/db/prisma/generated/rls.sql)을 통한 데이터베이스 강제 격리. 서비스 역할 연결은 신뢰할 수 있는 내부 서비스 내부에서만 RLS를 우회하며, 모든 사용자 대면 라우트는 테넌트 범위 클라이언트를 통과합니다."
         },
         "swap-clerk": {
-          "question": "Clerk을 다른 인증 공급자로 교체할 수 있습니까?",
-          "answer": "예. @nebutra/auth는 Clerk, Better Auth, NextAuth(Auth.js v5), Supabase Auth용 일등급 어댑터를 제공합니다. AUTH_PROVIDER 환경 변수로 전환하거나 스캐폴드 시점에 create-sailor --auth=...로 선택하십시오 — 공급자에 관계없이 서버, React, 미들웨어 표면이 동일하게 유지됩니다. 다섯 번째 어댑터를 추가하는 것은 단일 인터페이스(~80 LOC)를 구현하는 것을 의미하며, 주변 코드의 어떤 부분도 특정 공급자에 결합되지 않습니다."
+          "question": "Better Auth를 다른 인증 공급자로 교체할 수 있습니까?",
+          "answer": "예. @nebutra/auth는 Better Auth용 일등급 어댑터를 제공합니다. AUTH_PROVIDER 환경 변수로 전환하거나 스캐폴드 시점에 create-sailor --auth=...로 선택하십시오 — 공급자에 관계없이 서버, React, 미들웨어 표면이 동일하게 유지됩니다. 다섯 번째 어댑터를 추가하는 것은 단일 인터페이스(~80 LOC)를 구현하는 것을 의미하며, 주변 코드의 어떤 부분도 특정 공급자에 결합되지 않습니다."
         }
       }
     },

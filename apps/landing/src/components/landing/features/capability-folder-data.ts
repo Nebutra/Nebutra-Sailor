@@ -410,8 +410,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
         {
           label: "@nebutra/auth",
           detail: copy(
-            "Clerk, Better Auth, NextAuth, Supabase abstraction",
-            "Clerk、Better Auth、NextAuth、Supabase 抽象",
+            "Better Auth on Postgres, session-based",
+            "基于 Postgres 的 Better Auth，session 鉴权",
           ),
           tone: "adapter",
         },
@@ -462,8 +462,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     ],
     owns: [
       copy(
-        "Provider abstraction for Clerk, Better Auth, NextAuth, and Supabase",
-        "Clerk、Better Auth、NextAuth、Supabase 的供应商抽象",
+        "Better Auth session/identity surface, with device-flow login and organization membership",
+        "Better Auth 的 session/身份接口，内建设备码登录与组织成员关系",
       ),
       copy(
         "Permission gates, tenant context, audit events, and vault storage",
@@ -803,10 +803,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
         },
         {
           label: "@nebutra/billing",
-          detail: copy(
-            "Stripe, ChinaPay, Polar, LemonSqueezy, credits",
-            "Stripe、ChinaPay、Polar、LemonSqueezy、credits",
-          ),
+          detail: copy("Stripe, ChinaPay, credits, manual", "Stripe、ChinaPay、credits、manual"),
           tone: "core",
         },
         {

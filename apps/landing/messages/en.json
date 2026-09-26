@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Vercel, Supabase, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "description": "Deeply integrating the modern tech stack of Postgres, Better Auth, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Session"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Authentication token",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Authentication session token",
             "duration": "7 days"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Infrastructure",
-              "desc": "Cloud hosting (Vercel, Supabase), database services"
+              "desc": "Cloud hosting (Fly.io, Cloudflare), database hosting"
             },
             "1": {
               "label": "Payment Processing",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Authentication",
-              "desc": "Clerk for identity management"
+              "desc": "Better Auth for identity management"
             },
             "3": {
               "label": "Analytics",
@@ -1149,7 +1149,7 @@
         "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Better Auth Multi-Tenant / Organization Identity",
         "desc": "SOC2-ready authentication gateway supporting B2B organization switching and RBAC."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "desc": "Set up Prisma, Better Auth, and Stripe via the interactive CLI in minutes."
       },
       "step3": {
         "title": "3. Build",
@@ -1320,10 +1320,10 @@
       "multi_category": "Multi-tenant Platform",
       "multi_f1_title": "Organisation-level isolation",
       "multi_f1_desc": "Row-level security in Postgres ensures tenants can never access each other's data — enforced at the database layer, not just the application.",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, etc.) plus email/password and magic-link — swap between Clerk, Better Auth, NextAuth, or Supabase Auth via a single env var.",
+      "multi_f2_title": "Better Auth, organization-aware",
+      "multi_f2_desc": "OAuth (Google, GitHub, etc.) plus email/password, passkeys, and magic-link — all through one Better Auth instance, no vendor swap.",
       "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "When a new organisation signs up via Clerk, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
+      "multi_f3_desc": "When a new organisation signs up, we auto-generate their first API key and send a branded welcome email — zero manual steps.",
       "dx_category": "Developer Experience",
       "dx_f1_title": "Hashed API keys",
       "dx_f1_desc": "SHA-256 hashed keys with prefix display (nbtr_live_…). Shown in plaintext exactly once on creation — security without friction.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
       "billing_category": "Billing & Monetisation",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Choose your payment provider: Stripe for global enterprise, LemonSqueezy for indie devs, Polar for OSS, or Alipay/WeChat Pay for China market. One-click checkout and self-serve billing portal.",
+      "billing_f1_title": "Stripe + WeChat Pay / Alipay",
+      "billing_f1_desc": "Stripe handles global cards and subscriptions; WeChat Pay and Alipay cover the China market — both live the moment you add their keys. One-click checkout and self-serve billing portal.",
       "billing_f2_title": "Usage-based quota enforcement",
       "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
       "billing_f3_title": "Webhook lifecycle sync",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Multi-window Google SRE-style alerts fire at 14.4×, 6×, and 3× burn rates before your error budget is exhausted.",
       "sec_category": "Security",
       "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in Clerk middleware — no unsafe-inline anywhere.",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy with per-request nonces generated in the auth middleware — no unsafe-inline anywhere.",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "OWASP Core Rule Set in DetectionOnly mode on every ingress. Rate limiting at 30 RPS with burst tolerance via nginx annotations.",
       "sec_f3_title": "SBOM + SLSA provenance",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps with ArgoCD",
       "infra_f1_desc": "Main branch changes are automatically reconciled to the cluster. Self-heal reverts manual kubectl edits. Sync windows enforce safe deploy hours.",
       "infra_f2_title": "PgBouncer connection pooling",
-      "infra_f2_desc": "Transaction-mode PgBouncer in front of Supabase handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
+      "infra_f2_desc": "Transaction-mode PgBouncer in front of Postgres handles 1,000 app connections on 20 Postgres connections. HA with 2 replicas.",
       "infra_f3_title": "Horizontal + vertical autoscaling",
       "infra_f3_desc": "HPA scales on CPU/memory. VPA runs in Off mode providing right-sizing recommendations. KEDA custom metrics planned for v2."
     }
@@ -1637,11 +1637,11 @@
         },
         "china-friendly": {
           "question": "Does it work in China?",
-          "answer": "Yes. We ship a parallel infra config (Aliyun-compatible CDN, ICP-friendly domains, optional Penpot in place of Figma) so the same codebase deploys cleanly inside the Great Firewall."
+          "answer": "Yes. Payments (WeChat Pay/Alipay alongside Stripe), SMS (Aliyun alongside Twilio Verify), and storage (OSS alongside R2, one S3-compatible client) each keep a China-market adapter, plus Aliyun-compatible CDN and ICP-friendly domains — so the same codebase deploys cleanly inside the Great Firewall."
         },
         "deployment": {
           "question": "Where can I deploy it?",
-          "answer": "Anywhere Node 22+ runs. The marketing site ships to Vercel; the dashboard, gateway, and Python services run on Docker / PM2 (we run them on Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
+          "answer": "Anywhere Node 22+ runs. Sailor ships portable output — Next standalone builds and Dockerfiles — and stays agnostic about where they run; the marketing site, dashboard, gateway, and Python services all run on Docker / PM2 (we run them on Fly Machines and Aliyun ECS today, with full Kubernetes manifests under infra/iac/k8s/ for clusters). Enterprise customers also deploy inside their own VPCs."
         },
         "security": {
           "question": "How is security handled?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Can I bring my own provider?",
-          "answer": "Yes. Every integration (auth, queue, search, email, payments, storage, billing) is provider-agnostic. The factory in each package picks the right adapter from a single env var — swap Clerk for Better Auth, NextAuth, or Supabase Auth, QStash for BullMQ, Resend for SES, Stripe for Polar / LemonSqueezy / ChinaPay — without touching application code."
+          "answer": "Each integration (auth, queue, search, email, payments, storage, billing) still sits behind its own interface, but the shipped adapter is the one {brandName} runs in production — Better Auth, QStash, Postgres, Resend, Stripe. Payments, SMS, and storage keep a second adapter (WeChat Pay/Alipay, Aliyun, OSS) only where mainland China needs it. Bringing your own means implementing that interface yourself; nothing in application code couples to a specific provider."
         },
         "tech-stack": {
           "question": "What is the tech stack?",
@@ -1676,8 +1676,8 @@
           "answer": "Two layers. Request-scoped tenant context via @nebutra/tenant (AsyncLocalStorage propagates the active org through every server call, including DB queries and outbound webhooks), and database-enforced isolation via Postgres Row-Level Security policies (packages/platform/db/prisma/generated/rls.sql) bound to a session-local app.current_tenant_id. Service-role connections bypass RLS only inside trusted internal services; all user-facing routes go through the tenant-scoped client."
         },
         "swap-clerk": {
-          "question": "Can I swap Clerk for another auth provider?",
-          "answer": "Yes. @nebutra/auth ships first-class adapters for Clerk, Better Auth, NextAuth (Auth.js v5), and Supabase Auth. Switch via the AUTH_PROVIDER env var or pick at scaffold time with create-sailor --auth=... — server, React, and middleware surfaces stay identical regardless of provider. Adding a fifth adapter means implementing a single interface (~80 LOC); nothing in the surrounding code couples to a specific provider."
+          "question": "Why Better Auth, and can I swap it for another provider?",
+          "answer": "Better Auth is the only auth backend Sailor ships — it is what production runs, so it is the one that is tested, documented, and kept current. There is no Clerk, NextAuth, or Supabase Auth adapter to flip between anymore; @nebutra/auth still exposes a single interface (session, React hooks, middleware), so if you need a different provider you implement one adapter (~80 LOC) behind it instead of picking one off a list."
         }
       }
     },

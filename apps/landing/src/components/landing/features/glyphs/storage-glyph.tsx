@@ -7,8 +7,8 @@ import type { SubpackageGlyphProps } from "./types";
 /* -------------------------------------------------------------------------- *\
  *  StorageGlyph — mini object-storage bucket card.
  *
- *  Hints at @nebutra/storage: lower-tier object storage (S3 / R2 / GCS /
- *  Filebase) with put/get blob primitives.
+ *  Hints at @nebutra/storage: lower-tier object storage on one S3-compatible
+ *  client (R2 / OSS) with put/get blob primitives.
  *
  *  Layout (height 160):
  *    ┌──────────────────────────────────────────────────┐

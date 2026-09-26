@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "ระบบอัตโนมัติสำหรับ Enterprise SaaS",
-      "description": "ผสานรวมเทคโนโลยีสมัยใหม่อย่าง Vercel, Supabase และ Stripe อย่างลึกซึ้ง พร้อมใช้งาน row-level security, multi-tenant isolation ที่ซับซ้อน และระบบบิลลิ่งการสมัครสมาชิกทั่วโลก"
+      "description": "ผสานรวมเทคโนโลยีสมัยใหม่อย่าง Postgres, Better Auth และ Stripe อย่างลึกซึ้ง พร้อมใช้งาน row-level security, multi-tenant isolation ที่ซับซ้อน และระบบบิลลิ่งการสมัครสมาชิกทั่วโลก"
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "เซสชัน"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "โทเค็นการตรวจสอบสิทธิ์",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "โทเค็นเซสชันการตรวจสอบสิทธิ์",
             "duration": "7 วัน"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "โครงสร้างพื้นฐาน",
-              "desc": "การโฮสต์บนคลาวด์ (Vercel, Supabase) บริการฐานข้อมูล"
+              "desc": "การโฮสต์บนคลาวด์ (Fly.io, Cloudflare) บริการฐานข้อมูล"
             },
             "1": {
               "label": "การประมวลผลการชำระเงิน",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "การตรวจสอบสิทธิ์",
-              "desc": "Clerk สำหรับการจัดการตัวตน"
+              "desc": "Better Auth สำหรับการจัดการตัวตน"
             },
             "3": {
               "label": "การวิเคราะห์",
@@ -1149,7 +1149,7 @@
         "desc": "ORM แบบ Fully Typed พร้อมนโยบาย Row-Level Security (RLS) ที่ฝังอยู่ในตัว"
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Custom Identity",
+        "title": "Better Auth Multi-Tenant / Custom Identity",
         "desc": "เกตเวย์การยืนยันตัวตนพร้อมมาตรฐาน SOC2 รองรับสลับองค์กรแบบ B2B และ RBAC"
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configure",
-        "desc": "ตั้งค่า Prisma, Clerk และ Stripe ผ่าน CLI แบบโต้ตอบภายในไม่กี่นาที"
+        "desc": "ตั้งค่า Prisma, Better Auth และ Stripe ผ่าน CLI แบบโต้ตอบภายในไม่กี่นาที"
       },
       "step3": {
         "title": "3. Build",
@@ -1320,10 +1320,10 @@
       "multi_category": "Multi-tenant Platform",
       "multi_f1_title": "Organisation-level isolation",
       "multi_f1_desc": "Row-level security ใน Postgres รับประกันว่า tenant ไม่สามารถเข้าถึงข้อมูลของกันและกันได้ — บังคับใช้ที่เลเยอร์ฐานข้อมูล ไม่ใช่แค่แอปพลิเคชัน",
-      "multi_f2_title": "Multi-provider auth (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub ฯลฯ) พร้อม email/password และ magic-link — สลับระหว่าง Clerk, Better Auth, NextAuth หรือ Supabase Auth ได้ด้วย env var เดียว",
+      "multi_f2_title": "Multi-provider auth (Better Auth)",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub ฯลฯ) พร้อม email/password และ magic-link — ทั้งหมดผ่าน Better Auth ตั้งค่าได้ด้วย env var เดียว",
       "multi_f3_title": "Automatic tenant provisioning",
-      "multi_f3_desc": "เมื่อ organisation ใหม่ลงทะเบียนผ่าน Clerk ระบบจะสร้าง API key แรกอัตโนมัติและส่งอีเมลต้อนรับแบบ branded — ไม่ต้องทำอะไรเอง",
+      "multi_f3_desc": "เมื่อ organisation ใหม่ลงทะเบียน ระบบจะสร้าง API key แรกอัตโนมัติและส่งอีเมลต้อนรับแบบ branded — ไม่ต้องทำอะไรเอง",
       "dx_category": "Developer Experience",
       "dx_f1_title": "คีย์ API แบบแฮช",
       "dx_f1_desc": "คีย์แฮช SHA-256 พร้อมแสดงส่วนหัว (nbtr_live_…) แสดงเป็นข้อความธรรมดาเพียงครั้งเดียวตอนสร้าง — ปลอดภัยโดยไม่ยุ่งยาก",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "API หลายโปรโตคอล (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI สำหรับ API สาธารณะ oRPC สำหรับการเรียกหน้าเว็บแบบปลอดภัยเรื่องประเภทข้อมูล tRPC สำหรับความเข้ากันได้กับ T3-stack โปรโตคอลทั้งหมดใช้สัญญา Zod และสแต็กมิดเดิลแวร์เดียวกัน เปิดใช้งานตามโปรโตคอลผ่านค่ากำหนดสำเร็จรูป",
       "billing_category": "การเรียกเก็บเงินและการสร้างรายได้",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "เลือกผู้ให้บริการชำระเงิน: Stripe สำหรับองค์กรทั่วโลก LemonSqueezy สำหรับนักพัฒนาอิสระ Polar สำหรับ OSS หรือ Alipay/WeChat Pay สำหรับตลาดจีน ชำระเงินคลิกเดียวและพอร์ทัลเรียกเก็บเงินแบบบริการตนเอง",
+      "billing_f1_title": "Stripe & China Pay",
+      "billing_f1_desc": "เลือกผู้ให้บริการชำระเงิน: Stripe สำหรับองค์กรทั่วโลก หรือ Alipay/WeChat Pay สำหรับตลาดจีน ชำระเงินคลิกเดียวและพอร์ทัลเรียกเก็บเงินแบบบริการตนเอง",
       "billing_f2_title": "การบังคับใช้โควตาตามการใช้งาน",
       "billing_f2_desc": "ตัวนับ Redis แบบเรียลไทม์ติดตามการเรียก API และการใช้โทเค็นต่อผู้เช่า คำขอจะถูกควบคุมที่เกตเวย์เมื่อถึงขีดจำกัด",
       "billing_f3_title": "การซิงค์วงจรชีวิต Webhook",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "การแจ้งเตือนแบบหลายหน้าต่างสไตล์ Google SRE ทำงานที่อัตราการเผา 14.4× 6× และ 3× ก่อนที่งบประมาณข้อผิดพลาดของคุณจะหมดลง",
       "sec_category": "ความปลอดภัย",
       "sec_f1_title": "CSP nonce-based headers",
-      "sec_f1_desc": "Strict-dynamic Content Security Policy พร้อม nonce ที่สร้างต่อคำขอใน Clerk middleware — ไม่มี unsafe-inline ในที่ใด",
+      "sec_f1_desc": "Strict-dynamic Content Security Policy พร้อม nonce ที่สร้างต่อคำขอใน Auth middleware — ไม่มี unsafe-inline ในที่ใด",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "OWASP Core Rule Set ในโหมด DetectionOnly ทุก ingress จำกัดอัตราที่ 30 RPS พร้อมความทนทานต่อ burst ผ่าน nginx annotations",
       "sec_f3_title": "SBOM + SLSA provenance",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps ด้วย ArgoCD",
       "infra_f1_desc": "การเปลี่ยนแปลงใน main branch จะถูกปรับให้สอดคล้องกับคลัสเตอร์โดยอัตโนมัติ การกู้คืนตัวเองจะย้อนการแก้ไขด้วย kubectl ที่ทำด้วยมือ และหน้าต่างการซิงค์จะบังคับให้ใช้งานในช่วงเวลาที่ปลอดภัย",
       "infra_f2_title": "การรวมการเชื่อมต่อด้วย PgBouncer",
-      "infra_f2_desc": "PgBouncer โหมดธุรกรรมอยู่หน้า Supabase รองรับ 1,000 การเชื่อมต่อแอปด้วย 20 การเชื่อมต่อ Postgres พร้อม HA ด้วย 2 รีพลิคา",
+      "infra_f2_desc": "PgBouncer โหมดธุรกรรมอยู่หน้า Postgres รองรับ 1,000 การเชื่อมต่อแอปด้วย 20 การเชื่อมต่อ Postgres พร้อม HA ด้วย 2 รีพลิคา",
       "infra_f3_title": "การปรับขนาดอัตโนมัติแนวนอน + แนวตั้ง",
       "infra_f3_desc": "HPA ปรับขนาดตาม CPU/หน่วยความจำ VPA ทำงานในโหมด Off ให้คำแนะนำการปรับขนาดที่เหมาะสม KEDA เมตริกแบบกำหนดเองจะพร้อมในเวอร์ชัน 2"
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "ใช้งานในประเทศจีนได้ไหม?",
-          "answer": "ได้ เราพร้อมใช้งานโครงสร้างพื้นฐานคู่ขนาน (CDN ที่เข้ากันได้กับ Aliyun, โดเมนที่รองรับ ICP, และ Penpot แทน Figma แบบเลือกได้) เพื่อให้โค้ดเบสเดียวกันสามารถ deploy ได้ภายใน Great Firewall อย่างราบรื่น"
+          "answer": "ได้ เราพร้อมใช้งานโครงสร้างพื้นฐานคู่ขนาน (CDN ที่เข้ากันได้กับ Aliyun, โดเมนที่รองรับ ICP) เพื่อให้โค้ดเบสเดียวกันสามารถ deploy ได้ภายใน Great Firewall อย่างราบรื่น"
         },
         "deployment": {
           "question": "สามารถ deploy ที่ไหนได้บ้าง?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "จัดการความปลอดภัยอย่างไร?",
-          "answer": "การเข้ารหัสแบบ envelope encryption ระดับแอปพลิเคชันสำหรับ secrets (@nebutra/vault), Postgres RLS สำหรับแยก tenant, RBAC/ABAC ผ่าน CASL หรือ OpenFGA (@nebutra/permissions), โทเค็นระหว่างบริการที่ลงนามด้วย HMAC, webhook ออกจากที่ลงนาม และ pipeline audit ที่สอดคล้องกับ SOC 2 (@nebutra/audit) รวมอยู่ในทุกแผน Pro และ Enterprise เพิ่มการสนับสนุนการรับรอง SOC 2, การตอบสนองต่อเหตุการณ์เฉพาะ และระยะเวลาเก็บ audit log ที่นานขึ้น"
+          "answer": "การเข้ารหัสแบบ envelope encryption ระดับแอปพลิเคชันสำหรับ secrets (@nebutra/vault), Postgres RLS สำหรับแยก tenant, RBAC/ABAC ผ่าน CASL (@nebutra/permissions), โทเค็นระหว่างบริการที่ลงนามด้วย HMAC, webhook ออกจากที่ลงนาม และ pipeline audit ที่สอดคล้องกับ SOC 2 (@nebutra/audit) รวมอยู่ในทุกแผน Pro และ Enterprise เพิ่มการสนับสนุนการรับรอง SOC 2, การตอบสนองต่อเหตุการณ์เฉพาะ และระยะเวลาเก็บ audit log ที่นานขึ้น"
         },
         "support": {
           "question": "ได้รับบริการสนับสนุนอย่างไร?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "สามารถนำ provider ของตัวเองมาใช้ได้ไหม?",
-          "answer": "ได้ ทุกการผสานรวม (auth, queue, search, email, payments, storage, billing) ไม่ผูกกับ provider ใดๆ factory ในแต่ละแพ็กเกจเลือก adapter ที่ถูกต้องจากตัวแปร env เดียว — เปลี่ยน Clerk เป็น Better Auth, NextAuth หรือ Supabase Auth, QStash เป็น BullMQ, Resend เป็น SES, Stripe เป็น Polar / LemonSqueezy / ChinaPay — โดยไม่ต้องแตะโค้ดแอปพลิเคชัน"
+          "answer": "ได้ ทุกการผสานรวม (auth, queue, search, email, payments, storage, billing) ไม่ผูกกับ provider ใดๆ factory ในแต่ละแพ็กเกจเลือก adapter ที่ถูกต้องจากตัวแปร env เดียว — เช่น Better Auth, QStash, Resend หรือ Stripe — โดยไม่ต้องแตะโค้ดแอปพลิเคชัน"
         },
         "tech-stack": {
           "question": "ใช้เทคโนโลยีอะไรบ้าง?",
@@ -1676,8 +1676,8 @@
           "answer": "สองชั้น Request-scoped tenant context ผ่าน @nebutra/tenant (AsyncLocalStorage ส่งต่อ active org ผ่านทุกการเรียก server รวมถึง DB queries และ outbound webhooks) และ database-enforced isolation ผ่าน Postgres Row-Level Security policies (packages/platform/db/prisma/generated/rls.sql) ที่ผูกกับ session-local app.current_tenant_id Service-role connections ข้าม RLS ได้เฉพาะภายใน trusted internal services เท่านั้น; ทุก user-facing routes ทำงานผ่าน tenant-scoped client"
         },
         "swap-clerk": {
-          "question": "สามารถเปลี่ยน Clerk เป็น auth provider อื่นได้หรือไม่?",
-          "answer": "ได้ @nebutra/auth มี adapters ระดับแรกสำหรับ Clerk, Better Auth, NextAuth (Auth.js v5) และ Supabase Auth เปลี่ยนผ่าน AUTH_PROVIDER env var หรือเลือกตอน scaffold ด้วย create-sailor --auth=... — server, React และ middleware surfaces เหมือนกันไม่ว่าจะใช้ provider ใด การเพิ่ม adapter ตัวที่ห้าหมายถึงการ implement interface เดียว (~80 LOC); ไม่มีโค้ดรอบข้างที่ผูกกับ provider เฉพาะ"
+          "question": "สามารถเปลี่ยน Better Auth เป็น auth provider อื่นได้หรือไม่?",
+          "answer": "ได้ @nebutra/auth มี adapter ระดับแรกสำหรับ Better Auth เปลี่ยนผ่าน AUTH_PROVIDER env var หรือเลือกตอน scaffold ด้วย create-sailor --auth=... — server, React และ middleware surfaces เหมือนกันไม่ว่าจะใช้ provider ใด การเพิ่ม adapter ตัวใหม่หมายถึงการ implement interface เดียว (~80 LOC); ไม่มีโค้ดรอบข้างที่ผูกกับ provider เฉพาะ"
         }
       }
     },

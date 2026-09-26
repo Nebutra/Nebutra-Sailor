@@ -143,9 +143,9 @@ export function getPackageFeatureHref(locale: string, node: FileNode) {
  *  • One sentence, ≤ 200 chars in EN, ≤ 80 CJK chars in ZH.
  *  • Lead with the concrete capability ("Issues short-lived JWTs…"), not
  *    "a package that does X".
- *  • Name the provider(s) when the package is multi-provider
- *    ("Stripe + Polar + LemonSqueezy + manual"), the boundary tech when
- *    relevant ("AsyncLocalStorage + RLS").
+ *  • Name the provider(s) when the package pairs a default with a
+ *    China-market adapter ("Stripe + WeChat Pay / Alipay"), the boundary
+ *    tech when relevant ("AsyncLocalStorage + RLS").
  *  • Avoid generic adjectives ("powerful", "modern", "robust").
  */
 export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = {
@@ -155,8 +155,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "面向 actor/tenant 行动的 hash-chain SHA-256 仅追加审计日志，SOC 2 级防篡改，支持流式导出与可回放查询。",
   },
   auth: {
-    en: "Multi-provider auth — Clerk, Better Auth, or NextAuth. Same React surface, swap providers via preset config. MFA-enforced, session HMAC-signed.",
-    zh: "多 provider 鉴权 — Clerk / Better Auth / NextAuth，preset 一行切换；React 接口统一，强制 MFA，session HMAC 签名。",
+    en: "Better Auth on Postgres — organization membership, device-flow login, MFA-enforced, session HMAC-signed. One identity layer, no vendor in the loop.",
+    zh: "基于 Postgres 的 Better Auth — 组织成员关系、设备码登录、强制 MFA、session HMAC 签名。统一身份层，不经第三方厂商。",
   },
   captcha: {
     en: "Bot challenge with Cloudflare Turnstile / hCaptcha / reCAPTCHA behind one verify() call. Server-side scoring, per-route enable, no third-party tracker on the client.",
@@ -185,8 +185,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
 
   // ─── commerce ───────────────────────────────────────────────────────────
   billing: {
-    en: "Multi-provider billing — Stripe, Polar, LemonSqueezy, ChinaPay, manual. Same Subscription / Invoice / Customer surface for every backend.",
-    zh: "多 provider 计费 — Stripe / Polar / LemonSqueezy / ChinaPay / Manual；Subscription / Invoice / Customer 接口对所有后端保持一致。",
+    en: "Billing on Stripe, plus WeChat Pay / Alipay for mainland China (or manual, for offline invoicing). Same Subscription / Invoice / Customer surface for every backend.",
+    zh: "计费基于 Stripe，另有微信支付 / 支付宝覆盖中国大陆（或手动开票）；Subscription / Invoice / Customer 接口对所有后端保持一致。",
   },
   contracts: {
     en: "Cross-package event, identity, billing, and notification type contracts. The shared TypeScript boundary that lets commerce talk to iam, queue, webhooks.",
@@ -251,8 +251,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "进程内 pub/sub + 跨应用 fanout;audit / billing / notifications 借此响应 commerce 事件,避免循环依赖。",
   },
   sms: {
-    en: "Transactional SMS — Twilio, AWS SNS, China Aliyun — same send(to, template) surface, automatic local-prefix routing.",
-    zh: "事务 SMS — Twilio / AWS SNS / 阿里云;统一 send(to, template),按本地号段自动选 provider。",
+    en: "Transactional SMS + OTP verify — Twilio Verify globally, Aliyun for mainland China — same send(to, template) surface, automatic local-prefix routing.",
+    zh: "事务 SMS + OTP 校验 — 全球用 Twilio Verify,中国大陆用阿里云;统一 send(to, template),按本地号段自动选 provider。",
   },
   tts: {
     en: "Text-to-speech with OpenAI / ElevenLabs / Azure backends. Streamed audio, voice presets, per-tenant rate-limit budgets.",
@@ -363,8 +363,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "运行时 CSS 变量 + ThemeProvider — 所有 app 颜色 / 间距 / radius 的单一数据源;在 globals.css 中 @import。",
   },
   "design-tokens": {
-    en: "W3C DTCG $value/$type token files + Style Dictionary 4 pipeline. Output CSS variables, JS modules, Figma sync feeds.",
-    zh: "W3C DTCG $value/$type 规范的 token 文件 + Style Dictionary 4 流水线;输出 CSS 变量、JS module、Figma 同步源。",
+    en: "W3C DTCG $value/$type token files + Style Dictionary 4 pipeline. Output CSS variables and JS modules, edited git-only — no design-tool sync round-trip.",
+    zh: "W3C DTCG $value/$type 规范的 token 文件 + Style Dictionary 4 流水线;输出 CSS 变量与 JS module，纯 Git 编辑，不经设计工具同步往返。",
   },
   icons: {
     en: "541 Geist icons as tree-shakable TSX components. Single-weight, optical-sized, drop-in for Vercel / v0 visual parity.",
@@ -379,8 +379,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "主组件库 — Nebutra 组件、自研原语、layout、主题桥接与共享 Motion 门面；产品 UI 的 import 边界。",
   },
   "design-sync": {
-    en: "Provider-agnostic design-tool sync — Figma, Penpot, or git-only. Pulls design-tool tokens to repo and pushes repo to design tool, safely dry-run by default.",
-    zh: "Provider 无关的设计工具同步 — Figma / Penpot / 仅 Git;双向同步 token,默认 dry-run 安全。",
+    en: "Git-only design-token sync — tokens live in the repo as the source of truth, no design-tool round-trip to keep in lock-step.",
+    zh: "纯 Git 的设计 token 同步 — token 以仓库为唯一数据源,无需再和设计工具做双向同步。",
   },
 
   // ─── ai ─────────────────────────────────────────────────────────────────

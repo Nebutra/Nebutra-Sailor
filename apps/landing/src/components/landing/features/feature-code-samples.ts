@@ -149,10 +149,10 @@ const fallback = resolveProvider("openai/gpt-5.5", {
   // ─── iam ──────────────────────────────────────────────────────────
   auth: ts(
     "auth.ts",
-    `import { auth } from "@nebutra/auth";
+    `import { createAuth } from "@nebutra/auth";
 
-export const POST = auth.handler({
-  provider: "clerk", // | "better-auth" | "next-auth"
+export const auth = await createAuth({
+  provider: "better-auth",
   callbacks: {
     onSignIn: async ({ user, ctx }) => {
       await ctx.audit.log("user.sign_in", { userId: user.id });
@@ -240,7 +240,7 @@ const actor: Actor = asActor({
     "queue.ts",
     `import { getQueue, createJob } from "@nebutra/queue";
 
-// Auto-detects QStash, BullMQ, or memory from env.
+// QStash in production; falls back to in-memory when no env is set.
 const queue = await getQueue();
 
 await queue.enqueue(
@@ -272,7 +272,7 @@ await cache.invalidate(\`user:\${id}\`);`,
     "search.ts",
     `import { getSearch } from "@nebutra/search";
 
-// Provider-agnostic: Meilisearch | Typesense | Algolia.
+// Postgres pgvector + full-text — no separate search cluster to run.
 const search = await getSearch();
 
 await search.indexDocument("posts", {
@@ -331,7 +331,7 @@ await sendEmail({
   to: user.email,
   subject: "Welcome to Nebutra",
   react: <WelcomeEmail name={user.name} orgName={org.name} />,
-  // Routes via Resend / SES / SMTP based on env.
+  // Resend in production; console sink when no API key is set.
 });`,
     [4, 6],
   ),
@@ -575,8 +575,8 @@ const heroAnimation = brandMotion.emerge; // brand motion language`,
 const sync = await getDesignSync();
 
 await sync.healthcheck();
-await sync.pull();                  // design tool → repo (DTCG)
-await sync.push({ dryRun: true });  // repo → design tool (dry-run safe)`,
+await sync.pull();                  // re-read DTCG token files (git is the source)
+await sync.push({ dryRun: true });  // validate + reformat in place (dry-run safe)`,
     [3, 4],
   ),
 
@@ -585,7 +585,7 @@ await sync.push({ dryRun: true });  // repo → design tool (dry-run safe)`,
     "billing.ts",
     `import { createCheckoutSession, getSubscription } from "@nebutra/billing";
 
-// Auto-routes to Stripe / Polar / LemonSqueezy / ChinaPay.
+// Stripe by default; WeChat Pay / Alipay run alongside once configured.
 const session = await createCheckoutSession({
   customerId: org.id,
   priceId: "price_pro_monthly",

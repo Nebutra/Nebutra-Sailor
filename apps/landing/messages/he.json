@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "אוטומציה ל-SaaS ארגוני",
-      "description": "אינטגרציה עמוקה עם הטכנולוגיות המודרניות של Vercel, Supabase ו-Stripe. מספקת אבטחה ברמת השורה מוכנה לשימוש, בידוד מורכב לריבוי שוכרים, וחשבוניות מנויים גלובליות."
+      "description": "אינטגרציה עמוקה עם הטכנולוגיות המודרניות של Postgres, Better Auth ו-Stripe. מספקת אבטחה ברמת השורה מוכנה לשימוש, בידוד מורכב לריבוי שוכרים, וחשבוניות מנויים גלובליות."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "מקור"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "אסימון אימות",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "אסימון מפגש אימות",
             "duration": "7 ימים"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "תשתית",
-              "desc": "אחסון ענן (Vercel, Supabase), שירותי מסד נתונים"
+              "desc": "אחסון ענן (Fly.io, Cloudflare), שירותי מסד נתונים"
             },
             "1": {
               "label": "עיבוד תשלומים",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "אימות",
-              "desc": "Clerk לניהול זהות"
+              "desc": "Better Auth לניהול זהות"
             },
             "3": {
               "label": "ניתוח נתונים",
@@ -1149,7 +1149,7 @@
         "desc": "ORM טיפוסי לחלוטין עם מדיניות Row-Level Security (RLS) מובנית באופן מקורי."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / זהות מותאמת אישית",
+        "title": "Better Auth Multi-Tenant / זהות מותאמת אישית",
         "desc": "שער אימות מוכן ל-SOC2 התומך בהחלפת ארגונים מסוג B2B ו-RBAC."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. התאמה",
-        "desc": "הגדר את Prisma, Clerk ו-Stripe באמצעות ה-CLI האינטראקטיבי תוך דקות."
+        "desc": "הגדר את Prisma, Better Auth ו-Stripe באמצעות ה-CLI האינטראקטיבי תוך דקות."
       },
       "step3": {
         "title": "3. בנייה",
@@ -1320,10 +1320,10 @@
       "multi_category": "פלטפורמת רב-שכירות",
       "multi_f1_title": "בידוד ברמת הארגון",
       "multi_f1_desc": "אבטחה ברמת שורה ב-Postgres מבטיחה ששכירים לא יוכלו לגשת זה לנתוני זה — אכיפה בשכבת המסד נתונים, לא רק באפליקציה.",
-      "multi_f2_title": "אימות רב-ספקים (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "OAuth רב-ספקים (Google, GitHub וכו') בנוסף לדואר/סיסמה וקישור קסם — החליפו בין Clerk, Better Auth, NextAuth או Supabase Auth באמצעות משתנה סביבה אחד.",
+      "multi_f2_title": "אימות רב-ספקים (Better Auth)",
+      "multi_f2_desc": "OAuth רב-ספקים (Google, GitHub וכו') בנוסף לדואר/סיסמה וקישור קסם — הכל דרך Better Auth באמצעות משתנה סביבה אחד.",
       "multi_f3_title": "אספקה אוטומטית של שכירים",
-      "multi_f3_desc": "כשארגון חדש נרשם דרך Clerk, אנחנו מייצרים אוטומטית את מפתח ה-API הראשון שלהם ושולחים דואר קבלת פנים ממותג — אפס שלבים ידניים.",
+      "multi_f3_desc": "כשארגון חדש נרשם, אנחנו מייצרים אוטומטית את מפתח ה-API הראשון שלהם ושולחים דואר קבלת פנים ממותג — אפס שלבים ידניים.",
       "dx_category": "חווית מפתח",
       "dx_f1_title": "מפתחות API מוצפנים",
       "dx_f1_desc": "מפתחות מוצפנים ב-SHA-256 עם תצוגת קידומת (nbtr_live_…). מוצגים בטקסט גלוי בדיוק פעם אחת בעת היצירה — אבטחה ללא חיכוך.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "API רב-פרוטוקולי (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI ל-API ציבוריים, oRPC לקריאות קליינט בטוחות טיפוסית, tRPC לתאימות עם T3-stack. כל הפרוטוקולים משתפים את אותם חוזי Zod וסטק מתווכים. הפעל לפי פרוטוקול באמצעות תצורה מוגדרת מראש.",
       "billing_category": "חיוב ומוניטיזציה",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar וסין פיי",
-      "billing_f1_desc": "בחר ספק תשלום: Stripe לעסקים גלובליים, LemonSqueezy לפיתוח עצמאי, Polar ל-OSS, או Alipay/WeChat Pay לשוק הסיני. תשלום בלחיצה אחת ופורטל חיוב עצמאי.",
+      "billing_f1_title": "Stripe וסין פיי",
+      "billing_f1_desc": "בחר ספק תשלום: Stripe לעסקים גלובליים, או Alipay/WeChat Pay לשוק הסיני. תשלום בלחיצה אחת ופורטל חיוב עצמאי.",
       "billing_f2_title": "אכיפת קוטה לפי שימוש",
       "billing_f2_desc": "מונים Redis בזמן אמת מעקבים אחר קריאות API ושימוש בטוקנים לכל שוכר. בקשות נחסמות בשער כשהגבולות מושגים.",
       "billing_f3_title": "סנכרון מחזור חיים של Webhook",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "התראות רב-חלון בסגנון Google SRE מופעלות בשיעורי צריכה של 14.4×, 6× ו-3× לפני שסל השגיאות שלך נגמר.",
       "sec_category": "אבטחה",
       "sec_f1_title": "כותרות CSP מבוססות nonce",
-      "sec_f1_desc": "מדיניות Content Security Policy מסוג strict-dynamic עם nonce ייחודי לכל בקשה, המיוצר בתוך ה-Clerk middleware — ללא unsafe-inline בשום מקום.",
+      "sec_f1_desc": "מדיניות Content Security Policy מסוג strict-dynamic עם nonce ייחודי לכל בקשה, המיוצר בתוך ה-Auth middleware — ללא unsafe-inline בשום מקום.",
       "sec_f2_title": "WAF של ModSecurity",
       "sec_f2_desc": "ערכת הכללים המרכזית של OWASP במצב DetectionOnly בכל נקודת כניסה. הגבלת קצב בקשות ל-30 RPS עם סובלנות לburst באמצעות אנוטציות nginx.",
       "sec_f3_title": "SBOM + אסמכת מוצא SLSA",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps עם ArgoCD",
       "infra_f1_desc": "שינויים בענף הראשי מתואמים אוטומטית לקלאסטר. תיקון עצמי מבטל עריכות ידניות ב-kubectl. חלונות סנכרון אוכפים שעות פריסה בטוחות.",
       "infra_f2_title": "איגוד חיבורים עם PgBouncer",
-      "infra_f2_desc": "PgBouncer במצב עסקה מול Supabase מטפל ב-1,000 חיבורי אפליקציה על 20 חיבורי Postgres. זמינות גבוהה עם 2 רפליקות.",
+      "infra_f2_desc": "PgBouncer במצב עסקה מול Postgres מטפל ב-1,000 חיבורי אפליקציה על 20 חיבורי Postgres. זמינות גבוהה עם 2 רפליקות.",
       "infra_f3_title": "קנה מידה אופקי ואנכי",
       "infra_f3_desc": "HPA מקנה מידה לפי CPU/זיכרון. VPA פועל במצב Off ומספק המלצות התאמת גודל. מדדים מותאמים של KEDA מתוכננים לגרסה 2."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "זה עובד בסין?",
-          "answer": "כן. אנחנו משלחים תצורה מקבילה של תשתית (CDN תואם Aliyun, דומיינים תואמי ICP, אפשרות להשתמש ב-Penpot במקום Figma) כך שאותו קוד יכול להתפרס בצורה נקייה בתוך החומה הגדולה."
+          "answer": "כן. אנחנו משלחים תצורה מקבילה של תשתית (CDN תואם Aliyun, דומיינים תואמי ICP) כך שאותו קוד יכול להתפרס בצורה נקייה בתוך החומה הגדולה."
         },
         "deployment": {
           "question": "איפה אפשר להפעיל את זה?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "איך ניהול האבטחה מתבצע?",
-          "answer": "הצפנה בשכבת האפליקציה לסיסמאות (@nebutra/vault), Postgres RLS לבידוד שוכרים, RBAC/ABAC דרך CASL או OpenFGA (@nebutra/permissions), אסימונים חתומים ב-HMAC בין שירותים, ווב-הוקים יוצאים חתומים, וצינור ביקורת תואם SOC 2 (@nebutra/audit) כלול בכל תוכנית. Pro ו-Enterprise מוסיפים תמיכה באישור SOC 2, תגובה ייעודית לאירועים, ושמירה ארוכה יותר של יומני ביקורת."
+          "answer": "הצפנה בשכבת האפליקציה לסיסמאות (@nebutra/vault), Postgres RLS לבידוד שוכרים, RBAC/ABAC דרך CASL (@nebutra/permissions), אסימונים חתומים ב-HMAC בין שירותים, ווב-הוקים יוצאים חתומים, וצינור ביקורת תואם SOC 2 (@nebutra/audit) כלול בכל תוכנית. Pro ו-Enterprise מוסיפים תמיכה באישור SOC 2, תגובה ייעודית לאירועים, ושמירה ארוכה יותר של יומני ביקורת."
         },
         "support": {
           "question": "איזו תמיכה אני מקבל?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "אפשר להביא ספק משלך?",
-          "answer": "כן. כל אינטגרציה (אימות, תור, חיפוש, מייל, תשלומים, אחסון, חיוב) היא אגנוסטית לספק. הפקטוריה בכל חבילה בוחרת את האדפטור הנכון מתוך משתנה סביבה אחד — מחליפים את Clerk ל-Better Auth, NextAuth או Supabase Auth, את QStash ל-BullMQ, את Resend ל-SES, את Stripe ל-Polar / LemonSqueezy / ChinaPay — בלי לגעת בקוד האפליקציה."
+          "answer": "כן. כל אינטגרציה (אימות, תור, חיפוש, מייל, תשלומים, אחסון, חיוב) היא אגנוסטית לספק. הפקטוריה בכל חבילה בוחרת את האדפטור הנכון מתוך משתנה סביבה אחד — הכל דרך Better Auth, QStash, Resend ו-Stripe — בלי לגעת בקוד האפליקציה."
         },
         "tech-stack": {
           "question": "מה סטק הטכנולוגיה?",
@@ -1676,8 +1676,8 @@
           "answer": "שתי שכבות. הקשר שכיר בטווח בקשה דרך @nebutra/tenant (AsyncLocalStorage מעביר את הארגון הפעיל דרך כל קריאת שרת, כולל שאילתות DB ו-webhooks יוצאים), ובידוד אכיפה במסד דרך מדיניות Postgres Row-Level Security (packages/platform/db/prisma/generated/rls.sql) קשורה ל-app.current_tenant_id מקומי לסשן. חיבורי תפקיד שירות עוקפים RLS רק בתוך שירותים פנימיים אמורים; כל המסלולים מול משתמשים עוברים דרך הלקוח בטווח השכיר."
         },
         "swap-clerk": {
-          "question": "האם אפשר להחליף את Clerk בספק אימות אחר?",
-          "answer": "כן. @nebutra/auth מגיע עם adapters ברמה ראשונה ל-Clerk, Better Auth, NextAuth (Auth.js v5), ו-Supabase Auth. מחליפים דרך משתנה הסביבה AUTH_PROVIDER או בוחרים בזמן ה-scaffold עם create-sailor --auth=... — פני השטח של שרת, React, ו-middleware נשארים זהים ללא קשר לספק. הוספת adapter חמישי דורשת מימוש ממשק אחד (~80 LOC); כלום בקוד הסובב לא קשור לספק ספציפי."
+          "question": "האם אפשר להחליף את Better Auth בספק אימות אחר?",
+          "answer": "כן. @nebutra/auth מגיע עם adapter ברמה ראשונה ל-Better Auth. מחליפים דרך משתנה הסביבה AUTH_PROVIDER או בוחרים בזמן ה-scaffold עם create-sailor --auth=... — פני השטח של שרת, React, ו-middleware נשארים זהים ללא קשר לספק. הוספת adapter חמישי דורשת מימוש ממשק אחד (~80 LOC); כלום בקוד הסובב לא קשור לספק ספציפי."
         }
       }
     },

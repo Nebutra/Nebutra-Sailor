@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Otomatisasi SaaS Perusahaan",
-      "description": "Terintegrasi mendalam dengan tumpukan teknologi modern Vercel, Supabase, dan Stripe. Menyediakan keamanan tingkat baris siap pakai, isolasi multi-tenant kompleks, dan penagihan langganan global."
+      "description": "Terintegrasi mendalam dengan tumpukan teknologi modern Postgres, Better Auth, dan Stripe. Menyediakan keamanan tingkat baris siap pakai, isolasi multi-tenant kompleks, dan penagihan langganan global."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Sesi"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Token autentikasi",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Token sesi autentikasi",
             "duration": "7 hari"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Infrastruktur",
-              "desc": "Hosting cloud (Vercel, Supabase), layanan database"
+              "desc": "Hosting cloud (Fly.io, Cloudflare), layanan database"
             },
             "1": {
               "label": "Pemrosesan Pembayaran",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Autentikasi",
-              "desc": "Clerk untuk manajemen identitas"
+              "desc": "Better Auth untuk manajemen identitas"
             },
             "3": {
               "label": "Analitik",
@@ -1149,7 +1149,7 @@
         "desc": "ORM yang sepenuhnya bertipe dengan kebijakan Keamanan Tingkat Baris (RLS) yang terintegrasi secara native."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Identitas Kustom",
+        "title": "Better Auth Multi-Tenant / Identitas Kustom",
         "desc": "Gerbang autentikasi siap SOC2 yang mendukung pengalihan organisasi B2B dan RBAC."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurasi",
-        "desc": "Atur Prisma, Clerk, dan Stripe melalui CLI interaktif dalam hitungan menit."
+        "desc": "Atur Prisma, Better Auth, dan Stripe melalui CLI interaktif dalam hitungan menit."
       },
       "step3": {
         "title": "3. Bangun",
@@ -1320,10 +1320,10 @@
       "multi_category": "Platform Multi-tenant",
       "multi_f1_title": "Isolasi tingkat organisasi",
       "multi_f1_desc": "Keamanan tingkat baris di Postgres memastikan tenant tidak pernah dapat mengakses data satu sama lain — diterapkan di lapisan database, bukan hanya aplikasi.",
-      "multi_f2_title": "Autentikasi multi-provider (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "OAuth multi-provider (Google, GitHub, dll.) plus email/password dan magic-link — ganti antara Clerk, Better Auth, NextAuth, atau Supabase Auth melalui satu variabel env.",
+      "multi_f2_title": "Autentikasi multi-provider (Better Auth)",
+      "multi_f2_desc": "OAuth multi-provider (Google, GitHub, dll.) plus email/password dan magic-link — semua melalui satu instans Better Auth, tanpa ganti provider.",
       "multi_f3_title": "Provisioning tenant otomatis",
-      "multi_f3_desc": "Saat organisasi baru mendaftar melalui Clerk, kami otomatis membuat kunci API pertama mereka dan mengirim email sambutan berbranding — tanpa langkah manual.",
+      "multi_f3_desc": "Saat organisasi baru mendaftar, kami otomatis membuat kunci API pertama mereka dan mengirim email sambutan berbranding — tanpa langkah manual.",
       "dx_category": "Pengalaman Pengembang",
       "dx_f1_title": "Kunci API yang di-hash",
       "dx_f1_desc": "Kunci yang di-hash SHA-256 dengan tampilan awalan (nbtr_live_…). Ditampilkan dalam teks biasa hanya sekali saat pembuatan — keamanan tanpa hambatan.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "API Multi-Protokol (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI untuk API publik, oRPC untuk panggilan frontend yang aman tipe, tRPC untuk kompatibilitas stack T3. Semua protokol berbagi kontrak Zod dan tumpukan middleware yang sama. Aktifkan per protokol melalui konfigurasi preset.",
       "billing_category": "Penagihan & Monetisasi",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Pilih penyedia pembayaran Anda: Stripe untuk perusahaan global, LemonSqueezy untuk pengembang indie, Polar untuk OSS, atau Alipay/WeChat Pay untuk pasar Tiongkok. Checkout satu klik dan portal penagihan mandiri.",
+      "billing_f1_title": "Stripe & China Pay",
+      "billing_f1_desc": "Pilih penyedia pembayaran Anda: Stripe untuk perusahaan global, atau Alipay/WeChat Pay untuk pasar Tiongkok. Checkout satu klik dan portal penagihan mandiri.",
       "billing_f2_title": "Penegakan kuota berbasis penggunaan",
       "billing_f2_desc": "Penghitung Redis real-time melacak panggilan API dan penggunaan token per tenant. Permintaan dikunci di gateway saat batas tercapai.",
       "billing_f3_title": "Sinkronisasi siklus hidup webhook",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Peringatan bergaya SRE Google multi-jendela aktif pada tingkat pembakaran 14.4×, 6×, dan 3× sebelum anggaran kesalahan Anda habis.",
       "sec_category": "Keamanan",
       "sec_f1_title": "Header berbasis nonce CSP",
-      "sec_f1_desc": "Content Security Policy strict-dynamic dengan nonce per-request yang dihasilkan di middleware Clerk — tanpa unsafe-inline di mana pun.",
+      "sec_f1_desc": "Content Security Policy strict-dynamic dengan nonce per-request yang dihasilkan di middleware auth — tanpa unsafe-inline di mana pun.",
       "sec_f2_title": "WAF ModSecurity",
       "sec_f2_desc": "OWASP Core Rule Set dalam mode DetectionOnly di setiap ingress. Pembatasan laju pada 30 RPS dengan toleransi burst melalui anotasi nginx.",
       "sec_f3_title": "SBOM + provenance SLSA",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps dengan ArgoCD",
       "infra_f1_desc": "Perubahan di cabang utama otomatis disinkronkan ke cluster. Self-heal membatalkan edit kubectl manual. Jendela sinkronisasi menegakkan jam deploy yang aman.",
       "infra_f2_title": "Connection pooling PgBouncer",
-      "infra_f2_desc": "PgBouncer mode transaksi di depan Supabase menangani 1.000 koneksi aplikasi dengan 20 koneksi Postgres. HA dengan 2 replika.",
+      "infra_f2_desc": "PgBouncer mode transaksi di depan Postgres menangani 1.000 koneksi aplikasi dengan 20 koneksi Postgres. HA dengan 2 replika.",
       "infra_f3_title": "Autoscaling horizontal + vertikal",
       "infra_f3_desc": "HPA menskalakan berdasarkan CPU/memori. VPA berjalan dalam mode Off memberikan rekomendasi right-sizing. Metrik custom KEDA direncanakan untuk v2."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Apakah berfungsi di Tiongkok?",
-          "answer": "Ya. Kami merilis konfigurasi infra paralel (CDN kompatibel Aliyun, domain ramah ICP, Penpot opsional menggantikan Figma) sehingga kode yang sama dapat di-deploy dengan bersih di dalam Great Firewall."
+          "answer": "Ya. Kami merilis konfigurasi infra paralel (CDN kompatibel Aliyun, domain ramah ICP) sehingga kode yang sama dapat di-deploy dengan bersih di dalam Great Firewall."
         },
         "deployment": {
           "question": "Di mana saya bisa deploy?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Bagaimana keamanan ditangani?",
-          "answer": "Enkripsi envelope lapisan aplikasi untuk secrets (@nebutra/vault), Postgres RLS untuk isolasi tenant, RBAC/ABAC via CASL atau OpenFGA (@nebutra/permissions), token antar-layanan yang ditandatangani HMAC, webhook keluaran yang ditandatangani, dan pipeline audit yang selaras dengan SOC 2 (@nebutra/audit) termasuk di setiap paket. Pro dan Enterprise menambahkan dukungan atestasi SOC 2, respons insiden khusus, dan retensi log audit yang lebih lama."
+          "answer": "Enkripsi envelope lapisan aplikasi untuk secrets (@nebutra/vault), Postgres RLS untuk isolasi tenant, RBAC/ABAC via CASL (@nebutra/permissions), token antar-layanan yang ditandatangani HMAC, webhook keluaran yang ditandatangani, dan pipeline audit yang selaras dengan SOC 2 (@nebutra/audit) termasuk di setiap paket. Pro dan Enterprise menambahkan dukungan atestasi SOC 2, respons insiden khusus, dan retensi log audit yang lebih lama."
         },
         "support": {
           "question": "Dukungan apa yang saya dapatkan?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Bisakah saya membawa provider sendiri?",
-          "answer": "Ya. Setiap integrasi (auth, queue, search, email, pembayaran, penyimpanan, billing) bersifat provider-agnostic. Factory di setiap paket memilih adapter yang tepat dari satu env var — ganti Clerk dengan Better Auth, NextAuth, atau Supabase Auth, QStash dengan BullMQ, Resend dengan SES, Stripe dengan Polar / LemonSqueezy / ChinaPay — tanpa menyentuh kode aplikasi."
+          "answer": "Ya. Setiap integrasi (auth, queue, search, email, pembayaran, penyimpanan, billing) bersifat provider-agnostic. Factory di setiap paket memilih adapter yang tepat dari satu env var — adapter yang digunakan adalah Better Auth, QStash, Resend, dan Stripe — tanpa menyentuh kode aplikasi."
         },
         "tech-stack": {
           "question": "Apa tech stack-nya?",
@@ -1676,8 +1676,8 @@
           "answer": "Dua lapisan. Konteks tenant yang di-scope permintaan melalui @nebutra/tenant (AsyncLocalStorage menyebarkan organisasi aktif melalui setiap panggilan server, termasuk kueri DB dan webhook keluar), dan isolasi yang dipaksakan database melalui kebijakan Row-Level Security Postgres (packages/platform/db/prisma/generated/rls.sql) yang terikat ke app.current_tenant_id sesi-lokal. Koneksi peran layanan melewati RLS hanya di dalam layanan internal tepercaya; semua rute yang menghadap pengguna berjalan melalui klien yang di-scope tenant."
         },
         "swap-clerk": {
-          "question": "Bisakah saya mengganti Clerk dengan penyedia autentikasi lain?",
-          "answer": "Ya. @nebutra/auth menyediakan adapter kelas satu untuk Clerk, Better Auth, NextAuth (Auth.js v5), dan Supabase Auth. Beralih melalui variabel lingkungan AUTH_PROVIDER atau pilih saat scaffold dengan create-sailor --auth=... — permukaan server, React, dan middleware tetap identik terlepas dari penyedia. Menambahkan adapter kelima berarti mengimplementasikan satu antarmuka (~80 LOC); tidak ada kode di sekitarnya yang terikat pada penyedia tertentu."
+          "question": "Bisakah saya mengganti Better Auth dengan penyedia autentikasi lain?",
+          "answer": "Ya. @nebutra/auth menyediakan adapter kelas satu untuk Better Auth. Beralih melalui variabel lingkungan AUTH_PROVIDER atau pilih saat scaffold dengan create-sailor --auth=... — permukaan server, React, dan middleware tetap identik terlepas dari penyedia. Menambahkan adapter kelima berarti mengimplementasikan satu antarmuka (~80 LOC); tidak ada kode di sekitarnya yang terikat pada penyedia tertentu."
         }
       }
     },

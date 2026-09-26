@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Uotomatiki wa SaaS ya Biashara",
-      "description": "Uunganisho wa kina wa stack ya teknolojia ya kisasa ya Vercel, Supabase, na Stripe. Inatoa usalama wa kiwango cha safu, utengano wa multi-tenant wa kina, na bili ya usajili wa kimataifa."
+      "description": "Uunganisho wa kina wa stack ya teknolojia ya kisasa ya Postgres, Better Auth, na Stripe. Inatoa usalama wa kiwango cha safu, utengano wa multi-tenant wa kina, na bili ya usajili wa kimataifa."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Kipindi"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Token ya uthibitishaji",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Tokeni ya kikao cha uthibitishaji",
             "duration": "Siku 7"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Miundombinu",
-              "desc": "Uhudumu wa wavuti (Vercel, Supabase), huduma za hifadhi ya data"
+              "desc": "Uhudumu wa wavuti (Fly.io, Cloudflare), huduma za hifadhi ya data"
             },
             "1": {
               "label": "Usindikaji wa Malipo",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Uthibitishaji",
-              "desc": "Clerk kwa usimamizi wa utambulisho"
+              "desc": "Better Auth kwa usimamizi wa utambulisho"
             },
             "3": {
               "label": "Uchambuzi",
@@ -1149,7 +1149,7 @@
         "desc": "ORM iliyofafanuliwa kikamilifu yenye sera za Usalama wa Kirowo (RLS) zilizojengwa ndani."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Utambulisho wa Kipekee",
+        "title": "Better Auth Multi-Tenant / Utambulisho wa Kipekee",
         "desc": "Lango la uthibitisho la SOC2 tayari linalosaidia kubadilisha mashirika ya B2B na RBAC."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Weka mipangilio",
-        "desc": "Weka Prisma, Clerk, na Stripe kupitia CLI ya mwingiliano kwa dakika chache."
+        "desc": "Weka Prisma, Better Auth, na Stripe kupitia CLI ya mwingiliano kwa dakika chache."
       },
       "step3": {
         "title": "3. Jenga",
@@ -1320,10 +1320,10 @@
       "multi_category": "Jukwaa la Multi-tenant",
       "multi_f1_title": "Utohozi wa kiwango cha shirika",
       "multi_f1_desc": "Usalama wa row-level katika Postgres huhakikisha tenants hawawezi kufikia data ya wengine—inafanywa katika tabaka la database, si tu programu.",
-      "multi_f2_title": "Uthibitisho wa watoa huduma wengi (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, n.k.) pamoja na email/password na magic-link—badilisha kati ya Clerk, Better Auth, NextAuth, au Supabase Auth kupitia env var moja.",
+      "multi_f2_title": "Uthibitisho wa watoa huduma wengi (Better Auth)",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub, n.k.) pamoja na email/password na magic-link—yote kupitia Better Auth, iliyowekwa kwa env var moja.",
       "multi_f3_title": "Uandishi wa kodi wa wafadhili kwa utaratibu",
-      "multi_f3_desc": "Polepole shirika jipya linajisajili kupitia Clerk, tunatengeneza API key yao ya kwanza na kutuma barua pepe ya karibisha iliyobrand—hatua za mkono sifuri.",
+      "multi_f3_desc": "Polepole shirika jipya linajisajili, tunatengeneza API key yao ya kwanza na kutuma barua pepe ya karibisha iliyobrand—hatua za mkono sifuri.",
       "dx_category": "Uzoefu wa Mtaalamu wa Programu",
       "dx_f1_title": "Ufunguo za API zilizohashwa",
       "dx_f1_desc": "Ufunguo zilizohashwa kwa SHA-256 zenye onyesho la kiambishi awali (nbtr_live_…). Zinaonyeshwa kwa maandishi wazi mara moja tu wakati wa kuundwa — usalama bila shida.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "API ya Multi-Protocol (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI kwa API za umma, oRPC kwa simu za frontend zenye usalama wa aina, tRPC kwa urahisiano wa T3-stack. Mikataba yote ya Zod na stack ya middleware zinashirikiwa na viashiria vyote. Wezesha kwa kila kiashiria kupitia config ya preset.",
       "billing_category": "Kubidisha na Uwekezaji wa Fedha",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar & China Pay",
-      "billing_f1_desc": "Chagua mtoa huduma wa malipo: Stripe kwa biashara za kimataifa, LemonSqueezy kwa wabunifu wa kujitegemea, Polar kwa OSS, au Alipay/WeChat Pay kwa soko la China. Malipo kwa bonyezo moja na mlango wa kubidisha mwenyewe.",
+      "billing_f1_title": "Stripe & China Pay",
+      "billing_f1_desc": "Chagua mtoa huduma wa malipo: Stripe kwa biashara za kimataifa, au Alipay/WeChat Pay kwa soko la China. Malipo kwa bonyezo moja na mlango wa kubidisha mwenyewe.",
       "billing_f2_title": "Kutekeleza kiasi kulingana na matumizi",
       "billing_f2_desc": "Visembo vya Redis vya wakati halisi vinafuatilia simu za API na matumizi ya token kwa kila mwenyeji. Ombi linazuiliwa kwenye gateway wakati mipaka inafikiwa.",
       "billing_f3_title": "Unganisho la mzunguko wa Webhook",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Onyo la Google SRE-style la dirisha nyingi hufanya kazi kwa viwango vya kuchoma 14.4×, 6×, na 3× kabla bajeti yako ya makosa haisha.",
       "sec_category": "Usalama",
       "sec_f1_title": "Vichacheo vya CSP vya msingi wa nonce",
-      "sec_f1_desc": "Sera ya Usalama wa Yaliyomo ya Strict-dynamic yenye nonces za kila ombi zilizotengenezwa katika middleware ya Clerk — hakuna unsafe-inline popote.",
+      "sec_f1_desc": "Sera ya Usalama wa Yaliyomo ya Strict-dynamic yenye nonces za kila ombi zilizotengenezwa katika middleware ya Auth — hakuna unsafe-inline popote.",
       "sec_f2_title": "WAF ya ModSecurity",
       "sec_f2_desc": "Seti ya Kanuni za Msingi za OWASP katika hali ya DetectionOnly kwenye kila ingress. Kuzuia kiwango kwa 30 RPS kwa utulivu wa burst kupitia alama za nginx.",
       "sec_f3_title": "SBOM + asili ya SLSA",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps na ArgoCD",
       "infra_f1_desc": "Mabadiliko ya tawi kuu yanarekebishwa moja kwa moja kwenye cluster. Urekebishaji wa kiotomatiki unarudisha urekebishaji wa mkono wa kubectl. Majani ya usawazishaji yanazuia saa salama za kuweka.",
       "infra_f2_title": "Uunganisho wa PgBouncer",
-      "infra_f2_desc": "PgBouncer wa hali ya muamala mbele ya Supabase hudumisha uunganisho 1,000 wa programu kwenye uunganisho 20 wa Postgres. HA na nakala 2.",
+      "infra_f2_desc": "PgBouncer wa hali ya muamala mbele ya Postgres hudumisha uunganisho 1,000 wa programu kwenye uunganisho 20 wa Postgres. HA na nakala 2.",
       "infra_f3_title": "Kupanuka kwa usawa + wima",
       "infra_f3_desc": "HPA inapanuka kulingana na CPU/kumbukumbu. VPA inafanya kazi katika hali ya Off ikitoa mapendekezo ya ukubwa sahihi. Vipimo maalum vya KEDA vinapangwa kwa v2."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Je, inafanya kazi China?",
-          "answer": "Ndiyo. Tunatoa mipangilio ya miundombinu sambamba (CDN inayofaa na Aliyun, domain zinazofaa na ICP, Penpot wa hiari badala ya Figma) ili msingi huo huo wa msimbo utolewe kwa usafi ndani ya Great Firewall."
+          "answer": "Ndiyo. Tunatoa mipangilio ya miundombinu sambamba (CDN inayofaa na Aliyun, domain zinazofaa na ICP) ili msingi huo huo wa msimbo utolewe kwa usafi ndani ya Great Firewall."
         },
         "deployment": {
           "question": "Wapi naweza kuweka?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Je, usalama unashughulikiwa vipi?",
-          "answer": "Ufungaji wa envelope wa ngazi ya programu kwa siri (@nebutra/vault), Postgres RLS kwa utenganisho wa tenanti, RBAC/ABAC kupitia CASL au OpenFGA (@nebutra/permissions), alama za kati-huduma zilizosainiwa na HMAC, webhooks za nje zilizosainiwa, na mchakato wa ukaguzi unaofaa na SOC 2 (@nebutra/audit) unaojumuishwa katika kila mpango. Pro na Enterprise zinaongeza msaada wa uthibitisho wa SOC 2, msaada maalum wa matukio, na uhifadhi mrefu wa logi za ukaguzi."
+          "answer": "Ufungaji wa envelope wa ngazi ya programu kwa siri (@nebutra/vault), Postgres RLS kwa utenganisho wa tenanti, RBAC/ABAC kupitia CASL (@nebutra/permissions), alama za kati-huduma zilizosainiwa na HMAC, webhooks za nje zilizosainiwa, na mchakato wa ukaguzi unaofaa na SOC 2 (@nebutra/audit) unaojumuishwa katika kila mpango. Pro na Enterprise zinaongeza msaada wa uthibitisho wa SOC 2, msaada maalum wa matukio, na uhifadhi mrefu wa logi za ukaguzi."
         },
         "support": {
           "question": "Msaada gani ninapata?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Je, naweza kuleta mtoa huduma wangu mwenyewe?",
-          "answer": "Ndiyo. Kila muunganisho (uhalalishaji, mistari ya kusubiri, utafutaji, barua pepe, malipo, hifadhi, bili) haitegemei mtoa huduma. Kifekete katika kila paketi kinachagua adapter sahihi kutoka kwenye kigezo kimoja cha mazingira — ubadilishe Clerk kwa Better Auth, NextAuth, au Supabase Auth, QStash kwa BullMQ, Resend kwa SES, Stripe kwa Polar / LemonSqueezy / ChinaPay — bila kugusa msimbo wa programu."
+          "answer": "Ndiyo. Kila muunganisho (uhalalishaji, mistari ya kusubiri, utafutaji, barua pepe, malipo, hifadhi, bili) haitegemei mtoa huduma. Kifekete katika kila paketi kinachagua adapter sahihi kutoka kwenye kigezo kimoja cha mazingira — kwa mfano Better Auth, QStash, Resend, au Stripe — bila kugusa msimbo wa programu."
         },
         "tech-stack": {
           "question": "Je, ni nini stack ya teknolojia?",
@@ -1676,8 +1676,8 @@
           "answer": "Tabaka mbili. Muktadha wa mtumiaji wa ombi kupitia @nebutra/tenant (AsyncLocalStorage inasambaza shirika la sasa kupitia kila simu ya seva, ikiwa ni pamoja na maswali ya DB na webhooks za nje), na utenganisho unaodhibitiwa na hifadhi ya data kupitia sera za Row-Level Security za Postgres (packages/platform/db/prisma/generated/rls.sql) zilizounganishwa na app.current_tenant_id ya kikao. Muunganisho wa jukumu la huduma unapita RLS ndani tu ya huduma za ndani zinazowezekana; njia zote zinazowasiliana na mtumiaji zinapita kupitia mteja wa muktadha wa mtumiaji."
         },
         "swap-clerk": {
-          "question": "Je, ninaweza kubadilisha Clerk kwa mtoa huduma mwingine wa uthibitisho?",
-          "answer": "Ndiyo. @nebutra/auth inatoa adapter za darasa la kwanza kwa Clerk, Better Auth, NextAuth (Auth.js v5), na Supabase Auth. Badilisha kupitia kigezo cha mazingira AUTH_PROVIDER au uchague wakati wa scaffold na create-sailor --auth=... — uso wa seva, React, na middleware unabaki sawa bila kujali mtoa huduma. Kuongeza adapter ya tano kunamaanisha kutumia interface moja (~80 LOC); hakuna kitu katika msimbo wa mazingira kinachounganishwa na mtoa huduma maalum."
+          "question": "Je, ninaweza kubadilisha Better Auth kwa mtoa huduma mwingine wa uthibitisho?",
+          "answer": "Ndiyo. @nebutra/auth inatoa adapta ya darasa la kwanza kwa Better Auth. Badilisha kupitia kigezo cha mazingira AUTH_PROVIDER au uchague wakati wa scaffold na create-sailor --auth=... — uso wa seva, React, na middleware unabaki sawa bila kujali mtoa huduma. Kuongeza adapta nyingine kunamaanisha kutumia interface moja (~80 LOC); hakuna kitu katika msimbo wa mazingira kinachounganishwa na mtoa huduma maalum."
         }
       }
     },

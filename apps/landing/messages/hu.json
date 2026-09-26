@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Vállalati SaaS automatizálás",
-      "description": "A Vercel, Supabase és Stripe modern technológiai stackjének mély integrációja. Azonnali sor szintű biztonságot, összetett több bérlős izolációt és globális előfizetési számlázást biztosít."
+      "description": "A Postgres, Better Auth és Stripe modern technológiai stackjének mély integrációja. Azonnali sor szintű biztonságot, összetett több bérlős izolációt és globális előfizetési számlázást biztosít."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Munkamenet"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Hitelesítési token",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Hitelesítési munkamenet-token",
             "duration": "7 nap"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Infrastruktúra",
-              "desc": "Felhőalapú hosztolás (Vercel, Supabase), adatbázis-szolgáltatások"
+              "desc": "Felhőalapú hosztolás (Fly.io, Cloudflare), adatbázis-szolgáltatások"
             },
             "1": {
               "label": "Fizetési feldolgozás",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Hitelesítés",
-              "desc": "Clerk a identitáskezeléshez"
+              "desc": "Better Auth a identitáskezeléshez"
             },
             "3": {
               "label": "Analitika",
@@ -1149,7 +1149,7 @@
         "desc": "Teljesen típusos ORM, amelybe natívan beépítve a sor szintű biztonsági (RLS) szabályzatok."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Egyedi Identitás",
+        "title": "Better Auth Multi-Tenant / Egyedi Identitás",
         "desc": "SOC2-kész hitelesítési kapu, amely támogatja a B2B szervezetek közötti váltást és a RBAC-ot."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurálás",
-        "desc": "Állítsd be a Prisma, Clerk és Stripe beállításokat az interaktív CLI segítségével percek alatt."
+        "desc": "Állítsd be a Prisma, Better Auth és Stripe beállításokat az interaktív CLI segítségével percek alatt."
       },
       "step3": {
         "title": "3. Fejlesztés",
@@ -1320,10 +1320,10 @@
       "multi_category": "Több bérlős platform",
       "multi_f1_title": "Szervezet szintű izoláció",
       "multi_f1_desc": "A Postgres sor szintű biztonsága biztosítja, hogy a bérlők soha ne férhessenek hozzá egymás adataihoz – az adatbázis rétegén, nem csak az alkalmazásban érvényesítve.",
-      "multi_f2_title": "Több szolgáltató hitelesítés (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Több szolgáltató OAuth (Google, GitHub stb.) plusz e-mail/jelszó és varázsló link – válthatsz Clerk, Better Auth, NextAuth vagy Supabase Auth között egyetlen környezeti változóval.",
+      "multi_f2_title": "Több szolgáltató hitelesítés (Better Auth)",
+      "multi_f2_desc": "Több szolgáltató OAuth (Google, GitHub stb.) plusz e-mail/jelszó és varázsló link – mind egyetlen Better Auth példányon keresztül, szolgáltatóváltás nélkül.",
       "multi_f3_title": "Automatikus bérlő üzembe helyezés",
-      "multi_f3_desc": "Amikor egy új szervezet regisztrál Clerkkel, automatikusan generáljuk az első API kulcsukat és küldünk egy márkázott üdvözlő e-mailt – nulla manuális lépés.",
+      "multi_f3_desc": "Amikor egy új szervezet regisztrál, automatikusan generáljuk az első API kulcsukat és küldünk egy márkázott üdvözlő e-mailt – nulla manuális lépés.",
       "dx_category": "Fejlesztői élmény",
       "dx_f1_title": "Hashelt API kulcsok",
       "dx_f1_desc": "SHA-256 hashelt kulcsok előtag megjelenítéssel (nbtr_live_…). Tiszta szövegként pontosan egyszer látható létrehozáskor – biztonság frusztráció nélkül.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "Több protokolos API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI nyilvános API-khoz, oRPC típusbiztos frontend hívásokhoz, tRPC T3-stack kompatibilitáshoz. Minden protokoll ugyanazt a Zod szerződést és middleware stacket használja. Protokollonként engedélyezhető előre beállított konfigurációval.",
       "billing_category": "Számlázás és Monetizáció",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar és Kínai Fizetés",
-      "billing_f1_desc": "Válassza ki a fizetési szolgáltatót: Stripe globális vállalati ügyfelekhez, LemonSqueezy indie fejlesztőknek, Polar nyílt forráskódú projektekhez, vagy Alipay/WeChat Pay a kínai piacra. Egy kattintásos fizetés és önálló számlázási portál.",
+      "billing_f1_title": "Stripe és Kínai Fizetés",
+      "billing_f1_desc": "Válassza ki a fizetési szolgáltatót: Stripe globális vállalati ügyfelekhez, vagy Alipay/WeChat Pay a kínai piacra. Egy kattintásos fizetés és önálló számlázási portál.",
       "billing_f2_title": "Használat alapú kvóta érvényesítés",
       "billing_f2_desc": "Valós idejű Redis számlálók követik az API hívásokat és token használatot bérlőnként. A kéréseket a gateway zárja le, amikor a limitet elérjük.",
       "billing_f3_title": "Webhook életciklus szinkronizálás",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Többablakos, Google SRE stílusú figyelmeztetések 14,4×, 6× és 3× leégülési sebességnél, mielőtt az hibakeret elfogy.",
       "sec_category": "Biztonság",
       "sec_f1_title": "CSP nonce-alapú fejlécek",
-      "sec_f1_desc": "Szigorú dinamikus Content Security Policy, kérésenként generált nonce-okkal a Clerk middleware-ben – nincs unsafe-inline.",
+      "sec_f1_desc": "Szigorú dinamikus Content Security Policy, kérésenként generált nonce-okkal az auth middleware-ben – nincs unsafe-inline.",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "OWASP Core Rule Set DetectionOnly módban minden bejövő forgalomnál. 30 RPS sebességkorlátozás burst toleranciával nginx annotációkon keresztül.",
       "sec_f3_title": "SBOM + SLSA származási adatok",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps az ArgoCD-vel",
       "infra_f1_desc": "A fő ág módosításai automatikusan szinkronizálódnak a klaszterrel. Az öngyógyító rendszer visszavonja a manuális kubectl szerkesztéseket. A szinkronizálási ablakok biztosítják a biztonságos telepítési órákat.",
       "infra_f2_title": "PgBouncer kapcsolattárolás",
-      "infra_f2_desc": "A Supabase előtt lévő tranzakciós módú PgBouncer kezeli az 1000 alkalmazási kapcsolatot 20 Postgres kapcsolaton keresztül. HA 2 replikával.",
+      "infra_f2_desc": "A Postgres előtt lévő tranzakciós módú PgBouncer kezeli az 1000 alkalmazási kapcsolatot 20 Postgres kapcsolaton keresztül. HA 2 replikával.",
       "infra_f3_title": "Vízszintes és függőleges autoscaling",
       "infra_f3_desc": "Az HPA CPU/memória alapján skáláz. A VPA Off módban fut, méretezési ajánlásokat nyújtva. A KEDA egyedi metrikák tervezve a v2-hez."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Működik Kínában?",
-          "answer": "Igen. Párhuzamos infrastruktúra-konfigurációt szállítunk (Aliyun-kompatibilis CDN, ICP-barát domainek, opcionális Penpot a Figma helyett), így ugyanaz a kódalap tiszta telepítést tesz lehetővé a Nagy Tűzfalon belül."
+          "answer": "Igen. Párhuzamos infrastruktúra-konfigurációt szállítunk (Aliyun-kompatibilis CDN, ICP-barát domainek), így ugyanaz a kódalap tiszta telepítést tesz lehetővé a Nagy Tűzfalon belül."
         },
         "deployment": {
           "question": "Hová telepíthetem?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Hogyan kezeljük a biztonságot?",
-          "answer": "Alkalmazásrétegű boríték titkosítás titkos adatokhoz (@nebutra/vault), Postgres RLS bérlőszigeteléshez, RBAC/ABAC CASL vagy OpenFGA segítségével (@nebutra/permissions), HMAC-aláírt szolgáltatások közötti tokenek, aláírt kimenő webhookok és SOC 2-igazított audit csatorna (@nebutra/audit) minden csomagban. A Pro és Enterprise hozzáadja a SOC 2 tanúsítást, dedikált eseménykezelést és hosszabb audit-napló tárolást."
+          "answer": "Alkalmazásrétegű boríték titkosítás titkos adatokhoz (@nebutra/vault), Postgres RLS bérlőszigeteléshez, RBAC/ABAC CASL segítségével (@nebutra/permissions), HMAC-aláírt szolgáltatások közötti tokenek, aláírt kimenő webhookok és SOC 2-igazított audit csatorna (@nebutra/audit) minden csomagban. A Pro és Enterprise hozzáadja a SOC 2 tanúsítást, dedikált eseménykezelést és hosszabb audit-napló tárolást."
         },
         "support": {
           "question": "Milyen támogatást kapok?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Saját szolgáltatót hozhatok?",
-          "answer": "Igen. Minden integráció (hitelesítés, sor, keresés, e-mail, fizetés, tárolás, számlázás) szolgáltatófüggetlen. A gyár minden csomagban egyetlen env változóból választja ki a megfelelő adaptert — cserélje a Clerk-et Better Auth-ra, NextAuth-ra vagy Supabase Auth-ra, a QStash-t BullMQ-ra, a Resend-et SES-re, a Stripe-ot Polar / LemonSqueezy / ChinaPay-re — anélkül, hogy az alkalmazáskódot érintené."
+          "answer": "Igen. Minden integráció (hitelesítés, sor, keresés, e-mail, fizetés, tárolás, számlázás) szolgáltatófüggetlen. A gyár minden csomagban egyetlen env változóból választja ki a megfelelő adaptert — a használt adapterek: Better Auth, QStash, Resend és Stripe — anélkül, hogy az alkalmazáskódot érintené."
         },
         "tech-stack": {
           "question": "Mi a technológiai stack?",
@@ -1676,8 +1676,8 @@
           "answer": "Két réteg. Kérés-scope-os bérlő-kontextus az @nebutra/tenant segítségével (az AsyncLocalStorage továbbítja az aktív szervezetet minden szerverhíváson keresztül, beleértve az adatbázis-lekérdezéseket és a kimenő webhookokat), valamint adatbázis-szintű izoláció a Postgres Row-Level Security szabályzatok révén (packages/platform/db/prisma/generated/rls.sql), amelyek egy session-local app.current_tenant_id-hez vannak kötve. A szolgáltatási szerepkörű kapcsolatok csak megbízható belső szolgáltatásokon belül kerülik meg az RLS-t; minden felhasználó felé nyíló útvonal a bérlő-scope-os kliensen keresztül halad."
         },
         "swap-clerk": {
-          "question": "Cserélhetem a Clerk-et másik hitelesítési szolgáltatóra?",
-          "answer": "Igen. Az @nebutra/auth első osztályú adaptereket biztosít Clerkhez, Better Auth-hoz, NextAuth-hoz (Auth.js v5) és Supabase Auth-hoz. Váltás az AUTH_PROVIDER környezeti változóval, vagy válassz scaffoldolás közben a create-sailor --auth=... paranccsal – a szerver, React és middleware felületek minden szolgáltató esetén azonosak maradnak. Egy ötödik adapter hozzáadása egyetlen interfész implementálását jelenti (~80 LOC); a környező kódban semmi sem kötődik egy adott szolgáltatóhoz."
+          "question": "Cserélhetem a Better Auth-ot másik hitelesítési szolgáltatóra?",
+          "answer": "Igen. Az @nebutra/auth első osztályú adaptert biztosít Better Auth-hoz. Váltás az AUTH_PROVIDER környezeti változóval, vagy válassz scaffoldolás közben a create-sailor --auth=... paranccsal – a szerver, React és middleware felületek minden szolgáltató esetén azonosak maradnak. Egy ötödik adapter hozzáadása egyetlen interfész implementálását jelenti (~80 LOC); a környező kódban semmi sem kötődik egy adott szolgáltatóhoz."
         }
       }
     },

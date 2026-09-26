@@ -139,8 +139,8 @@ export const SOLUTIONS: Solution[] = [
       {
         title: { en: "Payments without rewrites", zh: "支付无需重写" },
         body: {
-          en: "Stripe / Polar / LemonSqueezy / ChinaPay behind one billing contract.",
-          zh: "Stripe / Polar / LemonSqueezy / ChinaPay 收敛到一套计费契约后面。",
+          en: "Stripe plus WeChat Pay / Alipay behind one billing contract — both live the moment you add their keys.",
+          zh: "Stripe 与微信支付 / 支付宝收敛到同一套计费契约后面——配好密钥即可同时上线。",
         },
       },
       {
@@ -155,8 +155,8 @@ export const SOLUTIONS: Solution[] = [
       {
         q: { en: "Do I need separate apps per region?", zh: "每个地区要分开建应用吗?" },
         a: {
-          en: "No — one codebase, region-aware routing and provider selection via preset config.",
-          zh: "不用——一套代码库,通过 preset 配置做区域感知路由与 provider 选择。",
+          en: "No — one codebase. Both adapters of a China pair (payments, SMS, storage) ship in every build; whichever keys are present at deploy time decide which run, and both can run at once.",
+          zh: "不用——一套代码库。中国双轨(支付、短信、存储)的两个适配器都会打进每次构建;部署时哪些密钥存在就决定哪些生效,两边也可以同时运行。",
         },
       },
     ],
@@ -278,24 +278,24 @@ export const SOLUTIONS: Solution[] = [
     icon: Compass,
     label: { en: "Tech Selection", zh: "技术选型" },
     tagline: {
-      en: "Provider-agnostic choices you can swap without rewrites.",
-      zh: "provider 无关的选型,可替换而无需重写。",
+      en: "One opinionated stack per domain — a second adapter only where China requires it.",
+      zh: "每个领域一套定见技术栈——只有中国市场的法律或网络要求时才保留第二套。",
     },
     hero: {
       eyebrow: { en: "Tech Stack", zh: "技术选型" },
-      title: { en: "Choose once,", zh: "一次选型," },
-      titleAccent: { en: "swap freely", zh: "自由替换" },
+      title: { en: "One stack,", zh: "一套技术栈," },
+      titleAccent: { en: "zero decisions", zh: "零决策" },
       summary: {
-        en: "Queue, search, auth, billing and storage each sit behind one interface with multiple providers — pick by env, not by rewrite.",
-        zh: "队列、搜索、鉴权、计费、存储各自收敛到一个接口下的多 provider——按环境选择,而非重写选择。",
+        en: "Queue, search, auth, billing and storage each have one answer — Better Auth, QStash, Postgres, Stripe — behind an interface, not a picklist.",
+        zh: "队列、搜索、鉴权、计费、存储各自只有一个答案——Better Auth、QStash、Postgres、Stripe——都在接口后面,而不是一份选型清单。",
       },
     },
     useCases: [
       {
-        title: { en: "Auto-detected providers", zh: "自动检测 provider" },
+        title: { en: "One answer per domain", zh: "每个领域一个答案" },
         body: {
-          en: "Env vars pick QStash vs BullMQ, Meilisearch vs Algolia, etc. — code stays the same.",
-          zh: "环境变量决定 QStash 还是 BullMQ、Meilisearch 还是 Algolia——代码不变。",
+          en: "Better Auth for identity, QStash for queues, Postgres (pgvector + full-text) for search, Stripe for billing — the interface stayed, the alternatives didn't.",
+          zh: "身份用 Better Auth,队列用 QStash,搜索用 Postgres(pgvector + 全文检索),计费用 Stripe——接口留下了,备选项没有。",
         },
       },
       {
@@ -306,19 +306,22 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
-        title: { en: "Reversible decisions", zh: "可逆决策" },
+        title: { en: "China pairs, not a matrix", zh: "中国双轨,而非矩阵" },
         body: {
-          en: "Swapping a provider is a config change, so early bets stay cheap to revisit.",
-          zh: "替换 provider 只是配置改动,早期押注的回头成本很低。",
+          en: "Payments (Stripe + WeChat Pay/Alipay), SMS (Twilio Verify + Aliyun) and storage (R2/OSS on one S3-compatible client) keep a second adapter only where mainland law or network access makes the default unusable — both live as soon as their keys are set.",
+          zh: "支付(Stripe + 微信支付/支付宝)、短信(Twilio Verify + 阿里云)、存储(同一套 S3 兼容客户端接入 R2/OSS)——只有在中国大陆的法律或网络因素让默认方案走不通时,才保留第二套适配器;配好密钥两边都能同时上线。",
         },
       },
     ],
     faq: [
       {
-        q: { en: "What if my provider isn't supported?", zh: "如果我的 provider 不被支持?" },
+        q: {
+          en: "What if I need a provider that isn't kept?",
+          zh: "如果我需要一个已被移除的 provider 怎么办?",
+        },
         a: {
-          en: "Each domain ships an interface — add an adapter without touching call sites.",
-          zh: "每个域都有接口——加一个适配器即可,无需改调用点。",
+          en: "Each domain still ships behind an interface — add an adapter without touching call sites. The ones that remain were kept because production runs on them, not because the interface only fits them.",
+          zh: "每个域仍然收敛在一个接口后面——加一个适配器即可,无需改调用点。保留下来的这些是因为生产环境真的在用,不是因为接口只认它们。",
         },
       },
     ],
@@ -348,8 +351,8 @@ export const SOLUTIONS: Solution[] = [
       {
         title: { en: "Scaffold in seconds", zh: "秒级脚手架" },
         body: {
-          en: "create-sailor spins up a feature-configured SaaS with the harness wired in.",
-          zh: "create-sailor 一键拉起按功能配置、已接好 Harness 的 SaaS。",
+          en: "`npx create-sailor my-app` asks nothing and ships the full converged stack, wired and ready to run.",
+          zh: "`npx create-sailor my-app` 不问任何问题,直接生成完整的收敛技术栈,开箱即可运行。",
         },
       },
       {

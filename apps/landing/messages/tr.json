@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Kurumsal SaaS Otomasyonu",
-      "description": "Vercel, Supabase ve Stripe ile modern teknoloji yığınını derinlemesine entegre eder. Kutudan çıktığı gibi satır düzeyinde güvenlik, karmaşık çok kiracılı yalıtım ve küresel abonelik faturalama sağlar."
+      "description": "Postgres, Better Auth ve Stripe ile modern teknoloji yığınını derinlemesine entegre eder. Kutudan çıktığı gibi satır düzeyinde güvenlik, karmaşık çok kiracılı yalıtım ve küresel abonelik faturalama sağlar."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Oturum"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Kimlik doğrulama belirteci",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Kimlik doğrulama oturum belirteci",
             "duration": "7 gün"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Altyapı",
-              "desc": "Bulut barındırma (Vercel, Supabase), veritabanı hizmetleri"
+              "desc": "Bulut barındırma (Fly.io, Cloudflare), veritabanı hizmetleri"
             },
             "1": {
               "label": "Ödeme İşleme",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Kimlik Doğrulama",
-              "desc": "Kimlik yönetimi için Clerk"
+              "desc": "Kimlik yönetimi için Better Auth"
             },
             "3": {
               "label": "Analitik",
@@ -1149,7 +1149,7 @@
         "desc": "Satır Düzeyinde Güvenlik (RLS) politikaları yerleşik olarak gelen, tamamen tipli ORM."
       },
       "auth": {
-        "title": "Clerk Çok Kiracılı / Özel Kimlik",
+        "title": "Better Auth Çok Kiracılı / Özel Kimlik",
         "desc": "B2B organizasyon geçişlerini ve RBAC'yi destekleyen, SOC2 hazır kimlik doğrulama geçidi."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Yapılandır",
-        "desc": "Prisma, Clerk ve Stripe'ı interaktif CLI ile dakikalar içinde kurun."
+        "desc": "Prisma, Better Auth ve Stripe'ı interaktif CLI ile dakikalar içinde kurun."
       },
       "step3": {
         "title": "3. Geliştir",
@@ -1320,10 +1320,10 @@
       "multi_category": "Çok Kiracılı Platform",
       "multi_f1_title": "Organizasyon düzeyinde izolasyon",
       "multi_f1_desc": "Postgres'teki satır düzeyinde güvenlik, kiracıların birbirlerinin verilerine asla erişememesini sağlar — uygulama katmanında değil, veritabanı katmanında uygulanır.",
-      "multi_f2_title": "Çoklu sağlayıcı kimlik doğrulama (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Çoklu sağlayıcı OAuth (Google, GitHub vb.) yanı sıra e-posta/şifre ve magic-link — Clerk, Better Auth, NextAuth veya Supabase Auth arasında tek bir env değişkeni ile geçiş yapın.",
+      "multi_f2_title": "Çoklu sağlayıcı kimlik doğrulama (Better Auth)",
+      "multi_f2_desc": "Çoklu sağlayıcı OAuth (Google, GitHub vb.) yanı sıra e-posta/şifre ve magic-link — tek bir env değişkeniyle yapılandırılan Better Auth üzerinden çalışır.",
       "multi_f3_title": "Otomatik kiracı sağlama",
-      "multi_f3_desc": "Yeni bir organizasyon Clerk üzerinden kayıt olduğunda, ilk API anahtarını otomatik oluşturur ve markalı bir hoş geldin e-postası gönderir — sıfır manuel işlem.",
+      "multi_f3_desc": "Yeni bir organizasyon kayıt olduğunda, ilk API anahtarını otomatik oluşturur ve markalı bir hoş geldin e-postası gönderir — sıfır manuel işlem.",
       "dx_category": "Geliştirici Deneyimi",
       "dx_f1_title": "Hash'lenmiş API anahtarları",
       "dx_f1_desc": "Önek gösterimi (nbtr_live_…) ile SHA-256 hash'lenmiş anahtarlar. Oluşturma sırasında yalnızca bir kez düz metin olarak gösterilir — sürtünmesiz güvenlik.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "Çok Protokol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "Genel API'ler için REST/OpenAPI, tür güvenli ön uç çağrıları için oRPC, T3 yığını uyumluluğu için tRPC. Tüm protokoller aynı Zod sözleşmeleri ve ara yazılım yığınını paylaşır. Her protokol için hazır yapılandırma ile etkinleştirin.",
       "billing_category": "Faturalama & Para Kazanma",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar ve Çin Ödeme",
-      "billing_f1_desc": "Ödeme sağlayıcınızı seçin: küresel kurumsal için Stripe, bağımsız geliştiriciler için LemonSqueezy, açık kaynak için Polar veya Çin pazarı için Alipay/WeChat Pay. Tek tıkla ödeme ve kendi kendine hizmet veren faturalama portalı.",
+      "billing_f1_title": "Stripe ve Çin Ödeme",
+      "billing_f1_desc": "Ödeme sağlayıcınızı seçin: küresel kurumsal için Stripe veya Çin pazarı için Alipay/WeChat Pay. Tek tıkla ödeme ve kendi kendine hizmet veren faturalama portalı.",
       "billing_f2_title": "Kullanıma dayalı kota uygulaması",
       "billing_f2_desc": "Gerçek zamanlı Redis sayaçları, her kiracı için API çağrılarını ve token kullanımını izler. Limitlere ulaşıldığında istekler ağ geçidinde engellenir.",
       "billing_f3_title": "Webhook yaşam döngüsü senkronizasyonu",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Çoklu pencere Google SRE tarzı uyarılar, hata bütçeniz tükenmeden önce 14.4×, 6× ve 3× tüketim hızlarında tetiklenir.",
       "sec_category": "Güvenlik",
       "sec_f1_title": "CSP nonce tabanlı başlıklar",
-      "sec_f1_desc": "Clerk ara yazılımında istek başına oluşturulan nonce'lerle Strict-dynamic İçerik Güvenliği Politikası — hiçbir yerde unsafe-inline yok.",
+      "sec_f1_desc": "Auth ara yazılımında istek başına oluşturulan nonce'lerle Strict-dynamic İçerik Güvenliği Politikası — hiçbir yerde unsafe-inline yok.",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "Her giriş noktasında DetectionOnly modunda OWASP Core Rule Set. nginx ek açıklamalarıyla 30 RPS hız sınırlaması ve patlama toleransı.",
       "sec_f3_title": "SBOM + SLSA köken bilgisi",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "ArgoCD ile GitOps",
       "infra_f1_desc": "Ana dal değişiklikleri otomatik olarak kümeye senkronize edilir. Kendini iyileştirme, manuel kubectl düzenlemelerini geri alır. Senkronizasyon pencereleri güvenli dağıtım saatlerini zorlar.",
       "infra_f2_title": "PgBouncer bağlantı havuzlaması",
-      "infra_f2_desc": "Supabase'in önündeki işlem modundaki PgBouncer, 20 Postgres bağlantısı üzerinde 1.000 uygulama bağlantısını yönetir. 2 replika ile yüksek kullanılabilirlik.",
+      "infra_f2_desc": "Postgres'in önündeki işlem modundaki PgBouncer, 20 Postgres bağlantısı üzerinde 1.000 uygulama bağlantısını yönetir. 2 replika ile yüksek kullanılabilirlik.",
       "infra_f3_title": "Yatay + dikey otomatik ölçeklendirme",
       "infra_f3_desc": "HPA, CPU/bellek üzerine ölçeklendirme yapar. VPA, Off modunda doğru boyutlandırma önerileri sunar. KEDA özel metrikleri v2 için planlanıyor."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Çin'de çalışıyor mu?",
-          "answer": "Evet. Paralel bir altyapı yapılandırması sunuyoruz (Aliyun uyumlu CDN, ICP uyumlu alan adları, Figma yerine isteğe bağlı Penpot) böylece aynı kod tabanı Büyük Güvenlik Duvarı'nın içine sorunsuz şekilde dağıtılır."
+          "answer": "Evet. Paralel bir altyapı yapılandırması sunuyoruz (Aliyun uyumlu CDN, ICP uyumlu alan adları) böylece aynı kod tabanı Büyük Güvenlik Duvarı'nın içine sorunsuz şekilde dağıtılır."
         },
         "deployment": {
           "question": "Nereye dağıtabilirim?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Güvenlik nasıl ele alınıyor?",
-          "answer": "Gizli bilgiler için uygulama katmanı zarf şifrelemesi (@nebutra/vault), kiracı izolasyonu için Postgres RLS, CASL veya OpenFGA üzerinden RBAC/ABAC (@nebutra/permissions), HMAC imzalı hizmetler arası belirteçler, imzalı giden web kancaları ve her planda dahil edilen SOC 2 uyumlu denetim hattı (@nebutra/audit). Pro ve Enterprise, SOC 2 onay desteği, özel olay yanıtı ve daha uzun denetim günlüğü saklama süresi ekler."
+          "answer": "Gizli bilgiler için uygulama katmanı zarf şifrelemesi (@nebutra/vault), kiracı izolasyonu için Postgres RLS, CASL üzerinden RBAC/ABAC (@nebutra/permissions), HMAC imzalı hizmetler arası belirteçler, imzalı giden web kancaları ve her planda dahil edilen SOC 2 uyumlu denetim hattı (@nebutra/audit). Pro ve Enterprise, SOC 2 onay desteği, özel olay yanıtı ve daha uzun denetim günlüğü saklama süresi ekler."
         },
         "support": {
           "question": "Hangi desteği alırım?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Kendi sağlayıcıyı getirebilir miyim?",
-          "answer": "Evet. Her entegrasyon (kimlik doğrulama, kuyruk, arama, e-posta, ödemeler, depolama, faturalandırma) sağlayıcıdan bağımsızdır. Her paketteki fabrika, tek bir çevre değişkeninden doğru adaptörü seçer — Clerk'i Better Auth, NextAuth veya Supabase Auth ile, QStash'ı BullMQ ile, Resend'i SES ile, Stripe'ı Polar / LemonSqueezy / ChinaPay ile değiştirin — uygulama koduna dokunmadan."
+          "answer": "Evet. Her entegrasyon (kimlik doğrulama, kuyruk, arama, e-posta, ödemeler, depolama, faturalandırma) sağlayıcıdan bağımsızdır. Her paketteki fabrika, tek bir çevre değişkeninden doğru adaptörü seçer — örneğin Better Auth, QStash, Resend veya Stripe — uygulama koduna dokunmadan."
         },
         "tech-stack": {
           "question": "Teknoloji yığını nedir?",
@@ -1676,8 +1676,8 @@
           "answer": "İki katman. İstek kapsamındaki kiracı bağlamı @nebutra/tenant aracılığıyla (AsyncLocalStorage, aktif kuruluşu her sunucu çağrısı boyunca — veritabanı sorguları ve dışa giden web kancaları dahil — iletir) ve veritabanında zorlanan yalıtım Postgres Satır Düzeyi Güvenlik politikalarıyla (packages/platform/db/prisma/generated/rls.sql), oturum yerel app.current_tenant_id'ye bağlı olarak. Hizmet rolü bağlantıları yalnızca güvenilir iç hizmetlerin içinde RLS'yi atlar; tüm kullanıcıya yönelik rotalar kiracı kapsamındaki istemci üzerinden geçer."
         },
         "swap-clerk": {
-          "question": "Clerk'i başka bir kimlik doğrulama sağlayıcısıyla değiştirebilir miyim?",
-          "answer": "Evet. @nebutra/auth, Clerk, Better Auth, NextAuth (Auth.js v5) ve Supabase Auth için birinci sınıf adaptörler sunar. AUTH_PROVIDER çevre değişkeni üzerinden geçiş yapın veya create-sailor --auth=... ile iskeletleme sırasında seçin — sağlayıcıdan bağımsız olarak sunucu, React ve ara yazılım yüzeyleri aynı kalır. Beşinci bir adaptör eklemek, tek bir arayüzü (~80 LOC) uygulamak demektir; çevresel kodda belirli bir sağlayıcıya bağlı hiçbir şey yoktur."
+          "question": "Better Auth'ı başka bir kimlik doğrulama sağlayıcısıyla değiştirebilir miyim?",
+          "answer": "Evet. @nebutra/auth, Better Auth için birinci sınıf bir adaptör sunar. AUTH_PROVIDER çevre değişkeni üzerinden geçiş yapın veya create-sailor --auth=... ile iskeletleme sırasında seçin — sağlayıcıdan bağımsız olarak sunucu, React ve ara yazılım yüzeyleri aynı kalır. Yeni bir adaptör eklemek, tek bir arayüzü (~80 LOC) uygulamak demektir; çevresel kodda belirli bir sağlayıcıya bağlı hiçbir şey yoktur."
         }
       }
     },

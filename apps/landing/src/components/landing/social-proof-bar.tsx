@@ -19,8 +19,8 @@ const SVGL_BASE = "https://svgl.app/library";
 const BRANDS = [
   { name: "Vercel", light: "vercel.svg", dark: "vercel_dark.svg" },
   { name: "Stripe", light: "stripe.svg", dark: "stripe.svg" },
-  { name: "Supabase", light: "supabase.svg", dark: "supabase.svg" },
-  { name: "Clerk", light: "clerk-icon-light.svg", dark: "clerk-icon-dark.svg" },
+  { name: "Better Auth", light: "better-auth_light.svg", dark: "better-auth_dark.svg" },
+  { name: "PostHog", light: "posthog.svg", dark: "posthog.svg" },
   { name: "Resend", light: "resend-icon-black.svg", dark: "resend-icon-white.svg" },
   { name: "Cloudflare", light: "cloudflare.svg", dark: "cloudflare.svg" },
 ] as const;

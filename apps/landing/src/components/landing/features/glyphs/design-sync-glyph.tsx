@@ -77,7 +77,7 @@ export function DesignSyncGlyph(_props: SubpackageGlyphProps) {
       }}
     >
       <div className="flex items-center justify-between gap-1.5">
-        <FlowNode label="Figma" tone="purple" />
+        <FlowNode label="DTCG JSON" tone="purple" />
         <ArrowRight size={12} style={{ color: "hsl(var(--muted-foreground))" }} />
         <FlowNode label="git" tone="gray" />
         <ArrowRight size={12} style={{ color: "hsl(var(--muted-foreground))" }} />
@@ -91,7 +91,7 @@ export function DesignSyncGlyph(_props: SubpackageGlyphProps) {
           border: "1px solid hsl(var(--border))",
         }}
       >
-        <LogRow verb="pull" meta="1.2s · 47 tokens updated" time="12m ago" />
+        <LogRow verb="pull" meta="1.2s · 47 tokens re-read" time="12m ago" />
         <LogRow verb="push" meta="dry-run · 3 token diffs" time="1h ago" />
       </div>
 
@@ -102,7 +102,7 @@ export function DesignSyncGlyph(_props: SubpackageGlyphProps) {
             className="font-mono text-[10px] leading-none"
             style={{ color: "hsl(var(--muted-foreground))" }}
           >
-            provider-agnostic · CI workflow
+            git-only · CI workflow
           </span>
         </div>
         <GitBranch size={11} style={{ color: "hsl(var(--muted-foreground))" }} />

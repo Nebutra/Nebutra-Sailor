@@ -11,7 +11,7 @@ export const FALLBACK_POSTS: BlogPost[] = [
     title: "Building a Multi-Tenant SaaS with Next.js 16",
     slug: "multi-tenant-nextjs-16",
     excerpt:
-      "How we architected Nebutra Sailor's tenant isolation layer with Clerk organizations, row-level security, and per-tenant billing.",
+      "How we architected Nebutra Sailor's tenant isolation layer with Better Auth organizations, row-level security, and per-tenant billing.",
     date: "2026-03-20",
   },
   {

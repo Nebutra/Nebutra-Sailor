@@ -79,10 +79,10 @@ const CAPABILITIES: Capability[] = [
   },
   {
     icon: Key,
-    title: "Multi-provider auth",
+    title: "Better Auth on Postgres",
     pkg: "@nebutra/auth",
     summary:
-      "Pluggable Clerk / Better Auth / NextAuth backends — pick the right identity layer for your compliance posture without rewriting app code.",
+      "Session/cookie auth backed by Better Auth, with organization membership and device-flow login wired in — no third-party identity vendor sits between your users and your database.",
   },
   {
     icon: Database,

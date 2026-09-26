@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Automatizace enterprise SaaS",
-      "description": "Hluboká integrace moderní technologické stacku Vercel, Supabase a Stripe. Poskytuje bezpečnost na úrovni řádků, komplexní izolaci více nájemců a globální fakturaci předplatného přímo z krabice."
+      "description": "Hluboká integrace moderní technologické stacku Postgres, Better Auth a Stripe. Poskytuje bezpečnost na úrovni řádků, komplexní izolaci více nájemců a globální fakturaci předplatného přímo z krabice."
     }
   },
   "cta": {
@@ -365,9 +365,9 @@
             "duration": "Relace"
           },
           "1": {
-            "name": "__clerk_db_jwt",
-            "provider": "Clerk",
-            "purpose": "Token pro ověřování",
+            "name": "better-auth.session_token",
+            "provider": "Better Auth",
+            "purpose": "Token relace ověřování",
             "duration": "7 dní"
           },
           "2": {
@@ -700,7 +700,7 @@
           "items": {
             "0": {
               "label": "Infrastruktura",
-              "desc": "Cloudové hostování (Vercel, Supabase), databázové služby"
+              "desc": "Cloudové hostování (Fly.io, Cloudflare), databázové služby"
             },
             "1": {
               "label": "Zpracování plateb",
@@ -708,7 +708,7 @@
             },
             "2": {
               "label": "Ověřování",
-              "desc": "Clerk pro správu identit"
+              "desc": "Better Auth pro správu identit"
             },
             "3": {
               "label": "Analytika",
@@ -1149,7 +1149,7 @@
         "desc": "Plně typovaný ORM s politikami Row-Level Security (RLS) zabudovanými nativně."
       },
       "auth": {
-        "title": "Clerk Multi-Tenant / Vlastní identita",
+        "title": "Better Auth Multi-Tenant / Vlastní identita",
         "desc": "Autentizační brána připravená na SOC2 podporující přepínání B2B organizací a RBAC."
       }
     },
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurovat",
-        "desc": "Nastavte Prisma, Clerk a Stripe prostřednictvím interaktivního CLI během několika minut."
+        "desc": "Nastavte Prisma, Better Auth a Stripe prostřednictvím interaktivního CLI během několika minut."
       },
       "step3": {
         "title": "3. Vytvořit",
@@ -1320,10 +1320,10 @@
       "multi_category": "Platforma pro více nájemců",
       "multi_f1_title": "Izolace na úrovni organizace",
       "multi_f1_desc": "Zabezpečení na úrovni řádků v Postgres zajišťuje, že nájemci nikdy nebudou mít přístup k datům jiných nájemců — vynuceno na úrovni databáze, ne jen aplikace.",
-      "multi_f2_title": "Multi-provider autentizace (Clerk / Better Auth / NextAuth / Supabase)",
-      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub atd.) plus e-mail/heslo a magic-link — přepínejte mezi Clerk, Better Auth, NextAuth nebo Supabase Auth pomocí jedné proměnné prostředí.",
+      "multi_f2_title": "Multi-provider autentizace (Better Auth)",
+      "multi_f2_desc": "Multi-provider OAuth (Google, GitHub atd.) plus e-mail/heslo a magic-link — vše přes Better Auth pomocí jedné proměnné prostředí.",
       "multi_f3_title": "Automatické zprovozňování nájemců",
-      "multi_f3_desc": "Když se nová organizace zaregistruje přes Clerk, automaticky vygenerujeme její první API klíč a odešleme značkový uvítací e-mail — bez manuálních kroků.",
+      "multi_f3_desc": "Když se nová organizace zaregistruje, automaticky vygenerujeme její první API klíč a odešleme značkový uvítací e-mail — bez manuálních kroků.",
       "dx_category": "Zkušenost vývojářů",
       "dx_f1_title": "Hashované API klíče",
       "dx_f1_desc": "SHA-256 hashované klíče s prefixem (nbtr_live_…). Zobrazeny v čitelné podobě pouze jednou při vytvoření — bezpečnost bez zbytečných překážek.",
@@ -1332,8 +1332,8 @@
       "dx_f3_title": "Multi-protokolové API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI pro veřejná API, oRPC pro typově bezpečná volání z frontendu, tRPC pro kompatibilitu s T3 stackem. Všechny protokoly sdílejí stejné Zod kontrakty a middleware stack. Aktivujte jednotlivé protokoly přes přednastavenou konfiguraci.",
       "billing_category": "Fakturace a monetizace",
-      "billing_f1_title": "Stripe, LemonSqueezy, Polar a platby pro Čínu",
-      "billing_f1_desc": "Vyberte si poskytovatele plateb: Stripe pro globální podniky, LemonSqueezy pro nezávislé vývojáře, Polar pro OSS nebo Alipay/WeChat Pay pro čínský trh. Jednoklikový checkout a samoobslužný fakturační portál.",
+      "billing_f1_title": "Stripe a platby pro Čínu",
+      "billing_f1_desc": "Vyberte si poskytovatele plateb: Stripe pro globální podniky nebo Alipay/WeChat Pay pro čínský trh. Jednoklikový checkout a samoobslužný fakturační portál.",
       "billing_f2_title": "Vynucování kvót na základě využití",
       "billing_f2_desc": "Reálné počítadla v Redisu sledují volání API a využití tokenů pro každého nájemce. Žádosti jsou bráněny na úrovni gateway, když jsou dosaženy limity.",
       "billing_f3_title": "Synchronizace životního cyklu webhooků",
@@ -1347,7 +1347,7 @@
       "rel_f3_desc": "Víceokenná upozornění ve stylu Google SRE se spouštějí při rychlosti spotřeby 14,4×, 6× a 3× před vyčerpáním rozpočtu chyb.",
       "sec_category": "Zabezpečení",
       "sec_f1_title": "Hlavičky založené na nonce CSP",
-      "sec_f1_desc": "Přísně dynamická Content Security Policy s nonce generovanými pro každý požadavek v middleware Clerk — nikde žádné unsafe-inline.",
+      "sec_f1_desc": "Přísně dynamická Content Security Policy s nonce generovanými pro každý požadavek v middleware Auth — nikde žádné unsafe-inline.",
       "sec_f2_title": "ModSecurity WAF",
       "sec_f2_desc": "OWASP Core Rule Set v režimu DetectionOnly na každém vstupu. Omezení rychlosti na 30 RPS s tolerancí špiček prostřednictvím anotací nginx.",
       "sec_f3_title": "SBOM + SLSA původ",
@@ -1370,7 +1370,7 @@
       "infra_f1_title": "GitOps s ArgoCD",
       "infra_f1_desc": "Změny v hlavní větvi se automaticky synchronizují do clusteru. Self-heal vrací ruční úpravy kubectl. Sync windows vynucují bezpečné hodiny nasazení.",
       "infra_f2_title": "PgBouncer sdílení připojení",
-      "infra_f2_desc": "PgBouncer v transakčním režimu před Supabase zvládne 1 000 připojení aplikace na 20 připojení Postgres. HA s 2 replikami.",
+      "infra_f2_desc": "PgBouncer v transakčním režimu před Postgres zvládne 1 000 připojení aplikace na 20 připojení Postgres. HA s 2 replikami.",
       "infra_f3_title": "Horizontální a vertikální autoskalování",
       "infra_f3_desc": "HPA škáluje podle CPU/paměti. VPA běží v režimu Off a poskytuje doporučení pro right-sizing. KEDA custom metrics plánováno pro v2."
     }
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Funguje to v Číně?",
-          "answer": "Ano. Poskytujeme paralelní konfiguraci infrastruktury (CDN kompatibilní s Aliyun, domény vhodné pro ICP, volitelně Penpot místo Figma), takže stejná kódová základna se čistě nasadí i uvnitř Velkého ohnivého zdi."
+          "answer": "Ano. Poskytujeme paralelní konfiguraci infrastruktury (CDN kompatibilní s Aliyun, domény vhodné pro ICP), takže stejná kódová základna se čistě nasadí i uvnitř Velkého ohnivého zdi."
         },
         "deployment": {
           "question": "Kde to mohu nasadit?",
@@ -1645,7 +1645,7 @@
         },
         "security": {
           "question": "Jak je řešena bezpečnost?",
-          "answer": "Šifrování na aplikační vrstvě pro tajné informace (@nebutra/vault), Postgres RLS pro izolaci tenantů, RBAC/ABAC přes CASL nebo OpenFGA (@nebutra/permissions), HMAC podepsané tokeny mezi službami, podepsané outbound webhooky a auditní pipeline v souladu se SOC 2 (@nebutra/audit) zahrnutá v každém plánu. Pro a Enterprise přidávají podporu pro SOC 2 attestaci, dedikovanou incident response a delší uchovávání auditních logů."
+          "answer": "Šifrování na aplikační vrstvě pro tajné informace (@nebutra/vault), Postgres RLS pro izolaci tenantů, RBAC/ABAC přes CASL (@nebutra/permissions), HMAC podepsané tokeny mezi službami, podepsané outbound webhooky a auditní pipeline v souladu se SOC 2 (@nebutra/audit) zahrnutá v každém plánu. Pro a Enterprise přidávají podporu pro SOC 2 attestaci, dedikovanou incident response a delší uchovávání auditních logů."
         },
         "support": {
           "question": "Jakou podporu dostanu?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Mohu si přinést vlastní poskytovatele?",
-          "answer": "Ano. Každá integrace (auth, queue, search, email, payments, storage, billing) je nezávislá na poskytovateli. Factory v každém balíčku vybere správný adapter z jedné env proměnné — vyměňte Clerk za Better Auth, NextAuth nebo Supabase Auth, QStash za BullMQ, Resend za SES, Stripe za Polar / LemonSqueezy / ChinaPay — bez dotyku aplikačního kódu."
+          "answer": "Ano. Každá integrace (auth, queue, search, email, payments, storage, billing) je nezávislá na poskytovateli. Factory v každém balíčku vybere správný adapter z jedné env proměnné — použijte Better Auth, QStash, Resend nebo Stripe — bez dotyku aplikačního kódu."
         },
         "tech-stack": {
           "question": "Jaký je tech stack?",
@@ -1676,8 +1676,8 @@
           "answer": "Dvě vrstvy. Kontext tenantu v rozsahu požadavku přes @nebutra/tenant (AsyncLocalStorage propaguje aktivní organizaci přes každý serverový volání, včetně DB dotazů a outbound webhooků) a izolace vynucená databází přes Postgres Row-Level Security policies (packages/platform/db/prisma/generated/rls.sql) vázané na session-local app.current_tenant_id. Service-role connectiony bypassují RLS pouze uvnitř důvěryhodných interních služeb; všechny uživatelské routy jdou přes tenant-scoped klienta."
         },
         "swap-clerk": {
-          "question": "Mohu vyměnit Clerk za jiného auth providera?",
-          "answer": "Ano. @nebutra/auth obsahuje first-class adaptéry pro Clerk, Better Auth, NextAuth (Auth.js v5) a Supabase Auth. Přepnutí přes AUTH_PROVIDER env var nebo výběr při scaffoldování s create-sailor --auth=... — server, React a middleware rozhraní zůstávají identická bez ohledu na providera. Přidání pátého adaptéru znamená implementaci jediného interface (~80 LOC); nic v okolním kódu není spjato s konkrétním providerem."
+          "question": "Mohu vyměnit Better Auth za jiného auth providera?",
+          "answer": "Ano. @nebutra/auth obsahuje first-class adaptér pro Better Auth. Přepnutí přes AUTH_PROVIDER env var nebo výběr při scaffoldování s create-sailor --auth=... — server, React a middleware rozhraní zůstávají identická bez ohledu na providera. Přidání pátého adaptéru znamená implementaci jediného interface (~80 LOC); nic v okolním kódu není spjato s konkrétním providerem."
         }
       }
     },
