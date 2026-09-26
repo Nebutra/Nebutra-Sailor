@@ -1,6 +1,8 @@
+import { fetchAuthCenterSession } from "@nebutra/auth/auth-center-session";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { DeviceApprovalForm } from "@/components/device-approval-form";
-import { buildServerRequest, getAuth } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +14,13 @@ export const dynamic = "force-dynamic";
  * client-side against the Better Auth `/api/auth/device/*` endpoints
  * (DeviceApprovalForm) — this component's only job is the auth gate and the
  * `?user_code=` prefill.
+ *
+ * The session comes from the auth edge (`/api/auth/get-session`, cookies
+ * forwarded), not from a Better Auth instance built here. In production this
+ * page renders on the auth UI origin, which holds no database connection by
+ * design — the edge Worker owns `/api/auth/*` and the auth tables. Building a
+ * Prisma-backed instance here made every visit a 500, so `nebutra login` could
+ * never be approved.
  */
 export default async function DevicePage({
   searchParams,
@@ -21,11 +30,13 @@ export default async function DevicePage({
   const query = await searchParams;
   const rawUserCode = typeof query.user_code === "string" ? query.user_code : "";
 
-  const auth = await getAuth();
-  const request = await buildServerRequest();
-  const session = await auth.getSession(request);
+  const authBase = (process.env.BETTER_AUTH_URL || getBrandOrigin("auth")).replace(/\/$/, "");
+  const center = await fetchAuthCenterSession(
+    new Request(authBase, { headers: new Headers(await headers()) }),
+    authBase,
+  );
 
-  if (!session) {
+  if (!center) {
     const returnTo = `/device${rawUserCode ? `?user_code=${encodeURIComponent(rawUserCode)}` : ""}`;
     redirect(`/sign-in?returnTo=${encodeURIComponent(returnTo)}`);
   }
@@ -33,7 +44,10 @@ export default async function DevicePage({
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-16">
       <div className="w-full max-w-md">
-        <DeviceApprovalForm defaultUserCode={rawUserCode} signedInEmail={session.email ?? null} />
+        <DeviceApprovalForm
+          defaultUserCode={rawUserCode}
+          signedInEmail={typeof center.user.email === "string" ? center.user.email : null}
+        />
       </div>
     </div>
   );
