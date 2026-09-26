@@ -1,5 +1,8 @@
 # Sailor Convergence — one stack, zero-question scaffold, one CLI trunk
 
+> **Amended 2026-09-26:** the card rail is Creem (merchant of record), not Stripe — see ADR
+> 2026-09-26 Creem for global payments. The pair is Creem + WeChat Pay/Alipay.
+
 - **Status**: Accepted
 - **Date**: 2026-09-24
 - **Owner**: Tseka Luk
