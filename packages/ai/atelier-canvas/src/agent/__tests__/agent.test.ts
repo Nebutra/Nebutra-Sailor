@@ -12,7 +12,7 @@ import { createAtelierAgent } from "../agent";
 import { ATELIER_SYSTEM_PROMPT } from "../prompts";
 import { createAtelierGenerationTool } from "../tools";
 
-const ctx = createAgentContext("org_1", "user_1", "conv_1");
+const ctx = createAgentContext({ tenantId: "org_1", product: "nebutra" }, "user_1", "conv_1");
 
 describe("atelier system prompt", () => {
   it("encodes the absorbed creative invariants", () => {
