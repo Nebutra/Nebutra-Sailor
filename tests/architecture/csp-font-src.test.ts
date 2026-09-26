@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 /**
  * Every app that sends a CSP and renders <CjkFontFace /> must let the browser
  * fetch the MiSans subsets from the public asset origin. On 2026-09-26 both
- * CSPs said `font-src 'self' data:` and every MiSans face on nebutra.com was
+ * CSPs said `font-src 'self' data:` and every MiSans face in production was
  * refused with no error on the page — Chinese quietly fell back to PingFang.
  * apps/web also needs the nonce on the inline <style>: its style-src allows
  * inline styles only by nonce.
