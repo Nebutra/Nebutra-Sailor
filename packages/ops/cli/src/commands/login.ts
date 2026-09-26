@@ -85,6 +85,11 @@ async function runInteractivePoll(
         process.stderr.write(spinnerTicks === 1 ? "Waiting for approval" : ".");
       }
     },
+    // A poll that got no answer is retried, not fatal; `!` marks it so a
+    // flaky network is visible rather than silent.
+    onTransientFailure: () => {
+      if (!isJson) process.stderr.write("!");
+    },
   });
   if (!isJson) process.stderr.write("\n");
   await persistToken(baseUrl, token);
