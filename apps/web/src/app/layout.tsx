@@ -105,7 +105,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       suppressHydrationWarning
     >
       <body className="antialiased">
-        <CjkFontFace />
+        <CjkFontFace nonce={nonce} />
 
         <a
           href="#main-content"

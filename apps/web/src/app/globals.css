@@ -28,18 +28,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  /* Headings */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-sans);
-    /* Theme/DESIGN can lighten headings via fontWeight.heading; default 600. */
-    font-weight: var(--font-weight-heading, 600);
-  }
 }
 
 /* Dashboard specific utilities */

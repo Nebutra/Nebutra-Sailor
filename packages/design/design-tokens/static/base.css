@@ -144,10 +144,15 @@
      font-semibold, a text-heading-* recipe — still wins; zero-specificity
      :where() so a component's own heading styles are never fought. The face
      and weight are variables, so a Brand Package retunes both. */
-  :where(h1, h2, h3) {
+  :where(h1, h2, h3, h4, h5, h6) {
     font-family: var(--font-heading);
     font-weight: var(--font-weight-heading, 500);
+    line-height: 1.25;
   }
+  /* This is the ONLY heading rule. @nebutra/ui fonts.css and the web and
+     landing globals each re-declared one (font-sans at 600), and whichever
+     loaded last won: landing's h1 shipped in Geist 600 after the 2026-09-25
+     decision set headings to DM Sans 500. */
 }
 
 body {

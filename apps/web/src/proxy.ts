@@ -3,7 +3,7 @@ import {
   buildAuthCenterSignUpUrl,
   getAuthCenterOrigin,
 } from "@nebutra/auth";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { publicAssetOrigin } from "@nebutra/brand/metadata-helpers";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -27,8 +27,8 @@ function buildCsp(nonce: string): string {
     "default-src 'self'",
     `script-src ${scriptSrc}`,
     `style-src ${styleSrc}`,
-    `img-src 'self' data: blob: ${getBrandOrigin("cdn")}`,
-    "font-src 'self' data:",
+    `img-src 'self' data: blob: ${publicAssetOrigin()}`,
+    `font-src 'self' data: ${publicAssetOrigin()}`,
     "connect-src 'self'",
     "frame-src 'none'",
     "worker-src 'self' blob:",
