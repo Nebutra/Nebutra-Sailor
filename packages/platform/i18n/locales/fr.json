@@ -584,6 +584,98 @@
       "trial": "Essai gratuit de {days} jours",
       "seat": "{count, plural, one {# siège} other {# sièges}}",
       "perSeat": "/ siège"
+    },
+    "checkout": {
+      "method": "Mode de paiement",
+      "methods": {
+        "card": {
+          "title": "Carte",
+          "description": "Visa, Mastercard et autres, débitées en {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Débité en {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Débité en {currency}"
+        }
+      },
+      "amount": {
+        "label": "Montant ({currency})",
+        "range": "Entre {min} et {max}",
+        "invalid": "Saisissez un montant dans cette plage, avec au plus deux décimales"
+      },
+      "pay": "Payer {amount}",
+      "payNoAmount": "Payer",
+      "finePrint": {
+        "card": "Les paiements par carte sont traités par Creem, notre commerçant de référence, qui ajoute la taxe de vente ou la TVA le cas échéant.",
+        "wallet": "Crédité dès que le paiement est confirmé."
+      },
+      "qr": {
+        "alt": "Code QR de paiement",
+        "alipay": "Scannez avec Alipay. Cette page se met à jour automatiquement une fois le paiement effectué.",
+        "wechat": "Scannez avec WeChat. Cette page se met à jour automatiquement une fois le paiement effectué."
+      },
+      "changeMethod": "Payer autrement",
+      "confirming": {
+        "title": "Confirmation de votre paiement",
+        "body": "Cela prend généralement quelques secondes. Quitter cette page n'empêche pas le crédit."
+      },
+      "paid": {
+        "title": "Paiement reçu",
+        "body": "Il a été ajouté à votre compte {product}."
+      },
+      "backTo": "Retour à {product}",
+      "billing": "facturation",
+      "expired": {
+        "title": "Ce paiement n'a pas été finalisé",
+        "body": "Aucun montant n'a été débité. Recommencez quand vous serez prêt."
+      },
+      "lost": {
+        "title": "Cette page ne trouve pas le paiement",
+        "body": "Si vous avez payé, il sera tout de même crédité. Vos commandes figurent dans la facturation."
+      },
+      "tryAgain": "Payer à nouveau",
+      "viewOrders": "Voir les commandes",
+      "closed": {
+        "title": "Les paiements ne sont pas encore ouverts",
+        "body": "Aucun mode de paiement n'est disponible pour cette offre pour le moment. Réessayez plus tard."
+      },
+      "notForSale": {
+        "title": "Cette offre n'est pas en vente",
+        "body": "Le lien est peut-être obsolète. Retournez au produit et choisissez à nouveau."
+      },
+      "unavailable": {
+        "title": "Le paiement n'est pas disponible",
+        "body": "Le service de paiement n'a pas pu être contacté. Réessayez dans un instant."
+      },
+      "problems": {
+        "forbidden": "Seul un propriétaire, un administrateur ou un administrateur de facturation de cette organisation peut payer.",
+        "unavailable": "Le service de paiement n'a pas répondu. Aucun montant n'a été débité ; réessayez.",
+        "rejected": "Ce paiement n'a pas pu être lancé. Vérifiez le montant et réessayez."
+      }
+    },
+    "orders": {
+      "title": "Commandes",
+      "description": "Paiements pour tous les produits, du plus récent au plus ancien.",
+      "empty": "Aucun achat pour le moment. Les paiements effectués depuis n'importe quel produit s'afficheront ici.",
+      "unavailable": "Impossible de charger les commandes. Réessayez dans un instant.",
+      "columns": {
+        "date": "Date",
+        "item": "Article",
+        "method": "Payé avec",
+        "amount": "Montant",
+        "status": "Statut"
+      },
+      "status": {
+        "PENDING": "En attente de paiement",
+        "CREDITING": "Payé, en cours de crédit",
+        "PAID": "Payé",
+        "PARTIALLY_REFUNDED": "Partiellement remboursé",
+        "REFUNDED": "Remboursé",
+        "EXPIRED": "Non finalisé"
+      }
     }
   },
   "organizations": {

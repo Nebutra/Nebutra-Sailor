@@ -345,13 +345,4 @@ export const consoleApi = {
 
   wallet: (signal?: AbortSignal | undefined) =>
     consoleFetch({ path: `${BASE}/wallet`, decode: decodeWallet, signal }),
-
-  topUp: (amount: number, signal?: AbortSignal | undefined) =>
-    consoleFetch({
-      path: `${BASE}/wallet/topup`,
-      method: "POST",
-      body: { amount },
-      decode: decodeNothing,
-      signal,
-    }),
 };

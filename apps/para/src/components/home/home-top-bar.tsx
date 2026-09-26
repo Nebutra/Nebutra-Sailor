@@ -3,6 +3,7 @@
 import { MagnifyingGlass } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { CreateMenu } from "@/components/shell/create-menu";
+import { CreditsChip } from "@/components/shell/credits-chip";
 import { ProfileButton } from "@/components/shell/profile-button";
 import { Wordmark } from "@/components/shell/wordmark";
 import { useUiStore } from "@/stores/ui-store";
@@ -25,6 +26,7 @@ export function HomeTopBar() {
         >
           Search
         </Button>
+        <CreditsChip />
         <CreateMenu />
         <ProfileButton />
       </div>

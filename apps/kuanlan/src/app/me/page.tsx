@@ -119,7 +119,9 @@ export default async function MePage() {
             {credits ? (
               <div className="ledger-item">
                 <dd className="ledger-figure">{credits.balance}</dd>
-                <dt>还能用的 credit · 每张 {credits.price}</dt>
+                <dt>
+                  还能用的 credit · 每张 {credits.price} · <a href="/pro">补充</a>
+                </dt>
               </div>
             ) : null}
             {latest ? (

@@ -1,3 +1,5 @@
+export { type ExpiringCredits, expireCreditLots, getExpiringCredits } from "./lots";
+export type { CreditLotInput, CreditLotSource } from "./service";
 export {
   type AddCreditsInput,
   addBonusCredits,

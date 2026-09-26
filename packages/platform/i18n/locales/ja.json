@@ -584,6 +584,98 @@
       "trial": "無料 {days} 日間試用版",
       "seat": "{count, plural, one {# シート} other {# シート}}",
       "perSeat": "/ シート"
+    },
+    "checkout": {
+      "method": "支払い方法",
+      "methods": {
+        "card": {
+          "title": "カード",
+          "description": "Visa、Mastercardなど、{currency}で請求されます"
+        },
+        "alipay": {
+          "title": "アリペイ",
+          "description": "{currency}で請求されます"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "{currency}で請求されます"
+        }
+      },
+      "amount": {
+        "label": "金額（{currency}）",
+        "range": "{min}から{max}の間",
+        "invalid": "小数点以下2桁までで、この範囲内の金額を入力してください"
+      },
+      "pay": "{amount}を支払う",
+      "payNoAmount": "支払う",
+      "finePrint": {
+        "card": "カード決済は、加盟店契約先であるCreemが処理し、該当する場合は売上税またはVATが加算されます。",
+        "wallet": "支払いが確認され次第、加算されます。"
+      },
+      "qr": {
+        "alt": "支払い用QRコード",
+        "alipay": "アリペイでスキャンしてください。支払いが完了すると、このページは自動的に更新されます。",
+        "wechat": "WeChatでスキャンしてください。支払いが完了すると、このページは自動的に更新されます。"
+      },
+      "changeMethod": "他の方法で支払う",
+      "confirming": {
+        "title": "お支払いを確認しています",
+        "body": "通常は数秒で完了します。このページを離れても加算処理は止まりません。"
+      },
+      "paid": {
+        "title": "支払いを受け取りました",
+        "body": "{product}アカウントに追加されました。"
+      },
+      "backTo": "{product}に戻る",
+      "billing": "請求",
+      "expired": {
+        "title": "この支払いは完了しませんでした",
+        "body": "料金は請求されていません。準備ができたらもう一度やり直してください。"
+      },
+      "lost": {
+        "title": "このページでは支払いが見つかりません",
+        "body": "支払い済みの場合でも、後で加算されます。注文内容は請求ページで確認できます。"
+      },
+      "tryAgain": "もう一度支払う",
+      "viewOrders": "注文を表示",
+      "closed": {
+        "title": "支払いはまだ開始されていません",
+        "body": "現在、この商品には利用できる支払い方法がありません。しばらくしてからもう一度お試しください。"
+      },
+      "notForSale": {
+        "title": "この商品は販売されていません",
+        "body": "リンクが古い可能性があります。商品ページに戻ってもう一度選択してください。"
+      },
+      "unavailable": {
+        "title": "決済ページを利用できません",
+        "body": "支払いサービスに接続できませんでした。しばらくしてからもう一度お試しください。"
+      },
+      "problems": {
+        "forbidden": "この組織のオーナー、管理者、または請求管理者のみが支払いを行えます。",
+        "unavailable": "支払いサービスから応答がありませんでした。料金は請求されていません。もう一度お試しください。",
+        "rejected": "この支払いを開始できませんでした。金額を確認してもう一度お試しください。"
+      }
+    },
+    "orders": {
+      "title": "注文",
+      "description": "すべての商品の支払い履歴（新しい順）。",
+      "empty": "まだ何も購入されていません。いずれかの商品での支払いがここに表示されます。",
+      "unavailable": "注文を読み込めませんでした。しばらくしてからもう一度お試しください。",
+      "columns": {
+        "date": "日付",
+        "item": "商品",
+        "method": "支払い方法",
+        "amount": "金額",
+        "status": "ステータス"
+      },
+      "status": {
+        "PENDING": "支払い待ち",
+        "CREDITING": "支払い済み（加算処理中）",
+        "PAID": "支払い済み",
+        "PARTIALLY_REFUNDED": "一部返金済み",
+        "REFUNDED": "返金済み",
+        "EXPIRED": "未完了"
+      }
     }
   },
   "organizations": {

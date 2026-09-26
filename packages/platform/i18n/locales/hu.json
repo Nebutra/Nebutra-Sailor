@@ -584,6 +584,98 @@
       "trial": "Ingyenes {days} napos próbaidőszak",
       "seat": "{count, plural, one {# ülőhely} other {# ülőhely}}",
       "perSeat": "/ ülőhely"
+    },
+    "checkout": {
+      "method": "Fizetési mód",
+      "methods": {
+        "card": {
+          "title": "Kártya",
+          "description": "Visa, Mastercard és más kártyák, terhelés {currency} pénznemben"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Terhelés {currency} pénznemben"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Terhelés {currency} pénznemben"
+        }
+      },
+      "amount": {
+        "label": "Összeg ({currency})",
+        "range": "{min} és {max} között",
+        "invalid": "Adjon meg egy összeget ebben a tartományban, legfeljebb két tizedesjeggyel"
+      },
+      "pay": "{amount} fizetése",
+      "payNoAmount": "Fizetés",
+      "finePrint": {
+        "card": "A kártyás fizetéseket a Creem, a nyilvántartott kereskedőnk dolgozza fel, amely szükség esetén hozzáadja az áfát vagy forgalmi adót.",
+        "wallet": "A fizetés megerősítése után azonnal jóváírásra kerül."
+      },
+      "qr": {
+        "alt": "Fizetési QR-kód",
+        "alipay": "Olvassa be Alipay-jal. Ez az oldal magától frissül, amint a fizetés megtörtént.",
+        "wechat": "Olvassa be WeChattel. Ez az oldal magától frissül, amint a fizetés megtörtént."
+      },
+      "changeMethod": "Fizetés más módon",
+      "confirming": {
+        "title": "A fizetés megerősítése folyamatban",
+        "body": "Ez általában néhány másodpercet vesz igénybe. Az oldal elhagyása nem akadályozza a jóváírást."
+      },
+      "paid": {
+        "title": "A fizetés megérkezett",
+        "body": "Hozzáadtuk a(z) {product} fiókjához."
+      },
+      "backTo": "Vissza ide: {product}",
+      "billing": "számlázás",
+      "expired": {
+        "title": "Ez a fizetés nem fejeződött be",
+        "body": "Semmit sem terheltünk. Kezdje újra, amikor készen áll."
+      },
+      "lost": {
+        "title": "Ez az oldal nem találja a fizetést",
+        "body": "Ha fizetett, az akkor is jóváírásra kerül. A rendeléseit a számlázásnál találja."
+      },
+      "tryAgain": "Fizetés újra",
+      "viewOrders": "Rendelések megtekintése",
+      "closed": {
+        "title": "A fizetések még nem nyíltak meg",
+        "body": "Erre az ajánlatra jelenleg nem érhető el fizetési mód. Próbálja meg később."
+      },
+      "notForSale": {
+        "title": "Ez az ajánlat nincs eladásra kínálva",
+        "body": "Lehet, hogy a hivatkozás elavult. Térjen vissza a termékhez, és válasszon újra."
+      },
+      "unavailable": {
+        "title": "A pénztár nem érhető el",
+        "body": "A fizetési szolgáltatást nem sikerült elérni. Próbálja meg egy pillanat múlva újra."
+      },
+      "problems": {
+        "forbidden": "Csak a szervezet tulajdonosa, adminisztrátora vagy számlázási adminisztrátora fizethet.",
+        "unavailable": "A fizetési szolgáltatás nem válaszolt. Semmit sem terheltünk; próbálja meg újra.",
+        "rejected": "Ezt a fizetést nem sikerült elindítani. Ellenőrizze az összeget, és próbálja meg újra."
+      }
+    },
+    "orders": {
+      "title": "Rendelések",
+      "description": "Minden termék fizetései, a legújabbal kezdve.",
+      "empty": "Még nem történt vásárlás. Bármely termékből érkező fizetések itt jelennek meg.",
+      "unavailable": "A rendeléseket nem sikerült betölteni. Próbálja meg egy pillanat múlva újra.",
+      "columns": {
+        "date": "Dátum",
+        "item": "Tétel",
+        "method": "Fizetve ezzel",
+        "amount": "Összeg",
+        "status": "Állapot"
+      },
+      "status": {
+        "PENDING": "Fizetésre vár",
+        "CREDITING": "Fizetve, jóváírás alatt",
+        "PAID": "Fizetve",
+        "PARTIALLY_REFUNDED": "Részben visszatérítve",
+        "REFUNDED": "Visszatérítve",
+        "EXPIRED": "Nem fejeződött be"
+      }
     }
   },
   "organizations": {

@@ -584,6 +584,98 @@
       "trial": "Dùng thử miễn phí {days} ngày",
       "seat": "{count, plural, one {# chỗ} other {# chỗ}}",
       "perSeat": "/ chỗ"
+    },
+    "checkout": {
+      "method": "Phương thức thanh toán",
+      "methods": {
+        "card": {
+          "title": "Thẻ",
+          "description": "Visa, Mastercard và các loại khác, tính phí bằng {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Tính phí bằng {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Tính phí bằng {currency}"
+        }
+      },
+      "amount": {
+        "label": "Số tiền ({currency})",
+        "range": "Từ {min} đến {max}",
+        "invalid": "Nhập số tiền trong phạm vi đó, với tối đa hai chữ số thập phân"
+      },
+      "pay": "Thanh toán {amount}",
+      "payNoAmount": "Thanh toán",
+      "finePrint": {
+        "card": "Thanh toán bằng thẻ được xử lý bởi Creem, đơn vị bán hàng chính thức của chúng tôi, đơn vị này sẽ cộng thêm thuế bán hàng hoặc thuế GTGT nếu áp dụng.",
+        "wallet": "Được ghi có ngay khi thanh toán được xác nhận."
+      },
+      "qr": {
+        "alt": "Mã QR thanh toán",
+        "alipay": "Quét bằng Alipay. Trang này sẽ tự cập nhật ngay khi bạn thanh toán xong.",
+        "wechat": "Quét bằng WeChat. Trang này sẽ tự cập nhật ngay khi bạn thanh toán xong."
+      },
+      "changeMethod": "Thanh toán bằng cách khác",
+      "confirming": {
+        "title": "Đang xác nhận thanh toán của bạn",
+        "body": "Việc này thường chỉ mất vài giây. Rời khỏi trang này không làm dừng việc ghi có."
+      },
+      "paid": {
+        "title": "Đã nhận được thanh toán",
+        "body": "Khoản này đã được thêm vào tài khoản {product} của bạn."
+      },
+      "backTo": "Quay lại {product}",
+      "billing": "hóa đơn",
+      "expired": {
+        "title": "Thanh toán này chưa hoàn tất",
+        "body": "Không có khoản phí nào được tính. Hãy bắt đầu lại khi bạn sẵn sàng."
+      },
+      "lost": {
+        "title": "Trang này không tìm thấy khoản thanh toán",
+        "body": "Nếu bạn đã thanh toán, khoản đó vẫn sẽ được ghi có. Đơn hàng của bạn được liệt kê trong mục hóa đơn."
+      },
+      "tryAgain": "Thanh toán lại",
+      "viewOrders": "Xem đơn hàng",
+      "closed": {
+        "title": "Thanh toán chưa được mở",
+        "body": "Hiện chưa có phương thức thanh toán nào khả dụng cho ưu đãi này. Vui lòng thử lại sau."
+      },
+      "notForSale": {
+        "title": "Ưu đãi này hiện không được bán",
+        "body": "Liên kết có thể đã cũ. Hãy quay lại sản phẩm và chọn lại."
+      },
+      "unavailable": {
+        "title": "Trang thanh toán hiện không khả dụng",
+        "body": "Không thể kết nối với dịch vụ thanh toán. Vui lòng thử lại sau ít phút."
+      },
+      "problems": {
+        "forbidden": "Chỉ chủ sở hữu, quản trị viên hoặc quản trị viên hóa đơn của tổ chức này mới có thể thanh toán.",
+        "unavailable": "Dịch vụ thanh toán không phản hồi. Không có khoản phí nào được tính; vui lòng thử lại.",
+        "rejected": "Không thể bắt đầu khoản thanh toán này. Vui lòng kiểm tra số tiền và thử lại."
+      }
+    },
+    "orders": {
+      "title": "Đơn hàng",
+      "description": "Các khoản thanh toán cho mọi sản phẩm, mới nhất trước.",
+      "empty": "Chưa có gì được mua. Các khoản thanh toán từ bất kỳ sản phẩm nào sẽ được liệt kê tại đây.",
+      "unavailable": "Không thể tải đơn hàng. Vui lòng thử lại sau ít phút.",
+      "columns": {
+        "date": "Ngày",
+        "item": "Mục",
+        "method": "Thanh toán bằng",
+        "amount": "Số tiền",
+        "status": "Trạng thái"
+      },
+      "status": {
+        "PENDING": "Đang chờ thanh toán",
+        "CREDITING": "Đã thanh toán, đang ghi có",
+        "PAID": "Đã thanh toán",
+        "PARTIALLY_REFUNDED": "Đã hoàn tiền một phần",
+        "REFUNDED": "Đã hoàn tiền",
+        "EXPIRED": "Chưa hoàn tất"
+      }
     }
   },
   "organizations": {

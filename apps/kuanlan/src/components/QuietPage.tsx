@@ -7,7 +7,7 @@ export function QuietPage({
   line,
   children,
 }: {
-  active: "/" | "/create" | "/wardrobe" | "/moments" | "/me";
+  active: "/" | "/create" | "/wardrobe" | "/moments" | "/pro" | "/me";
   title: string;
   line: string;
   children?: ReactNode;

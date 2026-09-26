@@ -25,7 +25,6 @@ describe("console routes are off the public /v1 surface", () => {
   it("serves them under /api/console/v1 instead", () => {
     for (const route of [
       "console/v1/wallet",
-      "console/v1/wallet/topup",
       "console/v1/keys",
       "console/v1/keys/[id]",
       "console/v1/keys/[id]/logs",
@@ -39,6 +38,10 @@ describe("console routes are off the public /v1 surface", () => {
     ]) {
       expect(existsSync(path.join(appDir, route, "route.ts")), route).toBe(true);
     }
+  });
+
+  it("has no top-up of its own: money only enters through checkout (ADR 2026-09-27)", () => {
+    expect(existsSync(path.join(appDir, "console/v1/wallet/topup", "route.ts"))).toBe(false);
   });
 
   it("keeps no console route under the rewrite target, at any depth", () => {

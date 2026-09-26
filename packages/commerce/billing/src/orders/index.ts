@@ -73,6 +73,7 @@ export interface PaymentOrderStore {
   ): Promise<boolean>;
   listPendingCreatedBefore(before: Date, limit: number): Promise<PaymentOrderRecord[]>;
   listPaidUnfulfilled(limit: number): Promise<PaymentOrderRecord[]>;
+  listByTenant(tenantId: string, limit: number): Promise<PaymentOrderRecord[]>;
 }
 
 let store: PaymentOrderStore | undefined;
@@ -118,6 +119,18 @@ function lockedSpec(order: PaymentOrderRecord): LockedFulfillmentSpec {
     );
   }
   return spec as LockedFulfillmentSpec;
+}
+
+/** An organization's orders across every product, newest first. */
+export async function listPaymentOrders(
+  organizationId: string,
+  limit = 20,
+): Promise<Array<PaymentOrderRecord & { product: string | null }>> {
+  const rows = await requireStore().listByTenant(organizationId, Math.min(Math.max(limit, 1), 100));
+  return rows.map((row) => ({
+    ...row,
+    product: (row.fulfillment as Partial<LockedFulfillmentSpec> | null)?.product ?? null,
+  }));
 }
 
 /** Read one order, for status polling and support. */

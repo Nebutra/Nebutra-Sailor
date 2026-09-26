@@ -1,64 +1,58 @@
 "use client";
 
+import { checkoutLink } from "@nebutra/billing/links";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { AsyncSection, RetryButton, Skeleton } from "@/components/console-states";
 import { consoleApi, type WalletBalance } from "@/lib/console-api";
-import { describeError } from "@/lib/console-client";
 import { formatAmount, parseRequiredAmount } from "@/lib/console-format";
 import { useConsoleResource } from "@/lib/use-console-resource";
 
 /**
  * The wallet.
  *
- * Two things were wrong here and both were about telling the truth: a failed
- * top-up rendered in the same neutral paragraph as a successful one, so a
- * refusal read as a receipt; and the amount was an unvalidated string, so an
- * empty box posted `Number("") === 0` and came back as a bare 400. Success and
- * failure now have different roles, colours and words, and the amount is parsed
- * before anything is sent.
+ * Topping up is a payment, and payments happen on the one checkout page (ADR
+ * 2026-09-27 product wallets): this page names an amount and hands the buyer
+ * over; checkout sends them back here once the balance has been credited. The
+ * amount is parsed before anything is sent, so an empty box never becomes a
+ * bare 400 on the other side.
  */
 
 const PRESETS = [5, 10, 25, 50, 100];
+/** The catalog's USD floor for `router_topup`, same as 302.AI's. */
+const MIN_TOP_UP = 5;
+const OFFER_ID = "router_topup";
 
-type Outcome = { tone: "success" | "error"; text: string };
+export function checkoutUrl(amount: number, returnTo: string): string {
+  return checkoutLink({
+    checkoutUrl:
+      process.env.NEXT_PUBLIC_CHECKOUT_URL?.trim() || `${getBrandOrigin("app")}/checkout`,
+    offerId: OFFER_ID,
+    amount,
+    currency: "USD",
+    returnTo,
+  });
+}
 
 export function WalletClient() {
-  const { resource, reload, set } = useConsoleResource<WalletBalance>("wallet", (signal) =>
+  const { resource, reload } = useConsoleResource<WalletBalance>("wallet", (signal) =>
     consoleApi.wallet(signal),
   );
   const [amount, setAmount] = useState("10");
   const [fieldError, setFieldError] = useState<string | null>(null);
-  const [outcome, setOutcome] = useState<Outcome | null>(null);
-  const [submitting, setSubmitting] = useState(false);
 
   const currency = resource.data?.currency ?? "USD";
 
-  const topUp = useCallback(async () => {
-    const parsed = parseRequiredAmount(amount, { min: 1, max: 100_000 });
+  const topUp = () => {
+    const parsed = parseRequiredAmount(amount, { min: MIN_TOP_UP, max: 10_000 });
     if (!parsed.ok) {
       setFieldError(parsed.message);
-      setOutcome(null);
       return;
     }
-    setFieldError(null);
-    setOutcome(null);
-    setSubmitting(true);
-    try {
-      await consoleApi.topUp(parsed.value);
-      const fresh = await consoleApi.wallet();
-      set(fresh);
-      setOutcome({
-        tone: "success",
-        text: `已到账 ${formatAmount(parsed.value)} ${fresh.currency}，当前余额 ${formatAmount(fresh.balance)}。`,
-      });
-    } catch (error) {
-      setOutcome({ tone: "error", text: describeError(error) });
-    } finally {
-      setSubmitting(false);
-    }
-  }, [amount, set]);
+    window.location.assign(checkoutUrl(parsed.value, `${window.location.origin}/wallet`));
+  };
 
   return (
     <div className="grid gap-3 lg:grid-cols-[minmax(0,16rem)_1fr]">
@@ -122,7 +116,7 @@ export function WalletClient() {
               label={`金额 (${currency})`}
               id="topup-amount"
               type="number"
-              min={1}
+              min={MIN_TOP_UP}
               value={amount}
               onChange={(event) => {
                 setAmount(event.target.value);
@@ -131,30 +125,13 @@ export function WalletClient() {
               {...(fieldError ? { error: fieldError } : {})}
             />
           </div>
-          <Button
-            type="button"
-            variant="ink"
-            size="sm"
-            className="h-9"
-            disabled={submitting}
-            onClick={() => void topUp()}
-          >
-            {submitting ? "处理中…" : "充值"}
+          <Button type="button" variant="ink" size="sm" className="h-9" onClick={topUp}>
+            去付款
           </Button>
         </div>
-        {outcome ? (
-          <p
-            role={outcome.tone === "error" ? "alert" : "status"}
-            className={[
-              "mt-2 rounded-[var(--radius-md)] border px-2.5 py-1.5 text-[12px]",
-              outcome.tone === "error"
-                ? "border-destructive/35 bg-destructive/8 text-destructive-strong"
-                : "border-success/35 bg-success/8 text-success-strong",
-            ].join(" ")}
-          >
-            {outcome.text}
-          </p>
-        ) : null}
+        <p className="mt-2 text-[11px] leading-snug text-neutral-10">
+          最低 ${MIN_TOP_UP}。支持银行卡、支付宝、微信支付，付完自动回到这里。
+        </p>
       </div>
     </div>
   );

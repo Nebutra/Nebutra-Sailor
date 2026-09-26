@@ -41,10 +41,24 @@ export interface AmountRange {
   max: number;
 }
 
+/**
+ * Whose account an offer is bought for — which tenant's balance it feeds.
+ *
+ * - `personal`: the buyer's own account. Consumer products (Kuanlan, like 剪映).
+ * - `organization`: the active organization; buying needs billing rights there.
+ * - `workspace`: the active organization when there is one, else the buyer's
+ *   own account. Router's rule: an API key belongs to whichever is active.
+ */
+export type OfferAccount = "personal" | "organization" | "workspace";
+
+const ACCOUNTS: readonly OfferAccount[] = ["personal", "organization", "workspace"];
+
 export interface Offer {
   id: string;
   /** The product whose balance this offer feeds, e.g. "router". */
   product: string;
+  /** Whose account it is bought for. Defaults to `organization`. */
+  account?: OfferAccount;
   name: string;
   /** Fixed price, major units per currency. A currency left out cannot buy this offer. */
   prices?: Partial<Record<OfferCurrency, number>>;
@@ -92,6 +106,9 @@ function invalid(offer: Offer, what: string): never {
 
 function validate(offer: Offer): void {
   if (!PRODUCT_ID.test(offer.product ?? "")) invalid(offer, "needs a product id");
+  if (offer.account !== undefined && !ACCOUNTS.includes(offer.account)) {
+    invalid(offer, `has an unknown account "${offer.account}"`);
+  }
   const fixed = offer.prices ? Object.entries(offer.prices) : [];
   const custom = offer.customAmount ? Object.entries(offer.customAmount) : [];
   if (fixed.length > 0 === custom.length > 0) {
@@ -156,6 +173,10 @@ export function listOffers(product?: string): Offer[] {
 
 export function getOffer(id: string): Offer | undefined {
   return listOffers().find((offer) => offer.id === id);
+}
+
+export function offerAccount(offer: Offer): OfferAccount {
+  return offer.account ?? "organization";
 }
 
 export function offerCurrencies(offer: Offer): OfferCurrency[] {

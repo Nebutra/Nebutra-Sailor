@@ -584,6 +584,98 @@
       "trial": "Majaribio ya bure ya siku {days}",
       "seat": "{count, plural, one {# kiti} other {# viti}}",
       "perSeat": "/ kiti"
+    },
+    "checkout": {
+      "method": "Njia ya malipo",
+      "methods": {
+        "card": {
+          "title": "Kadi",
+          "description": "Visa, Mastercard na zaidi, itatozwa kwa {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Itatozwa kwa {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Itatozwa kwa {currency}"
+        }
+      },
+      "amount": {
+        "label": "Kiasi ({currency})",
+        "range": "Kati ya {min} na {max}",
+        "invalid": "Weka kiasi kilicho ndani ya kiwango hicho, kwa nukta mbili za desimali zaidi"
+      },
+      "pay": "Lipa {amount}",
+      "payNoAmount": "Lipa",
+      "finePrint": {
+        "card": "Malipo ya kadi yanashughulikiwa na Creem, muuzaji wetu wa rasmi, ambaye huongeza ushuru wa mauzo au VAT panapohitajika.",
+        "wallet": "Yanaongezwa mara tu malipo yanapothibitishwa."
+      },
+      "qr": {
+        "alt": "Msimbo wa QR wa malipo",
+        "alipay": "Changanua kwa Alipay. Ukurasa huu unajisasisha wenyewe mara tu unapolipa.",
+        "wechat": "Changanua kwa WeChat. Ukurasa huu unajisasisha wenyewe mara tu unapolipa."
+      },
+      "changeMethod": "Lipa kwa njia nyingine",
+      "confirming": {
+        "title": "Inathibitisha malipo yako",
+        "body": "Kwa kawaida hii huchukua sekunde chache. Kuondoka kwenye ukurasa huu hakuzuii kuongezwa kwake."
+      },
+      "paid": {
+        "title": "Malipo yamepokelewa",
+        "body": "Yameongezwa kwenye akaunti yako ya {product}."
+      },
+      "backTo": "Rudi kwenye {product}",
+      "billing": "malipo",
+      "expired": {
+        "title": "Malipo haya hayajakamilika",
+        "body": "Hakuna kilichotozwa. Anza tena ukiwa tayari."
+      },
+      "lost": {
+        "title": "Ukurasa huu hauwezi kupata malipo",
+        "body": "Ikiwa ulilipa, bado yataongezwa. Maagizo yako yameorodheshwa kwenye sehemu ya malipo."
+      },
+      "tryAgain": "Lipa tena",
+      "viewOrders": "Angalia maagizo",
+      "closed": {
+        "title": "Malipo bado hayajafunguliwa",
+        "body": "Hakuna njia ya malipo inayopatikana kwa ofa hii kwa sasa. Jaribu tena baadaye."
+      },
+      "notForSale": {
+        "title": "Ofa hii haipo kwa mauzo",
+        "body": "Kiungo huenda kimepitwa na wakati. Rudi kwenye bidhaa na uchague tena."
+      },
+      "unavailable": {
+        "title": "Checkout haipatikani",
+        "body": "Huduma ya malipo haikuweza kufikiwa. Jaribu tena baada ya muda mfupi."
+      },
+      "problems": {
+        "forbidden": "Ni mmiliki, msimamizi, au msimamizi wa malipo pekee wa shirika hili anayeweza kulipa.",
+        "unavailable": "Huduma ya malipo haikujibu. Hakuna kilichotozwa; jaribu tena.",
+        "rejected": "Malipo haya hayakuweza kuanzishwa. Angalia kiasi na ujaribu tena."
+      }
+    },
+    "orders": {
+      "title": "Maagizo",
+      "description": "Malipo ya kila bidhaa, mapya zaidi kwanza.",
+      "empty": "Hakuna kilichonunuliwa bado. Malipo kutoka bidhaa yoyote yataorodheshwa hapa.",
+      "unavailable": "Maagizo hayakuweza kupakiwa. Jaribu tena baada ya muda mfupi.",
+      "columns": {
+        "date": "Tarehe",
+        "item": "Kipengee",
+        "method": "Ililipwa kwa",
+        "amount": "Kiasi",
+        "status": "Hali"
+      },
+      "status": {
+        "PENDING": "Inasubiri malipo",
+        "CREDITING": "Imelipwa, inaongezwa",
+        "PAID": "Imelipwa",
+        "PARTIALLY_REFUNDED": "Imerejeshwa kiasi",
+        "REFUNDED": "Imerejeshwa",
+        "EXPIRED": "Haijakamilika"
+      }
     }
   },
   "organizations": {

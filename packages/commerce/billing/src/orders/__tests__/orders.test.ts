@@ -43,6 +43,7 @@ import {
 import {
   configurePaymentOrderStore,
   createPaymentOrder,
+  listPaymentOrders,
   type PaymentOrderRecord,
   type PaymentOrderStore,
   reconcilePaymentOrders,
@@ -110,6 +111,13 @@ function memoryStore() {
     async listPendingCreatedBefore(before, limit) {
       return [...rows.values()]
         .filter((r) => r.status === "PENDING" && r.createdAt < before)
+        .slice(0, limit)
+        .map((r) => ({ ...r }));
+    },
+    async listByTenant(tenantId, limit) {
+      return [...rows.values()]
+        .filter((r) => r.tenantId === tenantId)
+        .reverse()
         .slice(0, limit)
         .map((r) => ({ ...r }));
     },
@@ -333,6 +341,25 @@ describe("the catalog", () => {
     expect(() =>
       configureOffers([{ ...OFFER, customAmount: { USD: { min: 5, max: 100 } } }]),
     ).toThrow(/exactly one of prices or customAmount/);
+  });
+});
+
+describe("listPaymentOrders", () => {
+  it("lists one organization's orders newest first, with the product each was locked to", async () => {
+    const first = await buy();
+    const second = await buy();
+    await createPaymentOrder({
+      organizationId: "org_2",
+      offerId: "grant_pro",
+      method: "alipay",
+      successUrl: "https://app.example.com/ok",
+      cancelUrl: "https://app.example.com/cancel",
+    });
+
+    const listed = await listPaymentOrders("org_1");
+
+    expect(listed.map((o) => o.id)).toEqual([second.orderId, first.orderId]);
+    expect(listed[0]?.product).toBe("demo");
   });
 });
 

@@ -63,7 +63,7 @@ settles at zero and logs a warning: the gap is visible, never silent.
 
 ### Console API — not on the public surface
 
-The console lives under `/api/console/v1/{wallet,wallet/topup,keys,chat}` and
+The console lives under `/api/console/v1/{wallet,keys,chat}` and
 requires a session. It used to live under `/api/v1/*`, which the `/v1/:path*`
 rewrite made **publicly reachable**: `POST /v1/wallet/topup` was an
 unauthenticated mutation on a wallet. Those paths are now 404
@@ -106,6 +106,13 @@ in-memory demo store behind them. Needs `DATABASE_URL` and
 token never reaches customers.
 
 ### Wallet
+
+Topping up is a payment, and every payment goes through the one checkout page
+(ADR 2026-09-27 product wallets): `/wallet` links to
+`<app>/checkout?offer=router_topup&amount=…&currency=USD&returnTo=…`, and the
+order's `balance` fulfillment credits this product's balance once it is paid.
+Router has no top-up endpoint of its own; the old manual one, which credited
+money without a payment behind it, is gone.
 
 `CreditBalance` / `CreditTransaction`, keyed by `Tenant.id`, through
 `@nebutra/prepaid-wallet`. `src/instrumentation.ts` calls

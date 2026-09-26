@@ -584,6 +584,98 @@
       "trial": "免费试用 {days} 天",
       "seat": "{count} 个席位",
       "perSeat": "/ 席位"
+    },
+    "checkout": {
+      "method": "付款方式",
+      "methods": {
+        "card": {
+          "title": "银行卡",
+          "description": "Visa、Mastercard 等，以 {currency} 扣款"
+        },
+        "alipay": {
+          "title": "支付宝",
+          "description": "以 {currency} 扣款"
+        },
+        "wechat": {
+          "title": "微信支付",
+          "description": "以 {currency} 扣款"
+        }
+      },
+      "amount": {
+        "label": "金额（{currency}）",
+        "range": "{min} 至 {max}",
+        "invalid": "请输入范围内的金额，最多两位小数"
+      },
+      "pay": "支付 {amount}",
+      "payNoAmount": "支付",
+      "finePrint": {
+        "card": "银行卡付款由收款方 Creem 处理，按所在地加收销售税或增值税。",
+        "wallet": "付款确认后立即到账。"
+      },
+      "qr": {
+        "alt": "付款二维码",
+        "alipay": "用支付宝扫码付款，付完这个页面会自动更新。",
+        "wechat": "用微信扫码付款，付完这个页面会自动更新。"
+      },
+      "changeMethod": "换一种付款方式",
+      "confirming": {
+        "title": "正在确认付款",
+        "body": "通常几秒钟就好。离开这个页面也不影响到账。"
+      },
+      "paid": {
+        "title": "付款成功",
+        "body": "已计入你的 {product} 账户。"
+      },
+      "backTo": "返回 {product}",
+      "billing": "账单",
+      "expired": {
+        "title": "这笔付款没有完成",
+        "body": "没有扣款，准备好了可以重新付款。"
+      },
+      "lost": {
+        "title": "这个页面找不到刚才的付款",
+        "body": "如果已经付款，仍会正常到账，订单可以在账单里查看。"
+      },
+      "tryAgain": "重新付款",
+      "viewOrders": "查看订单",
+      "closed": {
+        "title": "还不能付款",
+        "body": "这个套餐现在没有可用的付款方式，请稍后再来。"
+      },
+      "notForSale": {
+        "title": "这个套餐已下架",
+        "body": "链接可能已经过期，请回到产品里重新选择。"
+      },
+      "unavailable": {
+        "title": "收银台暂时不可用",
+        "body": "暂时连不上付款服务，请稍后再试。"
+      },
+      "problems": {
+        "forbidden": "只有这个组织的所有者、管理员或账单管理员可以付款。",
+        "unavailable": "付款服务没有响应，没有扣款，请重试。",
+        "rejected": "这笔付款无法发起，请检查金额后重试。"
+      }
+    },
+    "orders": {
+      "title": "订单",
+      "description": "所有产品的付款记录，最新的在前。",
+      "empty": "还没有买过东西。在任何产品里付的款都会列在这里。",
+      "unavailable": "订单加载失败，请稍后再试。",
+      "columns": {
+        "date": "时间",
+        "item": "商品",
+        "method": "付款方式",
+        "amount": "金额",
+        "status": "状态"
+      },
+      "status": {
+        "PENDING": "等待付款",
+        "CREDITING": "已付款，正在到账",
+        "PAID": "已付款",
+        "PARTIALLY_REFUNDED": "部分退款",
+        "REFUNDED": "已退款",
+        "EXPIRED": "未完成"
+      }
     }
   },
   "organizations": {

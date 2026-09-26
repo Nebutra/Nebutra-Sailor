@@ -388,6 +388,15 @@ export const PaymentOrderStatus = {
 export type PaymentOrderStatus = (typeof PaymentOrderStatus)[keyof typeof PaymentOrderStatus]
 
 
+export const CreditLotSource = {
+  SUBSCRIPTION: 'SUBSCRIPTION',
+  PURCHASE: 'PURCHASE',
+  PROMO: 'PROMO'
+} as const
+
+export type CreditLotSource = (typeof CreditLotSource)[keyof typeof CreditLotSource]
+
+
 export const ConsentType = {
   EXPLICIT: 'EXPLICIT',
   IMPLICIT: 'IMPLICIT',

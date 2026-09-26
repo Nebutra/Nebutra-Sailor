@@ -132,14 +132,18 @@ export {
   addBonusCredits,
   addCredits,
   assertWalletProduct,
+  type CreditLotSource,
   creditsToDollars,
   deductCredits,
   dollarsToCredits,
+  type ExpiringCredits,
+  expireCreditLots,
   formatCredits,
   getCreditAllowanceForPlan,
   getCreditBalance,
   getCreditBalanceFresh,
   getCreditTransactions,
+  getExpiringCredits,
   hasEnoughCredits,
   hasEnoughCreditsFresh,
   invalidateCreditCache,
@@ -192,6 +196,15 @@ export {
   type RevocationResult,
   registerFulfillment,
 } from "./fulfillment/index";
+// Memberships — a product's paid tier for a period (ADR 2026-09-27)
+export {
+  applyMembershipPurchase,
+  GRANT_PERIOD_DAYS,
+  getMembership,
+  grantDueMemberships,
+  type Membership,
+  revokeMembershipPurchase,
+} from "./memberships/index";
 // Offers — what can be bought (data, replaced by the host at boot)
 export {
   type AmountRange,
@@ -203,7 +216,9 @@ export {
   type LockedFulfillmentSpec,
   listOffers,
   type Offer,
+  type OfferAccount,
   type OfferCurrency,
+  offerAccount,
   offerCurrencies,
   priceOffer,
   toMajorString,
@@ -218,6 +233,7 @@ export {
   fulfillPaymentOrder,
   getPaymentOrder,
   isPaymentMethodAvailable,
+  listPaymentOrders,
   type PaymentMethod,
   type PaymentOrderRecord,
   type PaymentOrderStatus,

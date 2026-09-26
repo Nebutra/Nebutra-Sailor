@@ -584,6 +584,98 @@
       "trial": "Gratis {days}-dagars provperiod",
       "seat": "{count, plural, one {# säte} other {# säten}}",
       "perSeat": "/ säte"
+    },
+    "checkout": {
+      "method": "Betalningsmetod",
+      "methods": {
+        "card": {
+          "title": "Kort",
+          "description": "Visa, Mastercard med flera, debiteras i {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Debiteras i {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Debiteras i {currency}"
+        }
+      },
+      "amount": {
+        "label": "Belopp ({currency})",
+        "range": "Mellan {min} och {max}",
+        "invalid": "Ange ett belopp inom det intervallet, med högst två decimaler"
+      },
+      "pay": "Betala {amount}",
+      "payNoAmount": "Betala",
+      "finePrint": {
+        "card": "Kortbetalningar hanteras av Creem, vår registrerade återförsäljare, som lägger till moms eller försäljningsskatt där det gäller.",
+        "wallet": "Krediteras så snart betalningen är bekräftad."
+      },
+      "qr": {
+        "alt": "QR-kod för betalning",
+        "alipay": "Skanna med Alipay. Den här sidan uppdateras automatiskt när du har betalat.",
+        "wechat": "Skanna med WeChat. Den här sidan uppdateras automatiskt när du har betalat."
+      },
+      "changeMethod": "Betala på ett annat sätt",
+      "confirming": {
+        "title": "Bekräftar din betalning",
+        "body": "Detta tar vanligtvis bara några sekunder. Att lämna sidan stoppar inte krediteringen."
+      },
+      "paid": {
+        "title": "Betalning mottagen",
+        "body": "Den har lagts till på ditt {product}-konto."
+      },
+      "backTo": "Tillbaka till {product}",
+      "billing": "fakturering",
+      "expired": {
+        "title": "Denna betalning slutfördes inte",
+        "body": "Inget har debiterats. Börja om när du är redo."
+      },
+      "lost": {
+        "title": "Den här sidan kan inte hitta betalningen",
+        "body": "Om du har betalat kommer den ändå att krediteras. Dina beställningar visas under fakturering."
+      },
+      "tryAgain": "Betala igen",
+      "viewOrders": "Visa beställningar",
+      "closed": {
+        "title": "Betalningar är inte öppna än",
+        "body": "Ingen betalningsmetod är tillgänglig för det här erbjudandet just nu. Försök igen senare."
+      },
+      "notForSale": {
+        "title": "Det här erbjudandet är inte till salu",
+        "body": "Länken kan vara inaktuell. Gå tillbaka till produkten och välj igen."
+      },
+      "unavailable": {
+        "title": "Kassan är inte tillgänglig",
+        "body": "Det gick inte att nå betaltjänsten. Försök igen om en stund."
+      },
+      "problems": {
+        "forbidden": "Endast en ägare, administratör eller faktureringsadministratör för denna organisation kan betala.",
+        "unavailable": "Betaltjänsten svarade inte. Inget har debiterats; försök igen.",
+        "rejected": "Den här betalningen kunde inte startas. Kontrollera beloppet och försök igen."
+      }
+    },
+    "orders": {
+      "title": "Beställningar",
+      "description": "Betalningar för alla produkter, nyaste först.",
+      "empty": "Inget har köpts ännu. Betalningar från vilken produkt som helst visas här.",
+      "unavailable": "Beställningar kunde inte läsas in. Försök igen om en stund.",
+      "columns": {
+        "date": "Datum",
+        "item": "Artikel",
+        "method": "Betalat med",
+        "amount": "Belopp",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Väntar på betalning",
+        "CREDITING": "Betalat, krediteras",
+        "PAID": "Betalat",
+        "PARTIALLY_REFUNDED": "Delvis återbetalat",
+        "REFUNDED": "Återbetalat",
+        "EXPIRED": "Ej slutfört"
+      }
     }
   },
   "organizations": {

@@ -54,6 +54,10 @@
     "./checkout": {
       "import": "./dist/checkout/index.js",
       "types": "./dist/checkout/index.d.ts"
+    },
+    "./links": {
+      "import": "./dist/links/index.js",
+      "types": "./dist/links/index.d.ts"
     }
   },
   "scripts": {
