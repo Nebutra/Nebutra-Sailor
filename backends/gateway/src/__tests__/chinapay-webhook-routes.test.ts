@@ -4,14 +4,14 @@ const {
   acceptWebhookEventMock,
   markFailedMock,
   markProcessedMock,
-  handleCreditPurchaseWebhookMock,
+  settlePaymentOrderMock,
   verifyAndDecryptWechatNotificationMock,
   verifyAlipayNotificationMock,
 } = vi.hoisted(() => ({
   acceptWebhookEventMock: vi.fn(),
   markFailedMock: vi.fn(),
   markProcessedMock: vi.fn(),
-  handleCreditPurchaseWebhookMock: vi.fn(),
+  settlePaymentOrderMock: vi.fn(),
   verifyAndDecryptWechatNotificationMock: vi.fn(),
   verifyAlipayNotificationMock: vi.fn(),
 }));
@@ -37,7 +37,7 @@ vi.mock("@nebutra/repositories", () => ({
 }));
 
 vi.mock("@nebutra/billing", () => ({
-  handleCreditPurchaseWebhook: (...args: unknown[]) => handleCreditPurchaseWebhookMock(...args),
+  settlePaymentOrder: (...args: unknown[]) => settlePaymentOrderMock(...args),
   verifyAndDecryptWechatNotification: (...args: unknown[]) =>
     verifyAndDecryptWechatNotificationMock(...args),
   verifyAlipayNotification: (...args: unknown[]) => verifyAlipayNotificationMock(...args),
@@ -60,7 +60,7 @@ describe("ChinaPay webhook HTTP mapping", () => {
     acceptWebhookEventMock.mockReset();
     markFailedMock.mockReset();
     markProcessedMock.mockReset();
-    handleCreditPurchaseWebhookMock.mockReset();
+    settlePaymentOrderMock.mockReset();
     verifyAndDecryptWechatNotificationMock.mockReset();
     verifyAlipayNotificationMock.mockReset();
     markProcessedMock.mockResolvedValue({});
@@ -91,16 +91,15 @@ describe("ChinaPay webhook HTTP mapping", () => {
       expect(acceptWebhookEventMock).not.toHaveBeenCalled();
     });
 
-    it("credits the purchase and acks only after markProcessed on a SUCCESS trade", async () => {
+    it("settles the payment order and acks only after markProcessed on a SUCCESS trade", async () => {
       verifyAndDecryptWechatNotificationMock.mockResolvedValue({
-        out_trade_no: "credit_1000_org_1",
+        out_trade_no: "cmg1order0000000000000001",
         transaction_id: "wx_txn_1",
         trade_state: "SUCCESS",
-        attach: JSON.stringify({ t: "credit_purchase", o: "org_1", c: "1000" }),
-        amount: { total: 990, currency: "CNY" },
+        amount: { total: 6800, currency: "CNY" },
       });
       acceptWebhookEventMock.mockResolvedValue({ outcome: "process" });
-      handleCreditPurchaseWebhookMock.mockResolvedValue({ handled: true });
+      settlePaymentOrderMock.mockResolvedValue("settled");
 
       const response = await chinaPayWebhookRoutes.request("/chinapay/wechat", {
         method: "POST",
@@ -110,21 +109,33 @@ describe("ChinaPay webhook HTTP mapping", () => {
 
       expect(response.status).toBe(200);
       await expect(response.json()).resolves.toEqual({ code: "SUCCESS", message: "成功" });
-      expect(handleCreditPurchaseWebhookMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          provider: "chinapay",
-          sessionId: "credit_1000_org_1",
-          metadata: {
-            type: "credit_purchase",
-            organizationId: "org_1",
-            creditAmount: "1000",
-            referenceId: undefined,
-          },
-          amountPaid: 9.9,
-          currency: "CNY",
-        }),
-      );
+      expect(settlePaymentOrderMock).toHaveBeenCalledWith({
+        orderId: "cmg1order0000000000000001",
+        paidMinor: 6800,
+        currency: "CNY",
+        providerRef: "wx_txn_1",
+      });
       expect(markProcessedMock).toHaveBeenCalledWith("chinapay", "wx_txn_1:SUCCESS");
+    });
+
+    it("acks a signed notification for an unknown order rather than retrying forever", async () => {
+      verifyAndDecryptWechatNotificationMock.mockResolvedValue({
+        out_trade_no: "not_ours",
+        transaction_id: "wx_txn_9",
+        trade_state: "SUCCESS",
+        amount: { total: 100, currency: "CNY" },
+      });
+      acceptWebhookEventMock.mockResolvedValue({ outcome: "process" });
+      settlePaymentOrderMock.mockResolvedValue("not_found");
+
+      const response = await chinaPayWebhookRoutes.request("/chinapay/wechat", {
+        method: "POST",
+        headers: wechatHeaders,
+        body: "{}",
+      });
+
+      expect(response.status).toBe(200);
+      expect(markProcessedMock).toHaveBeenCalledWith("chinapay", "wx_txn_9:SUCCESS");
     });
 
     it("does not credit a non-SUCCESS trade state but still acks and marks processed", async () => {
@@ -142,7 +153,7 @@ describe("ChinaPay webhook HTTP mapping", () => {
       });
 
       expect(response.status).toBe(200);
-      expect(handleCreditPurchaseWebhookMock).not.toHaveBeenCalled();
+      expect(settlePaymentOrderMock).not.toHaveBeenCalled();
       expect(markProcessedMock).toHaveBeenCalled();
     });
 
@@ -161,7 +172,7 @@ describe("ChinaPay webhook HTTP mapping", () => {
       });
 
       expect(response.status).toBe(200);
-      expect(handleCreditPurchaseWebhookMock).not.toHaveBeenCalled();
+      expect(settlePaymentOrderMock).not.toHaveBeenCalled();
       expect(markProcessedMock).not.toHaveBeenCalled();
     });
 
@@ -172,7 +183,7 @@ describe("ChinaPay webhook HTTP mapping", () => {
         trade_state: "SUCCESS",
       });
       acceptWebhookEventMock.mockResolvedValue({ outcome: "process" });
-      handleCreditPurchaseWebhookMock.mockRejectedValue(new Error("ledger down"));
+      settlePaymentOrderMock.mockRejectedValue(new Error("ledger down"));
 
       const response = await chinaPayWebhookRoutes.request("/chinapay/wechat", {
         method: "POST",
@@ -204,36 +215,31 @@ describe("ChinaPay webhook HTTP mapping", () => {
       expect(acceptWebhookEventMock).not.toHaveBeenCalled();
     });
 
-    it("credits the purchase and responds the literal string 'success'", async () => {
+    it("settles the payment order and responds the literal string 'success'", async () => {
       verifyAlipayNotificationMock.mockReturnValue(true);
       acceptWebhookEventMock.mockResolvedValue({ outcome: "process" });
-      handleCreditPurchaseWebhookMock.mockResolvedValue({ handled: true });
+      settlePaymentOrderMock.mockResolvedValue("settled");
 
       const response = await chinaPayWebhookRoutes.request("/chinapay/alipay", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: form({
           trade_status: "TRADE_SUCCESS",
-          out_trade_no: "credit_1000_org_1",
+          out_trade_no: "cmg1order0000000000000001",
           trade_no: "2026090322001",
-          total_amount: "9.90",
-          passback_params: encodeURIComponent(
-            JSON.stringify({ t: "credit_purchase", o: "org_1", c: "1000" }),
-          ),
+          total_amount: "68.00",
           sign: "ok",
         }),
       });
 
       expect(response.status).toBe(200);
       await expect(response.text()).resolves.toBe("success");
-      expect(handleCreditPurchaseWebhookMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          provider: "chinapay",
-          sessionId: "credit_1000_org_1",
-          amountPaid: 9.9,
-          currency: "CNY",
-        }),
-      );
+      expect(settlePaymentOrderMock).toHaveBeenCalledWith({
+        orderId: "cmg1order0000000000000001",
+        paidMinor: 6800,
+        currency: "CNY",
+        providerRef: "2026090322001",
+      });
       expect(markProcessedMock).toHaveBeenCalledWith("chinapay", "2026090322001:TRADE_SUCCESS");
     });
 
@@ -254,7 +260,7 @@ describe("ChinaPay webhook HTTP mapping", () => {
 
       expect(response.status).toBe(200);
       await expect(response.text()).resolves.toBe("success");
-      expect(handleCreditPurchaseWebhookMock).not.toHaveBeenCalled();
+      expect(settlePaymentOrderMock).not.toHaveBeenCalled();
     });
   });
 });

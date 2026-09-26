@@ -1,9 +1,11 @@
-import { createSign, generateKeyPairSync } from "node:crypto";
+import { createSign, createVerify, generateKeyPairSync } from "node:crypto";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   type AlipayNotificationFields,
+  buildAlipayWapPayUrl,
   createAlipayPrecreateOrder,
   queryAlipayOrder,
+  refundAlipayOrder,
   verifyAlipayNotification,
 } from "../alipay";
 import { getAlipayConfig, initAlipay, resetChinaPayConfig } from "../client";
@@ -176,5 +178,118 @@ describe("Alipay order creation", () => {
 
     const result = await queryAlipayOrder("order_1");
     expect(result).toEqual({ status: "paid", totalAmount: "9.90" });
+  });
+});
+
+describe("Alipay app_id check", () => {
+  beforeEach(() => {
+    resetChinaPayConfig();
+    initTestConfig();
+  });
+
+  afterEach(() => {
+    resetChinaPayConfig();
+  });
+
+  it("rejects a correctly signed notification addressed to another app", () => {
+    const fields: AlipayNotificationFields = {
+      app_id: "2021999999999999",
+      trade_status: "TRADE_SUCCESS",
+      out_trade_no: "credit_1000_org_1",
+    };
+    fields.sign = signAsAlipay(fields as Record<string, string>);
+
+    expect(verifyAlipayNotification(fields)).toBe(false);
+  });
+});
+
+describe("Alipay mobile website pay and refund", () => {
+  beforeEach(() => {
+    resetChinaPayConfig();
+    initTestConfig();
+  });
+
+  afterEach(() => {
+    resetChinaPayConfig();
+    vi.unstubAllGlobals();
+  });
+
+  it("builds a signed trade.wap.pay gateway URL the merchant key verifies", () => {
+    const { payUrl } = buildAlipayWapPayUrl({
+      outTradeNo: "order_1",
+      subject: "10000 Credits",
+      totalAmount: "68.00",
+      returnUrl: "https://pay.example.com/checkout-return",
+      quitUrl: "https://pay.example.com/billing",
+    });
+
+    const url = new URL(payUrl);
+    expect(url.origin + url.pathname).toBe(getAlipayConfig().gatewayUrl);
+    const params = Object.fromEntries(url.searchParams);
+    expect(params.method).toBe("alipay.trade.wap.pay");
+    expect(params.return_url).toBe("https://pay.example.com/checkout-return");
+    expect(JSON.parse(params.biz_content ?? "{}")).toMatchObject({
+      product_code: "QUICK_WAP_WAY",
+      total_amount: "68.00",
+      quit_url: "https://pay.example.com/billing",
+    });
+
+    const { sign, ...rest } = params;
+    const content = Object.keys(rest)
+      .sort()
+      .map((k) => `${k}=${rest[k]}`)
+      .join("&");
+    expect(
+      createVerify("RSA-SHA256")
+        .update(content, "utf8")
+        .verify(merchant.publicKey, sign ?? "", "base64"),
+    ).toBe(true);
+  });
+
+  it("refunds and treats code 10000 as success", async () => {
+    const fetchSpy = vi.fn(
+      async () =>
+        new Response(
+          JSON.stringify({
+            alipay_trade_refund_response: { code: "10000", msg: "Success", fund_change: "Y" },
+          }),
+          { status: 200 },
+        ),
+    );
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const result = await refundAlipayOrder({
+      outTradeNo: "order_1",
+      outRequestNo: "refund_1",
+      refundAmount: "34.00",
+    });
+
+    const [, init] = fetchSpy.mock.calls[0] as unknown as [string, RequestInit];
+    const params = new URLSearchParams(String(init.body));
+    expect(params.get("method")).toBe("alipay.trade.refund");
+    expect(JSON.parse(params.get("biz_content") ?? "{}")).toMatchObject({
+      out_request_no: "refund_1",
+      refund_amount: "34.00",
+    });
+    expect(result.status).toBe("succeeded");
+  });
+
+  it("throws when Alipay rejects the refund", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(
+            JSON.stringify({
+              alipay_trade_refund_response: { code: "40004", sub_msg: "交易不存在" },
+            }),
+            { status: 200 },
+          ),
+      ),
+    );
+
+    await expect(
+      refundAlipayOrder({ outTradeNo: "nope", outRequestNo: "r", refundAmount: "1.00" }),
+    ).rejects.toThrow(/交易不存在/);
   });
 });

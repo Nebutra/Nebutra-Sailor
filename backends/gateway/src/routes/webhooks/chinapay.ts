@@ -1,8 +1,8 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import {
   ALIPAY_NOTIFY_SUCCESS_BODIES,
-  type CreditPurchaseWebhookInput,
-  handleCreditPurchaseWebhook,
+  type SettlePaymentOrderInput,
+  settlePaymentOrder,
   verifyAlipayNotification,
   verifyAndDecryptWechatNotification,
   WECHAT_NOTIFY_FAIL,
@@ -13,40 +13,23 @@ import { logger } from "@nebutra/logger";
 import { acceptWebhookEvent, type JsonValue, WebhookEventRepository } from "@nebutra/repositories";
 
 // AUDIT(no-tenant): WeChat Pay / Alipay notifications arrive without a
-// request-scoped tenant context; the tenant (organizationId) is resolved
-// from the payment's attach/passback metadata inside each handler, same
-// pattern as the Stripe route. All writes below use the system-scope client.
+// request-scoped tenant context; the tenant comes from the payment order the
+// merchant order number names. All writes below use the system-scope client.
 const prisma = getSystemDb();
 
 const log = logger.child({ service: "chinapay-webhook" });
 
 export const chinaPayWebhookRoutes = new OpenAPIHono();
 
-function parseAttachMetadata(raw: string | undefined): Record<string, string | undefined> {
-  if (!raw) return {};
-  try {
-    const decoded = decodeURIComponent(raw);
-    const parsed = JSON.parse(decoded) as { t?: string; o?: string; c?: string; r?: string };
-    return {
-      type: parsed.t,
-      organizationId: parsed.o,
-      creditAmount: parsed.c,
-      referenceId: parsed.r,
-    };
-  } catch {
-    // attach was not URL-encoded (WeChat delivers it verbatim, Alipay
-    // URL-decodes form fields before this handler ever sees them).
-    try {
-      const parsed = JSON.parse(raw) as { t?: string; o?: string; c?: string; r?: string };
-      return {
-        type: parsed.t,
-        organizationId: parsed.o,
-        creditAmount: parsed.c,
-        referenceId: parsed.r,
-      };
-    } catch {
-      return {};
-    }
+/**
+ * The merchant order number is the PaymentOrder id, so the notification needs
+ * no metadata of its own. An unknown order is acknowledged, not retried: the
+ * signature proved it came from the wallet, and retrying cannot make it exist.
+ */
+async function settleWalletPayment(input: SettlePaymentOrderInput): Promise<void> {
+  const outcome = await settlePaymentOrder(input);
+  if (outcome === "not_found") {
+    log.error("Wallet notification for an unknown payment order", { orderId: input.orderId });
   }
 }
 
@@ -125,15 +108,12 @@ chinaPayWebhookRoutes.openapi(wechatRoute, async (c) => {
 
   try {
     if (resource.trade_state === "SUCCESS") {
-      const metadata = parseAttachMetadata(resource.attach);
-      const input: CreditPurchaseWebhookInput = {
-        provider: "chinapay",
-        sessionId: resource.out_trade_no,
-        metadata,
+      await settleWalletPayment({
+        orderId: resource.out_trade_no,
+        paidMinor: resource.amount?.total ?? 0,
         currency: resource.amount?.currency ?? "CNY",
-        ...(resource.amount?.total ? { amountPaid: resource.amount.total / 100 } : {}),
-      };
-      await handleCreditPurchaseWebhook(input);
+        providerRef: resource.transaction_id,
+      });
     }
     await inbox.markProcessed("chinapay", eventId);
     return c.json(WECHAT_NOTIFY_OK, 200);
@@ -213,15 +193,12 @@ chinaPayWebhookRoutes.openapi(alipayRoute, async (c) => {
       ALIPAY_NOTIFY_SUCCESS_BODIES.includes(fields.trade_status) &&
       fields.out_trade_no
     ) {
-      const metadata = parseAttachMetadata(fields.passback_params);
-      const input: CreditPurchaseWebhookInput = {
-        provider: "chinapay",
-        sessionId: fields.out_trade_no,
-        metadata,
+      await settleWalletPayment({
+        orderId: fields.out_trade_no,
+        paidMinor: Math.round(Number.parseFloat(fields.total_amount ?? "0") * 100),
         currency: "CNY",
-        ...(fields.total_amount ? { amountPaid: Number.parseFloat(fields.total_amount) } : {}),
-      };
-      await handleCreditPurchaseWebhook(input);
+        ...(fields.trade_no ? { providerRef: fields.trade_no } : {}),
+      });
     }
     await inbox.markProcessed("chinapay", eventId);
     return c.text("success", 200) as never;

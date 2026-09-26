@@ -2,8 +2,10 @@ import { createCipheriv, createSign, generateKeyPairSync } from "node:crypto";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { initWechatPay, resetChinaPayConfig } from "../client";
 import {
+  createWechatH5Order,
   createWechatNativeOrder,
   queryWechatOrder,
+  refundWechatOrder,
   resetWechatPlatformCertCache,
   seedWechatPlatformCertCache,
   verifyAndDecryptWechatNotification,
@@ -207,5 +209,79 @@ describe("WeChat Pay APIv3 order creation", () => {
 
     const result = await queryWechatOrder("order_1");
     expect(result).toEqual({ status: "paid", amountFen: 990 });
+  });
+});
+
+describe("WeChat Pay APIv3 H5 order and refund", () => {
+  beforeEach(() => {
+    resetChinaPayConfig();
+    initWechatPay(initTestConfig());
+  });
+
+  afterEach(() => {
+    resetChinaPayConfig();
+    vi.unstubAllGlobals();
+  });
+
+  it("sends the buyer IP as scene_info and appends the redirect_url", async () => {
+    const fetchSpy = vi.fn(
+      async () =>
+        new Response(
+          JSON.stringify({ h5_url: "https://wx.tenpay.com/cgi-bin/mmpayweb?prepay_id=x" }),
+          {
+            status: 200,
+          },
+        ),
+    );
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const result = await createWechatH5Order({
+      outTradeNo: "order_1",
+      description: "1000 Credits",
+      totalFen: 6800,
+      clientIp: "203.0.113.7",
+      redirectUrl: "https://pay.example.com/checkout-return?x=1",
+    });
+
+    const [url, init] = fetchSpy.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toContain("/v3/pay/transactions/h5");
+    const body = JSON.parse(String(init.body));
+    expect(body.scene_info).toEqual({
+      payer_client_ip: "203.0.113.7",
+      h5_info: { type: "Wap" },
+    });
+    expect(result.h5Url).toBe(
+      "https://wx.tenpay.com/cgi-bin/mmpayweb?prepay_id=x&redirect_url=" +
+        encodeURIComponent("https://pay.example.com/checkout-return?x=1"),
+    );
+  });
+
+  it("refunds with out_refund_no as the idempotency key and maps status", async () => {
+    const fetchSpy = vi.fn(
+      async () =>
+        new Response(
+          JSON.stringify({ refund_id: "50000000382019052709732678859", status: "PROCESSING" }),
+          {
+            status: 200,
+          },
+        ),
+    );
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const result = await refundWechatOrder({
+      outTradeNo: "order_1",
+      outRefundNo: "refund_1",
+      refundFen: 3400,
+      totalFen: 6800,
+    });
+
+    const [url, init] = fetchSpy.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toContain("/v3/refund/domestic/refunds");
+    expect(JSON.parse(String(init.body))).toMatchObject({
+      out_trade_no: "order_1",
+      out_refund_no: "refund_1",
+      amount: { refund: 3400, total: 6800, currency: "CNY" },
+    });
+    expect(result.status).toBe("processing");
   });
 });

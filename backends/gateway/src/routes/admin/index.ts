@@ -15,9 +15,11 @@
  *   POST /dlq/:id/replay   — retry a DLQ entry
  *   GET  /feature-flags    — list runtime-only feature flag override records
  *   POST /feature-flags    — record a runtime-only feature flag override
+ *   POST /payment-orders/:id/refund — refund an order and take back what it granted
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { BillingError, refundPaymentOrder } from "@nebutra/billing";
 import { getSystemDb } from "@nebutra/db";
 import { ackDeadLetter, getDeadLetterQueue } from "@nebutra/event-bus";
 import { logger } from "@nebutra/logger";
@@ -477,5 +479,91 @@ adminRoutes.openapi(
       runtimeOnlyOverride,
       metadata: runtimeOnlyFeatureFlagOverrideMetadata,
     });
+  },
+);
+
+// POST /payment-orders/{id}/refund
+const RefundRequestSchema = z.object({
+  /** Idempotency key: retrying with the same refundId never pays out twice. */
+  refundId: z.string().min(1).max(64),
+  /** Minor units (cents / fen). Omit to refund everything not yet refunded. */
+  amountMinor: z.number().int().positive().optional(),
+  reason: z.string().max(80).optional(),
+});
+
+adminRoutes.openapi(
+  createRoute({
+    method: "post",
+    path: "/payment-orders/{id}/refund",
+    tags: ["Admin"],
+    summary: "Refund a payment order and revoke what it granted",
+    description:
+      "Moves the money back through the order's provider, then asks the offer's fulfillment to take back a proportional share. `revocation.revoked: false` means the money went back but the grant could not be (e.g. credits already spent).",
+    request: {
+      params: OrgIdParam,
+      body: { content: { "application/json": { schema: RefundRequestSchema } } },
+    },
+    responses: {
+      200: {
+        description: "Refund result",
+        content: {
+          "application/json": {
+            schema: z.object({
+              status: z.enum(["succeeded", "processing", "failed"]),
+              refundedMinor: z.number().int(),
+              revocation: z
+                .object({ revoked: z.boolean(), reason: z.string().optional() })
+                .optional(),
+            }),
+          },
+        },
+      },
+      400: {
+        description: "Invalid refund",
+        content: {
+          "application/json": { schema: z.object({ error: z.string(), code: z.string() }) },
+        },
+      },
+      404: {
+        description: "Unknown order",
+        content: {
+          "application/json": { schema: z.object({ error: z.string(), code: z.string() }) },
+        },
+      },
+      409: {
+        description: "Order is not refundable, or changed mid-refund",
+        content: {
+          "application/json": { schema: z.object({ error: z.string(), code: z.string() }) },
+        },
+      },
+    },
+  }),
+  async (c) => {
+    const { id } = c.req.valid("param");
+    const body = c.req.valid("json");
+    try {
+      const result = await refundPaymentOrder({
+        orderId: id,
+        refundId: body.refundId,
+        ...(body.amountMinor ? { amountMinor: body.amountMinor } : {}),
+        ...(body.reason ? { reason: body.reason } : {}),
+      });
+      logger.info("Payment order refunded", {
+        auditEvent: "admin.payment_order.refunded",
+        orderId: id,
+        refundId: body.refundId,
+        status: result.status,
+        refundedMinor: result.refundedMinor,
+        revoked: result.revocation?.revoked,
+        requestId: c.get("requestId"),
+      });
+      return c.json(result, 200);
+    } catch (err) {
+      if (err instanceof BillingError) {
+        const status = err.statusCode === 404 ? 404 : err.statusCode === 409 ? 409 : 400;
+        return c.json({ error: err.message, code: err.code }, status);
+      }
+      throw err;
+    }
   },
 );

@@ -377,6 +377,17 @@ export const UsageLedgerSource = {
 export type UsageLedgerSource = (typeof UsageLedgerSource)[keyof typeof UsageLedgerSource]
 
 
+export const PaymentOrderStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  PARTIALLY_REFUNDED: 'PARTIALLY_REFUNDED',
+  REFUNDED: 'REFUNDED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type PaymentOrderStatus = (typeof PaymentOrderStatus)[keyof typeof PaymentOrderStatus]
+
+
 export const ConsentType = {
   EXPLICIT: 'EXPLICIT',
   IMPLICIT: 'IMPLICIT',

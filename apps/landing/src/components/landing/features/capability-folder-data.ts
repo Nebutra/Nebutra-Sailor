@@ -228,8 +228,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 21,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 337,
-      testFiles: 62,
+      sourceFiles: 340,
+      testFiles: 63,
       readmes: 15,
     },
     title: copy("Platform Control Plane", "平台控制平面"),
@@ -764,8 +764,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 9,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 85,
-      testFiles: 29,
+      sourceFiles: 90,
+      testFiles: 32,
       readmes: 9,
     },
     title: copy("Commercial System of Record", "商业系统记录源"),
@@ -902,8 +902,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 1,
       unitLabel: copy("backend", "后端"),
-      sourceFiles: 104,
-      testFiles: 45,
+      sourceFiles: 107,
+      testFiles: 47,
       readmes: 0,
     },
     title: copy("Typed API Gateway Boundary", "类型化 API 网关边界"),

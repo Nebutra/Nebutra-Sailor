@@ -4266,160 +4266,6 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/v1/billing/credits/pricing": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * List suggested credit pack tiers
-     * @description Public endpoint for marketing display — no authentication required.
-     */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description Credit pack pricing */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": {
-              packs: {
-                credits: number;
-                price: number;
-                bonus?: number;
-                recommended?: boolean;
-              }[];
-            };
-          };
-        };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/v1/billing/credits/checkout": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    /**
-     * Create a credit purchase checkout session
-     * @description Creates a provider-agnostic checkout session (Stripe / ChinaPay). Provider is auto-detected from env.
-     */
-    post: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: {
-        content: {
-          "application/json": {
-            creditAmount: number;
-            amount: number;
-            /** @default USD */
-            currency?: string;
-            /** Format: uri */
-            successUrl: string;
-            /** Format: uri */
-            cancelUrl: string;
-            priceId?: string;
-          };
-        };
-      };
-      responses: {
-        /** @description Checkout session created */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": {
-              /** Format: uri */
-              url: string;
-              sessionId: string;
-              provider: string;
-            };
-          };
-        };
-        /** @description Invalid request */
-        400: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": {
-              error: string;
-              message?: string;
-            };
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-        /** @description Organization membership required */
-        403: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-        /** @description Checkout provider error */
-        500: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": {
-              error: string;
-              message?: string;
-            };
-          };
-        };
-        /** @description Billing service temporarily unavailable */
-        503: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": {
-              error: string;
-              message?: string;
-            };
-          };
-        };
-      };
-    };
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   "/api/v1/billing/credits/balance": {
     parameters: {
       query?: never;
@@ -4558,6 +4404,255 @@ export interface paths {
             "application/json": {
               error: string;
               message?: string;
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/billing/offers": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List the offers that can be bought */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Active offers */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              offers: {
+                id: string;
+                name: string;
+                prices: {
+                  USD?: number;
+                  CNY?: number;
+                };
+                highlight?: string;
+              }[];
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/billing/offers/methods": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List the payment methods that are live
+     * @description A method is live when its provider keys are configured.
+     */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Live payment methods */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              methods: {
+                /** @enum {string} */
+                id: "card" | "alipay" | "wechat";
+                /** @enum {string} */
+                currency: "USD" | "CNY";
+              }[];
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/billing/orders": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Create a payment order for one offer */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            offerId: string;
+            /** @enum {string} */
+            method: "card" | "alipay" | "wechat";
+            /**
+             * @default qr
+             * @enum {string}
+             */
+            channel?: "qr" | "h5";
+            /** Format: uri */
+            successUrl: string;
+            /** Format: uri */
+            cancelUrl: string;
+          };
+        };
+      };
+      responses: {
+        /** @description Order created; send the buyer to the payment */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              orderId: string;
+              /** @enum {string} */
+              kind: "redirect" | "qr";
+              url: string;
+              amountMinor: number;
+              /** @enum {string} */
+              currency: "USD" | "CNY";
+            };
+          };
+        };
+        /** @description Unknown offer, unavailable method, or a return URL off the product origin */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              code?: string;
+            };
+          };
+        };
+        /** @description Payment provider error */
+        500: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              code?: string;
+            };
+          };
+        };
+        /** @description Billing service temporarily unavailable */
+        503: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              code?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/billing/orders/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get a payment order's status */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Order status */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              id: string;
+              offerId: string;
+              /** @enum {string} */
+              status: "PENDING" | "PAID" | "PARTIALLY_REFUNDED" | "REFUNDED" | "EXPIRED";
+              fulfilled: boolean;
+              amountMinor: number;
+              currency: string;
+              method: string;
+              createdAt: string;
+            };
+          };
+        };
+        /** @description No such order in this organization */
+        404: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              code?: string;
             };
           };
         };
@@ -5906,6 +6001,99 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/admin/payment-orders/{id}/refund": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Refund a payment order and revoke what it granted
+     * @description Moves the money back through the order's provider, then asks the offer's fulfillment to take back a proportional share. `revocation.revoked: false` means the money went back but the grant could not be (e.g. credits already spent).
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            refundId: string;
+            amountMinor?: number;
+            reason?: string;
+          };
+        };
+      };
+      responses: {
+        /** @description Refund result */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              /** @enum {string} */
+              status: "succeeded" | "processing" | "failed";
+              refundedMinor: number;
+              revocation?: {
+                revoked: boolean;
+                reason?: string;
+              };
+            };
+          };
+        };
+        /** @description Invalid refund */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              code: string;
+            };
+          };
+        };
+        /** @description Unknown order */
+        404: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              code: string;
+            };
+          };
+        };
+        /** @description Order is not refundable, or changed mid-refund */
+        409: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              code: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/webhooks/stripe": {
     parameters: {
       query?: never;
@@ -6083,6 +6271,64 @@ export interface paths {
           };
           content: {
             "text/plain": string;
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/webhooks/creem": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Creem webhook
+     * @description Verifies `creem-signature` (hex HMAC-SHA256 of the raw body) and settles the payment order a `checkout.completed` names. 2xx only after the inbox row is marked processed.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            [key: string]: unknown;
+          };
+        };
+      };
+      responses: {
+        /** @description Accepted */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              ok: boolean;
+            };
+          };
+        };
+        /** @description Bad signature */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              ok: boolean;
+            };
           };
         };
       };

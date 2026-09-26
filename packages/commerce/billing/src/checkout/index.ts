@@ -6,7 +6,8 @@ export {
   type CreditPurchaseWebhookResult,
   handleCreditPurchaseWebhook,
 } from "./credit-webhook";
-export { detectProvider, getCheckout } from "./factory";
+export { CreemCheckoutProvider } from "./creem";
+export { detectProvider, getCheckout, isChinaPayConfigured } from "./factory";
 export { ManualCheckoutProvider } from "./manual";
 export {
   type BillingProviderReadiness,
@@ -14,14 +15,15 @@ export {
   type BillingProviderReadinessStatus,
   resolveBillingProviderReadiness,
 } from "./readiness";
-export { StripeCheckoutProvider } from "./stripe";
+export { refundStripeCheckoutSession, StripeCheckoutProvider } from "./stripe";
 export {
   type CheckoutConfig,
   type CheckoutProvider,
   type CheckoutProviderType,
   CREDIT_PURCHASE_METADATA_TYPE,
-  type CreditPurchaseInput,
-  CreditPurchaseInputSchema,
   type CreditPurchaseMetadata,
-  type CreditPurchaseSession,
+  PAYMENT_ORDER_METADATA_KEY,
+  type PaymentSession,
+  type PaymentSessionInput,
+  PaymentSessionInputSchema,
 } from "./types";

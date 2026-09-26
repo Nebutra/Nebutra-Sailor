@@ -15,8 +15,8 @@ Read it in full before writing any code.
 
 ADR [2026-09-24 Sailor convergence](docs/architecture/2026-09-24-sailor-convergence.md):
 every domain has exactly one provider (what Nebutra production runs); a second
-adapter exists only where law or network forces it (payments: Stripe + WeChat
-Pay/Alipay; SMS: Twilio Verify + Aliyun; storage: one S3-compatible adapter for
+adapter exists only where law or network forces it (payments: Creem + WeChat
+Pay/Alipay — Creem replaced Stripe as the card rail, ADR 2026-09-26; SMS: Twilio Verify + Aliyun; storage: one S3-compatible adapter for
 R2 and OSS). Keys in the env decide what is live; `nebutra status` reports it.
 Do not add alternative adapters, provider flags, or region switches — amend the
 ADR first. Mainland-China surfaces switch on at runtime with `NEBUTRA_LOCALE=cn`.
@@ -75,7 +75,7 @@ packages/              # Shared TypeScript libraries — categorized layout: <ca
     permissions/       RBAC/ABAC engine — CASL (in-process)
     identity/          Shared identity primitives
   commerce/
-    billing/           Stripe + ChinaPay (WeChat Pay / Alipay) — legal pair
+    billing/           Creem (cards, merchant of record) + ChinaPay (WeChat Pay / Alipay)
     contracts/         Cross-package event/identity/billing/notification contracts
     license/           License key generation + validation
     marketing/         Marketing-site shared components/hooks/utils

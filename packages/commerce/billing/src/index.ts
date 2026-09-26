@@ -68,15 +68,18 @@ export {
   type CheckoutProvider,
   type CheckoutProviderType,
   CREDIT_PURCHASE_METADATA_TYPE,
-  type CreditPurchaseInput,
-  CreditPurchaseInputSchema,
   type CreditPurchaseMetadata,
-  type CreditPurchaseSession,
   type CreditPurchaseWebhookInput,
   type CreditPurchaseWebhookResult,
   detectProvider,
   getCheckout,
   handleCreditPurchaseWebhook,
+  isChinaPayConfigured,
+  PAYMENT_ORDER_METADATA_KEY,
+  type PaymentSession,
+  type PaymentSessionInput,
+  PaymentSessionInputSchema,
+  refundStripeCheckoutSession,
   resolveBillingProviderReadiness,
 } from "./checkout/index";
 // China Payment (official WeChat Pay APIv3 + Alipay Open Platform, no aggregator)
@@ -84,10 +87,13 @@ export {
   ALIPAY_NOTIFY_SUCCESS_BODIES,
   type AlipayConfig,
   type AlipayNotificationFields,
+  buildAlipayWapPayUrl,
+  type ChinaPayChannel,
   type ChinaPayMethod,
   type ChinaPayOrder,
   createAlipayPrecreateOrder,
   createChinaPayOrder,
+  createWechatH5Order,
   createWechatNativeOrder,
   ensurePem,
   getAlipayConfig,
@@ -97,6 +103,10 @@ export {
   queryAlipayOrder,
   queryChinaPayOrder,
   queryWechatOrder,
+  type RefundChinaPayOrderInput,
+  refundAlipayOrder,
+  refundChinaPayOrder,
+  refundWechatOrder,
   resetChinaPayConfig,
   verifyAlipayNotification,
   verifyAndDecryptWechatNotification,
@@ -134,6 +144,19 @@ export {
   invalidateCreditCache,
   refundCredits,
 } from "./credits/index";
+// Creem — the global card rail, merchant of record (ADR 2026-09-26)
+export {
+  type CreemCheckout,
+  type CreemConfig,
+  type CreemOrder,
+  type CreemWebhookEvent,
+  createCreemCheckout,
+  getCreemCheckout,
+  getCreemConfig,
+  isCreemConfigured,
+  refundCreemOrder,
+  verifyCreemSignature,
+} from "./creem/index";
 // Host DB wiring (no private @nebutra/db import)
 export {
   type BillingTenantDb,
@@ -158,6 +181,49 @@ export {
   revokeEntitlement,
   type UsageEntitlementResult,
 } from "./entitlements/index";
+// Fulfillment — what a paid order hands over, keyed by offer.fulfillment.type
+export {
+  type FulfillmentContext,
+  type FulfillmentHandler,
+  getFulfillment,
+  type RevocationContext,
+  type RevocationResult,
+  registerFulfillment,
+} from "./fulfillment/index";
+// Offers — what can be bought (data, replaced by the host at boot)
+export {
+  configureOffers,
+  DEFAULT_OFFERS,
+  type FulfillmentSpec,
+  getOffer,
+  listOffers,
+  type Offer,
+  type OfferCurrency,
+  toMajorString,
+  toMinorUnits,
+} from "./offers/index";
+// Payment orders — create, settle, reconcile, refund
+export {
+  type CreatedPaymentOrder,
+  type CreatePaymentOrderInput,
+  configurePaymentOrderStore,
+  createPaymentOrder,
+  fulfillPaymentOrder,
+  getPaymentOrder,
+  isPaymentMethodAvailable,
+  type PaymentMethod,
+  type PaymentOrderRecord,
+  type PaymentOrderStatus,
+  type PaymentOrderStore,
+  type ReconcileResult,
+  type RefundPaymentOrderInput,
+  type RefundPaymentOrderResult,
+  reconcilePaymentOrders,
+  refundPaymentOrder,
+  type SettleOutcome,
+  type SettlePaymentOrderInput,
+  settlePaymentOrder,
+} from "./orders/index";
 export {
   createBillingPortalSession,
   createCheckoutSession,

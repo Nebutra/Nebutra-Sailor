@@ -57,6 +57,7 @@ BEGIN
     ('public', 'invoices', 'invoices_rls'),
     ('public', 'invoice_items', 'invoice_items_rls'),
     ('public', 'payments', 'payments_rls'),
+    ('public', 'payment_orders', 'payment_orders_rls'),
     ('public', 'payment_methods', 'payment_methods_rls'),
     ('public', 'usage_ledger_entries', 'usage_ledger_entries_rls'),
     ('public', 'credit_balances', 'credit_balances_rls'),
@@ -314,6 +315,11 @@ CREATE POLICY "invoice_items_rls" ON "public"."invoice_items" FOR ALL USING ("in
 ALTER TABLE "public"."payments" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "payments_rls" ON "public"."payments";
 CREATE POLICY "payments_rls" ON "public"."payments" FOR ALL USING ("tenant_id" = public.current_tenant_id()) WITH CHECK ("tenant_id" = public.current_tenant_id());
+
+-- PaymentOrder
+ALTER TABLE "public"."payment_orders" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "payment_orders_rls" ON "public"."payment_orders";
+CREATE POLICY "payment_orders_rls" ON "public"."payment_orders" FOR ALL USING ("tenant_id" = public.current_tenant_id()) WITH CHECK ("tenant_id" = public.current_tenant_id());
 
 -- PaymentMethod
 ALTER TABLE "public"."payment_methods" ENABLE ROW LEVEL SECURITY;

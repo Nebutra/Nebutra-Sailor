@@ -22,10 +22,9 @@ import {
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getSystemDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
-import type { Context, Next } from "hono";
 import {
-  mapTenantRoleToPermissionRoles,
   requireAuth,
+  requireBillingManage,
   requireOrganization,
 } from "../../middlewares/tenantContext.js";
 import { getUsageSnapshot } from "../../middlewares/usageMetering.js";
@@ -35,17 +34,6 @@ export const billingRoutes = new OpenAPIHono();
 billingRoutes.use("*", requireAuth, requireOrganization);
 billingRoutes.use("/checkout", requireBillingManage);
 billingRoutes.use("/portal", requireBillingManage);
-
-const BILLING_MANAGE_ROLES = new Set(["owner", "admin", "billing_admin"]);
-
-async function requireBillingManage(c: Context, next: Next) {
-  const tenant = c.get("tenant");
-  const roles = mapTenantRoleToPermissionRoles(tenant?.role);
-  if (!roles.some((role) => BILLING_MANAGE_ROLES.has(role))) {
-    return c.json({ error: "Forbidden", message: "billing:manage permission is required" }, 403);
-  }
-  await next();
-}
 
 function checkoutEnv(): NodeJS.ProcessEnv {
   return {

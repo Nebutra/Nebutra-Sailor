@@ -148,12 +148,6 @@ const KNOWN_UNGUARDED: readonly KnownUnguarded[] = [
   { file: "ai/index.ts", method: "POST", path: "/chat", identity: "requireAuth" },
   { file: "ai/index.ts", method: "POST", path: "/embeddings", identity: "requireAuth" },
   {
-    file: "billing/credits.ts",
-    method: "POST",
-    path: "/checkout",
-    identity: "requireAuth+requireOrganization",
-  },
-  {
     file: "billing/usage.ts",
     method: "POST",
     path: "/usage",
@@ -313,6 +307,11 @@ const AUTHZ_MARKERS: readonly Marker[] = [
     why: "middlewares/tenantContext.ts — org role allow-list, 401/403",
   },
   {
+    id: "billing-manage",
+    test: (t) => /\brequireBillingManage\b/.test(t),
+    why: "middlewares/tenantContext.ts — owner/admin/billing_admin, 403",
+  },
+  {
     id: "role-check",
     test: (t) => /\bmapTenantRoleToPermissionRoles\s*\(/.test(t),
     why: "hand-rolled role check on the tenantContext role mapping (billing requireBillingManage)",
@@ -388,6 +387,10 @@ const WEBHOOK_VERIFICATION: Readonly<
   // on the route's own path since the file-level check above isn't granular
   // enough. WeChat Pay APIv3: platform-certificate RSA signature + AEAD_AES_256_GCM
   // decrypt. Alipay: RSA2 signature over the sorted form fields.
+  // verifyCreemSignature(rawBody, creem-signature) — hex HMAC-SHA256 under
+  // CREEM_WEBHOOK_SECRET, checked before the body is parsed → 401 on failure.
+  "webhooks/creem.ts": (r, f) =>
+    r.path === "/creem" && /\bverifyCreemSignature\s*\(/.test(f.masked),
   "webhooks/chinapay.ts": (r, f) => {
     if (r.path === "/chinapay/wechat") {
       return /\bverifyAndDecryptWechatNotification\s*\(/.test(f.masked);
@@ -1072,10 +1075,15 @@ describe("permissions ratchet (gateway mutation routes)", () => {
       });
     });
 
-    it("sees a hand-rolled role check through a local function reference", () => {
+    it("sees the shared billing-manage guard on subscription checkout and on buying an offer", () => {
       expect(anchor("billing/index.ts", "POST", "/checkout")).toMatchObject({
         status: "guarded",
-        authz: ["role-check"],
+        authz: ["billing-manage"],
+      });
+      // Through a local function reference: guardPurchase → requireBillingManage.
+      expect(anchor("billing/orders.ts", "POST", "/orders")).toMatchObject({
+        status: "guarded",
+        authz: ["billing-manage"],
       });
     });
 
@@ -1086,6 +1094,7 @@ describe("permissions ratchet (gateway mutation routes)", () => {
       });
       for (const [file, path] of [
         ["webhooks/stripe.ts", "/stripe"],
+        ["webhooks/creem.ts", "/creem"],
         ["webhooks/better-auth-webhooks.ts", "/"],
       ] as const) {
         expect(anchor(file, "POST", path), file).toMatchObject({

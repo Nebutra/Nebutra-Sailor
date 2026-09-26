@@ -5,6 +5,7 @@ import { automationRunner } from "./functions/automationRunner.js";
 import { automationScheduler } from "./functions/automationScheduler.js";
 import { processBillingEvent } from "./functions/billingSync.js";
 import { processGdprDeletion } from "./functions/gdprDeletion.js";
+import { paymentOrderReconcile } from "./functions/paymentOrderReconcile.js";
 import { pebbleDiagnosticsRetention } from "./functions/pebbleDiagnosticsRetention.js";
 import { requestLogRetention } from "./functions/requestLogRetention.js";
 import { routerReservationSweep } from "./functions/routerReservationSweep.js";
@@ -24,6 +25,7 @@ export const inngestFunctions: InngestFunction.Any[] = [
   pebbleDiagnosticsRetention,
   routerReservationSweep,
   requestLogRetention,
+  paymentOrderReconcile,
 ];
 export { inngest };
 
