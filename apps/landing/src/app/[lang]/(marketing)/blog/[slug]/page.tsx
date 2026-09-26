@@ -108,7 +108,7 @@ function BlogArticleFooter({
             </div>
             <Link
               href={localizedPostHref(lang)}
-              className="hidden items-center gap-1.5 text-sm font-medium text-[hsl(var(--primary))] sm:inline-flex"
+              className="hidden items-center gap-1.5 text-sm font-medium text-primary sm:inline-flex"
             >
               {isZh ? "全部文章" : "All posts"}
               <ArrowRight className="size-4" aria-hidden />
@@ -238,7 +238,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
           <AnimateIn preset="fade" inView>
             <Link
               href={localizedPostHref(lang)}
-              className="mb-8 inline-flex items-center gap-1.5 rounded text-sm text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
+              className="mb-8 inline-flex items-center gap-1.5 rounded text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               <ArrowLeft className="size-4" aria-hidden />
               {isZh ? "全部文章" : "All posts"}
@@ -284,7 +284,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     {authorName && (
                       <Link
                         href={`${localizedPostHref(lang)}/author/${getBlogUrlSegment(authorName)}`}
-                        className="inline-flex items-center gap-2 font-medium text-foreground hover:text-[hsl(var(--primary))]"
+                        className="inline-flex items-center gap-2 font-medium text-foreground hover:text-primary"
                       >
                         <BlogAuthorAvatar name={authorName} src={authorAvatarUrl} size="md" />
                         <span>{authorName}</span>

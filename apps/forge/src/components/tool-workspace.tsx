@@ -993,7 +993,7 @@ export function ToolWorkspace({
             category === "image" ? (
               <ImageToolRunner toolId={toolId} />
             ) : (
-              <p className="text-sm text-[var(--status-danger)]">
+              <p className="text-sm text-destructive-strong">
                 {tRunners("workspaceMissing", { slug })}
               </p>
             )

@@ -231,7 +231,7 @@ export function ProductDetail({
               {categoryLabel}
             </span>
             {model.sellable || model.routed ? (
-              <span className="rounded-full bg-[color-mix(in_srgb,var(--status-success)_16%,white)] px-2.5 py-1 text-[11px] font-medium text-[var(--status-success)]">
+              <span className="rounded-full bg-success/16 px-2.5 py-1 text-[11px] font-medium text-success-strong">
                 可售
               </span>
             ) : (
@@ -262,9 +262,7 @@ export function ProductDetail({
               <dd className="font-medium text-[var(--neutral-12)]">{providerLabel}</dd>
             </div>
           </dl>
-          <p className="mt-2 text-[12px] text-[color:var(--status-warning)]">
-            大额采购可联系支持获取专属价
-          </p>
+          <p className="mt-2 text-[12px] text-warning-strong">大额采购可联系支持获取专属价</p>
 
           <div className="mt-5 flex flex-wrap items-center gap-2.5">
             <Link
@@ -417,10 +415,7 @@ export function ProductDetail({
                           {a.method}
                         </span>
                       </TableCell>
-                      <TableCell
-                        alignment="start"
-                        className="px-3 py-3.5 text-[var(--status-success)]"
-                      >
+                      <TableCell alignment="start" className="px-3 py-3.5 text-success-strong">
                         {a.stability}
                       </TableCell>
                       <TableCell alignment="start" className="px-5 py-3.5 md:px-6">

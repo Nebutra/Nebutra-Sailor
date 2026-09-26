@@ -614,7 +614,7 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
           setDragging(false);
         }}
         onDrop={onDrop}
-        className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[var(--radius-lg)] border-2 border-dashed px-4 py-10 text-center transition-colors focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[hsl(var(--ring)/0.5)] ${
+        className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[var(--radius-lg)] border-2 border-dashed px-4 py-10 text-center transition-colors focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring/50 ${
           dragging
             ? "border-primary bg-[var(--blue-3)]/40"
             : "border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 hover:border-[var(--neutral-8)]"

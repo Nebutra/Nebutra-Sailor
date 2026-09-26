@@ -103,7 +103,7 @@ export function ThreeDPipelineGlyph(_props: SubpackageGlyphProps) {
 
         <StageCard icon={<Box size={11} />} title="Pack GLB">
           <div className="flex items-center gap-1">
-            <Check size={11} style={{ color: "var(--status-success)" }} />
+            <Check size={11} style={{ color: "hsl(var(--success-strong))" }} />
             <span
               className="font-mono text-[9.5px] leading-none"
               style={{ color: "hsl(var(--muted-foreground))" }}

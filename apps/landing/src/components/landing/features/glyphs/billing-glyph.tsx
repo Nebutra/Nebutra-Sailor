@@ -29,7 +29,7 @@ export function BillingGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Header: MRR label + sparkle accent */}
         <div className="flex items-center gap-1.5">
           <Sparkles className="h-3 w-3 text-muted-foreground" />
@@ -51,7 +51,7 @@ export function BillingGlyph({ locale }: SubpackageGlyphProps) {
           {BAR_HEIGHTS.map((height, i) => (
             <span
               key={i}
-              className="flex-1 rounded-[var(--radius-sm)] bg-[hsl(var(--primary))]"
+              className="flex-1 rounded-[var(--radius-sm)] bg-primary"
               style={{ height: `${height}%`, opacity: 0.35 + (i / BAR_HEIGHTS.length) * 0.6 }}
             />
           ))}

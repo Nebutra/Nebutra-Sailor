@@ -48,7 +48,7 @@ function DeleteButton({
       disabled={pending}
       onClick={handleClick}
       data-testid={`provider-key-remove-${provider}`}
-      className="text-xs font-medium text-[hsl(var(--destructive-strong))] transition-colors hover:text-[hsl(var(--destructive-strong))]/80 disabled:opacity-50"
+      className="text-xs font-medium text-destructive-strong transition-colors hover:text-destructive-strong/80 disabled:opacity-50"
     >
       {pending ? "Removing…" : "Remove"}
     </button>

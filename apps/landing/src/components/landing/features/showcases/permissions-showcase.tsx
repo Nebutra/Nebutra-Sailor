@@ -106,9 +106,7 @@ const HIGHLIGHT: Record<RoleKey, { resource: ResourceKey; action: ActionKey }> =
 };
 
 function PermissionCell({ state, highlighted }: { state: CellState; highlighted: boolean }) {
-  const ring = highlighted
-    ? "ring-2 ring-[hsl(var(--primary))] ring-offset-2 ring-offset-background"
-    : "";
+  const ring = highlighted ? "ring-2 ring-primary ring-offset-2 ring-offset-background" : "";
 
   if (state === "allow") {
     return (

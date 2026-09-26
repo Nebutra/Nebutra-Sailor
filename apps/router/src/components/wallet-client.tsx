@@ -150,8 +150,8 @@ export function WalletClient() {
             className={[
               "mt-2 rounded-[var(--radius-md)] border px-2.5 py-1.5 text-[12px]",
               outcome.tone === "error"
-                ? "border-[color-mix(in_srgb,var(--status-danger)_35%,var(--neutral-6))] bg-[color-mix(in_srgb,var(--status-danger)_8%,var(--neutral-1))] text-[var(--status-danger)]"
-                : "border-[color-mix(in_srgb,var(--status-success)_35%,var(--neutral-6))] bg-[color-mix(in_srgb,var(--status-success)_8%,var(--neutral-1))] text-[var(--status-success)]",
+                ? "border-destructive/35 bg-destructive/8 text-destructive-strong"
+                : "border-success/35 bg-success/8 text-success-strong",
             ].join(" ")}
           >
             {outcome.text}

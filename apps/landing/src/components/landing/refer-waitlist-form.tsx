@@ -230,7 +230,7 @@ export function ReferWaitlistForm({
           mode (fill-only), the ramp is 5.32 light / 5.84 dark.
           TODO: use --destructive-strong once @nebutra/tokens defines it. */}
       {status === "error" && (
-        <p role="alert" className="mt-3 text-sm text-[hsl(var(--destructive-strong))]">
+        <p role="alert" className="mt-3 text-sm text-destructive-strong">
           {errorMessage}
         </p>
       )}

@@ -147,7 +147,7 @@ export default async function ToolPage({ params }: Props) {
                       href={rel.path}
                       className={
                         isNext
-                          ? "inline-flex h-9 items-center rounded-full border border-[hsl(var(--primary)/0.35)] bg-[hsl(var(--primary)/0.08)] px-4 text-sm text-[var(--neutral-12)] transition-colors hover:border-[hsl(var(--primary)/0.55)]"
+                          ? "inline-flex h-9 items-center rounded-full border border-primary/35 bg-primary/8 px-4 text-sm text-[var(--neutral-12)] transition-colors hover:border-primary/55.00000000000001"
                           : "inline-flex h-9 items-center rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 text-sm text-[var(--neutral-11)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
                       }
                     >

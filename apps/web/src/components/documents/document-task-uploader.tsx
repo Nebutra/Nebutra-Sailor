@@ -222,7 +222,7 @@ export function DocumentTaskUploader({
     >
       <div className="min-w-0">
         <div className="flex min-w-0 items-start gap-3">
-          <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-background text-muted-foreground ring-1 ring-[hsl(var(--border))]">
+          <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-background text-muted-foreground ring-1 ring-border">
             <FileText className="size-4" aria-hidden={true} />
           </span>
           <div className="min-w-0">
@@ -254,7 +254,7 @@ export function DocumentTaskUploader({
         {taskQuery.isError ? (
           <p
             role="alert"
-            className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-warning/30 bg-warning/10 px-3 py-2 text-[hsl(var(--warning-strong))] text-xs"
+            className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-warning/30 bg-warning/10 px-3 py-2 text-warning-strong text-xs"
           >
             <Warning className="size-3.5 shrink-0" aria-hidden={true} />
             {text.statusError}
@@ -264,7 +264,7 @@ export function DocumentTaskUploader({
         {error ? (
           <p
             role="alert"
-            className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-[hsl(var(--destructive-strong))] text-xs"
+            className="mt-3 flex items-center gap-2 rounded-[var(--radius-md)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-destructive-strong text-xs"
           >
             <Warning className="size-3.5 shrink-0" aria-hidden={true} />
             {error}
@@ -482,9 +482,9 @@ function getProgressType(status: TaskRecord["status"]) {
 function getTaskPanelTone(status: TaskRecord["status"]) {
   switch (status) {
     case "succeeded":
-      return "border-success/30 bg-success/10 text-[hsl(var(--success-strong))]";
+      return "border-success/30 bg-success/10 text-success-strong";
     case "failed":
-      return "border-destructive/30 bg-destructive/10 text-[hsl(var(--destructive-strong))]";
+      return "border-destructive/30 bg-destructive/10 text-destructive-strong";
     case "cancelled":
       return "border-border bg-muted text-foreground";
     case "queued":

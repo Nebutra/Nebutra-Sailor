@@ -464,7 +464,7 @@ function NotificationsToolbar({
         type="button"
         onClick={() => void onMarkAllRead()}
         disabled={loading || !hasUnread}
-        className="text-xs font-medium text-[hsl(var(--primary))] hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+        className="text-xs font-medium text-primary hover:underline disabled:cursor-not-allowed disabled:opacity-50"
       >
         {markAllReadLabel}
       </button>
@@ -622,7 +622,7 @@ function FilterTabButton({
     >
       {label}
       {typeof count === "number" && count > 0 ? (
-        <span className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-[hsl(var(--primary))] px-1.5 text-[10px] font-semibold text-[hsl(var(--background))]">
+        <span className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[10px] font-semibold text-background">
           {count > 99 ? "99+" : count}
         </span>
       ) : null}

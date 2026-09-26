@@ -160,7 +160,7 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
             <div>
               <div className="h-2 overflow-hidden rounded-full bg-[var(--neutral-4)]">
                 <div
-                  className="h-full rounded-full bg-[hsl(var(--primary))] transition-all"
+                  className="h-full rounded-full bg-primary transition-all"
                   style={{
                     width: `${Math.min(
                       100,

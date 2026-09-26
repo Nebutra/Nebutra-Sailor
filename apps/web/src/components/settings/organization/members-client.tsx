@@ -204,7 +204,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
       {successMessage && (
         <p
           role="status"
-          className="rounded-[var(--radius-sm)] bg-[color:var(--status-success)]/10 px-3 py-2 text-xs text-[color:var(--status-success)]"
+          className="rounded-[var(--radius-sm)] bg-success/10 px-3 py-2 text-xs text-success-strong"
         >
           {successMessage}
         </p>
@@ -213,7 +213,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
       {errorMessage && (
         <p
           role="alert"
-          className="rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
+          className="rounded-[var(--radius-sm)] bg-destructive/10 px-3 py-2 text-xs text-destructive-strong"
         >
           {errorMessage}
         </p>
@@ -301,7 +301,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
                         type="button"
                         aria-label={`${t("remove")} ${displayName}`}
                         onClick={() => setConfirmRemoveId(member.id)}
-                        className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
+                        className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-xs text-destructive-strong transition-colors hover:bg-destructive/10"
                       >
                         <Trash2 className="h-3.5 w-3.5" aria-hidden />
                         <span>{t("remove")}</span>

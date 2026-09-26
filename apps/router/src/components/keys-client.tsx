@@ -268,8 +268,8 @@ function NoticeLine({ notice }: { notice: Notice }) {
       className={[
         "rounded-[var(--radius-md)] border px-3 py-2 text-[12px]",
         error
-          ? "border-[color-mix(in_srgb,var(--status-danger)_35%,var(--neutral-6))] bg-[color-mix(in_srgb,var(--status-danger)_8%,var(--neutral-1))] text-[var(--status-danger)]"
-          : "border-[color-mix(in_srgb,var(--status-success)_35%,var(--neutral-6))] bg-[color-mix(in_srgb,var(--status-success)_8%,var(--neutral-1))] text-[var(--status-success)]",
+          ? "border-destructive/35 bg-destructive/8 text-destructive-strong"
+          : "border-success/35 bg-success/8 text-success-strong",
       ].join(" ")}
     >
       {notice.text}
@@ -280,7 +280,7 @@ function NoticeLine({ notice }: { notice: Notice }) {
 function RevealOnce({ fullKey, onDismiss }: { fullKey: string; onDismiss: () => void }) {
   const [copied, setCopied] = useState(false);
   return (
-    <div className="rounded-[var(--radius-md)] border border-[color-mix(in_srgb,var(--status-warning)_35%,var(--neutral-6))] bg-[color-mix(in_srgb,var(--status-warning)_8%,var(--neutral-1))] p-3">
+    <div className="rounded-[var(--radius-md)] border border-warning/35 bg-warning/8 p-3">
       <p className="text-[12px] font-semibold">只显示这一次 · 关掉就再也读不到了</p>
       <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2 font-mono text-[11px]">
         {fullKey}
@@ -488,7 +488,7 @@ function KeyRowView({
               type="button"
               variant="outline"
               size="sm"
-              className="h-7 text-[var(--status-danger)]"
+              className="h-7 text-destructive-strong"
               disabled={busy !== null}
               aria-label={`吊销 ${row.name}`}
               onClick={onRevoke}

@@ -225,14 +225,14 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
             Subscribe to release notes via{" "}
             <Link
               href="/api/changelog/rss"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               RSS
             </Link>{" "}
             or{" "}
             <Link
               href="/api/changelog/atom"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               Atom
             </Link>{" "}
@@ -241,7 +241,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
               href="https://x.com/nebutra_ai"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               @nebutra_ai
             </a>

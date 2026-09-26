@@ -11,18 +11,18 @@ export type CodeSegment = CodeSegmentBase & {
 
 const TONE_RING: Record<SpecimenTone, string> = {
   neutral: "ring-[var(--neutral-6)]",
-  info: "ring-[color-mix(in_srgb,var(--status-info)_45%,var(--neutral-6))]",
-  success: "ring-[color-mix(in_srgb,var(--status-success)_50%,var(--neutral-6))]",
-  warning: "ring-[color-mix(in_srgb,var(--status-warning)_50%,var(--neutral-6))]",
-  danger: "ring-[color-mix(in_srgb,var(--status-danger)_55%,var(--neutral-6))]",
+  info: "ring-info/45",
+  success: "ring-success/50",
+  warning: "ring-warning/50",
+  danger: "ring-destructive/55",
 };
 
 const TONE_BG: Record<SpecimenTone, string> = {
   neutral: "bg-[var(--neutral-3)]",
-  info: "bg-[color-mix(in_srgb,var(--status-info)_12%,transparent)]",
-  success: "bg-[color-mix(in_srgb,var(--status-success)_12%,transparent)]",
-  warning: "bg-[color-mix(in_srgb,var(--status-warning)_14%,transparent)]",
-  danger: "bg-[color-mix(in_srgb,var(--status-danger)_12%,transparent)]",
+  info: "bg-info/12",
+  success: "bg-success/12",
+  warning: "bg-warning/14",
+  danger: "bg-destructive/12",
 };
 
 function cx(...parts: (string | false | null | undefined)[]): string {
@@ -64,10 +64,10 @@ export function SegmentedCodeSpecimen({
               "rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset",
               TONE_BG[statusTone],
               TONE_RING[statusTone],
-              statusTone === "success" && "text-[var(--status-success)]",
-              statusTone === "danger" && "text-[var(--status-danger)]",
-              statusTone === "warning" && "text-[color:var(--status-warning)]",
-              statusTone === "info" && "text-[color:var(--status-info)]",
+              statusTone === "success" && "text-success-strong",
+              statusTone === "danger" && "text-destructive-strong",
+              statusTone === "warning" && "text-warning-strong",
+              statusTone === "info" && "text-info",
               statusTone === "neutral" && "text-[var(--neutral-11)]",
             )}
           >
@@ -93,7 +93,7 @@ export function SegmentedCodeSpecimen({
               <p
                 className={cx(
                   "mt-1 break-all font-mono text-sm font-semibold tracking-wider",
-                  seg.error ? "text-[var(--status-danger)]" : "text-[var(--neutral-12)]",
+                  seg.error ? "text-destructive-strong" : "text-[var(--neutral-12)]",
                 )}
               >
                 {seg.value || "—"}

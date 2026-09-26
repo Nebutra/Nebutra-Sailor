@@ -117,7 +117,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
     return (
       <section className="rounded-[var(--radius-2xl)] bg-neutral-2 p-6 dark:bg-black/30">
         <h2 className="text-sm font-semibold text-neutral-12">Invitations and rewards</h2>
-        <p className="mt-1 text-xs text-[hsl(var(--destructive-strong))]">{message}</p>
+        <p className="mt-1 text-xs text-destructive-strong">{message}</p>
         <Button
           type="button"
           variant="outline"
@@ -256,9 +256,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
             {redeemMutation.isPending ? "Redeeming" : "Redeem"}
           </Button>
         </div>
-        {redeemError && (
-          <p className="mt-2 text-xs text-[hsl(var(--destructive-strong))]">{redeemError}</p>
-        )}
+        {redeemError && <p className="mt-2 text-xs text-destructive-strong">{redeemError}</p>}
         {redeemMutation.isSuccess && !redeemError && (
           <p className="mt-2 text-xs text-neutral-11">Code redeemed. Your referrer is credited.</p>
         )}

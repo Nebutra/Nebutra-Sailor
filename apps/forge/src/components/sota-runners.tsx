@@ -182,8 +182,8 @@ export function RegexSotaRunner({ toolId }: { toolId: string }) {
           <span
             className={`rounded-full px-3 py-1 text-xs font-medium ${
               testOk
-                ? "bg-[color-mix(in_srgb,var(--status-success)_15%,transparent)] text-[var(--status-success)]"
-                : "bg-[color-mix(in_srgb,var(--status-danger)_15%,transparent)] text-[var(--status-danger)]"
+                ? "bg-success/15 text-success-strong"
+                : "bg-destructive/15 text-destructive-strong"
             }`}
           >
             {testOk ? "true" : "false"}
@@ -202,10 +202,7 @@ export function RegexSotaRunner({ toolId }: { toolId: string }) {
         <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 font-mono text-sm leading-relaxed whitespace-pre-wrap">
           {highlighted.map((p, i) =>
             p.hit ? (
-              <mark
-                key={i}
-                className="rounded-sm bg-[color-mix(in_srgb,var(--status-warning)_45%,transparent)] px-0.5 text-[var(--neutral-12)]"
-              >
+              <mark key={i} className="rounded-sm bg-warning/45 px-0.5 text-[var(--neutral-12)]">
                 {p.text}
               </mark>
             ) : (
@@ -803,7 +800,7 @@ export function RouterTranslateRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-[var(--radius-lg)] border border-[color-mix(in_srgb,var(--status-warning)_30%,transparent)] bg-[color-mix(in_srgb,var(--status-warning)_8%,transparent)] px-3 py-2 text-sm text-[var(--neutral-11)]">
+      <div className="rounded-[var(--radius-lg)] border border-warning/30 bg-warning/8 px-3 py-2 text-sm text-[var(--neutral-11)]">
         {t("routerTranslate.lab")}
       </div>
       <Textarea

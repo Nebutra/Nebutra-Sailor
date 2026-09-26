@@ -28,8 +28,8 @@ export interface RoadmapPhase {
 const STATUS_META: Record<PhaseStatus, { label: string; tone: string; dot: string }> = {
   done: {
     label: "Complete",
-    tone: "text-[color:var(--status-success)]",
-    dot: "bg-[color:var(--status-success)]",
+    tone: "text-success-strong",
+    dot: "bg-success",
   },
   active: {
     label: "In Progress",
@@ -156,7 +156,7 @@ export function RoadmapTimeline({ data }: { data: RoadmapPhase[] }) {
                         <CheckCircle
                           className={`mt-0.5 h-4 w-4 flex-shrink-0 ${
                             phase.status === "done"
-                              ? "text-[color:var(--status-success)]"
+                              ? "text-success-strong"
                               : phase.status === "active"
                                 ? "text-[color:hsl(var(--primary))]"
                                 : "text-[color:hsl(var(--border))]"

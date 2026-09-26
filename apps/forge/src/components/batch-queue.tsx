@@ -310,7 +310,7 @@ export function BatchQueue({
                 </span>
                 <span className="text-xs text-[var(--neutral-10)]">{item.status}</span>
                 {item.error ? (
-                  <span className="w-full text-xs text-[var(--status-danger)]">{item.error}</span>
+                  <span className="w-full text-xs text-destructive-strong">{item.error}</span>
                 ) : null}
                 {(item.status === "failed" || item.status === "skipped") && (
                   <Button
@@ -324,7 +324,7 @@ export function BatchQueue({
                 )}
                 {item.status === "succeeded" && resultKind === "file" ? (
                   <a
-                    className="text-xs text-[hsl(var(--primary))] underline"
+                    className="text-xs text-primary underline"
                     href={`/api/v1/jobs/${item.id}`}
                     target="_blank"
                     rel="noreferrer"

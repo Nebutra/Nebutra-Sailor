@@ -31,7 +31,7 @@ function getCellButtonClasses(enabled: boolean, editable: boolean): string {
   }
 
   if (enabled) {
-    return "border-success/30 bg-success/10/70 text-[hsl(var(--success-strong))] hover:bg-success/10 hover:text-[hsl(var(--success-strong))]";
+    return "border-success/30 bg-success/10/70 text-success-strong hover:bg-success/10 hover:text-success-strong";
   }
 
   return "";
@@ -58,8 +58,8 @@ export function NotificationPreferenceMatrix({
         <div
           className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-medium ${
             runtime.canManagePreferences
-              ? "bg-success/10 text-[hsl(var(--success-strong))]"
-              : "bg-warning/10 text-[hsl(var(--warning-strong))]"
+              ? "bg-success/10 text-success-strong"
+              : "bg-warning/10 text-warning-strong"
           }`}
         >
           {runtime.canManagePreferences ? (

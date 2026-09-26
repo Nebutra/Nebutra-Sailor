@@ -244,10 +244,7 @@ export default async function PublicDashboardPage() {
                 key={item}
                 className="flex items-center gap-2 rounded-[var(--radius-md)] bg-neutral-1 px-3 py-2 text-sm font-medium text-neutral-11 ring-1 ring-neutral-5"
               >
-                <CheckCircle
-                  className="size-4 text-[hsl(var(--success-strong))]"
-                  aria-hidden="true"
-                />
+                <CheckCircle className="size-4 text-success-strong" aria-hidden="true" />
                 {item}
               </div>
             ))}

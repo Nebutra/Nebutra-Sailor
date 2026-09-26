@@ -170,7 +170,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
           <p className="mt-16 text-center text-sm text-muted-foreground">
             <Link
               href="/contact"
-              className="font-medium text-[hsl(var(--primary))] underline-offset-4 hover:underline"
+              className="font-medium text-primary underline-offset-4 hover:underline"
             >
               {faq("contactNudge")}
             </Link>

@@ -123,7 +123,7 @@ export default function DialogDemo() {
                   label="Domain"
                 />
                 {failed ? (
-                  <p className="text-[hsl(var(--destructive-strong))] text-sm">
+                  <p className="text-destructive-strong text-sm">
                     Nothing was saved. Your input is still here.
                   </p>
                 ) : null}

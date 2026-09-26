@@ -312,7 +312,7 @@ export function PasskeysBlock({
       </div>
 
       {errorMessage && (
-        <p className="mb-4 text-sm text-[hsl(var(--destructive))]" id="passkeys-error" role="alert">
+        <p className="mb-4 text-sm text-destructive-strong" id="passkeys-error" role="alert">
           {errorMessage}
         </p>
       )}

@@ -36,8 +36,7 @@ export function MultiTenantMockup() {
           {"// Enterprise-grade RLS enforced transparently"}
         </div>
         <div>
-          <span className="text-[hsl(var(--primary))]">const</span> data{" "}
-          <span className="text-[hsl(var(--primary))]">=</span>{" "}
+          <span className="text-primary">const</span> data <span className="text-primary">=</span>{" "}
           <span className="text-[var(--brand-tertiary)]">await</span> prisma.post.findMany(
           {`{`}
         </div>
@@ -196,27 +195,27 @@ export function DXMockup() {
         </span>
       </div>
       <div className="p-6 text-foreground dark:text-muted-foreground">
-        <span className="text-[hsl(var(--primary))]">import</span> {`{ Hono }`}{" "}
-        <span className="text-[hsl(var(--primary))]">from</span>{" "}
+        <span className="text-primary">import</span> {`{ Hono }`}{" "}
+        <span className="text-primary">from</span>{" "}
         <span className="text-green-900">{"'hono';"}</span>
         <div className="mt-4 text-muted-foreground dark:text-muted-foreground">
           {"// Fully typed edge-ready RPC"}
         </div>
         <div>
-          <span className="text-[hsl(var(--primary))]">const</span> app ={" "}
-          <span className="text-[hsl(var(--primary))]">new</span>{" "}
+          <span className="text-primary">const</span> app ={" "}
+          <span className="text-primary">new</span>{" "}
           <span className="text-[var(--brand-tertiary)]">Hono</span>().
           <span className="text-amber-900">get</span>(
         </div>
         <div className="pl-4 pt-1">
           <span className="text-green-900">'/'</span>, (c){" "}
-          <span className="text-[hsl(var(--primary))]">=&gt;</span> c.json({`{ ok: `}
-          <span className="text-[hsl(var(--primary))]">true</span> {`}`})
+          <span className="text-primary">=&gt;</span> c.json({`{ ok: `}
+          <span className="text-primary">true</span> {`}`})
         </div>
         <div>)</div>
         <div className="mt-4">
-          <span className="text-[hsl(var(--primary))]">export type</span> AppRouter ={" "}
-          <span className="text-[hsl(var(--primary))]">typeof</span> app;
+          <span className="text-primary">export type</span> AppRouter ={" "}
+          <span className="text-primary">typeof</span> app;
         </div>
       </div>
     </div>

@@ -40,7 +40,7 @@ export function PricingComparisonTable() {
     >
       <div className="mx-auto max-w-wide px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[hsl(var(--primary))]">
+          <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-primary">
             {t("badge")}
           </p>
           <h2
@@ -109,7 +109,7 @@ function GroupBlock({ group, plans, t }: GroupBlockProps) {
           scope="colgroup"
           colSpan={plans.length + 1}
           alignment="start"
-          className="py-3 text-xs font-bold uppercase tracking-wider text-[hsl(var(--primary))]"
+          className="py-3 text-xs font-bold uppercase tracking-wider text-primary"
         >
           {t(`feature.${group.id}.label`)}
         </TableHead>

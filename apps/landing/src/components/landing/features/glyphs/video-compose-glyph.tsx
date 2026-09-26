@@ -74,10 +74,10 @@ export function VideoComposeGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Playhead line */}
-      <div className="relative h-px w-full bg-[hsl(var(--border))]">
+      <div className="relative h-px w-full bg-border">
         <span
           aria-hidden="true"
-          className="absolute top-1/2 h-2 w-px -translate-y-1/2 bg-[hsl(var(--primary))]"
+          className="absolute top-1/2 h-2 w-px -translate-y-1/2 bg-primary"
           style={{ left: "38%" }}
         />
       </div>

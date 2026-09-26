@@ -226,7 +226,7 @@ function IncidentCard({ incident }: { incident: StatusIncident }) {
   return (
     <article className="rounded-[var(--radius-2xl)] border border-destructive/25 bg-destructive/5 px-4 py-4 sm:px-5">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-destructive/15 px-2 py-0.5 text-[11px] font-semibold text-[hsl(var(--destructive-strong))] ring-1 ring-destructive/25">
+        <span className="rounded-full bg-destructive/15 px-2 py-0.5 text-[11px] font-semibold text-destructive-strong ring-1 ring-destructive/25">
           {impactLabel[incident.impact]}
         </span>
         <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">

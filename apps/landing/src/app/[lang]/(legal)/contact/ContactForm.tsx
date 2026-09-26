@@ -49,7 +49,7 @@ export function ContactForm() {
       {state.status === "error" && (
         <div
           role="alert"
-          className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-[hsl(var(--destructive-strong))]"
+          className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive-strong"
         >
           {state.message}
         </div>

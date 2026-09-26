@@ -23,7 +23,7 @@ export function IdeaPlazaGlyph(_props: SubpackageGlyphProps) {
       {/* Header */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
-          <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
+          <Sparkles className="h-3 w-3 text-primary" />
           <span>idea-plaza</span>
           <span className="text-muted-foreground">·</span>
           <span>1,247 ideas</span>
@@ -42,7 +42,7 @@ export function IdeaPlazaGlyph(_props: SubpackageGlyphProps) {
           >
             <span className="truncate font-mono text-[10px] text-foreground">{idea.title}</span>
             <div className="flex shrink-0 items-center gap-2 font-mono text-[9px] text-muted-foreground">
-              <span className="flex items-center gap-0.5 text-[hsl(var(--primary))]">
+              <span className="flex items-center gap-0.5 text-primary">
                 <ChartTrendingUp className="h-2.5 w-2.5" />
                 {idea.votes}
               </span>

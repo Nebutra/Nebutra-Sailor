@@ -115,10 +115,10 @@ function UsageGauge({
   // of the pair come from the same registered ramp. The -900 step is AA in both
   // themes (red 5.32/5.84, amber 5.60/8.14, green 5.22/8.30 on the card).
   const statusColor = isCritical
-    ? "text-[hsl(var(--destructive-strong))]"
+    ? "text-destructive-strong"
     : isWarning
-      ? "text-[hsl(var(--warning-strong))]"
-      : "text-[hsl(var(--success-strong))]";
+      ? "text-warning-strong"
+      : "text-success-strong";
 
   return (
     <Card className="p-4 sm:p-6">
@@ -150,12 +150,12 @@ function UsageGauge({
 
       {/* Warning */}
       {isCritical && (
-        <div className="mt-3 rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-[hsl(var(--destructive-strong))]">
+        <div className="mt-3 rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive-strong">
           Quota nearly exhausted. Upgrade your plan to avoid service interruption.
         </div>
       )}
       {isWarning && !isCritical && (
-        <div className="mt-3 rounded-[var(--radius-lg)] border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-[hsl(var(--warning-strong))]">
+        <div className="mt-3 rounded-[var(--radius-lg)] border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-warning-strong">
           Approaching quota limit. Consider upgrading to avoid disruptions.
         </div>
       )}

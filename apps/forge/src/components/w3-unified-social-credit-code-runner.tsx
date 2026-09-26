@@ -415,7 +415,7 @@ export function W3UnifiedSocialCreditCodeRunner({ toolId }: { toolId: string }) 
         {output.illegalCharacters.length > 0 ? (
           <ul className="space-y-1">
             {output.illegalCharacters.map((c) => (
-              <li key={`${c.position}-${c.char}`} className="text-sm text-[var(--status-danger)]">
+              <li key={`${c.position}-${c.char}`} className="text-sm text-destructive-strong">
                 {t("uscc.illegalAt", { position: c.position, char: c.char })}
               </li>
             ))}

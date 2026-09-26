@@ -31,7 +31,7 @@ export function CinemaGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Film strip — 6 frame cells */}
-      <div className="flex items-center gap-0.5 rounded-[var(--radius-sm)] bg-[hsl(var(--foreground))] p-1">
+      <div className="flex items-center gap-0.5 rounded-[var(--radius-sm)] bg-foreground p-1">
         {/* Left sprocket column */}
         <div className="flex h-10 flex-col justify-between py-0.5">
           {[0, 1, 2].map((i) => (

@@ -58,18 +58,18 @@ export type ShellTone = "neutral" | "info" | "success" | "warning" | "danger";
 
 const TONE_FG: Record<ShellTone, string> = {
   neutral: "text-[var(--neutral-12)]",
-  info: "text-[var(--status-info)]",
-  success: "text-[var(--status-success)]",
-  warning: "text-[var(--status-warning)]",
-  danger: "text-[var(--status-danger)]",
+  info: "text-info",
+  success: "text-success-strong",
+  warning: "text-warning-strong",
+  danger: "text-destructive-strong",
 };
 
 const TONE_BG: Record<ShellTone, string> = {
   neutral: "bg-[var(--neutral-3)]",
-  info: "bg-[color-mix(in_srgb,var(--status-info)_12%,transparent)]",
-  success: "bg-[color-mix(in_srgb,var(--status-success)_12%,transparent)]",
-  warning: "bg-[color-mix(in_srgb,var(--status-warning)_14%,transparent)]",
-  danger: "bg-[color-mix(in_srgb,var(--status-danger)_12%,transparent)]",
+  info: "bg-info/12",
+  success: "bg-success/12",
+  warning: "bg-warning/14",
+  danger: "bg-destructive/12",
 };
 
 /** Tonal panel — the house separator. Never add a border to this. */

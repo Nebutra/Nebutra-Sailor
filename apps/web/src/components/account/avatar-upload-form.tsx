@@ -319,9 +319,7 @@ export function AvatarUploadForm({
           onDragLeave={() => dispatch({ type: "drag.active", active: false })}
           onDrop={handleDrop}
           className={`flex flex-1 flex-col items-start gap-2 rounded-[var(--radius-md)] border border-dashed px-4 py-3 ${
-            state.dragActive
-              ? "border-[hsl(var(--primary))] bg-primary/10"
-              : "border-border bg-muted"
+            state.dragActive ? "border-primary bg-primary/10" : "border-border bg-muted"
           }`}
         >
           <input
@@ -349,7 +347,7 @@ export function AvatarUploadForm({
               type="button"
               onClick={handleDelete}
               disabled={pending}
-              className="text-xs font-medium text-[var(--status-danger)] underline-offset-4 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+              className="text-xs font-medium text-destructive-strong underline-offset-4 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
             >
               {t("removeButton")}
             </button>
@@ -358,12 +356,12 @@ export function AvatarUploadForm({
       </div>
 
       {state.errorMessage && (
-        <p role="alert" className="mt-3 text-sm text-[var(--status-danger)]">
+        <p role="alert" className="mt-3 text-sm text-destructive-strong">
           {state.errorMessage}
         </p>
       )}
       {state.statusMessage && (
-        <p role="status" className="mt-3 text-sm text-[color:var(--status-success)]">
+        <p role="status" className="mt-3 text-sm text-success-strong">
           {state.statusMessage}
         </p>
       )}

@@ -154,7 +154,7 @@ export default async function DashboardPage() {
                     <span
                       className={
                         c.ok
-                          ? "inline-flex h-4 w-4 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--status-success)_18%,transparent)] text-[var(--status-success)]"
+                          ? "inline-flex h-4 w-4 items-center justify-center rounded-full bg-success/18 text-success-strong"
                           : "inline-flex h-4 w-4 rounded-full bg-[var(--neutral-3)]"
                       }
                     >

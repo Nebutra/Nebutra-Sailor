@@ -41,13 +41,13 @@ export default async function NotificationSettingsPage({ params, searchParams }:
       </div>
 
       {query.notice ? (
-        <div className="rounded-[var(--radius-lg)] border border-success/30 bg-success/10 px-4 py-3 text-sm text-[hsl(var(--success-strong))]">
+        <div className="rounded-[var(--radius-lg)] border border-success/30 bg-success/10 px-4 py-3 text-sm text-success-strong">
           {query.notice}
         </div>
       ) : null}
 
       {query.error ? (
-        <div className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-[hsl(var(--destructive-strong))]">
+        <div className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive-strong">
           {query.error}
         </div>
       ) : null}

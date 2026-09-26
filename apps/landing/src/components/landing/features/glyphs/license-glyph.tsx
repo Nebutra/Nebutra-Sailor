@@ -33,9 +33,9 @@ export function LicenseGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Top: key icon + license key */}
-        <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
+        <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-border">
           <Key className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
           <span className="truncate font-mono text-[11px] text-foreground">{LICENSE_KEY}</span>
         </div>

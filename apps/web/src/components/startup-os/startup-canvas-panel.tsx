@@ -435,10 +435,10 @@ function StartupCanvasNodeButton({
             : "planned";
   const toneClass = {
     context: "bg-primary/10 text-primary dark:bg-primary/15",
-    failed: "bg-destructive/10 text-[hsl(var(--destructive-strong))]",
+    failed: "bg-destructive/10 text-destructive-strong",
     planned: "bg-neutral-1 text-neutral-12",
-    ready: "bg-success/10 text-[hsl(var(--success-strong))]",
-    review: "bg-warning/10 text-[hsl(var(--warning-strong))]",
+    ready: "bg-success/10 text-success-strong",
+    review: "bg-warning/10 text-warning-strong",
   }[tone];
 
   return (
@@ -447,7 +447,7 @@ function StartupCanvasNodeButton({
       onClick={onSelect}
       onPointerDown={onPointerDown}
       className={`absolute cursor-grab overflow-hidden rounded-2xl p-3 text-left shadow-ambient-sm transition-shadow hover:shadow-ambient-md active:cursor-grabbing ${
-        selected ? "outline outline-2 outline-offset-2 outline-[hsl(var(--ring))]" : ""
+        selected ? "outline outline-2 outline-offset-2 outline-ring" : ""
       } ${toneClass}`}
       style={{
         height: node.height,

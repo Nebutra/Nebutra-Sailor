@@ -35,9 +35,9 @@ export function DbGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Code line */}
-        <div className="rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
+        <div className="rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-border">
           <code className="font-mono text-[10px] leading-none">
             <span className="text-muted-foreground">prisma</span>
             <span className="text-muted-foreground">.</span>
@@ -57,7 +57,7 @@ export function DbGlyph({ locale }: SubpackageGlyphProps) {
             return (
               <div
                 key={row.id}
-                className="flex items-center gap-2 rounded-[var(--radius-md)] bg-muted px-2 py-1 ring-1 ring-[hsl(var(--border))]"
+                className="flex items-center gap-2 rounded-[var(--radius-md)] bg-muted px-2 py-1 ring-1 ring-border"
               >
                 {blocked ? (
                   <Cross className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />

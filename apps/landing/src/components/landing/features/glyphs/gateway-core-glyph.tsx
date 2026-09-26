@@ -56,8 +56,8 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
         {STAGES.map((stage) => (
           <div key={stage.key} className="flex items-center gap-1.5">
             <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" />
-            <div className="flex items-center gap-1 rounded-[var(--radius-md)] bg-background px-1.5 py-1 ring-1 ring-[hsl(var(--border))]">
-              <Check className="h-3 w-3 text-[color:var(--status-success)]" />
+            <div className="flex items-center gap-1 rounded-[var(--radius-md)] bg-background px-1.5 py-1 ring-1 ring-border">
+              <Check className="h-3 w-3 text-success-strong" />
               <span className="font-mono text-[10px] text-foreground">{stage.label}</span>
             </div>
           </div>
@@ -74,14 +74,14 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
         {METRICS.map((metric) => (
           <div
             key={metric.key}
-            className="flex flex-1 flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-[hsl(var(--border))]"
+            className="flex flex-1 flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-border"
           >
             <span className="font-mono text-[9px] uppercase tracking-wide text-muted-foreground">
               {metric.label}
             </span>
             <span
               className={`font-mono text-[12px] tabular-nums ${
-                metric.tone === "success" ? "text-[color:var(--status-success)]" : "text-foreground"
+                metric.tone === "success" ? "text-success-strong" : "text-foreground"
               }`}
             >
               {metric.value}

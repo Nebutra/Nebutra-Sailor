@@ -61,10 +61,10 @@ export function NewsroomHero({ contactHref, rssHref, isZh }: NewsroomHeroProps) 
                   {...(row.external
                     ? { target: "_blank", rel: "noopener noreferrer", prefetch: false }
                     : {})}
-                  className="group inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-[hsl(var(--primary))]"
+                  className="group inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
                 >
                   <Icon
-                    className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-[hsl(var(--primary))]"
+                    className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
                     aria-hidden
                   />
                   <span className="truncate">{row.value}</span>

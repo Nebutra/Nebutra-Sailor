@@ -49,7 +49,7 @@ function ThemeSwitcher() {
   }
   return (
     <div
-      className="inline-flex items-center overflow-hidden rounded-full bg-background ring-1 ring-[hsl(var(--border))] ring-inset"
+      className="inline-flex items-center overflow-hidden rounded-full bg-background ring-1 ring-border ring-inset"
       role="radiogroup"
       aria-label="Select color theme"
     >

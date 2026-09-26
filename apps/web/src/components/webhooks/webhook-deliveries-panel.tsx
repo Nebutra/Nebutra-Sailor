@@ -51,9 +51,9 @@ async function defaultReplay(endpointId: string, deliveryId: string): Promise<vo
 
 function StatusPill({ status }: { status: WebhookDeliveryView["status"] }) {
   const styles: Record<WebhookDeliveryView["status"], string> = {
-    success: "bg-success/10 text-[hsl(var(--success-strong))]",
-    failed: "bg-destructive/10 text-[hsl(var(--destructive-strong))]",
-    retrying: "bg-warning/10 text-[hsl(var(--warning-strong))]",
+    success: "bg-success/10 text-success-strong",
+    failed: "bg-destructive/10 text-destructive-strong",
+    retrying: "bg-warning/10 text-warning-strong",
   };
   return (
     <span
@@ -137,7 +137,7 @@ export function WebhookDeliveriesPanel({
         </p>
       )}
       {error && (
-        <p role="alert" className="text-sm text-[hsl(var(--destructive-strong))]">
+        <p role="alert" className="text-sm text-destructive-strong">
           {error}
         </p>
       )}
@@ -178,7 +178,7 @@ export function WebhookDeliveriesPanel({
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setExpandedId(isOpen ? null : delivery.id)}
-                  className="text-[hsl(var(--primary))] hover:underline"
+                  className="text-primary hover:underline"
                 >
                   {isOpen ? "Hide payload" : "View payload"}
                 </button>

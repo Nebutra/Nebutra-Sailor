@@ -271,7 +271,7 @@ export function ChangePasswordForm({
           >
             <input
               data-allow-native
-              className="size-4 rounded border-border text-[hsl(var(--primary))]"
+              className="size-4 rounded border-border text-primary"
               id="change-password-revoke"
               type="checkbox"
               {...form.register("revokeOtherSessions")}
@@ -280,7 +280,7 @@ export function ChangePasswordForm({
           </label>
 
           {errorMessage && (
-            <p className="text-sm text-[hsl(var(--destructive))]" id={errorId} role="alert">
+            <p className="text-sm text-destructive-strong" id={errorId} role="alert">
               {errorMessage}
             </p>
           )}

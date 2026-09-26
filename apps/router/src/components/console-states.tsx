@@ -57,7 +57,7 @@ export function StatePanel({
       role={isError ? "alert" : undefined}
       className={[
         "flex flex-col items-center justify-center gap-2 px-4 py-10 text-center",
-        isError ? "text-[var(--status-danger)]" : "text-[var(--neutral-11)]",
+        isError ? "text-destructive-strong" : "text-[var(--neutral-11)]",
       ].join(" ")}
     >
       <p className="text-[13px] font-medium">{title}</p>

@@ -40,7 +40,7 @@ export function CacheGlyph({ locale }: SubpackageGlyphProps) {
       style={{ height: 160 }}
     >
       <header className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
-        <Lightning className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <Lightning className="h-3 w-3 text-primary" />
         <span className="tabular-nums text-foreground">{HIT_RATE_VALUE.toFixed(1)}%</span>
         <span>{copy.headerLabel}</span>
       </header>

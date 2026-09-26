@@ -203,7 +203,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         {/* Timeline dot — simple solid + thin halo, no 4px
                             white ring + no animate-pulse (loud per-item glow). */}
                         <div className="absolute left-0 top-24 hidden lg:block">
-                          <div className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--primary))] shadow-[0_0_0_4px_color-mix(in_oklab,hsl(var(--primary)),transparent_85%)]" />
+                          <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_0_4px_color-mix(in_oklab,hsl(var(--primary)),transparent_85%)]" />
                         </div>
 
                         <div className="h-fit lg:sticky lg:top-8">
@@ -241,7 +241,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                 alt={item.title}
                                 width={1200}
                                 height={700}
-                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 dark:border-[hsl(var(--muted))]/60 object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
+                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 dark:border-muted/60 object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
                                 unoptimized={item.image?.endsWith(".svg")}
                               />
                               <div className="absolute inset-0 rounded-[var(--radius-lg)] bg-gradient-to-b from-transparent to-black/50 opacity-100" />
@@ -264,7 +264,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                       alt="Contributor"
                                       width={96}
                                       height={96}
-                                      className="size-6 rounded-full border border-border/60 dark:border-[hsl(var(--muted))]/60 object-cover"
+                                      className="size-6 rounded-full border border-border/60 dark:border-muted/60 object-cover"
                                     />
                                   ))}
                                 </div>
@@ -347,7 +347,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                           {/* View details link */}
                           <Link
                             href={`/changelog/${item.version}`}
-                            className="inline-flex items-center gap-1 text-sm font-medium text-[hsl(var(--primary))] hover:text-[var(--blue-8)] transition-colors rounded px-1"
+                            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-[var(--blue-8)] transition-colors rounded px-1"
                           >
                             View details
                             <ChevronDown className="size-4 -rotate-90" />
@@ -374,7 +374,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         alt={item.title}
                         width={1200}
                         height={700}
-                        className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 dark:border-[hsl(var(--muted))]/60 object-cover"
+                        className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 dark:border-muted/60 object-cover"
                         unoptimized={item.image?.endsWith(".svg")}
                       />
                       {item.content}
@@ -386,7 +386,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
           </ol>
         ) : (
           <div className="flex flex-col items-center justify-center py-24 gap-4">
-            <Search className="size-12 text-[hsl(var(--border))] dark:text-[hsl(var(--muted))]" />
+            <Search className="size-12 text-border dark:text-muted" />
             <div className="text-center">
               <h3 className="text-lg font-semibold text-foreground mb-1">No releases found</h3>
               <p className="text-sm text-muted-foreground">

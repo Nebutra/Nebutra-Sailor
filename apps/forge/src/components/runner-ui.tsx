@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
 export { RunnerSelect, type RunnerSelectOption } from "@/components/runner-select";
 
 const ERROR =
-  "rounded-[var(--radius-lg)] border border-[color-mix(in_srgb,var(--status-danger)_35%,transparent)] bg-[color-mix(in_srgb,var(--status-danger)_8%,transparent)] p-3 text-sm text-[var(--status-danger)]";
+  "rounded-[var(--radius-lg)] border border-destructive/35 bg-destructive/8 p-3 text-sm text-destructive-strong";
 
 const OUTPUT =
   "overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 font-mono text-sm";

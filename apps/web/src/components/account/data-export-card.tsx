@@ -143,7 +143,7 @@ export function DataExportCard({
           type="button"
           onClick={handleClick}
           disabled={phase === "pending"}
-          className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-muted-foreground disabled:cursor-not-allowed disabled:opacity-60"
         >
           {phase === "pending" ? t("pending") : t("export")}
         </button>
@@ -160,12 +160,12 @@ export function DataExportCard({
       </div>
 
       {phase === "ready" ? (
-        <p className="mt-3 text-sm text-[color:var(--status-success)]" role="status">
+        <p className="mt-3 text-sm text-success-strong" role="status">
           {t("ready")}
         </p>
       ) : null}
       {phase === "error" && errorMessage ? (
-        <p className="mt-3 text-sm text-[hsl(var(--destructive))]" role="alert">
+        <p className="mt-3 text-sm text-destructive-strong" role="alert">
           {errorMessage}
         </p>
       ) : null}

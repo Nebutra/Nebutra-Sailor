@@ -25,13 +25,13 @@ function brandSurface(brand: string): string {
     return "from-[color-mix(in_srgb,hsl(var(--primary))_35%,var(--neutral-3))] to-[var(--neutral-3)]";
   }
   if (b.includes("master")) {
-    return "from-[color-mix(in_srgb,var(--status-warning)_28%,var(--neutral-3))] to-[var(--neutral-3)]";
+    return "from-warning/28 to-[var(--neutral-3)]";
   }
   if (b.includes("amex") || b.includes("american")) {
-    return "from-[color-mix(in_srgb,var(--status-info)_30%,var(--neutral-3))] to-[var(--neutral-3)]";
+    return "from-info/30 to-[var(--neutral-3)]";
   }
   if (b.includes("union") || b.includes("银联")) {
-    return "from-[color-mix(in_srgb,var(--status-danger)_22%,var(--neutral-3))] to-[var(--neutral-3)]";
+    return "from-destructive/22 to-[var(--neutral-3)]";
   }
   return "from-[var(--neutral-3)] to-[var(--neutral-2)]";
 }
@@ -69,10 +69,8 @@ export function BankCardSpecimen({
             <span
               className={cx(
                 "rounded-full px-2 py-0.5 text-[0.65rem] font-medium",
-                valid === true &&
-                  "bg-[color-mix(in_srgb,var(--status-success)_18%,transparent)] text-[var(--status-success)]",
-                valid === false &&
-                  "bg-[color-mix(in_srgb,var(--status-danger)_18%,transparent)] text-[var(--status-danger)]",
+                valid === true && "bg-success/18 text-success-strong",
+                valid === false && "bg-destructive/18 text-destructive-strong",
                 valid == null && "bg-[var(--neutral-1)] text-[var(--neutral-11)]",
               )}
             >

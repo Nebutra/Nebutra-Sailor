@@ -299,7 +299,7 @@ export function CredentialsForm({
           <OAuthButtons providers={enabledOAuthProviders} returnTo={returnTo} />
           <WeChatLoginButton appId={wechatAppId} className="mt-3" />
           <div className="relative my-6">
-            <div className="h-px w-full bg-[hsl(var(--border))]" aria-hidden />
+            <div className="h-px w-full bg-border" aria-hidden />
             <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs font-medium text-muted-foreground">
               {tSignIn("dividerOr")}
             </span>
@@ -417,7 +417,7 @@ export function CredentialsForm({
               onClick={() => setShowPassword((v) => !v)}
               aria-label={showPassword ? tSignIn("hidePassword") : tSignIn("showPassword")}
               aria-pressed={showPassword}
-              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--primary))]"
+              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" aria-hidden />

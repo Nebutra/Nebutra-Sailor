@@ -99,7 +99,7 @@ function GridCard({ post }: { post: BlogIndexPost }) {
 
       <div className="flex flex-1 flex-col p-5">
         <PostMeta post={post} />
-        <h2 className="mt-3 text-lg font-semibold leading-snug text-foreground transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-[hsl(var(--primary))]">
+        <h2 className="mt-3 text-lg font-semibold leading-snug text-foreground transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-primary">
           {post.title}
         </h2>
         {post.excerpt && (
@@ -150,7 +150,7 @@ function ListCard({ post }: { post: BlogIndexPost }) {
 
       <div className="flex min-w-0 flex-col py-1 pr-2">
         <PostMeta post={post} />
-        <h2 className="mt-3 text-xl font-semibold leading-snug text-foreground transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-[hsl(var(--primary))]">
+        <h2 className="mt-3 text-xl font-semibold leading-snug text-foreground transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-primary">
           {post.title}
         </h2>
         {post.excerpt && (

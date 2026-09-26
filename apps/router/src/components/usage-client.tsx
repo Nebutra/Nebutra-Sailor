@@ -495,7 +495,7 @@ function RecordsPanel({
                 已加载 {data.rows.length} 行
               </span>
               {moreError ? (
-                <span role="alert" className="text-[11px] text-[var(--status-danger)]">
+                <span role="alert" className="text-[11px] text-destructive-strong">
                   {moreError}
                 </span>
               ) : null}
@@ -528,9 +528,7 @@ function StatusPill({ status }: { status: number | null }) {
     <span
       className={[
         "rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums",
-        ok
-          ? "bg-[color-mix(in_srgb,var(--status-success)_14%,transparent)] text-[var(--status-success)]"
-          : "bg-[color-mix(in_srgb,var(--status-danger)_14%,transparent)] text-[var(--status-danger)]",
+        ok ? "bg-success/14 text-success-strong" : "bg-destructive/14 text-destructive-strong",
       ].join(" ")}
     >
       {status}

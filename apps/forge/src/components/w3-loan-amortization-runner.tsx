@@ -334,11 +334,7 @@ export function W3LoanAmortizationRunner({ toolId }: { toolId: string }) {
                     {shown.map((row) => (
                       <tr
                         key={row.period}
-                        className={
-                          row.period === o.crossoverPeriod
-                            ? "bg-[color-mix(in_srgb,var(--status-info)_12%,transparent)]"
-                            : undefined
-                        }
+                        className={row.period === o.crossoverPeriod ? "bg-info/12" : undefined}
                       >
                         <th
                           scope="row"

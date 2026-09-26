@@ -23,7 +23,7 @@ export function I18nGlyph(_props: SubpackageGlyphProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
-          <Globe className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
+          <Globe className="h-3.5 w-3.5 text-primary" />
           <span className="font-mono text-[10px] text-foreground">i18n</span>
           <span className="font-mono text-[10px] text-muted-foreground">·</span>
           <Badge
@@ -49,14 +49,14 @@ export function I18nGlyph(_props: SubpackageGlyphProps) {
             key={row.code}
             className="flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-border bg-muted px-1.5 py-1"
           >
-            <span className="w-5 shrink-0 font-mono text-[9px] uppercase text-[hsl(var(--primary))]">
+            <span className="w-5 shrink-0 font-mono text-[9px] uppercase text-primary">
               {row.code}
             </span>
             <span className="font-mono text-[9px] text-muted-foreground">·</span>
             <span className="flex-1 truncate font-mono text-[10px] text-foreground">
               {row.text}
             </span>
-            <Check className="h-2.5 w-2.5 shrink-0 text-[var(--status-success)]" />
+            <Check className="h-2.5 w-2.5 shrink-0 text-success-strong" />
           </div>
         ))}
       </div>
@@ -64,7 +64,7 @@ export function I18nGlyph(_props: SubpackageGlyphProps) {
       {/* Footer */}
       <div className="mt-auto flex items-center justify-between font-mono text-[9px] text-muted-foreground">
         <span>next-intl · ICU MessageFormat</span>
-        <span className="text-[var(--status-success)]">99.2% coverage</span>
+        <span className="text-success-strong">99.2% coverage</span>
       </div>
     </div>
   );

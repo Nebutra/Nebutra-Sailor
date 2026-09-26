@@ -46,7 +46,7 @@ export function BlogCtaBlock({
         {hasCta && (
           <a
             href={ctaHref}
-            className="group inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 text-sm font-semibold text-[hsl(var(--background))] transition-colors hover:bg-[hsl(var(--primary))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-8)] sm:w-auto"
+            className="group inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-foreground px-4 text-sm font-semibold text-background transition-colors hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-8)] sm:w-auto"
           >
             {ctaLabel}
             <ArrowRight

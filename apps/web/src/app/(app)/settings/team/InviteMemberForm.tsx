@@ -56,7 +56,7 @@ export function InviteMemberForm({ orgId }: Props) {
         <p className="self-center text-sm text-success-strong">Invitation is on its way.</p>
       )}
       {state.status === "error" && (
-        <p className="self-center text-sm text-[hsl(var(--destructive-strong))]">{state.message}</p>
+        <p className="self-center text-sm text-destructive-strong">{state.message}</p>
       )}
     </form>
   );

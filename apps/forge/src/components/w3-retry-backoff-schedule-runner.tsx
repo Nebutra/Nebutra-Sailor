@@ -302,8 +302,8 @@ export function W3RetryBackoffScheduleRunner({ toolId }: { toolId: string }) {
               <p
                 className={
                   o.exceedsCallerTimeout
-                    ? "flex items-start gap-2 rounded-[var(--radius-lg)] bg-[color-mix(in_srgb,var(--status-warning)_14%,transparent)] p-3 text-sm text-[var(--status-warning)]"
-                    : "flex items-start gap-2 rounded-[var(--radius-lg)] bg-[color-mix(in_srgb,var(--status-success)_12%,transparent)] p-3 text-sm text-[var(--status-success)]"
+                    ? "flex items-start gap-2 rounded-[var(--radius-lg)] bg-warning/14 p-3 text-sm text-warning-strong"
+                    : "flex items-start gap-2 rounded-[var(--radius-lg)] bg-success/12 p-3 text-sm text-success-strong"
                 }
               >
                 {o.exceedsCallerTimeout ? (

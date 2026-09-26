@@ -46,13 +46,13 @@ type KindFilter = "all" | "add" | "remove" | "change" | "type";
 function kindRowClass(kind?: string): string {
   switch (kind) {
     case "add":
-      return "bg-[color-mix(in_srgb,var(--status-success)_12%,transparent)]";
+      return "bg-success/12";
     case "remove":
-      return "bg-[color-mix(in_srgb,var(--status-danger)_12%,transparent)]";
+      return "bg-destructive/12";
     case "change":
-      return "bg-[color-mix(in_srgb,var(--status-warning)_14%,transparent)]";
+      return "bg-warning/14";
     case "type":
-      return "bg-[color-mix(in_srgb,var(--status-info)_12%,transparent)]";
+      return "bg-info/12";
     default:
       return "";
   }
@@ -61,13 +61,13 @@ function kindRowClass(kind?: string): string {
 function kindBadgeClass(kind?: string): string {
   switch (kind) {
     case "add":
-      return "bg-[color-mix(in_srgb,var(--status-success)_20%,transparent)] text-[var(--status-success)]";
+      return "bg-success/20 text-success-strong";
     case "remove":
-      return "bg-[color-mix(in_srgb,var(--status-danger)_20%,transparent)] text-[var(--status-danger)]";
+      return "bg-destructive/20 text-destructive-strong";
     case "change":
-      return "bg-[color-mix(in_srgb,var(--status-warning)_22%,transparent)] text-[var(--status-warning)]";
+      return "bg-warning/22 text-warning-strong";
     case "type":
-      return "bg-[color-mix(in_srgb,var(--status-info)_20%,transparent)] text-[var(--status-info)]";
+      return "bg-info/20 text-info";
     default:
       return "bg-[var(--neutral-3)] text-[var(--neutral-11)]";
   }
@@ -140,7 +140,7 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[color-mix(in_srgb,var(--status-danger)_4%,transparent)] p-1">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-destructive/4 p-1">
           <Textarea
             id="json-diff-left"
             label={t("jsonDiff.left")}
@@ -151,7 +151,7 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
             className="font-mono text-sm"
           />
         </div>
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[color-mix(in_srgb,var(--status-success)_4%,transparent)] p-1">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-success/4 p-1">
           <Textarea
             id="json-diff-right"
             label={t("jsonDiff.right")}
@@ -185,9 +185,7 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
         {equal !== null ? (
           <span
             className={`rounded-full px-3 py-1 text-xs font-medium ${
-              equal
-                ? "bg-[color-mix(in_srgb,var(--status-success)_15%,transparent)] text-[var(--status-success)]"
-                : "bg-[color-mix(in_srgb,var(--status-warning)_15%,transparent)] text-[var(--status-warning)]"
+              equal ? "bg-success/15 text-success-strong" : "bg-warning/15 text-warning-strong"
             }`}
           >
             {equal ? t("jsonDiff.equal") : t("jsonDiff.differs", { count: changeCount })}

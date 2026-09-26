@@ -339,7 +339,7 @@ function FileEventList({
                   className="shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em]"
                   style={{
                     borderColor: "color-mix(in srgb, var(--status-success) 25%, transparent)",
-                    color: "var(--status-success)",
+                    color: "hsl(var(--success-strong))",
                   }}
                 >
                   {event.action}
@@ -629,7 +629,7 @@ function SummaryCard({
       <div className="flex items-start gap-2.5">
         <CheckCircle
           className="mt-0.5 size-4 shrink-0"
-          style={{ color: "var(--status-success)" }}
+          style={{ color: "hsl(var(--success-strong))" }}
           aria-hidden="true"
         />
         <p className="text-sm leading-6 text-neutral-11">{summary.summary}</p>
@@ -661,7 +661,7 @@ function SummaryCard({
           onClick={() => void sendVote("down")}
         >
           <ThumbDown
-            className={`size-3.5 ${vote === "down" ? "text-[color:var(--status-danger)]" : ""}`}
+            className={`size-3.5 ${vote === "down" ? "text-destructive-strong" : ""}`}
             aria-hidden="true"
           />
         </ToolbarButton>

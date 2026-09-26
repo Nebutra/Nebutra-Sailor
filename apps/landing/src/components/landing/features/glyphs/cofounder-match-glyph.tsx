@@ -12,7 +12,7 @@ export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
     >
       <div className="flex items-center justify-between">
         <span className="flex items-center gap-1 font-mono text-[10px] text-muted-foreground">
-          <Users className="h-3 w-3 text-[hsl(var(--primary))]" />
+          <Users className="h-3 w-3 text-primary" />
           cofounder match
         </span>
         <Badge
@@ -31,8 +31,8 @@ export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
         >
           M
         </div>
-        <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[hsl(var(--primary))] bg-background">
-          <Check className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <div className="flex h-5 w-5 items-center justify-center rounded-full border border-primary bg-background">
+          <Check className="h-3 w-3 text-primary" />
         </div>
         <div
           className="flex h-7 w-7 items-center justify-center rounded-full border border-emerald-300 bg-emerald-100 font-mono text-[11px] font-semibold text-emerald-700"
@@ -46,7 +46,7 @@ export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between font-mono text-[10px]">
           <span className="flex items-center gap-1 text-foreground">
-            <Sparkles className="h-2.5 w-2.5 text-[hsl(var(--primary))]" />
+            <Sparkles className="h-2.5 w-2.5 text-primary" />
             92% compatibility match
           </span>
         </div>

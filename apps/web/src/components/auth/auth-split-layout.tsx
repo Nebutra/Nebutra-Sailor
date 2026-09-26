@@ -42,7 +42,7 @@ export function AuthSplitLayout({ children, className }: AuthSplitLayoutProps) {
       >
         <a
           href={homeHref}
-          className="absolute left-5 top-6 z-20 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[hsl(var(--primary))] sm:left-8 lg:left-12 lg:top-10"
+          className="absolute left-5 top-6 z-20 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:left-8 lg:left-12 lg:top-10"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden />
           {t("homeLink")}

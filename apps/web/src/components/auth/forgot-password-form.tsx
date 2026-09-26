@@ -102,7 +102,7 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
       </div>
 
       {errorMessage && (
-        <p className="mb-4 text-sm text-[hsl(var(--destructive))]" id={errorId} role="alert">
+        <p className="mb-4 text-sm text-destructive-strong" id={errorId} role="alert">
           {errorMessage}
         </p>
       )}

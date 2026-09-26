@@ -652,11 +652,7 @@ export function MimeLookupRunner({ toolId }: { toolId: string }) {
                     <td className="px-3 py-2 font-mono">{r.input}</td>
                     <td className="px-3 py-2 font-mono text-[var(--neutral-11)]">.{r.extension}</td>
                     <td className="px-3 py-2 font-mono">
-                      {r.known ? (
-                        r.mime
-                      ) : (
-                        <span className="text-[var(--status-warning)]">unknown</span>
-                      )}
+                      {r.known ? r.mime : <span className="text-warning-strong">unknown</span>}
                     </td>
                   </tr>
                 ))}

@@ -80,7 +80,7 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
         <div className="rounded-[var(--radius-xl)] border border-border bg-background p-8 shadow-[var(--elevation-lg)]">
           <div className="mb-8 text-center">
             <div
-              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-[var(--radius-xl)] text-2xl font-bold text-[hsl(var(--background))]"
+              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-[var(--radius-xl)] text-2xl font-bold text-background"
               style={{
                 background: "linear-gradient(135deg, hsl(var(--primary)), var(--cyan-9))",
               }}

@@ -29,9 +29,9 @@ const JOB_ROWS: ReadonlyArray<JobRow> = [
 ];
 
 const STATUS_COLOR: Readonly<Record<JobState, string>> = {
-  BUILDING: "text-[color:var(--status-warning)]",
-  READY: "text-[color:var(--status-success)]",
-  ERROR: "text-[color:var(--status-danger)]",
+  BUILDING: "text-warning-strong",
+  READY: "text-success-strong",
+  ERROR: "text-destructive-strong",
   QUEUED: "text-muted-foreground",
 };
 

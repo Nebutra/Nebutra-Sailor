@@ -18,14 +18,14 @@ export type JwtTokenSpecimenProps = {
 
 const PART_BG: Record<JwtPart["tone"], string> = {
   header: "bg-[color-mix(in_srgb,hsl(var(--primary))_14%,var(--neutral-3))]",
-  payload: "bg-[color-mix(in_srgb,var(--status-success)_14%,var(--neutral-3))]",
-  signature: "bg-[color-mix(in_srgb,var(--status-warning)_16%,var(--neutral-3))]",
+  payload: "bg-success/14",
+  signature: "bg-warning/16",
 };
 
 const PART_DOT: Record<JwtPart["tone"], string> = {
-  header: "bg-[hsl(var(--primary))]",
-  payload: "bg-[var(--status-success)]",
-  signature: "bg-[var(--status-warning)]",
+  header: "bg-primary",
+  payload: "bg-success",
+  signature: "bg-warning",
 };
 
 function cx(...parts: (string | false | null | undefined)[]): string {

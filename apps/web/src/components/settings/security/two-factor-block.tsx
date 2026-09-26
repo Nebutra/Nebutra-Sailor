@@ -300,11 +300,7 @@ export function TwoFactorBlock({
       />
 
       {errorMessage && (
-        <p
-          className="mb-4 text-sm text-[hsl(var(--destructive))]"
-          id="two-factor-error"
-          role="alert"
-        >
+        <p className="mb-4 text-sm text-destructive-strong" id="two-factor-error" role="alert">
           {errorMessage}
         </p>
       )}

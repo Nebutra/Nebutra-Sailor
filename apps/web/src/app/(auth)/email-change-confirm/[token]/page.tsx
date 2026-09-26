@@ -67,7 +67,7 @@ async function EmailChangeConfirmContent({ params }: PageProps) {
             <>
               <div
                 aria-hidden
-                className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--status-success)_15%,transparent)] text-lg text-[color:var(--status-success)]"
+                className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-success/15 text-lg text-success-strong"
               >
                 ✓
               </div>
@@ -79,7 +79,7 @@ async function EmailChangeConfirmContent({ params }: PageProps) {
               <div className="mt-5">
                 <Link
                   href="/settings/account"
-                  className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] hover:bg-[hsl(var(--muted-foreground))]"
+                  className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-muted-foreground"
                 >
                   {t("continueCta")}
                 </Link>
@@ -89,7 +89,7 @@ async function EmailChangeConfirmContent({ params }: PageProps) {
             <>
               <div
                 aria-hidden
-                className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--status-warning)_15%,transparent)] text-lg text-[color:var(--status-warning)]"
+                className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-warning/15 text-lg text-warning-strong"
               >
                 ⚠
               </div>

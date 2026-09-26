@@ -62,7 +62,7 @@ export default function DropdownMenuDemo() {
               <DropdownMenuItem>View logs</DropdownMenuItem>
               <DropdownMenuItem>Redeploy</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-[hsl(var(--destructive-strong))]">
+              <DropdownMenuItem className="text-destructive-strong">
                 Delete deployment
                 <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
               </DropdownMenuItem>

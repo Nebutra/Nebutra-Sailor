@@ -63,7 +63,7 @@ export function DocumentPipelineGlyph({ locale }: SubpackageGlyphProps) {
               variant="outline"
               className="gap-1 border-border bg-background px-1.5 py-0.5 text-[10px] font-medium text-foreground"
             >
-              <FileText className="h-2.5 w-2.5 text-[hsl(var(--primary))]" />
+              <FileText className="h-2.5 w-2.5 text-primary" />
               <span>{step.label}</span>
               {step.meta ? (
                 <span className="font-mono text-[9px] text-muted-foreground">· {step.meta}</span>

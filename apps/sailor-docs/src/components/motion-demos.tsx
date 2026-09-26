@@ -65,7 +65,7 @@ export function MotionDemos() {
                   },
                 }}
               >
-                <Database className="w-5 h-5 text-[hsl(var(--primary))] dark:text-[var(--brand-accent)]" />
+                <Database className="w-5 h-5 text-primary dark:text-[var(--brand-accent)]" />
               </motion.div>
 
               <AnimatedList delay={800} className="w-full relative z-10">

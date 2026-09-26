@@ -68,7 +68,7 @@ export async function PricingSection({ hideHeader = false }: { hideHeader?: bool
               className={[
                 "p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-transform duration-150 hover:-translate-y-px",
                 tier.highlighted
-                  ? "border border-[hsl(var(--primary))]/40 bg-background/80 lg:-translate-y-2 z-10"
+                  ? "border border-primary/40 bg-background/80 lg:-translate-y-2 z-10"
                   : "border border-border bg-background/50",
               ].join(" ")}
               style={{ boxShadow: "var(--ring-hairline)" }}

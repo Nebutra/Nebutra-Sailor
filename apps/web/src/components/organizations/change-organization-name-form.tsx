@@ -134,9 +134,9 @@ export function ChangeOrganizationNameForm({
             )}
           />
 
-          {errorMessage && <p className="text-sm text-[var(--status-danger)]">{errorMessage}</p>}
+          {errorMessage && <p className="text-sm text-destructive-strong">{errorMessage}</p>}
           {showSuccess && (
-            <p className="text-sm text-[color:var(--status-success)]">
+            <p className="text-sm text-success-strong">
               {t("organizations.settings.name.success")}
             </p>
           )}

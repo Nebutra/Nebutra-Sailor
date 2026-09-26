@@ -46,7 +46,7 @@ export function UiGlyph(_props: SubpackageGlyphProps) {
 
         <Card className="p-2">
           <div className="flex items-center gap-1 text-[10px] font-semibold text-foreground">
-            <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
+            <Sparkles className="h-3 w-3 text-primary" />
             Composable Card
           </div>
           <p className="mt-0.5 text-[9px] leading-tight text-muted-foreground">

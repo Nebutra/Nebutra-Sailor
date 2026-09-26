@@ -94,7 +94,7 @@ export function OrganizationInvitationModal({
         <button
           type="button"
           onClick={() => router.push("/")}
-          className="mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-[hsl(var(--foreground))] px-4 py-2.5 text-sm font-medium text-[hsl(var(--background))] transition hover:opacity-90"
+          className="mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-foreground px-4 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
         >
           {t("backToDashboard")}
         </button>
@@ -131,7 +131,7 @@ export function OrganizationInvitationModal({
       </div>
 
       <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">
-        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary" />
         {t("roleLabel", { role: roleLabel })}
       </div>
 
@@ -143,7 +143,7 @@ export function OrganizationInvitationModal({
       {errorKey ? (
         <p
           role="alert"
-          className="mt-4 rounded-[var(--radius-lg)] border border-[var(--status-danger)] bg-[var(--status-danger)]/10 px-3 py-2 text-sm text-[color:var(--status-danger)]"
+          className="mt-4 rounded-[var(--radius-lg)] border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive-strong"
         >
           {tErrors(errorKey)}
         </p>
@@ -162,7 +162,7 @@ export function OrganizationInvitationModal({
           type="button"
           onClick={handleAccept}
           disabled={!!submitting}
-          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] bg-[hsl(var(--foreground))] px-4 py-2.5 text-sm font-medium text-[hsl(var(--background))] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] bg-foreground px-4 py-2.5 text-sm font-medium text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting === "accept" ? t("accepting") : t("accept")}
         </button>

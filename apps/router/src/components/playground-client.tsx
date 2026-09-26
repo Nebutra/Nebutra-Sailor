@@ -278,7 +278,7 @@ function TurnView({ turn }: { turn: Turn }) {
       {turn.status === "failed" ? (
         <div
           role="alert"
-          className="rounded-[var(--radius-md)] border border-[color-mix(in_srgb,var(--status-danger)_35%,var(--neutral-6))] bg-[color-mix(in_srgb,var(--status-danger)_8%,var(--neutral-1))] px-2.5 py-2 text-[12px] text-[var(--status-danger)]"
+          className="rounded-[var(--radius-md)] border border-destructive/35 bg-destructive/8 px-2.5 py-2 text-[12px] text-destructive-strong"
         >
           {turn.error ?? "这次请求失败了。"}
           {turn.error?.includes("Key") ? (

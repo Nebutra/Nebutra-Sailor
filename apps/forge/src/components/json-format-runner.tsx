@@ -170,7 +170,7 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
             type="checkbox"
             checked={sortKeys}
             onChange={(e) => setSortKeys(e.target.checked)}
-            className="size-4 accent-[hsl(var(--primary))]"
+            className="size-4 accent-primary"
           />
           {t("jsonFormat.sortKeys")}
         </label>
@@ -224,8 +224,8 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
           <span
             className={`rounded-full px-3 py-1 text-xs font-medium ${
               valid
-                ? "bg-[color-mix(in_srgb,var(--status-success)_15%,transparent)] text-[var(--status-success)]"
-                : "bg-[color-mix(in_srgb,var(--status-danger)_15%,transparent)] text-[var(--status-danger)]"
+                ? "bg-success/15 text-success-strong"
+                : "bg-destructive/15 text-destructive-strong"
             }`}
           >
             {valid ? t("jsonFormat.valid") : t("jsonFormat.invalid")}

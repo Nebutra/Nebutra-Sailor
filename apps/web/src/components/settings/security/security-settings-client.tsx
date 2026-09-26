@@ -144,7 +144,7 @@ export function SecuritySettingsClient() {
       </section>
 
       {error && (
-        <section className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 p-4 text-sm text-[hsl(var(--destructive-strong))]">
+        <section className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive-strong">
           {error}
         </section>
       )}

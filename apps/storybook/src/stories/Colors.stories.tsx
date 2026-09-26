@@ -34,11 +34,11 @@ function Swatch({ name, cssVar }: { name: string; cssVar: string }) {
   return (
     <div className="flex flex-col gap-1">
       <div
-        className="h-12 w-full rounded-md border border-[hsl(var(--border))]"
+        className="h-12 w-full rounded-md border border-border"
         style={{ background: `var(${cssVar})` }}
       />
-      <p className="text-xs font-medium text-[hsl(var(--foreground))]">{name}</p>
-      <p className="font-mono text-[11px] text-[hsl(var(--muted-foreground))]">{cssVar}</p>
+      <p className="text-xs font-medium text-foreground">{name}</p>
+      <p className="font-mono text-[11px] text-muted-foreground">{cssVar}</p>
     </div>
   );
 }
@@ -52,7 +52,7 @@ function ColorRow({
 }) {
   return (
     <div className="mb-8">
-      <h3 className="mb-3 text-sm font-semibold text-[hsl(var(--muted-foreground))]">{label}</h3>
+      <h3 className="mb-3 text-sm font-semibold text-muted-foreground">{label}</h3>
       <div className="grid grid-cols-6 gap-3 md:grid-cols-11">
         {swatches.map((s) => (
           <Swatch key={s.cssVar} {...s} />
@@ -67,7 +67,7 @@ function ColorRow({
 export const BrandColors: StoryObj = {
   name: "Brand Scales",
   render: () => (
-    <div className="bg-[hsl(var(--background))] p-6">
+    <div className="bg-background p-6">
       <ColorRow
         label="云毓蓝 — Primary Brand (--nebutra-blue-*)"
         swatches={legacySteps.map((name) => ({ name, cssVar: `--nebutra-blue-${name}` }))}
@@ -83,8 +83,8 @@ export const BrandColors: StoryObj = {
 export const SemanticColors: StoryObj = {
   name: "Semantic Scale (12-step)",
   render: () => (
-    <div className="bg-[hsl(var(--background))] p-6">
-      <p className="mb-4 text-sm text-[hsl(var(--muted-foreground))]">
+    <div className="bg-background p-6">
+      <p className="mb-4 text-sm text-muted-foreground">
         Geist-style 12-step scales. Steps 1–2 = backgrounds, 3–5 = component states, 6–8 = borders,
         9–10 = solid fills, 11–12 = text.
       </p>
@@ -105,7 +105,7 @@ export const SemanticColors: StoryObj = {
 export const Gradients: StoryObj = {
   name: "Brand Gradients",
   render: () => (
-    <div className="grid grid-cols-2 gap-4 bg-[hsl(var(--background))] p-6 md:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 bg-background p-6 md:grid-cols-4">
       {[
         { name: "Default", cssVar: "--brand-gradient" },
         { name: "Reverse", cssVar: "--brand-gradient-reverse" },
@@ -114,8 +114,8 @@ export const Gradients: StoryObj = {
       ].map(({ name, cssVar }) => (
         <div key={cssVar} className="flex flex-col gap-2">
           <div className="h-24 rounded-lg" style={{ background: `var(${cssVar})` }} />
-          <p className="text-sm font-medium text-[hsl(var(--foreground))]">{name}</p>
-          <p className="font-mono text-[11px] text-[hsl(var(--muted-foreground))]">{cssVar}</p>
+          <p className="text-sm font-medium text-foreground">{name}</p>
+          <p className="font-mono text-[11px] text-muted-foreground">{cssVar}</p>
         </div>
       ))}
     </div>
@@ -126,7 +126,7 @@ export const DarkMode: StoryObj = {
   name: "Dark Mode Preview",
   parameters: { backgrounds: { default: "dark" } },
   render: () => (
-    <div className="dark p-6 bg-[hsl(var(--background))] min-h-64">
+    <div className="dark p-6 bg-background min-h-64">
       <p className="mb-4 text-sm" style={{ color: "hsl(var(--muted-foreground))" }}>
         All semantic tokens switch automatically in dark mode.
       </p>

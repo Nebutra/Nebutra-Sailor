@@ -57,20 +57,20 @@ export function MarketingGlyph({ locale }: SubpackageGlyphProps) {
 
       {/* 3-cell stat strip */}
       <div className="grid grid-cols-3 gap-1.5">
-        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
+        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-border">
           <span className="text-[9px] uppercase tracking-wide text-muted-foreground">
             {copy.sent}
           </span>
           <span className="font-mono text-[12px] font-semibold text-foreground">12,400</span>
         </div>
-        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
+        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-border">
           <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wide text-muted-foreground">
             <Users className="h-2.5 w-2.5" />
             {copy.opens}
           </span>
           <span className="font-mono text-[12px] font-semibold text-foreground">47%</span>
         </div>
-        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-[hsl(var(--border))]">
+        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-background px-2 py-1.5 ring-1 ring-border">
           <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wide text-muted-foreground">
             <ChartTrendingUp className="h-2.5 w-2.5" />
             {copy.clicks}

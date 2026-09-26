@@ -58,14 +58,17 @@ export function CaptchaGlyph(_props: SubpackageGlyphProps) {
               challenge · 6 tiles
             </div>
           </div>
-          <Shield className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--status-success)" }} />
+          <Shield
+            className="h-3.5 w-3.5 shrink-0"
+            style={{ color: "hsl(var(--success-strong))" }}
+          />
         </div>
 
         <Badge
           className="w-fit gap-1 px-1.5 py-0.5 font-mono text-[9px]"
           style={{
             background: "color-mix(in srgb, var(--status-success) 14%, transparent)",
-            color: "var(--status-success)",
+            color: "hsl(var(--success-strong))",
             border: "1px solid color-mix(in srgb, var(--status-success) 30%, transparent)",
           }}
         >

@@ -122,7 +122,7 @@ export function InboxList({
                 aria-label={`Select notification ${item.title}`}
                 checked={checked}
                 onChange={() => onToggleSelect?.(item.id)}
-                className="mt-1 size-4 cursor-pointer accent-[hsl(var(--primary))]"
+                className="mt-1 size-4 cursor-pointer accent-primary"
                 onClick={(e) => e.stopPropagation()}
               />
             ) : null}
@@ -161,7 +161,7 @@ export function InboxList({
               <span
                 role="status"
                 aria-label="Unread"
-                className="mt-1.5 size-2 shrink-0 rounded-full bg-[hsl(var(--primary))]"
+                className="mt-1.5 size-2 shrink-0 rounded-full bg-primary"
               />
             ) : null}
 

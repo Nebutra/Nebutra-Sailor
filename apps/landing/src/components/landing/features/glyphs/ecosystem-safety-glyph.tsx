@@ -48,7 +48,7 @@ export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
     >
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
-          <Shield className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
+          <Shield className="h-3.5 w-3.5 text-primary" />
           <span className="font-mono text-[10px] text-foreground">{COPY.title[locale]}</span>
         </div>
         <span className="font-mono text-[10px] text-muted-foreground">{COPY.layers[locale]}</span>
@@ -72,7 +72,7 @@ export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
                 </span>
                 <Badge
                   variant="outline"
-                  className="h-3.5 gap-0.5 border-[color:var(--status-success)]/30 bg-[color:var(--status-success)]/10 px-1 text-[color:var(--status-success)]"
+                  className="h-3.5 gap-0.5 border-success/30 bg-success/10 px-1 text-success-strong"
                 >
                   <Check className="h-2.5 w-2.5" />
                 </Badge>

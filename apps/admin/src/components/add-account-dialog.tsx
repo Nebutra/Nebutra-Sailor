@@ -380,7 +380,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
               {error ? (
                 <p
                   role="alert"
-                  className="rounded-md border border-[hsl(var(--destructive-strong))]/30 px-3 py-2 text-[hsl(var(--destructive-strong))] text-xs"
+                  className="rounded-md border border-destructive-strong/30 px-3 py-2 text-destructive-strong text-xs"
                 >
                   <span className="font-mono">{error.code}</span> · {error.message}
                 </p>

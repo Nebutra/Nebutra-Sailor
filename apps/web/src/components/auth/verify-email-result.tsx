@@ -24,7 +24,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
       >
         <div
           aria-hidden
-          className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--status-success)_15%,transparent)] text-lg text-[color:var(--status-success)]"
+          className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-success/15 text-lg text-success-strong"
         >
           ✓
         </div>
@@ -46,13 +46,13 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
     >
       <div
         aria-hidden
-        className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--status-warning)_15%,transparent)] text-lg text-[color:var(--status-warning)]"
+        className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-warning/15 text-lg text-warning-strong"
       >
         ⚠
       </div>
       <h3 className="mt-4 text-base font-semibold text-foreground">{t("failureTitle")}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{t("failureDescription")}</p>
-      <p className="mt-1 text-sm text-[hsl(var(--destructive))]" role="alert">
+      <p className="mt-1 text-sm text-destructive-strong" role="alert">
         {tErrors(errorKey)}
       </p>
       <div className="mt-5">

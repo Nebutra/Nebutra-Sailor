@@ -35,14 +35,14 @@ export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-[hsl(var(--border))] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
             <Brain className="h-2.5 w-2.5" />
             {copy.header}
           </span>
-          <Sparkles className="h-2.5 w-2.5 text-[hsl(var(--primary))]" />
+          <Sparkles className="h-2.5 w-2.5 text-primary" />
         </div>
 
         {/* Trace steps */}

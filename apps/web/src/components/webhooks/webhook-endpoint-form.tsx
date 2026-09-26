@@ -169,7 +169,7 @@ export function WebhookEndpointForm({
         />
 
         {rootError && (
-          <p role="alert" className="text-sm text-[hsl(var(--destructive-strong))]">
+          <p role="alert" className="text-sm text-destructive-strong">
             {rootError}
           </p>
         )}

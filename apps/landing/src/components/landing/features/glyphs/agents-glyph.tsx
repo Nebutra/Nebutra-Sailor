@@ -23,7 +23,7 @@ export function AgentsGlyph(_props: SubpackageGlyphProps) {
         <span className="font-mono text-[10px] text-muted-foreground">
           @nebutra/agents · unified surface
         </span>
-        <Sparkles className="h-3 w-3 text-[hsl(var(--primary))]" />
+        <Sparkles className="h-3 w-3 text-primary" />
       </div>
 
       <ul className="flex flex-col gap-1">
@@ -32,7 +32,7 @@ export function AgentsGlyph(_props: SubpackageGlyphProps) {
             key={signature}
             className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-background px-2 py-1"
           >
-            <Icon className="h-2.5 w-2.5 shrink-0 text-[hsl(var(--primary))]" />
+            <Icon className="h-2.5 w-2.5 shrink-0 text-primary" />
             <code className="truncate font-mono text-[10px] text-foreground">{signature}</code>
           </li>
         ))}

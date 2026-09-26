@@ -62,12 +62,12 @@ export function CollabGlyph(_props: SubpackageGlyphProps) {
         {COLLABORATORS.map((c) => (
           <div
             key={c.initial}
-            className={`flex h-7 w-7 items-center justify-center rounded-full border-2 border-[hsl(var(--background))] text-[11px] font-semibold text-white ${c.bg}`}
+            className={`flex h-7 w-7 items-center justify-center rounded-full border-2 border-background text-[11px] font-semibold text-white ${c.bg}`}
           >
             {c.initial}
           </div>
         ))}
-        <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-[hsl(var(--background))] bg-[hsl(var(--foreground))] text-[10px] font-semibold text-[hsl(var(--background))]">
+        <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-background bg-foreground text-[10px] font-semibold text-background">
           +1
         </div>
       </div>

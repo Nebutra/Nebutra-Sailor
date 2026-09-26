@@ -14,9 +14,9 @@ const DOT: Record<StatusTone, string> = {
 };
 
 const INK: Record<StatusTone, string> = {
-  ok: "text-[hsl(var(--success-strong))]",
-  warn: "text-[hsl(var(--warning-strong))]",
-  bad: "text-[hsl(var(--destructive-strong))]",
+  ok: "text-success-strong",
+  warn: "text-warning-strong",
+  bad: "text-destructive-strong",
   unknown: "text-muted-foreground",
 };
 

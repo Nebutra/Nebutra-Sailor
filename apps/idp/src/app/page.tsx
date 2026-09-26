@@ -14,7 +14,7 @@ export default function IdPHomePage() {
 
         <div className="relative rounded-[var(--radius-xl)] border border-border bg-background p-12 shadow-[var(--elevation-lg)]">
           <div
-            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-[var(--radius-xl)] text-3xl font-bold text-[hsl(var(--background))]"
+            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-[var(--radius-xl)] text-3xl font-bold text-background"
             style={{
               background: "linear-gradient(135deg, hsl(var(--primary)), var(--cyan-9))",
             }}

@@ -682,7 +682,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           role="alert"
           aria-live="polite"
           className={cn(
-            "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-[hsl(var(--warning-strong))] dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-amber-100",
+            "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-warning-strong dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-amber-100",
             isWorkspaceHomeRoute
               ? // Home main has p-0; banner already runs edge-to-edge, no
                 // negative margin needed. relative+z keeps it above gradient.

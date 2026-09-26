@@ -105,7 +105,7 @@ export function ConnectIntegrationsStep({ onComplete }: ConnectIntegrationsStepP
               className={cn(
                 "flex flex-col gap-3 rounded-[var(--radius-xl)] border p-4 transition-colors",
                 isConnected
-                  ? "border-[hsl(var(--success)/0.35)] bg-[hsl(var(--success)/0.12)]"
+                  ? "border-success/35 bg-success/12"
                   : "border-border bg-card hover:border-border/80",
               )}
             >

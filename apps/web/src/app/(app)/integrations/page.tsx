@@ -202,8 +202,8 @@ export default function IntegrationsPage() {
                       onClick={() => handleToggle(integration.id, integration.isActive)}
                       className={`flex items-center gap-1 rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors ${
                         integration.isActive
-                          ? "bg-warning/10 text-[hsl(var(--warning-strong))] hover:bg-warning/10/70"
-                          : "bg-success/10 text-[hsl(var(--success-strong))] hover:bg-success/10/70"
+                          ? "bg-warning/10 text-warning-strong hover:bg-warning/10/70"
+                          : "bg-success/10 text-success-strong hover:bg-success/10/70"
                       }`}
                     >
                       {integration.isActive ? (
@@ -219,7 +219,7 @@ export default function IntegrationsPage() {
                     <button
                       type="button"
                       onClick={() => handleDisconnect(integration.id)}
-                      className="flex items-center gap-1 rounded-[var(--radius-md)] bg-destructive/10 px-2.5 py-1.5 text-xs font-medium text-[hsl(var(--destructive-strong))] transition-colors hover:bg-destructive/10/70"
+                      className="flex items-center gap-1 rounded-[var(--radius-md)] bg-destructive/10 px-2.5 py-1.5 text-xs font-medium text-destructive-strong transition-colors hover:bg-destructive/10/70"
                     >
                       <X className="h-3 w-3" /> Disconnect
                     </button>

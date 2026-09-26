@@ -432,7 +432,7 @@ export function BlogComments({
               <button
                 type="submit"
                 disabled={body.trim().length < 2 || submitMutation.isPending}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[hsl(var(--foreground))] px-4 py-2 text-sm font-medium text-[hsl(var(--background))] transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <PaperAirplane className="size-4" aria-hidden />
                 {submitMutation.isPending ? labels.submitting : labels.submit}
@@ -450,7 +450,7 @@ export function BlogComments({
       </div>
 
       {(commentsQuery.isError || submitMutation.isError || reactionMutation.isError) && (
-        <p className="mt-4 text-sm text-[color:var(--status-danger)]">{labels.error}</p>
+        <p className="mt-4 text-sm text-destructive-strong">{labels.error}</p>
       )}
     </section>
   );

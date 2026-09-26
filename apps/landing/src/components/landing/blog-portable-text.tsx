@@ -162,7 +162,7 @@ function renderTableCellMark(
       <a
         key={key}
         href={href}
-        className="font-medium text-foreground underline decoration-[hsl(var(--border))] underline-offset-4 transition-colors hover:decoration-[hsl(var(--primary))]"
+        className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary"
         rel={isExternal ? "noopener noreferrer" : undefined}
         target={isExternal ? "_blank" : undefined}
       >
@@ -274,8 +274,7 @@ function renderTableCellMark(
  * palette class has no dark-mode value, so a highlighted phrase used to sit as
  * a near-white block in dark mode.
  */
-const cnHighlight =
-  "rounded-[var(--radius-sm)] bg-[color-mix(in_srgb,var(--status-warning)_28%,transparent)] px-1 text-foreground";
+const cnHighlight = "rounded-[var(--radius-sm)] bg-warning/28 px-1 text-foreground";
 
 function BlogTableCellSpan({
   block,
@@ -974,7 +973,7 @@ function createPortableTextComponents(
           <a
             href={href}
             aria-label={typeof value?.label === "string" ? value.label : undefined}
-            className="font-medium text-foreground underline decoration-[hsl(var(--border))] underline-offset-4 transition-colors hover:decoration-[hsl(var(--primary))]"
+            className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary"
             rel={openInNewTab ? "noopener noreferrer" : undefined}
             target={openInNewTab ? "_blank" : undefined}
           >

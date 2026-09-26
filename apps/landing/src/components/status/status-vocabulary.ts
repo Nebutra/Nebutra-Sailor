@@ -70,9 +70,9 @@ export const componentStatusLabel: Record<ServiceState, string> = {
 
 /** Pill / badge surfaces (bg + text + ring). */
 export const stateSurfaceClass: Record<ServiceState, string> = {
-  operational: "bg-success/10 text-[hsl(var(--success-strong))] ring-success/20",
-  degraded: "bg-warning/12 text-[hsl(var(--warning-strong))] ring-warning/25",
-  outage: "bg-destructive/10 text-[hsl(var(--destructive-strong))] ring-destructive/25",
+  operational: "bg-success/10 text-success-strong ring-success/20",
+  degraded: "bg-warning/12 text-warning-strong ring-warning/25",
+  outage: "bg-destructive/10 text-destructive-strong ring-destructive/25",
   unknown: "bg-muted text-muted-foreground ring-[color:hsl(var(--border))]",
 };
 

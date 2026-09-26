@@ -111,7 +111,7 @@ export default function AccessibilityPage() {
           <ul className="mt-6 flex flex-col gap-2">
             {[...light.failing, ...dark.failing].map(({ entry, pairing }) => (
               <li
-                className="rounded-[var(--radius-md)] bg-destructive/10 px-3 py-2 font-mono text-[12px] text-[hsl(var(--destructive-strong))]"
+                className="rounded-[var(--radius-md)] bg-destructive/10 px-3 py-2 font-mono text-[12px] text-destructive-strong"
                 key={`${entry.token.cssVar}-${pairing.backdrop.cssVar}`}
               >
                 --{entry.token.cssVar} on --{pairing.backdrop.cssVar} — {pairing.basis}

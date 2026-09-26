@@ -298,7 +298,7 @@ export default async function ChangelogVersionPage({
             <div className="mb-8">
               <Link
                 href="/changelog"
-                className="inline-flex items-center text-sm font-medium text-[hsl(var(--primary))] hover:underline"
+                className="inline-flex items-center text-sm font-medium text-primary hover:underline"
               >
                 ← All releases
               </Link>
@@ -352,7 +352,7 @@ export default async function ChangelogVersionPage({
                 return prevEntry ? (
                   <Link
                     href={`/changelog/${prevEntry.version}`}
-                    className="text-sm font-medium text-[hsl(var(--primary))] hover:underline"
+                    className="text-sm font-medium text-primary hover:underline"
                   >
                     ← v{prevEntry.version}
                   </Link>
@@ -371,7 +371,7 @@ export default async function ChangelogVersionPage({
                 return nextEntry ? (
                   <Link
                     href={`/changelog/${nextEntry.version}`}
-                    className="text-sm font-medium text-[hsl(var(--primary))] hover:underline"
+                    className="text-sm font-medium text-primary hover:underline"
                   >
                     v{nextEntry.version} →
                   </Link>
@@ -423,7 +423,7 @@ export default async function ChangelogVersionPage({
           <div className="mb-8">
             <Link
               href="/changelog"
-              className="inline-flex items-center text-sm font-medium text-[hsl(var(--primary))] hover:underline"
+              className="inline-flex items-center text-sm font-medium text-primary hover:underline"
             >
               ← All releases
             </Link>
@@ -464,7 +464,7 @@ export default async function ChangelogVersionPage({
             {prevRelease ? (
               <Link
                 href={`/changelog/${prevRelease.version}`}
-                className="text-sm font-medium text-[hsl(var(--primary))] hover:underline"
+                className="text-sm font-medium text-primary hover:underline"
               >
                 ← v{prevRelease.version}
               </Link>
@@ -475,7 +475,7 @@ export default async function ChangelogVersionPage({
             {nextRelease ? (
               <Link
                 href={`/changelog/${nextRelease.version}`}
-                className="text-sm font-medium text-[hsl(var(--primary))] hover:underline"
+                className="text-sm font-medium text-primary hover:underline"
               >
                 v{nextRelease.version} →
               </Link>

@@ -580,7 +580,7 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
                     className={[
                       "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs",
                       done
-                        ? "bg-[color-mix(in_srgb,var(--status-success)_18%,transparent)] text-[var(--status-success)]"
+                        ? "bg-success/18 text-success-strong"
                         : active
                           ? "bg-[var(--neutral-3)] font-medium text-[var(--neutral-12)]"
                           : "bg-[var(--neutral-3)] text-[var(--neutral-10)]",
@@ -619,14 +619,12 @@ export function DnsLeakRunner({ toolId }: { toolId: string }) {
 
           {liveResolvers.length > 0 ? (
             <div className="space-y-1">
-              <p className="text-xs font-medium text-[var(--status-success)]">
-                {t("dnsLeak.liveHits")}
-              </p>
+              <p className="text-xs font-medium text-success-strong">{t("dnsLeak.liveHits")}</p>
               <ul className="flex flex-wrap gap-2 font-mono text-sm">
                 {liveResolvers.map((r) => (
                   <li
                     key={r.ip}
-                    className="rounded-md bg-[color-mix(in_srgb,var(--status-success)_12%,transparent)] px-2 py-0.5 text-[var(--neutral-12)]"
+                    className="rounded-md bg-success/12 px-2 py-0.5 text-[var(--neutral-12)]"
                   >
                     {r.ip}
                     {typeof r.count === "number" ? (

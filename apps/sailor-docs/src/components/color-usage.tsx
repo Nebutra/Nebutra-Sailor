@@ -194,7 +194,7 @@ export function ColorUsageDemos() {
               Connect and manage all your external data sources seamlessly with Nebutra's
               enterprise-grade integration engine.
             </p>
-            <div className="mt-4 flex gap-3 text-[hsl(var(--primary))]">
+            <div className="mt-4 flex gap-3 text-primary">
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"

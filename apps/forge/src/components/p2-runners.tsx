@@ -993,7 +993,7 @@ export function MortgageRunner({ toolId }: { toolId: string }) {
             <p className="text-2xl font-semibold tabular-nums">¥ {fmt(out.totalPayment)}</p>
           </RunnerPanel>
           <RunnerPanel title="总利息">
-            <p className="text-2xl font-semibold tabular-nums text-[var(--status-warning)]">
+            <p className="text-2xl font-semibold tabular-nums text-warning-strong">
               ¥ {fmt(out.totalInterest)}
             </p>
           </RunnerPanel>
@@ -1183,7 +1183,7 @@ export function PhoneLookupRunner({ toolId }: { toolId: string }) {
       {out ? (
         <RunnerPanel>
           <p
-            className={`font-semibold ${out.valid === true ? "text-[var(--status-success)]" : "text-[var(--status-danger)]"}`}
+            className={`font-semibold ${out.valid === true ? "text-success-strong" : "text-destructive-strong"}`}
           >
             {out.valid === true ? "格式有效" : "无效"}
           </p>

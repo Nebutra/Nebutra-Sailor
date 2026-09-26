@@ -138,6 +138,11 @@ const CASES: Case[] = [
     violation: 'document.documentElement.dataset.lintProbeUnread = "on";\n',
   },
   {
+    // An app speaking around the design system: a status fill var as ink.
+    guard: "lint-app-consumption",
+    violation: 'export const C = () => <p className="text-[var(--status-danger)]">Failed</p>;\n',
+  },
+  {
     // A status fill used as ink: text-warning is 2.0:1 in light mode.
     guard: "lint-token-pairing",
     violation: 'export const C = () => <p className="text-warning">Quota almost used</p>;\n',

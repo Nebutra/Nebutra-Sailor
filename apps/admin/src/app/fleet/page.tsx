@@ -122,7 +122,7 @@ export default async function FleetPage() {
                         <span className="inline-flex items-center gap-2">
                           <span className="font-mono text-xs">{row.deployTarget}</span>
                           {row.targetMatchesRuntime === false ? (
-                            <span className="rounded-full bg-[hsl(var(--warning))]/12 px-1.5 text-[11px] text-[hsl(var(--warning-strong))] leading-4">
+                            <span className="rounded-full bg-warning/12 px-1.5 text-[11px] text-warning-strong leading-4">
                               drift
                             </span>
                           ) : null}

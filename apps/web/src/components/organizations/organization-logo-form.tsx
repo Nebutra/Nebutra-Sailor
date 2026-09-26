@@ -295,7 +295,7 @@ export function OrganizationLogoForm({
               type="button"
               onClick={() => void handleDelete()}
               disabled={pending}
-              className="text-left text-xs font-medium text-[var(--status-danger)] underline-offset-4 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+              className="text-left text-xs font-medium text-destructive-strong underline-offset-4 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
             >
               {t("organizations.settings.logo.removeButton")}
             </button>
@@ -303,9 +303,9 @@ export function OrganizationLogoForm({
         </div>
       </div>
 
-      {errorMessage && <p className="mt-3 text-sm text-[var(--status-danger)]">{errorMessage}</p>}
+      {errorMessage && <p className="mt-3 text-sm text-destructive-strong">{errorMessage}</p>}
       {showSuccess && (
-        <p className="mt-3 text-sm text-[color:var(--status-success)]">
+        <p className="mt-3 text-sm text-success-strong">
           {logoUrl
             ? t("organizations.settings.logo.success")
             : t("organizations.settings.logo.removed")}

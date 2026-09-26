@@ -113,9 +113,7 @@ export function NewsRailCarousel({ slides, isZh }: { slides: NewsRailSlide[]; is
                   aria-current={isActive}
                   onClick={() => setActive(index)}
                   className={`h-1.5 rounded-full [transition-property:width,background-color] [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none ${
-                    isActive
-                      ? "w-5 bg-[hsl(var(--primary))]"
-                      : "w-1.5 bg-[hsl(var(--border))] hover:bg-[hsl(var(--muted-foreground))]"
+                    isActive ? "w-5 bg-primary" : "w-1.5 bg-border hover:bg-muted-foreground"
                   }`}
                 />
               );

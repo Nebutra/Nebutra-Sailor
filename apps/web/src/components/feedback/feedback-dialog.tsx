@@ -226,7 +226,7 @@ export function FeedbackDialog() {
                     <span
                       className={`tabular-nums ${
                         descLength < MIN_DESCRIPTION || descLength > MAX_DESCRIPTION
-                          ? "text-[hsl(var(--destructive-strong))]"
+                          ? "text-destructive-strong"
                           : "text-neutral-10"
                       }`}
                     >

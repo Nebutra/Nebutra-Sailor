@@ -58,15 +58,15 @@ export function AIGatewayCard() {
           </div>
           <div className="p-5 font-mono text-[12px] leading-relaxed text-foreground dark:text-muted-foreground">
             <div>
-              <span className="text-[hsl(var(--primary))]">import</span> {`{ createEdgeRouter }`}{" "}
-              <span className="text-[hsl(var(--primary))]">from</span>{" "}
+              <span className="text-primary">import</span> {`{ createEdgeRouter }`}{" "}
+              <span className="text-primary">from</span>{" "}
               <span className="text-green-900">'@nebutra/ai';</span>
             </div>
             <div className="mt-3 font-medium text-muted-foreground dark:text-muted-foreground">
               {"// Auto-fallback & latency routing"}
             </div>
             <div>
-              <span className="text-[hsl(var(--primary))]">export const</span> POST ={" "}
+              <span className="text-primary">export const</span> POST ={" "}
               <span className="text-[var(--brand-tertiary)]">createEdgeRouter</span>({`{`}
             </div>
             <div className="pl-4">
@@ -77,7 +77,7 @@ export function AIGatewayCard() {
               <span className="text-green-900">'claude-sonnet-4.6'</span>],
             </div>
             <div className="pl-4">
-              stream: <span className="text-[hsl(var(--primary))]">true</span>
+              stream: <span className="text-primary">true</span>
             </div>
             <div>{`});`}</div>
           </div>

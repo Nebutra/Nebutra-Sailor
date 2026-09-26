@@ -30,13 +30,10 @@ export interface ActivePlanCardProps {
 }
 
 const STATUS_TONES: Record<SubscriptionStatus, string> = {
-  active:
-    "bg-[hsl(var(--success)/0.1)] text-[hsl(var(--success))] ring-1 ring-[hsl(var(--success)/0.3)]",
-  trialing: "bg-[hsl(var(--info)/0.1)] text-[hsl(var(--info))] ring-1 ring-[hsl(var(--info)/0.3)]",
-  past_due:
-    "bg-[hsl(var(--warning)/0.1)] text-[hsl(var(--warning))] ring-1 ring-[hsl(var(--warning)/0.3)]",
-  canceled:
-    "bg-[hsl(var(--destructive)/0.1)] text-[hsl(var(--destructive))] ring-1 ring-[hsl(var(--destructive)/0.3)]",
+  active: "bg-success/10 text-success-strong ring-1 ring-success/30",
+  trialing: "bg-info/10 text-info ring-1 ring-info/30",
+  past_due: "bg-warning/10 text-warning-strong ring-1 ring-warning/30",
+  canceled: "bg-destructive/10 text-destructive-strong ring-1 ring-destructive/30",
   free: "bg-muted text-muted-foreground ring-1 ring-[color:hsl(var(--border))]",
 };
 
@@ -61,7 +58,7 @@ export function ActivePlanCard({
     return (
       <div
         role="alert"
-        className={`rounded-[var(--radius-3xl)] border border-[hsl(var(--destructive)/0.3)] bg-[hsl(var(--destructive)/0.1)] p-5 text-[hsl(var(--destructive))] text-sm ${className ?? ""}`}
+        className={`rounded-[var(--radius-3xl)] border border-destructive/30 bg-destructive/10 p-5 text-destructive-strong text-sm ${className ?? ""}`}
       >
         {t("errors.loadFailed")}
       </div>
