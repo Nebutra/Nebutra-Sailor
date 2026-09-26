@@ -29,7 +29,7 @@ DATABASE_URL=<your-production-db-url> pnpm db:migrate
 
 **已配置 Redis 持久化**
 
-如果将 Redis 用于 BullMQ 队列，请启用 AOF（追加写文件）持久化。没有持久化的话，重启时正在处理中的任务将丢失。
+如果依赖 Redis 做缓存或限流状态，请启用 AOF（追加写文件）持久化。队列（QStash）不使用 Redis——它是一个独立的、始终持久化的 Serverless 队列，因此不存在因 Redis 重启而丢失的处理中队列任务。
 
 ---
 
@@ -53,9 +53,15 @@ DATABASE_URL=<your-production-db-url> pnpm db:migrate
 
 ## 认证
 
-**Clerk Webhook 端点已配置**
+**Better Auth（唯一的认证服务商）已在登录中心 + 应用两端接通**
 
-在 Clerk 控制台中，创建指向 `https://api.yourdomain.com/api/v1/webhooks/clerk` 的 Webhook。将签名密钥设置为 `CLERK_WEBHOOK_SECRET`。必需事件：`user.created`、`user.deleted`、`organization.created`、`organizationMembership.created`。
+- `AUTH_PROVIDER` / `NEXT_PUBLIC_AUTH_PROVIDER` = `better-auth`
+- `BETTER_AUTH_URL` / `NEXT_PUBLIC_AUTH_URL` 指向登录中心主机
+- `BETTER_AUTH_SECRET` 在 auth 与 web 两端一致
+- `AUTH_COOKIE_DOMAIN` 是共享的父域（如 `.nebutra.com`）
+- OAuth 回调地址包含登录中心的回调路径
+
+Better Auth 是唯一的认证服务商——Clerk、NextAuth 和 Supabase 适配器已根据 Sailor Convergence ADR（2026-09-24）移除。不存在需要接入的 Clerk Webhook 路径。
 
 ---
 

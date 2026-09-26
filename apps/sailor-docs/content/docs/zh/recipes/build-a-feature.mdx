@@ -140,7 +140,7 @@ pnpm generate:api-types
 这会运行 `openapi-typescript` 流水线（脚本：`scripts/generate-api-types.ts`），从 `backends/gateway/openapi.json` 读取规范，写入 `apps/web/src/lib/api/types.generated.ts`。基于 `openapi-fetch` 的有类型客户端可通过以下方式使用：
 
 ```typescript
-// Server Components / route handlers（自动转发 Clerk JWT）：
+// Server Components / route handlers（自动转发 Better Auth 会话）：
 import { getTypedApi } from "@/lib/api/client";
 const api = await getTypedApi();
 

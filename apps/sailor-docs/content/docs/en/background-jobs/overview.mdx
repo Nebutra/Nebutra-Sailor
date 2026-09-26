@@ -24,9 +24,9 @@ Nebutra ships two systems for this, each optimized for different workload shapes
 | **Steps** | Yes — each step retried independently | No — job is atomic |
 | **Fan-out** | Yes — one event triggers many functions | No |
 | **Observability** | Full UI, traces, replay | Basic logging |
-| **Scheduled jobs** | Yes (cron syntax) | No (use Vercel cron or Inngest) |
-| **Self-hosted** | No (managed) | Yes (BullMQ + Redis) |
-| **Serverless** | Yes | Yes (QStash) or No (BullMQ) |
+| **Scheduled jobs** | Yes (cron syntax) | No (use Inngest, or your deploy target's own cron) |
+| **Self-hosted** | No (managed) | No — QStash only |
+| **Serverless** | Yes | Yes (QStash) |
 | **Throughput** | Medium | High |
 
 **Rule of thumb:** if your job has more than one step, needs retry granularity, or you want to replay it from a UI — use Inngest. If you just need to defer a fast task or process a high-volume queue — use `@nebutra/queue`.
@@ -45,7 +45,6 @@ Event emitter / API gateway
         │                               (your API gateway)
         │
         └─── queue.enqueue(job) ───────► QStash (serverless)
-                                         or BullMQ (Redis)
                                                 │
                                          queue.registerHandler()
                                          POST /api/v1/queue/:queue/:type
@@ -118,15 +117,15 @@ await inngest.send({
 INNGEST_EVENT_KEY=""            # Secret key for sending events
 INNGEST_SIGNING_KEY=""          # Validates Inngest → your server requests
 
-# QStash (serverless queue)
+# QStash (the queue — no self-hosted alternative)
 QSTASH_TOKEN=""
 QSTASH_CURRENT_SIGNING_KEY=""
 QSTASH_NEXT_SIGNING_KEY=""
 QSTASH_CALLBACK_BASE_URL=""     # e.g. https://api.yourdomain.com
-
-# BullMQ (self-hosted queue — reuses REDIS_URL)
-REDIS_URL=""
 ```
+
+Unconfigured, the queue degrades to an in-memory fallback (dev/test only, reported as
+`local-fallback` by `nebutra status`) — it does not fall back to a self-hosted broker.
 
 ## Related
 
@@ -135,10 +134,10 @@ REDIS_URL=""
     Multi-step durable functions, retries, and event fan-out.
   </Card>
   <Card title="Queues" icon="list" href="/background-jobs/queues">
-    Simple task queues with QStash and BullMQ.
+    Simple task queues with QStash.
   </Card>
   <Card title="Cron Jobs" icon="clock" href="/background-jobs/cron">
-    Scheduled recurring jobs with Inngest and Vercel cron.
+    Scheduled recurring jobs with Inngest.
   </Card>
   <Card title="Email" icon="bell" href="/email/overview">
     Send in-app, email, and push notifications from jobs.

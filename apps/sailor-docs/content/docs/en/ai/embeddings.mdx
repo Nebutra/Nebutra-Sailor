@@ -26,14 +26,6 @@ Nebutra stores embeddings in PostgreSQL using the **pgvector** extension, so the
     ```
   </Step>
 
-  <Step title="Enable the feature flag">
-    ```typescript
-    import { setFeatureFlag } from "@nebutra/preset";
-
-    await setFeatureFlag("org_123", "ai.embeddings", true);
-    ```
-  </Step>
-
   <Step title="Run the pgvector migration">
     The Nebutra database schema already includes an `embeddings` table with a `vector` column. If you are setting up from scratch, ensure pgvector is enabled:
 
@@ -255,7 +247,7 @@ CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops) WITH (lis
 ```
 
 <Note>
-  **Recommended index configuration for Nebutra's managed tiers (Neon / Supabase):**
+  **Recommended index configuration for managed Postgres (Neon or any hosted Postgres with pgvector):**
 
   ```sql
   -- HNSW (recommended for ≤5M rows — best query speed, ~2% build overhead)
@@ -284,7 +276,7 @@ CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops) WITH (lis
 
 <CardGroup cols={2}>
   <Card title="AI Overview" icon="sparkles" href="/ai/overview">
-    Supported models, feature flags, and token quotas.
+    Supported models and token quotas.
   </Card>
   <Card title="Chatbot" icon="message-bot" href="/ai/chatbot">
     Use embeddings with RAG to ground chatbot responses.

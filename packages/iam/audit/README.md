@@ -112,10 +112,13 @@ interface AuditEvent {
 
 ## Storage
 
-Audit logs are stored in:
+Provider is resolved from the environment (`AUDIT_PROVIDER`, or auto-detected —
+see `src/providers/index.ts`):
 
-- **Primary:** Supabase (queryable)
-- **Archive:** S3/R2 (long-term retention)
+- **Postgres** (via Prisma, `DATABASE_URL`) — default durable backend
+- **ClickHouse** (`CLICKHOUSE_URL` + `AUDIT_USE_CLICKHOUSE=true`) — high-volume
+  append-only storage
+- **Memory** — dev/test fallback only, not durable
 
 ## Related
 

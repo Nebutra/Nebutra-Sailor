@@ -31,31 +31,30 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 
 ## Authentication
 
+Better Auth is the only auth provider — the Sailor Convergence ADR (2026-09-24) deleted the Clerk,
+NextAuth, and Supabase auth adapters. Without `BETTER_AUTH_SECRET` set, auth degrades to a dev
+fallback (`nebutra status` reports this as `local-fallback`), not to a different provider.
+
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `AUTH_PROVIDER` | No | `better-auth` | Server-side auth provider. One of `better-auth`, `nextauth`, `clerk`, `supabase`, or `dev`. |
+| `AUTH_PROVIDER` | No | `better-auth` | Server-side auth provider. `better-auth` is the only real option (or `dev`, the local fallback). |
 | `NEXT_PUBLIC_AUTH_PROVIDER` | No | `better-auth` | Client-visible auth provider. Keep this aligned with `AUTH_PROVIDER`. |
-| `BETTER_AUTH_SECRET` | If `AUTH_PROVIDER=better-auth` | — | Self-hosted Better Auth signing secret. Generate with `openssl rand -base64 32`. **Must match** on auth-center and every RP app. |
-| `BETTER_AUTH_URL` | If `AUTH_PROVIDER=better-auth` | — | Auth-center origin that serves `/api/auth/*`. Production: `https://auth.nebutra.com`. |
+| `BETTER_AUTH_SECRET` | For a live auth backend | — | Self-hosted Better Auth signing secret. Generate with `openssl rand -base64 32`. **Must match** on auth-center and every RP app. |
+| `BETTER_AUTH_URL` | For a live auth backend | — | Auth-center origin that serves `/api/auth/*`. Production: `https://auth.nebutra.com`. |
 | `NEXT_PUBLIC_AUTH_URL` | If split auth-center | — | Public auth-center URL for client redirects / SDK baseURL. Usually same as `BETTER_AUTH_URL`. |
 | `AUTH_COOKIE_DOMAIN` | Production multi-subdomain | — | Shared cookie parent domain (e.g. `.nebutra.com`) so session works on `app` + `auth`. |
 | `SERVICE_SECRET` | Yes (gateway / S2S) | — | HS256 secret for internal `x-service-token` JWTs. Not an end-user session secret. |
-| `AUTH_SECRET` | If `AUTH_PROVIDER=nextauth` | — | Auth.js / NextAuth signing secret. Generate with `openssl rand -base64 32`. |
-| `NEXTAUTH_URL` | If `AUTH_PROVIDER=nextauth` | — | Dashboard origin for Auth.js callbacks. |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | If `AUTH_PROVIDER=clerk` | — | Clerk publishable key. Starts with `pk_live_` or `pk_test_`. |
-| `CLERK_SECRET_KEY` | If `AUTH_PROVIDER=clerk` | — | Clerk secret key. Starts with `sk_live_` or `sk_test_`. |
-| `CLERK_WEBHOOK_SECRET` | If Clerk webhooks are enabled | — | Signing secret for Clerk webhook payloads. Starts with `whsec_`. |
-| `AUTH_SSO_DISCOVERY_PROVIDERS` | If Enterprise SSO discovery is enabled | — | JSON array mapping email domains to SSO providers. Clerk entries use `/sign-in/sso`; Feishu entries use `/api/auth/oauth/feishu`; generic entries must define an internal `loginUrl`. |
+| `AUTH_SSO_DISCOVERY_PROVIDERS` | If Enterprise SSO discovery is enabled | — | JSON array mapping email domains to SSO providers. Feishu entries use `/api/auth/oauth/feishu`; generic entries must define an internal `loginUrl`. |
 | `FEISHU_APP_ID` | If Feishu/Lark SSO is enabled | — | Feishu/Lark app id for Better Auth generic OAuth. |
 | `FEISHU_APP_SECRET` | If Feishu/Lark SSO is enabled | — | Feishu/Lark app secret. Never expose this as `NEXT_PUBLIC_`. |
 | `FEISHU_OAUTH_SCOPES` | No | `contact:user.email contact:user.base:readonly` | Space- or comma-separated OAuth scopes requested from Feishu/Lark. |
 | `FEISHU_ALLOWED_TENANT_KEYS` | No | — | Optional allowlist of Feishu tenant keys accepted by this deployment. |
 | `FEISHU_REDIRECT_URI` | No | — | Optional override. Default Better Auth callback is `/api/auth/oauth2/callback/feishu`. |
-| `GOOGLE_CLIENT_ID` | If Google OAuth is enabled | — | Google OAuth web client id for Better Auth or NextAuth. |
-| `GOOGLE_CLIENT_SECRET` | If Google OAuth is enabled | — | Google OAuth web client secret for Better Auth or NextAuth. |
+| `GOOGLE_CLIENT_ID` | If Google OAuth is enabled | — | Google OAuth web client id for Better Auth. |
+| `GOOGLE_CLIENT_SECRET` | If Google OAuth is enabled | — | Google OAuth web client secret for Better Auth. |
 | `GITHUB_CLIENT_ID` | If GitHub OAuth is enabled | — | GitHub OAuth app client id (Better Auth). |
 | `GITHUB_CLIENT_SECRET` | If GitHub OAuth is enabled | — | GitHub OAuth app client secret. |
-| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | If Google One Tap is enabled for Better Auth or NextAuth | — | Public Google OAuth web client id used by the landing page One Tap prompt. |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | If Google One Tap is enabled | — | Public Google OAuth web client id used by the landing page One Tap prompt. |
 | `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP` | No | `true` | Set to `false` to disable the landing One Tap prompt. |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | If Turnstile captcha is shown | — | Cloudflare Turnstile site key on auth-center forms. |
 | `TURNSTILE_SECRET_KEY` / `TURNSTILE_SECRET` | If Turnstile is enforced | — | Server secret for `siteverify`. When unset, verification is skipped. |
@@ -63,7 +62,7 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 | `NEXT_PUBLIC_AUTH_PASSKEYS` | No | off | Set `1` / `true` to show passkey button + conditional UI. |
 | `PASSKEY_RP_ID` | No | auth hostname | WebAuthn RP ID override (defaults to auth-center host). |
 | `PASSKEY_ORIGIN` | No | auth origin | WebAuthn origin override (defaults to auth-center origin). |
-| `NEBUTRA_LANDING_ORIGIN` | If NextAuth One Tap is enabled | — | Landing origin allowed to POST to `/api/auth/google-one-tap`. |
+| `NEBUTRA_LANDING_ORIGIN` | If landing-page One Tap is enabled | — | Landing origin allowed to POST to `/api/auth/google-one-tap`. |
 | `NEBUTRA_SESSION_HINT_DOMAIN` | No | — | Optional shared cookie domain for the lightweight cross-subdomain session hint. |
 
 <CodeGroup>
@@ -97,13 +96,6 @@ TURNSTILE_SECRET_KEY=0x4AAAAA...
 # NEXT_PUBLIC_AUTH_PASSKEYS=1
 # PASSKEY_RP_ID=auth.nebutra.com
 # PASSKEY_ORIGIN=https://auth.nebutra.com
-```
-```bash .env (optional Clerk provider)
-AUTH_PROVIDER=clerk
-NEXT_PUBLIC_AUTH_PROVIDER=clerk
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
-CLERK_SECRET_KEY=sk_live_xxx
-CLERK_WEBHOOK_SECRET=whsec_xxx
 ```
 ```bash .env (Feishu/Lark SSO)
 AUTH_PROVIDER=better-auth
@@ -164,17 +156,28 @@ AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","nam
 
 ## Storage
 
+One S3-compatible client covers both R2 and Aliyun OSS — there is no separate provider for each.
+`UPLOAD_PROVIDER` picks a backend explicitly; unset, the provider auto-detects from whichever
+credentials are present (R2 first, then AWS, then a custom S3-compatible endpoint), falling back
+to local disk.
+
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `STORAGE_PROVIDER` | No | `local` | Storage backend. One of `s3`, `r2`, `s3-compatible`, `local`. |
-| `AWS_BUCKET_NAME` | No | `nebutra-uploads` | S3 or R2 bucket name. |
+| `UPLOAD_PROVIDER` | No | auto-detected | `s3` (or its alias `r2`) forces the S3-compatible provider; unset auto-detects from the credentials below; otherwise falls back to `local`. |
+| `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY` | No | — | Cloudflare R2 credentials — checked first. |
+| `R2_ENDPOINT` / `R2_PUBLIC_URL` | No | — | R2 endpoint and public CDN URL overrides. |
+| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | No | — | AWS S3 credentials — checked if no R2 credentials are set. |
 | `AWS_REGION` | No | `us-east-1` | AWS region for S3. |
-| `AWS_ACCESS_KEY_ID` | No | — | AWS access key ID. |
-| `AWS_SECRET_ACCESS_KEY` | No | — | AWS secret access key. |
+| `S3_ENDPOINT` / `S3_PUBLIC_URL` | No | — | Custom S3-compatible endpoint (Aliyun OSS, MinIO, …) and its public URL. |
+| `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | No | — | Fallback credential names, used only when `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY` are unset and `S3_ENDPOINT` is set. |
 
 <Info>
-  When `STORAGE_PROVIDER` is `local`, uploaded files are written to `./uploads` on the server filesystem. This is suitable for local development only — local storage is not persistent across deployments.
+  With no storage credentials set at all, uploaded files are written to `./uploads` on the server filesystem (`nebutra status` reports this as `local-fallback`). This is suitable for local development only — local storage is not persistent across deployments.
 </Info>
+
+<Note>
+  Vercel Blob was deleted per the Sailor Convergence ADR (2026-09-24) — there is no `blob` provider. Everything object-storage-shaped goes through the S3-compatible client above.
+</Note>
 
 ---
 
@@ -192,7 +195,8 @@ AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","nam
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `REDIS_URL` | No | — | Redis connection string. Required for queues (BullMQ), caching, and rate limiting. Example: `redis://localhost:6379`. |
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | No | — | Redis via the Upstash REST protocol — the production cache path. Checked first. |
+| `REDIS_URL` | No | — | Direct `ioredis` connection string — self-hosted Redis (e.g. behind the Serverless Redis HTTP proxy). Used for caching and rate limiting when the Upstash REST vars are unset. Example: `redis://localhost:6379`. |
 
 <Tip>
   `pnpm infra:up` starts Redis 7 on port 6379. `pnpm infra:lite` starts only PostgreSQL — Redis is not included.
@@ -238,16 +242,18 @@ AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","nam
 
 ---
 
-## Serverless Queue (QStash)
+## Queue (QStash)
 
-These variables are required only when `QUEUE_PROVIDER=qstash`. If `REDIS_URL` is set and `QUEUE_PROVIDER` is unset, the system auto-selects BullMQ instead.
+QStash is the only queue backend — BullMQ was deleted per the Sailor Convergence ADR (2026-09-24).
+Without `QSTASH_TOKEN`, the queue degrades to an in-memory fallback (`nebutra status` reports this
+as `local-fallback`), not to a self-hosted broker.
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `QSTASH_TOKEN` | Conditional | — | Upstash QStash REST token. |
-| `QSTASH_CURRENT_SIGNING_KEY` | Conditional | — | Current webhook signing key for payload verification. |
-| `QSTASH_NEXT_SIGNING_KEY` | Conditional | — | Next signing key, used during key rotation. |
-| `QSTASH_CALLBACK_BASE_URL` | Conditional | — | Public base URL where QStash delivers webhook callbacks. Example: `https://api.nebutra.com`. |
+| `QSTASH_TOKEN` | For a live queue | — | Upstash QStash REST token. |
+| `QSTASH_CURRENT_SIGNING_KEY` | For a live queue | — | Current webhook signing key for payload verification. |
+| `QSTASH_NEXT_SIGNING_KEY` | For a live queue | — | Next signing key, used during key rotation. |
+| `QSTASH_CALLBACK_BASE_URL` | For a live queue | — | Public base URL where QStash delivers webhook callbacks. Example: `https://api.nebutra.com`. |
 
 ---
 
@@ -268,7 +274,7 @@ Use a separate secret value per environment (development, preview, production). 
     How config validation works and where to set variables per environment.
   </Card>
   <Card title="Feature Flags" icon="toggle-on" href="/configuration/feature-flags">
-    Boolean toggles that enable or disable product features.
+    Why the scaffold doesn't have a feature-flags capability.
   </Card>
   <Card title="Common Errors" icon="triangle-exclamation" href="/troubleshooting/common-errors">
     Startup errors caused by missing or incorrect environment variables.

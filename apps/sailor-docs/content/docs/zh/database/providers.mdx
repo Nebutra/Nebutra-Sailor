@@ -238,7 +238,7 @@ PlanetScale Vitess/MySQL 与 PlanetScale Postgres 不是同一条支持路径。
 | 托管控制台 | 基础版 | 功能完整的 Studio UI | 带指标和分支的运维控制台 |
 | 连接池 | PgBouncer（事务模式） | Supavisor（会话 + 事务模式） | PgBouncer（事务模式，端口 `6432`） |
 | 直连迁移 URL | 直接 PostgreSQL URL | 直接 PostgreSQL URL | 端口 `5432` 的直接 PostgreSQL URL |
-| 内置认证 | 否（使用 Clerk / Better Auth） | 是（如需要） | 否（使用 Clerk / Better Auth） |
+| 内置认证 | 否（使用 Better Auth） | 是（如需要） | 否（使用 Better Auth） |
 | 内置存储 | 否（使用 `@nebutra/uploads`） | 是（S3 兼容） | 否（使用 `@nebutra/uploads`） |
 | pgvector | 默认启用 | 作为扩展提供 | 作为扩展提供 |
 | Prisma 迁移工作流 | checked-in Postgres migrations | checked-in Postgres migrations | checked-in Postgres migrations |

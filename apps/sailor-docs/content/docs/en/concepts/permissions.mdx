@@ -10,7 +10,6 @@ Nebutra ships a production-ready RBAC (Role-Based Access Control) system out of 
 - **4 built-in roles**: `OWNER`, `ADMIN`, `MEMBER`, `VIEWER`
 - **17 typed permission scopes** across resources
 - **In-process enforcement** via CASL (sub-millisecond)
-- **Zanzibar-scale enforcement** via OpenFGA (optional, for complex policy graphs)
 - **React UI gates** via the `<Can>` component
 
 ## Roles
@@ -112,18 +111,13 @@ export const SCOPES = [
 
 Then add them to the role matrix in the same file.
 
-## OpenFGA (optional)
+## CASL only
 
-For complex authorization scenarios — resource sharing, cross-tenant policies, or graph-based access — Nebutra supports OpenFGA as a drop-in replacement:
-
-```bash
-PERMISSIONS_PROVIDER=openfga
-OPENFGA_API_URL=https://api.us1.fga.dev
-OPENFGA_STORE_ID=your_store_id
-OPENFGA_API_KEY=your_api_key
-```
-
-The application code doesn't change — `requirePermission()` and `<Can>` work identically with both backends.
+CASL is the only permissions backend. The Sailor Convergence ADR (2026-09-24) deleted the
+OpenFGA (Zanzibar-style) adapter that used to be offered as a drop-in replacement for complex,
+graph-based authorization — no `PERMISSIONS_PROVIDER` env var or store-based backend exists to
+switch to. If your product needs cross-tenant sharing or graph-based access beyond what CASL's
+in-process rules express, write your own adapter against the `@nebutra/permissions` interface.
 
 ## Related
 

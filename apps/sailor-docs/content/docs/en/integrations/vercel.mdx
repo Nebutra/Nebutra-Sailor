@@ -1,30 +1,27 @@
 ---
 title: Vercel
-description: Deploy the Nebutra marketing surface to Vercel and keep app/API/docs origins on the appropriate runtime boundary.
+description: Vercel as one deploy target for the frontend surfaces of a Sailor project — not the default, not required.
 ---
 
 ## Overview
 
-Nebutra uses Vercel where it is the best runtime boundary: the public marketing
-site, product docs, preview deployments, and content surfaces. Stateful app/API
-origins can run separately on ECS when regional control, network policy, or
-origin ownership matters.
+The Sailor template doesn't bake in a deploy target. `create-sailor` produces portable output — a
+Next `standalone` build and a `Dockerfile.web` + `docker-compose.yml` — and says nothing about
+where it runs. Vercel is one option among several (`vercel`, `standalone`, `cloudflare-pages`,
+`railway`, `fly` for frontend surfaces) selectable per service via the `DEPLOY_TARGET_*`
+env-var/preset mechanism — it is not provisioned automatically and nothing in the scaffold assumes
+it.
 
-## Deploy from the monorepo
+<Note>
+  Nebutra's own production (`nebutra.com`) does not run on Vercel — that surface was retired on
+  2026-09-22 in favor of Fly Machines for frontends/origin and Cloudflare Workers for the gateway.
+  This page is about using Vercel as a deploy target for a project you scaffold from Sailor, not
+  about how Nebutra itself deploys.
+</Note>
 
-Vercel-hosted apps are deployed as separate projects:
+## Deploying an app to Vercel
 
-| App | Project name |
-|-----|-------------|
-| `apps/landing` | `nebutra-landing` |
-| `apps/sailor-docs` | `docs` |
-| `apps/studio` | `nebutra-studio` |
-
-`apps/sailor-docs` powers **`https://nebutra.com/docs`** via Git → Vercel
-(project-specific CNAME, DNS-only). `https://nebutra.com/docs` still 308s to
-the docs host for back-compat.
-
-### Link each app
+Each app deploys as a separate Vercel project:
 
 ```bash
 cd apps/landing
@@ -32,8 +29,7 @@ vercel link
 
 cd ../web
 vercel link
-
-# Repeat for each app
+# Repeat for each app you want on Vercel
 ```
 
 ### Set environment variables
@@ -54,28 +50,21 @@ Enable shared build cache across CI and local machines:
 npx turbo link
 ```
 
-This uses your Vercel account as the remote cache backend — cache misses are eliminated across the team.
+This uses your Vercel account as the remote cache backend — cache misses are eliminated across the team, independent of which deploy target you actually run on.
 
 ## Environment variables
 
-Vercel-hosted **landing / docs** rarely need full auth secrets. If you host web
-or auth on Vercel as an optional cutover, mirror the same Better Auth contract
-used on ECS:
+The converged stack has one provider per capability — the env vars are the same regardless of
+where you deploy:
 
 ```bash
-# Auth (production default = Better Auth auth-center)
+# Auth — Better Auth is the only provider
 AUTH_PROVIDER=better-auth
 NEXT_PUBLIC_AUTH_PROVIDER=better-auth
 BETTER_AUTH_SECRET=...
-BETTER_AUTH_URL=https://auth.nebutra.com
-NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
-AUTH_COOKIE_DOMAIN=.nebutra.com
-
-# Optional: Clerk provider instead
-# AUTH_PROVIDER=clerk
-# NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
-# CLERK_SECRET_KEY=sk_live_...
-# CLERK_WEBHOOK_SECRET=whsec_...
+BETTER_AUTH_URL=https://auth.yourdomain.com
+NEXT_PUBLIC_AUTH_URL=https://auth.yourdomain.com
+AUTH_COOKIE_DOMAIN=.yourdomain.com
 
 # Database
 DATABASE_URL=postgresql://...
@@ -87,7 +76,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 # Email
 RESEND_API_KEY=re_...
 
-# Redis
+# Redis (Upstash REST protocol)
 UPSTASH_REDIS_REST_URL=https://...
 UPSTASH_REDIS_REST_TOKEN=...
 
@@ -101,31 +90,6 @@ SERVICE_SECRET=... # HS256 for x-service-token
 ## Preview deployments
 
 Every pull request gets an automatic preview URL. Vercel automatically sets the correct `VERCEL_URL` so API calls work in preview environments.
-
-## Vercel WAF
-
-The WAF is enabled by default for all Nebutra deployments. Custom rules are configured in `vercel.json`:
-
-```json
-{
-  "firewall": {
-    "rules": [
-      {
-        "name": "Block API abuse",
-        "active": true,
-        "condition": {
-          "op": "and",
-          "conditions": [
-            { "type": "path", "op": "pre", "value": "/api/" },
-            { "type": "rate_limit", "requests": 100, "window": 60 }
-          ]
-        },
-        "action": "challenge"
-      }
-    ]
-  }
-}
-```
 
 ## Related
 

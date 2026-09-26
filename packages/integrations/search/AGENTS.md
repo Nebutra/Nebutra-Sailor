@@ -7,8 +7,10 @@ Execution contract for Nebutra's pluggable search package.
 Applies to everything under `packages/integrations/search/`.
 
 This package owns the cross-provider search contract, provider selection,
-singleton lifecycle, and the checked-in provider adapters for Meilisearch,
-Typesense, and Algolia. It is the shared indexing/search abstraction, not an
+singleton lifecycle, and the checked-in pgvector (Postgres) provider adapter.
+Per ADR 2026-09-24 (Sailor Convergence), Postgres pgvector/FTS is the single
+kept search provider — Meilisearch, Typesense, and Algolia adapters have been
+deleted, not demoted. It is the shared indexing/search abstraction, not an
 app-local search UI or ranking-policy layer.
 
 ## Source Of Truth
@@ -18,10 +20,8 @@ app-local search UI or ranking-policy layer.
   contracts: `src/types.ts`
 - Provider selection, auto-detection, singleton, and shutdown behavior:
   `src/factory.ts`
-- Provider implementations and backend-specific translation:
-  `src/providers/meilisearch.ts`,
-  `src/providers/typesense.ts`,
-  `src/providers/algolia.ts`
+- Provider implementation and backend-specific translation:
+  `src/providers/pgvector.ts`
 
 Treat `README.md` as descriptive only. If examples drift, update the source
 files above instead of preserving stale docs.

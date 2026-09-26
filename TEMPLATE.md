@@ -11,19 +11,18 @@ content is stripped and only the reusable skeleton remains.
 npm create sailor@latest my-app
    │
    ▼
-packages/create-sailor fetches the repo tarball (shallow, fast)
+create-sailor fetches a template tarball — primary: Nebutra/Sailor-Template
+(pre-stripped mirror, auto-synced by sync-template.yml); fallback: this repo's
+main branch, with .templateignore applied at runtime
    │
    ▼
-Reads .templateignore from the cloned dir
+(mirror path only) .templateignore is already applied; nothing further to strip
    │
    ▼
-Deletes every path matched by the ignore patterns (gitignore syntax)
-   │
-   ▼
-Removes .templateignore itself
-   │
-   ▼
-Runs configured prune step (ORM / i18n / app type)
+Writes nebutra.config.json, governance.config.json, compliance boilerplate,
+secrets, .env.local, MIT LICENSE — the same output every time (ADR 2026-09-24
+Sailor convergence: no provider flags, no ORM/i18n/app-type choice, no prune
+step — the full converged stack ships as-is)
    │
    ▼
 my-app/ contains only the reusable skeleton
@@ -145,10 +144,12 @@ tree in which every core and runtime package carries that version.
 
 The mirror itself does **not** carry the `fixed` group: the template build
 rewrites `.changeset/config.json` there with `fixed: []`. The mirror never
-publishes (`release.yml` is stripped), and a scaffold may prune group
-members (`create-sailor --no-webhooks` deletes `packages/integrations/webhooks`),
-which `@changesets/config` would reject on the first `pnpm changeset` if the
-name were still listed. The number travels in the marker and the tag instead.
+publishes (`release.yml` is stripped). `create-sailor` no longer takes flags
+that prune individual packages (ADR 2026-09-24 Sailor convergence — it asks
+only for the target directory and always scaffolds the full converged stack),
+but `fixed: []` still guards against `@changesets/config` rejecting the group
+on the first `pnpm changeset` if a scaffolded project ever drops a package by
+hand. The number travels in the marker and the tag instead.
 
 ## Adding new Nebutra business code
 

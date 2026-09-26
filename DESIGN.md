@@ -444,15 +444,16 @@ It prints the `colors` block of `brand.config.ts`; paste it and run `pnpm brand:
 
 ---
 
-## 7. Figma & Tooling
+## 7. Design tooling
 
-### 7.1 Figma integration (placeholder)
+### 7.1 Figma integration — removed
 
-The Tokens Studio Figma plugin sync workflow is documented separately in `docs/figma-sync.md` (produced by the design-tooling agent). Token round-trip path:
-
-```
-Figma (Tokens Studio) ⇄ packages/tokens/styles.css (DTCG-mapped) ⇄ Tailwind v4 @theme inline
-```
+Figma and Penpot were deleted as design-sync providers per
+[ADR 2026-09-24 Sailor convergence](docs/architecture/2026-09-24-sailor-convergence.md) §1: neither
+was ever configured in production. The only design-sync providers today are `git-only` (DTCG JSON
+committed directly, the default) and `design-md` (AI-native markdown surface); see
+`packages/design/design-sync/DESIGN.md` for the architecture and why Figma/Penpot were removed
+outright rather than kept as stubs.
 
 ### 7.2 Storybook
 

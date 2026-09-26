@@ -154,7 +154,7 @@ await page.click('text=创建项目');
 | 依赖项 | Mock 方式 |
 |-------|---------|
 | Stripe | `vi.mock("stripe")` 配合固定响应 |
-| Clerk / Auth | `vi.mock("@clerk/nextjs")` 配合 Mock 会话 |
+| 认证（Better Auth） | `vi.mock("@/lib/auth-client")` / `@nebutra/auth` 配合 Mock 会话 |
 | PostHog | `vi.mock("@nebutra/analytics")` — 无操作桩 |
 | 邮件 | `vi.mock("@nebutra/email")` — 捕获已发送的邮件 |
 | 数据库（单元测试） | 通过 Prisma 测试客户端使用内存 SQLite |

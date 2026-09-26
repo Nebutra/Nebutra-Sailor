@@ -24,9 +24,9 @@ Nebutra 为此提供了两套系统，分别针对不同的工作负载类型进
 | **步骤** | 支持——每个步骤独立重试 | 不支持——任务是原子性的 |
 | **扇出** | 支持——一个事件触发多个函数 | 不支持 |
 | **可观测性** | 完整 UI、追踪、重放 | 基础日志 |
-| **定时任务** | 支持（Cron 语法） | 不支持（使用 Vercel Cron 或 Inngest） |
-| **自托管** | 否（托管服务） | 是（BullMQ + Redis） |
-| **Serverless** | 是 | 是（QStash）或否（BullMQ） |
+| **定时任务** | 支持（Cron 语法） | 不支持（使用 Inngest,或依赖具体部署平台自带的 cron） |
+| **自托管** | 否（托管服务） | 否——仅 QStash |
+| **Serverless** | 是 | 是（QStash） |
 | **吞吐量** | 中等 | 高 |
 
 **经验法则：** 如果任务有多个步骤、需要精细的重试粒度，或者希望从 UI 中重放——使用 Inngest。如果只是需要延迟执行一个快速任务或处理高并发队列——使用 `@nebutra/queue`。
@@ -45,7 +45,6 @@ Nebutra 为此提供了两套系统，分别针对不同的工作负载类型进
         │                               （你的 API 网关）
         │
         └─── queue.enqueue(job) ───────► QStash（Serverless）
-                                         或 BullMQ（Redis）
                                                 │
                                          queue.registerHandler()
                                          POST /api/v1/queue/:queue/:type
@@ -118,15 +117,15 @@ await inngest.send({
 INNGEST_EVENT_KEY=""            # 用于发送事件的密钥
 INNGEST_SIGNING_KEY=""          # 验证 Inngest → 你的服务器的请求
 
-# QStash（Serverless 队列）
+# QStash（唯一的队列实现,没有自托管替代方案）
 QSTASH_TOKEN=""
 QSTASH_CURRENT_SIGNING_KEY=""
 QSTASH_NEXT_SIGNING_KEY=""
 QSTASH_CALLBACK_BASE_URL=""     # 例如 https://api.yourdomain.com
-
-# BullMQ（自托管队列——复用 REDIS_URL）
-REDIS_URL=""
 ```
+
+未配置时,队列会降级为内存兜底(仅限开发/测试,`nebutra status` 会将其报告为
+`local-fallback`)——它不会降级到某个自托管的消息代理。
 
 ## 相关文档
 
@@ -135,10 +134,10 @@ REDIS_URL=""
     多步骤持久函数、重试和事件扇出。
   </Card>
   <Card title="队列" icon="list" href="/zh/background-jobs/queues">
-    使用 QStash 和 BullMQ 的简单任务队列。
+    使用 QStash 的简单任务队列。
   </Card>
   <Card title="定时任务" icon="clock" href="/zh/background-jobs/cron">
-    使用 Inngest 和 Vercel Cron 的定期调度任务。
+    使用 Inngest 的定期调度任务。
   </Card>
   <Card title="邮件" icon="bell" href="/zh/email/overview">
     从后台任务发送应用内、邮件和推送通知。

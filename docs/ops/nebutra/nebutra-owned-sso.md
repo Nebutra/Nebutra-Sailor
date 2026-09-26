@@ -1,8 +1,9 @@
 # Nebutra-Owned SSO Runbook
 
 `sso.nebutra.com` is Nebutra's own OIDC issuer for first-party and internal
-relying parties. It is not a replacement for Clerk Enterprise SSO, Auth0, Ory,
-or an OIDC certification program.
+relying parties. It is not a replacement for the Enterprise SSO discovery flow
+documented in [`docs/ops/enterprise-sso.md`](../enterprise-sso.md) (Better Auth
+generic OAuth / Feishu-Lark), Auth0, Ory, or an OIDC certification program.
 
 ## Public Contract
 

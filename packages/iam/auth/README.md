@@ -1,11 +1,18 @@
 # @nebutra/auth
 
-> Provider-agnostic authentication abstraction for **multi-provider parallel**
-> (Better Auth default, Clerk enterprise option, Auth.js / NextAuth + Supabase migration).
+> Authentication abstraction for Sailor's single kept provider: **Better Auth**
+> (per ADR 2026-09-24 Sailor Convergence — the Clerk, Auth.js/NextAuth, and
+> Supabase adapters have been deleted, not demoted). `dev` remains for
+> synthetic local sessions.
 >
-> Product apps import **only this package**. Adapters live inside
-> `src/providers/*`. Switch at scaffold (`create-sailor --auth=...`) or runtime
-> via `AUTH_PROVIDER` / `NEXT_PUBLIC_AUTH_PROVIDER`.
+> Product apps import **only this package**. The adapter lives inside
+> `src/providers/better-auth.ts`. `create-sailor` has no `--auth` flag — the
+> scaffold ships Better Auth only; runtime behavior is controlled via
+> `AUTH_PROVIDER` / `NEXT_PUBLIC_AUTH_PROVIDER`.
+>
+> `apps/sleptons` is a documented exception: it is Nebutra's own product,
+> stripped from the template, and keeps a direct `@clerk/nextjs` integration
+> that does not go through this package.
 
 ## Installation
 
@@ -48,7 +55,7 @@ import { AuthProvider } from "@nebutra/auth/react";
 ```typescript
 import { createAuthMiddleware } from "@nebutra/auth/middleware";
 
-const middleware = createAuthMiddleware({ provider: "clerk" });
+const middleware = createAuthMiddleware({ provider: "better-auth" });
 ```
 
 ## API
@@ -86,9 +93,6 @@ if (isCapabilityEffective(provider, "organizations", auth.capabilities)) {
 | Provider | Tier | Notes |
 |----------|------|--------|
 | **better-auth** | first-class (default) | Self-hosted reference implementation |
-| **clerk** | optional-enterprise | Explicit `AUTH_PROVIDER=clerk` |
-| **nextauth** | migration | **Auth.js** (ex-NextAuth.js; package `next-auth`). Scaffold / migrate only |
-| **supabase** | migration | Scaffold / experimental |
 | **dev** | dev-only | Synthetic local sessions |
 
 **Impersonation** is declared `false` for all providers until an adapter ships
@@ -96,9 +100,10 @@ end-to-end support (product returns `501 AUTH_CAPABILITY_UNSUPPORTED`).
 
 ## Configuration
 
-Depends on the chosen provider:
-
 | Provider | Required Environment Variables |
 |----------|-------------------------------|
-| Clerk | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` |
 | Better Auth | Database connection (via `@nebutra/db`) |
+
+`apps/sleptons`'s direct Clerk integration configures itself independently
+(`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`) and is out of scope
+for this package.

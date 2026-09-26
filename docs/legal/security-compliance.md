@@ -52,8 +52,8 @@ Controls the software provides for *your* deployment to use:
 | Area | Implementation |
 | --- | --- |
 | Tenant isolation | PostgreSQL Row-Level Security, transaction-local `app.current_tenant_id`, non-`BYPASSRLS` application role |
-| Authentication | Pluggable — Clerk, Better Auth, or NextAuth |
-| Authorisation | RBAC/ABAC via CASL in-process, or OpenFGA (Zanzibar-style) |
+| Authentication | Better Auth (self-hosted; the only supported auth provider as of ADR 2026-09-24 — Clerk, NextAuth, and the Supabase adapter were deleted) |
+| Authorisation | RBAC/ABAC via CASL, in-process (OpenFGA was deleted per ADR 2026-09-24) |
 | Secrets | Application-layer envelope encryption with AWS KMS or local HKDF (`@nebutra/vault`) |
 | Audit logging | Append-only audit trail designed against SOC 2 criteria (`@nebutra/audit`) |
 | Rate limiting | Per-tenant, at the gateway |

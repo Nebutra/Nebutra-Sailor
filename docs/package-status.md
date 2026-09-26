@@ -1,9 +1,11 @@
 # Nebutra Package Status
 
 This page tracks the production-readiness of each `@nebutra/*` package
-exposed by `create-sailor`. Every workspace package now declares
-`nebutra.status` and `nebutra.graph` in its `package.json`. The tables
-below remain the create-sailor CLI surface, not the full workspace.
+shipped by `create-sailor`'s single converged scaffold (ADR 2026-09-24
+Sailor convergence — one stack, no provider flags). Every workspace package
+now declares `nebutra.status` and `nebutra.graph` in its `package.json`. The
+tables below are the subset of packages worth calling out for maturity —
+not the full workspace, and not a CLI flag surface (there isn't one).
 
 ## Status values
 
@@ -43,18 +45,37 @@ build/test graph.
 
 ## How to read the CLI
 
-When you run `create-sailor` and select a provider whose underlying
-package is not `stable`, the CLI will:
+`create-sailor` asks for nothing but the target directory (ADR 2026-09-24
+Sailor convergence) — there is no provider selection at scaffold time, so
+there is nothing to warn about during scaffolding. Every scaffold writes the
+same `nebutra.config.json`, naming **capabilities**, never providers:
 
-1. Print a yellow `⚠` warning after the dry-run plan and again right
-   before the done card.
-2. In `--json` mode, emit an `event: "warn"` with `packageStatus`,
-   `provider`, and `step`.
-3. Add the selection to a `⚠  Preview features selected` section of the
-   post-install "done card".
+```json
+{ "stack": "sailor-2026-09", "capabilities": ["auth", "billing", "email", "storage", "queue", "cache", "notifications", "webhooks", "ai", "mcp"] }
+```
 
-You are never blocked from selecting a preview provider — the guarantee
-is transparency, not restriction.
+Which vendor actually runs for a capability is decided at runtime by which
+env keys are present — see `packages/ops/cli/src/utils/capabilities.ts`, the
+single source of truth shared by `nebutra status` and `nebutra sync`. Run
+`nebutra status` in a scaffolded project to see each declared capability's
+state:
+
+- `live` — a real provider's keys are set.
+- `local-fallback` — no keys set, but the capability degrades to a working
+  local implementation (console email, in-memory queue/cache, local storage,
+  dev auth).
+- `missing-key` — no keys set and there is no local fallback; the capability
+  does not run until you set one.
+
+Capabilities not in the default list above (`sms`, `monitoring`, `analytics`,
+`captcha`) are opt-in: add them to `nebutra.config.json`'s `capabilities`
+array, then `nebutra sync` will add the right keys to `.env.example`.
+
+Most packages below are **not** part of this capability model at all — they
+are consumed directly in app/gateway code, with no scaffold-time or
+`nebutra status` surfacing. Their maturity is still tracked by
+`nebutra.status` in their own `package.json`, which is what the tables below
+reflect.
 
 ## Foundation packages (18)
 
@@ -63,24 +84,24 @@ registration. Their core path is usable, but the happy path usually
 needs: (a) external credentials, (b) additional adapter code you
 contribute, or (c) a managed SaaS that the provider wraps.
 
-| Package                  | CLI flag(s)            | Ready out-of-the-box?                 | Main gaps                                                           |
-| ------------------------ | ---------------------- | ------------------------------------- | ------------------------------------------------------------------- |
-| `@nebutra/metering`      | (enabled via payment)  | No — needs ClickHouse or local dev    | Gateway/billing ingestion and enforcement wiring pending             |
-| `@nebutra/billing`       | `--payment`            | No — provider credentials required    | Persistence and UI are host-owned; each adapter needs its own keys  |
+| Package                  | Enabled via                                    | Ready out-of-the-box?                 | Main gaps                                                           |
+| ------------------------ | ----------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------- |
+| `@nebutra/metering`      | (consumed directly; billing ingestion)          | No — needs ClickHouse or local dev    | Gateway/billing ingestion and enforcement wiring pending             |
+| `@nebutra/billing`       | `nebutra.config.json` capability `billing` (default) | No — provider credentials required    | Persistence and UI are host-owned; each adapter needs its own keys (Stripe, or WeChat Pay/Alipay for mainland China) |
 | `@nebutra/legal`         | (consumed directly)    | Partial — package seams exist         | Consent persistence API, DB-backed store, and publishing workflow pending |
 | `@nebutra/license`       | (consumed directly)    | Partial — contract usable             | Host injects LicenseDb; delivery needs an email provider; no UI      |
-| `@nebutra/permissions`   | (consumed directly)    | Partial — CASL works in-process       | OpenFGA adapter stub                                                |
-| `@nebutra/queue`         | `--queue`              | No — QStash or Redis credentials      | QStash DLQ retrieval TODO; worker auto-scaling TODO                 |
-| `@nebutra/search`        | `--search`             | No — provider creds required          | Provider adapters are stubs; pgvector not implemented               |
+| `@nebutra/permissions`   | (consumed directly — not a scaffold capability) | Partial — CASL works in-process | CASL is the only supported provider (OpenFGA adapter removed, ADR 2026-09-24) |
+| `@nebutra/queue`         | `nebutra.config.json` capability `queue` (default) | No — QStash credentials, else memory fallback | QStash DLQ retrieval TODO; worker auto-scaling TODO (BullMQ removed, ADR 2026-09-24) |
+| `@nebutra/search`        | (consumed directly — not a scaffold capability) | Yes — pgvector runs against `DATABASE_URL` | pgvector is the sole provider (Meilisearch/Typesense/Algolia removed, ADR 2026-09-24); see inline TODOs |
 | `@nebutra/tenant`        | (enabled by middleware)| Partial — AsyncLocalStorage works     | Subdomain/JWT resolvers scaffolded; schema migration flow pending   |
 | `@nebutra/uploads`       | (consumed directly)    | No — S3/R2 creds required             | Tus flow not end-to-end; validation stubs                           |
 | `@nebutra/vault`         | (consumed directly)    | Partial — local HKDF works for dev    | KMS rotation flow TODO; tenant isolation scaffolded                 |
-| `@nebutra/feature-flags` | `--feature-flags`      | Partial — Redis/env runtime works     | Managed Vercel/GrowthBook/ConfigCat SDK adapters and rollout UI pending |
+| `@nebutra/feature-flags` | (consumed directly — not a scaffold capability; removed from `create-sailor`, ADR 2026-09-24) | Partial — Redis/env runtime works | Managed Vercel/GrowthBook/ConfigCat SDK adapters and rollout UI pending |
 | `@nebutra/knowledge-rag` | (consumed directly)    | Partial — zero-config RAG path works  | pgvector store interface-only; provider-grade reranker adapter pending |
-| `@nebutra/design-sync`   | (auto-detect)          | git-only works zero-config            | Figma push (Variables REST API) is dry-run; Penpot push scaffolded  |
-| `@nebutra/china-compliance` | (env-driven)         | ICP footer + region detection ready   | WeChat OAuth callback route TODO; Aliyun SMS adapter scaffold       |
-| `@nebutra/access-gate`  | `--access-gate`        | Core + Prisma adapter + admin issue/list/revoke/email/Dub links + Better Auth signup gate/redeem work | OAuth callback gating and DB-backed integration tests are app-owned |
-| `@nebutra/waitlist`      | `--waitlist`           | In-memory store works                 | Prisma adapter TODO; email confirmation + analytics endpoint pending |
+| `@nebutra/design-sync`   | (auto-detect, dev tool — not a scaffold capability) | git-only works zero-config      | `design-md` and `memory` are the other supported providers; Figma and Penpot providers removed (ADR 2026-09-24) |
+| `@nebutra/china-compliance` | (env-driven, `NEBUTRA_LOCALE`)               | ICP footer + region detection ready   | WeChat OAuth callback route TODO; Aliyun SMS adapter scaffold       |
+| `@nebutra/access-gate`  | (consumed directly — not a scaffold capability) | Core + Prisma adapter + admin issue/list/revoke/email/Dub links + Better Auth signup gate/redeem work | OAuth callback gating and DB-backed integration tests are app-owned |
+| `@nebutra/waitlist`      | (consumed directly — not a scaffold capability) | In-memory store works                 | Prisma adapter TODO; email confirmation + analytics endpoint pending |
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
@@ -91,14 +112,14 @@ production integrations. Their READMEs carry a `Status: WIP — Not yet
 integrated into any production app` banner. Expect breaking changes
 and missing functionality.
 
-| Package                  | CLI flag(s)             | Why WIP                                                          |
-| ------------------------ | ----------------------- | ---------------------------------------------------------------- |
+| Package                  | Enabled via              | Why WIP                                                          |
+| ------------------------ | ------------------------- | ---------------------------------------------------------------- |
 | `@nebutra/fonts`         | (consumed directly)     | Self-hosted font registry present; first intentional public publish and app-wide adoption pending |
 | `@nebutra/audit`         | (consumed directly)     | Event schema not finalized; retention/export workflow pending    |
-| `@nebutra/captcha`       | `--captcha`             | hCaptcha & Aliyun adapters scaffolded only                       |
+| `@nebutra/captcha`       | `nebutra.config.json` capability `captcha` (opt-in) | hCaptcha & Aliyun adapters scaffolded only                       |
 | `@nebutra/event-bus`     | (consumed by saga)      | Cross-service pub/sub guarantees not verified                    |
 | `@nebutra/code-index`    | (consumed directly)     | Provider-agnostic contracts and indexing core only; concrete embedder/vector-store adapters are injected |
-| `@nebutra/mcp`           | `--mcp`                 | Context server binary is a placeholder stub                      |
+| `@nebutra/mcp`           | `nebutra.config.json` capability `mcp` (default) | Capability is "always live" (built-in, no keys needed); the package's own context-server binary is still a placeholder stub |
 | `@nebutra/saga`          | (consumed directly)     | No durable journal; compensation logic scaffolded only           |
 | `@nebutra/agent-runtime` | (consumed directly)     | Track-B kernel transport + durable-turn queue binding interface-only; adapters live under subpath exports |
 | `@nebutra/3d-pipeline` | (consumed directly)     | Generation capability only; model-backed mesh generation, retopology, and export sidecars are adapter-gated |
@@ -146,8 +167,8 @@ If you want to take one of these packages to `stable`:
    - `packages/<name>/package.json` → set `nebutra.status = "stable"` and
      drop the `gaps` array (or leave it empty).
    - `packages/<name>/README.md` → remove the `Status:` banner.
-   - `packages/ops/create-sailor/src/utils/package-status.ts` → remove the
-     entry (defaults to `stable`).
+   - Run `pnpm maturity:verify` (`scripts/verify-package-maturity.mjs`) to
+     confirm `nebutra.status`/`nebutra.graph` and the README banner agree.
    - This doc.
 
 ## Machine-readable source of truth
@@ -161,9 +182,8 @@ Every package carries its status in its own `package.json`:
     "status": "foundation",
     "graph": "core",
     "productionReady": false,
-    "requires": ["QSTASH_TOKEN or REDIS_URL"],
+    "requires": ["QSTASH_TOKEN (+ signing keys) for serverless"],
     "gaps": [
-      "QStash provider dead letter retrieval not implemented",
       "Worker auto-scaling TODO"
     ]
   }

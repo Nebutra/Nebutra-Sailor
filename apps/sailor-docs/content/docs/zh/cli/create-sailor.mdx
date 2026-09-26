@@ -1,139 +1,75 @@
 ---
 title: create-sailor
-description: 交互式脚手架向导——几秒钟内引导你完成 Nebutra-Sailor 生产级项目的初始化。
+description: 零提问脚手架——一条命令写出收敛后的 Nebutra-Sailor 全栈项目。
 ---
 
-`create-sailor` 是一次性脚手架工具，它会克隆 Nebutra-Sailor 模板，通过配置问题引导你完成设置，并写入 `.env.local`——让你在不到一分钟内就能开始编码。
-
-已发布 npm 包：**`create-sailor@1.8.2`**（可用 `npx create-sailor@latest` 拉取当前版）。
+`create-sailor` 是一次性脚手架工具。它除了项目目录之外不问任何问题，直接写出收敛后的完整 Sailor 技术栈——空的 `.env` 也能直接运行。
 
 <Note>
-  脚手架**默认**偏向快速上手（`--auth clerk`、`--deploy vercel`）。
-  第一方 **nebutra.com** 生产使用 **Better Auth** 登录中心 `auth.nebutra.com`（ECS），
-  app/API 亦在 ECS——若要对齐该拓扑，请选 `--auth betterauth` 与
-  `--deploy selfhost`（或自行对接 ECS）。
+  Sailor Convergence ADR（2026-09-24）移除了所有“选服务商”的标志。现在只有一套栈，不再是菜单——脚手架时已经没有可配置的东西，自然也就不会配错。
 </Note>
 
 ## 用法
 
 ```bash
-npx create-sailor [目录]
-# 固定版本：npx create-sailor@1.8.2 my-app
+npx create-sailor [名称]
+# 或者在一个空目录里
+npx create-sailor .
 ```
 
-若省略 `[目录]` 参数，向导会提示你输入目录名称。
+若省略 `[名称]`，向导会提示你输入项目目录（默认：`my-app`）。这个目录——或者非交互模式下的 `--yes`——是 `create-sailor` 会为你做的**唯一**决定。
 
-## 执行流程
+## 生成内容
 
-<Steps>
-  <Step title="询问项目创建位置">
-    提示输入目标目录（默认：`./my-saas-app`）。
-  </Step>
-  <Step title="选择核心配置">
-    仅 4 个交互问题：项目目录、Region、Auth、AI 拓扑。其余设置全部通过标志或基于 Region 的默认值解析。
-  </Step>
-  <Step title="生成环境变量默认值">
-    自动生成随机 `AUTH_SECRET` / `JWT_SECRET`，并写入带服务商占位 Key 的 `.env.local`，稍后填入真实密钥即可。
-  </Step>
-  <Step title="克隆、配置并剪枝">
-    克隆 Nebutra-Sailor 仓库，在 `package.json` 中设置项目名称，写入 `nebutra.config.json`，裁剪未使用的模板功能，并注入环境变量。
-  </Step>
-  <Step title="输出后续步骤">
-    显示接下来要运行的命令：`cd my-saas-app && pnpm install && pnpm dev`。
-  </Step>
-</Steps>
+没有可选项，每个项目都是同一套栈：
 
-## 交互式问答
+- **前端**：Next.js 16 + Tailwind v4，Hono 网关默认以进程内挂载方式接在 `app/api/[[...route]]`（`GATEWAY_MODE=embedded`）
+- **数据库**：Postgres + Prisma
+- **认证**：Better Auth
+- **支付**：Stripe，外加并行的微信支付 / 支付宝（ChinaPay）
+- **邮件**：Resend（附带仅用于开发环境的 `console` 兜底）
+- **存储**：S3 兼容对象存储（同时覆盖 R2 与阿里云 OSS）
+- **队列**：QStash
+- **缓存**：通过 Upstash REST 协议使用 Redis
+- **监控 / 分析 / 验证码**：Sentry、PostHog、Turnstile
+- **MCP**：内置上下文服务器
 
-向导**只问 4 个问题**，其余设置全部由标志或 Region 默认值解析：
+每项能力开箱即用本地实现——控制台打印邮件、内存队列、本地存储——所以空 `.env` 下 `pnpm dev` 就能直接跑起来。之后想让某项能力上线，加一个服务商密钥即可；`nebutra status`（见 [nebutra CLI](/docs/cli/nebutra-cli)）会报告哪些已上线、哪些在跑本地兜底、哪些还缺密钥。
 
-1. **项目目录** —— 默认 `./my-saas-app`
-2. **Region** —— `global` | `cn` | `hybrid`
-3. **认证服务商** —— `clerk` | `betterauth` | `nextauth` | `none`
-4. **AI 拓扑** —— `gateway`（推荐）| `direct` | `custom` | `none`。选择 `direct` 会追问 Provider 适配器多选；选择 `custom` 会追问端点名、Base URL 和 API Key 环境变量名。
+面向中国大陆的部署是运行时的 locale，而不是脚手架标志：设置 `NEBUTRA_LOCALE=cn` 即可打开 ICP 备案页脚、AIGC 生成内容标识、手机号优先登录——这些能力在每个脚手架里都存在,只是运行时门控。
 
-其余（ORM、数据库、支付、邮件、存储……）均为标志驱动。
+`foundation` 层的包（vault、audit、tenant、permissions、metering……）**不**包含在默认脚手架中。需要时显式添加；在添加之前 `nebutra status` 会将它们显示为 `preview`。
 
-## 核心标志
+## 标志
 
-| 标志 | 取值 | 默认 |
-|------|------|------|
-| `--region` | `global`、`cn`、`hybrid` | `global` |
-| `--orm` | `prisma`、`drizzle` | `prisma`（选 `drizzle` 进入双 ORM 模式：在 Prisma 旁追加 `db-drizzle`） |
-| `--db` | `postgres`、`mysql`、`sqlite`、`none` | `postgresql` |
-| `--db-host` | `local`、`supabase`、`neon`、`vercel-postgres`、`planetscale`、`railway`、`aliyun-rds`、`tencent-cdb`、`none` | 基于 Region（global 选 `supabase`，cn 选 `local`） |
-| `--auth` | `clerk`、`betterauth`、`nextauth`、`none` | `clerk` |
-| `--payment` | `stripe`、`lemon`、`wechat`、`alipay`、`none` | `stripe`（global）/ `wechat`（cn） |
-| `--ai` | 拓扑速写（`gateway`、`direct`、`custom`、`none`）或逗号分隔的 Provider ID | `gateway` |
-| `--deploy` | `vercel`、`railway`、`cloudflare`、`selfhost`、`none` | `vercel` |
-| `--docs` | `fumadocs`、`none`（v1.x 中其他值会回退到 fumadocs） | `fumadocs` |
-| `-y`, `--yes` | （开关）接受所有默认值，非交互模式 | 关 |
-| `--dry-run` | （开关）打印计划但不写入文件 | 关 |
-| `--json` | （开关）机器可读的事件流输出 | 关 |
+剩下的标志都是机械性的——没有一个用来选服务商：
 
-<Note>
-  `--db-host=planetscale` 指 PlanetScale Postgres。Vitess/MySQL 产品需要单独的
-  Prisma schema 和迁移策略，才能作为生产级 Sailor runtime 支持。
-</Note>
-
-完整的按功能标志（`--email`、`--storage`、`--monitoring`、`--analytics`、`--sms`、`--queue`、`--search`、`--cache`、`--notifications`、`--webhooks`、`--cms`、`--feature-flags`、`--captcha`、`--mcp`、`--metering`、`--billing-mode`、`--idp` 等）请执行 `npx create-sailor --help`。
-
-## 进阶标志
-
-### 脚手架扩展
-
-| 标志 | 效果 |
+| 标志 | 作用 |
 |------|------|
-| `--with-workflows` | 添加 `workflows/{inngest,n8n,pusher}/` 起始目录，便于稍后通过 `nebutra workflow init` 选择服务商。 |
-| `--with-python-backend` | 添加 `backends/python/` FastAPI 存根。**仅当 [TS-by-Default ADR](/docs/architecture/backend-language-policy) 例外成立时启用**——批处理 / 队列任务、机器学习 / 科学计算、或无对应 TS 端口的专用库。生成的 README 会要求你声明引用的具体理由。 |
-| `--no-install` | 跳过脚手架完成后的 `pnpm install`。 |
-| `--no-git` | 跳过 `git init` 和初始提交。 |
-| `--no-color` | 关闭 stdout 的 ANSI 颜色（适配 CI）。 |
+| `-p, --pm <id>` | `npm` \| `pnpm` \| `yarn` \| `bun`（根据 `PATH` 自动检测） |
+| `--no-install` | 跳过依赖安装 |
+| `--no-git` | 跳过 `git init` |
+| `-y, --yes` | 非交互模式——采用默认项目名，跳过所有提示 |
+| `--dry-run` | 只打印计划，不写入文件 |
+| `--json` | 机器可读的 NDJSON 事件流 |
+| `--no-color` | 关闭彩色输出 |
 
-### 合规 / Wave-3 开关
+以前存在的每一个服务商标志——`--auth`、`--payment`、`--email`、`--storage`、`--queue`、`--search`、`--cache`、`--sms`、`--cms`、`--captcha`、`--monitoring`、`--analytics`、`--notifications`、`--webhooks`、`--feature-flags`、`--metering`、`--mcp`、`--region`,以及旧版 43 个标志中的其余部分——都已移除。克隆整个 monorepo 之后再做减法的裁剪流水线（`prune.ts`、`prune-schema.ts`、`prune-migrations.ts`）同样已移除：脚手架现在只写出收敛后的这一套栈，没有什么需要裁剪。
 
-均接受 `true` / `false`，默认 `true`；`--china-compliance` 在 `--region=cn` 时自动翻转为 `true`。
-
-`--cron-jobs`、`--audit-log`、`--api-keys`、`--command-palette`、`--cookie-consent`、`--legal-pages`、`--china-compliance`。
-
-### Wave-2 治理
-
-| 标志 | 取值 | 默认 |
-|------|------|------|
-| `--billing-mode` | `usage`、`seat`、`credits` | `usage` |
-| `--idp` | `clerk`、`oauth-server` | `clerk` |
-| `--social-login` | 中国社交登录（`wechat,qq,dingtalk,workweixin,feishu,weibo`，逗号分隔） | 无 |
-
-## 包版本策略
-
-生成的项目中 `@nebutra/*` 包以 **npm caret 区间**（如 `"@nebutra/ui": "^0.1.0"`）声明，而**不是** `workspace:*`。正因如此，`create-sailor` 生成的仓库可以脱离 Nebutra-Sailor monorepo 独立 install / run。版本来源是脚手架运行时读取的已发布版本注册表。
+需要 Node.js >= 22 和 pnpm 10+（脚手架生成的项目是 pnpm + Turborepo workspace）。除非传入 `--pm`，CLI 会检查 `PATH` 上是否有 `pnpm`。
 
 ## 示例会话
 
 ```
-  create-sailor
+npx create-sailor my-saas
 
 ✔ 项目创建在哪里？ … ./my-saas
-✔ Target region? › global — 海外优先
-✔ Auth provider? › Clerk
-✔ AI topology? › Multi-provider AI Gateway / router
-
-  ▸ Region            global
-  ▸ Auth              clerk
-  ▸ ORM               prisma
-  ▸ Database          postgresql
-  ▸ Payment           stripe
-  ▸ AI topology       gateway
-  ▸ Email             resend
-  ▸ Storage           r2
-  ▸ Deploy Target     vercel
-  ▸ Docs Framework    fumadocs
 
 ⠋ 正在克隆 Nebutra-Sailor 模板到 ./my-saas...
 ✔ 项目 my-saas 初始化成功！
 
   后续步骤：
-  cd ./my-saas
+  cd my-saas
   pnpm install
   pnpm dev
 ```
@@ -142,13 +78,12 @@ npx create-sailor [目录]
 
 ```bash
 cd my-saas
-pnpm install          # 安装所有依赖
-pnpm infra:lite       # 启动 PostgreSQL（Docker）
-pnpm db:generate      # 生成 Prisma 客户端
-pnpm db:migrate       # 运行初始迁移
-pnpm dev:dashboard    # 启动 Web 应用 + API 网关
+pnpm install
+pnpm dev
 ```
 
+`pnpm dev` 在没有任何外部服务的情况下,靠本地兜底就能跑起来。要接入真实服务商,把密钥加到 `.env.local`,再跑一次 `nebutra status` 确认每项能力都已上线。
+
 <Note>
-  `create-sailor` 是一次性工具。项目创建后，日常任务（添加组件、管理基础设施、运行迁移）请使用 `nebutra` CLI。
+  `create-sailor` 是一次性工具——不存在再包一层的 `nebutra create`,这就是唯一的创建入口。项目创建之后的日常任务(查看能力状态、跑迁移、管理基础设施)请使用 [`nebutra` CLI](/docs/cli/nebutra-cli)。
 </Note>

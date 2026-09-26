@@ -88,8 +88,6 @@ Complete navigation to all project documentation.
 | --------------------------------------------------------- | -------------------------------- |
 | [UI Registry Blueprint](./design-system/ui-registry-blueprint.md) | Design tokens, styles, component registry |
 | [Token Drift Audit](./design-system/token-drift-audit.md)         | Token audit and drift analysis            |
-| [Figma Sync](./design-system/figma-sync.md)                       | Figma ↔ repo token sync                   |
-| [Figma Onboarding](./design-system/figma-onboarding.md)           | Getting started with Figma                |
 
 ## Current phase
 

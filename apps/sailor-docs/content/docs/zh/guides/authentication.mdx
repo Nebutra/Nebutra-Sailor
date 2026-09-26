@@ -1,41 +1,30 @@
 ---
 title: 认证
-description: Nebutra 端到端认证处理——提供商设置、令牌验证和会话管理。
+description: Nebutra 端到端认证处理——Better Auth 配置、令牌验证和会话管理。
 ---
 
-## 认证提供商
+## 认证服务商
 
-Nebutra 通过 `@nebutra/auth` 支持可切换认证提供商。请保持
-`AUTH_PROVIDER` 与 `NEXT_PUBLIC_AUTH_PROVIDER` 一致，这样服务端路由、
-中间件、React hooks 和 Landing 页会加载同一条 provider 路径。
+Better Auth 是 Sailor 技术栈中唯一的认证服务商。Sailor Convergence ADR(2026-09-24)移除了此前 `@nebutra/auth` 可切换的 Clerk、NextAuth/Auth.js 和 Supabase Auth 适配器——现在没有别的可选,`AUTH_PROVIDER` 除了 `better-auth`(或未设置 `BETTER_AUTH_SECRET` 时的本地兜底 `dev`)之外没有其他值。
 
-| 提供商 | 最适合 | 说明 |
-|--------|--------|------|
-| **Better Auth** | 自托管或合规敏感部署 | 默认。开源、Postgres 后端，通过官方 `oneTap` 插件支持 Google One Tap。 |
-| **NextAuth / Auth.js v5** | 自托管且 OAuth 场景较多的部署 | 使用 Auth.js 会话 Cookie 和 Nebutra 自有 Google One Tap 回调。 |
-| **Clerk** | 托管认证和托管 UI 组件 | 使用 Clerk 官方 SDK 与 `<GoogleOneTap />` 组件。 |
-| **Supabase Auth** | 已使用 Supabase 的团队 | 与 Supabase storage/realtime 部署配套。 |
-| **Dev** | 仅本地 fixture 预览 | 合成用户和工作区；生产环境会硬失败。 |
+请保持 `AUTH_PROVIDER` 与 `NEXT_PUBLIC_AUTH_PROVIDER` 一致,这样服务端路由、中间件、React hooks 和 Landing 页会解析到同一个服务商。
 
 ```bash
+# .env
 AUTH_PROVIDER=better-auth
 NEXT_PUBLIC_AUTH_PROVIDER=better-auth
 ```
 
+未设置 `BETTER_AUTH_SECRET` 时,应用会运行在 `dev` 兜底上——合成用户和工作区,适合本地预览,生产环境会被硬性禁用。`nebutra status` 会将其报告为 `local-fallback`。
+
 ## Google One Tap
 
-Landing 页会根据 `NEXT_PUBLIC_AUTH_PROVIDER` 选择正确的 One Tap 实现：
-
-| Provider | One Tap 实现 | 必需公开配置 |
-|----------|--------------|--------------|
-| Better Auth | `better-auth` 客户端 `oneTapClient`，POST 到 `/api/auth/one-tap/callback` | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` |
-| NextAuth | Google Identity Services HTML API，POST 到 `/api/auth/google-one-tap` | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` |
-| Clerk | Clerk 官方 `<GoogleOneTap />` 组件 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` |
+Landing 页的 One Tap 实现是 Better Auth 自带的客户端 `oneTapClient`,会 POST 到 `/api/auth/one-tap/callback`。需要设置 `NEXT_PUBLIC_GOOGLE_CLIENT_ID`。
 
 设置 `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP=false` 可关闭 Landing 页提示。
 当 `ACCESS_GATE_MODE=invite` 时，OAuth 与 One Tap 入口会被封住，直到邀请码门禁放开。
 
-## Better Auth（生产默认）
+## Better Auth 配置
 
 生产 Nebutra 使用独立**登录中心**（`apps/auth` → `https://auth.nebutra.com`）：
 
@@ -56,8 +45,6 @@ Landing 页会根据 `NEXT_PUBLIC_AUTH_PROVIDER` 选择正确的 One Tap 实现�
 | `app.nebutra.com/sign-in` | `307` → `auth.nebutra.com/sign-in?returnTo=…` |
 | `app.nebutra.com/sign-up` | `307` → `auth.nebutra.com/sign-up?returnTo=…` |
 | `auth.nebutra.com/*` | 规范登录 UI（账密、OAuth、可选魔法链接 / Passkey） |
-
-例外：当 `NEXT_PUBLIC_AUTH_PROVIDER=clerk` 时，web 可保留本地 Clerk UI。
 
 ### OAuth 回调 URI
 
@@ -81,72 +68,24 @@ https://auth.nebutra.com/api/auth/callback/github
 
 各 RP 的 `BETTER_AUTH_SECRET` 必须一致。
 
-## Clerk 配置（可选提供商）
+### 设备授权流程（CLI 登录）
 
-### 1. 安装 Clerk
-
-```bash
-pnpm add @clerk/nextjs
-```
-
-### 2. 添加环境变量
-
-```bash
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxx
-CLERK_SECRET_KEY=sk_live_xxxxxxxxxxxx
-CLERK_WEBHOOK_SECRET=whsec_xxxxxxxxxxxx
-```
-
-### 3. 包裹应用
-
-```tsx app/layout.tsx
-import { ClerkProvider } from "@clerk/nextjs";
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <ClerkProvider>
-      <html lang="zh">
-        <body>{children}</body>
-      </html>
-    </ClerkProvider>
-  );
-}
-```
-
-### 4. 添加认证代理
-
-```typescript proxy.ts
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-
-const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/sign-up(.*)"]);
-
-export default clerkMiddleware(async (auth, req) => {
-  if (!isPublicRoute(req)) {
-    await auth.protect();
-  }
-});
-```
-
-### 5. 在 Server Components 中读取认证信息
-
-```typescript
-import { auth, currentUser } from "@clerk/nextjs/server";
-
-export default async function DashboardPage() {
-  const { orgId } = await auth();
-  const user = await currentUser();
-
-  if (!orgId) redirect("/create-org");
-
-  return <Dashboard userId={user?.id} orgId={orgId} />;
-}
-```
+登录中心还挂载了 Better Auth 的 `deviceAuthorization` + `bearer` 插件,供 `nebutra login` 使用(参见 [nebutra CLI](/zh/cli/nebutra-cli))——这是一个独立、按需开启的表面,与上面基于 Cookie 的会话流程分开,通过 `AuthConfig.options.deviceAuthorization` 门控,因此只存在于 `apps/auth`,而不是每个构建 Better Auth 实例的应用都有。
 
 ## 网关令牌校验
 
-Hono API 网关在受保护请求上按当前 `AUTH_PROVIDER` 校验会话 / Bearer。
+Hono API 网关在受保护请求上校验 Better Auth 的会话 / Bearer 令牌。
 Better Auth 使用共享密钥与数据库会话；服务间调用使用短时 **HS256**
 `x-service-token`（`SERVICE_SECRET`），旧版 hex-HMAC 会被拒绝。
+
+```typescript
+app.use("/api/*", authMiddleware());
+
+app.get("/api/projects", async (c) => {
+  const { userId, orgId } = c.get("auth");
+  // userId 和 orgId 已经过校验,可以安全使用
+});
+```
 
 ## JWT 声明内容
 
@@ -162,31 +101,29 @@ Better Auth 使用共享密钥与数据库会话；服务间调用使用短时 *
 }
 ```
 
+`scopes` 声明由 Nebutra 的 RBAC 层在签发令牌时设置。
+
 ## 会话管理
 
-**Better Auth（生产默认）**：会话 Cookie 在 `auth.nebutra.com` 签发，
-`AUTH_COOKIE_DOMAIN=.nebutra.com`，RP 经 `returnTo` 回跳后共享同一 Cookie。
+- 会话 Cookie 在 `auth.nebutra.com` 签发,`AUTH_COOKIE_DOMAIN=.nebutra.com`
+- 仪表板等 RP 经 `returnTo` 回跳后共享同一 Cookie
+- 通过登录中心的 Better Auth 会话 API 撤销 / 登出
 
-**Clerk（可选）**：会话时长在 Clerk Dashboard 配置，SDK 负责刷新。
+## 多因素认证
+
+MFA 可在组织层面强制启用(产品设置)：
+
+- TOTP(身份验证器 App)
+- 短信一次性密码(如已配置)
+- Passkey(WebAuthn)——在登录中心设置 `NEXT_PUBLIC_AUTH_PASSKEYS=1` 启用
 
 ## 登录 / 注册 UI
 
-生产（Better Auth）使用 `apps/auth` 登录中心页面；产品应用只做 307 跳转。
-仅在 `AUTH_PROVIDER=clerk` 时在 web 本地保留 Clerk `<SignIn />` 等组件。
+使用 `apps/auth` 下的登录中心页面(`/sign-in`、`/sign-up`、`/forgot-password` 等)。产品应用只做跳转——不需要为每个应用单独构建或维护登录页。
 
 ## 组织创建流程
 
-注册后没有组织的用户会被重定向到组织创建 / onboarding（按提供商不同）。
-
-Clerk 示例：
-
-```typescript app/create-org/page.tsx
-import { CreateOrganization } from "@clerk/nextjs";
-
-export default function CreateOrgPage() {
-  return <CreateOrganization afterCreateOrganizationUrl="/dashboard" />;
-}
-```
+注册后没有组织的用户会被重定向到组织创建流程(Nebutra 仪表板 onboarding)。
 
 <Warning>
   缺少组织创建路径时，用户可能长期处于 `orgId: null` 并在落地页与仪表板之间循环跳转。多租户应用务必实现该流程。

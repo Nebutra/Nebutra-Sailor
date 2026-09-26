@@ -140,7 +140,7 @@ pnpm generate:api-types
 This runs the `openapi-typescript` pipeline (script: `scripts/generate-api-types.ts`), reading `backends/gateway/openapi.json` and writing `apps/web/src/lib/api/types.generated.ts`. The typed client (built on `openapi-fetch`) is available from:
 
 ```typescript
-// Server Components / route handlers (with Clerk JWT forwarded):
+// Server Components / route handlers (with the Better Auth session forwarded):
 import { getTypedApi } from "@/lib/api/client";
 const api = await getTypedApi();
 

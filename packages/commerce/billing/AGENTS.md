@@ -18,8 +18,9 @@ not treat it as a generic app-level pricing UI layer.
 - Checkout provider detection and factory resolution:
   `src/checkout/factory.ts`, `src/checkout/types.ts`
 - Provider-specific checkout behavior and webhook handling:
-  `src/checkout/*.ts`, `src/stripe/`, `src/polar/`, `src/lemonsqueezy/`,
-  `src/chinapay/`
+  `src/checkout/*.ts`, `src/stripe/`, `src/chinapay/` (Stripe + ChinaPay
+  WeChat/Alipay are the only kept payment providers per ADR 2026-09-24 —
+  Polar and LemonSqueezy have been deleted, not demoted)
 - Credits balance and transaction semantics: `src/credits/service.ts`
 - Usage ingestion, buffering, and metering bridge:
   `src/usage/service.ts`, `src/usage/ledger.ts`
@@ -39,9 +40,8 @@ the same change.
   scatter `BILLING_PROVIDER` parsing or payment credential auto-detection across
   apps.
 - Preserve the split between checkout orchestration and provider clients:
-  checkout helpers choose and normalize behavior, while Stripe, Polar,
-  LemonSqueezy, and ChinaPay integrations own provider-specific request and
-  webhook details.
+  checkout helpers choose and normalize behavior, while the Stripe and
+  ChinaPay integrations own provider-specific request and webhook details.
 - Treat `src/types.ts` as the canonical billing contract. If plan, pricing,
   usage, subscription, or error semantics change, align exports and tests in
   the same work.

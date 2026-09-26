@@ -7,7 +7,7 @@ description: 将 Nebutra 与你团队已经在使用的工具连接起来。
 
 <CardGroup cols={3}>
   <Card title="Vercel" icon="triangle" href="/zh/integrations/vercel">
-    零配置部署到 Vercel，自动提供环境变量。
+    前端表面可选的部署目标之一——不是默认选项。
   </Card>
   <Card title="Stripe" icon="credit-card" href="/zh/integrations/stripe">
     计费、订阅和支付 Webhook 预先接好线。
@@ -41,7 +41,7 @@ description: 将 Nebutra 与你团队已经在使用的工具连接起来。
 
 | 集成 | 状态 | 说明 |
 |------|------|------|
-| Vercel | 内置 | 零配置部署 |
+| Vercel | 可选部署目标 | 不是默认选项——模板产出可移植的 Docker/`standalone` 构建产物,想部署到哪里都可以,包括 Vercel |
 | Resend | 设置 `RESEND_API_KEY` 后激活 | 邮件模板已就绪 |
 | Stripe | 设置 `STRIPE_SECRET_KEY` 后激活 | Webhook 已预配置 |
 | Sentry | 设置 `SENTRY_DSN` 后激活 | 租户上下文自动标记 |

@@ -72,28 +72,19 @@ description: Nebutra-Sailor 中 12 个最常见错误的解决方案，包含完
     </Steps>
   </Accordion>
 
-  <Accordion title="auth() 在没有 Clerk 中间件的情况下被调用">
-    **完整错误：**
-    ```
-    Error: auth() was called, but Clerk's Middleware has not been set up.
-    ```
-
-    **原因：** Next.js 16 的代理文件（`proxy.ts`）缺失、位置错误，或未正确导出 Clerk 中间件。Next.js 16+ 使用 `proxy.ts` 而非 `middleware.ts`。
+  <Accordion title="会话 Cookie 无法识别 / 被重定向回登录页">
+    **原因：** `AUTH_COOKIE_DOMAIN` 没有设置为共享的父域，或者登录中心与读取会话的应用之间
+    `BETTER_AUTH_SECRET` 不一致。Better Auth 是唯一的认证服务商——不存在像 Clerk 那样需要配置的
+    中间件/代理步骤;这几乎总是 Cookie 域或密钥不匹配导致的。
 
     **修复：**
 
     <Steps>
-      <Step title="检查代理文件位置">
-        文件必须位于 `apps/web/src/proxy.ts`（不能在 `app/` 或 `pages/` 目录内）。Next.js 16 仅在 `src` 目录根部识别 `proxy.ts`。
+      <Step title="检查 AUTH_COOKIE_DOMAIN">
+        必须是共享的父域（如 `.nebutra.com`），在 `apps/auth` 和 `apps/web` 上设置为完全相同的值。
       </Step>
-      <Step title="验证导出内容">
-        ```typescript
-        import { clerkMiddleware } from "@clerk/nextjs/server";
-        export default clerkMiddleware();
-        export const config = {
-          matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-        };
-        ```
+      <Step title="检查 BETTER_AUTH_SECRET">
+        登录中心和每个 RP 应用上必须逐字节完全一致。
       </Step>
       <Step title="清除 Next.js 缓存并重启">
         ```bash
@@ -221,21 +212,18 @@ description: Nebutra-Sailor 中 12 个最常见错误的解决方案，包含完
   <Accordion title="组织无限重定向循环">
     **症状：** 登录后，用户被无限循环重定向到 `/org-selection` 或 `/create-org`。
 
-    **原因：** Clerk 组织功能已启用（`FEATURE_TEAMS=true`），但应用中不存在 `/create-org` 路由。
+    **原因：** 用户尚未拥有任何组织成员身份，而应用又没有 `/create-org` 路由把用户导过去，
+    只能来回反弹回仪表板。
 
     **修复：**
 
     <Steps>
       <Step title="创建组织创建页面">
-        添加 `apps/web/src/app/(auth)/create-org/page.tsx`，使用 `@clerk/nextjs` 中的 `<CreateOrganization />` 组件。
+        添加 `apps/web/src/app/(auth)/create-org/page.tsx`，调用 Better Auth 的
+        `authClient.organization.create(...)`，成功后跳转到 `/dashboard`。
       </Step>
-      <Step title="或者，若不需要团队功能则禁用">
-        ```bash .env.local
-        FEATURE_TEAMS=false
-        ```
-      </Step>
-      <Step title="验证 Clerk afterCreateOrganizationUrl">
-        在您的 Clerk 控制台中，确认 **afterCreateOrganizationUrl** 已设置为有效路由（如 `/dashboard`）。
+      <Step title="验证跳转目标">
+        确认组织创建成功后页面跳转到一个有效路由（如 `/dashboard`），而不是跳回循环里。
       </Step>
     </Steps>
   </Accordion>

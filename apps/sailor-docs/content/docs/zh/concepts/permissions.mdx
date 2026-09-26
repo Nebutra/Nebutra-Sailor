@@ -10,8 +10,15 @@ Nebutra 开箱即用地提供生产就绪的 RBAC（基于角色的访问控制�
 - **4 个内置角色**：`OWNER`、`ADMIN`、`MEMBER`、`VIEWER`
 - **跨资源的 17 个类型化权限范围**
 - **通过 CASL 在进程内强制执行**（亚毫秒级）
-- **通过 OpenFGA 进行 Zanzibar 级强制执行**（可选）
 - **通过 `<Can>` 组件进行 React UI 门控**
+
+<Note>
+  CASL 是唯一的权限后端。Sailor Convergence ADR（2026-09-24）移除了此前作为
+  复杂图状授权场景「即插即用替代方案」提供的 OpenFGA（Zanzibar 风格）适配器——
+  不再存在可切换的 `PERMISSIONS_PROVIDER` 环境变量或基于存储的后端。如果产品
+  需要跨租户共享或超出 CASL 进程内规则表达能力的图状访问控制，需针对
+  `@nebutra/permissions` 接口自行编写适配器。
+</Note>
 
 ## 角色
 

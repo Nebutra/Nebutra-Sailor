@@ -102,7 +102,7 @@ These are the pieces of the admin stack Sailor owns and maintains. Everything el
 | Impersonate escape hatch | `apps/web/app/admin/impersonate` | Log in as any user (audited, time-boxed, requires 2 admin approvals) |
 | Admin tooling contract | `@nebutra/admin-tooling` | REST endpoints under `/api/admin/tools/*` that Retool/Forest/etc. connect to. Every endpoint goes through `withAuditHook()` + `requirePermission()`. |
 | Audit log | `@nebutra/audit` | Tamper-evident audit trail for every admin write (SOC 2 ready) |
-| Permissions | `@nebutra/permissions` | RBAC/ABAC engine (CASL + OpenFGA) — gates every admin endpoint |
+| Permissions | `@nebutra/permissions` | RBAC/ABAC engine (CASL, in-process) — gates every admin endpoint |
 | Read replica contract | `READONLY_DATABASE_URL` env var | Standard env contract for Metabase/Hex/Retool reads |
 
 That's it. ~6 surfaces, all small, all maintained.

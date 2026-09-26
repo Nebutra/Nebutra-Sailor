@@ -6,12 +6,19 @@ Execution contract for Nebutra's provider-agnostic auth package.
 
 Applies to everything under `packages/iam/auth/`.
 
-## Multi-provider parallel (product model)
+## Single provider (product model)
 
-Parallel providers are **intentional** (platform / create-sailor). Product code
-still has **one import surface**: `@nebutra/auth` (and `/react`, `/client`,
-`/middleware`). Apps must not import `@clerk/*`, `better-auth`, or `next-auth`
-directly (architecture test + allowlist for known exceptions).
+Per ADR 2026-09-24 (Sailor Convergence), Better Auth is the only kept auth
+provider — the Clerk, NextAuth (Auth.js), and Supabase adapters have been
+deleted, not demoted. `AuthProviderId` is `"better-auth" | "dev"`
+(`src/types.ts`). Product code still has **one import surface**:
+`@nebutra/auth` (and `/react`, `/client`, `/middleware`). Apps must not import
+`better-auth` directly outside allowlisted adapter paths (architecture test +
+allowlist for known exceptions).
+
+`apps/sleptons` is the one exception, and it does not go through this
+package: it is Nebutra's own product, stripped from the template, and keeps a
+direct `@clerk/nextjs` integration on purpose.
 
 Two capability layers must both pass before UI exposes a feature:
 
@@ -20,8 +27,8 @@ Two capability layers must both pass before UI exposes a feature:
 
 AND them with `isCapabilityEffective(provider, feature, runtimeCaps)`.
 
-Tiers: `first-class` (better-auth default) · `optional-enterprise` (clerk) ·
-`migration` (nextauth = Auth.js / ex-NextAuth, supabase) · `dev-only` (dev).
+Tiers: `first-class` (better-auth default) · `dev-only` (dev, synthetic local
+sessions).
 
 Impersonation is **declared false** for all providers until an adapter
 implements it end-to-end — no half-cookie product path.
@@ -37,7 +44,7 @@ implements it end-to-end — no half-cookie product path.
   `src/react/index.ts`, `src/react/context.tsx`, `src/react/hooks.tsx`,
   `src/react/auth-provider.tsx`
 - Provider adapters and provider-specific semantics:
-  `src/providers/better-auth.ts`, `src/providers/clerk.ts`,
+  `src/providers/better-auth.ts`, `src/providers/dev.ts`,
   `src/react/providers/*.tsx`
 - Service-to-service auth token helpers: `src/s2s.ts`
 - Export-surface compile check: `test-exports.ts`
@@ -56,10 +63,11 @@ implements it end-to-end — no half-cookie product path.
 - Keep provider selection centralized in `src/server.ts` and
   `src/middleware.ts`. Do not duplicate provider env parsing, dynamic imports,
   or adapter branching in consumers.
-- Treat Better Auth and Clerk differently on purpose. Better Auth is the
-  self-hosted implementation path in this package; Clerk is a bridge that
-  points consumers to Clerk-native APIs. Do not move Clerk SDK ownership into
-  this package or pretend the Clerk adapter is a full drop-in server runtime.
+- Better Auth is the only production adapter this package implements (plus
+  `dev` for local synthetic sessions). Do not reintroduce a Clerk, NextAuth, or
+  Supabase adapter here — that surface was deleted per ADR 2026-09-24. A
+  consumer that genuinely needs a different provider (e.g. `apps/sleptons`'s
+  direct Clerk integration) integrates it directly, outside this package.
 - Keep React normalization inside `src/react/`. Hooks and UI components should
   consume the shared auth context, not reach into provider modules directly.
   Provider-specific React wrappers belong under `src/react/providers/`.

@@ -10,7 +10,7 @@ description: Nebutra 是 AI 原生 SaaS 基础设施层——无需从头构建�
   [立即获取免费许可证 →](https://nebutra.com/en/get-license)
 </Info>
 
-Nebutra 是专为 AI 原生产品打造的生产就绪 SaaS 脚手架。它将现代 B2B SaaS 所需的一切整合到单一 monorepo 中——多租户认证、基于角色的访问控制、计费、事务性邮件、AI 服务代理、功能标志和可观测性。
+Nebutra 是专为 AI 原生产品打造的生产就绪 SaaS 脚手架。它将现代 B2B SaaS 所需的一切整合到单一 monorepo 中——多租户认证、基于角色的访问控制、计费、事务性邮件、AI 服务代理和可观测性。
 
 不要把前 6 个月浪费在构建基础设施上。从第一天起就专注于真正重要的事：你的产品。
 
@@ -41,10 +41,10 @@ Nebutra 是专为 AI 原生产品打造的生产就绪 SaaS 脚手架。它将�
 
 <AccordionGroup>
   <Accordion title="多租户认证" icon="shield-check">
-    **默认 Better Auth**（可切换 Clerk / Auth.js / Supabase Auth），含组织成员角色。生产使用独立登录中心 `auth.nebutra.com`，并在 `.nebutra.com` 上共享会话 Cookie。包含组织创建、成员邀请与会话管理。
+    **Better Auth**——唯一的认证服务商，含组织成员角色。生产使用独立登录中心 `auth.nebutra.com`，并在 `.nebutra.com` 上共享会话 Cookie。包含组织创建、成员邀请与会话管理。
   </Accordion>
   <Accordion title="基于角色的访问控制（RBAC）" icon="lock">
-    4 个内置角色（`OWNER`、`ADMIN`、`MEMBER`、`VIEWER`）覆盖 17 个类型化权限范围。无需修改业务逻辑即可扩展权限矩阵。CASL 在进程内实现毫秒级检查，OpenFGA 支持 Zanzibar 级策略评估。
+    4 个内置角色（`OWNER`、`ADMIN`、`MEMBER`、`VIEWER`）覆盖 17 个类型化权限范围。无需修改业务逻辑即可扩展权限矩阵。CASL 在进程内实现毫秒级检查。
   </Accordion>
   <Accordion title="计费与订阅" icon="credit-card">
     Stripe 驱动的计费系统，预置 FREE、PRO 和 ENTERPRISE 三个套餐。通过 ClickHouse 聚合实现基于消耗的计量。在 API 网关层强制执行使用配额——无需修改应用代码。
@@ -55,11 +55,8 @@ Nebutra 是专为 AI 原生产品打造的生产就绪 SaaS 脚手架。它将�
   <Accordion title="事务性邮件" icon="envelope">
     基于 Resend 的邮件系统，附带欢迎邮件、API 密钥创建、配额预警和团队邀请等开箱即用模板。可在几分钟内自定义的 React Email 组件。
   </Accordion>
-  <Accordion title="功能标志" icon="flag">
-    支持 SSR 的功能标志 Hook，含租户上下文。无需部署即可向特定组织套餐或个别租户发布功能。
-  </Accordion>
   <Accordion title="可观测性" icon="chart-bar">
-    30 天漏斗和收入图表。含租户上下文的 Sentry 错误追踪。通过 `@nebutra/logger` 结构化日志记录。在 Vercel 上零配置。
+    30 天漏斗和收入图表。含租户上下文的 Sentry 错误追踪。通过 `@nebutra/logger` 结构化日志记录。
   </Accordion>
 </AccordionGroup>
 

@@ -25,7 +25,7 @@ workflows/
 
 ## Related packages
 
-- [`@nebutra/queue`](../packages/integrations/queue/) — provider-agnostic queue interface (QStash + BullMQ)
+- [`@nebutra/queue`](../packages/integrations/queue/) — queue interface (QStash; BullMQ deleted per ADR 2026-09-24 Sailor convergence)
 - [`@nebutra/event-bus`](../packages/integrations/event-bus/) — pub/sub abstraction
 - [`@nebutra/saga`](../packages/integrations/saga/) — long-running transaction orchestration
 - [`@nebutra/webhooks`](../packages/integrations/webhooks/) — outbound webhook delivery

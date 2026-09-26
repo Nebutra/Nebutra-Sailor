@@ -43,9 +43,10 @@ cp .env.example .env.local
 ```bash
 # .env.local
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/nebutra"
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=""
-CLERK_SECRET_KEY=""
 ```
+
+其余一切开箱即用地跑在本地兜底上——空的 `.env` 就足够 `pnpm dev` 了。准备好后再补上真实的
+`BETTER_AUTH_SECRET`(以及其他想要上线的能力所需的服务商密钥);`nebutra status` 会显示哪些还停留在兜底状态。
 
 然后启动开发服务器：
 
@@ -95,7 +96,7 @@ Cursor 将 `.cursor/rules/*.mdc` 文件作为项目规则读取。`nebutra.mdc` 
 
 ```
 # Cursor 提示词示例
-@codebase 添加一个从 Edge Config 读取数据的功能标志 Hook
+@codebase 添加一个每晚运行清理任务的 QStash job
 @nebutra.mdc 创建一个 GET /api/v1/usage/summary 的 Hono 路由
 将计费页面重构为使用 @nebutra/ui 组件
 ```

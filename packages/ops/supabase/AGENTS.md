@@ -10,6 +10,14 @@ This package owns shared Supabase client creation, server utilities, realtime
 helpers, and storage helpers. It is a provider integration layer, not the place
 for app-specific table schemas, business workflows, or custom access policy.
 
+Note: as of ADR 2026-09-24 (Sailor Convergence), this package has no callers
+anywhere in the monorepo — auth runs on Better Auth, object storage/uploads on
+R2, and the queue on QStash. It is not one of the adapters that convergence
+deleted (it is a standalone Supabase SDK wrapper, not a Supabase auth or
+storage adapter behind one of the shared provider interfaces); it is simply
+orphaned. Do not extend it as if it backs a live capability without first
+confirming a real consumer exists.
+
 ## Source Of Truth
 
 - Public package surface and subpath exports: `package.json`, `src/index.ts`

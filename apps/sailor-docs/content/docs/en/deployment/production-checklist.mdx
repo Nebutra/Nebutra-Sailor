@@ -29,7 +29,9 @@ Enable automated daily backups with at least 7-day retention. Verify that a test
 
 **Redis persistence configured**
 
-Enable AOF (Append Only File) persistence on Redis if you are using it for BullMQ queues. Without persistence, in-flight jobs are lost on restart.
+Enable AOF (Append Only File) persistence on Redis if you rely on it for caching or rate-limit
+state. The queue (QStash) does not use Redis — it is a separate, always-persistent serverless
+queue, so there are no in-flight queue jobs to lose on a Redis restart.
 
 ---
 
@@ -61,12 +63,8 @@ Ensure the following events are selected on the webhook endpoint:
 - `AUTH_COOKIE_DOMAIN` is the shared parent domain (e.g. `.nebutra.com`)
 - OAuth redirect URIs include the auth-center callback paths
 
-**If using Clerk instead**
-
-In the Clerk dashboard, create a webhook pointing to
-`https://api.yourdomain.com/api/v1/webhooks/clerk`. Add the signing secret as
-`CLERK_WEBHOOK_SECRET`. Required events: `user.created`, `user.deleted`,
-`organization.created`, `organizationMembership.created`.
+Better Auth is the only auth provider — the Clerk, NextAuth, and Supabase adapters were deleted
+per the Sailor Convergence ADR (2026-09-24). There is no Clerk webhook path to wire up.
 
 ---
 

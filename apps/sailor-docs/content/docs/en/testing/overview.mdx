@@ -154,7 +154,7 @@ await page.click('text=Create Project');
 | Dependency | Mock approach |
 |-----------|--------------|
 | Stripe | `vi.mock("stripe")` with fixture responses |
-| Clerk / Auth | `vi.mock("@clerk/nextjs")` with mock session |
+| Auth (Better Auth) | `vi.mock("@/lib/auth-client")` / `@nebutra/auth` with a mock session |
 | PostHog | `vi.mock("@nebutra/analytics")` — no-op stubs |
 | Email | `vi.mock("@nebutra/email")` — capture sent emails |
 | Database (unit) | In-memory SQLite via Prisma test client |

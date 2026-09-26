@@ -10,7 +10,7 @@ description: Nebutra is the AI-native SaaS infrastructure layer — ship product
   [Get your free license →](https://nebutra.com/en/get-license)
 </Info>
 
-Nebutra is a production-ready SaaS scaffold for AI-native products. It ships everything a modern B2B SaaS needs — multi-tenant auth, role-based access control, billing, transactional email, AI service proxies, feature flags, and observability — wired together in a single monorepo.
+Nebutra is a production-ready SaaS scaffold for AI-native products. It ships everything a modern B2B SaaS needs — multi-tenant auth, role-based access control, billing, transactional email, AI service proxies, and observability — wired together in a single monorepo.
 
 Stop spending your first 6 months building infrastructure. Start on day one with what matters: your product.
 
@@ -41,10 +41,10 @@ Stop spending your first 6 months building infrastructure. Start on day one with
 
 <AccordionGroup>
   <Accordion title="Multi-Tenant Authentication" icon="shield-check">
-    **Better Auth by default** (switchable to Clerk / Auth.js / Supabase Auth) with organization membership roles. Production uses a dedicated auth center at `auth.nebutra.com` plus shared cookies on `.nebutra.com`. Includes org creation, member invites, and session management.
+    **Better Auth** — the only auth provider, with organization membership roles. Production uses a dedicated auth center at `auth.nebutra.com` plus shared cookies on `.nebutra.com`. Includes org creation, member invites, and session management.
   </Accordion>
   <Accordion title="Role-Based Access Control (RBAC)" icon="lock">
-    17 typed permission scopes across 4 built-in roles: `OWNER`, `ADMIN`, `MEMBER`, and `VIEWER`. Extend the matrix without touching your product logic. CASL in-process for millisecond checks, OpenFGA for Zanzibar-scale policy evaluation.
+    17 typed permission scopes across 4 built-in roles: `OWNER`, `ADMIN`, `MEMBER`, and `VIEWER`. Extend the matrix without touching your product logic. CASL in-process for millisecond checks.
   </Accordion>
   <Accordion title="Billing & Subscriptions" icon="credit-card">
     Stripe-powered billing with FREE, PRO, and ENTERPRISE tiers pre-wired. Consumption-based metering via ClickHouse aggregation. Usage quotas enforced at the API gateway layer — no application code required.
@@ -55,11 +55,8 @@ Stop spending your first 6 months building infrastructure. Start on day one with
   <Accordion title="Transactional Email" icon="envelope">
     Resend-powered email with ready-made templates for welcome, API key creation, quota warnings, and team invitations. React Email components you can customize in minutes.
   </Accordion>
-  <Accordion title="Feature Flags" icon="flag">
-    SSR-safe feature flag hooks with tenant context. Ship features to specific org plans or individual tenants without a deploy.
-  </Accordion>
   <Accordion title="Observability" icon="chart-bar">
-    30-day funnel and revenue charts. Sentry error tracking with tenant context. Structured logging via `@nebutra/logger`. Zero-config on Vercel.
+    30-day funnel and revenue charts. Sentry error tracking with tenant context. Structured logging via `@nebutra/logger`.
   </Accordion>
 </AccordionGroup>
 

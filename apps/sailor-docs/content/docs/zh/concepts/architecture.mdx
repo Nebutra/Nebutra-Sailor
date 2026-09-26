@@ -39,7 +39,7 @@ Nebutra 是 **Turborepo monorepo**：多应用 + 共享 packages（设计系统�
 |---------|------|
 | `@nebutra/ui` | 组件库 |
 | `@nebutra/auth` | 认证适配 + **JWT S2S** |
-| `@nebutra/permissions` | RBAC |
+| `@nebutra/permissions` | RBAC/ABAC——CASL |
 | `@nebutra/db` | Prisma / 多租户 |
 | `@nebutra/metering` | 用量计量 → ClickHouse |
 | `@nebutra/webhooks` | 出站 Webhook（投递签名 HMAC，≠ S2S） |
@@ -54,12 +54,12 @@ Nebutra 是 **Turborepo monorepo**：多应用 + 共享 packages（设计系统�
 
 服务间令牌为短时 **HS256 JWT**，不再接受遗留 hex-HMAC。
 
-## 提供商替换
+## 认证配置
 
 ```bash
-AUTH_PROVIDER=better-auth          # 生产默认
+AUTH_PROVIDER=better-auth          # 唯一的认证服务商
 NEXT_PUBLIC_AUTH_PROVIDER=better-auth
-# 可选：clerk | next-auth | supabase | dev
+# 未配置(缺少 BETTER_AUTH_SECRET)时降级为开发环境兜底——见 `nebutra status`
 ```
 
 auth 中心、web、落地页的 provider 配置必须一致。

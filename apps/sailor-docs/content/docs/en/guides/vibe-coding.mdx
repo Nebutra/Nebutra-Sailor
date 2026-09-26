@@ -43,9 +43,11 @@ The minimum env vars to get started:
 ```bash
 # .env.local
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/nebutra"
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=""
-CLERK_SECRET_KEY=""
 ```
+
+Everything else runs on local fallbacks out of the box — an empty `.env` is enough to `pnpm dev`.
+Add a real `BETTER_AUTH_SECRET` (and provider keys for whatever else you need live) when you're
+ready; `nebutra status` shows what's still on a fallback.
 
 Then start the dev server:
 
@@ -95,7 +97,7 @@ Cursor reads `.cursor/rules/*.mdc` files as project rules. The `nebutra.mdc` fil
 
 ```
 # Example Cursor prompts
-@codebase Add a feature flag hook that reads from Edge Config
+@codebase Add a QStash job that runs a nightly cleanup
 @nebutra.mdc Create a new Hono route for GET /api/v1/usage/summary
 Refactor the billing page to use @nebutra/ui components
 ```

@@ -11,7 +11,6 @@ In Nebutra, a **tenant** is an organization — a company, team, or workspace th
 - Data (isolated by tenant ID)
 - Billing plan (FREE / PRO / ENTERPRISE)
 - API keys and settings
-- Feature flag overrides
 
 A single user can belong to multiple tenants and switch between them without logging out.
 
@@ -69,7 +68,7 @@ The API gateway resolves the current tenant from the incoming request using this
 | Priority | Source | Header / Cookie |
 |----------|--------|-----------------|
 | 1 | Explicit header | `x-tenant-id` |
-| 2 | JWT claim | `org_id` in the Clerk/Better Auth token |
+| 2 | JWT claim | `org_id` in the Better Auth token |
 | 3 | Subdomain | `acme.app.nebutra.com` → tenant `acme` |
 | 4 | API key prefix | `nbk_live_acme_xxx` → tenant `acme` |
 

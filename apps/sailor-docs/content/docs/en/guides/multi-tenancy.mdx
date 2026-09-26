@@ -61,17 +61,21 @@ Removing a member:
 Users can switch between orgs they belong to. In the dashboard, the org switcher is in the top-left nav. Programmatically:
 
 ```typescript
-// Client-side — Clerk
-import { useOrganizationList } from "@clerk/nextjs";
+// Client-side — Better Auth
+import { authClient } from "@/lib/auth-client";
 
 function OrgSwitcher() {
-  const { userMemberships, setActive } = useOrganizationList();
+  const { data: organizations } = authClient.useListOrganizations();
+  const { data: activeOrganization } = authClient.useActiveOrganization();
 
   return (
-    <select onChange={(e) => setActive({ organization: e.target.value })}>
-      {userMemberships.data?.map((m) => (
-        <option key={m.organization.id} value={m.organization.id}>
-          {m.organization.name}
+    <select
+      value={activeOrganization?.id}
+      onChange={(e) => authClient.organization.setActive({ organizationId: e.target.value })}
+    >
+      {organizations?.map((org) => (
+        <option key={org.id} value={org.id}>
+          {org.name}
         </option>
       ))}
     </select>
@@ -114,23 +118,6 @@ const key = await nebutra.apiKeys.create({
 ```
 
 API keys are hashed with SHA-256 before storage. We cannot recover the plaintext.
-
-## Tenant-specific feature flags
-
-Feature flags can be overridden per tenant:
-
-```typescript
-import { useFeatureFlag } from "@nebutra/ui/components";
-
-// SSR-safe hook — reads tenant context automatically
-const aiWorkflowsEnabled = useFeatureFlag("ai_workflows");
-
-if (aiWorkflowsEnabled) {
-  // Render AI workflow builder
-}
-```
-
-Override for a specific tenant in the dashboard: **Settings → Feature Flags → Override**.
 
 ## Delete an organization
 

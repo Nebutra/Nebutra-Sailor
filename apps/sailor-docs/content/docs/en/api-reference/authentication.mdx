@@ -62,7 +62,7 @@ Revoked keys return `401 Unauthorized` immediately.
 
 ## Bearer token (JWT) authentication
 
-JWTs are issued by your auth provider (Clerk or Better Auth) after a user signs in. They are short-lived (typically 1 hour) and automatically refreshed client-side.
+JWTs are issued by Better Auth after a user signs in. They are short-lived (typically 1 hour) and automatically refreshed client-side.
 
 ```http
 GET /api/v1/projects HTTP/1.1

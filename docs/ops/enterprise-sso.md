@@ -1,6 +1,6 @@
 # Enterprise SSO Runbook
 
-This runbook governs Enterprise SSO for `nebutra.com` and
+This runbook governs Enterprise SSO discovery for `nebutra.com` and
 `app.nebutra.com`.
 
 It does not govern Nebutra acting as an OIDC issuer. The self-hosted issuer
@@ -8,18 +8,29 @@ served from `sso.nebutra.com` is documented separately in
 [`docs/ops/nebutra/nebutra-owned-sso.md`](./nebutra/nebutra-owned-sso.md)
 (source repo only — stripped from the Sailor template).
 
+> **Clerk removed (ADR 2026-09-24 Sailor convergence).** Auth converged on
+> Better Auth as the only production provider; Clerk, NextAuth, and the
+> Supabase auth adapter were deleted. The Clerk Enterprise SSO handoff
+> (`/sign-in/sso`, `clerk-enterprise-sso-handoff.tsx`) was deleted in the same
+> change. `AUTH_PROVIDER` accepts only `better-auth` in production (`dev` for
+> local fixtures). The discovery route's `SsoProvider` schema still accepts a
+> `"clerk"` enum value for backward compatibility with old
+> `AUTH_SSO_DISCOVERY_PROVIDERS` payloads, but it resolves to a dead handoff
+> path — there is no `/sign-in/sso` page anymore. Do not configure new
+> discovery entries with `"provider": "clerk"`.
+
 ## Current State
 
-The web app supports Enterprise SSO discovery with two production paths:
+The web app supports Enterprise SSO discovery with one production path:
 
-- Clerk Enterprise SSO for managed SAML/OIDC connections.
 - Better Auth generic OAuth for non-Clerk providers, starting with Feishu/Lark.
 
 The user types an email on `/sign-in`; `/api/auth/sso/discovery` checks only the
-email domain against `AUTH_SSO_DISCOVERY_PROVIDERS`. Matching Clerk providers
-handoff to `/sign-in/sso`, which calls Clerk's `signIn.sso` flow with
-`strategy: "enterprise_sso"`. Matching Feishu providers handoff to
-`/api/auth/oauth/feishu`, which starts Better Auth's generic OAuth flow.
+email domain against `AUTH_SSO_DISCOVERY_PROVIDERS`. Matching Feishu providers
+handoff to `/api/auth/oauth/feishu`, which starts Better Auth's generic OAuth
+flow. A `"generic"` provider entry hands off to an internal `loginUrl` you
+supply — useful for a future external broker, but nothing in this repo wires
+one today.
 
 The route intentionally does not look up users. A non-matching or invalid email
 gets the same `{ "provider": null }` response, preserving anti-enumeration
@@ -27,19 +38,13 @@ behavior.
 
 ## Provider Configuration
 
-Use Clerk for first-party and customer-managed Enterprise SSO unless a customer
-requires an external broker or a China collaboration suite such as Feishu/Lark.
+Use Feishu/Lark for China-market SSO via Better Auth's generic OAuth plugin, or
+a `"generic"` entry with an explicit internal `loginUrl` for a broker you build
+yourself. There is no first-class SAML broker in this repo since Clerk was
+removed — a SAML IdP needs a `"generic"` entry pointing at a route you add.
 
 ```json
 [
-  {
-    "domain": "nebutra.com",
-    "id": "nebutra-entra",
-    "name": "Nebutra Entra ID",
-    "type": "oidc",
-    "provider": "clerk",
-    "allowSubdomains": false
-  },
   {
     "domain": "example.cn",
     "id": "example-feishu",
@@ -58,28 +63,13 @@ Fields:
 | `id` | Yes | Stable internal identifier for support and audit notes. |
 | `name` | Yes | Human-readable provider name shown during handoff. |
 | `type` | Yes | `saml` or `oidc`. |
-| `provider` | No | `clerk`, `feishu`, or `generic`; defaults to `generic` for legacy explicit `loginUrl` entries. |
+| `provider` | No | `feishu` or `generic`; defaults to `generic` for legacy explicit `loginUrl` entries. `clerk` is still accepted by the schema but resolves to a deleted route — do not use it. |
 | `loginUrl` | Generic only | Internal path for an external broker handoff. Absolute URLs are rejected. |
-| `allowSubdomains` | No | Defaults to `false`. Set to `true` only when the Clerk/IdP connection also allows subdomains. |
-
-## Clerk Dashboard Checklist
-
-1. Add production domains for `nebutra.com`, `app.nebutra.com`, and
-   `auth.nebutra.com` (login center).
-2. Set sign-in to `https://auth.nebutra.com/sign-in` (login center).
-3. Set sign-up to `https://auth.nebutra.com/sign-up`.
-4. Set post-sign-in to `https://app.nebutra.com/dashboard` (product RP).
-5. Create the SAML or OIDC Enterprise connection.
-6. Ensure the connection domain matches the JSON `domain`.
-7. Keep subdomain support disabled unless the customer explicitly needs it and
-   the IdP supports the same policy.
-8. Add `https://auth.nebutra.com/sign-in` to Clerk redirect/continuation allowlists
-   for custom Enterprise SSO flows.
+| `allowSubdomains` | No | Defaults to `false`. Set to `true` only when the IdP connection also allows subdomains. |
 
 ## Feishu/Lark Checklist
 
-Use this path when `AUTH_PROVIDER=better-auth` and the customer wants Feishu or
-Lark login without Clerk.
+Use this path when the customer wants Feishu or Lark login.
 
 1. Create or open the Feishu/Lark app in the developer console.
 2. Add the login-center redirect URI:
@@ -111,21 +101,10 @@ keys.
 
 Set `AUTH_SSO_DISCOVERY_PROVIDERS` on every web runtime:
 
-- Vercel project: `@nebutra/web`
 - ECS GitHub environment: `ecs-prod`
-- Any future GCP/AWS runtime that serves `app.nebutra.com`
+- Any future GCP/AWS/Fly runtime that serves `app.nebutra.com`
 
-When `AUTH_PROVIDER=clerk`, also set:
-
-```env
-NEXT_PUBLIC_AUTH_PROVIDER=clerk
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
-CLERK_SECRET_KEY=sk_live_xxx
-CLERK_WEBHOOK_SECRET=whsec_xxx
-```
-
-When `AUTH_PROVIDER=better-auth` and any discovery provider uses
-`provider: "feishu"`, also set:
+When any discovery provider uses `provider: "feishu"`, also set:
 
 ```env
 FEISHU_APP_ID=cli_xxx
@@ -138,7 +117,7 @@ FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
 Run the focused checks before enabling a production domain:
 
 ```bash
-pnpm --filter @nebutra/web exec vitest run src/lib/auth/__tests__/oauth-providers.test.ts src/app/api/auth/sso/discovery/__tests__/route.test.ts src/components/auth/__tests__/clerk-enterprise-sso-handoff.test.tsx
+pnpm --filter @nebutra/web exec vitest run src/lib/auth/__tests__/oauth-providers.test.ts src/app/api/auth/sso/discovery/__tests__/route.test.ts
 pnpm --filter @nebutra/auth test -- src/providers/better-auth.test.ts
 pnpm --filter @nebutra/web exec tsc --noEmit --pretty false
 pnpm test:arch -- tests/architecture/nebutra/sso-infrastructure.test.ts  # source repo only
@@ -147,18 +126,17 @@ pnpm test:arch -- tests/architecture/nebutra/sso-infrastructure.test.ts  # sourc
 Manual smoke:
 
 1. Open `https://app.nebutra.com/sign-in`.
-2. Type an email whose domain is configured for SSO.
+2. Type an email whose domain is configured for Feishu SSO.
 3. Blur the email field.
-4. Confirm the Enterprise SSO button appears.
-5. Click it and confirm Clerk or Feishu redirects to the configured IdP.
+4. Confirm the Feishu SSO button appears.
+5. Click it and confirm the flow redirects to Feishu/Lark.
 
 ## Rollback
 
-To disable discovery without changing Clerk:
+To disable discovery:
 
 ```env
 AUTH_SSO_DISCOVERY_PROVIDERS=
 ```
 
-Password, OAuth, magic link, and passkey sign-in remain available. Existing
-Clerk sessions are not revoked by removing the discovery mapping.
+Password, OAuth, magic link, and passkey sign-in remain available.

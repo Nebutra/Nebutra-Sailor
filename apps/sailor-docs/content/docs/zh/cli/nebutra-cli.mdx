@@ -1,587 +1,306 @@
 ---
 title: nebutra CLI
-description: Nebutra 统一命令行工具——脚手架代码、管理基础设施、运行迁移等。
+description: 统一的 Nebutra 命令行工具——在已脚手架的 Sailor 项目里查看状态、跑 dev、管数据库、做代码生成。
 ---
 
-`nebutra` CLI 是你在 Nebutra-Sailor monorepo 内进行日常开发的主要工具。
+`nebutra` CLI 是在 [`create-sailor`](/docs/cli/create-sailor) 脚手架出来的项目里日常使用的工具。根据 Sailor Convergence ADR（2026-09-24），公开发布的这个包现在只服务模板购买者——运营方工具(`admin`、`community`、`growth`、`stats`)以及尚未完工的 `ecosystem` 已被移除,`create` 不再包一层 `create-sailor`(只有一个创建入口),`add` 被替换为针对声明式能力清单的 `sync`。
 
 ## 安装
 
 ```bash
-# 在 monorepo 内——无需额外安装
+# 在 monorepo 内——无需安装
 pnpm exec nebutra --help
 
-# 全局安装（已发布 nebutra@0.3.6+）
+# 全局安装
 npm install -g nebutra@latest
 ```
 
-## 命令参考
+## 全局标志
+
+```
+--verbose            输出详细信息
+--quiet              抑制非必要输出
+--format <type>      输出格式：json、table、plain
+--yes                跳过所有交互式提示(Agent 模式)
+--no-interactive      --yes 的别名
+--no-color           关闭彩色输出
+```
+
+在非 TTY 环境(CI、管道输出、agent 沙箱)下会自动隐含 `--yes`。
+
+## 生命周期：login、status、sync
+
+### `nebutra login`
+
+通过设备授权流程(参照 `gh`/`vercel`)授权本机使用你的 Nebutra 账号——这不是模板项目自身的功能,而是用于模板更新与授权的**购买者身份**认证。
+
+```bash
+nebutra login                 # 打开浏览器,打印用户码,阻塞直到确认
+nebutra login --json          # 打印 {verification_uri, verification_uri_complete, user_code,
+                               #   expires_in, interval} 并立即以 0 退出——不阻塞
+nebutra login --poll --json   # 恢复上面 --json 调用留下的待处理设备码,并阻塞直到完成
+nebutra login --no-browser    # 只打印链接,不尝试打开浏览器
+```
+
+会话令牌存储在操作系统的密钥链中(找不到密钥链工具时回退到 `~/.config/nebutra/credentials.json`,权限 `0600`)。设置 `NEBUTRA_TOKEN` 可以完全跳过本地存储的令牌(用于 CI)。没有静默刷新——存储令牌过期后,重新运行 `nebutra login` 即可。
+
+```bash
+nebutra whoami                # 显示本机当前授权的身份
+nebutra logout                # 清除存储的令牌
+nebutra logout --all          # 清除所有本地 nebutra 配置,不止认证令牌
+```
+
+### `nebutra link` / `nebutra unlink`
+
+```bash
+nebutra link [project-id]     # 将当前项目关联到一个 Nebutra 项目 id
+nebutra unlink                # 从 nebutra.config.json 中移除项目关联
+nebutra unlink --force        # 删除整个 nebutra.config.json
+```
+
+### `nebutra status`
+
+能力就绪状态的机器接口。读取 `nebutra.config.json` 中声明的 `capabilities` 列表,对每一项检查其某个可用服务商所需的环境变量是否齐全:
+
+```bash
+nebutra status
+nebutra status --json
+```
+
+每项能力会汇报以下三种状态之一:
+
+| 状态 | 含义 |
+|------|------|
+| `live` | 某个真实服务商所需的环境变量已全部设置 |
+| `local-fallback` | 未配置服务商;正在运行本地实现(dev/console/内存) |
+| `missing-key` | 未配置服务商,也没有本地兜底——该能力不可用 |
+
+输出还包含尚未 `live` 的能力的 `next` 提示(该设置哪个环境变量)。Agent 应当读取 `status`、按 `next` 提示行动、再重新读取。
+
+### `nebutra sync`
+
+按 `nebutra.config.json` 中声明的能力清单,校正 `.env.example` / `.env.local`——**只涉及能力,不涉及服务商**;服务商由运行时哪些环境变量存在来决定。这取代了旧版直接写入服务商选择的 `nebutra add`。
+
+```bash
+nebutra sync              # 为已声明的能力,把缺失的环境变量键加进 .env.example;
+                           #   .env.local 不存在则创建
+nebutra sync --dry-run    # 预览将要添加的内容,不写入(退出码 10)
+nebutra sync --json
+```
+
+`sync` 是幂等的——`.env.example` 中任何位置已存在的键都不会被改动。
+
+## 项目初始化
 
 ### `nebutra init`
 
-初始化 Nebutra 项目并创建 `nebutra.config.json`。
-
 ```bash
 nebutra init
-nebutra init --dry-run          # 预览但不写入文件（退出码 10）
-nebutra init --if-not-exists    # 如配置文件已存在则跳过
+nebutra init --dry-run          # 预览而不写入文件(退出码 10)
+nebutra init --if-not-exists    # nebutra.config.json 已存在则跳过
 ```
-
----
-
-### `nebutra add`
-
-向项目添加组件或功能。支持 21st.dev 和 v0.dev 注册中心。
-
-```bash
-nebutra add button card                   # 从 @nebutra/ui 添加
-nebutra add --21st pricing-table          # 从 21st.dev 获取
-nebutra add --v0 https://v0.dev/r/abc123  # 从 v0.dev 获取
-nebutra add button --dry-run              # 预览但不安装
-nebutra add button --yes                  # 跳过提示（Agent 模式）
-nebutra add button --if-not-exists        # 如已安装则跳过
-```
-
-#### 功能注册中心（Feature Registry）
-
-`nebutra add <feature>` 同时接受组件名和**功能 ID**，注册中心由两个层级组成：
-
-**硬编码功能**（位于 [`packages/ops/cli/src/utils/registry.ts`](https://github.com/Nebutra/Nebutra-Sailor/blob/main/packages/ops/cli/src/utils/registry.ts)）：
-
-| 功能 ID | 分组 | 用途 |
-|---------|------|------|
-| `queue` | integrations | 后台任务队列（Upstash QStash 或 BullMQ） |
-| `search` | integrations | 全文搜索（Meilisearch 或 Typesense） |
-| `cache` | integrations | 缓存适配器（Upstash Redis、Vercel KV、Redis、Dragonfly） |
-| `notifications` | integrations | 通知工作流（Novu、Knock、自定义） |
-| `webhooks` | integrations | 出站 Webhook（Svix、自定义） |
-| `cms` | integrations | 无头 CMS（Sanity、Contentful、Strapi） |
-| `feature-flags` | platform | 功能开关（Vercel Flags、GrowthBook、ConfigCat） |
-| `captcha` | iam | 验证码（Turnstile、hCaptcha、阿里云滑块） |
-
-**动态发现功能** —— 任意在 `package.json` 中声明 `"nebutra": { "featureId": "..." }` 块的工作区包都会被自动发现。当前包括：
-
-`vault`、`audit`、`tenant`、`permissions`、`metering`、`license`、`waitlist`、`uploads`、`saga`、`email`、`design-sync`、`agents`、`mcp`。
-
-列出两层全部功能：
-
-```bash
-nebutra add --list                 # 列出全部可用功能（硬编码 + 动态发现）
-```
-
-动态发现的功能会从已发布版本注册表中读取 npm caret 区间（`^0.x.y`）固定版本——绝不会写入 `workspace:*`——以保证生成的 `package.json` 在 monorepo 外也能干净安装。
-
----
-
-### `nebutra generate`（别名：`gen`）
-
-创建新的 app、包、API 路由或 UI 组件脚手架。
-
-<Tabs>
-  <Tab title="app">
-    创建 Next.js 16 + Tailwind v4 应用：
-
-    ```bash
-    nebutra generate app my-blog
-    nebutra gen app my-blog --dry-run
-    ```
-
-    在 `apps/my-blog/` 中创建 `package.json`、`tsconfig.json`、layout、page 和 globals。
-  </Tab>
-  <Tab title="package">
-    创建新的 `@nebutra/<name>` 包：
-
-    ```bash
-    nebutra generate package notifications
-    nebutra gen package notifications --dry-run
-    ```
-
-    在 `packages/integrations/notifications/` 中创建 `package.json`、`tsconfig.json` 和 `src/index.ts`。
-  </Tab>
-  <Tab title="route">
-    在 `backends/gateway` 中创建 Hono API 路由：
-
-    ```bash
-    nebutra generate route projects
-    nebutra gen route projects/members
-    ```
-
-    创建 `backends/gateway/src/routes/projects.ts`，包含 GET 和 POST 处理器。
-  </Tab>
-  <Tab title="component">
-    创建带 Storybook Story 的 UI 组件：
-
-    ```bash
-    nebutra generate component PricingCard
-    nebutra gen component PricingCard --variants "primary,outlined" --sizes "sm,md,lg"
-    ```
-
-    在 `packages/design/ui/src/components/` 中创建 `pricing-card.tsx` 和 `.stories.tsx`。
-  </Tab>
-</Tabs>
-
----
-
-### `nebutra db`
-
-通过 Prisma 管理数据库。
-
-| 子命令 | 说明 |
-|--------|------|
-| `db generate` | 重新生成 Prisma 客户端 |
-| `db migrate` | 运行所有待执行的迁移 |
-| `db migrate create <name>` | 创建新的命名迁移 |
-| `db push` | 直接推送 schema 到数据库（不生成迁移文件） |
-| `db seed` | 填充测试数据 |
-| `db studio` | 启动 Prisma Studio GUI |
-| `db reset --yes` | ⚠️ 重置整个数据库 |
-| `db status` | 显示迁移状态 |
-
-```bash
-nebutra db generate
-nebutra db migrate
-nebutra db migrate create add-user-table
-nebutra db push
-nebutra db seed
-nebutra db studio
-nebutra db reset --yes     # 危险操作——需要 --yes
-nebutra db status --format json
-```
-
-**标志：** `--dry-run`、`--yes`、`--format <json|plain>`
-
----
-
-### `nebutra infra`
-
-Docker Compose 基础设施管理（PostgreSQL、Redis、Meilisearch、ClickHouse 等）。
-
-| 子命令 | 说明 |
-|--------|------|
-| `infra up` | 启动完整 Docker 服务栈 |
-| `infra up --lite` | 启动精简栈（仅 PostgreSQL + Redis） |
-| `infra up --profile search` | 启动时加载搜索配置 |
-| `infra down` | 停止所有服务 |
-| `infra status` | 显示服务状态表 |
-| `infra logs [service]` | 查看最后 50 行日志 |
-| `infra reset --yes` | ⚠️ 删除所有容器和数据卷 |
-
-```bash
-nebutra infra up
-nebutra infra up --lite
-nebutra infra up --profile search
-nebutra infra down
-nebutra infra status
-nebutra infra status --format json
-nebutra infra logs
-nebutra infra logs postgres
-nebutra infra reset --yes    # 危险操作
-```
-
-**标志：** `--dry-run`、`--yes`、`--lite`、`--profile <name>`、`--format <json|plain>`
-
----
-
-### `nebutra env`
-
-环境变量管理。
-
-| 子命令 | 说明 |
-|--------|------|
-| `env validate` | 检查 `.env.example` 中所有必填变量是否已设置 |
-| `env template` | 交互式从 `.env.example` 生成 `.env.local` |
-| `env template --yes` | 使用默认值生成（非交互模式） |
-| `env diff` | 对比 `.env.local` 与 `.env.example` |
-| `env show` | 显示当前变量（敏感值已脱敏） |
-
-```bash
-nebutra env validate
-nebutra env template
-nebutra env template --yes
-nebutra env diff
-nebutra env show
-nebutra env show --format json
-```
-
-<Note>
-  名称中含有 `KEY`、`TOKEN`、`SECRET` 或 `PASSWORD` 的变量在 `env show` 输出中会自动脱敏。
-</Note>
-
-**标志：** `--dry-run`、`--yes`、`--format <json|plain>`
-
----
-
-### `nebutra brand`
-
-品牌管理与调色板生成。
-
-```bash
-nebutra brand init                                              # 初始化品牌配置
-nebutra brand apply                                             # 将品牌应用到所有包
-nebutra brand palette --primary=#7C3AED --secondary=#F59E0B   # 生成调色板
-nebutra brand sync                                              # 跨包同步品牌资产
-nebutra brand verify                                            # 验证品牌一致性
-```
-
----
-
-### `nebutra i18n`
-
-国际化工具。
-
-```bash
-nebutra i18n sync              # 跨语言同步翻译文件
-nebutra i18n validate          # 验证所有语言文件
-nebutra i18n add zh-TW         # 添加新语言
-nebutra i18n status            # 查看每个语言的翻译覆盖率
-```
-
----
-
-### `nebutra preset`
-
-SaaS 配置预设管理。
-
-```bash
-nebutra preset list                   # 列出可用预设
-nebutra preset list --format json
-nebutra preset show ai-saas           # 显示预设详情
-nebutra preset apply ai-saas          # 应用预设
-nebutra preset env                    # 显示当前预设的环境变量
-nebutra preset features               # 显示当前预设的功能列表
-nebutra preset diff ai-saas growth    # 对比两个预设的差异
-```
-
----
-
-### `nebutra dev`
-
-启动开发服务器，支持预设过滤。
-
-```bash
-nebutra dev                           # 启动所有应用
-nebutra dev --preset=ai-saas          # 仅启动 AI SaaS 预设应用
-nebutra dev --preset=dashboard        # 仅启动 Web + API 网关
-nebutra dev --preset=marketing        # 仅启动落地页 + Studio
-```
-
----
-
-### `nebutra test`
-
-运行测试。
-
-```bash
-nebutra test                          # 运行所有单元测试（Vitest）
-nebutra test e2e                      # Playwright E2E 测试
-nebutra test e2e --ui                 # 带 Playwright UI 界面的 E2E 测试
-nebutra test e2e --ci                 # CI 模式 E2E 测试（无头）
-nebutra test arch                     # 架构合规测试
-nebutra test --coverage               # 含覆盖率报告
-nebutra test size                     # 检查包体积是否超预算
-nebutra test size --why               # 详细包体积组成分析
-nebutra test --app web                # 仅运行指定应用的测试
-```
-
----
-
-### `nebutra auth`
-
-认证配置管理。
-
-```bash
-nebutra auth status                   # 当前认证服务商和配置
-nebutra auth setup clerk              # 配置 Clerk 认证服务商
-nebutra auth setup better-auth        # 配置 Better Auth
-nebutra auth keys                     # 管理认证服务商 API 密钥
-```
-
----
-
-### `nebutra billing`
-
-计费与订阅管理。
-
-```bash
-nebutra billing status                # 当前计费配置
-nebutra billing setup stripe          # 配置 Stripe 计费服务
-nebutra billing setup lemonsqueezy    # 配置 LemonSqueezy 计费服务
-nebutra billing setup polar           # 配置 Polar 计费服务
-nebutra billing setup chinapay        # 配置 ChinaPay 计费服务
-nebutra billing webhooks              # 管理计费 Webhook 端点
-```
-
----
-
-### `nebutra ai`
-
-AI 服务商与 SDK 配置。
-
-```bash
-nebutra ai models                     # 列出可用 AI 模型
-nebutra ai agents                     # 管理 AI Agent 配置
-nebutra ai test "hello world"         # 测试当前 AI 服务商
-nebutra ai config                     # 查看/编辑 AI 配置
-```
-
----
-
-### `nebutra secrets`
-
-应用层加密密钥（通过 `@nebutra/vault`）。
-
-```bash
-nebutra secrets list --tenant org_123
-nebutra secrets set openai_key --tenant org_123 --value sk-...
-nebutra secrets get openai_key --tenant org_123
-nebutra secrets rotate openai_key --tenant org_123
-nebutra secrets audit --tenant org_123
-nebutra secrets verify --tenant org_123
-```
-
----
-
-### `nebutra services`
-
-微服务健康状态。
-
-```bash
-nebutra services status               # 所有服务健康概览
-nebutra services health               # 详细健康检查
-nebutra services logs api-gateway     # 流式输出指定服务日志
-nebutra services restart api-gateway  # 重启指定服务
-nebutra services scale api-gateway 3  # 将服务扩展到 N 个实例
-```
-
----
-
-### `nebutra search`
-
-全文搜索索引管理（Meilisearch / Typesense / Algolia）。
-
-```bash
-nebutra search status                 # 搜索服务商状态
-nebutra search indexes                # 列出所有搜索索引
-nebutra search reindex products       # 重建指定索引
-nebutra search reindex --force --yes  # 重建所有索引（无需确认）
-nebutra search query products "widget" # 执行测试查询
-nebutra search stats                  # 索引统计信息
-```
-
----
-
-### `nebutra admin`
-
-平台管理。
-
-```bash
-nebutra admin tenants                 # 列出所有租户
-nebutra admin tenants --format json
-nebutra admin health                  # 平台健康检查
-```
-
----
-
-### `nebutra community`
-
-社区健康与展示。
-
-```bash
-nebutra community health              # 社区健康评分
-nebutra community health --period 30d # 最近 30 天
-nebutra community showcase list       # 浏览项目展示
-```
-
-<Warning>
-  `community` 命令尚未完全实现。接口已定义，但当前版本输出内容可能有限。
-</Warning>
-
----
-
-### `nebutra growth`
-
-增长指标与分析。
-
-```bash
-nebutra growth dashboard              # 增长概览
-nebutra growth funnel                 # 转化漏斗
-nebutra growth funnel --segment paid  # 按付费细分
-nebutra growth pulse                  # AI 驱动的增长洞察
-nebutra growth pulse --focus retention
-```
-
-<Warning>
-  `growth` 命令尚未完全实现。接口已定义，但当前版本输出内容可能有限。
-</Warning>
-
----
-
-### `nebutra ecosystem`
-
-生态系统与模板市场。
-
-```bash
-nebutra ecosystem status              # 生态系统概览
-nebutra ecosystem publish --tag latest  # 发布模板
-nebutra ecosystem ideas list          # 浏览创意市场
-nebutra ecosystem opc register        # 加入 OPC 会员网络
-```
-
-<Warning>
-  `ecosystem` 命令尚未完全实现。接口已定义，但当前版本输出内容可能有限。
-</Warning>
-
----
-
-### `nebutra schema`
-
-以 JSON 格式输出完整 CLI Schema（适合 AI 工具和工具链集成）。
-
-```bash
-nebutra schema                        # 人类可读格式
-nebutra schema --all                  # 完整 Schema（供 Agent 使用，JSON 输出）
-nebutra schema --list                 # 列出所有命令
-nebutra schema --exit-codes           # 列出所有退出码及说明
-```
-
----
-
-### `nebutra stats`
-
-Monorepo 概览与统计。
-
-```bash
-nebutra stats                         # 包数量、应用数量等
-nebutra stats --format json
-```
-
----
-
-### `nebutra completions`
-
-安装 bash、zsh 或 fish Shell 补全。
-
-```bash
-nebutra completions bash
-nebutra completions zsh
-nebutra completions fish
-```
-
----
 
 ### `nebutra doctor`
 
-检查项目配置中的常见问题。
+检查 Node 版本、`nebutra.config.json`/`package.json` 是否存在、`.env` 是否存在,以及 monorepo 布局漂移(旧版 `apps/api-gateway/` vs `backends/gateway/`、未分类的 `packages/<name>/`)。
 
 ```bash
 nebutra doctor
 ```
 
-<Warning>
-  `doctor` 命令尚未完全实现，基础检查可正常运行，但完整诊断功能将在未来版本中提供。
-</Warning>
-
----
-
-### `nebutra mcp`
-
-为 AI 编码工具（Cursor、Windsurf、Claude Code）启动 MCP（模型上下文协议）上下文服务器。
+## 数据库
 
 ```bash
-nebutra mcp                           # 启动 MCP 上下文服务器
+nebutra db generate                # 重新生成 Prisma 客户端
+nebutra db migrate                 # 运行待执行的迁移
+nebutra db push                    # 将 schema 推送到数据库(不生成迁移文件)
+nebutra db seed                    # 填充测试数据
+nebutra db studio                  # 启动 Prisma Studio GUI
+nebutra db reset --yes             # ⚠️ 重置整个数据库
+nebutra db status                  # 显示迁移状态
 ```
 
----
+**标志：** `--dry-run`、`--yes`、`--format <json|plain>`
 
-### `nebutra workflow`
+## 基础设施
 
-为工作流服务商在 `workflows/<provider>/` 下生成入门文件。若目标文件已存在则拒绝覆盖。
+Docker Compose 基础设施管理(PostgreSQL、Redis,以及任何按 profile 门控的附加服务):
 
 ```bash
-nebutra workflow init inngest          # workflows/inngest/example.ts
-nebutra workflow init n8n              # workflows/n8n/README.md + example.json
-nebutra workflow init pusher           # workflows/pusher/example.ts
-nebutra workflow init inngest --dry-run
+nebutra infra up                    # 启动完整栈
+nebutra infra up --lite             # 仅 PostgreSQL + Redis
+nebutra infra up --profile <name>
+nebutra infra down
+nebutra infra status
+nebutra infra logs [service]
+nebutra infra reset --yes           # ⚠️ 移除所有容器和卷
 ```
 
-| 服务商 | 生成的文件 |
-|--------|-----------|
-| `inngest` | `workflows/inngest/example.ts`（Inngest 函数骨架） |
-| `n8n` | `workflows/n8n/README.md` + `workflows/n8n/example.json`（自托管约定） |
-| `pusher` | `workflows/pusher/example.ts`（频道发布器） |
+**标志：** `--dry-run`、`--yes`、`--lite`、`--profile <name>`、`--format <json|plain>`
 
-退出码：成功为 `0`；若所有目标文件均已存在则为 `9`（`CONFLICT`）；`--dry-run` 为 `10`。
-
----
-
-### `nebutra backend`
-
-生成后端服务脚手架。按照 [ADR 2026-05-10](/docs/architecture/backend-language-policy)，TypeScript（`backends/gateway/`）是默认选项。
+## 环境变量
 
 ```bash
-# TypeScript 网关（Hono）—— 仅下游消费者 monorepo 需要
-nebutra backend init ts
-
-# Python（FastAPI）—— 仅当 ADR 例外条件成立时
-nebutra backend init py --name translator
-nebutra backend init py --name translator --dry-run
+nebutra env validate       # 检查 .env.example 要求的变量是否已设置
+nebutra env template       # 基于 .env.example 交互式生成 .env.local
+nebutra env template --yes # 非交互模式
+nebutra env diff           # 对比 .env.local 与 .env.example
+nebutra env show            # 显示当前变量(KEY/TOKEN/SECRET/PASSWORD 会被打码)
 ```
 
-| 运行时 | 输出 | 说明 |
-|--------|------|------|
-| `ts` | `backends/gateway/{package.json,src/index.ts,README.md}` | 若 `backends/gateway/` 已存在则跳过 |
-| `py` | `backends/python/<name>/{pyproject.toml,README.md,src/main.py,src/__init__.py}` | 生成的 README 引用 ADR 2026-05-10，并要求替换为具体的例外理由 |
+**标志：** `--dry-run`、`--yes`、`--format <json|plain>`
 
-`--name` 在非交互模式下对 `py` 为必填；交互模式下会提示输入。名称格式：`^[a-z][a-z0-9_-]{0,40}$`。
-
----
-
-### `nebutra e2e`
-
-通过 `e2e/` 下专用配置运行对应的 Playwright 套件。
+## Dev、build、lint、typecheck
 
 ```bash
-nebutra e2e smoke                      # e2e/playwright.config.ts
-nebutra e2e golden                     # e2e/playwright.golden.config.ts
-nebutra e2e sleptons                   # e2e/playwright.sleptons.config.ts
-nebutra e2e smoke --dry-run            # 打印将要执行的 `playwright test` 任务
+nebutra dev                     # 启动 dev 服务器(turbo dev)
+nebutra dev --app=web           # 只启动单个 app
+nebutra build                   # 构建所有 app
+nebutra build --strict          # 附带 UI 治理校验的构建
+nebutra lint                    # Biome lint
+nebutra lint --fix
+nebutra typecheck
 ```
 
-| 套件 | 配置 | 套件目录 |
-|------|------|---------|
-| `smoke` | `e2e/playwright.config.ts` | `e2e/smoke/` |
-| `golden` | `e2e/playwright.golden.config.ts` | `e2e/golden/` |
-| `sleptons` | `e2e/playwright.sleptons.config.ts` | `e2e/sleptons/` |
+以上四个命令均支持 `--app <name>` 和 `--dry-run`(退出码 10)。
 
-命令以 Playwright 子进程的退出码返回；若套件目录或配置缺失，则返回 `7`（`NOT_FOUND`）。
+## 测试
 
----
+```bash
+nebutra test                    # 单元测试(Vitest)
+nebutra test --watch
+nebutra test --coverage
+nebutra test e2e                # Playwright 端到端测试
+nebutra test e2e --ui
+nebutra test e2e --ci
+nebutra test size                # 检查产物体积
+nebutra test size --why          # 详细体积构成分析
+nebutra test arch                # 架构一致性测试
+```
+
+另有一个独立的顶层命令 `nebutra e2e <suite>`,对应各自配置文件的具名 Playwright 套件:
+
+```bash
+nebutra e2e smoke        # e2e/playwright.config.ts
+nebutra e2e golden       # e2e/playwright.golden.config.ts
+nebutra e2e sleptons     # e2e/playwright.sleptons.config.ts
+nebutra e2e smoke --dry-run
+```
+
+## 代码生成
+
+```bash
+nebutra generate app my-blog                 # 生成 Next.js app
+nebutra generate package notifications       # 生成 @nebutra/<name> 包
+nebutra generate route projects              # 在 backends/gateway 生成 Hono 路由
+nebutra generate component PricingCard \
+  --variants "primary,outlined" --sizes "sm,md,lg"
+```
+
+别名：`nebutra gen`。均支持 `--dry-run` 与 `--yes`。
+
+## 品牌、主题、国际化
+
+```bash
+nebutra brand init
+nebutra brand apply
+nebutra brand palette --primary=#7C3AED --secondary=#F59E0B
+nebutra brand sync
+nebutra brand verify
+
+nebutra theme list                # 列出设计语言(Brand Package)
+nebutra theme inspect <id>         # 查看某个设计语言的治理清单
+
+nebutra i18n sync
+nebutra i18n validate
+nebutra i18n add <locale>
+nebutra i18n status
+```
+
+## AI
+
+```bash
+nebutra ai provider list                     # 已支持/已启用的运行时 AI 服务商
+nebutra ai provider enable openai anthropic
+nebutra ai provider disable deepseek
+nebutra ai gateway init                      # 本地 AI 网关治理配置块
+nebutra ai gateway status
+nebutra ai route set <name> ...
+nebutra ai route list
+nebutra ai models                            # 已配置的模型/服务商
+nebutra ai agents                            # 项目中可用的 Agent
+nebutra ai test "hello world"                # 需要一个正在运行的 API 网关
+nebutra ai config
+```
+
+## UI 组件契约
+
+```bash
+nebutra ui search [query]           # 搜索面向 Agent 的 @nebutra/ui 组件契约
+nebutra ui component <name>         # 打印单个组件的契约
+nebutra ui validate [name]          # 校验生产证据
+nebutra ui migrate <name>           # 干跑式 codemod / 迁移提示
+```
+
+## 平台
+
+```bash
+nebutra services status
+nebutra services logs <service>
+nebutra services restart <service>
+nebutra services scale <service> <n>
+
+nebutra secrets list --tenant org_123
+nebutra secrets set <key> --tenant org_123 --value ...
+nebutra secrets get <key> --tenant org_123
+nebutra secrets rotate <key> --tenant org_123
+nebutra secrets audit --tenant org_123
+nebutra secrets verify --tenant org_123
+```
+
+`secrets` 通过 `@nebutra/vault`(AWS KMS + HKDF 信封加密)管理应用层加密密钥。
+
+## 授权许可
+
+```bash
+nebutra license activate <key>
+nebutra license status
+```
+
+`license` 是对已登录身份的内部检查(见 `nebutra login`),而不是一个独立的授权流程。
+
+## 工具类
+
+```bash
+nebutra completions bash|zsh|fish     # 安装 shell 补全
+nebutra mcp                           # 为 Cursor/Windsurf/Claude Code 启动 MCP 上下文服务器
+nebutra schema                        # 命令 schema(对 Agent 友好)
+nebutra schema --all                  # 完整 JSON schema
+nebutra schema --list                 # 列出所有命令名
+nebutra schema --exit-codes           # 退出码参考
+nebutra upgrade                       # 升级 CLI 本身(别名：self-update)
+```
 
 ## Agent 模式
 
-所有命令均支持 `--yes` 以在 CI/CD 流水线、Agent 环境和脚本中非交互式执行：
+每个命令都支持 `--yes` 实现非交互执行：
 
 ```bash
-# 适用于 CI/CD 和 AI Agent
 nebutra init --yes
-nebutra add button card --yes
-nebutra env template --yes
 nebutra db migrate --yes
 nebutra generate app analytics --yes
 ```
 
-在非 TTY 环境（管道输出、CI）中运行时，`--yes` 会自动启用。
+在非 TTY 环境(管道输出、CI)下 `--yes` 会自动隐含。
 
 ## Dry-run 模式
 
-使用 `--dry-run` 预览更改而不产生任何副作用。Dry-run 成功完成时返回退出码 `10`：
+`--dry-run` 预览而不产生副作用,并以退出码 `10` 结束：
 
 ```bash
 nebutra init --dry-run
-nebutra add button --dry-run
+nebutra sync --dry-run
 nebutra generate app my-blog --dry-run
 nebutra db migrate --dry-run
 nebutra infra up --dry-run
 ```
-
-Dry-run 输出始终为 JSON 结构，便于 Agent 解析。

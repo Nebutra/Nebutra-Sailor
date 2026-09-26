@@ -69,8 +69,8 @@ All thrown errors are `KnowledgeRagError` and carry an actionable
 ## How it wraps existing Sailor infra (no reinvention)
 
 - **Keyword leg → `@nebutra/search`.** `SearchKeywordIndex` wraps the existing
-  provider-agnostic search abstraction (`getSearch()` →
-  Meilisearch / Typesense / Algolia / pgvector-BM25). Each chunk is indexed as
+  search abstraction (`getSearch()` → Postgres pgvector/FTS, the single kept
+  search provider per ADR 2026-09-24). Each chunk is indexed as
   a `SearchDocument` carrying `tenantId`; every keyword query passes
   `filters: { tenantId }` and results are re-filtered by tenant, so the keyword
   leg has the same isolation guarantee as the vector leg. `@nebutra/search` is

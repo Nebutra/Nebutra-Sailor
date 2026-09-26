@@ -1,143 +1,80 @@
 ---
 title: 队列
-description: 用于延迟和高吞吐量处理的简单任务队列——QStash 适用于 Serverless，BullMQ 适用于自托管 Redis 部署。
+description: 用于延迟处理和高吞吐任务的简单队列——QStash,Serverless、基于 HTTP。
 ---
 
 ## 概述
 
-`@nebutra/queue` 是一个支持两种后端的提供商无关任务队列：
+`@nebutra/queue` 是每个 Sailor 项目使用的队列：**QStash**（Upstash）——Serverless、基于 HTTP,无需管理任何基础设施。根据 Sailor Convergence ADR（2026-09-24）,自托管的 BullMQ + Redis 后端已被移除;QStash 是唯一的队列后端。
 
-- **QStash**（Upstash）——Serverless，基于 HTTP，无需管理基础设施。适合 Vercel 和边缘部署。
-- **BullMQ**——基于 Redis，自托管，高吞吐量。适合具有持久队列的专用服务器。
+## Provider 自动检测
 
-两种后端的应用代码完全相同——只有环境变量不同。
-
-## 提供商自动检测
-
-队列后端根据存在的环境变量自动选择：
-
-| 优先级 | 条件 | 提供商 |
-|--------|------|--------|
-| 1 | `QUEUE_PROVIDER` 已设置 | 按指定值（`qstash` / `bullmq` / `memory`） |
+| 优先级 | 条件 | Provider |
+|----------|-----------|----------|
+| 1 | 设置了 `QUEUE_PROVIDER` | 按指定值（`qstash` / `memory`） |
 | 2 | 存在 `QSTASH_TOKEN` | `qstash` |
-| 3 | 存在 `REDIS_URL` | `bullmq` |
-| 4 | 都不存在 | `memory`（仅限开发/测试——非持久化） |
+| 3 | 都没有 | `memory`（仅限开发/测试——不持久化；`nebutra status` 会将其报告为 `local-fallback`） |
 
 ## 配置步骤
 
-<Tabs>
-  <Tab title="QStash（Serverless）">
-    <Steps>
-      <Step title="设置环境变量">
-        ```bash
-        QSTASH_TOKEN=""
-        QSTASH_CURRENT_SIGNING_KEY=""
-        QSTASH_NEXT_SIGNING_KEY=""
+<Steps>
+  <Step title="设置环境变量">
+    ```bash
+    QSTASH_TOKEN=""
+    QSTASH_CURRENT_SIGNING_KEY=""
+    QSTASH_NEXT_SIGNING_KEY=""
 
-        # API 网关的公开基础 URL
-        # QStash 将调用此 URL 投递任务
-        QSTASH_CALLBACK_BASE_URL="https://api.yourdomain.com"
-        ```
-      </Step>
+    # 你的 API 网关的公网 Base URL
+    # QStash 会调用这个 URL 来投递任务
+    QSTASH_CALLBACK_BASE_URL="https://api.yourdomain.com"
+    ```
+  </Step>
 
-      <Step title="注册 Webhook 路由">
-        API 网关已在以下地址暴露 QStash Webhook：
+  <Step title="注册 Webhook 路由">
+    API 网关已经在以下地址暴露了 QStash Webhook：
 
-        ```
-        POST /api/v1/queue/:queue/:type
-        ```
+    ```
+    POST /api/v1/queue/:queue/:type
+    ```
 
-        当 `report.generate` 任务就绪时，QStash 将 POST 到 `https://api.yourdomain.com/api/v1/queue/report/generate`。
+    当 `report.generate` 任务就绪时,QStash 会向 `https://api.yourdomain.com/api/v1/queue/report/generate` 发起 POST。
 
-        <Warning>
-          QStash 需要**可公开访问的 HTTPS 接口**，无法投递到 `localhost`。本地开发时请使用内网穿透工具（如 `ngrok`）。
-        </Warning>
-      </Step>
+    <Warning>
+      QStash 需要一个**可公网访问的 HTTPS 地址**,无法投递到 `localhost`。本地开发时请使用隧道工具（如 `ngrok`）。
+    </Warning>
+  </Step>
 
-      <Step title="加入任务队列">
-        ```typescript
-        import { getQueue, createJob } from "@nebutra/queue";
+  <Step title="将任务加入队列">
+    ```typescript
+    import { getQueue, createJob } from "@nebutra/queue";
 
-        const queue = await getQueue();
+    const queue = await getQueue();
 
-        await queue.enqueue(
-          createJob("report", "generate", {
-            tenantId: "org_123",
-            reportType: "monthly",
-          })
-        );
-        ```
-      </Step>
+    await queue.enqueue(
+      createJob("report", "generate", {
+        tenantId: "org_123",
+        reportType: "monthly",
+      })
+    );
+    ```
+  </Step>
 
-      <Step title="注册处理器">
-        ```typescript
-        import { getQueue } from "@nebutra/queue";
+  <Step title="注册处理器">
+    ```typescript
+    import { getQueue } from "@nebutra/queue";
 
-        const queue = await getQueue();
+    const queue = await getQueue();
 
-        queue.registerHandler("report", "generate", async (job) => {
-          await generateReport(job.data);
-        });
-        ```
-      </Step>
-    </Steps>
-  </Tab>
+    queue.registerHandler("report", "generate", async (job) => {
+      await generateReport(job.data);
+    });
+    ```
+  </Step>
+</Steps>
 
-  <Tab title="BullMQ（Redis）">
-    <Steps>
-      <Step title="设置环境变量">
-        ```bash
-        REDIS_URL="redis://localhost:6379"
-
-        # 可选：即使 QSTASH_TOKEN 也存在，也强制使用 BullMQ
-        QUEUE_PROVIDER="bullmq"
-        ```
-      </Step>
-
-      <Step title="启动 Redis">
-        ```bash
-        # 本地开发
-        docker run -d -p 6379:6379 redis:7-alpine
-
-        # 或通过 pnpm dev（如果 Redis 已在 compose 文件中）
-        docker compose up redis
-        ```
-      </Step>
-
-      <Step title="加入任务队列">
-        ```typescript
-        import { getQueue, createJob } from "@nebutra/queue";
-
-        const queue = await getQueue();
-
-        await queue.enqueue(
-          createJob("report", "generate", {
-            tenantId: "org_123",
-            reportType: "monthly",
-          })
-        );
-        ```
-      </Step>
-
-      <Step title="注册处理器">
-        ```typescript
-        import { getQueue } from "@nebutra/queue";
-
-        const queue = await getQueue();
-
-        // BullMQ 启动 Worker 进程拉取任务
-        queue.registerHandler("report", "generate", async (job) => {
-          await generateReport(job.data);
-        });
-        ```
-      </Step>
-    </Steps>
-  </Tab>
-</Tabs>
+未设置 `QSTASH_TOKEN` 时,`getQueue()` 会返回内存兜底实现——同样的入队/处理器 API 依旧可用,但任务不会跨进程投递,重启后也不会保留。它存在的意义是让 `pnpm dev` 和单元测试在没有配置队列的情况下也能跑起来,而不是一个生产替代方案。
 
 ## 入队与处理模式
-
-所有提供商的入队/处理模式完全一致：
 
 ```typescript
 import { getQueue, createJob } from "@nebutra/queue";
@@ -147,7 +84,7 @@ const queue = await getQueue();
 
 await queue.enqueue(
   createJob(
-    "email",        // 队列名称
+    "email",        // 队列名
     "send",         // 任务类型
     {               // 任务数据（可序列化）
       to: "user@example.com",
@@ -156,7 +93,7 @@ await queue.enqueue(
     },
     {               // 选项（可选）
       tenantId: "org_123",
-      delay: 5000,  // 投递前延迟（毫秒）
+      delay: 5000,  // 投递前延迟的毫秒数
     }
   )
 );
@@ -171,89 +108,42 @@ queue.registerHandler("email", "send", async (job) => {
 
 ```typescript
 createJob(queueName, jobType, data, {
-  tenantId: "org_123",   // 将任务限定到某个租户
+  tenantId: "org_123",   // 将任务限定在某个租户
   delay: 60_000,         // 60 秒后投递
-  priority: 10,          // 值越大越优先处理（仅 BullMQ）
   jobId: "unique-id",    // 按 ID 去重（防止重复入队）
 })
 ```
 
-## QStash vs BullMQ 对比
+## QStash 的特点
 
-<Tabs>
-  <Tab title="QStash">
-    **优点：**
-    - 零基础设施——由 Upstash 完全托管
-    - 可在 Vercel、Netlify 等 Serverless 平台运行
-    - 内置指数退避重试
-    - 基于 HTTP——易于检查和调试
-    - 签名 Webhook——投递经过认证
+**优点：**
+- 零基础设施——完全由 Upstash 托管
+- 适用于任意部署目标,包括 Serverless / 边缘环境
+- 内置带指数退避的重试
+- 基于 HTTP——便于检查和调试
+- 签名 Webhook——投递经过认证
 
-    **缺点：**
-    - 需要公开的 Webhook 接口（不能直接使用 `localhost`）
-    - 不支持优先级队列
-    - 超高并发时单条消息成本较高
-    - 最大消息体：1 MB
+**权衡：**
+- 需要一个公网 Webhook 地址（不能直接用 `localhost`）
+- 不支持优先级队列
+- 单条消息最大 1 MB
 
-    **适用于：** Vercel 部署、中低流量队列、不想管理 Redis 的团队。
-  </Tab>
-
-  <Tab title="BullMQ">
-    **优点：**
-    - 高吞吐量——每天数百万任务
-    - 支持优先级队列
-    - 适用于私有网络（无需公开接口）
-    - 丰富的任务生命周期事件（active、completed、failed、stalled）
-    - 支持延迟和可重复任务
-
-    **缺点：**
-    - 需要 Redis 实例
-    - Worker 必须是长期运行的进程（不支持 Serverless）
-    - 运维开销更大
-
-    **适用于：** 自托管部署、高流量处理、需要优先级或复杂调度的工作负载。
-  </Tab>
-</Tabs>
+如果你需要自托管、支持优先级调度、长驻 Worker 进程的高吞吐队列,`@nebutra/queue` 并不提供这些——按照它的接口自己写一个适配器即可（参见 ADR 的结论部分：想要已删除服务商的买家,针对保留的接口自己写适配器）。
 
 ## 死信队列（DLQ）
 
-耗尽所有重试次数的任务会被移入死信队列。
+QStash 默认对失败的投递做指数退避重试（最多 3 次）。所有重试耗尽后,任务会被丢弃。可在 [Upstash 控制台](https://console.upstash.com) 中查看失败的投递。
 
-<Tabs>
-  <Tab title="QStash">
-    QStash 使用指数退避算法重试失败投递（默认最多 3 次）。所有重试耗尽后，任务被丢弃。可在 [Upstash 控制台](https://console.upstash.com) 中监控失败投递。
-
-    ```typescript
-    // 入队时配置重试次数
-    await queue.enqueue(
-      createJob("report", "generate", data, { maxRetries: 5 })
-    );
-    ```
-  </Tab>
-
-  <Tab title="BullMQ">
-    BullMQ 将耗尽重试的任务移入 `failed` 队列。可以通过代码查看和重试：
-
-    ```typescript
-    import { getQueue } from "@nebutra/queue";
-
-    const queue = await getQueue();
-
-    // 列出失败任务
-    const failedJobs = await queue.getFailedJobs("report");
-
-    // 重试特定失败任务
-    await queue.retryJob("report", jobId);
-
-    // 清空失败队列（丢弃所有）
-    await queue.cleanFailed("report");
-    ```
-  </Tab>
-</Tabs>
+```typescript
+// 入队时配置重试次数
+await queue.enqueue(
+  createJob("report", "generate", data, { maxRetries: 5 })
+);
+```
 
 ## Python 支持
 
-`@nebutra/queue` 也提供 Python 客户端，用于微服务：
+`@nebutra/queue` 也为微服务提供了 Python 客户端：
 
 ```python
 from _shared.queue import get_queue, create_job

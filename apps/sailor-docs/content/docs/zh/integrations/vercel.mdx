@@ -1,27 +1,19 @@
 ---
 title: Vercel
-description: 将 Nebutra 营销入口部署到 Vercel，同时把 app/API/docs 保留在合适的运行边界。
+description: Vercel 是 Sailor 项目前端表面的部署目标之一——不是默认选项，也不是必需的。
 ---
 
 ## 概述
 
-Nebutra 在适合 Vercel 的地方使用 Vercel：公开营销站点、产品文档、预览部署和内容入口。
-有状态的 app/API origin 可以运行在 ECS 上，以便保留区域、网络策略和 origin 所有权。
+Sailor 模板不内置任何部署目标。`create-sailor` 产出的是可移植的构建结果——一个 Next `standalone` 构建，加上 `Dockerfile.web` + `docker-compose.yml`——对跑在哪里没有任何主张。Vercel 只是其中一个选项（前端表面可选 `vercel`、`standalone`、`cloudflare-pages`、`railway`、`fly`），通过 `DEPLOY_TARGET_*` 环境变量 / preset 机制按服务选择——它不会被自动配置,脚手架也没有任何地方假定你会用它。
 
-## 从 monorepo 部署
+<Note>
+  Nebutra 自己的生产环境（`nebutra.com`）并不跑在 Vercel 上——这个部署面已于 2026-09-22 退役,改为前端/源站用 Fly Machines、网关用 Cloudflare Workers。本页说的是把 Vercel 用作从 Sailor 脚手架出来的项目的部署目标,不是 Nebutra 自己怎么部署。
+</Note>
 
-托管在 Vercel 的应用作为独立项目部署：
+## 把某个应用部署到 Vercel
 
-| 应用 | 项目名 |
-|-----|--------|
-| `apps/landing` | `nebutra-landing` |
-| `apps/sailor-docs` | `docs` |
-| `apps/studio` | `nebutra-studio` |
-
-`apps/sailor-docs` 支撑 **`https://nebutra.com/docs`**，走 Git → Vercel
-（项目专用 CNAME，DNS-only）。`https://nebutra.com/docs` 仍会 308 到文档站，兼容旧链。
-
-### 链接每个应用
+每个应用作为独立的 Vercel 项目部署：
 
 ```bash
 cd apps/landing
@@ -29,6 +21,7 @@ vercel link
 
 cd ../web
 vercel link
+# 对想部署到 Vercel 的每个应用重复此操作
 ```
 
 ### 设置环境变量
@@ -49,7 +42,45 @@ vercel env add DATABASE_URL production
 npx turbo link
 ```
 
-这使用你的 Vercel 账户作为远程缓存后端——消除团队间的缓存未命中。
+这使用你的 Vercel 账户作为远程缓存后端——无论实际部署目标是什么，都能消除团队间的缓存未命中。
+
+## 环境变量
+
+收敛后的技术栈每项能力只有一个服务商——无论部署在哪里，环境变量都是一样的：
+
+```bash
+# 认证——Better Auth 是唯一的服务商
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://auth.yourdomain.com
+NEXT_PUBLIC_AUTH_URL=https://auth.yourdomain.com
+AUTH_COOKIE_DOMAIN=.yourdomain.com
+
+# 数据库
+DATABASE_URL=postgresql://...
+
+# Stripe
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# 邮件
+RESEND_API_KEY=re_...
+
+# Redis（Upstash REST 协议）
+UPSTASH_REDIS_REST_URL=https://...
+UPSTASH_REDIS_REST_TOKEN=...
+
+# 错误追踪
+SENTRY_DSN=https://...
+
+# 内部 S2S
+SERVICE_SECRET=... # x-service-token 使用的 HS256
+```
+
+## 预览部署
+
+每个 Pull Request 都会自动获得一个预览 URL。Vercel 会自动设置正确的 `VERCEL_URL`，让预览环境中的 API 调用能正常工作。
 
 ## 相关文档
 

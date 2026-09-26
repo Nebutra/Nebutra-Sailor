@@ -82,11 +82,16 @@ docker compose -f infra/runtime/docker-compose.analytics.yml up -d
 
 ## Environments
 
-| Environment | Purpose                | Database             | Deploy      |
-| ----------- | ---------------------- | -------------------- | ----------- |
-| `dev`       | Local development      | Supabase (free tier) | Manual      |
-| `staging`   | Pre-production testing | Supabase (pro)       | PR merge    |
-| `prod`      | Production             | Supabase / RDS       | Release tag |
+| Environment | Purpose                | Database                                         | Deploy      |
+| ----------- | ---------------------- | ------------------------------------------------- | ----------- |
+| `dev`       | Local development      | Local/Docker Postgres                              | Manual      |
+| `staging`   | Pre-production testing | PlanetScale Postgres                               | PR merge    |
+| `prod`      | Production             | PlanetScale Postgres (via Cloudflare Hyperdrive)   | Release tag |
+
+Production moved from Supabase to PlanetScale Postgres in 2026-07 — see
+[`infra/data/database/README.md`](data/database/README.md) and
+[`docs/ops/postgres-to-planetscale-via-cloudflare.md`](../docs/ops/postgres-to-planetscale-via-cloudflare.md).
+Supabase is kept running only as the pre-cutover data source, not as the active database.
 
 ## Security Notes
 

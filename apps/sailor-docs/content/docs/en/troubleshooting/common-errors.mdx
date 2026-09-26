@@ -72,28 +72,21 @@ description: Solutions for the 12 most frequently encountered errors in Nebutra-
     </Steps>
   </Accordion>
 
-  <Accordion title="auth() was called without Clerk middleware">
-    **Full error:**
-    ```
-    Error: auth() was called, but Clerk's Middleware has not been set up.
-    ```
-
-    **Cause:** The Next.js 16 proxy file (`proxy.ts`) is missing, in the wrong location, or does not export the Clerk middleware correctly. Next.js 16+ uses `proxy.ts` instead of `middleware.ts`.
+  <Accordion title="Session cookie not recognized / redirected back to sign-in">
+    **Cause:** `AUTH_COOKIE_DOMAIN` isn't set to the shared parent domain, or `BETTER_AUTH_SECRET`
+    differs between the auth-center and the app that's reading the session. Better Auth is the
+    only auth provider — there is no middleware/proxy step to misconfigure the way Clerk's used to
+    require; this is almost always a cookie-domain or secret mismatch.
 
     **Fix:**
 
     <Steps>
-      <Step title="Check proxy file location">
-        The file must be at `apps/web/src/proxy.ts` (not inside `app/` or `pages/`). Next.js 16 picks up `proxy.ts` at the root of the `src` directory.
+      <Step title="Check AUTH_COOKIE_DOMAIN">
+        Must be the shared parent domain (e.g. `.nebutra.com`), set identically on both `apps/auth`
+        and `apps/web`.
       </Step>
-      <Step title="Verify the export">
-        ```typescript
-        import { clerkMiddleware } from "@clerk/nextjs/server";
-        export default clerkMiddleware();
-        export const config = {
-          matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-        };
-        ```
+      <Step title="Check BETTER_AUTH_SECRET">
+        Must be byte-for-byte identical on the auth-center and every RP app.
       </Step>
       <Step title="Clear the Next.js cache and restart">
         ```bash
@@ -221,21 +214,19 @@ description: Solutions for the 12 most frequently encountered errors in Nebutra-
   <Accordion title="Organization infinite redirect loop">
     **Symptom:** After signing in, the user is redirected to `/org-selection` or `/create-org` in an infinite loop.
 
-    **Cause:** The Clerk organization feature is enabled (`FEATURE_TEAMS=true`) but the `/create-org` route does not exist in the app.
+    **Cause:** The user has no organization membership yet, and the app has no `/create-org` route
+    to send them to instead of bouncing back to the dashboard.
 
     **Fix:**
 
     <Steps>
       <Step title="Create the org creation page">
-        Add `apps/web/src/app/(auth)/create-org/page.tsx` with a `<CreateOrganization />` component from `@clerk/nextjs`.
+        Add `apps/web/src/app/(auth)/create-org/page.tsx` that calls Better Auth's
+        `authClient.organization.create(...)` and redirects to `/dashboard` on success.
       </Step>
-      <Step title="Or disable teams if not needed">
-        ```bash .env.local
-        FEATURE_TEAMS=false
-        ```
-      </Step>
-      <Step title="Verify Clerk afterCreateOrganizationUrl">
-        In your Clerk dashboard, confirm that **afterCreateOrganizationUrl** is set to a valid route (e.g., `/dashboard`).
+      <Step title="Verify the redirect target">
+        Confirm the page redirects to a valid route (e.g., `/dashboard`) after organization
+        creation, not back into the loop.
       </Step>
     </Steps>
   </Accordion>

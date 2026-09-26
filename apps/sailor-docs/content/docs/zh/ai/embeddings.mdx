@@ -26,14 +26,6 @@ Nebutra 使用 **pgvector** 扩展将嵌入向量存储在 PostgreSQL 中，使�
     ```
   </Step>
 
-  <Step title="启用功能标志">
-    ```typescript
-    import { setFeatureFlag } from "@nebutra/preset";
-
-    await setFeatureFlag("org_123", "ai.embeddings", true);
-    ```
-  </Step>
-
   <Step title="运行 pgvector 迁移">
     Nebutra 数据库 Schema 已包含带有 `vector` 列的 `embeddings` 表。如果是全新部署，请确保启用 pgvector：
 
@@ -255,7 +247,7 @@ CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops) WITH (lis
 ```
 
 <Note>
-  **Nebutra 托管层（Neon / Supabase）推荐索引配置：**
+  **托管 Postgres（Neon 或任何支持 pgvector 的托管 Postgres）推荐索引配置：**
 
   ```sql
   -- HNSW（推荐用于 ≤500 万行——最佳查询速度，约 2% 构建开销）
@@ -284,7 +276,7 @@ CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops) WITH (lis
 
 <CardGroup cols={2}>
   <Card title="AI 概述" icon="sparkles" href="/zh/ai/overview">
-    支持的模型、功能标志和 Token 配额。
+    支持的模型和 Token 配额。
   </Card>
   <Card title="聊天机器人" icon="message-bot" href="/zh/ai/chatbot">
     使用 RAG 为聊天机器人提供有依据的回答。

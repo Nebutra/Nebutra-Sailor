@@ -55,9 +55,9 @@ nebutra.com docs.     app. + auth.   api.nebutra.com
 | `@nebutra/ui` | Component library — Radix + Nebutra primitives |
 | `@nebutra/tokens` | Runtime CSS design tokens |
 | `@nebutra/auth` | Provider adapters + **JWT S2S** (`signServiceToken`) |
-| `@nebutra/permissions` | RBAC — CASL or OpenFGA |
+| `@nebutra/permissions` | RBAC/ABAC — CASL |
 | `@nebutra/db` | Prisma client + multi-tenant helpers |
-| `@nebutra/queue` | QStash or BullMQ |
+| `@nebutra/queue` | QStash |
 | `@nebutra/metering` | Usage metering → ClickHouse |
 | `@nebutra/webhooks` | Outbound webhooks (HMAC signing for delivery, not S2S) |
 | `@nebutra/tenant` | Tenant context + RLS helpers |
@@ -104,14 +104,14 @@ Gateway AI surfaces (authenticated, tenant-scoped), for example:
 
 Usage feeds the metering pipeline for quotas and billing.
 
-## Provider swap pattern
+## Auth configuration
 
 ```bash
-# Auth (production default)
+# Auth — Better Auth is the only provider
 AUTH_PROVIDER=better-auth
 NEXT_PUBLIC_AUTH_PROVIDER=better-auth
 
-# Alternatives: clerk | next-auth | supabase | dev
+# Unconfigured (no BETTER_AUTH_SECRET) degrades to a dev fallback — see `nebutra status`
 ```
 
 Align `AUTH_PROVIDER` and `NEXT_PUBLIC_AUTH_PROVIDER` across auth center, web, and landing.

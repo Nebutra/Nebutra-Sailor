@@ -1,6 +1,14 @@
 # @nebutra/supabase
 
-Supabase client for Realtime, Storage, and Edge Functions (Auth handled by Clerk).
+Supabase client for Realtime, Storage, and Edge Functions.
+
+> **Not currently wired to any app or package in this monorepo** (`nebutra.productionReady: false`
+> in `package.json`; no in-repo callers as of this writing). Per ADR 2026-09-24 (Sailor
+> Convergence), the kept providers for the domains this package touches are Better Auth (auth),
+> R2 (object storage/uploads), and QStash (queue) — not Supabase. This package is a standalone
+> Supabase SDK wrapper (client/realtime/storage/server helpers over `@supabase/supabase-js`), not
+> a Supabase-flavored auth or storage adapter that the convergence deleted; it simply predates the
+> current stack and has no live consumer. Treat as unmaintained until a real caller lands.
 
 ## Installation
 

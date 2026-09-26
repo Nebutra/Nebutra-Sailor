@@ -213,10 +213,10 @@ logger.info("order.created", { orderId, tenantId });
 ```typescript
 import { logger } from "@nebutra/logger";
 
-const queueLogger = logger.child({ service: "queue", provider: "bullmq" });
+const queueLogger = logger.child({ service: "queue", provider: "qstash" });
 
 queueLogger.info("任务已入队", { jobId, queue: "email" });
-// → { "service": "queue", "provider": "bullmq", "msg": "任务已入队", "jobId": "...", "queue": "email", ... }
+// → { "service": "queue", "provider": "qstash", "msg": "任务已入队", "jobId": "...", "queue": "email", ... }
 ```
 
 ---

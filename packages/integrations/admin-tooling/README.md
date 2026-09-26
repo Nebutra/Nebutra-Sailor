@@ -140,7 +140,8 @@ Consumers MUST do all of these before exposing this surface to non-engineers:
 - [ ] **Authentication** — every request carries a bearer token from
       `@nebutra/auth`. No anonymous routes.
 - [ ] **Authorization** — every `resource` + `op` pair is gated through
-      `@nebutra/permissions` (CASL or OpenFGA). Default-deny.
+      `@nebutra/permissions` (CASL — the package's single kept provider per
+      ADR 2026-09-24 Sailor Convergence). Default-deny.
 - [ ] **Rate limiting** — apply per-tenant and per-actor limits at the edge
       (`packages/integrations/queue` / Upstash Ratelimit).
 - [ ] **IP allowlist** — restrict the admin routes to your low-code tool's

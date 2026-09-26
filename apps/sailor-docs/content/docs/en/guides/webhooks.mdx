@@ -7,7 +7,7 @@ description: Send and receive real-time events between Nebutra and your external
 
 Nebutra's webhook system (`@nebutra/webhooks`) allows you to:
 
-1. **Receive** events from Nebutra (inbound webhooks — e.g. Stripe, Clerk, GitHub)
+1. **Receive** events from Nebutra (inbound webhooks — e.g. Stripe, GitHub)
 2. **Send** events to your customers' systems (outbound webhooks — when things happen in your product)
 
 ## Outbound webhooks
@@ -99,35 +99,25 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-### Clerk webhooks
+### GitHub webhooks
 
-```typescript app/api/webhooks/clerk/route.ts
-import { Webhook } from "svix";
-import { headers } from "next/headers";
+```typescript app/api/webhooks/github/route.ts
+import { createHmac, timingSafeEqual } from "node:crypto";
 
 export async function POST(req: Request) {
   const body = await req.text();
-  const headerPayload = await headers();
-  const svixId = headerPayload.get("svix-id")!;
-  const svixTimestamp = headerPayload.get("svix-timestamp")!;
-  const svixSignature = headerPayload.get("svix-signature")!;
+  const signature = req.headers.get("x-hub-signature-256") ?? "";
 
-  const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET!);
+  const expected =
+    "sha256=" +
+    createHmac("sha256", process.env.GITHUB_WEBHOOK_SECRET!).update(body).digest("hex");
 
-  const event = wh.verify(body, {
-    "svix-id": svixId,
-    "svix-timestamp": svixTimestamp,
-    "svix-signature": svixSignature,
-  });
-
-  switch (event.type) {
-    case "organization.created":
-      await provisionTenant(event.data);
-      break;
-    case "organizationMembership.created":
-      await addMember(event.data);
-      break;
+  if (!timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
+    return new Response("Invalid signature", { status: 400 });
   }
+
+  const event = JSON.parse(body);
+  // handle event.action, event.repository, etc.
 
   return new Response("OK", { status: 200 });
 }

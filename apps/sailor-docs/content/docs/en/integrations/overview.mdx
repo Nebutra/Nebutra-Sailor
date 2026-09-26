@@ -7,7 +7,7 @@ description: Connect Nebutra with the tools your team already uses.
 
 <CardGroup cols={3}>
   <Card title="Vercel" icon="triangle" href="/integrations/vercel">
-    Deploy to Vercel with zero config. Auto-provisioned environment variables.
+    One of several deploy targets for frontend surfaces — not the default.
   </Card>
   <Card title="Stripe" icon="credit-card" href="/integrations/stripe">
     Billing, subscriptions, and payment webhooks pre-wired.
@@ -41,7 +41,7 @@ Some integrations are pre-wired and active by default. Others require API keys t
 
 | Integration | Status | Notes |
 |-------------|--------|-------|
-| Vercel | Built-in | Zero-config deployment |
+| Vercel | Optional deploy target | Not the default — the template produces portable Docker/`standalone` output; deploy it wherever you want, Vercel included |
 | Resend | Active when `RESEND_API_KEY` is set | Email templates ready |
 | Stripe | Active when `STRIPE_SECRET_KEY` is set | Webhooks pre-configured |
 | Sentry | Active when `SENTRY_DSN` is set | Tenant context auto-tagged |

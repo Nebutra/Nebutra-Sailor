@@ -19,8 +19,9 @@ entitlement logic.
 - Provider selection and singleton lifecycle: `src/factory.ts`
 - Hono authorization middleware contract: `src/middleware.ts`
 - React permission context and helpers: `src/react.tsx`
-- Provider implementations:
-  `src/providers/casl.ts`, `src/providers/openfga.ts`
+- Provider implementation: `src/providers/casl.ts` — CASL is the single kept
+  permissions provider per ADR 2026-09-24 (Sailor Convergence); the OpenFGA
+  adapter has been deleted, not demoted
 
 ## Contract Boundaries
 
@@ -28,16 +29,16 @@ entitlement logic.
   `Resource`, `Role`, `PermissionContext`, `PermissionRule`, and
   `PermissionProvider` define the shared API.
 - Keep provider selection in `src/factory.ts`. Do not scatter
-  `PERMISSIONS_PROVIDER` or `OPENFGA_API_URL` detection into consumers.
+  `PERMISSIONS_PROVIDER` detection into consumers.
 - Preserve the runtime split:
   `src/middleware.ts` is the Hono server boundary,
   `src/react.tsx` is the React consumer boundary,
-  providers stay behind the shared `PermissionProvider` interface.
+  the provider stays behind the shared `PermissionProvider` interface.
 - Treat `src/roles.ts` as the default role catalog. App-specific roles can be
   injected, but the shared hierarchy logic should not be redefined elsewhere.
-- Respect the package's current foundation status. `src/providers/openfga.ts`
-  is not feature-complete; do not write contracts or app integrations that
-  assume full Zanzibar semantics already exist.
+- Do not reintroduce an OpenFGA (or other Zanzibar-style) provider here — that
+  adapter was deleted per ADR 2026-09-24. CASL (in-process) is the package's
+  only supported policy engine.
 - Keep authorization policy separate from billing, feature gating, or tenant
   resolution. This package answers permission questions; it should not become a
   generic product-policy registry.
@@ -56,7 +57,6 @@ entitlement logic.
   `pnpm --filter @nebutra/permissions typecheck`
 - Run the package-local suite before changing provider or middleware
   semantics: `pnpm --filter @nebutra/permissions test` (`vitest run`). It
-  covers the CASL provider, the OpenFGA provider, the platform role
-  definitions, and the roles module. Also verify the narrowest affected
-  downstream consumer.
+  covers the CASL provider, the platform role definitions, and the roles
+  module. Also verify the narrowest affected downstream consumer.
 

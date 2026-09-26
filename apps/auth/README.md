@@ -18,8 +18,6 @@ Worker serves `/api/auth/*` at the edge and proxies UI routes to the dedicated
 `nebutra-auth` Fly Machine. The UI origin must not share the gateway's
 `origin.nebutra.com` hostname.
 
-Clerk is the only exception: when `NEXT_PUBLIC_AUTH_PROVIDER=clerk`, web keeps a local UI.
-
 ## OAuth redirect URIs (operator)
 
 Better Auth callback base is the **auth-center** origin. Register in each IdP:
