@@ -51,9 +51,26 @@ export interface CreditAllowance {
   refreshTime: string;
 }
 
+/**
+ * Where a grant came from, which decides when it expires (ADR 2026-09-27):
+ * a membership's periodic credits die at the period's end, a purchased pack
+ * lasts two years, a promotion whatever it was granted with.
+ */
+export type CreditLotSource = "SUBSCRIPTION" | "PURCHASE" | "PROMO";
+
+export interface CreditLotInput {
+  source: CreditLotSource;
+  expiresAt: Date;
+}
+
 export interface AddCreditsInput {
   organizationId: string;
   product: WalletProduct;
+  /**
+   * An expiring grant. Omit for credits that never expire (a money balance,
+   * a legacy grant): whatever the lots do not cover is spent last.
+   */
+  lot?: CreditLotInput;
   amount: number;
   type: CreditTransactionType;
   description?: string;
@@ -205,50 +222,7 @@ export async function addCredits(input: AddCreditsInput): Promise<CreditTransact
   }
 
   const db = requireTenantDb(input.organizationId);
-  const transactionData = await db.$transaction(async (tx: CreditLedgerClient) => {
-    const balance = await tx.creditBalance.upsert({
-      where: balanceKey(input.organizationId, input.product),
-      create: {
-        tenantId: input.organizationId,
-        product: input.product,
-        balance: 0,
-        currency: "USD",
-      },
-      update: {},
-    });
-
-    if (input.relatedId) {
-      const existing = await tx.creditTransaction.findFirst({
-        where: {
-          creditBalanceId: balance.id,
-          relatedId: input.relatedId,
-          type: input.type,
-        },
-      });
-
-      if (existing) {
-        return existing;
-      }
-    }
-
-    const updatedBalance = await tx.creditBalance.update({
-      where: balanceKey(input.organizationId, input.product),
-      data: { balance: { increment: input.amount } },
-    });
-
-    return tx.creditTransaction.create({
-      data: {
-        creditBalanceId: updatedBalance.id,
-        type: input.type,
-        amount: input.amount,
-        balanceAfter: updatedBalance.balance,
-        description: input.description,
-        expiresAt: input.expiresAt,
-        relatedId: input.relatedId,
-        metadata: toJsonInput(input.metadata),
-      },
-    });
-  });
+  const transactionData = await db.$transaction((tx: CreditLedgerClient) => grantInTx(tx, input));
 
   invalidateCreditCache(input.organizationId, input.product);
 
@@ -265,6 +239,97 @@ export async function addCredits(input: AddCreditsInput): Promise<CreditTransact
     metadata: (transactionData.metadata as Record<string, unknown>) || undefined,
     createdAt: transactionData.createdAt,
   };
+}
+
+/**
+ * The body of {@link addCredits}, for a caller that must grant inside its own
+ * transaction (a membership extends its period and grants its credits as one
+ * change). Idempotent on `(type, relatedId)`. Does not touch the cache — the
+ * caller invalidates after commit.
+ */
+export async function grantInTx(tx: CreditLedgerClient, input: AddCreditsInput) {
+  if (input.amount <= 0) {
+    throw new BillingError("Credit amount must be positive", "INVALID_CREDIT_AMOUNT", 400);
+  }
+  const balance = await tx.creditBalance.upsert({
+    where: balanceKey(input.organizationId, input.product),
+    create: {
+      tenantId: input.organizationId,
+      product: input.product,
+      balance: 0,
+      currency: "USD",
+    },
+    update: {},
+  });
+
+  if (input.relatedId) {
+    const existing = await tx.creditTransaction.findFirst({
+      where: {
+        creditBalanceId: balance.id,
+        relatedId: input.relatedId,
+        type: input.type,
+      },
+    });
+
+    if (existing) {
+      return existing;
+    }
+  }
+
+  const updatedBalance = await tx.creditBalance.update({
+    where: balanceKey(input.organizationId, input.product),
+    data: { balance: { increment: input.amount } },
+  });
+
+  if (input.lot) {
+    await tx.creditLot.create({
+      data: {
+        creditBalanceId: updatedBalance.id,
+        source: input.lot.source,
+        amount: input.amount,
+        remaining: input.amount,
+        expiresAt: input.lot.expiresAt,
+        relatedId: input.relatedId,
+      },
+    });
+  }
+
+  return tx.creditTransaction.create({
+    data: {
+      creditBalanceId: updatedBalance.id,
+      type: input.type,
+      amount: input.amount,
+      balanceAfter: updatedBalance.balance,
+      description: input.description,
+      expiresAt: input.lot?.expiresAt ?? input.expiresAt,
+      relatedId: input.relatedId,
+      metadata: toJsonInput(input.metadata),
+    },
+  });
+}
+
+/**
+ * Take a spend out of the expiring lots, soonest expiry first — the rule at
+ * 剪映 and CapCut. Runs after the balance row was decremented in the same
+ * transaction, so that row's lock serializes concurrent spends and two of
+ * them cannot draw on one lot's remainder. Whatever the lots do not cover
+ * comes from the part of the balance that never expires.
+ */
+async function consumeLots(tx: CreditLedgerClient, creditBalanceId: string, amount: number) {
+  let left = amount;
+  const lots = await tx.creditLot.findMany({
+    where: { creditBalanceId, remaining: { gt: 0 }, expiresAt: { gt: new Date() } },
+    orderBy: [{ expiresAt: "asc" }, { createdAt: "asc" }],
+  });
+  for (const lot of lots) {
+    if (left <= 0) break;
+    const take = Math.min(Number(lot.remaining), left);
+    await tx.creditLot.update({
+      where: { id: lot.id },
+      data: { remaining: { decrement: take } },
+    });
+    left -= take;
+  }
 }
 
 /**
@@ -319,6 +384,8 @@ export async function deductCredits(input: DeductCreditsInput): Promise<CreditTr
     if (!freshBalance) {
       throw new BillingError("Credit balance not found", "CREDIT_BALANCE_NOT_FOUND", 404);
     }
+
+    await consumeLots(tx, freshBalance.id, input.amount);
 
     return tx.creditTransaction.create({
       data: {

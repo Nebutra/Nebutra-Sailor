@@ -61,6 +61,8 @@ BEGIN
     ('public', 'payment_methods', 'payment_methods_rls'),
     ('public', 'usage_ledger_entries', 'usage_ledger_entries_rls'),
     ('public', 'credit_balances', 'credit_balances_rls'),
+    ('public', 'credit_lots', 'credit_lots_rls'),
+    ('public', 'memberships', 'memberships_rls'),
     ('public', 'credit_transactions', 'credit_transactions_rls'),
     ('public', 'stripe_customers', 'stripe_customers_rls'),
     ('public', 'webhook_events', 'webhook_events_rls'),
@@ -335,6 +337,16 @@ CREATE POLICY "usage_ledger_entries_rls" ON "public"."usage_ledger_entries" FOR 
 ALTER TABLE "public"."credit_balances" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "credit_balances_rls" ON "public"."credit_balances";
 CREATE POLICY "credit_balances_rls" ON "public"."credit_balances" FOR ALL USING ("tenant_id" = public.current_tenant_id()) WITH CHECK ("tenant_id" = public.current_tenant_id());
+
+-- CreditLot
+ALTER TABLE "public"."credit_lots" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "credit_lots_rls" ON "public"."credit_lots";
+CREATE POLICY "credit_lots_rls" ON "public"."credit_lots" FOR ALL USING ("credit_balance_id" IN (SELECT "id" FROM "public"."credit_balances" WHERE "tenant_id" = public.current_tenant_id())) WITH CHECK ("credit_balance_id" IN (SELECT "id" FROM "public"."credit_balances" WHERE "tenant_id" = public.current_tenant_id()));
+
+-- Membership
+ALTER TABLE "public"."memberships" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "memberships_rls" ON "public"."memberships";
+CREATE POLICY "memberships_rls" ON "public"."memberships" FOR ALL USING ("tenant_id" = public.current_tenant_id()) WITH CHECK ("tenant_id" = public.current_tenant_id());
 
 -- CreditTransaction
 ALTER TABLE "public"."credit_transactions" ENABLE ROW LEVEL SECURITY;

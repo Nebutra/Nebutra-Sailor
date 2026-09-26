@@ -117,6 +117,9 @@ refund path of ADR 2026-09-25 carries it out. Customers have no self-serve refun
 - Creator revenue share (RunningHub and LiblibAI pay authors when others run their work, I2). It
   belongs to the UGC ecosystem, later.
 - Team plans (即梦 团队版 for 3 or more people, O).
+- Changing tier mid-period. For now a different tier replaces the current one from the moment it is
+  bought, with no credit for the time left; buying the same tier extends it. Proration arrives with
+  auto-renew, when the benchmarks' upgrade flows can be observed on a paying account.
 
 ## Consequences
 
@@ -136,10 +139,12 @@ refund path of ADR 2026-09-25 carries it out. Customers have no self-serve refun
 1. Balances per product, offers owned by a product, buyer-named top-up amounts, the `balance`
    fulfillment and Router's catalog (`ops/nebutra/offers.json`).
 2. The checkout page, then Router's top-up routed to it.
-3. Credit lots with expiry and memberships, then Kuanlan's and Para's offers.
+3. Credit lots with expiry and memberships, then Kuanlan's and Para's offers (`credit_lots`,
+   `memberships`, the `membership` fulfillment, an hourly upkeep job that grants membership months
+   and expires lots). Their pricing pages and balance chips follow.
 
-Until step 3 lands, purchased credits do not expire, which is more generous than the rule above,
-never less.
+Credits granted before step 3 have no lot and never expire, which is more generous than the rule
+above, never less.
 
 ## Sources
 
