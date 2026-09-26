@@ -50,15 +50,47 @@ async function readJson(res: Response): Promise<Record<string, unknown>> {
   }
 }
 
+/**
+ * One idempotent request, tried up to `attempts` times. From mainland China a
+ * direct connection to the auth edge occasionally stalls for seconds (the edge
+ * itself answers in well under a second), so a single timeout, dropped
+ * connection or 5xx is retried after a short backoff. A 4xx is the server's
+ * answer and is returned as-is. Only for requests that are safe to repeat.
+ */
+export async function fetchWithRetry(
+  fetchImpl: typeof fetch,
+  url: string,
+  init: Omit<RequestInit, "signal">,
+  options: { attempts?: number; timeoutMs?: number; sleep?: (ms: number) => Promise<void> } = {},
+): Promise<Response> {
+  const attempts = options.attempts ?? 3;
+  const sleep = options.sleep ?? defaultSleep;
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      const res = await fetchImpl(url, {
+        ...init,
+        signal: AbortSignal.timeout(options.timeoutMs ?? 10_000),
+      });
+      if (res.status < 500 || attempt === attempts) return res;
+      lastError = new Error(`HTTP ${res.status}`);
+    } catch (error) {
+      if (!isTransientPollFailure(error) || attempt === attempts) throw error;
+      lastError = error;
+    }
+    await sleep(1000 * attempt);
+  }
+  throw lastError;
+}
+
 export async function requestDeviceCode(
   baseUrl: string,
   fetchImpl: typeof fetch = fetch,
 ): Promise<DeviceCodeResponse> {
-  const res = await fetchImpl(`${baseUrl}/api/auth/device/code`, {
+  const res = await fetchWithRetry(fetchImpl, `${baseUrl}/api/auth/device/code`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ client_id: NEBUTRA_CLI_CLIENT_ID }),
-    signal: AbortSignal.timeout(10_000),
   });
   const body = await readJson(res);
   if (!res.ok) {
@@ -194,10 +226,9 @@ export async function fetchWhoami(
   accessToken: string,
   fetchImpl: typeof fetch = fetch,
 ): Promise<WhoamiResult | null> {
-  const res = await fetchImpl(`${baseUrl}/api/auth/get-session`, {
+  const res = await fetchWithRetry(fetchImpl, `${baseUrl}/api/auth/get-session`, {
     method: "GET",
     headers: { authorization: `Bearer ${accessToken}` },
-    signal: AbortSignal.timeout(10_000),
   });
   if (!res.ok) return null;
   const body = await readJson(res);
