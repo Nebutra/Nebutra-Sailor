@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO 架构",
-    "title": "10 个应用 · 113 个包 · 4 条后端线",
+    "title": "10 个应用 · 112 个包 · 4 条后端线",
     "description": "共享代码、并行构建、零冗余。从数据库到前端的完整端到端类型安全。",
     "metricApps": "应用",
     "metricBackends": "后端线",
@@ -1750,7 +1750,7 @@
           "label": "AI 提供商支持"
         },
         "projects": {
-          "value": "113",
+          "value": "112",
           "label": "monorepo 包"
         },
         "uptime": {

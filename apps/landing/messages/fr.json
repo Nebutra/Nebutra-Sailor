@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "STRUCTURE TURBOREPO",
-    "title": "10 apps. 113 packages. 4 lignes backend.",
+    "title": "10 apps. 112 packages. 4 lignes backend.",
     "description": "Code partagé, builds parallèles, zéro duplication. Typage end-to-end complet de la base de données au frontend.",
     "metricApps": "applications",
     "metricBackends": "lignes backend",
@@ -1750,7 +1750,7 @@
           "label": "Fournisseurs IA supportés"
         },
         "projects": {
-          "value": "113",
+          "value": "112",
           "label": "Packages monorepo"
         },
         "uptime": {

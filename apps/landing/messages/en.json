@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 113 packages. 4 backend lanes.",
+    "title": "10 apps. 112 packages. 4 backend lanes.",
     "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
     "metricApps": "apps",
     "metricBackends": "backend lanes",
@@ -1750,7 +1750,7 @@
           "label": "AI providers supported"
         },
         "projects": {
-          "value": "113",
+          "value": "112",
           "label": "monorepo packages"
         },
         "uptime": {

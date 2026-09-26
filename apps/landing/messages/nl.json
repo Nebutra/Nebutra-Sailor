@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUCTUUR",
-    "title": "10 apps. 113 pakketten. 4 backendlanes.",
+    "title": "10 apps. 112 pakketten. 4 backendlanes.",
     "description": "Gedeelde code, parallelle builds, geen duplicatie. Volledige end-to-end typing van database tot frontend.",
     "metricApps": "apps",
     "metricBackends": "backendlanes",

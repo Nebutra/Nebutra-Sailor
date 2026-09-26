@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUKTUR",
-    "title": "10 Apps. 113 Pakete. 4 Backend-Lanes.",
+    "title": "10 Apps. 112 Pakete. 4 Backend-Lanes.",
     "description": "Gemeinsamer Code, parallele Builds, keine Duplizierung. Vollständige End-to-End-Typisierung von der Datenbank bis zum Frontend.",
     "metricApps": "Apps",
     "metricBackends": "Backend-Lanes",
@@ -1750,7 +1750,7 @@
           "label": "unterstützte KI-Anbieter"
         },
         "projects": {
-          "value": "113",
+          "value": "112",
           "label": "Monorepo-Pakete"
         },
         "uptime": {
