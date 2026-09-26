@@ -35,11 +35,13 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  # Deploy workflows fan in here at once; db.mjs also locks, this just keeps
-  # the log readable.
-  group: database-${{ inputs.action }}
-  cancel-in-progress: false
+# No concurrency group, on purpose. One push fans in here from three deploy
+# workflows at once, and GitHub keeps only one *pending* run per group: the
+# newest pending caller cancelled the others while they queued, taking their
+# whole deploys down with them (2026-09-26, the first deploy after #640).
+# Parallel runs are safe without it — `prisma migrate deploy` and db.mjs each
+# hold a Postgres advisory lock, so the second waits and then finds nothing
+# pending.
 
 jobs:
   database:
