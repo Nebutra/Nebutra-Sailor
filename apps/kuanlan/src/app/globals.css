@@ -807,6 +807,46 @@ a.auth-link:hover {
   letter-spacing: -0.011em;
 }
 
+/* 观澜 Pro. The sku card's box, one size up: a plan is read, not scanned. */
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.plan-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--pill);
+}
+
+.plan-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: var(--font-weight-heading);
+  letter-spacing: -0.011em;
+}
+
+.plan-line {
+  margin: 0;
+  color: var(--mute);
+  font-size: 14px;
+}
+
+.plan-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .leave-row {
   display: flex;
   margin-top: 40px;

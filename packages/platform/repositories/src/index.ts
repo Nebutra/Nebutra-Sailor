@@ -78,6 +78,8 @@ export {
   PebbleFeedbackRepository,
   retentionExpiryFrom,
 } from "./pebble-support.repository";
+// User
+export { PersonalTenantRepository } from "./personal-tenant.repository";
 export type {
   ListRequestLogsInput,
   ListRequestLogsResult,
@@ -149,7 +151,6 @@ export type {
   UpdateUserData,
   UpsertByClerkIdData,
 } from "./user.repository";
-// User
 export { UserRepository } from "./user.repository";
 export type {
   JsonValue,

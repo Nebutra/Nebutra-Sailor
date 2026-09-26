@@ -55,6 +55,9 @@ const chip: (props?: {
   },
 );
 
+/** The chip's classes, for a link that must read as one (e.g. the credits chip). */
+export const chipClass = chip;
+
 export interface ChipProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color"> {
   tone?: ChipTone;
   size?: ChipSize;

@@ -88,6 +88,19 @@ describe("Nebutra offer catalog", () => {
     }
   });
 
+  it("bills each product to the account its benchmark does", () => {
+    // Kuanlan is a consumer app like 剪映: what a person buys is theirs. Para is
+    // a team workspace. A Router key belongs to whichever account is active.
+    const expected: Record<string, string> = {
+      kuanlan: "personal",
+      para: "organization",
+      router: "workspace",
+    };
+    for (const offer of offers) {
+      expect((offer as { account?: string }).account, offer.id).toBe(expected[offer.product]);
+    }
+  });
+
   it("reaches the gateway on every deploy", () => {
     const deploy = readFileSync(resolve(ROOT, ".github/workflows/deploy-fly-gateway.yml"), "utf-8");
     expect(deploy).toContain("ops/nebutra/offers.json");

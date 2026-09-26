@@ -1,6 +1,7 @@
 import { ErrorState } from "@nebutra/ui/layout";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getAuthenticatedApi } from "@/lib/api";
+import { requireAuthReturningTo } from "@/lib/auth";
 import {
   type CheckoutOffer,
   defaultMethod,
@@ -41,6 +42,14 @@ export default async function CheckoutPage({
   searchParams?: Promise<SearchParams>;
 }) {
   const params = (await searchParams) ?? {};
+  // Buyers arrive from other products; after signing in they come back here,
+  // to this offer, not to the dashboard.
+  const query = new URLSearchParams(
+    Object.entries(params).flatMap(([key, value]) =>
+      value === undefined ? [] : [[key, Array.isArray(value) ? (value[0] ?? "") : value]],
+    ),
+  );
+  await requireAuthReturningTo(`/checkout?${query.toString()}`);
   const t = await getTranslations("billing.checkout");
   const offerId = first(params.offer);
   const catalog = offerId ? await loadCatalog() : null;
