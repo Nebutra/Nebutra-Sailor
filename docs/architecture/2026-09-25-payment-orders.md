@@ -65,4 +65,4 @@ Amounts are integer minor units (cents, fen) everywhere past the catalog.
   convergence), so there is no hand-written policy. It ships with the first deploy after merge,
   because every deploy runs `db:deploy` first.
 - **Not yet done:** a purchase UI, and more `successUrl` origins for the mainland entry
-  (`cn.nebutra.com`). `assertProductReturnUrl` allows only the product origin today.
+  (the mainland entry host). `assertProductReturnUrl` allows only the product origin today.

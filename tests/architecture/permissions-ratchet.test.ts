@@ -148,12 +148,6 @@ const KNOWN_UNGUARDED: readonly KnownUnguarded[] = [
   { file: "ai/index.ts", method: "POST", path: "/chat", identity: "requireAuth" },
   { file: "ai/index.ts", method: "POST", path: "/embeddings", identity: "requireAuth" },
   {
-    file: "billing/credits.ts",
-    method: "POST",
-    path: "/checkout",
-    identity: "requireAuth+requireOrganization",
-  },
-  {
     file: "billing/usage.ts",
     method: "POST",
     path: "/usage",
@@ -311,6 +305,11 @@ const AUTHZ_MARKERS: readonly Marker[] = [
     id: "requireRole",
     test: (t) => /\brequireRole\s*\(/.test(t),
     why: "middlewares/tenantContext.ts — org role allow-list, 401/403",
+  },
+  {
+    id: "billing-manage",
+    test: (t) => /\brequireBillingManage\b/.test(t),
+    why: "middlewares/tenantContext.ts — owner/admin/billing_admin, 403",
   },
   {
     id: "role-check",
@@ -1072,10 +1071,15 @@ describe("permissions ratchet (gateway mutation routes)", () => {
       });
     });
 
-    it("sees a hand-rolled role check through a local function reference", () => {
+    it("sees the shared billing-manage guard on subscription checkout and on buying an offer", () => {
       expect(anchor("billing/index.ts", "POST", "/checkout")).toMatchObject({
         status: "guarded",
-        authz: ["role-check"],
+        authz: ["billing-manage"],
+      });
+      // Through a local function reference: guardPurchase → requireBillingManage.
+      expect(anchor("billing/orders.ts", "POST", "/orders")).toMatchObject({
+        status: "guarded",
+        authz: ["billing-manage"],
       });
     });
 

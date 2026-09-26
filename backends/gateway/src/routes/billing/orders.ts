@@ -21,17 +21,31 @@ import {
   type PaymentMethod,
 } from "@nebutra/billing";
 import { logger } from "@nebutra/logger";
-import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
+import type { Context, Next } from "hono";
+import {
+  requireAuth,
+  requireBillingManage,
+  requireOrganization,
+} from "../../middlewares/tenantContext.js";
 import { billingServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
 
 export const orderRoutes = new OpenAPIHono();
 
 orderRoutes.use("/offers", requireAuth, requireOrganization);
 orderRoutes.use("/offers/*", requireAuth, requireOrganization);
-orderRoutes.use("/orders", requireAuth, requireOrganization);
+orderRoutes.use("/orders", requireAuth, requireOrganization, guardPurchase);
 orderRoutes.use("/orders/*", requireAuth, requireOrganization);
 
 const METHODS = ["card", "alipay", "wechat"] as const satisfies readonly PaymentMethod[];
+
+/**
+ * Buying spends the organization's money: billing managers only. Reading an
+ * order (the QR page polls it) stays open to any member.
+ */
+async function guardPurchase(c: Context, next: Next) {
+  if (c.req.method === "POST") return requireBillingManage(c, next);
+  await next();
+}
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
 

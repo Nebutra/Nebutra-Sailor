@@ -240,7 +240,7 @@ describe("WeChat Pay APIv3 H5 order and refund", () => {
       description: "1000 Credits",
       totalFen: 6800,
       clientIp: "203.0.113.7",
-      redirectUrl: "https://cn.nebutra.com/checkout-return?x=1",
+      redirectUrl: "https://pay.example.com/checkout-return?x=1",
     });
 
     const [url, init] = fetchSpy.mock.calls[0] as unknown as [string, RequestInit];
@@ -252,7 +252,7 @@ describe("WeChat Pay APIv3 H5 order and refund", () => {
     });
     expect(result.h5Url).toBe(
       "https://wx.tenpay.com/cgi-bin/mmpayweb?prepay_id=x&redirect_url=" +
-        encodeURIComponent("https://cn.nebutra.com/checkout-return?x=1"),
+        encodeURIComponent("https://pay.example.com/checkout-return?x=1"),
     );
   });
 
