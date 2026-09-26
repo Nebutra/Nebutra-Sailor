@@ -42,10 +42,7 @@ export function DashboardHintCard({ cookieName }: Props) {
         />
 
         <div className="relative flex items-start gap-3">
-          <div
-            className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
-            style={{ background: "hsl(var(--primary))" }}
-          >
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] bg-primary text-primary-foreground">
             <Sparkles className="size-4" />
           </div>
 
@@ -55,7 +52,7 @@ export function DashboardHintCard({ cookieName }: Props) {
             </p>
             <p className="mt-1 text-xs leading-relaxed text-neutral-11">
               Press{" "}
-              <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] text-neutral-12 dark:bg-black/40">
+              <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] text-neutral-12">
                 ⌘K
               </kbd>{" "}
               to open the command palette. Pick a{" "}

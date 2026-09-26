@@ -156,7 +156,10 @@ function CapabilityNode({
       )}
     >
       <Icon
-        className={cn("size-4 shrink-0", active ? "text-white" : "text-muted-foreground")}
+        className={cn(
+          "size-4 shrink-0",
+          active ? "text-primary-foreground" : "text-muted-foreground",
+        )}
         aria-hidden="true"
       />
       <span className="truncate text-xs font-semibold">{label}</span>

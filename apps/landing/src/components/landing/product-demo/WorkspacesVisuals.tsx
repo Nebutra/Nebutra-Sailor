@@ -16,7 +16,7 @@ export function RoleSwitcher() {
     <div className="flex items-center gap-4 bg-background dark:bg-muted border border-border/50 rounded-[var(--radius-xl)] p-3 shadow-elevation-high">
       {/* Fake User Avatar */}
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-500 to-fuchsia-500 ring-2 ring-background overflow-hidden relative">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-chart-3 to-info ring-2 ring-background overflow-hidden relative">
           <svg
             viewBox="0 0 24 24"
             fill="white"
@@ -57,7 +57,7 @@ export function RoleSwitcher() {
             activeKey={role}
             className={
               role === "Viewer"
-                ? "rounded-full border border-black/5 bg-background shadow-sm"
+                ? "rounded-full border border-foreground/5 bg-background shadow-sm"
                 : "rounded-full bg-primary shadow-sm"
             }
           />
@@ -120,10 +120,10 @@ export function TenantDiagram() {
 
           {/* Line 2 */}
           <div className="flex items-center gap-2 -ml-4">
-            <div className="w-16 h-px bg-gradient-to-r from-border/50 to-emerald-500/50 relative overflow-hidden">
-              <div className="w-4 h-full bg-emerald-500 absolute top-0 left-0 blur-[2px] animate-wire-pulse motion-reduce:animate-none" />
+            <div className="w-16 h-px bg-gradient-to-r from-border/50 to-success/50 relative overflow-hidden">
+              <div className="w-4 h-full bg-success absolute top-0 left-0 blur-[2px] animate-wire-pulse motion-reduce:animate-none" />
             </div>
-            <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-emerald-500/20 bg-emerald-500/10 text-success-strong text-[10px] font-mono tracking-wide shadow-sm">
+            <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-success/20 bg-success/10 text-success-strong text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Globex
             </div>
           </div>

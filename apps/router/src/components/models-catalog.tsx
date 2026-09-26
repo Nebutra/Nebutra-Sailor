@@ -244,15 +244,15 @@ export function ModelsCatalog({
   return (
     <div className="router-market-shell py-6 md:py-8">
       {/* taxonomy mega-panel */}
-      <div className="rounded-2xl border border-[var(--neutral-6)]">
+      <div className="rounded-2xl border border-neutral-6">
         <div className="flex flex-wrap items-center gap-2 px-3 py-2.5 md:px-4">
           <span className="text-[12px] font-semibold">分类</span>
-          <span className="rounded-full bg-[var(--neutral-12)] px-2 py-0.5 text-[10px] font-medium text-[var(--neutral-1)]">
+          <span className="rounded-full bg-neutral-12 px-2 py-0.5 text-[10px] font-medium text-neutral-1">
             API
           </span>
           <Link
             href="/?product_type=tool"
-            className="rounded-full bg-[var(--neutral-3)] px-2 py-0.5 text-[10px] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)]"
+            className="rounded-full bg-neutral-3 px-2 py-0.5 text-[10px] text-neutral-11 hover:bg-neutral-4"
           >
             应用
           </Link>
@@ -267,11 +267,11 @@ export function ModelsCatalog({
               if (e.currentTarget.value !== applied.q) pushFilters({ q: e.currentTarget.value });
             }}
             placeholder="在结果中筛选…"
-            className="ml-auto h-8 w-full max-w-[220px] rounded-full border border-[var(--neutral-6)] px-3 text-[12px] outline-none md:w-auto"
+            className="ml-auto h-8 w-full max-w-[220px] rounded-full border border-neutral-6 px-3 text-[12px] outline-none md:w-auto"
           />
           <button
             type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-neutral-11 hover:bg-neutral-2"
             aria-expanded={taxonomyOpen}
             aria-label={taxonomyOpen ? "折叠分类" : "展开分类"}
             onClick={() => setTaxonomyOpen((v) => !v)}
@@ -285,7 +285,7 @@ export function ModelsCatalog({
         </div>
 
         {taxonomyOpen ? (
-          <div className="space-y-2.5 border-t border-[var(--neutral-6)] px-3 py-3 md:px-4">
+          <div className="space-y-2.5 border-t border-neutral-6 px-3 py-3 md:px-4">
             {taxonomy.map((row) => (
               <div key={row.c} className="flex flex-wrap items-start gap-x-3 gap-y-1">
                 <button
@@ -294,13 +294,13 @@ export function ModelsCatalog({
                   className={[
                     "inline-flex shrink-0 items-center gap-1 text-[12px] font-medium",
                     cat === row.c
-                      ? "text-[var(--neutral-12)] underline decoration-2 underline-offset-4"
-                      : "text-[var(--neutral-11)] hover:text-[var(--neutral-12)]",
+                      ? "text-neutral-12 underline decoration-2 underline-offset-4"
+                      : "text-neutral-11 hover:text-neutral-12",
                   ].join(" ")}
                 >
                   <MarketIcon name={API_CATEGORY_ICON[row.c]} className="h-3.5 w-3.5 opacity-70" />
                   {row.label}
-                  <span className="ml-1 font-normal text-[var(--neutral-9)]">{row.count}</span>
+                  <span className="ml-1 font-normal text-neutral-9">{row.count}</span>
                 </button>
                 {row.brands.map((b) => {
                   const active = cat === row.c && brand === b.provider;
@@ -312,8 +312,8 @@ export function ModelsCatalog({
                       className={[
                         "text-[12px]",
                         active
-                          ? "font-semibold text-[var(--neutral-12)]"
-                          : "text-[var(--neutral-10)] hover:text-[var(--neutral-12)]",
+                          ? "font-medium text-neutral-12"
+                          : "font-medium text-neutral-10 hover:text-neutral-12",
                       ].join(" ")}
                     >
                       {b.label}
@@ -328,10 +328,10 @@ export function ModelsCatalog({
 
       <div className="mt-4 mb-3 flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-[15px] font-semibold">{title}</h1>
-        <div className="flex items-center gap-3 text-[12px] text-[var(--neutral-11)]">
+        <div className="flex items-center gap-3 text-[12px] text-neutral-11">
           <button
             type="button"
-            className={sort.startsWith("price") ? "font-semibold text-[var(--neutral-12)]" : ""}
+            className={sort.startsWith("price") ? "font-semibold text-neutral-12" : ""}
             onClick={() => {
               pushFilters({
                 sort:
@@ -346,7 +346,7 @@ export function ModelsCatalog({
             价格 {sort === "price-asc" ? "↑" : sort === "price-desc" ? "↓" : "↕"}
           </button>
           <span className="tabular-nums">{filtered.length} 个</span>
-          <div className="flex rounded-lg border border-[var(--neutral-6)] p-0.5">
+          <div className="flex rounded-lg border border-neutral-6 p-0.5">
             <button
               type="button"
               aria-label="网格视图"
@@ -355,8 +355,8 @@ export function ModelsCatalog({
               className={[
                 "inline-flex h-7 w-7 items-center justify-center rounded-md",
                 view === "grid"
-                  ? "bg-[var(--neutral-3)] text-[var(--neutral-12)]"
-                  : "text-[var(--neutral-10)] hover:text-[var(--neutral-12)]",
+                  ? "bg-neutral-3 text-neutral-12"
+                  : "text-neutral-10 hover:text-neutral-12",
               ].join(" ")}
             >
               <MarketIcon name="grid" className="h-3.5 w-3.5" />
@@ -369,15 +369,15 @@ export function ModelsCatalog({
               className={[
                 "inline-flex h-7 w-7 items-center justify-center rounded-md",
                 view === "list"
-                  ? "bg-[var(--neutral-3)] text-[var(--neutral-12)]"
-                  : "text-[var(--neutral-10)] hover:text-[var(--neutral-12)]",
+                  ? "bg-neutral-3 text-neutral-12"
+                  : "text-neutral-10 hover:text-neutral-12",
               ].join(" ")}
             >
               <MarketIcon name="list" className="h-3.5 w-3.5" />
             </button>
           </div>
           {pathname.startsWith("/models") && (cat !== "all" || brand !== "all" || draft) ? (
-            <Link href="/models?cate=api" className="hover:text-[var(--neutral-12)]">
+            <Link href="/models?cate=api" className="hover:text-neutral-12">
               清除筛选
             </Link>
           ) : null}
@@ -399,9 +399,9 @@ export function ModelsCatalog({
       )}
 
       {filtered.length === 0 ? (
-        <p className="py-16 text-center text-[13px] text-[var(--neutral-10)]">没有匹配的模型</p>
+        <p className="py-16 text-center text-[13px] text-neutral-10">没有匹配的模型</p>
       ) : null}
-      <p className="mt-4 text-[11px] text-[var(--neutral-10)]">{sourceNote}</p>
+      <p className="mt-4 text-[11px] text-neutral-10">{sourceNote}</p>
     </div>
   );
 }

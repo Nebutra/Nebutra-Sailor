@@ -47,12 +47,14 @@ export function BrandLogo({
       <LogomarkSVG
         width={32}
         height={32}
+        // allow-palette: brand logomark VI asset — mono white on dark is fixed identity, not themed ink
         className="hidden h-full w-auto shrink-0 !text-white dark:block"
       />
       {variant === "horizontal" ? (
         <WordmarkEnSVG
           width={110}
-          className="h-[70%] w-auto shrink-0 self-center !text-[var(--neutral-12)] dark:!text-white"
+          // allow-palette: brand wordmark VI asset — mono white on dark is fixed identity, not themed ink
+          className="h-[70%] w-auto shrink-0 self-center !text-neutral-12 dark:!text-white"
         />
       ) : null}
     </span>

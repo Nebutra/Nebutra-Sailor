@@ -145,8 +145,7 @@ export function StartupChatPanel({
         {showHeader ? (
           <header className="flex items-center gap-3 px-5 py-4">
             <span
-              className="grid size-9 shrink-0 place-items-center rounded-2xl text-white"
-              style={{ background: "hsl(var(--primary))" }}
+              className="grid size-9 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground"
               aria-hidden="true"
             >
               <Sparkles className="size-4.5" />

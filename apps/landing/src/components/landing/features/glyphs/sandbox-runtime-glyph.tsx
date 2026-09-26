@@ -50,15 +50,15 @@ export const SandboxRuntimeGlyph = ({ locale }: SubpackageGlyphProps) => {
           <div className="flex flex-col gap-0.5 font-mono text-[9px] text-muted-foreground">
             <span>
               <span className="text-muted-foreground">·</span> network:{" "}
-              <span className="text-[color:var(--cyan-11)]">egress-only</span>
+              <span className="text-cyan-11">egress-only</span>
             </span>
             <span>
               <span className="text-muted-foreground">·</span> filesystem:{" "}
-              <span className="text-[color:var(--cyan-11)]">tmpfs</span>
+              <span className="text-cyan-11">tmpfs</span>
             </span>
             <span>
               <span className="text-muted-foreground">·</span> timeout:{" "}
-              <span className="text-[color:var(--cyan-11)]">30s</span>
+              <span className="text-cyan-11">30s</span>
             </span>
           </div>
         </div>
@@ -66,10 +66,7 @@ export const SandboxRuntimeGlyph = ({ locale }: SubpackageGlyphProps) => {
         {/* Right column: Run button + last exec cell */}
         <div className="flex w-[100px] shrink-0 flex-col gap-1.5">
           {/* Run button mockup */}
-          <div
-            className="flex items-center justify-center gap-1 rounded-[var(--radius-md)] px-2 py-1.5 text-[10px] font-semibold text-white"
-            style={{ background: "hsl(var(--primary))" }}
-          >
+          <div className="flex items-center justify-center gap-1 rounded-[var(--radius-md)] bg-primary px-2 py-1.5 text-[10px] font-semibold text-primary-foreground">
             <Play className="h-2.5 w-2.5" />
             <span>{runLabel}</span>
           </div>

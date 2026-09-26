@@ -115,8 +115,7 @@ export default function CofounderPage() {
           <div className="mt-6 flex items-center justify-center">
             <Link
               href={`/${locale}/cofounder/discover`}
-              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white"
-              style={{ background: "hsl(var(--primary))" }}
+              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground"
             >
               Enter Discover
               <ArrowRight className="size-4" aria-hidden="true" />

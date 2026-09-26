@@ -31,8 +31,7 @@ export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
             return (
               <div
                 key={provider.name}
-                className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium text-white"
-                style={{ background: "hsl(var(--primary))" }}
+                className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[11px] font-medium text-primary-foreground"
               >
                 <Check className="h-3 w-3" />
                 <span>{provider.name}</span>

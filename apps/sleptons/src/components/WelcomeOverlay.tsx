@@ -23,6 +23,7 @@ export function WelcomeOverlay({ memberNumber, onClose }: WelcomeOverlayProps) {
   if (!visible) return null;
 
   return (
+    // allow-palette: dialog backdrop dims arbitrary app content behind it, must stay dark in both themes
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="relative mx-4 w-full max-w-md rounded-2xl border border-border bg-background p-8 text-center shadow-2xl">
         <button
@@ -59,8 +60,7 @@ export function WelcomeOverlay({ memberNumber, onClose }: WelcomeOverlayProps) {
           type="button"
           onClick={handleClose}
           aria-label="Explore the community"
-          className="rounded-lg px-6 py-3 font-semibold text-white"
-          style={{ background: "hsl(var(--primary))" }}
+          className="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground"
         >
           Explore the Community →
         </button>

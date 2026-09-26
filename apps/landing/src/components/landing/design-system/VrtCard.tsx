@@ -16,14 +16,14 @@ export function VrtCard() {
             {t("card3Title")}
           </h3>
         </div>
-        <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/15 text-success-strong px-2 py-0.5 text-xs font-semibold border border-emerald-500/20 shadow-sm shrink-0">
+        <div className="flex items-center gap-1.5 rounded-full bg-success/15 text-success-strong px-2 py-0.5 text-xs font-semibold border border-success/20 shadow-sm shrink-0">
           <CheckCircle2 className="w-3.5 h-3.5" />
           <span>Passed</span>
         </div>
       </div>
 
       {/* VRT Slider Mockup */}
-      <div className="relative z-10 mt-auto flex h-[160px] w-full rounded-[var(--radius-xl)] border border-border/50 bg-black/5 overflow-hidden flex-col justify-center items-center group shadow-inner">
+      <div className="relative z-10 mt-auto flex h-[160px] w-full rounded-[var(--radius-xl)] border border-border/50 bg-foreground/5 overflow-hidden flex-col justify-center items-center group shadow-inner">
         <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-[var(--radius-lg)] mx-auto">
           {/* Left side (Base / Raw) */}
           <div className="absolute inset-y-0 left-0 w-1/2 flex items-center justify-center bg-background border-r border-border/50 overflow-hidden group-hover:w-[40%] transition-[width] duration-700 ease-in-out motion-reduce:transition-none z-10 flex-col gap-2">
@@ -32,16 +32,16 @@ export function VrtCard() {
             </span>
             <button
               type="button"
-              className="px-4 py-2 bg-muted/50 border-2 border-dashed border-red-500/30 text-muted-foreground rounded-[var(--radius-sm)] text-xs font-mono opacity-80 pointer-events-none scale-95 whitespace-nowrap"
+              className="px-4 py-2 bg-muted/50 border-2 border-dashed border-destructive/30 text-muted-foreground rounded-[var(--radius-sm)] text-xs font-mono opacity-80 pointer-events-none scale-95 whitespace-nowrap"
             >
               {"<Button />"}
             </button>
           </div>
 
           {/* Laser Line Scanner */}
-          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-emerald-500/50 shadow-[0_0_12px_1px_rgba(16,185,129,0.5)] z-30 group-hover:left-[40%] transition-[left] duration-700 ease-in-out motion-reduce:transition-none flex flex-col items-center justify-center">
+          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-success/50 shadow-[0_0_12px_1px_rgba(16,185,129,0.5)] z-30 group-hover:left-[40%] transition-[left] duration-700 ease-in-out motion-reduce:transition-none flex flex-col items-center justify-center">
             {/* Glow dot on laser */}
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_8px_rgba(16,185,129,0.4)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-success shadow-[0_0_8px_8px_rgba(16,185,129,0.4)]" />
           </div>
 
           {/* Right side (Head / Polished) */}
@@ -52,7 +52,7 @@ export function VrtCard() {
 
             {/* Diff Highlight Overlay */}
             <div className="relative">
-              <div className="absolute -inset-1.5 border border-emerald-500/40 bg-emerald-500/5 rounded-[var(--radius-xl)] border-dashed animate-pulse" />
+              <div className="absolute -inset-1.5 border border-success/40 bg-success/5 rounded-[var(--radius-xl)] border-dashed animate-pulse" />
               <button
                 type="button"
                 className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full text-sm font-bold border border-border pointer-events-none whitespace-nowrap relative z-10"

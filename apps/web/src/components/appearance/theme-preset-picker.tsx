@@ -21,6 +21,7 @@ function SwatchRow({ colors }: { colors: string[] }) {
       {colors.map((color, i) => (
         <span
           key={`${i}-${color}`}
+          // allow-palette: fixed hairline so the swatch chip reads against any arbitrary theme color
           className="size-5 rounded-[var(--radius-sm)] border border-white/10 shadow-sm"
           style={{ background: color }}
         />

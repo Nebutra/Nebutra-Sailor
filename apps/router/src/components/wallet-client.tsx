@@ -62,8 +62,8 @@ export function WalletClient() {
 
   return (
     <div className="grid gap-3 lg:grid-cols-[minmax(0,16rem)_1fr]">
-      <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3">
-        <p className="text-[11px] text-[var(--neutral-10)]">当前余额</p>
+      <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
+        <p className="text-[11px] text-neutral-10">当前余额</p>
         <AsyncSection
           resource={resource}
           onRetry={reload}
@@ -72,13 +72,11 @@ export function WalletClient() {
           {(data) => (
             <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight">
               {formatAmount(data.balance)}
-              <span className="ml-1.5 text-sm font-medium text-[var(--neutral-10)]">
-                {data.currency}
-              </span>
+              <span className="ml-1.5 text-sm font-medium text-neutral-10">{data.currency}</span>
             </p>
           )}
         </AsyncSection>
-        <p className="mt-2 text-[11px] leading-snug text-[var(--neutral-10)]">
+        <p className="mt-2 text-[11px] leading-snug text-neutral-10">
           按量扣费，单次请求精确到 6 位小数。花在哪里见{" "}
           <Link href="/usage" className="underline underline-offset-2">
             用量
@@ -92,7 +90,7 @@ export function WalletClient() {
         ) : null}
       </div>
 
-      <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3">
+      <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
         <p className="mb-2 text-[12px] font-semibold">充值</p>
         <div className="mb-2 flex flex-wrap gap-1.5">
           {PRESETS.map((preset) => {
@@ -109,8 +107,8 @@ export function WalletClient() {
                 className={[
                   "h-7 rounded-full border px-2.5 text-[11px] tabular-nums transition-colors",
                   active
-                    ? "border-[var(--neutral-8)] bg-[var(--neutral-3)] font-medium"
-                    : "border-[var(--neutral-6)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]",
+                    ? "border-neutral-8 bg-neutral-3 font-medium"
+                    : "font-medium border-neutral-6 text-neutral-11 hover:bg-neutral-2",
                 ].join(" ")}
               >
                 +{preset}

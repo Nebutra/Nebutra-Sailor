@@ -13,9 +13,9 @@ const SQL_LINES: ReadonlyArray<{
 
 const TONE_CLASS: Record<"keyword" | "value" | "comment" | "result" | "plain", string> = {
   keyword: "text-primary",
-  value: "text-[var(--cyan-11)]",
+  value: "text-cyan-11",
   comment: "text-muted-foreground",
-  result: "text-green-900",
+  result: "text-success-strong",
   plain: "text-foreground",
 };
 

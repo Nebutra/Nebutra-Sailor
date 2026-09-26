@@ -23,19 +23,52 @@ export type StaticChangelogRelease = {
   /** ISO date, `YYYY-MM` or `YYYY-MM-DD`. */
   readonly date: string;
   readonly tag: string;
-  /** Design token expression — never a raw hex value. */
-  readonly tagColor: string;
   readonly title: string;
   readonly summary: string;
   readonly highlights: readonly string[];
 };
+
+/**
+ * One tag chip per tone — a tint and the ink that reads on it.
+ *
+ * The index, the detail page and the timeline each kept their own map from tag
+ * to a raw colour (--brand-accent, --status-warning) and painted it as the
+ * chip's text over a 14% tint of itself. Those are bright fills: cyan-9 as ink
+ * on white is 1.46:1. A chip names its tone; the pair comes from here.
+ */
+const TAG_TONE_CLASS = {
+  feature: "bg-cyan-3 text-cyan-11",
+  improvement: "bg-warning/15 text-warning-strong",
+  fix: "bg-success/15 text-success-strong",
+  breaking: "bg-destructive/12 text-destructive-strong",
+  infrastructure: "bg-neutral-3 text-neutral-11",
+  major: "bg-primary text-primary-foreground",
+} as const;
+
+const TAG_TONE: Record<string, keyof typeof TAG_TONE_CLASS> = {
+  feat: "feature",
+  feature: "feature",
+  refactor: "feature",
+  security: "feature",
+  improvement: "improvement",
+  platform: "improvement",
+  fix: "fix",
+  foundation: "fix",
+  breaking: "breaking",
+  infrastructure: "infrastructure",
+  major: "major",
+};
+
+/** Classes for a changelog tag chip — any casing, unknown tags read as features. */
+export function changelogTagClassName(tag: string | undefined): string {
+  return TAG_TONE_CLASS[TAG_TONE[(tag ?? "").toLowerCase()] ?? "feature"];
+}
 
 const RELEASES: readonly StaticChangelogRelease[] = [
   {
     version: "1.7",
     date: "2026-05-12",
     tag: "Refactor",
-    tagColor: "var(--brand-accent)",
     title: "TS-by-Default Backends & Dark Border Tokens",
     summary:
       "The Python fleet collapses to _shared + ai under ADR 2026-05-10, a pure-neutral dark border token system lands under ADR 2026-05-11, and the marketing copy passes an honesty audit.",
@@ -49,7 +82,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "1.5",
     date: "2026-04",
     tag: "Feat",
-    tagColor: "var(--brand-accent)",
     title: "Categorized Monorepo & Multi-Provider Auth/Billing",
     summary:
       "Packages regroup by domain, and both auth and billing move behind provider abstractions so a deployment can pick its own stack.",
@@ -63,7 +95,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.10.0",
     date: "2026-03-13",
     tag: "Security",
-    tagColor: "var(--brand-accent)",
     title: "ExternalSecrets & RBAC Hardening",
     summary:
       "Production security audit — ExternalSecrets Operator with ClusterSecretStore for AWS Secrets Manager, comprehensive RBAC with least-privilege ServiceAccounts and RoleBindings, Prisma migration automation with K8s init container.",
@@ -78,7 +109,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.9.1",
     date: "2026-03-13",
     tag: "Platform",
-    tagColor: "var(--status-warning)",
     title: "Analytics Dashboard & Blog Launch",
     summary:
       "Customer insights at your fingertips — analytics dashboard with interactive charts, Sanity-powered blog engine with ISR, and React feature flags with SSR hydration.",
@@ -92,7 +122,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.9.0",
     date: "2026-03-13",
     tag: "Major",
-    tagColor: "hsl(var(--primary))",
     title: "GitOps & SLO Observability",
     summary:
       "Enterprise-grade deployment automation and reliability — ArgoCD GitOps reconciliation, PgBouncer connection pooling, Google SRE burn-rate alerts, and Grafana platform dashboard.",
@@ -107,7 +136,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.8.0",
     date: "2026-03-03",
     tag: "Feature",
-    tagColor: "var(--brand-accent)",
     title: "Usage Metering & Error Tracking",
     summary:
       "Billing-ready infrastructure — fire-and-forget usage metering with Redis counters, Sentry error tracking with tenant context, transactional email system via Resend.",
@@ -121,7 +149,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.7.0",
     date: "2026-02-20",
     tag: "Feature",
-    tagColor: "var(--brand-accent)",
     title: "Settings & Idempotency",
     summary:
       "Self-service control panel — settings pages for team management, API key rotation, billing, and security. Idempotency middleware prevents duplicate charges.",
@@ -135,7 +162,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "1.0",
     date: "2026-02",
     tag: "Feat",
-    tagColor: "var(--brand-accent)",
     title: "Hono Gateway & Multi-Tenant Primitives",
     summary:
       "The Hono API gateway lands with OpenAPI, oRPC and tRPC, on the Prisma + Supabase foundation, alongside the multi-tenant primitives the rest of the platform builds on.",
@@ -149,7 +175,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.6.0",
     date: "2026-02-08",
     tag: "Infrastructure",
-    tagColor: "var(--brand-tertiary)",
     title: "Observability & Zero-Trust Security",
     summary:
       "Production-hardened infrastructure — Prometheus monitoring, ModSecurity WAF, and zero-trust network policies. Every request traced.",
@@ -163,7 +188,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.5.0",
     date: "2026-01-25",
     tag: "Platform",
-    tagColor: "var(--status-warning)",
     title: "Multi-Tenant Auth & RBAC",
     summary:
       "Multi-tenant ready — Clerk authentication with organization roles, fine-grained RBAC with 17 typed scopes, AI service proxy routes.",
@@ -177,7 +201,6 @@ const RELEASES: readonly StaticChangelogRelease[] = [
     version: "0.4.0",
     date: "2026-01-10",
     tag: "Foundation",
-    tagColor: "var(--status-success)",
     title: "Turborepo Monorepo & Hono API",
     summary:
       "Foundation release — Turborepo-powered monorepo with 33 packages, Hono API gateway with OpenAPI support, PostgreSQL with pgvector for embeddings.",

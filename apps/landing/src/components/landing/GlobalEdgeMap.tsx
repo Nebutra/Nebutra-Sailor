@@ -109,7 +109,7 @@ export function GlobalEdgeMap() {
           </div>
 
           {/* Bottom stats bar */}
-          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-background/90 dark:from-[#0a0a0a]/90 via-background/50 dark:via-[#0a0a0a]/50 to-transparent pt-12 pb-3 px-4 z-20-[2px]">
+          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent pt-12 pb-3 px-4 z-20-[2px]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span
@@ -133,8 +133,8 @@ export function GlobalEdgeMap() {
                   P99
                 </span>
               </div>
-              <div className="flex items-center gap-2 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_#34d399]" />
+              <div className="flex items-center gap-2 bg-success/10 px-2.5 py-1 rounded-full border border-success/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-success shadow-[0_0_6px_#34d399]" />
                 <span className="text-[10px] text-success-strong uppercase tracking-widest font-bold">
                   Live
                 </span>

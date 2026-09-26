@@ -24,7 +24,7 @@ type ReferPageProps = {
   searchParams: Promise<{ code?: string | string[] }>;
 };
 
-const proofIconClassName = "h-5 w-5 text-[color:var(--cyan-10)]";
+const proofIconClassName = "h-5 w-5 text-cyan-10";
 
 function firstParam(value: string | string[] | undefined): string | null {
   if (Array.isArray(value)) return value[0] ?? null;
@@ -134,7 +134,7 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
           <AnimateIn preset="emerge" inView>
             <div>
               <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold uppercase text-muted-foreground">
-                <Sparkles aria-hidden="true" className="h-3.5 w-3.5 text-[color:var(--cyan-10)]" />
+                <Sparkles aria-hidden="true" className="h-3.5 w-3.5 text-cyan-10" />
                 {t("eyebrow")}
               </p>
               <h1 className="max-w-3xl text-balance text-3xl font-semibold leading-[1.05] text-foreground sm:text-5xl md:text-6xl">
@@ -146,11 +146,11 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground">
-                  <CheckCircle aria-hidden="true" className="h-4 w-4 text-green-900" />
+                  <CheckCircle aria-hidden="true" className="h-4 w-4 text-success-strong" />
                   {t("signal.waitlist")}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground">
-                  <ArrowRight aria-hidden="true" className="h-4 w-4 text-amber-900" />
+                  <ArrowRight aria-hidden="true" className="h-4 w-4 text-warning-strong" />
                   {initialCode
                     ? t("signal.codeDetected", { code: initialCode })
                     : t("signal.direct")}

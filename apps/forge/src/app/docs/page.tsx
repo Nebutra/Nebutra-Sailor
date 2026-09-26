@@ -59,38 +59,33 @@ export default function ApiDocsPage() {
           description="页面与 API 共用同一 invoke 路径。生产环境请带认证 Key。"
         />
 
-        <Card className="divide-y divide-[var(--neutral-6)] overflow-hidden border-[var(--neutral-6)] p-0">
+        <Card className="divide-y divide-neutral-6 overflow-hidden border-neutral-6 p-0">
           {ENDPOINTS.map((ep) => (
             <div
               key={ep.method + ep.path}
               className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="flex min-w-0 flex-wrap items-center gap-3">
-                <code className="rounded-[var(--radius-sm)] bg-[var(--neutral-2)] px-2 py-0.5 font-mono text-[11px] font-semibold text-[var(--neutral-12)]">
+                <code className="rounded-[var(--radius-sm)] bg-neutral-2 px-2 py-0.5 font-mono text-[11px] font-semibold text-neutral-12">
                   {ep.method}
                 </code>
-                <code className="truncate font-mono text-sm text-[var(--neutral-11)]">
-                  {ep.path}
-                </code>
+                <code className="truncate font-mono text-sm text-neutral-11">{ep.path}</code>
               </div>
-              <p className="text-sm text-[var(--neutral-10)]">{ep.note}</p>
+              <p className="text-sm text-neutral-10">{ep.note}</p>
             </div>
           ))}
         </Card>
 
-        <Card className="border-[var(--neutral-6)] p-5">
+        <Card className="border-neutral-6 p-5">
           <p className="mb-3 text-sm font-semibold">示例</p>
-          <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-4 font-mono text-[12px] leading-relaxed">{`curl -X POST 'http://localhost:3105/api/v1/tools/invoke/text/word-count' \\
+          <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-4 font-mono text-[12px] leading-relaxed">{`curl -X POST 'http://localhost:3105/api/v1/tools/invoke/text/word-count' \\
   -H 'Content-Type: application/json' \\
   -d '{"input":{"text":"hello 你好"}}'`}</pre>
         </Card>
 
-        <p className="text-sm text-[var(--neutral-11)]">
+        <p className="text-sm text-neutral-11">
           人类工具站：{" "}
-          <Link
-            href="/"
-            className="font-medium text-[var(--neutral-12)] underline-offset-4 hover:underline"
-          >
+          <Link href="/" className="font-medium text-neutral-12 underline-offset-4 hover:underline">
             返回首页
           </Link>
         </p>

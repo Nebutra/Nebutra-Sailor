@@ -37,7 +37,7 @@ export function SettingsNav() {
                 className={`block rounded-[var(--radius-md)] px-3 py-2 text-sm transition-colors ${
                   isActive
                     ? "bg-neutral-2 font-medium text-neutral-12"
-                    : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12"
+                    : "font-medium text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12"
                 }`}
               >
                 {label}

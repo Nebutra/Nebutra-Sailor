@@ -29,22 +29,17 @@ export function AuditGlyph(_props: SubpackageGlyphProps) {
 
       {/* Entries */}
       <div className="flex flex-1 flex-col justify-between gap-1">
-        <EntryRow
-          time="2s"
-          initials="AK"
-          color="bg-blue-500/15 text-blue-600 dark:text-blue-400"
-          action="admin.invite_user"
-        />
+        <EntryRow time="2s" initials="AK" color="bg-info/15 text-info" action="admin.invite_user" />
         <EntryRow
           time="14m"
           initials="MR"
-          color="bg-amber-500/15 text-amber-600 dark:text-amber-400"
+          color="bg-warning/15 text-warning-strong"
           action="billing.cancel"
         />
         <EntryRow
           time="1h"
           initials="JT"
-          color="bg-emerald-500/15 text-success-strong"
+          color="bg-success/15 text-success-strong"
           action="auth.signin"
         />
       </div>

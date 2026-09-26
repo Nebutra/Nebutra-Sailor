@@ -87,6 +87,7 @@ export function BrandLogo({
     imgClassName,
   );
   const monoMarkClass = cn(
+    // allow-palette: brand logomark VI asset — mono white on dark is fixed identity, not themed ink
     "h-full w-auto shrink-0 !text-white",
     forceLight ? "hidden" : "hidden dark:block",
     imgClassName,
@@ -135,6 +136,7 @@ export function BrandLogo({
         width={24}
         height={24}
         className={cn(
+          // allow-palette: brand logomark VI asset — mono white on dark is fixed identity, not themed ink
           "h-[1.35em] w-auto shrink-0 !text-white",
           forceLight ? "hidden" : "hidden dark:block",
           imgClassName,
@@ -145,7 +147,8 @@ export function BrandLogo({
         width={100}
         height={18}
         className={cn(
-          "h-[0.95em] w-auto !text-[var(--neutral-12)]",
+          "h-[0.95em] w-auto !text-neutral-12",
+          // allow-palette: brand wordmark VI asset — mono white on dark is fixed identity, not themed ink
           !forceLight && "dark:!text-white",
           imgClassName,
         )}

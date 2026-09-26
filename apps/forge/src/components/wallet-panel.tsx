@@ -25,9 +25,7 @@ export function WalletPanel() {
   if (isLoaded && !isSignedIn) {
     return (
       <RunnerPanel className="space-y-4 !p-5">
-        <p className="text-sm text-[var(--neutral-11)]">
-          登录后绑定钱包（@nebutra/auth · Better Auth）。
-        </p>
+        <p className="text-sm text-neutral-11">登录后绑定钱包（@nebutra/auth · Better Auth）。</p>
         <Button asChild variant="ink">
           <a
             href={buildAuthCenterSignInUrl(
@@ -42,7 +40,7 @@ export function WalletPanel() {
   }
   return (
     <RunnerPanel className="space-y-4 !p-5">
-      <p className="text-sm text-[var(--neutral-10)]">
+      <p className="text-sm text-neutral-10">
         tenant: <span className="font-mono text-[12px]">{tenantId}</span>
         {user?.email ? ` · ${user.email}` : ""}
       </p>

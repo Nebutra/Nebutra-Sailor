@@ -37,9 +37,7 @@ export function VideoPipelineGlyph(_props: SubpackageGlyphProps) {
               <div
                 className={[
                   "flex min-w-0 flex-1 flex-col gap-1 rounded-[var(--radius-md)] border px-2 py-1.5",
-                  stage.active
-                    ? "border-[var(--blue-7)] bg-[var(--blue-2)]"
-                    : "border-neutral-6 bg-muted",
+                  stage.active ? "border-blue-7 bg-blue-2" : "border-neutral-6 bg-muted",
                 ].join(" ")}
               >
                 <div className="flex items-center gap-1">
@@ -52,7 +50,7 @@ export function VideoPipelineGlyph(_props: SubpackageGlyphProps) {
                   <span
                     className={[
                       "truncate text-[10px] font-medium",
-                      stage.active ? "text-[var(--blue-12)]" : "text-neutral-12",
+                      stage.active ? "text-blue-12" : "text-neutral-12",
                     ].join(" ")}
                   >
                     {stage.label}
@@ -60,7 +58,7 @@ export function VideoPipelineGlyph(_props: SubpackageGlyphProps) {
                   <StatusIcon
                     className={[
                       "ml-auto h-2.5 w-2.5 shrink-0",
-                      stage.active ? "text-primary" : "text-green-900",
+                      stage.active ? "text-primary" : "text-success-strong",
                     ].join(" ")}
                   />
                 </div>

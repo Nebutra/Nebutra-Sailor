@@ -43,7 +43,7 @@ export function MemberCard({ member }: MemberCardProps) {
               className="h-10 w-10 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--blue-3)] text-sm font-bold text-primary">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-3 text-sm font-bold text-primary">
               {initials}
             </div>
           )}

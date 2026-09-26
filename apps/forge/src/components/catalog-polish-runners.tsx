@@ -73,22 +73,20 @@ function BatchValidateResult({
           </>
         }
       />
-      <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+      <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2">
         <table className="w-full min-w-[28rem] text-left text-sm">
           <tbody>
             {output.results.map((row, i) => {
               const ok = row.valid === true;
               return (
-                <tr key={i} className={i % 2 === 1 ? "bg-[var(--neutral-3)]" : undefined}>
+                <tr key={i} className={i % 2 === 1 ? "bg-neutral-3" : undefined}>
                   <td className="px-3 py-2">
                     <ShellBadge tone={ok ? "success" : "danger"}>
                       {ok ? labelValid : labelInvalid}
                     </ShellBadge>
                   </td>
-                  <td className="px-3 py-2 font-mono text-[var(--neutral-12)]">
-                    {rowPrimary(row)}
-                  </td>
-                  <td className="px-3 py-2 font-mono text-xs text-[var(--neutral-11)]">
+                  <td className="px-3 py-2 font-mono text-neutral-12">{rowPrimary(row)}</td>
+                  <td className="px-3 py-2 font-mono text-xs text-neutral-11">
                     {rowMeta?.(row) ?? "—"}
                   </td>
                 </tr>
@@ -381,7 +379,7 @@ export function ReadingTimeRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -493,14 +491,14 @@ export function WorldClockRunner({ toolId }: { toolId: string }) {
         >
           {loading ? t("common.running") : t("common.run")}
         </Button>
-        <span className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</span>
+        <span className="text-xs text-neutral-10">{t("common.liveHint")}</span>
       </div>
       <RunnerError>{error}</RunnerError>
       {rows.length > 0 ? (
-        <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+        <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2">
           <table className="w-full min-w-[32rem] text-left text-sm">
             <thead>
-              <tr className="text-xs text-[var(--neutral-10)]">
+              <tr className="text-xs text-neutral-10">
                 <th className="px-3 py-2 font-medium">Timezone</th>
                 <th className="px-3 py-2 font-medium">Local time</th>
                 <th className="px-3 py-2 font-medium">Offset</th>
@@ -508,16 +506,16 @@ export function WorldClockRunner({ toolId }: { toolId: string }) {
             </thead>
             <tbody>
               {rows.map((row, i) => (
-                <tr key={i} className={i % 2 === 1 ? "bg-[var(--neutral-3)]" : undefined}>
-                  <td className="px-3 py-2 font-mono text-[var(--neutral-12)]">
+                <tr key={i} className={i % 2 === 1 ? "bg-neutral-3" : undefined}>
+                  <td className="px-3 py-2 font-mono text-neutral-12">
                     {String(row.timezone ?? row.tz ?? row.id ?? "—")}
                   </td>
-                  <td className="px-3 py-2 font-mono tabular-nums text-[var(--neutral-12)]">
+                  <td className="px-3 py-2 font-mono tabular-nums text-neutral-12">
                     {row.error
                       ? String(row.error)
                       : String(row.time ?? row.formatted ?? row.local ?? "—")}
                   </td>
-                  <td className="px-3 py-2 font-mono text-[var(--neutral-11)]">
+                  <td className="px-3 py-2 font-mono text-neutral-11">
                     {String(row.offset ?? row.utcOffset ?? "—")}
                   </td>
                 </tr>
@@ -580,7 +578,7 @@ export function PasswordEntropyRunner({ toolId }: { toolId: string }) {
         onChange={(e) => setPassword(e.target.value)}
         className="font-mono"
       />
-      <p className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</p>
+      <p className="text-xs text-neutral-10">{t("common.liveHint")}</p>
       <RunnerError>{error}</RunnerError>
       {out ? (
         <div className="space-y-3">
@@ -673,7 +671,7 @@ export function RandomStringRunner({ toolId }: { toolId: string }) {
       {text ? (
         <>
           <TextResultActions text={text} downloadName="random-strings.txt" />
-          <pre className="max-h-80 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-sm">
+          <pre className="max-h-80 overflow-auto rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-sm">
             {text}
           </pre>
         </>
@@ -747,7 +745,7 @@ export function LoremIpsumRunner({ toolId }: { toolId: string }) {
       {result ? (
         <>
           <TextResultActions text={result} downloadName="lorem.txt" />
-          <pre className="max-h-96 overflow-auto whitespace-pre-wrap rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 text-sm leading-relaxed">
+          <pre className="max-h-96 overflow-auto whitespace-pre-wrap rounded-[var(--radius-lg)] bg-neutral-2 p-3 text-sm leading-relaxed">
             {result}
           </pre>
         </>
@@ -815,14 +813,14 @@ export function MarkdownTocRunner({ toolId }: { toolId: string }) {
         onChange={(e) => setMaxLevel(e.target.value)}
         className="max-w-xs font-mono"
       />
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
       {toc ? (
         <>
           <TextResultActions text={toc} downloadName="toc.md" />
-          <pre className="max-h-80 overflow-auto whitespace-pre-wrap rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-sm">
+          <pre className="max-h-80 overflow-auto whitespace-pre-wrap rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-sm">
             {toc}
           </pre>
         </>

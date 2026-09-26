@@ -138,15 +138,15 @@ function WorkedMath({ result, operation }: { result: CodeResult; operation: Oper
           // fixed-length projection of one code, never reordered.
           <span
             key={`${i}-${cell.digit}`}
-            className="flex w-8 shrink-0 flex-col items-center gap-0.5 rounded-[var(--radius-md)] bg-[var(--neutral-3)] py-1"
+            className="flex w-8 shrink-0 flex-col items-center gap-0.5 rounded-[var(--radius-md)] bg-neutral-3 py-1"
           >
-            <span className="text-[var(--neutral-12)]">{cell.digit}</span>
-            <span className="text-[var(--neutral-10)]">×{cell.weight}</span>
-            <span className="text-[var(--neutral-11)]">{cell.product}</span>
+            <span className="text-neutral-12">{cell.digit}</span>
+            <span className="text-neutral-10">×{cell.weight}</span>
+            <span className="text-neutral-11">{cell.product}</span>
           </span>
         ))}
       </div>
-      <p className="font-mono text-xs text-[var(--neutral-11)]">
+      <p className="font-mono text-xs text-neutral-11">
         {t("eanUpcGtin.mathSum", { sum, check: result.checkDigit })}
       </p>
     </div>
@@ -198,15 +198,12 @@ export function W3EanUpcGtinRunner({ toolId }: { toolId: string }) {
 
         <ol className="space-y-2">
           {shown.map((r) => (
-            <li
-              key={r.index}
-              className="space-y-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3"
-            >
+            <li key={r.index} className="space-y-2 rounded-[var(--radius-lg)] bg-neutral-2 p-3">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-mono text-xs text-[var(--neutral-10)]">{r.index + 1}</span>
+                <span className="font-mono text-xs text-neutral-10">{r.index + 1}</span>
                 {/* Calculate answers with the completed code; every other verdict
                     must show what the user actually gave, never a silent fix. */}
-                <span className="font-mono text-sm text-[var(--neutral-12)]">
+                <span className="font-mono text-sm text-neutral-12">
                   {r.verdict === "calculated"
                     ? (r.correctedCode ?? r.input)
                     : (r.normalized ?? r.input)}
@@ -275,12 +272,12 @@ export function W3EanUpcGtinRunner({ toolId }: { toolId: string }) {
               </dl>
 
               {r.reason ? (
-                <p className="text-xs text-[var(--neutral-11)]">
+                <p className="text-xs text-neutral-11">
                   {t(`eanUpcGtin.reason.${r.reason}` as never)}
                 </p>
               ) : null}
               {r.warnings?.map((w) => (
-                <p key={w} className="text-xs text-[var(--neutral-10)]">
+                <p key={w} className="text-xs text-neutral-10">
                   {t(`eanUpcGtin.warning.${w}` as never)}
                 </p>
               ))}
@@ -369,8 +366,8 @@ export function W3EanUpcGtinRunner({ toolId }: { toolId: string }) {
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline gap-1.5">
-      <dt className="text-[var(--neutral-10)]">{label}</dt>
-      <dd className="font-mono text-[var(--neutral-12)]">{value}</dd>
+      <dt className="text-neutral-10">{label}</dt>
+      <dd className="font-mono text-neutral-12">{value}</dd>
     </div>
   );
 }

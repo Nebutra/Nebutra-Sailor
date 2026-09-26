@@ -155,7 +155,7 @@ export function KeysClient() {
 
       {notice ? <NoticeLine notice={notice} /> : null}
 
-      <div className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-6)]">
+      <div className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-6">
         <AsyncSection
           resource={resource}
           onRetry={reload}
@@ -167,7 +167,7 @@ export function KeysClient() {
           {(data) => (
             <Table bare className="w-full min-w-[720px] text-[12px]">
               <TableHeader>
-                <TableRow className="bg-[var(--neutral-2)]/50 text-[11px] text-[var(--neutral-10)]">
+                <TableRow className="bg-neutral-2/50 text-[11px] text-neutral-10">
                   <TableHead alignment="start" className="font-medium">
                     名称
                   </TableHead>
@@ -223,7 +223,7 @@ export function KeysClient() {
         </AsyncSection>
       </div>
 
-      <p className="text-[11px] text-[var(--neutral-10)]">
+      <p className="text-[11px] text-neutral-10">
         停用可以随时恢复；吊销不可撤销。用量与花费见{" "}
         <Link href="/usage" className="underline underline-offset-2">
           用量
@@ -282,7 +282,7 @@ function RevealOnce({ fullKey, onDismiss }: { fullKey: string; onDismiss: () => 
   return (
     <div className="rounded-[var(--radius-md)] border border-warning/35 bg-warning/8 p-3">
       <p className="text-[12px] font-semibold">只显示这一次 · 关掉就再也读不到了</p>
-      <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2 font-mono text-[11px]">
+      <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 p-2 font-mono text-[11px]">
         {fullKey}
       </pre>
       <div className="mt-2 flex items-center gap-2">
@@ -358,7 +358,7 @@ function CreateKeyForm({
   };
 
   return (
-    <div className="grid gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3 sm:grid-cols-[minmax(0,1fr)_7rem_7rem_7rem_auto] sm:items-end">
+    <div className="grid gap-2 rounded-[var(--radius-md)] border border-neutral-6 p-3 sm:grid-cols-[minmax(0,1fr)_7rem_7rem_7rem_auto] sm:items-end">
       <Input
         label="名称"
         id="key-name"
@@ -430,14 +430,14 @@ function KeyRowView({
 }) {
   return (
     <>
-      <TableRow className="hover:bg-[var(--neutral-2)]/40">
+      <TableRow className="hover:bg-neutral-2/40">
         <TableCell alignment="start" className="font-medium">
           {row.name}
-          <span className="ml-2 font-normal text-[10px] text-[var(--neutral-9)]">
+          <span className="ml-2 font-normal text-[10px] text-neutral-9">
             {formatDate(row.createdAt)} 创建
           </span>
         </TableCell>
-        <TableCell alignment="start" className="font-mono text-[11px] text-[var(--neutral-11)]">
+        <TableCell alignment="start" className="font-mono text-[11px] text-neutral-11">
           {row.keyPrefix}…
         </TableCell>
         <TableCell alignment="start">
@@ -448,21 +448,19 @@ function KeyRowView({
         <TableCell alignment="end" className="tabular-nums text-[11px]">
           {formatAmount(row.cost.daily)}
           {row.limits.daily === null ? "" : ` / ${formatAmount(row.limits.daily)}`}
-          <span className="text-[var(--neutral-9)]"> · </span>
+          <span className="text-neutral-9"> · </span>
           {formatAmount(row.cost.total)}
           {row.limits.total === null ? "" : ` / ${formatAmount(row.limits.total)}`}
         </TableCell>
         <TableCell alignment="end" className="tabular-nums text-[11px]">
           {row.rateLimitRps} r/s
         </TableCell>
-        <TableCell alignment="start" className="text-[11px] text-[var(--neutral-10)]">
+        <TableCell alignment="start" className="text-[11px] text-neutral-10">
           {row.expiresAt ? formatDateTime(row.expiresAt) : "长期有效"}
         </TableCell>
         <TableCell alignment="end">
           <div className="flex items-center justify-end gap-1">
-            {busy ? (
-              <span className="mr-1 text-[11px] text-[var(--neutral-10)]">{busy}…</span>
-            ) : null}
+            {busy ? <span className="mr-1 text-[11px] text-neutral-10">{busy}…</span> : null}
             <Button
               type="button"
               variant="ghost"
@@ -500,7 +498,7 @@ function KeyRowView({
       </TableRow>
       {expanded ? (
         <TableRow>
-          <TableCell colSpan={7} alignment="start" className="bg-[var(--neutral-2)]/40 p-3">
+          <TableCell colSpan={7} alignment="start" className="bg-neutral-2/40 p-3">
             <KeyEditor row={row} onSave={onSave} onCancel={onToggleEdit} />
           </TableCell>
         </TableRow>
@@ -616,7 +614,7 @@ function KeyEditor({
         >
           保存日志：{saveLogs ? "开" : "关"}
         </Button>
-        <span className="text-[11px] text-[var(--neutral-10)]">
+        <span className="text-[11px] text-neutral-10">
           关掉后这把 Key 的请求明细不再记录，账单仍然照常记账。
         </span>
         <div className="ml-auto flex gap-2">

@@ -178,7 +178,7 @@ function renderTableCellMark(
         [
         <a
           href={href}
-          className="text-primary no-underline decoration-[var(--blue-7)] decoration-dotted hover:underline"
+          className="text-primary no-underline decoration-blue-7 decoration-dotted hover:underline"
         >
           {children}
         </a>
@@ -956,7 +956,7 @@ function createPortableTextComponents(
         return (
           <li
             id={referenceNumber ? `ref${referenceNumber}` : undefined}
-            className="scroll-mt-28 leading-8 target:rounded-[var(--radius-sm)] target:bg-[var(--blue-2)] target:px-2 target:py-1"
+            className="scroll-mt-28 leading-8 target:rounded-[var(--radius-sm)] target:bg-blue-2 target:px-2 target:py-1"
           >
             {children}
           </li>
@@ -995,7 +995,7 @@ function createPortableTextComponents(
             [
             <a
               href={href}
-              className="text-primary no-underline decoration-[var(--blue-7)] decoration-dotted hover:underline"
+              className="text-primary no-underline decoration-blue-7 decoration-dotted hover:underline"
             >
               {children}
             </a>

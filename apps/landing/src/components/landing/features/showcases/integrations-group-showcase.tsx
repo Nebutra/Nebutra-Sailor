@@ -171,12 +171,12 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
                   >
                     <Icon className="h-3.5 w-3.5" aria-hidden="true" />
                     <span
-                      className={`text-center text-[11px] font-medium ${accent ? "text-white" : ""}`}
+                      className={`text-center text-[11px] font-medium ${accent ? "text-primary-foreground" : ""}`}
                     >
                       {i === 1 ? `${entry.label} ${label}` : label}
                     </span>
                     <span
-                      className={`font-mono text-[10px] ${accent ? "text-white/80" : "text-muted-foreground"}`}
+                      className={`font-mono text-[10px] ${accent ? "text-primary-foreground/80" : "text-muted-foreground"}`}
                     >
                       {stageLatencies[i]}
                       {copy.msUnit}

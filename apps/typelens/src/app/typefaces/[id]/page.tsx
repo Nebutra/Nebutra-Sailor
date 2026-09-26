@@ -19,7 +19,7 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
       data-tl-section
       className="mx-auto w-full max-w-[900px] px-5 py-12 sm:px-6 md:px-8 md:py-16 will-change-transform"
     >
-      <p className="mb-2 text-sm text-neutral-500">
+      <p className="mb-2 text-sm text-muted-foreground">
         <Link href="/typefaces" className="hover:underline">
           Typefaces
         </Link>
@@ -30,7 +30,7 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
       >
         {tf.family}
       </h1>
-      <p className="mt-3 text-neutral-600">
+      <p className="mt-3 text-muted-foreground">
         {tf.foundry} · {tf.category}
       </p>
       <p className="mt-2 text-sm">
@@ -41,7 +41,7 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
         · commercial OK
       </p>
       <div
-        className="mt-8 border border-neutral-200 bg-neutral-50 p-8 text-3xl leading-snug"
+        className="mt-8 border border-border bg-muted p-8 text-3xl leading-snug"
         style={{ fontFamily: resolvedStack(tf.id, tf.cssStack) }}
       >
         The quick brown fox jumps over the lazy dog.
@@ -62,7 +62,7 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
               <Link href={`/works/${work.slug}`} className="text-lg font-medium hover:underline">
                 {work.title}
               </Link>
-              <span className="text-sm text-neutral-500"> · {roles}</span>
+              <span className="text-sm text-muted-foreground"> · {roles}</span>
             </li>
           );
         })}

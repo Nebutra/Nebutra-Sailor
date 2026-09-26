@@ -12,7 +12,7 @@ export function WorkspacesTerminal() {
         <TypingAnimation delay={100} className="text-muted-foreground/80">
           &gt; nebutra rbac --tenant org_kjl9a
         </TypingAnimation>
-        <AnimatedSpan delay={1200} className="text-cyan-600 dark:text-cyan-400">
+        <AnimatedSpan delay={1200} className="text-info">
           ⚡ Establishing multi-tenant DB proxy...
         </AnimatedSpan>
 

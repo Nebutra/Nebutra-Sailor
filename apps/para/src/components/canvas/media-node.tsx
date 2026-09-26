@@ -57,6 +57,7 @@ export function MediaNode({ node, selected }: { node: WorkspaceNode; selected: b
             />
           ) : null}
           {node.type === "video" && node.status === "completed" && (
+            // allow-palette: play-state scrim over arbitrary video thumbnail, must read on any footage
             <span className="absolute right-2 bottom-2 flex size-6 items-center justify-center rounded-full bg-black/50 text-white">
               <PlayFill className="size-3" />
             </span>

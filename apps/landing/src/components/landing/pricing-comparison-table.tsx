@@ -137,8 +137,7 @@ function CellValue({ value, t }: { value: ComparisonCell; t: DynamicTranslate })
         data-cell="check"
         role="img"
         aria-label={t("value.included")}
-        className="inline-flex h-6 w-6 items-center justify-center rounded-full font-semibold text-white"
-        style={{ background: "hsl(var(--primary))" }}
+        className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground"
       >
         ✓
       </span>

@@ -87,10 +87,13 @@ export function NewsRailCarousel({ slides, isZh }: { slides: NewsRailSlide[]; is
             </div>
           ))}
 
+          {/* allow-palette: scrim + ink over the carousel photo, not a themed surface */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 via-black/25 to-transparent p-4">
             {current.category && (
+              // allow-palette: ink over the carousel photo scrim above
               <p className="text-xs font-medium text-white/80">{current.category}</p>
             )}
+            {/* allow-palette: ink over the carousel photo scrim above */}
             <p className="mt-1 inline-flex items-start gap-1.5 text-sm font-semibold leading-snug text-white">
               <span className="line-clamp-2">{current.title}</span>
               <ArrowUpRight

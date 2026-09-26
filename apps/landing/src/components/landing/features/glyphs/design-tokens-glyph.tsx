@@ -40,7 +40,7 @@ export function DesignTokensGlyph(_props: SubpackageGlyphProps) {
         <Badge
           variant="secondary"
           size="sm"
-          className="bg-[var(--blue-3)] font-mono text-[9px] text-primary"
+          className="bg-blue-3 font-mono text-[9px] text-primary"
         >
           DTCG v0.7
         </Badge>

@@ -57,7 +57,7 @@ import { FilePaperSpecimen, filePaperStats } from "@/components/specimens";
 export type ShellTone = "neutral" | "info" | "success" | "warning" | "danger";
 
 const TONE_FG: Record<ShellTone, string> = {
-  neutral: "text-[var(--neutral-12)]",
+  neutral: "text-neutral-12",
   info: "text-info",
   success: "text-success-strong",
   warning: "text-warning-strong",
@@ -65,7 +65,7 @@ const TONE_FG: Record<ShellTone, string> = {
 };
 
 const TONE_BG: Record<ShellTone, string> = {
-  neutral: "bg-[var(--neutral-3)]",
+  neutral: "bg-neutral-3",
   info: "bg-info/12",
   success: "bg-success/12",
   warning: "bg-warning/14",
@@ -73,10 +73,10 @@ const TONE_BG: Record<ShellTone, string> = {
 };
 
 /** Tonal panel — the house separator. Never add a border to this. */
-const PANEL = "rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4";
+const PANEL = "rounded-[var(--radius-lg)] bg-neutral-2 p-4";
 const CODE =
-  "overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-sm leading-relaxed";
-const META = "text-xs text-[var(--neutral-10)]";
+  "overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-sm leading-relaxed";
+const META = "text-xs text-neutral-10";
 
 function cx(...parts: (string | false | null | undefined)[]): string {
   return parts.filter(Boolean).join(" ");
@@ -429,7 +429,7 @@ export function ShellVerdict({
   return (
     <div className={cx("rounded-[var(--radius-lg)] p-4", TONE_BG[tone])}>
       <p className={cx("text-lg font-semibold", TONE_FG[tone])}>{headline}</p>
-      {caveat ? <p className="mt-1 text-sm text-[var(--neutral-11)]">{caveat}</p> : null}
+      {caveat ? <p className="mt-1 text-sm text-neutral-11">{caveat}</p> : null}
       {badges ? <div className="mt-2 flex flex-wrap gap-1.5">{badges}</div> : null}
     </div>
   );
@@ -446,8 +446,8 @@ export function ShellDrill({
   defaultOpen?: boolean;
 }) {
   return (
-    <details className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)]" open={defaultOpen}>
-      <summary className="cursor-pointer select-none px-4 py-3 text-sm font-medium text-[var(--neutral-11)]">
+    <details className="rounded-[var(--radius-lg)] bg-neutral-2" open={defaultOpen}>
+      <summary className="cursor-pointer select-none px-4 py-3 text-sm font-medium text-neutral-11">
         {summary}
       </summary>
       <div className="px-4 pb-4">{children}</div>
@@ -458,8 +458,8 @@ export function ShellDrill({
 function ShellSkeleton() {
   return (
     <div className="space-y-2" aria-hidden="true">
-      <div className="h-4 w-2/5 animate-pulse rounded bg-[var(--neutral-4)]" />
-      <div className="h-4 w-3/5 animate-pulse rounded bg-[var(--neutral-4)]" />
+      <div className="h-4 w-2/5 animate-pulse rounded bg-neutral-4" />
+      <div className="h-4 w-3/5 animate-pulse rounded bg-neutral-4" />
     </div>
   );
 }
@@ -788,10 +788,7 @@ export function ConfigureGenerateShell<TOutput>({
           layout === "stack" ? "min-w-0 space-y-3" : "min-w-0 space-y-3 lg:sticky lg:top-4"
         }
       >
-        <ShellStateView
-          state={state}
-          idle={<p className="text-sm text-[var(--neutral-11)]">{emptyHint}</p>}
-        >
+        <ShellStateView state={state} idle={<p className="text-sm text-neutral-11">{emptyHint}</p>}>
           {(output) => (
             <div className="space-y-3">
               {renderResult(output)}
@@ -879,7 +876,7 @@ export function ShellArtifacts({ artifacts }: { artifacts: readonly ShellArtifac
         ))}
       </TabsList>
       {artifacts.map((a) => (
-        <TabsContent key={a.id} value={a.id} className="space-y-2 text-[var(--neutral-12)]">
+        <TabsContent key={a.id} value={a.id} className="space-y-2 text-neutral-12">
           {panel(a)}
         </TabsContent>
       ))}
@@ -925,7 +922,7 @@ export function DecisionShell({
   return (
     <div className="space-y-4">
       <div className="space-y-3">
-        <p id={`${uid}-prompt`} className="text-sm font-medium text-[var(--neutral-12)]">
+        <p id={`${uid}-prompt`} className="text-sm font-medium text-neutral-12">
           {prompt}
         </p>
         {/* DS RadioGroupCard (Base UI radio group). Replaces a hand-written
@@ -947,21 +944,17 @@ export function DecisionShell({
                 value={option.id}
                 className={cx(
                   "block border-0 items-stretch justify-start rounded-[var(--radius-lg)] p-4 text-left transition-colors",
-                  selected
-                    ? "bg-[var(--blue-3)] hover:bg-[var(--blue-3)]"
-                    : "bg-[var(--neutral-2)] hover:bg-[var(--neutral-3)]",
+                  selected ? "bg-blue-3 hover:bg-blue-3" : "bg-neutral-2 hover:bg-neutral-3",
                 )}
               >
                 <span className="flex items-start gap-2">
                   {selected ? <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> : null}
                   <span>
-                    <span className="block text-sm font-medium text-[var(--neutral-12)]">
+                    <span className="block text-sm font-medium text-neutral-12">
                       {option.label}
                     </span>
                     {option.detail ? (
-                      <span className="mt-1 block text-xs text-[var(--neutral-11)]">
-                        {option.detail}
-                      </span>
+                      <span className="mt-1 block text-xs text-neutral-11">{option.detail}</span>
                     ) : null}
                   </span>
                 </span>
@@ -1109,7 +1102,7 @@ export function DropVerdictShell<TOutput>({
     <div
       className={cx(
         "flex flex-col items-center gap-2 rounded-[var(--radius-lg)] p-6 text-center transition-colors",
-        dragging ? "bg-[var(--blue-3)]" : "bg-[var(--neutral-2)]",
+        dragging ? "bg-blue-3" : "bg-neutral-2",
       )}
       onDragOver={(e) => {
         e.preventDefault();
@@ -1122,7 +1115,7 @@ export function DropVerdictShell<TOutput>({
         void takeFile(e.dataTransfer.files?.[0] ?? null);
       }}
     >
-      <p className="text-sm text-[var(--neutral-11)]">{dropLabel}</p>
+      <p className="text-sm text-neutral-11">{dropLabel}</p>
       <input
         data-allow-native
         ref={fileInput}
@@ -1194,11 +1187,11 @@ export function DropVerdictShell<TOutput>({
             <TabsTrigger value="file">{t("shell.fileTab")}</TabsTrigger>
             <TabsTrigger value="paste">{paste.label ?? t("shell.pasteTab")}</TabsTrigger>
           </TabsList>
-          <TabsContent value="file" className="text-[var(--neutral-12)]">
+          <TabsContent value="file" className="text-neutral-12">
             {filePanel}
             {readError ? <ShellError message={readError} /> : null}
           </TabsContent>
-          <TabsContent value="paste" className="text-[var(--neutral-12)]">
+          <TabsContent value="paste" className="text-neutral-12">
             {pastePanel}
           </TabsContent>
         </Tabs>
@@ -1392,7 +1385,7 @@ export function TwoPaneCompareShell<TOutput>({
         }}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-xs font-medium text-[var(--neutral-11)]">{label}</span>
+          <span className="text-xs font-medium text-neutral-11">{label}</span>
           {status ? <ShellBadge tone={status.tone}>{status.label}</ShellBadge> : null}
         </div>
         <Textarea
@@ -1465,10 +1458,7 @@ export function TwoPaneCompareShell<TOutput>({
       {/* Alt+ArrowUp / Alt+ArrowDown walk the change list; the handler sits on the
           region so it fires from whichever control inside currently has focus. */}
       <section aria-label={t("shell.result")} onKeyDown={onResultKeyDown} className="space-y-3">
-        <ShellStateView
-          state={state}
-          idle={<p className="text-sm text-[var(--neutral-11)]">{emptyHint}</p>}
-        >
+        <ShellStateView state={state} idle={<p className="text-sm text-neutral-11">{emptyHint}</p>}>
           {(output) => {
             const head = summary?.(output);
             const list = changes?.(output) ?? [];
@@ -1515,17 +1505,15 @@ export function TwoPaneCompareShell<TOutput>({
                         <div className="flex flex-wrap items-center gap-2">
                           {i === cursor ? (
                             <ArrowRight
-                              className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]"
+                              className="h-3.5 w-3.5 shrink-0 text-neutral-11"
                               aria-hidden="true"
                             />
                           ) : null}
-                          <span className="font-mono text-xs text-[var(--neutral-12)]">
-                            {change.path}
-                          </span>
+                          <span className="font-mono text-xs text-neutral-12">{change.path}</span>
                           <ShellBadge tone={changeKindTone(change.kind)}>{change.kind}</ShellBadge>
                         </div>
                         {change.before !== undefined || change.after !== undefined ? (
-                          <div className="mt-1 grid gap-1 overflow-x-auto font-mono text-xs text-[var(--neutral-11)] sm:grid-cols-2">
+                          <div className="mt-1 grid gap-1 overflow-x-auto font-mono text-xs text-neutral-11 sm:grid-cols-2">
                             <span>{change.before ?? "—"}</span>
                             <span>{change.after ?? "—"}</span>
                           </div>

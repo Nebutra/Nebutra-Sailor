@@ -129,7 +129,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       {bingVerificationContent ? (
         <meta name="msvalidate.01" content={bingVerificationContent} />
       ) : null}
-      <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
+      <body className="flex min-h-screen flex-col bg-neutral-1 font-sans text-neutral-12 antialiased">
         <CjkFontFace />
 
         <NextIntlClientProvider locale={locale} messages={messages}>

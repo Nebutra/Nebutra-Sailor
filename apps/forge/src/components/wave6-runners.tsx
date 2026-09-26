@@ -91,7 +91,7 @@ export function DnsLookupRunner({ toolId }: { toolId: string }) {
           <ShellBadge tone="info">
             {String(out.type)} · {String(out.count ?? records.length)}
           </ShellBadge>
-          <pre className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-xs">
+          <pre className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-xs">
             {JSON.stringify(records, null, 2)}
           </pre>
           <TextResultActions
@@ -179,7 +179,7 @@ export function TlsCertInspectRunner({ toolId }: { toolId: string }) {
             ]}
           />
           {Array.isArray(out.subjectAltNames) && out.subjectAltNames.length > 0 ? (
-            <pre className="overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-xs">
+            <pre className="overflow-auto rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-xs">
               {(out.subjectAltNames as string[]).join("\n")}
             </pre>
           ) : null}
@@ -304,7 +304,7 @@ export function ColorDeltaERunner({ toolId }: { toolId: string }) {
             // @allow-brand-hex: fallback for the seeded input while the typed hex is incomplete
             value={/^#[0-9a-fA-F]{6}$/.test(hexA) ? hexA : "#0033FE"}
             onChange={(e) => setA(e.target.value)}
-            className="h-10 w-12 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"
+            className="h-10 w-12 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
           />
         </div>
         <div className="flex flex-wrap items-end gap-2">
@@ -323,17 +323,17 @@ export function ColorDeltaERunner({ toolId }: { toolId: string }) {
             // @allow-brand-hex: fallback for the other seeded input
             value={/^#[0-9a-fA-F]{6}$/.test(hexB) ? hexB : "#0BF1C3"}
             onChange={(e) => setB(e.target.value)}
-            className="h-10 w-12 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"
+            className="h-10 w-12 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
           />
         </div>
       </div>
       <div className="flex gap-2">
         <div
-          className="h-16 flex-1 rounded-lg border border-[var(--neutral-6)]"
+          className="h-16 flex-1 rounded-lg border border-neutral-6"
           style={{ background: hexA }}
         />
         <div
-          className="h-16 flex-1 rounded-lg border border-[var(--neutral-6)]"
+          className="h-16 flex-1 rounded-lg border border-neutral-6"
           style={{ background: hexB }}
         />
       </div>
@@ -385,10 +385,10 @@ export function DbmlParseRunner({ toolId }: { toolId: string }) {
             <ShellBadge>refs {o.refCount}</ShellBadge>
             <ShellBadge>enums {o.enums.length}</ShellBadge>
           </div>
-          <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="text-xs text-[var(--neutral-10)]">
+                <tr className="text-xs text-neutral-10">
                   <th className="px-3 py-2">table</th>
                   <th className="px-3 py-2">columns</th>
                   <th className="px-3 py-2">indexes</th>
@@ -460,7 +460,7 @@ export function DbmlToSqlRunner({ toolId }: { toolId: string }) {
       {sql ? (
         <>
           <TextResultActions text={sql} downloadName={`schema.${dialect}.sql`} />
-          <pre className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-xs">
+          <pre className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-xs">
             {sql}
           </pre>
         </>
@@ -523,7 +523,7 @@ export function SqlToDbmlRunner({ toolId }: { toolId: string }) {
       {dbml ? (
         <>
           <TextResultActions text={dbml} downloadName="schema.dbml" />
-          <pre className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-xs">
+          <pre className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-xs">
             {dbml}
           </pre>
         </>

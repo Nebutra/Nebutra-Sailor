@@ -115,7 +115,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
         ? referralsQuery.error.message
         : "Failed to load referrals.";
     return (
-      <section className="rounded-[var(--radius-2xl)] bg-neutral-2 p-6 dark:bg-black/30">
+      <section className="rounded-[var(--radius-2xl)] bg-neutral-2 p-6">
         <h2 className="text-sm font-semibold text-neutral-12">Invitations and rewards</h2>
         <p className="mt-1 text-xs text-destructive-strong">{message}</p>
         <Button
@@ -138,7 +138,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
   return (
     <section className="space-y-5">
       {/* Hero card */}
-      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] bg-neutral-2 p-5 dark:bg-black/30">
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] bg-neutral-2 p-5">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 opacity-[0.16] blur-3xl"
@@ -155,7 +155,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
           </p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3 dark:bg-black/40">
+            <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3">
               <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
                 Referral code
               </p>
@@ -171,11 +171,11 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
                   size="tiny"
                   showToast={false}
                   timeout={1600}
-                  className="h-auto gap-1.5 rounded-[var(--radius-md)] bg-neutral-2 px-2.5 py-1 text-xs text-neutral-11 hover:bg-neutral-3 hover:text-neutral-12 dark:bg-black/40"
+                  className="h-auto gap-1.5 rounded-[var(--radius-md)] bg-neutral-2 px-2.5 py-1 text-xs text-neutral-11 hover:bg-neutral-3 hover:text-neutral-12"
                 />
               </div>
             </div>
-            <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3 dark:bg-black/40">
+            <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3">
               <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
                 Share link
               </p>
@@ -189,7 +189,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
                   size="tiny"
                   showToast={false}
                   timeout={1600}
-                  className="h-auto gap-1.5 rounded-[var(--radius-md)] bg-neutral-2 px-2.5 py-1 text-xs text-neutral-11 hover:bg-neutral-3 hover:text-neutral-12 dark:bg-black/40"
+                  className="h-auto gap-1.5 rounded-[var(--radius-md)] bg-neutral-2 px-2.5 py-1 text-xs text-neutral-11 hover:bg-neutral-3 hover:text-neutral-12"
                 />
               </div>
             </div>
@@ -210,10 +210,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
             value: (levels[stats.currentLevel] ?? levels[0])?.title ?? "—",
           },
         ].map((cell) => (
-          <div
-            key={cell.label}
-            className="rounded-[var(--radius-xl)] bg-neutral-2 p-3 text-center dark:bg-black/30"
-          >
+          <div key={cell.label} className="rounded-[var(--radius-xl)] bg-neutral-2 p-3 text-center">
             <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
               {cell.label}
             </p>
@@ -224,7 +221,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
 
       {/* Redeem someone else's code */}
       <form
-        className="rounded-[var(--radius-xl)] bg-neutral-2 p-4 dark:bg-black/30"
+        className="rounded-[var(--radius-xl)] bg-neutral-2 p-4"
         onSubmit={(event) => {
           event.preventDefault();
           const code = normalizeReferralCode(redeemCode);
@@ -271,7 +268,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
             <div
               key={level.id}
               className={`flex items-center justify-between gap-4 rounded-[var(--radius-xl)] p-4 ${
-                isActive ? "bg-primary/10 dark:bg-primary/15" : "bg-neutral-2 dark:bg-black/30"
+                isActive ? "bg-primary/10 dark:bg-primary/15" : "bg-neutral-2"
               }`}
             >
               <div className="min-w-0">
@@ -304,7 +301,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
           {claimed.map((row) => (
             <li
               key={row.id}
-              className="flex items-center justify-between gap-3 rounded-[var(--radius-lg)] bg-neutral-2 px-3 py-2 dark:bg-black/30"
+              className="flex items-center justify-between gap-3 rounded-[var(--radius-lg)] bg-neutral-2 px-3 py-2"
             >
               <code className="font-mono text-xs text-neutral-11">{row.code}</code>
               <span className="text-xs tabular-nums text-neutral-10">

@@ -106,7 +106,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
                   ))}
                 </div>
                 <div className="flex flex-col items-center sm:items-start gap-1">
-                  <div className="flex text-amber-500">
+                  <div className="flex text-warning-strong">
                     {RATING_STARS.map((star) => (
                       <StarFill key={star.id} className="h-4 w-4" />
                     ))}

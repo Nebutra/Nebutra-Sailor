@@ -53,8 +53,8 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     name: "Stripe",
     description: "Synchronize payment data, invoices, and subscription events.",
     icon: Zap,
-    color: "text-purple-900",
-    bgColor: "bg-purple-200",
+    color: "text-chart-3",
+    bgColor: "bg-chart-3/15",
     docUrl: `${getDocsUrl()}/integrations/stripe`,
   },
   {

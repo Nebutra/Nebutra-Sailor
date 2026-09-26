@@ -77,7 +77,7 @@ export function RunnerSelect({
   if (!label) return control;
 
   return (
-    <div className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
+    <div className="flex flex-col gap-1.5 text-sm text-neutral-11">
       <span className="text-xs font-medium" id={labelId}>
         {label}
       </span>

@@ -105,10 +105,7 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
                   {theme.label}
                 </span>
                 {isActive ? (
-                  <div
-                    className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full text-white shadow-sm"
-                    style={{ background: "hsl(var(--primary))" }}
-                  >
+                  <div className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm">
                     <Check className="h-2 w-2" aria-hidden="true" />
                   </div>
                 ) : null}

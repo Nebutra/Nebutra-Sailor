@@ -35,8 +35,11 @@ export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
         {/* Browser chrome */}
         <div className="flex items-center gap-2 border-b border-border pb-1.5">
           <div className="flex items-center gap-1">
+            {/* allow-palette: macOS traffic-light dot — OS chrome's own fixed colour */}
             <span className="h-1.5 w-1.5 rounded-full bg-red-900" />
+            {/* allow-palette: macOS traffic-light dot — OS chrome's own fixed colour */}
             <span className="h-1.5 w-1.5 rounded-full bg-amber-900" />
+            {/* allow-palette: macOS traffic-light dot — OS chrome's own fixed colour */}
             <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
           </div>
           <div className="flex flex-1 items-center gap-1 rounded-[var(--radius-sm)] bg-muted px-1.5 py-0.5">
@@ -73,7 +76,7 @@ export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
             <ArrowRight className="h-2.5 w-2.5" />
             {copy.footer}
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
         </div>
       </div>
     </div>

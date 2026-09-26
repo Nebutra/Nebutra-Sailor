@@ -82,8 +82,7 @@ export function RoomView({ profileId }: { profileId: string }) {
         action={
           <Link
             href={`/${locale}/cofounder/discover`}
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
-            style={{ background: "hsl(var(--primary))" }}
+            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
             Discover cofounders
             <ArrowRight className="size-4" aria-hidden="true" />
@@ -157,8 +156,7 @@ export function RoomView({ profileId }: { profileId: string }) {
           </p>
           <Link
             href={`/${locale}/choose-plan`}
-            className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
-            style={{ background: "hsl(var(--primary))" }}
+            className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
             Upgrade to open the room
             <ArrowRight className="size-4" aria-hidden="true" />

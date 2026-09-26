@@ -164,7 +164,7 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
             </option>
           ))}
         </RunnerSelect>
-        <label className="flex h-9 items-center gap-2 text-sm text-[var(--neutral-11)]">
+        <label className="flex h-9 items-center gap-2 text-sm text-neutral-11">
           <input
             data-allow-native
             type="checkbox"
@@ -252,7 +252,7 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
         placeholder={t("jsonFormat.placeholder")}
       />
 
-      <p className="text-xs tabular-nums text-[var(--neutral-10)]">
+      <p className="text-xs tabular-nums text-neutral-10">
         {t("jsonFormat.stats", { chars: charCount, lines: lineCount })}
         {text.length > LIVE_VALIDATE_MAX ? ` · ${t("jsonFormat.liveOff")}` : ""}
       </p>

@@ -121,6 +121,7 @@ export function StartupWorkspaceFilesPanel({
                   title="Startup OS generated app preview"
                   sandbox=""
                   srcDoc={livePreviewHtml}
+                  // allow-palette: fixed browser-canvas white behind arbitrary generated app content, not app chrome
                   className="min-h-0 flex-1 border-0 bg-white"
                 />
               ) : (

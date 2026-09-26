@@ -47,6 +47,7 @@ export function NewsDecorTile({
             "radial-gradient(120% 90% at 0% 0%, rgb(255 255 255 / 0.22), transparent 60%)",
         }}
       />
+      {/* allow-palette: glyph ink over a fixed brand-gradient decorative tile (VARIANT_BACKGROUND above), not a themed surface */}
       <Glyph className={`relative text-white/80 ${glyphClassName}`} />
     </div>
   );

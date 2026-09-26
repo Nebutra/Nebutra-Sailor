@@ -10,7 +10,7 @@ export function MiniPipeline() {
         {HARNESS_PIPELINE_STEPS.map((step, i) => (
           <div key={step} className="flex items-center flex-1">
             <div className="flex flex-col items-center flex-1">
-              <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-xl)] bg-emerald-500/10 border border-success/20 mb-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-xl)] bg-success/10 border border-success/20 mb-2">
                 <span className="text-success-strong text-sm font-semibold">{"\u2713"}</span>
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80">
@@ -18,7 +18,7 @@ export function MiniPipeline() {
               </span>
             </div>
             {i < HARNESS_PIPELINE_STEPS.length - 1 && (
-              <div className="h-[2px] w-full min-w-2 bg-gradient-to-r from-emerald-500/40 to-emerald-500/20 -mt-5" />
+              <div className="h-[2px] w-full min-w-2 bg-gradient-to-r from-success/40 to-success/20 -mt-5" />
             )}
           </div>
         ))}

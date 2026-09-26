@@ -58,9 +58,7 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
         </RunnerPanel>
         <RunnerPanel title={t("timestamp.nowMs")}>
           <p className="font-mono text-sm tabular-nums">{now}</p>
-          <p className="mt-1 font-mono text-xs text-[var(--neutral-10)]">
-            {new Date(now).toISOString()}
-          </p>
+          <p className="mt-1 font-mono text-xs text-neutral-10">{new Date(now).toISOString()}</p>
         </RunnerPanel>
       </div>
 
@@ -96,7 +94,7 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</p>
+      <p className="text-xs text-neutral-10">{t("common.liveHint")}</p>
       <Button type="button" variant="outline" onClick={() => void run({ mode, value, unit })}>
         {t("timestamp.convert")}
       </Button>

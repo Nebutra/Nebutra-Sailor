@@ -66,7 +66,7 @@ export function ResumeEditor({ initial }: ResumeEditorProps) {
           className={`flex w-full items-center justify-between gap-2 whitespace-nowrap rounded-md px-3 py-1.5 text-left text-sm ${
             isActive
               ? "bg-muted font-medium text-foreground"
-              : "text-muted-foreground hover:bg-muted/60"
+              : "font-medium text-muted-foreground hover:bg-muted/60"
           }`}
         >
           <span>{title}</span>

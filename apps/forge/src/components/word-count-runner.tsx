@@ -85,13 +85,13 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
           <Card
             padding="sm"
             key={s.label}
-            className={`border-[var(--neutral-6)] px-3.5 py-3 ${
+            className={`border-neutral-6 px-3.5 py-3 ${
               s.primary
                 ? "border-[color-mix(in_srgb,hsl(var(--primary))_28%,var(--neutral-7))] bg-[color-mix(in_srgb,var(--blue-3)_35%,var(--neutral-1))]"
                 : ""
             }`}
           >
-            <p className="text-[11px] font-medium text-[var(--neutral-10)]">{s.label}</p>
+            <p className="text-[11px] font-medium text-neutral-10">{s.label}</p>
             <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight">{s.value}</p>
           </Card>
         ))}

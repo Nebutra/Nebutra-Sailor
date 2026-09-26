@@ -63,7 +63,7 @@ export const Slider = ({ onValueChange, value }: SliderProps) => {
           max="100"
           value={value}
           onChange={(event) => onValueChange(parseInt(event.target.value, 10))}
-          className="slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+          className="slider w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer"
           style={{
             background: `linear-gradient(to right, #006bff ${value - 0.5}%, ${isDarkMode ? "#1f1f1f" : "#ebebeb"} ${value - 0.5}%)`,
           }}

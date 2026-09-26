@@ -154,7 +154,7 @@ function BaseTree({ variant = "default" }: { variant: "default" | "minimal" }) {
         selectable={false}
         animateExpand
         indent={16}
-        className={`font-mono ${variant === "minimal" ? "text-black/10" : "text-black/20"}`}
+        className={`font-mono ${variant === "minimal" ? "text-foreground/10" : "text-foreground/20"}`}
       >
         <TreeView>
           <TreeNodes nodes={TREE_DATA} />
@@ -235,7 +235,7 @@ export function MonorepoFileTree() {
         </AnimateIn>
 
         <div className="relative flex min-h-[360px] flex-1 flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-background/55 shadow-inner dark:bg-muted/80">
-          <div className="z-20 flex h-[42px] flex-none items-center border-black/5 border-b bg-white/55 px-4">
+          <div className="z-20 flex h-[42px] flex-none items-center border-foreground/5 border-b bg-background/55 px-4">
             <div className="flex gap-1.5 items-center">
               <div className="size-2.5 rounded-full bg-[#ff5f56] shadow-sm" />
               <div className="size-2.5 rounded-full bg-[#ffbd2e] shadow-sm" />

@@ -25,6 +25,7 @@
 
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 
 const WHITELIST = [
   /\/storybook\/src\/stories\//,
@@ -52,11 +53,9 @@ const ATTR_BODY_RE = /<(input|textarea|select)\b((?:[^<>{}]|\{(?:[^{}]|\{[^{}]*\
 
 // Strip JS line + block comments so commented-out tags don't false-positive.
 // Keep a parallel map of allow-os-select reasons on their source lines.
-const stripComments = (src) => {
-  return src
-    .replace(/\/\/[^\n]*/g, (m) => " ".repeat(m.length))
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
-};
+function stripComments(src) {
+  return blankSourceComments(src);
+}
 
 /** Lines (1-indexed) that contain `// allow-os-select:` before strip. */
 function allowOsSelectLines(raw) {

@@ -97,8 +97,8 @@ export function W3FileTypeDetectRunner({ toolId }: { toolId: string }) {
 
   const signal = (label: string, value: string | null) => (
     <div key={label} className="space-y-0.5">
-      <p className="text-xs text-[var(--neutral-10)]">{label}</p>
-      <p className="font-mono text-sm text-[var(--neutral-12)]">{value ?? dash}</p>
+      <p className="text-xs text-neutral-10">{label}</p>
+      <p className="font-mono text-sm text-neutral-12">{value ?? dash}</p>
     </div>
   );
 
@@ -120,7 +120,7 @@ export function W3FileTypeDetectRunner({ toolId }: { toolId: string }) {
           </>
         }
       />
-      <div className="grid grid-cols-1 gap-3 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 rounded-[var(--radius-lg)] bg-neutral-2 p-4 sm:grid-cols-3">
         {signal(t("fileTypeDetect.signalDetected"), out.detectedMime)}
         {signal(t("fileTypeDetect.signalReported"), out.reportedMime)}
         {signal(
@@ -129,8 +129,8 @@ export function W3FileTypeDetectRunner({ toolId }: { toolId: string }) {
         )}
       </div>
       {out.containerDrillDown ? (
-        <div className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4">
-          <p className="text-sm text-[var(--neutral-12)]">
+        <div className="rounded-[var(--radius-lg)] bg-neutral-2 p-4">
+          <p className="text-sm text-neutral-12">
             {out.containerDrillDown.resolvedType
               ? t("fileTypeDetect.drillResolved", {
                   kind: out.containerDrillDown.kind,
@@ -139,7 +139,7 @@ export function W3FileTypeDetectRunner({ toolId }: { toolId: string }) {
               : t("fileTypeDetect.drillUnresolved", { kind: out.containerDrillDown.kind })}
           </p>
           {out.containerDrillDown.evidence.length > 0 ? (
-            <p className="mt-1 font-mono text-xs text-[var(--neutral-10)]">
+            <p className="mt-1 font-mono text-xs text-neutral-10">
               {out.containerDrillDown.evidence.join(" · ")}
             </p>
           ) : null}
@@ -153,7 +153,7 @@ export function W3FileTypeDetectRunner({ toolId }: { toolId: string }) {
   const renderDetail = (out: DetectOutput) => (
     <div className="space-y-3">
       <ShellCode label={t("fileTypeDetect.hexDump")}>{out.hexDump}</ShellCode>
-      <div className="space-y-1 text-sm text-[var(--neutral-11)]">
+      <div className="space-y-1 text-sm text-neutral-11">
         <p>
           {t("fileTypeDetect.bytesRead", { n: out.bytesRead })}
           {out.truncated ? ` · ${t("fileTypeDetect.headerOnly")}` : ""}
@@ -166,9 +166,9 @@ export function W3FileTypeDetectRunner({ toolId }: { toolId: string }) {
       </div>
       {out.candidates.length > 0 ? (
         <div className="space-y-1">
-          <p className="text-xs text-[var(--neutral-10)]">{t("fileTypeDetect.candidates")}</p>
+          <p className="text-xs text-neutral-10">{t("fileTypeDetect.candidates")}</p>
           {out.candidates.map((c) => (
-            <p key={c.id} className="font-mono text-xs text-[var(--neutral-11)]">
+            <p key={c.id} className="font-mono text-xs text-neutral-11">
               {c.name} · {t("fileTypeDetect.atOffset", { offset: c.offset })} · {c.hex}
             </p>
           ))}

@@ -208,7 +208,7 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
                 ) : null
               }
             />
-            <p className="text-sm text-[var(--neutral-11)]">{ruleLine(o.ruleSetUsed)}</p>
+            <p className="text-sm text-neutral-11">{ruleLine(o.ruleSetUsed)}</p>
             {o.mode === "shift" && o.result.date ? (
               <Button
                 type="button"
@@ -239,8 +239,8 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
             onClick={() => setMode(id)}
             className={`rounded-full px-3 py-1 text-xs transition-colors ${
               mode === id
-                ? "bg-[var(--blue-3)] text-[var(--neutral-12)]"
-                : "bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)]"
+                ? "bg-blue-3 text-neutral-12"
+                : "bg-neutral-3 text-neutral-11 hover:bg-neutral-4"
             }`}
           >
             {t(`businessDayShift.mode.${id}`)}
@@ -290,9 +290,7 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
       ) : null}
 
       <div className="space-y-2">
-        <p className="text-xs font-medium text-[var(--neutral-11)]">
-          {t("businessDayShift.weekendLabel")}
-        </p>
+        <p className="text-xs font-medium text-neutral-11">{t("businessDayShift.weekendLabel")}</p>
         <div className="flex flex-wrap gap-1.5">
           {WEEKDAY_KEYS.map((key, index) => {
             const on = weekendDays.includes(index);
@@ -304,8 +302,8 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
                 onClick={() => toggleWeekend(index)}
                 className={`rounded-full px-3 py-1 text-xs transition-colors ${
                   on
-                    ? "bg-[var(--blue-3)] text-[var(--neutral-12)]"
-                    : "bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:bg-[var(--neutral-4)]"
+                    ? "bg-blue-3 text-neutral-12"
+                    : "bg-neutral-3 text-neutral-11 hover:bg-neutral-4"
                 }`}
               >
                 {t(`businessDayShift.weekday.${key}`)}
@@ -354,7 +352,7 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
       </div>
 
       {!startDate ? (
-        <p className="flex items-center gap-2 text-sm text-[var(--neutral-11)]">
+        <p className="flex items-center gap-2 text-sm text-neutral-11">
           <Calendar className="h-4 w-4" aria-hidden="true" />
           {t("businessDayShift.pickStart")}
         </p>

@@ -69,7 +69,7 @@ function kindBadgeClass(kind?: string): string {
     case "type":
       return "bg-info/20 text-info";
     default:
-      return "bg-[var(--neutral-3)] text-[var(--neutral-11)]";
+      return "bg-neutral-3 text-neutral-11";
   }
 }
 
@@ -140,7 +140,7 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-destructive/4 p-1">
+        <div className="rounded-[var(--radius-lg)] border border-neutral-6 bg-destructive/4 p-1">
           <Textarea
             id="json-diff-left"
             label={t("jsonDiff.left")}
@@ -151,7 +151,7 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
             className="font-mono text-sm"
           />
         </div>
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-success/4 p-1">
+        <div className="rounded-[var(--radius-lg)] border border-neutral-6 bg-success/4 p-1">
           <Textarea
             id="json-diff-right"
             label={t("jsonDiff.right")}
@@ -207,8 +207,8 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
               onClick={() => setFilter(f.id)}
               className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                 filter === f.id
-                  ? "border-primary bg-[var(--blue-3)] text-[var(--neutral-12)]"
-                  : "border-[var(--neutral-6)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
+                  ? "border-primary bg-blue-3 text-neutral-12"
+                  : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2"
               }`}
             >
               {f.label}
@@ -218,9 +218,9 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
       ) : null}
 
       {filtered.length > 0 ? (
-        <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)]">
+        <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-neutral-6">
           <table className="w-full min-w-[36rem] text-left text-sm">
-            <thead className="bg-[var(--neutral-2)] text-xs text-[var(--neutral-11)]">
+            <thead className="bg-neutral-2 text-xs text-neutral-11">
               <tr>
                 <th className="px-3 py-2 font-medium">{t("jsonDiff.colPath")}</th>
                 <th className="px-3 py-2 font-medium">{t("jsonDiff.colKind")}</th>
@@ -232,11 +232,9 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
               {filtered.slice(0, 100).map((op, i) => (
                 <tr
                   key={`${op.path}-${i}`}
-                  className={`border-t border-[var(--neutral-6)] ${kindRowClass(op.kind)}`}
+                  className={`border-t border-neutral-6 ${kindRowClass(op.kind)}`}
                 >
-                  <td className="px-3 py-2 font-mono text-xs text-[var(--neutral-12)]">
-                    {op.path ?? "—"}
-                  </td>
+                  <td className="px-3 py-2 font-mono text-xs text-neutral-12">{op.path ?? "—"}</td>
                   <td className="px-3 py-2">
                     <span
                       className={`inline-flex rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide ${kindBadgeClass(op.kind)}`}
@@ -244,10 +242,10 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
                       {op.kind ?? "—"}
                     </span>
                   </td>
-                  <td className="max-w-[14rem] truncate px-3 py-2 font-mono text-xs text-[var(--neutral-11)]">
+                  <td className="max-w-[14rem] truncate px-3 py-2 font-mono text-xs text-neutral-11">
                     {preview(op.left)}
                   </td>
-                  <td className="max-w-[14rem] truncate px-3 py-2 font-mono text-xs text-[var(--neutral-11)]">
+                  <td className="max-w-[14rem] truncate px-3 py-2 font-mono text-xs text-neutral-11">
                     {preview(op.right)}
                   </td>
                 </tr>

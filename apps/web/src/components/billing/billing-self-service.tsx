@@ -307,8 +307,8 @@ export function buildBillingSelfServiceModel({
 export function BillingProviderNotice({ model }: { model: BillingSelfServiceModel }) {
   const tone =
     model.provider.status === "ready"
-      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100"
-      : "border-amber-500/30 bg-amber-500/10 text-amber-950 dark:text-amber-100";
+      ? "border-success/30 bg-success/10 text-success-strong"
+      : "border-warning/30 bg-warning/10 text-warning-strong";
   const Icon = model.provider.status === "ready" ? CheckCircle2 : ShieldAlert;
 
   return (
@@ -326,7 +326,7 @@ export function BillingProviderNotice({ model }: { model: BillingSelfServiceMode
 
 export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
   return (
-    <div className="rounded-[var(--radius-3xl)] border border-border bg-background p-5 shadow-sm dark:bg-black/40">
+    <div className="rounded-[var(--radius-3xl)] border border-border bg-background p-5 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-10">
@@ -349,7 +349,7 @@ export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         {model.activePlan.features.map((feature) => (
           <div key={feature} className="flex items-center gap-2 text-sm text-neutral-11">
-            <CheckCircle2 className="size-4 text-emerald-600" aria-hidden="true" />
+            <CheckCircle2 className="size-4 text-success-strong" aria-hidden="true" />
             {feature}
           </div>
         ))}
@@ -360,7 +360,7 @@ export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
           <form action="/api/billing/portal" method="post">
             <button
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-11 dark:text-black sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2.5 text-sm font-medium text-neutral-1 transition hover:bg-neutral-11 sm:w-auto"
             >
               <CreditCard className="size-4" aria-hidden="true" />
               {model.portal.label}
@@ -391,9 +391,7 @@ export function PlanChoiceGrid({ plans }: { plans: BillingPlanOption[] }) {
           <article
             key={plan.id}
             className={`flex min-h-full flex-col rounded-[var(--radius-3xl)] border p-5 shadow-sm ${
-              plan.active
-                ? "border-primary/40 bg-primary/10"
-                : "border-border bg-background dark:bg-black/40"
+              plan.active ? "border-primary/40 bg-primary/10" : "border-border bg-background"
             }`}
           >
             <div className="flex items-start justify-between gap-3">
@@ -402,7 +400,7 @@ export function PlanChoiceGrid({ plans }: { plans: BillingPlanOption[] }) {
                 <p className="mt-1 text-sm text-neutral-11">{plan.description}</p>
               </div>
               {plan.badge && (
-                <span className="rounded-full bg-neutral-12 px-2.5 py-1 text-xs font-medium text-white dark:text-black">
+                <span className="rounded-full bg-neutral-12 px-2.5 py-1 text-xs font-medium text-neutral-1">
                   {plan.badge}
                 </span>
               )}
@@ -417,7 +415,7 @@ export function PlanChoiceGrid({ plans }: { plans: BillingPlanOption[] }) {
               {plan.features.map((feature) => (
                 <li key={feature} className="flex gap-2 text-sm text-neutral-11">
                   <CheckCircle2
-                    className="mt-0.5 size-4 shrink-0 text-emerald-600"
+                    className="mt-0.5 size-4 shrink-0 text-success-strong"
                     aria-hidden="true"
                   />
                   {feature}

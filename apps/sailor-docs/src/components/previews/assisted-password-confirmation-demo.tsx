@@ -23,7 +23,7 @@ export function AssistedPasswordConfirmationDemo() {
         {match && (
           <Badge
             variant="default"
-            className="bg-green-500 hover:bg-green-600 text-white animate-in fade-in zoom-in"
+            className="bg-success hover:bg-success/90 text-success-foreground animate-in fade-in zoom-in"
           >
             Passwords Match
           </Badge>

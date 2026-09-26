@@ -110,7 +110,7 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
             // @allow-brand-hex: fallback for the same seeded input when the typed hex is incomplete
             value={/^#[0-9a-fA-F]{6}$/.test(fg) ? fg : "#0033FE"}
             onChange={(e) => setFg(e.target.value)}
-            className="h-10 w-12 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"
+            className="h-10 w-12 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
           />
         </div>
         <div className="flex flex-wrap items-end gap-2">
@@ -128,11 +128,11 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
             aria-label={t("contrast.bg")}
             value={/^#[0-9a-fA-F]{6}$/.test(bg) ? bg : "#ffffff"}
             onChange={(e) => setBg(e.target.value)}
-            className="h-10 w-12 cursor-pointer rounded border border-[var(--neutral-7)] bg-transparent p-1"
+            className="h-10 w-12 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
           />
         </div>
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -140,7 +140,7 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
         <div className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-stretch">
             <div
-              className="flex min-h-[8rem] flex-col justify-center rounded-[var(--radius-lg)] p-6 text-center shadow-ambient-sm ring-1 ring-inset ring-[var(--neutral-6)]"
+              className="flex min-h-[8rem] flex-col justify-center rounded-[var(--radius-lg)] p-6 text-center shadow-ambient-sm ring-1 ring-inset ring-neutral-6"
               style={{ color: fg, background: bg }}
             >
               <p className="text-lg font-semibold leading-snug">{t("contrast.sampleHeadline")}</p>
@@ -150,13 +150,13 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
             </div>
             <div className="flex gap-2 sm:flex-col sm:justify-center">
               <div
-                className="h-14 w-14 shrink-0 rounded-[var(--radius-md)] ring-1 ring-inset ring-[var(--neutral-6)] sm:h-16 sm:w-16"
+                className="h-14 w-14 shrink-0 rounded-[var(--radius-md)] ring-1 ring-inset ring-neutral-6 sm:h-16 sm:w-16"
                 style={{ background: fg }}
                 title={fg}
                 aria-label={t("contrast.fg")}
               />
               <div
-                className="h-14 w-14 shrink-0 rounded-[var(--radius-md)] ring-1 ring-inset ring-[var(--neutral-6)] sm:h-16 sm:w-16"
+                className="h-14 w-14 shrink-0 rounded-[var(--radius-md)] ring-1 ring-inset ring-neutral-6 sm:h-16 sm:w-16"
                 style={{ background: bg }}
                 title={bg}
                 aria-label={t("contrast.bg")}
@@ -213,7 +213,7 @@ export function AgeCalculatorRunner({ toolId }: { toolId: string }) {
         />
         <DatePicker label={t("age.asOf")} id="age-asof" value={asOf} onValueChange={setAsOf} />
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -276,7 +276,7 @@ export function TipCalculatorRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -325,7 +325,7 @@ export function AspectRatioRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -379,7 +379,7 @@ export function PercentageChangeRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -420,7 +420,7 @@ export function CountCharsRunner({ toolId }: { toolId: string }) {
         rows={8}
         className="font-mono text-sm"
       />
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -471,16 +471,16 @@ export function WordFrequencyRunner({ toolId }: { toolId: string }) {
         onChange={(e) => setTop(e.target.value)}
         className="max-w-xs font-mono"
       />
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
       {out ? <ShellBadge tone="info">unique {String(out.totalUnique ?? "—")}</ShellBadge> : null}
       {ranked.length > 0 ? (
-        <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+        <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2">
           <table className="w-full min-w-[20rem] text-left text-sm">
             <thead>
-              <tr className="text-xs text-[var(--neutral-10)]">
+              <tr className="text-xs text-neutral-10">
                 <th className="px-3 py-2">#</th>
                 <th className="px-3 py-2">token</th>
                 <th className="px-3 py-2">count</th>
@@ -488,12 +488,9 @@ export function WordFrequencyRunner({ toolId }: { toolId: string }) {
             </thead>
             <tbody>
               {ranked.map((row, i) => (
-                <tr
-                  key={`${row.token}-${i}`}
-                  className={i % 2 === 1 ? "bg-[var(--neutral-3)]" : undefined}
-                >
-                  <td className="px-3 py-1.5 tabular-nums text-[var(--neutral-11)]">{i + 1}</td>
-                  <td className="px-3 py-1.5 font-mono text-[var(--neutral-12)]">{row.token}</td>
+                <tr key={`${row.token}-${i}`} className={i % 2 === 1 ? "bg-neutral-3" : undefined}>
+                  <td className="px-3 py-1.5 tabular-nums text-neutral-11">{i + 1}</td>
+                  <td className="px-3 py-1.5 font-mono text-neutral-12">{row.token}</td>
                   <td className="px-3 py-1.5 tabular-nums font-medium">{row.count}</td>
                 </tr>
               ))}
@@ -560,7 +557,7 @@ export function FindReplaceRegexRunner({ toolId }: { toolId: string }) {
           className="font-mono"
         />
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
         {out?.matches != null ? ` · matches ${String(out.matches)}` : ""}
       </p>
@@ -568,7 +565,7 @@ export function FindReplaceRegexRunner({ toolId }: { toolId: string }) {
       {result ? (
         <>
           <TextResultActions text={result} downloadName="replaced.txt" />
-          <pre className="max-h-80 overflow-auto whitespace-pre-wrap rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-sm">
+          <pre className="max-h-80 overflow-auto whitespace-pre-wrap rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-sm">
             {result}
           </pre>
         </>
@@ -644,13 +641,13 @@ export function MimeLookupRunner({ toolId }: { toolId: string }) {
               unknown {o.unknownCount}
             </ShellBadge>
           </div>
-          <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2">
             <table className="w-full text-left text-sm">
               <tbody>
                 {o.results.map((r, i) => (
-                  <tr key={i} className={i % 2 === 1 ? "bg-[var(--neutral-3)]" : undefined}>
+                  <tr key={i} className={i % 2 === 1 ? "bg-neutral-3" : undefined}>
                     <td className="px-3 py-2 font-mono">{r.input}</td>
-                    <td className="px-3 py-2 font-mono text-[var(--neutral-11)]">.{r.extension}</td>
+                    <td className="px-3 py-2 font-mono text-neutral-11">.{r.extension}</td>
                     <td className="px-3 py-2 font-mono">
                       {r.known ? r.mime : <span className="text-warning-strong">unknown</span>}
                     </td>
@@ -697,7 +694,7 @@ export function UserAgentParseRunner({ toolId }: { toolId: string }) {
         >
           {loading ? t("common.running") : t("common.run")}
         </Button>
-        <span className="text-xs text-[var(--neutral-10)]">{t("common.liveHint")}</span>
+        <span className="text-xs text-neutral-10">{t("common.liveHint")}</span>
       </div>
       <RunnerError>{error}</RunnerError>
       {out ? (
@@ -781,7 +778,7 @@ export function EpochConvertRunner({ toolId }: { toolId: string }) {
           <option value="iso_to_ms">ISO → ms</option>
         </RunnerSelect>
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -789,7 +786,7 @@ export function EpochConvertRunner({ toolId }: { toolId: string }) {
         <RunnerPanel>
           <p className="break-all font-mono text-xl font-semibold">{String(out.result ?? "—")}</p>
           {out.ms != null ? (
-            <p className="mt-1 font-mono text-xs text-[var(--neutral-10)]">ms {String(out.ms)}</p>
+            <p className="mt-1 font-mono text-xs text-neutral-10">ms {String(out.ms)}</p>
           ) : null}
         </RunnerPanel>
       ) : null}
@@ -833,7 +830,7 @@ export function HexRgbRunner({ toolId }: { toolId: string }) {
           <option value="rgb_to_hex">RGB → HEX</option>
         </RunnerSelect>
       </div>
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -841,7 +838,7 @@ export function HexRgbRunner({ toolId }: { toolId: string }) {
         <div className="flex flex-wrap items-center gap-4">
           {swatch ? (
             <div
-              className="h-16 w-16 rounded-lg border border-[var(--neutral-6)]"
+              className="h-16 w-16 rounded-lg border border-neutral-6"
               style={{ background: String(swatch) }}
             />
           ) : null}
@@ -996,9 +993,7 @@ export function DiceRollRunner({ toolId }: { toolId: string }) {
       {rolls.length > 0 ? (
         <RunnerPanel>
           <p className="text-3xl font-bold tabular-nums tracking-widest">{rolls.join(" · ")}</p>
-          {total != null ? (
-            <p className="mt-2 text-sm text-[var(--neutral-11)]">total {total}</p>
-          ) : null}
+          {total != null ? <p className="mt-2 text-sm text-neutral-11">total {total}</p> : null}
         </RunnerPanel>
       ) : null}
       <RunnerNote>{t("dice.note")}</RunnerNote>
@@ -1066,7 +1061,7 @@ export function JwtGenerateRunner({ toolId }: { toolId: string }) {
       {token ? (
         <>
           <TextResultActions text={token} downloadName="token.jwt" />
-          <pre className="overflow-x-auto break-all rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-xs">
+          <pre className="overflow-x-auto break-all rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-xs">
             {token}
           </pre>
         </>
@@ -1127,7 +1122,7 @@ export function HmacVerifyRunner({ toolId }: { toolId: string }) {
         className="font-mono"
         placeholder="paste expected HMAC"
       />
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -1216,7 +1211,7 @@ export function SecretGenerateRunner({ toolId }: { toolId: string }) {
       {text ? (
         <>
           <TextResultActions text={text} downloadName="secrets.txt" />
-          <pre className="max-h-80 overflow-auto break-all rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3 font-mono text-sm">
+          <pre className="max-h-80 overflow-auto break-all rounded-[var(--radius-lg)] bg-neutral-2 p-3 font-mono text-sm">
             {text}
           </pre>
         </>
@@ -1248,7 +1243,7 @@ export function ChecksumTextRunner({ toolId }: { toolId: string }) {
         rows={5}
         className="font-mono text-sm"
       />
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -1275,7 +1270,7 @@ export function WeekdayRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <DatePicker label="Date" id="wd-date" value={date} onValueChange={setDate} />
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-neutral-10">
         {loading ? t("common.running") : t("common.liveHint")}
       </p>
       <RunnerError>{error}</RunnerError>
@@ -1338,7 +1333,7 @@ export function LoremWordsRunner({ toolId }: { toolId: string }) {
       {result ? (
         <>
           <TextResultActions text={result} downloadName="lorem-words.txt" />
-          <p className="leading-relaxed text-[var(--neutral-12)]">{result}</p>
+          <p className="leading-relaxed text-neutral-12">{result}</p>
         </>
       ) : null}
       <RunnerNote>{t("common.sameAsApi")}</RunnerNote>

@@ -60,7 +60,7 @@ export function AIGatewayCard() {
             <div>
               <span className="text-primary">import</span> {`{ createEdgeRouter }`}{" "}
               <span className="text-primary">from</span>{" "}
-              <span className="text-green-900">'@nebutra/ai';</span>
+              <span className="text-success-strong">'@nebutra/ai';</span>
             </div>
             <div className="mt-3 font-medium text-muted-foreground dark:text-muted-foreground">
               {"// Auto-fallback & latency routing"}
@@ -70,11 +70,11 @@ export function AIGatewayCard() {
               <span className="text-[var(--brand-tertiary)]">createEdgeRouter</span>({`{`}
             </div>
             <div className="pl-4">
-              strategy: <span className="text-green-900">'lowest-latency'</span>,
+              strategy: <span className="text-success-strong">'lowest-latency'</span>,
             </div>
             <div className="pl-4">
-              models: [<span className="text-green-900">'gpt-5.5'</span>,{" "}
-              <span className="text-green-900">'claude-sonnet-4.6'</span>],
+              models: [<span className="text-success-strong">'gpt-5.5'</span>,{" "}
+              <span className="text-success-strong">'claude-sonnet-4.6'</span>],
             </div>
             <div className="pl-4">
               stream: <span className="text-primary">true</span>

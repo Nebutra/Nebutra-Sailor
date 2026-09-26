@@ -51,7 +51,7 @@ export function ContractsGlyph(_props: SubpackageGlyphProps) {
             <Badge
               variant="secondary"
               size="sm"
-              className="shrink-0 bg-[var(--blue-3)] font-mono text-[9px] text-primary"
+              className="shrink-0 bg-blue-3 font-mono text-[9px] text-primary"
             >
               event
             </Badge>

@@ -305,9 +305,7 @@ export function W3DockerfileStarterRunner({ toolId }: { toolId: string }) {
       }}
     >
       <div className="space-y-3">
-        <p className="text-xs font-medium text-[var(--neutral-11)]">
-          {t("dockerfileStarter.groupWhat")}
-        </p>
+        <p className="text-xs font-medium text-neutral-11">{t("dockerfileStarter.groupWhat")}</p>
         <div className="flex flex-wrap items-end gap-3">
           <RunnerSelect
             id="dockerfile-language"
@@ -353,9 +351,7 @@ export function W3DockerfileStarterRunner({ toolId }: { toolId: string }) {
       </div>
 
       <div className="space-y-3">
-        <p className="text-xs font-medium text-[var(--neutral-11)]">
-          {t("dockerfileStarter.groupHow")}
-        </p>
+        <p className="text-xs font-medium text-neutral-11">{t("dockerfileStarter.groupHow")}</p>
         <div className="grid gap-3 sm:grid-cols-2">
           {textField("version", t("dockerfileStarter.version"), "22")}
           {textField("workdir", t("dockerfileStarter.workdir"), "/app")}
@@ -371,7 +367,7 @@ export function W3DockerfileStarterRunner({ toolId }: { toolId: string }) {
             t("dockerfileStarter.commandPlaceholder"),
           )}
         </div>
-        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[var(--neutral-11)]">
+        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-neutral-11">
           {toggles.map((toggle) => (
             <Checkbox
               key={toggle.id}

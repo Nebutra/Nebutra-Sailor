@@ -123,7 +123,7 @@ export function W3RobotsTxtGeneratorRunner({ toolId }: { toolId: string }) {
 
   const renderAgentRow = (name: string) => (
     <div key={name} className="flex items-center justify-between gap-3">
-      <span className="font-mono text-sm text-[var(--neutral-12)]">{name}</span>
+      <span className="font-mono text-sm text-neutral-12">{name}</span>
       <Select
         value={access[name] ?? "default"}
         onValueChange={(value) => setAgent(name, (value as Access) ?? "default")}
@@ -182,7 +182,7 @@ export function W3RobotsTxtGeneratorRunner({ toolId }: { toolId: string }) {
                     <ShellBadge tone={warning.severity === "warning" ? "warning" : "neutral"}>
                       {warning.code}
                     </ShellBadge>
-                    <span className="text-sm text-[var(--neutral-11)]">{warning.message}</span>
+                    <span className="text-sm text-neutral-11">{warning.message}</span>
                   </li>
                 ))}
               </ul>
@@ -226,22 +226,18 @@ export function W3RobotsTxtGeneratorRunner({ toolId }: { toolId: string }) {
         </div>
 
         <section className="space-y-2" aria-label={t("robotsTxt.searchAgents")}>
-          <h3 className="text-sm font-medium text-[var(--neutral-12)]">
-            {t("robotsTxt.searchAgents")}
-          </h3>
+          <h3 className="text-sm font-medium text-neutral-12">{t("robotsTxt.searchAgents")}</h3>
           <div className="space-y-2">{SEARCH_AGENTS.map(renderAgentRow)}</div>
         </section>
 
         <section className="space-y-2" aria-label={t("robotsTxt.aiAgents")}>
-          <h3 className="text-sm font-medium text-[var(--neutral-12)]">
-            {t("robotsTxt.aiAgents")}
-          </h3>
+          <h3 className="text-sm font-medium text-neutral-12">{t("robotsTxt.aiAgents")}</h3>
           <ShellNote>{t("robotsTxt.aiAgentsNote")}</ShellNote>
           <div className="space-y-2">{AI_AGENTS.map(renderAgentRow)}</div>
         </section>
 
         <section className="space-y-2" aria-label={t("robotsTxt.rules")}>
-          <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("robotsTxt.rules")}</h3>
+          <h3 className="text-sm font-medium text-neutral-12">{t("robotsTxt.rules")}</h3>
           <ShellNote>{t("robotsTxt.rulesNote")}</ShellNote>
           {rules.map((rule, index) => (
             <div key={rule.id} className="flex flex-wrap items-end gap-2">
@@ -297,9 +293,7 @@ export function W3RobotsTxtGeneratorRunner({ toolId }: { toolId: string }) {
         </section>
 
         <section className="space-y-2" aria-label={t("robotsTxt.sitemaps")}>
-          <h3 className="text-sm font-medium text-[var(--neutral-12)]">
-            {t("robotsTxt.sitemaps")}
-          </h3>
+          <h3 className="text-sm font-medium text-neutral-12">{t("robotsTxt.sitemaps")}</h3>
           <ShellNote>{t("robotsTxt.sitemapsNote")}</ShellNote>
           {sitemaps.map((row, index) => (
             <div key={row.id} className="flex flex-wrap items-end gap-2">

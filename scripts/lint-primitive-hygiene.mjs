@@ -29,6 +29,7 @@
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 
 const ROOT = join(import.meta.dirname, "..");
 const SRC = join(ROOT, "packages/design/ui/src");
@@ -46,7 +47,7 @@ const VALUE_ONCHANGE =
   /^\s*onChange\??\s*:\s*\(\s*(?!e\b|event\b|ev\b)\w+\s*:\s*(?!React\.)[\w[\]| ]+\)\s*=>/;
 
 function strip(src) {
-  return src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/[^\n]*/g, "$1");
+  return blankSourceComments(src);
 }
 
 function* files(dir) {

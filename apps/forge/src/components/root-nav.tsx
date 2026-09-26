@@ -21,10 +21,8 @@ export async function RootNav({ tools }: { tools: readonly ForgeToolSummary[] })
     <nav aria-label={t("hubLabel")} className="space-y-3">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-sm font-semibold tracking-tight text-[var(--neutral-12)]">
-            {t("hubLabel")}
-          </h2>
-          <p className="mt-0.5 text-xs text-[var(--neutral-10)]">{t("dualSurface")}</p>
+          <h2 className="text-sm font-semibold tracking-tight text-neutral-12">{t("hubLabel")}</h2>
+          <p className="mt-0.5 text-xs text-neutral-10">{t("dualSurface")}</p>
         </div>
       </div>
       <ul className="flex flex-wrap gap-2">
@@ -34,12 +32,10 @@ export async function RootNav({ tools }: { tools: readonly ForgeToolSummary[] })
             <li key={root}>
               <Link
                 href={`/r/${root}`}
-                className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3.5 text-sm text-[var(--neutral-11)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
+                className="inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-3.5 text-sm text-neutral-11 transition-colors hover:border-neutral-8 hover:bg-neutral-2 hover:text-neutral-12"
               >
                 <span className="font-medium capitalize">{root}</span>
-                <span className="font-mono text-[11px] tabular-nums text-[var(--neutral-10)]">
-                  {count}
-                </span>
+                <span className="font-mono text-[11px] tabular-nums text-neutral-10">{count}</span>
               </Link>
             </li>
           );

@@ -43,6 +43,7 @@ export function FinalCTA() {
         <AnimateIn preset="fadeUp" inView className="mt-8 w-full min-w-0">
           <a
             href={createPublicDocsUrl("getting-started/installation")}
+            // allow-palette: .landing-brand-action is a fixed brand-gradient fill (globals.css), not driven by --primary, so its ink stays fixed too
             className="landing-brand-action group inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full px-8 py-3.5 font-medium text-white transition-transform hover:-translate-y-0.5 sm:w-auto sm:max-w-none"
           >
             {t("startBuilding")}

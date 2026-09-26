@@ -46,7 +46,7 @@ export function IntroductionHero() {
         <div className="flex flex-wrap items-center gap-4 mt-4 w-full justify-center md:justify-start">
           <Link
             href="/en/components/introduction"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[image:var(--brand-gradient-logo)] px-6 py-3 text-sm font-medium text-white shadow hover:opacity-90 transition-opacity !no-underline"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[image:var(--brand-gradient-logo)] px-6 py-3 text-sm font-medium text-primary-foreground shadow hover:opacity-90 transition-opacity !no-underline"
           >
             <Layout className="h-4 w-4" />
             Browse Components

@@ -76,7 +76,7 @@ export function UuidRunner({ toolId }: { toolId: string }) {
           {uuids.map((id) => (
             <li
               key={id}
-              className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2"
+              className="rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 px-3 py-2"
             >
               {id}
             </li>

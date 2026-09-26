@@ -52,7 +52,7 @@ function Section({ section, pathname }: { section: NavSection; pathname: string 
               "rounded-[var(--radius-sm)] px-2 py-[5px] text-[13px] no-underline transition-colors duration-micro",
               active
                 ? "bg-muted font-medium text-foreground"
-                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+                : "font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground",
             )}
             href={item.href}
             key={item.href}

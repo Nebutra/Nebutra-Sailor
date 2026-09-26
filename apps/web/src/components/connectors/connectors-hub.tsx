@@ -83,10 +83,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
   if (connectors.length === 0) {
     return (
       <section className="flex flex-col items-center justify-center gap-4 rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-12 text-center/[0.02]">
-        <div
-          className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-2xl)] text-white"
-          style={{ background: "hsl(var(--primary))" }}
-        >
+        <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-2xl)] bg-primary text-primary-foreground">
           <Cable className="h-4 w-4" />
         </div>
         <div>

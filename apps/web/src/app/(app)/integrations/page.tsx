@@ -261,7 +261,7 @@ export default function IntegrationsPage() {
                 className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
                   isConnected
                     ? "border-success/40 opacity-60"
-                    : "hover:border-[var(--blue-7)] hover:shadow-md"
+                    : "hover:border-blue-7 hover:shadow-md"
                 }`}
               >
                 <div className="flex items-start gap-3">

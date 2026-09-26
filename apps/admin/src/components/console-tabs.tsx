@@ -37,7 +37,7 @@ export function ConsoleTabs({ tabs }: { tabs: ConsoleTab[] }) {
             "-mb-px flex h-10 items-center border-b-2 px-3 text-sm leading-5",
             active
               ? "border-foreground font-medium text-foreground"
-              : "border-transparent text-muted-foreground",
+              : "font-medium border-transparent text-muted-foreground",
             tab.disabled ? "cursor-default opacity-60" : "hover:text-foreground",
           );
           if (tab.disabled) {

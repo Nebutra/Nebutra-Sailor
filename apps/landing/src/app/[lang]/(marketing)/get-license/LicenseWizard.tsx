@@ -140,7 +140,7 @@ const RoleCard = ({
     aria-pressed={selected}
     onClick={onClick}
     className={`flex flex-col items-center gap-3 rounded-[var(--radius-lg)] border-2 p-4 transition-colors duration-200 ${
-      selected ? "border-primary bg-[var(--blue-3)]" : "border-border hover:border-muted-foreground"
+      selected ? "border-primary bg-blue-3" : "border-border hover:border-muted-foreground"
     }`}
   >
     <Icon className="h-6 w-6 text-foreground" />
@@ -165,7 +165,7 @@ const UseCaseCard = ({
     aria-pressed={selected}
     onClick={onClick}
     className={`flex flex-col gap-2 rounded-[var(--radius-xl)] border-2 p-5 text-left transition-colors duration-200 ${
-      selected ? "border-primary bg-[var(--blue-3)]" : "border-border hover:border-muted-foreground"
+      selected ? "border-primary bg-blue-3" : "border-border hover:border-muted-foreground"
     }`}
   >
     <p className="font-semibold text-foreground">{label}</p>
@@ -199,9 +199,7 @@ const LicenseTierCard = ({
     onClick={onClick}
     className={`flex flex-col gap-4 rounded-[var(--radius-xl)] border-2 p-6 text-left transition-colors duration-200 ${
       highlighted ? "ring-2 ring-primary ring-offset-2" : ""
-    } ${
-      selected ? "border-primary bg-[var(--blue-3)]" : "border-border hover:border-muted-foreground"
-    }`}
+    } ${selected ? "border-primary bg-blue-3" : "border-border hover:border-muted-foreground"}`}
   >
     <div>
       <p className="font-semibold text-foreground">{title}</p>
@@ -519,7 +517,7 @@ export function LicenseWizard({
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep1Valid}
-                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-primary-foreground transition-opacity ${
                     isStep1Valid ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   }`}
                   style={{ background: isStep1Valid ? "hsl(var(--primary))" : undefined }}
@@ -646,7 +644,7 @@ export function LicenseWizard({
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep2Valid}
-                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-primary-foreground transition-opacity ${
                     isStep2Valid ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   }`}
                   style={{ background: isStep2Valid ? "hsl(var(--primary))" : undefined }}
@@ -842,7 +840,7 @@ export function LicenseWizard({
               {submitError && (
                 <div
                   aria-live="polite"
-                  className="flex gap-3 rounded-[var(--radius-lg)] border border-destructive bg-red-50 p-4"
+                  className="flex gap-3 rounded-[var(--radius-lg)] border border-destructive bg-destructive/10 p-4"
                 >
                   <AlertCircle className="h-5 w-5 shrink-0 text-destructive-strong" />
                   <p className="text-sm text-destructive-strong">{submitError}</p>
@@ -863,7 +861,7 @@ export function LicenseWizard({
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep3Valid || isSubmitting}
-                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-primary-foreground transition-opacity ${
                     isStep3Valid && !isSubmitting
                       ? "cursor-pointer"
                       : "cursor-not-allowed opacity-50"
@@ -884,7 +882,7 @@ export function LicenseWizard({
         {currentStep === 4 && (
           <AnimateIn preset="fadeUp">
             <div className="flex flex-col items-center gap-8 py-12 text-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-[var(--radius-full)] bg-[var(--blue-3)]">
+              <div className="flex h-20 w-20 items-center justify-center rounded-[var(--radius-full)] bg-blue-3">
                 <CheckCircle2 className="h-12 w-12 text-primary" />
               </div>
 
@@ -923,7 +921,7 @@ export function LicenseWizard({
               <div className="flex w-full max-w-md flex-col gap-3">
                 <a
                   href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002"}?welcome=true`}
-                  className="rounded-[var(--radius-lg)] px-6 py-3 text-center font-semibold text-white transition-opacity hover:opacity-90"
+                  className="rounded-[var(--radius-lg)] px-6 py-3 text-center font-semibold text-primary-foreground transition-opacity hover:opacity-90"
                   style={{ background: "hsl(var(--primary))" }}
                 >
                   Explore Nebutra Community →

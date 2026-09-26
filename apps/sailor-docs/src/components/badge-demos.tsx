@@ -129,21 +129,21 @@ export function BadgePillDemo() {
       <div className="flex flex-wrap items-center gap-3">
         <Badge
           variant="outline"
-          icon={<Slack className="text-blue-500" fill="currentColor" />}
+          icon={<Slack className="text-info" fill="currentColor" />}
           className="rounded-full font-normal hover:bg-muted/50 transition-colors pr-3 pl-2 py-1"
         >
           label
         </Badge>
         <Badge
           variant="outline"
-          icon={<Slack className="text-red-500" fill="currentColor" />}
+          icon={<Slack className="text-destructive-strong" fill="currentColor" />}
           className="rounded-full font-normal hover:bg-muted/50 transition-colors pr-3 pl-2 py-1"
         >
           label
         </Badge>
         <Badge
           variant="outline"
-          icon={<Slack className="text-green-500" fill="currentColor" />}
+          icon={<Slack className="text-success-strong" fill="currentColor" />}
           className="rounded-full font-normal hover:bg-muted/50 transition-colors pr-3 pl-2 py-1"
         >
           label

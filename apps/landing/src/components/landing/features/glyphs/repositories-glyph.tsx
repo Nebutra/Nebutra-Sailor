@@ -56,7 +56,7 @@ export function RepositoriesGlyph({ locale }: SubpackageGlyphProps) {
               key={m.name}
               className="flex items-center gap-1 font-mono text-[9px] leading-tight"
             >
-              <span className="text-[var(--cyan-11)]">{m.name}</span>
+              <span className="text-cyan-11">{m.name}</span>
               <span className="text-muted-foreground">(</span>
               <span className="text-muted-foreground">{m.args}</span>
               <span className="text-muted-foreground">)</span>

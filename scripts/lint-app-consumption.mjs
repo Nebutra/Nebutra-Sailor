@@ -14,10 +14,15 @@
  *                    Same pixels, but it bypasses the utility the theme
  *                    registers, so tooling (tailwind-merge, the pairing and
  *                    state-shift guards) cannot see it. Zero tolerance.
+ *   bracket-scale  — bg-[var(--neutral-1)] where bg-neutral-1 is registered.
+ *                    The 12-step scales are theme colours (--color-neutral-N,
+ *                    --color-blue-N, --color-cyan-N); the long form hid 1,133
+ *                    sites from tailwind-merge. Zero tolerance.
  *   palette        — Tailwind default-palette / fixed colours (bg-white,
  *                    text-gray-500, border-slate-200 …) that no Brand Package
- *                    or dark mode can restyle. Shrink-only per-file counts in
- *                    governance.config.json → appConsumption.allowlist.
+ *                    or dark mode can restyle. The 903 found were migrated
+ *                    the same day; governance.config.json →
+ *                    appConsumption.allowlist is empty and stays that way.
  *
  * Exempt one line with `// allow-palette: <reason>` directly above it (colour
  * on arbitrary media, depicted third-party chrome, material colours).
@@ -25,6 +30,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 
 const ROOT = join(import.meta.dirname, "..");
 const ALLOW = JSON.parse(readFileSync(join(ROOT, "governance.config.json"), "utf8")).appConsumption
@@ -32,13 +38,24 @@ const ALLOW = JSON.parse(readFileSync(join(ROOT, "governance.config.json"), "utf
 
 const files = execFileSync(
   "git",
-  ["ls-files", "--", "apps/**/*.tsx", "apps/**/*.ts", "apps/**/*.css"],
+  [
+    "ls-files",
+    "--cached",
+    "--others",
+    "--exclude-standard",
+    "--",
+    "apps/**/*.tsx",
+    "apps/**/*.ts",
+    "apps/**/*.css",
+  ],
   {
     cwd: ROOT,
     encoding: "utf8",
   },
 )
   .split("\n")
+  // An unmerged file is listed once per stage; count it once.
+  .filter((f, i, all) => all.indexOf(f) === i)
   .filter(
     (f) =>
       f &&
@@ -54,8 +71,11 @@ const STATUS_INK =
 const HSL_WRAPPED =
   /(?<![\w-])(?:bg|text|border|fill|stroke|ring|outline|decoration|divide|accent|placeholder|caret)-\[hsl\(var\(--[a-z0-9-]+\)(?:\s*\/\s*[\d.]+)?\)\]/g;
 
+const BRACKET_SCALE =
+  /(?<![\w-])(?:bg|text|border(?:-[trblxyse])?|ring|ring-offset|fill|stroke|from|to|via|outline|divide|decoration|placeholder|caret|accent)-\[(?:color:)?var\(--(?:neutral|blue|cyan)-(?:1[0-2]|[1-9])\)\]/g;
+
 function strip(src) {
-  return src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/[^\n]*/g, "$1");
+  return blankSourceComments(src);
 }
 
 const problems = [];
@@ -67,6 +87,7 @@ for (const rel of files) {
   const ink = (code.match(STATUS_INK) ?? []).length;
   const hsl = (code.match(HSL_WRAPPED) ?? []).length;
   const palette = (code.match(PALETTE) ?? []).length;
+  const bracket = (code.match(BRACKET_SCALE) ?? []).length;
   if (ink)
     problems.push(
       `${rel}: ${ink} status fill(s) used as ink — text-{destructive,warning,success}-strong`,
@@ -74,6 +95,10 @@ for (const rel of files) {
   if (hsl)
     problems.push(
       `${rel}: ${hsl} hsl(var(--x)) arbitrary value(s) where a utility exists — use it`,
+    );
+  if (bracket)
+    problems.push(
+      `${rel}: ${bracket} bracketed 12-step token(s) — write bg-neutral-1, not bg-[var(--neutral-1)]`,
     );
   const cap = ALLOW[rel];
   if (cap !== undefined) seen.add(rel);

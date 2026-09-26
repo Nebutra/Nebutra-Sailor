@@ -158,7 +158,7 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
           />
           {Number(meta.bytesIn) > 0 ? (
             <div>
-              <div className="h-2 overflow-hidden rounded-full bg-[var(--neutral-4)]">
+              <div className="h-2 overflow-hidden rounded-full bg-neutral-4">
                 <div
                   className="h-full rounded-full bg-primary transition-all"
                   style={{
@@ -169,11 +169,11 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
                   }}
                 />
               </div>
-              <p className="mt-1 text-xs text-[var(--neutral-10)]">{t("pdfCompress.barHint")}</p>
+              <p className="mt-1 text-xs text-neutral-10">{t("pdfCompress.barHint")}</p>
             </div>
           ) : null}
           {meta.note ? (
-            <p className="text-xs leading-relaxed text-[var(--neutral-11)]">{String(meta.note)}</p>
+            <p className="text-xs leading-relaxed text-neutral-11">{String(meta.note)}</p>
           ) : null}
         </div>
       ) : null}

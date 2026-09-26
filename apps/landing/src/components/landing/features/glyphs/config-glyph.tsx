@@ -59,7 +59,7 @@ export function ConfigGlyph(_props: SubpackageGlyphProps) {
             <Badge
               variant="secondary"
               size="sm"
-              className="ml-auto shrink-0 bg-[var(--blue-3)] font-mono text-[9px] text-primary"
+              className="ml-auto shrink-0 bg-blue-3 font-mono text-[9px] text-primary"
             >
               {row.type}
             </Badge>
@@ -75,7 +75,7 @@ export function ConfigGlyph(_props: SubpackageGlyphProps) {
         <Badge
           variant="secondary"
           size="sm"
-          className="bg-green-200 px-1 py-0 font-mono text-[9px] text-green-900"
+          className="bg-success/15 px-1 py-0 font-mono text-[9px] text-success-strong"
         >
           <Check className="h-2.5 w-2.5" />
         </Badge>

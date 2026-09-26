@@ -322,7 +322,7 @@ export function W3ReadmeSkeletonGeneratorRunner({ toolId }: { toolId: string }) 
           })()}
           {out.sectionsOmitted.length > 0 || out.warnings.length > 0 ? (
             <ShellDrill summary={t("readmeSkeleton.omittedTitle")}>
-              <ul className="space-y-1 text-sm text-[var(--neutral-11)]">
+              <ul className="space-y-1 text-sm text-neutral-11">
                 {out.sectionsOmitted.map((o) => (
                   <li key={o.section}>
                     <span className="font-mono">{t(`readmeSkeleton.section.${o.section}`)}</span> —{" "}
@@ -341,7 +341,7 @@ export function W3ReadmeSkeletonGeneratorRunner({ toolId }: { toolId: string }) 
       <div className="grid gap-4 sm:grid-cols-2">
         {SECTION_GROUPS.map((group) => (
           <fieldset key={group.id} className="space-y-2">
-            <legend className="text-xs font-medium text-[var(--neutral-10)]">
+            <legend className="text-xs font-medium text-neutral-10">
               {t(`readmeSkeleton.group.${group.id}`)}
             </legend>
             {group.sections.map((id) => (

@@ -114,7 +114,7 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
             <Lightning className="h-2.5 w-2.5" />
             {copy.footer}
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
         </div>
       </div>
     </div>

@@ -285,15 +285,15 @@ export function W3ListSetCompareRunner({ toolId }: { toolId: string }) {
           <ShellDrill
             summary={t("listSetCompare.drill.multiplicities", { n: output.multiplicities.length })}
           >
-            <ul className="space-y-1 font-mono text-xs text-[var(--neutral-11)]">
-              <li className="flex flex-wrap gap-3 text-[var(--neutral-10)]">
+            <ul className="space-y-1 font-mono text-xs text-neutral-11">
+              <li className="flex flex-wrap gap-3 text-neutral-10">
                 <span className="min-w-40">{t("listSetCompare.colValue")}</span>
                 <span>{t("listSetCompare.colCountA")}</span>
                 <span>{t("listSetCompare.colCountB")}</span>
               </li>
               {output.multiplicities.map((m) => (
                 <li key={m.value} className="flex flex-wrap gap-3">
-                  <span className="min-w-40 text-[var(--neutral-12)]">{m.value}</span>
+                  <span className="min-w-40 text-neutral-12">{m.value}</span>
                   <span>{m.countInA}</span>
                   <span>{m.countInB}</span>
                 </li>
@@ -316,7 +316,7 @@ export function W3ListSetCompareRunner({ toolId }: { toolId: string }) {
                     className="flex flex-wrap items-start gap-2"
                   >
                     <ShellBadge tone="warning">{output.warningCodes[i] ?? "notice"}</ShellBadge>
-                    <span className="flex-1 text-sm text-[var(--neutral-11)]">{message}</span>
+                    <span className="flex-1 text-sm text-neutral-11">{message}</span>
                   </li>
                 ))}
               </ul>
@@ -371,12 +371,9 @@ function ResultPanel({
 }) {
   const hidden = Math.max(0, items.length - MAX_VISIBLE_ITEMS);
   return (
-    <section
-      aria-label={title}
-      className="space-y-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4"
-    >
+    <section aria-label={title} className="space-y-2 rounded-[var(--radius-lg)] bg-neutral-2 p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="text-xs font-medium text-[var(--neutral-11)]">{title}</span>
+        <span className="text-xs font-medium text-neutral-11">{title}</span>
         <ShellBadge tone={tone}>{countLabel(items.length)}</ShellBadge>
       </div>
       <ItemList items={items.slice(0, MAX_VISIBLE_ITEMS)} empty={emptyLabel} />
@@ -389,9 +386,9 @@ function ResultPanel({
 }
 
 function ItemList({ items, empty }: { items: readonly string[]; empty: string }): ReactNode {
-  if (items.length === 0) return <p className="text-sm text-[var(--neutral-10)]">{empty}</p>;
+  if (items.length === 0) return <p className="text-sm text-neutral-10">{empty}</p>;
   return (
-    <ul className="max-h-64 space-y-0.5 overflow-y-auto font-mono text-xs text-[var(--neutral-12)]">
+    <ul className="max-h-64 space-y-0.5 overflow-y-auto font-mono text-xs text-neutral-12">
       {items.map((value, i) => (
         <li key={`${value}-${i}`} className="whitespace-pre-wrap break-all">
           {value}
@@ -412,14 +409,14 @@ function CountList({
 }) {
   return (
     <div className="space-y-1">
-      <span className="text-xs font-medium text-[var(--neutral-11)]">{title}</span>
+      <span className="text-xs font-medium text-neutral-11">{title}</span>
       {rows.length === 0 ? (
-        <p className="text-sm text-[var(--neutral-10)]">{empty}</p>
+        <p className="text-sm text-neutral-10">{empty}</p>
       ) : (
-        <ul className="max-h-64 space-y-0.5 overflow-y-auto font-mono text-xs text-[var(--neutral-11)]">
+        <ul className="max-h-64 space-y-0.5 overflow-y-auto font-mono text-xs text-neutral-11">
           {rows.map((row) => (
             <li key={row.value} className="flex flex-wrap gap-3">
-              <span className="text-[var(--neutral-12)]">{row.value}</span>
+              <span className="text-neutral-12">{row.value}</span>
               <span>×{row.count}</span>
             </li>
           ))}

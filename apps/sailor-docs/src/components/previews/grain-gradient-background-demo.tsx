@@ -12,6 +12,7 @@ export function GrainGradientBackgroundDemo() {
           className="opacity-80"
         />
 
+        {/* allow-palette: frosted-glass highlight edge over a randomly-coloured WebGL gradient — needs a literal light edge regardless of theme */}
         <div className="backdrop-blur-md p-8 max-w-md border-white/20 relative z-10 rounded-2xl border bg-background/50 text-center shadow-xl">
           <h2 className="text-3xl font-bold tracking-tight mb-4">Dreamy Gradients</h2>
           <p className="mb-6 text-foreground/80">

@@ -112,8 +112,7 @@ export function ApiKeysPageClient() {
         <button
           type="button"
           onClick={() => setDialogOpen(true)}
-          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-          style={{ background: "hsl(var(--primary))" }}
+          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-opacity hover:opacity-90"
         >
           Create API key
         </button>

@@ -178,10 +178,10 @@ export function W3VinRunner({ toolId }: { toolId: string }) {
     if (!math) return null;
     return (
       <div className="space-y-3">
-        <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-3)]">
+        <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-3">
           <table className="w-full min-w-[26rem] text-left text-sm">
             <thead>
-              <tr className="text-xs text-[var(--neutral-10)]">
+              <tr className="text-xs text-neutral-10">
                 <th scope="col" className="px-3 py-2 font-medium">
                   {t("vin.math.col.position")}
                 </th>
@@ -201,21 +201,18 @@ export function W3VinRunner({ toolId }: { toolId: string }) {
             </thead>
             <tbody>
               {math.positions.map((p: VinMathPosition) => (
-                <tr
-                  key={p.position}
-                  className={p.position === 9 ? "bg-[var(--blue-3)]" : undefined}
-                >
-                  <td className="px-3 py-1.5 text-[var(--neutral-10)]">{p.position}</td>
-                  <td className="px-3 py-1.5 font-mono text-[var(--neutral-12)]">{p.char}</td>
-                  <td className="px-3 py-1.5 font-mono text-[var(--neutral-11)]">{p.value}</td>
-                  <td className="px-3 py-1.5 font-mono text-[var(--neutral-11)]">{p.weight}</td>
-                  <td className="px-3 py-1.5 font-mono text-[var(--neutral-11)]">{p.product}</td>
+                <tr key={p.position} className={p.position === 9 ? "bg-blue-3" : undefined}>
+                  <td className="px-3 py-1.5 text-neutral-10">{p.position}</td>
+                  <td className="px-3 py-1.5 font-mono text-neutral-12">{p.char}</td>
+                  <td className="px-3 py-1.5 font-mono text-neutral-11">{p.value}</td>
+                  <td className="px-3 py-1.5 font-mono text-neutral-11">{p.weight}</td>
+                  <td className="px-3 py-1.5 font-mono text-neutral-11">{p.product}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="font-mono text-sm text-[var(--neutral-11)]">
+        <p className="font-mono text-sm text-neutral-11">
           {t("vin.math.formula", {
             sum: math.sum,
             remainder: math.remainder,

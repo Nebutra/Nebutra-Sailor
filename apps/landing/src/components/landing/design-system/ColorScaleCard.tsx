@@ -28,6 +28,7 @@ export function ColorScaleCard() {
               <Tooltip key={step}>
                 <TooltipTrigger asChild>
                   <div
+                    // allow-palette: swatch border/ink here is literally the swatch it renders, keyed to each neutral-N step, not the page theme
                     className="relative flex h-7 sm:h-8 lg:h-7 xl:h-8 w-[85%] items-center rounded-[var(--radius-md)] px-3 cursor-pointer transition-[box-shadow,width] duration-300 hover:w-full hover:shadow-md motion-reduce:transition-shadow motion-reduce:hover:w-[85%] border border-black/5"
                     style={{
                       backgroundColor: `var(--neutral-${step})`,
@@ -36,6 +37,7 @@ export function ColorScaleCard() {
                     <span
                       className={cn(
                         "text-[10px] font-mono select-none",
+                        // allow-palette: ink keyed to this swatch's own step, not the page theme
                         isDark ? "text-white/60" : "text-black/40",
                       )}
                     >
@@ -47,6 +49,7 @@ export function ColorScaleCard() {
                       <span
                         className={cn(
                           "text-[9px] font-mono px-1.5 py-0.5 rounded",
+                          // allow-palette: tag ink/fill keyed to this swatch's own step, not the page theme
                           isDark ? "bg-white/20 text-white" : "bg-black/10 text-black",
                         )}
                       >

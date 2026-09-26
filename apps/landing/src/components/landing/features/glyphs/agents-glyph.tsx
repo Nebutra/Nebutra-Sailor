@@ -43,7 +43,7 @@ export function AgentsGlyph(_props: SubpackageGlyphProps) {
           <Badge
             key={provider}
             variant="outline"
-            className="border-[var(--blue-6)] bg-[var(--blue-3)] px-1.5 py-0 font-mono text-[9px] text-primary"
+            className="border-blue-6 bg-blue-3 px-1.5 py-0 font-mono text-[9px] text-primary"
           >
             {provider}
           </Badge>

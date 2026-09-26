@@ -10,7 +10,7 @@ export type CodeSegment = CodeSegmentBase & {
 };
 
 const TONE_RING: Record<SpecimenTone, string> = {
-  neutral: "ring-[var(--neutral-6)]",
+  neutral: "ring-neutral-6",
   info: "ring-info/45",
   success: "ring-success/50",
   warning: "ring-warning/50",
@@ -18,7 +18,7 @@ const TONE_RING: Record<SpecimenTone, string> = {
 };
 
 const TONE_BG: Record<SpecimenTone, string> = {
-  neutral: "bg-[var(--neutral-3)]",
+  neutral: "bg-neutral-3",
   info: "bg-info/12",
   success: "bg-success/12",
   warning: "bg-warning/14",
@@ -50,13 +50,13 @@ export function SegmentedCodeSpecimen({
 }: SegmentedCodeSpecimenProps) {
   return (
     <div
-      className={cx("rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4 sm:p-5", className)}
+      className={cx("rounded-[var(--radius-lg)] bg-neutral-2 p-4 sm:p-5", className)}
       data-specimen="segmented-code"
     >
       <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
         <div>
-          <p className="text-sm font-semibold text-[var(--neutral-12)]">{title}</p>
-          {subtitle ? <p className="mt-0.5 text-xs text-[var(--neutral-10)]">{subtitle}</p> : null}
+          <p className="text-sm font-semibold text-neutral-12">{title}</p>
+          {subtitle ? <p className="mt-0.5 text-xs text-neutral-10">{subtitle}</p> : null}
         </div>
         {statusLabel ? (
           <span
@@ -68,7 +68,7 @@ export function SegmentedCodeSpecimen({
               statusTone === "danger" && "text-destructive-strong",
               statusTone === "warning" && "text-warning-strong",
               statusTone === "info" && "text-info",
-              statusTone === "neutral" && "text-[var(--neutral-11)]",
+              statusTone === "neutral" && "text-neutral-11",
             )}
           >
             {statusLabel}
@@ -87,13 +87,13 @@ export function SegmentedCodeSpecimen({
                 TONE_RING[tone],
               )}
             >
-              <p className="text-[0.65rem] font-medium uppercase tracking-wide text-[var(--neutral-10)]">
+              <p className="text-[0.65rem] font-medium uppercase tracking-wide text-neutral-10">
                 {seg.label}
               </p>
               <p
                 className={cx(
                   "mt-1 break-all font-mono text-sm font-semibold tracking-wider",
-                  seg.error ? "text-destructive-strong" : "text-[var(--neutral-12)]",
+                  seg.error ? "text-destructive-strong" : "text-neutral-12",
                 )}
               >
                 {seg.value || "—"}
@@ -102,7 +102,7 @@ export function SegmentedCodeSpecimen({
           );
         })}
       </ul>
-      {footer ? <div className="mt-3 text-xs text-[var(--neutral-10)]">{footer}</div> : null}
+      {footer ? <div className="mt-3 text-xs text-neutral-10">{footer}</div> : null}
     </div>
   );
 }

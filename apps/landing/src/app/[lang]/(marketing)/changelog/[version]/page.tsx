@@ -1,5 +1,6 @@
 import { getChangelogEntries } from "@nebutra/sanity/queries";
 import { AnimateIn } from "@nebutra/ui/components";
+import { cn } from "@nebutra/ui/utils";
 import { format as dateFnsFormat } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import type { Metadata } from "next";
@@ -13,23 +14,12 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import {
+  changelogTagClassName,
   findStaticChangelogRelease,
   STATIC_CHANGELOG_RELEASES as STATIC_RELEASES,
 } from "@/lib/changelog-releases";
 import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-
-const TAG_COLORS: Record<string, string> = {
-  feature: "var(--brand-accent)",
-  improvement: "var(--status-warning)",
-  fix: "var(--status-success)",
-  breaking: "var(--status-danger)",
-  security: "var(--brand-accent)",
-  platform: "var(--status-warning)",
-  infrastructure: "var(--brand-tertiary)",
-  major: "hsl(var(--primary))",
-  foundation: "var(--status-success)",
-};
 
 const CHANGELOG_CMS_TIMEOUT_MS = 1500;
 
@@ -308,10 +298,10 @@ export default async function ChangelogVersionPage({
             <header className="mb-8">
               <div className="mb-4 flex items-center gap-3">
                 <span
-                  className="inline-block rounded-full px-3 py-1 text-xs font-semibold text-white"
-                  style={{
-                    backgroundColor: TAG_COLORS[cmsEntry.type || "feature"] || TAG_COLORS.feature,
-                  }}
+                  className={cn(
+                    "inline-block rounded-full px-3 py-1 text-xs font-semibold",
+                    changelogTagClassName(cmsEntry.type),
+                  )}
                 >
                   {cmsEntry.type || "Feature"}
                 </span>
@@ -433,8 +423,10 @@ export default async function ChangelogVersionPage({
           <header className="mb-8">
             <div className="mb-4 flex items-center gap-3">
               <span
-                className="inline-block rounded-full px-3 py-1 text-xs font-semibold text-white"
-                style={{ backgroundColor: staticRelease.tagColor }}
+                className={cn(
+                  "inline-block rounded-full px-3 py-1 text-xs font-semibold",
+                  changelogTagClassName(staticRelease.tag),
+                )}
               >
                 {staticRelease.tag}
               </span>

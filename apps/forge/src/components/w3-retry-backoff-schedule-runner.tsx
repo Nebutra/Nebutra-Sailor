@@ -324,10 +324,10 @@ export function W3RetryBackoffScheduleRunner({ toolId }: { toolId: string }) {
             )}
 
             {o.schedule.length > 0 ? (
-              <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+              <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-neutral-2">
                 <table className="w-full text-sm" aria-label={t("retryBackoff.tableLabel")}>
                   <thead>
-                    <tr className="text-left text-xs text-[var(--neutral-10)]">
+                    <tr className="text-left text-xs text-neutral-10">
                       <th scope="col" className="px-3 py-2 font-medium">
                         {t("retryBackoff.colAttempt")}
                       </th>
@@ -344,16 +344,16 @@ export function W3RetryBackoffScheduleRunner({ toolId }: { toolId: string }) {
                       <tr key={row.attempt} className="align-top">
                         <th
                           scope="row"
-                          className="whitespace-nowrap px-3 py-2 text-left font-mono text-xs font-normal text-[var(--neutral-11)]"
+                          className="whitespace-nowrap px-3 py-2 text-left font-mono text-xs font-normal text-neutral-11"
                         >
                           #{row.attempt}
                         </th>
                         <td className="whitespace-nowrap px-3 py-2 font-mono text-xs">
-                          <span className="text-[var(--neutral-12)]">
+                          <span className="text-neutral-12">
                             {formatRange(row.delayMs, jittered)}
                           </span>
                           {jittered ? (
-                            <span className="ml-2 text-[var(--neutral-10)]">
+                            <span className="ml-2 text-neutral-10">
                               {t("retryBackoff.average", {
                                 value: formatMs(row.delayMs.expected),
                               })}
@@ -361,11 +361,11 @@ export function W3RetryBackoffScheduleRunner({ toolId }: { toolId: string }) {
                           ) : null}
                         </td>
                         <td className="whitespace-nowrap px-3 py-2 font-mono text-xs">
-                          <span className="text-[var(--neutral-12)]">
+                          <span className="text-neutral-12">
                             {formatRange(row.cumulativeMs, jittered)}
                           </span>
                           {jittered ? (
-                            <span className="ml-2 text-[var(--neutral-10)]">
+                            <span className="ml-2 text-neutral-10">
                               {t("retryBackoff.average", {
                                 value: formatMs(row.cumulativeMs.expected),
                               })}
@@ -385,7 +385,7 @@ export function W3RetryBackoffScheduleRunner({ toolId }: { toolId: string }) {
       }}
     >
       <fieldset className="space-y-2">
-        <legend className="text-xs font-medium text-[var(--neutral-11)]">
+        <legend className="text-xs font-medium text-neutral-11">
           {t("retryBackoff.strategy")}
         </legend>
         <div className="flex flex-wrap gap-1.5">

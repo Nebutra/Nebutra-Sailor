@@ -254,7 +254,7 @@ export function InboxBell({
           <span
             aria-hidden="true"
             data-testid="inbox-bell-badge"
-            className="absolute -right-0.5 -top-0.5 inline-flex min-w-[1rem] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold leading-none text-white"
+            className="absolute -right-0.5 -top-0.5 inline-flex min-w-[1rem] items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-semibold leading-none text-destructive-foreground"
           >
             {badgeLabel}
           </span>

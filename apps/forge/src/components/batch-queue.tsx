@@ -253,9 +253,7 @@ export function BatchQueue({
             className="block w-full text-sm"
             onChange={(e) => onFiles(e.target.files)}
           />
-          <p className="mt-2 text-xs text-[var(--neutral-10)]">
-            {pendingFiles.length} file(s) selected
-          </p>
+          <p className="mt-2 text-xs text-neutral-10">{pendingFiles.length} file(s) selected</p>
           <Button
             type="button"
             className="mt-3"
@@ -269,7 +267,7 @@ export function BatchQueue({
         <RunnerPanel title="Lines">
           <textarea
             data-allow-native
-            className="min-h-[140px] w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 font-mono text-sm"
+            className="min-h-[140px] w-full rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-3 font-mono text-sm"
             value={paste}
             onChange={(e) => setPaste(e.target.value)}
             placeholder="One item per line"
@@ -290,7 +288,7 @@ export function BatchQueue({
       {aggregate ? (
         <RunnerPanel title={`Batch ${aggregate.id.slice(0, 8)}… · ${aggregate.status}`}>
           {c ? (
-            <p className="mb-3 text-sm text-[var(--neutral-11)]">
+            <p className="mb-3 text-sm text-neutral-11">
               Processed {c.succeeded + c.failed + c.skipped}/{c.total}
               {c.running + c.queued > 0 ? ` · in flight ${c.running + c.queued}` : ""}
               {c.succeeded ? ` · ok ${c.succeeded}` : ""}
@@ -303,12 +301,12 @@ export function BatchQueue({
             {aggregate.items.map((item) => (
               <li
                 key={item.id}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-[var(--neutral-6)] px-3 py-2 text-sm"
+                className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-neutral-6 px-3 py-2 text-sm"
               >
                 <span className="min-w-0 flex-1 truncate font-mono text-xs">
                   {item.index + 1}. {item.label}
                 </span>
-                <span className="text-xs text-[var(--neutral-10)]">{item.status}</span>
+                <span className="text-xs text-neutral-10">{item.status}</span>
                 {item.error ? (
                   <span className="w-full text-xs text-destructive-strong">{item.error}</span>
                 ) : null}

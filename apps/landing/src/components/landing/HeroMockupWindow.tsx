@@ -50,26 +50,27 @@ type CodeToken = {
   value: ReactNode;
 };
 
+/** Ink that reads on the editor's own surface, which follows the theme. */
 function getCodeTokenClassName(token: string) {
   if (token.startsWith("//")) return "text-muted-foreground/50 italic";
-  if (token.startsWith('"')) return "text-teal-600 dark:text-teal-400";
+  if (token.startsWith('"')) return "text-success-strong";
   if (
     /^(import|export|const|async|await|return|from|new|default|function|if|else|try|catch)$/.test(
       token,
     )
   ) {
-    return "text-[#ff7b72] dark:text-[#ff7b72] font-medium";
+    return "text-destructive-strong font-medium";
   }
   if (/^(Hono|z|streamText|openai|authMiddleware)$/.test(token)) {
-    return "text-[#d2a8ff] dark:text-[#d2a8ff]";
+    return "text-blue-11";
   }
   if (/^(use|post|get|json|toDataStreamResponse)$/.test(token)) {
-    return "text-[#79c0ff] dark:text-[#79c0ff]";
+    return "text-cyan-11";
   }
   if (/^(model|system|messages|tools|searchDocs|description|parameters|query)$/.test(token)) {
-    return "text-[#7ee787] dark:text-[#7ee787]";
+    return "text-warning-strong";
   }
-  return "text-[#79c0ff] dark:text-[#79c0ff]";
+  return "text-blue-11";
 }
 
 function tokenizeCodeLine(line: string) {

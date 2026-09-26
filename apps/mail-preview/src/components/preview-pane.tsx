@@ -170,7 +170,7 @@ function Tabs({ current, onChange }: { current: Tab; onChange: (tab: Tab) => voi
               "rounded-t-md px-3 py-2 text-sm transition-colors",
               active
                 ? "border-b-2 border-primary font-medium text-foreground"
-                : "border-b-2 border-transparent text-muted-foreground hover:text-foreground",
+                : "font-medium border-b-2 border-transparent text-muted-foreground hover:text-foreground",
             ].join(" ")}
           >
             {t.label}
@@ -202,6 +202,7 @@ function IframePreview({ html }: { html: string }) {
         title="Email preview"
         sandbox="allow-same-origin"
         srcDoc={html}
+        // allow-palette: fixed light canvas behind arbitrary email HTML content, not app chrome
         className="mx-auto block h-[80vh] w-full max-w-3xl rounded-lg border border-border bg-white shadow-sm"
       />
     </div>
@@ -325,8 +326,7 @@ function SendTestPanel({
           type="button"
           onClick={() => void send()}
           disabled={disabled || pending || !to}
-          className="inline-flex items-center gap-1.5 rounded-md px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
-          style={{ background: "hsl(var(--primary))" }}
+          className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50"
         >
           {pending ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

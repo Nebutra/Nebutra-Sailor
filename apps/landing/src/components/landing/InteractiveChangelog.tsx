@@ -27,9 +27,11 @@ import {
   TooltipTrigger,
   toast,
 } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
+import { changelogTagClassName } from "@/lib/changelog-releases";
 import { landingPublicSrc } from "@/lib/public-assets";
 
 export interface Release {
@@ -37,7 +39,6 @@ export interface Release {
   version: string;
   date: string;
   tag?: string;
-  tagColor?: string;
   image?: string;
   excerpt: string;
   contributors?: string[];
@@ -48,19 +49,6 @@ export interface Release {
 export interface InteractiveChangelogProps {
   releases: Release[];
 }
-
-// Tag color map for semantic styling
-const TAG_COLORS: Record<string, string> = {
-  feature: "var(--brand-accent)",
-  improvement: "var(--status-warning)",
-  fix: "var(--status-success)",
-  breaking: "var(--status-danger)",
-  security: "var(--brand-accent)",
-  platform: "var(--status-warning)",
-  infrastructure: "var(--brand-tertiary)",
-  major: "hsl(var(--primary))",
-  foundation: "var(--status-success)",
-};
 
 const FALLBACK_RELEASE_IMAGE = landingPublicSrc("screenshots/demo-dashboard-command.webp");
 
@@ -105,7 +93,8 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
       {/* Hero — collapsed from 6 decoration layers to 2: subtle grid (faded
           to edges via mask) + single brand-color radial. Brand colors via
           tokens, not hardcoded RGB. */}
-      <div className="relative isolate w-full overflow-hidden bg-[#030712] pt-28 pb-20 text-white sm:pt-32 md:pb-24">
+      {/* A fixed dark band: the `dark` class scopes the dark token values here. */}
+      <div className="dark relative isolate w-full overflow-hidden bg-background pt-28 pb-20 text-foreground sm:pt-32 md:pb-24">
         <div className="pointer-events-none absolute inset-0 -z-10">
           {/* Subtle faded-edge grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(255_255_255/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.04)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,#000_30%,transparent_90%)]" />
@@ -115,18 +104,18 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
 
         <div className="relative container mx-auto px-4 text-left">
           <div className="flex max-w-4xl flex-col gap-4">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/8 px-3 py-1 text-sm font-medium text-white/80 shadow-[0_12px_40px_-24px_rgba(11,241,195,0.8)]">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-foreground/14 bg-foreground/8 px-3 py-1 text-sm font-medium text-foreground/80 shadow-[0_12px_40px_-24px_rgba(11,241,195,0.8)]">
               <GitPullRequest className="size-4" />
               <p>Changelog</p>
               <Link href="/api/changelog/rss" aria-label="Subscribe to changelog RSS">
-                <Rss className="size-4 ml-1 hover:text-white transition-colors" />
+                <Rss className="size-4 ml-1 hover:text-foreground transition-colors" />
               </Link>
             </div>
-            <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
+            <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl">
               Changelog
               <br /> Latest Enhancements & Platform News
             </h1>
-            <p className="max-w-2xl text-base leading-7 text-white/68 sm:text-lg">
+            <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
               Follow every product-grade improvement across the Nebutra AI SaaS platform.
             </p>
           </div>
@@ -158,7 +147,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                 className={`px-3 py-1 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                   activeFilter === null
                     ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-foreground hover:bg-muted dark:bg-muted dark:hover:bg-muted"
+                    : "bg-muted text-foreground hover:bg-muted"
                 }`}
               >
                 All
@@ -170,8 +159,8 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                   onClick={() => setActiveFilter(tag === activeFilter ? null : tag)}
                   className={`px-3 py-1 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                     activeFilter === tag
-                      ? "text-white"
-                      : "bg-muted text-foreground hover:bg-muted dark:bg-muted dark:hover:bg-muted"
+                      ? "text-primary-foreground"
+                      : "bg-muted text-foreground hover:bg-muted"
                   }`}
                   style={activeFilter === tag ? { background: "hsl(var(--primary))" } : undefined}
                 >
@@ -223,10 +212,10 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                               </span>
                               {item.tag && (
                                 <span
-                                  className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
-                                  style={{
-                                    backgroundColor: TAG_COLORS[item.tag] || "hsl(var(--primary))",
-                                  }}
+                                  className={cn(
+                                    "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+                                    changelogTagClassName(item.tag),
+                                  )}
                                 >
                                   {item.tag}
                                 </span>
@@ -241,9 +230,10 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                 alt={item.title}
                                 width={1200}
                                 height={700}
-                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 dark:border-muted/60 object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
+                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
                                 unoptimized={item.image?.endsWith(".svg")}
                               />
+                              {/* allow-palette: scrim over a release screenshot, not a themed surface */}
                               <div className="absolute inset-0 rounded-[var(--radius-lg)] bg-gradient-to-b from-transparent to-black/50 opacity-100" />
                             </div>
                           </DialogTrigger>
@@ -347,7 +337,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                           {/* View details link */}
                           <Link
                             href={`/changelog/${item.version}`}
-                            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-[var(--blue-8)] transition-colors rounded px-1"
+                            className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-blue-8 transition-colors rounded px-1"
                           >
                             View details
                             <ChevronDown className="size-4 -rotate-90" />

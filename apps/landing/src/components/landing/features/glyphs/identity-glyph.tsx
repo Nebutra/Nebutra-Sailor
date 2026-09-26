@@ -33,10 +33,7 @@ export function IdentityGlyph({ locale }: SubpackageGlyphProps) {
       <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2.5 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Top: avatar + name + handle */}
         <div className="flex items-center gap-2.5">
-          <span
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold text-white"
-            style={{ background: "hsl(var(--primary))" }}
-          >
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-[13px] font-semibold text-primary-foreground">
             MK
           </span>
           <div className="flex min-w-0 flex-col">

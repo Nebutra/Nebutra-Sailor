@@ -30,7 +30,8 @@ export function HexGridDemo() {
               Solid filled hexagons masked by a radial gradient.
             </p>
           </div>
-          <div className="md:h-[400px] bg-black relative flex h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border">
+          {/* Always dark — the glow is the point; `dark` scopes the dark token values. */}
+          <div className="dark md:h-[400px] bg-background relative flex h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border">
             <HexGrid
               filled
               size={32}
@@ -39,7 +40,7 @@ export function HexGridDemo() {
               className="[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]"
             />
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter mix-blend-overlay">
+              <h2 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter mix-blend-overlay">
                 NEBUTRA
               </h2>
             </div>

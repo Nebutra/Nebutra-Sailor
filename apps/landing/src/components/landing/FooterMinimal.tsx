@@ -124,7 +124,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
   return (
     <footer
       data-testid="footer-minimal"
-      className="relative w-full overflow-hidden bg-[var(--neutral-1)] text-[var(--neutral-12)]"
+      className="relative w-full overflow-hidden bg-neutral-1 text-neutral-12"
     >
       {/* Final CTA — opt-in via `showFinalCta`; default off to avoid polluting
           non-conversion pages (careers, legal, blog) with a product pitch. */}

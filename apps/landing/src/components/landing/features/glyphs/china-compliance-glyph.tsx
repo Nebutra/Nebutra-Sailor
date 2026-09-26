@@ -91,7 +91,7 @@ function ChecklistRow({ row }: ChecklistRowProps) {
       {isOk ? (
         <Check className="h-3.5 w-3.5 shrink-0 text-success-strong" aria-hidden="true" />
       ) : (
-        <Clock className="h-3.5 w-3.5 shrink-0 text-amber-500" aria-hidden="true" />
+        <Clock className="h-3.5 w-3.5 shrink-0 text-warning-strong" aria-hidden="true" />
       )}
       <span className="truncate text-[11px] text-foreground">{row.label}</span>
       {mono ? (

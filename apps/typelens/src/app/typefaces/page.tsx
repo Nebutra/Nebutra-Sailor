@@ -45,7 +45,7 @@ export default function TypefacesPage() {
                 {tf.scripts.join(", ")}
               </p>
             </div>
-            <span className="shrink-0 self-start border border-emerald-800/30 bg-emerald-50/80 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.12em] text-emerald-950 uppercase sm:self-end">
+            <span className="shrink-0 self-start border border-success/30 bg-success/10 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.12em] text-success-strong uppercase sm:self-end">
               {tf.license.spdxOrLabel} · commercial
             </span>
           </li>

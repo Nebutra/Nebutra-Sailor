@@ -72,7 +72,7 @@ export function NotificationPreferenceMatrix({
       </div>
 
       {!runtime.canManagePreferences ? (
-        <div className="mt-4 rounded-[var(--radius-lg)] border border-warning/20 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <div className="mt-4 rounded-[var(--radius-lg)] border border-warning/20 bg-warning/10 px-4 py-3 text-sm text-warning-strong">
           Changes are disabled here because the current notification runtime does not expose durable
           preference storage yet.
         </div>

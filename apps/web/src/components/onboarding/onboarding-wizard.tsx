@@ -30,10 +30,10 @@ export function OnboardingWizard() {
                 className={cn(
                   "flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold transition-colors",
                   i < currentStep
-                    ? "bg-primary text-primary-foreground"
+                    ? "border-2 border-primary bg-primary text-primary-foreground"
                     : i === currentStep
                       ? "border-2 border-primary text-primary"
-                      : "border border-muted-foreground/30 text-muted-foreground",
+                      : "border-2 border-muted-foreground/30 text-muted-foreground",
                 )}
               >
                 {i < currentStep ? (

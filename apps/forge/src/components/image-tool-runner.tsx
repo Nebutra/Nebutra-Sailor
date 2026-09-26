@@ -163,7 +163,7 @@ export function ImageToolRunner({
               <option value="jpeg">jpeg</option>
               <option value="png">png</option>
             </RunnerSelect>
-            <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
+            <label className="flex flex-col gap-1.5 text-sm text-neutral-11">
               <span className="text-xs font-medium">{t("imageTool.quality", { n: quality })}</span>
               <input
                 data-allow-native
@@ -233,7 +233,7 @@ export function ImageToolRunner({
               <option value="jpeg">jpeg</option>
               <option value="png">png</option>
             </RunnerSelect>
-            <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
+            <label className="flex flex-col gap-1.5 text-sm text-neutral-11">
               <span className="text-xs font-medium">{t("imageTool.quality", { n: quality })}</span>
               <input
                 data-allow-native
@@ -291,21 +291,21 @@ export function ImageToolRunner({
           <div className="grid gap-3 sm:grid-cols-2">
             {previewIn ? (
               <div>
-                <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageTool.original")}</p>
+                <p className="mb-1 text-xs text-neutral-10">{t("imageTool.original")}</p>
                 <img
                   src={previewIn}
                   alt="input preview"
-                  className="max-h-72 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
+                  className="max-h-72 w-full rounded-[var(--radius-lg)] border border-neutral-6 object-contain"
                 />
               </div>
             ) : null}
             {previewOut ? (
               <div>
-                <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageTool.result")}</p>
+                <p className="mb-1 text-xs text-neutral-10">{t("imageTool.result")}</p>
                 <img
                   src={previewOut}
                   alt="output preview"
-                  className="max-h-72 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
+                  className="max-h-72 w-full rounded-[var(--radius-lg)] border border-neutral-6 object-contain"
                 />
               </div>
             ) : null}

@@ -22,18 +22,18 @@ function cx(...parts: (string | false | null | undefined)[]): string {
 function brandSurface(brand: string): string {
   const b = brand.toLowerCase();
   if (b.includes("visa")) {
-    return "from-[color-mix(in_srgb,hsl(var(--primary))_35%,var(--neutral-3))] to-[var(--neutral-3)]";
+    return "from-[color-mix(in_srgb,hsl(var(--primary))_35%,var(--neutral-3))] to-neutral-3";
   }
   if (b.includes("master")) {
-    return "from-warning/28 to-[var(--neutral-3)]";
+    return "from-warning/28 to-neutral-3";
   }
   if (b.includes("amex") || b.includes("american")) {
-    return "from-info/30 to-[var(--neutral-3)]";
+    return "from-info/30 to-neutral-3";
   }
   if (b.includes("union") || b.includes("银联")) {
-    return "from-destructive/22 to-[var(--neutral-3)]";
+    return "from-destructive/22 to-neutral-3";
   }
-  return "from-[var(--neutral-3)] to-[var(--neutral-2)]";
+  return "from-neutral-3 to-neutral-2";
 }
 
 export function BankCardSpecimen({
@@ -56,13 +56,13 @@ export function BankCardSpecimen({
         aria-label={aria || displayBrand}
         className={cx(
           "relative overflow-hidden rounded-[1.1rem] bg-gradient-to-br p-5 shadow-ambient-sm",
-          "ring-1 ring-inset ring-[var(--neutral-6)]",
+          "ring-1 ring-inset ring-neutral-6",
           brandSurface(displayBrand),
         )}
         style={{ aspectRatio: "1.586 / 1", maxWidth: "22rem" }}
       >
         <div className="flex items-start justify-between gap-2">
-          <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[var(--neutral-11)]">
+          <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-neutral-11">
             {displayBrand}
           </span>
           {statusLabel ? (
@@ -71,22 +71,20 @@ export function BankCardSpecimen({
                 "rounded-full px-2 py-0.5 text-[0.65rem] font-medium",
                 valid === true && "bg-success/18 text-success-strong",
                 valid === false && "bg-destructive/18 text-destructive-strong",
-                valid == null && "bg-[var(--neutral-1)] text-[var(--neutral-11)]",
+                valid == null && "bg-neutral-1 text-neutral-11",
               )}
             >
               {statusLabel}
             </span>
           ) : null}
         </div>
-        <p className="mt-8 font-mono text-lg font-semibold tracking-[0.18em] text-[var(--neutral-12)] sm:text-xl">
+        <p className="mt-8 font-mono text-lg font-semibold tracking-[0.18em] text-neutral-12 sm:text-xl">
           {numberDisplay || "···· ···· ···· ····"}
         </p>
         <div className="mt-6 flex items-end justify-between">
           <div>
-            <p className="text-[0.6rem] uppercase tracking-wide text-[var(--neutral-10)]">
-              {specimenLabel}
-            </p>
-            <p className="text-xs text-[var(--neutral-11)]">{structureLabel}</p>
+            <p className="text-[0.6rem] uppercase tracking-wide text-neutral-10">{specimenLabel}</p>
+            <p className="text-xs text-neutral-11">{structureLabel}</p>
           </div>
           <div
             className="h-8 w-10 rounded-md bg-[color-mix(in_srgb,var(--neutral-12)_12%,transparent)]"
@@ -94,7 +92,7 @@ export function BankCardSpecimen({
           />
         </div>
       </section>
-      {caveat ? <p className="max-w-sm text-xs text-[var(--neutral-10)]">{caveat}</p> : null}
+      {caveat ? <p className="max-w-sm text-xs text-neutral-10">{caveat}</p> : null}
       {footer}
     </div>
   );

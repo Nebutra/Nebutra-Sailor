@@ -50,14 +50,14 @@ export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
               {"(o "}
               <span className="text-muted-foreground">{"=>"}</span>
               {" o.status === "}
-              <span className="text-[color:var(--cyan-11)]">{"'paid'"}</span>
+              <span className="text-cyan-11">{"'paid'"}</span>
               {")\n"}
               {"  ."}
               <span className="text-[color:hsl(var(--primary))]">reduce</span>
               {"((s, o) "}
               <span className="text-muted-foreground">{"=>"}</span>
               {" s + o.amount, "}
-              <span className="text-[color:var(--cyan-11)]">0</span>
+              <span className="text-cyan-11">0</span>
               {")"}
             </code>
           </pre>

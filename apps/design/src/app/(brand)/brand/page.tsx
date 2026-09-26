@@ -235,6 +235,7 @@ export default function BrandPage() {
           className="mb-4 flex h-32 items-end rounded-[var(--radius-lg)] p-4"
           style={{ background: brandGradient.primary.css }}
         >
+          {/* allow-palette: ink pinned to read on an arbitrary computed brand gradient swatch */}
           <span className="font-medium text-[13px] text-white">{brandGradient.primary.angle}°</span>
         </div>
         <div className="flex flex-wrap gap-4">

@@ -31,11 +31,11 @@ export function TokenGovernanceCard() {
         <div className="flex flex-col gap-2 relative">
           {/* Timeline progressive line */}
           <div className="absolute left-[7px] top-2 bottom-4 w-px bg-border group-hover:bg-border/40 transition-colors" />
-          <div className="absolute left-[7px] top-2 h-16 w-px bg-emerald-500/60 dark:bg-emerald-500/80 transition-[height] duration-1000 group-hover:h-full motion-reduce:transition-none z-0" />
+          <div className="absolute left-[7px] top-2 h-16 w-px bg-success/60 transition-[height] duration-1000 group-hover:h-full motion-reduce:transition-none z-0" />
 
           <div className="flex items-center gap-3 relative z-10">
-            <div className="h-4 w-4 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center bg-background">
-              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <div className="h-4 w-4 rounded-full bg-success/10 border border-success/30 flex items-center justify-center bg-background">
+              <div className="h-1.5 w-1.5 rounded-full bg-success" />
             </div>
             <span className="text-foreground font-medium group-hover:text-success-strong transition-colors">
               token parsing config
@@ -43,8 +43,8 @@ export function TokenGovernanceCard() {
           </div>
 
           <div className="flex items-center gap-3 relative z-10">
-            <div className="h-4 w-4 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center bg-background">
-              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <div className="h-4 w-4 rounded-full bg-success/10 border border-success/30 flex items-center justify-center bg-background">
+              <div className="h-1.5 w-1.5 rounded-full bg-success" />
             </div>
             <span className="text-foreground font-medium group-hover:text-success-strong transition-colors">
               generate css variables
@@ -52,8 +52,8 @@ export function TokenGovernanceCard() {
           </div>
 
           <div className="flex items-center gap-3 relative z-10">
-            <div className="h-4 w-4 rounded-full bg-blue-500/10 border border-blue-500/40 flex items-center justify-center bg-background">
-              <div className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse" />
+            <div className="h-4 w-4 rounded-full bg-info/10 border border-info/40 flex items-center justify-center bg-background">
+              <div className="h-1.5 w-1.5 rounded-full bg-info animate-pulse" />
             </div>
             <span className="text-foreground font-semibold">verify contrast (WCAG)</span>
             <span className="ml-auto text-muted-foreground font-bold animate-pulse hidden sm:inline-block border border-border/50 bg-muted/30 px-1.5 rounded-[var(--radius-sm)]">

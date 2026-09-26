@@ -77,7 +77,6 @@ const EXEMPT_PATH = [/\.stories\.tsx?$/, /\.test\.tsx?$/, /\/__tests__\//];
  * delete the entry — the guard fails on a stale one.
  */
 const ALLOWLIST = [
-  "apps/web/src/app/(app)/settings/shortcuts/page.tsx:dark-hand-paired-shadow",
   "apps/web/src/components/command-palette/command-mode-context.tsx:dark-hand-paired-shadow",
 ];
 

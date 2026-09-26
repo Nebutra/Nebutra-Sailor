@@ -95,7 +95,7 @@ export function NotificationPreferencesRow({
               )}`}
             >
               <span
-                className={`inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                className={`inline-block h-4 w-4 rounded-full bg-background shadow transition-transform ${
                   enabled ? "translate-x-5" : "translate-x-0"
                 }`}
                 aria-hidden="true"

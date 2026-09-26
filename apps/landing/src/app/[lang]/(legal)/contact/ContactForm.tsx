@@ -102,7 +102,7 @@ export function ContactForm() {
         {t("contact.form.privacyNotice")}{" "}
         <Link
           href="/privacy"
-          className="text-[color:var(--blue-11)] hover:underline dark:text-[color:hsl(var(--primary))]"
+          className="text-blue-11 hover:underline dark:text-[color:hsl(var(--primary))]"
         >
           {t("contact.form.privacyLink")}
         </Link>

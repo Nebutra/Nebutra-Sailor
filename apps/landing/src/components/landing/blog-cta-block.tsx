@@ -46,7 +46,7 @@ export function BlogCtaBlock({
         {hasCta && (
           <a
             href={ctaHref}
-            className="group inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-foreground px-4 text-sm font-semibold text-background transition-colors hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-8)] sm:w-auto"
+            className="group inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-foreground px-4 text-sm font-semibold text-background transition-colors hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-8 sm:w-auto"
           >
             {ctaLabel}
             <ArrowRight
@@ -62,7 +62,7 @@ export function BlogCtaBlock({
             <div key={item.key ?? `${title ?? "cta"}-${index}`} className="min-w-0">
               {item.title && (
                 <dt className="flex items-baseline gap-2 text-sm font-semibold text-foreground">
-                  <span className="font-mono text-[11px] text-[var(--blue-10)]">
+                  <span className="font-mono text-[11px] text-blue-10">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span>{item.title}</span>

@@ -8,8 +8,8 @@ export function EntityDemo() {
         <Entity
           as="li"
           left={
-            <div className="bg-blue-100 p-2 rounded-full dark:bg-blue-900">
-              <User className="text-blue-600 dark:text-blue-300 size-5" />
+            <div className="bg-chart-1/15 p-2 rounded-full">
+              <User className="text-chart-1 size-5" />
             </div>
           }
           right={<ChevronRight className="size-5 text-muted-foreground" />}
@@ -20,8 +20,8 @@ export function EntityDemo() {
         <Entity
           as="li"
           left={
-            <div className="bg-emerald-100 dark:bg-emerald-900 p-2 rounded-full">
-              <Mail className="text-emerald-600 dark:text-emerald-300 size-5" />
+            <div className="bg-chart-2/15 p-2 rounded-full">
+              <Mail className="text-chart-2 size-5" />
             </div>
           }
           right={<ChevronRight className="size-5 text-muted-foreground" />}
@@ -32,8 +32,8 @@ export function EntityDemo() {
         <Entity
           as="li"
           left={
-            <div className="bg-orange-100 dark:bg-orange-900 p-2 rounded-full">
-              <Settings className="text-orange-600 dark:text-orange-300 size-5" />
+            <div className="bg-chart-3/15 p-2 rounded-full">
+              <Settings className="text-chart-3 size-5" />
             </div>
           }
           right={<ChevronRight className="size-5 text-muted-foreground" />}

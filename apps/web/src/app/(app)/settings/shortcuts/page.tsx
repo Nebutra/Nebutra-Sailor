@@ -60,7 +60,7 @@ function groupVisible(
 
 function KeyCap({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded border border-neutral-7 bg-neutral-1 px-1.5 font-mono text-[11px] font-medium text-neutral-12 shadow-[0_1px_0_hsl(var(--border))] dark:bg-black/40 dark:shadow-[0_1px_0_rgba(255,255,255,0.05)]">
+    <kbd className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded border border-neutral-7 bg-neutral-1 px-1.5 font-mono text-[11px] font-medium text-neutral-12 shadow-[0_1px_0_hsl(var(--border))]">
       {children}
     </kbd>
   );
@@ -78,15 +78,15 @@ export default function ShortcutsPage() {
         <h1 className="text-base font-semibold text-neutral-12">Keyboard shortcuts</h1>
         <p className="mt-1 text-sm text-neutral-11">
           Press{" "}
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
             ⌘K
           </kbd>{" "}
           anywhere to run any command. Use{" "}
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
             ↑
           </kbd>
           /
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
             ↓
           </kbd>{" "}
           to navigate the list.

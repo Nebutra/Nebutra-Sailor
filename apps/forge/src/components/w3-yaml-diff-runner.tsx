@@ -301,7 +301,7 @@ export function W3YamlDiffRunner({ toolId }: { toolId: string }) {
           ) : null}
 
           <ShellDrill summary={t("yamlDiff.howItWorks")}>
-            <ul className="space-y-1.5 text-sm text-[var(--neutral-11)]">
+            <ul className="space-y-1.5 text-sm text-neutral-11">
               <li>{t("yamlDiff.rule.keyOrder")}</li>
               <li>{t("yamlDiff.rule.anchors")}</li>
               <li>{t("yamlDiff.rule.mergeKeys")}</li>

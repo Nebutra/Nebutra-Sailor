@@ -85,7 +85,7 @@ export function W3SecretScanRunner({ toolId }: { toolId: string }) {
       }}
       idle={
         <div className="space-y-1">
-          <p className="text-sm text-[var(--neutral-11)]">{t("secretScan.idleTitle")}</p>
+          <p className="text-sm text-neutral-11">{t("secretScan.idleTitle")}</p>
           <ShellNote>{t("secretScan.idleHint")}</ShellNote>
         </div>
       }
@@ -139,15 +139,13 @@ export function W3SecretScanRunner({ toolId }: { toolId: string }) {
               {output.findings.map((finding) => (
                 <li
                   key={`${finding.line}-${finding.column}-${finding.type}`}
-                  className="space-y-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3"
+                  className="space-y-2 rounded-[var(--radius-lg)] bg-neutral-2 p-3"
                 >
                   <div className="flex flex-wrap items-center gap-1.5">
                     <ShellBadge tone={CONFIDENCE_TONE[finding.confidence]}>
                       {confidenceLabel(finding.confidence)}
                     </ShellBadge>
-                    <span className="text-sm font-medium text-[var(--neutral-12)]">
-                      {finding.label}
-                    </span>
+                    <span className="text-sm font-medium text-neutral-12">{finding.label}</span>
                     <ShellBadge>
                       {t("secretScan.position", { line: finding.line, column: finding.column })}
                     </ShellBadge>
@@ -156,8 +154,8 @@ export function W3SecretScanRunner({ toolId }: { toolId: string }) {
                   <ShellCode label={t("secretScan.maskedLabel")}>{finding.maskedValue}</ShellCode>
                   <ShellDrill summary={t("secretScan.why")}>
                     <div className="space-y-2">
-                      <p className="text-sm text-[var(--neutral-11)]">{finding.reason}</p>
-                      <p className="font-mono text-xs text-[var(--neutral-10)]">{finding.type}</p>
+                      <p className="text-sm text-neutral-11">{finding.reason}</p>
+                      <p className="font-mono text-xs text-neutral-10">{finding.type}</p>
                       {finding.candidates && finding.candidates.length > 0 ? (
                         <div className="space-y-1">
                           <ShellNote>{t("secretScan.candidates")}</ShellNote>

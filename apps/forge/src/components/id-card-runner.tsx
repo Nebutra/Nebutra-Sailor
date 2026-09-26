@@ -133,18 +133,18 @@ export function IdCardRunner({ toolId }: { toolId: string }) {
             statusLabel={o.valid ? t("validate.valid") : t("validate.invalid")}
             footer={
               <div className="space-y-1">
-                {reasonText ? <p className="text-[var(--neutral-11)]">{reasonText}</p> : null}
+                {reasonText ? <p className="text-neutral-11">{reasonText}</p> : null}
                 <p>
                   {t("idCard.metaBirth")}:{" "}
-                  <span className="font-mono text-[var(--neutral-12)]">{o.birth ?? "—"}</span>
+                  <span className="font-mono text-neutral-12">{o.birth ?? "—"}</span>
                   {" · "}
                   {t("idCard.metaGender")}:{" "}
-                  <span className="text-[var(--neutral-12)]">{genderLabel(o.gender, t)}</span>
+                  <span className="text-neutral-12">{genderLabel(o.gender, t)}</span>
                   {o.regionCode ? (
                     <>
                       {" · "}
                       {t("idCard.metaRegion")}:{" "}
-                      <span className="font-mono text-[var(--neutral-12)]">{o.regionCode}</span>
+                      <span className="font-mono text-neutral-12">{o.regionCode}</span>
                     </>
                   ) : null}
                 </p>

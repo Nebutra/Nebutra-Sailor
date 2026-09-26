@@ -31,6 +31,7 @@ function Swatch({
   className?: string;
 }) {
   const isLightBg = parseInt(shade, 10) < 400 || shade === "50" || shade === "foreground";
+  // allow-palette: fixed ink over an arbitrary swatch hex set via inline style — a theme token can't guarantee contrast against every hue
   const contrastClass = isLightBg ? "text-neutral-900" : "text-white";
 
   const twClass = `bg-${name}-${shade === "DEFAULT" ? name : shade}`;
@@ -49,7 +50,7 @@ function Swatch({
           <div className="font-mono text-xs font-semibold opacity-90 transition-opacity group-hover:opacity-100">
             {hex.toUpperCase()}
           </div>
-          <div className="pointer-events-none absolute inset-0 rounded-md border border-black/10 opacity-0 mix-blend-overlay transition-opacity group-hover:opacity-100 dark:border-white/10" />
+          <div className="pointer-events-none absolute inset-0 rounded-md border border-foreground/10 opacity-0 mix-blend-overlay transition-opacity group-hover:opacity-100" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[180px]">
@@ -268,7 +269,7 @@ export function TailwindAnimationsDemo() {
               } as React.CSSProperties
             }
           >
-            <div className="w-4 h-4 bg-white/50 rounded-full" />
+            <div className="w-4 h-4 bg-primary-foreground/50 rounded-full" />
           </div>
           <code className="text-xs font-mono text-primary font-semibold truncate w-full text-center">
             animate-{key}

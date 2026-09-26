@@ -85,13 +85,13 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         {contacts.map((contact) => (
           <div
             key={contact.email}
-            className="rounded-[var(--radius-lg)] border border-border p-6 transition-colors hover:border-[color:var(--blue-8)] dark:hover:border-[color:var(--blue-7)]"
+            className="rounded-[var(--radius-lg)] border border-border p-6 transition-colors hover:border-blue-8 dark:hover:border-blue-7"
           >
             <h3 className="font-semibold text-foreground">{contact.title}</h3>
             <p className="mt-1 text-sm text-muted-foreground">{contact.description}</p>
             <a
               href={`mailto:${contact.email}`}
-              className="mt-4 inline-block text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] dark:text-[color:hsl(var(--primary))] dark:hover:text-[color:var(--blue-10)]"
+              className="mt-4 inline-block text-blue-11 hover:text-blue-12 dark:text-[color:hsl(var(--primary))] dark:hover:text-blue-10"
             >
               {contact.email}
             </a>
@@ -121,7 +121,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 href="https://twitter.com/nebutra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-[color:var(--blue-11)] dark:hover:text-[color:hsl(var(--primary))]"
+                className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
               >
                 Twitter
               </a>
@@ -129,7 +129,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 href="https://linkedin.com/company/nebutra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-[color:var(--blue-11)] dark:hover:text-[color:hsl(var(--primary))]"
+                className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
               >
                 LinkedIn
               </a>
@@ -137,7 +137,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 href="https://github.com/nebutra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-[color:var(--blue-11)] dark:hover:text-[color:hsl(var(--primary))]"
+                className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
               >
                 GitHub
               </a>

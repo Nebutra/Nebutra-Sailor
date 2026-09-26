@@ -19,13 +19,13 @@ const ROLES = [
     name: "Admin",
     src: "https://github.com/shadcn.png",
     fallback: "CN",
-    ring: "ring-primary/40 dark:ring-cyan-500/50 shadow-[0_0_10px_rgba(0,194,255,0.2)]",
+    ring: "ring-info/40 shadow-[0_0_10px_rgba(0,194,255,0.2)]",
   },
   {
     name: "Member",
     src: "https://github.com/leerob.png",
     fallback: "LR",
-    ring: "ring-amber-500/40 dark:ring-amber-400/50",
+    ring: "ring-warning/40",
   },
   {
     name: "Guest",
@@ -100,7 +100,7 @@ export function RBACCard() {
                   <td key={j} className="py-3.5 text-center">
                     <span className="inline-flex items-center justify-center w-full h-full">
                       {allowed ? (
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/15 shadow-[0_0_8px_rgba(16,185,129,0.15)] dark:shadow-[0_0_10px_rgba(52,211,153,0.2)]">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success/15 shadow-[0_0_8px_rgba(16,185,129,0.15)] dark:shadow-[0_0_10px_rgba(52,211,153,0.2)]">
                           <CheckCircle2 className="w-4 h-4 text-success-strong" />
                         </span>
                       ) : (

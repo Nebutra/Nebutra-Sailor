@@ -67,7 +67,7 @@ export function AnalyticsGlyph({ locale }: SubpackageGlyphProps) {
         {/* Footer */}
         <div className="flex items-center justify-between">
           <span className="font-mono text-[9px] text-muted-foreground">{copy.footer}</span>
-          <span className="h-1.5 w-1.5 rounded-full bg-green-900" />
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
         </div>
       </div>
     </div>

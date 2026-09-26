@@ -389,7 +389,7 @@ export function MermaidRenderRunner({ toolId }: { toolId: string }) {
           <Button type="button" size="sm" variant="outline" onClick={resetView}>
             {t("mermaid.zoomReset")}
           </Button>
-          <span className="px-1 text-xs tabular-nums text-[var(--neutral-10)]">
+          <span className="px-1 text-xs tabular-nums text-neutral-10">
             {Math.round(scale * 100)}%{diagramType ? ` · ${diagramType}` : ""}
             {loading ? ` · ${t("common.running")}` : ` · ${t("common.liveHint")}`}
           </span>
@@ -439,7 +439,7 @@ export function MermaidRenderRunner({ toolId }: { toolId: string }) {
             data-specimen="mermaid-canvas"
             role="img"
             aria-label={t("mermaid.previewAria")}
-            className="relative flex-1 cursor-grab overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] ring-1 ring-inset ring-[var(--neutral-6)] active:cursor-grabbing"
+            className="relative flex-1 cursor-grab overflow-hidden rounded-[var(--radius-lg)] bg-neutral-2 ring-1 ring-inset ring-neutral-6 active:cursor-grabbing"
             style={{ background: previewBg(theme) }}
             onWheel={onWheel}
             onPointerDown={onPointerDown}
@@ -462,7 +462,7 @@ export function MermaidRenderRunner({ toolId }: { toolId: string }) {
               </div>
             )}
           </div>
-          <p className="text-[11px] text-[var(--neutral-10)]">{t("mermaid.canvasHint")}</p>
+          <p className="text-[11px] text-neutral-10">{t("mermaid.canvasHint")}</p>
         </div>
       </div>
 

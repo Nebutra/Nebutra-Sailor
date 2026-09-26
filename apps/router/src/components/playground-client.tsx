@@ -199,7 +199,7 @@ export function PlaygroundClient({
           : "grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
       }
     >
-      <div className="flex min-h-0 flex-col space-y-3 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] p-3 md:p-4">
+      <div className="flex min-h-0 flex-col space-y-3 rounded-[var(--radius-lg)] border border-neutral-6 p-3 md:p-4">
         <Select
           label="模型"
           id="router-model"
@@ -239,16 +239,14 @@ export function PlaygroundClient({
               停止
             </Button>
           ) : null}
-          <span className="text-[11px] text-[var(--neutral-10)]">
-            用你账号下最新的一把 Key 计费
-          </span>
+          <span className="text-[11px] text-neutral-10">用你账号下最新的一把 Key 计费</span>
         </div>
       </div>
 
-      <div className="flex min-h-[240px] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] lg:min-h-0">
-        <div className="flex items-center justify-between border-b border-[var(--neutral-6)] bg-[var(--neutral-2)]/50 px-3 py-2">
+      <div className="flex min-h-[240px] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-neutral-6 lg:min-h-0">
+        <div className="flex items-center justify-between border-b border-neutral-6 bg-neutral-2/50 px-3 py-2">
           <span className="text-[12px] font-semibold">回复</span>
-          <span className="font-mono text-[10px] text-[var(--neutral-10)]">{model}</span>
+          <span className="font-mono text-[10px] text-neutral-10">{model}</span>
         </div>
         <div className="flex-1 overflow-auto">
           {turns.length === 0 ? (
@@ -257,7 +255,7 @@ export function PlaygroundClient({
               description="每次调用都会走计费边缘，结束后这里会显示它花了多少。"
             />
           ) : (
-            <ul className="divide-y divide-[var(--neutral-6)]">
+            <ul className="divide-y divide-neutral-6">
               {turns.map((turn) => (
                 <li key={turn.id} className="p-3">
                   <TurnView turn={turn} />
@@ -274,7 +272,7 @@ export function PlaygroundClient({
 function TurnView({ turn }: { turn: Turn }) {
   return (
     <>
-      <p className="mb-1.5 line-clamp-2 text-[11px] text-[var(--neutral-10)]">{turn.prompt}</p>
+      <p className="mb-1.5 line-clamp-2 text-[11px] text-neutral-10">{turn.prompt}</p>
       {turn.status === "failed" ? (
         <div
           role="alert"
@@ -291,14 +289,14 @@ function TurnView({ turn }: { turn: Turn }) {
           ) : null}
         </div>
       ) : (
-        <pre className="whitespace-pre-wrap font-mono text-[13px] leading-relaxed text-[var(--neutral-12)]">
+        <pre className="whitespace-pre-wrap font-mono text-[13px] leading-relaxed text-neutral-12">
           {turn.answer}
           {turn.status === "streaming" ? (
-            <span className="ml-0.5 inline-block h-3 w-1.5 animate-pulse bg-[var(--neutral-9)]" />
+            <span className="ml-0.5 inline-block h-3 w-1.5 animate-pulse bg-neutral-9" />
           ) : null}
         </pre>
       )}
-      <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] text-[var(--neutral-10)]">
+      <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] text-neutral-10">
         <span>{turn.model}</span>
         {turn.status === "cancelled" ? <span>已停止</span> : null}
         {turn.promptTokens !== null && turn.completionTokens !== null ? (
@@ -307,7 +305,7 @@ function TurnView({ turn }: { turn: Turn }) {
           </span>
         ) : null}
         {turn.cost !== null ? (
-          <span className="font-semibold text-[var(--neutral-12)]">
+          <span className="font-semibold text-neutral-12">
             {formatAmount(turn.cost)} {turn.currency}
           </span>
         ) : turn.settling ? (

@@ -45,7 +45,7 @@ export function DbGlyph({ locale }: SubpackageGlyphProps) {
             <span className="text-muted-foreground">.</span>
             <span className="text-primary">findMany</span>
             <span className="text-muted-foreground">{"({ "}</span>
-            <span className="text-[var(--cyan-11)]">tenantId</span>
+            <span className="text-cyan-11">tenantId</span>
             <span className="text-muted-foreground">{" })"}</span>
           </code>
         </div>
@@ -62,7 +62,7 @@ export function DbGlyph({ locale }: SubpackageGlyphProps) {
                 {blocked ? (
                   <Cross className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
                 ) : (
-                  <Check className="h-3 w-3 shrink-0 text-green-900" aria-hidden="true" />
+                  <Check className="h-3 w-3 shrink-0 text-success-strong" aria-hidden="true" />
                 )}
                 <span
                   className={`truncate font-mono text-[10px] ${

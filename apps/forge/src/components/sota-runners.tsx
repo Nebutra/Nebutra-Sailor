@@ -174,7 +174,7 @@ export function RegexSotaRunner({ toolId }: { toolId: string }) {
           {loading ? t("common.running") : t("regex.server")}
         </Button>
         {mode === "match" ? (
-          <span className="rounded-full bg-[var(--neutral-3)] px-3 py-1 text-xs tabular-nums text-[var(--neutral-11)]">
+          <span className="rounded-full bg-neutral-3 px-3 py-1 text-xs tabular-nums text-neutral-11">
             {t("regex.count", { count: matches.length })}
           </span>
         ) : null}
@@ -199,10 +199,10 @@ export function RegexSotaRunner({ toolId }: { toolId: string }) {
         className="font-mono text-sm"
       />
       {highlighted ? (
-        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 font-mono text-sm leading-relaxed whitespace-pre-wrap">
+        <div className="rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-3 font-mono text-sm leading-relaxed whitespace-pre-wrap">
           {highlighted.map((p, i) =>
             p.hit ? (
-              <mark key={i} className="rounded-sm bg-warning/45 px-0.5 text-[var(--neutral-12)]">
+              <mark key={i} className="rounded-sm bg-warning/45 px-0.5 text-neutral-12">
                 {p.text}
               </mark>
             ) : (
@@ -213,9 +213,9 @@ export function RegexSotaRunner({ toolId }: { toolId: string }) {
       ) : null}
       {mode === "replace" && replaceOut ? <RunnerOutput>{replaceOut}</RunnerOutput> : null}
       {mode === "match" && matches.length > 0 ? (
-        <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)]">
+        <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-neutral-6">
           <table className="w-full text-left text-sm">
-            <thead className="bg-[var(--neutral-2)] text-xs text-[var(--neutral-11)]">
+            <thead className="bg-neutral-2 text-xs text-neutral-11">
               <tr>
                 <th className="px-3 py-2">#</th>
                 <th className="px-3 py-2">index</th>
@@ -225,11 +225,11 @@ export function RegexSotaRunner({ toolId }: { toolId: string }) {
             </thead>
             <tbody>
               {matches.slice(0, 100).map((m, i) => (
-                <tr key={`${m.index}-${i}`} className="border-t border-[var(--neutral-6)]">
+                <tr key={`${m.index}-${i}`} className="border-t border-neutral-6">
                   <td className="px-3 py-1.5 font-mono text-xs">{i + 1}</td>
                   <td className="px-3 py-1.5 font-mono text-xs">{m.index}</td>
                   <td className="px-3 py-1.5 font-mono text-xs">{m.match}</td>
-                  <td className="px-3 py-1.5 font-mono text-xs text-[var(--neutral-11)]">
+                  <td className="px-3 py-1.5 font-mono text-xs text-neutral-11">
                     {m.groups.length ? m.groups.join(" · ") : "—"}
                   </td>
                 </tr>
@@ -340,7 +340,7 @@ export function QrSotaRunner({ toolId }: { toolId: string }) {
       </div>
       <RunnerError>{error}</RunnerError>
       {preview ? (
-        <div className="flex flex-col items-start gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4">
+        <div className="flex flex-col items-start gap-2 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={preview}
@@ -349,9 +349,7 @@ export function QrSotaRunner({ toolId }: { toolId: string }) {
             width={size}
             height={size}
           />
-          {engine ? (
-            <p className="font-mono text-[11px] text-[var(--neutral-10)]">{engine}</p>
-          ) : null}
+          {engine ? <p className="font-mono text-[11px] text-neutral-10">{engine}</p> : null}
         </div>
       ) : null}
       <RunnerNote>{t("qr.note")}</RunnerNote>
@@ -417,12 +415,12 @@ export function MultiHashSotaRunner({ toolId }: { toolId: string }) {
           {Object.entries(digests).map(([algo, value]) => (
             <div
               key={algo}
-              className="flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2"
+              className="flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 px-3 py-2"
             >
-              <span className="w-16 font-mono text-xs font-semibold uppercase text-[var(--neutral-11)]">
+              <span className="w-16 font-mono text-xs font-semibold uppercase text-neutral-11">
                 {algo}
               </span>
-              <code className="min-w-0 flex-1 truncate font-mono text-xs text-[var(--neutral-12)]">
+              <code className="min-w-0 flex-1 truncate font-mono text-xs text-neutral-12">
                 {value}
               </code>
               <Button
@@ -502,7 +500,7 @@ export function PdfTextRunner({ toolId }: { toolId: string }) {
           className="block w-full text-sm"
           onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
         />
-        {fileName ? <p className="text-xs text-[var(--neutral-11)]">{fileName}</p> : null}
+        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
       </div>
       <RunnerSelect id="pdf-layout" label={t("pdfText.layout")} value={layout} onChange={setLayout}>
         <option value="layout">layout</option>
@@ -607,7 +605,7 @@ export function XlsxTextRunner({ toolId }: { toolId: string }) {
           className="block w-full text-sm"
           onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
         />
-        {fileName ? <p className="text-xs text-[var(--neutral-11)]">{fileName}</p> : null}
+        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
       </div>
       <div className="flex flex-wrap gap-2">
         <Button
@@ -626,16 +624,16 @@ export function XlsxTextRunner({ toolId }: { toolId: string }) {
       {meta ? <RunnerNote>{meta}</RunnerNote> : null}
       {grid.length > 0 ? (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-[var(--neutral-12)]">{t("common.tablePreview")}</p>
-          <div className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-[var(--neutral-2)]">
+          <p className="text-sm font-medium text-neutral-12">{t("common.tablePreview")}</p>
+          <div className="max-h-96 overflow-auto rounded-[var(--radius-lg)] bg-neutral-2">
             <table className="w-full min-w-[32rem] text-left text-xs">
               <tbody>
                 {grid.map((row, ri) => (
-                  <tr key={ri} className={ri === 0 ? "font-medium text-[var(--neutral-12)]" : ""}>
+                  <tr key={ri} className={ri === 0 ? "font-medium text-neutral-12" : ""}>
                     {row.map((cell, ci) => (
                       <td
                         key={ci}
-                        className="border-b border-[var(--neutral-4)] px-2 py-1.5 font-mono text-[var(--neutral-11)]"
+                        className="border-b border-neutral-4 px-2 py-1.5 font-mono text-neutral-11"
                       >
                         {cell}
                       </td>
@@ -709,7 +707,7 @@ export function DocxTextRunner({ toolId }: { toolId: string }) {
           className="block w-full text-sm"
           onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
         />
-        {fileName ? <p className="text-xs text-[var(--neutral-11)]">{fileName}</p> : null}
+        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading || !base64}>
         {loading ? t("docxText.extracting") : t("docxText.extract")}
@@ -800,7 +798,7 @@ export function RouterTranslateRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-[var(--radius-lg)] border border-warning/30 bg-warning/8 px-3 py-2 text-sm text-[var(--neutral-11)]">
+      <div className="rounded-[var(--radius-lg)] border border-warning/30 bg-warning/8 px-3 py-2 text-sm text-neutral-11">
         {t("routerTranslate.lab")}
       </div>
       <Textarea
@@ -833,7 +831,7 @@ export function RouterTranslateRunner({ toolId }: { toolId: string }) {
           href={String(result.deepLink)}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex text-sm text-[var(--blue-11)] underline"
+          className="inline-flex text-sm text-blue-11 underline"
         >
           {t("routerTranslate.deepLink")}
         </a>
@@ -976,11 +974,11 @@ export function ImageCropRunner({ toolId }: { toolId: string }) {
         className="block w-full text-sm"
         onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
       />
-      <p className="text-xs text-[var(--neutral-10)]">{t("imageCrop.dragHint")}</p>
+      <p className="text-xs text-neutral-10">{t("imageCrop.dragHint")}</p>
       {preview ? (
         <div
           ref={boxRef}
-          className="relative max-w-full cursor-crosshair select-none overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)]"
+          className="relative max-w-full cursor-crosshair select-none overflow-hidden rounded-[var(--radius-lg)] border border-neutral-6"
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
@@ -1002,7 +1000,7 @@ export function ImageCropRunner({ toolId }: { toolId: string }) {
         </div>
       ) : null}
       {natural.w > 0 ? (
-        <p className="text-xs text-[var(--neutral-10)]">
+        <p className="text-xs text-neutral-10">
           {t("imageCrop.natural", { w: natural.w, h: natural.h })}
         </p>
       ) : null}
@@ -1043,13 +1041,9 @@ export function ImageCropRunner({ toolId }: { toolId: string }) {
       <div className="grid gap-4 sm:grid-cols-2">
         {outUrl ? (
           <div>
-            <p className="mb-1 text-xs text-[var(--neutral-10)]">{t("imageCrop.result")}</p>
+            <p className="mb-1 text-xs text-neutral-10">{t("imageCrop.result")}</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={outUrl}
-              alt="crop"
-              className="max-h-64 rounded border border-[var(--neutral-6)]"
-            />
+            <img src={outUrl} alt="crop" className="max-h-64 rounded border border-neutral-6" />
           </div>
         ) : null}
       </div>
@@ -1110,7 +1104,7 @@ export function PptxTextRunner({ toolId }: { toolId: string }) {
           className="block w-full text-sm"
           onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
         />
-        {fileName ? <p className="text-xs text-[var(--neutral-11)]">{fileName}</p> : null}
+        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading || !base64}>
         {loading ? t("pptxText.extracting") : t("pptxText.extract")}

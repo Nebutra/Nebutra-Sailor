@@ -92,26 +92,26 @@ const KIND_META: Record<
 > = {
   prompt: {
     Icon: Sparkles,
-    iconClass: "text-blue-600 dark:text-blue-400",
-    pipClass: "bg-blue-500",
-    chip: "bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300",
+    iconClass: "text-info",
+    pipClass: "bg-info",
+    chip: "bg-info/10 text-info",
   },
   think: {
     Icon: Brain,
-    iconClass: "text-purple-600 dark:text-purple-400",
-    pipClass: "bg-purple-500",
-    chip: "bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300",
+    iconClass: "text-chart-3",
+    pipClass: "bg-chart-3",
+    chip: "bg-chart-3/10 text-chart-3",
   },
   tool: {
     Icon: Wrench,
-    iconClass: "text-amber-600 dark:text-amber-400",
-    pipClass: "bg-amber-500",
-    chip: "bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300",
+    iconClass: "text-warning-strong",
+    pipClass: "bg-warning",
+    chip: "bg-warning/10 text-warning-strong",
   },
   result: {
     Icon: Check,
     iconClass: "text-success-strong",
-    pipClass: "bg-emerald-500",
+    pipClass: "bg-success",
     chip: "bg-success/10 text-success-strong",
   },
   answer: {
