@@ -387,6 +387,10 @@ const WEBHOOK_VERIFICATION: Readonly<
   // on the route's own path since the file-level check above isn't granular
   // enough. WeChat Pay APIv3: platform-certificate RSA signature + AEAD_AES_256_GCM
   // decrypt. Alipay: RSA2 signature over the sorted form fields.
+  // verifyCreemSignature(rawBody, creem-signature) — hex HMAC-SHA256 under
+  // CREEM_WEBHOOK_SECRET, checked before the body is parsed → 401 on failure.
+  "webhooks/creem.ts": (r, f) =>
+    r.path === "/creem" && /\bverifyCreemSignature\s*\(/.test(f.masked),
   "webhooks/chinapay.ts": (r, f) => {
     if (r.path === "/chinapay/wechat") {
       return /\bverifyAndDecryptWechatNotification\s*\(/.test(f.masked);
@@ -1090,6 +1094,7 @@ describe("permissions ratchet (gateway mutation routes)", () => {
       });
       for (const [file, path] of [
         ["webhooks/stripe.ts", "/stripe"],
+        ["webhooks/creem.ts", "/creem"],
         ["webhooks/better-auth-webhooks.ts", "/"],
       ] as const) {
         expect(anchor(file, "POST", path), file).toMatchObject({
