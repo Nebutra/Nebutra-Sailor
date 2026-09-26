@@ -494,10 +494,6 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     en: "Sanity Studio v4 helpers — schema generators, content-driven page builder, image pipeline integration.",
     zh: "Sanity Studio v4 辅助 — schema 生成器、内容驱动的 page builder、与图像流水线集成。",
   },
-  supabase: {
-    en: "Supabase adapter layer — auth bridge, RLS helpers, edge function templates — for teams running Sailor on Supabase rather than Postgres-direct.",
-    zh: "Supabase 适配层 — auth 桥接、RLS 辅助、edge function 模板 — 适合 Sailor 跑在 Supabase 而非直连 Postgres 的团队。",
-  },
   "china-compliance": {
     en: "China-region operations — ICP filing helpers, MIIT registration, real-name verification, in-country DB residency.",
     zh: "中国区运营支持 — ICP 备案辅助、工信部登记、实名认证、数据境内存储。",

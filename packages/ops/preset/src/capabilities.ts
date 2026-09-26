@@ -126,7 +126,8 @@ export function resolveProductCapabilities(config: ResolvedConfig): ProductCapab
       provider: config.authProvider,
       organizationSwitching: workspaceMode === "organization",
       supportsSso: config.features.sso,
-      supportsSocialLogin: config.authProvider === "clerk",
+      // Better Auth ships Google/GitHub social sign-in.
+      supportsSocialLogin: true,
       signupSurface: config.apps.web || config.apps["landing"],
     },
     billing: resolveBillingCapabilities(config, workspaceMode),

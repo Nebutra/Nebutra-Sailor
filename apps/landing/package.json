@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@chenglou/pretext": "^0.0.5",
-    "@clerk/nextjs": "^7.3.7",
     "@dicebear/collection": "^9.4.2",
     "@dicebear/core": "^9.4.2",
     "@gsap/react": "^2.1.2",

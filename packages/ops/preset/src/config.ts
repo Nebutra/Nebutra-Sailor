@@ -52,8 +52,8 @@ export const ThemeId = z.string().superRefine((value, ctx) => {
 
 export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 
-/** `nextauth` = Auth.js (ex-NextAuth.js; npm package `next-auth`). */
-export const AuthProviderId = z.enum(["clerk", "better-auth", "nextauth", "supabase"]);
+// Better Auth is the only auth provider (ADR 2026-09-24 Sailor convergence).
+export const AuthProviderId = z.enum(["better-auth"]);
 
 const DeployTargetsSchema = z
   .record(z.string(), z.string())
@@ -109,7 +109,7 @@ export const NebutraConfigSchema = z.object({
   locales: z.array(z.string()).default(["en"]),
   defaultLocale: z.string().default("en"),
   apiProtocols: z.array(ApiProtocolId).default(["rest"]),
-  authProvider: AuthProviderId.default("clerk"),
+  authProvider: AuthProviderId.default("better-auth"),
   deployTargets: DeployTargetsSchema,
   // Relative path (from repo root) to the project's brand config file.
   // Emitted as NEBUTRA_BRAND_CONFIG env var by getFeatureEnvVars.

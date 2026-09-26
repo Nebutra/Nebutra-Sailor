@@ -20,7 +20,7 @@ describe("Enterprise SSO infrastructure contract", () => {
 
     expect(discoveryRoute).toContain("parseConfiguredSsoProviders");
     expect(discoveryRoute).toContain("toSsoDiscoveryProvider");
-    expect(parser).toContain('provider: z.enum(["clerk", "generic", "feishu"]).default("generic")');
+    expect(parser).toContain('provider: z.enum(["generic", "feishu"]).default("generic")');
     expect(parser).toContain('FEISHU_OAUTH_START_PATH = "/api/auth/oauth/feishu"');
     expect(parser).toContain("allowSubdomains: z.boolean().default(false)");
     expect(oauthProviders).toContain('"feishu"');

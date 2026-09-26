@@ -33,7 +33,7 @@ const mockConfig: ResolvedConfig = {
   locales: ["en"],
   defaultLocale: "en",
   apiProtocols: ["rest"],
-  authProvider: "clerk",
+  authProvider: "better-auth",
   deployTargets: {
     web: "vercel",
     landing: "vercel",

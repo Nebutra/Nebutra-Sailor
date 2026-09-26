@@ -89,7 +89,7 @@ const COMPLIANCE_ITEMS: Record<"en" | "zh", [string, boolean][]> = {
 
 function pickLayout(slug: string): Layout {
   if (slug === "cli" || slug === "create-sailor") return "cli";
-  if (slug === "sanity" || slug === "supabase") return "connection";
+  if (slug === "sanity") return "connection";
   if (slug === "preset") return "preset";
   if (slug.includes("compliance")) return "compliance";
   return "cli";
@@ -109,7 +109,7 @@ function CliBody({ slug }: { slug: string }) {
 }
 
 function ConnectionBody({ slug }: { slug: string }) {
-  const Icon = slug === "supabase" ? Database : Box;
+  const Icon = Box;
   return (
     <Card>
       <CardContent className="flex items-center gap-4 p-4 md:p-5">

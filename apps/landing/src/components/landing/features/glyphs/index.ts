@@ -95,7 +95,6 @@ import { SearchGlyph } from "./search-glyph";
 import { SmsGlyph } from "./sms-glyph";
 import { StatusGlyph } from "./status-glyph";
 import { StorageGlyph } from "./storage-glyph";
-import { SupabaseGlyph } from "./supabase-glyph";
 import { SupportDeflectorGlyph } from "./support-deflector-glyph";
 import { TenantGlyph } from "./tenant-glyph";
 import { TenantStoreGlyph } from "./tenant-store-glyph";
@@ -204,7 +203,6 @@ export const SUBPACKAGE_GLYPHS: Record<string, SubpackageGlyph> = {
   sms: SmsGlyph,
   status: StatusGlyph,
   storage: StorageGlyph,
-  supabase: SupabaseGlyph,
   "support-deflector": SupportDeflectorGlyph,
   tenant: TenantGlyph,
   "tenant-store": TenantStoreGlyph,

@@ -5,7 +5,6 @@
 
 import { NextResponse } from "next/server";
 import { applyAuthCors } from "@/lib/cors";
-import { resolveAppOrigin } from "@/lib/return-to";
 import {
   extractEmailDomain,
   findSsoProvider,
@@ -33,7 +32,6 @@ export async function GET(request: Request) {
         provider: toSsoDiscoveryProvider(provider, {
           identifier,
           returnUrl: url.searchParams.get("returnUrl") ?? url.searchParams.get("returnTo"),
-          loginOrigin: resolveAppOrigin(),
         }),
       },
       { status: 200 },

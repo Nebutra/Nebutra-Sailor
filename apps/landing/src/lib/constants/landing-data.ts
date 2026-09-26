@@ -172,7 +172,7 @@ const packageGroups = [
     id: "ops",
     description: "- CLI, create-sailor, presets, Sanity, Supabase, compliance",
     icon: React.createElement(Settings, { className: "h-4 w-4 text-muted-foreground" }),
-    children: ["china-compliance", "cli", "create-sailor", "preset", "sanity", "supabase"],
+    children: ["china-compliance", "cli", "create-sailor", "preset", "sanity"],
   },
   {
     id: "platform",

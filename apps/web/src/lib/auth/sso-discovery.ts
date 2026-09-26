@@ -1,7 +1,6 @@
 import { sanitizeReturnUrl } from "@nebutra/auth";
 import { z } from "zod";
 
-export const CLERK_ENTERPRISE_SSO_PATH = "/sign-in/sso";
 export const FEISHU_OAUTH_START_PATH = "/api/auth/oauth/feishu";
 
 const EMAIL_DOMAIN_PATTERN =
@@ -19,7 +18,7 @@ export const ssoProviderSchema = z
     id: z.string().trim().min(1).max(120),
     name: z.string().trim().min(1).max(120),
     type: z.enum(["saml", "oidc"]),
-    provider: z.enum(["clerk", "generic", "feishu"]).default("generic"),
+    provider: z.enum(["generic", "feishu"]).default("generic"),
     loginUrl: internalPathSchema.optional(),
     allowSubdomains: z.boolean().default(false),
   })
@@ -40,7 +39,7 @@ export interface SsoDiscoveryProvider {
   id: string;
   name: string;
   type: "saml" | "oidc";
-  provider: "clerk" | "generic" | "feishu";
+  provider: "generic" | "feishu";
   loginUrl: string;
 }
 
@@ -95,18 +94,11 @@ export function buildSsoLoginUrl(
   provider: SsoProvider,
   options: { identifier: string; returnUrl: string | null },
 ): string {
-  const loginUrl =
-    provider.provider === "feishu"
-      ? (provider.loginUrl ?? FEISHU_OAUTH_START_PATH)
-      : (provider.loginUrl ?? CLERK_ENTERPRISE_SSO_PATH);
+  // generic providers are schema-required to carry loginUrl; feishu defaults
+  // to the built-in OAuth start route.
+  const loginUrl = provider.loginUrl ?? FEISHU_OAUTH_START_PATH;
   const url = new URL(loginUrl, "https://placeholder.invalid");
   const safeReturnUrl = sanitizeReturnUrl(options.returnUrl, { fallback: "" });
-
-  if (provider.provider === "clerk") {
-    url.searchParams.set("provider", provider.id);
-    url.searchParams.set("providerName", provider.name);
-    url.searchParams.set("identifier", options.identifier);
-  }
 
   if (safeReturnUrl) {
     url.searchParams.set(

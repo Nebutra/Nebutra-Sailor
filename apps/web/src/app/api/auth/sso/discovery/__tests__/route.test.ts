@@ -12,13 +12,14 @@ const configuredProviders = JSON.stringify([
   },
 ]);
 
-const clerkConfiguredProviders = JSON.stringify([
+const genericConfiguredProviders = JSON.stringify([
   {
     domain: "nebutra.com",
     id: "nebutra-entra",
     name: "Nebutra Entra ID",
     type: "oidc",
-    provider: "clerk",
+    provider: "generic",
+    loginUrl: "/sso/entra",
   },
 ]);
 
@@ -67,7 +68,7 @@ describe("GET /api/auth/sso/discovery", () => {
   });
 
   it("builds the default Clerk Enterprise SSO handoff URL", async () => {
-    vi.stubEnv("AUTH_SSO_DISCOVERY_PROVIDERS", clerkConfiguredProviders);
+    vi.stubEnv("AUTH_SSO_DISCOVERY_PROVIDERS", genericConfiguredProviders);
     const { GET } = await loadRoute();
 
     const res = await GET(
@@ -83,14 +84,13 @@ describe("GET /api/auth/sso/discovery", () => {
         id: "nebutra-entra",
         name: "Nebutra Entra ID",
         type: "oidc",
-        provider: "clerk",
-        loginUrl:
-          "/sign-in/sso?provider=nebutra-entra&providerName=Nebutra+Entra+ID&identifier=owner%40nebutra.com&returnUrl=%2Fatelier",
+        provider: "generic",
+        loginUrl: "/sso/entra?returnUrl=%2Fatelier",
       },
     });
   });
 
-  it("builds the default Feishu OAuth SSO handoff URL without requiring Clerk", async () => {
+  it("builds the default Feishu OAuth SSO handoff URL", async () => {
     vi.stubEnv("AUTH_SSO_DISCOVERY_PROVIDERS", feishuConfiguredProviders);
     const { GET } = await loadRoute();
 
@@ -131,7 +131,7 @@ describe("GET /api/auth/sso/discovery", () => {
   });
 
   it("does not match subdomains unless the provider opts in", async () => {
-    vi.stubEnv("AUTH_SSO_DISCOVERY_PROVIDERS", clerkConfiguredProviders);
+    vi.stubEnv("AUTH_SSO_DISCOVERY_PROVIDERS", genericConfiguredProviders);
     const { GET } = await loadRoute();
 
     const res = await GET(

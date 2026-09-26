@@ -51,7 +51,6 @@ Complete navigation to all project documentation.
 | [sanity](../packages/ops/sanity/README.md)               | Sanity CMS integration        |
 | [status](../packages/platform/status/README.md)               | Status page utilities         |
 | [storage](../packages/integrations/storage/README.md)             | File storage abstraction      |
-| [supabase](../packages/ops/supabase/README.md)           | Realtime, Storage, Edge Funcs |
 | [ui](../packages/design/ui/README.md)                       | Shared UI components          |
 
 ## Infrastructure

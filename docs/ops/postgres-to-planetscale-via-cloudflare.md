@@ -112,8 +112,7 @@ This sequence was validated end to end on a virgin PostgreSQL 17.8 with
 
 - Personal portfolio `tsekaluk-dev` (separate repo) runs on its own Neon and is decoupled from this
   monorepo. It is not part of this migration.
-- `packages/ops/supabase` (realtime client) is a provider option, not the data
-  path. It keeps working against a Supabase project if one is still around,
-  and is simply unused otherwise.
+- The former `packages/ops/supabase` realtime client was removed on 2026-09-26
+  (ADR 2026-09-24 Sailor convergence): it had no callers.
 - ClickHouse (metering) and Upstash (queue/cache) are separate stores and are
   not affected.

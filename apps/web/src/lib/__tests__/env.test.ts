@@ -88,7 +88,8 @@ describe("web env schema", () => {
           id: "nebutra-entra",
           name: "Nebutra Entra ID",
           type: "oidc",
-          provider: "clerk",
+          provider: "generic",
+          loginUrl: "/sso/entra",
         },
       ]),
     });

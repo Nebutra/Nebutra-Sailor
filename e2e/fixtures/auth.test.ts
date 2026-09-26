@@ -6,14 +6,13 @@ describe("auth E2E fixture configuration", () => {
   it("does not treat placeholders as runnable auth runtime config", () => {
     const status = getAuthCapabilityStatus("auth-runtime", {
       E2E_LIVE: "1",
-      NEXT_PUBLIC_AUTH_PROVIDER: "clerk",
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_placeholder",
-      CLERK_SECRET_KEY: "sk_test_placeholder",
+      NEXT_PUBLIC_AUTH_PROVIDER: "better-auth",
+      BETTER_AUTH_SECRET: "placeholder",
+      DATABASE_URL: "postgresql://localhost/dev_placeholder",
     });
 
     expect(status.ready).toBe(false);
-    expect(status.reason).toContain("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY");
-    expect(status.reason).toContain("CLERK_SECRET_KEY");
+    expect(status.reason).toContain("BETTER_AUTH_SECRET");
   });
 
   it("requires an explicit live target before auth-gated tests run", () => {

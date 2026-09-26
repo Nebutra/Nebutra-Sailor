@@ -215,11 +215,10 @@ pnpm generate:api-types   # regenerate TypeScript types from OpenAPI
 ## Auth Pattern
 
 ```typescript
-// Select provider via AUTH_PROVIDER env var (or create-sailor --auth=...)
+// Better Auth is the only provider (ADR 2026-09-24 Sailor convergence)
 import { createAuth } from "@nebutra/auth/server";
 
-const auth = await createAuth({ provider: process.env.AUTH_PROVIDER ?? "clerk" });
-// Providers: "clerk" | "better-auth" | "nextauth" | "supabase"
+const auth = await createAuth({ provider: "better-auth" });
 
 const session = await auth.getSession(request);
 if (!session) return new Response(null, { status: 401 });

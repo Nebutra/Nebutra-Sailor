@@ -57,7 +57,6 @@ const config = {
         // Infrastructure
         "infra",
         "inngest",
-        "supabase",
         // Other
         "deps",
         "release",

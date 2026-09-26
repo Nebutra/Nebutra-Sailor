@@ -36,7 +36,7 @@ export interface ConfiguredSessionCookie {
   readonly sameSite: SameSite;
 }
 
-export type AuthProvider = "better-auth" | "clerk" | "dev" | "nextauth" | "supabase" | "custom";
+export type AuthProvider = "better-auth" | "dev" | "custom";
 
 export type AuthCapability =
   | "auth-runtime"
@@ -77,17 +77,12 @@ const PLACEHOLDER_PATTERNS = [
 
 const AUTH_RUNTIME_ENV: Record<AuthProvider, readonly string[]> = {
   "better-auth": ["BETTER_AUTH_SECRET", "DATABASE_URL"],
-  clerk: ["NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "CLERK_SECRET_KEY"],
   dev: ["E2E_AUTH_READY=1"],
-  nextauth: ["NEXTAUTH_SECRET", "DATABASE_URL"],
-  supabase: ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_ANON_KEY"],
   custom: ["E2E_AUTH_READY=1"],
 };
 
 const DEFAULT_SESSION_COOKIE_NAME: Partial<Record<AuthProvider, string>> = {
   "better-auth": "better-auth.session_token",
-  clerk: "__session",
-  nextauth: "next-auth.session-token",
 };
 
 function readEnv(name: string, env: Env = process.env): string | undefined {
@@ -124,13 +119,7 @@ function readAuthProvider(env: Env = process.env): AuthProvider {
     "better-auth";
   const normalized = raw.toLowerCase();
 
-  if (
-    normalized === "better-auth" ||
-    normalized === "clerk" ||
-    normalized === "dev" ||
-    normalized === "nextauth" ||
-    normalized === "supabase"
-  ) {
+  if (normalized === "better-auth" || normalized === "dev") {
     return normalized;
   }
 
