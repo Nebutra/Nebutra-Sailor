@@ -505,6 +505,7 @@
     },
     "pdfCompress": {
       "file": "PDF 檔案",
+      "drop": "拖放或選擇 PDF",
       "quality": "品質",
       "engine": "引擎",
       "qStructural": "結構化（qpdf，無損串流）",
@@ -514,14 +515,13 @@
       "eAuto": "自動（qpdf → Ghostscript → pdf-lib）",
       "download": "下載 PDF",
       "needFile": "請先選擇 PDF 檔案",
+      "needPdf": "請選擇 PDF 檔案",
+      "privacy": "PDF 會送至主機壓縮，處理後不保留。",
+      "barHint": "長條表示輸出相對大小",
       "in": "輸入",
       "out": "輸出",
       "saved": "已儲存",
-      "note": "PDF 壓縮 · 主機端 qpdf / Ghostscript · pdf-lib 備用",
-      "drop": "拖放或選擇 PDF",
-      "needPdf": "請選擇 PDF 檔案",
-      "privacy": "PDF 會送至主機壓縮，處理後不保留。",
-      "barHint": "長條表示輸出相對大小"
+      "note": "PDF 壓縮 · 主機端 qpdf / Ghostscript · pdf-lib 備用"
     },
     "jsonFormat": {
       "indent": "縮排",
@@ -538,10 +538,10 @@
       "invalid": "無效 JSON",
       "line": "行",
       "column": "欄",
-      "note": "引擎：JSON.parse/stringify · 即時本地處理 · 與 API 路徑相同",
       "sortKeys": "排序鍵",
       "stats": "{chars} 字元 · {lines} 行",
-      "liveOff": "關閉即時"
+      "liveOff": "關閉即時",
+      "note": "引擎：JSON.parse/stringify · 即時本地處理 · 與 API 路徑相同"
     },
     "qr": {
       "size": "尺寸",
@@ -845,12 +845,12 @@
       "generate": "產生 PDF",
       "generating": "產生中…",
       "download": "下載 PDF",
-      "note": "marked → HTML → Playwright Chromium 列印。若缺少 Chromium，將自動回退至簡易結構化 PDF — 請檢查 renderEngine；簡易模式並非列印級版面。",
       "openTab": "在新分頁開啟",
       "preview": "PDF 預覽",
       "previewTitle": "PDF 預覽",
       "previewHint": "瀏覽器內建 PDF 預覽。部分行動瀏覽器僅支援下載。",
-      "noPayload": "未回傳 PDF 內容"
+      "noPayload": "未回傳 PDF 內容",
+      "note": "marked → HTML → Playwright Chromium 列印。若缺少 Chromium，將自動回退至簡易結構化 PDF — 請檢查 renderEngine；簡易模式並非列印級版面。"
     },
     "tokenCount": {
       "count": "計算 Token 數",
@@ -895,8 +895,8 @@
       "dims": " · {w}×{h}",
       "original": "原始",
       "result": "結果",
-      "note": "引擎：sharp (libvips) · 伺服器端 · 與 API (imageBase64) 路徑相同",
-      "privacy": "圖片會送至主機處理，處理後不保留。"
+      "privacy": "圖片會送至主機處理，處理後不保留。",
+      "note": "引擎：sharp (libvips) · 伺服器端 · 與 API (imageBase64) 路徑相同"
     },
     "pptxText": {
       "file": "PPTX 檔案",
@@ -2069,7 +2069,7 @@
       "theme_dark": "深色",
       "theme_forest": "森林",
       "theme_neutral": "中性",
-      "theme_base": "Base",
+      "theme_base": "基礎",
       "sample_flowchart": "流程圖",
       "sample_sequence": "時序圖",
       "sample_class": "類別圖",
@@ -2131,7 +2131,7 @@
       "authorityNote": "查询了你唯一探测名的递归解析器 IP（操作系统 DNS 路径）。请与 VPN/DNS 提供商对照。",
       "authorityNoHits": "本輪未捕獲遞迴命中。可暫時關閉瀏覽器「安全 DNS」後重試。",
       "authorityOfflineHint": "权威区离线 — 无法做系统 DNS 捕获。",
-      "authorityDetail": "Authority session detail",
+      "authorityDetail": "權威工作階段詳細資料",
       "phaseSession": "正在建立工作階段…",
       "phaseSystemDns": "正在觸發系統 DNS…",
       "phasePoll": "等待遞迴命中（{n}/{total}）…",
@@ -2152,7 +2152,7 @@
       "queryCount": "{n} 次查询",
       "colPath": "路径",
       "colAnswers": "应答",
-      "colMs": "ms",
+      "colMs": "毫秒",
       "ipPublic": "公网",
       "ipPrivate": "内网",
       "sig": {
