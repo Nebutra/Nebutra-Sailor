@@ -47,7 +47,7 @@ export class AgentOrchestrator {
 
   /** Route a message to the best agent and execute. */
   async chat(message: string, context: AgentContext): Promise<AgentResponse> {
-    await this.assertQuota(context.tenantId);
+    await this.assertQuota(context.tenantId, context.product);
 
     const agentConfigs = [...this.agents.values()].map((a) => a.config);
     const agentId = await this.router.route(message, agentConfigs, context, this.defaultAgentId);
@@ -63,8 +63,8 @@ export class AgentOrchestrator {
   }
 
   /** Check tenant quota before execution. */
-  private async assertQuota(tenantId: string): Promise<void> {
-    const { allowed } = await checkAgentQuota(tenantId);
+  private async assertQuota(tenantId: string, product: string): Promise<void> {
+    const { allowed } = await checkAgentQuota(tenantId, product);
     if (!allowed) {
       throw new Error(`Tenant "${tenantId}" has exceeded agent execution quota`);
     }

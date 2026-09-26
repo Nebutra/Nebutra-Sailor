@@ -231,6 +231,7 @@ model Tenant {
   cofounderProfile         CofounderProfile?
   contents                 Content[]
   creditBalances           CreditBalance[]
+  memberships              Membership[]
   customerFeatureOverrides CustomerFeatureOverride[]
   customerPlanVersions     CustomerPlanVersion[]
   customerUsageLimits      CustomerUsageLimit[]
@@ -1646,17 +1647,78 @@ model UsageLedgerEntry {
 
 // Credits System
 /// @conditional(billing-mode=credits)
+/// One balance per organization per product (ADR 2026-09-27 product wallets):
+/// Router's never pays for a Kuanlan shoot.
 model CreditBalance {
   id        String   @id @default(cuid())
-  tenantId  String   @unique @map("tenant_id")
+  tenantId  String   @map("tenant_id")
+  /// The product this balance belongs to, e.g. "router", "kuanlan", "para".
+  product   String   @db.VarChar(32)
   balance   Decimal  @default(0) @db.Decimal(10, 4)
   currency  String   @default("USD") @db.VarChar(3)
   updatedAt DateTime @updatedAt @map("updated_at")
 
   tenant       Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   transactions CreditTransaction[]
+  lots         CreditLot[]
 
+  @@unique([tenantId, product])
   @@map("credit_balances")
+  @@schema("public")
+}
+
+/// Where an expiring grant came from, which decides when it expires.
+enum CreditLotSource {
+  SUBSCRIPTION
+  PURCHASE
+  PROMO
+
+  @@schema("public")
+}
+
+/// The expiring part of a balance (ADR 2026-09-27): one row per grant that
+/// expires. Spends draw on the soonest expiry first; a job takes back what an
+/// expired lot still holds. A balance's never-expiring part is whatever the
+/// lots do not cover.
+model CreditLot {
+  id              String          @id @default(cuid())
+  creditBalanceId String          @map("credit_balance_id")
+  source          CreditLotSource
+  amount          Decimal         @db.Decimal(10, 4)
+  remaining       Decimal         @db.Decimal(10, 4)
+  expiresAt       DateTime        @map("expires_at")
+  relatedId       String?         @map("related_id")
+  createdAt       DateTime        @default(now()) @map("created_at")
+
+  creditBalance CreditBalance @relation(fields: [creditBalanceId], references: [id], onDelete: Cascade)
+
+  @@index([creditBalanceId, expiresAt])
+  @@index([expiresAt])
+  @@map("credit_lots")
+  @@schema("public")
+}
+
+/// A product's paid tier for a period (ADR 2026-09-27): Kuanlan and Para sell
+/// 月卡 / 年卡 memberships that grant credits monthly. One row per organization
+/// per product; the orders that bought it are recorded so a replay is a no-op.
+model Membership {
+  id             String    @id @default(cuid())
+  tenantId       String    @map("tenant_id")
+  product        String    @db.VarChar(32)
+  tier           String    @db.VarChar(32)
+  startsAt       DateTime  @map("starts_at")
+  endsAt         DateTime  @map("ends_at")
+  monthlyCredits Int       @default(0) @map("monthly_credits")
+  nextGrantAt    DateTime? @map("next_grant_at")
+  appliedOrders  String[]  @default([]) @map("applied_orders")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, product])
+  @@index([nextGrantAt])
+  @@map("memberships")
   @@schema("public")
 }
 

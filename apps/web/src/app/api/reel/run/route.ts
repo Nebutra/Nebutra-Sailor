@@ -90,7 +90,7 @@ export async function POST(req: Request) {
     await reelStore.create(tenantId, graphId, graphId);
     await reelStore.save(tenantId, graphId, [storyboardNode, ...genNodes], edges);
 
-    const ctx = createAgentContext(tenantId, userId, graphId);
+    const ctx = createAgentContext({ tenantId, product: "nebutra" }, userId, graphId);
     for (let i = 0; i < genNodes.length; i++) {
       const shot = shots[i];
       const node = genNodes[i];

@@ -351,6 +351,7 @@ export class AnalyticsClient {
 
       await addBonusCredits({
         organizationId: input.referrerId, // We assume referrerId implies the tenant/org ID context here
+        product: input.product,
         amount: Math.round(creditAmount),
         reason: `Referral reward for ${input.eventType}`,
       });

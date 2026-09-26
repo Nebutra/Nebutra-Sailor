@@ -7,8 +7,25 @@ import { BillingError } from "../types";
 // Types
 // ============================================
 
+/**
+ * Which product a balance belongs to, e.g. "router", "kuanlan", "para".
+ * Balances never cross products (ADR 2026-09-27 product wallets), so every
+ * read and write names one.
+ */
+export type WalletProduct = string;
+
+const PRODUCT_ID = /^[a-z][a-z0-9-]{1,31}$/;
+
+export function assertWalletProduct(product: string): WalletProduct {
+  if (!PRODUCT_ID.test(product)) {
+    throw new BillingError(`Invalid wallet product: ${product}`, "INVALID_WALLET_PRODUCT", 400);
+  }
+  return product;
+}
+
 export interface CreditBalance {
   organizationId: string;
+  product: WalletProduct;
   balance: number;
   currency: string;
 }
@@ -16,6 +33,7 @@ export interface CreditBalance {
 export interface CreditTransaction {
   id: string;
   organizationId: string;
+  product: WalletProduct;
   type: CreditTransactionType;
   amount: number;
   balanceAfter: number;
@@ -33,8 +51,26 @@ export interface CreditAllowance {
   refreshTime: string;
 }
 
+/**
+ * Where a grant came from, which decides when it expires (ADR 2026-09-27):
+ * a membership's periodic credits die at the period's end, a purchased pack
+ * lasts two years, a promotion whatever it was granted with.
+ */
+export type CreditLotSource = "SUBSCRIPTION" | "PURCHASE" | "PROMO";
+
+export interface CreditLotInput {
+  source: CreditLotSource;
+  expiresAt: Date;
+}
+
 export interface AddCreditsInput {
   organizationId: string;
+  product: WalletProduct;
+  /**
+   * An expiring grant. Omit for credits that never expire (a money balance,
+   * a legacy grant): whatever the lots do not cover is spent last.
+   */
+  lot?: CreditLotInput;
   amount: number;
   type: CreditTransactionType;
   description?: string;
@@ -45,6 +81,7 @@ export interface AddCreditsInput {
 
 export interface DeductCreditsInput {
   organizationId: string;
+  product: WalletProduct;
   amount: number;
   description?: string;
   relatedId?: string;
@@ -83,9 +120,15 @@ const DEFAULT_CREDIT_ALLOWANCES: Record<Plan, Omit<CreditAllowance, "plan">> = {
   },
 };
 
-export function invalidateCreditCache(organizationId: string) {
-  balanceCache.delete(organizationId);
+const cacheKey = (organizationId: string, product: WalletProduct) => `${organizationId}:${product}`;
+
+export function invalidateCreditCache(organizationId: string, product: WalletProduct) {
+  balanceCache.delete(cacheKey(organizationId, product));
 }
+
+const balanceKey = (organizationId: string, product: WalletProduct) => ({
+  tenantId_product: { tenantId: organizationId, product: assertWalletProduct(product) },
+});
 
 function toJsonInput(metadata: Record<string, unknown> | undefined): InputJsonValue {
   return (metadata ?? {}) as InputJsonValue;
@@ -99,9 +142,13 @@ function toJsonInput(metadata: Record<string, unknown> | undefined): InputJsonVa
  * a stale positive balance while the first has already spent it — that is an
  * overdraw. Guards must call {@link getCreditBalanceFresh}.
  */
-export async function getCreditBalance(organizationId: string): Promise<CreditBalance> {
+export async function getCreditBalance(
+  organizationId: string,
+  product: WalletProduct,
+): Promise<CreditBalance> {
   const now = Date.now();
-  const cached = balanceCache.get(organizationId);
+  const key = cacheKey(organizationId, product);
+  const cached = balanceCache.get(key);
 
   if (cached && cached.expiresAt > now) {
     return cached.data;
@@ -109,13 +156,14 @@ export async function getCreditBalance(organizationId: string): Promise<CreditBa
 
   const db = requireTenantDb(organizationId);
   let dbBalance = await db.creditBalance.findUnique({
-    where: { tenantId: organizationId },
+    where: balanceKey(organizationId, product),
   });
 
   if (!dbBalance) {
     dbBalance = await db.creditBalance.create({
       data: {
         tenantId: organizationId,
+        product,
         balance: 0,
         currency: "USD",
       },
@@ -124,11 +172,12 @@ export async function getCreditBalance(organizationId: string): Promise<CreditBa
 
   const mapped: CreditBalance = {
     organizationId: dbBalance.tenantId,
+    product,
     balance: Number(dbBalance.balance),
     currency: dbBalance.currency,
   };
 
-  balanceCache.set(organizationId, {
+  balanceCache.set(key, {
     data: mapped,
     expiresAt: now + CACHE_TTL_MS,
   });
@@ -143,9 +192,12 @@ export async function getCreditBalance(organizationId: string): Promise<CreditBa
  * concurrent reader on this instance cannot keep serving the stale value, then
  * repopulates it from the row it just read.
  */
-export async function getCreditBalanceFresh(organizationId: string): Promise<CreditBalance> {
-  balanceCache.delete(organizationId);
-  return getCreditBalance(organizationId);
+export async function getCreditBalanceFresh(
+  organizationId: string,
+  product: WalletProduct,
+): Promise<CreditBalance> {
+  invalidateCreditCache(organizationId, product);
+  return getCreditBalance(organizationId, product);
 }
 
 /**
@@ -154,9 +206,10 @@ export async function getCreditBalanceFresh(organizationId: string): Promise<Cre
  */
 export async function hasEnoughCreditsFresh(
   organizationId: string,
+  product: WalletProduct,
   amount: number,
 ): Promise<boolean> {
-  const balance = await getCreditBalanceFresh(organizationId);
+  const balance = await getCreditBalanceFresh(organizationId, product);
   return balance.balance >= amount;
 }
 
@@ -169,55 +222,14 @@ export async function addCredits(input: AddCreditsInput): Promise<CreditTransact
   }
 
   const db = requireTenantDb(input.organizationId);
-  const transactionData = await db.$transaction(async (tx: CreditLedgerClient) => {
-    const balance = await tx.creditBalance.upsert({
-      where: { tenantId: input.organizationId },
-      create: {
-        tenantId: input.organizationId,
-        balance: 0,
-        currency: "USD",
-      },
-      update: {},
-    });
+  const transactionData = await db.$transaction((tx: CreditLedgerClient) => grantInTx(tx, input));
 
-    if (input.relatedId) {
-      const existing = await tx.creditTransaction.findFirst({
-        where: {
-          creditBalanceId: balance.id,
-          relatedId: input.relatedId,
-          type: input.type,
-        },
-      });
-
-      if (existing) {
-        return existing;
-      }
-    }
-
-    const updatedBalance = await tx.creditBalance.update({
-      where: { tenantId: input.organizationId },
-      data: { balance: { increment: input.amount } },
-    });
-
-    return tx.creditTransaction.create({
-      data: {
-        creditBalanceId: updatedBalance.id,
-        type: input.type,
-        amount: input.amount,
-        balanceAfter: updatedBalance.balance,
-        description: input.description,
-        expiresAt: input.expiresAt,
-        relatedId: input.relatedId,
-        metadata: toJsonInput(input.metadata),
-      },
-    });
-  });
-
-  invalidateCreditCache(input.organizationId);
+  invalidateCreditCache(input.organizationId, input.product);
 
   return {
     id: transactionData.id,
     organizationId: input.organizationId,
+    product: input.product,
     type: transactionData.type as CreditTransactionType,
     amount: Number(transactionData.amount),
     balanceAfter: Number(transactionData.balanceAfter),
@@ -227,6 +239,97 @@ export async function addCredits(input: AddCreditsInput): Promise<CreditTransact
     metadata: (transactionData.metadata as Record<string, unknown>) || undefined,
     createdAt: transactionData.createdAt,
   };
+}
+
+/**
+ * The body of {@link addCredits}, for a caller that must grant inside its own
+ * transaction (a membership extends its period and grants its credits as one
+ * change). Idempotent on `(type, relatedId)`. Does not touch the cache — the
+ * caller invalidates after commit.
+ */
+export async function grantInTx(tx: CreditLedgerClient, input: AddCreditsInput) {
+  if (input.amount <= 0) {
+    throw new BillingError("Credit amount must be positive", "INVALID_CREDIT_AMOUNT", 400);
+  }
+  const balance = await tx.creditBalance.upsert({
+    where: balanceKey(input.organizationId, input.product),
+    create: {
+      tenantId: input.organizationId,
+      product: input.product,
+      balance: 0,
+      currency: "USD",
+    },
+    update: {},
+  });
+
+  if (input.relatedId) {
+    const existing = await tx.creditTransaction.findFirst({
+      where: {
+        creditBalanceId: balance.id,
+        relatedId: input.relatedId,
+        type: input.type,
+      },
+    });
+
+    if (existing) {
+      return existing;
+    }
+  }
+
+  const updatedBalance = await tx.creditBalance.update({
+    where: balanceKey(input.organizationId, input.product),
+    data: { balance: { increment: input.amount } },
+  });
+
+  if (input.lot) {
+    await tx.creditLot.create({
+      data: {
+        creditBalanceId: updatedBalance.id,
+        source: input.lot.source,
+        amount: input.amount,
+        remaining: input.amount,
+        expiresAt: input.lot.expiresAt,
+        relatedId: input.relatedId,
+      },
+    });
+  }
+
+  return tx.creditTransaction.create({
+    data: {
+      creditBalanceId: updatedBalance.id,
+      type: input.type,
+      amount: input.amount,
+      balanceAfter: updatedBalance.balance,
+      description: input.description,
+      expiresAt: input.lot?.expiresAt ?? input.expiresAt,
+      relatedId: input.relatedId,
+      metadata: toJsonInput(input.metadata),
+    },
+  });
+}
+
+/**
+ * Take a spend out of the expiring lots, soonest expiry first — the rule at
+ * 剪映 and CapCut. Runs after the balance row was decremented in the same
+ * transaction, so that row's lock serializes concurrent spends and two of
+ * them cannot draw on one lot's remainder. Whatever the lots do not cover
+ * comes from the part of the balance that never expires.
+ */
+async function consumeLots(tx: CreditLedgerClient, creditBalanceId: string, amount: number) {
+  let left = amount;
+  const lots = await tx.creditLot.findMany({
+    where: { creditBalanceId, remaining: { gt: 0 }, expiresAt: { gt: new Date() } },
+    orderBy: [{ expiresAt: "asc" }, { createdAt: "asc" }],
+  });
+  for (const lot of lots) {
+    if (left <= 0) break;
+    const take = Math.min(Number(lot.remaining), left);
+    await tx.creditLot.update({
+      where: { id: lot.id },
+      data: { remaining: { decrement: take } },
+    });
+    left -= take;
+  }
 }
 
 /**
@@ -240,7 +343,7 @@ export async function deductCredits(input: DeductCreditsInput): Promise<CreditTr
   const db = requireTenantDb(input.organizationId);
   const transactionData = await db.$transaction(async (tx: CreditLedgerClient) => {
     const balance = await tx.creditBalance.findUnique({
-      where: { tenantId: input.organizationId },
+      where: balanceKey(input.organizationId, input.product),
     });
 
     if (!balance) {
@@ -264,6 +367,7 @@ export async function deductCredits(input: DeductCreditsInput): Promise<CreditTr
     const updateResult = await tx.creditBalance.updateMany({
       where: {
         tenantId: input.organizationId,
+        product: input.product,
         balance: { gte: input.amount },
       },
       data: { balance: { decrement: input.amount } },
@@ -274,12 +378,14 @@ export async function deductCredits(input: DeductCreditsInput): Promise<CreditTr
     }
 
     const freshBalance = await tx.creditBalance.findUnique({
-      where: { tenantId: input.organizationId },
+      where: balanceKey(input.organizationId, input.product),
     });
 
     if (!freshBalance) {
       throw new BillingError("Credit balance not found", "CREDIT_BALANCE_NOT_FOUND", 404);
     }
+
+    await consumeLots(tx, freshBalance.id, input.amount);
 
     return tx.creditTransaction.create({
       data: {
@@ -294,11 +400,12 @@ export async function deductCredits(input: DeductCreditsInput): Promise<CreditTr
     });
   });
 
-  invalidateCreditCache(input.organizationId);
+  invalidateCreditCache(input.organizationId, input.product);
 
   return {
     id: transactionData.id,
     organizationId: input.organizationId,
+    product: input.product,
     type: transactionData.type as CreditTransactionType,
     amount: Number(transactionData.amount),
     balanceAfter: Number(transactionData.balanceAfter),
@@ -312,8 +419,12 @@ export async function deductCredits(input: DeductCreditsInput): Promise<CreditTr
 /**
  * Check if organization has enough credits
  */
-export async function hasEnoughCredits(organizationId: string, amount: number): Promise<boolean> {
-  const balance = await getCreditBalance(organizationId);
+export async function hasEnoughCredits(
+  organizationId: string,
+  product: WalletProduct,
+  amount: number,
+): Promise<boolean> {
+  const balance = await getCreditBalance(organizationId, product);
   return balance.balance >= amount;
 }
 
@@ -322,6 +433,7 @@ export async function hasEnoughCredits(organizationId: string, amount: number): 
  */
 export async function getCreditTransactions(
   organizationId: string,
+  product: WalletProduct,
   options?: {
     limit?: number;
     offset?: number;
@@ -330,7 +442,7 @@ export async function getCreditTransactions(
 ): Promise<CreditTransaction[]> {
   const db = requireTenantDb(organizationId);
   const balance = await db.creditBalance.findUnique({
-    where: { tenantId: organizationId },
+    where: balanceKey(organizationId, product),
     select: { id: true },
   });
 
@@ -349,6 +461,7 @@ export async function getCreditTransactions(
   return (raw as Array<Record<string, unknown>>).map((tx) => ({
     id: String(tx.id),
     organizationId,
+    product,
     type: tx.type as CreditTransactionType,
     amount: Number(tx.amount),
     balanceAfter: Number(tx.balanceAfter),
@@ -412,12 +525,14 @@ export function formatCredits(credits: number, currency = "USD", locale = "en-US
  */
 export async function refundCredits(input: {
   organizationId: string;
+  product: WalletProduct;
   amount: number;
   reason?: string;
   relatedId?: string;
 }): Promise<CreditTransaction> {
   return await addCredits({
     organizationId: input.organizationId,
+    product: input.product,
     amount: input.amount,
     type: "REFUND",
     description: input.reason || "Refund",
@@ -430,12 +545,14 @@ export async function refundCredits(input: {
  */
 export async function addBonusCredits(input: {
   organizationId: string;
+  product: WalletProduct;
   amount: number;
   reason?: string;
   expiresAt?: Date;
 }): Promise<CreditTransaction> {
   return await addCredits({
     organizationId: input.organizationId,
+    product: input.product,
     amount: input.amount,
     type: "BONUS",
     description: input.reason || "Bonus credits",

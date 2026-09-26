@@ -584,6 +584,98 @@
       "trial": "Free {days}-day trial",
       "seat": "{count, plural, one {# seat} other {# seats}}",
       "perSeat": "/ seat"
+    },
+    "checkout": {
+      "method": "How to pay",
+      "methods": {
+        "card": {
+          "title": "Card",
+          "description": "Visa, Mastercard and more, charged in {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Charged in {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Charged in {currency}"
+        }
+      },
+      "amount": {
+        "label": "Amount ({currency})",
+        "range": "Between {min} and {max}",
+        "invalid": "Enter an amount in that range, with at most two decimal places"
+      },
+      "pay": "Pay {amount}",
+      "payNoAmount": "Pay",
+      "finePrint": {
+        "card": "Card payments are processed by Creem, our merchant of record, which adds sales tax or VAT where it applies.",
+        "wallet": "Credited as soon as the payment is confirmed."
+      },
+      "qr": {
+        "alt": "Payment QR code",
+        "alipay": "Scan with Alipay. This page updates by itself once you have paid.",
+        "wechat": "Scan with WeChat. This page updates by itself once you have paid."
+      },
+      "changeMethod": "Pay another way",
+      "confirming": {
+        "title": "Confirming your payment",
+        "body": "This usually takes a few seconds. Leaving this page does not stop it from being credited."
+      },
+      "paid": {
+        "title": "Payment received",
+        "body": "It has been added to your {product} account."
+      },
+      "backTo": "Back to {product}",
+      "billing": "billing",
+      "expired": {
+        "title": "This payment was not completed",
+        "body": "Nothing was charged. Start again when you are ready."
+      },
+      "lost": {
+        "title": "This page cannot find the payment",
+        "body": "If you paid, it will still be credited. Your orders are listed in billing."
+      },
+      "tryAgain": "Pay again",
+      "viewOrders": "View orders",
+      "closed": {
+        "title": "Payments are not open yet",
+        "body": "No payment method is available for this offer right now. Try again later."
+      },
+      "notForSale": {
+        "title": "This offer is not on sale",
+        "body": "The link may be out of date. Go back to the product and choose again."
+      },
+      "unavailable": {
+        "title": "Checkout is unavailable",
+        "body": "The payment service could not be reached. Try again in a moment."
+      },
+      "problems": {
+        "forbidden": "Only an owner, admin or billing admin of this organization can pay.",
+        "unavailable": "The payment service did not answer. Nothing was charged; try again.",
+        "rejected": "This payment could not be started. Check the amount and try again."
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "description": "Payments for every product, newest first.",
+      "empty": "Nothing has been bought yet. Payments made from any product will be listed here.",
+      "unavailable": "Orders could not be loaded. Try again in a moment.",
+      "columns": {
+        "date": "Date",
+        "item": "Item",
+        "method": "Paid with",
+        "amount": "Amount",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Awaiting payment",
+        "CREDITING": "Paid, being credited",
+        "PAID": "Paid",
+        "PARTIALLY_REFUNDED": "Partly refunded",
+        "REFUNDED": "Refunded",
+        "EXPIRED": "Not completed"
+      }
     }
   },
   "organizations": {

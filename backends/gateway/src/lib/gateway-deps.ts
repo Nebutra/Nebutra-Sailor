@@ -11,6 +11,14 @@ import { getSystemDb, type PrismaClient } from "@nebutra/db";
 import { getQueue } from "@nebutra/queue";
 
 /**
+ * The balance the API-key AI gateway (`/api/v1/ai/gateway`) and the platform's
+ * own agents spend: the Nebutra platform's, not Router's (ADR 2026-09-27).
+ * Router bills USD at its edge; this path bills credits at $0.01, so sharing a
+ * balance would mix units.
+ */
+export const AI_GATEWAY_WALLET_PRODUCT = "nebutra";
+
+/**
  * Simple Redis adapter matching the shape expected by `@nebutra/gateway-core`.
  * Translates the Upstash Redis API to the minimal interface used for auth
  * caching, pricing cache, and balance cache.
@@ -74,7 +82,7 @@ export async function buildGatewayDeps(): Promise<GatewayDeps> {
     prisma: getSystemDb(),
     queue,
     getCreditBalance: async (orgId: string) => {
-      const result = await getCreditBalance(orgId);
+      const result = await getCreditBalance(orgId, AI_GATEWAY_WALLET_PRODUCT);
       return Number(result.balance);
     },
   };

@@ -19,6 +19,7 @@ on:
     paths:
       - "backends/gateway/**"
       - "infra/fly/gateway.toml"
+      - "ops/nebutra/offers.json"
       - "infra/runtime/docker/Dockerfile.gateway"
       - ".github/workflows/deploy-fly-gateway.yml"
 
@@ -149,9 +150,12 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
+          # The price list is data in the repo (ADR 2026-09-27): a catalog edit
+          # ships with the next deploy, and a malformed one fails the boot.
           flyctl deploy "$STAGE" \
             --config "$GITHUB_WORKSPACE/infra/fly/gateway.toml" \
             --dockerfile "$STAGE/Dockerfile" \
+            --env BILLING_OFFERS_JSON="$(jq -c . "$GITHUB_WORKSPACE/ops/nebutra/offers.json")" \
             --ha=false \
             --remote-only \
             --yes

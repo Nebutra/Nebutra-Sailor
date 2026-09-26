@@ -1,7 +1,10 @@
+export { type ExpiringCredits, expireCreditLots, getExpiringCredits } from "./lots";
+export type { CreditLotInput, CreditLotSource } from "./service";
 export {
   type AddCreditsInput,
   addBonusCredits,
   addCredits,
+  assertWalletProduct,
   type CreditAllowance,
   type CreditBalance,
   type CreditTransaction,
@@ -18,4 +21,5 @@ export {
   hasEnoughCreditsFresh,
   invalidateCreditCache,
   refundCredits,
+  type WalletProduct,
 } from "./service";

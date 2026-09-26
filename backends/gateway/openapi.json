@@ -8911,7 +8911,18 @@
     "/api/v1/billing/credits/balance": {
       "get": {
         "tags": ["Billing", "Credits"],
-        "summary": "Get current credit balance",
+        "summary": "Get one product's credit balance",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,31}$"
+            },
+            "required": true,
+            "name": "product",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Credit balance",
@@ -8968,6 +8979,15 @@
         "tags": ["Billing", "Credits"],
         "summary": "List credit transactions (paginated)",
         "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,31}$"
+            },
+            "required": true,
+            "name": "product",
+            "in": "query"
+          },
           {
             "schema": {
               "type": "integer",
@@ -9096,6 +9116,17 @@
       "get": {
         "tags": ["Billing", "Orders"],
         "summary": "List the offers that can be bought",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,31}$"
+            },
+            "required": false,
+            "name": "product",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Active offers",
@@ -9112,6 +9143,36 @@
                           "id": {
                             "type": "string"
                           },
+                          "product": {
+                            "type": "string"
+                          },
+                          "account": {
+                            "type": "string",
+                            "enum": ["personal", "organization", "workspace"]
+                          },
+                          "kind": {
+                            "type": "string"
+                          },
+                          "grants": {
+                            "type": "object",
+                            "properties": {
+                              "credits": {
+                                "type": "number"
+                              },
+                              "tier": {
+                                "type": "string"
+                              },
+                              "days": {
+                                "type": "number"
+                              },
+                              "monthlyCredits": {
+                                "type": "number"
+                              },
+                              "expiresInDays": {
+                                "type": "number"
+                              }
+                            }
+                          },
                           "name": {
                             "type": "string"
                           },
@@ -9126,11 +9187,40 @@
                               }
                             }
                           },
+                          "customAmount": {
+                            "type": "object",
+                            "properties": {
+                              "USD": {
+                                "type": "object",
+                                "properties": {
+                                  "min": {
+                                    "type": "number"
+                                  },
+                                  "max": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": ["min", "max"]
+                              },
+                              "CNY": {
+                                "type": "object",
+                                "properties": {
+                                  "min": {
+                                    "type": "number"
+                                  },
+                                  "max": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": ["min", "max"]
+                              }
+                            }
+                          },
                           "highlight": {
                             "type": "string"
                           }
                         },
-                        "required": ["id", "name", "prices"]
+                        "required": ["id", "product", "account", "kind", "grants", "name"]
                       }
                     }
                   },
@@ -9198,6 +9288,11 @@
                   "method": {
                     "type": "string",
                     "enum": ["card", "alipay", "wechat"]
+                  },
+                  "amount": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
                   },
                   "channel": {
                     "type": "string",
@@ -9302,6 +9397,89 @@
                     }
                   },
                   "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Billing", "Orders"],
+        "summary": "List this organization's orders, newest first",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders across every product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "offerId": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["PENDING", "PAID", "PARTIALLY_REFUNDED", "REFUNDED", "EXPIRED"]
+                          },
+                          "fulfilled": {
+                            "type": "boolean"
+                          },
+                          "amountMinor": {
+                            "type": "integer"
+                          },
+                          "currency": {
+                            "type": "string"
+                          },
+                          "method": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "product": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "offerId",
+                          "status",
+                          "fulfilled",
+                          "amountMinor",
+                          "currency",
+                          "method",
+                          "createdAt",
+                          "product",
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": ["orders"]
                 }
               }
             }

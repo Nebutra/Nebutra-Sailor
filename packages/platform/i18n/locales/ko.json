@@ -584,6 +584,98 @@
       "trial": "무료 {days}일 평가판",
       "seat": "{count, plural, one {# 석} other {# 석}}",
       "perSeat": "/ 석"
+    },
+    "checkout": {
+      "method": "결제 방법",
+      "methods": {
+        "card": {
+          "title": "카드",
+          "description": "Visa, Mastercard 등, {currency}로 청구됩니다"
+        },
+        "alipay": {
+          "title": "알리페이",
+          "description": "{currency}로 청구됩니다"
+        },
+        "wechat": {
+          "title": "위챗페이",
+          "description": "{currency}로 청구됩니다"
+        }
+      },
+      "amount": {
+        "label": "금액 ({currency})",
+        "range": "{min}에서 {max} 사이",
+        "invalid": "이 범위 내의 금액을 소수점 둘째 자리까지 입력하세요"
+      },
+      "pay": "{amount} 결제",
+      "payNoAmount": "결제",
+      "finePrint": {
+        "card": "카드 결제는 저희 기록상 판매자인 Creem에서 처리하며, 해당하는 경우 판매세 또는 부가가치세가 추가됩니다.",
+        "wallet": "결제가 확인되는 즉시 적립됩니다."
+      },
+      "qr": {
+        "alt": "결제용 QR 코드",
+        "alipay": "알리페이로 스캔하세요. 결제가 완료되면 이 페이지가 자동으로 업데이트됩니다.",
+        "wechat": "위챗으로 스캔하세요. 결제가 완료되면 이 페이지가 자동으로 업데이트됩니다."
+      },
+      "changeMethod": "다른 방법으로 결제",
+      "confirming": {
+        "title": "결제를 확인하는 중입니다",
+        "body": "보통 몇 초 정도 걸립니다. 이 페이지를 떠나도 적립은 계속 진행됩니다."
+      },
+      "paid": {
+        "title": "결제가 완료되었습니다",
+        "body": "{product} 계정에 추가되었습니다."
+      },
+      "backTo": "{product}(으)로 돌아가기",
+      "billing": "결제 내역",
+      "expired": {
+        "title": "이 결제는 완료되지 않았습니다",
+        "body": "청구된 금액이 없습니다. 준비되면 다시 시작하세요."
+      },
+      "lost": {
+        "title": "이 페이지에서 결제를 찾을 수 없습니다",
+        "body": "이미 결제하셨다면 결제 금액은 그대로 적립됩니다. 주문 내역은 결제 페이지에서 확인할 수 있습니다."
+      },
+      "tryAgain": "다시 결제",
+      "viewOrders": "주문 보기",
+      "closed": {
+        "title": "결제가 아직 열리지 않았습니다",
+        "body": "현재 이 상품에 이용 가능한 결제 방법이 없습니다. 나중에 다시 시도하세요."
+      },
+      "notForSale": {
+        "title": "이 상품은 판매 중이 아닙니다",
+        "body": "링크가 오래되었을 수 있습니다. 상품 페이지로 돌아가 다시 선택하세요."
+      },
+      "unavailable": {
+        "title": "결제 페이지를 사용할 수 없습니다",
+        "body": "결제 서비스에 연결할 수 없습니다. 잠시 후 다시 시도하세요."
+      },
+      "problems": {
+        "forbidden": "이 조직의 소유자, 관리자 또는 결제 관리자만 결제할 수 있습니다.",
+        "unavailable": "결제 서비스가 응답하지 않았습니다. 청구된 금액이 없습니다. 다시 시도하세요.",
+        "rejected": "이 결제를 시작할 수 없습니다. 금액을 확인하고 다시 시도하세요."
+      }
+    },
+    "orders": {
+      "title": "주문",
+      "description": "모든 상품의 결제 내역, 최신순.",
+      "empty": "아직 구매한 내역이 없습니다. 어떤 상품에서든 결제하면 여기에 표시됩니다.",
+      "unavailable": "주문을 불러올 수 없습니다. 잠시 후 다시 시도하세요.",
+      "columns": {
+        "date": "날짜",
+        "item": "항목",
+        "method": "결제 수단",
+        "amount": "금액",
+        "status": "상태"
+      },
+      "status": {
+        "PENDING": "결제 대기 중",
+        "CREDITING": "결제 완료, 적립 중",
+        "PAID": "결제 완료",
+        "PARTIALLY_REFUNDED": "부분 환불됨",
+        "REFUNDED": "환불됨",
+        "EXPIRED": "완료되지 않음"
+      }
     }
   },
   "organizations": {

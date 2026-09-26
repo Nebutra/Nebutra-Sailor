@@ -584,6 +584,98 @@
       "trial": "Zkušební období zdarma na {days} dní",
       "seat": "{count, plural, one {# místo} few {# místa} other {# míst}}",
       "perSeat": "/ místo"
+    },
+    "checkout": {
+      "method": "Způsob platby",
+      "methods": {
+        "card": {
+          "title": "Karta",
+          "description": "Visa, Mastercard a další, účtováno v {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Účtováno v {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Účtováno v {currency}"
+        }
+      },
+      "amount": {
+        "label": "Částka ({currency})",
+        "range": "Mezi {min} a {max}",
+        "invalid": "Zadejte částku v tomto rozsahu, maximálně na dvě desetinná místa"
+      },
+      "pay": "Zaplatit {amount}",
+      "payNoAmount": "Zaplatit",
+      "finePrint": {
+        "card": "Platby kartou zpracovává Creem, náš smluvní prodejce, který případně připočítává daň z prodeje nebo DPH.",
+        "wallet": "Připsáno hned po potvrzení platby."
+      },
+      "qr": {
+        "alt": "QR kód pro platbu",
+        "alipay": "Naskenujte v aplikaci Alipay. Tato stránka se po zaplacení sama aktualizuje.",
+        "wechat": "Naskenujte v aplikaci WeChat. Tato stránka se po zaplacení sama aktualizuje."
+      },
+      "changeMethod": "Zaplatit jinak",
+      "confirming": {
+        "title": "Potvrzujeme vaši platbu",
+        "body": "Obvykle to trvá jen pár sekund. Opuštění této stránky připsání platby nezastaví."
+      },
+      "paid": {
+        "title": "Platba přijata",
+        "body": "Byla přidána na váš účet {product}."
+      },
+      "backTo": "Zpět na {product}",
+      "billing": "fakturaci",
+      "expired": {
+        "title": "Tato platba nebyla dokončena",
+        "body": "Nic nebylo strženo. Začněte znovu, až budete připraveni."
+      },
+      "lost": {
+        "title": "Tato stránka platbu nenašla",
+        "body": "Pokud jste zaplatili, částka bude přesto připsána. Vaše objednávky najdete ve fakturaci."
+      },
+      "tryAgain": "Zaplatit znovu",
+      "viewOrders": "Zobrazit objednávky",
+      "closed": {
+        "title": "Platby zatím nejsou otevřené",
+        "body": "Pro tuto nabídku momentálně není k dispozici žádný způsob platby. Zkuste to prosím později."
+      },
+      "notForSale": {
+        "title": "Tato nabídka není v prodeji",
+        "body": "Odkaz může být zastaralý. Vraťte se k produktu a vyberte znovu."
+      },
+      "unavailable": {
+        "title": "Pokladna není dostupná",
+        "body": "Platební službu se nepodařilo kontaktovat. Zkuste to za chvíli znovu."
+      },
+      "problems": {
+        "forbidden": "Platit může pouze vlastník, správce nebo správce fakturace této organizace.",
+        "unavailable": "Platební služba neodpověděla. Nic nebylo strženo, zkuste to znovu.",
+        "rejected": "Tuto platbu se nepodařilo zahájit. Zkontrolujte částku a zkuste to znovu."
+      }
+    },
+    "orders": {
+      "title": "Objednávky",
+      "description": "Platby za všechny produkty, od nejnovějších.",
+      "empty": "Zatím nebylo nic zakoupeno. Platby z jakéhokoli produktu se zobrazí zde.",
+      "unavailable": "Objednávky se nepodařilo načíst. Zkuste to za chvíli znovu.",
+      "columns": {
+        "date": "Datum",
+        "item": "Položka",
+        "method": "Způsob platby",
+        "amount": "Částka",
+        "status": "Stav"
+      },
+      "status": {
+        "PENDING": "Čeká se na platbu",
+        "CREDITING": "Zaplaceno, připisuje se",
+        "PAID": "Zaplaceno",
+        "PARTIALLY_REFUNDED": "Částečně vráceno",
+        "REFUNDED": "Vráceno",
+        "EXPIRED": "Nedokončeno"
+      }
     }
   },
   "organizations": {

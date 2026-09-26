@@ -17,6 +17,7 @@ export default defineConfig({
     "src/checkout/index.ts",
     "src/chinapay/index.ts",
     "src/lemonsqueezy/index.ts",
+    "src/links/index.ts",
   ],
   format: ["esm"],
   dts: true,

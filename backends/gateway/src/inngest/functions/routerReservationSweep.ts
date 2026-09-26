@@ -19,7 +19,7 @@
 import { invalidateCreditCache } from "@nebutra/billing/credits";
 import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
-import { RouterBillingRepository } from "@nebutra/repositories";
+import { ROUTER_WALLET_PRODUCT, RouterBillingRepository } from "@nebutra/repositories";
 import type { InngestFunction } from "inngest";
 import { inngest } from "../client.js";
 
@@ -45,7 +45,9 @@ export const routerReservationSweep: InngestFunction.Any = inngest.createFunctio
     const result = await step.run("return-expired-holds", async () => {
       const repository = new RouterBillingRepository(systemDb);
       const swept = await repository.sweepExpired({ limit: SWEEP_BATCH });
-      for (const tenantId of swept.tenantIds) invalidateCreditCache(tenantId);
+      for (const tenantId of swept.tenantIds) {
+        invalidateCreditCache(tenantId, ROUTER_WALLET_PRODUCT);
+      }
       return swept;
     });
 

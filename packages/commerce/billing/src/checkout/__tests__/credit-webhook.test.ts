@@ -52,6 +52,21 @@ describe("handleCreditPurchaseWebhook", () => {
     expect(mockedAddCredits).not.toHaveBeenCalled();
   });
 
+  it("returns { handled: true, skipped: 'invalid_metadata' } when the product is missing", async () => {
+    const result = await handleCreditPurchaseWebhook({
+      provider: "stripe",
+      sessionId: "sess_123",
+      metadata: {
+        type: CREDIT_PURCHASE_METADATA_TYPE,
+        organizationId: "org_123",
+        creditAmount: "500",
+      },
+    });
+
+    expect(result).toEqual({ handled: true, skipped: "invalid_metadata" });
+    expect(mockedAddCredits).not.toHaveBeenCalled();
+  });
+
   it("returns { handled: true, skipped: 'invalid_metadata' } when creditAmount is missing", async () => {
     const result = await handleCreditPurchaseWebhook({
       provider: "stripe",
@@ -59,6 +74,7 @@ describe("handleCreditPurchaseWebhook", () => {
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,
         organizationId: "org_123",
+        product: "kuanlan",
       },
     });
 
@@ -73,6 +89,7 @@ describe("handleCreditPurchaseWebhook", () => {
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,
         organizationId: "org_123",
+        product: "kuanlan",
         creditAmount: "not-a-number",
       },
     });
@@ -88,6 +105,7 @@ describe("handleCreditPurchaseWebhook", () => {
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,
         organizationId: "org_123",
+        product: "kuanlan",
         creditAmount: "0",
       },
     });
@@ -112,6 +130,7 @@ describe("handleCreditPurchaseWebhook", () => {
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,
         organizationId: "org_123",
+        product: "kuanlan",
         creditAmount: "500",
         referenceId: "ref_xyz",
       },
@@ -152,6 +171,7 @@ describe("handleCreditPurchaseWebhook", () => {
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,
         organizationId: "org_123",
+        product: "kuanlan",
         creditAmount: "500",
       },
     });
@@ -173,6 +193,7 @@ describe("handleCreditPurchaseWebhook", () => {
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,
         organizationId: "org_123",
+        product: "kuanlan",
         creditAmount: "500",
       },
     });
@@ -189,6 +210,7 @@ describe("handleCreditPurchaseWebhook", () => {
       metadata: {
         type: CREDIT_PURCHASE_METADATA_TYPE,
         organizationId: "org_123",
+        product: "kuanlan",
         creditAmount: "500",
       },
     });
@@ -206,6 +228,7 @@ describe("handleCreditPurchaseWebhook", () => {
         metadata: {
           type: CREDIT_PURCHASE_METADATA_TYPE,
           organizationId: "org_123",
+          product: "kuanlan",
           creditAmount: "500",
         },
       }),

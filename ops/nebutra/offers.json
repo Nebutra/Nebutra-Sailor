@@ -1,0 +1,239 @@
+[
+  {
+    "id": "router_topup",
+    "product": "router",
+    "account": "workspace",
+    "name": "Router balance",
+    "customAmount": {
+      "USD": {
+        "min": 5,
+        "max": 10000
+      },
+      "CNY": {
+        "min": 50,
+        "max": 70000
+      }
+    },
+    "fulfillment": {
+      "type": "balance",
+      "params": {
+        "unitsPerMajor": {
+          "USD": 1,
+          "CNY": 0.1389
+        }
+      }
+    }
+  },
+  {
+    "id": "kuanlan_pro_month",
+    "product": "kuanlan",
+    "account": "personal",
+    "name": "Pro · 1 month",
+    "prices": {
+      "USD": 9.99,
+      "CNY": 79
+    },
+    "fulfillment": {
+      "type": "membership",
+      "params": {
+        "tier": "pro",
+        "days": 30,
+        "monthlyCredits": 3200
+      }
+    }
+  },
+  {
+    "id": "kuanlan_pro_year",
+    "product": "kuanlan",
+    "account": "personal",
+    "name": "Pro · 1 year",
+    "prices": {
+      "USD": 89.99,
+      "CNY": 758
+    },
+    "fulfillment": {
+      "type": "membership",
+      "params": {
+        "tier": "pro",
+        "days": 365,
+        "monthlyCredits": 3200
+      }
+    }
+  },
+  {
+    "id": "kuanlan_max_month",
+    "product": "kuanlan",
+    "account": "personal",
+    "name": "Max · 1 month",
+    "prices": {
+      "USD": 29.99,
+      "CNY": 239
+    },
+    "fulfillment": {
+      "type": "membership",
+      "params": {
+        "tier": "max",
+        "days": 30,
+        "monthlyCredits": 12000
+      }
+    }
+  },
+  {
+    "id": "kuanlan_max_year",
+    "product": "kuanlan",
+    "account": "personal",
+    "name": "Max · 1 year",
+    "prices": {
+      "USD": 289,
+      "CNY": 2290
+    },
+    "fulfillment": {
+      "type": "membership",
+      "params": {
+        "tier": "max",
+        "days": 365,
+        "monthlyCredits": 12000
+      }
+    }
+  },
+  {
+    "id": "kuanlan_credits_1000",
+    "product": "kuanlan",
+    "account": "personal",
+    "name": "1,000 credits",
+    "prices": {
+      "USD": 9.99,
+      "CNY": 68
+    },
+    "fulfillment": {
+      "type": "credits",
+      "params": {
+        "credits": 1000,
+        "expiresInDays": 730
+      }
+    }
+  },
+  {
+    "id": "kuanlan_credits_5000",
+    "product": "kuanlan",
+    "account": "personal",
+    "name": "5,000 credits",
+    "prices": {
+      "USD": 49.99,
+      "CNY": 328
+    },
+    "fulfillment": {
+      "type": "credits",
+      "params": {
+        "credits": 5000,
+        "expiresInDays": 730
+      }
+    }
+  },
+  {
+    "id": "para_pro_month",
+    "product": "para",
+    "account": "organization",
+    "name": "Pro · 1 month",
+    "prices": {
+      "USD": 9.99,
+      "CNY": 79
+    },
+    "fulfillment": {
+      "type": "membership",
+      "params": {
+        "tier": "pro",
+        "days": 30,
+        "monthlyCredits": 3000
+      }
+    }
+  },
+  {
+    "id": "para_pro_year",
+    "product": "para",
+    "account": "organization",
+    "name": "Pro · 1 year",
+    "prices": {
+      "USD": 89.99,
+      "CNY": 758
+    },
+    "fulfillment": {
+      "type": "membership",
+      "params": {
+        "tier": "pro",
+        "days": 365,
+        "monthlyCredits": 3000
+      }
+    }
+  },
+  {
+    "id": "para_max_month",
+    "product": "para",
+    "account": "organization",
+    "name": "Max · 1 month",
+    "prices": {
+      "USD": 29.99,
+      "CNY": 239
+    },
+    "fulfillment": {
+      "type": "membership",
+      "params": {
+        "tier": "max",
+        "days": 30,
+        "monthlyCredits": 12000
+      }
+    }
+  },
+  {
+    "id": "para_max_year",
+    "product": "para",
+    "account": "organization",
+    "name": "Max · 1 year",
+    "prices": {
+      "USD": 289,
+      "CNY": 2290
+    },
+    "fulfillment": {
+      "type": "membership",
+      "params": {
+        "tier": "max",
+        "days": 365,
+        "monthlyCredits": 12000
+      }
+    }
+  },
+  {
+    "id": "para_credits_1000",
+    "product": "para",
+    "account": "organization",
+    "name": "1,000 credits",
+    "prices": {
+      "USD": 9.99,
+      "CNY": 68
+    },
+    "fulfillment": {
+      "type": "credits",
+      "params": {
+        "credits": 1000,
+        "expiresInDays": 730
+      }
+    }
+  },
+  {
+    "id": "para_credits_5000",
+    "product": "para",
+    "account": "organization",
+    "name": "5,000 credits",
+    "prices": {
+      "USD": 49.99,
+      "CNY": 328
+    },
+    "fulfillment": {
+      "type": "credits",
+      "params": {
+        "credits": 5000,
+        "expiresInDays": 730
+      }
+    }
+  }
+]

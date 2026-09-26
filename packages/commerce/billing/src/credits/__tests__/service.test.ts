@@ -20,7 +20,7 @@ describe("credits service", () => {
     tenantDb.mockImplementation(() => db);
   });
 
-  it("creates a zero balance row scoped by tenantId when the organization has no balance", async () => {
+  it("creates a zero balance row scoped by tenant and product when there is none", async () => {
     db.creditBalance.findUnique.mockResolvedValueOnce(null);
     db.creditBalance.create.mockResolvedValueOnce({
       id: "bal_1",
@@ -29,21 +29,22 @@ describe("credits service", () => {
       currency: "USD",
     });
 
-    await expect(getCreditBalance("org_1")).resolves.toEqual({
+    await expect(getCreditBalance("org_1", "kuanlan")).resolves.toEqual({
       organizationId: "org_1",
+      product: "kuanlan",
       balance: 0,
       currency: "USD",
     });
 
     expect(db.creditBalance.findUnique).toHaveBeenCalledWith({
-      where: { tenantId: "org_1" },
+      where: { tenantId_product: { tenantId: "org_1", product: "kuanlan" } },
     });
     expect(db.creditBalance.create).toHaveBeenCalledWith({
-      data: { tenantId: "org_1", balance: 0, currency: "USD" },
+      data: { tenantId: "org_1", product: "kuanlan", balance: 0, currency: "USD" },
     });
   });
 
-  it("uses tenantId in add/deduct write paths and records balanceAfter from the updated balance", async () => {
+  it("uses tenant and product in add/deduct write paths and records balanceAfter from the updated balance", async () => {
     const tx = {
       creditBalance: {
         findUnique: vi.fn(),
@@ -54,6 +55,11 @@ describe("credits service", () => {
       creditTransaction: {
         create: vi.fn(),
         findFirst: vi.fn(),
+      },
+      creditLot: {
+        create: vi.fn(),
+        findMany: vi.fn().mockResolvedValue([]),
+        update: vi.fn(),
       },
     };
     type TransactionMock = typeof tx;
@@ -87,6 +93,7 @@ describe("credits service", () => {
     await expect(
       addCredits({
         organizationId: "org_1",
+        product: "kuanlan",
         amount: 50,
         type: "BONUS",
         description: "Bonus",
@@ -100,15 +107,15 @@ describe("credits service", () => {
     });
 
     expect(tx.creditBalance.upsert).toHaveBeenCalledWith({
-      where: { tenantId: "org_1" },
-      create: { tenantId: "org_1", balance: 0, currency: "USD" },
+      where: { tenantId_product: { tenantId: "org_1", product: "kuanlan" } },
+      create: { tenantId: "org_1", product: "kuanlan", balance: 0, currency: "USD" },
       update: {},
     });
     expect(tx.creditTransaction.findFirst).toHaveBeenCalledWith({
       where: { creditBalanceId: "bal_1", relatedId: "bonus_1", type: "BONUS" },
     });
     expect(tx.creditBalance.update).toHaveBeenCalledWith({
-      where: { tenantId: "org_1" },
+      where: { tenantId_product: { tenantId: "org_1", product: "kuanlan" } },
       data: { balance: { increment: 50 } },
     });
 
@@ -141,6 +148,7 @@ describe("credits service", () => {
     await expect(
       deductCredits({
         organizationId: "org_1",
+        product: "kuanlan",
         amount: 25,
         description: "Agent run",
         relatedId: "run_1",
@@ -152,7 +160,7 @@ describe("credits service", () => {
     });
 
     expect(tx.creditBalance.updateMany).toHaveBeenCalledWith({
-      where: { tenantId: "org_1", balance: { gte: 25 } },
+      where: { tenantId: "org_1", product: "kuanlan", balance: { gte: 25 } },
       data: { balance: { decrement: 25 } },
     });
   });
@@ -196,6 +204,7 @@ describe("credits service", () => {
     await expect(
       deductCredits({
         organizationId: "org_1",
+        product: "kuanlan",
         amount: 25,
         description: "Agent run",
         relatedId: "run_1",
@@ -223,5 +232,12 @@ describe("credits service", () => {
     });
     expect(getCreditAllowanceForPlan("PRO").dailyRefresh).toBe(1000);
     expect(getCreditAllowanceForPlan("ENTERPRISE").includedMonthly).toBe(-1);
+  });
+
+  it("refuses a product id that could not name a wallet", async () => {
+    await expect(getCreditBalance("org_1", "")).rejects.toMatchObject({
+      code: "INVALID_WALLET_PRODUCT",
+    });
+    expect(db.creditBalance.findUnique).not.toHaveBeenCalled();
   });
 });

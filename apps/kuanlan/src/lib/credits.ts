@@ -7,6 +7,8 @@ import {
   getCreditAllowanceForPlan,
   getCreditBalance,
   getCreditTransactions,
+  getExpiringCredits as getExpiringLedger,
+  getMembership as getLedgerMembership,
   refundCredits,
 } from "@nebutra/billing";
 import { getTenantDb } from "@nebutra/db";
@@ -22,6 +24,9 @@ import { getTenantDb } from "@nebutra/db";
  * The ledger is per tenant, which is why every person has one (see db.ts).
  */
 configureBillingTenantDb(getTenantDb);
+
+/** 观澜's own balance: credits bought here never pay for another product (ADR 2026-09-27). */
+export const WALLET_PRODUCT = "kuanlan";
 
 /** 1 credit = $0.01. The price of one shoot, tunable without a deploy. */
 export const DEFAULT_SHOOT_PRICE_CREDITS = 100;
@@ -62,6 +67,7 @@ export async function reserveShootCredits(
   try {
     const tx = await deductCredits({
       organizationId: tenantId,
+      product: WALLET_PRODUCT,
       amount: price,
       description: "开拍",
       relatedId: taskId,
@@ -70,7 +76,7 @@ export async function reserveShootCredits(
     return { transactionId: tx.id, balanceAfter: tx.balanceAfter };
   } catch (error) {
     if (isBillingCode(error, "INSUFFICIENT_CREDITS")) {
-      const { balance } = await getCreditBalance(tenantId);
+      const { balance } = await getCreditBalance(tenantId, WALLET_PRODUCT);
       throw new InsufficientCreditsError(balance, price);
     }
     throw error;
@@ -92,7 +98,10 @@ export async function refundShootCredits(
 ): Promise<{ refunded: boolean; balanceAfter: number }> {
   // Filtered at the ledger, not in memory: a person with a long history must
   // not slip past a 50-row page and be refunded twice.
-  const refunds = await getCreditTransactions(tenantId, { type: "REFUND", limit: 100 });
+  const refunds = await getCreditTransactions(tenantId, WALLET_PRODUCT, {
+    type: "REFUND",
+    limit: 100,
+  });
   const already = refunds.find((t) => t.relatedId === taskId);
   if (already) {
     return { refunded: false, balanceAfter: already.balanceAfter };
@@ -100,6 +109,7 @@ export async function refundShootCredits(
 
   const tx = await refundCredits({
     organizationId: tenantId,
+    product: WALLET_PRODUCT,
     amount: shootPriceCredits(),
     reason,
     relatedId: taskId,
@@ -126,7 +136,10 @@ export async function refundShootCredits(
 export const WELCOME_GRANT_MARKER = "kuanlan.welcome";
 
 export async function ensureWelcomeCredits(tenantId: string): Promise<{ granted: boolean }> {
-  const bonuses = await getCreditTransactions(tenantId, { type: "BONUS", limit: 100 });
+  const bonuses = await getCreditTransactions(tenantId, WALLET_PRODUCT, {
+    type: "BONUS",
+    limit: 100,
+  });
   if (bonuses.some((t) => t.description === WELCOME_GRANT_MARKER)) {
     return { granted: false };
   }
@@ -135,6 +148,7 @@ export async function ensureWelcomeCredits(tenantId: string): Promise<{ granted:
 
   await addBonusCredits({
     organizationId: tenantId,
+    product: WALLET_PRODUCT,
     amount: includedMonthly,
     reason: WELCOME_GRANT_MARKER,
   });
@@ -142,7 +156,7 @@ export async function ensureWelcomeCredits(tenantId: string): Promise<{ granted:
 }
 
 export async function creditBalance(tenantId: string): Promise<number> {
-  return (await getCreditBalance(tenantId)).balance;
+  return (await getCreditBalance(tenantId, WALLET_PRODUCT)).balance;
 }
 
 function isBillingCode(error: unknown, code: string): boolean {
@@ -152,4 +166,14 @@ function isBillingCode(error: unknown, code: string): boolean {
     "code" in error &&
     (error as { code?: unknown }).code === code
   );
+}
+
+/** 观澜's current membership for this person, or null. */
+export function getMembership(tenantId: string) {
+  return getLedgerMembership(tenantId, WALLET_PRODUCT);
+}
+
+/** The part of this person's credits that expires, soonest first. */
+export function getExpiringCredits(tenantId: string) {
+  return getExpiringLedger(tenantId, WALLET_PRODUCT);
 }

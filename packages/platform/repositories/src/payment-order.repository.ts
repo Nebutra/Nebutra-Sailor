@@ -107,6 +107,15 @@ export class PaymentOrderRepository {
     });
   }
 
+  /** One organization's orders, newest first — the account ledger. */
+  async listByTenant(tenantId: string, limit: number): Promise<PaymentOrder[]> {
+    return this.prisma.paymentOrder.findMany({
+      where: { tenantId },
+      orderBy: { createdAt: "desc" },
+      take: limit,
+    });
+  }
+
   /** Paid, but the thing that was bought was never handed over. */
   async listPaidUnfulfilled(limit: number): Promise<PaymentOrder[]> {
     return this.prisma.paymentOrder.findMany({

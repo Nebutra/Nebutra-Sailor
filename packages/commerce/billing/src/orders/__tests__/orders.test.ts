@@ -34,10 +34,16 @@ vi.mock("../../chinapay/index.js", () => ({
 }));
 
 import { registerFulfillment } from "../../fulfillment/index";
-import { configureOffers, DEFAULT_OFFERS } from "../../offers/index";
+import {
+  configureOffers,
+  configureOffersFromEnv,
+  DEFAULT_OFFERS,
+  listOffers,
+} from "../../offers/index";
 import {
   configurePaymentOrderStore,
   createPaymentOrder,
+  listPaymentOrders,
   type PaymentOrderRecord,
   type PaymentOrderStore,
   reconcilePaymentOrders,
@@ -108,6 +114,13 @@ function memoryStore() {
         .slice(0, limit)
         .map((r) => ({ ...r }));
     },
+    async listByTenant(tenantId, limit) {
+      return [...rows.values()]
+        .filter((r) => r.tenantId === tenantId)
+        .reverse()
+        .slice(0, limit)
+        .map((r) => ({ ...r }));
+    },
     async listPaidUnfulfilled(limit) {
       return [...rows.values()]
         .filter((r) => r.status === "PAID" && !r.fulfilledAt)
@@ -121,6 +134,7 @@ function memoryStore() {
 // ── A fulfillment that records what it was asked to do ───────────────────────
 
 const fulfilled: string[] = [];
+const fulfilledProducts: string[] = [];
 const revoked: Array<{ orderId: string; ratio: number; refundId: string }> = [];
 let failNextFulfill = false;
 
@@ -131,6 +145,7 @@ registerFulfillment("test_grant", {
       throw new Error("downstream unavailable");
     }
     fulfilled.push(ctx.orderId);
+    fulfilledProducts.push(ctx.product);
   },
   async revoke(ctx) {
     revoked.push({ orderId: ctx.orderId, ratio: ctx.ratio, refundId: ctx.refundId });
@@ -140,6 +155,7 @@ registerFulfillment("test_grant", {
 
 const OFFER = {
   id: "grant_pro",
+  product: "demo",
   name: "Pro grant",
   prices: { USD: 10, CNY: 68 },
   fulfillment: { type: "test_grant", params: { tier: "pro" } },
@@ -153,6 +169,7 @@ beforeEach(() => {
   configurePaymentOrderStore(memory.store);
   configureOffers([OFFER]);
   fulfilled.length = 0;
+  fulfilledProducts.length = 0;
   revoked.length = 0;
   failNextFulfill = false;
   createPaymentSessionMock.mockReset();
@@ -200,7 +217,7 @@ describe("createPaymentOrder", () => {
       provider: "chinapay",
       method: "alipay",
       status: "PENDING",
-      fulfillment: OFFER.fulfillment,
+      fulfillment: { ...OFFER.fulfillment, product: "demo" },
     });
     expect(createPaymentSessionMock).toHaveBeenCalledWith(
       expect.objectContaining({ orderId: created.orderId, amountMinor: 6800, method: "alipay" }),
@@ -227,6 +244,18 @@ describe("createPaymentOrder", () => {
     });
   });
 
+  it("prices a fixed offer from the catalog, whatever amount the request proposes", async () => {
+    const created = await createPaymentOrder({
+      organizationId: "org_1",
+      offerId: "grant_pro",
+      method: "alipay",
+      amount: 0.01,
+      successUrl: "https://app.example.com/ok",
+      cancelUrl: "https://app.example.com/cancel",
+    });
+    expect(created.amountMinor).toBe(6800);
+  });
+
   it("refuses a method with no credentials behind it", async () => {
     await expect(buy("wechat")).rejects.toMatchObject({ code: "PAYMENT_METHOD_UNAVAILABLE" });
     expect(rows.size).toBe(0);
@@ -248,6 +277,90 @@ describe("createPaymentOrder", () => {
     configureOffers([{ ...OFFER, prices: { USD: 10 } }]);
     await expect(buy("alipay")).rejects.toMatchObject({ code: "OFFER_CURRENCY_UNAVAILABLE" });
   });
+
+  describe("an offer whose buyer names the amount", () => {
+    const TOPUP = {
+      id: "topup",
+      product: "demo",
+      name: "Balance",
+      customAmount: { CNY: { min: 50, max: 10_000 } },
+      fulfillment: { type: "test_grant", params: {} },
+    };
+    const topUp = (amount?: number) =>
+      createPaymentOrder({
+        organizationId: "org_1",
+        offerId: "topup",
+        method: "alipay",
+        ...(amount === undefined ? {} : { amount }),
+        successUrl: "https://app.example.com/ok",
+        cancelUrl: "https://app.example.com/cancel",
+      });
+
+    beforeEach(() => configureOffers([TOPUP]));
+
+    it("locks the amount the buyer named", async () => {
+      const created = await topUp(128.5);
+      expect(rows.get(created.orderId)).toMatchObject({ amountMinor: 12_850, currency: "CNY" });
+    });
+
+    it.each([
+      [undefined, "no amount"],
+      [49.99, "below the floor"],
+      [10_000.01, "above the ceiling"],
+      [60.005, "a fraction of a fen"],
+    ])("refuses %s (%s) before any order is written", async (amount) => {
+      await expect(topUp(amount)).rejects.toMatchObject({ code: "OFFER_AMOUNT_OUT_OF_RANGE" });
+      expect(rows.size).toBe(0);
+    });
+  });
+});
+
+describe("the catalog", () => {
+  it("loads the deployment's price list from BILLING_OFFERS_JSON, and refuses a broken one", () => {
+    configureOffersFromEnv({ BILLING_OFFERS_JSON: JSON.stringify([OFFER]) });
+    expect(listOffers("demo").map((o) => o.id)).toEqual(["grant_pro"]);
+    expect(listOffers("router")).toEqual([]);
+
+    expect(() => configureOffersFromEnv({ BILLING_OFFERS_JSON: "{" })).toThrow(/not valid JSON/);
+    expect(() =>
+      configureOffersFromEnv({ BILLING_OFFERS_JSON: JSON.stringify([{ ...OFFER, product: "" }]) }),
+    ).toThrow(/needs a product id/);
+  });
+
+  it("keeps the current catalog when the deployment sets none", () => {
+    configureOffersFromEnv({});
+    expect(listOffers().map((o) => o.id)).toEqual(["grant_pro"]);
+  });
+
+  it("refuses an offer that belongs to no product", () => {
+    const { product: _dropped, ...orphan } = OFFER;
+    expect(() => configureOffers([orphan as never])).toThrow(/needs a product id/);
+  });
+
+  it("refuses an offer with both a fixed price and a custom amount", () => {
+    expect(() =>
+      configureOffers([{ ...OFFER, customAmount: { USD: { min: 5, max: 100 } } }]),
+    ).toThrow(/exactly one of prices or customAmount/);
+  });
+});
+
+describe("listPaymentOrders", () => {
+  it("lists one organization's orders newest first, with the product each was locked to", async () => {
+    const first = await buy();
+    const second = await buy();
+    await createPaymentOrder({
+      organizationId: "org_2",
+      offerId: "grant_pro",
+      method: "alipay",
+      successUrl: "https://app.example.com/ok",
+      cancelUrl: "https://app.example.com/cancel",
+    });
+
+    const listed = await listPaymentOrders("org_1");
+
+    expect(listed.map((o) => o.id)).toEqual([second.orderId, first.orderId]);
+    expect(listed[0]?.product).toBe("demo");
+  });
 });
 
 describe("settlePaymentOrder", () => {
@@ -258,6 +371,7 @@ describe("settlePaymentOrder", () => {
     const second = await settlePaymentOrder({ orderId, paidMinor: 6800, currency: "CNY" });
 
     expect([first, second]).toEqual(["settled", "already_settled"]);
+    expect(fulfilledProducts).toEqual(["demo"]);
     expect(fulfilled).toEqual([orderId]);
     expect(rows.get(orderId)).toMatchObject({ status: "PAID", paidMinor: 6800 });
     expect(rows.get(orderId)?.fulfilledAt).toBeInstanceOf(Date);

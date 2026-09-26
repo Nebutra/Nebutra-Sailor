@@ -895,6 +895,23 @@ export type EnumUsageTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumUsageTypeFilter<$PrismaModel>
 }
 
+export type EnumCreditLotSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.CreditLotSource | Prisma.EnumCreditLotSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.CreditLotSource[] | Prisma.ListEnumCreditLotSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CreditLotSource[] | Prisma.ListEnumCreditLotSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCreditLotSourceFilter<$PrismaModel> | $Enums.CreditLotSource
+}
+
+export type EnumCreditLotSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CreditLotSource | Prisma.EnumCreditLotSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.CreditLotSource[] | Prisma.ListEnumCreditLotSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CreditLotSource[] | Prisma.ListEnumCreditLotSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCreditLotSourceWithAggregatesFilter<$PrismaModel> | $Enums.CreditLotSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCreditLotSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCreditLotSourceFilter<$PrismaModel>
+}
+
 export type EnumCreditTransactionTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.CreditTransactionType | Prisma.EnumCreditTransactionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.CreditTransactionType[] | Prisma.ListEnumCreditTransactionTypeFieldRefInput<$PrismaModel>
@@ -2056,6 +2073,23 @@ export type NestedEnumUsageTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumUsageTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumUsageTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumCreditLotSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.CreditLotSource | Prisma.EnumCreditLotSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.CreditLotSource[] | Prisma.ListEnumCreditLotSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CreditLotSource[] | Prisma.ListEnumCreditLotSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCreditLotSourceFilter<$PrismaModel> | $Enums.CreditLotSource
+}
+
+export type NestedEnumCreditLotSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CreditLotSource | Prisma.EnumCreditLotSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.CreditLotSource[] | Prisma.ListEnumCreditLotSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CreditLotSource[] | Prisma.ListEnumCreditLotSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCreditLotSourceWithAggregatesFilter<$PrismaModel> | $Enums.CreditLotSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCreditLotSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCreditLotSourceFilter<$PrismaModel>
 }
 
 export type NestedEnumCreditTransactionTypeFilter<$PrismaModel = never> = {

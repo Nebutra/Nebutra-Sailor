@@ -78,6 +78,8 @@ export {
   PebbleFeedbackRepository,
   retentionExpiryFrom,
 } from "./pebble-support.repository";
+// User
+export { PersonalTenantRepository } from "./personal-tenant.repository";
 export type {
   ListRequestLogsInput,
   ListRequestLogsResult,
@@ -103,6 +105,7 @@ export type {
 // Router money spine (reserve → settle → release → sweep)
 export {
   RESERVATION_TTL_MS,
+  ROUTER_WALLET_PRODUCT,
   RouterBillingRepository,
   startOfUtcDay,
 } from "./router-billing.repository";
@@ -148,7 +151,6 @@ export type {
   UpdateUserData,
   UpsertByClerkIdData,
 } from "./user.repository";
-// User
 export { UserRepository } from "./user.repository";
 export type {
   JsonValue,

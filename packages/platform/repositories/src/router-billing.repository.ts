@@ -74,6 +74,16 @@ export interface RouterKeySpend {
  * live request is never swept out from under itself, short enough that a
  * crashed one returns the customer's money in minutes rather than days.
  */
+/**
+ * Router spends its own balance, never another product's (ADR 2026-09-27
+ * product wallets). Every `credit_balances` read or write here names it.
+ */
+export const ROUTER_WALLET_PRODUCT = "router";
+
+const routerBalance = (tenantId: string) => ({
+  tenantId_product: { tenantId, product: ROUTER_WALLET_PRODUCT },
+});
+
 export const RESERVATION_TTL_MS = 15 * 60 * 1000;
 
 export interface RouterReserveInput {
@@ -245,12 +255,19 @@ export class RouterBillingRepository {
     const amount = input.amount;
     if (!(amount > 0)) {
       const exists = await this.prisma.creditBalance.findUnique({
-        where: { tenantId: input.tenantId },
+        where: routerBalance(input.tenantId),
         select: { id: true },
       });
       if (!exists) {
         await this.prisma.creditBalance
-          .create({ data: { tenantId: input.tenantId, balance: 0, currency: "USD" } })
+          .create({
+            data: {
+              tenantId: input.tenantId,
+              product: ROUTER_WALLET_PRODUCT,
+              balance: 0,
+              currency: "USD",
+            },
+          })
           .catch(() => undefined);
       }
       return true;
@@ -262,7 +279,11 @@ export class RouterBillingRepository {
     try {
       return await this.prisma.$transaction(async (tx) => {
         const held = await tx.creditBalance.updateMany({
-          where: { tenantId: input.tenantId, balance: { gte: new Prisma.Decimal(amount) } },
+          where: {
+            tenantId: input.tenantId,
+            product: ROUTER_WALLET_PRODUCT,
+            balance: { gte: new Prisma.Decimal(amount) },
+          },
           data: { balance: { decrement: new Prisma.Decimal(amount) } },
         });
         if (held.count !== 1) return false;
@@ -302,7 +323,7 @@ export class RouterBillingRepository {
       // it. Either way, incrementing here would be inventing money.
       if (claimed.count !== 1) return;
       await tx.creditBalance.updateMany({
-        where: { tenantId: input.tenantId },
+        where: { tenantId: input.tenantId, product: ROUTER_WALLET_PRODUCT },
         data: { balance: { increment: new Prisma.Decimal(input.amount) } },
       });
     });
@@ -344,9 +365,10 @@ export class RouterBillingRepository {
         if (!(amount > 0)) return true;
 
         const balance = await tx.creditBalance.upsert({
-          where: { tenantId: row.tenantId },
+          where: routerBalance(row.tenantId),
           create: {
             tenantId: row.tenantId,
+            product: ROUTER_WALLET_PRODUCT,
             balance: new Prisma.Decimal(amount),
             currency: "USD",
           },
@@ -427,9 +449,10 @@ export class RouterBillingRepository {
         // Net effect on the balance: the held amount comes back, the real cost
         // goes out. Expressed as one signed increment so the row is touched once.
         const balance = await tx.creditBalance.upsert({
-          where: { tenantId: input.tenantId },
+          where: routerBalance(input.tenantId),
           create: {
             tenantId: input.tenantId,
+            product: ROUTER_WALLET_PRODUCT,
             balance: new Prisma.Decimal(refunded),
             currency: input.currency,
           },

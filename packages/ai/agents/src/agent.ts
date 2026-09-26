@@ -50,6 +50,7 @@ export class BaseAgent {
     // Build usage event for billing / metering
     const usage: AgentUsageEvent = {
       tenantId: context.tenantId,
+      product: context.product,
       userId: context.userId,
       agentId: this.config.id,
       model: this.config.model,
@@ -103,6 +104,7 @@ export class BaseAgent {
 
       await deductCredits({
         organizationId: event.tenantId,
+        product: event.product,
         amount: creditCost,
         description: `Agent execution: ${event.model}`,
       });

@@ -4,9 +4,10 @@ import { refundStripeCheckoutSession } from "../checkout/stripe";
 import type { PaymentSession } from "../checkout/types";
 import { getFulfillment, type RevocationResult } from "../fulfillment/index";
 import {
-  type FulfillmentSpec,
   getOffer,
+  type LockedFulfillmentSpec,
   type OfferCurrency,
+  priceOffer,
   toMajorString,
   toMinorUnits,
 } from "../offers/index";
@@ -54,7 +55,7 @@ export interface PaymentOrderStore {
   create(data: {
     tenantId: string;
     offerId: string;
-    fulfillment: FulfillmentSpec;
+    fulfillment: LockedFulfillmentSpec;
     amountMinor: number;
     currency: string;
     provider: string;
@@ -72,6 +73,7 @@ export interface PaymentOrderStore {
   ): Promise<boolean>;
   listPendingCreatedBefore(before: Date, limit: number): Promise<PaymentOrderRecord[]>;
   listPaidUnfulfilled(limit: number): Promise<PaymentOrderRecord[]>;
+  listByTenant(tenantId: string, limit: number): Promise<PaymentOrderRecord[]>;
 }
 
 let store: PaymentOrderStore | undefined;
@@ -107,6 +109,30 @@ export function isPaymentMethodAvailable(method: PaymentMethod): boolean {
   return isChinaPayConfigured(method);
 }
 
+function lockedSpec(order: PaymentOrderRecord): LockedFulfillmentSpec {
+  const spec = order.fulfillment as Partial<LockedFulfillmentSpec> | null;
+  if (!(spec?.type && spec.product)) {
+    throw new BillingError(
+      `Order ${order.id} has no locked product to fulfill into`,
+      "FULFILLMENT_PRODUCT_MISSING",
+      500,
+    );
+  }
+  return spec as LockedFulfillmentSpec;
+}
+
+/** An organization's orders across every product, newest first. */
+export async function listPaymentOrders(
+  organizationId: string,
+  limit = 20,
+): Promise<Array<PaymentOrderRecord & { product: string | null }>> {
+  const rows = await requireStore().listByTenant(organizationId, Math.min(Math.max(limit, 1), 100));
+  return rows.map((row) => ({
+    ...row,
+    product: (row.fulfillment as Partial<LockedFulfillmentSpec> | null)?.product ?? null,
+  }));
+}
+
 /** Read one order, for status polling and support. */
 export async function getPaymentOrder(orderId: string): Promise<PaymentOrderRecord | null> {
   return requireStore().findById(orderId);
@@ -121,6 +147,8 @@ export interface CreatePaymentOrderInput {
   offerId: string;
   method: PaymentMethod;
   channel?: "qr" | "h5";
+  /** Major units, for an offer whose buyer names the amount. Ignored by fixed-price offers. */
+  amount?: number;
   successUrl: string;
   cancelUrl: string;
   customerEmail?: string;
@@ -150,14 +178,7 @@ export async function createPaymentOrder(
   }
 
   const currency = currencyFor(input.method);
-  const price = offer.prices[currency];
-  if (price === undefined) {
-    throw new BillingError(
-      `Offer ${offer.id} has no ${currency} price`,
-      "OFFER_CURRENCY_UNAVAILABLE",
-      400,
-    );
-  }
+  const price = priceOffer(offer, currency, input.amount);
 
   const orders = requireStore();
   const amountMinor = toMinorUnits(price);
@@ -166,7 +187,9 @@ export async function createPaymentOrder(
   const order = await orders.create({
     tenantId: input.organizationId,
     offerId: offer.id,
-    fulfillment: offer.fulfillment,
+    // Locked with the product it grants into, so a later catalog edit cannot
+    // move a paid order's grant to another product.
+    fulfillment: { ...offer.fulfillment, product: offer.product } satisfies LockedFulfillmentSpec,
     amountMinor,
     currency,
     provider,
@@ -245,10 +268,11 @@ export async function fulfillPaymentOrder(orderId: string): Promise<boolean> {
   const order = await orders.findById(orderId);
   if (!order || order.fulfilledAt || order.status !== "PAID") return false;
 
-  const spec = order.fulfillment as FulfillmentSpec;
+  const spec = lockedSpec(order);
   await getFulfillment(spec.type).fulfill({
     orderId: order.id,
     organizationId: order.tenantId,
+    product: spec.product,
     params: spec.params ?? {},
     amountMinor: order.amountMinor,
     currency: order.currency,
@@ -443,12 +467,13 @@ export async function refundPaymentOrder(
     );
   }
 
-  const spec = order.fulfillment as FulfillmentSpec;
+  const spec = lockedSpec(order);
   const handler = getFulfillment(spec.type);
   const revocation = handler.revoke
     ? await handler.revoke({
         orderId: order.id,
         organizationId: order.tenantId,
+        product: spec.product,
         params: spec.params ?? {},
         amountMinor: order.amountMinor,
         currency: order.currency,

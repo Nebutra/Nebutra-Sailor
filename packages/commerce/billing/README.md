@@ -178,24 +178,26 @@ import {
   getCreditTransactions,
 } from "@nebutra/billing";
 
-// Check balance
-const balance = getCreditBalance("org_xxx");
+// One balance per organization per product — they never add up
+// (ADR 2026-09-27 product wallets). Every call names the product.
+const { balance } = await getCreditBalance("org_xxx", "app");
 console.log(`Balance: ${balance} credits ($${creditsToDollars(balance)})`);
 
 // Add credits
 await addCredits({
   organizationId: "org_xxx",
+  product: "app",
   amount: 1000,
   type: "PURCHASE",
   description: "Credit purchase",
 });
 
 // Deduct credits
-if (hasEnoughCredits("org_xxx", 100)) {
+if (await hasEnoughCredits("org_xxx", "app", 100)) {
   await deductCredits({
     organizationId: "org_xxx",
+    product: "app",
     amount: 100,
-    type: "USAGE",
     description: "AI generation",
   });
 }

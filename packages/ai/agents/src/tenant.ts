@@ -10,15 +10,19 @@ import type { AgentContext } from "./types";
 /**
  * Create a fully-populated AgentContext.
  * Generates a random conversationId when none is provided.
+ *
+ * `scope` names the tenant and the product whose balance the run spends:
+ * balances are per product, so a run cannot be billed without one.
  */
 export function createAgentContext(
-  tenantId: string,
+  scope: { tenantId: string; product: string },
   userId: string,
   conversationId?: string,
   metadata?: Record<string, unknown>,
 ): AgentContext {
   return {
-    tenantId,
+    tenantId: scope.tenantId,
+    product: scope.product,
     userId,
     conversationId: conversationId ?? crypto.randomUUID(),
     ...(metadata !== undefined ? { metadata } : {}),
@@ -33,10 +37,11 @@ export function createAgentContext(
  */
 export async function checkAgentQuota(
   tenantId: string,
+  product: string,
 ): Promise<{ allowed: boolean; remaining: number }> {
   try {
     const { getCreditBalance } = await import("@nebutra/billing/credits");
-    const balance = await getCreditBalance(tenantId);
+    const balance = await getCreditBalance(tenantId, product);
 
     // Simple quota check: tenant must have positive credits
     // In production, we might check plan-specific monthly limits beforehand

@@ -25,6 +25,7 @@ export function ProfileButton() {
       <DropdownMenuContent align="end" className="min-w-44">
         <DropdownMenuItem render={<Link href="/" />}>Home</DropdownMenuItem>
         <DropdownMenuItem render={<Link href="/projects" />}>Projects</DropdownMenuItem>
+        <DropdownMenuItem render={<Link href="/pro" />}>Plans & credits</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem disabled>Settings</DropdownMenuItem>
         <DropdownMenuSeparator />

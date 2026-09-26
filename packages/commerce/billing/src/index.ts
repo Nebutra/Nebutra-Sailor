@@ -127,22 +127,28 @@ export {
   PlanConfigService,
   type ResolvedConfig,
 } from "./config/index";
-// Credits
+// Credits — one balance per organization per product (ADR 2026-09-27)
 export {
   addBonusCredits,
   addCredits,
+  assertWalletProduct,
+  type CreditLotSource,
   creditsToDollars,
   deductCredits,
   dollarsToCredits,
+  type ExpiringCredits,
+  expireCreditLots,
   formatCredits,
   getCreditAllowanceForPlan,
   getCreditBalance,
   getCreditBalanceFresh,
   getCreditTransactions,
+  getExpiringCredits,
   hasEnoughCredits,
   hasEnoughCreditsFresh,
   invalidateCreditCache,
   refundCredits,
+  type WalletProduct,
 } from "./credits/index";
 // Creem — the global card rail, merchant of record (ADR 2026-09-26)
 export {
@@ -190,15 +196,31 @@ export {
   type RevocationResult,
   registerFulfillment,
 } from "./fulfillment/index";
+// Memberships — a product's paid tier for a period (ADR 2026-09-27)
+export {
+  applyMembershipPurchase,
+  GRANT_PERIOD_DAYS,
+  getMembership,
+  grantDueMemberships,
+  type Membership,
+  revokeMembershipPurchase,
+} from "./memberships/index";
 // Offers — what can be bought (data, replaced by the host at boot)
 export {
+  type AmountRange,
   configureOffers,
+  configureOffersFromEnv,
   DEFAULT_OFFERS,
   type FulfillmentSpec,
   getOffer,
+  type LockedFulfillmentSpec,
   listOffers,
   type Offer,
+  type OfferAccount,
   type OfferCurrency,
+  offerAccount,
+  offerCurrencies,
+  priceOffer,
   toMajorString,
   toMinorUnits,
 } from "./offers/index";
@@ -211,6 +233,7 @@ export {
   fulfillPaymentOrder,
   getPaymentOrder,
   isPaymentMethodAvailable,
+  listPaymentOrders,
   type PaymentMethod,
   type PaymentOrderRecord,
   type PaymentOrderStatus,

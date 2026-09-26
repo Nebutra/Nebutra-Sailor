@@ -4273,10 +4273,12 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** Get current credit balance */
+    /** Get one product's credit balance */
     get: {
       parameters: {
-        query?: never;
+        query: {
+          product: string;
+        };
         header?: never;
         path?: never;
         cookie?: never;
@@ -4342,7 +4344,8 @@ export interface paths {
     /** List credit transactions (paginated) */
     get: {
       parameters: {
-        query?: {
+        query: {
+          product: string;
           limit?: number;
           cursor?: string;
         };
@@ -4427,7 +4430,9 @@ export interface paths {
     /** List the offers that can be bought */
     get: {
       parameters: {
-        query?: never;
+        query?: {
+          product?: string;
+        };
         header?: never;
         path?: never;
         cookie?: never;
@@ -4443,10 +4448,31 @@ export interface paths {
             "application/json": {
               offers: {
                 id: string;
+                product: string;
+                /** @enum {string} */
+                account: "personal" | "organization" | "workspace";
+                kind: string;
+                grants: {
+                  credits?: number;
+                  tier?: string;
+                  days?: number;
+                  monthlyCredits?: number;
+                  expiresInDays?: number;
+                };
                 name: string;
-                prices: {
+                prices?: {
                   USD?: number;
                   CNY?: number;
+                };
+                customAmount?: {
+                  USD?: {
+                    min: number;
+                    max: number;
+                  };
+                  CNY?: {
+                    min: number;
+                    max: number;
+                  };
                 };
                 highlight?: string;
               }[];
@@ -4516,7 +4542,43 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get?: never;
+    /** List this organization's orders, newest first */
+    get: {
+      parameters: {
+        query?: {
+          limit?: number;
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Orders across every product */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              orders: {
+                id: string;
+                offerId: string;
+                /** @enum {string} */
+                status: "PENDING" | "PAID" | "PARTIALLY_REFUNDED" | "REFUNDED" | "EXPIRED";
+                fulfilled: boolean;
+                amountMinor: number;
+                currency: string;
+                method: string;
+                createdAt: string;
+                product: string | null;
+                name: string;
+              }[];
+            };
+          };
+        };
+      };
+    };
     put?: never;
     /** Create a payment order for one offer */
     post: {
@@ -4532,6 +4594,7 @@ export interface paths {
             offerId: string;
             /** @enum {string} */
             method: "card" | "alipay" | "wechat";
+            amount?: number;
             /**
              * @default qr
              * @enum {string}

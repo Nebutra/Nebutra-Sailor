@@ -67,7 +67,7 @@ orchestrator.registerAgent(
   new VercelAIAgent({ id: "assistant", name: "Assistant", description: "Helpful", model: "openai/gpt-5.5", instructions: "..." }),
 );
 
-const ctx = createAgentContext("org_123", "user_456");
+const ctx = createAgentContext({ tenantId: "org_123", product: "app" }, "user_456");
 const response = await orchestrator.chat("Hello", ctx);
 // → response.usage tracks tokens for billing
 ```

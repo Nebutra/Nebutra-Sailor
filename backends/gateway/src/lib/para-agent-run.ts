@@ -95,7 +95,7 @@ export async function advanceParaRun(input: AdvanceRunInput): Promise<ParaRunOut
     async invoke() {
       const response: AgentResponse = await orchestrator.chat(
         run.input,
-        createAgentContext(input.tenantId, "para", run.threadId),
+        createAgentContext({ tenantId: input.tenantId, product: "para" }, "para", run.threadId),
       );
       summary = response.messages.at(-1)?.content ?? "";
       return {

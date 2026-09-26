@@ -96,6 +96,8 @@ export const ModelName = {
   PaymentMethod: 'PaymentMethod',
   UsageLedgerEntry: 'UsageLedgerEntry',
   CreditBalance: 'CreditBalance',
+  CreditLot: 'CreditLot',
+  Membership: 'Membership',
   CreditTransaction: 'CreditTransaction',
   RouterReservation: 'RouterReservation',
   StripeCustomer: 'StripeCustomer',
@@ -948,12 +950,44 @@ export type UsageLedgerEntryScalarFieldEnum = (typeof UsageLedgerEntryScalarFiel
 export const CreditBalanceScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
+  product: 'product',
   balance: 'balance',
   currency: 'currency',
   updatedAt: 'updatedAt'
 } as const
 
 export type CreditBalanceScalarFieldEnum = (typeof CreditBalanceScalarFieldEnum)[keyof typeof CreditBalanceScalarFieldEnum]
+
+
+export const CreditLotScalarFieldEnum = {
+  id: 'id',
+  creditBalanceId: 'creditBalanceId',
+  source: 'source',
+  amount: 'amount',
+  remaining: 'remaining',
+  expiresAt: 'expiresAt',
+  relatedId: 'relatedId',
+  createdAt: 'createdAt'
+} as const
+
+export type CreditLotScalarFieldEnum = (typeof CreditLotScalarFieldEnum)[keyof typeof CreditLotScalarFieldEnum]
+
+
+export const MembershipScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  product: 'product',
+  tier: 'tier',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  monthlyCredits: 'monthlyCredits',
+  nextGrantAt: 'nextGrantAt',
+  appliedOrders: 'appliedOrders',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MembershipScalarFieldEnum = (typeof MembershipScalarFieldEnum)[keyof typeof MembershipScalarFieldEnum]
 
 
 export const CreditTransactionScalarFieldEnum = {

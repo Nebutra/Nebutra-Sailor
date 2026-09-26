@@ -46,7 +46,7 @@ function isDuplicateError(error: unknown): boolean {
  *
  * Flow:
  * 1. If `metadata.type !== "credit_purchase"` → return early (not our job).
- * 2. Validate required fields (organizationId, creditAmount as positive int).
+ * 2. Validate required fields (organizationId, product, creditAmount as positive int).
  * 3. Call `addCredits` with `relatedId = sessionId` for idempotency.
  * 4. Swallow duplicate errors (already processed); rethrow other errors.
  */
@@ -63,8 +63,11 @@ export async function handleCreditPurchaseWebhook(
   // 2. Validate required fields
   const organizationId = metadata.organizationId;
   const rawCreditAmount = metadata.creditAmount;
+  // Balances are per product (ADR 2026-09-27); a session that does not say
+  // which one it paid for cannot be credited anywhere.
+  const product = metadata.product;
 
-  if (!organizationId || !rawCreditAmount) {
+  if (!organizationId || !rawCreditAmount || !product) {
     return { handled: true, skipped: "invalid_metadata" };
   }
 
@@ -84,6 +87,7 @@ export async function handleCreditPurchaseWebhook(
   try {
     const transaction = await addCredits({
       organizationId,
+      product,
       amount: creditAmount,
       type: "PURCHASE",
       description,

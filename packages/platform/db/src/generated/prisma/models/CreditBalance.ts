@@ -15,6 +15,8 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model CreditBalance
  * @conditional(billing-mode=credits)
+ * One balance per organization per product (ADR 2026-09-27 product wallets):
+ * Router's never pays for a Kuanlan shoot.
  */
 export type CreditBalanceModel = runtime.Types.Result.DefaultSelection<Prisma.$CreditBalancePayload>
 
@@ -37,6 +39,7 @@ export type CreditBalanceSumAggregateOutputType = {
 export type CreditBalanceMinAggregateOutputType = {
   id: string | null
   tenantId: string | null
+  product: string | null
   balance: runtime.Decimal | null
   currency: string | null
   updatedAt: Date | null
@@ -45,6 +48,7 @@ export type CreditBalanceMinAggregateOutputType = {
 export type CreditBalanceMaxAggregateOutputType = {
   id: string | null
   tenantId: string | null
+  product: string | null
   balance: runtime.Decimal | null
   currency: string | null
   updatedAt: Date | null
@@ -53,6 +57,7 @@ export type CreditBalanceMaxAggregateOutputType = {
 export type CreditBalanceCountAggregateOutputType = {
   id: number
   tenantId: number
+  product: number
   balance: number
   currency: number
   updatedAt: number
@@ -71,6 +76,7 @@ export type CreditBalanceSumAggregateInputType = {
 export type CreditBalanceMinAggregateInputType = {
   id?: true
   tenantId?: true
+  product?: true
   balance?: true
   currency?: true
   updatedAt?: true
@@ -79,6 +85,7 @@ export type CreditBalanceMinAggregateInputType = {
 export type CreditBalanceMaxAggregateInputType = {
   id?: true
   tenantId?: true
+  product?: true
   balance?: true
   currency?: true
   updatedAt?: true
@@ -87,6 +94,7 @@ export type CreditBalanceMaxAggregateInputType = {
 export type CreditBalanceCountAggregateInputType = {
   id?: true
   tenantId?: true
+  product?: true
   balance?: true
   currency?: true
   updatedAt?: true
@@ -182,6 +190,7 @@ export type CreditBalanceGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type CreditBalanceGroupByOutputType = {
   id: string
   tenantId: string
+  product: string
   balance: runtime.Decimal
   currency: string
   updatedAt: Date
@@ -213,39 +222,47 @@ export type CreditBalanceWhereInput = {
   NOT?: Prisma.CreditBalanceWhereInput | Prisma.CreditBalanceWhereInput[]
   id?: Prisma.StringFilter<"CreditBalance"> | string
   tenantId?: Prisma.StringFilter<"CreditBalance"> | string
+  product?: Prisma.StringFilter<"CreditBalance"> | string
   balance?: Prisma.DecimalFilter<"CreditBalance"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"CreditBalance"> | string
   updatedAt?: Prisma.DateTimeFilter<"CreditBalance"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   transactions?: Prisma.CreditTransactionListRelationFilter
+  lots?: Prisma.CreditLotListRelationFilter
 }
 
 export type CreditBalanceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   tenant?: Prisma.TenantOrderByWithRelationInput
   transactions?: Prisma.CreditTransactionOrderByRelationAggregateInput
+  lots?: Prisma.CreditLotOrderByRelationAggregateInput
 }
 
 export type CreditBalanceWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  tenantId?: string
+  tenantId_product?: Prisma.CreditBalanceTenantIdProductCompoundUniqueInput
   AND?: Prisma.CreditBalanceWhereInput | Prisma.CreditBalanceWhereInput[]
   OR?: Prisma.CreditBalanceWhereInput[]
   NOT?: Prisma.CreditBalanceWhereInput | Prisma.CreditBalanceWhereInput[]
+  tenantId?: Prisma.StringFilter<"CreditBalance"> | string
+  product?: Prisma.StringFilter<"CreditBalance"> | string
   balance?: Prisma.DecimalFilter<"CreditBalance"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"CreditBalance"> | string
   updatedAt?: Prisma.DateTimeFilter<"CreditBalance"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   transactions?: Prisma.CreditTransactionListRelationFilter
-}, "id" | "tenantId">
+  lots?: Prisma.CreditLotListRelationFilter
+}, "id" | "tenantId_product">
 
 export type CreditBalanceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -262,6 +279,7 @@ export type CreditBalanceScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CreditBalanceScalarWhereWithAggregatesInput | Prisma.CreditBalanceScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CreditBalance"> | string
   tenantId?: Prisma.StringWithAggregatesFilter<"CreditBalance"> | string
+  product?: Prisma.StringWithAggregatesFilter<"CreditBalance"> | string
   balance?: Prisma.DecimalWithAggregatesFilter<"CreditBalance"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"CreditBalance"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CreditBalance"> | Date | string
@@ -269,43 +287,52 @@ export type CreditBalanceScalarWhereWithAggregatesInput = {
 
 export type CreditBalanceCreateInput = {
   id?: string
+  product: string
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutCreditBalancesInput
   transactions?: Prisma.CreditTransactionCreateNestedManyWithoutCreditBalanceInput
+  lots?: Prisma.CreditLotCreateNestedManyWithoutCreditBalanceInput
 }
 
 export type CreditBalanceUncheckedCreateInput = {
   id?: string
   tenantId: string
+  product: string
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   updatedAt?: Date | string
   transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutCreditBalanceInput
+  lots?: Prisma.CreditLotUncheckedCreateNestedManyWithoutCreditBalanceInput
 }
 
 export type CreditBalanceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutCreditBalancesNestedInput
   transactions?: Prisma.CreditTransactionUpdateManyWithoutCreditBalanceNestedInput
+  lots?: Prisma.CreditLotUpdateManyWithoutCreditBalanceNestedInput
 }
 
 export type CreditBalanceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutCreditBalanceNestedInput
+  lots?: Prisma.CreditLotUncheckedUpdateManyWithoutCreditBalanceNestedInput
 }
 
 export type CreditBalanceCreateManyInput = {
   id?: string
   tenantId: string
+  product: string
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   updatedAt?: Date | string
@@ -313,6 +340,7 @@ export type CreditBalanceCreateManyInput = {
 
 export type CreditBalanceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -321,6 +349,7 @@ export type CreditBalanceUpdateManyMutationInput = {
 export type CreditBalanceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -336,9 +365,15 @@ export type CreditBalanceOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type CreditBalanceTenantIdProductCompoundUniqueInput = {
+  tenantId: string
+  product: string
+}
+
 export type CreditBalanceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -351,6 +386,7 @@ export type CreditBalanceAvgOrderByAggregateInput = {
 export type CreditBalanceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -359,6 +395,7 @@ export type CreditBalanceMaxOrderByAggregateInput = {
 export type CreditBalanceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -415,6 +452,20 @@ export type CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput = {
   deleteMany?: Prisma.CreditBalanceScalarWhereInput | Prisma.CreditBalanceScalarWhereInput[]
 }
 
+export type CreditBalanceCreateNestedOneWithoutLotsInput = {
+  create?: Prisma.XOR<Prisma.CreditBalanceCreateWithoutLotsInput, Prisma.CreditBalanceUncheckedCreateWithoutLotsInput>
+  connectOrCreate?: Prisma.CreditBalanceCreateOrConnectWithoutLotsInput
+  connect?: Prisma.CreditBalanceWhereUniqueInput
+}
+
+export type CreditBalanceUpdateOneRequiredWithoutLotsNestedInput = {
+  create?: Prisma.XOR<Prisma.CreditBalanceCreateWithoutLotsInput, Prisma.CreditBalanceUncheckedCreateWithoutLotsInput>
+  connectOrCreate?: Prisma.CreditBalanceCreateOrConnectWithoutLotsInput
+  upsert?: Prisma.CreditBalanceUpsertWithoutLotsInput
+  connect?: Prisma.CreditBalanceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CreditBalanceUpdateToOneWithWhereWithoutLotsInput, Prisma.CreditBalanceUpdateWithoutLotsInput>, Prisma.CreditBalanceUncheckedUpdateWithoutLotsInput>
+}
+
 export type CreditBalanceCreateNestedOneWithoutTransactionsInput = {
   create?: Prisma.XOR<Prisma.CreditBalanceCreateWithoutTransactionsInput, Prisma.CreditBalanceUncheckedCreateWithoutTransactionsInput>
   connectOrCreate?: Prisma.CreditBalanceCreateOrConnectWithoutTransactionsInput
@@ -431,18 +482,22 @@ export type CreditBalanceUpdateOneRequiredWithoutTransactionsNestedInput = {
 
 export type CreditBalanceCreateWithoutTenantInput = {
   id?: string
+  product: string
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   updatedAt?: Date | string
   transactions?: Prisma.CreditTransactionCreateNestedManyWithoutCreditBalanceInput
+  lots?: Prisma.CreditLotCreateNestedManyWithoutCreditBalanceInput
 }
 
 export type CreditBalanceUncheckedCreateWithoutTenantInput = {
   id?: string
+  product: string
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   updatedAt?: Date | string
   transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutCreditBalanceInput
+  lots?: Prisma.CreditLotUncheckedCreateNestedManyWithoutCreditBalanceInput
 }
 
 export type CreditBalanceCreateOrConnectWithoutTenantInput = {
@@ -477,25 +532,86 @@ export type CreditBalanceScalarWhereInput = {
   NOT?: Prisma.CreditBalanceScalarWhereInput | Prisma.CreditBalanceScalarWhereInput[]
   id?: Prisma.StringFilter<"CreditBalance"> | string
   tenantId?: Prisma.StringFilter<"CreditBalance"> | string
+  product?: Prisma.StringFilter<"CreditBalance"> | string
   balance?: Prisma.DecimalFilter<"CreditBalance"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"CreditBalance"> | string
   updatedAt?: Prisma.DateTimeFilter<"CreditBalance"> | Date | string
 }
 
-export type CreditBalanceCreateWithoutTransactionsInput = {
+export type CreditBalanceCreateWithoutLotsInput = {
   id?: string
+  product: string
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   updatedAt?: Date | string
   tenant: Prisma.TenantCreateNestedOneWithoutCreditBalancesInput
+  transactions?: Prisma.CreditTransactionCreateNestedManyWithoutCreditBalanceInput
+}
+
+export type CreditBalanceUncheckedCreateWithoutLotsInput = {
+  id?: string
+  tenantId: string
+  product: string
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  updatedAt?: Date | string
+  transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutCreditBalanceInput
+}
+
+export type CreditBalanceCreateOrConnectWithoutLotsInput = {
+  where: Prisma.CreditBalanceWhereUniqueInput
+  create: Prisma.XOR<Prisma.CreditBalanceCreateWithoutLotsInput, Prisma.CreditBalanceUncheckedCreateWithoutLotsInput>
+}
+
+export type CreditBalanceUpsertWithoutLotsInput = {
+  update: Prisma.XOR<Prisma.CreditBalanceUpdateWithoutLotsInput, Prisma.CreditBalanceUncheckedUpdateWithoutLotsInput>
+  create: Prisma.XOR<Prisma.CreditBalanceCreateWithoutLotsInput, Prisma.CreditBalanceUncheckedCreateWithoutLotsInput>
+  where?: Prisma.CreditBalanceWhereInput
+}
+
+export type CreditBalanceUpdateToOneWithWhereWithoutLotsInput = {
+  where?: Prisma.CreditBalanceWhereInput
+  data: Prisma.XOR<Prisma.CreditBalanceUpdateWithoutLotsInput, Prisma.CreditBalanceUncheckedUpdateWithoutLotsInput>
+}
+
+export type CreditBalanceUpdateWithoutLotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCreditBalancesNestedInput
+  transactions?: Prisma.CreditTransactionUpdateManyWithoutCreditBalanceNestedInput
+}
+
+export type CreditBalanceUncheckedUpdateWithoutLotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutCreditBalanceNestedInput
+}
+
+export type CreditBalanceCreateWithoutTransactionsInput = {
+  id?: string
+  product: string
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutCreditBalancesInput
+  lots?: Prisma.CreditLotCreateNestedManyWithoutCreditBalanceInput
 }
 
 export type CreditBalanceUncheckedCreateWithoutTransactionsInput = {
   id?: string
   tenantId: string
+  product: string
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   updatedAt?: Date | string
+  lots?: Prisma.CreditLotUncheckedCreateNestedManyWithoutCreditBalanceInput
 }
 
 export type CreditBalanceCreateOrConnectWithoutTransactionsInput = {
@@ -516,22 +632,27 @@ export type CreditBalanceUpdateToOneWithWhereWithoutTransactionsInput = {
 
 export type CreditBalanceUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.TenantUpdateOneRequiredWithoutCreditBalancesNestedInput
+  lots?: Prisma.CreditLotUpdateManyWithoutCreditBalanceNestedInput
 }
 
 export type CreditBalanceUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lots?: Prisma.CreditLotUncheckedUpdateManyWithoutCreditBalanceNestedInput
 }
 
 export type CreditBalanceCreateManyTenantInput = {
   id?: string
+  product: string
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   updatedAt?: Date | string
@@ -539,22 +660,27 @@ export type CreditBalanceCreateManyTenantInput = {
 
 export type CreditBalanceUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   transactions?: Prisma.CreditTransactionUpdateManyWithoutCreditBalanceNestedInput
+  lots?: Prisma.CreditLotUpdateManyWithoutCreditBalanceNestedInput
 }
 
 export type CreditBalanceUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutCreditBalanceNestedInput
+  lots?: Prisma.CreditLotUncheckedUpdateManyWithoutCreditBalanceNestedInput
 }
 
 export type CreditBalanceUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -567,10 +693,12 @@ export type CreditBalanceUncheckedUpdateManyWithoutTenantInput = {
 
 export type CreditBalanceCountOutputType = {
   transactions: number
+  lots: number
 }
 
 export type CreditBalanceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   transactions?: boolean | CreditBalanceCountOutputTypeCountTransactionsArgs
+  lots?: boolean | CreditBalanceCountOutputTypeCountLotsArgs
 }
 
 /**
@@ -590,21 +718,31 @@ export type CreditBalanceCountOutputTypeCountTransactionsArgs<ExtArgs extends ru
   where?: Prisma.CreditTransactionWhereInput
 }
 
+/**
+ * CreditBalanceCountOutputType without action
+ */
+export type CreditBalanceCountOutputTypeCountLotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CreditLotWhereInput
+}
+
 
 export type CreditBalanceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   tenantId?: boolean
+  product?: boolean
   balance?: boolean
   currency?: boolean
   updatedAt?: boolean
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.CreditBalance$transactionsArgs<ExtArgs>
+  lots?: boolean | Prisma.CreditBalance$lotsArgs<ExtArgs>
   _count?: boolean | Prisma.CreditBalanceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["creditBalance"]>
 
 export type CreditBalanceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   tenantId?: boolean
+  product?: boolean
   balance?: boolean
   currency?: boolean
   updatedAt?: boolean
@@ -614,6 +752,7 @@ export type CreditBalanceSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type CreditBalanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   tenantId?: boolean
+  product?: boolean
   balance?: boolean
   currency?: boolean
   updatedAt?: boolean
@@ -623,15 +762,17 @@ export type CreditBalanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type CreditBalanceSelectScalar = {
   id?: boolean
   tenantId?: boolean
+  product?: boolean
   balance?: boolean
   currency?: boolean
   updatedAt?: boolean
 }
 
-export type CreditBalanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "balance" | "currency" | "updatedAt", ExtArgs["result"]["creditBalance"]>
+export type CreditBalanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "product" | "balance" | "currency" | "updatedAt", ExtArgs["result"]["creditBalance"]>
 export type CreditBalanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.CreditBalance$transactionsArgs<ExtArgs>
+  lots?: boolean | Prisma.CreditBalance$lotsArgs<ExtArgs>
   _count?: boolean | Prisma.CreditBalanceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CreditBalanceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -646,10 +787,15 @@ export type $CreditBalancePayload<ExtArgs extends runtime.Types.Extensions.Inter
   objects: {
     tenant: Prisma.$TenantPayload<ExtArgs>
     transactions: Prisma.$CreditTransactionPayload<ExtArgs>[]
+    lots: Prisma.$CreditLotPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     tenantId: string
+    /**
+     * The product this balance belongs to, e.g. "router", "kuanlan", "para".
+     */
+    product: string
     balance: runtime.Decimal
     currency: string
     updatedAt: Date
@@ -1049,6 +1195,7 @@ export interface Prisma__CreditBalanceClient<T, Null = never, ExtArgs extends ru
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   transactions<T extends Prisma.CreditBalance$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CreditBalance$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreditTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lots<T extends Prisma.CreditBalance$lotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CreditBalance$lotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreditLotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1080,6 +1227,7 @@ export interface Prisma__CreditBalanceClient<T, Null = never, ExtArgs extends ru
 export interface CreditBalanceFieldRefs {
   readonly id: Prisma.FieldRef<"CreditBalance", 'String'>
   readonly tenantId: Prisma.FieldRef<"CreditBalance", 'String'>
+  readonly product: Prisma.FieldRef<"CreditBalance", 'String'>
   readonly balance: Prisma.FieldRef<"CreditBalance", 'Decimal'>
   readonly currency: Prisma.FieldRef<"CreditBalance", 'String'>
   readonly updatedAt: Prisma.FieldRef<"CreditBalance", 'DateTime'>
@@ -1500,6 +1648,30 @@ export type CreditBalance$transactionsArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.CreditTransactionScalarFieldEnum | Prisma.CreditTransactionScalarFieldEnum[]
+}
+
+/**
+ * CreditBalance.lots
+ */
+export type CreditBalance$lotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CreditLot
+   */
+  select?: Prisma.CreditLotSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CreditLot
+   */
+  omit?: Prisma.CreditLotOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CreditLotInclude<ExtArgs> | null
+  where?: Prisma.CreditLotWhereInput
+  orderBy?: Prisma.CreditLotOrderByWithRelationInput | Prisma.CreditLotOrderByWithRelationInput[]
+  cursor?: Prisma.CreditLotWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CreditLotScalarFieldEnum | Prisma.CreditLotScalarFieldEnum[]
 }
 
 /**

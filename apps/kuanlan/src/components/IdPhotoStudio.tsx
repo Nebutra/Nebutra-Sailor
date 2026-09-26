@@ -37,6 +37,7 @@ export function IdPhotoStudio({
   const [credits, setCredits] = useState<{ balance: number; price: number } | null>(null);
   const [agreeing, setAgreeing] = useState(false);
   const [needsSignIn, setNeedsSignIn] = useState(false);
+  const [outOfCredits, setOutOfCredits] = useState(false);
   const [pendingId, setPendingId] = useState<string | null>(null);
 
   const selected = skus.find((sku) => sku.id === skuId);
@@ -148,6 +149,7 @@ export function IdPhotoStudio({
     setStatus("idle");
     setNote("");
     setNeedsSignIn(false);
+    setOutOfCredits(false);
     setConsentGap(null);
     setPreview(next ? URL.createObjectURL(next) : null);
   }
@@ -183,6 +185,7 @@ export function IdPhotoStudio({
     setStatus("shooting");
     setNote("");
     setNeedsSignIn(false);
+    setOutOfCredits(false);
     const body = new FormData();
     body.set("skuId", skuId);
     body.set("sizeId", selectedSize.id);
@@ -196,6 +199,7 @@ export function IdPhotoStudio({
       if (!response.ok) {
         setStatus("error");
         setNeedsSignIn(response.status === 401);
+        setOutOfCredits(response.status === 402);
         if (response.status === 403) {
           const refused = (await response.json().catch(() => ({}))) as { gap?: ConsentGap };
           // Not an error state: nothing went wrong, we just have not asked yet.
@@ -404,6 +408,12 @@ export function IdPhotoStudio({
             <>
               {" "}
               <a href="/me">进入</a>
+            </>
+          ) : null}
+          {outOfCredits ? (
+            <>
+              {" "}
+              <a href="/pro">补充额度</a>
             </>
           ) : null}
         </p>

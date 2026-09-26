@@ -205,6 +205,7 @@ const stats = await analytics.referrals.getStats({
 // Process referral reward
 await analytics.referrals.processReward({
   referrerId: "user_123",
+  product: "app", // balances are per product
   referredId: "user_789",
   eventType: "signup",
 });

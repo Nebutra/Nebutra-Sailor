@@ -584,6 +584,98 @@
       "trial": "Masa percobaan gratis {days} hari",
       "seat": "{count, plural, one {# tempat duduk} other {# tempat duduk}}",
       "perSeat": "/ tempat duduk"
+    },
+    "checkout": {
+      "method": "Metode pembayaran",
+      "methods": {
+        "card": {
+          "title": "Kartu",
+          "description": "Visa, Mastercard, dan lainnya, ditagih dalam {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Ditagih dalam {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Ditagih dalam {currency}"
+        }
+      },
+      "amount": {
+        "label": "Jumlah ({currency})",
+        "range": "Antara {min} dan {max}",
+        "invalid": "Masukkan jumlah dalam rentang tersebut, dengan maksimal dua angka desimal"
+      },
+      "pay": "Bayar {amount}",
+      "payNoAmount": "Bayar",
+      "finePrint": {
+        "card": "Pembayaran kartu diproses oleh Creem, merchant of record kami, yang menambahkan pajak penjualan atau PPN jika berlaku.",
+        "wallet": "Dikreditkan segera setelah pembayaran dikonfirmasi."
+      },
+      "qr": {
+        "alt": "Kode QR pembayaran",
+        "alipay": "Pindai dengan Alipay. Halaman ini akan diperbarui sendiri setelah Anda membayar.",
+        "wechat": "Pindai dengan WeChat. Halaman ini akan diperbarui sendiri setelah Anda membayar."
+      },
+      "changeMethod": "Bayar dengan cara lain",
+      "confirming": {
+        "title": "Mengonfirmasi pembayaran Anda",
+        "body": "Biasanya ini hanya butuh beberapa detik. Meninggalkan halaman ini tidak menghentikan proses kreditnya."
+      },
+      "paid": {
+        "title": "Pembayaran diterima",
+        "body": "Sudah ditambahkan ke akun {product} Anda."
+      },
+      "backTo": "Kembali ke {product}",
+      "billing": "penagihan",
+      "expired": {
+        "title": "Pembayaran ini tidak selesai",
+        "body": "Tidak ada yang ditagihkan. Mulai lagi saat Anda siap."
+      },
+      "lost": {
+        "title": "Halaman ini tidak menemukan pembayaran",
+        "body": "Jika Anda sudah membayar, itu tetap akan dikreditkan. Pesanan Anda tercantum di halaman penagihan."
+      },
+      "tryAgain": "Bayar lagi",
+      "viewOrders": "Lihat pesanan",
+      "closed": {
+        "title": "Pembayaran belum dibuka",
+        "body": "Saat ini tidak ada metode pembayaran yang tersedia untuk penawaran ini. Coba lagi nanti."
+      },
+      "notForSale": {
+        "title": "Penawaran ini tidak dijual",
+        "body": "Tautan mungkin sudah usang. Kembali ke produk dan pilih lagi."
+      },
+      "unavailable": {
+        "title": "Checkout tidak tersedia",
+        "body": "Layanan pembayaran tidak dapat dihubungi. Coba lagi sesaat lagi."
+      },
+      "problems": {
+        "forbidden": "Hanya pemilik, admin, atau admin penagihan organisasi ini yang dapat membayar.",
+        "unavailable": "Layanan pembayaran tidak merespons. Tidak ada yang ditagihkan; coba lagi.",
+        "rejected": "Pembayaran ini tidak dapat dimulai. Periksa jumlahnya dan coba lagi."
+      }
+    },
+    "orders": {
+      "title": "Pesanan",
+      "description": "Pembayaran untuk setiap produk, terbaru lebih dulu.",
+      "empty": "Belum ada yang dibeli. Pembayaran dari produk apa pun akan tercantum di sini.",
+      "unavailable": "Pesanan tidak dapat dimuat. Coba lagi sesaat lagi.",
+      "columns": {
+        "date": "Tanggal",
+        "item": "Item",
+        "method": "Dibayar dengan",
+        "amount": "Jumlah",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Menunggu pembayaran",
+        "CREDITING": "Dibayar, sedang dikreditkan",
+        "PAID": "Dibayar",
+        "PARTIALLY_REFUNDED": "Sebagian dikembalikan",
+        "REFUNDED": "Dikembalikan",
+        "EXPIRED": "Tidak selesai"
+      }
     }
   },
   "organizations": {

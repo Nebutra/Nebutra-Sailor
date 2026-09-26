@@ -55,7 +55,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    const ctx = createAgentContext(tenantId, userId, body.canvasId ?? "demo");
+    const ctx = createAgentContext(
+      { tenantId, product: "nebutra" },
+      userId,
+      body.canvasId ?? "demo",
+    );
     const sink: { patch?: ScenePatch } = {};
     const summary = await buildTool(sink).execute(
       {

@@ -6,7 +6,8 @@
  * they never read. What is here is transcribed from the Prisma models the
  * Router money spine and console actually use, including the constraints the
  * behaviour depends on — the unique `(tenant_id, idempotency_key)` that makes a
- * replayed settle a no-op, and the unique `tenant_id` on `credit_balances`.
+ * replayed settle a no-op, and the unique `(tenant_id, product)` on
+ * `credit_balances` — one balance per product (ADR 2026-09-27).
  */
 
 export const ROUTER_ENUMS = `
@@ -26,10 +27,12 @@ export const ROUTER_ENUMS = `
 export const ROUTER_TABLES = `
   CREATE TABLE credit_balances (
     id         text PRIMARY KEY,
-    tenant_id  text NOT NULL UNIQUE,
+    tenant_id  text NOT NULL,
+    product    varchar(32) NOT NULL,
     balance    numeric(10,4) NOT NULL DEFAULT 0,
     currency   varchar(3) NOT NULL DEFAULT 'USD',
-    updated_at timestamp(3) NOT NULL DEFAULT now()
+    updated_at timestamp(3) NOT NULL DEFAULT now(),
+    UNIQUE (tenant_id, product)
   );
 
   CREATE TABLE credit_transactions (

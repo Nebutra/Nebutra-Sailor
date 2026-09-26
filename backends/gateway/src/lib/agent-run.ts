@@ -22,6 +22,7 @@ import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { getGatewayOrchestrator } from "../agents/orchestrator-singleton.js";
 import { createGatewayCarinaBundle } from "./carina-sandbox.js";
+import { AI_GATEWAY_WALLET_PRODUCT } from "./gateway-deps.js";
 
 /** Automation runs are durable: rollout lines persist for replay/debugging. */
 function durableRolloutStore(): RolloutStore {
@@ -66,7 +67,11 @@ export async function runAgentTurn(opts: AgentTurnInput): Promise<AgentTurnResul
     async invoke() {
       const response: AgentResponse = await orch.chat(
         opts.input,
-        createAgentContext(opts.tenantId, "automation", opts.threadId),
+        createAgentContext(
+          { tenantId: opts.tenantId, product: AI_GATEWAY_WALLET_PRODUCT },
+          "automation",
+          opts.threadId,
+        ),
       );
       const last = response.messages.at(-1);
       summary = last?.content ?? "";

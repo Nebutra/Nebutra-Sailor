@@ -1,12 +1,16 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { createPaymentOrderMock, getPaymentOrderMock, isPaymentMethodAvailableMock } = vi.hoisted(
-  () => ({
-    createPaymentOrderMock: vi.fn(),
-    getPaymentOrderMock: vi.fn(),
-    isPaymentMethodAvailableMock: vi.fn(),
-  }),
-);
+const {
+  createPaymentOrderMock,
+  getPaymentOrderMock,
+  isPaymentMethodAvailableMock,
+  listPaymentOrdersMock,
+} = vi.hoisted(() => ({
+  createPaymentOrderMock: vi.fn(),
+  getPaymentOrderMock: vi.fn(),
+  isPaymentMethodAvailableMock: vi.fn(),
+  listPaymentOrdersMock: vi.fn(),
+}));
 
 vi.mock("@nebutra/logger", () => ({
   logger: {
@@ -19,10 +23,24 @@ vi.mock("@nebutra/logger", () => ({
 }));
 
 const tenantRole = vi.hoisted(() => ({ value: "org:admin" }));
+const activeOrg = vi.hoisted(() => ({ value: "org_1" as string | undefined }));
+const personal = vi.hoisted(() => ({ ensure: vi.fn(), find: vi.fn() }));
+
+vi.mock("@nebutra/db", () => ({ getSystemDb: () => ({}) }));
+vi.mock("@nebutra/repositories", () => ({
+  PersonalTenantRepository: class {
+    ensure = personal.ensure;
+    find = personal.find;
+  },
+}));
 
 vi.mock("../middlewares/tenantContext.js", () => ({
   requireAuth: async (c: { set: (k: string, v: unknown) => void }, next: () => Promise<void>) => {
-    c.set("tenant", { organizationId: "org_1", userId: "user_1", role: tenantRole.value });
+    c.set("tenant", {
+      organizationId: activeOrg.value,
+      userId: "user_1",
+      role: tenantRole.value,
+    });
     await next();
   },
   requireOrganization: async (_c: unknown, next: () => Promise<void>) => next(),
@@ -50,6 +68,9 @@ vi.mock("@nebutra/billing", async () => {
   return {
     BillingError,
     listOffers: offers.listOffers,
+    getOffer: offers.getOffer,
+    offerAccount: offers.offerAccount,
+    listPaymentOrders: (org: string, limit: number) => listPaymentOrdersMock(org, limit),
     // Mirrors the real guard: only the product origin may be a return URL.
     assertProductReturnUrl: (value: string) => {
       if (new URL(value).origin !== "https://app.example.com") {
@@ -98,6 +119,10 @@ describe("GET /offers", () => {
 
 describe("POST /orders", () => {
   beforeEach(() => {
+    activeOrg.value = "org_1";
+    tenantRole.value = "org:admin";
+    personal.ensure.mockReset();
+    personal.ensure.mockResolvedValue("tenant_me");
     createPaymentOrderMock.mockReset();
     createPaymentOrderMock.mockResolvedValue({
       orderId: "order_1",
@@ -107,7 +132,7 @@ describe("POST /orders", () => {
     });
   });
 
-  it("creates an order from the offer id alone — a client price is ignored", async () => {
+  it("never forwards a client price; a proposed amount goes to the catalog to judge", async () => {
     const res = await postOrder({
       offerId: "credits_10k",
       method: "alipay",
@@ -122,7 +147,9 @@ describe("POST /orders", () => {
       offerId: "credits_10k",
       method: "alipay",
     });
-    expect(call).not.toHaveProperty("amount");
+    // `amount` is how a buyer names a top-up; a fixed-price offer ignores it,
+    // and priceOffer refuses one outside a custom offer's range.
+    expect(call).toMatchObject({ amount: 0.01 });
     expect(call).not.toHaveProperty("amountMinor");
     expect(await res.json()).toEqual({
       orderId: "order_1",
@@ -186,6 +213,151 @@ describe("POST /orders", () => {
 
     expect(res.status).toBe(500);
     expect(JSON.stringify(await res.json())).not.toContain("secret detail");
+  });
+});
+
+describe("whose account pays", () => {
+  const offersModule = () => import("../../../../packages/commerce/billing/src/offers/index.js");
+  const SHOT = {
+    id: "shots",
+    product: "kuanlan",
+    account: "personal" as const,
+    name: "Shots",
+    prices: { CNY: 68 },
+    fulfillment: { type: "credits", params: { credits: 1000 } },
+  };
+  const PLAN = { ...SHOT, id: "plan", product: "para", account: "organization" as const };
+  const TOPUP = { ...SHOT, id: "topup", product: "router", account: "workspace" as const };
+
+  beforeEach(async () => {
+    const { configureOffers } = await offersModule();
+    configureOffers([SHOT, PLAN, TOPUP]);
+    activeOrg.value = "org_1";
+    tenantRole.value = "org:viewer";
+    personal.ensure.mockReset();
+    personal.ensure.mockResolvedValue("tenant_me");
+    createPaymentOrderMock.mockReset();
+    createPaymentOrderMock.mockResolvedValue({
+      orderId: "o",
+      session: { kind: "qr", url: "u", provider: "chinapay" },
+      amountMinor: 6800,
+      currency: "CNY",
+    });
+  });
+
+  afterEach(async () => {
+    const { configureOffers, DEFAULT_OFFERS } = await offersModule();
+    configureOffers(DEFAULT_OFFERS);
+  });
+
+  it("bills a personal offer to the buyer's own account, whatever their role", async () => {
+    const res = await postOrder({ offerId: "shots", method: "alipay" });
+    expect(res.status).toBe(200);
+    expect(createPaymentOrderMock.mock.calls[0]?.[0]).toMatchObject({
+      organizationId: "tenant_me",
+    });
+  });
+
+  it("keeps an organization's money behind billing rights", async () => {
+    const res = await postOrder({ offerId: "plan", method: "alipay" });
+    expect(res.status).toBe(403);
+    expect(createPaymentOrderMock).not.toHaveBeenCalled();
+  });
+
+  it("refuses an organization offer to someone with no organization", async () => {
+    activeOrg.value = undefined;
+    const res = await postOrder({ offerId: "plan", method: "alipay" });
+    expect(res.status).toBe(403);
+    expect(createPaymentOrderMock).not.toHaveBeenCalled();
+  });
+
+  it("bills a workspace offer to the active organization, or to the buyer without one", async () => {
+    tenantRole.value = "org:admin";
+    await postOrder({ offerId: "topup", method: "alipay" });
+    activeOrg.value = undefined;
+    await postOrder({ offerId: "topup", method: "alipay" });
+    expect(createPaymentOrderMock.mock.calls.map((c) => c[0].organizationId)).toEqual([
+      "org_1",
+      "tenant_me",
+    ]);
+  });
+});
+
+describe("GET /orders", () => {
+  beforeEach(() => {
+    activeOrg.value = "org_1";
+    personal.find.mockReset();
+    personal.find.mockResolvedValue(null);
+    listPaymentOrdersMock.mockReset();
+  });
+
+  it("lists the caller's organization's orders with product and offer name", async () => {
+    listPaymentOrdersMock.mockResolvedValue([
+      {
+        id: "order_2",
+        offerId: "credits_10k",
+        product: "app",
+        status: "PAID",
+        fulfilledAt: new Date("2026-09-27T00:01:00Z"),
+        amountMinor: 6800,
+        currency: "CNY",
+        method: "alipay",
+        createdAt: new Date("2026-09-27T00:00:00Z"),
+      },
+    ]);
+
+    const res = await orderRoutes.request("/orders?limit=5");
+
+    expect(res.status).toBe(200);
+    expect(listPaymentOrdersMock).toHaveBeenCalledWith("org_1", 5);
+    expect(await res.json()).toEqual({
+      orders: [
+        {
+          id: "order_2",
+          offerId: "credits_10k",
+          product: "app",
+          name: "10,000 credits",
+          status: "PAID",
+          fulfilled: true,
+          amountMinor: 6800,
+          currency: "CNY",
+          method: "alipay",
+          createdAt: "2026-09-27T00:00:00.000Z",
+        },
+      ],
+    });
+  });
+});
+
+describe("GET /orders across accounts", () => {
+  it("lists the organization's orders and the buyer's own, newest first", async () => {
+    activeOrg.value = "org_1";
+    personal.find.mockReset();
+    personal.find.mockResolvedValue("tenant_me");
+    listPaymentOrdersMock.mockReset();
+    const row = (id: string, at: string) => ({
+      id,
+      offerId: "x",
+      product: "kuanlan",
+      status: "PAID",
+      fulfilledAt: null,
+      amountMinor: 1,
+      currency: "CNY",
+      method: "alipay",
+      createdAt: new Date(at),
+    });
+    listPaymentOrdersMock.mockImplementation(async (tenantId: string) =>
+      tenantId === "org_1" ? [row("org_old", "2026-09-01")] : [row("mine_new", "2026-09-20")],
+    );
+
+    const res = await orderRoutes.request("/orders");
+    const body = (await res.json()) as { orders: Array<{ id: string }> };
+
+    expect(listPaymentOrdersMock.mock.calls.map((c) => c[0]).sort()).toEqual([
+      "org_1",
+      "tenant_me",
+    ]);
+    expect(body.orders.map((o) => o.id)).toEqual(["mine_new", "org_old"]);
   });
 });
 
