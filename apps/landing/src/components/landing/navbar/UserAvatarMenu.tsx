@@ -22,8 +22,15 @@ import {
   SettingsGear as Settings,
   User,
 } from "@nebutra/icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { env } from "@/lib/env";
 import { usePublicMe } from "@/lib/use-public-me";
 
@@ -72,25 +79,6 @@ function AvatarFace({
 export function UserAvatarMenu(): React.ReactElement | null {
   const t = useTranslations("nav.avatarMenu");
   const me = usePublicMe();
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    function onDocumentClick(event: MouseEvent) {
-      if (!containerRef.current) return;
-      if (!containerRef.current.contains(event.target as Node)) setOpen(false);
-    }
-    function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
-    }
-    document.addEventListener("mousedown", onDocumentClick);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDocumentClick);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
 
   async function handleSignOut() {
     try {
@@ -110,81 +98,75 @@ export function UserAvatarMenu(): React.ReactElement | null {
   const displayName = me.name || me.email || t("loadingName");
   const subtitle = me.activeOrganization?.name ?? me.email ?? "";
 
+  // The DS menu, not a hand-rolled absolute panel: the navbar is a blurred,
+  // stacking-context surface, and an in-place z-50 panel is only as high as
+  // the navbar itself. The DS menu portals, and owns outside-click, Escape,
+  // focus and arrow-key navigation.
   return (
-    <div ref={containerRef} className="relative inline-flex">
-      <button
-        type="button"
-        aria-label={t("ariaLabel")}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center gap-2 rounded-full border border-neutral-7/60 bg-neutral-2/60 px-1.5 py-1 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3/80"
-      >
-        <span
-          aria-hidden
-          className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary text-[10px] font-semibold text-primary-foreground shadow-inner"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          aria-label={t("ariaLabel")}
+          className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-1.5 py-1 text-sm font-medium text-foreground transition-colors hover:bg-muted"
         >
-          <AvatarFace
-            key={me.avatarUrl ?? "none"}
-            src={me.avatarUrl}
-            name={me.name}
-            email={me.email}
-          />
           <span
             aria-hidden
-            className="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-500 ring-2 ring-white dark:ring-black"
-          />
-        </span>
-        <ChevronDown className="h-3.5 w-3.5 text-neutral-11" />
-      </button>
-
-      {open && (
-        <div
-          role="menu"
-          aria-label={t("ariaLabel")}
-          className="absolute right-0 top-full z-50 mt-2 w-72 origin-top-right rounded-[var(--radius-xl)] border border-neutral-7/70 bg-white p-1.5 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl dark:bg-black/95"
-        >
-          <div className="flex items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2.5">
+            className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary text-[10px] font-semibold text-primary-foreground shadow-inner"
+          >
+            <AvatarFace
+              key={me.avatarUrl ?? "none"}
+              src={me.avatarUrl}
+              name={me.name}
+              email={me.email}
+            />
             <span
               aria-hidden
-              className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-semibold text-primary-foreground shadow-inner"
-            >
-              <AvatarFace
-                key={me.avatarUrl ?? "none"}
-                src={me.avatarUrl}
-                name={me.name}
-                email={me.email}
-              />
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-neutral-12">{displayName}</p>
-              {subtitle && <p className="truncate text-xs text-neutral-11">{subtitle}</p>}
-            </div>
-          </div>
-
-          <div className="my-1 h-px bg-neutral-6" aria-hidden />
-
-          <MenuLink href={`${APP_URL}/workspace`} icon={User} label={t("dashboard")} />
-          <MenuLink href={`${APP_URL}/settings/account`} icon={Settings} label={t("account")} />
-          <MenuLink href={`${APP_URL}/billing`} icon={CreditCard} label={t("billing")} />
-          <MenuLink href="/docs" icon={BookOpen} label={t("docs")} external={false} />
-
-          <div className="my-1 h-px bg-neutral-6" aria-hidden />
-
-          <button
-            type="button"
-            role="menuitem"
-            onClick={() => {
-              void handleSignOut();
-            }}
-            className="flex w-full items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2 text-sm font-medium text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
+              className="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-success ring-2 ring-background"
+            />
+          </span>
+          <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" sideOffset={8} className="w-72 p-1.5">
+        <div className="flex items-center gap-3 px-3 py-2.5">
+          <span
+            aria-hidden
+            className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-semibold text-primary-foreground shadow-inner"
           >
-            <LogOut className="h-4 w-4" aria-hidden />
-            <span>{t("signOut")}</span>
-          </button>
+            <AvatarFace
+              key={me.avatarUrl ?? "none"}
+              src={me.avatarUrl}
+              name={me.name}
+              email={me.email}
+            />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold text-foreground">{displayName}</p>
+            {subtitle && <p className="truncate text-xs text-muted-foreground">{subtitle}</p>}
+          </div>
         </div>
-      )}
-    </div>
+
+        <DropdownMenuSeparator />
+
+        <MenuLink href={`${APP_URL}/workspace`} icon={User} label={t("dashboard")} />
+        <MenuLink href={`${APP_URL}/settings/account`} icon={Settings} label={t("account")} />
+        <MenuLink href={`${APP_URL}/billing`} icon={CreditCard} label={t("billing")} />
+        <MenuLink href="/docs" icon={BookOpen} label={t("docs")} external={false} />
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem
+          onClick={() => {
+            void handleSignOut();
+          }}
+          className="gap-3 px-3 py-2 text-destructive-strong"
+        >
+          <LogOut className="h-4 w-4" aria-hidden />
+          <span>{t("signOut")}</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -197,19 +179,20 @@ interface MenuLinkProps {
 
 function MenuLink({ href, icon: Icon, label, external = true }: MenuLinkProps) {
   const isExternal = external && href.startsWith("http");
-  const className =
-    "flex w-full items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2";
   return (
-    <a
-      role="menuitem"
-      href={href}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noreferrer" : undefined}
-      className={className}
+    <DropdownMenuItem
+      render={
+        <a
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noreferrer" : undefined}
+        />
+      }
+      className="gap-3 px-3 py-2"
     >
-      <Icon className="h-4 w-4 text-neutral-11" aria-hidden />
+      <Icon className="h-4 w-4 text-muted-foreground" aria-hidden />
       <span>{label}</span>
-    </a>
+    </DropdownMenuItem>
   );
 }
 

@@ -12,11 +12,17 @@ import {
   Key,
   MagnifyingGlass,
 } from "@nebutra/icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { type FormEvent, type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { type FormEvent, type ReactNode, useState } from "react";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandLogo } from "@/components/brand-logo";
 import { LocaleSwitcher } from "@/components/locale-switcher";
@@ -88,7 +94,11 @@ export function ConsoleShell({
   return <MarketShell pathname={pathname}>{children}</MarketShell>;
 }
 
-/** Tiny hover/click dropdown — 302 style */
+/**
+ * Tiny hover/click dropdown — 302 style. The DS menu (openOnHover), not an
+ * in-place absolute panel: the utility bar is backdrop-blurred, which traps
+ * any in-place z-index under the page below it.
+ */
 function HeaderMenu({
   label,
   items,
@@ -98,84 +108,37 @@ function HeaderMenu({
   items: readonly { id: string; label: string; href?: string; onSelect?: () => void }[];
   align?: "left" | "right";
 }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const menuId = useId();
-
-  useEffect(() => {
-    if (!open) return;
-    const onDoc = (e: MouseEvent) => {
-      if (!ref.current?.contains(e.target as Node)) setOpen(false);
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("mousedown", onDoc);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDoc);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
-
+  const itemClass = "px-3 py-1.5 text-[12px]";
   return (
-    // Hover-open chrome menu (302 utility dropdowns)
-    // biome-ignore lint/a11y/noStaticElementInteractions: hover affordance wraps trigger+panel
-    <div
-      ref={ref}
-      className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
-      <button
-        type="button"
-        className="inline-flex items-center gap-0.5 hover:text-[var(--neutral-12)]"
-        aria-expanded={open}
-        aria-haspopup="menu"
-        aria-controls={menuId}
-        onClick={() => setOpen((v) => !v)}
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild openOnHover>
+        <button type="button" className="inline-flex items-center gap-0.5 hover:text-foreground">
+          {label}
+          <ChevronDown className="h-3 w-3 opacity-70" aria-hidden />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align={align === "right" ? "end" : "start"}
+        sideOffset={4}
+        className="max-h-72 min-w-[140px] overflow-y-auto py-1"
       >
-        {label}
-        <ChevronDown className="h-3 w-3 opacity-70" aria-hidden />
-      </button>
-      {open ? (
-        <div
-          id={menuId}
-          role="menu"
-          className={cn(
-            "absolute top-full z-50 mt-1 max-h-72 min-w-[140px] overflow-y-auto rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] py-1 shadow-md",
-            align === "right" ? "right-0" : "left-0",
-          )}
-        >
-          {items.map((item) =>
-            item.href ? (
-              <Link
-                key={item.id}
-                href={item.href}
-                role="menuitem"
-                className="block px-3 py-1.5 text-left text-[12px] text-[var(--neutral-12)] hover:bg-[var(--neutral-2)]"
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <button
-                key={item.id}
-                type="button"
-                role="menuitem"
-                className="block w-full px-3 py-1.5 text-left text-[12px] text-[var(--neutral-12)] hover:bg-[var(--neutral-2)]"
-                onClick={() => {
-                  item.onSelect?.();
-                  setOpen(false);
-                }}
-              >
-                {item.label}
-              </button>
-            ),
-          )}
-        </div>
-      ) : null}
-    </div>
+        {items.map((item) =>
+          item.href ? (
+            <DropdownMenuItem
+              key={item.id}
+              render={<Link href={item.href} />}
+              className={itemClass}
+            >
+              {item.label}
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem key={item.id} onClick={() => item.onSelect?.()} className={itemClass}>
+              {item.label}
+            </DropdownMenuItem>
+          ),
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -210,7 +173,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
   return (
     <div className="router-market text-[var(--neutral-12)]">
       {/* utility bar — hairline, quieter */}
-      <div className="border-b border-[var(--rm-line)]/80 bg-white/40 backdrop-blur-sm">
+      <div className="border-b border-[var(--rm-line)]/80 bg-background/40 backdrop-blur-sm">
         <div className="router-market-shell flex h-9 items-center justify-between gap-3 text-[12px] text-[var(--neutral-11)]">
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Settlement currency. A picker used to sit here that changed a
