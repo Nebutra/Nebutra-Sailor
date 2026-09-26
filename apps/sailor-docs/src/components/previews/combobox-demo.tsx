@@ -17,7 +17,7 @@ export function ComboboxDemo() {
     <Combobox
       options={frameworks}
       value={value}
-      onChange={setValue}
+      onValueChange={setValue}
       placeholder="Select framework..."
     />
   );

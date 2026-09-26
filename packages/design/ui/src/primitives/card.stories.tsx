@@ -155,3 +155,49 @@ export const DarkMode: Story = {
     </div>
   ),
 };
+
+export const Variants: Story = {
+  render: () => (
+    <div className="grid grid-cols-2 gap-4 p-6 md:grid-cols-4">
+      {(["default", "elevated", "outline", "ghost"] as const).map((variant) => (
+        <Card key={variant} variant={variant} padding="md">
+          <Card.Header>
+            <Card.Title>{variant}</Card.Title>
+            <Card.Description>variant=&quot;{variant}&quot;</Card.Description>
+          </Card.Header>
+          <Card.Body className="text-sm">Surface and elevation from the brand rails.</Card.Body>
+        </Card>
+      ))}
+    </div>
+  ),
+};
+
+export const PaddedCompound: Story = {
+  name: "Padded card, compound parts",
+  render: () => (
+    <div className="max-w-sm p-6">
+      <Card padding="lg" variant="elevated">
+        <Card.Header>
+          <Card.Icon>
+            <span aria-hidden="true">◆</span>
+          </Card.Icon>
+          <Card.Title>Workspace usage</Card.Title>
+          <Card.Description>The card pads; its parts only space themselves.</Card.Description>
+        </Card.Header>
+        <Card.Body className="text-sm">12,408 requests this month.</Card.Body>
+        <Card.Footer className="text-xs text-muted-foreground">Updated just now</Card.Footer>
+      </Card>
+    </div>
+  ),
+};
+
+export const Interactive: Story = {
+  render: () => (
+    <div className="max-w-sm p-6">
+      <Card interactive padding="md">
+        <Card.Title>Hover me</Card.Title>
+        <Card.Description>interactive lifts to the next elevation step.</Card.Description>
+      </Card>
+    </div>
+  ),
+};

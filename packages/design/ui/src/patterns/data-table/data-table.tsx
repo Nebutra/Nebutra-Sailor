@@ -8,12 +8,7 @@ import type { DataTableProps } from "./types";
 import { getPinnedStyles } from "./utils";
 
 export function DataTable<TData>(props: DataTableProps<TData>) {
-  const {
-    showToolbar = true,
-    enableColumnVisibility = true,
-    extraActions,
-    resizeColumnLabel = "Resize column",
-  } = props;
+  const { showToolbar = true, enableColumnVisibility = true, extraActions } = props;
 
   const { table, state, refs, virtualization, helpers, data: tableData, t } = useDataTable(props);
   const { scrollContainerRef } = refs;
@@ -103,7 +98,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                           {header.column.getCanResize() ? (
                             <button
                               type="button"
-                              aria-label={resizeColumnLabel}
+                              aria-label={t("common.table.resizeColumn")}
                               onMouseDown={header.getResizeHandler()}
                               onTouchStart={header.getResizeHandler()}
                               onDoubleClick={() => header.column.resetSize()}

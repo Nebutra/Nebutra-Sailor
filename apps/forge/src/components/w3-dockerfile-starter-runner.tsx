@@ -377,7 +377,7 @@ export function W3DockerfileStarterRunner({ toolId }: { toolId: string }) {
               key={toggle.id}
               id={`dockerfile-${toggle.id}`}
               checked={toggle.checked}
-              onChange={toggle.set}
+              onCheckedChange={toggle.set}
             >
               {toggle.label}
             </Checkbox>

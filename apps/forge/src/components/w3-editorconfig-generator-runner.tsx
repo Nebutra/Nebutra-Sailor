@@ -225,7 +225,7 @@ export function W3EditorconfigGeneratorRunner({ toolId }: { toolId: string }) {
         </div>
       </div>
 
-      <Checkbox id={`${uid}-root`} checked={root} onChange={setRoot}>
+      <Checkbox id={`${uid}-root`} checked={root} onCheckedChange={setRoot}>
         <span className="text-sm">{t("editorconfig.rootLabel")}</span>
       </Checkbox>
 

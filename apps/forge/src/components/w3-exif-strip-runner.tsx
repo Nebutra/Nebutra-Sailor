@@ -193,7 +193,7 @@ export function W3ExifStripRunner({ toolId }: { toolId: string }) {
       maxReadBytes={READ_BYTES}
       optionsKey={String(keepThumbnail)}
       options={
-        <Checkbox checked={keepThumbnail} onChange={setKeepThumbnail}>
+        <Checkbox checked={keepThumbnail} onCheckedChange={setKeepThumbnail}>
           {t("exifStrip.optKeepThumbnail")}
         </Checkbox>
       }

@@ -9,8 +9,9 @@ import {
   SettingsGear as Settings,
   Cross as X,
 } from "@nebutra/icons";
-import { Card, EmptyState, PageHeader } from "@nebutra/ui/layout";
+import { EmptyState, PageHeader } from "@nebutra/ui/layout";
 import { DashboardPanel } from "@nebutra/ui/patterns";
+import { Card } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { DocumentTaskUploader } from "@/components/documents/document-task-uploader";
@@ -255,6 +256,7 @@ export default function IntegrationsPage() {
 
             return (
               <Card
+                padding="sm"
                 key={item.type}
                 className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
                   isConnected

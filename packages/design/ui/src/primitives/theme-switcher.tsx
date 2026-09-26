@@ -51,7 +51,9 @@ export interface ThemeSwitcherProps
   /** Initial fallback when rendered outside ThemeProvider. */
   defaultValue?: ThemeSwitcherValue;
   /** Compatibility callback for tests or migrations. ThemeProvider remains the source of truth. */
+  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (theme: ThemeSwitcherValue) => void;
+  onValueChange?: (theme: ThemeSwitcherValue) => void;
   /** Read-only preview state. Provider `forcedTheme` also disables the control. */
   disabled?: boolean;
   /** Compact size for dense chrome. */
@@ -89,7 +91,8 @@ function isThemeSwitcherValue(value: string | undefined): value is ThemeSwitcher
 export const ThemeSwitcher = ({
   value,
   defaultValue = "system",
-  onChange,
+  onChange: legacyOnChange,
+  onValueChange: onChange = legacyOnChange,
   disabled = false,
   size = "medium",
   name,

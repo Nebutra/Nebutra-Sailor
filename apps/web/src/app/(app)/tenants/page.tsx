@@ -1,4 +1,5 @@
-import { Card, LoadingState, PageHeader } from "@nebutra/ui/layout";
+import { LoadingState, PageHeader } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import { Suspense } from "react";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
 

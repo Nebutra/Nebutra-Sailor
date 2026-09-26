@@ -16,7 +16,6 @@
 
 import { Cloud, Inbox, Plus } from "@nebutra/icons";
 import { EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
-import { Card } from "@nebutra/ui/patterns";
 import {
   Alert,
   AlertContent,
@@ -27,6 +26,7 @@ import {
   Avatar,
   Badge,
   Button,
+  Card,
   Checkbox,
   CheckboxGroup,
   Combobox,

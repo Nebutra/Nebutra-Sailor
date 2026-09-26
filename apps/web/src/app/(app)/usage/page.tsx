@@ -1,4 +1,5 @@
-import { Card, EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
+import { EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { type ReactNode, Suspense } from "react";

@@ -343,7 +343,7 @@ export function W3CsvColumnsRunner({ toolId }: { toolId: string }) {
                 <Checkbox
                   id={`${uid}-keep-${column.index}`}
                   checked={column.keep}
-                  onChange={(checked) => patch(column.index, { keep: checked })}
+                  onCheckedChange={(checked) => patch(column.index, { keep: checked })}
                 >
                   <span className="sr-only">{t("csvColumns.keep", { name: column.original })}</span>
                 </Checkbox>

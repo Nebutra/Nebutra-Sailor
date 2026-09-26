@@ -27,7 +27,7 @@ export const Default: Story = {
   render: () => {
     const [checked, setChecked] = useState(false);
     return (
-      <Checkbox checked={checked} onChange={(v) => setChecked(v)}>
+      <Checkbox checked={checked} onCheckedChange={(v) => setChecked(v)}>
         Option 1
       </Checkbox>
     );
@@ -88,10 +88,10 @@ export const InForm: Story = {
     return (
       <div className="flex flex-col gap-4 rounded-lg border p-4">
         <h3 className="text-sm font-medium">Settings</h3>
-        <Checkbox checked={terms} onChange={setTerms}>
+        <Checkbox checked={terms} onCheckedChange={setTerms}>
           Accept terms and conditions
         </Checkbox>
-        <Checkbox checked={newsletter} onChange={setNewsletter}>
+        <Checkbox checked={newsletter} onCheckedChange={setNewsletter}>
           Subscribe to newsletter
         </Checkbox>
         <Checkbox disabled>SMS alerts (coming soon)</Checkbox>

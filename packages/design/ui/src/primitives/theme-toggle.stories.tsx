@@ -35,7 +35,7 @@ function ControlledToggle({ initial = "light" }: { initial?: ThemeToggleValue })
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <ThemeToggle value={theme} onChange={setTheme} />
+      <ThemeToggle value={theme} onValueChange={setTheme} />
       <span className="rounded-[var(--radius-sm)] bg-muted px-2 py-1 font-mono text-muted-foreground text-xs">
         {theme}
       </span>

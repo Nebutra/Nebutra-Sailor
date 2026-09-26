@@ -1,39 +1,7 @@
-"use client";
-
-import type React from "react";
-import { cn } from "../utils";
-
-export interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-  /** Whether the card has a hover/press effect */
-  isInteractive?: boolean;
-}
-
 /**
- * Card — surface container with border, background, and shadow.
- *
- * @status stable
- * @planned apps/web dashboard — settings panels, billing summary, team member tiles.
- *   See governance/registry.ts for full allocation record.
- *
- * @example
- * ```tsx
- * <Card>
- *   <p>Card content</p>
- * </Card>
- * ```
+ * @deprecated Import Card from `@nebutra/ui/primitives`. This path re-exports
+ * the one Card; it used to be a second implementation (bg-background — the
+ * canvas colour — a fixed shadow-sm and a built-in p-4). Its `isInteractive`
+ * is now `interactive`, and the old default padding is `padding="sm"`.
  */
-export function Card({ children, isInteractive = false, className }: CardProps) {
-  return (
-    <div
-      className={cn(
-        "rounded-[var(--radius-lg)] border border-border bg-background p-4 text-foreground shadow-sm",
-        isInteractive && "cursor-pointer transition-shadow hover:shadow-md",
-        className,
-      )}
-    >
-      {children}
-    </div>
-  );
-}
+export { Card, type CardProps } from "../primitives/card";

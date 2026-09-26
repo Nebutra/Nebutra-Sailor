@@ -7,11 +7,11 @@ import {
   CardHeader,
   CardIcon,
   CardTitle,
-} from "@nebutra/ui/patterns";
+} from "@nebutra/ui/primitives";
 
 export function CardWithIconDemo() {
   return (
-    <Card variant="bordered" padding="md">
+    <Card variant="outline" padding="md">
       <CardHeader>
         <CardIcon size="md">
           <span>⚡️</span>

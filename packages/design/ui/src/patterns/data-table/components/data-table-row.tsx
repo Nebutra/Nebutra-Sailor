@@ -1,14 +1,14 @@
 import { flexRender, type Row } from "@tanstack/react-table";
 import type { VirtualItem } from "@tanstack/react-virtual";
-import type { useTranslations } from "next-intl";
 import { type CSSProperties, memo } from "react";
 import type { UseCellSelectionReturn } from "../hooks/use-cell-selection";
+import type { DataTableTranslate } from "../labels";
 
 export interface DataTableRowProps<TData> {
   row: Row<TData>;
   virtualRow: VirtualItem | undefined;
   pinnedColumnStyles: Record<string, CSSProperties>;
-  t: ReturnType<typeof useTranslations>;
+  t: DataTableTranslate;
   handleCellCopy: (value: unknown) => void;
   shouldMeasure: boolean;
   measureElement: (element: Element | null) => void;

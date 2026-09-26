@@ -28,7 +28,9 @@ export interface CheckboxProps
   > {
   checked?: boolean;
   defaultChecked?: boolean;
+  /** @deprecated Use `onCheckedChange` — `onChange` conventionally receives an event. */
   onChange?: (checked: boolean) => void;
+  onCheckedChange?: (checked: boolean) => void;
   disabled?: boolean;
   indeterminate?: boolean;
   children?: React.ReactNode;
@@ -60,7 +62,8 @@ const boxClassName = (on: boolean) =>
 export const Checkbox = ({
   checked: controlledChecked,
   defaultChecked = false,
-  onChange,
+  onChange: legacyOnChange,
+  onCheckedChange: onChange = legacyOnChange,
   disabled = false,
   indeterminate = false,
   children,

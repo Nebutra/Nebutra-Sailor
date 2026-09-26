@@ -1,8 +1,7 @@
 "use client";
 
 import { Cloud } from "@nebutra/icons";
-import { Card } from "@nebutra/ui/patterns";
-import { Badge, Button } from "@nebutra/ui/primitives";
+import { Badge, Button, Card } from "@nebutra/ui/primitives";
 import {
   Aside,
   AxisMatrix,
@@ -12,11 +11,11 @@ import {
   LONG_PARAGRAPH,
   State,
 } from "../demo-kit";
-import type { DemoProps } from "../derived";
+import { axis, type DemoProps } from "../derived";
 
 export default function CardDemo({ derived }: DemoProps) {
-  const variants = derived.axes.variant ?? [];
-  const paddings = derived.axes.padding ?? [];
+  const variants = axis(derived, "card", "variant");
+  const paddings = axis(derived, "card", "padding");
 
   return (
     <DemoPage>
@@ -51,7 +50,7 @@ export default function CardDemo({ derived }: DemoProps) {
       <State
         breaks="Padding applied per card at the call site, which is how a grid of cards ends up with three different insets. padding is a prop, and none is one of the values."
         id="padding"
-        note={`All ${paddings.length} padding steps from paddingMap.`}
+        note={`All ${paddings.length} padding steps from cardVariants.`}
         title="Padding"
       >
         <AxisMatrix
@@ -60,7 +59,7 @@ export default function CardDemo({ derived }: DemoProps) {
           defaultValue="md"
           render={(padding) => (
             <div className="w-48">
-              <Card padding={padding as never} variant="bordered">
+              <Card padding={padding as never} variant="outline">
                 <Card.Body>
                   <Card.Description>padding="{padding}"</Card.Description>
                 </Card.Body>
@@ -119,10 +118,10 @@ export default function CardDemo({ derived }: DemoProps) {
         title="Empty"
       >
         <div className="grid gap-4 md:grid-cols-2">
-          <Card padding="md" variant="bordered">
+          <Card padding="md" variant="outline">
             {null}
           </Card>
-          <Card padding="md" variant="bordered">
+          <Card padding="md" variant="outline">
             <Card.Header>
               <Card.Title>Recent deployments</Card.Title>
             </Card.Header>
@@ -142,7 +141,7 @@ export default function CardDemo({ derived }: DemoProps) {
         title="Overflow"
       >
         <div className="max-w-[15rem]">
-          <Card padding="sm" variant="bordered">
+          <Card padding="sm" variant="outline">
             <Card.Header>
               <Card.Title>{LONG_LABEL}</Card.Title>
             </Card.Header>

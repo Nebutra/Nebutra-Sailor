@@ -1,5 +1,6 @@
 import type { ColumnDef, ColumnPinningState } from "@tanstack/react-table";
 import type { ReactNode } from "react";
+import type { DataTableLabels } from "./labels";
 
 export type DataTableFilter<TData> =
   | {
@@ -35,6 +36,6 @@ export type DataTableProps<TData> = {
   columnResizeMode?: "onChange" | "onEnd";
   /** Enable drag/click multi-cell selection & copy shortcuts */
   enableCellSelection?: boolean;
-  /** Accessible name for the column resize handle. Pass a translated string. */
-  resizeColumnLabel?: string;
+  /** Every string the table renders; English defaults. Pass translations here. */
+  labels?: Partial<DataTableLabels>;
 };

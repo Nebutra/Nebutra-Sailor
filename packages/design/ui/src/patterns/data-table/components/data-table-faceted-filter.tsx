@@ -15,6 +15,7 @@ import {
 } from "../../../primitives/command";
 import { Popover, PopoverContent, PopoverTrigger } from "../../../primitives/popover";
 import { cn } from "../../../utils/cn";
+import type { DataTableTranslate } from "../labels";
 
 export interface FacetedFilterOption {
   value: string;
@@ -22,7 +23,7 @@ export interface FacetedFilterOption {
   group?: string;
 }
 
-type DataTableTranslation = (key: string, values?: Record<string, string | number>) => string;
+type DataTableTranslation = DataTableTranslate;
 
 interface DataTableFacetedFilterProps {
   /** Filter title shown on button */

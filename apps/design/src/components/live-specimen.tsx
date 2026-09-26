@@ -15,12 +15,12 @@
  * compose, which is the part a palette page cannot show.
  */
 
-import { Card } from "@nebutra/ui/patterns";
 import {
   AnimateIn,
   Avatar,
   Badge,
   Button,
+  Card,
   Input,
   Kbd,
   Label,

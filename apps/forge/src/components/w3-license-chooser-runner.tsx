@@ -135,20 +135,24 @@ export function W3LicenseChooserRunner({ toolId }: { toolId: string }) {
   let refinements: ReactNode;
   if (showPatent) {
     refinements = (
-      <Checkbox checked={patentConcern} onChange={setPatentConcern} id={`${uid}-patent`}>
+      <Checkbox checked={patentConcern} onCheckedChange={setPatentConcern} id={`${uid}-patent`}>
         {t("licenseChooser.refine.patent")}
       </Checkbox>
     );
   } else if (showCopyleft) {
     refinements = (
       <div className="space-y-3">
-        <Checkbox checked={networkService} onChange={setNetworkService} id={`${uid}-network`}>
+        <Checkbox
+          checked={networkService}
+          onCheckedChange={setNetworkService}
+          id={`${uid}-network`}
+        >
           {t("licenseChooser.refine.network")}
         </Checkbox>
-        <Checkbox checked={isLibrary} onChange={setIsLibrary} id={`${uid}-library`}>
+        <Checkbox checked={isLibrary} onCheckedChange={setIsLibrary} id={`${uid}-library`}>
           {t("licenseChooser.refine.library")}
         </Checkbox>
-        <Checkbox checked={allowLater} onChange={setAllowLater} id={`${uid}-later`}>
+        <Checkbox checked={allowLater} onCheckedChange={setAllowLater} id={`${uid}-later`}>
           {t("licenseChooser.refine.later")}
         </Checkbox>
       </div>

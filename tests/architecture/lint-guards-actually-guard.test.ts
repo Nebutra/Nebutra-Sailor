@@ -143,6 +143,12 @@ const CASES: Case[] = [
     path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
   },
   {
+    // A value callback named onChange — the DOM and Base UI pass events there.
+    guard: "lint-primitive-hygiene",
+    violation: "export interface ProbeProps {\n  onChange?: (value: string) => void;\n}\n",
+    path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

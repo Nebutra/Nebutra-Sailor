@@ -11,7 +11,9 @@ export interface InputOTPProps {
   /** Current value */
   value?: string;
   /** Change handler */
+  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (newValue: string) => void;
+  onValueChange?: (newValue: string) => void;
   /** Complete handler */
   onComplete?: (value: string) => void;
   /** Render function for slots */
@@ -36,8 +38,12 @@ const InputOTP = ({
   children,
   render,
   ref,
-  ...props
+  onValueChange,
+  onChange: legacyOnChange,
+  ...rest
 }: InputOTPProps & { ref?: React.Ref<HTMLInputElement> | undefined }) => {
+  // The underlying OTPInput calls onChange with the value; ours is onValueChange.
+  const props = { ...rest, onChange: onValueChange ?? legacyOnChange };
   // Build the OTPInput props based on whether render or children is provided
   const otpProps = render ? { render, ...props } : { children, ...props };
 

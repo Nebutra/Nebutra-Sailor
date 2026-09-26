@@ -1,7 +1,14 @@
 "use client";
 
-import { Card, CardBody } from "@nebutra/ui/patterns";
-import { Button, CardDescription, CardFooter, CardHeader, CardTitle } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@nebutra/ui/primitives";
 export function CardDemo() {
   return (
     <Card variant="default" padding="md">

@@ -84,7 +84,7 @@ export const Controlled: Story = {
 
     return (
       <div className="flex flex-col items-center gap-6">
-        <ExpandableTabs tabs={tabs} onChange={setActiveTab} />
+        <ExpandableTabs tabs={tabs} onValueChange={setActiveTab} />
         <p className="text-sm text-muted-foreground">
           Active tab: <strong>{activeTitle}</strong>
         </p>

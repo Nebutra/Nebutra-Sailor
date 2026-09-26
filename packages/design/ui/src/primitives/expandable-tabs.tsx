@@ -24,7 +24,9 @@ export interface ExpandableTabsProps {
   tabs: TabItem[];
   className?: string;
   activeColor?: string;
+  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (index: number | null) => void;
+  onValueChange?: (index: number | null) => void;
   /** Accessible name for the tab list. Pass a translated string. */
   tabsLabel?: string;
 }
@@ -41,7 +43,8 @@ export function ExpandableTabs({
   tabs,
   className,
   activeColor = "text-primary",
-  onChange,
+  onChange: legacyOnChange,
+  onValueChange: onChange = legacyOnChange,
   tabsLabel = "Navigation tabs",
 }: ExpandableTabsProps) {
   const [selected, setSelected] = React.useState<number | null>(null);

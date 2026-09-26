@@ -273,7 +273,11 @@ export function QAPage({
           <h3 className="font-semibold text-foreground text-lg">Your Answer</h3>
         </CardHeader>
         <CardContent className="space-y-4">
-          <MarkdownEditor value={draft} onChange={setDraft} placeholder="Write your answer here…" />
+          <MarkdownEditor
+            value={draft}
+            onValueChange={setDraft}
+            placeholder="Write your answer here…"
+          />
           <div className="flex items-center justify-between">
             <p className="text-muted-foreground text-xs">Thanks for contributing an answer!</p>
             <div className="flex gap-2">

@@ -258,7 +258,7 @@ export function FeedbackDialog() {
                 <Checkbox
                   id={emailId}
                   checked={field.value}
-                  onChange={(checked) => field.onChange(checked)}
+                  onCheckedChange={(checked) => field.onChange(checked)}
                   disabled={submitting}
                   className="text-xs text-neutral-11"
                 >

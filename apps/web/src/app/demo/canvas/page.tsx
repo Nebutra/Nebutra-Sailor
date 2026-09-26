@@ -1,5 +1,5 @@
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
-import { Card } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import { connection } from "next/server";
 import { CanvasDemoClient } from "./canvas-demo-client";
 

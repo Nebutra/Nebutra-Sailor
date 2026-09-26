@@ -49,7 +49,9 @@ export interface MultipleSelectorProps {
   /** Sync search function (no loading indicator) */
   onSearchSync?: (value: string) => MultipleSelectorOption[];
   /** Callback when selection changes */
+  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (options: MultipleSelectorOption[]) => void;
+  onValueChange?: (options: MultipleSelectorOption[]) => void;
   /** Maximum number of selected options */
   maxSelected?: number;
   /** Callback when max selection is reached */
@@ -174,7 +176,7 @@ CommandEmpty.displayName = "CommandEmpty";
  *     { value: "vue", label: "Vue" },
  *   ]}
  *   placeholder="Select frameworks..."
- *   onChange={(options) => console.log(options)}
+ *   onValueChange={(options) => console.log(options)}
  * />
  * ```
  *
@@ -211,7 +213,8 @@ CommandEmpty.displayName = "CommandEmpty";
 const MultipleSelector = ({
   ref,
   value,
-  onChange,
+  onChange: legacyOnChange,
+  onValueChange: onChange = legacyOnChange,
   placeholder,
   defaultOptions: arrayDefaultOptions = [],
   options: arrayOptions,

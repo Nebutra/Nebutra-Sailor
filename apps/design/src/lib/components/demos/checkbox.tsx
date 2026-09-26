@@ -43,7 +43,7 @@ export default function CheckboxDemo() {
           <Checkbox
             checked={all}
             indeterminate={some}
-            onChange={(next: boolean) => setChecked([next, next, next])}
+            onCheckedChange={(next: boolean) => setChecked([next, next, next])}
           >
             All features
           </Checkbox>
@@ -52,7 +52,7 @@ export default function CheckboxDemo() {
               <Checkbox
                 checked={checked[i] ?? false}
                 key={label}
-                onChange={(next: boolean) =>
+                onCheckedChange={(next: boolean) =>
                   setChecked((prev) => prev.map((v, j) => (j === i ? next : v)))
                 }
               >

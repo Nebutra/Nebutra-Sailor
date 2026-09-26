@@ -1,7 +1,7 @@
 "use client";
 
-import { Card } from "@nebutra/ui/patterns";
 import {
+  Card,
   CardContent,
   Carousel,
   CarouselContent,

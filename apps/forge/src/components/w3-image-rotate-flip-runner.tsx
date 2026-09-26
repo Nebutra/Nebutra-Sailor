@@ -266,7 +266,7 @@ export function W3ImageRotateFlipRunner({ toolId }: { toolId: string }) {
           <Checkbox
             id={`${uid}-flip-h`}
             checked={flipHorizontal}
-            onChange={(checked: boolean) => setFlipHorizontal(checked)}
+            onCheckedChange={(checked: boolean) => setFlipHorizontal(checked)}
           >
             <span className="inline-flex items-center gap-1.5">
               <ArrowLeftRight className="h-4 w-4" aria-hidden="true" />
@@ -276,7 +276,7 @@ export function W3ImageRotateFlipRunner({ toolId }: { toolId: string }) {
           <Checkbox
             id={`${uid}-flip-v`}
             checked={flipVertical}
-            onChange={(checked: boolean) => setFlipVertical(checked)}
+            onCheckedChange={(checked: boolean) => setFlipVertical(checked)}
           >
             <span className="inline-flex items-center gap-1.5">
               <ArrowUpDown className="h-4 w-4" aria-hidden="true" />

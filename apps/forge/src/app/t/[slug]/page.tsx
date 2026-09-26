@@ -1,5 +1,6 @@
 import { buildToolPageModel } from "@nebutra/forge-runtime";
-import { Card, PageHeader } from "@nebutra/ui/layout";
+import { PageHeader } from "@nebutra/ui/layout";
+import { Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
