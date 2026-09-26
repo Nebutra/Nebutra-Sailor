@@ -20,7 +20,7 @@
 // Run: node scripts/lint-database.mjs
 
 import { createHash } from "node:crypto";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = new URL("..", import.meta.url).pathname;
@@ -116,8 +116,10 @@ function walk(dir) {
     const path = join(dir, entry.name);
     if (entry.isDirectory()) walk(path);
     else if (entry.name.endsWith(".sql") && path !== RLS_HOME && !path.startsWith(migrationsDir)) {
-      if (statSync(path).size > 2_000_000) continue;
-      if (/\bCREATE\s+POLICY\b/i.test(stripComments(readFileSync(path, "utf8")))) {
+      // Read once and judge the bytes read — no stat-then-read window.
+      const sql = readFileSync(path, "utf8");
+      if (sql.length > 2_000_000) continue;
+      if (/\bCREATE\s+POLICY\b/i.test(stripComments(sql))) {
         fail(
           path,
           "defines a policy outside schema.prisma. Row-level security has one source: `/// @rls` → generated/rls.sql.",
