@@ -4273,10 +4273,12 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** Get current credit balance */
+    /** Get one product's credit balance */
     get: {
       parameters: {
-        query?: never;
+        query: {
+          product: string;
+        };
         header?: never;
         path?: never;
         cookie?: never;
@@ -4342,7 +4344,8 @@ export interface paths {
     /** List credit transactions (paginated) */
     get: {
       parameters: {
-        query?: {
+        query: {
+          product: string;
           limit?: number;
           cursor?: string;
         };
@@ -4427,7 +4430,9 @@ export interface paths {
     /** List the offers that can be bought */
     get: {
       parameters: {
-        query?: never;
+        query?: {
+          product?: string;
+        };
         header?: never;
         path?: never;
         cookie?: never;
@@ -4443,10 +4448,21 @@ export interface paths {
             "application/json": {
               offers: {
                 id: string;
+                product: string;
                 name: string;
-                prices: {
+                prices?: {
                   USD?: number;
                   CNY?: number;
+                };
+                customAmount?: {
+                  USD?: {
+                    min: number;
+                    max: number;
+                  };
+                  CNY?: {
+                    min: number;
+                    max: number;
+                  };
                 };
                 highlight?: string;
               }[];
@@ -4532,6 +4548,7 @@ export interface paths {
             offerId: string;
             /** @enum {string} */
             method: "card" | "alipay" | "wechat";
+            amount?: number;
             /**
              * @default qr
              * @enum {string}

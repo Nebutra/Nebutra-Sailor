@@ -22,6 +22,9 @@ anyone else's deployment:
 - Cloudflare account and zone ids (the Vercel team / project id maps were
   retired with the Vercel deploy surface on 2026-09-22)
 - Host inventories (ECS, VMs) and their PM2 / nginx process maps
+- `offers.json` — Nebutra's price list: what each product sells and for how
+  much (ADR 2026-09-27 product wallets). Deployed to the gateway as
+  `BILLING_OFFERS_JSON`; the template ships its own default catalog instead
 
 ## What does not belong here
 

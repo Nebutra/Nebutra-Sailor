@@ -8911,7 +8911,18 @@
     "/api/v1/billing/credits/balance": {
       "get": {
         "tags": ["Billing", "Credits"],
-        "summary": "Get current credit balance",
+        "summary": "Get one product's credit balance",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,31}$"
+            },
+            "required": true,
+            "name": "product",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Credit balance",
@@ -8968,6 +8979,15 @@
         "tags": ["Billing", "Credits"],
         "summary": "List credit transactions (paginated)",
         "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,31}$"
+            },
+            "required": true,
+            "name": "product",
+            "in": "query"
+          },
           {
             "schema": {
               "type": "integer",
@@ -9096,6 +9116,17 @@
       "get": {
         "tags": ["Billing", "Orders"],
         "summary": "List the offers that can be bought",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,31}$"
+            },
+            "required": false,
+            "name": "product",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Active offers",
@@ -9112,6 +9143,9 @@
                           "id": {
                             "type": "string"
                           },
+                          "product": {
+                            "type": "string"
+                          },
                           "name": {
                             "type": "string"
                           },
@@ -9126,11 +9160,40 @@
                               }
                             }
                           },
+                          "customAmount": {
+                            "type": "object",
+                            "properties": {
+                              "USD": {
+                                "type": "object",
+                                "properties": {
+                                  "min": {
+                                    "type": "number"
+                                  },
+                                  "max": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": ["min", "max"]
+                              },
+                              "CNY": {
+                                "type": "object",
+                                "properties": {
+                                  "min": {
+                                    "type": "number"
+                                  },
+                                  "max": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": ["min", "max"]
+                              }
+                            }
+                          },
                           "highlight": {
                             "type": "string"
                           }
                         },
-                        "required": ["id", "name", "prices"]
+                        "required": ["id", "product", "name"]
                       }
                     }
                   },
@@ -9198,6 +9261,11 @@
                   "method": {
                     "type": "string",
                     "enum": ["card", "alipay", "wechat"]
+                  },
+                  "amount": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
                   },
                   "channel": {
                     "type": "string",

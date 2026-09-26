@@ -127,10 +127,11 @@ export {
   PlanConfigService,
   type ResolvedConfig,
 } from "./config/index";
-// Credits
+// Credits — one balance per organization per product (ADR 2026-09-27)
 export {
   addBonusCredits,
   addCredits,
+  assertWalletProduct,
   creditsToDollars,
   deductCredits,
   dollarsToCredits,
@@ -143,6 +144,7 @@ export {
   hasEnoughCreditsFresh,
   invalidateCreditCache,
   refundCredits,
+  type WalletProduct,
 } from "./credits/index";
 // Creem — the global card rail, merchant of record (ADR 2026-09-26)
 export {
@@ -192,13 +194,18 @@ export {
 } from "./fulfillment/index";
 // Offers — what can be bought (data, replaced by the host at boot)
 export {
+  type AmountRange,
   configureOffers,
+  configureOffersFromEnv,
   DEFAULT_OFFERS,
   type FulfillmentSpec,
   getOffer,
+  type LockedFulfillmentSpec,
   listOffers,
   type Offer,
   type OfferCurrency,
+  offerCurrencies,
+  priceOffer,
   toMajorString,
   toMinorUnits,
 } from "./offers/index";

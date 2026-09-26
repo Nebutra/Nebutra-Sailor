@@ -299,6 +299,8 @@ export type UsageLedgerEntry = Prisma.UsageLedgerEntryModel
 /**
  * Model CreditBalance
  * @conditional(billing-mode=credits)
+ * One balance per organization per product (ADR 2026-09-27 product wallets):
+ * Router's never pays for a Kuanlan shoot.
  */
 export type CreditBalance = Prisma.CreditBalanceModel
 /**

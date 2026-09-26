@@ -103,6 +103,7 @@ describe("shoot credits", () => {
     await refundShootCredits("t1", "task9", "x");
     expect(billing.getCreditTransactions).toHaveBeenCalledWith(
       "t1",
+      "kuanlan",
       expect.objectContaining({ type: "REFUND" }),
     );
   });

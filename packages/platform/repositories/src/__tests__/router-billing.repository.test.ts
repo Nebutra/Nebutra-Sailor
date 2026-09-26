@@ -41,8 +41,9 @@ describe("RouterBillingRepository (real Prisma over PGlite)", () => {
       "TRUNCATE credit_balances, credit_transactions, usage_ledger_entries, router_reservations, api_keys, model_configs",
     );
     await prisma.$executeRawUnsafe(
-      `INSERT INTO credit_balances (id, tenant_id, balance) VALUES
-         ('cb_1', '${TENANT}', 1.0000), ('cb_2', '${OTHER}', 50.0000)`,
+      `INSERT INTO credit_balances (id, tenant_id, product, balance) VALUES
+         ('cb_1', '${TENANT}', 'router', 1.0000), ('cb_2', '${OTHER}', 'router', 50.0000),
+         ('cb_3', '${TENANT}', 'kuanlan', 900.0000)`,
     );
     await prisma.$executeRawUnsafe(
       `INSERT INTO api_keys (id, name, key_hash, key_prefix, tenant_id)
@@ -57,9 +58,23 @@ describe("RouterBillingRepository (real Prisma over PGlite)", () => {
   });
 
   async function balance(tenantId = TENANT): Promise<number> {
-    const row = await database.prisma.creditBalance.findUnique({ where: { tenantId } });
+    const row = await database.prisma.creditBalance.findUnique({
+      where: { tenantId_product: { tenantId, product: "router" } },
+    });
     return Number(row?.balance ?? 0);
   }
+
+  it("holds money from the Router balance only, never another product's", async () => {
+    // The tenant has $1 on Router and 900 on Kuanlan: a $5 hold must fail
+    // rather than reach into Kuanlan's balance.
+    await expect(
+      repository.reserve({ requestId: "req_other_product", tenantId: TENANT, amount: 5 }),
+    ).resolves.toBe(false);
+    const kuanlan = await database.prisma.creditBalance.findUnique({
+      where: { tenantId_product: { tenantId: TENANT, product: "kuanlan" } },
+    });
+    expect(Number(kuanlan?.balance)).toBe(900);
+  });
 
   describe("findPrice", () => {
     it("returns the row with the Decimals already numbers", async () => {

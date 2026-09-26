@@ -1,0 +1,15 @@
+[
+  {
+    "id": "router_topup",
+    "product": "router",
+    "name": "Router balance",
+    "customAmount": {
+      "USD": { "min": 5, "max": 10000 },
+      "CNY": { "min": 50, "max": 70000 }
+    },
+    "fulfillment": {
+      "type": "balance",
+      "params": { "unitsPerMajor": { "USD": 1, "CNY": 0.1389 } }
+    }
+  }
+]

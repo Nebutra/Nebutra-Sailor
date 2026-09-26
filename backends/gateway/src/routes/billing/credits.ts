@@ -4,6 +4,9 @@
  * Buying credits is an ordinary payment order for a credits offer — see
  * ./orders.ts. This file only reads the ledger.
  *
+ * Every read names a product: an organization has one balance per product and
+ * they never add up (ADR 2026-09-27 product wallets).
+ *
  * Auth + tenant context applied upstream via `tenantContextMiddleware`.
  */
 
@@ -42,7 +45,11 @@ const TransactionSchema = z.object({
   createdAt: z.string(),
 });
 
-const TransactionsQuerySchema = z.object({
+const ProductQuerySchema = z.object({
+  product: z.string().regex(/^[a-z][a-z0-9-]{1,31}$/),
+});
+
+const TransactionsQuerySchema = ProductQuerySchema.extend({
   limit: z.coerce.number().int().min(1).max(100).default(50).optional(),
   cursor: z.string().optional(),
 });
@@ -71,7 +78,8 @@ const balanceRoute = createRoute({
   method: "get",
   path: "/balance",
   tags: ["Billing", "Credits"],
-  summary: "Get current credit balance",
+  summary: "Get one product's credit balance",
+  request: { query: ProductQuerySchema },
   responses: {
     200: {
       description: "Credit balance",
@@ -89,9 +97,10 @@ const balanceRoute = createRoute({
 creditsRoutes.openapi(balanceRoute, async (c) => {
   const tenant = c.get("tenant");
   const organizationId = tenant.organizationId!;
+  const { product } = c.req.valid("query");
 
   try {
-    const balance = await getCreditBalance(organizationId);
+    const balance = await getCreditBalance(organizationId, product);
     return c.json({
       balance: balance.balance,
       currency: balance.currency,
@@ -127,13 +136,13 @@ const transactionsRoute = createRoute({
 creditsRoutes.openapi(transactionsRoute, async (c) => {
   const tenant = c.get("tenant");
   const organizationId = tenant.organizationId!;
-  const { limit = 50, cursor } = c.req.valid("query");
+  const { product, limit = 50, cursor } = c.req.valid("query");
 
   try {
     // Cursor is a base64-encoded offset for simple offset pagination.
     // We fetch `limit + 1` to determine whether there's another page.
     const offset = cursor ? parseCursor(cursor) : 0;
-    const fetched = await getCreditTransactions(organizationId, {
+    const fetched = await getCreditTransactions(organizationId, product, {
       limit: limit + 1,
       offset,
     });

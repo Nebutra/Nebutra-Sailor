@@ -8,6 +8,7 @@ import { initializeFromEnv, setAlertErrorHandler } from "@nebutra/alerting";
 import { configureAuditSystemDb } from "@nebutra/audit";
 import {
   configureBillingTenantDb,
+  configureOffersFromEnv,
   configurePaymentOrderStore,
   deductCredits,
   dollarsToCredits,
@@ -25,6 +26,9 @@ configureBillingTenantDb(getTenantDb);
 // reconcile job, neither of which has a request tenant; reads that face a
 // tenant (GET /billing/orders/{id}) check the order's tenantId themselves.
 configurePaymentOrderStore(new PaymentOrderRepository(getSystemDb()));
+// The deployment's price list (Nebutra's lives in ops/nebutra/offers.json);
+// unset keeps the template default.
+configureOffersFromEnv();
 
 import {
   calculateCost,
@@ -47,7 +51,7 @@ import { isOrpcEnabled, isTrpcEnabled } from "./config/protocols.js";
 import { captureRequestError, initSentry } from "./config/sentry.js";
 import { inngestHandler } from "./inngest/index.js";
 import { createAiGatewayIngestUsage } from "./lib/ai-gateway-metering.js";
-import { buildGatewayDeps } from "./lib/gateway-deps.js";
+import { AI_GATEWAY_WALLET_PRODUCT, buildGatewayDeps } from "./lib/gateway-deps.js";
 import { registerParaAgentWorker } from "./lib/para-agent-worker.js";
 import { requestContext, runWithContext } from "./lib/requestContext.js";
 import { apiVersionMiddleware } from "./middlewares/apiVersion.js";
@@ -355,7 +359,10 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
             }),
           calculateCost,
           deductCredits: async (input) => {
-            await deductCredits(input as never);
+            await deductCredits({
+              ...(input as Omit<Parameters<typeof deductCredits>[0], "product">),
+              product: AI_GATEWAY_WALLET_PRODUCT,
+            });
           },
           dollarsToCredits,
           invalidateBalanceCache: async (orgId: string) => {

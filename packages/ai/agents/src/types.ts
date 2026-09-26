@@ -39,6 +39,8 @@ export interface AgentTool {
 
 export interface AgentContext {
   readonly tenantId: string;
+  /** The product whose balance pays for this run (ADR 2026-09-27 product wallets). */
+  readonly product: string;
   readonly userId: string;
   readonly conversationId: string;
   readonly metadata?: Record<string, unknown>;
@@ -98,6 +100,7 @@ export interface RouterConfig {
 
 export interface AgentUsageEvent {
   readonly tenantId: string;
+  readonly product: string;
   readonly userId: string;
   readonly agentId: string;
   readonly model: string;

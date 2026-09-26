@@ -10,6 +10,9 @@ import { getAuth } from "@/lib/auth";
 
 const TRANSACTION_LIMIT = 10;
 
+/** The dashboard's own balance: the platform's, not a product's (ADR 2026-09-27). */
+const WALLET_PRODUCT = "nebutra";
+
 export async function GET(request: Request) {
   const authState = await getAuth(request);
 
@@ -28,8 +31,8 @@ export async function GET(request: Request) {
 
   try {
     const [balance, transactions] = await Promise.all([
-      getCreditBalance(authState.orgId),
-      getCreditTransactions(authState.orgId, { limit: TRANSACTION_LIMIT }),
+      getCreditBalance(authState.orgId, WALLET_PRODUCT),
+      getCreditTransactions(authState.orgId, WALLET_PRODUCT, { limit: TRANSACTION_LIMIT }),
     ]);
 
     return NextResponse.json({

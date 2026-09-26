@@ -54,12 +54,14 @@ tenant; `CreditBalance.tenantId` is unique and FK'd to `Tenant`).
 import * as credits from "@nebutra/billing/credits";
 import { createCreditLedgerWallet } from "@nebutra/prepaid-wallet";
 
+// The port is product-agnostic; bind the product's balance once.
+const product = "router";
 const wallet = createCreditLedgerWallet({
-  getCreditBalance: credits.getCreditBalance,
-  getCreditBalanceFresh: credits.getCreditBalanceFresh,
-  invalidateCreditCache: credits.invalidateCreditCache,
-  addCredits: credits.addCredits,
-  deductCredits: credits.deductCredits,
+  getCreditBalance: (tenantId) => credits.getCreditBalance(tenantId, product),
+  getCreditBalanceFresh: (tenantId) => credits.getCreditBalanceFresh(tenantId, product),
+  invalidateCreditCache: (tenantId) => credits.invalidateCreditCache(tenantId, product),
+  addCredits: (input) => credits.addCredits({ ...input, product }),
+  deductCredits: (input) => credits.deductCredits({ ...input, product }),
 });
 ```
 

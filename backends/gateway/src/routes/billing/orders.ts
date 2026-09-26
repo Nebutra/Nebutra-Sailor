@@ -1,7 +1,7 @@
 /**
  * /api/v1/billing — offers and payment orders
  *
- *   GET  /offers         — what can be bought, with a price per currency
+ *   GET  /offers         — what can be bought (?product= narrows to one product)
  *   GET  /offers/methods — which payment methods are live right now
  *   POST /orders         — buy one offer; returns a QR code or a redirect
  *   GET  /orders/{id}    — poll an order (the QR page waits on this)
@@ -51,11 +51,26 @@ async function guardPurchase(c: Context, next: Next) {
 
 const ErrorSchema = z.object({ error: z.string(), code: z.string().optional() });
 
+const PerCurrency = <T extends z.ZodTypeAny>(value: T) =>
+  z.object({ USD: value.optional(), CNY: value.optional() });
+
 const OfferSchema = z.object({
   id: z.string(),
+  /** The product whose balance this offer feeds. */
+  product: z.string(),
   name: z.string(),
-  prices: z.object({ USD: z.number().optional(), CNY: z.number().optional() }),
+  /** Fixed price, major units. Absent when the buyer names the amount. */
+  prices: PerCurrency(z.number()).optional(),
+  /** The range a buyer-named amount must fall in, major units. */
+  customAmount: PerCurrency(z.object({ min: z.number(), max: z.number() })).optional(),
   highlight: z.string().optional(),
+});
+
+const OffersQuerySchema = z.object({
+  product: z
+    .string()
+    .regex(/^[a-z][a-z0-9-]{1,31}$/)
+    .optional(),
 });
 
 const MethodsSchema = z.object({
@@ -64,8 +79,10 @@ const MethodsSchema = z.object({
 
 const CreateOrderSchema = z.object({
   offerId: z.string().min(1),
-  /** `card` → Stripe (USD). `alipay` / `wechat` → the wallet (CNY). */
+  /** `card` → Creem (USD). `alipay` / `wechat` → the wallet (CNY). */
   method: z.enum(METHODS),
+  /** Major units, for an offer with `customAmount`. The server checks the range and locks it. */
+  amount: z.number().positive().optional(),
   /** Wallets only: `qr` on a desktop, `h5` on the buyer's own phone. */
   channel: z.enum(["qr", "h5"]).default("qr"),
   successUrl: z.string().url(),
@@ -101,6 +118,7 @@ orderRoutes.openapi(
     path: "/offers",
     tags: ["Billing", "Orders"],
     summary: "List the offers that can be bought",
+    request: { query: OffersQuerySchema },
     responses: {
       200: {
         description: "Active offers",
@@ -110,12 +128,16 @@ orderRoutes.openapi(
   }),
   (c) =>
     c.json({
-      offers: listOffers().map(({ id, name, prices, highlight }) => ({
-        id,
-        name,
-        prices,
-        ...(highlight ? { highlight } : {}),
-      })),
+      offers: listOffers(c.req.valid("query").product).map(
+        ({ id, product, name, prices, customAmount, highlight }) => ({
+          id,
+          product,
+          name,
+          ...(prices ? { prices } : {}),
+          ...(customAmount ? { customAmount } : {}),
+          ...(highlight ? { highlight } : {}),
+        }),
+      ),
     }),
 );
 
@@ -187,6 +209,7 @@ orderRoutes.openapi(
           offerId: body.offerId,
           method: body.method,
           channel: body.channel,
+          ...(body.amount === undefined ? {} : { amount: body.amount }),
           successUrl,
           cancelUrl,
           ...(clientIp ? { clientIp } : {}),

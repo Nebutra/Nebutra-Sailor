@@ -33,6 +33,7 @@ import { FLAGS, featureFlagMiddleware } from "@nebutra/feature-flags";
 import { streamSSE } from "hono/streaming";
 import { getGatewayOrchestrator } from "../../agents/orchestrator-singleton.js";
 import { createGatewayCarinaBundle, getCarinaSandbox } from "../../lib/carina-sandbox.js";
+import { AI_GATEWAY_WALLET_PRODUCT } from "../../lib/gateway-deps.js";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 
 export const agentRuntimeRoutes = new OpenAPIHono();
@@ -76,7 +77,11 @@ function modelInvoker(
     async invoke() {
       const response: AgentResponse = await orch.chat(
         input,
-        createAgentContext(tenantId, userId, conversationId),
+        createAgentContext(
+          { tenantId, product: AI_GATEWAY_WALLET_PRODUCT },
+          userId,
+          conversationId,
+        ),
       );
       const last = response.messages.at(-1);
       return {

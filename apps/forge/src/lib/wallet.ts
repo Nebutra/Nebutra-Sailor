@@ -37,15 +37,20 @@ function createMemoryWallet(): PrepaidWallet {
 
 async function createLedgerWallet(): Promise<PrepaidWallet> {
   const credits = await import("@nebutra/billing/credits");
+  // Forge's own balance (ADR 2026-09-27 product wallets): the port stays
+  // product-agnostic, so the product is bound here, once.
+  const product = "forge";
   return createCreditLedgerWallet({
-    getCreditBalance: (organizationId) => credits.getCreditBalance(organizationId),
+    getCreditBalance: (organizationId) => credits.getCreditBalance(organizationId, product),
     // The cached read is display-only; anything that admits work reads fresh,
     // because the cache is a per-instance Map and a stale positive balance on a
     // second instance is how an empty wallet gets past a guard.
-    getCreditBalanceFresh: (organizationId) => credits.getCreditBalanceFresh(organizationId),
-    invalidateCreditCache: (organizationId) => credits.invalidateCreditCache(organizationId),
-    addCredits: (input) => credits.addCredits(input),
-    deductCredits: (input) => credits.deductCredits(input),
+    getCreditBalanceFresh: (organizationId) =>
+      credits.getCreditBalanceFresh(organizationId, product),
+    invalidateCreditCache: (organizationId) =>
+      credits.invalidateCreditCache(organizationId, product),
+    addCredits: (input) => credits.addCredits({ ...input, product }),
+    deductCredits: (input) => credits.deductCredits({ ...input, product }),
   });
 }
 

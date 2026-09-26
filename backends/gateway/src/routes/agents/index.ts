@@ -14,6 +14,7 @@ import { logger } from "@nebutra/logger";
 import { SpanStatusCode, trace } from "@opentelemetry/api";
 import { DEFAULT_AGENTS } from "../../agents/default-agents.js";
 import { getGatewayOrchestrator } from "../../agents/orchestrator-singleton.js";
+import { AI_GATEWAY_WALLET_PRODUCT } from "../../lib/gateway-deps.js";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 
 const tracer = trace.getTracer("api-gateway.agents");
@@ -126,7 +127,7 @@ agentRoutes.openapi(chatRoute, async (c) => {
 
     try {
       const ctx = createAgentContext(
-        tenant.organizationId ?? "anonymous",
+        { tenantId: tenant.organizationId ?? "anonymous", product: AI_GATEWAY_WALLET_PRODUCT },
         tenant.userId ?? "anonymous",
         body.conversationId,
       );

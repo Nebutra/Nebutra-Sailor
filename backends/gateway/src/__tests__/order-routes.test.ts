@@ -107,7 +107,7 @@ describe("POST /orders", () => {
     });
   });
 
-  it("creates an order from the offer id alone — a client price is ignored", async () => {
+  it("never forwards a client price; a proposed amount goes to the catalog to judge", async () => {
     const res = await postOrder({
       offerId: "credits_10k",
       method: "alipay",
@@ -122,7 +122,9 @@ describe("POST /orders", () => {
       offerId: "credits_10k",
       method: "alipay",
     });
-    expect(call).not.toHaveProperty("amount");
+    // `amount` is how a buyer names a top-up; a fixed-price offer ignores it,
+    // and priceOffer refuses one outside a custom offer's range.
+    expect(call).toMatchObject({ amount: 0.01 });
     expect(call).not.toHaveProperty("amountMinor");
     expect(await res.json()).toEqual({
       orderId: "order_1",

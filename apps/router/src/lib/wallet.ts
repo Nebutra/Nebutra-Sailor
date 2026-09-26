@@ -4,6 +4,7 @@ import { configureBillingTenantDb } from "@nebutra/billing";
 import * as credits from "@nebutra/billing/credits";
 import { getTenantDb } from "@nebutra/db";
 import { createCreditLedgerWallet, type PrepaidWallet } from "@nebutra/prepaid-wallet";
+import { ROUTER_WALLET_PRODUCT } from "@nebutra/repositories";
 
 /**
  * The Router's one wallet: `CreditBalance` / `CreditTransaction`, keyed by
@@ -38,12 +39,14 @@ let wallet: PrepaidWallet | undefined;
 export function getWallet(): PrepaidWallet {
   if (!wallet) {
     configureBillingTenantDb(getTenantDb);
+    // Router's own balance (ADR 2026-09-27 product wallets), bound once here.
+    const product = ROUTER_WALLET_PRODUCT;
     wallet = createCreditLedgerWallet({
-      getCreditBalance: credits.getCreditBalance,
-      getCreditBalanceFresh: credits.getCreditBalanceFresh,
-      invalidateCreditCache: credits.invalidateCreditCache,
-      addCredits: credits.addCredits,
-      deductCredits: credits.deductCredits,
+      getCreditBalance: (tenantId) => credits.getCreditBalance(tenantId, product),
+      getCreditBalanceFresh: (tenantId) => credits.getCreditBalanceFresh(tenantId, product),
+      invalidateCreditCache: (tenantId) => credits.invalidateCreditCache(tenantId, product),
+      addCredits: (input) => credits.addCredits({ ...input, product }),
+      deductCredits: (input) => credits.deductCredits({ ...input, product }),
     });
   }
   return wallet;

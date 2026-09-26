@@ -8557,6 +8557,7 @@ export type UsageLedgerEntryScalarFieldEnum = (typeof UsageLedgerEntryScalarFiel
 export const CreditBalanceScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
+  product: 'product',
   balance: 'balance',
   currency: 'currency',
   updatedAt: 'updatedAt'

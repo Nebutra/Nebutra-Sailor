@@ -103,6 +103,7 @@ export type {
 // Router money spine (reserve → settle → release → sweep)
 export {
   RESERVATION_TTL_MS,
+  ROUTER_WALLET_PRODUCT,
   RouterBillingRepository,
   startOfUtcDay,
 } from "./router-billing.repository";

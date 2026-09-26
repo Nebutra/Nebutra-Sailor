@@ -18,6 +18,8 @@ const log = logger.child({ service: "fulfillment" });
 export interface FulfillmentContext {
   orderId: string;
   organizationId: string;
+  /** The product the order was locked to; its balance is the only one touched. */
+  product: string;
   params: Record<string, unknown>;
   amountMinor: number;
   currency: string;
@@ -75,6 +77,7 @@ registerFulfillment("credits", {
   async fulfill(ctx) {
     await addCredits({
       organizationId: ctx.organizationId,
+      product: ctx.product,
       amount: creditsParam(ctx.params),
       type: "PURCHASE",
       description: `Purchase (order ${ctx.orderId})`,
@@ -88,6 +91,7 @@ registerFulfillment("credits", {
     try {
       await deductCredits({
         organizationId: ctx.organizationId,
+        product: ctx.product,
         amount,
         description: `Refund (order ${ctx.orderId})`,
         relatedId: `refund:${ctx.refundId}`,
@@ -103,6 +107,68 @@ registerFulfillment("credits", {
           amount,
         });
         return { revoked: false, reason: "credits_already_spent" };
+      }
+      throw error;
+    }
+  },
+});
+
+/**
+ * `unitsPerMajor[currency]`: how much balance one major unit of the paid
+ * currency buys. Router's balance is USD, so `{ USD: 1, CNY: 0.1389 }` — the
+ * CNY rate is data in the catalog, locked on the order when it is created.
+ */
+function balanceGrant(ctx: FulfillmentContext): number {
+  const rates = ctx.params.unitsPerMajor as Record<string, unknown> | undefined;
+  const rate = rates?.[ctx.currency];
+  if (!(typeof rate === "number" && rate > 0)) {
+    throw new BillingError(
+      `balance fulfillment needs params.unitsPerMajor.${ctx.currency}`,
+      "FULFILLMENT_INVALID_PARAMS",
+      500,
+    );
+  }
+  // The ledger keeps four decimal places.
+  return Math.floor((ctx.amountMinor / 100) * rate * 10_000) / 10_000;
+}
+
+/**
+ * Built in: top up a money balance with what was paid — an API balance bought
+ * by amount rather than by pack (ADR 2026-09-27: Router, like OpenRouter and
+ * 302.AI, sells a prepaid balance).
+ */
+registerFulfillment("balance", {
+  async fulfill(ctx) {
+    await addCredits({
+      organizationId: ctx.organizationId,
+      product: ctx.product,
+      amount: balanceGrant(ctx),
+      type: "PURCHASE",
+      description: `Top-up (order ${ctx.orderId})`,
+      relatedId: ctx.orderId,
+    });
+  },
+
+  async revoke(ctx) {
+    const amount = Math.floor(balanceGrant(ctx) * ctx.ratio * 10_000) / 10_000;
+    if (amount <= 0) return { revoked: true };
+    try {
+      await deductCredits({
+        organizationId: ctx.organizationId,
+        product: ctx.product,
+        amount,
+        description: `Refund (order ${ctx.orderId})`,
+        relatedId: `refund:${ctx.refundId}`,
+      });
+      return { revoked: true };
+    } catch (error) {
+      if (error instanceof BillingError && error.code === "INSUFFICIENT_CREDITS") {
+        log.warn("Refunded balance was already spent", {
+          orderId: ctx.orderId,
+          organizationId: ctx.organizationId,
+          amount,
+        });
+        return { revoked: false, reason: "balance_already_spent" };
       }
       throw error;
     }

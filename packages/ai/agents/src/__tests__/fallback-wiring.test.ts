@@ -283,6 +283,7 @@ describe("VercelAIAgent.execute() — fallback wiring", () => {
 
     const response = await agent.run([{ role: "user", content: "hi", timestamp: new Date() }], {
       tenantId: "org_1",
+      product: "para",
       userId: "u_1",
       conversationId: "c_1",
     });
@@ -326,6 +327,7 @@ describe("VercelAIAgent.execute() — fallback wiring", () => {
 
     const response = await agent.run([{ role: "user", content: "ping", timestamp: new Date() }], {
       tenantId: "t",
+      product: "para",
       userId: "u",
       conversationId: "c",
     });

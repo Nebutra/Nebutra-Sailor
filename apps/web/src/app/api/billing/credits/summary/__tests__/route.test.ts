@@ -12,9 +12,10 @@ vi.mock("@/lib/auth", () => ({
 vi.mock("@nebutra/billing/credits", () => ({
   formatCredits: (credits: number, _currency = "USD") => `$${(credits / 100).toFixed(2)}`,
   getCreditAllowanceForPlan: (plan: string) => getCreditAllowanceForPlan(plan),
-  getCreditBalance: (organizationId: string) => getCreditBalance(organizationId),
-  getCreditTransactions: (organizationId: string, options: unknown) =>
-    getCreditTransactions(organizationId, options),
+  getCreditBalance: (organizationId: string, product: string) =>
+    getCreditBalance(organizationId, product),
+  getCreditTransactions: (organizationId: string, product: string, options: unknown) =>
+    getCreditTransactions(organizationId, product, options),
 }));
 
 vi.mock("@nebutra/logger", () => ({
@@ -81,8 +82,8 @@ describe("GET /api/billing/credits/summary", () => {
     const response = await GET(new Request("https://app.nebutra.com/api/billing/credits/summary"));
 
     expect(response.status).toBe(200);
-    expect(getCreditBalance).toHaveBeenCalledWith("org_1");
-    expect(getCreditTransactions).toHaveBeenCalledWith("org_1", { limit: 10 });
+    expect(getCreditBalance).toHaveBeenCalledWith("org_1", "nebutra");
+    expect(getCreditTransactions).toHaveBeenCalledWith("org_1", "nebutra", { limit: 10 });
     await expect(response.json()).resolves.toEqual({
       balance: {
         amount: 1509,

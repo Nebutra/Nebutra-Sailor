@@ -1646,9 +1646,13 @@ model UsageLedgerEntry {
 
 // Credits System
 /// @conditional(billing-mode=credits)
+/// One balance per organization per product (ADR 2026-09-27 product wallets):
+/// Router's never pays for a Kuanlan shoot.
 model CreditBalance {
   id        String   @id @default(cuid())
-  tenantId  String   @unique @map("tenant_id")
+  tenantId  String   @map("tenant_id")
+  /// The product this balance belongs to, e.g. "router", "kuanlan", "para".
+  product   String   @db.VarChar(32)
   balance   Decimal  @default(0) @db.Decimal(10, 4)
   currency  String   @default("USD") @db.VarChar(3)
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -1656,6 +1660,7 @@ model CreditBalance {
   tenant       Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   transactions CreditTransaction[]
 
+  @@unique([tenantId, product])
   @@map("credit_balances")
   @@schema("public")
 }

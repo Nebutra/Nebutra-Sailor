@@ -284,6 +284,8 @@ export interface ReferralStats {
 export interface ProcessRewardInput {
   /** Referrer user ID */
   referrerId: string;
+  /** The product whose balance the reward lands in (balances are per product). */
+  product: string;
   /** Referred user ID */
   referredId: string;
   /** Event type that triggered reward */

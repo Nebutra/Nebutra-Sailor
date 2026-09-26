@@ -6,6 +6,7 @@ import { logger } from "@nebutra/logger";
 import { TokenBucket } from "@nebutra/rate-limit";
 import {
   RequestLogRepository,
+  ROUTER_WALLET_PRODUCT,
   RouterBillingRepository,
   type RouterKeySpend,
   type RouterPriceRow,
@@ -130,7 +131,7 @@ async function sweepTenant(billing: RouterBilling, tenantId: string): Promise<vo
   try {
     const result = await billing.sweepExpired({ tenantId, limit: 8 });
     if (result.swept > 0) {
-      invalidateCreditCache(tenantId);
+      invalidateCreditCache(tenantId, ROUTER_WALLET_PRODUCT);
       logger.warn("[router] returned expired reservations", {
         tenantId,
         swept: result.swept,
@@ -243,7 +244,7 @@ export function createRouterGuard(
         amount: reserved,
       });
       // The hold moved money; anything the billing cache still holds is stale.
-      invalidateCreditCache(input.identity.tenantId);
+      invalidateCreditCache(input.identity.tenantId, ROUTER_WALLET_PRODUCT);
       if (!held) {
         return {
           ok: false,
@@ -437,7 +438,7 @@ export function createRouterGuard(
           logger.warn("[router] settle ignored as duplicate", { requestId: input.requestId });
         }
       } finally {
-        invalidateCreditCache(input.identity.tenantId);
+        invalidateCreditCache(input.identity.tenantId, ROUTER_WALLET_PRODUCT);
         await writeRequestLog(logs(), input, model, floored, spend?.saveLogs ?? false);
       }
     },
@@ -448,7 +449,7 @@ export function createRouterGuard(
         requestId: input.requestId,
         amount: input.admission.reserved,
       });
-      invalidateCreditCache(input.identity.tenantId);
+      invalidateCreditCache(input.identity.tenantId, ROUTER_WALLET_PRODUCT);
       logger.warn("[router] reservation released, upstream never answered", {
         requestId: input.requestId,
       });

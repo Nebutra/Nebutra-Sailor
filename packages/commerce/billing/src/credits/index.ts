@@ -2,6 +2,7 @@ export {
   type AddCreditsInput,
   addBonusCredits,
   addCredits,
+  assertWalletProduct,
   type CreditAllowance,
   type CreditBalance,
   type CreditTransaction,
@@ -18,4 +19,5 @@ export {
   hasEnoughCreditsFresh,
   invalidateCreditCache,
   refundCredits,
+  type WalletProduct,
 } from "./service";
