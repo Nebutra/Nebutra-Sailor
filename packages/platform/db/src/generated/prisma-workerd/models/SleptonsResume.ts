@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model SleptonsResume
- * 
+ * @rls off
  */
 export type SleptonsResumeModel = runtime.Types.Result.DefaultSelection<Prisma.$SleptonsResumePayload>
 

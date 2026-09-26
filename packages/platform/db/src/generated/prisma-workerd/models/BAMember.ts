@@ -15,6 +15,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model BAMember
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type BAMemberModel = runtime.Types.Result.DefaultSelection<Prisma.$BAMemberPayload>
 

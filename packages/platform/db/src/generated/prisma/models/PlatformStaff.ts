@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PlatformStaff
- * 
+ * @rls deny
  */
 export type PlatformStaffModel = runtime.Types.Result.DefaultSelection<Prisma.$PlatformStaffPayload>
 

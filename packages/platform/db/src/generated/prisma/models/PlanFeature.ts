@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PlanFeature
- * 
+ * @rls global
  */
 export type PlanFeatureModel = runtime.Types.Result.DefaultSelection<Prisma.$PlanFeaturePayload>
 

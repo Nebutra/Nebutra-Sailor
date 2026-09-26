@@ -28,6 +28,7 @@ import type * as Prisma from "../internal/prismaNamespace"
  * transaction as the decrement and deleted in the same transaction as the
  * settle, the release, or the sweep that refunds it. `id` is the edge's
  * `requestId`, so a retried admit collides instead of holding twice.
+ * @rls off
  */
 export type RouterReservationModel = runtime.Types.Result.DefaultSelection<Prisma.$RouterReservationPayload>
 

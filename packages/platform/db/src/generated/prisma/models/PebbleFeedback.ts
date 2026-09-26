@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PebbleFeedback
- * 
+ * @rls off
  */
 export type PebbleFeedbackModel = runtime.Types.Result.DefaultSelection<Prisma.$PebbleFeedbackPayload>
 

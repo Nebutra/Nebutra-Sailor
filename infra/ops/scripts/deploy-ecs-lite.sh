@@ -346,11 +346,10 @@ fi
 # =============================================================================
 step "第 10 步：数据库迁移"
 
-if [[ -f "$PROJECT_DIR/infra/ops/scripts/setup-db.sh" ]]; then
-  warn "如需初始化数据库，请运行: bash infra/ops/scripts/setup-db.sh"
-  warn "或运行: pnpm db:migrate"
+if [[ -f "$PROJECT_DIR/packages/platform/db/scripts/db.mjs" ]]; then
+  warn "如需初始化或更新数据库，请运行: pnpm db:deploy"
 else
-  warn "未找到数据库迁移脚本，请手动运行: pnpm db:migrate"
+  warn "未找到数据库部署脚本 packages/platform/db/scripts/db.mjs"
 fi
 
 # =============================================================================

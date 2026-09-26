@@ -15,6 +15,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model BAPasskey
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type BAPasskeyModel = runtime.Types.Result.DefaultSelection<Prisma.$BAPasskeyPayload>
 

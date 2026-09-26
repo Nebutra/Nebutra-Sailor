@@ -30,8 +30,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  database:
+    # Schema first, apps second: the database is brought to this commit's
+    # schema before anything that reads it ships. No pending migration → a
+    # quick no-op. It fails closed — a drifted database stops the deploy.
+    name: Database
+    uses: ./.github/workflows/ops-database-migrate.yml
+    with:
+      action: deploy
+    secrets: inherit
+
   deploy:
     name: Fly Hono origin
+    needs: database
     runs-on: ubuntu-latest
     steps:
       - name: Require FLY_API_TOKEN

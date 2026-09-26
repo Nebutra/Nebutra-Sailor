@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PricingPlan
- * 
+ * @rls global
  */
 export type PricingPlanModel = runtime.Types.Result.DefaultSelection<Prisma.$PricingPlanPayload>
 

@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model CommunityProfile
- * 
+ * @rls global
  */
 export type CommunityProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$CommunityProfilePayload>
 

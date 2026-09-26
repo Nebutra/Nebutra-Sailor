@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model License
- * 
+ * @rls using("stripe_customer_id" IN (SELECT "stripe_id" FROM "public"."stripe_customers" WHERE "tenant_id" = public.current_tenant_id()))
  */
 export type LicenseModel = runtime.Types.Result.DefaultSelection<Prisma.$LicensePayload>
 

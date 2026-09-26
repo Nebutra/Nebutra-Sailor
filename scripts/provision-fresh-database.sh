@@ -1,22 +1,15 @@
 #!/usr/bin/env bash
 #
-# Stand up a brand-new platform database: schema, application role, RLS, and a
-# self-check that tenant isolation actually bites.
+# Stand up a brand-new platform database: the application role, then the
+# whole schema through the same command every deploy runs, then a self-check
+# that tenant isolation actually bites.
 #
 #   scripts/provision-fresh-database.sh "postgresql://admin:…@host:5432/db"
 #
-# Safe to point at an empty database only. It refuses to run against one that
-# already has tables, because the schema step is a from-empty diff and would
-# collide rather than migrate.
-#
-# Why not `prisma migrate deploy`: prisma/migrations has no baseline — the
-# earliest migration is 20260313000000_enable_rls, which ALTERs tables no
-# migration ever creates. Replaying the folder onto an empty database dies on
-# `relation "organizations" does not exist`. The schema of record is
-# schema.prisma, so a from-empty diff is what actually builds a new database.
-# The migrations folder stays meaningful only against databases that already
-# have the pre-2026-03 baseline.
-
+# The only thing here a deploy cannot do is create the login role — that needs
+# a password. Schema, RLS, functions and role settings all come from
+# `pnpm --filter @nebutra/db db:deploy` (ADR 2026-09-25 database convergence),
+# which is also what brings this database up to date on every later deploy.
 set -euo pipefail
 
 DB_URL="${1:-}"
@@ -27,9 +20,6 @@ fi
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DB_PKG="$REPO_ROOT/packages/platform/db"
-RLS_SQL="$REPO_ROOT/infra/data/database/policies/rls.sql"
-WORK="$(mktemp -d)"
-trap 'rm -rf "$WORK"' EXIT
 
 APP_ROLE="${APP_DB_ROLE:-app_user}"
 APP_PASSWORD="${APP_DB_PASSWORD:-}"
@@ -49,50 +39,19 @@ if [[ "$EXISTING" != "0" ]]; then
   exit 1
 fi
 
-say "Creating schemas and extensions"
-# vector needs superuser on most managed providers; run this script with an
-# admin role, not the application role it is about to create.
-psql "$DB_URL" -v ON_ERROR_STOP=1 -q <<'SQL'
-CREATE SCHEMA IF NOT EXISTS better_auth;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS vector;
-SQL
-
-say "Generating schema from schema.prisma"
-(cd "$DB_PKG" && npx prisma migrate diff \
-  --from-empty --to-schema prisma/schema.prisma --script) > "$WORK/schema.sql"
-echo "  $(grep -c 'CREATE TABLE' "$WORK/schema.sql") tables"
-
-say "Applying schema"
-psql "$DB_URL" -v ON_ERROR_STOP=1 -q -f "$WORK/schema.sql"
-
 say "Creating the application role"
 # NOSUPERUSER + NOBYPASSRLS is not cosmetic: either attribute makes every RLS
-# policy below a no-op, and tenant isolation silently stops existing.
+# policy a no-op, and tenant isolation silently stops existing. Grants and
+# session guardrails for it come from platform.sql in the next step.
 psql "$DB_URL" -v ON_ERROR_STOP=1 -q \
   -v role="$APP_ROLE" -v pw="$APP_PASSWORD" <<'SQL'
 SELECT format('CREATE ROLE %I LOGIN PASSWORD %L NOSUPERUSER NOBYPASSRLS',
               :'role', :'pw')
 WHERE NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = :'role') \gexec
-GRANT USAGE ON SCHEMA public, better_auth TO :"role";
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO :"role";
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA better_auth TO :"role";
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO :"role";
-ALTER DEFAULT PRIVILEGES IN SCHEMA public
-  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO :"role";
 SQL
 
-say "Applying row-level security"
-psql "$DB_URL" -v ON_ERROR_STOP=1 -q -f "$RLS_SQL"
-POLICIES=$(psql "$DB_URL" -tA -c "select count(*) from pg_policies where schemaname='public'")
-echo "  $POLICIES policies"
-
-say "Applying cost guardrails"
-# Role-level, not call-site level: @nebutra/db sets statement_timeout inside
-# getTenantDb, but a raw client or a future code path that forgets inherits
-# nothing. Defaults on the role cover every session it opens.
-psql "$DB_URL" -v ON_ERROR_STOP=1 -q -v role="$APP_ROLE" \
-  -f "$REPO_ROOT/infra/data/database/policies/cost-guardrails.sql"
+say "Building the schema (db:deploy)"
+DIRECT_URL="$DB_URL" APP_DB_ROLE="$APP_ROLE" node "$DB_PKG/scripts/db.mjs" deploy
 
 say "Verifying isolation as $APP_ROLE"
 # Two tenants, one row each. Then read as the application role: scoped to a

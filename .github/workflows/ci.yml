@@ -888,38 +888,42 @@ jobs:
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
-      - name: Validate Prisma schema
+      - name: Generate client and row-level security
+        # Fails when a model has neither a tenant column nor a `/// @rls`
+        # directive: no table ships without an access decision.
         run: pnpm --filter @nebutra/db db:generate
+
+      - name: Generated RLS is committed and current
+        run: |
+          if ! git diff --exit-code -- packages/platform/db/prisma/generated/; then
+            echo "::error::prisma/generated/rls.sql is stale. Run \`pnpm --filter @nebutra/db db:generate\` and commit it."
+            exit 1
+          fi
 
       - name: Validate Prisma schema syntax
         working-directory: packages/platform/db
         run: pnpm exec prisma validate
 
-      - name: Check migration history is consistent
+      - name: Build a database from empty, twice
+        # The same command every deploy runs. From empty it must replay the
+        # baseline and every migration, apply platform.sql and rls.sql, and then
+        # find zero drift against schema.prisma — which is also the proof that
+        # the migrations and the schema agree. The second run proves the whole
+        # thing is idempotent, as a redeploy needs it to be.
         working-directory: packages/platform/db
-        # Prisma 7 dropped --to-schema-datamodel and --shadow-database-url.
-        # The committed migration history starts at enable_rls and is not
-        # replayable from empty (P3006 / P1014: organizations is never created).
-        # Apply the current schema to the job-local Postgres, then confirm the
-        # live datasource still matches schema.prisma. Prisma 7 also refuses a
-        # shadow URL that equals DATABASE_URL, so create a second empty DB.
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
           DIRECT_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
-          SHADOW_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra_diff
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shadow_nebutra
         run: |
           node --input-type=module -e '
             import pg from "pg";
-            const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
-            await client.connect();
-            await client.query("CREATE DATABASE shadow_nebutra_diff");
-            await client.end();
+            const c = new pg.Client({ connectionString: process.env.DATABASE_URL });
+            await c.connect();
+            await c.query("CREATE ROLE app_user NOSUPERUSER NOBYPASSRLS");
+            await c.end();
           '
-          pnpm exec prisma db push --accept-data-loss
-          pnpm exec prisma migrate diff \
-            --from-config-datasource \
-            --to-schema ./prisma/schema.prisma \
-            --exit-code
+          pnpm db:deploy
+          pnpm db:deploy
 
   # ── Security scanning ────────────────────────────────────────────────────
   # Source monorepo only. Sailor-Template is a stripped scaffold mirror; its

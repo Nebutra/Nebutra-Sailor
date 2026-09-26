@@ -15,6 +15,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model DesktopAuthHandoff
  * @conditional(auth=betterauth)
+ * @rls off
  */
 export type DesktopAuthHandoffModel = runtime.Types.Result.DefaultSelection<Prisma.$DesktopAuthHandoffPayload>
 

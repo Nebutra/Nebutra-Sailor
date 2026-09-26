@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model LegalDocument
- * 
+ * @rls global
  */
 export type LegalDocumentModel = runtime.Types.Result.DefaultSelection<Prisma.$LegalDocumentPayload>
 

@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Πώς διαχειρίζεται η multi-tenancy;",
-          "answer": "Δύο επίπεδα. Request-scoped tenant context μέσω @nebutra/tenant (το AsyncLocalStorage διαδίδει την ενεργή org σε κάθε server call, συμπεριλαμβανομένων DB queries και outbound webhooks), και database-enforced isolation μέσω πολιτικών Postgres Row-Level Security (infra/data/database/policies/rls.sql) δεσμευμένων σε session-local app.current_tenant_id. Οι συνδέσεις service-role παρακάμπτουν το RLS μόνο μέσα σε αξιόπιστα εσωτερικά services· όλα τα user-facing routes περνούν μέσω του tenant-scoped client."
+          "answer": "Δύο επίπεδα. Request-scoped tenant context μέσω @nebutra/tenant (το AsyncLocalStorage διαδίδει την ενεργή org σε κάθε server call, συμπεριλαμβανομένων DB queries και outbound webhooks), και database-enforced isolation μέσω πολιτικών Postgres Row-Level Security (packages/platform/db/prisma/generated/rls.sql) δεσμευμένων σε session-local app.current_tenant_id. Οι συνδέσεις service-role παρακάμπτουν το RLS μόνο μέσα σε αξιόπιστα εσωτερικά services· όλα τα user-facing routes περνούν μέσω του tenant-scoped client."
         },
         "swap-clerk": {
           "question": "Μπορώ να αντικαταστήσω το Clerk με άλλο auth provider;",

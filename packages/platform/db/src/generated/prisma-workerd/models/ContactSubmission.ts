@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model ContactSubmission
- * 
+ * @rls global
  */
 export type ContactSubmissionModel = runtime.Types.Result.DefaultSelection<Prisma.$ContactSubmissionPayload>
 

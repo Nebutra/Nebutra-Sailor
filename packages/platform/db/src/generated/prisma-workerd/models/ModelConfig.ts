@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model ModelConfig
- * 
+ * @rls global
  */
 export type ModelConfigModel = runtime.Types.Result.DefaultSelection<Prisma.$ModelConfigPayload>
 

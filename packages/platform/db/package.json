@@ -43,7 +43,7 @@
   "scripts": {
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:deploy": "node scripts/db.mjs deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:seed": "prisma db seed",
@@ -52,7 +52,9 @@
     "test:watch": "vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "build": "tsc -p tsconfig.json && cp src/generated/prisma-workerd/internal/query_compiler_fast_bg.js src/generated/prisma-workerd/internal/query_compiler_fast_bg.wasm dist/generated/prisma-workerd/internal/",
-    "verify:migrations": "tsx scripts/verify-migrations.mts"
+    "db:deploy": "node scripts/db.mjs deploy",
+    "db:check": "node scripts/db.mjs check",
+    "db:adopt": "node scripts/db.mjs adopt"
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
@@ -67,12 +69,13 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.15",
+    "@electric-sql/pglite-socket": "^0.0.20",
+    "@prisma/generator-helper": "7.4.2",
     "@types/pg": "^8.18.0",
     "prisma": "catalog:",
     "tsx": "^4.21.0",
     "typescript": "catalog:",
-    "vitest": "catalog:",
-    "@electric-sql/pglite-socket": "^0.0.20"
+    "vitest": "catalog:"
   },
   "license": "AGPL-3.0-only",
   "files": [

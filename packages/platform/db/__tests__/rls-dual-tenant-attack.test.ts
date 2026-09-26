@@ -25,14 +25,14 @@ function setupSql(role: string): string {
   );
   ALTER TABLE tenant_docs ENABLE ROW LEVEL SECURITY;
   ALTER TABLE tenant_docs FORCE ROW LEVEL SECURITY;
-  CREATE OR REPLACE FUNCTION current_org_id() RETURNS text
+  CREATE OR REPLACE FUNCTION current_tenant_id() RETURNS text
     LANGUAGE sql STABLE
   AS $$
     SELECT COALESCE(current_setting('app.current_tenant_id', true), '')
   $$;
   CREATE POLICY tenant_docs_isolation ON tenant_docs
-    USING (tenant_id = current_org_id())
-    WITH CHECK (tenant_id = current_org_id());
+    USING (tenant_id = current_tenant_id())
+    WITH CHECK (tenant_id = current_tenant_id());
   GRANT ALL ON TABLE tenant_docs TO ${role};
 `;
 }

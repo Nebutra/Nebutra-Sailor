@@ -8,6 +8,73 @@ do not treat them as a `DATABASE_URL`-only swap for this package.
 
 > ⚠️ **Important for AI Assistants**: This package uses **Prisma 7.x** with the new `prisma-client` generator. Do NOT use outdated Prisma patterns. Read the [Prisma 7 Migration Guide](#prisma-7-critical-changes) below.
 
+## Changing the database — the contract
+
+> For people and agents alike. `pnpm lint` (scripts/lint-database.mjs), `prisma
+> generate` and CI's Database Schema Check enforce every rule below; this is
+> what they are checking. ADR 2026-09-25 database convergence has the why.
+
+**One source.** Everything about the database's shape is in `prisma/`:
+
+| File | Holds | You |
+|---|---|---|
+| `schema.prisma` | tables, columns, indexes, enums, and each table's access rule | **edit** |
+| `platform.sql` | the few objects Prisma cannot express: functions, role settings | edit, rarely — keep it small and idempotent |
+| `generated/rls.sql` | row-level security, written by `prisma generate` | never edit; commit it |
+| `migrations/00000000000000_baseline` | the database as of 2026-09-25 | never edit (checksum-pinned) |
+| `migrations/<timestamp>_<name>` | one per schema change since | generate, then review |
+
+**To change the schema**
+
+1. Edit `schema.prisma`. For a new model, decide its access rule (below).
+2. `pnpm --filter @nebutra/db db:migrate --name <what_changed>` against a local
+   database — Prisma writes the migration from your schema diff. Do not
+   hand-write migration SQL; review what was generated instead.
+3. `pnpm --filter @nebutra/db db:generate` and commit `generated/rls.sql` with it.
+4. Deploying does the rest: every deploy workflow runs `db:deploy` before the
+   apps, which applies the migration, re-applies `platform.sql` and `rls.sql`,
+   and fails the deploy if the database still differs from the schema.
+
+**Access rules (`/// @rls`, on the line above `model`)**
+
+A model with a `tenant_id` column, an `organization_id` column, or exactly one
+required relation to such a model is isolated automatically — write nothing.
+Anything else must say what it is, or `prisma generate` fails:
+
+| Directive | Meaning |
+|---|---|
+| `@rls global` | every role may read and write (reference data, public catalogues) |
+| `@rls deny` | RLS on, no policy — only the owner / BYPASSRLS roles reach it |
+| `@rls off` | RLS disabled — a system table the app reaches as owner only |
+| `@rls self` | `id` is the tenant (the tenant roots) |
+| `@rls tenant(col)` | isolate on a column not called `tenant_id` |
+| `@rls via(field)` | visible when the parent through `field` is |
+| `@rls using(sql)` | one custom predicate |
+| `@rls read(sql) write(sql)` | readers see `read OR write`; writers need `write` |
+
+Policies have no `TO` clause, so they bind whatever `APP_DB_ROLE` a deployment
+uses. Use `public.current_tenant_id()` in custom SQL.
+
+**Never**
+
+- write `CREATE POLICY`, `ENABLE ROW LEVEL SECURITY`, a function, a `GRANT` or a
+  role into a migration — they run once and then drift; they belong in
+  `/// @rls` or `platform.sql`, which re-apply on every deploy;
+- add a `.sql` file anywhere else that defines policies;
+- run `db push` against a shared database — it is how the old history broke;
+- drop, retype, rename or delete in a migration without a line
+  `-- nebutra:destructive <reason>`.
+
+**Commands**
+
+| Command | Does |
+|---|---|
+| `db:generate` | client + `generated/rls.sql` |
+| `db:migrate` | dev only: generate a migration from your schema change |
+| `db:deploy` | any database: migrate, `platform.sql`, `rls.sql`, then verify — the same on every host |
+| `db:check` | read-only drift report; exit 1 on any drift |
+| `db:adopt` | once, for a database that predates the baseline (checks, then records it) |
+
 ## Prisma 7 Critical Changes
 
 ### What Changed in Prisma 7 (Released 2025)
@@ -133,9 +200,11 @@ const user = await prisma.user.create({
 
 | Command            | Description            |
 | ------------------ | ---------------------- |
-| `pnpm db:generate` | Generate Prisma client |
-| `pnpm db:migrate`  | Run migrations (dev)   |
-| `pnpm db:push`     | Push schema changes    |
+| `pnpm db:generate` | Generate Prisma client and `generated/rls.sql` |
+| `pnpm db:migrate`  | Dev: generate a migration from a schema change |
+| `pnpm db:deploy`   | Bring any database to the schema, then verify |
+| `pnpm db:check`    | Read-only drift report |
+| `pnpm db:push`     | Scratch databases only — never a shared one |
 | `pnpm db:studio`   | Open Prisma Studio     |
 | `pnpm db:seed`     | Seed database          |
 

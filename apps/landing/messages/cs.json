@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Jak je řešena multi-tenance?",
-          "answer": "Dvě vrstvy. Kontext tenantu v rozsahu požadavku přes @nebutra/tenant (AsyncLocalStorage propaguje aktivní organizaci přes každý serverový volání, včetně DB dotazů a outbound webhooků) a izolace vynucená databází přes Postgres Row-Level Security policies (infra/data/database/policies/rls.sql) vázané na session-local app.current_tenant_id. Service-role connectiony bypassují RLS pouze uvnitř důvěryhodných interních služeb; všechny uživatelské routy jdou přes tenant-scoped klienta."
+          "answer": "Dvě vrstvy. Kontext tenantu v rozsahu požadavku přes @nebutra/tenant (AsyncLocalStorage propaguje aktivní organizaci přes každý serverový volání, včetně DB dotazů a outbound webhooků) a izolace vynucená databází přes Postgres Row-Level Security policies (packages/platform/db/prisma/generated/rls.sql) vázané na session-local app.current_tenant_id. Service-role connectiony bypassují RLS pouze uvnitř důvěryhodných interních služeb; všechny uživatelské routy jdou přes tenant-scoped klienta."
         },
         "swap-clerk": {
           "question": "Mohu vyměnit Clerk za jiného auth providera?",

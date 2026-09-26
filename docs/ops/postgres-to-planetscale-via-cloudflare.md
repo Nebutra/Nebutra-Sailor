@@ -1,5 +1,9 @@
 # Migrating Postgres from Supabase to PlanetScale (via Cloudflare)
 
+> **2026-09-25:** `infra/data/database/policies/rls.sql` and the provisioning steps below are
+> retired. A new database is built by `pnpm db:deploy` from `packages/platform/db` — see ADR
+> 2026-09-25 database convergence. This runbook stays as the record of the 2026-07 cutover.
+
 Moves the platform database onto the Postgres you provision from the
 Cloudflare dashboard, reached from the Workers gateway through Hyperdrive.
 

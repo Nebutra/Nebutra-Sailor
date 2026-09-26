@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model CofounderInterest
- * 
+ * @rls read((EXISTS ( SELECT 1 FROM cofounder_profiles p WHERE (((p.id = cofounder_interests.from_profile_id) OR (p.id = cofounder_interests.to_profile_id)) AND (p.tenant_id = public.current_tenant_id()))))) write((EXISTS ( SELECT 1 FROM cofounder_profiles p WHERE ((p.id = cofounder_interests.from_profile_id) AND (p.tenant_id = public.current_tenant_id())))))
  */
 export type CofounderInterestModel = runtime.Types.Result.DefaultSelection<Prisma.$CofounderInterestPayload>
 

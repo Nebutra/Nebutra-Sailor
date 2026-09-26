@@ -98,6 +98,7 @@ export const ModelName = {
   CreditTransaction: 'CreditTransaction',
   RouterReservation: 'RouterReservation',
   StripeCustomer: 'StripeCustomer',
+  RetentionPolicy: 'RetentionPolicy',
   WebhookEvent: 'WebhookEvent',
   AuditLog: 'AuditLog',
   LegalDocument: 'LegalDocument',
@@ -972,6 +973,17 @@ export const StripeCustomerScalarFieldEnum = {
 } as const
 
 export type StripeCustomerScalarFieldEnum = (typeof StripeCustomerScalarFieldEnum)[keyof typeof StripeCustomerScalarFieldEnum]
+
+
+export const RetentionPolicyScalarFieldEnum = {
+  tableName: 'tableName',
+  keepDays: 'keepDays',
+  timeColumn: 'timeColumn',
+  enabled: 'enabled',
+  note: 'note'
+} as const
+
+export type RetentionPolicyScalarFieldEnum = (typeof RetentionPolicyScalarFieldEnum)[keyof typeof RetentionPolicyScalarFieldEnum]
 
 
 export const WebhookEventScalarFieldEnum = {

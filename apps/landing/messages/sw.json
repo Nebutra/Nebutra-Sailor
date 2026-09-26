@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Jinsi multi-tenancy inavyoshughulikiwa?",
-          "answer": "Tabaka mbili. Muktadha wa mtumiaji wa ombi kupitia @nebutra/tenant (AsyncLocalStorage inasambaza shirika la sasa kupitia kila simu ya seva, ikiwa ni pamoja na maswali ya DB na webhooks za nje), na utenganisho unaodhibitiwa na hifadhi ya data kupitia sera za Row-Level Security za Postgres (infra/data/database/policies/rls.sql) zilizounganishwa na app.current_tenant_id ya kikao. Muunganisho wa jukumu la huduma unapita RLS ndani tu ya huduma za ndani zinazowezekana; njia zote zinazowasiliana na mtumiaji zinapita kupitia mteja wa muktadha wa mtumiaji."
+          "answer": "Tabaka mbili. Muktadha wa mtumiaji wa ombi kupitia @nebutra/tenant (AsyncLocalStorage inasambaza shirika la sasa kupitia kila simu ya seva, ikiwa ni pamoja na maswali ya DB na webhooks za nje), na utenganisho unaodhibitiwa na hifadhi ya data kupitia sera za Row-Level Security za Postgres (packages/platform/db/prisma/generated/rls.sql) zilizounganishwa na app.current_tenant_id ya kikao. Muunganisho wa jukumu la huduma unapita RLS ndani tu ya huduma za ndani zinazowezekana; njia zote zinazowasiliana na mtumiaji zinapita kupitia mteja wa muktadha wa mtumiaji."
         },
         "swap-clerk": {
           "question": "Je, ninaweza kubadilisha Clerk kwa mtoa huduma mwingine wa uthibitisho?",

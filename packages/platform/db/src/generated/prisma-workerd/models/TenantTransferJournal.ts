@@ -20,6 +20,7 @@ import type * as Prisma from "../internal/prismaNamespace"
  * known `toOrganizationId`. The provisioning worker fills `toTenantId`,
  * re-points the named asset, and marks the row `applied` (or `failed` with
  * `error`). No implicit copy — each row is an explicit ownership change.
+ * @rls read(((from_tenant_id = public.current_tenant_id()) OR (to_tenant_id = public.current_tenant_id()))) write((from_tenant_id = public.current_tenant_id()))
  */
 export type TenantTransferJournalModel = runtime.Types.Result.DefaultSelection<Prisma.$TenantTransferJournalPayload>
 

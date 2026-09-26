@@ -34,11 +34,9 @@ infra/
 ### Database
 
 ```bash
-# Apply Prisma migrations
-pnpm db:migrate
-
-# Apply RLS policies
-psql $DATABASE_URL -f infra/data/database/policies/rls.sql
+# Migrations, platform.sql and the generated RLS, then a drift check —
+# the same command on every host (see infra/data/database/README.md)
+pnpm db:deploy
 ```
 
 ### Terraform

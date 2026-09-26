@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Đa thuê bao được xử lý như thế nào?",
-          "answer": "Hai lớp. Bối cảnh tenant theo phạm vi request qua @nebutra/tenant (AsyncLocalStorage truyền org đang hoạt động qua mọi cuộc gọi server, bao gồm truy vấn DB và webhook ra ngoài), và cách ly được thực thi ở cơ sở dữ liệu qua chính sách Row-Level Security của Postgres (infra/data/database/policies/rls.sql) ràng buộc với app.current_tenant_id cục bộ theo phiên. Kết nối vai trò dịch vụ bỏ qua RLS chỉ bên trong dịch vụ nội bộ đáng tin; mọi route hướng người dùng đều đi qua client theo phạm vi tenant."
+          "answer": "Hai lớp. Bối cảnh tenant theo phạm vi request qua @nebutra/tenant (AsyncLocalStorage truyền org đang hoạt động qua mọi cuộc gọi server, bao gồm truy vấn DB và webhook ra ngoài), và cách ly được thực thi ở cơ sở dữ liệu qua chính sách Row-Level Security của Postgres (packages/platform/db/prisma/generated/rls.sql) ràng buộc với app.current_tenant_id cục bộ theo phiên. Kết nối vai trò dịch vụ bỏ qua RLS chỉ bên trong dịch vụ nội bộ đáng tin; mọi route hướng người dùng đều đi qua client theo phạm vi tenant."
         },
         "swap-clerk": {
           "question": "Tôi có thể thay Clerk bằng nhà cung cấp auth khác không?",

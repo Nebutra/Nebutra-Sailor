@@ -32,8 +32,19 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  database:
+    # Schema first, apps second: the database is brought to this commit's
+    # schema before anything that reads it ships. No pending migration → a
+    # quick no-op. It fails closed — a drifted database stops the deploy.
+    name: Database
+    uses: ./.github/workflows/ops-database-migrate.yml
+    with:
+      action: deploy
+    secrets: inherit
+
   origin:
     name: nebutra-ai
+    needs: database
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

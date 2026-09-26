@@ -50,6 +50,13 @@ const CASES: Case[] = [
     path: "apps/web/src/app/api/admin/route.ts",
   },
   {
+    // A second source of row-level security beside the generated rls.sql —
+    // how the database drifted into two policy models before ADR 2026-09-25.
+    guard: "lint-database",
+    violation: 'CREATE POLICY "probe_rls" ON "public"."tenants" USING (true);\n',
+    path: "infra/__lint_guard_probe.sql",
+  },
+  {
     // Slowest guard in the set by an order of magnitude — a single run walks
     // the whole tree in ~65s, and this case runs it twice. Worth knowing on its
     // own: every `pnpm lint` pays that, and the other seventeen finish in

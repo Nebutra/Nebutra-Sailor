@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model WaitlistEntry
- * 
+ * @rls off
  */
 export type WaitlistEntryModel = runtime.Types.Result.DefaultSelection<Prisma.$WaitlistEntryPayload>
 

@@ -2,26 +2,36 @@
 
 ## Architecture
 
+Everything about the database's shape lives in one package. This directory
+holds none of it any more — see ADR 2026-09-25 database convergence.
+
 ```
-packages/platform/db/              → Prisma schema (single source of truth)
-infra/data/database/           → Database-level configs (RLS, extensions)
-infra/iac/terraform/          → Cloud infrastructure provisioning
+packages/platform/db/prisma/
+  schema.prisma              ← tables, columns, indexes, and each table's access
+                               rule in a `/// @rls ...` comment. The only file
+                               you edit for a schema change.
+  platform.sql               ← the few objects Prisma cannot express (functions,
+                               role settings). Hand-written, idempotent, small.
+  generated/rls.sql          ← row-level security, generated from schema.prisma
+                               by `prisma generate`. Never edit.
+  migrations/                ← 00000000000000_baseline + one generated file per
+                               schema change since.
 ```
 
 ## Schema Management
 
-**All models defined in `packages/platform/db/prisma/schema.prisma`**
-
 ```bash
-pnpm db:generate    # Generate Prisma client
-pnpm db:migrate     # Run migrations
-pnpm db:push        # Push schema (dev only)
-
-# Production: Actions → "Ops — apply pending database migrations" → Run.
-# It picks migrate deploy or db push from the database's own history and
-# never accepts data loss on your behalf.
-pnpm db:studio      # Open Prisma Studio
+pnpm --filter @nebutra/db db:generate      # client + rls.sql
+pnpm --filter @nebutra/db db:migrate       # dev: generate the migration for your schema change
+pnpm --filter @nebutra/db db:deploy        # any database: migrate, platform.sql, rls.sql, verify
+pnpm --filter @nebutra/db db:check         # read-only: exit 1 on any drift
 ```
+
+`db:deploy` is the same command on every host — a container entrypoint, a Fly
+`release_command`, a K8s init container, CI, a laptop. It needs `DIRECT_URL`
+(or `DATABASE_URL`). Deploy workflows run it before the apps they ship, so new
+code never meets an old schema. The rules for changing the schema, for people
+and agents alike, are in `packages/platform/db/README.md`.
 
 ## Identity mirror (`users` ↔ `auth_users`)
 
@@ -48,18 +58,14 @@ and stay unique (Postgres allows any number of `NULL`s under a unique index).
 
 ## Row Level Security (RLS)
 
-RLS policies are in `policies/rls.sql`. Apply after migrations:
+Generated. A model with a `tenant_id` (or `organization_id`) column, or one
+required relation to such a model, is isolated automatically; anything else
+must say what it is — `/// @rls global | deny | off | self | via(...) |
+using(...) | read(...) write(...)` — or `prisma generate` fails. Policies carry
+no `TO` clause, so they bind whatever `APP_DB_ROLE` a deployment uses.
 
-```bash
-psql $DATABASE_URL -f infra/data/database/policies/rls.sql
-```
-
-## Required Extensions
-
-```sql
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS vector;  -- pgvector for embeddings
-```
+Extensions (`vector`, `uuid-ossp`) are declared in `schema.prisma` and created by
+the baseline migration.
 
 ## Environment Variables
 
@@ -108,8 +114,9 @@ cannot give you.
 
 ## Retention
 
-`policies/retention.sql` defines `public.purge_expired_rows()`, driven by rows in
-`public.retention_policies` — so a retention window is **data, not code**. Adding
+`packages/platform/db/prisma/platform.sql` defines `public.purge_expired_rows()`,
+driven by rows in `public.retention_policies` (a model in schema.prisma, seeded
+by the baseline) — so a retention window is **data, not code**. Adding
 one is an INSERT, not a deploy.
 
 The caller is `backends/gateway/src/worker-retention.ts` with

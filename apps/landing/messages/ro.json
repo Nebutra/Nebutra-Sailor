@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Cum este gestionată multi-tenancy?",
-          "answer": "Două niveluri. Context tenant scoped la cerere prin @nebutra/tenant (AsyncLocalStorage propagă organizația activă prin fiecare apel server, inclusiv query-uri DB și webhooks outbound), și izolare impusă la nivel de bază de date prin politici Postgres Row-Level Security (infra/data/database/policies/rls.sql) legate de app.current_tenant_id local sesiunii. Conexiunile cu rol de serviciu ocolește RLS doar în interiorul serviciilor interne de încredere; toate rutele expuse utilizatorilor trec prin clientul scoped la tenant."
+          "answer": "Două niveluri. Context tenant scoped la cerere prin @nebutra/tenant (AsyncLocalStorage propagă organizația activă prin fiecare apel server, inclusiv query-uri DB și webhooks outbound), și izolare impusă la nivel de bază de date prin politici Postgres Row-Level Security (packages/platform/db/prisma/generated/rls.sql) legate de app.current_tenant_id local sesiunii. Conexiunile cu rol de serviciu ocolește RLS doar în interiorul serviciilor interne de încredere; toate rutele expuse utilizatorilor trec prin clientul scoped la tenant."
         },
         "swap-clerk": {
           "question": "Pot înlocui Clerk cu un alt provider de auth?",

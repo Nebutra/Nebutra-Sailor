@@ -1673,7 +1673,7 @@
         },
         "multi-tenancy": {
           "question": "Jak obsługiwana jest wielodostępność?",
-          "answer": "Dwie warstwy. Kontekst najemcy w zakresie żądania przez @nebutra/tenant (AsyncLocalStorage propaguje aktywną organizację przez każde wywołanie serwera, w tym zapytania do bazy danych i wychodzące webhooki) oraz izolacja wymuszana w bazie danych przez polityki Row-Level Security w Postgres (infra/data/database/policies/rls.sql) powiązane z lokalnym dla sesji app.current_tenant_id. Połączenia roli serwisowej omijają RLS tylko wewnątrz zaufanych wewnętrznych usług; wszystkie trasy skierowane do użytkowników przechodzą przez klienta w zakresie najemcy."
+          "answer": "Dwie warstwy. Kontekst najemcy w zakresie żądania przez @nebutra/tenant (AsyncLocalStorage propaguje aktywną organizację przez każde wywołanie serwera, w tym zapytania do bazy danych i wychodzące webhooki) oraz izolacja wymuszana w bazie danych przez polityki Row-Level Security w Postgres (packages/platform/db/prisma/generated/rls.sql) powiązane z lokalnym dla sesji app.current_tenant_id. Połączenia roli serwisowej omijają RLS tylko wewnątrz zaufanych wewnętrznych usług; wszystkie trasy skierowane do użytkowników przechodzą przez klienta w zakresie najemcy."
         },
         "swap-clerk": {
           "question": "Czy mogę zamienić Clerk na innego dostawcę uwierzytelniania?",
