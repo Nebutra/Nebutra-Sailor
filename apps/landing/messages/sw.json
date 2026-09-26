@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Jinsi gani leseni ya hazina imeundwa?",
-              "a": "Miundombinu wa msingi unatekeleza kwa ukali mkataba wa OSS AGPLv3, ukihakikisha uwazi na matumizi ya gharama sifuri. Kwa mashirika yanayohitaji upotevu wa mali na dhamana za kuandika upya zilizoinuliwa, mikataba ya biashara ya chanzo kilichofungwa inapatikana."
+              "a": "Msimbo wa chanzo unatolewa chini ya Functional Source License (FSL-1.1-ALv2): unaweza kuutumia bila malipo kujenga bidhaa zako mwenyewe, bila ada na bila wajibu wa copyleft. Kitu pekee kisichoruhusiwa ni kutoa Sailor yenyewe kama bidhaa au huduma ya kibiashara inayoshindana. Kila toleo hubadilika moja kwa moja kuwa Apache-2.0 miaka miwili baada ya kutolewa kwake."
             },
             "2": {
               "q": "Je, kasi ya tathmini ya kwanza ya biashara ni ipi?",
@@ -1217,7 +1217,7 @@
       "title": "Acha kuweka mipangilio. Anza kujenga.",
       "description": "Anzisha muundo wa SaaS unaoweza kupanuka ndani kwa kutumia {brandName} CLI.",
       "button": "Weka Muundo",
-      "license": "Chanzo huria chini ya leseni ya AGPL-3.0. Hakuna kadi ya mkopo inayohitajika."
+      "license": "Chanzo huria chini ya leseni ya FSL-1.1-ALv2. Hakuna kadi ya mkopo inayohitajika."
     },
     "capability": {
       "badge": "Uwezo wa Biashara",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Je, ni bure au inalipwa?",
-          "answer": "Chanzo kamili kinatolewa chini ya AGPL-3.0 — bure kwa miradi ya kibinafsi, zana za ndani, na kazi za chanzo wazi zinazofaa na AGPL. Leseni ya biashara inafungua haki ya kutoa Sailor katika SaaS ya kibinafsi isiyo na chanzo wazi. Kila mpango unajumuisha seti kamili ya vipengele (uhalalishaji, malipo, multi-tenancy, AI, ukaguzi); viwango vinatofautiana katika masharti ya leseni na SLA ya msaada, si katika vipengele."
+          "answer": "Chanzo kamili kinatolewa chini ya FSL-1.1-ALv2 — bure kwa kujenga bidhaa zako mwenyewe, bila ada na bila wajibu wa copyleft. Kitu pekee kisichoruhusiwa ni kutoa Sailor yenyewe kama bidhaa au huduma ya kibiashara inayoshindana. Kila toleo hubadilika moja kwa moja kuwa Apache-2.0 miaka miwili baada ya kutolewa. Mipango ya kibiashara inayolipwa haifungui vipengele vya ziada — kila mpango una seti kamili ya vipengele; inauza ahadi ya msaada na SLA, fidia, nyaraka za uzingatiaji, na haki za chapa ya biashara."
         },
         "china-friendly": {
           "question": "Je, inafanya kazi China?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Ni leseni gani?",
-          "answer": "AGPL-3.0 kwa Utepekelezo wa Biashara. Bure kwa matumizi binafsi, zana za ndani, na OSS zinazofaa na AGPL. Leseni ya biashara inayolipwa inafungua haki ya kutuma Sailor kama ilivyo katika SaaS ya kibinafsi. Chanzo kamili kinajumuishwa kwenye kila mpango."
+          "answer": "FSL-1.1-ALv2 (Functional Source License). Bure kwa kujenga bidhaa — bila ada, bila copyleft. Kizuizi pekee ni kutoa Sailor yenyewe kama bidhaa au huduma ya kibiashara inayoshindana. Kila toleo hubadilika moja kwa moja kuwa Apache-2.0 miaka miwili baada ya kutolewa. Mipango ya kibiashara inayolipwa haiuzi vipengele vya ziada, bali ahadi ya msaada/SLA, fidia, nyaraka za uzingatiaji, na haki za chapa ya biashara."
         },
         "paid-updates": {
           "question": "Je, ninahitaji kulipa kwa masasisho?",

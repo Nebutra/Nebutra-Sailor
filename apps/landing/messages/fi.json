@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Miten varaston lisenssien rakenne on järjestetty?",
-              "a": "Perustavanlaatuinen infrastruktuuri noudattaa tiukasti OSS AGPLv3-sopimusta, mikä takaa läpinäkyvyyden ja maksuttoman käytön. Organisaatioille, jotka tarvitsevat omistusoikeudellista salailua ja korkeampia uudelleenkirjoitustakuuja, on saatavilla erilliset suljetun lähdekoodin kaupalliset sopimukset."
+              "a": "Perustavanlaatuinen infrastruktuuri on nyt lisensoitu Functional Source License -lisenssillä, versio 1.1, ALv2 (FSL-1.1-ALv2) — täysin maksuton tuotteiden rakentamiseen, ilman maksuja tai copyleft-velvoitteita. Ainoa asia, joka ei ole sallittua, on tarjota Sailoria itseään kilpailevana kaupallisena tuotteena tai palveluna. Jokainen versio muuttuu peruuttamattomasti Apache-2.0-lisenssiksi kaksi vuotta julkaisun jälkeen."
             },
             "2": {
               "q": "Mikä on alkuperäisen kaupallisen arvioinnin nopeus?",
@@ -1217,7 +1217,7 @@
       "title": "Lopeta konfigurointi. Aloita rakentaminen.",
       "description": "Alusta skaalautuva SaaS-arkkitehtuuri paikallisesti {brandName}-CLI:n avulla.",
       "button": "Julkaise arkkitehtuuri",
-      "license": "Avoin lähdekoodi AGPL-3.0-lisenssillä. Luottokorttia ei tarvita."
+      "license": "Avoin lähdekoodi FSL-1.1-ALv2-lisenssillä. Luottokorttia ei tarvita."
     },
     "capability": {
       "badge": "Enterprise-ominaisuudet",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Onko se ilmainen vai maksullinen?",
-          "answer": "Koko lähdekoodi on AGPL-3.0 -lisenssillä — ilmainen henkilökohtaisiin projekteihin, sisäisiin työkaluihin ja AGPL-yhteensopivaan avoimeen lähdekoodiin. Kaupallinen lisenssi antaa oikeuden julkaista Sailorin suljettuna lähdekoodina olevana omaehtoisena SaaS-palveluna. Jokainen suunnitelma sisältää täyden ominaisuusvalikoiman (autentikointi, laskutus, monivuokraisuus, tekoäly, tarkastus); tasot eroavat lisenssiehdoissa ja tuen SLA:ssa, ei ominaisuuksissa."
+          "answer": "Koko lähdekoodi julkaistaan FSL-1.1-ALv2-lisenssillä — täysin maksuton tuotteiden rakentamiseen, ilman maksuja tai copyleft-velvoitteita. Ainoa rajoitus on, ettei Sailoria itseään voi tarjota kilpailevana kaupallisena tuotteena tai palveluna, ja jokainen versio muuttuu automaattisesti Apache-2.0-lisenssiksi kahden vuoden kuluttua. Jokainen suunnitelma sisältää täyden ominaisuusvalikoiman (autentikointi, laskutus, monivuokraisuus, tekoäly, tarkastus); maksulliset suunnitelmat eivät myy lisäominaisuuksia — ne myyvät tukisitoumuksen ja SLA:n, vahingonkorvausvastuun, compliance-dokumentaation ja tavaramerkkioikeudet."
         },
         "china-friendly": {
           "question": "Toimiiko se Kiinassa?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Mikä on lisenssi?",
-          "answer": "AGPL-3.0 kaupallisella poikkeuksella. Ilmainen henkilökohtaiseen käyttöön, sisäisiin työkaluihin ja AGPL-yhteensopivaan OSS:iin. Maksullinen kaupallinen lisenssi antaa oikeuden julkaista Sailor sellaisenaan omaehtoisessa SaaS:ssä. Täysi lähdekoodi sisältyy jokaiseen suunnitelmaan."
+          "answer": "FSL-1.1-ALv2 (Functional Source License, versio 1.1, ALv2). Täysin maksuton tuotteiden rakentamiseen, ilman copyleft-velvoitteita. Ainoa asia, joka ei ole sallittua, on tarjota Sailoria itseään kilpailevana kaupallisena tuotteena tai palveluna. Jokainen versio muuttuu peruuttamattomasti Apache-2.0-lisenssiksi kaksi vuotta julkaisun jälkeen. Maksulliset suunnitelmat myyvät tukisitoumuksen, SLA:n, vahingonkorvausvastuun, compliance-dokumentaation ja tavaramerkkioikeudet, eivät lisäominaisuuksia."
         },
         "paid-updates": {
           "question": "Pitäisikö minun maksaa päivityksistä?",

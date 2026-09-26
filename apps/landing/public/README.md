@@ -2,7 +2,7 @@
 
 The visual assets contained in this directory (including but not limited to logos, illustrations, icons, and marketing graphics) are the intellectual property and trademarks of Wuxi Nebutra Intelligence Technology Co., Ltd. ("Nebutra").
 
-**These assets are NOT covered by the project's open-source AGPLv3 license.**
+**These assets are NOT covered by the project's open-source FSL-1.1-ALv2 license.**
 
 ## Usage Rules
 

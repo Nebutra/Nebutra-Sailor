@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Hogyan működik a tároló licencelése?",
-              "a": "Az alapinfrastruktúra szigorúan betartja az OSS AGPLv3 megállapodást, garantálva a átláthatóságot és a költségmentes használatot. Azok számára, akiknek zárt forráskódú elrejtést és fokozott átírás-garanciát kell biztosítaniuk, kifejezett zárt forráskódú kereskedelmi szerződések érhetők el."
+              "a": "Az alap az FSL-1.1-ALv2 (Functional Source License) licenc alatt áll, amely ingyenesen felhasználható termékek építésére — nincs díj, nincs copyleft kötelezettség. Az egyetlen megkötés, hogy a Sailort magát nem lehet versengő kereskedelmi termékként vagy szolgáltatásként kínálni. Minden verzió a kiadásától számított két év után visszavonhatatlanul Apache-2.0 licencre vált."
             },
             "2": {
               "q": "Mennyire gyors az első kereskedelmi értékelés?",
@@ -1217,7 +1217,7 @@
       "title": "Állj le a konfigurálással. Kezdj el építeni.",
       "description": "Inicializálj egy skálázható SaaS architektúrát helyileg a {brandName} CLI segítségével.",
       "button": "Architektúra telepítése",
-      "license": "Nyílt forráskódú AGPL-3.0 licenc alatt. Nincs szükség bankkártyára."
+      "license": "Nyílt forráskódú FSL-1.1-ALv2 licenc alatt. Nincs szükség bankkártyára."
     },
     "capability": {
       "badge": "Enterprise képességek",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Ingyenes vagy fizetős?",
-          "answer": "A teljes forráskód AGPL-3.0 alatt érhető el — ingyenes személyes projektekhez, belső eszközökhöz és AGPL-kompatibilis nyílt forráskódú munkákhoz. A kereskedelmi licenc lehetővé teszi a Sailor zárt forráskódú, saját SaaS-ben való forgalmazását. Minden csomag tartalmazza a teljes funkciókészletet (hitelesítés, számlázás, több bérlőség, AI, audit); a szintek a licencfeltételekben és támogatási SLA-ban térnek el, nem a funkciókban."
+          "answer": "A teljes forráskód FSL-1.1-ALv2 alatt érhető el — ingyenes személyes projektekhez, belső eszközökhöz és saját termékek építéséhez, díj és copyleft kötelezettség nélkül. Az egyetlen megkötés, hogy a Sailort magát nem lehet versengő kereskedelmi termékként vagy szolgáltatásként kínálni. Minden csomag tartalmazza a teljes funkciókészletet (hitelesítés, számlázás, több bérlőség, AI, audit); a szintek a support SLA-ban, kártalanításban, megfelelőségi dokumentációban és védjegyjogokban térnek el, nem a funkciókban."
         },
         "china-friendly": {
           "question": "Működik Kínában?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Mi a licenc?",
-          "answer": "AGPL-3.0 kereskedelmi kivétellel. Ingyenes személyes használatra, belső eszközökhöz és AGPL-kompatibilis OSS-hez. A fizetős kereskedelmi licenc lehetővé teszi a Sailor saját SaaS-ben való forgalmazását. A teljes forráskód minden csomagban benne van."
+          "answer": "FSL-1.1-ALv2, amely minden verzió kiadásától számított két év után Apache-2.0 licencre vált. Ingyenes személyes használatra, belső eszközökhöz és saját termékek építéséhez, díj és copyleft kötelezettség nélkül. Az egyetlen dolog, amit nem enged, hogy a Sailort magát versengő termékként vagy szolgáltatásként kínálják. A teljes forráskód minden csomagban benne van."
         },
         "paid-updates": {
           "question": "Fizetnem kell a frissítésekért?",

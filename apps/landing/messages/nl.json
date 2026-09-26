@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Hoe is de licentie van de repository gestructureerd?",
-              "a": "De onderliggende infrastructuur handhaaft strikt de OSS AGPLv3-overeenkomst, wat transparantie en gebruik zonder kosten garandeert. Voor organisaties die gepatenteerde verduistering en verhoogde herschrijfgaranties nodig hebben, zijn expliciete gesloten-bron commerciële contracten beschikbaar."
+              "a": "De kern is gelicentieerd onder FSL-1.1-ALv2 (Functional Source License), vrij te gebruiken om producten te bouwen — geen kosten, geen copyleft-verplichting. De enige beperking is het aanbieden van Sailor zelf als concurrerend commercieel product of dienst. Elke versie zet automatisch en onherroepelijk om naar Apache-2.0 twee jaar na de release."
             },
             "2": {
               "q": "Wat is de snelheid van de initiële commerciële evaluatie?",
@@ -1217,7 +1217,7 @@
       "title": "Stop met configureren. Begin met bouwen.",
       "description": "Initialiseer een schaalbare SaaS-architectuur lokaal met de {brandName}-CLI.",
       "button": "Architectuur implementeren",
-      "license": "Open source onder AGPL-3.0-licentie. Geen creditcard vereist."
+      "license": "Open source onder FSL-1.1-ALv2-licentie. Geen creditcard vereist."
     },
     "capability": {
       "badge": "Enterprise-mogelijkheden",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Is het gratis of betaald?",
-          "answer": "De volledige broncode wordt uitgegeven onder AGPL-3.0 — gratis voor persoonlijke projecten, interne tooling en AGPL-compatibel open-source werk. Een commerciële licentie opent het recht om Sailor te gebruiken in gesloten, proprietaire SaaS. Elk plan bevat de volledige functieset (authenticatie, facturering, multi-tenancy, AI, audit); de niveaus verschillen in licentievoorwaarden en ondersteunings-SLA, niet in functies."
+          "answer": "De volledige broncode wordt uitgegeven onder FSL-1.1-ALv2 — gratis voor persoonlijke projecten, interne tooling en het bouwen van je eigen product, zonder kosten of copyleft-verplichting. De enige beperking is het aanbieden van Sailor zelf als concurrerend commercieel product of dienst. Elk plan bevat de volledige functieset (authenticatie, facturering, multi-tenancy, AI, audit); de niveaus verschillen in support-SLA, vrijwaring, compliance-documentatie en merkrechten, niet in functies."
         },
         "china-friendly": {
           "question": "Werkt het in China?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Wat is de licentie?",
-          "answer": "AGPL-3.0 met een Commerciële Uitzondering. Gratis voor persoonlijk gebruik, interne tooling en AGPL-compatibel OSS. Een betaalde commerciële licentie opent het recht om Sailor as-is te gebruiken in proprietaire SaaS. Volledige broncode is inbegrepen in elk plan."
+          "answer": "FSL-1.1-ALv2, dat twee jaar na elke release overgaat naar Apache-2.0. Gratis voor persoonlijk gebruik, interne tooling en het bouwen van je eigen product, zonder kosten of copyleft-verplichting. Het enige wat niet is toegestaan, is Sailor zelf aanbieden als concurrerend product of dienst. Volledige broncode is inbegrepen in elk plan."
         },
         "paid-updates": {
           "question": "Moet ik betalen voor updates?",

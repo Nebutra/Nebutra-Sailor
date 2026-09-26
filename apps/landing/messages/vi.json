@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Cấu trúc cấp phép của kho lưu trữ là như thế nào?",
-              "a": "Hạ tầng nền tảng tuân thủ nghiêm ngặt thỏa thuận OSS AGPLv3, đảm bảo tính minh bạch và sử dụng miễn phí. Đối với các tổ chức cần che giấu mã nguồn độc quyền và cam kết viết lại nâng cao, các hợp đồng thương mại đóng nguồn rõ ràng có sẵn."
+              "a": "Giấy phép hiện tại là Functional Source License, phiên bản 1.1, ALv2 (FSL-1.1-ALv2). Hoàn toàn miễn phí để xây dựng sản phẩm — không phí, không nghĩa vụ copyleft. Điều duy nhất không được phép là chào bán chính Sailor như một sản phẩm hoặc dịch vụ thương mại cạnh tranh. Mỗi phiên bản tự động chuyển sang Apache-2.0 hai năm sau khi phát hành."
             },
             "2": {
               "q": "Tốc độ đánh giá thương mại ban đầu là bao nhiêu?",
@@ -1217,7 +1217,7 @@
       "title": "Dừng cấu hình. Bắt đầu xây dựng.",
       "description": "Khởi tạo kiến trúc SaaS có thể mở rộng cục bộ với CLI {brandName}.",
       "button": "Triển khai kiến trúc",
-      "license": "Mã nguồn mở theo giấy phép AGPL-3.0. Không yêu cầu thẻ tín dụng."
+      "license": "Mã nguồn mở theo giấy phép FSL-1.1-ALv2. Không yêu cầu thẻ tín dụng."
     },
     "capability": {
       "badge": "Khả năng doanh nghiệp",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Có miễn phí hay phải trả phí?",
-          "answer": "Mã nguồn đầy đủ được phát hành theo AGPL-3.0 — miễn phí cho dự án cá nhân, công cụ nội bộ và các dự án mã nguồn mở tương thích AGPL. Giấy phép thương mại mở khóa quyền phát hành Sailor trong SaaS độc quyền đóng mã nguồn. Mọi gói đều bao gồm đầy đủ tính năng (xác thực, thanh toán, đa thuê bao, AI, kiểm toán); các cấp độ khác nhau về điều khoản cấp phép và SLA hỗ trợ, không phải về tính năng."
+          "answer": "Có, Sailor miễn phí để xây dựng sản phẩm — không phí, không nghĩa vụ copyleft. Các gói thương mại trả phí không bán thêm quyền sử dụng — chúng cung cấp cam kết hỗ trợ với SLA, bồi thường, giấy tờ tuân thủ và quyền sử dụng thương hiệu. Mọi gói đều bao gồm đầy đủ tính năng (xác thực, thanh toán, đa thuê bao, AI, kiểm toán); các gói chỉ khác nhau về điều khoản hỗ trợ và cấp phép, không phải về tính năng."
         },
         "china-friendly": {
           "question": "Có hoạt động được ở Trung Quốc không?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Giấy phép là gì?",
-          "answer": "AGPL-3.0 kèm Ngoại lệ Thương mại. Miễn phí cho mục đích cá nhân, công cụ nội bộ và OSS tương thích AGPL. Giấy phép thương mại trả phí mở khóa quyền phát hành Sailor nguyên bản trong SaaS độc quyền. Mã nguồn đầy đủ được bao gồm trong mọi gói."
+          "answer": "Functional Source License, phiên bản 1.1, ALv2 (FSL-1.1-ALv2). Điều duy nhất không được phép là chào bán chính Sailor như một sản phẩm hoặc dịch vụ thương mại cạnh tranh; ngoài ra việc sử dụng hoàn toàn miễn phí, không có nghĩa vụ copyleft. Mỗi phiên bản tự động chuyển sang Apache-2.0 hai năm sau khi phát hành."
         },
         "paid-updates": {
           "question": "Tôi có cần trả phí cho bản cập nhật không?",

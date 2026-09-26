@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Hvordan er lisensieringen av repositoriet strukturert?",
-              "a": "Den underliggende infrastrukturen håndhever strengt OSS AGPLv3-avtalen, og garanterer transparens og kostnadsfri bruk. For organisasjoner som krever proprietær obskurering og forhøyede omskrivingsgarantier, er eksplisitte lukkede kommersielle kontrakter tilgjengelige."
+              "a": "Kjernen er lisensiert under FSL-1.1-ALv2 (Functional Source License), som fritt kan brukes til å bygge produkter — ingen kostnad, ingen copyleft-forpliktelse. Den eneste begrensningen er å tilby Sailor selv som et konkurrerende kommersielt produkt eller tjeneste. Hver versjon konverteres automatisk og ugjenkallelig til Apache-2.0 to år etter utgivelsen."
             },
             "2": {
               "q": "Hva er hastigheten på den innledende kommersielle evalueringen?",
@@ -1217,7 +1217,7 @@
       "title": "Slutt å konfigurere. Begynn å bygge.",
       "description": "Initialiser en skalerbar SaaS-arkitektur lokalt med {brandName} CLI.",
       "button": "Utrull arkitektur",
-      "license": "Åpen kildekode under AGPL-3.0-lisens. Ingen kredittkort kreves."
+      "license": "Åpen kildekode under FSL-1.1-ALv2-lisens. Ingen kredittkort kreves."
     },
     "capability": {
       "badge": "Enterprise-funksjoner",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Er det gratis eller betalt?",
-          "answer": "Hele kildekoden leveres under AGPL-3.0 — gratis for personlige prosjekter, intern verktøyutvikling og AGPL-kompatibelt åpen kildekodearbeid. En kommersiell lisens gir rett til å levere Sailor i lukket kildekode i proprietær SaaS. Alle planer inkluderer hele funksjonssettet (autentisering, fakturering, multi-tenancy, AI, revisjon); nivåer skiller seg i lisensvilkår og support-SLA, ikke i funksjoner."
+          "answer": "Hele kildekoden leveres under FSL-1.1-ALv2 — gratis for personlige prosjekter, intern verktøyutvikling og bygging av ditt eget produkt, uten kostnad og uten copyleft-forpliktelse. Den eneste begrensningen er å tilby Sailor selv som et konkurrerende kommersielt produkt eller tjeneste. Alle planer inkluderer hele funksjonssettet (autentisering, fakturering, multi-tenancy, AI, revisjon); nivåer skiller seg i support-SLA, erstatningsansvar, compliance-dokumentasjon og varemerkerettigheter, ikke i funksjoner."
         },
         "china-friendly": {
           "question": "Fungerer det i Kina?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Hva er lisensen?",
-          "answer": "AGPL-3.0 med kommersiell unntak. Gratis for personlig bruk, intern verktøyutvikling og AGPL-kompatibel OSS. En betalt kommersiell lisens gir rett til å levere Sailor som den er i proprietær SaaS. Full kildekode er inkludert i alle planer."
+          "answer": "FSL-1.1-ALv2, som konverteres til Apache-2.0 to år etter hver versjons utgivelse. Gratis for personlig bruk, intern verktøyutvikling og bygging av ditt eget produkt, uten kostnad og uten copyleft-forpliktelse. Det eneste den ikke tillater, er å tilby Sailor selv som et konkurrerende produkt eller tjeneste. Full kildekode er inkludert i alle planer."
         },
         "paid-updates": {
           "question": "Må jeg betale for oppdateringer?",

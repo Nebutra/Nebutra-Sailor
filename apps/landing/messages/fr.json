@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Comment la structure de licence du dépôt est-elle organisée ?",
-              "a": "L'infrastructure sous-jacente applique strictement l'accord OSS AGPLv3, garantissant transparence et utilisation sans coût. Pour les organisations nécessitant une obfuscation propriétaire et des garanties de réécriture élevées, des contrats commerciaux à code fermé explicites sont disponibles."
+              "a": "La licence actuelle est la Functional Source License, version 1.1, ALv2 (FSL-1.1-ALv2). Elle est gratuite pour construire des produits : aucun coût, aucune obligation de copyleft. La seule chose qu'elle n'autorise pas, c'est de proposer Sailor lui-même comme produit ou service commercial concurrent. Chaque version bascule automatiquement vers Apache-2.0 deux ans après sa sortie."
             },
             "2": {
               "q": "Quelle est la rapidité de l'évaluation commerciale initiale ?",
@@ -1217,7 +1217,7 @@
       "title": "Arrêtez de configurer. Commencez à construire.",
       "description": "Initialisez une architecture SaaS scalable localement avec le {brandName} CLI.",
       "button": "Déployer l'architecture",
-      "license": "Open source sous licence AGPL-3.0. Pas de carte bancaire requise."
+      "license": "Open source sous licence FSL-1.1-ALv2. Pas de carte bancaire requise."
     },
     "capability": {
       "badge": "Capacités Enterprise",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Est-ce gratuit ou payant ?",
-          "answer": "Le code source complet est livré sous AGPL-3.0 — gratuit pour les projets personnels, les outils internes et les travaux open source compatibles AGPL. Une licence commerciale déverrouille le droit de livrer Sailor dans un SaaS propriétaire à code fermé. Chaque plan inclut l'ensemble complet des fonctionnalités (auth, facturation, multi-tenancy, IA, audit) ; les niveaux diffèrent dans les conditions de licence et le SLA de support, pas dans les fonctionnalités."
+          "answer": "Oui, Sailor est gratuit pour construire des produits — aucun coût, aucune obligation de copyleft. Les offres commerciales payantes ne vendent pas de permission supplémentaire : elles apportent un engagement de support avec SLA, une indemnisation, des documents de conformité et des droits sur la marque. Chaque offre inclut l'ensemble complet des fonctionnalités (authentification, facturation, multi-tenancy, IA, audit) ; les niveaux ne diffèrent que par le support et les conditions de licence, pas par les fonctionnalités."
         },
         "china-friendly": {
           "question": "Fonctionne-t-il en Chine ?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Quelle est la licence ?",
-          "answer": "AGPL-3.0 avec une exception commerciale. Gratuit pour usage personnel, outils internes et OSS compatible AGPL. Une licence commerciale payante déverrouille le droit de livrer Sailor tel quel dans un SaaS propriétaire. Le code source complet est inclus dans chaque plan."
+          "answer": "Functional Source License, version 1.1, ALv2 (FSL-1.1-ALv2). La seule chose qu'elle n'autorise pas, c'est de proposer Sailor lui-même comme produit ou service commercial concurrent ; en dehors de cela, l'utilisation est gratuite et sans obligation de copyleft. Chaque version bascule automatiquement vers Apache-2.0 deux ans après sa sortie."
         },
         "paid-updates": {
           "question": "Dois-je payer pour les mises à jour ?",

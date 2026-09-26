@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Depo lisanslaması nasıl yapılandırılmış?",
-              "a": "Altta yatan altyapı, OSS AGPLv3 anlaşmasını sıkı bir şekilde uygulayarak şeffaflığı ve sıfır maliyetli kullanımı garanti eder. Özel karartma ve yükseltilmiş yeniden yazma garantilerine ihtiyaç duyan kuruluşlar için açık kaynak dışı ticari sözleşmeler mevcuttur."
+              "a": "Kaynak kod, Functional Source License (FSL-1.1-ALv2) altında sunulur: kendi ürünlerinizi oluşturmak için ücretsiz kullanabilirsiniz, ücret veya copyleft yükümlülüğü olmadan. İzin verilmeyen tek şey, Sailor'ın kendisini rakip bir ticari ürün veya hizmet olarak sunmaktır. Her sürüm, yayınlanmasından iki yıl sonra otomatik olarak Apache-2.0 lisansına dönüşür."
             },
             "2": {
               "q": "İlk ticari değerlendirme hızı nedir?",
@@ -1217,7 +1217,7 @@
       "title": "Yapılandırmayı bırakın. İnşa etmeye başlayın.",
       "description": "{brandName} CLI ile ölçeklenebilir bir SaaS mimarisini yerel olarak başlatın.",
       "button": "Mimarisi Dağıt",
-      "license": "AGPL-3.0 lisansı altında açık kaynak. Kredi kartı gerekmez."
+      "license": "FSL-1.1-ALv2 lisansı altında açık kaynak. Kredi kartı gerekmez."
     },
     "capability": {
       "badge": "Kurumsal Yetenekler",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Ücretsiz mi yoksa ücretli mi?",
-          "answer": "Tüm kaynak kodu AGPL-3.0 altında dağıtılır — kişisel projeler, iç araçlar ve AGPL uyumlu açık kaynak çalışmalar için ücretsizdir. Ticari lisans, Sailor'ı kapalı kaynaklı özel SaaS olarak dağıtma hakkını açar. Her plan tam özellik setini içerir (kimlik doğrulama, faturalandırma, çok kiracılık, yapay zeka, denetim); katmanlar özelliklerde değil, lisanslama koşullarında ve destek SLA'sında farklılık gösterir."
+          "answer": "Tüm kaynak kodu FSL-1.1-ALv2 altında dağıtılır — kendi ürünlerinizi oluşturmak için ücretsizdir, ücret veya copyleft yükümlülüğü yoktur. İzin verilmeyen tek şey Sailor'ın kendisini rakip bir ticari ürün veya hizmet olarak sunmaktır. Her sürüm, yayınlanmasından iki yıl sonra otomatik olarak Apache-2.0'a dönüşür. Ücretli ticari planlar ekstra özellik açmaz — her plan tam özellik setine sahiptir; sattıkları şey destek taahhüdü ve SLA, tazminat, uyumluluk belgeleri ve ticari marka haklarıdır."
         },
         "china-friendly": {
           "question": "Çin'de çalışıyor mu?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Lisans nedir?",
-          "answer": "Ticari İstisna ile AGPL-3.0. Kişisel kullanım, iç araçlar ve AGPL uyumlu açık kaynak yazılım için ücretsiz. Ücretli bir ticari lisans, Sailor'ı özel SaaS olarak olduğu gibi dağıtma hakkını açar. Her planda tam kaynak kodu dahildir."
+          "answer": "FSL-1.1-ALv2 (Functional Source License). Ürün oluşturmak için ücretsizdir — ücret yok, copyleft yok. Tek kısıtlama, Sailor'ın kendisini rakip bir ticari ürün veya hizmet olarak sunmaktır. Her sürüm, yayınlanmasından iki yıl sonra otomatik olarak Apache-2.0'a dönüşür. Ücretli ticari planlar ekstra özellik satmaz, yalnızca destek/SLA taahhüdü, tazminat, uyumluluk belgeleri ve ticari marka hakları sunar."
         },
         "paid-updates": {
           "question": "Güncellemeler için ödeme yapmam gerekiyor mu?",

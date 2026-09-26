@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Jak je strukturováno licencování repozitáře?",
-              "a": "Základní infrastruktura přísně vynucuje OSS licenci AGPLv3, což zaručuje transparentnost a bezplatné používání. Pro organizace vyžadující proprietární obfuskaci a zvýšené záruky přepisování jsou k dispozici explicitní komerční smlouvy s uzavřeným zdrojovým kódem."
+              "a": "Základní infrastruktura je nyní licencována pod Functional Source License, verze 1.1, ALv2 (FSL-1.1-ALv2) — zcela zdarma pro stavbu produktů, bez poplatků a bez copyleft povinností. Jediné, co není povoleno, je nabízet samotný Sailor jako konkurenční komerční produkt nebo službu. Každá verze se dva roky po vydání neodvolatelně převádí na Apache-2.0."
             },
             "2": {
               "q": "Jaká je rychlost počátečního komerčního hodnocení?",
@@ -1217,7 +1217,7 @@
       "title": "Přestaňte konfigurovat. Začněte budovat.",
       "description": "Inicializujte škálovatelnou SaaS architekturu lokálně pomocí CLI {brandName}.",
       "button": "Nasadit architekturu",
-      "license": "Open source pod licencí AGPL-3.0. Karta není vyžadována."
+      "license": "Open source pod licencí FSL-1.1-ALv2. Karta není vyžadována."
     },
     "capability": {
       "badge": "Funkce pro enterprise",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Je to zdarma nebo placené?",
-          "answer": "Celý zdrojový kód je vydáván pod licencí AGPL-3.0 — zdarma pro osobní projekty, interní nástroje a open-source práci kompatibilní s AGPL. Komerční licence odemyká právo nasadit Sailor v proprietárním SaaS s uzavřeným zdrojovým kódem. Každý plán zahrnuje kompletní sadu funkcí (auth, billing, multi-tenancy, AI, audit); jednotlivé úrovně se liší licenčními podmínkami a podporou SLA, ne funkcemi."
+          "answer": "Celý zdrojový kód je vydáván pod licencí FSL-1.1-ALv2 — zcela zdarma pro stavbu produktů, bez poplatků a bez copyleft povinností. Jediné omezení je, že nelze nabízet samotný Sailor jako konkurenční komerční produkt nebo službu, a každá verze se po dvou letech automaticky převádí na Apache-2.0. Každý plán zahrnuje kompletní sadu funkcí (auth, billing, multi-tenancy, AI, audit); placené plány neprodávají žádné funkce navíc — prodávají závazek podpory a SLA, odškodnění, compliance dokumentaci a práva k ochranné známce."
         },
         "china-friendly": {
           "question": "Funguje to v Číně?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Jaká je licence?",
-          "answer": "AGPL-3.0 s komerční výjimkou. Zdarma pro osobní použití, interní nástroje a AGPL kompatibilní OSS. Placená komerční licence odemyká právo nasadit Sailor tak, jak je, v proprietárním SaaS. Plný zdrojový kód je zahrnut v každém plánu."
+          "answer": "FSL-1.1-ALv2 (Functional Source License, verze 1.1, ALv2). Zcela zdarma pro stavbu produktů, bez copyleft povinností. Jediné, co není povoleno, je nabízet samotný Sailor jako konkurenční komerční produkt nebo službu. Každá verze se dva roky po vydání neodvolatelně převádí na Apache-2.0. Placené plány prodávají závazek podpory, SLA, odškodnění, compliance dokumentaci a práva k ochranné známce, ne funkce navíc."
         },
         "paid-updates": {
           "question": "Musím platit za aktualizace?",

@@ -14,7 +14,7 @@ import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 // =============================================================================
 
 export const heroContent = {
-  badge: "AGPLv3 Licensed · Production-Ready",
+  badge: "FSL Licensed · Production-Ready",
   preHeadline: "The SaaS framework for",
   headlineWords: ["builders who ship", "teams who scale", "founders who win"],
   command: "npx create-sailor@latest",
@@ -31,7 +31,7 @@ export const heroContent = {
  * Tech stack logos for the logo strip.
  *
  * Primary source: SVGL (https://svgl.app)
- * - AGPLv3 licensed, open source
+ * - MIT licensed, open source
  * - 300+ tech logos with light/dark variants
  * - CDN: https://svgl.app/library/{filename}.svg
  *

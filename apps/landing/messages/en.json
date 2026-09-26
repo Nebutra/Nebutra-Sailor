@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "How is the repository licensing structured?",
-              "a": "The underlying infrastructure strictly enforces the OSS AGPLv3 agreement, guaranteeing transparency and zero-cost usage. For organizations necessitating proprietary obfuscation and elevated rewrite guarantees, explicit closed-source commercial contracts are available."
+              "a": "The repository ships under the Functional Source License (FSL-1.1-ALv2): free to use, with no copyleft obligation, for building products — it converts irrevocably to Apache-2.0 two years after each release. Organizations needing support SLAs, indemnification, or trademark rights can use the paid commercial tiers instead."
             },
             "2": {
               "q": "What is the speed of initial commercial evaluation?",
@@ -1217,7 +1217,7 @@
       "title": "Stop configuring. Start building.",
       "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
       "button": "Deploy Architecture",
-      "license": "Open source under AGPL-3.0 license. No credit card required."
+      "license": "Open source under the FSL-1.1-ALv2 license. No credit card required."
     },
     "capability": {
       "badge": "Enterprise Capabilities",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Is it free or paid?",
-          "answer": "Full source ships under AGPL-3.0 — free for personal projects, internal tooling, and AGPL-compatible open-source work. A commercial license unlocks the right to ship Sailor in closed-source proprietary SaaS. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); tiers differ in licensing terms and support SLA, not in features."
+          "answer": "Full source ships under FSL-1.1-ALv2 — free to build and ship any commercial product with it, no copyleft, no fee. The only thing the license doesn't permit is offering Sailor itself as a competing product or service, and that restriction lapses to Apache-2.0 two years after each release. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); paid tiers add support SLAs, indemnification, and trademark rights, not features."
         },
         "china-friendly": {
           "question": "Does it work in China?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "What is the license?",
-          "answer": "AGPL-3.0 with a Commercial Exception. Free for personal use, internal tooling, and AGPL-compatible OSS. A paid commercial license unlocks the right to ship Sailor as-is in proprietary SaaS. Full source is included on every plan."
+          "answer": "FSL-1.1-ALv2 (Functional Source License), converting irrevocably to Apache-2.0 two years after each release. Free for every use except offering Sailor itself as a competing product or service. Paid commercial tiers add support SLAs, indemnification, and trademark rights — not extra permission. Full source is included on every plan."
         },
         "paid-updates": {
           "question": "Do I need to pay for updates?",

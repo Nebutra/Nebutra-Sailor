@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "रिपॉज़िटरी लाइसेंसिंग कैसे संरचित है?",
-              "a": "मूल बुनियादी ढांचा OSS AGPLv3 समझौते का सख्ती से पालन करता है, जो पारदर्शिता और शून्य-लागत उपयोग की गारंटी देता है। उन संगठनों के लिए जो प्रोप्राइटरी ऑबफ़्यूकेशन और उन्नत रीराइट गारंटीज़ की मांग करते हैं, स्पष्ट क्लोज़्ड-सोर्स वाणिज्यिक अनुबंध उपलब्ध हैं।"
+              "a": "मूल कोर FSL-1.1-ALv2 (Functional Source License) के तहत लाइसेंस प्राप्त है, जो product बनाने के लिए मुफ्त उपयोग की अनुमति देता है — कोई शुल्क नहीं, कोई copyleft दायित्व नहीं। एकमात्र प्रतिबंध यह है कि Sailor को स्वयं एक प्रतिस्पर्धी वाणिज्यिक उत्पाद या सेवा के रूप में पेश नहीं किया जा सकता। हर version अपनी रिलीज़ के दो साल बाद अपरिवर्तनीय रूप से Apache-2.0 में बदल जाता है।"
             },
             "2": {
               "q": "प्रारंभिक वाणिज्यिक मूल्यांकन की गति क्या है?",
@@ -1217,7 +1217,7 @@
       "title": "कॉन्फ़िगर करना बंद करें। बनाना शुरू करें।",
       "description": "{brandName} CLI के साथ स्थानीय रूप से एक स्केलेबल SaaS आर्किटेक्चर आरंभ करें।",
       "button": "Deploy Architecture",
-      "license": "AGPL-3.0 लाइसेंस के तहत ओपन सोर्स। कोई क्रेडिट कार्ड आवश्यक नहीं।"
+      "license": "FSL-1.1-ALv2 लाइसेंस के तहत ओपन सोर्स। कोई क्रेडिट कार्ड आवश्यक नहीं।"
     },
     "capability": {
       "badge": "एंटरप्राइज़ क्षमताएं",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "क्या यह मुफ्त है या पेड?",
-          "answer": "Full source AGPL-3.0 के तहत शिप होता है — personal projects, internal tooling और AGPL-compatible open-source work के लिए मुफ्त। एक commercial license closed-source proprietary SaaS में Sailor शिप करने का अधिकार खोलता है. हर plan में complete feature set (auth, billing, multi-tenancy, AI, audit) शामिल है; tiers licensing terms और support SLA में अलग हैं, features में नहीं।"
+          "answer": "Full source FSL-1.1-ALv2 के तहत शिप होता है — personal projects, internal tooling और अपने खुद के product बनाने के लिए बिल्कुल मुफ्त, कोई copyleft दायित्व नहीं। एकमात्र प्रतिबंध Sailor को खुद एक प्रतिस्पर्धी commercial product या service के रूप में पेश करना है। हर plan में complete feature set (auth, billing, multi-tenancy, AI, audit) शामिल है; tiers support SLA, indemnification, compliance paperwork और trademark rights में अलग हैं, features में नहीं।"
         },
         "china-friendly": {
           "question": "क्या यह चीन में काम करता है?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "लाइसेंस क्या है?",
-          "answer": "Commercial Exception के साथ AGPL-3.0। व्यक्तिगत उपयोग, आंतरिक टूलिंग, और AGPL-संगत OSS के लिए मुफ्त। एक भुगतान वाले व्यावसायिक लाइसेंस से Sailor को प्रोप्राइटरी SaaS में जैसा है वैसा ही शिप करने का अधिकार खुलता है। हर प्लान में पूरा स्रोत शामिल है।"
+          "answer": "FSL-1.1-ALv2, जो हर version की रिलीज़ के दो साल बाद Apache-2.0 में बदल जाता है। व्यक्तिगत उपयोग, आंतरिक टूलिंग, और अपना खुद का product बनाने के लिए मुफ्त — कोई शुल्क नहीं, कोई copyleft दायित्व नहीं। यह केवल Sailor को स्वयं एक प्रतिस्पर्धी product या service के रूप में पेश करने से रोकता है। हर plan में पूरा source code शामिल है।"
         },
         "paid-updates": {
           "question": "क्या अपडेट्स के लिए मुझे भुगतान करना होगा?",

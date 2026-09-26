@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Bagaimana struktur lisensi repositori?",
-              "a": "Infrastruktur dasar secara ketat menegakkan perjanjian OSS AGPLv3, menjamin transparansi dan penggunaan tanpa biaya. Untuk organisasi yang memerlukan obfuskasi proprietary dan jaminan penulisan ulang yang lebih tinggi, kontrak komersial tertutup eksplisit tersedia."
+              "a": "Inti proyek dilisensikan di bawah FSL-1.1-ALv2 (Functional Source License), yang bebas digunakan untuk membangun produk — tanpa biaya, tanpa kewajiban copyleft. Satu-satunya batasan adalah menawarkan Sailor itu sendiri sebagai produk atau layanan komersial yang bersaing. Setiap versi secara otomatis dan tidak dapat dibatalkan berubah menjadi Apache-2.0 dua tahun setelah rilisnya."
             },
             "2": {
               "q": "Bagaimana kecepatan evaluasi komersial awal?",
@@ -1217,7 +1217,7 @@
       "title": "Berhenti mengonfigurasi. Mulai membangun.",
       "description": "Inisialisasi arsitektur SaaS yang dapat diskalakan secara lokal dengan CLI {brandName}.",
       "button": "Terapkan Arsitektur",
-      "license": "Sumber terbuka di bawah lisensi AGPL-3.0. Tidak perlu kartu kredit."
+      "license": "Sumber terbuka di bawah lisensi FSL-1.1-ALv2. Tidak perlu kartu kredit."
     },
     "capability": {
       "badge": "Kemampuan Perusahaan",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Apakah gratis atau berbayar?",
-          "answer": "Sumber lengkap dirilis di bawah AGPL-3.0 — gratis untuk proyek pribadi, internal tooling, dan karya open-source yang kompatibel dengan AGPL. Lisensi komersial membuka hak untuk meluncurkan Sailor dalam SaaS proprietary tertutup. Setiap paket mencakup fitur lengkap (auth, billing, multi-tenancy, AI, audit); tier berbeda dalam ketentuan lisensi dan SLA dukungan, bukan fitur."
+          "answer": "Sumber lengkap dirilis di bawah FSL-1.1-ALv2 — gratis untuk proyek pribadi, internal tooling, dan membangun produk Anda sendiri, tanpa biaya dan tanpa kewajiban copyleft. Satu-satunya batasan adalah menawarkan Sailor itu sendiri sebagai produk atau layanan komersial yang bersaing. Setiap paket mencakup fitur lengkap (auth, billing, multi-tenancy, AI, audit); tier berbeda dalam support SLA, indemnifikasi, dokumen kepatuhan, dan hak merek dagang, bukan fitur."
         },
         "china-friendly": {
           "question": "Apakah berfungsi di Tiongkok?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Apa lisensinya?",
-          "answer": "AGPL-3.0 dengan Pengecualian Komersial. Gratis untuk penggunaan pribadi, alat internal, dan OSS yang kompatibel dengan AGPL. Lisensi komersial berbayar membuka hak untuk mengirimkan Sailor apa adanya dalam SaaS proprietari. Sumber lengkap disertakan di setiap paket."
+          "answer": "FSL-1.1-ALv2, yang berubah menjadi Apache-2.0 dua tahun setelah rilis setiap versi. Gratis untuk penggunaan pribadi, alat internal, dan membangun produk Anda sendiri, tanpa biaya dan tanpa kewajiban copyleft. Satu-satunya hal yang tidak diizinkan adalah menawarkan Sailor itu sendiri sebagai produk atau layanan yang bersaing. Sumber lengkap disertakan di setiap paket."
         },
         "paid-updates": {
           "question": "Apakah saya harus membayar untuk pembaruan?",

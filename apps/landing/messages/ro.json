@@ -521,7 +521,7 @@
             },
             "1": {
               "q": "Cum este structurată licențierea repository-ului?",
-              "a": "Infrastructura de bază aplică strict acordul OSS AGPLv3, garantând transparență și utilizare fără costuri. Pentru organizațiile care necesită obfuscare proprietară și garanții ridicate de rescriere, sunt disponibile contracte comerciale explicite cu sursă închisă."
+              "a": "Codul sursă este disponibil sub Functional Source License (FSL-1.1-ALv2): este gratuit pentru a construi propriile produse, fără taxe și fără obligații de tip copyleft. Singurul lucru care nu este permis este oferirea Sailor însuși ca produs sau serviciu comercial concurent. Fiecare versiune trece automat la Apache-2.0 la doi ani după lansare."
             },
             "2": {
               "q": "Care este viteza evaluării comerciale inițiale?",
@@ -1217,7 +1217,7 @@
       "title": "Oprește-te din configurat. Începe să construiești.",
       "description": "Inițializează o arhitectură SaaS scalabilă local cu CLI-ul {brandName}.",
       "button": "Implementează Arhitectura",
-      "license": "Open source sub licența AGPL-3.0. Nu este necesară o card de credit."
+      "license": "Open source sub licența FSL-1.1-ALv2. Nu este necesar un card de credit."
     },
     "capability": {
       "badge": "Capabilități Enterprise",
@@ -1633,7 +1633,7 @@
         },
         "free-or-paid": {
           "question": "Este gratuit sau plătit?",
-          "answer": "Codul sursă complet este distribuit sub AGPL-3.0 — gratuit pentru proiecte personale, instrumente interne și proiecte open-source compatibile AGPL. O licență comercială deblochează dreptul de a distribui Sailor în SaaS proprietar closed-source. Fiecare plan include setul complet de funcționalități (autentificare, facturare, multi-tenancy, AI, audit); diferențele între niveluri sunt în termenii licenței și SLA-ul de suport, nu în funcționalități."
+          "answer": "Codul sursă complet este distribuit sub FSL-1.1-ALv2 — gratuit pentru a construi propriile produse, fără taxe și fără obligație de copyleft. Singurul lucru care nu este permis este oferirea Sailor însuși ca produs sau serviciu comercial concurent. Fiecare versiune trece automat la Apache-2.0 la doi ani după lansare. Planurile comerciale plătite nu deblochează funcționalități suplimentare — fiecare plan are setul complet de funcționalități; ele vând angajament de suport și SLA, despăgubire, documentație de conformitate și drepturi asupra mărcii."
         },
         "china-friendly": {
           "question": "Funcționează în China?",
@@ -1661,7 +1661,7 @@
         },
         "license": {
           "question": "Care este licența?",
-          "answer": "AGPL-3.0 cu o excepție comercială. Gratuit pentru uz personal, instrumente interne și OSS compatibil AGPL. O licență comercială plătită deblochează dreptul de a distribui Sailor ca atare în SaaS proprietar. Codul sursă complet este inclus în fiecare plan."
+          "answer": "FSL-1.1-ALv2 (Functional Source License). Gratuită pentru a construi produse — fără taxe, fără copyleft. Singura restricție este oferirea Sailor însuși ca produs sau serviciu comercial concurent. Fiecare versiune trece automat la Apache-2.0 la doi ani după lansare. Planurile comerciale plătite nu vând funcționalități suplimentare, ci angajament de suport/SLA, despăgubire, documentație de conformitate și drepturi asupra mărcii."
         },
         "paid-updates": {
           "question": "Trebuie să plătesc pentru actualizări?",
