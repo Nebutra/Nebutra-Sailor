@@ -99,6 +99,7 @@ BEGIN
     ('public', 'sleptons_products', 'sleptons_products_rls'),
     ('public', 'sleptons_upvotes', 'sleptons_upvotes_rls'),
     ('public', 'sleptons_connections', 'sleptons_connections_rls'),
+    ('public', 'auth_device_codes', 'auth_device_codes_rls'),
     ('public', 'atelier_canvas', 'atelier_canvas_rls'),
     ('public', 'agent_rollout_lines', 'agent_rollout_lines_rls')
       )
@@ -549,7 +550,9 @@ ALTER TABLE "better_auth"."invitation" DISABLE ROW LEVEL SECURITY;
 ALTER TABLE "better_auth"."passkey" DISABLE ROW LEVEL SECURITY;
 
 -- AuthDeviceCode
-ALTER TABLE "public"."auth_device_codes" DISABLE ROW LEVEL SECURITY;
+ALTER TABLE "public"."auth_device_codes" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "auth_device_codes_rls" ON "public"."auth_device_codes";
+CREATE POLICY "auth_device_codes_rls" ON "public"."auth_device_codes" FOR ALL USING (true) WITH CHECK (true);
 
 -- AtelierCanvas
 ALTER TABLE "public"."atelier_canvas" ENABLE ROW LEVEL SECURITY;

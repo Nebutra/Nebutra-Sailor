@@ -15,7 +15,9 @@ import type * as Prisma from "../internal/prismaNamespace"
 /**
  * Model AuthDeviceCode
  * @conditional(auth=betterauth)
- * @rls off
+ * RLS on, allow-all — same posture as auth_sessions: rows are keyed by
+ * device/user code and read only by the auth center.
+ * @rls global
  */
 export type AuthDeviceCodeModel = runtime.Types.Result.DefaultSelection<Prisma.$AuthDeviceCodePayload>
 
