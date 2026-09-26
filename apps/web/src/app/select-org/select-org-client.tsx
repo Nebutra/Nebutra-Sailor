@@ -117,7 +117,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
                 className="flex w-full items-center gap-3 rounded-[var(--radius-lg)] bg-neutral-2 p-3 text-left transition-colors hover:bg-neutral-3"
               >
                 {org.image ? (
-                  // biome-ignore lint/performance/noImgElement: Clerk organization avatars can be arbitrary remote URLs outside next/image remotePatterns.
+                  // biome-ignore lint/performance/noImgElement: organization avatars can be arbitrary remote URLs outside next/image remotePatterns.
                   <img src={org.image} alt={org.name} className="h-8 w-8 rounded object-cover" />
                 ) : (
                   <div className="flex h-8 w-8 items-center justify-center rounded bg-primary text-sm font-semibold text-primary-foreground">

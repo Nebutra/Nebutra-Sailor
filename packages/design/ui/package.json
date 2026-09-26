@@ -163,7 +163,6 @@
     "vaul": "^1.1.2"
   },
   "peerDependencies": {
-    "@clerk/nextjs": ">=5.0.0",
     "driver.js": "^1.4.0",
     "next": ">=14.0.0",
     "next-intl": "catalog:",
@@ -171,9 +170,6 @@
     "react-dom": ">=19.0.0"
   },
   "peerDependenciesMeta": {
-    "@clerk/nextjs": {
-      "optional": true
-    },
     "driver.js": {
       "optional": true
     },

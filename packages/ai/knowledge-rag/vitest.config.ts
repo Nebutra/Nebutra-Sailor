@@ -15,8 +15,8 @@ export default defineConfig({
         "src/index.ts",
         "src/types.ts",
         // keyword.ts is a thin lazy adapter over the external @nebutra/search
-        // backend (Meilisearch/Typesense/Algolia). Its real branches require
-        // live search infra and are exercised by integration, not unit, tests.
+        // (pgvector) backend. Its real branches require live search infra and
+        // are exercised by integration, not unit, tests.
         // tool.ts type surface re-exported; covered by tool.test.ts behaviour.
         "src/keyword.ts",
       ],

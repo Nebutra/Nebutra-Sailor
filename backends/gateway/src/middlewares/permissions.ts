@@ -8,7 +8,7 @@
  *
  * The PermissionContext consumed by `requirePermission` is populated on the
  * Hono context (`c.set("user", ...)`) by `tenantContextMiddleware`, which maps
- * the resolved tenant (Clerk `org:` role → prefix-less CASL role) into a
+ * the resolved tenant (`org:` role convention → prefix-less CASL role) into a
  * `PermissionContext`. As a result, mounting `tenantContextMiddleware` upstream
  * is all that is required for these guards to work.
  *

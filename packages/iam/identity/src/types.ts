@@ -1,6 +1,6 @@
 import type { CanonicalIdentity } from "@nebutra/contracts";
 
-export type IdentityProvider = "clerk" | "authjs" | "custom";
+export type IdentityProvider = "nebutra" | "custom";
 
 export interface IdentityAdapter<TInput = unknown> {
   provider: IdentityProvider | string;

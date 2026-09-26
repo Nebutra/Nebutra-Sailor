@@ -30,10 +30,7 @@ export {
   AutomationRunRepository,
   getAutomationRunRepository,
 } from "./automation-run.repository";
-export type {
-  CreateOrganizationData,
-  UpdateOrganizationData,
-} from "./organization.repository";
+export type { UpdateOrganizationData } from "./organization.repository";
 // Organization
 export { getOrganizationRepository, OrganizationRepository } from "./organization.repository";
 export type { UpsertMemberData } from "./organization-member.repository";
@@ -145,12 +142,8 @@ export type {
 } from "./usage-ledger.repository";
 // UsageLedger
 export { UsageLedgerRepository } from "./usage-ledger.repository";
-export type {
-  CreateUserData,
-  IdentityRecord,
-  UpdateUserData,
-  UpsertByClerkIdData,
-} from "./user.repository";
+export type { IdentityRecord, UpdateUserData } from "./user.repository";
+// User
 export { UserRepository } from "./user.repository";
 export type {
   JsonValue,

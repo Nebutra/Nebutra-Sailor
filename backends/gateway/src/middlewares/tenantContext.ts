@@ -31,11 +31,11 @@ declare module "hono" {
   }
 }
 
-// ── Role mapping (Clerk org_role → @nebutra/permissions Role) ───────────────
+// ── Role mapping (org_role claim → @nebutra/permissions Role) ──────────────
 
 /**
- * Map a Clerk-style `org_role` claim (`org:owner`, `org:admin`, …) to the
- * prefix-less role names used by the @nebutra/permissions CASL engine
+ * Map the S2S/session `org_role` convention (`org:owner`, `org:admin`, …) to
+ * the prefix-less role names used by the @nebutra/permissions CASL engine
  * (`owner`, `admin`, `member`, `viewer`).
  *
  * Unknown / unprefixed values are passed through unchanged so custom roles
@@ -300,7 +300,7 @@ export async function requireOrganization(c: Context, next: Next) {
 /**
  * Require specific organization roles.
  * Pass one or more allowed roles — user must have at least one.
- * Clerk org_role values: "org:owner", "org:admin", "org:member", "org:viewer"
+ * Canonical org_role values: "org:owner", "org:admin", "org:member", "org:viewer"
  */
 const BILLING_MANAGE_ROLES = new Set(["owner", "admin", "billing_admin"]);
 

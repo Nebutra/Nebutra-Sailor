@@ -15,11 +15,11 @@ interface CommandPaletteMountProps {
  * authenticated page tree with this component (between the auth provider
  * and the page content):
  *
- *   <ClerkProvider>
+ *   <AuthProvider>
  *     <CommandPaletteMount>
  *       {children}
  *     </CommandPaletteMount>
- *   </ClerkProvider>
+ *   </AuthProvider>
  *
  * Once mounted, ⌘+K (mac) or Ctrl+K (Windows/Linux) opens the palette
  * from anywhere in the app. ESC closes it.

@@ -11,7 +11,7 @@ import { PostHogProvider as PHProvider } from "posthog-js/react";
  * (history_change captures client-side navigations).
  *
  * Identity is synchronized via the provider-agnostic `@nebutra/auth/client`
- * context. Do not import Clerk/Better Auth SDKs here.
+ * context. Do not import auth-provider server SDKs here.
  */
 import { useEffect, useRef } from "react";
 

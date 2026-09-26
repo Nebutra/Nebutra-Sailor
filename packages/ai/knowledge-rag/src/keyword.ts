@@ -2,10 +2,9 @@
 // @nebutra/knowledge-rag — Keyword leg (wraps @nebutra/search)
 // =============================================================================
 // Rather than reinventing a keyword index, this WRAPS the existing
-// provider-agnostic @nebutra/search abstraction (Meilisearch / Typesense /
-// Algolia / pgvector-BM25). Each chunk is indexed as a SearchDocument carrying
-// tenantId; every query filters by { tenantId } so the keyword leg has the
-// same tenant-isolation guarantee as the vector leg.
+// @nebutra/search abstraction (pgvector-BM25). Each chunk is indexed as a
+// SearchDocument carrying tenantId; every query filters by { tenantId } so
+// the keyword leg has the same tenant-isolation guarantee as the vector leg.
 //
 // @nebutra/search is imported lazily so the zero-config path (keyword
 // disabled, no search backend) never needs it at module load.
@@ -46,11 +45,10 @@ export class SearchKeywordIndex implements KeywordIndex {
 
   /**
    * Returns a live keyword index, or `null` when no @nebutra/search backend
-   * is genuinely reachable. The default provider auto-detects to Meilisearch
-   * even with no env; it only fails on the first network call. So we probe
-   * with a real createIndex/search call and degrade to vector-only on any
-   * failure — the zero-config path must NEVER break because a search server
-   * happens to be absent.
+   * is genuinely reachable. The default (pgvector) provider only fails on
+   * the first network call, so we probe with a real createIndex/search call
+   * and degrade to vector-only on any failure — the zero-config path must
+   * NEVER break because a search server happens to be absent.
    */
   static async tryCreate(indexName: string): Promise<SearchKeywordIndex | null> {
     try {

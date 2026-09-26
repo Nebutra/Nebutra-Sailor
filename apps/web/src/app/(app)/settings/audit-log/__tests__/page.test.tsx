@@ -16,7 +16,7 @@ vi.mock("next-intl", () => ({
   }),
 }));
 
-// PermissionGate is Clerk-backed; grant the scope so the page body renders.
+// PermissionGate gates on RBAC scope; grant it so the page body renders.
 vi.mock("@/hooks/usePermission", () => ({
   usePermission: () => ({
     isLoading: false,

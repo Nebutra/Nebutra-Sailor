@@ -19,7 +19,7 @@ export const SERVICE_TOKEN_HEADER = "x-service-token";
 export type ServiceAuthPrincipal = {
   userId?: string | null;
   organizationId?: string | null;
-  /** Clerk-style role claim, passed through verbatim (`org:admin`, …). */
+  /** `org:<role>` convention claim, passed through verbatim (`org:admin`, …). */
   role?: string | null;
   plan?: string | null;
 };

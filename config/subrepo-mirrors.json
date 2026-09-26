@@ -141,7 +141,7 @@
       "cohort": "first-wave",
       "category": "integrations",
       "description": "Outbound webhook contracts and delivery primitives for Nebutra services.",
-      "topics": ["nebutra", "webhooks", "svix", "integrations", "typescript"]
+      "topics": ["nebutra", "webhooks", "integrations", "typescript"]
     },
     {
       "packageName": "@nebutra/notifications",
@@ -150,7 +150,7 @@
       "cohort": "second-wave",
       "category": "integrations",
       "description": "Multi-channel notification center for in-app, email, push, SMS, and chat delivery.",
-      "topics": ["nebutra", "notifications", "novu", "integrations", "typescript"]
+      "topics": ["nebutra", "notifications", "integrations", "typescript"]
     },
     {
       "packageName": "@nebutra/search",
@@ -158,8 +158,8 @@
       "sourceDir": "packages/integrations/search",
       "cohort": "second-wave",
       "category": "integrations",
-      "description": "Provider-agnostic full-text search across Meilisearch, Typesense, and Algolia.",
-      "topics": ["nebutra", "search", "meilisearch", "typesense", "algolia", "typescript"]
+      "description": "Provider-agnostic full-text search backed by pgvector.",
+      "topics": ["nebutra", "search", "pgvector", "typescript"]
     },
     {
       "packageName": "@nebutra/uploads",
@@ -185,8 +185,8 @@
       "sourceDir": "packages/iam/permissions",
       "cohort": "second-wave",
       "category": "iam",
-      "description": "RBAC/ABAC authorization engine with CASL and OpenFGA adapters.",
-      "topics": ["nebutra", "permissions", "rbac", "abac", "casl", "openfga", "typescript"]
+      "description": "RBAC/ABAC authorization engine with a CASL adapter.",
+      "topics": ["nebutra", "permissions", "rbac", "abac", "casl", "typescript"]
     },
     {
       "packageName": "@nebutra/tenant",
@@ -203,8 +203,8 @@
       "sourceDir": "packages/iam/identity",
       "cohort": "second-wave",
       "category": "iam",
-      "description": "Provider-agnostic identity adapter layer (Clerk-first, Auth.js-ready).",
-      "topics": ["nebutra", "identity", "auth", "clerk", "iam", "typescript"]
+      "description": "Provider-agnostic identity adapter layer for Nebutra-issued OIDC claims.",
+      "topics": ["nebutra", "identity", "auth", "oidc", "iam", "typescript"]
     },
     {
       "packageName": "@nebutra/metering",
@@ -221,8 +221,8 @@
       "sourceDir": "packages/design/design-sync",
       "cohort": "second-wave",
       "category": "design-system",
-      "description": "Provider-agnostic design-tool sync for Figma, Penpot, and git-only token workflows.",
-      "topics": ["nebutra", "design-sync", "figma", "penpot", "design-tokens", "typescript"]
+      "description": "Provider-agnostic design-tool sync for git-only token workflows.",
+      "topics": ["nebutra", "design-sync", "design-tokens", "typescript"]
     },
     {
       "packageName": "@nebutra/theme",
@@ -257,8 +257,8 @@
       "sourceDir": "packages/integrations/queue",
       "cohort": "third-wave",
       "category": "integrations",
-      "description": "Provider-agnostic message queue with QStash, BullMQ, SQS, and scheduled job DI.",
-      "topics": ["nebutra", "queue", "qstash", "bullmq", "sqs", "typescript"]
+      "description": "Provider-agnostic message queue with QStash and scheduled job DI.",
+      "topics": ["nebutra", "queue", "qstash", "typescript"]
     },
     {
       "packageName": "@nebutra/capability-kit",
@@ -725,7 +725,7 @@
       "sourceDir": "packages/ops/create-sailor",
       "cohort": "eighth-wave",
       "category": "ops",
-      "description": "Governed AI-native SaaS scaffolder — bootstrap a production monorepo with multi-tenant defaults.",
+      "description": "Governed AI-native SaaS scaffolder \u2014 bootstrap a production monorepo with multi-tenant defaults.",
       "topics": ["nebutra", "create-sailor", "scaffold", "cli", "typescript"]
     },
     {

@@ -127,7 +127,6 @@ catalog:
   # ── Backend / infra ────────────────────────────────────────────────────────
   hono: ^4.12.27  # >=4.12.25 patches current 2026 Lambda/CORS advisories (#167)
   ioredis: ^5.4.2
-  svix: ^1.86.0
 
   # ── Observability / analytics ──────────────────────────────────────────────
   "@vercel/analytics": ^1.6.1
@@ -177,7 +176,6 @@ overrides:
   "@svgr/plugin-svgo>svgo": ">=4.1.0"
   "@types/react": "catalog:"
   "@types/react-dom": "catalog:"
-  "@vercel/blob>undici": ">=7.29.0 <8"
   # GHSA-7q85-xj36-vmfc (high): adm-zip <0.6.1 allocates from the declared
   # uncompressed size before reading, so a crafted archive exhausts memory. The
   # >=0.6.0 floor here predates the advisory by one patch — raised, not added,
@@ -226,7 +224,6 @@ overrides:
   "minimatch": ">=9.0.7"
   "nanoid": ">=3.3.18 <4 || >=5.1.16"
   "next": "catalog:"
-  "nodemailer": ">=9.1.0"
   "oidc-provider>undici": ">=7.29.0 <8"
   "openapi-typescript>js-yaml": "5.2.2"
   "path-to-regexp": ">=8.4.0"
@@ -292,7 +289,6 @@ onlyBuiltDependencies:
   - "style-dictionary"
   - "workerd"
 allowedDeprecatedVersions:
-  "@novu/node": "*"
   "svg-dotted-map": "*"
 auditConfig:
   "ignoreGhsas":

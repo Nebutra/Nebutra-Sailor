@@ -1,7 +1,7 @@
 /**
  * RBAC permission matrix for the Nebutra web application.
  *
- * Roles map 1:1 to Clerk organization membership roles.
+ * Roles map 1:1 to the `org:<role>` organization membership role convention.
  * Scopes are coarse-grained feature access units (resource:action format).
  */
 
@@ -148,11 +148,11 @@ export function hasAnyPermission(role: Role, scopes: Scope[]): boolean {
 }
 
 /**
- * Resolve a Clerk org membership role string to a typed Role.
+ * Resolve an `org:<role>` membership role string to a typed Role.
  * Falls back to "viewer" for unknown/missing roles.
  */
-export function resolveRole(clerkRole: string | null | undefined): Role {
-  if (clerkRole === "org:admin") return "admin";
-  if (clerkRole === "org:member") return "member";
+export function resolveRole(orgRole: string | null | undefined): Role {
+  if (orgRole === "org:admin") return "admin";
+  if (orgRole === "org:member") return "member";
   return "viewer";
 }

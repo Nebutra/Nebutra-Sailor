@@ -120,10 +120,6 @@ const nextConfig: NextConfig = {
   // Add new hostnames here rather than disabling optimization globally.
   images: {
     remotePatterns: [
-      // Clerk user profile avatars
-      { protocol: "https", hostname: "**.clerk.com" },
-      { protocol: "https", hostname: "img.clerk.com" },
-      { protocol: "https", hostname: "images.clerk.com" },
       // OAuth provider avatars
       { protocol: "https", hostname: "**.googleusercontent.com" },
       { protocol: "https", hostname: "avatars.githubusercontent.com" },

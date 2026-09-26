@@ -11,8 +11,7 @@
     "requires": [
       "(none) — zero-config: in-memory vector store + deterministic local embedder",
       "optional: OPENAI_API_KEY or OPENROUTER_API_KEY (real embeddings via @nebutra/agents)",
-      "optional: MEILISEARCH_URL / TYPESENSE_URL / ALGOLIA_APP_ID (keyword leg via @nebutra/search)",
-      "optional: DATABASE_URL (pgvector store)"
+      "optional: DATABASE_URL (pgvector store; also powers the keyword leg via @nebutra/search)"
     ],
     "gaps": [
       "pgvector store is interface-only (Prisma snippet in README, not migrated)",

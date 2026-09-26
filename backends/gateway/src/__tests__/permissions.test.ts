@@ -5,8 +5,8 @@
  * `requireRole` guard (which is left unchanged):
  *
  *  1. `tenantToPermissionContext` / `mapTenantRoleToPermissionRoles` —
- *     the mapping from the gateway TenantContext (Clerk `org:` role) to the
- *     @nebutra/permissions PermissionContext (prefix-less CASL role).
+ *     the mapping from the gateway TenantContext (`org:` role convention) to
+ *     the @nebutra/permissions PermissionContext (prefix-less CASL role).
  *
  *  2. `requirePermission(action, resource)` from @nebutra/permissions, run as a
  *     Hono route guard. The allow/deny matrix is asserted across
@@ -40,7 +40,6 @@ import {
 // allow/deny matrix, regardless of ambient env.
 // ---------------------------------------------------------------------------
 beforeEach(() => {
-  delete process.env.OPENFGA_API_URL;
   process.env.PERMISSIONS_PROVIDER = "casl";
   resetPermissions();
 });
@@ -59,7 +58,7 @@ describe("mapTenantRoleToPermissionRoles", () => {
     ["org:admin", "admin"],
     ["org:member", "member"],
     ["org:viewer", "viewer"],
-  ])("strips the Clerk prefix: %s → %s", (input, expected) => {
+  ])("strips the org: prefix: %s → %s", (input, expected) => {
     expect(mapTenantRoleToPermissionRoles(input)).toEqual([expected]);
   });
 

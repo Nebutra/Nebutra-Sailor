@@ -37,7 +37,7 @@ export function PermissionGate({
 }: PermissionGateProps) {
   const { canAll, canAny, isLoading } = usePermission();
 
-  // Don't render anything while Clerk is loading to avoid layout flicker
+  // Don't render anything while permissions are loading to avoid layout flicker
   if (isLoading) return null;
 
   const scopes: Scope[] = Array.isArray(require) ? require : [require];

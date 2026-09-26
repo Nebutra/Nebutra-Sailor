@@ -15,7 +15,7 @@ import { cronNext } from "./cron-next.js";
 // AUDIT(no-tenant): cross-tenant scheduler. It reads due automations across all
 // tenants and advances their nextRunAt. Only an authenticated, permission-gated
 // API call can create/modify an Automation; once a row exists the scheduler
-// operates without per-tick auth, like tenantProvisioning/gdprDeletion.
+// operates without per-tick auth, like gdprDeletion.
 const systemDb = getSystemDb();
 
 const DUE_LIMIT = Number.parseInt(process.env.AUTOMATION_DUE_LIMIT ?? "100", 10);

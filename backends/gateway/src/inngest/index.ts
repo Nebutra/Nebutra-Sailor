@@ -9,17 +9,12 @@ import { paymentOrderReconcile } from "./functions/paymentOrderReconcile.js";
 import { pebbleDiagnosticsRetention } from "./functions/pebbleDiagnosticsRetention.js";
 import { requestLogRetention } from "./functions/requestLogRetention.js";
 import { routerReservationSweep } from "./functions/routerReservationSweep.js";
-import { provisionTenant } from "./functions/tenantProvisioning.js";
-import { deleteUserFromDB, syncUserToDB } from "./functions/userSync.js";
 import { walletUpkeep } from "./functions/walletUpkeep.js";
 import { workflowRunner } from "./functions/workflowRunner.js";
 
 export const inngestFunctions: InngestFunction.Any[] = [
-  syncUserToDB,
-  deleteUserFromDB,
   processBillingEvent,
   processGdprDeletion,
-  provisionTenant,
   automationScheduler,
   automationRunner,
   workflowRunner,

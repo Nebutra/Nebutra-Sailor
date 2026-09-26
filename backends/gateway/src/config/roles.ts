@@ -1,6 +1,7 @@
 /**
- * Clerk organization role constants.
- * Matches the org_role claim in Clerk JWTs.
+ * Organization role constants.
+ * Matches the org_role convention carried by S2S tokens / session roles
+ * (see mapTenantRoleToPermissionRoles in middlewares/tenantContext.ts).
  */
 export const ROLES = {
   OWNER: "org:owner",

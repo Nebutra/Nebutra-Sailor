@@ -73,89 +73,6 @@ services:
       timeout: 5s
       retries: 10
 
-  # Bull Board — BullMQ job dashboard (optional)
-  bull-board:
-    image: venatum/bull-board:latest
-    container_name: nebutra-bull-board
-    ports:
-      - "127.0.0.1:3200:3000"
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - BULL_PREFIX=nebutra:queue
-    depends_on:
-      redis:
-        condition: service_healthy
-    profiles: ["queue", "core"]
-
-  # Meilisearch — full-text search engine (@nebutra/search)
-  meilisearch:
-    image: getmeili/meilisearch:v1.12
-    container_name: nebutra-meilisearch
-    ports:
-      - "127.0.0.1:7700:7700"
-    environment:
-      - MEILI_ENV=development
-      - MEILI_MASTER_KEY=${MEILISEARCH_API_KEY:-nebutra-dev-key}
-      - MEILI_NO_ANALYTICS=true
-    volumes:
-      - meilisearch_data:/meili_data
-    healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:7700/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    profiles: ["search", "core"]
-
-  # Novu — notification infrastructure (@nebutra/notifications)
-  novu:
-    image: ghcr.io/novuhq/novu/api:2.1.0
-    container_name: nebutra-novu
-    ports:
-      - "127.0.0.1:3300:3000"
-    environment:
-      - NODE_ENV=local
-      - MONGO_URL=mongodb://mongo:27017/novu-db
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-    depends_on:
-      redis:
-        condition: service_healthy
-    profiles: ["notifications"]
-
-  # OpenFGA datastore bootstrap — `openfga migrate` creates the openfga_*
-  # tables in our shared postgres. Idempotent; safe to re-run on every up.
-  openfga-migrate:
-    image: openfga/openfga:v1.8
-    container_name: nebutra-openfga-migrate
-    command: migrate
-    environment:
-      - OPENFGA_DATASTORE_ENGINE=postgres
-      - OPENFGA_DATASTORE_URI=postgresql://postgres:postgres@postgres:5432/nebutra?sslmode=disable
-    depends_on:
-      postgres:
-        condition: service_healthy
-    restart: "no"
-    profiles: ["permissions"]
-
-  # OpenFGA — relationship-based auth (@nebutra/permissions)
-  openfga:
-    image: openfga/openfga:v1.8
-    container_name: nebutra-openfga
-    command: run
-    ports:
-      - "127.0.0.1:8080:8080"   # HTTP API
-      - "127.0.0.1:8081:8081"   # Playground
-    environment:
-      - OPENFGA_DATASTORE_ENGINE=postgres
-      - OPENFGA_DATASTORE_URI=postgresql://postgres:postgres@postgres:5432/nebutra?sslmode=disable
-    depends_on:
-      postgres:
-        condition: service_healthy
-      openfga-migrate:
-        condition: service_completed_successfully
-    profiles: ["permissions"]
-
   # ============================================
   # Python Microservices
   # ============================================
@@ -364,7 +281,6 @@ volumes:
   postgres_data:
   redis_data:
   clickhouse_data:
-  meilisearch_data:
 
 networks:
   default:

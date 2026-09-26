@@ -40,7 +40,6 @@ openapi.json:
     - '#/paths/~1api~1v1~1admin~1feature-flags/get/operationId'
     - '#/paths/~1api~1v1~1admin~1feature-flags/post/operationId'
     - '#/paths/~1api~1webhooks~1stripe/post/operationId'
-    - '#/paths/~1api~1webhooks~1clerk/post/operationId'
   operation-4xx-response:
     - '#/paths/~1api~1misc~1health/get/responses'
     - '#/paths/~1api~1system~1status/get/responses'
@@ -102,4 +101,3 @@ openapi.json:
     - >-
       #/paths/~1api~1webhooks~1stripe/post/requestBody/content/application~1json/schema/additionalProperties/nullable
     - >-
-      #/paths/~1api~1webhooks~1clerk/post/requestBody/content/application~1json/schema/additionalProperties/nullable

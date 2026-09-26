@@ -1,20 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const {
-  acceptWebhookEventMock,
-  constructEventMock,
-  markFailedMock,
-  markProcessedMock,
-  userCreateMock,
-  verifyMock,
-} = vi.hoisted(() => ({
-  acceptWebhookEventMock: vi.fn(),
-  constructEventMock: vi.fn(),
-  markFailedMock: vi.fn(),
-  markProcessedMock: vi.fn(),
-  userCreateMock: vi.fn(),
-  verifyMock: vi.fn(),
-}));
+const { acceptWebhookEventMock, constructEventMock, markFailedMock, markProcessedMock } =
+  vi.hoisted(() => ({
+    acceptWebhookEventMock: vi.fn(),
+    constructEventMock: vi.fn(),
+    markFailedMock: vi.fn(),
+    markProcessedMock: vi.fn(),
+  }));
 
 vi.mock("@nebutra/logger", () => ({
   logger: {
@@ -49,20 +41,9 @@ vi.mock("@nebutra/license", () => ({
 
 vi.mock("@nebutra/repositories", () => ({
   acceptWebhookEvent: (...args: unknown[]) => acceptWebhookEventMock(...args),
-  OrganizationMemberRepository: class OrganizationMemberRepository {},
-  OrganizationRepository: class OrganizationRepository {},
-  UserRepository: class UserRepository {},
   WebhookEventRepository: class WebhookEventRepository {
     markFailed = (...args: unknown[]) => markFailedMock(...args);
     markProcessed = (...args: unknown[]) => markProcessedMock(...args);
-  },
-}));
-
-vi.mock("svix", () => ({
-  Webhook: class {
-    verify(...args: unknown[]) {
-      return verifyMock(...args);
-    }
   },
 }));
 
@@ -87,14 +68,10 @@ describe("webhook inbox HTTP mapping", () => {
     constructEventMock.mockReset();
     markFailedMock.mockReset();
     markProcessedMock.mockReset();
-    userCreateMock.mockReset();
-    verifyMock.mockReset();
-    process.env.CLERK_WEBHOOK_SECRET = "whsec_test";
     process.env.STRIPE_WEBHOOK_SECRET = "whsec_stripe";
     process.env.STRIPE_SECRET_KEY = "sk_test_123";
     markProcessedMock.mockResolvedValue({});
     markFailedMock.mockResolvedValue({});
-    userCreateMock.mockResolvedValue({});
   });
 
   it("returns 503 while a Stripe event is still in-flight", async () => {

@@ -1,7 +1,7 @@
 {
   "name": "@nebutra/identity",
   "version": "2.0.0",
-  "description": "Provider-agnostic identity adapter layer (Clerk-first, Auth.js-ready)",
+  "description": "Provider-agnostic identity adapter layer (Nebutra-issued OIDC claims by default)",
   "private": false,
   "nebutra": {
     "status": "foundation",
@@ -16,14 +16,6 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    },
-    "./adapters/clerk": {
-      "import": "./dist/adapters/clerk.js",
-      "types": "./dist/adapters/clerk.d.ts"
-    },
-    "./adapters/authjs": {
-      "import": "./dist/adapters/authjs.js",
-      "types": "./dist/adapters/authjs.d.ts"
     }
   },
   "scripts": {

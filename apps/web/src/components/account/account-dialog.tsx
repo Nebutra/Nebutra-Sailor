@@ -474,7 +474,7 @@ export function AccountDialogMount({
    * Server-rendered slot for the subscription tab's plan badge.
    * Pass `<PlanBadge />` from a Server Component (e.g. the app layout) —
    * client code MUST NOT import `PlanBadge` directly, since it pulls in
-   * server-only modules (`next/headers`, Prisma, Clerk).
+   * server-only modules (`next/headers`, Prisma, Better Auth's server SDK).
    */
   planBadge?: ReactNode;
 }) {

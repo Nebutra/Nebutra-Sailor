@@ -25,7 +25,7 @@ interface CommandPaletteProps {
    * `next/navigation`. Tests can stub this.
    */
   onNavigate?: (href: string) => void;
-  /** Optional override for sign-out handling (defaults to Clerk signOut). */
+  /** Optional override for sign-out handling (defaults to Better Auth signOut). */
   onSignOut?: () => void;
   /** Optional override for the org-switcher trigger. */
   onSwitchOrganization?: () => void;

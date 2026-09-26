@@ -1,7 +1,7 @@
 /**
  * Client-safe types and pure helpers for the template registry.
  * No imports from `@nebutra/email` so this module can be bundled for the
- * browser without dragging in nodemailer/server-only code.
+ * browser without dragging in server-only code.
  */
 
 export interface TemplateMeta {

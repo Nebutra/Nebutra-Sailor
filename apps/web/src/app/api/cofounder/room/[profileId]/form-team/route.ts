@@ -31,10 +31,13 @@ const ERROR_STATUS: Record<string, number> = {
  * Form a team from a mutual match. The initiator's OPC becomes a shared
  * Organization and the compiled company carries over.
  *
- * Because org Tenants are provisioned asynchronously (Clerk webhook -> inngest),
- * this records the intent: create the org, write `pending` transfer-journal rows
- * keyed by the new org id, and invite the cofounder. The async worker re-points
- * the assets once the org tenant exists. Nothing is copied implicitly.
+ * Org Tenants are expected to be provisioned asynchronously, so this records
+ * the intent: create the org, write `pending` transfer-journal rows keyed by
+ * the new org id, and invite the cofounder. An async worker is expected to
+ * re-point the assets once the org tenant exists — no such worker is wired up
+ * today (see KNOWN GAPS in this file's PR description / ADR 2026-09-24); the
+ * journal rows currently stay `pending` until one is added. Nothing is copied
+ * implicitly.
  */
 export async function POST(
   request: Request,

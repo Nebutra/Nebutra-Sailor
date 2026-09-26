@@ -29,7 +29,7 @@ export const Default: Story = {
         key: "queue",
         cells: [
           <code key="c">@nebutra/queue</code>,
-          "QStash | BullMQ | memory",
+          "QStash | memory",
           <code key="e">QUEUE_PROVIDER</code>,
         ],
       },
@@ -37,7 +37,7 @@ export const Default: Story = {
         key: "search",
         cells: [
           <code key="c">@nebutra/search</code>,
-          "Meilisearch | Typesense | Algolia",
+          "pgvector",
           <code key="e">SEARCH_PROVIDER</code>,
         ],
       },
@@ -45,7 +45,7 @@ export const Default: Story = {
         key: "billing",
         cells: [
           <code key="c">@nebutra/billing</code>,
-          "Stripe | Polar | LemonSqueezy | ChinaPay",
+          "Stripe | ChinaPay",
           <code key="e">BILLING_PROVIDER</code>,
         ],
       },

@@ -1,7 +1,7 @@
 "use client";
 
 // Use the /client subpath for both — the root entrypoint transitively
-// imports server-only middleware (Clerk's server SDK), which webpack
+// imports server-only middleware (Better Auth's server SDK), which webpack
 // rejects when reached from a "use client" boundary.
 import { getConfiguredAuthProvider, isAuthFeatureEnabledSync, useUser } from "@nebutra/auth/client";
 import { useRouter } from "next/navigation";

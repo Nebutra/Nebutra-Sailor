@@ -6,16 +6,15 @@ import { eventType, type InngestFunction } from "inngest";
 import { inngest } from "../client.js";
 
 // AUDIT(no-tenant): GDPR deletion spans multiple tenants (User is deleted
-// across all their orgs). Each step explicitly scopes by clerkId / orgIds
+// across all their orgs). Each step explicitly scopes by userId / orgIds
 // from the event payload rather than relying on ambient tenant context.
 const prisma = getSystemDb();
 
 /**
  * GDPR / CCPA data deletion Inngest function.
  *
- * Triggered by a "compliance/user.deletion_requested" event (fired from
- * the Clerk webhook handler when a user is deleted, or from a manual
- * support request).
+ * Triggered by a "nebutra/gdpr.deletion_requested" event, fired from a
+ * manual support/ops request.
  *
  * Execution order — each step runs independently so partial failures
  * don't restart the whole workflow:
@@ -51,7 +50,7 @@ export const processGdprDeletion: InngestFunction.Any = inngest.createFunction(
     // ── Step 1: Anonymize user PII ──────────────────────────────────────────
     await step.run("anonymize-user-pii", async () => {
       const anonymized = await prisma.user.updateMany({
-        where: { clerkId: userId },
+        where: { id: userId },
         data: {
           email: `deleted_${userId}@gdpr.invalid`,
           name: "Deleted User",
@@ -77,7 +76,7 @@ export const processGdprDeletion: InngestFunction.Any = inngest.createFunction(
 
     // ── Step 3: Purge analytics events ─────────────────────────────────────
     await step.run("purge-analytics-events", async () => {
-      // Only delete rows where the clerkId is stored directly.
+      // Only delete rows where the userId is stored directly.
       // Aggregate analytics (no PII) are retained for product metrics.
       // Implementation depends on your analytics table schema.
       // Example for a hypothetical AnalyticsEvent model:

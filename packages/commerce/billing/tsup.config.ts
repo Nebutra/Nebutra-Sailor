@@ -4,7 +4,6 @@ export default defineConfig({
   entry: [
     "src/index.ts",
     "src/stripe/index.ts",
-    "src/polar/index.ts",
     "src/subscriptions/index.ts",
     "src/usage/index.ts",
     "src/credits/index.ts",
@@ -16,7 +15,6 @@ export default defineConfig({
     // import time instead.
     "src/checkout/index.ts",
     "src/chinapay/index.ts",
-    "src/lemonsqueezy/index.ts",
     "src/links/index.ts",
   ],
   format: ["esm"],

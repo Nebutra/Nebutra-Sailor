@@ -48,11 +48,11 @@ export const Localized: Story = {
 export const ThreeColumns: Story = {
   name: "Three columns",
   args: {
-    columns: ["QStash", "BullMQ", "Memory"],
+    columns: ["Fly Machines", "Cloudflare Workers", "ECS Docker"],
     rows: [
-      { label: "Runtime", cells: ["Serverless", "Self-hosted Redis", "In-process"] },
-      { label: "Durability", cells: ["Managed", "Redis-backed", "None"] },
-      { label: "Use", cells: ["Production edge", "Production origin", "Dev and test"] },
+      { label: "Runtime", cells: ["VM per region", "Edge isolate", "Container"] },
+      { label: "Cold start", cells: ["None (always on)", "None (edge)", "Depends on scaling"] },
+      { label: "Use", cells: ["Web, landing", "Gateway (default)", "Gateway alt. target"] },
     ],
   },
 };

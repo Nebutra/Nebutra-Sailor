@@ -1,9 +1,9 @@
 /**
  * Server-only wrapper around the @nebutra/email REACT_EMAIL_TEMPLATES registry.
  *
- * `@nebutra/email` transitively pulls in `nodemailer` (a Node-only optional
- * peer dependency). Importing this module from client components is forbidden
- * — pass `TEMPLATES` down from a Server Component to client components instead.
+ * `@nebutra/email` transitively pulls in Node-only server SDKs (Resend).
+ * Importing this module from client components is forbidden — pass
+ * `TEMPLATES` down from a Server Component to client components instead.
  *
  * Client-safe types and helpers live in `./template-types.ts`.
  */

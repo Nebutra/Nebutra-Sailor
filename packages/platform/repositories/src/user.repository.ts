@@ -2,24 +2,10 @@ import type { Prisma, PrismaClient, User } from "@nebutra/db";
 import type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
 import { normalizePaginationParams } from "./pagination";
 
-export interface CreateUserData {
-  clerkId: string;
-  email: string;
-  name?: string;
-  avatarUrl?: string;
-}
-
 export interface UpdateUserData {
   email?: string;
   name?: string | null;
   avatarUrl?: string | null;
-}
-
-export interface UpsertByClerkIdData {
-  clerkId: string;
-  email: string;
-  name: string | null;
-  avatarUrl: string | null;
 }
 
 /**
@@ -65,39 +51,8 @@ export class UserRepository {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
-  async findByClerkId(clerkId: string): Promise<User | null> {
-    return this.prisma.user.findUnique({ where: { clerkId } });
-  }
-
-  async create(data: CreateUserData): Promise<User> {
-    return this.prisma.user.create({ data });
-  }
-
   async update(id: string, data: UpdateUserData): Promise<User> {
     return this.prisma.user.update({ where: { id }, data });
-  }
-
-  async updateByClerkId(clerkId: string, data: UpdateUserData): Promise<User> {
-    return this.prisma.user.update({ where: { clerkId }, data });
-  }
-
-  async upsertByClerkId(data: UpsertByClerkIdData): Promise<User> {
-    const { clerkId, email, name, avatarUrl } = data;
-
-    return this.prisma.user.upsert({
-      where: { clerkId },
-      create: {
-        clerkId,
-        email,
-        ...(name !== null && { name }),
-        ...(avatarUrl !== null && { avatarUrl }),
-      },
-      update: {
-        email,
-        name,
-        avatarUrl,
-      },
-    });
   }
 
   /**
@@ -130,16 +85,5 @@ export class UserRepository {
 
   async delete(id: string): Promise<void> {
     await this.prisma.user.delete({ where: { id } });
-  }
-
-  async deleteByClerkId(clerkId: string): Promise<void> {
-    await this.prisma.user.delete({ where: { clerkId } });
-  }
-
-  /**
-   * Delete a user by Clerk ID if they exist. No-op if user is not found.
-   */
-  async deleteIfExistsByClerkId(clerkId: string): Promise<void> {
-    await this.prisma.user.deleteMany({ where: { clerkId } });
   }
 }

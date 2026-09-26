@@ -3,12 +3,6 @@ import { getSystemDb } from "@nebutra/db";
 import type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
 import { normalizePaginationParams } from "./pagination";
 
-export interface CreateOrganizationData {
-  clerkId: string;
-  name: string;
-  slug: string;
-}
-
 export interface UpdateOrganizationData {
   name?: string;
   slug?: string;
@@ -47,16 +41,8 @@ export class OrganizationRepository {
     return this.prisma.organization.findUnique({ where: { id } });
   }
 
-  async findByClerkId(clerkId: string): Promise<Organization | null> {
-    return this.prisma.organization.findUnique({ where: { clerkId } });
-  }
-
   async findBySlug(slug: string): Promise<Organization | null> {
     return this.prisma.organization.findUnique({ where: { slug } });
-  }
-
-  async create(data: CreateOrganizationData): Promise<Organization> {
-    return this.prisma.organization.create({ data });
   }
 
   async update(id: string, data: UpdateOrganizationData): Promise<Organization> {
@@ -70,16 +56,8 @@ export class OrganizationRepository {
     return this.prisma.organization.update({ where: { id }, data });
   }
 
-  async updateByClerkId(clerkId: string, data: UpdateOrganizationData): Promise<Organization> {
-    return this.prisma.organization.update({ where: { clerkId }, data });
-  }
-
   async delete(id: string): Promise<void> {
     await this.prisma.organization.delete({ where: { id } });
-  }
-
-  async deleteByClerkId(clerkId: string): Promise<void> {
-    await this.prisma.organization.delete({ where: { clerkId } });
   }
 
   /**

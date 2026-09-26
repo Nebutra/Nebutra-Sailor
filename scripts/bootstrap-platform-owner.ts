@@ -5,22 +5,23 @@
  *
  * WHY THIS HAS TO EXIST AT ALL
  *
- * `users` rows are written by exactly one path — the `clerk/user.created`
- * webhook in backends/gateway/src/inngest/functions/userSync.ts — and production
- * does not run Clerk, so the table is empty. `PlatformStaff.userId` is a foreign
- * key into it, which makes the first staff grant unissuable: nobody can be made
- * an operator because nobody exists, and nobody can be created because the only
- * creator is not running. Every platform needs a way out of that, and a
- * reviewable idempotent script beats a hand-typed INSERT.
+ * `users` rows are now written by Better Auth's `user.create.after` hook via
+ * `UserRepository.ensureFromIdentity` (keyed by `id`, the auth provider's own
+ * user id). Before that bridge existed, the only writer was the
+ * `clerk/user.created` Inngest handler — production never ran Clerk, so the
+ * table stayed empty and `PlatformStaff.userId`, a foreign key into it, made
+ * the first staff grant unissuable: nobody could be made an operator because
+ * nobody existed. This script is the reviewable, idempotent way out of that,
+ * and it still matters for bootstrapping an owner before anyone has signed in
+ * through Better Auth.
  *
  * ABOUT clerkId
  *
- * The column is `NOT NULL UNIQUE` and named for a provider this deployment does
- * not use. Rather than change a 26-model FK hub to fix a name, non-Clerk rows get
- * a namespaced value — `bootstrap:<email>` here. Nothing validates the format;
- * it is an opaque external identity key. When Clerk (or anything else) does start
- * writing users, its rows carry its own ids and these coexist. If the column is
- * ever renamed to something provider-neutral, this convention is what makes that
+ * The column is `UNIQUE` and named for a provider this deployment does not
+ * use. Rather than change a many-model FK hub to fix a name, non-Clerk rows
+ * get a namespaced value — `bootstrap:<email>` here. Nothing validates the
+ * format; it is an opaque external identity key. If the column is ever
+ * renamed to something provider-neutral, this convention is what makes that
  * a rename rather than a migration.
  *
  * Idempotent: re-running converges rather than duplicating, and it will not
