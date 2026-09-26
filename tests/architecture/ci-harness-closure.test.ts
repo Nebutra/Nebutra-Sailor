@@ -200,6 +200,18 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain(`pnpm turbo test "\${filters[@]}"`);
   });
 
+  it("never lets one deploy's database step cancel another's", async () => {
+    // ops-database-migrate is called by several deploy workflows on the same
+    // push. A concurrency group there keeps only one pending run and cancels
+    // the rest — with their whole deploys. db.mjs locks instead.
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/ops-database-migrate.yml"),
+      "utf8",
+    );
+    expect(workflow).toContain("workflow_call:");
+    expect(workflow).not.toMatch(/^concurrency:/m);
+  });
+
   it("backs database migration checks with a local Postgres shadow service", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
 
