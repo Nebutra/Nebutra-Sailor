@@ -302,6 +302,21 @@ export async function requireOrganization(c: Context, next: Next) {
  * Pass one or more allowed roles — user must have at least one.
  * Clerk org_role values: "org:owner", "org:admin", "org:member", "org:viewer"
  */
+const BILLING_MANAGE_ROLES = new Set(["owner", "admin", "billing_admin"]);
+
+/**
+ * Spending or changing the organization's money: subscription checkout, the
+ * billing portal, buying an offer. Owners, admins and billing admins only.
+ */
+export async function requireBillingManage(c: Context, next: Next) {
+  const tenant = c.get("tenant");
+  const roles = mapTenantRoleToPermissionRoles(tenant?.role);
+  if (!roles.some((role) => BILLING_MANAGE_ROLES.has(role))) {
+    return c.json({ error: "Forbidden", message: "billing:manage permission is required" }, 403);
+  }
+  await next();
+}
+
 export function requireRole(...allowedRoles: string[]) {
   return async (c: Context, next: Next) => {
     const tenant = c.get("tenant");

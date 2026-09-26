@@ -18,12 +18,25 @@ vi.mock("@nebutra/logger", () => ({
   },
 }));
 
+const tenantRole = vi.hoisted(() => ({ value: "org:admin" }));
+
 vi.mock("../middlewares/tenantContext.js", () => ({
   requireAuth: async (c: { set: (k: string, v: unknown) => void }, next: () => Promise<void>) => {
-    c.set("tenant", { organizationId: "org_1", userId: "user_1" });
+    c.set("tenant", { organizationId: "org_1", userId: "user_1", role: tenantRole.value });
     await next();
   },
   requireOrganization: async (_c: unknown, next: () => Promise<void>) => next(),
+  // Mirrors the real guard: owner / admin / billing_admin may spend.
+  requireBillingManage: async (
+    c: { get: (k: string) => { role?: string }; json: (b: unknown, s: number) => Response },
+    next: () => Promise<void>,
+  ) => {
+    const role = (c.get("tenant")?.role ?? "").replace(/^org:/, "");
+    if (!["owner", "admin", "billing_admin"].includes(role)) {
+      return c.json({ error: "Forbidden" }, 403);
+    }
+    await next();
+  },
 }));
 
 vi.mock("../services/circuitBreaker.js", () => ({
@@ -39,7 +52,7 @@ vi.mock("@nebutra/billing", async () => {
     listOffers: offers.listOffers,
     // Mirrors the real guard: only the product origin may be a return URL.
     assertProductReturnUrl: (value: string) => {
-      if (new URL(value).origin !== "https://app.nebutra.com") {
+      if (new URL(value).origin !== "https://app.example.com") {
         throw new BillingError("off origin", "CHECKOUT_RETURN_URL_FORBIDDEN", 400);
       }
       return value;
@@ -57,8 +70,8 @@ function postOrder(body: Record<string, unknown>, headers: Record<string, string
     method: "POST",
     headers: { "content-type": "application/json", ...headers },
     body: JSON.stringify({
-      successUrl: "https://app.nebutra.com/billing/return",
-      cancelUrl: "https://app.nebutra.com/billing",
+      successUrl: "https://app.example.com/billing/return",
+      cancelUrl: "https://app.example.com/billing",
       ...body,
     }),
   });
@@ -118,6 +131,17 @@ describe("POST /orders", () => {
       amountMinor: 6800,
       currency: "CNY",
     });
+  });
+
+  it("refuses a member who cannot manage billing", async () => {
+    tenantRole.value = "org:member";
+    try {
+      const res = await postOrder({ offerId: "credits_10k", method: "alipay" });
+      expect(res.status).toBe(403);
+      expect(createPaymentOrderMock).not.toHaveBeenCalled();
+    } finally {
+      tenantRole.value = "org:admin";
+    }
   });
 
   it("passes the buyer IP through for WeChat H5", async () => {

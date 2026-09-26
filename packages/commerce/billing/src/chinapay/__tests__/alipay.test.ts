@@ -219,19 +219,19 @@ describe("Alipay mobile website pay and refund", () => {
       outTradeNo: "order_1",
       subject: "10000 Credits",
       totalAmount: "68.00",
-      returnUrl: "https://cn.nebutra.com/checkout-return",
-      quitUrl: "https://cn.nebutra.com/billing",
+      returnUrl: "https://pay.example.com/checkout-return",
+      quitUrl: "https://pay.example.com/billing",
     });
 
     const url = new URL(payUrl);
     expect(url.origin + url.pathname).toBe(getAlipayConfig().gatewayUrl);
     const params = Object.fromEntries(url.searchParams);
     expect(params.method).toBe("alipay.trade.wap.pay");
-    expect(params.return_url).toBe("https://cn.nebutra.com/checkout-return");
+    expect(params.return_url).toBe("https://pay.example.com/checkout-return");
     expect(JSON.parse(params.biz_content ?? "{}")).toMatchObject({
       product_code: "QUICK_WAP_WAY",
       total_amount: "68.00",
-      quit_url: "https://cn.nebutra.com/billing",
+      quit_url: "https://pay.example.com/billing",
     });
 
     const { sign, ...rest } = params;
