@@ -283,26 +283,26 @@
     ],
     "bannedPatterns": [
       {
-        "pattern": "\u6682\u65e0",
-        "label": "\u7981\u4e03: \u7a7a\u767d\u72b6\u6001\u7981\u7528\u300c\u6682\u65e0\u300d"
+        "pattern": "暂无",
+        "label": "禁七: 空白状态禁用「暂无」"
       },
       {
         "pattern": "No [A-Za-z].*(yet|available)",
-        "label": "\u7981\u4e03: empty state lacks a \u6bcd\u9898 (\"No X yet/available\")"
+        "label": "禁七: empty state lacks a 母题 (\"No X yet/available\")"
       },
       {
-        "pattern": "\u8d4b\u80fd|\u95ed\u73af|\u6293\u624b|\u9897\u7c92\u5ea6|\u6253\u6cd5|\u7cfb\u7edf\u68c0\u6d4b\u5230|\u8bf7\u60a8",
-        "label": "\u7981\u56db: LinkedIn/corporate-speak (\u8d4b\u80fd/\u95ed\u73af/\u6293\u624b/\u9897\u7c92\u5ea6/\u6253\u6cd5/\u7cfb\u7edf\u68c0\u6d4b\u5230/\u8bf7\u60a8)"
+        "pattern": "赋能|闭环|抓手|颗粒度|打法|系统检测到|请您",
+        "label": "禁四: LinkedIn/corporate-speak (赋能/闭环/抓手/颗粒度/打法/系统检测到/请您)"
       },
       {
-        "pattern": "\u52a0\u6cb9|\u4f60\u80fd\u884c|\u51b2\u9e2d|\u68a6\u60f3\u6210\u771f",
-        "label": "\u7981\u4e00 (partial): over-incentive words (\u52a0\u6cb9/\u4f60\u80fd\u884c/\u51b2\u9e2d/\u68a6\u60f3\u6210\u771f)"
+        "pattern": "加油|你能行|冲鸭|梦想成真",
+        "label": "禁一 (partial): over-incentive words (加油/你能行/冲鸭/梦想成真)"
       }
     ],
     "allowlist": []
   },
   "inertDimensions": {
-    "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written \u2014 it is not somewhere to park a new dimension so the gate goes green. spacing and controls were removed 2026-07-31: both were false positives from a detector bug (scripts/lint-inert-dimensions.mjs required var(--x) to close immediately, but every real caller writes a CSS fallback, var(--spacing-md, ...)). Compiling apps/web's real globals.css with @tailwindcss/node confirmed --spacing-md/--spacing-lg vary per brand (consumed by apps/web/src/components/theme-playground) and --control-height-* is read at 58 call sites in packages/design/ui/src/primitives/button-variants.ts and switch.tsx, density-driven via packages/design/tokens/src/brand-package/emit-css.ts. Both dimensions were already wired; only the guard was blind to it.",
+    "description": "Dimensions every Brand Package declares that no shipped code reads, measured 2026-07-31 by compiling the real Tailwind pipeline rather than reading source. A skin can override these forever without moving a pixel. Shrink-only: give a dimension a consumer and delete its entry. This list records what was already true when the guard was written — it is not somewhere to park a new dimension so the gate goes green. spacing and controls were removed 2026-07-31: both were false positives from a detector bug (scripts/lint-inert-dimensions.mjs required var(--x) to close immediately, but every real caller writes a CSS fallback, var(--spacing-md, ...)). Compiling apps/web's real globals.css with @tailwindcss/node confirmed --spacing-md/--spacing-lg vary per brand (consumed by apps/web/src/components/theme-playground) and --control-height-* is read at 58 call sites in packages/design/ui/src/primitives/button-variants.ts and switch.tsx, density-driven via packages/design/tokens/src/brand-package/emit-css.ts. Both dimensions were already wired; only the guard was blind to it.",
     "known": []
   },
   "arbitraryTypography": {
@@ -342,7 +342,7 @@
       },
       {
         "file": "apps/router/src/components/console-shell.tsx",
-        "count": 15
+        "count": 14
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/global/page.tsx",
@@ -1975,7 +1975,7 @@
       },
       {
         "file": "apps/router/src/components/console-shell.tsx",
-        "count": 4
+        "count": 3
       },
       {
         "file": "apps/sailor-docs/src/components/accessibility-demos.tsx",
@@ -2083,7 +2083,7 @@
       },
       {
         "file": "apps/landing/src/components/landing/blog-motion-showcase.tsx",
-        "count": 2
+        "count": 1
       },
       {
         "file": "apps/landing/src/components/landing/design-system/VrtCard.tsx",
@@ -2099,7 +2099,7 @@
       },
       {
         "file": "apps/landing/src/components/landing/navbar/UserAvatarMenu.tsx",
-        "count": 2
+        "count": 1
       },
       {
         "file": "apps/landing/src/components/landing/product-demo/WorkspacesVisuals.tsx",
@@ -2606,7 +2606,7 @@
     ]
   },
   "tokenMirrors": {
-    "$description": "scripts/lint-token-mirrors.mjs \u2014 a token value is written once (design-tokens/tokens/*.json); code reads @nebutra/tokens/values or var(). allowlist is shrink-only.",
+    "$description": "scripts/lint-token-mirrors.mjs — a token value is written once (design-tokens/tokens/*.json); code reads @nebutra/tokens/values or var(). allowlist is shrink-only.",
     "threshold": 3,
     "sources": {
       "scripts/brand-types.ts": "The colour seed: DEFAULT_BRAND.colors is the human-edited palette brand:apply writes into core.json.",
@@ -2617,15 +2617,15 @@
       "packages/design/tokens/src/brand-package/presets/generic.ts": "Another design language's own palette; overlap with House hex is coincidence, not a copy.",
       "scripts/lint-token-mirrors.mjs": "This guard.",
       "packages/design/ui/src/primitives/safari.tsx": "Draws Safari's own window chrome; its greys are Apple's, not ours.",
-      "apps/router/src/components/brand-marks.tsx": "Per-product cover washes \u2014 art direction for each product card, not token restatements.",
-      "packages/design/ui/scripts/build-registry.ts": "Registry builder: documents and asserts the legacy-name \u2192 token mapping.",
+      "apps/router/src/components/brand-marks.tsx": "Per-product cover washes — art direction for each product card, not token restatements.",
+      "packages/design/ui/scripts/build-registry.ts": "Registry builder: documents and asserts the legacy-name → token mapping.",
       "scripts/verify-brand-token-sync.ts": "The brand:apply drift verifier: names the values it asserts.",
-      "apps/web/src/components/appearance/store.ts": "The user-selectable accent presets \u2014 a catalogue of choices, read by both pickers."
+      "apps/web/src/components/appearance/store.ts": "The user-selectable accent presets — a catalogue of choices, read by both pickers."
     },
     "allowlist": {}
   },
   "primitiveHygiene": {
-    "$description": "scripts/lint-primitive-hygiene.mjs \u2014 raw palette classes and English aria-label literals in packages/design/ui/src, per file. Shrink-only.",
+    "$description": "scripts/lint-primitive-hygiene.mjs — raw palette classes and English aria-label literals in packages/design/ui/src, per file. Shrink-only.",
     "allowlist": {}
   },
   "database": {

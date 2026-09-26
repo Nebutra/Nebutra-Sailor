@@ -2,9 +2,15 @@
 
 import { motionDurationSec } from "@nebutra/brand";
 import { ArrowRight, BookOpen, ChevronDown, Copy, Message } from "@nebutra/icons";
-import { useCopyToClipboard } from "@nebutra/ui/primitives";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  useCopyToClipboard,
+} from "@nebutra/ui/primitives";
 import Link from "next/link";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type BlogHeroTopic = {
   href: string;
@@ -61,30 +67,10 @@ function useAnimationFrame(callback: (deltaMs: number) => void, enabled: boolean
 }
 
 function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
+  // The DS menu, not a hand-rolled absolute panel: it portals past any
+  // ancestor stacking context, and owns outside-click, Escape and focus.
   const [open, setOpen] = useState(false);
   const { copied, copy } = useCopyToClipboard({ timeout: 1600, showToast: false });
-  const menuId = useId();
-  const menuRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const closeOnPointerDown = (event: PointerEvent) => {
-      if (!menuRef.current?.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-
-    document.addEventListener("pointerdown", closeOnPointerDown);
-    document.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.removeEventListener("pointerdown", closeOnPointerDown);
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [open]);
 
   async function copyPageAsMarkdown() {
     const title = document.title || (isZh ? "Nebutra 博客" : "Nebutra Blog");
@@ -93,56 +79,40 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
     await copy(markdown);
   }
 
-  return (
-    <div ref={menuRef} className="relative z-20 flex justify-end">
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={menuId}
-        onClick={() => setOpen((value) => !value)}
-        className="group inline-flex min-h-10 items-center gap-1.5 rounded-full border border-transparent px-3 text-sm font-medium text-muted-foreground transition-[background-color,color,border-color] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] hover:border-border hover:bg-muted hover:text-foreground motion-reduce:transition-none"
-      >
-        {isZh ? "探索此页" : "Explore here"}
-        <ChevronDown
-          className={`size-3.5 opacity-70 transition-transform duration-[var(--motion-duration-flow)] motion-reduce:transition-none ${
-            open ? "-rotate-180" : ""
-          }`}
-          aria-hidden
-        />
-      </button>
+  const itemClass =
+    "group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-sm font-medium text-foreground";
+  const iconClass =
+    "size-4 shrink-0 text-muted-foreground transition-colors group-data-[highlighted]:text-foreground";
 
-      {open ? (
-        <div
-          id={menuId}
-          role="menu"
-          className="absolute right-0 top-full mt-2 w-72 rounded-[var(--radius-xl)] border border-border bg-background p-2 shadow-[var(--shadow-lg)]"
-        >
-          <Link
-            href={contactHref}
-            role="menuitem"
-            onClick={() => setOpen(false)}
-            className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-foreground transition-colors hover:bg-muted"
-          >
-            <Message
-              className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-[hsl(var(--primary))]"
-              aria-hidden
-            />
-            {isZh ? "询问这个页面" : "Ask questions about this page"}
-          </Link>
+  return (
+    <div className="flex justify-end">
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>
           <button
             type="button"
-            role="menuitem"
-            onClick={copyPageAsMarkdown}
-            className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-foreground transition-colors hover:bg-muted"
+            className="group inline-flex min-h-10 items-center gap-1.5 rounded-full border border-transparent px-3 text-sm font-medium text-muted-foreground transition-[background-color,color,border-color] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] hover:border-border hover:bg-muted hover:text-foreground motion-reduce:transition-none"
           >
-            <Copy
-              className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-[hsl(var(--primary))]"
+            {isZh ? "探索此页" : "Explore here"}
+            <ChevronDown
+              className={`size-3.5 opacity-70 transition-transform duration-[var(--motion-duration-flow)] motion-reduce:transition-none ${
+                open ? "-rotate-180" : ""
+              }`}
               aria-hidden
             />
-            {copied ? (isZh ? "已复制" : "Copied") : isZh ? "复制链接" : "Copy link"}
           </button>
-        </div>
-      ) : null}
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" sideOffset={8} className="w-72 p-2">
+          <DropdownMenuItem render={<Link href={contactHref} />} className={itemClass}>
+            <Message className={iconClass} aria-hidden />
+            {isZh ? "询问这个页面" : "Ask questions about this page"}
+          </DropdownMenuItem>
+          {/* Stays open so the "Copied" confirmation is seen. */}
+          <DropdownMenuItem closeOnClick={false} onClick={copyPageAsMarkdown} className={itemClass}>
+            <Copy className={iconClass} aria-hidden />
+            {copied ? (isZh ? "已复制" : "Copied") : isZh ? "复制链接" : "Copy link"}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

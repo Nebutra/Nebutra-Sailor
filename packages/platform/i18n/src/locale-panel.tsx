@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * Shared shell for the language/market pickers.
@@ -17,10 +18,15 @@ import {
  * Deliberately not the DS Popover. That primitive's surface is
  * `bg-popover/95 + backdrop-blur-md`, which reads fine over body copy and
  * bleeds badly over a large high-contrast headline — and a language list is a
- * reading surface, not a glass overlay. It also portals to <body>, which put
- * the panel in a different stacking and scroll context than the header that
- * owns it. This shell stays in the header's own context with a solid
- * background, which is what the marketing picker always did.
+ * reading surface, not a glass overlay.
+ *
+ * It DOES portal to <body>, as fixed. It used to stay in the header's own
+ * context, and any ancestor that makes a stacking context — backdrop-blur,
+ * transform, filter, opacity, isolation — trapped it there: on the router
+ * market the top bar's backdrop-blur-sm put the whole panel under the search
+ * bar and category cards, and made the mobile sheet's `position: fixed`
+ * resolve against the 36px bar instead of the viewport. Portalled, the
+ * popover tier is the popover tier wherever the switcher is mounted.
  *
  * Mobile (<640px): fixed full-bleed sheet with body scroll lock so long locale
  * lists are not clipped under the viewport (flex min-height:auto trap).
@@ -100,6 +106,8 @@ export function LocalePanel({
    * `null` means "not measured yet" and falls back to right-alignment.
    */
   const [desktopLeft, setDesktopLeft] = useState<number | null>(null);
+  const [desktopTop, setDesktopTop] = useState<number | null>(null);
+  const [desktopRight, setDesktopRight] = useState<number>(12);
 
   useEffect(() => {
     if (!open || !showSearch) return;
@@ -133,8 +141,17 @@ export function LocalePanel({
       // for one in the top-left, where the panel ran off the left of the
       // viewport and clipped every language name — leaving only the narrow code
       // rail visible, which read as a list of raw locale codes.
+      // Top depends only on the trigger, so it is always known.
+      setDesktopTop(Math.round(rect.bottom + 8));
       const panelWidth = panelRef.current?.offsetWidth ?? 0;
-      if (panelWidth === 0) return;
+      if (panelWidth === 0) {
+        // Width not laid out yet: align the panel's right edge to the trigger's
+        // rather than hiding it — a hidden fallback would stay hidden if the
+        // width never measured.
+        setDesktopLeft(null);
+        setDesktopRight(Math.max(12, Math.round(window.innerWidth - rect.right)));
+        return;
+      }
       const margin = 12;
       // Prefer opening leftward from the trigger's right edge, as before.
       let viewportLeft = rect.right - panelWidth;
@@ -143,19 +160,25 @@ export function LocalePanel({
       // Then clamp, so neither choice can leave the viewport on a narrow window.
       viewportLeft = Math.min(viewportLeft, window.innerWidth - margin - panelWidth);
       viewportLeft = Math.max(margin, viewportLeft);
-      // `left` resolves against the positioned container, not the trigger, so
-      // the offset has to be measured from the container's own edge.
-      const base = containerRef.current?.getBoundingClientRect() ?? rect;
-      setDesktopLeft(Math.round(viewportLeft - base.left));
+      // Fixed positioning: viewport coordinates are the offsets.
+      setDesktopLeft(Math.round(viewportLeft));
     };
     measure();
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    // Fixed to the viewport now, so it follows the trigger on scroll itself.
+    window.addEventListener("scroll", measure, { capture: true, passive: true });
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure, { capture: true });
+    };
   }, [open, isMobile]);
 
   // Forget the measurement on close: the trigger may have moved by next open.
   useLayoutEffect(() => {
-    if (!open) setDesktopLeft(null);
+    if (!open) {
+      setDesktopLeft(null);
+      setDesktopTop(null);
+    }
   }, [open]);
 
   const close = useCallback(() => setOpen(false), []);
@@ -181,12 +204,13 @@ export function LocalePanel({
         boxShadow: "0 1px 2px rgb(0 0 0 / 0.06), 0 24px 48px -24px rgb(0 0 0 / 0.28)",
       }
     : {
-        position: "absolute",
-        // Right-aligned until measured, then pinned to a viewport-safe offset.
-        // useLayoutEffect measures before paint, so the fallback never shows.
-        ...(desktopLeft === null ? { right: 0 } : { left: desktopLeft }),
-        top: "100%",
-        marginTop: 8,
+        position: "fixed",
+        // Measured in useLayoutEffect before paint. Left when the width is
+        // known, else right-aligned to the trigger; hidden only for the frame
+        // before the trigger itself is measured.
+        ...(desktopLeft === null ? { right: desktopRight } : { left: desktopLeft }),
+        top: desktopTop ?? 0,
+        visibility: desktopTop === null ? "hidden" : "visible",
         // A dropdown: the popover tier, so it clears form chrome and page layers.
         zIndex: "var(--layer-popover)",
         width,
@@ -219,7 +243,10 @@ export function LocalePanel({
         if (e.key === "Escape") close();
       }}
       onBlur={(e) => {
-        if (!containerRef.current?.contains(e.relatedTarget as Node | null)) close();
+        // The panel is portalled out of the container's DOM subtree (React
+        // still bubbles its events here), so check both.
+        const next = e.relatedTarget as Node | null;
+        if (!containerRef.current?.contains(next) && !panelRef.current?.contains(next)) close();
       }}
     >
       <button
@@ -242,94 +269,103 @@ export function LocalePanel({
         {trigger}
       </button>
 
-      {open && isMobile ? (
-        <button
-          type="button"
-          aria-label={copy.closeAria}
-          className="fixed inset-0 z-[calc(var(--layer-panel)-10)] bg-black/40"
-          onClick={close}
-        />
-      ) : null}
+      {open && isMobile
+        ? createPortal(
+            <button
+              type="button"
+              aria-label={copy.closeAria}
+              className="fixed inset-0 z-[calc(var(--layer-panel)-10)] bg-black/40"
+              onClick={close}
+            />,
+            document.body,
+          )
+        : null}
 
-      {open ? (
-        <div
-          ref={panelRef}
-          role="dialog"
-          aria-label={copy.menuAria}
-          aria-modal={isMobile ? "true" : "false"}
-          style={panelStyle}
-          className="overflow-hidden rounded-[var(--radius-lg)] bg-background"
-        >
-          {copy.title || showSearch ? (
-            // The header is a tonal block, not a bordered strip: the step from
-            // --muted to the --background body is the separator, so the list
-            // starts without a line drawn across it.
-            //
-            // --muted and not neutral-2, even though both are "one step up". The
-            // panel body is --background, and in dark mode the two ramps do not
-            // agree: --background is 222° at 14% saturation while neutral-2 is
-            // the same hue at 47%. Mixing them put a navy block on a near-black
-            // surface, so the header read as a different material rather than a
-            // lighter part of the same one. Everything on this surface now comes
-            // from the semantic ramp.
-            <div className="shrink-0 bg-muted px-4 py-3">
-              {copy.title ? (
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-foreground">{copy.title}</p>
-                    {copy.description ? (
-                      <p className="mt-0.5 text-xs text-muted-foreground">{copy.description}</p>
-                    ) : null}
-                  </div>
-                  <button
-                    type="button"
-                    aria-label={copy.closeAria}
-                    onClick={close}
-                    className="-mr-1 -mt-1 inline-flex min-h-11 min-w-11 items-center justify-center rounded-[var(--radius-sm)] p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                  >
-                    <Cross className="h-4 w-4" aria-hidden />
-                  </button>
+      {open
+        ? createPortal(
+            <div
+              ref={panelRef}
+              role="dialog"
+              aria-label={copy.menuAria}
+              aria-modal={isMobile ? "true" : "false"}
+              style={panelStyle}
+              className="overflow-hidden rounded-[var(--radius-lg)] bg-background"
+            >
+              {copy.title || showSearch ? (
+                // The header is a tonal block, not a bordered strip: the step from
+                // --muted to the --background body is the separator, so the list
+                // starts without a line drawn across it.
+                //
+                // --muted and not neutral-2, even though both are "one step up". The
+                // panel body is --background, and in dark mode the two ramps do not
+                // agree: --background is 222° at 14% saturation while neutral-2 is
+                // the same hue at 47%. Mixing them put a navy block on a near-black
+                // surface, so the header read as a different material rather than a
+                // lighter part of the same one. Everything on this surface now comes
+                // from the semantic ramp.
+                <div className="shrink-0 bg-muted px-4 py-3">
+                  {copy.title ? (
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-foreground">{copy.title}</p>
+                        {copy.description ? (
+                          <p className="mt-0.5 text-xs text-muted-foreground">{copy.description}</p>
+                        ) : null}
+                      </div>
+                      <button
+                        type="button"
+                        aria-label={copy.closeAria}
+                        onClick={close}
+                        className="-mr-1 -mt-1 inline-flex min-h-11 min-w-11 items-center justify-center rounded-[var(--radius-sm)] p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <Cross className="h-4 w-4" aria-hidden />
+                      </button>
+                    </div>
+                  ) : null}
+                  {showSearch ? (
+                    <label
+                      // A well sunk into the tonal header rather than a bordered
+                      // field: --background is lighter than the --muted header in
+                      // light mode and darker in dark mode, so it reads as inset in
+                      // both without a stroke. The ring appears on focus only —
+                      // that is feedback, not decoration.
+                      className={`flex min-h-11 items-center gap-2 rounded-[var(--radius-md)] bg-background px-2.5 py-2 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-0 focus-within:outline-[hsl(var(--ring)/0.5)] ${
+                        copy.title ? "mt-3" : ""
+                      }`}
+                    >
+                      <MagnifyingGlass
+                        className="h-4 w-4 shrink-0 text-muted-foreground"
+                        aria-hidden
+                      />
+                      <input
+                        ref={searchRef}
+                        data-allow-native
+                        type="text"
+                        inputMode="search"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder={copy.searchPlaceholder}
+                        className="min-w-0 flex-1 appearance-none border-0 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/70"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                      />
+                    </label>
+                  ) : null}
                 </div>
               ) : null}
-              {showSearch ? (
-                <label
-                  // A well sunk into the tonal header rather than a bordered
-                  // field: --background is lighter than the --muted header in
-                  // light mode and darker in dark mode, so it reads as inset in
-                  // both without a stroke. The ring appears on focus only —
-                  // that is feedback, not decoration.
-                  className={`flex min-h-11 items-center gap-2 rounded-[var(--radius-md)] bg-background px-2.5 py-2 transition-shadow focus-within:outline focus-within:outline-2 focus-within:outline-offset-0 focus-within:outline-[hsl(var(--ring)/0.5)] ${
-                    copy.title ? "mt-3" : ""
-                  }`}
-                >
-                  <MagnifyingGlass className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
-                  <input
-                    ref={searchRef}
-                    data-allow-native
-                    type="text"
-                    inputMode="search"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder={copy.searchPlaceholder}
-                    className="min-w-0 flex-1 appearance-none border-0 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/70"
-                    autoComplete="off"
-                    autoCorrect="off"
-                    spellCheck={false}
-                  />
-                </label>
-              ) : null}
-            </div>
-          ) : null}
 
-          {/* min-h-0 is required so flex-1 + overflow-y-auto can shrink and
+              {/* min-h-0 is required so flex-1 + overflow-y-auto can shrink and
               scroll. Without it, long locale lists are clipped and cannot
               scroll (mobile / short viewports). overscroll-contain stops the
               wheel chaining to the document once the list hits its end. */}
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
-            {children(query.trim().toLowerCase(), close)}
-          </div>
-        </div>
-      ) : null}
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
+                {children(query.trim().toLowerCase(), close)}
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
