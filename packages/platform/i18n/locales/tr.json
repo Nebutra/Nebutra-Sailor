@@ -584,6 +584,98 @@
       "trial": "Ücretsiz {days} günlük deneme",
       "seat": "{count, plural, one {# koltuk} other {# koltuk}}",
       "perSeat": "/ koltuk"
+    },
+    "checkout": {
+      "method": "Ödeme yöntemi",
+      "methods": {
+        "card": {
+          "title": "Kart",
+          "description": "Visa, Mastercard ve diğerleri, {currency} cinsinden tahsil edilir"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "{currency} cinsinden tahsil edilir"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "{currency} cinsinden tahsil edilir"
+        }
+      },
+      "amount": {
+        "label": "Tutar ({currency})",
+        "range": "{min} ile {max} arasında",
+        "invalid": "Bu aralıkta, en fazla iki ondalık basamaklı bir tutar girin"
+      },
+      "pay": "{amount} öde",
+      "payNoAmount": "Öde",
+      "finePrint": {
+        "card": "Kart ödemeleri, kayıtlı satıcımız olan Creem tarafından işlenir; geçerli olduğu durumlarda satış vergisi veya KDV ekler.",
+        "wallet": "Ödeme onaylanır onaylanmaz hesaba eklenir."
+      },
+      "qr": {
+        "alt": "Ödeme QR kodu",
+        "alipay": "Alipay ile tarayın. Ödeme yaptığınızda bu sayfa kendiliğinden güncellenir.",
+        "wechat": "WeChat ile tarayın. Ödeme yaptığınızda bu sayfa kendiliğinden güncellenir."
+      },
+      "changeMethod": "Başka bir yöntemle öde",
+      "confirming": {
+        "title": "Ödemeniz onaylanıyor",
+        "body": "Bu genellikle sadece birkaç saniye sürer. Bu sayfadan ayrılmak, tutarın hesaba eklenmesini durdurmaz."
+      },
+      "paid": {
+        "title": "Ödeme alındı",
+        "body": "{product} hesabınıza eklendi."
+      },
+      "backTo": "{product} sayfasına dön",
+      "billing": "faturalandırma",
+      "expired": {
+        "title": "Bu ödeme tamamlanmadı",
+        "body": "Herhangi bir ücret alınmadı. Hazır olduğunuzda yeniden başlayın."
+      },
+      "lost": {
+        "title": "Bu sayfa ödemeyi bulamıyor",
+        "body": "Ödeme yaptıysanız, yine de hesabınıza eklenecektir. Siparişleriniz faturalandırma bölümünde listelenir."
+      },
+      "tryAgain": "Yeniden öde",
+      "viewOrders": "Siparişleri görüntüle",
+      "closed": {
+        "title": "Ödemeler henüz açık değil",
+        "body": "Şu anda bu teklif için kullanılabilir bir ödeme yöntemi yok. Daha sonra tekrar deneyin."
+      },
+      "notForSale": {
+        "title": "Bu teklif satışta değil",
+        "body": "Bağlantı güncel olmayabilir. Ürüne geri dönün ve yeniden seçin."
+      },
+      "unavailable": {
+        "title": "Ödeme sayfası kullanılamıyor",
+        "body": "Ödeme hizmetine ulaşılamadı. Birazdan tekrar deneyin."
+      },
+      "problems": {
+        "forbidden": "Bu kuruluşun yalnızca bir sahibi, yöneticisi veya faturalandırma yöneticisi ödeme yapabilir.",
+        "unavailable": "Ödeme hizmeti yanıt vermedi. Herhangi bir ücret alınmadı; tekrar deneyin.",
+        "rejected": "Bu ödeme başlatılamadı. Tutarı kontrol edip tekrar deneyin."
+      }
+    },
+    "orders": {
+      "title": "Siparişler",
+      "description": "Tüm ürünlere ait ödemeler, en yeniden eskiye.",
+      "empty": "Henüz hiçbir şey satın alınmadı. Herhangi bir üründen yapılan ödemeler burada listelenecek.",
+      "unavailable": "Siparişler yüklenemedi. Birazdan tekrar deneyin.",
+      "columns": {
+        "date": "Tarih",
+        "item": "Ürün",
+        "method": "Ödeme yöntemi",
+        "amount": "Tutar",
+        "status": "Durum"
+      },
+      "status": {
+        "PENDING": "Ödeme bekleniyor",
+        "CREDITING": "Ödendi, hesaba ekleniyor",
+        "PAID": "Ödendi",
+        "PARTIALLY_REFUNDED": "Kısmen iade edildi",
+        "REFUNDED": "İade edildi",
+        "EXPIRED": "Tamamlanmadı"
+      }
     }
   },
   "organizations": {

@@ -1,28 +1,17 @@
 import { LoadingState, PageHeader } from "@nebutra/ui/layout";
-import { Card } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { Suspense } from "react";
 import {
   ActivePlanCard,
-  BillingProviderNotice,
   buildBillingSelfServiceModel,
-  PlanChoiceGrid,
 } from "@/components/billing/billing-self-service";
+import { OrderHistory } from "@/components/billing/order-history";
 import { getTenantContext } from "@/lib/auth";
-import { getGrowthSummary } from "@/lib/warehouse/gold";
 import {
   type BillingJourneyNotice,
   type JourneySearchParams,
   resolveBillingJourneyNotice,
 } from "./journey-state";
-
-function toCurrency(value: number) {
-  return value.toLocaleString(undefined, {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 2,
-  });
-}
 
 function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
   const tone =
@@ -58,67 +47,30 @@ function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
   );
 }
 
+/**
+ * The account ledger (ADR 2026-09-27 product wallets): the organization's plan
+ * and every order it paid, across products. Buying happens on each product's
+ * own page and on /checkout, never here — which is why the plan grid that
+ * could not sell anything is gone, and the revenue snapshot, an operator's
+ * number, went with it.
+ */
 async function BillingContent({ journeyNotice }: { journeyNotice: BillingJourneyNotice | null }) {
   const tenant = await getTenantContext();
-  const tenantId = tenant.tenantId ?? process.env.DEFAULT_DASHBOARD_TENANT_ID ?? "demo_org";
   const billingModel = buildBillingSelfServiceModel({ currentPlan: tenant.plan });
-  const summary = await getGrowthSummary(tenantId);
-  const projectedMonthlyRevenue = summary.revenue * 30;
 
   return (
     <>
       <PageHeader
         title="Billing"
-        description="Review the active plan, change configured plans, and manage hosted billing when provider setup is available."
+        description="Your plan, and every order paid for any product in this organization."
       />
 
       <div className="space-y-4">
         {journeyNotice && <BillingReturnNotice notice={journeyNotice} />}
 
-        <BillingProviderNotice model={billingModel} />
-
         <ActivePlanCard model={billingModel} />
 
-        <section aria-labelledby="change-plan-heading">
-          <div className="mb-3">
-            <h2 id="change-plan-heading" className="text-base font-semibold text-neutral-12">
-              Change plan
-            </h2>
-            <p className="mt-1 text-sm text-neutral-11">
-              Paid checkout is only active for plans with configured provider price ids.
-            </p>
-          </div>
-          <PlanChoiceGrid plans={billingModel.plans} />
-        </section>
-
-        <Card className="p-4 sm:p-6">
-          <h2 className="text-base font-semibold text-neutral-12">Revenue Snapshot</h2>
-          {summary.day ? (
-            <>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <div>
-                  <p className="text-sm text-neutral-11">Today</p>
-                  <p className="mt-1 text-2xl font-semibold text-neutral-12">
-                    {toCurrency(summary.revenue)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-neutral-11">30-day Projection</p>
-                  <p className="mt-1 text-2xl font-semibold text-neutral-12">
-                    {toCurrency(projectedMonthlyRevenue)}
-                  </p>
-                </div>
-              </div>
-              <p className="mt-4 text-xs text-neutral-10">
-                Based on the latest daily warehouse snapshot ({summary.day}).
-              </p>
-            </>
-          ) : (
-            <p className="mt-3 text-sm text-neutral-11">
-              Revenue widgets will appear once billing events are ingested.
-            </p>
-          )}
-        </Card>
+        <OrderHistory />
       </div>
     </>
   );

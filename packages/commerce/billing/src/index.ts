@@ -218,6 +218,7 @@ export {
   fulfillPaymentOrder,
   getPaymentOrder,
   isPaymentMethodAvailable,
+  listPaymentOrders,
   type PaymentMethod,
   type PaymentOrderRecord,
   type PaymentOrderStatus,

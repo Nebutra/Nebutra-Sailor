@@ -9375,6 +9375,89 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": ["Billing", "Orders"],
+        "summary": "List this organization's orders, newest first",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders across every product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "offerId": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["PENDING", "PAID", "PARTIALLY_REFUNDED", "REFUNDED", "EXPIRED"]
+                          },
+                          "fulfilled": {
+                            "type": "boolean"
+                          },
+                          "amountMinor": {
+                            "type": "integer"
+                          },
+                          "currency": {
+                            "type": "string"
+                          },
+                          "method": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "product": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "offerId",
+                          "status",
+                          "fulfilled",
+                          "amountMinor",
+                          "currency",
+                          "method",
+                          "createdAt",
+                          "product",
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": ["orders"]
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/billing/orders/{id}": {

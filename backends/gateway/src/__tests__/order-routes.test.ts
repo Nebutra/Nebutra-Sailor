@@ -1,12 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { createPaymentOrderMock, getPaymentOrderMock, isPaymentMethodAvailableMock } = vi.hoisted(
-  () => ({
-    createPaymentOrderMock: vi.fn(),
-    getPaymentOrderMock: vi.fn(),
-    isPaymentMethodAvailableMock: vi.fn(),
-  }),
-);
+const {
+  createPaymentOrderMock,
+  getPaymentOrderMock,
+  isPaymentMethodAvailableMock,
+  listPaymentOrdersMock,
+} = vi.hoisted(() => ({
+  createPaymentOrderMock: vi.fn(),
+  getPaymentOrderMock: vi.fn(),
+  isPaymentMethodAvailableMock: vi.fn(),
+  listPaymentOrdersMock: vi.fn(),
+}));
 
 vi.mock("@nebutra/logger", () => ({
   logger: {
@@ -50,6 +54,8 @@ vi.mock("@nebutra/billing", async () => {
   return {
     BillingError,
     listOffers: offers.listOffers,
+    getOffer: offers.getOffer,
+    listPaymentOrders: (org: string, limit: number) => listPaymentOrdersMock(org, limit),
     // Mirrors the real guard: only the product origin may be a return URL.
     assertProductReturnUrl: (value: string) => {
       if (new URL(value).origin !== "https://app.example.com") {
@@ -188,6 +194,45 @@ describe("POST /orders", () => {
 
     expect(res.status).toBe(500);
     expect(JSON.stringify(await res.json())).not.toContain("secret detail");
+  });
+});
+
+describe("GET /orders", () => {
+  it("lists the caller's organization's orders with product and offer name", async () => {
+    listPaymentOrdersMock.mockResolvedValue([
+      {
+        id: "order_2",
+        offerId: "credits_10k",
+        product: "app",
+        status: "PAID",
+        fulfilledAt: new Date("2026-09-27T00:01:00Z"),
+        amountMinor: 6800,
+        currency: "CNY",
+        method: "alipay",
+        createdAt: new Date("2026-09-27T00:00:00Z"),
+      },
+    ]);
+
+    const res = await orderRoutes.request("/orders?limit=5");
+
+    expect(res.status).toBe(200);
+    expect(listPaymentOrdersMock).toHaveBeenCalledWith("org_1", 5);
+    expect(await res.json()).toEqual({
+      orders: [
+        {
+          id: "order_2",
+          offerId: "credits_10k",
+          product: "app",
+          name: "10,000 credits",
+          status: "PAID",
+          fulfilled: true,
+          amountMinor: 6800,
+          currency: "CNY",
+          method: "alipay",
+          createdAt: "2026-09-27T00:00:00.000Z",
+        },
+      ],
+    });
   });
 });
 

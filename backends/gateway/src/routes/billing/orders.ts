@@ -4,6 +4,7 @@
  *   GET  /offers         — what can be bought (?product= narrows to one product)
  *   GET  /offers/methods — which payment methods are live right now
  *   POST /orders         — buy one offer; returns a QR code or a redirect
+ *   GET  /orders         — the organization's orders across products (the account ledger)
  *   GET  /orders/{id}    — poll an order (the QR page waits on this)
  *
  * The request names an offer and a way to pay. It never carries a price: the
@@ -15,9 +16,11 @@ import {
   assertProductReturnUrl,
   BillingError,
   createPaymentOrder,
+  getOffer,
   getPaymentOrder,
   isPaymentMethodAvailable,
   listOffers,
+  listPaymentOrders,
   type PaymentMethod,
 } from "@nebutra/billing";
 import { logger } from "@nebutra/logger";
@@ -245,6 +248,57 @@ orderRoutes.openapi(
       logger.error("Payment order creation failed", err, { organizationId, offerId: body.offerId });
       return c.json({ error: "Payment provider error" }, 500);
     }
+  },
+);
+
+// ── GET /orders ───────────────────────────────────────────────────────────────
+
+const OrderListItemSchema = OrderStatusSchema.extend({
+  /** The product the order was locked to. */
+  product: z.string().nullable(),
+  /** The offer's current display name; the id when it has left the catalog. */
+  name: z.string(),
+});
+
+orderRoutes.openapi(
+  createRoute({
+    method: "get",
+    path: "/orders",
+    tags: ["Billing", "Orders"],
+    summary: "List this organization's orders, newest first",
+    request: {
+      query: z.object({ limit: z.coerce.number().int().min(1).max(100).optional() }),
+    },
+    responses: {
+      200: {
+        description: "Orders across every product",
+        content: {
+          "application/json": { schema: z.object({ orders: z.array(OrderListItemSchema) }) },
+        },
+      },
+    },
+  }),
+  async (c) => {
+    const tenant = c.get("tenant");
+    const { limit } = c.req.valid("query");
+    const orders = await listPaymentOrders(tenant.organizationId as string, limit ?? 20);
+    return c.json(
+      {
+        orders: orders.map((order) => ({
+          id: order.id,
+          offerId: order.offerId,
+          product: order.product,
+          name: getOffer(order.offerId)?.name ?? order.offerId,
+          status: order.status,
+          fulfilled: order.fulfilledAt !== null,
+          amountMinor: order.amountMinor,
+          currency: order.currency,
+          method: order.method,
+          createdAt: order.createdAt.toISOString(),
+        })),
+      },
+      200,
+    );
   },
 );
 

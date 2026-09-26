@@ -584,6 +584,98 @@
       "trial": "Kostenlose {days}-Tage-Testversion",
       "seat": "{count, plural, one {# Sitz} other {# Sitze}}",
       "perSeat": "/ Sitz"
+    },
+    "checkout": {
+      "method": "Zahlungsmethode",
+      "methods": {
+        "card": {
+          "title": "Karte",
+          "description": "Visa, Mastercard und mehr, abgerechnet in {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Abgerechnet in {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Abgerechnet in {currency}"
+        }
+      },
+      "amount": {
+        "label": "Betrag ({currency})",
+        "range": "Zwischen {min} und {max}",
+        "invalid": "Geben Sie einen Betrag in diesem Bereich mit höchstens zwei Dezimalstellen ein"
+      },
+      "pay": "{amount} zahlen",
+      "payNoAmount": "Zahlen",
+      "finePrint": {
+        "card": "Kartenzahlungen werden von Creem abgewickelt, unserem Merchant of Record, der gegebenenfalls Umsatzsteuer oder Mehrwertsteuer hinzufügt.",
+        "wallet": "Wird gutgeschrieben, sobald die Zahlung bestätigt ist."
+      },
+      "qr": {
+        "alt": "QR-Code für die Zahlung",
+        "alipay": "Mit Alipay scannen. Diese Seite aktualisiert sich selbst, sobald bezahlt wurde.",
+        "wechat": "Mit WeChat scannen. Diese Seite aktualisiert sich selbst, sobald bezahlt wurde."
+      },
+      "changeMethod": "Anders bezahlen",
+      "confirming": {
+        "title": "Zahlung wird bestätigt",
+        "body": "Das dauert normalerweise nur wenige Sekunden. Wenn Sie diese Seite verlassen, wird die Gutschrift nicht gestoppt."
+      },
+      "paid": {
+        "title": "Zahlung erhalten",
+        "body": "Sie wurde Ihrem {product}-Konto gutgeschrieben."
+      },
+      "backTo": "Zurück zu {product}",
+      "billing": "Abrechnung",
+      "expired": {
+        "title": "Diese Zahlung wurde nicht abgeschlossen",
+        "body": "Es wurde nichts belastet. Beginnen Sie erneut, wenn Sie bereit sind."
+      },
+      "lost": {
+        "title": "Diese Seite kann die Zahlung nicht finden",
+        "body": "Falls Sie bezahlt haben, wird sie trotzdem gutgeschrieben. Ihre Bestellungen finden Sie unter Abrechnung."
+      },
+      "tryAgain": "Erneut zahlen",
+      "viewOrders": "Bestellungen ansehen",
+      "closed": {
+        "title": "Zahlungen sind noch nicht geöffnet",
+        "body": "Für dieses Angebot ist derzeit keine Zahlungsmethode verfügbar. Versuchen Sie es später erneut."
+      },
+      "notForSale": {
+        "title": "Dieses Angebot ist nicht im Verkauf",
+        "body": "Der Link ist möglicherweise veraltet. Gehen Sie zurück zum Produkt und wählen Sie erneut."
+      },
+      "unavailable": {
+        "title": "Kasse nicht verfügbar",
+        "body": "Der Zahlungsdienst konnte nicht erreicht werden. Versuchen Sie es gleich noch einmal."
+      },
+      "problems": {
+        "forbidden": "Nur ein Inhaber, Admin oder Abrechnungsadmin dieser Organisation kann zahlen.",
+        "unavailable": "Der Zahlungsdienst hat nicht geantwortet. Es wurde nichts belastet; versuchen Sie es erneut.",
+        "rejected": "Diese Zahlung konnte nicht gestartet werden. Prüfen Sie den Betrag und versuchen Sie es erneut."
+      }
+    },
+    "orders": {
+      "title": "Bestellungen",
+      "description": "Zahlungen für alle Produkte, neueste zuerst.",
+      "empty": "Es wurde noch nichts gekauft. Zahlungen aus jedem Produkt werden hier aufgeführt.",
+      "unavailable": "Bestellungen konnten nicht geladen werden. Versuchen Sie es gleich noch einmal.",
+      "columns": {
+        "date": "Datum",
+        "item": "Artikel",
+        "method": "Bezahlt mit",
+        "amount": "Betrag",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Zahlung ausstehend",
+        "CREDITING": "Bezahlt, wird gutgeschrieben",
+        "PAID": "Bezahlt",
+        "PARTIALLY_REFUNDED": "Teilweise erstattet",
+        "REFUNDED": "Erstattet",
+        "EXPIRED": "Nicht abgeschlossen"
+      }
     }
   },
   "organizations": {

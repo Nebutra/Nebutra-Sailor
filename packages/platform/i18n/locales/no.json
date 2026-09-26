@@ -584,6 +584,98 @@
       "trial": "Gratis {days}-dagers prøveperiode",
       "seat": "{count, plural, one {# sete} other {# seter}}",
       "perSeat": "/ sete"
+    },
+    "checkout": {
+      "method": "Betalingsmåte",
+      "methods": {
+        "card": {
+          "title": "Kort",
+          "description": "Visa, Mastercard med flere, belastes i {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Belastes i {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Belastes i {currency}"
+        }
+      },
+      "amount": {
+        "label": "Beløp ({currency})",
+        "range": "Mellom {min} og {max}",
+        "invalid": "Angi et beløp innenfor dette området, med maks to desimaler"
+      },
+      "pay": "Betal {amount}",
+      "payNoAmount": "Betal",
+      "finePrint": {
+        "card": "Kortbetalinger behandles av Creem, vår registrerte forhandler, som legger til omsetningsavgift eller mva. der det er aktuelt.",
+        "wallet": "Godskrives så snart betalingen er bekreftet."
+      },
+      "qr": {
+        "alt": "QR-kode for betaling",
+        "alipay": "Skann med Alipay. Denne siden oppdaterer seg selv når du har betalt.",
+        "wechat": "Skann med WeChat. Denne siden oppdaterer seg selv når du har betalt."
+      },
+      "changeMethod": "Betal på en annen måte",
+      "confirming": {
+        "title": "Bekrefter betalingen din",
+        "body": "Dette tar vanligvis bare noen sekunder. Å forlate denne siden stopper ikke godskrivingen."
+      },
+      "paid": {
+        "title": "Betaling mottatt",
+        "body": "Den er lagt til på {product}-kontoen din."
+      },
+      "backTo": "Tilbake til {product}",
+      "billing": "fakturering",
+      "expired": {
+        "title": "Denne betalingen ble ikke fullført",
+        "body": "Ingenting ble belastet. Start på nytt når du er klar."
+      },
+      "lost": {
+        "title": "Denne siden finner ikke betalingen",
+        "body": "Hvis du har betalt, blir den likevel godskrevet. Bestillingene dine finnes under fakturering."
+      },
+      "tryAgain": "Betal på nytt",
+      "viewOrders": "Vis bestillinger",
+      "closed": {
+        "title": "Betalinger er ikke åpne ennå",
+        "body": "Ingen betalingsmåte er tilgjengelig for dette tilbudet akkurat nå. Prøv igjen senere."
+      },
+      "notForSale": {
+        "title": "Dette tilbudet er ikke til salgs",
+        "body": "Lenken kan være utdatert. Gå tilbake til produktet og velg på nytt."
+      },
+      "unavailable": {
+        "title": "Kassen er ikke tilgjengelig",
+        "body": "Fikk ikke kontakt med betalingstjenesten. Prøv igjen om litt."
+      },
+      "problems": {
+        "forbidden": "Bare en eier, admin eller faktureringsadmin i denne organisasjonen kan betale.",
+        "unavailable": "Betalingstjenesten svarte ikke. Ingenting ble belastet; prøv igjen.",
+        "rejected": "Denne betalingen kunne ikke startes. Sjekk beløpet og prøv igjen."
+      }
+    },
+    "orders": {
+      "title": "Bestillinger",
+      "description": "Betalinger for alle produkter, nyeste først.",
+      "empty": "Ingenting er kjøpt ennå. Betalinger fra ethvert produkt vises her.",
+      "unavailable": "Bestillinger kunne ikke lastes inn. Prøv igjen om litt.",
+      "columns": {
+        "date": "Dato",
+        "item": "Vare",
+        "method": "Betalt med",
+        "amount": "Beløp",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Venter på betaling",
+        "CREDITING": "Betalt, godskrives",
+        "PAID": "Betalt",
+        "PARTIALLY_REFUNDED": "Delvis refundert",
+        "REFUNDED": "Refundert",
+        "EXPIRED": "Ikke fullført"
+      }
     }
   },
   "organizations": {

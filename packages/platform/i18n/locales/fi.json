@@ -584,6 +584,98 @@
       "trial": "Ilmainen {days} päivän kokeilu",
       "seat": "{count, plural, one {# istuin} other {# istuinta}}",
       "perSeat": "/ istuin"
+    },
+    "checkout": {
+      "method": "Maksutapa",
+      "methods": {
+        "card": {
+          "title": "Kortti",
+          "description": "Visa, Mastercard ja muut, veloitetaan valuutassa {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Veloitetaan valuutassa {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Veloitetaan valuutassa {currency}"
+        }
+      },
+      "amount": {
+        "label": "Summa ({currency})",
+        "range": "Väliltä {min}–{max}",
+        "invalid": "Anna summa tältä väliltä, enintään kahdella desimaalilla"
+      },
+      "pay": "Maksa {amount}",
+      "payNoAmount": "Maksa",
+      "finePrint": {
+        "card": "Korttimaksut käsittelee Creem, virallinen jälleenmyyjämme, joka lisää tarvittaessa myyntiveron tai arvonlisäveron.",
+        "wallet": "Hyvitetään heti, kun maksu on vahvistettu."
+      },
+      "qr": {
+        "alt": "Maksun QR-koodi",
+        "alipay": "Skannaa Alipaylla. Tämä sivu päivittyy itsestään, kun olet maksanut.",
+        "wechat": "Skannaa WeChatilla. Tämä sivu päivittyy itsestään, kun olet maksanut."
+      },
+      "changeMethod": "Maksa toisella tavalla",
+      "confirming": {
+        "title": "Vahvistetaan maksuasi",
+        "body": "Tämä kestää yleensä muutaman sekunnin. Sivulta poistuminen ei keskeytä hyvitystä."
+      },
+      "paid": {
+        "title": "Maksu vastaanotettu",
+        "body": "Se on lisätty {product}-tilillesi."
+      },
+      "backTo": "Takaisin kohteeseen {product}",
+      "billing": "laskutus",
+      "expired": {
+        "title": "Tätä maksua ei suoritettu loppuun",
+        "body": "Mitään ei veloitettu. Aloita alusta, kun olet valmis."
+      },
+      "lost": {
+        "title": "Tämä sivu ei löydä maksua",
+        "body": "Jos maksoit, se hyvitetään silti. Tilauksesi näkyvät laskutuksessa."
+      },
+      "tryAgain": "Maksa uudelleen",
+      "viewOrders": "Näytä tilaukset",
+      "closed": {
+        "title": "Maksut eivät ole vielä käytössä",
+        "body": "Tälle tarjoukselle ei ole tällä hetkellä maksutapaa saatavilla. Yritä myöhemmin uudelleen."
+      },
+      "notForSale": {
+        "title": "Tämä tarjous ei ole myynnissä",
+        "body": "Linkki voi olla vanhentunut. Palaa tuotteeseen ja valitse uudelleen."
+      },
+      "unavailable": {
+        "title": "Kassa ei ole käytettävissä",
+        "body": "Maksupalveluun ei saatu yhteyttä. Yritä hetken kuluttua uudelleen."
+      },
+      "problems": {
+        "forbidden": "Vain tämän organisaation omistaja, ylläpitäjä tai laskutuksen ylläpitäjä voi maksaa.",
+        "unavailable": "Maksupalvelu ei vastannut. Mitään ei veloitettu; yritä uudelleen.",
+        "rejected": "Tätä maksua ei voitu aloittaa. Tarkista summa ja yritä uudelleen."
+      }
+    },
+    "orders": {
+      "title": "Tilaukset",
+      "description": "Kaikkien tuotteiden maksut, uusimmat ensin.",
+      "empty": "Mitään ei ole vielä ostettu. Minkä tahansa tuotteen maksut näkyvät täällä.",
+      "unavailable": "Tilauksia ei voitu ladata. Yritä hetken kuluttua uudelleen.",
+      "columns": {
+        "date": "Päivämäärä",
+        "item": "Kohde",
+        "method": "Maksettu",
+        "amount": "Summa",
+        "status": "Tila"
+      },
+      "status": {
+        "PENDING": "Odottaa maksua",
+        "CREDITING": "Maksettu, hyvitetään",
+        "PAID": "Maksettu",
+        "PARTIALLY_REFUNDED": "Osittain hyvitetty",
+        "REFUNDED": "Hyvitetty",
+        "EXPIRED": "Ei valmis"
+      }
     }
   },
   "organizations": {

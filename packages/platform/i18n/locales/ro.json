@@ -584,6 +584,98 @@
       "trial": "Perioadă de probă gratuită de {days} zile",
       "seat": "{count, plural, one {# scaun} other {# scaune}}",
       "perSeat": "/ scaun"
+    },
+    "checkout": {
+      "method": "Metodă de plată",
+      "methods": {
+        "card": {
+          "title": "Card",
+          "description": "Visa, Mastercard și altele, taxate în {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Taxat în {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Taxat în {currency}"
+        }
+      },
+      "amount": {
+        "label": "Sumă ({currency})",
+        "range": "Între {min} și {max}",
+        "invalid": "Introduceți o sumă în acest interval, cu cel mult două zecimale"
+      },
+      "pay": "Plătește {amount}",
+      "payNoAmount": "Plătește",
+      "finePrint": {
+        "card": "Plățile cu cardul sunt procesate de Creem, comerciantul nostru înregistrat, care adaugă taxa pe vânzări sau TVA acolo unde se aplică.",
+        "wallet": "Creditat imediat ce plata este confirmată."
+      },
+      "qr": {
+        "alt": "Cod QR de plată",
+        "alipay": "Scanați cu Alipay. Această pagină se actualizează singură după efectuarea plății.",
+        "wechat": "Scanați cu WeChat. Această pagină se actualizează singură după efectuarea plății."
+      },
+      "changeMethod": "Plătește în alt mod",
+      "confirming": {
+        "title": "Se confirmă plata dumneavoastră",
+        "body": "De obicei durează doar câteva secunde. Părăsirea acestei pagini nu oprește creditarea."
+      },
+      "paid": {
+        "title": "Plată primită",
+        "body": "A fost adăugată în contul dumneavoastră {product}."
+      },
+      "backTo": "Înapoi la {product}",
+      "billing": "facturare",
+      "expired": {
+        "title": "Această plată nu a fost finalizată",
+        "body": "Nu s-a taxat nimic. Reîncepeți când sunteți pregătit."
+      },
+      "lost": {
+        "title": "Această pagină nu găsește plata",
+        "body": "Dacă ați plătit, suma va fi creditată oricum. Comenzile dumneavoastră sunt listate la facturare."
+      },
+      "tryAgain": "Plătește din nou",
+      "viewOrders": "Vezi comenzile",
+      "closed": {
+        "title": "Plățile nu sunt încă deschise",
+        "body": "În acest moment nu este disponibilă nicio metodă de plată pentru această ofertă. Încercați din nou mai târziu."
+      },
+      "notForSale": {
+        "title": "Această ofertă nu este de vânzare",
+        "body": "Este posibil ca linkul să fie învechit. Reveniți la produs și alegeți din nou."
+      },
+      "unavailable": {
+        "title": "Finalizarea comenzii nu este disponibilă",
+        "body": "Serviciul de plată nu a putut fi contactat. Încercați din nou peste puțin timp."
+      },
+      "problems": {
+        "forbidden": "Doar un proprietar, administrator sau administrator de facturare al acestei organizații poate plăti.",
+        "unavailable": "Serviciul de plată nu a răspuns. Nu s-a taxat nimic; încercați din nou.",
+        "rejected": "Această plată nu a putut fi inițiată. Verificați suma și încercați din nou."
+      }
+    },
+    "orders": {
+      "title": "Comenzi",
+      "description": "Plăți pentru fiecare produs, cele mai recente primele.",
+      "empty": "Nu s-a cumpărat încă nimic. Plățile efectuate din orice produs vor apărea aici.",
+      "unavailable": "Comenzile nu au putut fi încărcate. Încercați din nou peste puțin timp.",
+      "columns": {
+        "date": "Dată",
+        "item": "Articol",
+        "method": "Plătit cu",
+        "amount": "Sumă",
+        "status": "Stare"
+      },
+      "status": {
+        "PENDING": "În așteptarea plății",
+        "CREDITING": "Plătit, se creditează",
+        "PAID": "Plătit",
+        "PARTIALLY_REFUNDED": "Rambursat parțial",
+        "REFUNDED": "Rambursat",
+        "EXPIRED": "Neterminat"
+      }
     }
   },
   "organizations": {

@@ -584,6 +584,98 @@
       "trial": "Prova gratuita di {days} giorni",
       "seat": "{count, plural, one {# posto} other {# posti}}",
       "perSeat": "/ posto"
+    },
+    "checkout": {
+      "method": "Metodo di pagamento",
+      "methods": {
+        "card": {
+          "title": "Carta",
+          "description": "Visa, Mastercard e altre, addebitate in {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Addebitato in {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Addebitato in {currency}"
+        }
+      },
+      "amount": {
+        "label": "Importo ({currency})",
+        "range": "Tra {min} e {max}",
+        "invalid": "Inserisci un importo compreso in questo intervallo, con al massimo due decimali"
+      },
+      "pay": "Paga {amount}",
+      "payNoAmount": "Paga",
+      "finePrint": {
+        "card": "I pagamenti con carta sono elaborati da Creem, il nostro merchant of record, che aggiunge l'imposta sulle vendite o l'IVA ove applicabile.",
+        "wallet": "Accreditato non appena il pagamento è confermato."
+      },
+      "qr": {
+        "alt": "Codice QR di pagamento",
+        "alipay": "Scansiona con Alipay. Questa pagina si aggiorna da sola una volta effettuato il pagamento.",
+        "wechat": "Scansiona con WeChat. Questa pagina si aggiorna da sola una volta effettuato il pagamento."
+      },
+      "changeMethod": "Paga in un altro modo",
+      "confirming": {
+        "title": "Conferma del pagamento in corso",
+        "body": "Di solito richiede pochi secondi. Uscire da questa pagina non ne impedisce l'accredito."
+      },
+      "paid": {
+        "title": "Pagamento ricevuto",
+        "body": "È stato aggiunto al tuo account {product}."
+      },
+      "backTo": "Torna a {product}",
+      "billing": "fatturazione",
+      "expired": {
+        "title": "Questo pagamento non è stato completato",
+        "body": "Non è stato addebitato nulla. Ricomincia quando sei pronto."
+      },
+      "lost": {
+        "title": "Questa pagina non trova il pagamento",
+        "body": "Se hai pagato, verrà comunque accreditato. I tuoi ordini sono elencati nella fatturazione."
+      },
+      "tryAgain": "Paga di nuovo",
+      "viewOrders": "Visualizza ordini",
+      "closed": {
+        "title": "I pagamenti non sono ancora aperti",
+        "body": "Al momento non è disponibile alcun metodo di pagamento per questa offerta. Riprova più tardi."
+      },
+      "notForSale": {
+        "title": "Questa offerta non è in vendita",
+        "body": "Il link potrebbe non essere più valido. Torna al prodotto e scegli di nuovo."
+      },
+      "unavailable": {
+        "title": "Il checkout non è disponibile",
+        "body": "Non è stato possibile contattare il servizio di pagamento. Riprova tra poco."
+      },
+      "problems": {
+        "forbidden": "Solo un proprietario, un amministratore o un amministratore di fatturazione di questa organizzazione può pagare.",
+        "unavailable": "Il servizio di pagamento non ha risposto. Non è stato addebitato nulla; riprova.",
+        "rejected": "Non è stato possibile avviare questo pagamento. Controlla l'importo e riprova."
+      }
+    },
+    "orders": {
+      "title": "Ordini",
+      "description": "Pagamenti per ogni prodotto, dal più recente.",
+      "empty": "Non è stato ancora acquistato nulla. I pagamenti effettuati da qualsiasi prodotto verranno elencati qui.",
+      "unavailable": "Impossibile caricare gli ordini. Riprova tra poco.",
+      "columns": {
+        "date": "Data",
+        "item": "Articolo",
+        "method": "Pagato con",
+        "amount": "Importo",
+        "status": "Stato"
+      },
+      "status": {
+        "PENDING": "In attesa di pagamento",
+        "CREDITING": "Pagato, in fase di accredito",
+        "PAID": "Pagato",
+        "PARTIALLY_REFUNDED": "Parzialmente rimborsato",
+        "REFUNDED": "Rimborsato",
+        "EXPIRED": "Non completato"
+      }
     }
   },
   "organizations": {

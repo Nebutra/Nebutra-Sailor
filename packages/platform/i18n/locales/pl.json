@@ -584,6 +584,98 @@
       "trial": "Darmowy {days}-dniowy okres próbny",
       "seat": "{count, plural, one {# miejsce} few {# miejsca} many {# miejsc}}",
       "perSeat": "/ miejsce"
+    },
+    "checkout": {
+      "method": "Sposób płatności",
+      "methods": {
+        "card": {
+          "title": "Karta",
+          "description": "Visa, Mastercard i inne, obciążenie w {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "Obciążenie w {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "Obciążenie w {currency}"
+        }
+      },
+      "amount": {
+        "label": "Kwota ({currency})",
+        "range": "Między {min} a {max}",
+        "invalid": "Wprowadź kwotę z tego zakresu, z maksymalnie dwoma miejscami po przecinku"
+      },
+      "pay": "Zapłać {amount}",
+      "payNoAmount": "Zapłać",
+      "finePrint": {
+        "card": "Płatności kartą są przetwarzane przez Creem, naszego autoryzowanego sprzedawcę, który dolicza podatek od sprzedaży lub VAT, jeśli ma zastosowanie.",
+        "wallet": "Zaksięgowane natychmiast po potwierdzeniu płatności."
+      },
+      "qr": {
+        "alt": "Kod QR do płatności",
+        "alipay": "Zeskanuj w Alipay. Ta strona zaktualizuje się sama po dokonaniu płatności.",
+        "wechat": "Zeskanuj w WeChat. Ta strona zaktualizuje się sama po dokonaniu płatności."
+      },
+      "changeMethod": "Zapłać w inny sposób",
+      "confirming": {
+        "title": "Potwierdzanie płatności",
+        "body": "Zwykle zajmuje to tylko kilka sekund. Opuszczenie tej strony nie zatrzymuje księgowania."
+      },
+      "paid": {
+        "title": "Płatność otrzymana",
+        "body": "Została dodana do Twojego konta {product}."
+      },
+      "backTo": "Powrót do {product}",
+      "billing": "rozliczeń",
+      "expired": {
+        "title": "Ta płatność nie została zakończona",
+        "body": "Nic nie zostało pobrane. Zacznij od nowa, gdy będziesz gotowy."
+      },
+      "lost": {
+        "title": "Ta strona nie może znaleźć płatności",
+        "body": "Jeśli zapłaciłeś, płatność mimo to zostanie zaksięgowana. Twoje zamówienia znajdują się w sekcji rozliczeń."
+      },
+      "tryAgain": "Zapłać ponownie",
+      "viewOrders": "Zobacz zamówienia",
+      "closed": {
+        "title": "Płatności nie są jeszcze otwarte",
+        "body": "Żadna metoda płatności nie jest obecnie dostępna dla tej oferty. Spróbuj ponownie później."
+      },
+      "notForSale": {
+        "title": "Ta oferta nie jest dostępna w sprzedaży",
+        "body": "Link może być nieaktualny. Wróć do produktu i wybierz ponownie."
+      },
+      "unavailable": {
+        "title": "Kasa jest niedostępna",
+        "body": "Nie udało się połączyć z usługą płatności. Spróbuj ponownie za chwilę."
+      },
+      "problems": {
+        "forbidden": "Płacić może wyłącznie właściciel, administrator lub administrator ds. rozliczeń tej organizacji.",
+        "unavailable": "Usługa płatności nie odpowiedziała. Nic nie zostało pobrane; spróbuj ponownie.",
+        "rejected": "Nie udało się rozpocząć tej płatności. Sprawdź kwotę i spróbuj ponownie."
+      }
+    },
+    "orders": {
+      "title": "Zamówienia",
+      "description": "Płatności za wszystkie produkty, od najnowszych.",
+      "empty": "Nic jeszcze nie kupiono. Płatności z dowolnego produktu będą tutaj wyświetlane.",
+      "unavailable": "Nie udało się wczytać zamówień. Spróbuj ponownie za chwilę.",
+      "columns": {
+        "date": "Data",
+        "item": "Pozycja",
+        "method": "Zapłacono za pomocą",
+        "amount": "Kwota",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Oczekuje na płatność",
+        "CREDITING": "Zapłacono, trwa księgowanie",
+        "PAID": "Zapłacono",
+        "PARTIALLY_REFUNDED": "Częściowo zwrócono",
+        "REFUNDED": "Zwrócono",
+        "EXPIRED": "Nieukończone"
+      }
     }
   },
   "organizations": {

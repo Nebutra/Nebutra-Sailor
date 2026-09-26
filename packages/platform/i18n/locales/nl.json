@@ -584,6 +584,98 @@
       "trial": "Gratis proefperiode van {days} dagen",
       "seat": "{count, plural, one {# zitplaats} other {# zitplaatsen}}",
       "perSeat": "/ zitplaats"
+    },
+    "checkout": {
+      "method": "Betaalmethode",
+      "methods": {
+        "card": {
+          "title": "Kaart",
+          "description": "Visa, Mastercard en meer, in rekening gebracht in {currency}"
+        },
+        "alipay": {
+          "title": "Alipay",
+          "description": "In rekening gebracht in {currency}"
+        },
+        "wechat": {
+          "title": "WeChat Pay",
+          "description": "In rekening gebracht in {currency}"
+        }
+      },
+      "amount": {
+        "label": "Bedrag ({currency})",
+        "range": "Tussen {min} en {max}",
+        "invalid": "Voer een bedrag binnen dit bereik in, met maximaal twee decimalen"
+      },
+      "pay": "{amount} betalen",
+      "payNoAmount": "Betalen",
+      "finePrint": {
+        "card": "Kaartbetalingen worden verwerkt door Creem, onze merchant of record, die waar van toepassing omzetbelasting of btw toevoegt.",
+        "wallet": "Wordt gecrediteerd zodra de betaling is bevestigd."
+      },
+      "qr": {
+        "alt": "QR-code voor betaling",
+        "alipay": "Scan met Alipay. Deze pagina wordt automatisch bijgewerkt zodra u heeft betaald.",
+        "wechat": "Scan met WeChat. Deze pagina wordt automatisch bijgewerkt zodra u heeft betaald."
+      },
+      "changeMethod": "Op een andere manier betalen",
+      "confirming": {
+        "title": "Uw betaling wordt bevestigd",
+        "body": "Dit duurt meestal maar een paar seconden. Deze pagina verlaten stopt de creditering niet."
+      },
+      "paid": {
+        "title": "Betaling ontvangen",
+        "body": "Deze is toegevoegd aan uw {product}-account."
+      },
+      "backTo": "Terug naar {product}",
+      "billing": "facturering",
+      "expired": {
+        "title": "Deze betaling is niet voltooid",
+        "body": "Er is niets in rekening gebracht. Begin opnieuw wanneer u er klaar voor bent."
+      },
+      "lost": {
+        "title": "Deze pagina kan de betaling niet vinden",
+        "body": "Als u heeft betaald, wordt dit alsnog gecrediteerd. Uw bestellingen staan onder facturering."
+      },
+      "tryAgain": "Opnieuw betalen",
+      "viewOrders": "Bestellingen bekijken",
+      "closed": {
+        "title": "Betalingen zijn nog niet geopend",
+        "body": "Er is momenteel geen betaalmethode beschikbaar voor dit aanbod. Probeer het later opnieuw."
+      },
+      "notForSale": {
+        "title": "Dit aanbod is niet te koop",
+        "body": "De link is mogelijk verouderd. Ga terug naar het product en kies opnieuw."
+      },
+      "unavailable": {
+        "title": "Afrekenen is niet beschikbaar",
+        "body": "De betalingsservice kon niet worden bereikt. Probeer het straks opnieuw."
+      },
+      "problems": {
+        "forbidden": "Alleen een eigenaar, beheerder of factureringsbeheerder van deze organisatie kan betalen.",
+        "unavailable": "De betalingsservice heeft niet gereageerd. Er is niets in rekening gebracht; probeer het opnieuw.",
+        "rejected": "Deze betaling kon niet worden gestart. Controleer het bedrag en probeer het opnieuw."
+      }
+    },
+    "orders": {
+      "title": "Bestellingen",
+      "description": "Betalingen voor elk product, nieuwste eerst.",
+      "empty": "Er is nog niets gekocht. Betalingen vanuit elk product worden hier vermeld.",
+      "unavailable": "Bestellingen konden niet worden geladen. Probeer het straks opnieuw.",
+      "columns": {
+        "date": "Datum",
+        "item": "Item",
+        "method": "Betaald met",
+        "amount": "Bedrag",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Wacht op betaling",
+        "CREDITING": "Betaald, wordt gecrediteerd",
+        "PAID": "Betaald",
+        "PARTIALLY_REFUNDED": "Gedeeltelijk terugbetaald",
+        "REFUNDED": "Terugbetaald",
+        "EXPIRED": "Niet voltooid"
+      }
     }
   },
   "organizations": {
