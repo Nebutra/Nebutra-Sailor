@@ -9146,6 +9146,33 @@
                           "product": {
                             "type": "string"
                           },
+                          "account": {
+                            "type": "string",
+                            "enum": ["personal", "organization", "workspace"]
+                          },
+                          "kind": {
+                            "type": "string"
+                          },
+                          "grants": {
+                            "type": "object",
+                            "properties": {
+                              "credits": {
+                                "type": "number"
+                              },
+                              "tier": {
+                                "type": "string"
+                              },
+                              "days": {
+                                "type": "number"
+                              },
+                              "monthlyCredits": {
+                                "type": "number"
+                              },
+                              "expiresInDays": {
+                                "type": "number"
+                              }
+                            }
+                          },
                           "name": {
                             "type": "string"
                           },
@@ -9193,7 +9220,7 @@
                             "type": "string"
                           }
                         },
-                        "required": ["id", "product", "name"]
+                        "required": ["id", "product", "account", "kind", "grants", "name"]
                       }
                     }
                   },

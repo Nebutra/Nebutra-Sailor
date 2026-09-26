@@ -4449,6 +4449,16 @@ export interface paths {
               offers: {
                 id: string;
                 product: string;
+                /** @enum {string} */
+                account: "personal" | "organization" | "workspace";
+                kind: string;
+                grants: {
+                  credits?: number;
+                  tier?: string;
+                  days?: number;
+                  monthlyCredits?: number;
+                  expiresInDays?: number;
+                };
                 name: string;
                 prices?: {
                   USD?: number;

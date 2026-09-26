@@ -144,6 +144,21 @@ export async function requireAuth() {
 }
 
 /**
+ * Require a signed-in user, and send a signed-out one back to `path` after
+ * signing in rather than to the dashboard — for pages reached from another
+ * product, like checkout.
+ */
+export async function requireAuthReturningTo(path: string) {
+  const { userId } = await getAuth();
+  if (!userId) {
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || defaultPublicUrls.appUrl;
+    const safePath = path.startsWith("/") && !path.startsWith("//") ? path : "/";
+    redirect(buildAuthCenterSignInUrl(new URL(safePath, appUrl).toString()));
+  }
+  return { userId };
+}
+
+/**
  * Require organization membership
  * Use for multi-tenant routes
  */

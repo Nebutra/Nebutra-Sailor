@@ -20,6 +20,7 @@
   "dependencies": {
     "@nebutra/atelier-canvas": "workspace:*",
     "@nebutra/auth": "workspace:*",
+    "@nebutra/billing": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",

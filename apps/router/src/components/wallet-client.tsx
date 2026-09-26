@@ -1,5 +1,6 @@
 "use client";
 
+import { checkoutLink } from "@nebutra/billing/links";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
@@ -25,13 +26,14 @@ const MIN_TOP_UP = 5;
 const OFFER_ID = "router_topup";
 
 export function checkoutUrl(amount: number, returnTo: string): string {
-  const base = process.env.NEXT_PUBLIC_CHECKOUT_URL?.trim() || `${getBrandOrigin("app")}/checkout`;
-  const url = new URL(base);
-  url.searchParams.set("offer", OFFER_ID);
-  url.searchParams.set("amount", String(amount));
-  url.searchParams.set("currency", "USD");
-  url.searchParams.set("returnTo", returnTo);
-  return url.toString();
+  return checkoutLink({
+    checkoutUrl:
+      process.env.NEXT_PUBLIC_CHECKOUT_URL?.trim() || `${getBrandOrigin("app")}/checkout`,
+    offerId: OFFER_ID,
+    amount,
+    currency: "USD",
+    returnTo,
+  });
 }
 
 export function WalletClient() {
