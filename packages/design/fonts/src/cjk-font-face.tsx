@@ -31,6 +31,12 @@ export function misansFontFaceCss(origin?: string): string {
 export interface CjkFontFaceProps {
   /** Asset origin override; defaults to the publicAssetUrl() resolution. */
   origin?: string;
+  /**
+   * CSP nonce, for apps whose style-src allows inline styles only by nonce
+   * (apps/web). Without it the whole @font-face block is refused. The page's
+   * font-src must also allow publicAssetOrigin().
+   */
+  nonce?: string;
 }
 
 /**
@@ -38,9 +44,9 @@ export interface CjkFontFaceProps {
  * React 19 hoists a `<style>` carrying `href` + `precedence` into <head> and
  * dedupes it by `href`, so rendering it twice costs nothing.
  */
-export function CjkFontFace({ origin }: CjkFontFaceProps) {
+export function CjkFontFace({ origin, nonce }: CjkFontFaceProps) {
   return (
-    <style href="nebutra-misans" precedence="default">
+    <style href="nebutra-misans" precedence="default" nonce={nonce || undefined}>
       {misansFontFaceCss(origin)}
     </style>
   );

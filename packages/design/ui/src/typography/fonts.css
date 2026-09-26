@@ -81,18 +81,8 @@ body {
   font-weight: 400;
 }
 
-/* Headings */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading), var(--font-cjk);
-  /* Theme/DESIGN can lighten headings via fontWeight.heading; default 600. */
-  font-weight: var(--font-weight-heading, 600);
-  line-height: 1.25;
-}
+/* Headings: one rule, in @nebutra/design-tokens static/base.css
+   (--font-heading at --font-weight-heading). Not re-declared here. */
 
 /* Code */
 code,

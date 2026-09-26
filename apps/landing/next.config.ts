@@ -1,4 +1,4 @@
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
+import { getBrandOrigin, publicAssetOrigin } from "@nebutra/brand/metadata-helpers";
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
@@ -79,7 +79,8 @@ function buildContentSecurityPolicy(): string {
       "https://ui-avatars.com",
       cdnOrigin,
     ]),
-    cspDirective("font-src", ["'self'", "data:"]),
+    // MiSans is served from the public asset origin (<CjkFontFace />).
+    cspDirective("font-src", ["'self'", "data:", publicAssetOrigin()]),
     cspDirective("media-src", ["'self'", "https://d8j0ntlcm91z4.cloudfront.net"]),
     cspDirective("connect-src", [
       "'self'",

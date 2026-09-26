@@ -55,6 +55,16 @@ export function getDocsUrl(service: BrandService = "landing", path = ""): string
   return `${getBrandOrigin(service)}/docs${suffix ? `/${suffix}` : ""}`;
 }
 
+/**
+ * The origin publicAssetUrl() resolves against — for CSP directives. A page
+ * that loads public assets (images, the MiSans subsets) must allow exactly
+ * this origin, or the browser blocks the request with no error on the page:
+ * font-src 'self' blocked every MiSans face on nebutra.com until 2026-09-26.
+ */
+export function publicAssetOrigin(base?: string): string {
+  return new URL(publicAssetUrl("x", base)).origin;
+}
+
 export function publicAssetUrl(key: string, base?: string): string {
   const origin = (
     base ||
