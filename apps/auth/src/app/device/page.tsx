@@ -37,7 +37,11 @@ export default async function DevicePage({
   );
 
   if (!center) {
-    const returnTo = `/device${rawUserCode ? `?user_code=${encodeURIComponent(rawUserCode)}` : ""}`;
+    // Absolute, not `/device?…`: sign-in resolves a bare path against the
+    // product app (app.<apex>), which has no /device — the browser landed
+    // there after login and the code could never be approved. This page
+    // lives on the auth center, so the way back names it.
+    const returnTo = `${authBase}/device${rawUserCode ? `?user_code=${encodeURIComponent(rawUserCode)}` : ""}`;
     redirect(`/sign-in?returnTo=${encodeURIComponent(returnTo)}`);
   }
 

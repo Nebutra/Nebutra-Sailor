@@ -115,10 +115,26 @@ export interface PollOptions {
   /** Called before each wait, e.g. to print a spinner tick. Not called
    * before the very first attempt. */
   onWaiting?: (intervalSeconds: number) => void;
+  /** A poll got no answer and will be retried after backing off. */
+  onTransientFailure?: (error: unknown) => void;
   sleep?: (ms: number) => Promise<void>;
 }
 
 const defaultSleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+const MAX_BACKOFF_SECONDS = 30;
+
+/**
+ * A poll that never got an answer: the request timed out, the connection
+ * dropped, or the server failed (5xx, surfaced as `request_failed`). Distinct
+ * from the RFC 8628 errors, which are answers and end the loop.
+ */
+export function isTransientPollFailure(error: unknown): boolean {
+  if (error instanceof DeviceAuthError) return error.code === "request_failed";
+  if (error instanceof TypeError) return true; // fetch: network failure
+  const name = (error as { name?: unknown } | null)?.name;
+  return name === "TimeoutError" || name === "AbortError";
+}
 
 /**
  * Polls `/device/token` until approved, denied, or expired — honouring
@@ -144,13 +160,21 @@ export async function pollUntilComplete(
     try {
       return await pollDeviceToken(baseUrl, deviceCode, fetchImpl);
     } catch (error) {
+      if (isTransientPollFailure(error)) {
+        // RFC 8628 §3.5: on a connection timeout the client backs off and
+        // keeps polling. One slow or dropped request is not a verdict on the
+        // device code — only the server's answer, or the deadline, is.
+        interval = Math.min(interval + 5, MAX_BACKOFF_SECONDS);
+        options.onTransientFailure?.(error);
+        continue;
+      }
       if (!(error instanceof DeviceAuthError)) throw error;
       if (error.code === "authorization_pending") continue;
       if (error.code === "slow_down") {
         interval += 5;
         continue;
       }
-      // expired_token, access_denied, invalid_grant, request_failed — fatal.
+      // expired_token, access_denied, invalid_grant — the server's answer.
       throw error;
     }
   }

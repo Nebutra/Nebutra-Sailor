@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { type MockAuthServer, startMockAuthServer } from "../../tests/device-auth-mock-server";
 import {
   fetchWhoami,
+  isTransientPollFailure,
   pollUntilComplete,
   requestDeviceCode,
   resolveAuthBaseUrl,
@@ -106,5 +107,87 @@ describe("device-auth", () => {
     server = await startMockAuthServer();
     const identity = await fetchWhoami(server.url, "not-a-real-token");
     expect(identity).toBeNull();
+  });
+
+  describe("transient poll failures (RFC 8628 §3.5)", () => {
+    const token = { access_token: "tok", token_type: "Bearer" };
+    const json = (status: number, body: unknown) =>
+      new Response(JSON.stringify(body), {
+        status,
+        headers: { "content-type": "application/json" },
+      });
+    const timeout = () =>
+      Object.assign(new Error("The operation was aborted due to timeout"), {
+        name: "TimeoutError",
+      });
+
+    it("keeps polling past a timeout, a dropped connection and a 5xx, then resolves", async () => {
+      const answers: Array<() => Response> = [
+        () => {
+          throw timeout();
+        },
+        () => {
+          throw new TypeError("fetch failed");
+        },
+        () => json(503, {}),
+        () => json(400, { error: "authorization_pending" }),
+        () => json(200, token),
+      ];
+      const fetchImpl = (async () => answers.shift()!()) as unknown as typeof fetch;
+      const transient: unknown[] = [];
+
+      const result = await pollUntilComplete("https://auth.example", "dc", {
+        intervalSeconds: 5,
+        deadline: Date.now() + 60_000,
+        fetchImpl,
+        sleep: async () => {},
+        onTransientFailure: (e) => transient.push(e),
+      });
+
+      expect(result.access_token).toBe("tok");
+      expect(transient).toHaveLength(3);
+    });
+
+    it("still ends on the server's answer", async () => {
+      const fetchImpl = (async () =>
+        json(400, { error: "access_denied" })) as unknown as typeof fetch;
+      await expect(
+        pollUntilComplete("https://auth.example", "dc", {
+          intervalSeconds: 5,
+          deadline: Date.now() + 60_000,
+          fetchImpl,
+          sleep: async () => {},
+        }),
+      ).rejects.toMatchObject({ code: "access_denied" });
+    });
+
+    it("gives up at the deadline even while every poll times out", async () => {
+      let now = 0;
+      const fetchImpl = (async () => {
+        throw timeout();
+      }) as unknown as typeof fetch;
+      const realNow = Date.now;
+      Date.now = () => now;
+      try {
+        await expect(
+          pollUntilComplete("https://auth.example", "dc", {
+            intervalSeconds: 5,
+            deadline: 100_000,
+            fetchImpl,
+            sleep: async (ms) => {
+              now += ms;
+            },
+          }),
+        ).rejects.toMatchObject({ code: "expired_token" });
+      } finally {
+        Date.now = realNow;
+      }
+    });
+
+    it("classifies failures without an answer as transient, answers as not", () => {
+      expect(isTransientPollFailure(timeout())).toBe(true);
+      expect(isTransientPollFailure(new TypeError("fetch failed"))).toBe(true);
+      expect(isTransientPollFailure(new Error("boom"))).toBe(false);
+    });
   });
 });
