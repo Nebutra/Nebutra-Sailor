@@ -144,6 +144,19 @@ export {
   invalidateCreditCache,
   refundCredits,
 } from "./credits/index";
+// Creem — the global card rail, merchant of record (ADR 2026-09-26)
+export {
+  type CreemCheckout,
+  type CreemConfig,
+  type CreemOrder,
+  type CreemWebhookEvent,
+  createCreemCheckout,
+  getCreemCheckout,
+  getCreemConfig,
+  isCreemConfigured,
+  refundCreemOrder,
+  verifyCreemSignature,
+} from "./creem/index";
 // Host DB wiring (no private @nebutra/db import)
 export {
   type BillingTenantDb,

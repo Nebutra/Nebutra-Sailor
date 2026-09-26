@@ -87,6 +87,7 @@ import { taskRoutes } from "./routes/tasks/index.js";
 import { uploadRoutes } from "./routes/uploads/index.js";
 import {
   chinaPayWebhookRoutes,
+  creemWebhookRoutes,
   getAuthWebhookRoutes,
   stripeWebhookRoutes,
 } from "./routes/webhooks/index.js";
@@ -394,6 +395,7 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
   // Webhook routes (raw body — bypass rate limiting)
   app.route("/api/webhooks", stripeWebhookRoutes);
   app.route("/api/webhooks", chinaPayWebhookRoutes);
+  app.route("/api/webhooks", creemWebhookRoutes);
   // Auth webhook routes (provider-agnostic) — initialized during startup
   const authWebhookRoutes = await getAuthWebhookRoutes();
   app.route("/api/webhooks", authWebhookRoutes);

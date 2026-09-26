@@ -61,6 +61,10 @@ export async function getCheckout(config?: CheckoutConfig): Promise<CheckoutProv
   const provider = config?.provider ?? detectProvider();
 
   switch (provider) {
+    case "creem": {
+      const { CreemCheckoutProvider } = await import("./creem");
+      return new CreemCheckoutProvider();
+    }
     case "stripe": {
       const { StripeCheckoutProvider } = await import("./stripe");
       return new StripeCheckoutProvider();

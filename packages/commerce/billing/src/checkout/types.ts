@@ -7,11 +7,11 @@ import { z } from "zod";
 // knows the order id, what to call it and how much to charge — never what is
 // being sold. That lives in the order's fulfillment spec.
 //
-// Which providers are live is decided by the keys in the env (STRIPE_SECRET_KEY,
+// Which providers are live is decided by the keys in the env (CREEM_API_KEY,
 // ALIPAY_APP_ID, WECHATPAY_MCHID); the buyer's chosen method picks among them.
 // =============================================================================
 
-export type CheckoutProviderType = "stripe" | "chinapay" | "manual";
+export type CheckoutProviderType = "creem" | "stripe" | "chinapay" | "manual";
 
 export const PaymentSessionInputSchema = z.object({
   /** The PaymentOrder id — also the provider's merchant order number. */
@@ -50,6 +50,7 @@ export interface CheckoutProvider {
 }
 
 export type CheckoutConfig =
+  | { provider: "creem" }
   | { provider: "stripe"; secretKey?: string }
   | { provider: "chinapay" }
   | { provider: "manual" };
