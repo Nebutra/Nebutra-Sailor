@@ -23,7 +23,10 @@ describe("apps/web Vite migration contract", () => {
     expect(packageJson.scripts.dev).toBe("vite --host 0.0.0.0 --port 3001");
     expect(packageJson.scripts.build).toContain("vite build");
     expect(packageJson.scripts.build).not.toContain("next build");
-    expect(packageJson.scripts.typecheck).toBe("tsc --noEmit --pretty false");
+    // #659 added a second pass over the Next app sources (tsconfig.app.json).
+    expect(packageJson.scripts.typecheck).toBe(
+      "tsc --noEmit --pretty false && tsc -p tsconfig.app.json --pretty false",
+    );
 
     expect(packageJson.dependencies["@tanstack/react-router"]).toBe("1.170.13");
     expect(packageJson.dependencies["@tanstack/react-query"]).toBe("5.101.0");
