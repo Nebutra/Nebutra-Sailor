@@ -1,5 +1,19 @@
 # @nebutra/kuanlan
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`6684e47`](https://github.com/Nebutra/Nebutra-Sailor/commit/6684e47930383dc572406c6f900827827375278b)]:
+  - @nebutra/billing@3.0.0
+  - @nebutra/brand@3.0.0
+  - @nebutra/fonts@3.0.0
+  - @nebutra/logger@3.0.0
+  - @nebutra/tokens@3.0.0
+  - @nebutra/auth@2.0.0
+  - @nebutra/db@0.1.4
+  - @nebutra/repositories@0.0.5
+
 ## 0.1.1
 
 ### Patch Changes

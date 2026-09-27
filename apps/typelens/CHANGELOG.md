@@ -1,5 +1,16 @@
 # @nebutra/typelens
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@3.0.0
+  - @nebutra/fonts@3.0.0
+  - @nebutra/icons@3.0.0
+  - @nebutra/tokens@3.0.0
+  - @nebutra/ui@3.0.0
+
 ## 0.1.2
 
 ### Patch Changes

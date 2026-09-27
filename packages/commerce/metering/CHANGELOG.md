@@ -1,5 +1,12 @@
 # @nebutra/metering
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/logger@3.0.0
+
 ## 2.0.0
 
 ### Patch Changes

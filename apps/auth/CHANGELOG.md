@@ -1,5 +1,21 @@
 # @nebutra/auth-center
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@3.0.0
+  - @nebutra/fonts@3.0.0
+  - @nebutra/icons@3.0.0
+  - @nebutra/logger@3.0.0
+  - @nebutra/tokens@3.0.0
+  - @nebutra/ui@3.0.0
+  - @nebutra/auth@2.0.0
+  - @nebutra/i18n@3.0.0
+  - @nebutra/sms@0.1.4
+  - @nebutra/db@0.1.4
+
 ## 0.1.2
 
 ### Patch Changes

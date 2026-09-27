@@ -1,5 +1,13 @@
 # @nebutra/legal
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@3.0.0
+  - @nebutra/db@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes

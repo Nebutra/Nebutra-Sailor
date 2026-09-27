@@ -1,5 +1,15 @@
 # @nebutra/ui
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@3.0.0
+  - @nebutra/graph-model@3.0.0
+  - @nebutra/icons@3.0.0
+  - @nebutra/tokens@3.0.0
+
 ## 2.0.0
 
 ### Patch Changes
