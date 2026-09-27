@@ -2399,9 +2399,6 @@
       "packages/design/ui/src/catalog/demos/dotted-map-demo.tsx": {
         "palette": 1
       },
-      "packages/design/ui/src/catalog/demos/feature-arrow-card-demo.tsx": {
-        "palette": 11
-      },
       "packages/design/ui/src/catalog/demos/feature-check-item-demo.tsx": {
         "palette": 2
       },

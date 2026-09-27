@@ -152,7 +152,6 @@ export const DEMO_LOADERS: Readonly<Record<string, () => Promise<ComponentType>>
   "expandable-gallery-demo": () => import("@nebutra/ui/catalog/demos/expandable-gallery-demo").then(pick("ExpandableGalleryDemo")),
   "expandable-tabs-demo": () => import("@nebutra/ui/catalog/demos/expandable-tabs-demo").then(pick("ExpandableTabsDemo")),
   "expanding-textarea-demo": () => import("@nebutra/ui/catalog/demos/expanding-textarea-demo").then(pick("ExpandingTextareaDemo")),
-  "feature-arrow-card-demo": () => import("@nebutra/ui/catalog/demos/feature-arrow-card-demo").then(pick("FeatureArrowCardDemo")),
   "feature-card-demo": () => import("@nebutra/ui/catalog/demos/feature-card-demo").then(pick("FeatureCardDemo")),
   "feature-check-item-demo": () => import("@nebutra/ui/catalog/demos/feature-check-item-demo").then(pick("FeatureCheckItemDemo")),
   "feature-icon-item-demo": () => import("@nebutra/ui/catalog/demos/feature-icon-item-demo").then(pick("FeatureIconItemDemo")),

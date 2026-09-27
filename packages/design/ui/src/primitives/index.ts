@@ -198,7 +198,6 @@ export * from "./error-message";
 export * from "./expandable-gallery";
 export * from "./expandable-tabs";
 export * from "./expanding-textarea";
-export * from "./feature-arrow-card";
 /**
  * @registry https://ui.nebutra.com/r/feature-card.json
  * @distribution dual-track (npm + shadcn registry) until 2026-11-09.

@@ -1453,15 +1453,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     demos: ["display-cards-demo"],
   },
   {
-    id: "feature-arrow-card",
-    title: "Feature Arrow Card",
-    category: "marketing",
-    status: "experimental",
-    import: "@nebutra/ui/primitives",
-    files: ["primitives/feature-arrow-card.tsx"],
-    demos: ["feature-arrow-card-demo"],
-  },
-  {
     id: "feature-card",
     title: "Feature Card",
     category: "marketing",
