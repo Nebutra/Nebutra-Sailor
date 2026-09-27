@@ -445,9 +445,13 @@ const NEBUTRA_ONLY_ENUMS = [
 
 function stripNebutraOnlyModels(targetDir: string): number {
   const schemaPath = path.join(targetDir, "packages/platform/db/prisma/schema.prisma");
-  if (!fs.existsSync(schemaPath)) return 0;
 
-  let src = fs.readFileSync(schemaPath, "utf8");
+  let src: string;
+  try {
+    src = fs.readFileSync(schemaPath, "utf8");
+  } catch {
+    return 0; // no schema in this tree
+  }
   let removed = 0;
 
   const removeBlock = (kind: "model" | "enum", name: string) => {
@@ -571,7 +575,8 @@ function pruneUnreachableLanding(targetDir: string): number {
   for (;;) {
     const { unreachable, sources } = moduleReach(app);
     const brokenTests = sources.filter((rel: string) => {
-      if (!/__tests__\/|\.(test|spec)\.tsx?$/.test(rel)) return false;
+      const isTest = rel.includes("__tests__/") || /\.(test|spec)\.tsx?$/.test(rel);
+      if (!isTest) return false;
       const abs = path.join(app, rel);
       return localImports(abs).some((spec: string) => resolveSpecifier(src, abs, spec) === null);
     });

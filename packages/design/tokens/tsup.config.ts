@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { defineConfig } from "tsup";
 
@@ -12,8 +12,12 @@ import { defineConfig } from "tsup";
 const CLIENT_DIST_ENTRIES = ["index", "brand-package/use-brand"] as const;
 
 function prependUseClient(distFile: string): void {
-  if (!existsSync(distFile)) return;
-  const content = readFileSync(distFile, "utf-8");
+  let content: string;
+  try {
+    content = readFileSync(distFile, "utf-8");
+  } catch {
+    return; // entry not emitted
+  }
   if (/^\s*["']use client["']/.test(content)) return;
   writeFileSync(distFile, `"use client";\n${content}`);
 }

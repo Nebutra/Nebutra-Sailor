@@ -4685,9 +4685,6 @@ importers:
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
-      '@nebutra/tokens':
-        specifier: workspace:*
-        version: link:../../design/tokens
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -4710,6 +4707,9 @@ importers:
       '@nebutra/theme':
         specifier: workspace:*
         version: link:../../design/theme
+      '@nebutra/tokens':
+        specifier: workspace:*
+        version: link:../../design/tokens
       '@nebutra/ui':
         specifier: workspace:*
         version: link:../../design/ui
@@ -4737,9 +4737,6 @@ importers:
       '@mrleebo/prisma-ast':
         specifier: ^0.16.0
         version: 0.16.0
-      '@nebutra/tokens':
-        specifier: workspace:*
-        version: link:../../design/tokens
       cfonts:
         specifier: ^3.3.0
         version: 3.3.1
@@ -4765,6 +4762,9 @@ importers:
       '@nebutra/preset':
         specifier: workspace:*
         version: link:../preset
+      '@nebutra/tokens':
+        specifier: workspace:*
+        version: link:../../design/tokens
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.1

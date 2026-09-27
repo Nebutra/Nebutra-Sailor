@@ -80,7 +80,10 @@ function renderIcon(icon: IconInput | undefined) {
   // @nebutra/icons export is one) — rather than an element to place as-is.
   if (
     typeof icon === "function" ||
-    (typeof icon === "object" && icon !== null && !isValidElement(icon) && "$$typeof" in icon)
+    (!isValidElement(icon) &&
+      typeof icon === "object" &&
+      Boolean(icon) &&
+      "$$typeof" in Object(icon))
   ) {
     const Icon = icon as IconComponent;
     return <Icon aria-hidden className="size-7 text-primary" />;

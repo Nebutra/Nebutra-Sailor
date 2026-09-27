@@ -30,7 +30,6 @@
   "dependencies": {
     "@clack/prompts": "^1.5.0",
     "@mrleebo/prisma-ast": "^0.16.0",
-    "@nebutra/tokens": "workspace:*",
     "cfonts": "^3.3.0",
     "commander": "^15.0.0",
     "gradient-string": "^3.0.0",
@@ -41,6 +40,7 @@
   "devDependencies": {
     "@nebutra/brand": "workspace:*",
     "@nebutra/preset": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
     "@types/node": "catalog:",
     "@types/update-notifier": "^6.0.8",
     "tsup": "catalog:",

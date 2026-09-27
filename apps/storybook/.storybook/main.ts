@@ -104,6 +104,12 @@ const config: StorybookConfig = {
             replacement: resolve(HERE, "../../../packages/design/tokens/src/index.ts"),
           },
           {
+            // Displays read the generated values; alias to source so a Storybook
+            // build does not need @nebutra/tokens built first (Chromatic builds brand only).
+            find: /^@nebutra\/tokens\/values$/,
+            replacement: resolve(HERE, "../../../packages/design/tokens/src/values.ts"),
+          },
+          {
             find: /^@nebutra\/tokens\/styles\.css$/,
             replacement: resolve(HERE, "../../../packages/design/tokens/styles.css"),
           },

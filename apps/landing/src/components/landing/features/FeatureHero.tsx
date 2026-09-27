@@ -58,96 +58,94 @@ export function FeatureHero({
   const paragraphAlign = isCenter ? "mx-auto" : "";
 
   return (
-    <section
-      className="relative isolate mx-auto flex max-w-wide flex-col px-4 pt-36 pb-20 sm:px-6 lg:px-8"
-      data-align={align}
-    >
-      <AuroraBackground
-        variant={tokens.ambient}
-        position="top"
-        intensity={0.55}
-        className="inset-y-0 left-1/2 right-auto w-screen -translate-x-1/2"
-      />
-
-      <div className={`relative flex flex-col gap-6 ${stackAlign}`}>
-        {backHref && backLabel ? (
-          <AnimateIn preset="fade" inView>
-            <Link
-              className="group/back inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em] transition-colors hover:text-foreground"
-              href={backHref}
-            >
-              <ArrowRight aria-hidden="true" className="size-3 rotate-180" />
-              {backLabel}
-            </Link>
-          </AnimateIn>
-        ) : null}
-
-        <AnimateIn preset="fade" inView delay={0.05}>
-          <div className={`flex flex-wrap items-center gap-2 ${badgeRowAlign}`}>
-            <Badge
-              variant="outline"
-              size="sm"
-              className="gap-1.5 font-mono uppercase tracking-[0.18em]"
-            >
-              <Icon className="size-3" />
-              {eyebrow}
-            </Badge>
-            {path ? (
-              <Badge
-                variant="secondary"
-                size="sm"
-                className="font-mono normal-case tracking-normal"
-                translate="no"
+    // The aurora bleeds to the edges of the content column, not the viewport:
+    // beside the Nebutra site's rail a w-screen layer overflowed by the rail's width.
+    <div className="relative isolate">
+      <AuroraBackground variant={tokens.ambient} position="top" intensity={0.55} />
+      <section
+        className="relative mx-auto flex max-w-wide flex-col px-4 pt-36 pb-20 sm:px-6 lg:px-8"
+        data-align={align}
+      >
+        <div className={`relative flex flex-col gap-6 ${stackAlign}`}>
+          {backHref && backLabel ? (
+            <AnimateIn preset="fade" inView>
+              <Link
+                className="group/back inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em] transition-colors hover:text-foreground"
+                href={backHref}
               >
-                {path}
+                <ArrowRight aria-hidden="true" className="size-3 rotate-180" />
+                {backLabel}
+              </Link>
+            </AnimateIn>
+          ) : null}
+
+          <AnimateIn preset="fade" inView delay={0.05}>
+            <div className={`flex flex-wrap items-center gap-2 ${badgeRowAlign}`}>
+              <Badge
+                variant="outline"
+                size="sm"
+                className="gap-1.5 font-mono uppercase tracking-[0.18em]"
+              >
+                <Icon className="size-3" />
+                {eyebrow}
               </Badge>
-            ) : null}
-          </div>
-        </AnimateIn>
+              {path ? (
+                <Badge
+                  variant="secondary"
+                  size="sm"
+                  className="font-mono normal-case tracking-normal"
+                  translate="no"
+                >
+                  {path}
+                </Badge>
+              ) : null}
+            </div>
+          </AnimateIn>
 
-        <AnimateIn preset="fadeUp" inView delay={0.1}>
-          <h1
-            className="font-semibold text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-[5.5rem]"
-            style={{ letterSpacing: "var(--tracking-display)", lineHeight: 1.05 }}
-          >
-            <span translate="no">{titlePrefix}</span>{" "}
-            <AuroraText colors={tokens.auroraColors} speed={0.6}>
-              {titleSuffix}
-            </AuroraText>
-          </h1>
-        </AnimateIn>
-
-        <AnimateIn preset="fadeUp" inView delay={0.18}>
-          <p
-            className={`max-w-2xl text-base text-muted-foreground leading-relaxed sm:text-lg ${paragraphAlign}`}
-          >
-            {summary}
-          </p>
-        </AnimateIn>
-
-        {primaryCtaHref && primaryCtaLabel ? (
-          <AnimateIn preset="fadeUp" inView delay={0.26}>
-            <a
-              href={primaryCtaHref}
-              target="_blank"
-              rel="noreferrer"
-              className="group/cta inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-opacity hover:opacity-90"
+          <AnimateIn preset="fadeUp" inView delay={0.1}>
+            <h1
+              className="font-semibold text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-[5.5rem]"
+              style={{ letterSpacing: "var(--tracking-display)", lineHeight: 1.05 }}
             >
-              {primaryCtaLabel}
-              <ArrowUpRight
-                aria-hidden="true"
-                className="size-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
-              />
-            </a>
+              <span translate="no">{titlePrefix}</span>{" "}
+              <AuroraText colors={tokens.auroraColors} speed={0.6}>
+                {titleSuffix}
+              </AuroraText>
+            </h1>
           </AnimateIn>
-        ) : null}
 
-        {children ? (
-          <AnimateIn preset="fadeUp" inView delay={0.32}>
-            {children}
+          <AnimateIn preset="fadeUp" inView delay={0.18}>
+            <p
+              className={`max-w-2xl text-base text-muted-foreground leading-relaxed sm:text-lg ${paragraphAlign}`}
+            >
+              {summary}
+            </p>
           </AnimateIn>
-        ) : null}
-      </div>
-    </section>
+
+          {primaryCtaHref && primaryCtaLabel ? (
+            <AnimateIn preset="fadeUp" inView delay={0.26}>
+              <a
+                href={primaryCtaHref}
+                target="_blank"
+                rel="noreferrer"
+                className="group/cta inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-opacity hover:opacity-90"
+              >
+                {primaryCtaLabel}
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="size-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
+                />
+              </a>
+            </AnimateIn>
+          ) : null}
+
+          {children ? (
+            <AnimateIn preset="fadeUp" inView delay={0.32}>
+              {children}
+            </AnimateIn>
+          ) : null}
+        </div>
+      </section>
+    </div>
   );
 }

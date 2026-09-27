@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
-    "@nebutra/tokens": "workspace:*",
     "commander": "^12.1.0",
     "node-fetch": "^3.3.2",
     "p-timeout": "^6.1.4",
@@ -50,6 +49,7 @@
     "@nebutra/brand": "workspace:*",
     "@nebutra/preset": "workspace:*",
     "@nebutra/theme": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@types/node": "catalog:",
     "@types/node-fetch": "^2.6.13",

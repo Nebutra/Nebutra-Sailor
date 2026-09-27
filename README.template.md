@@ -540,7 +540,7 @@ Sailor is **provider-agnostic**: every platform package below auto-detects its b
 │   ├── design/            # 9 pkgs  — e.g. ui, tokens, design-tokens, brand, theme, icons, fonts
 │   ├── iam/               # 8 pkgs — auth, audit, vault, oauth, permissions, tenant, identity, captcha
 │   ├── integrations/      # 17 pkgs — e.g. queue, search, email, notifications, storage, webhooks, cache
-│   ├── ops/               # 6 pkgs — cli, create-sailor, preset, sanity, supabase, china-compliance
+│   ├── ops/               # 5 pkgs — cli, create-sailor, preset, sanity, china-compliance
 │   └── platform/          # 21 pkgs — e.g. db, logger, repositories, rate-limit, feature-flags, i18n, status
 ├── backends/                  # No-UI backends (split by language à la vercel/vercel)
 │   ├── gateway/               # TypeScript / Hono — BFF, auth, tenancy, routing

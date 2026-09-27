@@ -130,7 +130,6 @@ const docsDriftSources = [
   "DESIGN.md",
   "packages/design/brand/README.md",
   "apps/storybook/src/stories/Typography.stories.tsx",
-  "apps/sailor-docs/src/components/typography-demos.tsx",
 ].map((relativePath) => ({ relativePath, content: read(relativePath) }));
 const runtimeFontSources = [
   {
