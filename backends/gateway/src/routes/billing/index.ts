@@ -31,7 +31,15 @@ import { getUsageSnapshot } from "../../middlewares/usageMetering.js";
 import { billingServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
 
 export const billingRoutes = new OpenAPIHono();
-billingRoutes.use("*", requireAuth, requireOrganization);
+// Scoped to this file's own paths, never "*": several routers share the
+// /api/v1/billing mount, and a "*" here ran in front of all of them — it made
+// the public offer catalog require a session, and a personal purchase (a
+// Kuanlan pack) require an organization the buyer does not have.
+billingRoutes.use("/checkout", requireAuth, requireOrganization);
+billingRoutes.use("/provider-status", requireAuth, requireOrganization);
+billingRoutes.use("/portal", requireAuth, requireOrganization);
+billingRoutes.use("/subscription", requireAuth, requireOrganization);
+billingRoutes.use("/usage", requireAuth, requireOrganization);
 billingRoutes.use("/checkout", requireBillingManage);
 billingRoutes.use("/portal", requireBillingManage);
 

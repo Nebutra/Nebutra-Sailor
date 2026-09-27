@@ -4,6 +4,7 @@ import { getAuthenticatedApi } from "@/lib/api";
 import { requireAuthReturningTo } from "@/lib/auth";
 import {
   type CheckoutOffer,
+  type Currency,
   defaultMethod,
   type LiveMethod,
   methodsFor,
@@ -70,10 +71,10 @@ export default async function CheckoutPage({
   const locale = await getLocale();
   const requestedAmount = Number(first(params.amount));
   const requestedCurrency = first(params.currency);
+  const currency: Currency | undefined =
+    requestedCurrency === "USD" || requestedCurrency === "CNY" ? requestedCurrency : undefined;
   const initialAmount =
-    Number.isFinite(requestedAmount) && (requestedCurrency === "USD" || requestedCurrency === "CNY")
-      ? { value: requestedAmount, currency: requestedCurrency }
-      : undefined;
+    Number.isFinite(requestedAmount) && currency ? { value: requestedAmount, currency } : undefined;
 
   return (
     <section className="mx-auto w-full max-w-text px-4 py-12">
