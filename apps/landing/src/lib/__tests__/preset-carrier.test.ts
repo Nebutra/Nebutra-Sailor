@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { carrierForPreset, PREVIEW_CARRIER_ROOT } from "../preview-carrier";
+import { carrierForPreset, PREVIEW_CARRIER_ROOT } from "../preset-carrier";
 
 describe("carrierForPreset", () => {
   it("emits the production carrier scoped to the preview artboard", () => {

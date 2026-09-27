@@ -43,7 +43,7 @@ const renderNode = (n: StepNode) => ({
 export function NodeGraphCanvasDemo() {
   const [graph, setGraph] = useState<Pipeline>(SEED);
   return (
-    <div className="h-80 w-full">
+    <div className="h-[28rem] w-full">
       <NodeGraphCanvas
         graph={graph}
         onChange={setGraph}

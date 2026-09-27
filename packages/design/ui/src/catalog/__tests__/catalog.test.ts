@@ -109,6 +109,9 @@ describe("UI catalog", () => {
       // A demo is the code a reader copies: no relative reaches into the library, no app aliases.
       const code = source.replace(/`[\s\S]*?`/g, "``");
       expect(code, id).not.toMatch(/from\s+["'](\.\.?\/|@\/)/);
+      // A demo shows the component, with copy a product would ship.
+      expect(code, `${id} renders nothing`).not.toMatch(/^\s*return null;/m);
+      expect(source, `${id} uses placeholder copy`).not.toMatch(/lorem ipsum/i);
     }
   });
 

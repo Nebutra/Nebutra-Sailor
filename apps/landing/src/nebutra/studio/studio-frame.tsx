@@ -13,8 +13,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { carrierForPreset } from "@/lib/preset-carrier";
 import { type FrameState, type FromFrame, isToFrame } from "./frame-protocol";
-import { carrierForPreset } from "./preview-carrier";
 
 /**
  * The catalog frame — Studio's Components view, rendered in its own document
@@ -126,7 +126,10 @@ function LazyDemo({ id }: { id: string }) {
     <div ref={ref} className="flex w-full items-center justify-center">
       {Demo ? (
         <DemoBoundary id={id}>
-          <Demo />
+          {/* A column, so a demo that returns several siblings stacks them. */}
+          <div className="flex min-w-0 max-w-full flex-col items-center">
+            <Demo />
+          </div>
         </DemoBoundary>
       ) : (
         <div className="h-24 w-full animate-pulse rounded-[var(--radius-md)] bg-muted/60" />

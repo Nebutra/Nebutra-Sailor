@@ -33,7 +33,7 @@ export function DialogSuccessDemo() {
         <DialogHeader className="text-center gap-0">
           <DialogTitle className="text-center">Payment successful</DialogTitle>
           <DialogDescription className="mt-2 text-center mx-auto sm:max-w-[90%]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore.
+            Your Team plan is active. A receipt for $240.00 is on its way to your inbox.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-center w-full mt-4">

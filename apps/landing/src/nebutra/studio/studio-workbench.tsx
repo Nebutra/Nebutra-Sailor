@@ -42,8 +42,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { carrierForPreset, type PreviewCarrier } from "@/lib/preset-carrier";
 import type { CatalogFilter } from "./frame-protocol";
-import { carrierForPreset, type PreviewCarrier } from "./preview-carrier";
 import { CatalogControls, CatalogFrame } from "./studio-catalog";
 import { StudioKnobs } from "./studio-knobs";
 import { presetArgument, StudioOutput } from "./studio-output";

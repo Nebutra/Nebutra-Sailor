@@ -37,21 +37,20 @@ export function ProgressiveBlurDemo() {
           <div className="inset-0 p-4 space-y-4 pt-16 pb-16 absolute overflow-y-auto">
             <h4 className="font-bold text-xl mb-4 text-center">Terms of Service</h4>
             <p className="text-sm leading-relaxed mb-4 text-foreground/80">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              These terms govern your use of the service. By creating an account you agree to them
+              on behalf of yourself and the workspace you create.
             </p>
             <p className="text-sm leading-relaxed mb-4 text-foreground/80">
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat.
+              You keep ownership of everything you upload. We process it only to run the service and
+              never to train models without your written consent.
             </p>
             <p className="text-sm leading-relaxed mb-4 text-foreground/80">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+              Paid plans renew monthly or yearly until cancelled. Cancelling stops the next renewal;
+              the current period stays active until it ends.
             </p>
             <p className="text-sm leading-relaxed text-foreground/80">
-              Sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.
+              We may update these terms. Material changes are announced by email at least 30 days
+              before they take effect, and you can export your data at any time before then.
             </p>
           </div>
           <ProgressiveBlur position="both" />
