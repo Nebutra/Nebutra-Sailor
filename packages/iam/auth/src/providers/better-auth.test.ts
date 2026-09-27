@@ -42,18 +42,42 @@ afterEach(() => {
 });
 
 describe("createBetterAuthProvider env validation", () => {
-  it("throws with explicit guidance when BETTER_AUTH_SECRET is missing", () => {
+  it("rejects a local-instance call with explicit guidance when BETTER_AUTH_SECRET is missing", async () => {
     delete process.env.BETTER_AUTH_SECRET;
-    expect(() => createBetterAuthProvider({ provider: "better-auth" })).toThrow(
-      /BETTER_AUTH_SECRET/,
-    );
+    const provider = createBetterAuthProvider({ provider: "better-auth" });
+    await expect(provider.getUser("user_1")).rejects.toThrow(/BETTER_AUTH_SECRET/);
+    await expect(provider.getUser("user_1")).rejects.toThrow(/openssl rand -base64 32/);
   });
 
-  it("includes secret-generation hint in the error message", () => {
+  // router. and para. ran with no secret; construction threw, their
+  // requireAuth read it as "signed out", and a signed-in user looped on
+  // /sign-in (2026-09-27). A relying party asks the auth center instead.
+  it("resolves a relying party's session at the auth center without a secret of its own", async () => {
     delete process.env.BETTER_AUTH_SECRET;
-    expect(() => createBetterAuthProvider({ provider: "better-auth" })).toThrow(
-      /openssl rand -base64 32/,
+    process.env.BETTER_AUTH_URL = "https://auth.nebutra.com";
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          session: { id: "sess_1", userId: "user_1", expiresAt: "2099-01-01T00:00:00.000Z" },
+          user: { id: "user_1", email: "a@example.com" },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      ),
     );
+
+    const provider = createBetterAuthProvider({ provider: "better-auth" });
+    const session = await provider.getSession(
+      new Request("https://router.nebutra.com/dashboard", {
+        headers: { cookie: "__Secure-better-auth.session_token=t" },
+      }),
+    );
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "https://auth.nebutra.com/api/auth/get-session",
+      expect.anything(),
+    );
+    expect(session?.userId).toBe("user_1");
+    fetchSpy.mockRestore();
   });
 });
 

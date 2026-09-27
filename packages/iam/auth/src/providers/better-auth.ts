@@ -92,13 +92,13 @@ export { resolveBetterAuthTrustedOrigins } from "./better-auth/trusted-origins";
  * never pull in the dependency.
  */
 export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
+  // The secret is checked where a local Better Auth instance is built, not
+  // here. A product app (router., para.) is a relying party: getSession asks
+  // the auth center and needs no secret of its own. Throwing at construction
+  // made every getSession on such a host fail before it could ask, and the
+  // app's requireAuth, reading the failure as "signed out", bounced a
+  // signed-in user back to sign-in forever (2026-09-27, router + para).
   const secret = process.env.BETTER_AUTH_SECRET;
-  if (!secret) {
-    throw new Error(
-      "BETTER_AUTH_SECRET environment variable is required for the Better Auth provider. " +
-        "Generate one with: openssl rand -base64 32",
-    );
-  }
 
   // Build social providers object conditionally
   const socialProviders: Record<string, { clientId: string; clientSecret: string }> = {};
@@ -157,6 +157,12 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
   let authInstance: Awaited<ReturnType<typeof initAuth>> | null = null;
 
   async function initAuth() {
+    if (!secret) {
+      throw new Error(
+        "BETTER_AUTH_SECRET environment variable is required for the Better Auth provider. " +
+          "Generate one with: openssl rand -base64 32",
+      );
+    }
     const { betterAuth } = await import("better-auth");
     const { prismaAdapter } = await import("better-auth/adapters/prisma");
 
