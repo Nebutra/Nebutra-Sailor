@@ -6,6 +6,7 @@ import { CommandInstallBox } from "@/components/landing/CommandInstallBox";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { REPO_URL } from "@/nebutra/data/repo";
 import { SailorCli } from "@/nebutra/home/sailor-cli";
+import { ACME_SITE } from "@/nebutra/routes";
 import { sitePageMeta } from "@/nebutra/seo";
 import { Band, Intro } from "@/nebutra/ui/page";
 
@@ -43,6 +44,13 @@ export default async function SailorPage({ params }: { params: Promise<{ lang: s
               className="text-secondary-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               Source on GitHub
+            </a>{" "}
+            ·{" "}
+            <a
+              href={ACME_SITE}
+              className="text-secondary-foreground underline-offset-4 hover:text-foreground hover:underline"
+            >
+              See the site you get
             </a>{" "}
             ·{" "}
             <Link

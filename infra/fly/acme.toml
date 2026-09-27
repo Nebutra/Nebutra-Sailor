@@ -1,0 +1,33 @@
+# acme.nebutra.com — the site a Sailor project starts as: the template build of
+# apps/landing (scripts/template-build.ts), deployed on its own by
+# .github/workflows/deploy-acme.yml. It follows Sailor Studio: the look a
+# visitor chose there is painted from a shared cookie (NEXT_PUBLIC_PRESET_PREVIEW).
+app = "nebutra-acme"
+primary_region = "sin"
+
+[env]
+  HOSTNAME = "0.0.0.0"
+  PORT = "8080"
+  # proxy.ts host allowlist: the template's brand config names placeholder
+  # hosts, so the demo's real names are listed here.
+  ALLOWED_HOSTS = "nebutra-acme.fly.dev,acme.nebutra.com"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  # A demonstration site: stop when idle, start on the next request.
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "45s"
+  interval = "30s"
+  method = "GET"
+  timeout = "8s"
+  path = "/api/e2e/health"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

@@ -1,0 +1,147 @@
+name: Deploy acme (the site you get)
+
+# acme.nebutra.com is the Sailor template's own site, built from exactly what
+# create-sailor hands a new project (scripts/template-build.ts), deployed as its
+# own Fly app. It follows Sailor Studio: NEXT_PUBLIC_PRESET_PREVIEW lets it wear
+# the look a visitor last chose there (apps/landing/src/components/preset-preview.tsx).
+
+on:
+  workflow_dispatch:
+    inputs:
+      cutover:
+        description: "After a healthy Fly URL, issue the Fly certificate and point acme.nebutra.com at it"
+        required: false
+        default: "false"
+        type: boolean
+  push:
+    branches: [main]
+    paths:
+      - "apps/landing/**"
+      - "packages/design/**"
+      - "scripts/template-build.ts"
+      - "scripts/lib/module-reach.mjs"
+      - ".templateignore"
+      - "infra/fly/acme.toml"
+      - "infra/runtime/docker/Dockerfile.standalone"
+      - ".github/workflows/deploy-acme.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-acme-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Fly acme
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      FLY_APP: nebutra-acme
+      SITE: https://acme.nebutra.com
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token)."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if '${FLY_APP}' in names else 1)"; then
+            echo "app ${FLY_APP} exists"
+          else
+            flyctl apps create "${FLY_APP}" --machines --org "$org" --yes
+          fi
+
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build the template
+        run: pnpm tsx scripts/template-build.ts --out="$RUNNER_TEMP/acme"
+
+      - name: Install the template
+        working-directory: ${{ runner.temp }}/acme
+        run: pnpm install --no-frozen-lockfile --ignore-scripts
+
+      - name: Build the template's landing
+        working-directory: ${{ runner.temp }}/acme
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_OUTPUT: standalone
+          NEXT_PUBLIC_SITE_URL: ${{ env.SITE }}
+          NEXT_PUBLIC_PRESET_PREVIEW: "1"
+          DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
+          REDIS_URL: "redis://localhost:6379"
+        run: |
+          set -euo pipefail
+          pnpm turbo build --filter="@nebutra/landing^..."
+          pnpm --filter @nebutra/landing build
+
+      - name: Assemble image context
+        working-directory: ${{ runner.temp }}/acme
+        run: bash infra/ops/scripts/assemble-next-standalone.sh apps/landing "$RUNNER_TEMP/stage-acme" landing
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy "$RUNNER_TEMP/stage-acme" \
+            --config "$GITHUB_WORKSPACE/infra/fly/acme.toml" \
+            --dockerfile "$RUNNER_TEMP/stage-acme/Dockerfile" \
+            --build-arg "APP_WORKSPACE=apps/landing" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Smoke Fly URL
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          url="https://${FLY_APP}.fly.dev/"
+          code="000"
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -L "$url" || echo 000)
+            echo "GET $url try $i -> $code"
+            [ "$code" = "200" ] && break
+            sleep 10
+          done
+          if [ "$code" != "200" ]; then
+            flyctl status -a "${FLY_APP}" || true
+            flyctl logs -a "${FLY_APP}" --no-tail || true
+            echo "::error::$url is not healthy ($code). DNS will not cut over."
+            exit 1
+          fi
+          css=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "https://${FLY_APP}.fly.dev/preset-preview.css")
+          echo "GET /preset-preview.css -> $css"
+          [ "$css" = "200" ] || { echo "::error::the preset preview stylesheet is not served ($css)"; exit 1; }
+
+      - name: Issue the Fly certificate
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl certs add acme.nebutra.com -a "${FLY_APP}" || flyctl certs show acme.nebutra.com -a "${FLY_APP}"
+
+      - name: Point acme.nebutra.com at Fly
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          HOST: acme
+        run: bash infra/ops/scripts/point-host-dns-fly.sh

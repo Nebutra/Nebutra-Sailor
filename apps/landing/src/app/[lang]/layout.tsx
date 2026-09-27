@@ -18,9 +18,11 @@ import { ConsentGatedTelemetry } from "@/components/consent-gated-telemetry";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { IcpFooter } from "@/components/icp-footer";
+import { PresetPreview } from "@/components/preset-preview";
 import RouteSkeleton from "@/components/ui/route-skeleton";
 import { type Locale, routing } from "@/i18n/routing";
 import { seoContent } from "@/lib/landing-content";
+import { PRESET_PREVIEW } from "@/lib/preset-preview-flag";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getPublicNavigationItems } from "@/lib/seo/site-routes";
 import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
@@ -194,6 +196,10 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
       suppressHydrationWarning
     >
       <body className="antialiased">
+        {PRESET_PREVIEW ? (
+          // The visitor's Sailor Studio look, from their cookie, in the first paint.
+          <link rel="stylesheet" href="/preset-preview.css" precedence="high" />
+        ) : null}
         <CjkFontFace />
 
         <a
@@ -227,6 +233,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
               {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
               <Toaster />
               <CookieConsentBanner />
+              {PRESET_PREVIEW ? <PresetPreview /> : null}
             </NextIntlClientProvider>
           </ErrorBoundary>
         </Providers>

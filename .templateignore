@@ -293,6 +293,7 @@ tests/architecture/nebutra/
 .github/workflows/deploy-auth-cloudflare.yml
 .github/workflows/deploy-fly-gateway.yml
 .github/workflows/deploy-fly.yml
+.github/workflows/deploy-acme.yml
 .github/workflows/deploy-redis-fly.yml
 .github/workflows/deploy-kuanlan-nginx.yml
 .github/workflows/issue-fly-certs.yml
@@ -316,6 +317,7 @@ tests/architecture/nebutra/
 # Brand replacement does not rewrite Fly app names, so none is a template
 # default. The two Dockerfiles and the nginx conf exist only for carina /
 # dns-leak, whose deploy workflows are stripped above.
+infra/fly/acme.toml
 infra/fly/admin.toml
 infra/fly/ai.toml
 infra/fly/auth.toml
