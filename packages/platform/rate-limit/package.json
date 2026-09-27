@@ -36,5 +36,5 @@
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.36.3"
   },
-  "license": "AGPL-3.0-only"
+  "license": "FSL-1.1-ALv2"
 }

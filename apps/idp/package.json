@@ -39,5 +39,5 @@
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "license": "AGPL-3.0-only"
+  "license": "FSL-1.1-ALv2"
 }

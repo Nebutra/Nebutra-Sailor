@@ -47,5 +47,5 @@
     "vitest": "catalog:",
     "wrangler": "4.112.0"
   },
-  "license": "AGPL-3.0-only"
+  "license": "FSL-1.1-ALv2"
 }

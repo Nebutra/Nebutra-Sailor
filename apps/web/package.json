@@ -113,5 +113,5 @@
     "vite": "catalog:",
     "vitest": "^4.0.18"
   },
-  "license": "AGPL-3.0-only"
+  "license": "FSL-1.1-ALv2"
 }

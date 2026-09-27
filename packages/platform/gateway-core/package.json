@@ -45,7 +45,7 @@
     "vitest": "catalog:",
     "@vitest/coverage-v8": "catalog:"
   },
-  "license": "AGPL-3.0-only",
+  "license": "FSL-1.1-ALv2",
   "imports": {
     "#tokenizer": {
       "workerd": "./dist/metering/encoding.workerd.js",
