@@ -53,9 +53,14 @@ describe("capability folder showcase data", () => {
 
   /**
    * These numbers are generated, not hand-maintained — the landing page
-   * advertises them as real repository metrics, so drift is a factual claim
-   * going stale. Do NOT fix a failure here by editing the constants: run
-   * `pnpm gen:capability-stats`, which derives them with these exact rules.
+   * advertises them as real repository metrics. What must hold is that the
+   * claim is true, not that it matches every commit: a declared figure may
+   * never exceed what the repository has (that would overclaim), and may lag
+   * it by at most 10% (that would be stale). Demanding an exact match turned
+   * main red after nearly every merge that added a file, since each PR
+   * regenerated against its own base. Do NOT fix a failure here by editing the
+   * constants: run `pnpm gen:capability-stats`, which derives them with these
+   * exact rules.
    */
   it("keeps source metrics grounded in the current repository", () => {
     const stale: string[] = [];
@@ -70,8 +75,13 @@ describe("capability folder showcase data", () => {
       };
 
       for (const [key, value] of Object.entries(actual) as [keyof typeof actual, number][]) {
-        if (declared[key] !== value) {
-          stale.push(`${folder.id}.${key}: declared ${declared[key]}, repository has ${value}`);
+        const claim = declared[key];
+        if (claim > value) {
+          stale.push(`${folder.id}.${key}: declares ${claim}, repository has only ${value}`);
+        } else if (claim < Math.floor(value * 0.9)) {
+          stale.push(
+            `${folder.id}.${key}: declares ${claim}, repository has ${value} (over 10% behind)`,
+          );
         }
       }
     }
