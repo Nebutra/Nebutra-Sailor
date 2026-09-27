@@ -1,5 +1,14 @@
 # @nebutra/play-loader
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@3.0.0
+  - @nebutra/errors@3.0.0
+  - @nebutra/tool-registry@3.0.0
+
 ## 0.1.4
 
 ### Patch Changes

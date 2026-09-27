@@ -1,5 +1,13 @@
 # @nebutra/analytics
 
+## 0.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`6684e47`](https://github.com/Nebutra/Nebutra-Sailor/commit/6684e47930383dc572406c6f900827827375278b)]:
+  - @nebutra/billing@3.0.0
+  - @nebutra/brand@3.0.0
+
 ## 0.0.5
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @nebutra/sailor-docs
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@3.0.0
+  - @nebutra/fonts@3.0.0
+  - @nebutra/icons@3.0.0
+  - @nebutra/tokens@3.0.0
+  - @nebutra/ui@3.0.0
+  - @nebutra/docs-shared@0.1.3
+
 ## 0.1.4
 
 ### Patch Changes

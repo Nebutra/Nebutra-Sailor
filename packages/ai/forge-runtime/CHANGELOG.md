@@ -1,5 +1,12 @@
 # @nebutra/forge-runtime
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/ai-providers@3.0.0
+
 ## 1.0.0
 
 ### Patch Changes

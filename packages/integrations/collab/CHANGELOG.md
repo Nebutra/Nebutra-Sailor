@@ -1,5 +1,13 @@
 # @nebutra/collab
 
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@3.0.0
+  - @nebutra/tenant-store@3.0.0
+
 ## 0.2.4
 
 ### Patch Changes

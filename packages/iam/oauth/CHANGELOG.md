@@ -1,5 +1,15 @@
 # @nebutra/oauth-server
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`6684e47`](https://github.com/Nebutra/Nebutra-Sailor/commit/6684e47930383dc572406c6f900827827375278b)]:
+  - @nebutra/identity@3.0.0
+  - @nebutra/contracts@3.0.0
+  - @nebutra/vault@3.0.0
+  - @nebutra/db@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes

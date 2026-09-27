@@ -1,5 +1,16 @@
 # @nebutra/knowledge-rag
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`6684e47`](https://github.com/Nebutra/Nebutra-Sailor/commit/6684e47930383dc572406c6f900827827375278b)]:
+  - @nebutra/search@3.0.0
+  - @nebutra/agents@3.0.0
+  - @nebutra/errors@3.0.0
+  - @nebutra/logger@3.0.0
+  - @nebutra/tenant-store@3.0.0
+
 ## 2.0.0
 
 ### Patch Changes

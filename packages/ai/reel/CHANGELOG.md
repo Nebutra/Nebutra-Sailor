@@ -1,5 +1,17 @@
 # @nebutra/reel
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agents@3.0.0
+  - @nebutra/graph-model@3.0.0
+  - @nebutra/icons@3.0.0
+  - @nebutra/logger@3.0.0
+  - @nebutra/tenant-store@3.0.0
+  - @nebutra/ui@3.0.0
+
 ## 2.0.0
 
 ### Patch Changes

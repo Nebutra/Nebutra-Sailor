@@ -1,5 +1,17 @@
 # @nebutra/outreach-engine
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@3.0.0
+  - @nebutra/errors@3.0.0
+  - @nebutra/event-log@3.0.0
+  - @nebutra/content-store@0.1.6
+  - @nebutra/play-loader@0.1.5
+  - @nebutra/generation-context@0.1.5
+
 ## 0.1.5
 
 ### Patch Changes
