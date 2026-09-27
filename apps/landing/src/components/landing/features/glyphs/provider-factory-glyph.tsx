@@ -8,7 +8,7 @@ type ProviderOption = {
 };
 
 const PROVIDERS: ProviderOption[] = [
-  { name: "Stripe", active: true },
+  { name: "Creem", active: true },
   { name: "WeChat Pay", active: true },
   { name: "Alipay", active: true },
 ];

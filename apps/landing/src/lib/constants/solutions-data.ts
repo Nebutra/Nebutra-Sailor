@@ -139,8 +139,8 @@ export const SOLUTIONS: Solution[] = [
       {
         title: { en: "Payments without rewrites", zh: "支付无需重写" },
         body: {
-          en: "Stripe plus WeChat Pay / Alipay behind one billing contract — both live the moment you add their keys.",
-          zh: "Stripe 与微信支付 / 支付宝收敛到同一套计费契约后面——配好密钥即可同时上线。",
+          en: "Creem (cards, merchant of record) plus WeChat Pay / Alipay behind one billing contract — both live the moment you add their keys.",
+          zh: "Creem（全球卡组织，交易商户）与微信支付 / 支付宝收敛到同一套计费契约后面——配好密钥即可同时上线。",
         },
       },
       {
@@ -286,16 +286,16 @@ export const SOLUTIONS: Solution[] = [
       title: { en: "One stack,", zh: "一套技术栈," },
       titleAccent: { en: "zero decisions", zh: "零决策" },
       summary: {
-        en: "Queue, search, auth, billing and storage each have one answer — Better Auth, QStash, Postgres, Stripe — behind an interface, not a picklist.",
-        zh: "队列、搜索、鉴权、计费、存储各自只有一个答案——Better Auth、QStash、Postgres、Stripe——都在接口后面,而不是一份选型清单。",
+        en: "Queue, search, auth, billing and storage each have one answer — Better Auth, QStash, Postgres, Creem — behind an interface, not a picklist.",
+        zh: "队列、搜索、鉴权、计费、存储各自只有一个答案——Better Auth、QStash、Postgres、Creem——都在接口后面,而不是一份选型清单。",
       },
     },
     useCases: [
       {
         title: { en: "One answer per domain", zh: "每个领域一个答案" },
         body: {
-          en: "Better Auth for identity, QStash for queues, Postgres (pgvector + full-text) for search, Stripe for billing — the interface stayed, the alternatives didn't.",
-          zh: "身份用 Better Auth,队列用 QStash,搜索用 Postgres(pgvector + 全文检索),计费用 Stripe——接口留下了,备选项没有。",
+          en: "Better Auth for identity, QStash for queues, Postgres (pgvector + full-text) for search, Creem for billing — the interface stayed, the alternatives didn't.",
+          zh: "身份用 Better Auth,队列用 QStash,搜索用 Postgres(pgvector + 全文检索),计费用 Creem——接口留下了,备选项没有。",
         },
       },
       {
@@ -308,8 +308,8 @@ export const SOLUTIONS: Solution[] = [
       {
         title: { en: "China pairs, not a matrix", zh: "中国双轨,而非矩阵" },
         body: {
-          en: "Payments (Stripe + WeChat Pay/Alipay), SMS (Twilio Verify + Aliyun) and storage (R2/OSS on one S3-compatible client) keep a second adapter only where mainland law or network access makes the default unusable — both live as soon as their keys are set.",
-          zh: "支付(Stripe + 微信支付/支付宝)、短信(Twilio Verify + 阿里云)、存储(同一套 S3 兼容客户端接入 R2/OSS)——只有在中国大陆的法律或网络因素让默认方案走不通时,才保留第二套适配器;配好密钥两边都能同时上线。",
+          en: "Payments (Creem + WeChat Pay/Alipay), SMS (Twilio Verify + Aliyun) and storage (R2/OSS on one S3-compatible client) keep a second adapter only where mainland law or network access makes the default unusable — both live as soon as their keys are set.",
+          zh: "支付(Creem + 微信支付/支付宝)、短信(Twilio Verify + 阿里云)、存储(同一套 S3 兼容客户端接入 R2/OSS)——只有在中国大陆的法律或网络因素让默认方案走不通时,才保留第二套适配器;配好密钥两边都能同时上线。",
         },
       },
     ],

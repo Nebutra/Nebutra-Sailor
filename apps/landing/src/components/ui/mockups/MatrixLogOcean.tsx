@@ -11,7 +11,7 @@ const MOCK_LOGS = [
   "[INFO] Scaled @nebutra/web deployment to 4 replicas",
   "[SUCCESS] 853 vitest suites passed",
   "[INFO] Pretext calculated zero-DOM layout for 10,000 nodes in 0.01ms",
-  "[WARN] Fallback proxy route activated for stripe-webhook",
+  "[WARN] Fallback proxy route activated for creem-webhook",
   "[INFO] Running pgvector index rebuild on 'ecommerce' schema",
   "[SUCCESS] 7 architecture test assertions passed",
   "[DEBUG] Sent rate-limit heartbeat to Redis cluster",

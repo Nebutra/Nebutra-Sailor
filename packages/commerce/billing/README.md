@@ -5,13 +5,22 @@ adapters need credentials and the UI surfaces belong to the consuming app.
 
 Comprehensive billing and monetization infrastructure for Nebutra SaaS platform.
 
+The current payments pair is **Creem** (cards worldwide, merchant of record —
+collects and remits sales tax/VAT) **+ WeChat Pay / Alipay** (mainland China),
+per [ADR 2026-09-26](../../../docs/architecture/2026-09-26-creem-global-payments.md).
+Stripe is legacy-only: its code stays so checkouts opened before the switch
+still complete, but nothing new is built on it and it is not advertised as a
+current rail.
+
 ## Features
 
-- **Stripe Integration** - Subscriptions, payments, customers, checkout sessions
+- **Creem Integration** - Global card checkout, merchant of record (tax handled), refunds
+- **Wallet Rails** - WeChat Pay / Alipay for mainland China
 - **Usage Tracking** - Metering, limits, overage pricing
 - **Credits System** - Balance management, transactions, purchases
 - **Entitlements** - Feature flags, plan-based access control
-- **Webhook Handling** - Automated subscription lifecycle management
+- **Webhook Handling** - Automated payment-order settlement
+- **Stripe (legacy)** - Kept only for checkouts opened before the Creem switch
 
 ## Installation
 
@@ -23,22 +32,20 @@ pnpm add @nebutra/billing
 
 ```typescript
 import {
-  initStripe,
-  createCheckoutSession,
+  isCreemConfigured,
+  createCreemCheckout,
   recordUsage,
   checkEntitlement,
 } from "@nebutra/billing";
 
-// Initialize Stripe
-initStripe({ secretKey: process.env.STRIPE_SECRET_KEY! });
-
-// Create checkout session
-const session = await createCheckoutSession({
-  customerId: "cus_xxx",
-  priceId: "price_xxx",
-  successUrl: "https://app.example.com/success",
-  cancelUrl: "https://app.example.com/cancel",
-});
+// Creem is live once CREEM_API_KEY and CREEM_PRODUCT_ID are set
+if (isCreemConfigured(process.env)) {
+  const checkout = await createCreemCheckout({
+    requestId: "order_xxx",
+    customPriceMinor: 2900,
+    successUrl: "https://app.example.com/success",
+  });
+}
 
 // Record usage
 recordUsage({
@@ -60,21 +67,62 @@ if (result.allowed) {
 Set the following environment variables:
 
 ```bash
-# Stripe
-STRIPE_SECRET_KEY=sk_test_xxx
-STRIPE_PUBLISHABLE_KEY=pk_test_xxx
-STRIPE_WEBHOOK_SECRET=whsec_xxx
+# Creem — the current card rail (merchant of record)
+CREEM_API_KEY=creem_xxx
+CREEM_PRODUCT_ID=prod_xxx
+CREEM_WEBHOOK_SECRET=whsec_xxx
+CREEM_TEST_MODE=true   # points at test-api.creem.io
 
-# Price IDs (create in Stripe Dashboard)
-STRIPE_PRICE_ID_PRO_MONTHLY=price_xxx
-STRIPE_PRICE_ID_PRO_YEARLY=price_xxx
-STRIPE_PRICE_ID_ENTERPRISE_MONTHLY=price_xxx
-STRIPE_PRICE_ID_ENTERPRISE_YEARLY=price_xxx
+# WeChat Pay / Alipay — mainland China
+WECHATPAY_MCHID=
+WECHATPAY_APP_ID=
+WECHATPAY_PRIVATE_KEY=
+WECHATPAY_SERIAL_NO=
+WECHATPAY_API_V3_KEY=
+ALIPAY_APP_ID=
+ALIPAY_PRIVATE_KEY=
+ALIPAY_PUBLIC_KEY=
 ```
+
+Legacy Stripe env vars (`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
+`STRIPE_PRICE_ID_*`) are still read by the old subscription/credit-purchase
+code paths under `src/stripe`, but are not part of the current setup — see
+the ADR for what still depends on them.
 
 ## Modules
 
-### Stripe (`@nebutra/billing/stripe`)
+### Creem (`@nebutra/billing`, checkout provider `"creem"`)
+
+```typescript
+import {
+  createCreemCheckout,
+  getCreemCheckout,
+  refundCreemOrder,
+  verifyCreemSignature,
+  isCreemConfigured,
+} from "@nebutra/billing";
+
+// One-time checkout — one Creem product carries every offer via custom_price
+const checkout = await createCreemCheckout({
+  requestId: "order_xxx",
+  customPriceMinor: 2900,
+  successUrl: "/success",
+});
+redirect(checkout.checkout_url);
+
+// Reconcile a pending order (in case a webhook was lost)
+const { status, order } = await getCreemCheckout(checkout.id);
+
+// Refunds are full-only — Creem's API takes no amount, and looks the
+// transaction up by Creem order id
+await refundCreemOrder(creemOrderId);
+```
+
+Webhook: `POST /api/webhooks/creem` — see `backends/gateway/src/routes/webhooks/creem.ts`.
+`checkout.completed` settles the order; the order's pre-tax amount is compared
+against the locked offer price, since Creem adds tax on top as merchant of record.
+
+### Stripe (`@nebutra/billing/stripe`) — legacy, do not build new features on this
 
 ```typescript
 import {
@@ -93,7 +141,7 @@ const customer = await createCustomer({
   metadata: { organizationId: "org_xxx" },
 });
 
-// Checkout session
+// Checkout session — only reachable via the legacy credit_purchase path
 const session = await createCheckoutSession({
   customerId: customer.id,
   priceId: "price_xxx",
@@ -109,6 +157,10 @@ const portal = await createBillingPortalSession({
 ```
 
 ### Subscriptions (`@nebutra/billing/subscriptions`)
+
+Subscriptions still run on Stripe today (legacy). When subscriptions move to
+Creem, they will be Creem subscriptions (`subscription.*` events) through the
+same payment-order and fulfillment seams — see the ADR.
 
 ```typescript
 import {
@@ -279,14 +331,20 @@ const FEATURES = {
 
 ## Webhook Events
 
-The billing system handles these Stripe webhook events:
+Creem (current card rail, `POST /api/webhooks/creem`):
+
+- `checkout.completed` - Settles a payment order (one-time card purchase)
+- `subscription.*` - Reserved for when subscriptions move to Creem
+
+Stripe (legacy, `POST /api/webhooks/stripe` — only feeds surfaces that have
+not yet moved to Creem):
 
 - `checkout.session.completed` - New subscription
 - `customer.subscription.updated` - Plan changes
 - `customer.subscription.deleted` - Cancellations
 - `invoice.paid` - Successful payments
 - `invoice.payment_failed` - Failed payments
-- `payment_intent.succeeded` - Credit purchases
+- `payment_intent.succeeded` - Legacy credit purchases
 
 ## Database Schema
 

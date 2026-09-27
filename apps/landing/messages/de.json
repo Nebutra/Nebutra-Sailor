@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Enterprise SaaS-Automatisierung",
-      "description": "Tiefe Integration von Postgres, Better Auth und Stripe. Bietet sofortige Datensicherheit und globales Biling."
+      "description": "Tiefe Integration von Postgres, Better Auth und Creem. Bietet sofortige Datensicherheit und globales Biling."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Welche Verarbeitungsinfrastruktur isoliert Zahlungsvektoren?",
-              "a": "Das globale Zahlungs-Routing stützt sich grundsätzlich auf die Stripe-Server-Schnittstellen und gewährleistet strikte PCI-DSS-Telemetrie und Verarbeitungsintegrität. Enterprise-Deployments können private Finanz-Audit-Pipelines mit individuellen SLA-Verpflichtungen integrieren."
+              "a": "Das globale Zahlungs-Routing stützt sich grundsätzlich auf die Creem-Server-Schnittstellen als Merchant of Record und gewährleistet strikte PCI-DSS-Telemetrie und Verarbeitungsintegrität. Enterprise-Deployments können private Finanz-Audit-Pipelines mit individuellen SLA-Verpflichtungen integrieren."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Zahlungsinformationen",
-              "desc": "Rechnungsadresse und Zahlungsmethodendetails (sicher verarbeitet über Stripe)."
+              "desc": "Rechnungsadresse und Zahlungsmethodendetails (sicher verarbeitet über Creem)."
             },
             "3": {
               "label": "Kommunikation",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Zahlungsabwicklung",
-              "desc": "Stripe für sichere Zahlungsabwicklung"
+              "desc": "Creem für sichere Zahlungsabwicklung"
             },
             "2": {
               "label": "Authentifizierung",
@@ -1056,7 +1056,7 @@
             "0": "Abonnements werden monatlich oder jährlich im Voraus abgerechnet",
             "1": "Alle Gebühren sind nicht erstattungsfähig, außer wie in unserer angegeben",
             "2": "Sie ermächtigen uns, Ihre Zahlungsmethode mit anfallenden Gebühren zu belasten",
-            "3": "Wir nutzen Stripe für die sichere Zahlungsabwicklung",
+            "3": "Wir nutzen Creem für die sichere Zahlungsabwicklung",
             "1RefundLink": "Erstattungsrichtlinie"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurieren",
-        "desc": "Richten Sie Prisma, Better Auth und Stripe in wenigen Minuten über die interaktive CLI ein."
+        "desc": "Richten Sie Prisma, Better Auth und Creem in wenigen Minuten über die interaktive CLI ein."
       },
       "step3": {
         "title": "3. Entwickeln",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "Multi-Protokoll-API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI für öffentliche APIs, oRPC für typsichere Frontend-Aufrufe, tRPC für T3-Stack-Kompatibilität. Alle Protokolle teilen dieselben Zod-Verträge und Middleware-Stack. Per Preset-Konfiguration protokollweise aktivierbar.",
       "billing_category": "Abrechnung & Monetarisierung",
-      "billing_f1_title": "Stripe & China Pay",
-      "billing_f1_desc": "Wählen Sie Ihren Zahlungsanbieter: Stripe für globale Unternehmen oder Alipay/WeChat Pay für den chinesischen Markt. Ein-Klick-Checkout und Self-Serve-Abrechnungsportal.",
+      "billing_f1_title": "Creem & China Pay",
+      "billing_f1_desc": "Wählen Sie Ihren Zahlungsanbieter: Creem für globale Unternehmen als Merchant of Record — es erhebt und führt Umsatzsteuer/Mehrwertsteuer selbst ab, sodass Sie sich nicht in jedem Land registrieren müssen — oder Alipay/WeChat Pay für den chinesischen Markt. Ein-Klick-Checkout und Self-Serve-Abrechnungsportal.",
       "billing_f2_title": "Nutzungsbasierte Kontingentdurchsetzung",
       "billing_f2_desc": "Echtzeit-Redis-Zähler verfolgen API-Aufrufe und Token-Nutzung pro Tenant. Anfragen werden am Gateway gestoppt, wenn Limits erreicht sind.",
       "billing_f3_title": "Webhook-Lifecycle-Synchronisation",
-      "billing_f3_desc": "Stripe-Abonnement-Events aktualisieren automatisch Organisationspläne in Ihrer Datenbank via Inngest — keine Cron-Jobs, kein Polling.",
+      "billing_f3_desc": "Zahlungs-Webhook-Events aktualisieren automatisch Organisationspläne in Ihrer Datenbank via Inngest — keine Cron-Jobs, kein Polling.",
       "rel_category": "Zuverlässigkeit",
       "rel_f1_title": "Circuit Breaker + Retry",
       "rel_f1_desc": "Jeder Python-Microservice verwendet einen CLOSED/OPEN/HALF_OPEN-Circuit-Breaker mit exponentiellem Backoff und Jitter — keine kaskadierenden Ausfälle.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Landingpages für globalen Softwareexport",
-        "desc": "Designed for cross-border SaaS. Built-in multi-currency Stripe checkout, next-intl i18n routing, and GDPR compliance.",
+        "desc": "Designed for cross-border SaaS. Built-in multi-currency Creem checkout, next-intl i18n routing, and GDPR compliance.",
         "features": {
           "f1": "Global Payments",
           "f2": "7 Languages Auto-routing"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Kann ich meinen eigenen Anbieter mitbringen?",
-          "answer": "Ja. Jede Integration (Auth, Queue, Suche, E-Mail, Zahlungen, Storage, Billing) ist anbieterunabhängig. Die Factory in jedem Paket wählt den richtigen Adapter aus einer einzigen Umgebungsvariable — nutzen Sie Better Auth, QStash, Resend oder Stripe — ohne Anwendungscode zu ändern."
+          "answer": "Ja. Jede Integration (Auth, Queue, Suche, E-Mail, Zahlungen, Storage, Billing) ist anbieterunabhängig. Die Factory in jedem Paket wählt den richtigen Adapter aus einer einzigen Umgebungsvariable — nutzen Sie Better Auth, QStash, Resend oder Creem — ohne Anwendungscode zu ändern."
         },
         "tech-stack": {
           "question": "Was ist der Tech-Stack?",

@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Enterprise SaaS-automatisering",
-      "description": "Diep geïntegreerde moderne tech stack van Postgres, Better Auth en Stripe. Biedt out-of-the-box row-level security, complexe multi-tenant isolatie en wereldwijde abonnementsfacturering."
+      "description": "Diep geïntegreerde moderne tech stack van Postgres, Better Auth en Creem. Biedt out-of-the-box row-level security, complexe multi-tenant isolatie en wereldwijde abonnementsfacturering."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Welke verwerkingsinfrastructuur isoleert betalingsvectoren?",
-              "a": "Wereldwijd geldrouten verzoeken fundamenteel aan Stripe-serverinterfaces, wat strikte PCI-DSS-telemetrie en verwerkingsintegriteit garandeert. Enterprise-implementaties kunnen private financiële auditpijplijnen integreren die worden beheerd door aangepaste SLA-verplichtingen."
+              "a": "Wereldwijd geldrouten verzoeken fundamenteel aan Creem-serverinterfaces als merchant of record, wat strikte PCI-DSS-telemetrie en verwerkingsintegriteit garandeert. Enterprise-implementaties kunnen private financiële auditpijplijnen integreren die worden beheerd door aangepaste SLA-verplichtingen."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Betalingsgegevens",
-              "desc": "Factuuradres en betalingsgegevens (veilig verwerkt via Stripe)."
+              "desc": "Factuuradres en betalingsgegevens (veilig verwerkt via Creem)."
             },
             "3": {
               "label": "Communicatie",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Betalingsverwerking",
-              "desc": "Stripe voor beveiligde betalingsafhandeling"
+              "desc": "Creem voor beveiligde betalingsafhandeling"
             },
             "2": {
               "label": "Authenticatie",
@@ -1056,7 +1056,7 @@
             "0": "Abonnementen worden vooraf gefactureerd op maandelijkse of jaarlijkse basis",
             "1": "Alle kosten zijn niet-terugbetaalbaar, tenzij anders vermeld in ons",
             "2": "U machtigt ons om uw betaalmethode te belasten met de toepasselijke kosten",
-            "3": "We gebruiken Stripe voor veilige betalingsverwerking",
+            "3": "We gebruiken Creem voor veilige betalingsverwerking",
             "1RefundLink": "Retourbeleid"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configureren",
-        "desc": "Stel Prisma, Better Auth en Stripe in via de interactieve CLI in enkele minuten."
+        "desc": "Stel Prisma, Better Auth en Creem in via de interactieve CLI in enkele minuten."
       },
       "step3": {
         "title": "3. Bouwen",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "Multi-protocol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI voor openbare API's, oRPC voor type-safe frontend-aanroepen, tRPC voor T3-stack-compatibiliteit. Alle protocollen delen dezelfde Zod-contracten en middleware-stack. Schakel per protocol in via preset-configuratie.",
       "billing_category": "Facturering & Monetarisatie",
-      "billing_f1_title": "Stripe & China Pay",
-      "billing_f1_desc": "Kies je betaalprovider: Stripe voor wereldwijd enterprise of Alipay/WeChat Pay voor de Chinese markt. Eén-klik checkout en zelfbedieningsfactureringsportaal.",
+      "billing_f1_title": "Creem & China Pay",
+      "billing_f1_desc": "Kies je betaalprovider: Creem als merchant of record voor wereldwijd enterprise — het int en draagt zelf btw/omzetbelasting af, zodat je je niet in elk land hoeft te registreren — of Alipay/WeChat Pay voor de Chinese markt. Eén-klik checkout en zelfbedieningsfactureringsportaal.",
       "billing_f2_title": "Quota-aafdwinging op basis van gebruik",
       "billing_f2_desc": "Real-time Redis-tellers houden API-aanroepen en tokengebruik per tenant bij. Aanvragen worden op de gateway geblokkeerd zodra limieten zijn bereikt.",
       "billing_f3_title": "Webhook-lifecycle synchronisatie",
-      "billing_f3_desc": "Stripe-abonnementsevents werken org-plannen automatisch bij in je database via Inngest — geen cron-jobs, geen polling.",
+      "billing_f3_desc": "Betalingswebhookevents werken org-plannen automatisch bij in je database via Inngest — geen cron-jobs, geen polling.",
       "rel_category": "Betrouwbaarheid",
       "rel_f1_title": "Circuit breaker + retry",
       "rel_f1_desc": "De gateway en AI-service gebruiken een CLOSED/OPEN/HALF_OPEN circuit breaker met exponentiële backoff en jitter — geen cascade-fouten.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Landingpagina's voor wereldwijde software-export",
-        "desc": "Speciaal ontworpen voor SaaS die wereldwijd uitbreidt. Multi-valuta Stripe-checkout, next-intl i18n-autorouting in 7 talen, GDPR/CCPA-compliance en geo-gerichte content.",
+        "desc": "Speciaal ontworpen voor SaaS die wereldwijd uitbreidt. Multi-valuta Creem-checkout, next-intl i18n-autorouting in 7 talen, GDPR/CCPA-compliance en geo-gerichte content.",
         "features": {
           "f1": "Wereldwijde betalingen in meerdere valuta",
           "f2": "7 talen + GDPR-klaar"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Kan ik mijn eigen provider meenemen?",
-          "answer": "Ja. Elke integratie (authenticatie, wachtrij, zoekopdracht, e-mail, betalingen, opslag, facturering) is provider-agnostisch. De fabriek in elk pakket kiest de juiste adapter uit een enkele omgevingsvariabele — de ingebouwde adapters zijn Better Auth, QStash, Resend en Stripe — zonder de applicatiecode aan te raken."
+          "answer": "Ja. Elke integratie (authenticatie, wachtrij, zoekopdracht, e-mail, betalingen, opslag, facturering) is provider-agnostisch. De fabriek in elk pakket kiest de juiste adapter uit een enkele omgevingsvariabele — de ingebouwde adapters zijn Better Auth, QStash, Resend en Creem — zonder de applicatiecode aan te raken."
         },
         "tech-stack": {
           "question": "Wat is de tech stack?",

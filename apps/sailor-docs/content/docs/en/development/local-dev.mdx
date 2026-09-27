@@ -132,8 +132,11 @@ Make sure the following are installed before you begin:
 | `REDIS_URL` | Yes | Redis connection string, e.g. `redis://localhost:6379` |
 | `AUTH_PROVIDER` | No | Auth provider: `better-auth` (the only real option) or `dev` (local fallback) |
 | `NEXT_PUBLIC_AUTH_PROVIDER` | No | Client-visible auth provider; keep aligned with `AUTH_PROVIDER` |
-| `STRIPE_SECRET_KEY` | Yes | Stripe secret key |
-| `STRIPE_WEBHOOK_SECRET` | Yes | Stripe webhook signing secret |
+| `CREEM_API_KEY` | For Creem checkout | Creem API key — the current card rail (merchant of record) |
+| `CREEM_PRODUCT_ID` | For Creem checkout | The one-time Creem product every checkout opens against |
+| `CREEM_WEBHOOK_SECRET` | For Creem webhook verification | Signs `creem-signature` on Creem webhook deliveries |
+| `STRIPE_SECRET_KEY` | For subscriptions (legacy) | Stripe secret key |
+| `STRIPE_WEBHOOK_SECRET` | For subscriptions (legacy) | Stripe webhook signing secret |
 | `CLICKHOUSE_URL` | Yes | ClickHouse HTTP interface URL |
 | `QUEUE_PROVIDER` | No | `qstash` or `memory` (auto-detected; no self-hosted alternative) |
 
@@ -147,7 +150,7 @@ Make sure the following are installed before you begin:
 | `GOOGLE_CLIENT_ID` | If using Google OAuth | Google OAuth web client id |
 | `GOOGLE_CLIENT_SECRET` | If using Google OAuth | Google OAuth web client secret |
 | `NEXT_PUBLIC_API_URL` | Yes | Base URL of the API gateway, e.g. `http://localhost:3001` |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Yes | Stripe publishable key for client-side billing |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | For subscriptions (legacy) | Stripe publishable key for client-side billing |
 | `DATABASE_URL` | Yes | PostgreSQL connection string (for Server Actions) |
 
 ### `apps/landing`

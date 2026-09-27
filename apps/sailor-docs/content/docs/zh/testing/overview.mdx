@@ -153,7 +153,8 @@ await page.click('text=创建项目');
 
 | 依赖项 | Mock 方式 |
 |-------|---------|
-| Stripe | `vi.mock("stripe")` 配合固定响应 |
+| Creem | 对 `fetch` 用 `vi.fn()` 配合固定响应（手写 REST 客户端，无 SDK） |
+| Stripe（历史遗留） | `vi.mock("stripe")` 配合固定响应 |
 | 认证（Better Auth） | `vi.mock("@/lib/auth-client")` / `@nebutra/auth` 配合 Mock 会话 |
 | PostHog | `vi.mock("@nebutra/analytics")` — 无操作桩 |
 | 邮件 | `vi.mock("@nebutra/email")` — 捕获已发送的邮件 |

@@ -129,18 +129,31 @@ AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","nam
 
 ---
 
-## Payments (Stripe)
+## Payments (Creem — current card rail)
+
+Creem is a merchant of record (it collects and remits sales tax/VAT itself) for cards worldwide — see [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md) and the [Creem integration guide](/integrations/creem).
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `STRIPE_SECRET_KEY` | Yes | — | Stripe secret key. Starts with `sk_live_` or `sk_test_`. |
-| `STRIPE_WEBHOOK_SECRET` | Yes | — | Signing secret for Stripe webhook payloads. Starts with `whsec_`. |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Yes | — | Stripe publishable key. Starts with `pk_live_` or `pk_test_`. |
-| `STRIPE_PRO_PRICE_ID` | Yes | — | Stripe Price ID for the Pro plan. Starts with `price_`. |
-| `STRIPE_ENTERPRISE_PRICE_ID` | Yes | — | Stripe Price ID for the Enterprise plan. Starts with `price_`. |
+| `CREEM_API_KEY` | For Creem checkout | — | Creem API key. |
+| `CREEM_PRODUCT_ID` | For Creem checkout | — | The one-time product every checkout opens against (`custom_price` overrides the price per checkout). |
+| `CREEM_WEBHOOK_SECRET` | For webhook verification | — | Signs `creem-signature` — the hex HMAC-SHA256 of the raw webhook body. |
+| `CREEM_TEST_MODE` | No | `false` | `true` points requests at `https://test-api.creem.io` instead of `https://api.creem.io`. |
+
+## Payments (Stripe — legacy, subscriptions)
+
+Stripe is retired from new work. Its env vars still feed subscriptions, the billing portal, and checkouts opened before the Creem switch — see [Stripe integration](/integrations/stripe).
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `STRIPE_SECRET_KEY` | For subscriptions/legacy checkout | — | Stripe secret key. Starts with `sk_live_` or `sk_test_`. |
+| `STRIPE_WEBHOOK_SECRET` | For subscriptions/legacy checkout | — | Signing secret for Stripe webhook payloads. Starts with `whsec_`. |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | For subscriptions/legacy checkout | — | Stripe publishable key. Starts with `pk_live_` or `pk_test_`. |
+| `STRIPE_PRO_PRICE_ID` | For subscriptions | — | Stripe Price ID for the Pro plan. Starts with `price_`. |
+| `STRIPE_ENTERPRISE_PRICE_ID` | For subscriptions | — | Stripe Price ID for the Enterprise plan. Starts with `price_`. |
 
 <Warning>
-  Use test-mode keys (`sk_test_`, `pk_test_`) in development and preview environments. Never use live-mode keys outside production.
+  Use test-mode keys (`sk_test_`, `pk_test_`, `CREEM_TEST_MODE=true`) in development and preview environments. Never use live-mode keys outside production.
 </Warning>
 
 ---

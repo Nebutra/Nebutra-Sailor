@@ -72,7 +72,7 @@
 > ```
 > `minimal` プリセットは `apps/web` + IAM + ローカル Postgres
 > のみを生成し、ゴールデンパスをローカル DB で起動できるようにします。
-> Stripe / Clerk / Resend などは後から `nebutra add <provider>`
+> Creem / Clerk / Resend などは後から `nebutra add <provider>`
 > で追加できます。
 
 <br />
@@ -154,7 +154,7 @@ Next.js 16、React 19、Prisma 7、Vercel AI SDK で構築され、AI をガバ�
 | 🤖  | **AI ネイティブ**  | LLM・Embeddings・RAG・MCP Agent  |
 | 🏢  | **マルチテナント** | RLS・テナント分離・カスタマイズ  |
 | ⚡  | **モダンスタック** | Next.js 16・React 19・TypeScript 5.9 |
-| 💳  | **課金機能内蔵**   | Stripe・使用量計測・機能権限     |
+| 💳  | **課金機能内蔵**   | Creem・使用量計測・機能権限     |
 
 </td>
 <td width="50%">
@@ -195,7 +195,7 @@ Next.js 16、React 19、Prisma 7、Vercel AI SDK で構築され、AI をガバ�
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
       <strong>課金・収益化</strong>
-      <br />DB 駆動プラン、Stripe 課金、使用量計測、機能ゲート。
+      <br />DB 駆動プラン、Creem 課金、使用量計測、機能ゲート。
     </td>
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
@@ -402,7 +402,7 @@ Next.js 16、React 19、Prisma 7、Vercel AI SDK で構築され、AI をガバ�
 <tr>
 <td><strong>決済</strong></td>
 <td>
-  <a href="https://stripe.com/"><img src="https://img.shields.io/badge/Stripe-008CDD?style=flat-square&logo=stripe&logoColor=white&v=1" alt="Stripe" /></a>
+  <a href="https://www.creem.io/"><img src="https://img.shields.io/badge/Creem-6C5CE7?style=flat-square" alt="Creem" /></a>
   <img src="https://img.shields.io/badge/利用量計測-gray?style=flat-square" alt="Metering" />
   <img src="https://img.shields.io/badge/エンタイトルメント-gray?style=flat-square" alt="Entitlements" />
 </td>
@@ -498,7 +498,7 @@ Sailor は **プロバイダー非依存** です。以下の各プラットフ�
 <tr><td>Webhook</td><td><code>@nebutra/webhooks</code></td><td>Svix · カスタム HMAC 配信</td></tr>
 <tr><td>SMS（中国）</td><td><code>@nebutra/sms</code></td><td>Aliyun · Tencent Cloud</td></tr>
 <tr><td>メール</td><td><code>@nebutra/email</code></td><td>Resend + React Email テンプレート</td></tr>
-<tr><td>請求</td><td><code>@nebutra/billing</code></td><td>Stripe — サブスクリプション、利用量、エンタイトルメント</td></tr>
+<tr><td>請求</td><td><code>@nebutra/billing</code></td><td>Creem（カード決済、merchant of record）+ WeChat Pay/Alipay — サブスクリプション、利用量、エンタイトルメント</td></tr>
 <tr><td>利用量計測</td><td><code>@nebutra/metering</code></td><td>ClickHouse リアルタイム集計</td></tr>
 <tr><td>イベントバス</td><td><code>@nebutra/event-bus</code></td><td>マルチテナント Pub/Sub · ファンアウト · Request-Reply</td></tr>
 <tr><td>Saga オーケストレーター</td><td><code>@nebutra/saga</code></td><td>自動ロールバック補償付きの TS ワークフロー</td></tr>
@@ -596,7 +596,7 @@ pnpm db:generate && pnpm dev
 │   ├── email/             # トランザクションメール (Magic Link, Resend)
 │   ├── agents/            # Vercel AI SDK ラッパー、エージェント、ストリーミング補助
 │   ├── ai-providers/      # マルチプロバイダー AI レジストリとメタデータ
-│   ├── billing/           # Stripe 課金、プラン、使用量計測
+│   ├── billing/           # Creem 課金（カード、merchant of record）+ WeChat Pay/Alipay、プラン、使用量計測
 │   ├── brand/             # ブランドアセット、ガイドライン
 │   ├── preset/            # 機能ベースのテンプレート設定
 │   ├── theme/             # グローバルテーマトークン & CSS 変数

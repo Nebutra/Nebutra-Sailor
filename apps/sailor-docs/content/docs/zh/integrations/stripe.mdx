@@ -3,6 +3,10 @@ title: Stripe
 description: 配置 Stripe 进行计费、订阅和客户计费门户管理。
 ---
 
+<Warning>
+本页介绍的是**历史遗留**的 Stripe 集成。根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)，全球范围的卡支付已迁移至 [Creem](/zh/integrations/creem)——一个自行代收代缴销售税/增值税的记录商户。Stripe 已不再承接新工作，其代码仅保留给订阅、计费门户、许可证 Webhook 以及切换前已发起的结账使用。请勿在其上构建任何新功能。当前的卡支付通道请参见 [Creem](/zh/integrations/creem)。
+</Warning>
+
 ## 前提条件
 
 - 一个 [Stripe 账户](https://stripe.com)
@@ -62,6 +66,9 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ## 相关文档
 
 <CardGroup cols={2}>
+  <Card title="Creem" icon="credit-card" href="/zh/integrations/creem">
+    当前的卡支付通道——面向全球，记录商户模式。
+  </Card>
   <Card title="计费模型" icon="credit-card" href="/zh/concepts/billing-model">
     套餐、配额和计量。
   </Card>

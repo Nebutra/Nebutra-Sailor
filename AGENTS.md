@@ -389,7 +389,7 @@ const key = "sk-proj-xxxxx";
 | Icons | `@nebutra/icons` | Named exports |
 | Database | `@nebutra/db` | Prisma client |
 | Auth adapter | `@nebutra/identity` | Provider adapters |
-| Billing | `@nebutra/billing` | Stripe operations |
+| Billing | `@nebutra/billing` | Creem (cards, merchant of record) + WeChat Pay/Alipay operations |
 | Email | `@nebutra/email` | Send templates |
 | AI | `@nebutra/agents` | streamText, generateText, embed, BaseAgent, AgentOrchestrator |
 | Logging | `@nebutra/logger` | Structured logger |

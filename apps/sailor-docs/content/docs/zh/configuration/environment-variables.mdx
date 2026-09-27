@@ -127,18 +127,31 @@ AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","nam
 
 ---
 
-## 支付（Stripe）
+## 支付（Creem——当前的卡支付通道）
+
+Creem 是一个记录商户（自行代收代缴销售税/增值税），负责面向全球的卡支付——参见 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md) 和 [Creem 集成指南](/zh/integrations/creem)。
 
 | 变量 | 是否必填 | 默认值 | 说明 |
 |------|----------|--------|------|
-| `STRIPE_SECRET_KEY` | 是 | — | Stripe 密钥。以 `sk_live_` 或 `sk_test_` 开头。 |
-| `STRIPE_WEBHOOK_SECRET` | 是 | — | Stripe Webhook 载荷的签名密钥。以 `whsec_` 开头。 |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 是 | — | Stripe 可发布密钥。以 `pk_live_` 或 `pk_test_` 开头。 |
-| `STRIPE_PRO_PRICE_ID` | 是 | — | Pro 计划的 Stripe Price ID。以 `price_` 开头。 |
-| `STRIPE_ENTERPRISE_PRICE_ID` | 是 | — | Enterprise 计划的 Stripe Price ID。以 `price_` 开头。 |
+| `CREEM_API_KEY` | 使用 Creem 结账时 | — | Creem API 密钥。 |
+| `CREEM_PRODUCT_ID` | 使用 Creem 结账时 | — | 每次结账都会打开的一次性产品（`custom_price` 会按次覆盖价格）。 |
+| `CREEM_WEBHOOK_SECRET` | 需要 Webhook 验证时 | — | 为 `creem-signature` 签名——对原始 Webhook 请求体做 HMAC-SHA256（十六进制）。 |
+| `CREEM_TEST_MODE` | 否 | `false` | `true` 会将请求指向 `https://test-api.creem.io`，而不是 `https://api.creem.io`。 |
+
+## 支付（Stripe——历史遗留，订阅）
+
+Stripe 已不再承接新工作。其环境变量仍供订阅、计费门户以及切换至 Creem 之前发起的历史结账使用——参见 [Stripe 集成](/zh/integrations/stripe)。
+
+| 变量 | 是否必填 | 默认值 | 说明 |
+|------|----------|--------|------|
+| `STRIPE_SECRET_KEY` | 用于订阅/历史结账时 | — | Stripe 密钥。以 `sk_live_` 或 `sk_test_` 开头。 |
+| `STRIPE_WEBHOOK_SECRET` | 用于订阅/历史结账时 | — | Stripe Webhook 载荷的签名密钥。以 `whsec_` 开头。 |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 用于订阅/历史结账时 | — | Stripe 可发布密钥。以 `pk_live_` 或 `pk_test_` 开头。 |
+| `STRIPE_PRO_PRICE_ID` | 用于订阅时 | — | Pro 计划的 Stripe Price ID。以 `price_` 开头。 |
+| `STRIPE_ENTERPRISE_PRICE_ID` | 用于订阅时 | — | Enterprise 计划的 Stripe Price ID。以 `price_` 开头。 |
 
 <Warning>
-  在开发和预览环境中请使用测试模式密钥（`sk_test_`、`pk_test_`）。切勿在生产环境之外使用正式模式密钥。
+  在开发和预览环境中请使用测试模式密钥（`sk_test_`、`pk_test_`、`CREEM_TEST_MODE=true`）。切勿在生产环境之外使用正式模式密钥。
 </Warning>
 
 ---

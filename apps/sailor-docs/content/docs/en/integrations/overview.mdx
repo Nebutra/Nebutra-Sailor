@@ -9,8 +9,11 @@ description: Connect Nebutra with the tools your team already uses.
   <Card title="Vercel" icon="triangle" href="/integrations/vercel">
     One of several deploy targets for frontend surfaces — not the default.
   </Card>
-  <Card title="Stripe" icon="credit-card" href="/integrations/stripe">
-    Billing, subscriptions, and payment webhooks pre-wired.
+  <Card title="Creem" icon="credit-card" href="/integrations/creem">
+    Global card payments, merchant of record — the current card rail.
+  </Card>
+  <Card title="Stripe (legacy)" icon="credit-card" href="/integrations/stripe">
+    Subscriptions and the billing portal — retired for new work.
   </Card>
   <Card title="Slack" icon="slack" href="/integrations/slack">
     Send notifications and alerts to Slack channels.
@@ -43,7 +46,8 @@ Some integrations are pre-wired and active by default. Others require API keys t
 |-------------|--------|-------|
 | Vercel | Optional deploy target | Not the default — the template produces portable Docker/`standalone` output; deploy it wherever you want, Vercel included |
 | Resend | Active when `RESEND_API_KEY` is set | Email templates ready |
-| Stripe | Active when `STRIPE_SECRET_KEY` is set | Webhooks pre-configured |
+| Creem | Active when `CREEM_API_KEY` and `CREEM_PRODUCT_ID` are set | Current card rail, merchant of record; webhooks pre-configured |
+| Stripe | Active when `STRIPE_SECRET_KEY` is set | Legacy — subscriptions, billing portal, pre-switch checkouts only |
 | Sentry | Active when `SENTRY_DSN` is set | Tenant context auto-tagged |
 | Sanity | Active when `SANITY_API_TOKEN` is set | Studio at studio.nebutra.com |
 | Slack | Requires OAuth setup | Via Settings → Integrations |

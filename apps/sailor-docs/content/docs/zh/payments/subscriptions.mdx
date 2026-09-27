@@ -3,6 +3,10 @@ title: 订阅
 description: 重定向至 Stripe 结账、处理订阅生命周期状态，以及管理试用期。
 ---
 
+<Note>
+订阅是独立于一次性卡支付结账的另一个表面。本页介绍的是循环计划订阅，目前仍运行在 **Stripe** 上（历史遗留，根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)）。一次性卡支付购买（例如积分）改用 **Creem**——参见 [Creem 集成](/zh/integrations/creem)。
+</Note>
+
 ## 结账流程
 
 <Steps>

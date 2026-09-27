@@ -4,7 +4,7 @@ Arguments:
   name                      project name or path (default: my-app; use . for cwd)
 
 There is nothing to choose. Every project gets the same converged stack:
-  Next.js + Hono gateway · Postgres + Prisma · Better Auth · Stripe (+ WeChat Pay /
+  Next.js + Hono gateway · Postgres + Prisma · Better Auth · Creem (+ WeChat Pay /
   Alipay) · Resend · S3-compatible storage (R2 / OSS) · QStash · Redis · Sentry ·
   PostHog · Turnstile · MCP
 

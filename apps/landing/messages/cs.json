@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Automatizace enterprise SaaS",
-      "description": "Hluboká integrace moderní technologické stacku Postgres, Better Auth a Stripe. Poskytuje bezpečnost na úrovni řádků, komplexní izolaci více nájemců a globální fakturaci předplatného přímo z krabice."
+      "description": "Hluboká integrace moderní technologické stacku Postgres, Better Auth a Creem. Poskytuje bezpečnost na úrovni řádků, komplexní izolaci více nájemců a globální fakturaci předplatného přímo z krabice."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Jaká zpracovatelská infrastruktura izoluje platební vektory?",
-              "a": "Globální směrování peněz se zásadně odkazuje na rozhraní serverů Stripe, což zaručuje přísnou telemetrii PCI-DSS a integritu zpracování. Nasazení Enterprise mohou integrovat soukromé finanční auditní potrubí řízené vlastními závazky SLA."
+              "a": "Globální směrování peněz se zásadně odkazuje na rozhraní serverů Creem coby merchant of record (oficiálního prodejce), což zaručuje přísnou telemetrii PCI-DSS a integritu zpracování. Nasazení Enterprise mohou integrovat soukromé finanční auditní potrubí řízené vlastními závazky SLA."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Platební údaje",
-              "desc": "Fakturační adresa a podrobnosti o platební metodě (bezpečně zpracovávané prostřednictvím Stripe)."
+              "desc": "Fakturační adresa a podrobnosti o platební metodě (bezpečně zpracovávané prostřednictvím Creem)."
             },
             "3": {
               "label": "Komunikace",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Zpracování plateb",
-              "desc": "Stripe pro bezpečné zpracování plateb"
+              "desc": "Creem pro bezpečné zpracování plateb"
             },
             "2": {
               "label": "Ověřování",
@@ -1056,7 +1056,7 @@
             "0": "Předplatné je fakturováno předem měsíčně nebo ročně",
             "1": "Všechny poplatky jsou nevracitelné, pokud není uvedeno jinak v našem",
             "2": "Zmocňujete nás k naúčtování platby vaším platebním prostředkem pro příslušné poplatky",
-            "3": "Pro bezpečné zpracování plateb používáme Stripe",
+            "3": "Pro bezpečné zpracování plateb používáme Creem",
             "1RefundLink": "Zásady vrácení peněz"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurovat",
-        "desc": "Nastavte Prisma, Better Auth a Stripe prostřednictvím interaktivního CLI během několika minut."
+        "desc": "Nastavte Prisma, Better Auth a Creem prostřednictvím interaktivního CLI během několika minut."
       },
       "step3": {
         "title": "3. Vytvořit",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "Multi-protokolové API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI pro veřejná API, oRPC pro typově bezpečná volání z frontendu, tRPC pro kompatibilitu s T3 stackem. Všechny protokoly sdílejí stejné Zod kontrakty a middleware stack. Aktivujte jednotlivé protokoly přes přednastavenou konfiguraci.",
       "billing_category": "Fakturace a monetizace",
-      "billing_f1_title": "Stripe a platby pro Čínu",
-      "billing_f1_desc": "Vyberte si poskytovatele plateb: Stripe pro globální podniky nebo Alipay/WeChat Pay pro čínský trh. Jednoklikový checkout a samoobslužný fakturační portál.",
+      "billing_f1_title": "Creem a platby pro Čínu",
+      "billing_f1_desc": "Vyberte si poskytovatele plateb: Creem pro globální podniky jako merchant of record, který sám vybírá a odvádí daň z prodeje/DPH, takže se nemusíte registrovat v každé zemi, nebo Alipay/WeChat Pay pro čínský trh. Jednoklikový checkout a samoobslužný fakturační portál.",
       "billing_f2_title": "Vynucování kvót na základě využití",
       "billing_f2_desc": "Reálné počítadla v Redisu sledují volání API a využití tokenů pro každého nájemce. Žádosti jsou bráněny na úrovni gateway, když jsou dosaženy limity.",
       "billing_f3_title": "Synchronizace životního cyklu webhooků",
-      "billing_f3_desc": "Události předplatného ze Stripe automaticky aktualizují plány organizací v vaší databázi prostřednictvím Inngest — žádné cron úlohy, žádné dotazování.",
+      "billing_f3_desc": "Události platebních webhooků automaticky aktualizují plány organizací v vaší databázi prostřednictvím Inngest — žádné cron úlohy, žádné dotazování.",
       "rel_category": "Spolehlivost",
       "rel_f1_title": "Circuit breaker + opakování",
       "rel_f1_desc": "Gateway a AI služba používají circuit breaker v režimu CLOSED/OPEN/HALF_OPEN s exponenciálním backoffem a jitterem — žádné kaskádové selhání.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Landing pages pro globální export softwaru",
-        "desc": "Navrženo pro SaaS expandující do zahraničí. Stripe checkout s více měnami, automatické směrování i18n přes next-intl v 7 jazycích, soulad s GDPR/CCPA a obsah cílený podle země.",
+        "desc": "Navrženo pro SaaS expandující do zahraničí. Creem checkout s více měnami, automatické směrování i18n přes next-intl v 7 jazycích, soulad s GDPR/CCPA a obsah cílený podle země.",
         "features": {
           "f1": "Globální platby v více měnách",
           "f2": "7 jazyků + připraveno na GDPR"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Mohu si přinést vlastní poskytovatele?",
-          "answer": "Ano. Každá integrace (auth, queue, search, email, payments, storage, billing) je nezávislá na poskytovateli. Factory v každém balíčku vybere správný adapter z jedné env proměnné — použijte Better Auth, QStash, Resend nebo Stripe — bez dotyku aplikačního kódu."
+          "answer": "Ano. Každá integrace (auth, queue, search, email, payments, storage, billing) je nezávislá na poskytovateli. Factory v každém balíčku vybere správný adapter z jedné env proměnné — použijte Better Auth, QStash, Resend nebo Creem — bez dotyku aplikačního kódu."
         },
         "tech-stack": {
           "question": "Jaký je tech stack?",

@@ -7,7 +7,7 @@ description: 在 Nebutra 和你的外部系统之间发送和接收实时事件�
 
 Nebutra 的 Webhook 系统允许你：
 
-1. **接收**来自 Nebutra 的事件（入站 Webhook——如 Stripe、GitHub）
+1. **接收**来自 Nebutra 的事件（入站 Webhook——如 Creem、GitHub）
 2. **发送**事件到你客户的系统（出站 Webhook——当产品中发生事情时）
 
 ## 发送 Webhook 事件
@@ -28,33 +28,38 @@ await webhooks.sendEvent({
 
 ## 验证签名
 
-接收 Webhook 时，始终先验证签名：
+接收 Webhook 时，始终先验证签名。Nebutra 自己当前的卡支付通道（Creem，根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)）会在解析请求体之前先验证原始字节——同样的模式适用于你接收的任何入站 Webhook：
 
-```typescript app/api/webhooks/stripe/route.ts
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+```typescript backends/gateway/src/routes/webhooks/creem.ts
+import { verifyCreemSignature } from "@nebutra/billing";
 
 export async function POST(req: Request) {
-  const body = await req.text();
-  const sig = req.headers.get("stripe-signature")!;
+  // 按收到的原始字节验证——先解析会改变这些字节。
+  const rawBody = await req.text();
+  const signature = req.headers.get("creem-signature");
 
-  let event: Stripe.Event;
-  try {
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
-  } catch {
-    return new Response("签名无效", { status: 400 });
+  if (!verifyCreemSignature(rawBody, signature)) {
+    return new Response("Invalid signature", { status: 401 });
   }
 
-  switch (event.type) {
-    case "invoice.paid":
-      await handleInvoicePaid(event.data.object as Stripe.Invoice);
+  const event = JSON.parse(rawBody);
+
+  switch (event.eventType) {
+    case "checkout.completed":
+      await handleCheckoutCompleted(event.object);
+      break;
+    case "refund.created":
+      await handleRefundCreated(event.object);
       break;
   }
 
   return new Response("OK", { status: 200 });
 }
 ```
+
+<Note>
+订阅相关的 Webhook（`customer.subscription.*`、`invoice.*`）目前仍从 **Stripe**（历史遗留）投递到另一个独立端点——参见[支付 Webhooks](/zh/payments/webhooks)。
+</Note>
 
 ## Webhook 事件参考
 
@@ -69,15 +74,17 @@ export async function POST(req: Request) {
 
 ## 本地测试 Webhook
 
+对于 Creem，设置 `CREEM_TEST_MODE=true` 并将 Webhook 指向你的本地隧道，或者使用 [ngrok](https://ngrok.com) 暴露本地服务器：
+
 ```bash
-stripe listen --forward-to localhost:3000/api/webhooks/stripe
+ngrok http 3000
 ```
 
 ## 相关文档
 
 <CardGroup cols={2}>
-  <Card title="Stripe 集成" icon="credit-card" href="/zh/integrations/stripe">
-    Stripe Webhook 配置指南。
+  <Card title="Creem 集成" icon="credit-card" href="/zh/integrations/creem">
+    Creem Webhook 配置指南——当前的卡支付通道。
   </Card>
   <Card title="错误处理" icon="triangle-alert" href="/zh/guides/error-handling">
     如何处理 Webhook 投递失败。

@@ -70,7 +70,7 @@ describe("sync command", () => {
     };
 
     expect(payload.added[".env.example"]).toEqual(
-      expect.arrayContaining(["BETTER_AUTH_SECRET", "STRIPE_SECRET_KEY", "RESEND_API_KEY"]),
+      expect.arrayContaining(["BETTER_AUTH_SECRET", "CREEM_API_KEY", "RESEND_API_KEY"]),
     );
     expect(payload.added[".env.local"]).toEqual([]);
     expect(payload.warnings).toEqual([]);
@@ -78,8 +78,8 @@ describe("sync command", () => {
     const envExample = await readFile(join(testDir, ".env.example"), "utf-8");
     expect(envExample).toContain("# auth (better-auth)");
     expect(envExample).toContain("BETTER_AUTH_SECRET=");
-    expect(envExample).toContain("# billing (stripe)");
-    expect(envExample).toContain("STRIPE_SECRET_KEY=");
+    expect(envExample).toContain("# billing (creem)");
+    expect(envExample).toContain("CREEM_API_KEY=");
     // notifications/mcp have no env keys — should not appear as a group
     expect(envExample).not.toContain("# notifications");
     expect(envExample).not.toContain("# mcp");
@@ -123,7 +123,7 @@ describe("sync command", () => {
     );
     await writeFile(
       join(testDir, ".env.example"),
-      ["# hand-written header", "", "STRIPE_SECRET_KEY=", ""].join("\n"),
+      ["# hand-written header", "", "CREEM_API_KEY=", ""].join("\n"),
     );
 
     const result = await runCliInDir(["sync", "--json"], testDir, ISOLATED_ENV);
@@ -131,15 +131,15 @@ describe("sync command", () => {
 
     const envExample = await readFile(join(testDir, ".env.example"), "utf-8");
     expect(envExample).toContain("# hand-written header");
-    // STRIPE_SECRET_KEY should appear exactly once
-    expect(envExample.match(/STRIPE_SECRET_KEY=/g)?.length).toBe(1);
+    // CREEM_API_KEY should appear exactly once
+    expect(envExample.match(/CREEM_API_KEY=/g)?.length).toBe(1);
 
     const payload = JSON.parse(result.stdout) as {
       added: Record<string, string[]>;
       unchanged: string[];
     };
-    expect(payload.added[".env.example"]).not.toContain("STRIPE_SECRET_KEY");
-    expect(payload.unchanged).toContain("STRIPE_SECRET_KEY");
+    expect(payload.added[".env.example"]).not.toContain("CREEM_API_KEY");
+    expect(payload.unchanged).toContain("CREEM_API_KEY");
   });
 
   it("--dry-run writes nothing and exits with code 10", async () => {
@@ -160,7 +160,7 @@ describe("sync command", () => {
     };
     expect(payload.mode).toBe("dry-run");
     expect(payload.added[".env.example"]).toEqual(
-      expect.arrayContaining(["BETTER_AUTH_SECRET", "STRIPE_SECRET_KEY"]),
+      expect.arrayContaining(["BETTER_AUTH_SECRET", "CREEM_API_KEY"]),
     );
   });
 

@@ -13,7 +13,7 @@ type ResultRow = {
 const RESULTS: readonly ResultRow[] = [
   {
     title: [
-      { text: "Stripe " },
+      { text: "Creem " },
       { text: "billing", mark: true },
       { text: " " },
       { text: "migration", mark: true },

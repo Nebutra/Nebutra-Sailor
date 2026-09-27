@@ -35,11 +35,15 @@ DATABASE_URL=<your-production-db-url> pnpm db:migrate
 
 ## 支付
 
-**Stripe Webhook 已配置并验证**
+**Creem Webhook 已配置并验证**
 
-在 Stripe 控制台中，创建指向 `https://api.yourdomain.com/api/v1/webhooks/stripe` 的 Webhook 端点。将 Webhook 签名密钥设置为 `STRIPE_WEBHOOK_SECRET`。使用 `stripe listen --forward-to` 在测试环境中验证分发。
+在 Creem 控制台中，创建指向 `https://api.yourdomain.com/api/webhooks/creem` 的 Webhook。设置签名密钥 `CREEM_WEBHOOK_SECRET`，以及 `CREEM_API_KEY` / `CREEM_PRODUCT_ID`。切换到正式密钥之前，先用 `CREEM_TEST_MODE=true` 在测试环境中验证分发。参见 [Creem 集成指南](/zh/integrations/creem)。
 
-**已启用必要的 Stripe 事件**
+**Stripe Webhook 已配置并验证（历史遗留——订阅）**
+
+Stripe 已不再承接新工作，但订阅、计费门户以及切换前的历史结账仍依赖它。在 Stripe 控制台中，创建指向 `https://api.yourdomain.com/api/v1/webhooks/stripe` 的 Webhook 端点。将 Webhook 签名密钥设置为 `STRIPE_WEBHOOK_SECRET`。使用 `stripe listen --forward-to` 在测试环境中验证分发。
+
+**已启用必要的 Stripe 事件（历史遗留）**
 
 确保在 Webhook 端点上选中以下事件：
 - `customer.subscription.created`

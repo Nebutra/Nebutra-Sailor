@@ -121,7 +121,7 @@ import { PlanGate } from "@nebutra/billing/react";
 
 ## 升级重定向目标
 
-`/billing/upgrade` 路由会创建 Stripe 结账会话并重定向用户。该路由已内置，仅需配置环境变量，无需额外设置。
+`/billing/upgrade` 路由会创建订阅结账会话并重定向用户。该路由已内置，仅需配置环境变量，无需额外设置。计划订阅目前仍运行在 Stripe 上（历史遗留，根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)）——这与 Creem 是两回事，Creem 负责一次性卡支付购买（面向全球，记录商户模式），中国大陆则由微信支付/支付宝负责。完整的服务商组合参见[账单概览](/zh/payments/overview)。
 
 如需自定义升级页面（例如在重定向前展示计划对比表），请编辑：
 

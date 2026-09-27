@@ -1,0 +1,135 @@
+---
+title: Creem
+description: 配置 Creem 以支持全球卡支付——当前的卡支付通道，作为记录商户代收代缴销售税/增值税。
+---
+
+## 前提条件
+
+- 一个 [Creem 账户](https://creem.io)
+- 无需安装 SDK——Nebutra 直接调用官方 REST API（https://docs.creem.io）。这与钱包适配器（微信支付 / 支付宝）的理由一致：API 密钥不经过任何未经审计的第三方依赖。
+
+<Info>
+Creem 是**记录商户（merchant of record）**：它是法律意义上的卖方，代为收单、代收代缴销售税/增值税，再将款项结算给你。这正是一家大陆运营的公司无需 Stripe 账户、无需在每个国家单独完成税务登记就能向全球销售卡支付的原因——完整推理见 [ADR 2026-09-26](/zh/payments/overview)。
+</Info>
+
+## 第一步：设置环境变量
+
+```bash
+CREEM_API_KEY=creem_xxxxxxxxxxxxxxxxxxxx
+CREEM_PRODUCT_ID=prod_xxxxxxxxxxxxxxxxxxxx
+CREEM_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
+CREEM_TEST_MODE=true
+```
+
+设置好 `CREEM_API_KEY` 和 `CREEM_PRODUCT_ID` 后，Creem 即为上线状态（`isCreemConfigured`）。`CREEM_TEST_MODE=true` 会将请求指向 `https://test-api.creem.io`；生产环境请不设置该变量（或设为 `false`），此时使用 `https://api.creem.io`。测试密钥与正式密钥按模式区分——正式密钥无法在测试域名下使用。
+
+## 第二步：在 Creem 中创建一个产品
+
+与 Stripe「一个计划对应一个产品」的模型不同，**一个 Creem 产品承载所有报价**。在 Creem 控制台创建一个一次性产品，然后在每次结账时通过 `custom_price`（取值范围 100–99,999,999 的最小货币单位）覆盖价格。这样价格唯一的来源始终是你自己的报价目录（价格、档位、一次性购买）；Creem 控制台里的产品价格永远不会被读取。
+
+你要结算的订单 id 会作为 `request_id` 随结账一起传递：
+
+```typescript
+import { createCreemCheckout } from "@nebutra/billing";
+
+const checkout = await createCreemCheckout({
+  requestId: "order_xxx",       // 你的 PaymentOrder id —— 会作为 request_id 原样返回
+  customPriceMinor: 2900,       // $29.00，最小货币单位
+  successUrl: "https://app.nebutra.com/billing/success",
+  customerEmail: "user@example.com",
+});
+
+redirect(checkout.checkout_url);
+```
+
+## 第三步：配置 Webhook 端点
+
+在 Creem 控制台：**Developers → Webhook**
+
+- URL：`https://<gateway>/api/webhooks/creem`
+- 监听：
+  - `checkout.completed` —— 结算支付订单
+  - `refund.created` —— 仅用于可见性（表示某笔退款是从 Creem 控制台发起的，而不是通过 `refundPaymentOrder`）
+
+### 签名验证
+
+Creem 会用 `creem-signature` 请求头为每次投递签名：对**原始**请求体做 HMAC-SHA256（十六进制），密钥为 `CREEM_WEBHOOK_SECRET`。必须按收到的原始字节验证——先解析请求体再验证会破坏签名校验。
+
+```typescript
+import { verifyCreemSignature } from "@nebutra/billing";
+
+const ok = verifyCreemSignature(rawBody, req.headers.get("creem-signature"));
+```
+
+## 第四步：Webhook 处理程序
+
+Creem 的 Webhook 处理程序已在 monorepo 中预先构建：
+
+```typescript backends/gateway/src/routes/webhooks/creem.ts
+creemWebhookRoutes.openapi(creemRoute, async (c) => {
+  const rawBody = await c.req.text();
+  if (!verifyCreemSignature(rawBody, c.req.header("creem-signature"))) {
+    return c.json({ ok: false }, 401);
+  }
+
+  const event = JSON.parse(rawBody) as CreemWebhookEvent;
+
+  if (event.eventType === "checkout.completed") {
+    const orderId = event.object.request_id ?? event.object.metadata?.[PAYMENT_ORDER_METADATA_KEY];
+    const order = event.object.order;
+    if (orderId && order && order.status === "paid") {
+      // order.amount 是税前金额 —— Creem 作为记录商户在其上另加税费，
+      // 而订单锁定的价格才是我们对这份报价实际收取的金额。
+      await settlePaymentOrder({
+        orderId,
+        paidMinor: order.amount,
+        currency: order.currency,
+        providerRef: order.id,
+      });
+    }
+  }
+
+  return c.json({ ok: true }, 200);
+});
+```
+
+每次投递都会先记录进 Webhook 收件箱、再执行任何副作用，因此重复投递只是空操作，而不会造成二次结算。
+
+## 第五步：对账丢失的 Webhook
+
+如果某次 Webhook 被延迟或丢失，不必无限期等待，可以直接查询该笔结账：
+
+```typescript
+import { getCreemCheckout } from "@nebutra/billing";
+
+const { status, order } = await getCreemCheckout(checkout.id);
+// GET /v1/checkouts?checkout_id=…
+```
+
+这样对账任务只损失几分钟，而不会损失一笔订单。
+
+## 退款——仅支持全额退款
+
+Creem 的 `POST /v1/refunds` 会退还一笔交易的全部剩余可退金额——没有 `amount` 参数，也没有幂等键。
+
+```typescript
+import { refundCreemOrder } from "@nebutra/billing";
+
+await refundCreemOrder(creemOrderId);
+```
+
+`refundCreemOrder` 先用 `GET /v1/transactions/search?order_id=…` 查到对应交易，再仅带 `transaction_id` 调用 `/v1/refunds`。`refundPaymentOrder` 会在调用 Creem 之前就拒绝**部分**退款请求，抛出 `REFUND_PARTIAL_UNSUPPORTED`——因为 Creem 本身没有部分退款的原语可调用。已退款的交易会被视为已完成，不会重复提交。
+
+## 相关文档
+
+<CardGroup cols={2}>
+  <Card title="Stripe（历史遗留）" icon="credit-card" href="/zh/integrations/stripe">
+    订阅、计费门户与切换前的历史结账。
+  </Card>
+  <Card title="账单概览" icon="credit-card" href="/zh/payments/overview">
+    完整的账单架构与服务商组合。
+  </Card>
+  <Card title="Webhooks 指南" icon="webhook" href="/zh/payments/webhooks">
+    Creem 与 Stripe 的 Webhook 处理对照。
+  </Card>
+</CardGroup>

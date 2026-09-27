@@ -98,11 +98,13 @@ const quota = await metering.getQuota("org_123", "api_calls");
 //   }
 ```
 
-## Stripe integration
+## Payment providers
 
-Billing is handled by Stripe. The API gateway includes pre-built webhook handlers for:
+Per [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md), one-time card purchases (e.g. plan upgrades bought outright, credit top-ups) go through **Creem** — cards worldwide, merchant of record — alongside **WeChat Pay / Alipay** for mainland China. The recurring plan subscription described above still runs on **Stripe** today (legacy): nothing new is built on it, and it stays only until subscriptions move to Creem subscriptions (`subscription.*` events).
 
-| Stripe event | Action |
+The API gateway includes pre-built webhook handlers for both:
+
+| Stripe event (legacy, subscriptions) | Action |
 |--------------|--------|
 | `checkout.session.completed` | Provision plan, send welcome email |
 | `customer.subscription.updated` | Update tenant plan and quotas |
@@ -110,9 +112,13 @@ Billing is handled by Stripe. The API gateway includes pre-built webhook handler
 | `invoice.payment_failed` | Send payment failure email |
 | `invoice.paid` | Log payment, update billing period |
 
+| Creem event (current, one-time card purchases) | Action |
+|--------------|--------|
+| `checkout.completed` | Settles the payment order (pre-tax amount vs. locked offer price) |
+
 ## Consumption-based billing (v1.x — Traction phase)
 
-In the upcoming v1.x release, Nebutra will support consumption-based billing — pay only for what you use, beyond a base tier. AI tokens, API calls, and storage will be metered and billed monthly via Stripe metered billing.
+In the upcoming v1.x release, Nebutra will support consumption-based billing — pay only for what you use, beyond a base tier. AI tokens, API calls, and storage will be metered and billed monthly against the active subscription. That subscription runs on Stripe today; per the ADR, it moves to Creem subscriptions when that surface moves.
 
 See the [Roadmap](https://nebutra.com/en/roadmap) for timeline.
 
@@ -122,7 +128,10 @@ See the [Roadmap](https://nebutra.com/en/roadmap) for timeline.
   <Card title="Rate Limits" icon="gauge" href="/guides/rate-limits">
     How rate limit headers work and how to handle 429 responses.
   </Card>
-  <Card title="Stripe Integration" icon="credit-card" href="/integrations/stripe">
-    Configure Stripe webhooks and billing portal.
+  <Card title="Creem Integration" icon="credit-card" href="/integrations/creem">
+    The current card rail — worldwide, merchant of record.
+  </Card>
+  <Card title="Stripe Integration (legacy)" icon="credit-card" href="/integrations/stripe">
+    Subscriptions, billing portal, and pre-switch checkouts.
   </Card>
 </CardGroup>

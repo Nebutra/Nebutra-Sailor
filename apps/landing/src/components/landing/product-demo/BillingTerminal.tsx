@@ -10,21 +10,21 @@ export function BillingTerminal() {
     >
       <div className="flex flex-col gap-2 relative z-20">
         <TypingAnimation delay={100} className="text-muted-foreground/80">
-          &gt; stripe listen --forward-to localhost
+          &gt; ngrok http --url=creem.localhost 8787
         </TypingAnimation>
         <AnimatedSpan delay={1200} className="text-warning-strong">
           ⚠ Ready! Waiting for events...
         </AnimatedSpan>
 
         <AnimatedSpan delay={2500} className="text-primary mt-2">
-          ↳ [Webhook] customer.subscription.created
+          ↳ [Webhook] checkout.completed
         </AnimatedSpan>
         <AnimatedSpan delay={3200} className="text-success-strong">
           {"  "}✔ Provisioned limits.
         </AnimatedSpan>
 
         <AnimatedSpan delay={4000} className="text-primary mt-2">
-          ↳ [Webhook] invoice.paid - $4,200.00
+          ↳ [Webhook] checkout.completed - $4,200.00
         </AnimatedSpan>
         <AnimatedSpan delay={4800} className="text-success-strong">
           {"  "}✔ Payment recorded. Emitting events.

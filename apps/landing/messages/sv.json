@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Enterprise SaaS-automation",
-      "description": "Djup integration av den moderna tech-stacken Postgres, Better Auth och Stripe. Ger row-level security, komplex multi-tenant-isolering och global prenumerationsfakturering redo att använda."
+      "description": "Djup integration av den moderna tech-stacken Postgres, Better Auth och Creem. Ger row-level security, komplex multi-tenant-isolering och global prenumerationsfakturering redo att använda."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Vilken bearbetningsinfrastruktur isolerar betalningsvektorer?",
-              "a": "Global kontantdirigering överlåts i grunden till Stripe-servergränssnitt, vilket garanterar strikt PCI-DSS-telemetri och bearbetningsintegritet. Enterprise-implementationer kan integrera privata finansiella revisionspipelines styrda av anpassade SLA-engagemang."
+              "a": "Global kontantdirigering överlåts i grunden till Creem-servergränssnitt som merchant of record, vilket garanterar strikt PCI-DSS-telemetri och bearbetningsintegritet. Enterprise-implementationer kan integrera privata finansiella revisionspipelines styrda av anpassade SLA-engagemang."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Betalningsinformation",
-              "desc": "Faktureringsadress och detaljer om betalningsmetod (hanteras säkert via Stripe)."
+              "desc": "Faktureringsadress och detaljer om betalningsmetod (hanteras säkert via Creem)."
             },
             "3": {
               "label": "Kommunikation",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Betalningshantering",
-              "desc": "Stripe för säker betalningshantering"
+              "desc": "Creem för säker betalningshantering"
             },
             "2": {
               "label": "Autentisering",
@@ -1056,7 +1056,7 @@
             "0": "Prenumerationer faktureras i förskott månatligen eller årligen",
             "1": "Alla avgifter är icke-återbetalningsbara utom som anges i vår",
             "2": "Du bemyndigar oss att debitera din betalningsmetod för tillämpliga avgifter",
-            "3": "Vi använder Stripe för säker betalningshantering",
+            "3": "Vi använder Creem för säker betalningshantering",
             "1RefundLink": "Återbetalningspolicy"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurera",
-        "desc": "Ställ in Prisma, Better Auth och Stripe via den interaktiva CLI på några minuter."
+        "desc": "Ställ in Prisma, Better Auth och Creem via den interaktiva CLI på några minuter."
       },
       "step3": {
         "title": "3. Bygg",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI för offentliga API:er, oRPC för typsäkra frontend-anrop, tRPC för T3-stack-kompatibilitet. Alla protokoll delar samma Zod-kontrakt och middleware-stack. Aktivera per protokoll via förinställd konfiguration.",
       "billing_category": "Faktura & Monetisering",
-      "billing_f1_title": "Stripe & China Pay",
-      "billing_f1_desc": "Välj din betalningsleverantör: Stripe för globalt företag, eller Alipay/WeChat Pay för den kinesiska marknaden. Enklick-kassa och självbetjäningsfakturaportal.",
+      "billing_f1_title": "Creem & China Pay",
+      "billing_f1_desc": "Välj din betalningsleverantör: Creem som merchant of record för globala företag — de tar in och betalar in moms/sales tax åt dig så att du slipper registrera dig i varje land — eller Alipay/WeChat Pay för den kinesiska marknaden. Enklick-kassa och självbetjäningsfakturaportal.",
       "billing_f2_title": "Användningsbaserad kvotgenomförande",
       "billing_f2_desc": "Realtime Redis-räknare spårar API-anrop och tokenanvändning per hyresgäst. Begäranden spärras vid gateway när gränser nås.",
       "billing_f3_title": "Webhook-livscykel-synk",
-      "billing_f3_desc": "Stripe-prenumerationshändelser uppdaterar automatiskt organisationsplaner i din databas via Inngest — inga cron-jobb, inget polling.",
+      "billing_f3_desc": "Betalnings-webhookhändelser uppdaterar automatiskt organisationsplaner i din databas via Inngest — inga cron-jobb, inget polling.",
       "rel_category": "Tillförlitlighet",
       "rel_f1_title": "Circuit breaker + återförsök",
       "rel_f1_desc": "Gateway och AI-tjänst använder en CLOSED/OPEN/HALF_OPEN circuit breaker med exponentiell backoff och jitter — inga kaskaderande fel.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Globala landningssidor för mjukvaruexport",
-        "desc": "Byggd för SaaS som går globalt. Multi-valuta Stripe-checkout, next-intl i18n-autorouting över 7 språk, GDPR/CCPA-kompatibilitet och geobaserat innehåll.",
+        "desc": "Byggd för SaaS som går globalt. Multi-valuta Creem-checkout, next-intl i18n-autorouting över 7 språk, GDPR/CCPA-kompatibilitet och geobaserat innehåll.",
         "features": {
           "f1": "Globala betalningar i flera valutor",
           "f2": "7 språk + GDPR-kompatibel"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Kan jag använda min egen leverantör?",
-          "answer": "Ja. Varje integration (autentisering, kö, sökning, e-post, betalningar, lagring, fakturering) är leverantörsagnostisk. Fabriken i varje paket väljer rätt adapter från en enda env-var — till exempel Better Auth, QStash, Resend eller Stripe — utan att röra applikationskoden."
+          "answer": "Ja. Varje integration (autentisering, kö, sökning, e-post, betalningar, lagring, fakturering) är leverantörsagnostisk. Fabriken i varje paket väljer rätt adapter från en enda env-var — till exempel Better Auth, QStash, Resend eller Creem — utan att röra applikationskoden."
         },
         "tech-stack": {
           "question": "Vad är tech stacken?",

@@ -37,11 +37,15 @@ queue, so there are no in-flight queue jobs to lose on a Redis restart.
 
 ## Payments
 
-**Stripe webhooks configured and verified**
+**Creem webhook configured and verified**
 
-In the Stripe dashboard, create a webhook endpoint pointing to `https://api.yourdomain.com/api/v1/webhooks/stripe`. Add the webhook signing secret as `STRIPE_WEBHOOK_SECRET`. Use `stripe listen --forward-to` to verify delivery in staging.
+In the Creem dashboard, create a webhook pointing to `https://api.yourdomain.com/api/webhooks/creem`. Add the signing secret as `CREEM_WEBHOOK_SECRET`, and set `CREEM_API_KEY` / `CREEM_PRODUCT_ID`. Verify delivery in staging with `CREEM_TEST_MODE=true` before flipping to live keys. See the [Creem integration guide](/integrations/creem).
 
-**Required Stripe events enabled**
+**Stripe webhooks configured and verified (legacy — subscriptions)**
+
+Stripe is retired from new work, but subscriptions, the billing portal, and pre-switch checkouts still depend on it. In the Stripe dashboard, create a webhook endpoint pointing to `https://api.yourdomain.com/api/v1/webhooks/stripe`. Add the webhook signing secret as `STRIPE_WEBHOOK_SECRET`. Use `stripe listen --forward-to` to verify delivery in staging.
+
+**Required Stripe events enabled (legacy)**
 
 Ensure the following events are selected on the webhook endpoint:
 - `customer.subscription.created`

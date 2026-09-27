@@ -7,7 +7,7 @@ const PLAYBOOKS: ReadonlyArray<{
   installs: string;
   rating: string;
 }> = [
-  { name: "Stripe Onboarding", installs: "2.4k", rating: "4.8" },
+  { name: "Creem Onboarding", installs: "2.4k", rating: "4.8" },
   { name: "Slack Recap", installs: "1.2k", rating: "4.7" },
   { name: "Notion Sync", installs: "847", rating: "4.6" },
   { name: "Linear Triage", installs: "412", rating: "4.5" },

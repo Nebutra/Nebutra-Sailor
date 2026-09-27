@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Tự động hóa SaaS doanh nghiệp",
-      "description": "Tích hợp sâu với bộ công nghệ hiện đại gồm Postgres, Better Auth và Stripe. Cung cấp sẵn bảo mật cấp hàng, cách ly đa thuê bao phức tạp và thanh toán đăng ký toàn cầu."
+      "description": "Tích hợp sâu với bộ công nghệ hiện đại gồm Postgres, Better Auth và Creem. Cung cấp sẵn bảo mật cấp hàng, cách ly đa thuê bao phức tạp và thanh toán đăng ký toàn cầu."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Hạ tầng xử lý nào cô lập các vector thanh toán?",
-              "a": "Định tuyến tiền tệ toàn cầu về cơ bản ủy thác cho các giao diện máy chủ Stripe, đảm bảo giám sát PCI-DSS nghiêm ngặt và tính toàn vẹn xử lý. Các triển khai Doanh nghiệp có thể tích hợp các đường ống kiểm toán tài chính riêng được quản lý bởi các cam kết SLA tùy chỉnh."
+              "a": "Định tuyến tiền tệ toàn cầu về cơ bản ủy thác cho các giao diện máy chủ Creem với vai trò merchant of record, đảm bảo giám sát PCI-DSS nghiêm ngặt và tính toàn vẹn xử lý. Các triển khai Doanh nghiệp có thể tích hợp các đường ống kiểm toán tài chính riêng được quản lý bởi các cam kết SLA tùy chỉnh."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Thông tin Thanh toán",
-              "desc": "Địa chỉ hóa đơn và chi tiết phương thức thanh toán (được xử lý an toàn qua Stripe)."
+              "desc": "Địa chỉ hóa đơn và chi tiết phương thức thanh toán (được xử lý an toàn qua Creem)."
             },
             "3": {
               "label": "Giao tiếp",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Xử lý thanh toán",
-              "desc": "Stripe để xử lý thanh toán an toàn"
+              "desc": "Creem để xử lý thanh toán an toàn"
             },
             "2": {
               "label": "Xác thực",
@@ -1056,7 +1056,7 @@
             "0": "Đăng ký được thanh toán trước theo tháng hoặc năm",
             "1": "Tất cả phí đều không hoàn lại trừ khi được nêu trong",
             "2": "Bạn ủy quyền cho chúng tôi tính phí phương thức thanh toán của bạn cho các khoản phí áp dụng",
-            "3": "Chúng tôi sử dụng Stripe để xử lý thanh toán an toàn",
+            "3": "Chúng tôi sử dụng Creem để xử lý thanh toán an toàn",
             "1RefundLink": "Chính sách hoàn tiền"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Cấu hình",
-        "desc": "Thiết lập Prisma, Better Auth và Stripe qua CLI tương tác trong vài phút."
+        "desc": "Thiết lập Prisma, Better Auth và Creem qua CLI tương tác trong vài phút."
       },
       "step3": {
         "title": "3. Xây dựng",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "API đa giao thức (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI cho API công khai, oRPC cho các cuộc gọi frontend an toàn kiểu, tRPC cho khả năng tương thích T3-stack. Tất cả giao thức chia sẻ cùng hợp đồng Zod và stack middleware. Bật theo giao thức qua cấu hình preset.",
       "billing_category": "Thanh toán & Monetisation",
-      "billing_f1_title": "Stripe & China Pay",
-      "billing_f1_desc": "Chọn nhà cung cấp thanh toán: Stripe cho doanh nghiệp toàn cầu, hoặc Alipay/WeChat Pay cho thị trường Trung Quốc. Thanh toán một chạm và cổng thanh toán tự phục vụ.",
+      "billing_f1_title": "Creem & China Pay",
+      "billing_f1_desc": "Chọn nhà cung cấp thanh toán: Creem xử lý thẻ toàn cầu với vai trò merchant of record — tự thu và nộp thuế bán hàng/VAT nên bạn không phải đăng ký ở từng quốc gia, hoặc Alipay/WeChat Pay cho thị trường Trung Quốc. Thanh toán một chạm và cổng thanh toán tự phục vụ.",
       "billing_f2_title": "Thực thi hạn ngạch theo mức sử dụng",
       "billing_f2_desc": "Bộ đếm Redis thời gian thực theo dõi cuộc gọi API và mức sử dụng token theo tenant. Yêu cầu bị chặn tại gateway khi đạt giới hạn.",
       "billing_f3_title": "Đồng bộ vòng đời webhook",
-      "billing_f3_desc": "Sự kiện đăng ký Stripe tự động cập nhật gói org trong cơ sở dữ liệu của bạn qua Inngest — không cần cron job, không cần polling.",
+      "billing_f3_desc": "Sự kiện webhook thanh toán tự động cập nhật gói org trong cơ sở dữ liệu của bạn qua Inngest — không cần cron job, không cần polling.",
       "rel_category": "Độ tin cậy",
       "rel_f1_title": "Circuit breaker + retry",
       "rel_f1_desc": "Gateway và dịch vụ AI sử dụng circuit breaker CLOSED/OPEN/HALF_OPEN với exponential backoff và jitter — không có lỗi lan truyền.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Trang đích xuất khẩu phần mềm toàn cầu",
-        "desc": "Xây dựng chuyên biệt cho SaaS vươn ra toàn cầu. Thanh toán Stripe đa tiền tệ, tự động định tuyến i18n next-intl qua 7 ngôn ngữ, tuân thủ GDPR/CCPA và nội dung nhắm mục tiêu theo khu vực.",
+        "desc": "Xây dựng chuyên biệt cho SaaS vươn ra toàn cầu. Thanh toán Creem đa tiền tệ, tự động định tuyến i18n next-intl qua 7 ngôn ngữ, tuân thủ GDPR/CCPA và nội dung nhắm mục tiêu theo khu vực.",
         "features": {
           "f1": "Thanh toán toàn cầu đa tiền tệ",
           "f2": "7 ngôn ngữ + Sẵn sàng GDPR"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Tôi có thể sử dụng nhà cung cấp của riêng mình không?",
-          "answer": "Có. Mọi tích hợp (xác thực, hàng đợi, tìm kiếm, email, thanh toán, lưu trữ, hóa đơn) đều không phụ thuộc nhà cung cấp. Factory trong mỗi gói chọn adapter phù hợp từ một biến môi trường duy nhất — ví dụ Better Auth, QStash, Resend hoặc Stripe — mà không cần chạm vào mã ứng dụng."
+          "answer": "Có. Mọi tích hợp (xác thực, hàng đợi, tìm kiếm, email, thanh toán, lưu trữ, hóa đơn) đều không phụ thuộc nhà cung cấp. Factory trong mỗi gói chọn adapter phù hợp từ một biến môi trường duy nhất — ví dụ Better Auth, QStash, Resend hoặc Creem — mà không cần chạm vào mã ứng dụng."
         },
         "tech-stack": {
           "question": "Công nghệ sử dụng là gì?",

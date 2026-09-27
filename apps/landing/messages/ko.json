@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "엔터프라이즈 SaaS 자동화",
-      "description": "Postgres, Better Auth, Stripe를 긴밀하게 통합합니다. 행 수준 보안, 다중 테넌트 격리 및 구독 청구가 내장되어 있습니다."
+      "description": "Postgres, Better Auth, Creem을 긴밀하게 통합합니다. 행 수준 보안, 다중 테넌트 격리 및 구독 청구가 내장되어 있습니다."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "결제 벡터를 격리하는 처리 인프라는 무엇입니까?",
-              "a": "글로벌 현금 라우팅은 근본적으로 Stripe 서버 인터페이스에 위임되어, 엄격한 PCI-DSS 텔레메트리와 처리 무결성을 보장합니다. 엔터프라이즈 배포에서는 맞춤형 SLA 약정에 따라 관리되는 프라이빗 재무 감사 파이프라인을 통합할 수 있습니다."
+              "a": "글로벌 현금 라우팅은 근본적으로 Creem 서버 인터페이스에 merchant of record(가맹점 명의 대행자)로서 위임되어, 엄격한 PCI-DSS 텔레메트리와 처리 무결성을 보장합니다. 엔터프라이즈 배포에서는 맞춤형 SLA 약정에 따라 관리되는 프라이빗 재무 감사 파이프라인을 통합할 수 있습니다."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "결제 정보",
-              "desc": "청구지 주소 및 결제 수단 세부 정보(Stripe를 통해 안전하게 처리)."
+              "desc": "청구지 주소 및 결제 수단 세부 정보(Creem을 통해 안전하게 처리)."
             },
             "3": {
               "label": "커뮤니케이션",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "결제 처리",
-              "desc": "안전한 결제 처리를 위한 Stripe"
+              "desc": "안전한 결제 처리를 위한 Creem"
             },
             "2": {
               "label": "인증",
@@ -1056,7 +1056,7 @@
             "0": "구독은 월간 또는 연간 기준으로 선불로 청구됩니다",
             "1": "모든 요금은 다음에 명시된 경우를 제외하고 환불되지 않습니다:",
             "2": "귀하는 당사가 적용 요금을 결제 수단에 청구하는 것을 승인합니다",
-            "3": "당사는 안전한 결제 처리를 위해 Stripe를 사용합니다",
+            "3": "당사는 안전한 결제 처리를 위해 Creem을 사용합니다",
             "1RefundLink": "환불 정책"
           }
         }
@@ -1238,7 +1238,7 @@
         "cta": "RBAC 문서 보기"
       },
       "billing": {
-        "title": "Stripe Billing Infrastructure",
+        "title": "멀티 프로바이더 결제 인프라",
         "desc": "사용량 기반 미터링, 구독 웹훅, 셀프 서비스 고객 포털입니다.",
         "cta": "결제 아키텍처 보기"
       }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. 구성",
-        "desc": "인터랙티브 CLI로 Prisma, Better Auth, Stripe를 몇 분 만에 설정하십시오."
+        "desc": "인터랙티브 CLI로 Prisma, Better Auth, Creem을 몇 분 만에 설정하십시오."
       },
       "step3": {
         "title": "3. 빌드",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "멀티 프로토콜 API (REST + oRPC + tRPC)",
       "dx_f3_desc": "공개 API용 REST/OpenAPI, 타입 안전 프런트엔드 호출용 oRPC, T3 스택 호환용 tRPC. 모든 프로토콜이 동일한 Zod 계약과 미들웨어 스택을 공유합니다. 프리셋 구성으로 프로토콜별 활성화가 가능합니다.",
       "billing_category": "결제 및 수익화",
-      "billing_f1_title": "Stripe 및 China Pay",
-      "billing_f1_desc": "결제 프로바이더를 선택하십시오. 글로벌 엔터프라이즈용 Stripe, 중국 시장용 Alipay/WeChat Pay. 원클릭 체크아웃과 셀프 서비스 결제 포털을 제공합니다.",
+      "billing_f1_title": "Creem 및 China Pay",
+      "billing_f1_desc": "결제 프로바이더를 선택하십시오. Creem은 merchant of record로서 글로벌 카드 결제를 처리하며, 판매세/VAT를 직접 징수하고 납부하므로 각 국가마다 등록할 필요가 없습니다. 중국 시장에는 Alipay/WeChat Pay. 원클릭 체크아웃과 셀프 서비스 결제 포털을 제공합니다.",
       "billing_f2_title": "사용량 기반 할당량 적용",
       "billing_f2_desc": "실시간 Redis 카운터가 테넌트별 API 호출과 토큰 사용량을 추적합니다. 한도에 도달하면 게이트웨이에서 요청이 차단됩니다.",
       "billing_f3_title": "웹훅 라이프사이클 동기화",
-      "billing_f3_desc": "Stripe 구독 이벤트가 Inngest를 통해 데이터베이스의 조직 플랜을 자동 업데이트합니다. 크론 작업이나 폴링이 필요 없습니다.",
+      "billing_f3_desc": "결제 웹훅 이벤트가 Inngest를 통해 데이터베이스의 조직 플랜을 자동 업데이트합니다. 크론 작업이나 폴링이 필요 없습니다.",
       "rel_category": "신뢰성",
       "rel_f1_title": "서킷 브레이커 + 재시도",
       "rel_f1_desc": "Every Python microservice uses a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "글로벌 소프트웨어 수출 랜딩 페이지",
-        "desc": "Designed for cross-border SaaS. Built-in multi-currency Stripe checkout, next-intl i18n routing, and GDPR compliance.",
+        "desc": "Designed for cross-border SaaS. Built-in multi-currency Creem checkout, next-intl i18n routing, and GDPR compliance.",
         "features": {
           "f1": "Global Payments",
           "f2": "7 Languages Auto-routing"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "자체 공급자를 가져올 수 있습니까?",
-          "answer": "예. 모든 통합(인증, 큐, 검색, 이메일, 결제, 스토리지, 빌링)은 공급자 독립적입니다. 각 패키지의 팩토리는 단일 환경 변수에서 적합한 어댑터를 선택합니다 — 사용되는 어댑터는 Better Auth, QStash, Resend, Stripe입니다 — 애플리케이션 코드를 건드리지 않습니다."
+          "answer": "예. 모든 통합(인증, 큐, 검색, 이메일, 결제, 스토리지, 빌링)은 공급자 독립적입니다. 각 패키지의 팩토리는 단일 환경 변수에서 적합한 어댑터를 선택합니다 — 사용되는 어댑터는 Better Auth, QStash, Resend, Creem입니다 — 애플리케이션 코드를 건드리지 않습니다."
         },
         "tech-stack": {
           "question": "기술 스택은 무엇입니까?",

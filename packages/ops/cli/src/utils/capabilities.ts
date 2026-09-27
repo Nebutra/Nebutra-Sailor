@@ -54,7 +54,7 @@ export const CAPABILITY_TABLE: Record<string, CapabilitySpec> = {
   },
   billing: {
     providers: [
-      { id: "stripe", envKeys: ["STRIPE_SECRET_KEY"] },
+      { id: "creem", envKeys: ["CREEM_API_KEY", "CREEM_PRODUCT_ID"] },
       {
         id: "wechat-pay",
         envKeys: [
@@ -68,7 +68,7 @@ export const CAPABILITY_TABLE: Record<string, CapabilitySpec> = {
       { id: "alipay", envKeys: ["ALIPAY_APP_ID", "ALIPAY_PRIVATE_KEY", "ALIPAY_PUBLIC_KEY"] },
     ],
     degrade: { kind: "missing-key" },
-    next: "set STRIPE_SECRET_KEY (or WECHATPAY_* / ALIPAY_* for mainland China)",
+    next: "set CREEM_API_KEY/CREEM_PRODUCT_ID (or WECHATPAY_* / ALIPAY_* for mainland China)",
   },
   email: {
     providers: [{ id: "resend", envKeys: ["RESEND_API_KEY"] }],

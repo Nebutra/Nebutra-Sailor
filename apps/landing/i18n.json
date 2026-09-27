@@ -48,7 +48,7 @@
     "id": "openai",
     "model": "sensenova-6.7-flash-lite",
     "baseUrl": "https://token.sensenova.cn/v1",
-    "prompt": "You are a professional translator. Translate the provided text from {source} to {target}. Keep brand names (Nebutra, Stripe, Clerk, etc.) untranslated. Preserve any technical terms, ICU placeholders like {name}, and HTML/Markdown markup. For target zh-Hans use Simplified Chinese; for zh-Hant use Traditional Chinese. Output only the translation, nothing else.",
+    "prompt": "You are a professional translator. Translate the provided text from {source} to {target}. Keep brand names (Nebutra, Creem, Clerk, etc.) untranslated. Preserve any technical terms, ICU placeholders like {name}, and HTML/Markdown markup. For target zh-Hans use Simplified Chinese; for zh-Hant use Traditional Chinese. Output only the translation, nothing else.",
     "settings": {
       "temperature": 0.2
     }

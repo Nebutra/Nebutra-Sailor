@@ -132,8 +132,11 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
 | `REDIS_URL` | 是 | Redis 连接字符串，例如 `redis://localhost:6379` |
 | `AUTH_PROVIDER` | 否 | 认证提供商：`better-auth`（唯一的真实选项）或 `dev`（本地兜底） |
 | `NEXT_PUBLIC_AUTH_PROVIDER` | 否 | 客户端可见的认证提供商；应与 `AUTH_PROVIDER` 保持一致 |
-| `STRIPE_SECRET_KEY` | 是 | Stripe 密钥 |
-| `STRIPE_WEBHOOK_SECRET` | 是 | Stripe Webhook 签名密钥 |
+| `CREEM_API_KEY` | 使用 Creem 结账时 | Creem API 密钥——当前的卡支付通道（记录商户模式） |
+| `CREEM_PRODUCT_ID` | 使用 Creem 结账时 | 每次结账都会打开的一次性 Creem 产品 |
+| `CREEM_WEBHOOK_SECRET` | 需要 Creem Webhook 验证时 | 为 Creem Webhook 投递的 `creem-signature` 签名 |
+| `STRIPE_SECRET_KEY` | 用于订阅（历史遗留） | Stripe 密钥 |
+| `STRIPE_WEBHOOK_SECRET` | 用于订阅（历史遗留） | Stripe Webhook 签名密钥 |
 | `CLICKHOUSE_URL` | 是 | ClickHouse HTTP 接口 URL |
 | `QUEUE_PROVIDER` | 否 | `qstash` 或 `memory`（自动检测；没有自托管替代方案） |
 
@@ -147,7 +150,7 @@ description: 在本机运行 Nebutra-Sailor 单体仓库的完整分步指南 �
 | `GOOGLE_CLIENT_ID` | 使用 Google OAuth 时 | Google OAuth Web Client ID |
 | `GOOGLE_CLIENT_SECRET` | 使用 Google OAuth 时 | Google OAuth Web Client Secret |
 | `NEXT_PUBLIC_API_URL` | 是 | API 网关的基础 URL，例如 `http://localhost:3001` |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 是 | 客户端计费所用的 Stripe 可发布密钥 |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | 用于订阅（历史遗留） | 客户端计费所用的 Stripe 可发布密钥 |
 | `DATABASE_URL` | 是 | PostgreSQL 连接字符串（用于 Server Actions） |
 
 ### `apps/landing`

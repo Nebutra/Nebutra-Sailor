@@ -47,7 +47,7 @@ const COPY: Record<"en" | "zh", Copy> = {
         rotated: "rotated 3 days ago",
       },
       {
-        name: "Stripe Webhook Secret",
+        name: "Creem Webhook Secret",
         masked: "whsec_•••••••••••1c4d",
         tenant: "acme-prod",
         kmsKeyId: "kms/9f2a",
@@ -77,7 +77,7 @@ const COPY: Record<"en" | "zh", Copy> = {
         rotated: "3 天前轮换",
       },
       {
-        name: "Stripe Webhook 密钥",
+        name: "Creem Webhook 密钥",
         masked: "whsec_•••••••••••1c4d",
         tenant: "acme-prod",
         kmsKeyId: "kms/9f2a",

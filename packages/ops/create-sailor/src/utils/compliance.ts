@@ -773,7 +773,7 @@ collected, the purpose of processing, and retention period.
 | Usage / 使用 | Page views, clickstream / 页面浏览、点击流 | Analytics, product improvement / 分析、产品改进 | Automatic / 自动 | 13 months / 13 个月 | Consent / 需同意 |
 | Usage / 使用 | Cookies / Cookie | See Cookie Preferences / 详见 Cookie 偏好 | Automatic / 自动 | Varies / 不一 | Consent / 需同意 |
 | Billing / 支付 | Billing address / 账单地址 | Payment processing / 支付处理 | User-provided | 7 years (tax) / 7 年（税务） | If paid plan / 付费时 |
-| Billing / 支付 | Payment method token / 支付令牌 | Recurring billing / 订阅续费 | Stripe / payment processor | Until deletion / 直至删除 | If paid plan / 付费时 |
+| Billing / 支付 | Payment method token / 支付令牌 | Recurring billing / 订阅续费 | Creem / payment processor | Until deletion / 直至删除 | If paid plan / 付费时 |
 | Content / 内容 | Uploaded files / 上传文件 | Service delivery / 服务交付 | User-provided | Until deletion by user / 直至用户删除 | Optional / 可选 |
 | Content / 内容 | Messages, prompts / 消息、提示词 | Service delivery, AI inference / 服务交付、AI 推理 | User-provided | 30 days then purged unless saved / 30 天后清除（除非保存） | Optional / 可选 |
 | Behavior / 行为 | Feature flags, experiments / 功能开关、实验 | Product personalization / 产品个性化 | Automatic / 自动 | 13 months / 13 个月 | Consent / 需同意 |

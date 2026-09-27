@@ -26,7 +26,7 @@ npx create-sailor .
 - **前端**：Next.js 16 + Tailwind v4，Hono 网关默认以进程内挂载方式接在 `app/api/[[...route]]`（`GATEWAY_MODE=embedded`）
 - **数据库**：Postgres + Prisma
 - **认证**：Better Auth
-- **支付**：Stripe，外加并行的微信支付 / 支付宝（ChinaPay）
+- **支付**：Creem（全球卡支付，记录商户模式），外加并行的微信支付 / 支付宝（ChinaPay）
 - **邮件**：Resend（附带仅用于开发环境的 `console` 兜底）
 - **存储**：S3 兼容对象存储（同时覆盖 R2 与阿里云 OSS）
 - **队列**：QStash

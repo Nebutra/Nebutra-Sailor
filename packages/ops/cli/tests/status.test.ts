@@ -87,9 +87,13 @@ describe("status command", () => {
     );
     await writeFile(
       join(testDir, ".env.local"),
-      ["STRIPE_SECRET_KEY=sk_test_123", "OPENAI_API_KEY=sk-test-456", "NEBUTRA_LOCALE=cn", ""].join(
-        "\n",
-      ),
+      [
+        "CREEM_API_KEY=creem_test_123",
+        "CREEM_PRODUCT_ID=prod_test_123",
+        "OPENAI_API_KEY=sk-test-456",
+        "NEBUTRA_LOCALE=cn",
+        "",
+      ].join("\n"),
     );
 
     const result = await runCliInDir(["status", "--json"], testDir, ISOLATED_ENV);
@@ -105,12 +109,12 @@ describe("status command", () => {
 
     const byName = Object.fromEntries(payload.capabilities.map((c) => [c.name, c]));
     expect(byName.billing.state).toBe("live");
-    expect(byName.billing.provider).toEqual(["stripe"]);
+    expect(byName.billing.provider).toEqual(["creem"]);
     expect(byName.ai.state).toBe("live");
     expect(byName.ai.provider).toEqual(["openai"]);
 
     // Never print secret values
-    expect(result.stdout).not.toContain("sk_test_123");
+    expect(result.stdout).not.toContain("creem_test_123");
     expect(result.stdout).not.toContain("sk-test-456");
   });
 

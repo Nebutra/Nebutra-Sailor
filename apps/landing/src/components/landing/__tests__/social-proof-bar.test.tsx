@@ -40,12 +40,12 @@ vi.mock("next/image", () => ({
 describe("SocialProofBar", () => {
   afterEach(() => cleanup());
 
-  it("renders all six brand logos", async () => {
+  it("renders all five brand logos", async () => {
     const { SocialProofBar } = await import("../social-proof-bar");
     const el = await SocialProofBar({ locale: "en" });
     render(el);
     const items = screen.getAllByRole("listitem");
-    expect(items.length).toBe(6);
+    expect(items.length).toBe(5);
   });
 
   it("renders brand logo images", async () => {
@@ -54,6 +54,6 @@ describe("SocialProofBar", () => {
     render(el);
     // Each brand has 2 images (light + dark variant)
     expect(screen.getAllByAltText("Vercel").length).toBe(2);
-    expect(screen.getAllByAltText("Stripe").length).toBe(2);
+    expect(screen.getAllByAltText("Resend").length).toBe(2);
   });
 });

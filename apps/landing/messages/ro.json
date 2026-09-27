@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Automatizare SaaS Enterprise",
-      "description": "Integrare profundă cu stack-ul modern de tehnologie Postgres, Better Auth și Stripe. Oferă securitate la nivel de rând, izolare complexă multi-tenant și facturare globală pentru abonamente, gata de utilizare."
+      "description": "Integrare profundă cu stack-ul modern de tehnologie Postgres, Better Auth și Creem. Oferă securitate la nivel de rând, izolare complexă multi-tenant și facturare globală pentru abonamente, gata de utilizare."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Ce infrastructură de procesare izolează vectorii de plată?",
-              "a": "Rutarea globală a fondelor se bazează fundamental pe interfețele server Stripe, garantând telemetrie strictă PCI-DSS și integritate în procesare. Implementările Enterprise pot integra pipeline-uri private de audit financiar guvernate de angajamente SLA personalizate."
+              "a": "Rutarea globală a fondelor se bazează fundamental pe interfețele server Creem în calitate de merchant of record, garantând telemetrie strictă PCI-DSS și integritate în procesare. Implementările Enterprise pot integra pipeline-uri private de audit financiar guvernate de angajamente SLA personalizate."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Informații de plată",
-              "desc": "Adresa de facturare și detaliile metodei de plată (procesate în siguranță prin Stripe)."
+              "desc": "Adresa de facturare și detaliile metodei de plată (procesate în siguranță prin Creem)."
             },
             "3": {
               "label": "Comunicări",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Procesare plăți",
-              "desc": "Stripe pentru gestionarea securizată a plăților"
+              "desc": "Creem pentru gestionarea securizată a plăților"
             },
             "2": {
               "label": "Autentificare",
@@ -1056,7 +1056,7 @@
             "0": "Abonamentele sunt facturate în avans lunar sau anual",
             "1": "Toate taxele sunt nerambursabile, cu excepția cazurilor menționate în",
             "2": "Ne autorizați să debităm metoda dvs. de plată pentru taxele aplicabile",
-            "3": "Folosim Stripe pentru procesarea securizată a plăților",
+            "3": "Folosim Creem pentru procesarea securizată a plăților",
             "1RefundLink": "Politica de rambursare"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configurează",
-        "desc": "Configurează Prisma, Better Auth și Stripe prin CLI-ul interactiv în câteva minute."
+        "desc": "Configurează Prisma, Better Auth și Creem prin CLI-ul interactiv în câteva minute."
       },
       "step3": {
         "title": "3. Construiește",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "API Multi-Protocol (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI pentru API-uri publice, oRPC pentru apeluri frontend sigure din punct de vedere al tipurilor, tRPC pentru compatibilitate cu stack-ul T3. Toate protocoalele împărtășesc aceleași contracte Zod și același stack de middleware. Activează pe protocol prin configurație presetată.",
       "billing_category": "Facturare & Monetizare",
-      "billing_f1_title": "Stripe și China Pay",
-      "billing_f1_desc": "Alege furnizorul tău de plăți: Stripe pentru enterprise global sau Alipay/WeChat Pay pentru piața din China. Checkout cu un singur clic și portal de facturare self-serve.",
+      "billing_f1_title": "Creem și China Pay",
+      "billing_f1_desc": "Alege furnizorul tău de plăți: Creem, în calitate de merchant of record pentru enterprise global — colectează și virează el însuși taxa pe vânzări/TVA, ca să nu fie nevoie să te înregistrezi în fiecare țară — sau Alipay/WeChat Pay pentru piața din China. Checkout cu un singur clic și portal de facturare self-serve.",
       "billing_f2_title": "Aplicare cotă bazată pe utilizare",
       "billing_f2_desc": "Contoare Redis în timp real urmăresc apelurile API și utilizarea tokenilor per tenant. Cererile sunt blocate la gateway când se ating limitele.",
       "billing_f3_title": "Sincronizare ciclu de viață webhook",
-      "billing_f3_desc": "Evenimentele de abonament Stripe actualizează automat planurile organizației în baza ta de date prin Inngest — fără joburi cron, fără polling.",
+      "billing_f3_desc": "Evenimentele webhook de plată actualizează automat planurile organizației în baza ta de date prin Inngest — fără joburi cron, fără polling.",
       "rel_category": "Fiabilitate",
       "rel_f1_title": "Circuit breaker + retry",
       "rel_f1_desc": "Gateway-ul și serviciul AI folosesc un circuit breaker CLOSED/OPEN/HALF_OPEN cu backoff exponențial și jitter — fără eșecuri în cascadă.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Pagini de aterizare pentru export software global",
-        "desc": "Construite special pentru SaaS-ul care se internaționalizează. Checkout Stripe multi-valută, rutare automată i18n next-intl în 7 limbi, conformitate GDPR/CCPA și conținut geo-targetat.",
+        "desc": "Construite special pentru SaaS-ul care se internaționalizează. Checkout Creem multi-valută, rutare automată i18n next-intl în 7 limbi, conformitate GDPR/CCPA și conținut geo-targetat.",
         "features": {
           "f1": "Plăți globale multi-valută",
           "f2": "7 limbi + compatibil GDPR"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Pot folosi propriul meu provider?",
-          "answer": "Da. Fiecare integrare (autentificare, coadă, căutare, email, plăți, stocare, facturare) este agnostică față de provider. Factory-ul din fiecare pachet selectează adaptorul potrivit dintr-o singură variabilă de mediu — adaptoarele incluse sunt Better Auth, QStash, Resend și Stripe — fără a modifica codul aplicației."
+          "answer": "Da. Fiecare integrare (autentificare, coadă, căutare, email, plăți, stocare, facturare) este agnostică față de provider. Factory-ul din fiecare pachet selectează adaptorul potrivit dintr-o singură variabilă de mediu — adaptoarele incluse sunt Better Auth, QStash, Resend și Creem — fără a modifica codul aplicației."
         },
         "tech-stack": {
           "question": "Care este stack-ul tehnologic?",

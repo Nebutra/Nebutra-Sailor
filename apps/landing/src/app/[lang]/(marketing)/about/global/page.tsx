@@ -132,15 +132,15 @@ const COMPLIANCE_ROWS: ReadonlyArray<{
 // Payment gateways
 const PAYMENTS_TITLE = { zh: "支付：全球 + 中国", en: "Payments: Global + China" } as const;
 const PAYMENTS_SUB = {
-  zh: "Stripe 覆盖全球主流卡组织与订阅；微信支付与支付宝原生覆盖中国大陆——都在同一套计费契约背后，配好密钥即可上线。",
-  en: "Stripe covers global cards and subscriptions; WeChat Pay and Alipay cover mainland China natively — both behind one billing contract, live as soon as you add the keys.",
+  zh: "Creem 作为交易商户（merchant of record）覆盖全球主流卡组织，代收代缴各地销售税/增值税；微信支付与支付宝原生覆盖中国大陆——都在同一套计费契约背后，配好密钥即可上线。",
+  en: "Creem covers global cards as merchant of record — it collects and remits sales tax/VAT so you don't register in every country; WeChat Pay and Alipay cover mainland China natively — both behind one billing contract, live as soon as you add the keys.",
 } as const;
 
 const PAYMENT_GATEWAYS: ReadonlyArray<{
   name: string;
   region: { zh: string; en: string };
 }> = [
-  { name: "Stripe", region: { zh: "全球", en: "Global" } },
+  { name: "Creem", region: { zh: "全球", en: "Global" } },
   { name: "WeChat Pay", region: { zh: "中国大陆", en: "Mainland China" } },
   { name: "Alipay", region: { zh: "中国大陆", en: "Mainland China" } },
 ];

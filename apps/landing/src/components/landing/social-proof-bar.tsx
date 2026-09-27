@@ -18,19 +18,22 @@ const SVGL_BASE = "https://svgl.app/library";
  */
 const BRANDS = [
   { name: "Vercel", light: "vercel.svg", dark: "vercel_dark.svg" },
-  { name: "Stripe", light: "stripe.svg", dark: "stripe.svg" },
   { name: "Better Auth", light: "better-auth_light.svg", dark: "better-auth_dark.svg" },
   { name: "PostHog", light: "posthog.svg", dark: "posthog.svg" },
   { name: "Resend", light: "resend-icon-black.svg", dark: "resend-icon-white.svg" },
   { name: "Cloudflare", light: "cloudflare.svg", dark: "cloudflare.svg" },
 ] as const;
+// Stripe was dropped here (ADR 2026-09-26 — Creem replaced Stripe as the
+// card rail). No Creem mark is on svgl.app as of this writing, so the logo
+// is removed rather than guessing an asset filename; add it back once a
+// verified svgl.app filename exists.
 
 const METRIC_KEYS = ["developers", "projects", "uptime"] as const;
 
 /**
  * Social proof strip — real brand icons + headline metrics.
  *
- * Renders logos of real integration partners (Vercel, Stripe, etc.)
+ * Renders logos of real integration partners (Vercel, Resend, etc.)
  * followed by three headline metrics. Server component — uses
  * getTranslations instead of useTranslations.
  */

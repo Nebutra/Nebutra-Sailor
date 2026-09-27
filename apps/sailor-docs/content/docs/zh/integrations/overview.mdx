@@ -9,8 +9,11 @@ description: 将 Nebutra 与你团队已经在使用的工具连接起来。
   <Card title="Vercel" icon="triangle" href="/zh/integrations/vercel">
     前端表面可选的部署目标之一——不是默认选项。
   </Card>
-  <Card title="Stripe" icon="credit-card" href="/zh/integrations/stripe">
-    计费、订阅和支付 Webhook 预先接好线。
+  <Card title="Creem" icon="credit-card" href="/zh/integrations/creem">
+    全球卡支付，记录商户模式——当前的卡支付通道。
+  </Card>
+  <Card title="Stripe（历史遗留）" icon="credit-card" href="/zh/integrations/stripe">
+    订阅和计费门户——已不再承接新工作。
   </Card>
   <Card title="Slack" icon="slack" href="/zh/integrations/slack">
     向 Slack 频道发送通知和告警。
@@ -43,7 +46,8 @@ description: 将 Nebutra 与你团队已经在使用的工具连接起来。
 |------|------|------|
 | Vercel | 可选部署目标 | 不是默认选项——模板产出可移植的 Docker/`standalone` 构建产物,想部署到哪里都可以,包括 Vercel |
 | Resend | 设置 `RESEND_API_KEY` 后激活 | 邮件模板已就绪 |
-| Stripe | 设置 `STRIPE_SECRET_KEY` 后激活 | Webhook 已预配置 |
+| Creem | 设置 `CREEM_API_KEY` 和 `CREEM_PRODUCT_ID` 后激活 | 当前的卡支付通道，记录商户模式；Webhook 已预配置 |
+| Stripe | 设置 `STRIPE_SECRET_KEY` 后激活 | 历史遗留——仅限订阅、计费门户和切换前的历史结账 |
 | Sentry | 设置 `SENTRY_DSN` 后激活 | 租户上下文自动标记 |
 | Sanity | 设置 `SANITY_API_TOKEN` 后激活 | Studio 在 studio.nebutra.com |
 | Slack | 需要 OAuth 配置 | 通过设置 → 集成 |

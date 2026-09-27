@@ -1,6 +1,6 @@
 # create-sailor
 
-> Governed scaffolding for AI-native SaaS. One converged stack, zero questions: Next.js + Hono + Postgres + Better Auth + Stripe, with every capability live the moment you add its key.
+> Governed scaffolding for AI-native SaaS. One converged stack, zero questions: Next.js + Hono + Postgres + Better Auth + Creem, with every capability live the moment you add its key.
 
 [![npm version](https://img.shields.io/npm/v/create-sailor.svg?color=0033FE)](https://www.npmjs.com/package/create-sailor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0033FE.svg)](https://opensource.org/licenses/MIT)
@@ -32,7 +32,7 @@ Nebutra runs in production:
 | App + API | Next.js + Hono gateway (mounted in Next, or deployed on its own) |
 | Database | Postgres + Prisma |
 | Auth | Better Auth |
-| Payments | Stripe, plus WeChat Pay / Alipay for mainland China |
+| Payments | Creem (cards worldwide, merchant of record), plus WeChat Pay / Alipay for mainland China |
 | Email | Resend |
 | SMS | Twilio Verify, plus Aliyun for mainland China |
 | Object storage | any S3-compatible bucket (Cloudflare R2, Aliyun OSS) |

@@ -675,11 +675,11 @@ export const GLOBAL_POINTS: ReadonlyArray<
     },
   },
   {
-    zh: { icon: "💳", title: "支付：全球 + 中国", desc: "Stripe、微信支付、支付宝" },
+    zh: { icon: "💳", title: "支付：全球 + 中国", desc: "Creem、微信支付、支付宝" },
     en: {
       icon: "💳",
       title: "Payments: Global + China",
-      desc: "Stripe · WeChat Pay · Alipay",
+      desc: "Creem · WeChat Pay · Alipay",
     },
   },
   {

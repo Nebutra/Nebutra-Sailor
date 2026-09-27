@@ -3,6 +3,10 @@ title: Manage Plans
 description: Create Stripe products, configure plan limits in code, and add new billing tiers to Nebutra.
 ---
 
+<Note>
+Plan tiers (FREE/PRO/ENTERPRISE) are a subscription concept and still map to **Stripe** products today (legacy, per [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)). This is separate from one-time card checkout, which runs on **Creem** — see [Creem integration](/integrations/creem).
+</Note>
+
 ## Prerequisites
 
 - Stripe account with API access

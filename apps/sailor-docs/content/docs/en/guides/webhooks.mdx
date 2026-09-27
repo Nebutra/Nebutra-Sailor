@@ -7,7 +7,7 @@ description: Send and receive real-time events between Nebutra and your external
 
 Nebutra's webhook system (`@nebutra/webhooks`) allows you to:
 
-1. **Receive** events from Nebutra (inbound webhooks — e.g. Stripe, GitHub)
+1. **Receive** events from Nebutra (inbound webhooks — e.g. Creem, GitHub)
 2. **Send** events to your customers' systems (outbound webhooks — when things happen in your product)
 
 ## Outbound webhooks
@@ -62,42 +62,38 @@ Nebutra handles delivery, retries (with exponential backoff), and signature sign
 
 ### Verifying signatures
 
-Always verify webhook signatures before processing events:
+Always verify webhook signatures before processing events. Nebutra's own current card rail (Creem, per [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)) verifies the raw request body before parsing it — the same pattern applies to any inbound webhook you receive:
 
-```typescript app/api/webhooks/stripe/route.ts
-import { NextRequest } from "next/server";
-import Stripe from "stripe";
+```typescript backends/gateway/src/routes/webhooks/creem.ts
+import { verifyCreemSignature } from "@nebutra/billing";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+export async function POST(req: Request) {
+  // Verify the bytes as received — parsing first would change them.
+  const rawBody = await req.text();
+  const signature = req.headers.get("creem-signature");
 
-export async function POST(req: NextRequest) {
-  const body = await req.text();
-  const sig = req.headers.get("stripe-signature")!;
-
-  let event: Stripe.Event;
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
-  } catch {
-    return new Response("Invalid signature", { status: 400 });
+  if (!verifyCreemSignature(rawBody, signature)) {
+    return new Response("Invalid signature", { status: 401 });
   }
 
-  switch (event.type) {
-    case "invoice.paid":
-      await handleInvoicePaid(event.data.object as Stripe.Invoice);
+  const event = JSON.parse(rawBody);
+
+  switch (event.eventType) {
+    case "checkout.completed":
+      await handleCheckoutCompleted(event.object);
       break;
-    case "customer.subscription.deleted":
-      await handleSubscriptionCancelled(event.data.object as Stripe.Subscription);
+    case "refund.created":
+      await handleRefundCreated(event.object);
       break;
   }
 
   return new Response("OK", { status: 200 });
 }
 ```
+
+<Note>
+Subscription webhooks (`customer.subscription.*`, `invoice.*`) still arrive from **Stripe** today (legacy) at a separate endpoint — see [Payment Webhooks](/payments/webhooks).
+</Note>
 
 ### GitHub webhooks
 
@@ -144,13 +140,7 @@ export async function POST(req: Request) {
 
 ## Testing webhooks locally
 
-Use the Stripe CLI to forward events to your local server:
-
-```bash
-stripe listen --forward-to localhost:3000/api/webhooks/stripe
-```
-
-Or use [ngrok](https://ngrok.com) to expose your local server:
+For Creem, set `CREEM_TEST_MODE=true` and point the webhook at your local tunnel, or use [ngrok](https://ngrok.com) to expose your local server:
 
 ```bash
 ngrok http 3000
@@ -163,7 +153,7 @@ ngrok http 3000
   <Card title="Error Handling" icon="triangle-alert" href="/guides/error-handling">
     How to handle failed webhook deliveries.
   </Card>
-  <Card title="Stripe Integration" icon="credit-card" href="/integrations/stripe">
-    Stripe webhook setup guide.
+  <Card title="Creem Integration" icon="credit-card" href="/integrations/creem">
+    Creem webhook setup guide — the current card rail.
   </Card>
 </CardGroup>

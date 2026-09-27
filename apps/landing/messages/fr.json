@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Automatisation SaaS B2B",
-      "description": "Intègre très profondément Postgres, Better Auth et Stripe. Fournit une sécurité RLS globale et très sophistiquée en tout."
+      "description": "Intègre très profondément Postgres, Better Auth et Creem. Fournit une sécurité RLS globale et très sophistiquée en tout."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Quelle infrastructure de traitement isole les vecteurs de paiement ?",
-              "a": "L'acheminement mondial des paiements s'appuie fondamentalement sur les interfaces serveur Stripe, garantissant une télémétrie PCI-DSS stricte et l'intégrité du traitement. Les déploiements Enterprise peuvent intégrer des pipelines d'audit financier privés régis par des engagements SLA personnalisés."
+              "a": "L'acheminement mondial des paiements s'appuie fondamentalement sur les interfaces serveur Creem en tant que merchant of record, garantissant une télémétrie PCI-DSS stricte et l'intégrité du traitement. Les déploiements Enterprise peuvent intégrer des pipelines d'audit financier privés régis par des engagements SLA personnalisés."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Informations de paiement",
-              "desc": "Adresse de facturation et détails du moyen de paiement (traitement sécurisé via Stripe)."
+              "desc": "Adresse de facturation et détails du moyen de paiement (traitement sécurisé via Creem)."
             },
             "3": {
               "label": "Communications",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Traitement des paiements",
-              "desc": "Stripe pour le traitement sécurisé des paiements"
+              "desc": "Creem pour le traitement sécurisé des paiements"
             },
             "2": {
               "label": "Authentification",
@@ -1056,7 +1056,7 @@
             "0": "Les abonnements sont facturés à l'avance sur une base mensuelle ou annuelle",
             "1": "Tous les frais sont non remboursables sauf disposition contraire dans notre",
             "2": "Vous nous autorisez à débiter votre moyen de paiement pour les frais applicables",
-            "3": "Nous utilisons Stripe pour le traitement sécurisé des paiements",
+            "3": "Nous utilisons Creem pour le traitement sécurisé des paiements",
             "1RefundLink": "Politique de remboursement"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configurer",
-        "desc": "Configurez Prisma, Better Auth et Stripe via le CLI interactif en quelques minutes."
+        "desc": "Configurez Prisma, Better Auth et Creem via le CLI interactif en quelques minutes."
       },
       "step3": {
         "title": "3. Construire",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "API multi-protocoles (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI pour les API publiques, oRPC pour les appels frontend typés, tRPC pour la compatibilité T3-stack. Tous les protocoles partagent les mêmes contrats Zod et la même pile de middleware. Activez par protocole via la config de préréglage.",
       "billing_category": "Facturation & Monétisation",
-      "billing_f1_title": "Stripe et paiements en Chine",
-      "billing_f1_desc": "Choisissez votre fournisseur de paiement : Stripe pour l'enterprise mondial, ou Alipay/WeChat Pay pour le marché chinois. Paiement en un clic et portail de facturation en libre-service.",
+      "billing_f1_title": "Creem et paiements en Chine",
+      "billing_f1_desc": "Choisissez votre fournisseur de paiement : Creem pour l'enterprise mondial en tant que merchant of record — il collecte et reverse lui-même la taxe de vente/TVA, donc pas besoin de vous immatriculer dans chaque pays — ou Alipay/WeChat Pay pour le marché chinois. Paiement en un clic et portail de facturation en libre-service.",
       "billing_f2_title": "Application des quotas basée sur l'utilisation",
       "billing_f2_desc": "Les compteurs Redis en temps réel suivent les appels API et l'utilisation des tokens par tenant. Les requêtes sont bloquées à la passerelle lorsque les limites sont atteintes.",
       "billing_f3_title": "Synchronisation du cycle de vie des webhooks",
-      "billing_f3_desc": "Les événements d'abonnement Stripe mettent automatiquement à jour les plans d'organisation dans votre base de données via Inngest — pas de tâches cron, pas de polling.",
+      "billing_f3_desc": "Les événements webhook de paiement mettent automatiquement à jour les plans d'organisation dans votre base de données via Inngest — pas de tâches cron, pas de polling.",
       "rel_category": "Fiabilité",
       "rel_f1_title": "Disjoncteur + nouvelle tentative",
       "rel_f1_desc": "La passerelle et le service IA utilisent un disjoncteur FERMÉ/OUVERT/SEMI-OUVERT avec backoff exponentiel et gigue — pas de pannes en cascade.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Pages d'accueil d'export logiciel mondial",
-        "desc": "Conçu pour le SaaS mondial. Paiement Stripe multi-devises, routage i18n automatique next-intl en 7 langues, conformité RGPD/CCPA et contenu géociblé.",
+        "desc": "Conçu pour le SaaS mondial. Paiement Creem multi-devises, routage i18n automatique next-intl en 7 langues, conformité RGPD/CCPA et contenu géociblé.",
         "features": {
           "f1": "Paiements mondiaux multi-devises",
           "f2": "7 langues + Prêt RGPD"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Puis-je apporter mon propre fournisseur ?",
-          "answer": "Oui. Chaque intégration (auth, file d'attente, recherche, e-mail, paiements, stockage, facturation) est indépendante du fournisseur. La fabrique dans chaque package sélectionne le bon adaptateur depuis une seule variable d'environnement — tout via Better Auth, QStash, Resend et Stripe — sans toucher au code applicatif."
+          "answer": "Oui. Chaque intégration (auth, file d'attente, recherche, e-mail, paiements, stockage, facturation) est indépendante du fournisseur. La fabrique dans chaque package sélectionne le bon adaptateur depuis une seule variable d'environnement — tout via Better Auth, QStash, Resend et Creem — sans toucher au code applicatif."
         },
         "tech-stack": {
           "question": "Quelle est la stack technologique ?",

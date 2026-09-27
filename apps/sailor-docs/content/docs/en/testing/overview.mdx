@@ -153,7 +153,8 @@ await page.click('text=Create Project');
 
 | Dependency | Mock approach |
 |-----------|--------------|
-| Stripe | `vi.mock("stripe")` with fixture responses |
+| Creem | `vi.fn()` over `fetch` with fixture responses (hand-rolled REST client, no SDK) |
+| Stripe (legacy) | `vi.mock("stripe")` with fixture responses |
 | Auth (Better Auth) | `vi.mock("@/lib/auth-client")` / `@nebutra/auth` with a mock session |
 | PostHog | `vi.mock("@nebutra/analytics")` — no-op stubs |
 | Email | `vi.mock("@nebutra/email")` — capture sent emails |

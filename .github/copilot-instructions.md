@@ -29,7 +29,7 @@ packages/design/ui/        → PRIMARY component library (Radix + HeroUI + Lobe 
 packages/design/tokens/    → CSS variables — SINGLE SOURCE OF TRUTH for theming
 packages/design/icons/     → 541 Geist icons as TSX components
 packages/platform/db/        → Prisma v7 + PostgreSQL schema
-packages/commerce/billing/   → Stripe subscriptions + usage metering
+packages/commerce/billing/   → Creem (cards, merchant of record) + WeChat Pay/Alipay + usage metering
 packages/iam/identity/  → Auth abstraction layer (Clerk adapter)
 packages/integrations/email/     → Resend transactional email
 packages/ai-sdk/    → Vercel AI SDK wrapper

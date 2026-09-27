@@ -46,7 +46,7 @@ This document is always included in Kiro's context window. It provides the found
 | `@nebutra/tokens` | CSS variables — color scales, brand, theming |
 | `@nebutra/icons` | 541 Geist icons as TSX components |
 | `@nebutra/db` | Prisma v7 + PostgreSQL client |
-| `@nebutra/billing` | Multi-provider billing (Stripe \| Polar \| LemonSqueezy \| ChinaPay) |
+| `@nebutra/billing` | Multi-provider billing (Creem, merchant of record \| WeChat Pay/Alipay \| Manual) |
 | `@nebutra/auth` | Auth abstraction — Clerk \| Better Auth \| NextAuth \| Supabase (`packages/iam/auth/`) |
 | `@nebutra/email` | Resend transactional email |
 | `@nebutra/agents` | AI runtime: Vercel AI SDK helpers + multi-agent orchestration |

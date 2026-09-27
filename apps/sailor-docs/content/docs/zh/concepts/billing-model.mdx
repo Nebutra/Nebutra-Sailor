@@ -83,13 +83,34 @@ const quota = await metering.getQuota("org_123", "api_calls");
 //   }
 ```
 
+## 支付服务商
+
+根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)，一次性卡支付购买（例如直接买断的计划升级、积分充值）通过 **Creem** 处理——全球卡支付，记录商户模式——中国大陆则使用 **微信支付 / 支付宝**。上文描述的循环计划订阅目前仍运行在 **Stripe** 上（历史遗留）：不会在其上构建任何新功能，仅保留至订阅迁移为 Creem 订阅（`subscription.*` 事件）为止。
+
+API 网关为两者都预置了 Webhook 处理程序：
+
+| Stripe 事件（历史遗留，订阅） | 处理动作 |
+|--------------|--------|
+| `checkout.session.completed` | 开通计划，发送欢迎邮件 |
+| `customer.subscription.updated` | 更新租户计划和配额 |
+| `customer.subscription.deleted` | 降级至 FREE |
+| `invoice.payment_failed` | 发送支付失败邮件 |
+| `invoice.paid` | 记录支付，更新计费周期 |
+
+| Creem 事件（当前，一次性卡支付购买） | 处理动作 |
+|--------------|--------|
+| `checkout.completed` | 结算支付订单（税前金额与锁定的报价价格比对） |
+
 ## 相关文档
 
 <CardGroup cols={2}>
   <Card title="限流" icon="gauge" href="/zh/guides/rate-limits">
     限流头部信息及 429 响应处理。
   </Card>
-  <Card title="Stripe 集成" icon="credit-card" href="/zh/integrations/stripe">
-    配置 Stripe Webhooks 和计费门户。
+  <Card title="Creem 集成" icon="credit-card" href="/zh/integrations/creem">
+    当前的卡支付通道——面向全球，记录商户模式。
+  </Card>
+  <Card title="Stripe 集成（历史遗留）" icon="credit-card" href="/zh/integrations/stripe">
+    订阅、计费门户与切换前的历史结账。
   </Card>
 </CardGroup>

@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Otomatisasi SaaS Perusahaan",
-      "description": "Terintegrasi mendalam dengan tumpukan teknologi modern Postgres, Better Auth, dan Stripe. Menyediakan keamanan tingkat baris siap pakai, isolasi multi-tenant kompleks, dan penagihan langganan global."
+      "description": "Terintegrasi mendalam dengan tumpukan teknologi modern Postgres, Better Auth, dan Creem. Menyediakan keamanan tingkat baris siap pakai, isolasi multi-tenant kompleks, dan penagihan langganan global."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Infrastruktur pemrosesan apa yang mengisolasi vektor pembayaran?",
-              "a": "Rute kas global secara fundamental mendelegasikan ke antarmuka server Stripe, menjamin telemetri PCI-DSS yang ketat dan integritas pemrosesan. Penyebaran Enterprise dapat mengintegrasikan pipeline audit keuangan pribadi yang diatur oleh komitmen SLA khusus."
+              "a": "Rute kas global secara fundamental mendelegasikan ke antarmuka server Creem sebagai merchant of record, menjamin telemetri PCI-DSS yang ketat dan integritas pemrosesan. Penyebaran Enterprise dapat mengintegrasikan pipeline audit keuangan pribadi yang diatur oleh komitmen SLA khusus."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Informasi Pembayaran",
-              "desc": "Alamat tagihan dan detail metode pembayaran (diproses secara aman melalui Stripe)."
+              "desc": "Alamat tagihan dan detail metode pembayaran (diproses secara aman melalui Creem)."
             },
             "3": {
               "label": "Komunikasi",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Pemrosesan Pembayaran",
-              "desc": "Stripe untuk penanganan pembayaran yang aman"
+              "desc": "Creem untuk penanganan pembayaran yang aman"
             },
             "2": {
               "label": "Autentikasi",
@@ -1056,7 +1056,7 @@
             "0": "Langganan ditagih secara dimuka secara bulanan atau tahunan",
             "1": "Semua biaya tidak dapat dikembalikan kecuali sebagaimana dinyatakan dalam",
             "2": "Anda mengotorisasi kami untuk membebankan biaya yang berlaku ke metode pembayaran Anda",
-            "3": "Kami menggunakan Stripe untuk pemrosesan pembayaran yang aman",
+            "3": "Kami menggunakan Creem untuk pemrosesan pembayaran yang aman",
             "1RefundLink": "Kebijakan Pengembalian Dana"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurasi",
-        "desc": "Atur Prisma, Better Auth, dan Stripe melalui CLI interaktif dalam hitungan menit."
+        "desc": "Atur Prisma, Better Auth, dan Creem melalui CLI interaktif dalam hitungan menit."
       },
       "step3": {
         "title": "3. Bangun",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "API Multi-Protokol (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI untuk API publik, oRPC untuk panggilan frontend yang aman tipe, tRPC untuk kompatibilitas stack T3. Semua protokol berbagi kontrak Zod dan tumpukan middleware yang sama. Aktifkan per protokol melalui konfigurasi preset.",
       "billing_category": "Penagihan & Monetisasi",
-      "billing_f1_title": "Stripe & China Pay",
-      "billing_f1_desc": "Pilih penyedia pembayaran Anda: Stripe untuk perusahaan global, atau Alipay/WeChat Pay untuk pasar Tiongkok. Checkout satu klik dan portal penagihan mandiri.",
+      "billing_f1_title": "Creem & China Pay",
+      "billing_f1_desc": "Pilih penyedia pembayaran Anda: Creem menangani kartu global sebagai merchant of record — Creem yang memungut dan menyetorkan pajak penjualan/PPN sehingga Anda tidak perlu mendaftar di setiap negara; atau Alipay/WeChat Pay untuk pasar Tiongkok. Checkout satu klik dan portal penagihan mandiri.",
       "billing_f2_title": "Penegakan kuota berbasis penggunaan",
       "billing_f2_desc": "Penghitung Redis real-time melacak panggilan API dan penggunaan token per tenant. Permintaan dikunci di gateway saat batas tercapai.",
       "billing_f3_title": "Sinkronisasi siklus hidup webhook",
-      "billing_f3_desc": "Peristiwa langganan Stripe secara otomatis memperbarui paket organisasi di database Anda melalui Inngest — tanpa pekerjaan cron, tanpa polling.",
+      "billing_f3_desc": "Peristiwa webhook pembayaran secara otomatis memperbarui paket organisasi di database Anda melalui Inngest — tanpa pekerjaan cron, tanpa polling.",
       "rel_category": "Keandalan",
       "rel_f1_title": "Pemutus sirkuit + pengulangan",
       "rel_f1_desc": "Gateway dan layanan AI menggunakan pemutus sirkuit CLOSED/OPEN/HALF_OPEN dengan backoff eksponensial dan jitter — tanpa kegagalan beruntun.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Landing Page Ekspor Perangkat Lunak Global",
-        "desc": "Dirancang khusus untuk SaaS yang melangkah ke pasar global. Pembayaran Stripe multi-mata uang, auto-routing i18n next-intl di 7 bahasa, kepatuhan GDPR/CCPA, dan konten berbasis geo-targeting.",
+        "desc": "Dirancang khusus untuk SaaS yang melangkah ke pasar global. Pembayaran Creem multi-mata uang, auto-routing i18n next-intl di 7 bahasa, kepatuhan GDPR/CCPA, dan konten berbasis geo-targeting.",
         "features": {
           "f1": "Pembayaran Global Multi-Mata Uang",
           "f2": "7 Bahasa + Siap GDPR"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Bisakah saya membawa provider sendiri?",
-          "answer": "Ya. Setiap integrasi (auth, queue, search, email, pembayaran, penyimpanan, billing) bersifat provider-agnostic. Factory di setiap paket memilih adapter yang tepat dari satu env var — adapter yang digunakan adalah Better Auth, QStash, Resend, dan Stripe — tanpa menyentuh kode aplikasi."
+          "answer": "Ya. Setiap integrasi (auth, queue, search, email, pembayaran, penyimpanan, billing) bersifat provider-agnostic. Factory di setiap paket memilih adapter yang tepat dari satu env var — adapter yang digunakan adalah Better Auth, QStash, Resend, dan Creem — tanpa menyentuh kode aplikasi."
         },
         "tech-stack": {
           "question": "Apa tech stack-nya?",

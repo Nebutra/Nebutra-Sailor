@@ -1,11 +1,20 @@
 ---
 title: Payments Overview
-description: How Nebutra's billing system works — Stripe subscriptions, plan sync, and quota enforcement.
+description: How Nebutra's billing system works — Creem for global card payments, plan sync, and quota enforcement.
 ---
 
-## Architecture
+## Providers
 
-Nebutra's billing pipeline is built on three layers that work together to gate access by plan and enforce usage quotas in real time.
+Per [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md), the payments pair is:
+
+- **Creem** — cards, worldwide, merchant of record (it collects and remits sales tax/VAT itself). This is the current rail for one-time card checkout. See [Creem integration](/integrations/creem).
+- **WeChat Pay / Alipay** — mainland China.
+
+**Subscriptions still run on Stripe today** (legacy) — the plan-sync architecture described below. Stripe is retired from new work; nothing new is built on it. When subscriptions move, they become Creem subscriptions (`subscription.*` events) through the same payment-order and fulfillment seams. See [Stripe integration](/integrations/stripe) for what still depends on it.
+
+## Architecture (subscriptions, Stripe — legacy)
+
+Nebutra's subscription billing pipeline is built on three layers that work together to gate access by plan and enforce usage quotas in real time.
 
 ```
 User
@@ -16,7 +25,7 @@ User
                          └─▶ @nebutra/metering enforces quotas
 ```
 
-All Stripe integration code lives in `packages/commerce/billing/`. Application code calls helpers from `@nebutra/billing` — it never touches the Stripe SDK directly.
+All billing integration code (Creem, Stripe, WeChat Pay/Alipay) lives in `packages/commerce/billing/`. Application code calls helpers from `@nebutra/billing` — it never touches a provider SDK directly.
 
 ## Plans
 
@@ -47,7 +56,7 @@ All Stripe integration code lives in `packages/commerce/billing/`. Application c
   </Card>
 </CardGroup>
 
-## How plan sync works
+## How plan sync works (subscriptions, Stripe — legacy)
 
 <Steps>
   <Step title="Customer completes Stripe Checkout">
@@ -64,22 +73,47 @@ All Stripe integration code lives in `packages/commerce/billing/`. Application c
   </Step>
 </Steps>
 
-## Where Stripe config lives
+## How one-time card checkout works (Creem — current)
+
+<Steps>
+  <Step title="Customer opens a Creem checkout">
+    A one-time card purchase (e.g. credits, an add-on) opens the shared Creem product with `custom_price` set to that offer's price. The order id travels as `request_id`.
+  </Step>
+  <Step title="Webhook received and verified">
+    `POST /api/webhooks/creem` verifies the `creem-signature` header (hex HMAC-SHA256 of the raw body under `CREEM_WEBHOOK_SECRET`) and looks for `checkout.completed`.
+  </Step>
+  <Step title="Payment order settled">
+    The order's pre-tax amount (Creem adds tax on top as merchant of record) is compared against the locked offer price, and the payment order is settled.
+  </Step>
+  <Step title="Reconcile on a lost webhook">
+    `GET /v1/checkouts?checkout_id=…` lets a reconciliation job check a pending checkout directly, so a dropped webhook costs minutes, not a sale.
+  </Step>
+</Steps>
+
+## Where provider config lives
 
 | Location | Purpose |
 |----------|---------|
-| `packages/commerce/billing/src/stripe.ts` | Stripe client initialization |
+| `packages/commerce/billing/src/creem/index.ts` | Creem client — checkout, reconcile, refund, webhook signature |
+| `packages/commerce/billing/src/stripe.ts` | Stripe client initialization (legacy — subscriptions) |
 | `packages/commerce/billing/src/plans.ts` | Plan definitions and limit constants |
 | `packages/commerce/billing/src/handlers/` | Webhook event handlers |
 | `packages/commerce/billing/src/checkout.ts` | Checkout session creation helpers |
-| `packages/commerce/billing/src/portal.ts` | Stripe Customer Portal session helpers |
+| `packages/commerce/billing/src/portal.ts` | Stripe Customer Portal session helpers (legacy) |
 
 ## Environment variables
 
 Set the following in your `.env` file (or your deployment platform's secret manager):
 
 ```bash
-# Stripe secret key — use sk_test_ in development, sk_live_ in production
+# Creem — the current card rail (merchant of record)
+CREEM_API_KEY=creem_xxxxxxxxxxxxxxxxxxxx
+CREEM_PRODUCT_ID=prod_xxxxxxxxxxxxxxxxxxxx
+CREEM_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
+CREEM_TEST_MODE=true   # points at test-api.creem.io
+
+# Stripe (legacy) — use sk_test_ in development, sk_live_ in production.
+# Only feeds subscriptions, the billing portal, and pre-switch checkouts.
 STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxx
 
 # Webhook signing secret — obtained from the Stripe Dashboard or Stripe CLI
@@ -94,10 +128,10 @@ STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
 ```
 
 <Warning>
-Never commit real Stripe keys to source control. Use `.env.local` locally and inject secrets through your CI/CD environment for production deployments.
+Never commit real Creem or Stripe keys to source control. Use `.env.local` locally and inject secrets through your CI/CD environment for production deployments.
 </Warning>
 
-## Stripe Dashboard setup
+## Stripe Dashboard setup (legacy — subscriptions)
 
 <Steps>
   <Step title="Create a Stripe account">
@@ -121,6 +155,9 @@ During local development, use the [Stripe CLI](https://stripe.com/docs/stripe-cl
 ## Related
 
 <CardGroup cols={2}>
+  <Card title="Creem Integration" icon="credit-card" href="/integrations/creem">
+    Set up the current card rail.
+  </Card>
   <Card title="Manage Plans" icon="sliders" href="/payments/manage-plans">
     Define plan limits and add new billing tiers.
   </Card>
@@ -131,6 +168,6 @@ During local development, use the [Stripe CLI](https://stripe.com/docs/stripe-cl
     Gate features and API routes by plan.
   </Card>
   <Card title="Webhooks" icon="webhook" href="/payments/webhooks">
-    Handle Stripe webhook events reliably.
+    Handle Creem and Stripe webhook events reliably.
   </Card>
 </CardGroup>

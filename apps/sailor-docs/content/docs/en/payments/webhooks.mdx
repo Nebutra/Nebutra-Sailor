@@ -1,9 +1,51 @@
 ---
 title: Payment Webhooks
-description: Handle Stripe webhook events for subscription lifecycle, invoice payment, and plan sync.
+description: Handle Creem and Stripe webhook events for one-time card checkout, subscription lifecycle, invoice payment, and plan sync.
 ---
 
-## Endpoint
+## Two endpoints, two providers
+
+Per [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md), Nebutra has two payment webhook endpoints:
+
+| Endpoint | Provider | Covers |
+|----------|----------|--------|
+| `POST /api/webhooks/creem` | Creem (current) | One-time card purchases, worldwide, merchant of record |
+| `POST /api/v1/webhooks/stripe` | Stripe (legacy) | Subscriptions, billing portal, pre-switch checkouts |
+
+Both are pre-built — you do not need to write the routing logic, only add handlers for new events if needed.
+
+## Creem webhook (current)
+
+`POST /api/webhooks/creem`, implemented in `backends/gateway/src/routes/webhooks/creem.ts`. The `creem-signature` header is the hex HMAC-SHA256 of the **raw** request body, keyed by `CREEM_WEBHOOK_SECRET` — verify the bytes as received, before any parsing:
+
+```typescript backends/gateway/src/routes/webhooks/creem.ts
+import { verifyCreemSignature } from "@nebutra/billing";
+
+const rawBody = await c.req.text();
+if (!verifyCreemSignature(rawBody, c.req.header("creem-signature"))) {
+  return c.json({ ok: false }, 401);
+}
+
+const event = JSON.parse(rawBody) as CreemWebhookEvent;
+if (event.eventType === "checkout.completed" && event.object.order?.status === "paid") {
+  // order.amount is before tax — Creem adds tax on top as merchant of record
+  await settlePaymentOrder({
+    orderId: event.object.request_id!,
+    paidMinor: event.object.order.amount,
+    currency: event.object.order.currency,
+    providerRef: event.object.order.id,
+  });
+}
+```
+
+| Creem event | Action |
+|-------------|--------|
+| `checkout.completed` | Settles the payment order |
+| `refund.created` | Logged for visibility — a refund started elsewhere (the Creem dashboard) rather than through `refundPaymentOrder` |
+
+A pending checkout can be reconciled directly with `GET /v1/checkouts?checkout_id=…` (`getCreemCheckout`) if a webhook is ever lost. See the [Creem integration guide](/integrations/creem) for full setup.
+
+## Stripe webhook (legacy — subscriptions)
 
 All Stripe events are delivered to a single endpoint on the API gateway:
 
@@ -11,7 +53,7 @@ All Stripe events are delivered to a single endpoint on the API gateway:
 POST /api/v1/webhooks/stripe
 ```
 
-This endpoint is pre-built in `backends/gateway/src/routes/webhooks/stripe.ts`. You do not need to write the routing logic — only add handlers for new events if needed.
+This endpoint is pre-built in `backends/gateway/src/routes/webhooks/stripe.ts`. It only feeds surfaces that have not yet moved to Creem: subscriptions, the billing portal, the licence webhook, and legacy credit-purchase sessions. Nothing new is built on it.
 
 ## Signature verification
 
@@ -132,7 +174,7 @@ async function handlePaymentFailed(invoice: Stripe.Invoice) {
 ```
 </CodeGroup>
 
-## Registering events in the Stripe Dashboard
+## Registering events in the Stripe Dashboard (legacy)
 
 When setting up your production webhook endpoint, enable exactly these events:
 
@@ -146,7 +188,7 @@ checkout.session.completed
 
 Go to **Stripe Dashboard → Developers → Webhooks → Add endpoint**, enter your API URL, and select the events above.
 
-## Local testing with Stripe CLI
+## Local testing with Stripe CLI (legacy)
 
 <Steps>
   <Step title="Install the Stripe CLI">
@@ -189,13 +231,16 @@ The Stripe CLI signing secret is different from your production webhook signing 
 
 ## Idempotency
 
-Stripe may deliver the same event more than once (at-least-once delivery). Make your handlers idempotent — processing the same event twice should produce the same result as processing it once.
+Both providers may deliver the same event more than once (at-least-once delivery). Make your handlers idempotent — processing the same event twice should produce the same result as processing it once.
 
-The `subscription.updated` and `subscription.deleted` handlers above are already idempotent because they use upsert-style database updates.
+The Creem handler records each event in a webhook inbox before any side effect, so a redelivery is a no-op. The Stripe `subscription.updated` and `subscription.deleted` handlers above are already idempotent because they use upsert-style database updates.
 
 ## Related
 
 <CardGroup cols={2}>
+  <Card title="Creem Integration" icon="credit-card" href="/integrations/creem">
+    The current card rail — worldwide, merchant of record.
+  </Card>
   <Card title="Payments Overview" icon="credit-card" href="/payments/overview">
     Full billing architecture and environment variable reference.
   </Card>

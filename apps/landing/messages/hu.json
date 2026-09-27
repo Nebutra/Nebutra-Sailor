@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Vállalati SaaS automatizálás",
-      "description": "A Postgres, Better Auth és Stripe modern technológiai stackjének mély integrációja. Azonnali sor szintű biztonságot, összetett több bérlős izolációt és globális előfizetési számlázást biztosít."
+      "description": "A Postgres, Better Auth és Creem modern technológiai stackjének mély integrációja. Azonnali sor szintű biztonságot, összetett több bérlős izolációt és globális előfizetési számlázást biztosít."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Milyen feldolgozási infrastruktúra izolálja a fizetési vektorokat?",
-              "a": "A globális pénzáramlás alapvetően a Stripe szerverfelületekre támaszkodik, garantálva a szigorú PCI-DSS telemetriát és feldolgozási integritást. A vállalati telepítések integrálhatják a saját pénzügyi audit csatornákat, amelyeket testreszabott SLA kötelezettségek szabályoznak."
+              "a": "A globális pénzáramlás alapvetően a Creem szerverfelületeire támaszkodik, mint bejegyzett kereskedő (merchant of record), garantálva a szigorú PCI-DSS telemetriát és feldolgozási integritást. A vállalati telepítések integrálhatják a saját pénzügyi audit csatornákat, amelyeket testreszabott SLA kötelezettségek szabályoznak."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Fizetési adatok",
-              "desc": "Számlázási cím és fizetési mód adatai (biztonságosan, Stripe-on keresztül feldolgozva)."
+              "desc": "Számlázási cím és fizetési mód adatai (biztonságosan, Creem-en keresztül feldolgozva)."
             },
             "3": {
               "label": "Kommunikáció",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Fizetési feldolgozás",
-              "desc": "Stripe a biztonságos fizetések kezeléséhez"
+              "desc": "Creem a biztonságos fizetések kezeléséhez"
             },
             "2": {
               "label": "Hitelesítés",
@@ -1056,7 +1056,7 @@
             "0": "Az előfizetéseket havi vagy éves bázison előre számlázzuk",
             "1": "Minden díj nem visszafizetendő, kivéve, ha az",
             "2": "Engedélyezi, hogy a megfelelő díjakat levonjuk a fizetési módjáról",
-            "3": "A biztonságos fizetési feldolgozáshoz a Stripe-ot használjuk",
+            "3": "A biztonságos fizetési feldolgozáshoz a Creem-et használjuk",
             "1RefundLink": "Visszatérítési szabályzat"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurálás",
-        "desc": "Állítsd be a Prisma, Better Auth és Stripe beállításokat az interaktív CLI segítségével percek alatt."
+        "desc": "Állítsd be a Prisma, Better Auth és Creem beállításokat az interaktív CLI segítségével percek alatt."
       },
       "step3": {
         "title": "3. Fejlesztés",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "Több protokolos API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI nyilvános API-khoz, oRPC típusbiztos frontend hívásokhoz, tRPC T3-stack kompatibilitáshoz. Minden protokoll ugyanazt a Zod szerződést és middleware stacket használja. Protokollonként engedélyezhető előre beállított konfigurációval.",
       "billing_category": "Számlázás és Monetizáció",
-      "billing_f1_title": "Stripe és Kínai Fizetés",
-      "billing_f1_desc": "Válassza ki a fizetési szolgáltatót: Stripe globális vállalati ügyfelekhez, vagy Alipay/WeChat Pay a kínai piacra. Egy kattintásos fizetés és önálló számlázási portál.",
+      "billing_f1_title": "Creem és Kínai Fizetés",
+      "billing_f1_desc": "Válassza ki a fizetési szolgáltatót: a Creem bejegyzett kereskedőként (merchant of record) kezeli a globális kártyás fizetéseket — ő szedi be és fizeti be az értékesítési adót/áfát, így nem kell minden országban regisztrálnia; vagy Alipay/WeChat Pay a kínai piacra. Egy kattintásos fizetés és önálló számlázási portál.",
       "billing_f2_title": "Használat alapú kvóta érvényesítés",
       "billing_f2_desc": "Valós idejű Redis számlálók követik az API hívásokat és token használatot bérlőnként. A kéréseket a gateway zárja le, amikor a limitet elérjük.",
       "billing_f3_title": "Webhook életciklus szinkronizálás",
-      "billing_f3_desc": "A Stripe előfizetési események automatikusan frissítik a szervezeti csomagokat az adatbázisban Inngest-en keresztül — nincs cron feladat, nincs polling.",
+      "billing_f3_desc": "A fizetési webhook események automatikusan frissítik a szervezeti csomagokat az adatbázisban Inngest-en keresztül — nincs cron feladat, nincs polling.",
       "rel_category": "Megbízhatóság",
       "rel_f1_title": "Áramkör törő + újrapróbálkozás",
       "rel_f1_desc": "A gateway és az AI szolgáltatás CLOSED/OPEN/HALF_OPEN áramkör törőt használ exponenciális visszatartással és jitterrel — nincs kaskád hiba.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Globális szoftverexport landoló oldalak",
-        "desc": "A globálisan terjeszkedő SaaS-ekhez készült. Többvaluta Stripe fizetés, next-intl i18n automatikus útvonalvezetés 7 nyelven, GDPR/CCPA megfelelőség és földrajzilag célzott tartalom.",
+        "desc": "A globálisan terjeszkedő SaaS-ekhez készült. Többvaluta Creem fizetés, next-intl i18n automatikus útvonalvezetés 7 nyelven, GDPR/CCPA megfelelőség és földrajzilag célzott tartalom.",
         "features": {
           "f1": "Többvaluta globális fizetések",
           "f2": "7 nyelv + GDPR-kész"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Saját szolgáltatót hozhatok?",
-          "answer": "Igen. Minden integráció (hitelesítés, sor, keresés, e-mail, fizetés, tárolás, számlázás) szolgáltatófüggetlen. A gyár minden csomagban egyetlen env változóból választja ki a megfelelő adaptert — a használt adapterek: Better Auth, QStash, Resend és Stripe — anélkül, hogy az alkalmazáskódot érintené."
+          "answer": "Igen. Minden integráció (hitelesítés, sor, keresés, e-mail, fizetés, tárolás, számlázás) szolgáltatófüggetlen. A gyár minden csomagban egyetlen env változóból választja ki a megfelelő adaptert — a használt adapterek: Better Auth, QStash, Resend és Creem — anélkül, hogy az alkalmazáskódot érintené."
         },
         "tech-stack": {
           "question": "Mi a technológiai stack?",

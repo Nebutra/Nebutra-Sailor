@@ -19,7 +19,7 @@ type SecretRow = {
 };
 
 const SECRETS: ReadonlyArray<SecretRow> = [
-  { provider: "Stripe API", masked: "sk_live_•••••••8847", Icon: Key },
+  { provider: "Creem API", masked: "creem_•••••••8847", Icon: Key },
   { provider: "OpenAI Key", masked: "sk-proj-•••••••a13e", Icon: LockClosed },
   { provider: "Slack OAuth", masked: "xoxb-•••••••92f0", Icon: Shield },
 ];

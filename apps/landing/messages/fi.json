@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "YritysasaaS-automatisointi",
-      "description": "Syvästi integroitu nykyaikaiseen teknologiaan: Postgres, Better Auth ja Stripe. Tarjoaa valmiin rivitasoisen turvallisuuden, monimutkaisen monivuokraisuuden eristelyn ja globaalin tilauslaskutuksen."
+      "description": "Syvästi integroitu nykyaikaiseen teknologiaan: Postgres, Better Auth ja Creem. Tarjoaa valmiin rivitasoisen turvallisuuden, monimutkaisen monivuokraisuuden eristelyn ja globaalin tilauslaskutuksen."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Mikä käsittelyinfrastruktuuri eristää maksuväylät?",
-              "a": "Globaali rahavirtaaminen perustuu Stripe-palvelinliittymiin, mikä takaa tiukan PCI-DSS-telemetrian ja käsittelyn eheyden. Yritysjärjestelmät voivat integroida yksityisiä taloudellisia tarkastusputkia, joita säätelevät räätälöidyt SLA-sitoumukset."
+              "a": "Globaali rahavirtaaminen perustuu Creem-palvelinliittymiin merchant of recordina, mikä takaa tiukan PCI-DSS-telemetrian ja käsittelyn eheyden. Yritysjärjestelmät voivat integroida yksityisiä taloudellisia tarkastusputkia, joita säätelevät räätälöidyt SLA-sitoumukset."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Maksutiedot",
-              "desc": "Laskutusosoite ja maksutapaa koskevat tiedot (käsittely tapahtuu turvallisesti Stripe-palvelun kautta)."
+              "desc": "Laskutusosoite ja maksutapaa koskevat tiedot (käsittely tapahtuu turvallisesti Creem-palvelun kautta)."
             },
             "3": {
               "label": "Viestit",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Maksujen käsittely",
-              "desc": "Stripe turvalliseen maksujen käsittelyyn"
+              "desc": "Creem turvalliseen maksujen käsittelyyn"
             },
             "2": {
               "label": "Autentikointi",
@@ -1056,7 +1056,7 @@
             "0": "Tilaukset laskutetaan etukäteen kuukausittain tai vuosittain",
             "1": "Kaikki maksut ovat palauttamattomia, ellei toisin mainita",
             "2": "Valtuutat meidät veloittamaan maksutapasi soveltuvista maksuista",
-            "3": "Käytämme Stripea turvalliseen maksunkäsittelyyn",
+            "3": "Käytämme Creemiä turvalliseen maksunkäsittelyyn",
             "1RefundLink": "Palautuskäytäntö"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Määritä",
-        "desc": "Määritä Prisma, Better Auth ja Stripe interaktiivisen CLI:n avulla minuuteissa."
+        "desc": "Määritä Prisma, Better Auth ja Creem interaktiivisen CLI:n avulla minuuteissa."
       },
       "step3": {
         "title": "3. Rakenna",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "Moniprotokollainen API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI julkisille API:ille, oRPC tyypiltään turvallisiin frontend-kutsuihin ja tRPC T3-stack-yhteensopivuuteen. Kaikki protokollat käyttävät samoja Zod-sopimuksia ja välittäjäpinoa. Ota käyttöön protokollakohtaisesti valmiilla määrityksellä.",
       "billing_category": "Laskutus & Monetalisointi",
-      "billing_f1_title": "Stripe ja Kiinan maksut",
-      "billing_f1_desc": "Valitse maksupalveluntarjoaja: Stripe globaaleille yrityksille tai Alipay/WeChat Pay Kiinan markkinoille. Yhden napsautuksen kassaprosessi ja itsepalvelulaskutusportaali.",
+      "billing_f1_title": "Creem ja Kiinan maksut",
+      "billing_f1_desc": "Valitse maksupalveluntarjoaja: Creem globaaleille yrityksille merchant of recordina — se kerää ja tilittää myynti-/arvonlisäveron puolestasi, joten sinun ei tarvitse rekisteröityä jokaiseen maahan — tai Alipay/WeChat Pay Kiinan markkinoille. Yhden napsautuksen kassaprosessi ja itsepalvelulaskutusportaali.",
       "billing_f2_title": "Käyttöön perustuva kiintiönvalvonta",
       "billing_f2_desc": "Reaaliaikaiset Redis-laskurit seuraavat API-kutsuja ja token-käyttöä jokaista vuokra-asiakasta kohti. Pyyntöjen käsittely keskeytetään portissa, kun rajat ylittyvät.",
       "billing_f3_title": "Webhook-elinkaaren synkronointi",
-      "billing_f3_desc": "Stripe-tilauspäivitykset päivittävät automaattisesti organisaatioiden suunnitelmat tietokantaasi Inngestin kautta — ei cron-työkaluja, ei pollausta.",
+      "billing_f3_desc": "Maksujen webhook-tapahtumat päivittävät automaattisesti organisaatioiden suunnitelmat tietokantaasi Inngestin kautta — ei cron-työkaluja, ei pollausta.",
       "rel_category": "Luotettavuus",
       "rel_f1_title": "Piirikatkaisin + uudelleenkokeilu",
       "rel_f1_desc": "Portti ja tekoälypalvelu käyttävät CLOSED/OPEN/HALF_OPEN-piirikatkaisijaa eksponentiaalisen takaisinvedon ja satunnaisuuden kanssa — ei kaskadivikoja.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Globaalit ohjelmistojen vienti-istumissivut",
-        "desc": "Rakennettu erityisesti SaaS-yhtiöille, jotka laajenevat maailmalle. Monivaluuttainen Stripe-kassan toiminto, next-intl i18n -automaattinen reititys 7 kielellä, GDPR/CCPA-sopivuus ja maantieteellisesti kohdennettu sisältö.",
+        "desc": "Rakennettu erityisesti SaaS-yhtiöille, jotka laajenevat maailmalle. Monivaluuttainen Creem-kassan toiminto, next-intl i18n -automaattinen reititys 7 kielellä, GDPR/CCPA-sopivuus ja maantieteellisesti kohdennettu sisältö.",
         "features": {
           "f1": "Monivaluuttainen globaali maksaminen",
           "f2": "7 kieltä + GDPR-valmius"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Voinko tuoda oman palveluntarjoajani?",
-          "answer": "Kyllä. Jokainen integraatio (autentikointi, jono, haku, sähköposti, maksut, tallennus, laskutus) on palveluntarjoajasta riippumaton. Jokaisen paketin factory valitsee oikean adapterin yhdestä env-muuttujasta — kaikki Better Authin, QStashin, Resendin ja Stripen kautta — ilman sovelluskoodin koskemista."
+          "answer": "Kyllä. Jokainen integraatio (autentikointi, jono, haku, sähköposti, maksut, tallennus, laskutus) on palveluntarjoajasta riippumaton. Jokaisen paketin factory valitsee oikean adapterin yhdestä env-muuttujasta — kaikki Better Authin, QStashin, Resendin ja Creemin kautta — ilman sovelluskoodin koskemista."
         },
         "tech-stack": {
           "question": "Mikä on tekninen stack?",

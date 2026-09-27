@@ -3,6 +3,10 @@ title: 管理计划
 description: 创建 Stripe 产品、在代码中配置计划限额，并为 Nebutra 添加新的账单层级。
 ---
 
+<Note>
+计划层级（FREE/PRO/ENTERPRISE）是订阅概念，目前仍映射到 **Stripe** 产品（历史遗留，根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)）。这与一次性卡支付结账是两回事，后者运行在 **Creem** 上——参见 [Creem 集成](/zh/integrations/creem)。
+</Note>
+
 ## 前置条件
 
 - 拥有 API 访问权限的 Stripe 账户

@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Uotomatiki wa SaaS ya Biashara",
-      "description": "Uunganisho wa kina wa stack ya teknolojia ya kisasa ya Postgres, Better Auth, na Stripe. Inatoa usalama wa kiwango cha safu, utengano wa multi-tenant wa kina, na bili ya usajili wa kimataifa."
+      "description": "Uunganisho wa kina wa stack ya teknolojia ya kisasa ya Postgres, Better Auth, na Creem. Inatoa usalama wa kiwango cha safu, utengano wa multi-tenant wa kina, na bili ya usajili wa kimataifa."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Je, miundombinu gani ya kuchakata inatenganisha vekta za malipo?",
-              "a": "Upelekaji wa fedha duniani kote unasimama kwa msingi kwenye viwango vya seva za Stripe, ukihakikisha telemetry ya PCI-DSS na uadilifu wa kuchakata. Usanidi wa Enterprise unaweza kuunganisha mistari ya ukaguzi wa fedha wa kibinafsi inayodhibitiwa na dhamana za SLA maalum."
+              "a": "Upelekaji wa fedha duniani kote unasimama kwa msingi kwenye viwango vya seva za Creem kama merchant of record, ukihakikisha telemetry ya PCI-DSS na uadilifu wa kuchakata. Usanidi wa Enterprise unaweza kuunganisha mistari ya ukaguzi wa fedha wa kibinafsi inayodhibitiwa na dhamana za SLA maalum."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Taarifa za Malipo",
-              "desc": "Anwani ya bili na maelezo ya njia ya malipo (inayochakuliwa kwa usalama kupitia Stripe)."
+              "desc": "Anwani ya bili na maelezo ya njia ya malipo (inayochakuliwa kwa usalama kupitia Creem)."
             },
             "3": {
               "label": "Mawasiliano",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Usindikaji wa Malipo",
-              "desc": "Stripe kwa usindikaji salama wa malipo"
+              "desc": "Creem kwa usindikaji salama wa malipo"
             },
             "2": {
               "label": "Uthibitishaji",
@@ -1056,7 +1056,7 @@
             "0": "Usajili unalipwa mapema kila mwezi au kila mwaka",
             "1": "Gharama zote hazirejeshwi isipokuwa kama ilivyoelezwa katika",
             "2": "Unatupa ruhusa ya kulipa njia yako ya malipo kwa gharama zinazohusika",
-            "3": "Tunatumia Stripe kwa usindikaji salama wa malipo",
+            "3": "Tunatumia Creem kwa usindikaji salama wa malipo",
             "1RefundLink": "Sera ya Kurudisha"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Weka mipangilio",
-        "desc": "Weka Prisma, Better Auth, na Stripe kupitia CLI ya mwingiliano kwa dakika chache."
+        "desc": "Weka Prisma, Better Auth, na Creem kupitia CLI ya mwingiliano kwa dakika chache."
       },
       "step3": {
         "title": "3. Jenga",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "API ya Multi-Protocol (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI kwa API za umma, oRPC kwa simu za frontend zenye usalama wa aina, tRPC kwa urahisiano wa T3-stack. Mikataba yote ya Zod na stack ya middleware zinashirikiwa na viashiria vyote. Wezesha kwa kila kiashiria kupitia config ya preset.",
       "billing_category": "Kubidisha na Uwekezaji wa Fedha",
-      "billing_f1_title": "Stripe & China Pay",
-      "billing_f1_desc": "Chagua mtoa huduma wa malipo: Stripe kwa biashara za kimataifa, au Alipay/WeChat Pay kwa soko la China. Malipo kwa bonyezo moja na mlango wa kubidisha mwenyewe.",
+      "billing_f1_title": "Creem & China Pay",
+      "billing_f1_desc": "Chagua mtoa huduma wa malipo: Creem kama merchant of record kwa biashara za kimataifa — hukusanya na kulipa kodi ya mauzo/VAT yenyewe ili usihitaji kujisajili katika kila nchi — au Alipay/WeChat Pay kwa soko la China. Malipo kwa bonyezo moja na mlango wa kubidisha mwenyewe.",
       "billing_f2_title": "Kutekeleza kiasi kulingana na matumizi",
       "billing_f2_desc": "Visembo vya Redis vya wakati halisi vinafuatilia simu za API na matumizi ya token kwa kila mwenyeji. Ombi linazuiliwa kwenye gateway wakati mipaka inafikiwa.",
       "billing_f3_title": "Unganisho la mzunguko wa Webhook",
-      "billing_f3_desc": "Matukio ya usajili wa Stripe hubadilisha mipango ya shirika kwenye hifadhi yako ya data kupitia Inngest — hakuna kazi za cron, hakuna polling.",
+      "billing_f3_desc": "Matukio ya webhook ya malipo hubadilisha mipango ya shirika kwenye hifadhi yako ya data kupitia Inngest — hakuna kazi za cron, hakuna polling.",
       "rel_category": "Uaminifu",
       "rel_f1_title": "Kibali cha mzunguko + kujaribu tena",
       "rel_f1_desc": "Gateway na huduma ya AI zinatumia kibali cha mzunguko cha CLOSED/OPEN/HALF_OPEN na kurudi nyuma kwa kasi na jitter — hakuna kushindwa kwa mfululizo.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Ukurasa wa Lango wa Usafirishaji wa Programu Duniani",
-        "desc": "Imeundwa kwa ajili ya SaaS zinazokwenda kimataifa. Malipo ya Stripe ya sarafu nyingi, i18n ya next-intl inayoelekeza kiotomatiki katika lugha 7, usimamizi wa GDPR/CCPA, na maudhui yanayolenga eneo.",
+        "desc": "Imeundwa kwa ajili ya SaaS zinazokwenda kimataifa. Malipo ya Creem ya sarafu nyingi, i18n ya next-intl inayoelekeza kiotomatiki katika lugha 7, usimamizi wa GDPR/CCPA, na maudhui yanayolenga eneo.",
         "features": {
           "f1": "Malipo ya Kimataifa ya Sarafu Nyingi",
           "f2": "Lugha 7 + Tayari kwa GDPR"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Je, naweza kuleta mtoa huduma wangu mwenyewe?",
-          "answer": "Ndiyo. Kila muunganisho (uhalalishaji, mistari ya kusubiri, utafutaji, barua pepe, malipo, hifadhi, bili) haitegemei mtoa huduma. Kifekete katika kila paketi kinachagua adapter sahihi kutoka kwenye kigezo kimoja cha mazingira — kwa mfano Better Auth, QStash, Resend, au Stripe — bila kugusa msimbo wa programu."
+          "answer": "Ndiyo. Kila muunganisho (uhalalishaji, mistari ya kusubiri, utafutaji, barua pepe, malipo, hifadhi, bili) haitegemei mtoa huduma. Kifekete katika kila paketi kinachagua adapter sahihi kutoka kwenye kigezo kimoja cha mazingira — kwa mfano Better Auth, QStash, Resend, au Creem — bila kugusa msimbo wa programu."
         },
         "tech-stack": {
           "question": "Je, ni nini stack ya teknolojia?",

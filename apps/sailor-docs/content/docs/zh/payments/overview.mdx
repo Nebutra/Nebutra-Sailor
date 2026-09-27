@@ -1,11 +1,20 @@
 ---
 title: 账单概览
-description: Nebutra 账单系统的工作原理 — Stripe 订阅、计划同步与配额执行。
+description: Nebutra 账单系统的工作原理 — Creem 全球卡支付、计划同步与配额执行。
 ---
 
-## 架构
+## 服务商
 
-Nebutra 的账单流水线由三层协同工作，根据计划控制访问权限并实时执行使用配额。
+根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)，支付服务商组合为：
+
+- **Creem** —— 全球卡支付，记录商户模式（自行代收代缴销售税/增值税）。这是当前一次性卡支付结账的通道。参见 [Creem 集成](/zh/integrations/creem)。
+- **微信支付 / 支付宝** —— 面向中国大陆。
+
+**订阅目前仍运行在 Stripe 上**（历史遗留）——即下文描述的计划同步架构。Stripe 已不再承接新工作；不会在其上构建任何新功能。订阅迁移时，将变为通过同一套支付订单与履约机制运作的 Creem 订阅（`subscription.*` 事件）。仍依赖 Stripe 的部分参见 [Stripe 集成](/zh/integrations/stripe)。
+
+## 架构（订阅，Stripe——历史遗留）
+
+Nebutra 的订阅账单流水线由三层协同工作，根据计划控制访问权限并实时执行使用配额。
 
 ```
 用户
@@ -16,7 +25,7 @@ Nebutra 的账单流水线由三层协同工作，根据计划控制访问权限
                          └─▶ @nebutra/metering 执行配额限制
 ```
 
-所有 Stripe 集成代码位于 `packages/commerce/billing/`。应用代码调用 `@nebutra/billing` 中的辅助函数——不直接使用 Stripe SDK。
+所有账单集成代码（Creem、Stripe、微信支付/支付宝）都位于 `packages/commerce/billing/`。应用代码调用 `@nebutra/billing` 中的辅助函数——不直接使用任何服务商的 SDK。
 
 ## 计划
 
@@ -47,7 +56,7 @@ Nebutra 的账单流水线由三层协同工作，根据计划控制访问权限
   </Card>
 </CardGroup>
 
-## 计划同步原理
+## 计划同步原理（订阅，Stripe——历史遗留）
 
 <Steps>
   <Step title="用户完成 Stripe 结账">
@@ -64,22 +73,47 @@ Nebutra 的账单流水线由三层协同工作，根据计划控制访问权限
   </Step>
 </Steps>
 
-## Stripe 配置位置
+## 一次性卡支付结账原理（Creem——当前）
+
+<Steps>
+  <Step title="用户发起 Creem 结账">
+    一次性卡支付购买（例如积分、附加包）会打开共享的 Creem 产品，并将 `custom_price` 设为该报价的价格。订单 id 作为 `request_id` 随结账一起传递。
+  </Step>
+  <Step title="接收并验证 Webhook">
+    `POST /api/webhooks/creem` 验证 `creem-signature` 请求头（对原始请求体做 HMAC-SHA256，密钥为 `CREEM_WEBHOOK_SECRET`），并查找 `checkout.completed` 事件。
+  </Step>
+  <Step title="结算支付订单">
+    将订单的税前金额（Creem 作为记录商户在其上另加税费）与锁定的报价价格进行比对，然后结算该笔支付订单。
+  </Step>
+  <Step title="对账丢失的 Webhook">
+    对账任务可以直接用 `GET /v1/checkouts?checkout_id=…` 查询一笔待处理的结账，因此丢失的 Webhook 只损失几分钟，而不会损失一笔订单。
+  </Step>
+</Steps>
+
+## 服务商配置位置
 
 | 位置 | 用途 |
 |------|------|
-| `packages/commerce/billing/src/stripe.ts` | Stripe 客户端初始化 |
+| `packages/commerce/billing/src/creem/index.ts` | Creem 客户端——结账、对账、退款、Webhook 签名 |
+| `packages/commerce/billing/src/stripe.ts` | Stripe 客户端初始化（历史遗留——订阅） |
 | `packages/commerce/billing/src/plans.ts` | 计划定义和限额常量 |
 | `packages/commerce/billing/src/handlers/` | Webhook 事件处理程序 |
 | `packages/commerce/billing/src/checkout.ts` | 结账会话创建辅助函数 |
-| `packages/commerce/billing/src/portal.ts` | Stripe 客户门户会话辅助函数 |
+| `packages/commerce/billing/src/portal.ts` | Stripe 客户门户会话辅助函数（历史遗留） |
 
 ## 环境变量
 
 在 `.env` 文件（或部署平台的密钥管理器）中设置以下变量：
 
 ```bash
-# Stripe 密钥 — 开发环境使用 sk_test_，生产环境使用 sk_live_
+# Creem — 当前的卡支付通道（记录商户模式）
+CREEM_API_KEY=creem_xxxxxxxxxxxxxxxxxxxx
+CREEM_PRODUCT_ID=prod_xxxxxxxxxxxxxxxxxxxx
+CREEM_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
+CREEM_TEST_MODE=true   # 指向 test-api.creem.io
+
+# Stripe（历史遗留）— 开发环境使用 sk_test_，生产环境使用 sk_live_。
+# 仅供订阅、计费门户和切换前的历史结账使用。
 STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxx
 
 # Webhook 签名密钥 — 从 Stripe Dashboard 或 Stripe CLI 获取
@@ -94,10 +128,10 @@ STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
 ```
 
 <Warning>
-切勿将真实的 Stripe 密钥提交到源代码仓库。本地开发请使用 `.env.local`，生产部署请通过 CI/CD 环境注入密钥。
+切勿将真实的 Creem 或 Stripe 密钥提交到源代码仓库。本地开发请使用 `.env.local`，生产部署请通过 CI/CD 环境注入密钥。
 </Warning>
 
-## Stripe Dashboard 配置
+## Stripe Dashboard 配置（历史遗留——订阅）
 
 <Steps>
   <Step title="创建 Stripe 账户">
@@ -121,6 +155,9 @@ STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
 ## 相关文档
 
 <CardGroup cols={2}>
+  <Card title="Creem 集成" icon="credit-card" href="/zh/integrations/creem">
+    配置当前的卡支付通道。
+  </Card>
   <Card title="管理计划" icon="sliders" href="/zh/payments/manage-plans">
     定义计划限额并添加新的账单层级。
   </Card>
@@ -131,6 +168,6 @@ STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
     按计划限制功能和 API 路由的访问。
   </Card>
   <Card title="Webhooks" icon="webhook" href="/zh/payments/webhooks">
-    可靠地处理 Stripe Webhook 事件。
+    可靠地处理 Creem 与 Stripe 的 Webhook 事件。
   </Card>
 </CardGroup>

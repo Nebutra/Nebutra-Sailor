@@ -585,7 +585,7 @@ await sync.push({ dryRun: true });  // validate + reformat in place (dry-run saf
     "billing.ts",
     `import { createCheckoutSession, getSubscription } from "@nebutra/billing";
 
-// Stripe by default; WeChat Pay / Alipay run alongside once configured.
+// Creem by default (cards, merchant of record); WeChat Pay / Alipay run alongside once configured.
 const session = await createCheckoutSession({
   customerId: org.id,
   priceId: "price_pro_monthly",

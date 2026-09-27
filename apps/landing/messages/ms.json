@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Automasi SaaS Perusahaan",
-      "description": "Berintegrasi mendalam dengan stack teknologi moden Postgres, Better Auth, dan Stripe. Menyediakan keselamatan peringkat baris sedia ada, pengasingan pelbagai penyewa yang kompleks, dan penagihan langganan global."
+      "description": "Berintegrasi mendalam dengan stack teknologi moden Postgres, Better Auth, dan Creem. Menyediakan keselamatan peringkat baris sedia ada, pengasingan pelbagai penyewa yang kompleks, dan penagihan langganan global."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Infrastruktur pemprosesan apa yang mengasingkan vektor pembayaran?",
-              "a": "Penghalaan tunai global pada asasnya merujuk kepada antara muka pelayan Stripe, menjamin telemetri PCI-DSS yang ketat dan integriti pemprosesan. Penyelesaian Enterprise boleh mengintegrasikan paip audit kewangan peribadi yang dikawal oleh komitmen SLA tersuai."
+              "a": "Penghalaan tunai global pada asasnya merujuk kepada antara muka pelayan Creem sebagai merchant of record, menjamin telemetri PCI-DSS yang ketat dan integriti pemprosesan. Penyelesaian Enterprise boleh mengintegrasikan paip audit kewangan peribadi yang dikawal oleh komitmen SLA tersuai."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Maklumat Pembayaran",
-              "desc": "Alamat bil dan butiran kaedah pembayaran (diproses dengan selamat melalui Stripe)."
+              "desc": "Alamat bil dan butiran kaedah pembayaran (diproses dengan selamat melalui Creem)."
             },
             "3": {
               "label": "Komunikasi",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Pemprosesan Pembayaran",
-              "desc": "Stripe untuk pengendalian pembayaran yang selamat"
+              "desc": "Creem untuk pengendalian pembayaran yang selamat"
             },
             "2": {
               "label": "Pengesahan",
@@ -1056,7 +1056,7 @@
             "0": "Langganan dibayar terlebih dahulu secara bulanan atau tahunan",
             "1": "Semua yuran tidak boleh dikembalikan kecuali seperti yang dinyatakan dalam",
             "2": "Anda memberi kuasa kepada kami untuk menjejaki kaedah pembayaran anda untuk yuran yang berkenaan",
-            "3": "Kami menggunakan Stripe untuk pemprosesan pembayaran yang selamat",
+            "3": "Kami menggunakan Creem untuk pemprosesan pembayaran yang selamat",
             "1RefundLink": "Dasar Pemulangan"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Konfigurasi",
-        "desc": "Sediakan Prisma, Better Auth, dan Stripe melalui CLI interaktif dalam beberapa minit."
+        "desc": "Sediakan Prisma, Better Auth, dan Creem melalui CLI interaktif dalam beberapa minit."
       },
       "step3": {
         "title": "3. Bina",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "API Multi-Protokol (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI untuk API awam, oRPC untuk panggilan frontend yang selamat jenis, tRPC untuk keserasian stack T3. Semua protokol berkongsi kontrak Zod dan tumpukan perantara yang sama. Aktifkan mengikut protokol melalui konfigurasi pratetap.",
       "billing_category": "Penagihan & Monetisasi",
-      "billing_f1_title": "Stripe & China Pay",
-      "billing_f1_desc": "Pilih penyedia pembayaran anda: Stripe untuk perusahaan global, atau Alipay/WeChat Pay untuk pasaran China. Semakan satu klik dan portal penagihan sendiri.",
+      "billing_f1_title": "Creem & China Pay",
+      "billing_f1_desc": "Pilih penyedia pembayaran anda: Creem mengendalikan kad global sebagai merchant of record — ia mengutip dan memungut cukai jualan/VAT sendiri supaya anda tidak perlu berdaftar di setiap negara; atau Alipay/WeChat Pay untuk pasaran China. Semakan satu klik dan portal penagihan sendiri.",
       "billing_f2_title": "Penguatkuasaan kuota berasaskan penggunaan",
       "billing_f2_desc": "Pengira Redis masa nyata menjejak panggilan API dan penggunaan token setiap penyewa. Permintaan dikawal di gerbang apabila had dicapai.",
       "billing_f3_title": "Selaras kitaran hayat webhook",
-      "billing_f3_desc": "Peristiwa langganan Stripe secara automatik mengemas kini pelan organisasi dalam pangkalan data anda melalui Inngest — tiada tugas cron, tiada pengimbasan.",
+      "billing_f3_desc": "Peristiwa webhook pembayaran secara automatik mengemas kini pelan organisasi dalam pangkalan data anda melalui Inngest — tiada tugas cron, tiada pengimbasan.",
       "rel_category": "Kebolehpercayaan",
       "rel_f1_title": "Pemecah litar + cuba semula",
       "rel_f1_desc": "Gerbang dan perkhidmatan AI menggunakan pemecah litar CLOSED/OPEN/HALF_OPEN dengan bayaran balik eksponen dan jitter — tiada kegagalan berantai.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Laman Pendaratan Eksport Perisian Global",
-        "desc": "Direka khas untuk SaaS yang meluaskan ke pasaran global. Pembayaran Stripe multi-mata wang, auto-routing i18n next-intl merentasi 7 bahasa, pematuhan GDPR/CCPA, dan kandungan berasaskan geo.",
+        "desc": "Direka khas untuk SaaS yang meluaskan ke pasaran global. Pembayaran Creem multi-mata wang, auto-routing i18n next-intl merentasi 7 bahasa, pematuhan GDPR/CCPA, dan kandungan berasaskan geo.",
         "features": {
           "f1": "Pembayaran Global Multi-Mata Wang",
           "f2": "7 Bahasa + Sedia untuk GDPR"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Bolehkah saya membawa penyedia saya sendiri?",
-          "answer": "Ya. Setiap integrasi (auth, queue, search, email, pembayaran, storan, billing) adalah agnostik penyedia. Kilang dalam setiap pakej memilih penyesuai yang betul daripada satu pemboleh ubah env — penyesuai yang digunakan ialah Better Auth, QStash, Resend, dan Stripe — tanpa menyentuh kod aplikasi."
+          "answer": "Ya. Setiap integrasi (auth, queue, search, email, pembayaran, storan, billing) adalah agnostik penyedia. Kilang dalam setiap pakej memilih penyesuai yang betul daripada satu pemboleh ubah env — penyesuai yang digunakan ialah Better Auth, QStash, Resend, dan Creem — tanpa menyentuh kod aplikasi."
         },
         "tech-stack": {
           "question": "Apakah tumpukan teknologi?",

@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Automazione SaaS Enterprise",
-      "description": "Integrazione profonda dello stack tecnologico moderno di Postgres, Better Auth e Stripe. Fornisce sicurezza a livello di riga pronta all'uso, isolamento multi-tenant complesso e fatturazione globale per abbonamenti."
+      "description": "Integrazione profonda dello stack tecnologico moderno di Postgres, Better Auth e Creem. Fornisce sicurezza a livello di riga pronta all'uso, isolamento multi-tenant complesso e fatturazione globale per abbonamenti."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Quale infrastruttura di elaborazione isola i vettori di pagamento?",
-              "a": "Il routing globale dei fondi deferisce fondamentalmente alle interfacce server di Stripe, garantendo una telemetria PCI-DSS rigorosa e l'integrità dell'elaborazione. Le implementazioni Enterprise possono integrare pipeline di audit finanziario private governate da impegni SLA personalizzati."
+              "a": "Il routing globale dei fondi deferisce fondamentalmente alle interfacce server di Creem in qualità di merchant of record, garantendo una telemetria PCI-DSS rigorosa e l'integrità dell'elaborazione. Le implementazioni Enterprise possono integrare pipeline di audit finanziario private governate da impegni SLA personalizzati."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Informazioni di pagamento",
-              "desc": "Indirizzo di fatturazione e dettagli del metodo di pagamento (elaborati in modo sicuro tramite Stripe)."
+              "desc": "Indirizzo di fatturazione e dettagli del metodo di pagamento (elaborati in modo sicuro tramite Creem)."
             },
             "3": {
               "label": "Comunicazioni",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Elaborazione dei pagamenti",
-              "desc": "Stripe per la gestione sicura dei pagamenti"
+              "desc": "Creem per la gestione sicura dei pagamenti"
             },
             "2": {
               "label": "Autenticazione",
@@ -1056,7 +1056,7 @@
             "0": "Gli abbonamenti vengono fatturati in anticipo su base mensile o annuale",
             "1": "Tutte le tariffe non sono rimborsabili, salvo quanto indicato nella nostra",
             "2": "Ci autorizzi a addebitare il tuo metodo di pagamento per le tariffe applicabili",
-            "3": "Utilizziamo Stripe per l'elaborazione sicura dei pagamenti",
+            "3": "Utilizziamo Creem per l'elaborazione sicura dei pagamenti",
             "1RefundLink": "Politica di rimborso"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configura",
-        "desc": "Configura Prisma, Better Auth e Stripe tramite la CLI interattiva in pochi minuti."
+        "desc": "Configura Prisma, Better Auth e Creem tramite la CLI interattiva in pochi minuti."
       },
       "step3": {
         "title": "3. Sviluppa",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "API multi-protocollo (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI per API pubbliche, oRPC per chiamate frontend type-safe, tRPC per compatibilità con lo stack T3. Tutti i protocolli condividono gli stessi contratti Zod e lo stack di middleware. Abilita per protocollo tramite configurazione predefinita.",
       "billing_category": "Fatturazione e monetizzazione",
-      "billing_f1_title": "Stripe e pagamenti cinesi",
-      "billing_f1_desc": "Scegli il tuo provider di pagamento: Stripe per le imprese globali, o Alipay/WeChat Pay per il mercato cinese. Checkout con un clic e portale di fatturazione self-service.",
+      "billing_f1_title": "Creem e pagamenti cinesi",
+      "billing_f1_desc": "Scegli il tuo provider di pagamento: Creem gestisce le carte globali in qualità di merchant of record — incassa e versa lei stessa l'imposta sulle vendite/IVA, così non devi registrarti in ogni paese; o Alipay/WeChat Pay per il mercato cinese. Checkout con un clic e portale di fatturazione self-service.",
       "billing_f2_title": "Applicazione delle quote in base all'uso",
       "billing_f2_desc": "Contatori Redis in tempo reale tracciano le chiamate API e l'uso dei token per tenant. Le richieste vengono bloccate al gateway quando si raggiungono i limiti.",
       "billing_f3_title": "Sincronizzazione del ciclo di vita dei webhook",
-      "billing_f3_desc": "Gli eventi di abbonamento di Stripe aggiornano automaticamente i piani dell'organizzazione nel tuo database tramite Inngest — senza cron job, senza polling.",
+      "billing_f3_desc": "Gli eventi webhook dei pagamenti aggiornano automaticamente i piani dell'organizzazione nel tuo database tramite Inngest — senza cron job, senza polling.",
       "rel_category": "Affidabilità",
       "rel_f1_title": "Interruttore automatico + riprova",
       "rel_f1_desc": "Il gateway e il servizio AI utilizzano un circuit breaker CLOSED/OPEN/HALF_OPEN con backoff esponenziale e jitter — senza guasti a cascata.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Landing Pages per l'Export Globale di Software",
-        "desc": "Progettato per il SaaS che va globale. Checkout Stripe multi-valuta, auto-routing i18n con next-intl in 7 lingue, conformità GDPR/CCPA e contenuti geo-targettizzati.",
+        "desc": "Progettato per il SaaS che va globale. Checkout Creem multi-valuta, auto-routing i18n con next-intl in 7 lingue, conformità GDPR/CCPA e contenuti geo-targettizzati.",
         "features": {
           "f1": "Pagamenti Globali Multi-Valuta",
           "f2": "7 Lingue + Pronto per il GDPR"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Posso portare il mio provider?",
-          "answer": "Sì. Ogni integrazione (autenticazione, coda, ricerca, email, pagamenti, storage, fatturazione) è indipendente dal provider. La factory in ogni pacchetto seleziona l'adapter corretto da una singola variabile d'ambiente — gli adapter usati sono Better Auth, QStash, Resend e Stripe — senza toccare il codice dell'applicazione."
+          "answer": "Sì. Ogni integrazione (autenticazione, coda, ricerca, email, pagamenti, storage, fatturazione) è indipendente dal provider. La factory in ogni pacchetto seleziona l'adapter corretto da una singola variabile d'ambiente — gli adapter usati sono Better Auth, QStash, Resend e Creem — senza toccare il codice dell'applicazione."
         },
         "tech-stack": {
           "question": "Qual è lo stack tecnologico?",

@@ -39,8 +39,8 @@ const RESULTS: ReadonlyArray<ResultRow> = [
   {
     id: "r3",
     title: {
-      en: "Stripe + WeChat Pay billing adapter notes",
-      zh: "Stripe + 微信支付 billing 适配器笔记",
+      en: "Creem + WeChat Pay billing adapter notes",
+      zh: "Creem + 微信支付 billing 适配器笔记",
     },
     excerpt: {
       en: "One billing contract keeps customer code stable across both rails.",

@@ -24,7 +24,7 @@ packages/
   theme/            Multi-theme CSS (6 oklch presets: neon, gradient, dark-dense...)
   icons/            541 Geist icons as tree-shakable TSX
   db/               Prisma v7 + PostgreSQL (pgvector, RLS, multi-schema)
-  billing/          Stripe subscriptions, usage credits, metering
+  billing/          Creem (cards, merchant of record) + WeChat Pay/Alipay, usage credits, metering
   identity/         Auth abstraction layer (Clerk adapter active)
   email/            Resend transactional email templates
   ai-sdk/           Vercel AI SDK wrapper (OpenAI, OpenRouter, streaming)

@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Enterprise SaaS Automation",
-      "description": "Deeply integrating the modern tech stack of Postgres, Better Auth, and Stripe. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
+      "description": "Deeply integrating the modern tech stack of Postgres, Better Auth, and Creem. Provides out-of-the-box row-level security, complex multi-tenant isolation, and global subscription billing."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "What processing infrastructure isolates payment vectors?",
-              "a": "Global cash routing fundamentally defers to Stripe server interfaces, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
+              "a": "Global cash routing fundamentally defers to Creem server interfaces as merchant of record, guaranteeing strict PCI-DSS telemetry and processing integrity. Enterprise deployments may integrate private financial audit pipelines governed by custom SLA commitments."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Payment Information",
-              "desc": "Billing address and payment method details (processed securely through Stripe)."
+              "desc": "Billing address and payment method details (processed securely through Creem)."
             },
             "3": {
               "label": "Communications",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Payment Processing",
-              "desc": "Stripe for secure payment handling"
+              "desc": "Creem for secure payment handling"
             },
             "2": {
               "label": "Authentication",
@@ -1056,7 +1056,7 @@
             "0": "Subscriptions are billed in advance on a monthly or annual basis",
             "1": "All fees are non-refundable except as stated in our",
             "2": "You authorize us to charge your payment method for applicable fees",
-            "3": "We use Stripe for secure payment processing",
+            "3": "We use Creem for secure payment processing",
             "1RefundLink": "Refund Policy"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Configure",
-        "desc": "Set up Prisma, Better Auth, and Stripe via the interactive CLI in minutes."
+        "desc": "Set up Prisma, Better Auth, and Creem via the interactive CLI in minutes."
       },
       "step3": {
         "title": "3. Build",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "Multi-Protocol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "REST/OpenAPI for public APIs, oRPC for type-safe frontend calls, tRPC for T3-stack compatibility. All protocols share the same Zod contracts and middleware stack. Enable per protocol via preset config.",
       "billing_category": "Billing & Monetisation",
-      "billing_f1_title": "Stripe + WeChat Pay / Alipay",
-      "billing_f1_desc": "Stripe handles global cards and subscriptions; WeChat Pay and Alipay cover the China market — both live the moment you add their keys. One-click checkout and self-serve billing portal.",
+      "billing_f1_title": "Creem + WeChat Pay / Alipay",
+      "billing_f1_desc": "Creem handles global cards as merchant of record — it collects and remits sales tax/VAT so you don't register in every country; WeChat Pay and Alipay cover the China market — both live the moment you add their keys. One-click checkout and self-serve billing portal.",
       "billing_f2_title": "Usage-based quota enforcement",
       "billing_f2_desc": "Real-time Redis counters track API calls and token usage per tenant. Requests are gated at the gateway when limits are hit.",
       "billing_f3_title": "Webhook lifecycle sync",
-      "billing_f3_desc": "Stripe subscription events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
+      "billing_f3_desc": "Payment webhook events automatically update org plans in your database via Inngest — no cron jobs, no polling.",
       "rel_category": "Reliability",
       "rel_f1_title": "Circuit breaker + retry",
       "rel_f1_desc": "The gateway and AI service use a CLOSED/OPEN/HALF_OPEN circuit breaker with exponential backoff and jitter — no cascading failures.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Global Software Export Landing Pages",
-        "desc": "Purpose-built for SaaS going global. Multi-currency Stripe checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
+        "desc": "Purpose-built for SaaS going global. Multi-currency Creem checkout, next-intl i18n auto-routing across 7 languages, GDPR/CCPA compliance, and geo-targeted content.",
         "features": {
           "f1": "Multi-Currency Global Payments",
           "f2": "7 Languages + GDPR Ready"
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "Does it work in China?",
-          "answer": "Yes. Payments (WeChat Pay/Alipay alongside Stripe), SMS (Aliyun alongside Twilio Verify), and storage (OSS alongside R2, one S3-compatible client) each keep a China-market adapter, plus Aliyun-compatible CDN and ICP-friendly domains — so the same codebase deploys cleanly inside the Great Firewall."
+          "answer": "Yes. Payments (WeChat Pay/Alipay alongside Creem), SMS (Aliyun alongside Twilio Verify), and storage (OSS alongside R2, one S3-compatible client) each keep a China-market adapter, plus Aliyun-compatible CDN and ICP-friendly domains — so the same codebase deploys cleanly inside the Great Firewall."
         },
         "deployment": {
           "question": "Where can I deploy it?",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Can I bring my own provider?",
-          "answer": "Each integration (auth, queue, search, email, payments, storage, billing) still sits behind its own interface, but the shipped adapter is the one {brandName} runs in production — Better Auth, QStash, Postgres, Resend, Stripe. Payments, SMS, and storage keep a second adapter (WeChat Pay/Alipay, Aliyun, OSS) only where mainland China needs it. Bringing your own means implementing that interface yourself; nothing in application code couples to a specific provider."
+          "answer": "Each integration (auth, queue, search, email, payments, storage, billing) still sits behind its own interface, but the shipped adapter is the one {brandName} runs in production — Better Auth, QStash, Postgres, Resend, Creem. Payments, SMS, and storage keep a second adapter (WeChat Pay/Alipay, Aliyun, OSS) only where mainland China needs it. Bringing your own means implementing that interface yourself; nothing in application code couples to a specific provider."
         },
         "tech-stack": {
           "question": "What is the tech stack?",

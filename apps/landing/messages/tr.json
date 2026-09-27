@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "Kurumsal SaaS Otomasyonu",
-      "description": "Postgres, Better Auth ve Stripe ile modern teknoloji yığınını derinlemesine entegre eder. Kutudan çıktığı gibi satır düzeyinde güvenlik, karmaşık çok kiracılı yalıtım ve küresel abonelik faturalama sağlar."
+      "description": "Postgres, Better Auth ve Creem ile modern teknoloji yığınını derinlemesine entegre eder. Kutudan çıktığı gibi satır düzeyinde güvenlik, karmaşık çok kiracılı yalıtım ve küresel abonelik faturalama sağlar."
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "Ödeme vektörlerini izole eden işleme altyapısı nedir?",
-              "a": "Global nakit yönlendirme temel olarak Stripe sunucu arayüzlerine ertelenir ve sıkı PCI-DSS telemetrisi ile işleme bütünlüğünü garanti eder. Kurumsal dağıtımlar, özel SLA taahhütleri tarafından yönetilen özel finansal denetim boru hatlarını entegre edebilir."
+              "a": "Global nakit yönlendirme temel olarak, kayıtlı satıcı (merchant of record) sıfatıyla Creem sunucu arayüzlerine ertelenir ve sıkı PCI-DSS telemetrisi ile işleme bütünlüğünü garanti eder. Kurumsal dağıtımlar, özel SLA taahhütleri tarafından yönetilen özel finansal denetim boru hatlarını entegre edebilir."
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "Ödeme Bilgileri",
-              "desc": "Fatura adresi ve ödeme yöntemi detayları (Stripe üzerinden güvenli bir şekilde işlenir)."
+              "desc": "Fatura adresi ve ödeme yöntemi detayları (Creem üzerinden güvenli bir şekilde işlenir)."
             },
             "3": {
               "label": "İletişimler",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "Ödeme İşleme",
-              "desc": "Güvenli ödeme işlemleri için Stripe"
+              "desc": "Güvenli ödeme işlemleri için Creem"
             },
             "2": {
               "label": "Kimlik Doğrulama",
@@ -1056,7 +1056,7 @@
             "0": "Abonelikler aylık veya yıllık olarak önceden faturalandırılır",
             "1": "Tüm ücretler, aşağıda belirtilen durumlar dışında iade edilemez",
             "2": "Uygulanabilir ücretleri ödeme yönteminize yansıtmamıza yetki verirsiniz",
-            "3": "Güvenli ödeme işlemleri için Stripe kullanıyoruz",
+            "3": "Güvenli ödeme işlemleri için Creem kullanıyoruz",
             "1RefundLink": "İade Politikası"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. Yapılandır",
-        "desc": "Prisma, Better Auth ve Stripe'ı interaktif CLI ile dakikalar içinde kurun."
+        "desc": "Prisma, Better Auth ve Creem'i interaktif CLI ile dakikalar içinde kurun."
       },
       "step3": {
         "title": "3. Geliştir",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "Çok Protokol API (REST + oRPC + tRPC)",
       "dx_f3_desc": "Genel API'ler için REST/OpenAPI, tür güvenli ön uç çağrıları için oRPC, T3 yığını uyumluluğu için tRPC. Tüm protokoller aynı Zod sözleşmeleri ve ara yazılım yığınını paylaşır. Her protokol için hazır yapılandırma ile etkinleştirin.",
       "billing_category": "Faturalama & Para Kazanma",
-      "billing_f1_title": "Stripe ve Çin Ödeme",
-      "billing_f1_desc": "Ödeme sağlayıcınızı seçin: küresel kurumsal için Stripe veya Çin pazarı için Alipay/WeChat Pay. Tek tıkla ödeme ve kendi kendine hizmet veren faturalama portalı.",
+      "billing_f1_title": "Creem ve Çin Ödeme",
+      "billing_f1_desc": "Ödeme sağlayıcınızı seçin: küresel kartlar için kayıtlı satıcı (merchant of record) olarak çalışan Creem — her ülkede ayrı kayıt gerekmeden satış vergisi/KDV'yi kendisi tahsil edip beyan eder — veya Çin pazarı için Alipay/WeChat Pay. Tek tıkla ödeme ve kendi kendine hizmet veren faturalama portalı.",
       "billing_f2_title": "Kullanıma dayalı kota uygulaması",
       "billing_f2_desc": "Gerçek zamanlı Redis sayaçları, her kiracı için API çağrılarını ve token kullanımını izler. Limitlere ulaşıldığında istekler ağ geçidinde engellenir.",
       "billing_f3_title": "Webhook yaşam döngüsü senkronizasyonu",
-      "billing_f3_desc": "Stripe abonelik olayları, Inngest aracılığıyla veritabanınızdaki kuruluş planlarını otomatik olarak günceller — cron işleri yok, sorgulama yok.",
+      "billing_f3_desc": "Ödeme webhook olayları, Inngest aracılığıyla veritabanınızdaki kuruluş planlarını otomatik olarak günceller — cron işleri yok, sorgulama yok.",
       "rel_category": "Güvenilirlik",
       "rel_f1_title": "Devre kesici + yeniden deneme",
       "rel_f1_desc": "Ağ geçidi ve AI servisi, üstel geri çekilme ve jitter ile CLOSED/OPEN/HALF_OPEN devre kesici kullanır — kademeli hatalar yok.",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "Global Yazılım İhracatı Açılış Sayfaları",
-        "desc": "Globalleşen SaaS'ler için özel olarak tasarlandı. Çoklu para birimi Stripe ödeme, 7 dilde next-intl i18n otomatik yönlendirme, GDPR/CCPA uyumluluğu ve coğrafi hedefli içerik.",
+        "desc": "Globalleşen SaaS'ler için özel olarak tasarlandı. Çoklu para birimi Creem ödeme, 7 dilde next-intl i18n otomatik yönlendirme, GDPR/CCPA uyumluluğu ve coğrafi hedefli içerik.",
         "features": {
           "f1": "Çoklu Para Birimi Global Ödemeler",
           "f2": "7 Dil + GDPR Hazır"
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "Kendi sağlayıcıyı getirebilir miyim?",
-          "answer": "Evet. Her entegrasyon (kimlik doğrulama, kuyruk, arama, e-posta, ödemeler, depolama, faturalandırma) sağlayıcıdan bağımsızdır. Her paketteki fabrika, tek bir çevre değişkeninden doğru adaptörü seçer — örneğin Better Auth, QStash, Resend veya Stripe — uygulama koduna dokunmadan."
+          "answer": "Evet. Her entegrasyon (kimlik doğrulama, kuyruk, arama, e-posta, ödemeler, depolama, faturalandırma) sağlayıcıdan bağımsızdır. Her paketteki fabrika, tek bir çevre değişkeninden doğru adaptörü seçer — örneğin Better Auth, QStash, Resend veya Creem — uygulama koduna dokunmadan."
         },
         "tech-stack": {
           "question": "Teknoloji yığını nedir?",

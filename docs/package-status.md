@@ -87,7 +87,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | Package                  | Enabled via                                    | Ready out-of-the-box?                 | Main gaps                                                           |
 | ------------------------ | ----------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------- |
 | `@nebutra/metering`      | (consumed directly; billing ingestion)          | No — needs ClickHouse or local dev    | Gateway/billing ingestion and enforcement wiring pending             |
-| `@nebutra/billing`       | `nebutra.config.json` capability `billing` (default) | No — provider credentials required    | Persistence and UI are host-owned; each adapter needs its own keys (Stripe, or WeChat Pay/Alipay for mainland China) |
+| `@nebutra/billing`       | `nebutra.config.json` capability `billing` (default) | No — provider credentials required    | Persistence and UI are host-owned; each adapter needs its own keys (Creem, or WeChat Pay/Alipay for mainland China) |
 | `@nebutra/legal`         | (consumed directly)    | Partial — package seams exist         | Consent persistence API, DB-backed store, and publishing workflow pending |
 | `@nebutra/license`       | (consumed directly)    | Partial — contract usable             | Host injects LicenseDb; delivery needs an email provider; no UI      |
 | `@nebutra/permissions`   | (consumed directly — not a scaffold capability) | Partial — CASL works in-process | CASL is the only supported provider (OpenFGA adapter removed, ADR 2026-09-24) |

@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "全自动 SaaS 商业底座",
-      "description": "将 Postgres、Better Auth 与 Stripe 的现代技术栈深度熔铸。完全内置开箱即用的访问控制以及订阅式计费。"
+      "description": "将 Postgres、Better Auth 与 Creem 的现代技术栈深度熔铸。完全内置开箱即用的访问控制以及订阅式计费。"
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "结算核心依托哪个处理中心完成验证？",
-              "a": "全球订单流向 Stripe 后端进行符合 PCI-DSS 高安全等级的信息流验证和转账交割。特殊地区可根据商务安排接入企业内部财务合规审计。"
+              "a": "全球订单流向作为交易商户（merchant of record）的 Creem 后端进行符合 PCI-DSS 高安全等级的信息流验证和转账交割。特殊地区可根据商务安排接入企业内部财务合规审计。"
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "支付信息",
-              "desc": "账单地址及支付方式详情（通过 Stripe 安全处理）。"
+              "desc": "账单地址及支付方式详情（通过 Creem 安全处理）。"
             },
             "3": {
               "label": "通讯内容",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "支付处理",
-              "desc": "Stripe 提供的安全支付服务"
+              "desc": "Creem 提供的安全支付服务"
             },
             "2": {
               "label": "身份认证",
@@ -1056,7 +1056,7 @@
             "0": "订阅费用按月或按年预先收取",
             "1": "所有费用不予退款，除非符合我们的",
             "2": "您授权我们向您的支付方式收取相应费用",
-            "3": "我们使用 Stripe 进行安全支付处理",
+            "3": "我们使用 Creem 进行安全支付处理",
             "1RefundLink": "退款政策"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. 交互式配置",
-        "desc": "几分钟内通过 CLI 引导完成 Prisma、Better Auth 和 Stripe 的生产环境级配置。"
+        "desc": "几分钟内通过 CLI 引导完成 Prisma、Better Auth 和 Creem 的生产环境级配置。"
       },
       "step3": {
         "title": "3. 专注构建",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "多协议 API（REST + oRPC + tRPC）",
       "dx_f3_desc": "REST/OpenAPI 面向公共 API，oRPC 面向类型安全的前端调用，tRPC 面向 T3 技术栈兼容。所有协议共享相同的 Zod 契约和中间件栈。通过 preset 配置按需启用。",
       "billing_category": "订阅与商业计费",
-      "billing_f1_title": "Stripe + 微信支付 / 支付宝",
-      "billing_f1_desc": "Stripe 覆盖全球卡组织与订阅；微信支付与支付宝覆盖中国市场——配好密钥即可同时上线。一键结账与自助账单门户。",
+      "billing_f1_title": "Creem + 微信支付 / 支付宝",
+      "billing_f1_desc": "Creem 以交易商户（merchant of record）身份覆盖全球卡组织，代收代缴各地销售税/增值税；微信支付与支付宝覆盖中国市场——配好密钥即可同时上线。一键结账与自助账单门户。",
       "billing_f2_title": "用量计量与配额执法",
       "billing_f2_desc": "实时的 Redis 哨兵持续监听租户的接口调用与 Token 损耗。一旦突破硬性配额极限，系统将立刻在 API 边缘网关上将后续请求直接拦截阻断。",
       "billing_f3_title": "订阅生命周期 Webhook 联动",
-      "billing_f3_desc": "来自 Stripe 的订阅信标事件将会通过 Inngest 的调度，实现对底层组织状态的无缝自愈式同步更新——免除繁琐配置与冗余的轮询作业。",
+      "billing_f3_desc": "支付 webhook 事件将会通过 Inngest 的调度，实现对底层组织状态的无缝自愈式同步更新——免除繁琐配置与冗余的轮询作业。",
       "rel_category": "高可用架构",
       "rel_f1_title": "熔断器守护机制",
       "rel_f1_desc": "Gateway 和 AI 服务使用 CLOSED/OPEN/HALF_OPEN 熔断器,带指数退避与抖动 —— 杜绝级联故障。",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "适合软件出海场景的落地页",
-        "desc": "专为 SaaS 出海打造。多币种 Stripe 结账、next-intl 7 国语言自动路由、GDPR/CCPA 合规以及地域定向内容。",
+        "desc": "专为 SaaS 出海打造。多币种 Creem 结账、next-intl 7 国语言自动路由、GDPR/CCPA 合规以及地域定向内容。",
         "features": {
           "f1": "多币种全球支付",
           "f2": "7 国语言 + GDPR 就绪"
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "在中国大陆能用吗？",
-          "answer": "可以。支付（微信支付/支付宝与 Stripe 并行）、短信（阿里云与 Twilio Verify 并行）、存储（OSS 与 R2 并行，走同一套 S3 兼容客户端）各自保留了中国市场适配器，再加上阿里云兼容 CDN 与 ICP 友好域名——同一份代码可以无障碍部署在长城防火墙内。"
+          "answer": "可以。支付（微信支付/支付宝与 Creem 并行）、短信（阿里云与 Twilio Verify 并行）、存储（OSS 与 R2 并行，走同一套 S3 兼容客户端）各自保留了中国市场适配器，再加上阿里云兼容 CDN 与 ICP 友好域名——同一份代码可以无障碍部署在长城防火墙内。"
         },
         "deployment": {
           "question": "可以部署到哪些环境？",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "可以接入我自己的供应商吗？",
-          "answer": "每个集成（认证、队列、搜索、邮件、支付、存储、计费）仍然收敛在各自的接口后面，但内置的适配器是 {brandName} 生产环境真正在用的那一个——Better Auth、QStash、Postgres、Resend、Stripe。只有在中国大陆确有必要时，支付、短信与存储才保留第二套适配器（微信支付/支付宝、阿里云、OSS）。要接入自己的供应商，需要自行实现该接口；业务代码本身不会绑定某个具体供应商。"
+          "answer": "每个集成（认证、队列、搜索、邮件、支付、存储、计费）仍然收敛在各自的接口后面，但内置的适配器是 {brandName} 生产环境真正在用的那一个——Better Auth、QStash、Postgres、Resend、Creem。只有在中国大陆确有必要时，支付、短信与存储才保留第二套适配器（微信支付/支付宝、阿里云、OSS）。要接入自己的供应商，需要自行实现该接口；业务代码本身不会绑定某个具体供应商。"
         },
         "tech-stack": {
           "question": "技术栈是什么？",

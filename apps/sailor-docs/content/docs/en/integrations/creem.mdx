@@ -1,0 +1,135 @@
+---
+title: Creem
+description: Configure Creem for global card payments — the current card rail, merchant of record for sales tax/VAT.
+---
+
+## Prerequisites
+
+- A [Creem account](https://creem.io)
+- No SDK to install — Nebutra calls the documented REST API directly (https://docs.creem.io). This is the same reasoning as the wallet adapters (WeChat Pay / Alipay): the API key never passes through an unaudited dependency.
+
+<Info>
+Creem is a **merchant of record**: it is the seller in law, so it takes the card, charges and remits sales tax/VAT itself, and pays you out. That is what lets a mainland-operated company sell cards worldwide without a Stripe account or a tax registration in every country — see [ADR 2026-09-26](/payments/overview) for the full reasoning.
+</Info>
+
+## Step 1: Set environment variables
+
+```bash
+CREEM_API_KEY=creem_xxxxxxxxxxxxxxxxxxxx
+CREEM_PRODUCT_ID=prod_xxxxxxxxxxxxxxxxxxxx
+CREEM_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
+CREEM_TEST_MODE=true
+```
+
+Creem is live once `CREEM_API_KEY` and `CREEM_PRODUCT_ID` are set (`isCreemConfigured`). `CREEM_TEST_MODE=true` points requests at `https://test-api.creem.io`; leave it unset (or `false`) in production, which uses `https://api.creem.io`. Test and live keys are per-mode — a live key will not work against the test host.
+
+## Step 2: Create one product in Creem
+
+Unlike Stripe's one-product-per-plan model, **one Creem product carries every offer**. Create a single one-time product in the Creem dashboard, then set its price per checkout with `custom_price` — a value in minor units between 100 and 99,999,999. This keeps your offer catalog (prices, tiers, one-off purchases) the single place a price is written; Creem's dashboard price is never read.
+
+The order id you're settling travels as `request_id` on the checkout:
+
+```typescript
+import { createCreemCheckout } from "@nebutra/billing";
+
+const checkout = await createCreemCheckout({
+  requestId: "order_xxx",       // your PaymentOrder id — comes back as request_id
+  customPriceMinor: 2900,       // $29.00, minor units
+  successUrl: "https://app.nebutra.com/billing/success",
+  customerEmail: "user@example.com",
+});
+
+redirect(checkout.checkout_url);
+```
+
+## Step 3: Configure the webhook endpoint
+
+In your Creem dashboard: **Developers → Webhook**
+
+- URL: `https://<gateway>/api/webhooks/creem`
+- Listen for:
+  - `checkout.completed` — settles the payment order
+  - `refund.created` — surfaced for visibility (a refund issued from the Creem dashboard rather than through `refundPaymentOrder`)
+
+### Signature verification
+
+Creem signs every delivery with the `creem-signature` header: the hex HMAC-SHA256 of the **raw** request body, keyed by `CREEM_WEBHOOK_SECRET`. Verify the bytes as received — parsing the body first changes them and breaks the signature check.
+
+```typescript
+import { verifyCreemSignature } from "@nebutra/billing";
+
+const ok = verifyCreemSignature(rawBody, req.headers.get("creem-signature"));
+```
+
+## Step 4: Webhook handler
+
+The Creem webhook handler is pre-built in the monorepo:
+
+```typescript backends/gateway/src/routes/webhooks/creem.ts
+creemWebhookRoutes.openapi(creemRoute, async (c) => {
+  const rawBody = await c.req.text();
+  if (!verifyCreemSignature(rawBody, c.req.header("creem-signature"))) {
+    return c.json({ ok: false }, 401);
+  }
+
+  const event = JSON.parse(rawBody) as CreemWebhookEvent;
+
+  if (event.eventType === "checkout.completed") {
+    const orderId = event.object.request_id ?? event.object.metadata?.[PAYMENT_ORDER_METADATA_KEY];
+    const order = event.object.order;
+    if (orderId && order && order.status === "paid") {
+      // order.amount is BEFORE tax — Creem adds tax on top as merchant of
+      // record, and the order's locked price is what we charged for the offer.
+      await settlePaymentOrder({
+        orderId,
+        paidMinor: order.amount,
+        currency: order.currency,
+        providerRef: order.id,
+      });
+    }
+  }
+
+  return c.json({ ok: true }, 200);
+});
+```
+
+Deliveries are recorded in the webhook inbox before any side effect runs, so a redelivered event is a no-op rather than a double settlement.
+
+## Step 5: Reconcile a lost webhook
+
+If a webhook is ever delayed or dropped, check the checkout directly instead of waiting indefinitely:
+
+```typescript
+import { getCreemCheckout } from "@nebutra/billing";
+
+const { status, order } = await getCreemCheckout(checkout.id);
+// GET /v1/checkouts?checkout_id=…
+```
+
+This costs the reconciliation job minutes, not a sale.
+
+## Refunds — full only
+
+Creem's `POST /v1/refunds` refunds the full remaining amount of a transaction — there is no `amount` parameter and no idempotency key.
+
+```typescript
+import { refundCreemOrder } from "@nebutra/billing";
+
+await refundCreemOrder(creemOrderId);
+```
+
+`refundCreemOrder` looks the transaction up with `GET /v1/transactions/search?order_id=…`, then calls `/v1/refunds` with only `transaction_id`. `refundPaymentOrder` refuses a **partial** refund before ever calling Creem, throwing `REFUND_PARTIAL_UNSUPPORTED` — Creem has no partial-refund primitive to call. An already-refunded transaction is treated as done rather than re-submitted.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Stripe (legacy)" icon="credit-card" href="/integrations/stripe">
+    Subscriptions, billing portal, and pre-switch checkouts.
+  </Card>
+  <Card title="Payments Overview" icon="credit-card" href="/payments/overview">
+    Full billing architecture and provider pair.
+  </Card>
+  <Card title="Webhooks Guide" icon="webhook" href="/payments/webhooks">
+    Creem and Stripe webhook handling side by side.
+  </Card>
+</CardGroup>

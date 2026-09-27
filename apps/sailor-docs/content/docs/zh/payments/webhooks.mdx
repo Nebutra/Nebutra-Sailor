@@ -1,9 +1,51 @@
 ---
 title: 支付 Webhooks
-description: 处理 Stripe Webhook 事件，实现订阅生命周期管理、发票支付与计划同步。
+description: 处理 Creem 与 Stripe 的 Webhook 事件，覆盖一次性卡支付结账、订阅生命周期、发票支付与计划同步。
 ---
 
-## 端点
+## 两个端点，两个服务商
+
+根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)，Nebutra 有两个支付 Webhook 端点：
+
+| 端点 | 服务商 | 覆盖范围 |
+|----------|----------|--------|
+| `POST /api/webhooks/creem` | Creem（当前） | 一次性卡支付购买，面向全球，记录商户模式 |
+| `POST /api/v1/webhooks/stripe` | Stripe（历史遗留） | 订阅、计费门户、切换前的历史结账 |
+
+两者都已预先构建——你无需自行编写路由逻辑，仅在需要时为新事件添加处理程序。
+
+## Creem Webhook（当前）
+
+`POST /api/webhooks/creem`，实现于 `backends/gateway/src/routes/webhooks/creem.ts`。`creem-signature` 请求头是对**原始**请求体做 HMAC-SHA256（十六进制），密钥为 `CREEM_WEBHOOK_SECRET`——必须在任何解析之前，按收到的原始字节验证：
+
+```typescript backends/gateway/src/routes/webhooks/creem.ts
+import { verifyCreemSignature } from "@nebutra/billing";
+
+const rawBody = await c.req.text();
+if (!verifyCreemSignature(rawBody, c.req.header("creem-signature"))) {
+  return c.json({ ok: false }, 401);
+}
+
+const event = JSON.parse(rawBody) as CreemWebhookEvent;
+if (event.eventType === "checkout.completed" && event.object.order?.status === "paid") {
+  // order.amount 是税前金额 —— Creem 作为记录商户在其上另加税费
+  await settlePaymentOrder({
+    orderId: event.object.request_id!,
+    paidMinor: event.object.order.amount,
+    currency: event.object.order.currency,
+    providerRef: event.object.order.id,
+  });
+}
+```
+
+| Creem 事件 | 处理动作 |
+|-------------|------------|
+| `checkout.completed` | 结算支付订单 |
+| `refund.created` | 仅用于可见性——表示某笔退款是从别处（Creem 控制台）发起的，而不是通过 `refundPaymentOrder` |
+
+如果某次 Webhook 丢失，可以直接用 `GET /v1/checkouts?checkout_id=…`（`getCreemCheckout`）对账一笔待处理的结账。完整配置流程参见 [Creem 集成指南](/zh/integrations/creem)。
+
+## Stripe Webhook（历史遗留——订阅）
 
 所有 Stripe 事件均发送至 API 网关的单一端点：
 
@@ -11,7 +53,7 @@ description: 处理 Stripe Webhook 事件，实现订阅生命周期管理、发
 POST /api/v1/webhooks/stripe
 ```
 
-该端点已预置于 `backends/gateway/src/routes/webhooks/stripe.ts`。您无需编写路由逻辑——仅在需要处理新事件时添加对应的处理程序。
+该端点已预置于 `backends/gateway/src/routes/webhooks/stripe.ts`。它仅供尚未迁移至 Creem 的表面使用：订阅、计费门户、许可证 Webhook 以及历史遗留的积分购买会话。不会在其上构建任何新功能。
 
 ## 签名验证
 
@@ -132,7 +174,7 @@ async function handlePaymentFailed(invoice: Stripe.Invoice) {
 ```
 </CodeGroup>
 
-## 在 Stripe Dashboard 中注册事件
+## 在 Stripe Dashboard 中注册事件（历史遗留）
 
 设置生产环境 Webhook 端点时，只需启用以下事件：
 
@@ -146,7 +188,7 @@ checkout.session.completed
 
 进入 **Stripe Dashboard → Developers → Webhooks → Add endpoint**，填写 API URL 并选择上述事件。
 
-## 使用 Stripe CLI 进行本地测试
+## 使用 Stripe CLI 进行本地测试（历史遗留）
 
 <Steps>
   <Step title="安装 Stripe CLI">
@@ -189,13 +231,16 @@ Stripe CLI 的签名密钥与生产环境的 Webhook 签名密钥不同。本地
 
 ## 幂等性
 
-Stripe 可能多次发送同一事件（至少一次投递语义）。请确保您的处理程序具备幂等性——处理同一事件两次的结果应与处理一次相同。
+两个服务商都可能多次发送同一事件（至少一次投递语义）。请确保您的处理程序具备幂等性——处理同一事件两次的结果应与处理一次相同。
 
-上述 `subscription.updated` 和 `subscription.deleted` 处理程序已具备幂等性，因为它们使用了 upsert 式的数据库更新操作。
+Creem 的处理程序会在执行任何副作用之前先将事件记录进 Webhook 收件箱，因此重复投递只是空操作。上述 Stripe `subscription.updated` 和 `subscription.deleted` 处理程序已具备幂等性，因为它们使用了 upsert 式的数据库更新操作。
 
 ## 相关文档
 
 <CardGroup cols={2}>
+  <Card title="Creem 集成" icon="credit-card" href="/zh/integrations/creem">
+    当前的卡支付通道——面向全球，记录商户模式。
+  </Card>
   <Card title="账单概览" icon="credit-card" href="/zh/payments/overview">
     完整账单架构与环境变量参考。
   </Card>

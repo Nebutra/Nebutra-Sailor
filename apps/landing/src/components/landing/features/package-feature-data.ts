@@ -144,7 +144,7 @@ export function getPackageFeatureHref(locale: string, node: FileNode) {
  *  • Lead with the concrete capability ("Issues short-lived JWTs…"), not
  *    "a package that does X".
  *  • Name the provider(s) when the package pairs a default with a
- *    China-market adapter ("Stripe + WeChat Pay / Alipay"), the boundary
+ *    China-market adapter ("Creem + WeChat Pay / Alipay"), the boundary
  *    tech when relevant ("AsyncLocalStorage + RLS").
  *  • Avoid generic adjectives ("powerful", "modern", "robust").
  */
@@ -185,8 +185,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
 
   // ─── commerce ───────────────────────────────────────────────────────────
   billing: {
-    en: "Billing on Stripe, plus WeChat Pay / Alipay for mainland China (or manual, for offline invoicing). Same Subscription / Invoice / Customer surface for every backend.",
-    zh: "计费基于 Stripe，另有微信支付 / 支付宝覆盖中国大陆（或手动开票）；Subscription / Invoice / Customer 接口对所有后端保持一致。",
+    en: "Billing on Creem (cards worldwide, merchant of record), plus WeChat Pay / Alipay for mainland China (or manual, for offline invoicing). Same Subscription / Invoice / Customer surface for every backend.",
+    zh: "计费基于 Creem（全球卡组织，交易商户），另有微信支付 / 支付宝覆盖中国大陆（或手动开票）；Subscription / Invoice / Customer 接口对所有后端保持一致。",
   },
   contracts: {
     en: "Cross-package event, identity, billing, and notification type contracts. The shared TypeScript boundary that lets commerce talk to iam, queue, webhooks.",
@@ -201,8 +201,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "营销站点共用原语 — Hero、Pricing、FAQ — landing 与产品营销面复用，brand tokens 已接入。",
   },
   metering: {
-    en: "Usage metering on ClickHouse — sub-second ingestion, per-tenant quota lookup, ready to feed Stripe metered billing or in-product limits.",
-    zh: "基于 ClickHouse 的用量计量 — 秒级写入、按租户查 quota，可直接接 Stripe 计量计费或产品内额度。",
+    en: "Usage metering on ClickHouse — sub-second ingestion, per-tenant quota lookup, ready to feed metered billing or in-product limits.",
+    zh: "基于 ClickHouse 的用量计量 — 秒级写入、按租户查 quota，可直接接计量计费或产品内额度。",
   },
   waitlist: {
     en: "Pre-launch waitlist for the foundation tier — invite codes, position queues, referral counts, and operator dashboards.",
@@ -275,8 +275,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "自助式运营 dashboard — 租户、计费覆写、feature flag 切换 — 由 @nebutra/permissions 统一鉴权。",
   },
   "integration-vault": {
-    en: "Per-tenant credential store for OAuth integrations — Stripe-connected, Gmail OAuth, Notion API. KMS-wrapped, refresh-rotated.",
-    zh: "按租户的 OAuth 凭证库 — Stripe Connect、Gmail OAuth、Notion API;KMS 包装,自动 refresh 轮换。",
+    en: "Per-tenant credential store for OAuth integrations and API keys — Creem, Gmail OAuth, Notion API. KMS-wrapped, refresh-rotated.",
+    zh: "按租户的凭证库，覆盖 OAuth 集成与 API key — Creem、Gmail OAuth、Notion API;KMS 包装,自动 refresh 轮换。",
   },
 
   // ─── platform ───────────────────────────────────────────────────────────

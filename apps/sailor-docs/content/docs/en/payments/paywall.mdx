@@ -121,7 +121,7 @@ The button links to `/billing/upgrade`.
 
 ## Upgrade redirect target
 
-The `/billing/upgrade` route creates a Stripe Checkout session and redirects the user. It is pre-built and requires no configuration beyond the environment variables.
+The `/billing/upgrade` route creates a subscription checkout session and redirects the user. It is pre-built and requires no configuration beyond the environment variables. Plan subscriptions still run on Stripe today (legacy, per [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)) — that's separate from Creem, which handles one-time card purchases (cards worldwide, merchant of record) alongside WeChat Pay/Alipay for mainland China. See [Payments Overview](/payments/overview) for the full provider pair.
 
 If you want to customize the upgrade page (e.g., to show a plan comparison table before redirecting), edit:
 

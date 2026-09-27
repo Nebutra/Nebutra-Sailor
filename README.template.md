@@ -81,7 +81,7 @@
 > cd my-app && pnpm dev   # → http://localhost:3000
 > ```
 > The `minimal` preset scaffolds only `apps/web` + IAM + Postgres so the
-> golden path boots against a local DB. Add Stripe / Clerk / Resend
+> golden path boots against a local DB. Add Creem / Clerk / Resend
 > later via `nebutra add <provider>`.
 
 <br />
@@ -165,7 +165,7 @@ Nebula • Nurture • Ultra • Future
 | 🤖  | **AI-Native**        | LLM · Embeddings · RAG · MCP Agent     |
 | 🏢  | **Multi-Tenant**     | RLS · Isolation · Customization        |
 | ⚡  | **Modern Stack**     | Next.js 16 · React 19 · TypeScript 5.9 |
-| 💳  | **Billing Built-in** | Stripe · Usage metering · Entitlements |
+| 💳  | **Billing Built-in** | Creem · Usage metering · Entitlements |
 
 </td>
 <td width="50%">
@@ -206,7 +206,7 @@ Nebula • Nurture • Ultra • Future
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
       <strong>Billing & Monetization</strong>
-      <br />Database-driven plans, Stripe billing, usage metering, feature gates.
+      <br />Database-driven plans, Creem billing, usage metering, feature gates.
     </td>
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
@@ -413,7 +413,7 @@ Nebula • Nurture • Ultra • Future
 <tr>
 <td><strong>Payments</strong></td>
 <td>
-  <a href="https://stripe.com/"><img src="https://img.shields.io/badge/Stripe-008CDD?style=flat-square&logo=stripe&logoColor=white&v=1" alt="Stripe" /></a>
+  <a href="https://www.creem.io/"><img src="https://img.shields.io/badge/Creem-6C5CE7?style=flat-square" alt="Creem" /></a>
   <img src="https://img.shields.io/badge/Usage_Metering-gray?style=flat-square" alt="Metering" />
   <img src="https://img.shields.io/badge/Entitlements-gray?style=flat-square" alt="Entitlements" />
 </td>
@@ -509,7 +509,7 @@ Sailor is **provider-agnostic**: every platform package below auto-detects its b
 <tr><td>Webhooks</td><td><code>@nebutra/webhooks</code></td><td>Svix · custom HMAC delivery</td></tr>
 <tr><td>SMS (CN)</td><td><code>@nebutra/sms</code></td><td>Aliyun · Tencent Cloud</td></tr>
 <tr><td>Email</td><td><code>@nebutra/email</code></td><td>Resend + React Email templates</td></tr>
-<tr><td>Billing</td><td><code>@nebutra/billing</code></td><td>Stripe — subscriptions, usage, entitlements</td></tr>
+<tr><td>Billing</td><td><code>@nebutra/billing</code></td><td>Creem (cards worldwide, merchant of record) + WeChat Pay/Alipay — subscriptions, usage, entitlements</td></tr>
 <tr><td>Metering</td><td><code>@nebutra/metering</code></td><td>ClickHouse real-time aggregation</td></tr>
 <tr><td>Event bus</td><td><code>@nebutra/event-bus</code></td><td>Multi-tenant Pub/Sub · Fan-out · Request-Reply</td></tr>
 <tr><td>Saga orchestrator</td><td><code>@nebutra/saga</code></td><td>Native TS workflows with auto-rollback compensations</td></tr>

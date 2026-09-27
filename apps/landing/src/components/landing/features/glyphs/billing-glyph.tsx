@@ -9,14 +9,14 @@ const COPY = {
     label: "Monthly Recurring Revenue",
     amount: "$12,400",
     trend: "+12%",
-    provider: "Stripe",
+    provider: "Creem",
     status: "live",
   },
   zh: {
     label: "月度经常性收入",
     amount: "$12,400",
     trend: "+12%",
-    provider: "Stripe",
+    provider: "Creem",
     status: "在线",
   },
 } as const;

@@ -3,6 +3,10 @@ title: Stripe
 description: Configure Stripe for billing, subscriptions, and the customer billing portal.
 ---
 
+<Warning>
+This page covers the **legacy** Stripe integration. Per [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md), card payments worldwide moved to [Creem](/integrations/creem) — a merchant of record that collects and remits sales tax/VAT itself. Stripe is retired from new work; its code stays only for subscriptions, the billing portal, the licence webhook, and checkouts opened before the switch. Nothing new should be built on it. For the current card rail, see [Creem](/integrations/creem).
+</Warning>
+
 ## Prerequisites
 
 - A [Stripe account](https://stripe.com)
@@ -93,6 +97,9 @@ Use any future expiry date and any 3-digit CVC.
 ## Related
 
 <CardGroup cols={2}>
+  <Card title="Creem" icon="credit-card" href="/integrations/creem">
+    The current card rail — worldwide, merchant of record.
+  </Card>
   <Card title="Billing Model" icon="credit-card" href="/concepts/billing-model">
     Plans, quotas, and metering.
   </Card>

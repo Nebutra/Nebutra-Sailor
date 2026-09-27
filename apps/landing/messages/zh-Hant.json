@@ -116,7 +116,7 @@
     },
     "item2": {
       "title": "全自动 SaaS 商业底座",
-      "description": "將 Postgres、Better Auth 與 Stripe 的現代技術棧深度熔鑄。完全內建開箱即用的存取控制以及訂閱式計費。"
+      "description": "將 Postgres、Better Auth 與 Creem 的現代技術棧深度熔鑄。完全內建開箱即用的存取控制以及訂閱式計費。"
     }
   },
   "cta": {
@@ -542,7 +542,7 @@
             },
             "2": {
               "q": "结算核心依托哪个处理中心完成验证？",
-              "a": "全球订单流向 Stripe 后端进行符合 PCI-DSS 高安全等级的信息流验证和转账交割。特殊地区可根据商务安排接入企业内部财务合规审计。"
+              "a": "全球訂單流向作為交易商戶（merchant of record）的 Creem 後端進行符合 PCI-DSS 高安全等級的資訊流驗證和轉帳交割。特殊地區可根據商務安排接入企業內部財務合規稽核。"
             }
           }
         },
@@ -626,7 +626,7 @@
             },
             "2": {
               "label": "支付信息",
-              "desc": "账单地址及支付方式详情（通过 Stripe 安全处理）。"
+              "desc": "帳單地址及支付方式詳情（透過 Creem 安全處理）。"
             },
             "3": {
               "label": "通讯内容",
@@ -704,7 +704,7 @@
             },
             "1": {
               "label": "支付处理",
-              "desc": "Stripe 提供的安全支付服务"
+              "desc": "Creem 提供的安全支付服務"
             },
             "2": {
               "label": "身份认证",
@@ -1056,7 +1056,7 @@
             "0": "订阅费用按月或按年预先收取",
             "1": "所有费用不予退款，除非符合我们的",
             "2": "您授权我们向您的支付方式收取相应费用",
-            "3": "我们使用 Stripe 进行安全支付处理",
+            "3": "我們使用 Creem 進行安全支付處理",
             "1RefundLink": "退款政策"
           }
         }
@@ -1269,7 +1269,7 @@
       },
       "step2": {
         "title": "2. 交互式配置",
-        "desc": "幾分鐘內透過 CLI 引導完成 Prisma、Better Auth 和 Stripe 的生產環境級設定。"
+        "desc": "幾分鐘內透過 CLI 引導完成 Prisma、Better Auth 和 Creem 的生產環境級設定。"
       },
       "step3": {
         "title": "3. 专注构建",
@@ -1332,12 +1332,12 @@
       "dx_f3_title": "多协议 API（REST + oRPC + tRPC）",
       "dx_f3_desc": "REST/OpenAPI 面向公共 API，oRPC 面向类型安全的前端调用，tRPC 面向 T3 技术栈兼容。所有协议共享相同的 Zod 契约和中间件栈。通过 preset 配置按需启用。",
       "billing_category": "订阅与商业计费",
-      "billing_f1_title": "Stripe + 微信支付 / 支付寶",
-      "billing_f1_desc": "Stripe 涵蓋全球卡組織與訂閱；微信支付與支付寶涵蓋中國市場——設定好金鑰即可同時上線。一鍵結帳與自助帳單入口。",
+      "billing_f1_title": "Creem + 微信支付 / 支付寶",
+      "billing_f1_desc": "Creem 以交易商戶（merchant of record）身份涵蓋全球卡組織，代收代繳各地銷售稅/增值稅；微信支付與支付寶涵蓋中國市場——設定好金鑰即可同時上線。一鍵結帳與自助帳單入口。",
       "billing_f2_title": "用量计量与配额执法",
       "billing_f2_desc": "实时的 Redis 哨兵持续监听租户的接口调用与 Token 损耗。一旦突破硬性配额极限，系统将立刻在 API 边缘网关上将后续请求直接拦截阻断。",
       "billing_f3_title": "订阅生命周期 Webhook 联动",
-      "billing_f3_desc": "来自 Stripe 的订阅信标事件将会通过 Inngest 的调度，实现对底层组织状态的无缝自愈式同步更新——免除繁琐配置与冗余的轮询作业。",
+      "billing_f3_desc": "支付 webhook 事件將會透過 Inngest 的排程，實現對底層組織狀態的無縫自癒式同步更新——免除繁瑣設定與冗餘的輪詢作業。",
       "rel_category": "高可用架构",
       "rel_f1_title": "熔断器守护机制",
       "rel_f1_desc": "Gateway 和 AI 服务使用 CLOSED/OPEN/HALF_OPEN 熔断器,带指数退避与抖动 —— 杜绝级联故障。",
@@ -1438,7 +1438,7 @@
       },
       "export": {
         "title": "适合软件出海场景的落地页",
-        "desc": "专为 SaaS 出海打造。多币种 Stripe 结账、next-intl 7 国语言自动路由、GDPR/CCPA 合规以及地域定向内容。",
+        "desc": "專為 SaaS 出海打造。多幣種 Creem 結帳、next-intl 7 國語言自動路由、GDPR/CCPA 合規以及地域定向內容。",
         "features": {
           "f1": "多币种全球支付",
           "f2": "7 国语言 + GDPR 就绪"
@@ -1637,7 +1637,7 @@
         },
         "china-friendly": {
           "question": "在中国大陆能用吗？",
-          "answer": "可以。支付（微信支付/支付寶與 Stripe 並行）、簡訊（阿里雲與 Twilio Verify 並行）、儲存（OSS 與 R2 並行，走同一套 S3 相容用戶端）各自保留了中國市場適配器，再加上阿里雲相容 CDN 與 ICP 友善網域——同一份程式碼可以無障礙部署在長城防火牆內。"
+          "answer": "可以。支付（微信支付/支付寶與 Creem 並行）、簡訊（阿里雲與 Twilio Verify 並行）、儲存（OSS 與 R2 並行，走同一套 S3 相容用戶端）各自保留了中國市場適配器，再加上阿里雲相容 CDN 與 ICP 友善網域——同一份程式碼可以無障礙部署在長城防火牆內。"
         },
         "deployment": {
           "question": "可以部署到哪些环境？",
@@ -1653,7 +1653,7 @@
         },
         "byo-provider": {
           "question": "可以接入我自己的供應商嗎？",
-          "answer": "每個整合（認證、佇列、搜尋、郵件、支付、儲存、計費）仍然收斂在各自的介面後面，但內建的適配器是 {brandName} 生產環境真正在用的那一個——Better Auth、QStash、Postgres、Resend、Stripe。只有在中國大陸確有必要時，支付、簡訊與儲存才保留第二套適配器（微信支付/支付寶、阿里雲、OSS）。要接入自己的供應商，需要自行實作該介面；業務程式碼本身不會綁定某個具體供應商。"
+          "answer": "每個整合（認證、佇列、搜尋、郵件、支付、儲存、計費）仍然收斂在各自的介面後面，但內建的適配器是 {brandName} 生產環境真正在用的那一個——Better Auth、QStash、Postgres、Resend、Creem。只有在中國大陸確有必要時，支付、簡訊與儲存才保留第二套適配器（微信支付/支付寶、阿里雲、OSS）。要接入自己的供應商，需要自行實作該介面；業務程式碼本身不會綁定某個具體供應商。"
         },
         "tech-stack": {
           "question": "技术栈是什么？",

@@ -82,7 +82,7 @@
 > ```
 > `minimal` 预设只生成 `apps/web` + IAM + 本地 Postgres，让黄金路径
 > 能在本地 DB 上跑起来。之后再用 `nebutra add <provider>` 接入
-> Stripe / Clerk / Resend 等。
+> Creem / Clerk / Resend 等。
 
 <br />
 
@@ -172,7 +172,7 @@ Nebula • Nurture • Ultra • Future
 | 🤖  | **AI 原生**    | LLM・Embeddings・RAG・MCP Agent |
 | 🏢  | **多租户**     | RLS・租户隔离・租户定制         |
 | ⚡  | **现代技术栈** | Next.js 16・React 19・TypeScript 5.9 |
-| 💳  | **计费内置**   | Stripe・用量计量・功能权限      |
+| 💳  | **计费内置**   | Creem・用量计量・功能权限      |
 
 </td>
 <td width="50%">
@@ -213,7 +213,7 @@ Nebula • Nurture • Ultra • Future
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/workflows.svg" width="28" alt="Workflows" /><br />
       <strong>计费与变现</strong>
-      <br />数据库驱动计划、Stripe 计费、用量计量、功能门控。
+      <br />数据库驱动计划、Creem 计费、用量计量、功能门控。
     </td>
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/security.svg" width="28" alt="Security" /><br />
@@ -420,7 +420,7 @@ Nebula • Nurture • Ultra • Future
 <tr>
 <td><strong>支付</strong></td>
 <td>
-  <a href="https://stripe.com/"><img src="https://img.shields.io/badge/Stripe-008CDD?style=flat-square&logo=stripe&logoColor=white&v=1" alt="Stripe" /></a>
+  <a href="https://www.creem.io/"><img src="https://img.shields.io/badge/Creem-6C5CE7?style=flat-square" alt="Creem" /></a>
   <img src="https://img.shields.io/badge/用量计量-gray?style=flat-square" alt="Metering" />
   <img src="https://img.shields.io/badge/权益管理-gray?style=flat-square" alt="Entitlements" />
 </td>
@@ -516,7 +516,7 @@ Sailor 是**与 Provider 无关**的：以下每个平台包都会从环境变�
 <tr><td>Webhook</td><td><code>@nebutra/webhooks</code></td><td>Svix · 自定义 HMAC 投递</td></tr>
 <tr><td>短信（国内）</td><td><code>@nebutra/sms</code></td><td>阿里云 · 腾讯云</td></tr>
 <tr><td>邮件</td><td><code>@nebutra/email</code></td><td>Resend + React Email 模板</td></tr>
-<tr><td>计费</td><td><code>@nebutra/billing</code></td><td>Stripe — 订阅、用量、权益</td></tr>
+<tr><td>计费</td><td><code>@nebutra/billing</code></td><td>Creem（全球卡组织，交易商户）+ 微信支付/支付宝 — 订阅、用量、权益</td></tr>
 <tr><td>用量计量</td><td><code>@nebutra/metering</code></td><td>ClickHouse 实时聚合</td></tr>
 <tr><td>事件总线</td><td><code>@nebutra/event-bus</code></td><td>多租户 Pub/Sub · Fan-out · Request-Reply</td></tr>
 <tr><td>Saga 编排</td><td><code>@nebutra/saga</code></td><td>原生 TS 流程，自动回滚补偿</td></tr>

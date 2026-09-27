@@ -803,7 +803,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
         },
         {
           label: "@nebutra/billing",
-          detail: copy("Stripe, ChinaPay, credits, manual", "Stripe、ChinaPay、credits、manual"),
+          detail: copy("Creem, ChinaPay, credits, manual", "Creem、ChinaPay、credits、manual"),
           tone: "core",
         },
         {

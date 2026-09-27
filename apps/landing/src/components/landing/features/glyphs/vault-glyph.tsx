@@ -19,7 +19,7 @@ type SecretRow = {
 
 const SECRETS: ReadonlyArray<SecretRow> = [
   { name: "OPENAI_API_KEY", masked: "sk-•••••8847" },
-  { name: "STRIPE_WEBHOOK_SECRET", masked: "whsec_•••••a3d2" },
+  { name: "CREEM_WEBHOOK_SECRET", masked: "whsec_•••••a3d2" },
 ];
 
 const COPY = {
