@@ -9,11 +9,13 @@ const featureHeroSource = readFileSync(
 
 describe("FeatureHero visual governance", () => {
   it("keeps the aurora layer full-bleed instead of boxed by content width", () => {
-    expect(featureHeroSource).toContain(
-      'className="inset-y-0 left-1/2 right-auto w-screen -translate-x-1/2"',
-    );
-    expect(featureHeroSource).not.toContain(
-      '<AuroraBackground variant={tokens.ambient} position="top" intensity={0.55} />',
-    );
+    // It bleeds to the content column: it sits outside the max-w-wide section,
+    // in a wrapper as wide as the column. A w-screen layer centred on the page
+    // overflowed by the rail's width on the Nebutra site.
+    const aurora = featureHeroSource.indexOf("<AuroraBackground");
+    const section = featureHeroSource.indexOf("max-w-wide");
+    expect(aurora).toBeGreaterThan(-1);
+    expect(aurora).toBeLessThan(section);
+    expect(featureHeroSource).not.toContain("w-screen");
   });
 });

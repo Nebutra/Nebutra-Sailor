@@ -1516,15 +1516,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     demos: ["infinite-slider-demo"],
   },
   {
-    id: "interactive-card",
-    title: "Interactive Card",
-    category: "marketing",
-    status: "experimental",
-    import: "@nebutra/ui/primitives",
-    files: ["primitives/interactive-card.tsx"],
-    demos: ["interactive-card-demo"],
-  },
-  {
     id: "kinetic-marketing",
     title: "Kinetic Marketing",
     category: "marketing",

@@ -59,7 +59,7 @@ export function FeatureHero({
 
   return (
     // The aurora bleeds to the edges of the content column, not the viewport:
-    // beside the Nebutra site's rail a w-screen layer overflowed by the rail's width.
+    // beside the Nebutra site's rail a viewport-wide layer overflowed by the rail's width.
     <div className="relative isolate">
       <AuroraBackground variant={tokens.ambient} position="top" intensity={0.55} />
       <section

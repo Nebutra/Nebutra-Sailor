@@ -259,7 +259,6 @@ export * from "./hover-card";
 export * from "./infinite-slider";
 export { Input, type InputProps } from "./input";
 export * from "./input-otp";
-export * from "./interactive-card";
 export * from "./iphone-mockup";
 export * from "./kbd";
 /**

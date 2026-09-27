@@ -193,7 +193,6 @@ export const DEMO_LOADERS: Readonly<Record<string, () => Promise<ComponentType>>
   "input-with-addons-demo": () => import("@nebutra/ui/catalog/demos/input-with-addons-demo").then(pick("InputWithAddonsDemo")),
   "input-with-icon-demo": () => import("@nebutra/ui/catalog/demos/input-with-icon-demo").then(pick("InputWithIconDemo")),
   "input-with-label-demo": () => import("@nebutra/ui/catalog/demos/input-with-label-demo").then(pick("InputWithLabelDemo")),
-  "interactive-card-demo": () => import("@nebutra/ui/catalog/demos/interactive-card-demo").then(pick("InteractiveCardDemo")),
   "iphone-mockup-demo": () => import("@nebutra/ui/catalog/demos/iphone-mockup-demo").then(pick("IphoneMockupDemo")),
   "kbd-demo": () => import("@nebutra/ui/catalog/demos/kbd-demo").then(pick("KbdDemo")),
   "kinetic-marketing-demo": () => import("@nebutra/ui/catalog/demos/kinetic-marketing-demo").then(pick("KineticMarketingDemo")),
