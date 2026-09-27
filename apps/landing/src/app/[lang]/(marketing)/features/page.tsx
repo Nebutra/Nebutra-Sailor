@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
+import { FinalCTA } from "@/components/landing";
 import { CapabilityFolderShowcase } from "@/components/landing/features/CapabilityFolderShowcase";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import { DEFAULT_GROUP_TOKENS } from "@/components/landing/features/feature-group-tokens";
@@ -46,10 +46,8 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
   return (
     <main
       id="main-content"
-      className="min-h-dvh bg-background selection:bg-primary/30 relative overflow-hidden"
+      className="flex-1 bg-background selection:bg-primary/30 relative overflow-hidden"
     >
-      <Navbar />
-
       <FeatureHero
         align="left"
         tokens={indexHeroTokens}
@@ -61,7 +59,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
 
       <CapabilityFolderShowcase locale={lang as Locale} />
 
-      <FooterMinimal showFinalCta />
+      <FinalCTA />
     </main>
   );
 }

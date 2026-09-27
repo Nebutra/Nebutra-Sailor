@@ -131,8 +131,8 @@
     "columns": {
       "product": "Produkt",
       "resources": "Ressurser",
-      "legal": "Juridisk",
-      "community": "Samfunn"
+      "company": "Selskap",
+      "legal": "Juridisk"
     },
     "links": {
       "product": "Produkt",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Alle rettigheter reservert.",
+    "copyright": "© 2026 {companyLegalEn} · Alle rettigheter reservert.",
     "fontCredit": "Kinesisk skrift: MiSans (Xiaomi)",
     "statusOnline": "Alle systemer operative",
     "newsletterTitle": "Hold deg oppdatert",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUKTUR",
-    "title": "10 apper. 112 pakker. 4 bakendspor.",
+    "title": "10 apper. 111 pakker. 4 bakendspor.",
     "description": "Delt kode, parallelle bygginger, null duplisering. Full end-to-end-typing fra database til frontend.",
     "metricApps": "apper",
     "metricBackends": "backend-sporer",
@@ -243,7 +243,7 @@
       "ctaButton": "Ta kontakt"
     },
     "contact": {
-      "title": "Teknisk og kommersiell henvendelse — {brandName} Intelligence",
+      "title": "Teknisk og kommersiell henvendelse — {brandName}",
       "description": "Den dedikerte kommunikasjonskanalen for kommersielle lisenser, bedriftsintern selvhosting og avansert teknisk support.",
       "heading": "Opprett supportkontakt",
       "subheading": "Vi sender en dedikert teknisk spesialist eller arkitekt for å vurdere dine eksplisitte behov.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Du kan kontakte vår personvernombud (DPO) på dpo@nebutra.com."
+            "desc": "Du kan kontakte vår personvernombud (DPO) på dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Slik ber du om refusjon",
         "step1": {
           "title": "Steg 1: Kontakt support",
-          "intro": "Send e-post til billing@nebutra.com med følgende informasjon:",
+          "intro": "Send e-post til billing@{domain} med følgende informasjon:",
           "items": {
             "0": "E-postadressen til kontoen din",
             "1": "Abonnementsplan og faktureringsperiode",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Svar på avgjørelses-e-posten med ytterligere informasjon",
           "1": "Be om eskalering til en leder",
-          "2": "Kontakt oss på legal@nebutra.com for videre gjennomgang"
+          "2": "Kontakt oss på legal@{domain} for videre gjennomgang"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Tvisteløsning",
         "informal": {
           "title": "10.1 Uformell løsning",
-          "content": "Før du starter formelle prosedyrer, samtykker du i å kontakte oss på legal@nebutra.com for å prøve å løse tvister uformelt."
+          "content": "Før du starter formelle prosedyrer, samtykker du i å kontakte oss på legal@{domain} for å prøve å løse tvister uformelt."
         },
         "governingLaw": {
           "title": "10.2 Gjeldende lov",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Kom i gang",
       "title": "Slutt å konfigurere. Begynn å bygge.",
       "description": "Initialiser en skalerbar SaaS-arkitektur lokalt med {brandName} CLI.",
-      "button": "Utrull arkitektur",
       "license": "Åpen kildekode under FSL-1.1-ALv2-lisens. Ingen kredittkort kreves."
     },
     "capability": {

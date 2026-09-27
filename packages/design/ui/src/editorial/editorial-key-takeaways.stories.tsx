@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EditorialKeyTakeaways } from "./editorial-key-takeaways";
+import { editorialReadingColumnDecorator } from "./story-decorators";
 
 const meta: Meta<typeof EditorialKeyTakeaways> = {
   title: "Editorial/KeyTakeaways",
   component: EditorialKeyTakeaways,
   tags: ["autodocs"],
+  decorators: [editorialReadingColumnDecorator],
   parameters: {
     docs: {
       description: {

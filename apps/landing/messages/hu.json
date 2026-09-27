@@ -131,8 +131,8 @@
     "columns": {
       "product": "Termék",
       "resources": "Erőforrások",
-      "legal": "Jogi",
-      "community": "Közösség"
+      "company": "Cég",
+      "legal": "Jogi"
     },
     "links": {
       "product": "Termék",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Minden jog fenntartva.",
+    "copyright": "© 2026 {companyLegalEn} · Minden jog fenntartva.",
     "fontCredit": "Kínai betűtípus: MiSans (Xiaomi)",
     "statusOnline": "Minden rendszer működik",
     "newsletterTitle": "Maradj naprakész",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUKTÚRA",
-    "title": "10 alkalmazás. 112 csomag. 4 backend sáv.",
+    "title": "10 alkalmazás. 111 csomag. 4 backend sáv.",
     "description": "Megosztott kód, párhuzamos build, nulla duplikáció. Teljes végponttól végpontig terjedő típusozás az adatbázistól a frontendig.",
     "metricApps": "alkalmazás",
     "metricBackends": "backend sávok",
@@ -243,7 +243,7 @@
       "ctaButton": "Kapcsolatfelvétel"
     },
     "contact": {
-      "title": "Technikai és kereskedelmi érdeklődés — {brandName} Intelligence",
+      "title": "Technikai és kereskedelmi érdeklődés — {brandName}",
       "description": "A kereskedelmi licencelés, vállalati önálló üzemeltetés és fejlett technikai támogatás dedikált kommunikációs csatornája.",
       "heading": "Támogatási kapcsolat létrehozása",
       "subheading": "Dedikált technikai szakértőt vagy architektust küldünk az Ön explicit igényeinek értékelésére.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "Adatvédelmi tisztviselő",
-            "desc": "Adatvédelmi tisztviselőnkkel a dpo@nebutra.com címen veheti fel a kapcsolatot."
+            "desc": "Adatvédelmi tisztviselőnkkel a dpo@{domain} címen veheti fel a kapcsolatot."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Hogyan kérj visszatérítést",
         "step1": {
           "title": "1. lépés: Fordulj a támogatáshoz",
-          "intro": "Küldj e-mailt a billing@nebutra.com címre az alábbi adatokkal:",
+          "intro": "Küldj e-mailt a billing@{domain} címre az alábbi adatokkal:",
           "items": {
             "0": "A fiókod e-mail címe",
             "1": "Előfizetési csomag és számlázási időszak",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Válaszoljon a döntésről szóló e-mailre további információkkal",
           "1": "Kérje az ügy továbbítását egy vezetőhöz",
-          "2": "Vegye fel velünk a kapcsolatot a legal@nebutra.com címen további áttekintésért"
+          "2": "Vegye fel velünk a kapcsolatot a legal@{domain} címen további áttekintésért"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Vitarendezés",
         "informal": {
           "title": "10.1 Nem hivatalos rendezés",
-          "content": "Hivatalos eljárás megindítása előtt Ön vállalja, hogy a legal@nebutra.com e-mail címen felkeres minket a viták nem hivatalos rendezésének kísérlete érdekében."
+          "content": "Hivatalos eljárás megindítása előtt Ön vállalja, hogy a legal@{domain} e-mail címen felkeres minket a viták nem hivatalos rendezésének kísérlete érdekében."
         },
         "governingLaw": {
           "title": "10.2 Alkalmazandó jog",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Kezdés",
       "title": "Állj le a konfigurálással. Kezdj el építeni.",
       "description": "Inicializálj egy skálázható SaaS architektúrát helyileg a {brandName} CLI segítségével.",
-      "button": "Architektúra telepítése",
       "license": "Nyílt forráskódú FSL-1.1-ALv2 licenc alatt. Nincs szükség bankkártyára."
     },
     "capability": {

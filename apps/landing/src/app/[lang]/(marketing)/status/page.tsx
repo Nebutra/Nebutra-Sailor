@@ -10,7 +10,7 @@ import { getStatusSnapshot } from "@/lib/status-checks";
 /**
  * `/status` is registered `ui`, so the sitemap publishes it as a distinct
  * localized document in every route locale. The previous cross-origin canonical
- * to status.nebutra.com contradicted that outright: 34 published URLs all
+ * to the status subdomain contradicted that outright: 34 published URLs all
  * declaring a different host as their canonical, and — because setting the
  * `alternates` key replaces the layout's wholesale — no hreflang at all. This
  * page renders its own live snapshot from `getStatusSnapshot`, so it is its own

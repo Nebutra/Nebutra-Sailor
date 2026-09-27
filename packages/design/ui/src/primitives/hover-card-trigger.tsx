@@ -2,6 +2,7 @@
 
 import { Popover as BasePopover } from "@base-ui/react/popover";
 import * as React from "react";
+import { rendersNativeButton } from "../utils/native-button";
 
 const HoverCardTrigger = ({
   asChild,
@@ -17,6 +18,7 @@ const HoverCardTrigger = ({
         ref={ref}
         {...props}
         render={children as React.ReactElement<Record<string, unknown>>}
+        nativeButton={rendersNativeButton(children)}
       />
     );
   }

@@ -46,10 +46,7 @@ const nextConfig: NextConfig = {
   ...(basePath ? { basePath } : {}),
   // Skip in-build tsc on production deploys — the strict typecheck runs as
   // its own pre-push lefthook job (`pnpm --filter @nebutra/sailor-docs
-  // typecheck`), so the build pipeline doesn't need to redo it. Without
-  // this, transient type drift in demo components (`previews/*`) — which
-  // get republished as shadcn-registry source and are exercised by tsc but
-  // never actually rendered into a layout — keeps blocking ECS deploys.
+  // typecheck`), so the build pipeline doesn't need to redo it.
   typescript: {
     ignoreBuildErrors:
       process.env.NEXT_OUTPUT === "standalone" ||

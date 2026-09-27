@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { FullPageStatus } from "@nebutra/ui/layout";
 import { fontVariables } from "./fonts";
 
@@ -13,7 +14,7 @@ export default function GlobalNotFound() {
           code="404"
           title="Page Not Found"
           description="The link may be outdated, or the page may have moved."
-          primaryAction={{ label: "Back to Nebutra", href: "/" }}
+          primaryAction={{ label: `Back to ${brand.name}`, href: "/" }}
           secondaryAction={{ label: "Open docs", href: "/docs" }}
         />
       </body>

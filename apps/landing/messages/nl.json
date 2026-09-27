@@ -131,8 +131,8 @@
     "columns": {
       "product": "Product",
       "resources": "Bronnen",
-      "legal": "Juridisch",
-      "community": "Community"
+      "company": "Bedrijf",
+      "legal": "Juridisch"
     },
     "links": {
       "product": "Product",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Alle rechten voorbehouden.",
+    "copyright": "© 2026 {companyLegalEn} · Alle rechten voorbehouden.",
     "fontCredit": "Chinees lettertype: MiSans (Xiaomi)",
     "statusOnline": "Alle systemen operationeel",
     "newsletterTitle": "Blijf op de hoogte",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUCTUUR",
-    "title": "10 apps. 112 pakketten. 4 backendlanes.",
+    "title": "10 apps. 111 pakketten. 4 backendlanes.",
     "description": "Gedeelde code, parallelle builds, geen duplicatie. Volledige end-to-end typing van database tot frontend.",
     "metricApps": "apps",
     "metricBackends": "backendlanes",
@@ -243,7 +243,7 @@
       "ctaButton": "Contact opnemen"
     },
     "contact": {
-      "title": "Technische & commerciële aanvraag — {brandName} Intelligence",
+      "title": "Technische & commerciële aanvraag — {brandName}",
       "description": "Het speciale communicatiekanaal voor commerciële licenties, enterprise self-hosting en geavanceerde technische ondersteuning.",
       "heading": "Ondersteuningsverbinding tot stand brengen",
       "subheading": "Wij sturen een toegewijde technische specialist of architect om uw expliciete vereisten te evalueren.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "U kunt contact opnemen met onze Data Protection Officer op dpo@nebutra.com."
+            "desc": "U kunt contact opnemen met onze Data Protection Officer op dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Hoe een terugbetaling aanvragen",
         "step1": {
           "title": "Stap 1: Neem contact op met support",
-          "intro": "Stuur ons een e-mail naar billing@nebutra.com met:",
+          "intro": "Stuur ons een e-mail naar billing@{domain} met:",
           "items": {
             "0": "Uw account e-mailadres",
             "1": "Abonnementsplan en factureringsperiode",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Reageer op de beslissing e-mail met aanvullende informatie",
           "1": "Vraag escalatie aan naar een leidinggevende",
-          "2": "Neem contact met ons op via legal@nebutra.com voor verdere beoordeling"
+          "2": "Neem contact met ons op via legal@{domain} voor verdere beoordeling"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Geschillenbeslechting",
         "informal": {
           "title": "10.1 Informele afhandeling",
-          "content": "Voordat u formele procedures start, gaat u ermee akkoord ons te contacteren op legal@nebutra.com om geschillen informeel op te lossen."
+          "content": "Voordat u formele procedures start, gaat u ermee akkoord ons te contacteren op legal@{domain} om geschillen informeel op te lossen."
         },
         "governingLaw": {
           "title": "10.2 Toepasselijk recht",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Aan de slag",
       "title": "Stop met configureren. Begin met bouwen.",
       "description": "Initialiseer een schaalbare SaaS-architectuur lokaal met de {brandName}-CLI.",
-      "button": "Architectuur implementeren",
       "license": "Open source onder FSL-1.1-ALv2-licentie. Geen creditcard vereist."
     },
     "capability": {

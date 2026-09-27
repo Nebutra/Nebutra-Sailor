@@ -21,7 +21,6 @@ const skipDir = new Set([
   "node_modules",
   "__tests__",
   "stories",
-  "theme-playground",
   "dist",
   ".next",
 ]);

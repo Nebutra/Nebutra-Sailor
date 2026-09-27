@@ -931,88 +931,11 @@
         "title": "Motiv",
         "description": "Použít světlý, tmavý nebo podle systému."
       },
-      "themePreset": {
-        "title": "Předvolba motivu",
-        "description": "Aplikovat libovolný motiv z Theme Playground po celé aplikaci. Ovládací prvky níže umožňují jeho doladění.",
-        "search": "Hledat motivy…",
-        "searchLabel": "Hledat motivy",
-        "default": "Výchozí",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktivní",
-        "empty": "Žádné motivy neodpovídají vašemu hledání.",
-        "count": "{count} motivů"
-      },
-      "themeEditor": {
-        "title": "Motiv",
-        "description": "Vyberte předvolbu, importujte DESIGN.md a poté doladíte tokeny níže.",
-        "selectLabel": "Předvolba motivu",
-        "import": "Importovat",
-        "copy": "Kopírovat motiv",
-        "copied": "Zkopírováno",
-        "copyError": "Kopírování selhalo",
-        "custom": "Vlastní"
-      },
-      "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Vložte nebo nahrajte DESIGN.md pro aplikaci jeho barev, poloměrů, písem, rozestupů a stínů napříč celou aplikací — změny zůstanou zachovány i po obnovení.",
-        "applied": "Aplikováno:",
-        "remove": "Odebrat"
-      },
       "themeMode": {
         "label": "Režim motivu",
         "light": "Světlý",
         "dark": "Tmavý",
         "system": "Systémový"
-      },
-      "accent": {
-        "title": "Akcentní barva",
-        "description": "Vyberte akcentní barvu značky, která zbarví aktivní stavy napříč aplikací.",
-        "label": "Akcentní barva",
-        "options": {
-          "default": "Výchozí",
-          "blue": "Modrá",
-          "cyan": "Azurová",
-          "violet": "Fialová",
-          "pink": "Růžová",
-          "amber": "Jantarová",
-          "green": "Zelená",
-          "red": "Červená"
-        }
-      },
-      "colors": {
-        "title": "Barvy",
-        "description": "Akcent, pozadí a popředí.",
-        "background": {
-          "label": "Pozadí",
-          "description": "Přepíše barvu pozadí povrchu."
-        },
-        "foreground": {
-          "label": "Popředí",
-          "description": "Přepíše barvu textu těla."
-        },
-        "resetToDefault": "Obnovit výchozí"
-      },
-      "fontFamily": {
-        "uiLabel": "Písmo UI",
-        "uiDescription": "Rodina písem používaná v rozhraní.",
-        "codeLabel": "Písmo pro kód",
-        "codeDescription": "Rodina písem používaná pro plochy s kódem.",
-        "options": {
-          "ui": {
-            "theme": "Výchozí téma",
-            "system": "Systémové",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Výchozí téma",
-            "system": "Systémové mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Použít kurzor ukazováku",
@@ -1049,14 +972,6 @@
         "label": "Předvolba pohybů",
         "system": "Systém",
         "on": "Zapnuto"
-      },
-      "surface": {
-        "title": "Průsvitné postranní panel",
-        "description": "Použít průsvitný materiál na postranní panel."
-      },
-      "transparency": {
-        "label": "Průsvitné postranní panel",
-        "description": "Použít průsvitný materiál na postranní panel."
       }
     }
   },

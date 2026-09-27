@@ -2,6 +2,7 @@ import { ArrowRight, Play } from "@nebutra/icons";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { getStartedHref } from "@/lib/app-url";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 import { HeroBackgroundVideo } from "./HeroBackgroundVideo";
 import { HeroInstallPill } from "./HeroInstallPill";
@@ -53,7 +54,7 @@ export async function HeroSection() {
               <div className="mt-4 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center">
                 <Button asChild variant="ink" size="lg" className="w-full sm:w-auto">
                   <Link
-                    href="/get-license"
+                    href={getStartedHref()}
                     className="inline-flex items-center justify-center gap-2"
                   >
                     {t("ctaGetAccess")}

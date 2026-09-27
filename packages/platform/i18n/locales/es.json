@@ -931,88 +931,11 @@
         "title": "Tema",
         "description": "Usa claro, oscuro o coincide con la preferencia del sistema."
       },
-      "themePreset": {
-        "title": "Preajuste de tema",
-        "description": "Aplica cualquier tema del Patio de Temas a toda la aplicación. Los controles a continuación se superponen para ajustarlo.",
-        "search": "Buscar temas…",
-        "searchLabel": "Buscar temas",
-        "default": "Predeterminado",
-        "defaultMood": "Paleta base de Nebutra",
-        "active": "Activo",
-        "empty": "Sin temas que coincidan con tu búsqueda.",
-        "count": "{count} temas"
-      },
-      "themeEditor": {
-        "title": "Tema",
-        "description": "Elige un preajuste, importa un DESIGN.md, luego ajusta los tokens a continuación.",
-        "selectLabel": "Preajuste de tema",
-        "import": "Importar",
-        "copy": "Copiar tema",
-        "copied": "Copiado",
-        "copyError": "Error al copiar",
-        "custom": "Personalizado"
-      },
-      "designMd": {
-        "title": "Importar DESIGN.md",
-        "description": "Pega o carga un DESIGN.md para aplicar sus colores, radio, fuentes, espaciado y sombras en toda la aplicación — persistidos a través de recargas.",
-        "applied": "Aplicado:",
-        "remove": "Eliminar"
-      },
       "themeMode": {
         "label": "Modo de tema",
         "light": "Claro",
         "dark": "Oscuro",
         "system": "Sistema"
-      },
-      "accent": {
-        "title": "Color de acento",
-        "description": "Elige un acento de marca que tiña los estados activos en toda la aplicación.",
-        "label": "Color de acento",
-        "options": {
-          "default": "Predeterminado",
-          "blue": "Azul",
-          "cyan": "Cian",
-          "violet": "Violeta",
-          "pink": "Rosa",
-          "amber": "Ámbar",
-          "green": "Verde",
-          "red": "Rojo"
-        }
-      },
-      "colors": {
-        "title": "Colores",
-        "description": "Acento, fondo y primer plano.",
-        "background": {
-          "label": "Fondo",
-          "description": "Anula el color de fondo de la superficie."
-        },
-        "foreground": {
-          "label": "Primer plano",
-          "description": "Anula el color del texto del cuerpo."
-        },
-        "resetToDefault": "Restablecer a predeterminado"
-      },
-      "fontFamily": {
-        "uiLabel": "Fuente de UI",
-        "uiDescription": "Familia de fuentes usada en toda la UI.",
-        "codeLabel": "Fuente de código",
-        "codeDescription": "Familia de fuentes usada para superficies de código.",
-        "options": {
-          "ui": {
-            "theme": "Predeterminado del tema",
-            "system": "Sistema",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Predeterminado del tema",
-            "system": "Monoespaciado del sistema",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Usar cursor de puntero",
@@ -1049,14 +972,6 @@
         "label": "Preferencia de movimiento",
         "system": "Sistema",
         "on": "Encendido"
-      },
-      "surface": {
-        "title": "Barra lateral translúcida",
-        "description": "Aplica un material translúcido a la barra lateral."
-      },
-      "transparency": {
-        "label": "Barra lateral translúcida",
-        "description": "Aplica un material translúcido a la barra lateral."
       }
     }
   },

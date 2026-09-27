@@ -127,12 +127,12 @@
     "startBuilding": "Start Building"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "Ship your startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
     "columns": {
       "product": "Product",
       "resources": "Resources",
-      "legal": "Legal",
-      "community": "Community"
+      "company": "Company",
+      "legal": "Legal"
     },
     "links": {
       "product": "Product",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
+    "copyright": "© 2026 {companyLegalEn} · All rights reserved.",
     "fontCredit": "Chinese typeface: MiSans by Xiaomi",
     "statusOnline": "All systems operational",
     "statusDegraded": "Degraded performance",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 112 packages. 4 backend lanes.",
+    "title": "10 apps. 111 packages. 4 backend lanes.",
     "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
     "metricApps": "apps",
     "metricBackends": "backend lanes",
@@ -243,7 +243,7 @@
       "ctaButton": "Establish Contact"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
+      "title": "Technical & Commercial Inquiry — {brandName}",
       "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
       "heading": "Establish Support Connection",
       "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "You can contact our Data Protection Officer at dpo@nebutra.com."
+            "desc": "You can contact our Data Protection Officer at dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "How to Request a Refund",
         "step1": {
           "title": "Step 1: Contact Support",
-          "intro": "Email us at billing@nebutra.com with:",
+          "intro": "Email us at billing@{domain} with:",
           "items": {
             "0": "Your account email address",
             "1": "Subscription plan and billing period",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Reply to the decision email with additional information",
           "1": "Request escalation to a supervisor",
-          "2": "Contact us at legal@nebutra.com for further review"
+          "2": "Contact us at legal@{domain} for further review"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Dispute Resolution",
         "informal": {
           "title": "10.1 Informal Resolution",
-          "content": "Before initiating formal proceedings, you agree to contact us at legal@nebutra.com to attempt to resolve disputes informally."
+          "content": "Before initiating formal proceedings, you agree to contact us at legal@{domain} to attempt to resolve disputes informally."
         },
         "governingLaw": {
           "title": "10.2 Governing Law",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Get Started",
       "title": "Stop configuring. Start building.",
       "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "button": "Deploy Architecture",
       "license": "Open source under the FSL-1.1-ALv2 license. No credit card required."
     },
     "capability": {
@@ -1750,7 +1749,7 @@
           "label": "AI providers supported"
         },
         "projects": {
-          "value": "112",
+          "value": "111",
           "label": "monorepo packages"
         },
         "uptime": {

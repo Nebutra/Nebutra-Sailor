@@ -6,7 +6,7 @@ import { SITE_NAME } from "@/lib/site";
 export const metadata: Metadata = {
   title: `Showcase — ${SITE_NAME}`,
   description:
-    "The expressive half of the library — backgrounds, shaders, device mockups, text effects and motion pieces — rendered live from @nebutra/docs-shared.",
+    "The expressive half of the library — backgrounds, shaders, device mockups, text effects and motion pieces — rendered live from the @nebutra/ui catalog.",
 };
 
 /**
@@ -40,20 +40,19 @@ export default function ShowcasePage() {
         <p className="text-muted-foreground">
           The expressive half of the library — backgrounds, shaders, device mockups, text effects,
           charts and motion pieces. Every card below is a real demo from{" "}
-          <code className="font-mono text-sm">@nebutra/docs-shared</code>, rendered live.
+          <code className="font-mono text-sm">@nebutra/ui/catalog</code>, rendered live.
         </p>
         <p className="text-muted-foreground text-sm">
-          The list is read from the package directory at build time and filtered against the
-          components that already have their own page, so it is precisely what this site did not
-          previously show. <strong className="font-medium text-foreground">{demos.length}</strong>{" "}
-          demos.
+          The list is the catalog, filtered against the components that already have their own page,
+          so it is precisely what this site did not previously show.{" "}
+          <strong className="font-medium text-foreground">{demos.length}</strong> demos.
         </p>
       </header>
 
       {demos.length === 0 ? (
         <p className="text-muted-foreground text-sm">
-          No demos found. <code className="font-mono text-xs">@nebutra/docs-shared</code> is not
-          resolvable from this build.
+          No demos found. The <code className="font-mono text-xs">@nebutra/ui</code> catalog lists
+          none outside the component pages.
         </p>
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">

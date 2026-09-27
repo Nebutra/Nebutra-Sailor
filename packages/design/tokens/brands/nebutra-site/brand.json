@@ -1,0 +1,103 @@
+{
+  "id": "nebutra-site",
+  "name": "Nebutra Site",
+  "darkDefault": true,
+  "version": "0.3.0",
+  "semantic": {
+    "background": "210 11.1% 3.5%",
+    "foreground": "180 6.7% 97.1%",
+    "card": "210 6.2% 6.3%",
+    "cardForeground": "180 6.7% 97.1%",
+    "popover": "210 6.2% 6.3%",
+    "popoverForeground": "180 6.7% 97.1%",
+    "primary": "180 6.7% 97.1%",
+    "primaryForeground": "210 11.1% 3.5%",
+    "secondary": "210 4.3% 9%",
+    "secondaryForeground": "218 20.5% 84.7%",
+    "muted": "210 4.3% 9%",
+    "mutedForeground": "219 6.4% 56.9%",
+    "accent": "210 4.3% 9%",
+    "accentForeground": "180 6.7% 97.1%",
+    "destructive": "0 79% 63%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "210 3.4% 11.4%",
+    "ring": "223 87.3% 69%",
+    "success": "134 62% 40%",
+    "successForeground": "0 0% 100%",
+    "info": "223 87.3% 69%",
+    "infoForeground": "210 11.1% 3.5%"
+  },
+  "roles": {
+    "canvas": "210 11.1% 3.5%",
+    "canvasForeground": "180 6.7% 97.1%",
+    "surface": "210 6.2% 6.3%",
+    "surfaceForeground": "180 6.7% 97.1%",
+    "action": "180 6.7% 97.1%",
+    "actionForeground": "210 11.1% 3.5%",
+    "quiet": "210 4.3% 9%",
+    "quietForeground": "218 20.5% 84.7%",
+    "muted": "210 4.3% 9%",
+    "mutedForeground": "219 6.4% 56.9%",
+    "border": "210 3.4% 11.4%",
+    "ring": "223 87.3% 69%",
+    "destructive": "0 79% 63%",
+    "destructiveForeground": "0 0% 100%",
+    "success": "134 62% 40%",
+    "successForeground": "0 0% 100%",
+    "info": "223 87.3% 69%",
+    "infoForeground": "210 11.1% 3.5%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "density": "comfortable",
+    "badgeDefault": "muted",
+    "radii": {
+      "button": "8px",
+      "card": "12px",
+      "badge": "9999px",
+      "input": "8px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "0 0 #0000",
+      "control": "0 0 #0000",
+      "raised": "0 24px 64px -32px rgb(0 0 0 / 0.8)"
+    }
+  },
+  "typography": {
+    "fontSans": "'Geist', 'MiSans', ui-sans-serif, system-ui, sans-serif",
+    "fontDisplay": "'DM Sans', 'MiSans', ui-sans-serif, sans-serif",
+    "fontMono": "'Geist Mono', ui-monospace, monospace",
+    "headingWeight": 500
+  },
+  "motion": {
+    "easeOut": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "micro": 80,
+    "flow": 160,
+    "reveal": 240,
+    "cinematic": 400
+  },
+  "spacing": {
+    "xs": "0.5rem",
+    "sm": "0.75rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem"
+  },
+  "extensions": {
+    "sourceUrl": "https://linear.app",
+    "notes": [
+      "Surfaces and ink measured on linear.app 2026-09-27 (computed styles, area-weighted) — see DESIGN.md.",
+      "VI decided for the site 2026-09-27 (owner picked candidate B): the blue→cyan gradient is a signature only — the brand mark and one keyword per screen, via --brand-decorative-signature. The ring is VI blue lifted for the void (#6B93F5, the House dark ring). Chrome stays Linear grayscale.",
+      "Action is monochrome (Ink 1 fill, Void ink), as Linear's own primary button.",
+      "Typography is the House decision of 2026-09-25 (DM Sans 500 headings, Geist body, MiSans CJK); this package does not change type.",
+      "Scoped to the Nebutra site's own shell (html[data-brand]). The template carries it in the catalog, but nothing there applies it; never applied to product apps.",
+      "No `brand` role: the emit pipeline maps roles.brand to shadcn `accent` (the hover/selected surface), which painted SidebarNav's current page and FilterPills' active pill in #0033FE. The mark carries its own colour (Logomark), so the role is not needed here."
+    ],
+    "decorative": {
+      "signature": "linear-gradient(120deg, hsl(223 87.3% 69%) 0%, hsl(168 91.3% 49.4%) 100%)"
+    }
+  }
+}

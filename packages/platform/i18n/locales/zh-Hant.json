@@ -931,88 +931,11 @@
         "title": "主题",
         "description": "使用浅色、深色，或匹配系统设置。"
       },
-      "themePreset": {
-        "title": "主题预设",
-        "description": "将任意 Theme Playground 主题应用到整个应用。下方的控件会叠加在其之上进行微调。",
-        "search": "搜索主题…",
-        "searchLabel": "搜索主题",
-        "default": "默认",
-        "defaultMood": "Nebutra 基础色板",
-        "active": "已启用",
-        "empty": "没有匹配的主题。",
-        "count": "{count} 个主题"
-      },
-      "themeEditor": {
-        "title": "主题",
-        "description": "选择预设、导入 DESIGN.md，然后在下方微调各项令牌。",
-        "selectLabel": "主题预设",
-        "import": "导入",
-        "copy": "复制主题",
-        "copied": "已复制",
-        "copyError": "复制失败",
-        "custom": "自定义"
-      },
-      "designMd": {
-        "title": "导入 DESIGN.md",
-        "description": "粘贴或上传 DESIGN.md，将其颜色、圆角、字体、间距及阴影应用到整个应用，并在刷新后持久保留。",
-        "applied": "已应用：",
-        "remove": "移除"
-      },
       "themeMode": {
         "label": "主题模式",
         "light": "浅色",
         "dark": "深色",
         "system": "系统"
-      },
-      "accent": {
-        "title": "强调色",
-        "description": "选择品牌强调色，作用于全应用的激活态。",
-        "label": "强调色",
-        "options": {
-          "default": "默认",
-          "blue": "蓝色",
-          "cyan": "青色",
-          "violet": "紫色",
-          "pink": "粉色",
-          "amber": "琥珀",
-          "green": "绿色",
-          "red": "红色"
-        }
-      },
-      "colors": {
-        "title": "色彩",
-        "description": "强调色、背景与前景。",
-        "background": {
-          "label": "背景",
-          "description": "覆盖应用背景色。"
-        },
-        "foreground": {
-          "label": "前景",
-          "description": "覆盖正文文字色。"
-        },
-        "resetToDefault": "恢复默认"
-      },
-      "fontFamily": {
-        "uiLabel": "UI 字体",
-        "uiDescription": "应用 UI 使用的字体。",
-        "codeLabel": "代码字体",
-        "codeDescription": "代码面板使用的字体。",
-        "options": {
-          "ui": {
-            "theme": "跟随主题",
-            "system": "系统",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "跟随主题",
-            "system": "系统等宽",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "使用指针光标",
@@ -1049,14 +972,6 @@
         "label": "动效偏好",
         "system": "系统",
         "on": "开启"
-      },
-      "surface": {
-        "title": "半透明侧边栏",
-        "description": "为侧边栏应用半透明材质。"
-      },
-      "transparency": {
-        "label": "半透明侧边栏",
-        "description": "为侧边栏应用半透明材质。"
       }
     }
   },

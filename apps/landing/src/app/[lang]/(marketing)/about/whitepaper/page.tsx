@@ -10,7 +10,6 @@ import {
 } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
@@ -227,9 +226,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
   const sleptons = pick(lang, PRODUCT_SLEPTONS);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
-      <Navbar />
-
+    <main id="main-content" className="flex flex-col flex-1 bg-background">
       {/* ─── Hero ─────────────────────────────────────────────────────── */}
       <section className="pt-32 md:pt-48 pb-20 md:pb-28">
         <div className="container mx-auto px-4 max-w-4xl">
@@ -671,8 +668,6 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           </div>
         </div>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

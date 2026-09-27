@@ -504,10 +504,10 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     icon: Palette,
     layout: "standard",
     sourceStats: {
-      unitCount: 10,
+      unitCount: 9,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 1430,
-      testFiles: 60,
+      sourceFiles: 1482,
+      testFiles: 70,
       readmes: 14,
     },
     title: copy("Design System Supply Chain", "设计系统供应链"),

@@ -11,7 +11,6 @@ import { normalizeReferralCode } from "@nebutra/waitlist";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import {
   ReferWaitlistForm,
   type ReferWaitlistFormCopy,
@@ -122,9 +121,7 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
   ] as const;
 
   return (
-    <main id="main-content" className="min-h-dvh overflow-x-hidden bg-background text-foreground">
-      <Navbar />
-
+    <main id="main-content" className="flex-1 overflow-x-hidden bg-background text-foreground">
       <section className="relative isolate overflow-hidden border-b border-border px-6 pb-12 pt-24 md:pb-20 md:pt-36">
         <div
           aria-hidden="true"
@@ -225,8 +222,6 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
           </div>
         </div>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

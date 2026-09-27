@@ -1,6 +1,6 @@
 # ADR — Registry Dual-Track Distribution for `@nebutra/ui` Primitives
 
-**Status**: Accepted
+**Status**: Accepted — registry track retired by [ADR 2026-09-27 UI catalog](2026-09-27-ui-catalog.md); the npm track stands
 **Date**: 2026-05-14
 **Driver**: Principal UI Systems Architect engagement (motion-drift governance pass)
 **Supersedes**: Implicit policy embedded in `@deprecated` JSDoc tags introduced 2026-05-09

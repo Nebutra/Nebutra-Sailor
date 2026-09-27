@@ -2,7 +2,6 @@ import { routing } from "@nebutra/i18n/routing";
 import {
   Lightning,
   type Icon as LucideIcon,
-  BlendMode as Palette,
   Connection as Plug,
   Shield,
   Users,
@@ -36,13 +35,6 @@ const STARTUP_OS_NAV_ITEM: DashboardNavItem = {
 
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
   STARTUP_OS_NAV_ITEM,
-  {
-    href: "/theme-playground",
-    label: "Theme Playground",
-    icon: Palette,
-    group: "Product",
-    badge: { label: "Beta", tone: "beta" },
-  },
   { href: "/integrations", label: "Connectors", icon: Plug, group: "Product" },
   { href: "/cofounder", label: "Match your cofounder", icon: Users, group: "Product" },
   {

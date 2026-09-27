@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EditorialMarginNote } from "./editorial-margin-note";
+import { editorialReadingColumnDecorator } from "./story-decorators";
 
 const meta: Meta<typeof EditorialMarginNote> = {
   title: "Editorial/MarginNote",
   component: EditorialMarginNote,
   tags: ["autodocs"],
+  decorators: [editorialReadingColumnDecorator],
   parameters: {
     docs: {
       description: {

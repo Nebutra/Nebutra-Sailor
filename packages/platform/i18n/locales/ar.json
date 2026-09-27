@@ -931,88 +931,11 @@
         "title": "السمة",
         "description": "استخدم الوضع الفاتح، أو الداكن، أو تطابق تفضيلات النظام."
       },
-      "themePreset": {
-        "title": "إعداد السمة",
-        "description": "تطبيق أي سمة من Theme Playground على التطبيق بالكامل. تتحكم الإعدادات أدناه في ضبطها بدقة.",
-        "search": "البحث عن السمات…",
-        "searchLabel": "البحث عن السمات",
-        "default": "الافتراضي",
-        "defaultMood": "Nebutra base palette",
-        "active": "نشط",
-        "empty": "لا توجد سمات تطابق بحثك.",
-        "count": "{count} سمة"
-      },
-      "themeEditor": {
-        "title": "السمة",
-        "description": "اختر إعدادًا مسبقًا، أو استورد ملف DESIGN.md، ثم اضبط الرموز أدناه بدقة.",
-        "selectLabel": "إعداد السمة",
-        "import": "استيراد",
-        "copy": "نسخ السمة",
-        "copied": "تم النسخ",
-        "copyError": "فشل النسخ",
-        "custom": "مخصص"
-      },
-      "designMd": {
-        "title": "استيراد DESIGN.md",
-        "description": "الصق أو ارفع ملف DESIGN.md لتطبيق ألوانه، أنصاف أقطاره، خطوطه، مسافاتِه، وظلاله عبر التطبيق بالكامل — مع الاحتفاظ بها عبر إعادة التحميل.",
-        "applied": "تم التطبيق:",
-        "remove": "إزالة"
-      },
       "themeMode": {
         "label": "وضع السمة",
         "light": "فاتح",
         "dark": "داكن",
         "system": "النظام"
-      },
-      "accent": {
-        "title": "لون التمييز",
-        "description": "اختر لون تمييز للعلامة التجارية يلون الحالات النشطة عبر التطبيق.",
-        "label": "لون التمييز",
-        "options": {
-          "default": "افتراضي",
-          "blue": "أزرق",
-          "cyan": "سماوي",
-          "violet": "بنفسجي",
-          "pink": "وردي",
-          "amber": "كهرماني",
-          "green": "أخضر",
-          "red": "أحمر"
-        }
-      },
-      "colors": {
-        "title": "الألوان",
-        "description": "اللون الرئيسي، والخلفية، والنص.",
-        "background": {
-          "label": "الخلفية",
-          "description": "تجاوز لون خلفية السطح."
-        },
-        "foreground": {
-          "label": "النص",
-          "description": "تجاوز لون نص المحتوى."
-        },
-        "resetToDefault": "إعادة تعيين إلى الافتراضي"
-      },
-      "fontFamily": {
-        "uiLabel": "خط الواجهة",
-        "uiDescription": "عائلة الخط المستخدمة في الواجهة.",
-        "codeLabel": "خط الكود",
-        "codeDescription": "عائلة الخط المستخدمة لأسطح الكود.",
-        "options": {
-          "ui": {
-            "theme": "الافتراضي حسب السمة",
-            "system": "النظام",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "الافتراضي حسب السمة",
-            "system": "النظام أحادي المسافة",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "استخدام مؤشر المؤشر",
@@ -1049,14 +972,6 @@
         "label": "تفضيل الحركة",
         "system": "النظام",
         "on": "مفعّل"
-      },
-      "surface": {
-        "title": "شريط جانبي شفاف",
-        "description": "تطبيق مادة شفافة على الشريط الجانبي."
-      },
-      "transparency": {
-        "label": "شريط جانبي شفاف",
-        "description": "تطبيق مادة شفافة على الشريط الجانبي."
       }
     }
   },

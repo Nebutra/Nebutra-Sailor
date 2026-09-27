@@ -131,8 +131,8 @@
     "columns": {
       "product": "Tuote",
       "resources": "Resurssit",
-      "legal": "Lakisääteinen",
-      "community": "Yhteisö"
+      "company": "Yritys",
+      "legal": "Lakisääteinen"
     },
     "links": {
       "product": "Tuote",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Kaikki oikeudet pidätetään.",
+    "copyright": "© 2026 {companyLegalEn} · Kaikki oikeudet pidätetään.",
     "fontCredit": "Kiinalainen kirjasin: MiSans (Xiaomi)",
     "statusOnline": "Kaikki järjestelmät toimivat",
     "newsletterTitle": "Pysy ajan tasalla",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-RAKENNE",
-    "title": "10 sovellusta. 112 pakettia. 4 backend-raitaa.",
+    "title": "10 sovellusta. 111 pakettia. 4 backend-raitaa.",
     "description": "Jaettu koodi, rinnakkaiset buildit, nolla päällekkäisyyksiä. Täydellinen päästä-päähän-tyypitys tietokannasta frontendiin.",
     "metricApps": "sovellusta",
     "metricBackends": "backend-laneja",
@@ -243,7 +243,7 @@
       "ctaButton": "Ota yhteyttä"
     },
     "contact": {
-      "title": "Tekninen ja kaupallinen kysely — {brandName} Intelligence",
+      "title": "Tekninen ja kaupallinen kysely — {brandName}",
       "description": "Omistettu viestintäkanava kaupallisille lisensseille, yrityksen omalle isännöidylle ja edistyneelle tekniselle tuelle.",
       "heading": "Ota tukiyhteys",
       "subheading": "Lähetämme omistautuneen teknisen asiantuntijan tai arkkitehdin arvioimaan nimenomaisia vaatimuksiasi.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Voit ottaa yhteyttä tietosuojavastaavaamme osoitteessa dpo@nebutra.com."
+            "desc": "Voit ottaa yhteyttä tietosuojavastaavaamme osoitteessa dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Miten pyytää palautusta",
         "step1": {
           "title": "Vaihe 1: Ota yhteyttä tukeen",
-          "intro": "Lähetä sähköposti osoitteeseen billing@nebutra.com ja sisällytä seuraavat tiedot:",
+          "intro": "Lähetä sähköposti osoitteeseen billing@{domain} ja sisällytä seuraavat tiedot:",
           "items": {
             "0": "Tilisi sähköpostiosoite",
             "1": "Tilaussuunnitelma ja laskutuskausi",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Vastaa päätös sähköpostiin lisätietojen kera",
           "1": "Pyydä asiaa siirrettäväksi esimiehelle",
-          "2": "Ota yhteyttä osoitteeseen legal@nebutra.com saadaksesi asian uudelleen tarkastettua"
+          "2": "Ota yhteyttä osoitteeseen legal@{domain} saadaksesi asian uudelleen tarkastettua"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Riitojen ratkaiseminen",
         "informal": {
           "title": "10.1 Epämuodollinen ratkaisu",
-          "content": "Ennen muodollisten menettelyjen aloittamista sopit ottaaksesi meihin yhteyttä osoitteessa legal@nebutra.com riitojen epämuodolliseen ratkaisemiseen."
+          "content": "Ennen muodollisten menettelyjen aloittamista sopit ottaaksesi meihin yhteyttä osoitteessa legal@{domain} riitojen epämuodolliseen ratkaisemiseen."
         },
         "governingLaw": {
           "title": "10.2 Sovellettava laki",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Aloita",
       "title": "Lopeta konfigurointi. Aloita rakentaminen.",
       "description": "Alusta skaalautuva SaaS-arkkitehtuuri paikallisesti {brandName}-CLI:n avulla.",
-      "button": "Julkaise arkkitehtuuri",
       "license": "Avoin lähdekoodi FSL-1.1-ALv2-lisenssillä. Luottokorttia ei tarvita."
     },
     "capability": {

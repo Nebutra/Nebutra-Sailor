@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
+import { FinalCTA } from "@/components/landing";
 import { VcProfile } from "@/components/landing/solutions/vc/VcProfile";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
@@ -49,8 +49,7 @@ export default async function ChinaVcProfilePage({ params }: Props) {
   const similar = similarVcs(raw, CHINA_VC_ORGS).map((o) => ({ ...o, logo: chinaVcLogoFor(o) }));
 
   return (
-    <main id="main-content" className="relative min-h-dvh overflow-hidden bg-background">
-      <Navbar />
+    <main id="main-content" className="relative flex-1 overflow-hidden bg-background">
       <VcProfile
         org={org}
         similar={similar}
@@ -59,7 +58,7 @@ export default async function ChinaVcProfilePage({ params }: Props) {
         hrefBase="/solutions/china-vc"
         variant="deals"
       />
-      <FooterMinimal showFinalCta />
+      <FinalCTA />
     </main>
   );
 }

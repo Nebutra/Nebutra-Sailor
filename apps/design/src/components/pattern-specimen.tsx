@@ -37,7 +37,7 @@ export function PatternSpecimen({ slug }: { slug: string }) {
   return (
     <p className="text-[13px] text-muted-foreground leading-relaxed">
       No specimen here yet — the chart primitives are shown live on the Showcase, which renders the
-      docs-shared demos directly.
+      catalog demos directly.
     </p>
   );
 }

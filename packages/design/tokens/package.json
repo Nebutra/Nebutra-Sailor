@@ -41,15 +41,21 @@
       "types": "./dist/values.d.ts",
       "import": "./dist/values.js",
       "default": "./dist/values.js"
-    }
+    },
+    "./preset": {
+      "types": "./dist/preset/index.d.ts",
+      "import": "./dist/preset/index.js",
+      "default": "./dist/preset/index.js"
+    },
+    "./project.css": "./project.css"
   },
   "scripts": {
-    "build": "node scripts/sync-styles.mjs && node scripts/emit-values.mjs && node scripts/emit-skins.mjs && tsup",
+    "build": "node scripts/sync-styles.mjs && node scripts/emit-values.mjs && node scripts/emit-skins.mjs && node scripts/emit-project.mjs && tsup",
     "sync": "node scripts/sync-styles.mjs",
     "emit-skins": "node scripts/emit-skins.mjs",
     "compile-brand": "node scripts/compile-brand.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/brand-package/__tests__/*.test.ts src/__tests__/*.test.ts",
+    "test": "tsx --test src/brand-package/__tests__/*.test.ts src/preset/__tests__/*.test.ts src/__tests__/*.test.ts",
     "emit-values": "node scripts/emit-values.mjs"
   },
   "dependencies": {
@@ -86,6 +92,8 @@
     "brands",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "project.css",
+    "project"
   ]
 }

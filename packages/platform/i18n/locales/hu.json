@@ -931,88 +931,11 @@
         "title": "Téma",
         "description": "Válassz világos vagy sötét témát, vagy használd a rendszer beállításait."
       },
-      "themePreset": {
-        "title": "Témaminta",
-        "description": "Alkalmazz bármelyik Theme Playground témát az egész alkalmazásra. Az alábbi vezérlőkkel finomhangolhatod.",
-        "search": "Témák keresése…",
-        "searchLabel": "Témák keresése",
-        "default": "Alapértelmezett",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktív",
-        "empty": "Nincs találat a keresésre.",
-        "count": "{count} téma"
-      },
-      "themeEditor": {
-        "title": "Téma",
-        "description": "Válassz egy mintát, importálj egy DESIGN.md fájlt, majd finomhangold az alábbi tokeneket.",
-        "selectLabel": "Témaminta",
-        "import": "Importálás",
-        "copy": "Téma másolása",
-        "copied": "Másolva",
-        "copyError": "A másolás sikertelen",
-        "custom": "Egyedi"
-      },
-      "designMd": {
-        "title": "DESIGN.md importálása",
-        "description": "Illeszd be vagy töltsd fel a DESIGN.md fájlt, hogy az alkalmazás színeit, sarkait, betűtípusait, távolságait és árnyékait egységesen alkalmazd – az értékek újratöltés után is megmaradnak.",
-        "applied": "Alkalmazva:",
-        "remove": "Eltávolítás"
-      },
       "themeMode": {
         "label": "Témamód",
         "light": "Világos",
         "dark": "Sötét",
         "system": "Rendszer"
-      },
-      "accent": {
-        "title": "Kiemelő szín",
-        "description": "Válassz egy márka kiemelő színt, amely átveszi az aktív állapotok színezését az egész alkalmazásban.",
-        "label": "Kiemelő szín",
-        "options": {
-          "default": "Alapértelmezett",
-          "blue": "Kék",
-          "cyan": "Cián",
-          "violet": "Ibolya",
-          "pink": "Rózsaszín",
-          "amber": "Borostyán",
-          "green": "Zöld",
-          "red": "Piros"
-        }
-      },
-      "colors": {
-        "title": "Színek",
-        "description": "Kiemelés, háttér és előtér.",
-        "background": {
-          "label": "Háttér",
-          "description": "Felülírja a felület háttérszínét."
-        },
-        "foreground": {
-          "label": "Előtér",
-          "description": "Felülírja a szöveg színeszínét."
-        },
-        "resetToDefault": "Visszaállítás alapértelmezettre"
-      },
-      "fontFamily": {
-        "uiLabel": "UI betűtípus",
-        "uiDescription": "A felületen használt betűtípuscsalád.",
-        "codeLabel": "Kód betűtípus",
-        "codeDescription": "A kód felületein használt betűcsalád.",
-        "options": {
-          "ui": {
-            "theme": "Téma alapértelmezett",
-            "system": "Rendszer",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Téma alapértelmezett",
-            "system": "Rendszer mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Mutató kurzor használata",
@@ -1049,14 +972,6 @@
         "label": "Mozgásbeállítás",
         "system": "Rendszer",
         "on": "Be"
-      },
-      "surface": {
-        "title": "Áttetsző oldalsáv",
-        "description": "Áttetsző anyagot alkalmaz az oldalsávra."
-      },
-      "transparency": {
-        "label": "Áttetsző oldalsáv",
-        "description": "Áttetsző anyagot alkalmaz az oldalsávra."
       }
     }
   },

@@ -187,6 +187,13 @@ export interface BrandConfig {
     description: string;
     descriptionCn?: string;
     /**
+     * How the logo renders. "image": the logo SVGs on the CDN (Nebutra's, or a
+     * project's own once it adds brand.config/assets/logo). "wordmark": the
+     * brand name set in the heading face — what a new brand shows until it
+     * has a mark, instead of a broken image pointing at a CDN it does not have.
+     */
+    logo?: "image" | "wordmark";
+    /**
      * Brand story / VI rationale. Surfaced in About pages and the design site,
      * separated by language because translations are not always 1:1.
      */
@@ -582,3 +589,79 @@ export const DEFAULT_BRAND: BrandConfig = {
     commercialExempt: ["Wuxi Nebutra Intelligence Technology Co., Ltd.", "Nebutra Co., Ltd"],
   },
 };
+
+/**
+ * Every host in DEFAULT_BRAND.domains, moved onto the new base domain
+ * (`app.nebutra.com` → `app.acme.com`). The key set comes from the default
+ * rather than a list here: this file used to write its own twelve keys, one of
+ * them retired, while the brand package reads nineteen — so brand:init followed
+ * by brand:apply left @nebutra/brand unable to build.
+ */
+export function rebaseDomains(
+  defaults: BrandConfig["domains"],
+  baseDomain: string,
+): BrandConfig["domains"] {
+  const from = defaults.landing;
+  const moved = Object.fromEntries(
+    Object.entries(defaults).map(([key, host]) => [
+      key,
+      host === from
+        ? baseDomain
+        : host.endsWith(`.${from}`)
+          ? `${host.slice(0, -from.length)}${baseDomain}`
+          : host,
+    ]),
+  );
+  return moved as BrandConfig["domains"];
+}
+
+/** What `pnpm brand:init` asks a new project. */
+export interface NewBrandAnswers {
+  name: string;
+  tagline: string;
+  description: string;
+  companyName: string;
+  /** Optional legal name in Chinese. */
+  companyNameCN?: string;
+  email: string;
+  year: number;
+  baseDomain: string;
+  repoOwner: string;
+  repoName: string;
+  social: BrandConfig["social"];
+  features: Pick<BrandConfig["features"], "web3" | "ecommerce" | "recsys">;
+  packageScope: string;
+}
+
+/**
+ * The config for a new brand. DEFAULT_BRAND is Nebutra's own instance, so
+ * only what is not identity comes from it — colours, type, asset paths,
+ * feature defaults. Every name, legal entity, story, host and link comes from
+ * the answers or is left unset (brand:apply falls back to the brand name).
+ *
+ * brand:init used to clone DEFAULT_BRAND and overwrite a handful of fields;
+ * the rest survived, so a new project's legal pages named Nebutra's company
+ * and its About page told Nebutra's logo story.
+ */
+export function buildBrandConfig(a: NewBrandAnswers): BrandConfig {
+  const base: BrandConfig = JSON.parse(JSON.stringify(DEFAULT_BRAND));
+  const cn = a.companyNameCN?.trim() || undefined;
+  return {
+    ...base,
+    brand: {
+      name: a.name,
+      logo: "wordmark",
+      nameFull: cn ?? a.companyName,
+      nameFullEn: a.companyName,
+      tagline: a.tagline,
+      description: a.description,
+    },
+    company: { name: a.companyName, ...(cn ? { nameCN: cn } : {}), email: a.email, year: a.year },
+    domains: rebaseDomains(DEFAULT_BRAND.domains, a.baseDomain),
+    social: a.social,
+    repo: { ...base.repo, owner: a.repoOwner, name: a.repoName },
+    features: { ...base.features, ...a.features },
+    packageScope: a.packageScope,
+    license: { ...base.license, commercialExempt: cn ? [a.companyName, cn] : [a.companyName] },
+  };
+}

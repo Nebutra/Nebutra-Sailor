@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -61,8 +60,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
 
   return (
     <Suspense>
-      <main id="main-content" className="flex flex-col min-h-dvh bg-background">
-        <Navbar />
+      <main id="main-content" className="flex flex-col flex-1 bg-background">
         <section className="container mx-auto max-w-4xl px-4 py-32">
           <AnimateIn preset="emerge">
             <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
@@ -132,7 +130,6 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
             </div>
           </AnimateIn>
         </section>
-        <FooterMinimal />
       </main>
     </Suspense>
   );

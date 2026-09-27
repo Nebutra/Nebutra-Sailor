@@ -111,6 +111,17 @@ const responsiveBreakpoints = [
   ["lg", gridTokens.breakpoints.lg],
 ] as const;
 
+/**
+ * Breakpoint rules must beat the base values, and the base values are inline
+ * styles (the element's `style` carries --grid-columns, grid-template-columns,
+ * aspect-ratio …). A class rule never wins against an inline declaration, so
+ * without this every responsive `columns={{ md: 2, lg: 3 }}` rendered the base
+ * column count at every width. `!important` in a stylesheet does beat inline.
+ */
+function important(declarations: string[]): string {
+  return declarations.map((d) => d.replace(/;\s*$/, " !important;")).join("");
+}
+
 function isResponsiveRecord<T>(
   value: GridResponsiveValue<T> | undefined,
 ): value is Partial<Record<GridBreakpoint, T>> {
@@ -246,7 +257,7 @@ function createGridResponsiveCss({
 
     if (declarations.length > 0) {
       blocks.push(
-        `${responsiveQuery(useContainer, width)}{.${className}{${declarations.join("")}}}`,
+        `${responsiveQuery(useContainer, width)}{.${className}{${important(declarations)}}}`,
       );
     }
   }
@@ -302,7 +313,7 @@ function createCellResponsiveCss({
 
     if (declarations.length > 0) {
       blocks.push(
-        `${responsiveQuery(useContainer, width)}{.${className}{${declarations.join("")}}}`,
+        `${responsiveQuery(useContainer, width)}{.${className}{${important(declarations)}}}`,
       );
     }
   }

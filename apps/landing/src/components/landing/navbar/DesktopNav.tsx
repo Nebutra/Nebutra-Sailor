@@ -3,8 +3,9 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
-import { ResourcesMegaMenu } from "./ResourcesMegaMenu";
-import { SolutionsMegaMenu } from "./SolutionsMegaMenu";
+import { hereOnly } from "@/site-map";
+import type { MenuId } from "./menu-types";
+import { MENUS } from "./menus";
 
 export function DesktopNav() {
   const t = useTranslations("nav");
@@ -13,13 +14,10 @@ export function DesktopNav() {
 
   return (
     <div className="hidden lg:flex items-center gap-3 xl:gap-5">
-      {NAV_LINKS.map((link) => {
+      {hereOnly(NAV_LINKS).map((link) => {
         if ("mega" in link) {
-          return link.labelKey === "resources" ? (
-            <ResourcesMegaMenu key={link.labelKey} />
-          ) : (
-            <SolutionsMegaMenu key={link.labelKey} />
-          );
+          const Menu = MENUS[link.labelKey as MenuId]?.Desktop;
+          return Menu ? <Menu key={link.labelKey} /> : null;
         }
 
         const isExternal = link.href.startsWith("http");

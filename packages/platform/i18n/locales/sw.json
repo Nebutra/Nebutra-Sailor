@@ -931,88 +931,11 @@
         "title": "Mandhari",
         "description": "Tumia mwanga, giza, au ufanane na mapendeleo ya mfumo."
       },
-      "themePreset": {
-        "title": "Kichujio cha mandhari",
-        "description": "Tumia mandhari yoyote ya Theme Playground kote kwenye programu. Vidhibiti vya chini vinaongezwa juu ili kurekebisha kwa usahihi.",
-        "search": "Tafuta mandhari…",
-        "searchLabel": "Tafuta mandhari",
-        "default": "Chaguo-msingi",
-        "defaultMood": "Nebutra base palette",
-        "active": "Inafanya kazi",
-        "empty": "Hakuna mandhari zinazolingana na utafutaji wako.",
-        "count": "mandhari {count}"
-      },
-      "themeEditor": {
-        "title": "Mandhari",
-        "description": "Chagua kichujio, ingiza DESIGN.md, kisha rekebisha alama za chini.",
-        "selectLabel": "Kichujio cha mandhari",
-        "import": "Ingiza",
-        "copy": "Nakili mandhari",
-        "copied": "Imenakiliwa",
-        "copyError": "Unakiliwa imekosa",
-        "custom": "Maalum"
-      },
-      "designMd": {
-        "title": "Ingiza DESIGN.md",
-        "description": "Nakili au paki DESIGN.md ili kutumia rangi zake, radius, fonti, nafasi, na kivuli kote programu — hifadhiwa hata baada ya kurefresh.",
-        "applied": "Imetumika:",
-        "remove": "Ondoa"
-      },
       "themeMode": {
         "label": "Hali ya mandhari",
         "light": "Nuru",
         "dark": "Giza",
         "system": "Mfumo"
-      },
-      "accent": {
-        "title": "Rangi ya kipekee",
-        "description": "Chagua rangi ya kipekee ya brand inayopamba hali za kazi kote programu.",
-        "label": "Rangi ya kipekee",
-        "options": {
-          "default": "Chaguo-msingi",
-          "blue": "Bluu",
-          "cyan": "Saiyani",
-          "violet": "Violeti",
-          "pink": "Uwekundu",
-          "amber": "Kijani-kahubwa",
-          "green": "Kijani",
-          "red": "Nyekundu"
-        }
-      },
-      "colors": {
-        "title": "Rangi",
-        "description": "Rangi ya kipekee, ya nyuma, na ya mbele.",
-        "background": {
-          "label": "Rangi ya nyuma",
-          "description": "Badilisha rangi ya nyuma ya uso."
-        },
-        "foreground": {
-          "label": "Rangi ya mbele",
-          "description": "Badilisha rangi ya maandishi ya mwili."
-        },
-        "resetToDefault": "Rudisha kwenye chaguo la awali"
-      },
-      "fontFamily": {
-        "uiLabel": "Fonti ya UI",
-        "uiDescription": "Familia ya fonti inayotumika kote kwenye UI.",
-        "codeLabel": "Fonti ya msimbo",
-        "codeDescription": "Familia ya fonti inayotumika kwa nyuso za msimbo.",
-        "options": {
-          "ui": {
-            "theme": "Chaguo-msingi la mandhari",
-            "system": "Mfumo",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Chaguo-msingi la mandhari",
-            "system": "System mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Tumia kichwa cha kidirisha",
@@ -1049,14 +972,6 @@
         "label": "Mpangilio wa mwendo",
         "system": "Mfumo",
         "on": "Imewashwa"
-      },
-      "surface": {
-        "title": "Upau wa pembeni wa kioo",
-        "description": "Weka nyenzo ya kioo kwenye upau wa pembeni."
-      },
-      "transparency": {
-        "label": "Upau wa pembeni wa kioo",
-        "description": "Weka nyenzo ya kioo kwenye upau wa pembeni."
       }
     }
   },

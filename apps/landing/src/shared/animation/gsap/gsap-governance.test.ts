@@ -11,10 +11,7 @@ const packageJson = JSON.parse(readFileSync(path.join(appRoot, "package.json"), 
 
 const gsapRoot = "src/shared/animation/gsap/";
 const gsapRuntimeSource = readFileSync(path.join(appRoot, `${gsapRoot}helpers/runtime.ts`), "utf8");
-const gsapHookSource = readFileSync(
-  path.join(appRoot, `${gsapRoot}hooks/use-landing-gsap.ts`),
-  "utf8",
-);
+const gsapHookSource = readFileSync(path.join(appRoot, `${gsapRoot}hooks/use-entrance.ts`), "utf8");
 
 function collectSourceFiles(directory: string): string[] {
   const files: string[] = [];
@@ -55,15 +52,11 @@ describe("landing GSAP governance", () => {
     expect(gsapRuntimeSource).toContain("ScrollTrigger.defaults");
     expect(gsapRuntimeSource).toContain("prefers-reduced-motion: reduce");
     expect(gsapRuntimeSource).toContain("MARKETING_GSAP_SELECTORS");
-    expect(gsapRuntimeSource).toContain("createMarketingTimeline");
     expect(gsapRuntimeSource).toContain("createMarketingMatchMedia");
   });
 
-  it("exposes scoped hooks with cleanup and reduced-motion gating", () => {
+  it("gates the entrance hooks on reduced motion", () => {
     expect(gsapHookSource).toContain('"use client"');
-    expect(gsapHookSource).toContain("useGSAP(");
-    expect(gsapHookSource).toContain("scope");
-    expect(gsapHookSource).toContain("revertOnUpdate = true");
     expect(gsapHookSource).toContain("prefersReducedMarketingMotion()");
   });
 

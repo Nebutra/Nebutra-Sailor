@@ -6,12 +6,13 @@ import { useState } from "react";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
-import { getGroupResources, RESOURCE_GROUPS } from "@/lib/constants/resources-data";
-import { getGroupSolutions, pick, SOLUTION_GROUPS } from "@/lib/constants/solutions-data";
 import { env } from "@/lib/env";
-import { isZhUiLocale } from "@/lib/i18n/localized";
+import { isZhUiLocale, pick } from "@/lib/i18n/localized";
 import { usePublicMe } from "@/lib/use-public-me";
+import { hereOnly } from "@/site-map";
 import { Presence } from "../Presence";
+import type { MenuId } from "./menu-types";
+import { MENUS } from "./menus";
 
 const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
@@ -47,32 +48,10 @@ export function MobileDrawer() {
                 <ThemeSwitcher />
               </div>
 
-              {NAV_LINKS.map((link) => {
+              {hereOnly(NAV_LINKS).map((link) => {
                 if ("mega" in link) {
-                  const groups =
-                    link.labelKey === "resources"
-                      ? RESOURCE_GROUPS.map((group) => ({
-                          id: group.id,
-                          label: group.label,
-                          items: getGroupResources(group).map((resource) => ({
-                            key: resource.href,
-                            href: resource.href,
-                            external: resource.external ?? false,
-                            icon: resource.icon,
-                            label: resource.label,
-                          })),
-                        }))
-                      : SOLUTION_GROUPS.map((group) => ({
-                          id: group.id,
-                          label: group.label,
-                          items: getGroupSolutions(group).map((s) => ({
-                            key: s.slug,
-                            href: `/solutions/${s.slug}`,
-                            external: false,
-                            icon: s.icon,
-                            label: s.label,
-                          })),
-                        }));
+                  const groups = MENUS[link.labelKey as MenuId]?.groups() ?? [];
+                  if (groups.length === 0) return null;
 
                   return (
                     <div key={link.labelKey} className="flex flex-col gap-3 py-1">

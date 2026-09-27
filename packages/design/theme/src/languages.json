@@ -16,7 +16,7 @@
       "brandPath": null,
       "skinPath": null,
       "install": {
-        "command": "nebutra theme use factory",
+        "command": "nebutra apply --preset factory",
         "cssImport": null
       },
       "compatibility": {
@@ -44,7 +44,7 @@
       "brandPath": "brands/cosmos/brand.json",
       "skinPath": "skins/cosmos.css",
       "install": {
-        "command": "nebutra theme use cosmos",
+        "command": "nebutra apply --preset cosmos",
         "cssImport": "@nebutra/tokens/skins/cosmos.css"
       },
       "compatibility": {
@@ -70,7 +70,7 @@
       "brandPath": "brands/gsap/brand.json",
       "skinPath": "skins/gsap.css",
       "install": {
-        "command": "nebutra theme use gsap",
+        "command": "nebutra apply --preset gsap",
         "cssImport": "@nebutra/tokens/skins/gsap.css"
       },
       "compatibility": {
@@ -92,7 +92,7 @@
       "brandPath": "brands/linear/brand.json",
       "skinPath": "skins/linear.css",
       "install": {
-        "command": "nebutra theme use linear",
+        "command": "nebutra apply --preset linear",
         "cssImport": "@nebutra/tokens/skins/linear.css"
       },
       "compatibility": {
@@ -120,7 +120,7 @@
       "brandPath": "brands/notion/brand.json",
       "skinPath": "skins/notion.css",
       "install": {
-        "command": "nebutra theme use notion",
+        "command": "nebutra apply --preset notion",
         "cssImport": "@nebutra/tokens/skins/notion.css"
       },
       "compatibility": {
@@ -142,7 +142,7 @@
       "brandPath": "brands/raycast/brand.json",
       "skinPath": "skins/raycast.css",
       "install": {
-        "command": "nebutra theme use raycast",
+        "command": "nebutra apply --preset raycast",
         "cssImport": "@nebutra/tokens/skins/raycast.css"
       },
       "compatibility": {
@@ -169,7 +169,7 @@
       "brandPath": "brands/stripe/brand.json",
       "skinPath": "skins/stripe.css",
       "install": {
-        "command": "nebutra theme use stripe",
+        "command": "nebutra apply --preset stripe",
         "cssImport": "@nebutra/tokens/skins/stripe.css"
       },
       "compatibility": {
@@ -196,7 +196,7 @@
       "brandPath": "brands/vanta/brand.json",
       "skinPath": "skins/vanta.css",
       "install": {
-        "command": "nebutra theme use vanta",
+        "command": "nebutra apply --preset vanta",
         "cssImport": "@nebutra/tokens/skins/vanta.css"
       },
       "compatibility": {
@@ -218,7 +218,7 @@
       "brandPath": "brands/vercel/brand.json",
       "skinPath": "skins/vercel.css",
       "install": {
-        "command": "nebutra theme use vercel",
+        "command": "nebutra apply --preset vercel",
         "cssImport": "@nebutra/tokens/skins/vercel.css"
       },
       "compatibility": {

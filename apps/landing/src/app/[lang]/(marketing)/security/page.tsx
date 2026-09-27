@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import {
   ArrowRight,
   Database,
@@ -15,7 +16,6 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -151,9 +151,8 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
     <Suspense>
       <main
         id="main-content"
-        className="flex flex-col min-h-dvh bg-background relative overflow-hidden"
+        className="flex flex-col flex-1 bg-background relative overflow-hidden"
       >
-        <Navbar />
         <AuroraBackground variant="subtle" position="top" intensity={0.4} />
         <section className="container mx-auto max-w-[1100px] px-4 py-32 relative">
           {/* Hero */}
@@ -290,8 +289,8 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                   variant="outline"
                   className="rounded-[var(--radius-button)]"
                 >
-                  <a href="mailto:security@nebutra.com?subject=Security%20Inquiry">
-                    <Mail className="mr-2 h-4 w-4" /> security@nebutra.com
+                  <a href={`mailto:security@${brand.domains.landing}?subject=Security%20Inquiry`}>
+                    <Mail className="mr-2 h-4 w-4" /> security@{brand.domains.landing}
                   </a>
                 </Button>
                 <Button
@@ -300,7 +299,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                   variant="outline"
                   className="rounded-[var(--radius-button)]"
                 >
-                  <a href="mailto:legal@nebutra.com?subject=DPA%20Request">
+                  <a href={`mailto:legal@${brand.domains.landing}?subject=DPA%20Request`}>
                     Request DPA <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
@@ -308,7 +307,6 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
             </div>
           </AnimateIn>
         </section>
-        <FooterMinimal />
       </main>
     </Suspense>
   );

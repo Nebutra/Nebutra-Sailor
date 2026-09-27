@@ -931,88 +931,11 @@
         "title": "Tema",
         "description": "Usa chiaro, scuro o segui le preferenze di sistema."
       },
-      "themePreset": {
-        "title": "Preset tema",
-        "description": "Applica qualsiasi tema di Theme Playground in tutta l'app. I controlli qui sotto permettono di affinarlo ulteriormente.",
-        "search": "Cerca temi…",
-        "searchLabel": "Cerca temi",
-        "default": "Predefinito",
-        "defaultMood": "Nebutra base palette",
-        "active": "Attivo",
-        "empty": "Nessun tema corrisponde alla ricerca.",
-        "count": "{count} temi"
-      },
-      "themeEditor": {
-        "title": "Tema",
-        "description": "Scegli un preset, importa un DESIGN.md, poi affina i token qui sotto.",
-        "selectLabel": "Preset tema",
-        "import": "Importa",
-        "copy": "Copia tema",
-        "copied": "Copiato",
-        "copyError": "Copia non riuscita",
-        "custom": "Personalizzato"
-      },
-      "designMd": {
-        "title": "Importa DESIGN.md",
-        "description": "Incolla o carica un DESIGN.md per applicare colori, raggio, font, spaziatura e ombre in tutta l'app — salvati anche dopo il ricaricamento.",
-        "applied": "Applicato:",
-        "remove": "Rimuovi"
-      },
       "themeMode": {
         "label": "Modalità tema",
         "light": "Chiaro",
         "dark": "Scuro",
         "system": "Sistema"
-      },
-      "accent": {
-        "title": "Colore di accento",
-        "description": "Scegli un colore di accento del brand che colora gli stati attivi in tutta l'app.",
-        "label": "Colore di accento",
-        "options": {
-          "default": "Predefinito",
-          "blue": "Blu",
-          "cyan": "Ciano",
-          "violet": "Viola",
-          "pink": "Rosa",
-          "amber": "Ambra",
-          "green": "Verde",
-          "red": "Rosso"
-        }
-      },
-      "colors": {
-        "title": "Colori",
-        "description": "Accento, sfondo e primo piano.",
-        "background": {
-          "label": "Sfondo",
-          "description": "Sovrascrive il colore di sfondo della superficie."
-        },
-        "foreground": {
-          "label": "Primo piano",
-          "description": "Sovrascrive il colore del testo principale."
-        },
-        "resetToDefault": "Ripristina predefiniti"
-      },
-      "fontFamily": {
-        "uiLabel": "Font interfaccia",
-        "uiDescription": "Famiglia di caratteri utilizzata nell'interfaccia.",
-        "codeLabel": "Font per il codice",
-        "codeDescription": "Famiglia di caratteri utilizzata per le superfici di codice.",
-        "options": {
-          "ui": {
-            "theme": "Predefinito del tema",
-            "system": "Sistema",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Predefinito del tema",
-            "system": "System mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Usa cursore puntatore",
@@ -1049,14 +972,6 @@
         "label": "Preferenza animazioni",
         "system": "Sistema",
         "on": "Attivo"
-      },
-      "surface": {
-        "title": "Barra laterale traslucida",
-        "description": "Applica un materiale traslucido alla barra laterale."
-      },
-      "transparency": {
-        "label": "Barra laterale traslucida",
-        "description": "Applica un materiale traslucido alla barra laterale."
       }
     }
   },

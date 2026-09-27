@@ -6,6 +6,11 @@ const mocks = vi.hoisted(() => ({
   getPostTranslationByKey: vi.fn(),
 }));
 
+// These cases are about a site that has a Sanity project; the unconfigured
+// case is its own describe block at the end.
+const sanity = vi.hoisted(() => ({ isSanityConfigured: true }));
+vi.mock("@nebutra/sanity/client", () => sanity);
+
 vi.mock("@nebutra/sanity/image", () => ({
   getImageUrl: () => "https://cdn.sanity.io/mock.webp",
 }));
@@ -265,5 +270,23 @@ describe("blog lib", () => {
       const blog = await import("@/lib/blog");
       expect(blog.getPostBySlug).toBe(blog.getPost);
     });
+  });
+});
+
+describe("blog lib without a Sanity project", () => {
+  afterEach(() => {
+    sanity.isSanityConfigured = true;
+    vi.resetModules();
+  });
+
+  it("shows the sample posts and never queries a CMS", async () => {
+    sanity.isSanityConfigured = false;
+    mocks.getPosts.mockClear();
+    const { getAllPosts } = await import("@/lib/blog");
+    const posts = await getAllPosts("en");
+
+    expect(posts.length).toBeGreaterThan(0);
+    expect(posts.every((post) => post.source === "fallback")).toBe(true);
+    expect(mocks.getPosts).not.toHaveBeenCalled();
   });
 });

@@ -17,8 +17,8 @@ Nebutra-Sailor is designed to be fully white-labeled. Every visual and structura
   <Card title="Onboarding Flow" icon="map" href="/customization/onboarding">
     Add, remove, or reorder onboarding steps. Customize welcome copy, skip logic per plan, and configure illustrations.
   </Card>
-  <Card title="Component Library" icon="blocks" href="https://localhost:6006">
-    Browse all components in Storybook, develop new ones in isolation, and extend existing primitives with CVA variants.
+  <Card title="Component Library" icon="blocks" href="https://nebutra.com/sailor/studio">
+    Browse every `@nebutra/ui` component — 188 of them, each with live demos — in Sailor Studio under your chosen look, and add any demo to your project with one command.
   </Card>
 </CardGroup>
 
@@ -39,27 +39,29 @@ Because every color and spacing value in `@nebutra/ui` is a CSS variable referen
 
 ## Quick wins (under 5 minutes)
 
-### Change the brand color
+### Choose your look in Sailor Studio
+
+Open [Sailor Studio](https://nebutra.com/sailor/studio), start from a design language (Linear, Stripe, Vercel, …), and turn the knobs: brand colour, neutrals, radius, density, fonts, heading weight, first-visit mode. The preview is the whole component catalog — menus, dialogs and toasts included — at desktop or phone width. Studio gives you a short preset code; one command puts it on a project:
 
 ```bash
-# Swap blue → purple, cyan → amber in one command
-node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
+# New project
+npx create-sailor@latest my-app --preset <code>
+
+# Existing project — writes packages/design/tokens/project/preset and rebuilds the tokens
+nebutra apply --preset <code>
+
+# A plain design language is its own preset; change only one group of knobs
+nebutra apply --preset vanta --only theme
 ```
 
-The script derives both 11-step scales and prints them as the `colors` block of `brand.config.ts`. Paste it in and run `pnpm brand:apply`: that writes the scales into the token source (`packages/design/design-tokens/tokens/core.json`) and regenerates everything downstream — `styles.css`, the brand metadata, and the values Storybook and the docs display. There is no override stylesheet to layer on top; the source changes, so every surface agrees.
+Nothing else in the design system is edited: the preset is resolved over its base language into `project.css`, which every app loads right after the House tokens, and ThemeProvider takes its default mode from it. A look Studio cannot express goes in `packages/design/tokens/project/brand.json` (hand-authored, takes precedence over any preset) — the declared escape hatch, not the path.
 
-### Switch the active Brand Package
+### Add a component example
 
-```ts
-import { applyLanguage, clearLanguage } from "@nebutra/theme";
-
-applyLanguage("vanta", { persist: true }); // any built-in id from LANGUAGE_REGISTRY
-clearLanguage(); // back to the factory default
-```
+Every demo in Studio is a shadcn registry item. In a Sailor project, where `@nebutra/ui` is already a workspace package, add one as a starting point:
 
 ```bash
-nebutra theme list
-nebutra theme use vanta
+npx shadcn@latest add https://nebutra.com/r/data-table-demo.json
 ```
 
 ### Toggle dark mode
@@ -79,7 +81,7 @@ setTheme("dark"); // "light" | "dark" | "system"
 | New UI primitive | `packages/design/ui/src/components/` + Storybook story |
 | New dashboard section | `apps/web/src/app/(dashboard)/[section]/page.tsx` |
 | Modify onboarding steps | `apps/web/src/app/(onboarding)/` |
-| Rewrite the palette generator | `scripts/generate-palette.mjs` |
+| A look no preset can express | `packages/design/tokens/project/brand.json` (overrides the preset), then `pnpm --filter @nebutra/tokens build` |
 
 ## Token architecture at a glance
 

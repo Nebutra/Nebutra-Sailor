@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 import { createAppSignInUrl } from "@/lib/app-url";
 import { getAuth } from "@/lib/auth";
@@ -48,14 +47,12 @@ export default async function GetLicensePage({ params }: { params: Promise<{ lan
   setRequestLocale(lang as Locale);
 
   return (
-    <main className="min-h-dvh bg-background">
-      <Navbar />
+    <main className="flex-1 bg-background">
       <Suspense fallback={null}>
         <RequireAuth>
           <LicenseWizard />
         </RequireAuth>
       </Suspense>
-      <FooterMinimal />
     </main>
   );
 }

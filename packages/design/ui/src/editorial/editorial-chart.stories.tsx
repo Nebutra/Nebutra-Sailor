@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EditorialChart } from "./editorial-chart";
+import { editorialReadingColumnDecorator } from "./story-decorators";
 
 const meta: Meta<typeof EditorialChart> = {
   title: "Editorial/Chart",
   component: EditorialChart,
   tags: ["autodocs"],
+  decorators: [editorialReadingColumnDecorator],
   parameters: {
     docs: {
       description: {

@@ -7,7 +7,6 @@
  * Note: For typography, use the dedicated `typography/` module instead.
  */
 
-export * from "./accessibility";
 // ─── Radix-based UI components ───────────────────────────────────────────────
 export {
   Accordion,
@@ -34,7 +33,6 @@ export * from "./animated-hike-card";
 export * from "./animated-list";
 export * from "./animated-shiny-text";
 export * from "./announcement";
-export * from "./apple-liquid-glass-switcher";
 export * from "./aspect-ratio";
 export * from "./assisted-password-confirmation";
 export * from "./aurora-background";
@@ -67,9 +65,6 @@ export {
 export * from "./avatar-smart-group";
 export * from "./awards";
 export { Badge, type BadgeProps, badgeVariants } from "./badge";
-export * from "./badge-1";
-export * from "./base-badge";
-export { baseBadgeVariants } from "./base-badge-variants";
 /**
  * @registry https://ui.nebutra.com/r/bento-grid.json
  * @distribution dual-track (npm + shadcn registry) until 2026-11-09.
@@ -84,7 +79,6 @@ export * from "./brand-mark";
 export * from "./breadcrumb";
 export * from "./browser-mockup";
 // Dashboard patterns (migrated from production)
-export * from "./bulk-action-bar";
 export {
   Button,
   ButtonLink,
@@ -122,7 +116,6 @@ export * from "./code-block-language-icon";
  * Use when consumers expect the Geist surface (title prop + defaultExpanded
  * + multiple group); use Accordion directly when you need the Radix tree.
  */
-export * from "./collapse";
 export * from "./collapsible";
 export * from "./color-badge";
 export {
@@ -179,10 +172,8 @@ export {
 } from "./dialog";
 export * from "./display-cards";
 export * from "./dithering-background";
-export * from "./dithering-shader";
 export * from "./dot-pattern";
 export * from "./dotted-map";
-export * from "./dotted-world-map";
 export * from "./drawer";
 export * from "./dropdown-menu";
 /**
@@ -202,15 +193,11 @@ export * from "./dynamic-island-toc";
  */
 export * from "./edit-tool";
 export * from "./empty-state";
-export * from "./enable-2fa-card";
 export * from "./entity";
-export * from "./error-boundary";
-export * from "./error-boundary-helpers";
 export * from "./error-message";
 export * from "./expandable-gallery";
 export * from "./expandable-tabs";
 export * from "./expanding-textarea";
-export * from "./fallback-card";
 export * from "./feature-arrow-card";
 /**
  * @registry https://ui.nebutra.com/r/feature-card.json
@@ -220,7 +207,6 @@ export * from "./feature-arrow-card";
  */
 export * from "./feature-card";
 export * from "./feature-check-item";
-export * from "./feature-gate";
 export * from "./feature-icon-item";
 export * from "./feedback";
 export * from "./field";
@@ -251,8 +237,8 @@ export * from "./flickering-grid";
 export * from "./folder";
 export * from "./form";
 export * from "./gauge";
-export * from "./geist-tooltip";
 export * from "./github-calendar";
+export * from "./github-calendar-data";
 export * from "./github-inline-diff";
 /**
  * @registry https://ui.nebutra.com/r/globe.json
@@ -274,7 +260,6 @@ export * from "./infinite-slider";
 export { Input, type InputProps } from "./input";
 export * from "./input-otp";
 export * from "./interactive-card";
-export * from "./interactive-frosted-glass-card";
 export * from "./iphone-mockup";
 export * from "./kbd";
 /**
@@ -285,10 +270,8 @@ export * from "./kbd";
  */
 export * from "./kpi-card";
 export { Label, type LabelProps, labelVariants } from "./label";
-export * from "./layout";
 export * from "./light-rays";
 export * from "./line-shadow-text";
-export * from "./loader";
 export * from "./loading-dots";
 export * from "./macbook-pro";
 /**
@@ -312,9 +295,7 @@ export * from "./mcp-tool";
  * MenuItemLocked / MenuSection API on top of DropdownMenu. Use when consumers
  * expect Geist's surface; use DropdownMenu directly when you need the Radix tree.
  */
-export * from "./menu";
 export * from "./menubar";
-export * from "./mesh-gradient-bg";
 // Streaming-aware markdown renderer for AI responses. Wraps Streamdown with
 // our prose tokens — single source-of-truth for chat text rendering.
 export * from "./message-content";
@@ -334,17 +315,12 @@ export * from "./middle-truncate";
  *   </Modal.Modal>
  * Use Dialog directly when you need the lower-level Radix-style tree.
  */
-export * from "./modal";
-export * from "./multi-select";
 export * from "./multiple-selector";
 export * from "./navigation-menu";
 export { navigationMenuTriggerStyle } from "./navigation-menu-variants";
-export * from "./neuro-noise-bg";
 export * from "./noise-pattern-card";
-export * from "./note";
 export * from "./notification-message-list";
 export * from "./pagination";
-export * from "./pagination-control";
 export * from "./popover";
 /**
  * @registry https://ui.nebutra.com/r/pricing-card.json
@@ -379,7 +355,6 @@ export * from "./reaction-chip";
  */
 export * from "./relative-time-card";
 export * from "./resizable";
-export * from "./responsive";
 export * from "./safari";
 export * from "./scroll-velocity";
 export * from "./scroller";
@@ -409,7 +384,6 @@ export * from "./show-more";
 export * from "./skeleton";
 export * from "./slider";
 export * from "./slider-number-flow";
-export * from "./spacing";
 export * from "./spinner";
 export * from "./split-button";
 export * from "./stack";
@@ -473,11 +447,9 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
-export * from "./upgrade-banner";
 export * from "./video-player";
 export * from "./video-text";
 export * from "./warp-background";
 export * from "./wave-animation";
-export * from "./waves-bg";
 export * from "./word-fade-in";
 export * from "./x-post-card";

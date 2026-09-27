@@ -14,6 +14,8 @@ export interface CliOptions {
   json?: boolean;
   color?: boolean;
   help?: boolean;
+  /** Sailor Studio preset code, or a design-language id. */
+  preset?: string;
 }
 
 export type JsonEvent = {

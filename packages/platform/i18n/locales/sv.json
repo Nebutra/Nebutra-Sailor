@@ -931,88 +931,11 @@
         "title": "Tema",
         "description": "Använd ljust, mörkt eller följ systemets inställning."
       },
-      "themePreset": {
-        "title": "Temamall",
-        "description": "Tillämpa ett tema från Theme Playground i hela appen. Kontrollerna nedan lagras ovanpå för finjustering.",
-        "search": "Sök teman…",
-        "searchLabel": "Sök teman",
-        "default": "Standard",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktivt",
-        "empty": "Inga teman matchar din sökning.",
-        "count": "{count} teman"
-      },
-      "themeEditor": {
-        "title": "Tema",
-        "description": "Välj en mall, importera en DESIGN.md och finjustera sedan token nedan.",
-        "selectLabel": "Temamall",
-        "import": "Importera",
-        "copy": "Kopiera tema",
-        "copied": "Kopierat",
-        "copyError": "Kopiering misslyckades",
-        "custom": "Anpassat"
-      },
-      "designMd": {
-        "title": "Importera DESIGN.md",
-        "description": "Klistra in eller ladda upp en DESIGN.md för att tillämpa dess färger, radie, typsnitt, avstånd och skuggor i hela appen — sparas över omladdningar.",
-        "applied": "Tillämpad:",
-        "remove": "Ta bort"
-      },
       "themeMode": {
         "label": "Temaläge",
         "light": "Ljust",
         "dark": "Mörkt",
         "system": "System"
-      },
-      "accent": {
-        "title": "Accentfärg",
-        "description": "Välj en varumärkesaccent som färgar aktiva tillstånd i hela appen.",
-        "label": "Accentfärg",
-        "options": {
-          "default": "Standard",
-          "blue": "Blå",
-          "cyan": "Cyan",
-          "violet": "Violett",
-          "pink": "Rosa",
-          "amber": "Amber",
-          "green": "Grön",
-          "red": "Röd"
-        }
-      },
-      "colors": {
-        "title": "Färger",
-        "description": "Accent, bakgrund och förgrund.",
-        "background": {
-          "label": "Bakgrund",
-          "description": "Åsidosätt bakgrundsfärgen för ytor."
-        },
-        "foreground": {
-          "label": "Förgrund",
-          "description": "Åsidosätt textfärgen i brödtexten."
-        },
-        "resetToDefault": "Återställ till standard"
-      },
-      "fontFamily": {
-        "uiLabel": "UI-typsnitt",
-        "uiDescription": "Typsnittsfamilj som används i hela gränssnittet.",
-        "codeLabel": "Kodtypsnitt",
-        "codeDescription": "Typsnittsfamilj som används för kodytor.",
-        "options": {
-          "ui": {
-            "theme": "Tema standard",
-            "system": "System",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Tema standard",
-            "system": "System mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Använd pekare",
@@ -1049,14 +972,6 @@
         "label": "Rörelseinställning",
         "system": "System",
         "on": "På"
-      },
-      "surface": {
-        "title": "Genomskinlig sidofält",
-        "description": "Tillämpa ett genomskinligt material på sidofältet."
-      },
-      "transparency": {
-        "label": "Genomskinlig sidofält",
-        "description": "Tillämpa ett genomskinligt material på sidofältet."
       }
     }
   },

@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import type { ReactNode } from "react";
 import { AnimateIn } from "./AnimateIn";
 import { AI_SHOWCASE_ROWS } from "./features/glyphs/ai-showcase.generated";
@@ -24,7 +25,7 @@ const app = new Hono()
 
     const result = streamText({
       model: openai(model ?? "${SAMPLE_MODEL}"),
-      system: "You are Nebutra Intelligence...",
+      system: "You are ${brand.name}'s assistant...",
       messages,
       tools: {
         searchDocs: {
@@ -129,7 +130,7 @@ export function HeroMockupWindow() {
             <div className="size-3 rounded-full bg-[#27c93f] shadow-sm" />
           </div>
           <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 text-[12px] font-semibold tracking-wide text-muted-foreground/70 sm:block">
-            nebutra-sailor: Code
+            {brand.name.toLowerCase()}: Code
           </div>
           <div className="w-12" /> {/* Spacer */}
         </div>

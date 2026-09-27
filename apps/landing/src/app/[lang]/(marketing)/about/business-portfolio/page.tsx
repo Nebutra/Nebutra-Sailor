@@ -3,7 +3,6 @@ import { AnimateIn } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
@@ -113,9 +112,7 @@ export default async function BusinessPortfolioPage({
   const totalCount = stats.reduce((sum, s) => sum + s.count, 0);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
-      <Navbar />
-
+    <main id="main-content" className="flex flex-col flex-1 bg-background">
       {/* ─── Section 1 · Hero ─────────────────────────────────────────────── */}
       <section className="pt-32 md:pt-48 pb-20 md:pb-24 border-b border-border/50">
         <div className="container mx-auto px-4 max-w-wide">
@@ -346,8 +343,6 @@ export default async function BusinessPortfolioPage({
           </Button>
         </div>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

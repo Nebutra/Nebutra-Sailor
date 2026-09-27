@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/project.css"; /* this project's look (Sailor Studio preset) */
 @import "@nebutra/tokens/skins/cosmos.css";
 
 @source "../**/*.{ts,tsx}";

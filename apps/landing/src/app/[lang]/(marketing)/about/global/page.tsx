@@ -1,7 +1,6 @@
 import { ArrowRight } from "@nebutra/icons";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { AnimateIn, AnimateInGroup } from "@/components/landing/AnimateIn";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -184,9 +183,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
   setRequestLocale(lang as Locale);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
-      <Navbar />
-
+    <main id="main-content" className="flex flex-col flex-1 bg-background">
       {/* 1. Hero — Day 1 Global */}
       <section className="relative pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
         <AuroraBackground variant="subtle" />
@@ -458,8 +455,6 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
           </AnimateIn>
         </div>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

@@ -58,7 +58,7 @@ function renderWithQueryClient(ui: ReactNode, client = createQueryClient()) {
 function commentsUi() {
   return (
     <BlogComments
-      appUrl="https://app.nebutra.com"
+      appUrl="https://app.example.com"
       language="en"
       labels={labels}
       slug="query-cache"

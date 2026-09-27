@@ -40,16 +40,26 @@ export const lineHeights = {
  * Semantic text styles — legacy aliases (kept for backward compat)
  * Prefer the named scale below for new code.
  */
+/**
+ * Headings read the House heading voice (DM Sans at --font-weight-heading, 500 —
+ * decided 2026-09-25) instead of naming a weight. These used to say font-bold,
+ * which beat base.css's `:where(h1…h6)` rule and put a 700 display on every
+ * page that used <Heading display> — the heavy "generated landing page" look.
+ * Line height and tracking come from the type scale (`--text-*--line-height`,
+ * `--text-*--letter-spacing`), so none is named here.
+ */
+const HEADING_VOICE = "font-heading [font-weight:var(--font-weight-heading,500)] text-balance";
+
 export const textStyles = {
   // Display styles (Hero headlines)
-  "display-1": "text-5xl md:text-6xl lg:text-7xl font-bold leading-tight",
-  "display-2": "text-4xl md:text-5xl font-bold leading-tight",
+  "display-1": `text-5xl md:text-6xl lg:text-7xl ${HEADING_VOICE}`,
+  "display-2": `text-4xl md:text-5xl ${HEADING_VOICE}`,
 
   // Heading styles
-  "heading-1": "text-3xl md:text-4xl font-bold leading-tight",
-  "heading-2": "text-2xl md:text-3xl font-semibold leading-snug",
-  "heading-3": "text-xl md:text-2xl font-semibold leading-snug",
-  "heading-4": "text-lg md:text-xl font-semibold leading-normal",
+  "heading-1": `text-3xl md:text-4xl ${HEADING_VOICE}`,
+  "heading-2": `text-2xl md:text-3xl ${HEADING_VOICE}`,
+  "heading-3": `text-xl md:text-2xl ${HEADING_VOICE}`,
+  "heading-4": `text-lg md:text-xl ${HEADING_VOICE}`,
 
   // Body styles
   "body-lg": "text-lg leading-relaxed",

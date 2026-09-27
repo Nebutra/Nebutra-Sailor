@@ -7,7 +7,7 @@
  * Switch: document.documentElement.dataset.brand = "vanta" | "linear" | ...
  * Factory: delete dataset.brand (or clearLanguage() / applyLanguage("factory")).
  *
- * Languages: cosmos, gsap, linear, notion, raycast, stripe, vanta, vercel
+ * Languages: cosmos, gsap, linear, nebutra-site, notion, raycast, stripe, vanta, vercel
  */
 
 /**
@@ -652,6 +652,156 @@ html.dark[data-brand="linear"] {
   --neutral-10: color-mix(in oklab, hsl(218 5% 41%) 75%, hsl(223 9% 15%));
   --neutral-11: hsl(218 5% 41%);
   --neutral-12: hsl(0 0% 100%);
+}
+
+/**
+ * Brand carrier skin: Nebutra Site (nebutra-site) v0.3.0
+ * darkDefault=true dualMode=false button=solid
+ * fonts=0 mode=global
+ * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
+ */
+
+html[data-brand="nebutra-site"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 210 11.1% 3.5%;
+  --role-canvas-fg: 180 6.7% 97.1%;
+  --role-surface: 210 6.2% 6.3%;
+  --role-surface-fg: 180 6.7% 97.1%;
+  --role-action: 180 6.7% 97.1%;
+  --role-action-fg: 210 11.1% 3.5%;
+  --role-quiet: 210 4.3% 9%;
+  --role-quiet-fg: 218 20.5% 84.7%;
+  --role-muted: 210 4.3% 9%;
+  --role-muted-fg: 219 6.4% 56.9%;
+  --role-border: 210 3.4% 11.4%;
+  --role-input: 210 3.4% 11.4%;
+  --role-ring: 223 87.3% 69%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 210 11.1% 3.5%;
+  --foreground: 180 6.7% 97.1%;
+  --card: 210 6.2% 6.3%;
+  --card-foreground: 180 6.7% 97.1%;
+  --popover: 210 6.2% 6.3%;
+  --popover-foreground: 180 6.7% 97.1%;
+  --primary: 180 6.7% 97.1%;
+  --primary-foreground: 210 11.1% 3.5%;
+  --secondary: 210 4.3% 9%;
+  --secondary-foreground: 218 20.5% 84.7%;
+  --muted: 210 4.3% 9%;
+  --muted-foreground: 219 6.4% 56.9%;
+  --accent: 210 4.3% 9%;
+  --accent-foreground: 218 20.5% 84.7%;
+  --destructive: 0 79% 63%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 3.4% 11.4%;
+  --input: 210 3.4% 11.4%;
+  --ring: 223 87.3% 69%;
+  --success: 134 62% 40%;
+  --success-foreground: 0 0% 100%;
+  --info: 223 87.3% 69%;
+  --info-foreground: 210 11.1% 3.5%;
+  --sidebar: 210 6.2% 6.3%;
+  --sidebar-foreground: 180 6.7% 97.1%;
+  --sidebar-primary: 180 6.7% 97.1%;
+  --sidebar-primary-foreground: 210 11.1% 3.5%;
+  --sidebar-accent: 210 4.3% 9%;
+  --sidebar-accent-foreground: 218 20.5% 84.7%;
+  --sidebar-border: 210 3.4% 11.4%;
+  --sidebar-ring: 223 87.3% 69%;
+  --brand-primary: hsl(180 6.7% 97.1%);
+  --brand-accent: hsl(180 6.7% 97.1%);
+  --brand-accent-foreground: hsl(210 11.1% 3.5%);
+  --brand-tertiary: hsl(180 6.7% 97.1%);
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(210 11.1% 3.5%);
+  --neutral-2: hsl(210 6.2% 6.3%);
+  --neutral-3: color-mix(in oklab, hsl(210 3.4% 11.4%) 20%, hsl(210 6.2% 6.3%));
+  --neutral-4: color-mix(in oklab, hsl(210 3.4% 11.4%) 40%, hsl(210 6.2% 6.3%));
+  --neutral-5: color-mix(in oklab, hsl(210 3.4% 11.4%) 60%, hsl(210 6.2% 6.3%));
+  --neutral-6: color-mix(in oklab, hsl(210 3.4% 11.4%) 80%, hsl(210 6.2% 6.3%));
+  --neutral-7: hsl(210 3.4% 11.4%);
+  --neutral-8: color-mix(in oklab, hsl(219 6.4% 56.9%) 25%, hsl(210 3.4% 11.4%));
+  --neutral-9: color-mix(in oklab, hsl(219 6.4% 56.9%) 50%, hsl(210 3.4% 11.4%));
+  --neutral-10: color-mix(in oklab, hsl(219 6.4% 56.9%) 75%, hsl(210 3.4% 11.4%));
+  --neutral-11: hsl(219 6.4% 56.9%);
+  --neutral-12: hsl(180 6.7% 97.1%);
+
+  /* Recipe (action language + free elev/radii) */
+  /* Shape slots */
+  --btn-default-radius: 8px;
+  --radius-button: 8px;
+  --radius-buttons: 8px;
+  --radius-md: min(8px, 12px);
+  --radius-card: 12px;
+  --radius-lg: 12px;
+  --radius-badge: 9999px;
+  --badge-default-radius: 9999px;
+  --radius-inputs: 8px;
+  --input-radius: 8px;
+  --radius-pill: 9999px;
+
+  /* Free elevation (carrier-provided CSS shadows) */
+  --elevation-card: 0 0 #0000;
+  --elevation-control: 0 0 #0000;
+  --elevation-raised: 0 24px 64px -32px rgb(0 0 0 / 0.8);
+  --elevation-xs: 0 0 #0000;
+  --elevation-sm: 0 0 #0000;
+  --elevation-md: 0 24px 64px -32px rgb(0 0 0 / 0.8);
+  --elevation-lg: 0 24px 64px -32px rgb(0 0 0 / 0.8);
+  --btn-default-shadow: 0 0 #0000;
+  --btn-default-bg: hsl(var(--primary));
+  --btn-default-fg: hsl(var(--primary-foreground));
+  --btn-default-border-width: 0px;
+  --btn-default-border: transparent;
+  --btn-default-stroke-gradient: linear-gradient(transparent, transparent);
+  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
+  --badge-default-bg: hsl(var(--secondary));
+  --badge-default-fg: hsl(var(--secondary-foreground));
+  --badge-default-border: transparent;
+  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), "Geist", "MiSans", ui-sans-serif, system-ui, sans-serif;
+  --font-cn: var(--font-geist-sans), "Geist", "MiSans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-reg-dm-sans), "DM Sans", "MiSans", ui-sans-serif, sans-serif;
+  --font-display: var(--font-reg-dm-sans), "DM Sans", "MiSans", ui-sans-serif, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+  --font-weight-heading: 500;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 80ms;
+  --motion-duration-micro: 80ms;
+  --duration-flow: 160ms;
+  --motion-duration-flow: 160ms;
+  --duration-reveal: 240ms;
+  --motion-duration-reveal: 240ms;
+  --duration-cinematic: 400ms;
+  --motion-duration-cinematic: 400ms;
+
+  /* Spacing */
+  --space-source-xs: 0.5rem;
+  --space-source-sm: 0.75rem;
+  --space-source-md: 1rem;
+  --space-source-lg: 1.5rem;
+  --space-source-xl: 2rem;
+  --space-source-2xl: 3rem;
+
+  /* Taxonomy / decorative (not product CTA) */
+  --brand-decorative-signature: linear-gradient(
+    120deg,
+    hsl(223 87.3% 69%) 0%,
+    hsl(168 91.3% 49.4%) 100%
+  );
 }
 
 /**

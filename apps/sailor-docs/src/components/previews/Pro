@@ -1,6 +1,0 @@
-description="Get started now"
-        value="pro"
-      />
-    </ChoiceboxGroup>
-  );
-}

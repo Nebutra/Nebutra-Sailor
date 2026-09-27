@@ -5,10 +5,10 @@ import { routing } from "@/i18n/routing";
  * Paths that must never mount Google One Tap.
  *
  * - `/refer` — waitlist handoff must not steal focus / conflict with invite flow
- * - `/status` — public trust surface (also served on status.nebutra.com). One Tap
+ * - `/status` — public trust surface (also served on the status subdomain). One Tap
  *   here looked like "status requires login" and still pointed some clients at
  *   the legacy app `/dashboard` dead-end after auth.
- * - `/open` — developer catalog (also served on open.nebutra.com). One Tap here
+ * - `/open` — developer catalog (also served on the open subdomain). One Tap here
  *   reads as "the platform requires Google" before the visitor chose a console.
  */
 const oneTapSuppressedPaths = new Set(["/refer", "/status", "/open"]);

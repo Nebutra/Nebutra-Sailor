@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { InteractiveChangelog, type Release } from "@/components/landing/InteractiveChangelog";
 import { type Locale, routing } from "@/i18n/routing";
 import { STATIC_CHANGELOG_RELEASES } from "@/lib/changelog-releases";
@@ -203,9 +202,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
       });
 
   return (
-    <main id="main-content" className="min-h-dvh bg-background">
-      <Navbar forceDarkTheme />
-
+    <main id="main-content" className="flex-1 bg-background">
       <InteractiveChangelog releases={mappedReleases} />
 
       <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
@@ -238,8 +235,6 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           </p>
         </AnimateIn>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

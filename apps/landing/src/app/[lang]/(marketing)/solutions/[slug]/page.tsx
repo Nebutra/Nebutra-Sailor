@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
+import { FinalCTA } from "@/components/landing";
 import { ChinaVcSolution } from "@/components/landing/solutions/china-vc/ChinaVcSolution";
 import { GlobalVcSolution } from "@/components/landing/solutions/global-vc/GlobalVcSolution";
 import { SolutionPage } from "@/components/landing/solutions/SolutionPage";
@@ -45,9 +45,8 @@ export default async function SolutionDetailPage({ params }: SolutionDetailPageP
   return (
     <main
       id="main-content"
-      className="relative min-h-dvh overflow-hidden bg-background selection:bg-primary/30"
+      className="relative flex-1 overflow-hidden bg-background selection:bg-primary/30"
     >
-      <Navbar />
       {solution.slug === "china-vc" ? (
         <ChinaVcSolution locale={lang as Locale} />
       ) : solution.slug === "global-vc" ? (
@@ -55,7 +54,7 @@ export default async function SolutionDetailPage({ params }: SolutionDetailPageP
       ) : (
         <SolutionPage solution={solution} locale={lang as Locale} />
       )}
-      <FooterMinimal showFinalCta />
+      <FinalCTA />
     </main>
   );
 }

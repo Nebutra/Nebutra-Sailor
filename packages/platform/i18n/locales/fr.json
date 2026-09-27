@@ -931,88 +931,11 @@
         "title": "Thème",
         "description": "Utilisez clair, sombre ou correspondez à la préférence du système."
       },
-      "themePreset": {
-        "title": "Préset de thème",
-        "description": "Appliquez n'importe quel thème Theme Playground à toute l'application. Les contrôles ci-dessous se superposent pour l'affiner.",
-        "search": "Rechercher des thèmes…",
-        "searchLabel": "Rechercher des thèmes",
-        "default": "Défaut",
-        "defaultMood": "Palette de base Nebutra",
-        "active": "Actif",
-        "empty": "Aucun thème ne correspond à votre recherche.",
-        "count": "{count} thèmes"
-      },
-      "themeEditor": {
-        "title": "Thème",
-        "description": "Choisissez un préset, importez un DESIGN.md, puis affinez les jetons ci-dessous.",
-        "selectLabel": "Préset de thème",
-        "import": "Importer",
-        "copy": "Copier le thème",
-        "copied": "Copié",
-        "copyError": "La copie a échoué",
-        "custom": "Personnalisé"
-      },
-      "designMd": {
-        "title": "Importer DESIGN.md",
-        "description": "Collez ou téléchargez un DESIGN.md pour appliquer ses couleurs, rayon, polices, espacement et ombres à l'application entière — persisté entre les rechargements.",
-        "applied": "Appliqué:",
-        "remove": "Supprimer"
-      },
       "themeMode": {
         "label": "Mode de thème",
         "light": "Clair",
         "dark": "Sombre",
         "system": "Système"
-      },
-      "accent": {
-        "title": "Couleur d'accentuation",
-        "description": "Choisissez une accentuation de marque qui tinte les états actifs dans l'application.",
-        "label": "Couleur d'accentuation",
-        "options": {
-          "default": "Défaut",
-          "blue": "Bleu",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Rose",
-          "amber": "Ambre",
-          "green": "Vert",
-          "red": "Rouge"
-        }
-      },
-      "colors": {
-        "title": "Couleurs",
-        "description": "Accentuation, arrière-plan et premier plan.",
-        "background": {
-          "label": "Arrière-plan",
-          "description": "Remplacez la couleur d'arrière-plan de la surface."
-        },
-        "foreground": {
-          "label": "Premier plan",
-          "description": "Remplacez la couleur du texte du corps."
-        },
-        "resetToDefault": "Réinitialiser par défaut"
-      },
-      "fontFamily": {
-        "uiLabel": "Police d'interface",
-        "uiDescription": "Famille de polices utilisée dans l'interface utilisateur.",
-        "codeLabel": "Police de code",
-        "codeDescription": "Famille de polices utilisée pour les surfaces de code.",
-        "options": {
-          "ui": {
-            "theme": "Défaut du thème",
-            "system": "Système",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Défaut du thème",
-            "system": "Système mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Utiliser le curseur pointeur",
@@ -1049,14 +972,6 @@
         "label": "Préférence de mouvement",
         "system": "Système",
         "on": "Activé"
-      },
-      "surface": {
-        "title": "Barre latérale translucide",
-        "description": "Appliquez un matériau translucide à la barre latérale."
-      },
-      "transparency": {
-        "label": "Barre latérale translucide",
-        "description": "Appliquez un matériau translucide à la barre latérale."
       }
     }
   },

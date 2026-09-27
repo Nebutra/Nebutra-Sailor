@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
+import { FinalCTA } from "@/components/landing";
 import { VcProfile } from "@/components/landing/solutions/vc/VcProfile";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
@@ -42,8 +42,7 @@ export default async function GlobalVcProfilePage({ params }: Props) {
   const similar = similarVcs(raw, GLOBAL_VC_ORGS).map((o) => ({ ...o, logo: globalVcLogoFor(o) }));
 
   return (
-    <main id="main-content" className="relative min-h-dvh overflow-hidden bg-background">
-      <Navbar />
+    <main id="main-content" className="relative flex-1 overflow-hidden bg-background">
       <VcProfile
         org={org}
         similar={similar}
@@ -52,7 +51,7 @@ export default async function GlobalVcProfilePage({ params }: Props) {
         hrefBase="/solutions/global-vc"
         variant="global"
       />
-      <FooterMinimal showFinalCta />
+      <FinalCTA />
     </main>
   );
 }

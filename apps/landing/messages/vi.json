@@ -131,8 +131,8 @@
     "columns": {
       "product": "Sản phẩm",
       "resources": "Tài nguyên",
-      "legal": "Pháp lý",
-      "community": "Cộng đồng"
+      "company": "Công ty",
+      "legal": "Pháp lý"
     },
     "links": {
       "product": "Sản phẩm",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Bảo lưu mọi quyền.",
+    "copyright": "© 2026 {companyLegalEn} · Bảo lưu mọi quyền.",
     "fontCredit": "Phông chữ tiếng Trung: MiSans (Xiaomi)",
     "statusOnline": "Tất cả hệ thống hoạt động bình thường",
     "newsletterTitle": "Cập nhật tin tức",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "CẤU TRÚC TURBOREPO",
-    "title": "10 ứng dụng. 112 gói. 4 luồng backend.",
+    "title": "10 ứng dụng. 111 gói. 4 luồng backend.",
     "description": "Mã nguồn chung, xây dựng song song, không trùng lặp. Typing đầu cuối hoàn chỉnh từ cơ sở dữ liệu đến frontend.",
     "metricApps": "ứng dụng",
     "metricBackends": "luồng backend",
@@ -243,7 +243,7 @@
       "ctaButton": "Thiết lập liên lạc"
     },
     "contact": {
-      "title": "Yêu cầu kỹ thuật & thương mại — {brandName} Intelligence",
+      "title": "Yêu cầu kỹ thuật & thương mại — {brandName}",
       "description": "Kênh giao tiếp chuyên dụng cho cấp phép thương mại, tự lưu trữ doanh nghiệp và hỗ trợ kỹ thuật nâng cao.",
       "heading": "Thiết lập kết nối hỗ trợ",
       "subheading": "Chúng tôi sẽ điều động một chuyên gia kỹ thuật hoặc kiến trúc sư chuyên dụng để đánh giá các yêu cầu cụ thể của bạn.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Bạn có thể liên hệ với Cán bộ Bảo vệ Dữ liệu của chúng tôi tại dpo@nebutra.com."
+            "desc": "Bạn có thể liên hệ với Cán bộ Bảo vệ Dữ liệu của chúng tôi tại dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Cách Yêu Cầu Hoàn Tiền",
         "step1": {
           "title": "Bước 1: Liên Hệ Hỗ Trợ",
-          "intro": "Gửi email cho chúng tôi tại billing@nebutra.com với nội dung:",
+          "intro": "Gửi email cho chúng tôi tại billing@{domain} với nội dung:",
           "items": {
             "0": "Địa chỉ email tài khoản của bạn",
             "1": "Gói đăng ký và chu kỳ thanh toán",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Trả lời email quyết định kèm thông tin bổ sung",
           "1": "Yêu cầu chuyển lên cấp quản lý",
-          "2": "Liên hệ chúng tôi qua legal@nebutra.com để xem xét thêm"
+          "2": "Liên hệ chúng tôi qua legal@{domain} để xem xét thêm"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Giải quyết tranh chấp",
         "informal": {
           "title": "10.1 Giải quyết không chính thức",
-          "content": "Trước khi khởi động thủ tục chính thức, bạn đồng ý liên hệ với chúng tôi qua legal@nebutra.com để cố gắng giải quyết tranh chấp một cách không chính thức."
+          "content": "Trước khi khởi động thủ tục chính thức, bạn đồng ý liên hệ với chúng tôi qua legal@{domain} để cố gắng giải quyết tranh chấp một cách không chính thức."
         },
         "governingLaw": {
           "title": "10.2 Luật điều chỉnh",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Bắt đầu ngay",
       "title": "Dừng cấu hình. Bắt đầu xây dựng.",
       "description": "Khởi tạo kiến trúc SaaS có thể mở rộng cục bộ với CLI {brandName}.",
-      "button": "Triển khai kiến trúc",
       "license": "Mã nguồn mở theo giấy phép FSL-1.1-ALv2. Không yêu cầu thẻ tín dụng."
     },
     "capability": {

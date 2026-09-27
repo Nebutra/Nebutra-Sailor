@@ -9,7 +9,6 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -70,8 +69,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
 
   return (
     <Suspense>
-      <main id="main-content" className="flex flex-col min-h-dvh bg-background">
-        <Navbar />
+      <main id="main-content" className="flex flex-col flex-1 bg-background">
         <section className="container mx-auto max-w-wide px-4 py-32">
           <AnimateIn preset="emerge" className="mb-16 max-w-4xl">
             <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
@@ -135,7 +133,6 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
             ))}
           </div>
         </section>
-        <FooterMinimal />
       </main>
     </Suspense>
   );

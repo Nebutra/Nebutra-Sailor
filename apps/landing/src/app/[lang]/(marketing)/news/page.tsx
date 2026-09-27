@@ -14,7 +14,6 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { NewsArchive, type NewsArchiveItem } from "@/components/landing/news-archive";
 import {
   NewsFeatured,
@@ -166,9 +165,7 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
   const railSlides = posts.slice(0, 6).map((post) => toRailSlide(post, lang));
 
   return (
-    <main id="main-content" className="min-h-dvh bg-background">
-      <Navbar />
-
+    <main id="main-content" className="flex-1 bg-background">
       <div className="mx-auto max-w-wide px-4 pt-16 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
           <NewsroomHero contactHref={contactHref} rssHref={rssHref} isZh={isZh} />
@@ -201,15 +198,13 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
           </AnimateIn>
         )}
       </div>
-
-      <FooterMinimal />
     </main>
   );
 }
 
 function NewsPageSkeleton() {
   return (
-    <main id="main-content" className="min-h-dvh bg-background" aria-busy="true">
+    <main id="main-content" className="flex-1 bg-background" aria-busy="true">
       <div className="mx-auto flex max-w-wide items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
         <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">

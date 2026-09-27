@@ -931,88 +931,11 @@
         "title": "Thema",
         "description": "Gebruik licht, donker of volg de systeemvoorkeur."
       },
-      "themePreset": {
-        "title": "Themapreset",
-        "description": "Pas een thema uit Theme Playground toe op de hele app. De onderstaande instellingen kunnen worden gebruikt om het verder aan te passen.",
-        "search": "Thema's zoeken…",
-        "searchLabel": "Thema's zoeken",
-        "default": "Standaard",
-        "defaultMood": "Nebutra base palette",
-        "active": "Actief",
-        "empty": "Geen thema's gevonden die overeenkomen met uw zoekopdracht.",
-        "count": "{count} thema's"
-      },
-      "themeEditor": {
-        "title": "Thema",
-        "description": "Kies een preset, importeer een DESIGN.md en pas de tokens hieronder verder aan.",
-        "selectLabel": "Themapreset",
-        "import": "Importeren",
-        "copy": "Thema kopiëren",
-        "copied": "Gekopieerd",
-        "copyError": "Kopiëren mislukt",
-        "custom": "Aangepast"
-      },
-      "designMd": {
-        "title": "DESIGN.md importeren",
-        "description": "Plak of upload een DESIGN.md om de kleuren, radius, lettertypen, opmaak en schaduwen over de hele app toe te passen — dit blijft behouden na herladen.",
-        "applied": "Toegepast:",
-        "remove": "Verwijderen"
-      },
       "themeMode": {
         "label": "Themamodus",
         "light": "Licht",
         "dark": "Donker",
         "system": "Systeem"
-      },
-      "accent": {
-        "title": "Accentkleur",
-        "description": "Kies een merkaccent dat actieve statussen in de hele app een tint geeft.",
-        "label": "Accentkleur",
-        "options": {
-          "default": "Standaard",
-          "blue": "Blauw",
-          "cyan": "Cyaan",
-          "violet": "Violet",
-          "pink": "Roze",
-          "amber": "Amber",
-          "green": "Groen",
-          "red": "Rood"
-        }
-      },
-      "colors": {
-        "title": "Kleuren",
-        "description": "Accent, achtergrond en voorgrond.",
-        "background": {
-          "label": "Achtergrond",
-          "description": "Overschrijf de achtergrondkleur van het oppervlak."
-        },
-        "foreground": {
-          "label": "Voorgrond",
-          "description": "Overschrijf de tekstkleur van de inhoud."
-        },
-        "resetToDefault": "Terug naar standaard"
-      },
-      "fontFamily": {
-        "uiLabel": "UI-lettertype",
-        "uiDescription": "Lettertype dat in de hele UI wordt gebruikt.",
-        "codeLabel": "Code-lettertype",
-        "codeDescription": "Lettertype dat wordt gebruikt voor code-oppervlakken.",
-        "options": {
-          "ui": {
-            "theme": "Standaard thema",
-            "system": "Systeem",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Standaard thema",
-            "system": "Systeem mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Pointer-cursor gebruiken",
@@ -1049,14 +972,6 @@
         "label": "Voorkeur beweging",
         "system": "Systeem",
         "on": "Aan"
-      },
-      "surface": {
-        "title": "Transparante zijbalk",
-        "description": "Pas een transparant materiaal toe op de zijbalk."
-      },
-      "transparency": {
-        "label": "Transparante zijbalk",
-        "description": "Pas een transparant materiaal toe on de zijbalk."
       }
     }
   },

@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { ArrowRight } from "@nebutra/icons";
 import {
   TreeExpander,
@@ -246,7 +247,7 @@ export function MonorepoFileTree() {
                 className="truncate font-sans font-medium text-[12px] text-muted-foreground"
                 translate="no"
               >
-                nebutra-sailor / Project Explorer / packages
+                {brand.name.toLowerCase()} / Project Explorer / packages
               </span>
             </div>
           </div>

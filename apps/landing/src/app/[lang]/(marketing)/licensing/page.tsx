@@ -7,7 +7,6 @@ import Link from "next/link";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
 import { getExchangeRate } from "@/lib/pricing/exchange-rates";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -123,10 +122,8 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
   return (
     <main
       id="main-content"
-      className="min-h-dvh bg-background selection:bg-primary/30 relative overflow-hidden"
+      className="flex-1 bg-background selection:bg-primary/30 relative overflow-hidden"
     >
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative mx-auto max-w-4xl px-4 pt-32 pb-20 text-center sm:px-6 lg:px-8 mt-16">
         <AuroraBackground variant="subtle" />
@@ -421,8 +418,6 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
           </div>
         </div>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

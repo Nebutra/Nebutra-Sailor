@@ -931,88 +931,11 @@
         "title": "테마",
         "description": "밝음, 어두움 또는 시스템 설정과 일치합니다."
       },
-      "themePreset": {
-        "title": "테마 프리셋",
-        "description": "Theme Playground의 모든 테마를 전체 앱에 적용합니다. 아래의 컨트롤이 이를 통해 세밀하게 조정됩니다.",
-        "search": "테마 검색…",
-        "searchLabel": "테마 검색",
-        "default": "기본",
-        "defaultMood": "Nebutra 기본 팔레트",
-        "active": "활성",
-        "empty": "검색 결과가 없습니다.",
-        "count": "{count}개 테마"
-      },
-      "themeEditor": {
-        "title": "테마",
-        "description": "프리셋을 선택하고 DESIGN.md를 가져온 후 아래의 토큰을 세밀하게 조정합니다.",
-        "selectLabel": "테마 프리셋",
-        "import": "가져오기",
-        "copy": "테마 복사",
-        "copied": "복사됨",
-        "copyError": "복사 실패",
-        "custom": "사용자 정의"
-      },
-      "designMd": {
-        "title": "DESIGN.md 가져오기",
-        "description": "DESIGN.md를 붙여넣거나 업로드하여 색상, 반경, 글꼴, 간격 및 그림자를 전체 앱에 적용하고 재로드 후에도 유지합니다.",
-        "applied": "적용됨:",
-        "remove": "제거"
-      },
       "themeMode": {
         "label": "테마 모드",
         "light": "밝음",
         "dark": "어두움",
         "system": "시스템"
-      },
-      "accent": {
-        "title": "강조색",
-        "description": "앱 전체의 활성 상태에 색상을 입히는 브랜드 강조색을 선택합니다.",
-        "label": "강조색",
-        "options": {
-          "default": "기본",
-          "blue": "파란색",
-          "cyan": "시안",
-          "violet": "보라색",
-          "pink": "분홍색",
-          "amber": "호박색",
-          "green": "녹색",
-          "red": "빨간색"
-        }
-      },
-      "colors": {
-        "title": "색상",
-        "description": "강조, 배경 및 전경.",
-        "background": {
-          "label": "배경",
-          "description": "표면 배경색을 재정의합니다."
-        },
-        "foreground": {
-          "label": "전경",
-          "description": "본문 텍스트 색을 재정의합니다."
-        },
-        "resetToDefault": "기본값으로 재설정"
-      },
-      "fontFamily": {
-        "uiLabel": "UI 글꼴",
-        "uiDescription": "UI 전체에서 사용되는 글꼴 모음입니다.",
-        "codeLabel": "코드 글꼴",
-        "codeDescription": "코드 표면에서 사용되는 글꼴 모음입니다.",
-        "options": {
-          "ui": {
-            "theme": "테마 기본",
-            "system": "시스템",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "테마 기본",
-            "system": "시스템 모노",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "포인터 커서 사용",
@@ -1049,14 +972,6 @@
         "label": "동작 설정",
         "system": "시스템",
         "on": "켜짐"
-      },
-      "surface": {
-        "title": "반투명 사이드바",
-        "description": "사이드바에 반투명 재료를 적용합니다."
-      },
-      "transparency": {
-        "label": "반투명 사이드바",
-        "description": "사이드바에 반투명 재료를 적용합니다."
       }
     }
   },

@@ -57,7 +57,7 @@ const languages = [
     brandPath: null,
     skinPath: null,
     install: {
-      command: "nebutra theme use factory",
+      command: "nebutra apply --preset factory",
       cssImport: null,
     },
     compatibility,
@@ -71,8 +71,14 @@ const brandIds = readdirSync(brandsDir, { withFileTypes: true })
 
 const langMeta = meta.languages ?? {};
 const missingMeta = [];
+/** Brand packages that are languages; `catalog: false` marks a site skin. */
+const catalogIds = brandIds.filter((id) => langMeta[id]?.catalog !== false);
 
 for (const id of brandIds) {
+  // A site skin, not a language anyone picks: its CSS is still emitted (by
+  // sync-skins) for the one surface that wears it, but it stays out of the
+  // catalog, the switchers and the template's picker.
+  if (langMeta[id]?.catalog === false) continue;
   const brandPath = join(brandsDir, id, "brand.json");
   if (!existsSync(brandPath)) {
     process.stderr.write(`warn: brands/${id} has no brand.json — skip\n`);
@@ -95,7 +101,7 @@ for (const id of brandIds) {
     brandPath: `brands/${id}/brand.json`,
     skinPath: `skins/${id}.css`,
     install: {
-      command: `nebutra theme use ${id}`,
+      command: `nebutra apply --preset ${id}`,
       cssImport: `@nebutra/tokens/skins/${id}.css`,
     },
     compatibility,
@@ -128,11 +134,11 @@ const registry = {
 writeFileSync(languagesOut, `${JSON.stringify(registry, null, 2)}\n`);
 
 // ── built-in-packages.generated.ts ───────────────────────────────────────────
-const importLines = brandIds.map(
+const importLines = catalogIds.map(
   (id) =>
     `import ${safeIdent(id)} from "@nebutra/tokens/brands/${id}/brand.json" with { type: "json" };`,
 );
-const mapEntries = brandIds.map(
+const mapEntries = catalogIds.map(
   (id) => `  ${JSON.stringify(id)}: ${safeIdent(id)} as BrandPackage,`,
 );
 
@@ -174,7 +180,7 @@ formatGenerated(languagesOut, builtInOut);
 
 process.stdout.write(
   `sync-languages:\n` +
-    `  languages.json: ${languages.length} languages (${brandIds.length} skins + factory)\n` +
+    `  languages.json: ${languages.length} languages (${catalogIds.length} skins + factory)\n` +
     `  built-in-packages.generated.ts: ${brandIds.length} packages\n`,
 );
 

@@ -107,6 +107,55 @@ const ASPECT_RATIOS: Record<LogoVariant, number> = {
 };
 
 /**
+ * A brand with no logo files yet (`brand.logo === "wordmark"`, what brand:init
+ * sets) shows its name in the heading face. currentColor, so it follows the
+ * surface in both themes the way the SVGs do with `inverted`.
+ */
+function TextWordmark({ height, className }: { height: number; className?: string | undefined }) {
+  return (
+    <span
+      className={className}
+      style={{
+        display: "inline-block",
+        fontFamily: "var(--font-heading, inherit)",
+        fontWeight: 500,
+        fontSize: Math.round(height * 0.9),
+        lineHeight: 1,
+        letterSpacing: "-0.02em",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {brand.name}
+    </span>
+  );
+}
+
+/** The mark counterpart: the initial in a rounded outline, same rules as TextWordmark. */
+function TextLogomark({ size, className }: { size: number; className?: string | undefined }) {
+  return (
+    <span
+      aria-label={brand.name}
+      role="img"
+      className={className}
+      style={{
+        display: "inline-grid",
+        placeItems: "center",
+        width: size,
+        height: size,
+        borderRadius: Math.round(size * 0.24),
+        border: "1.5px solid currentColor",
+        fontFamily: "var(--font-heading, inherit)",
+        fontWeight: 500,
+        fontSize: Math.round(size * 0.55),
+        lineHeight: 1,
+      }}
+    >
+      {brand.name.charAt(0).toUpperCase()}
+    </span>
+  );
+}
+
+/**
  * Nebutra Logo Component
  *
  * Renders the official Nebutra brand logo from SVG assets (fixed VI fills).
@@ -138,6 +187,7 @@ export function Logo({
 }: LogoProps) {
   const aspectRatio = ASPECT_RATIOS[variant];
   const height = Math.round(size / aspectRatio);
+  if (brand.logo === "wordmark") return <TextWordmark height={height} className={className} />;
   const src = logoPublicSrc(variant, edition);
 
   // For dark backgrounds, invert black to white
@@ -178,6 +228,7 @@ export function Logomark({
   edition?: LogoEdition;
   inverted?: boolean;
 }) {
+  if (brand.logo === "wordmark") return <TextLogomark size={size} className={className} />;
   const src = logoPublicSrc(variant, edition);
 
   // For dark backgrounds, invert black to white (unless using "inverse" variant which is already white)
@@ -217,6 +268,7 @@ export function Wordmark({
 }) {
   const aspectRatio = ASPECT_RATIOS[variant];
   const height = Math.round(size / aspectRatio);
+  if (brand.logo === "wordmark") return <TextWordmark height={height} className={className} />;
   const src = logoPublicSrc(variant, edition);
 
   const filterStyle = inverted ? { filter: "brightness(0) invert(1)" } : {};

@@ -39,7 +39,6 @@ export const RESERVED_SLUGS: ReadonlySet<string> = new Set([
   "settings",
   "startup-os",
   "tenants",
-  "theme-playground",
   "usage",
   "workspace",
   // (auth) routes — the group a hand-written list is most likely to miss,

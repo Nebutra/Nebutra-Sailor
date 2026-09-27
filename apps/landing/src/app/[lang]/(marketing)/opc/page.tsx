@@ -7,7 +7,7 @@ export async function generateMetadata(props: { params: Promise<{ lang: string }
   const { lang } = await props.params;
   setRequestLocale(lang as Locale);
 
-  // `none` scope: this is a redirect stub to /about/products, so the registry
+  // `none` scope: this is a redirect stub to /building, so the registry
   // publishes it in zero locales and buildPageMetadata emits noindex,follow.
   return buildPageMetadata({
     title: "Platform — Nebutra",
@@ -21,6 +21,6 @@ export default async function OPCPage(props: { params: Promise<{ lang: string }>
   const { lang } = await props.params;
   setRequestLocale(lang as Locale);
 
-  const target = lang === "en" ? "/about/products" : `/${lang}/about/products`;
+  const target = lang === "en" ? "/building" : `/${lang}/building`;
   redirect(target);
 }

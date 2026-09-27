@@ -931,88 +931,11 @@
         "title": "ธีม",
         "description": "ใช้ธีมสว่าง มืด หรือให้ตรงกับระบบ"
       },
-      "themePreset": {
-        "title": "ชุดธีม",
-        "description": "ใช้ธีมจาก Theme Playground ทั่วทั้งแอป ควบคุมด้านล่างเพื่อปรับแต่งเพิ่มเติม",
-        "search": "ค้นหาธีม…",
-        "searchLabel": "ค้นหาธีม",
-        "default": "เริ่มต้น",
-        "defaultMood": "Nebutra base palette",
-        "active": "ใช้งานอยู่",
-        "empty": "ไม่พบธีมที่ตรงกับคำค้นหา",
-        "count": "{count} ธีม"
-      },
-      "themeEditor": {
-        "title": "ธีม",
-        "description": "เลือกชุดธีม นำเข้า DESIGN.md แล้วปรับแต่งโทเค็นด้านล่าง",
-        "selectLabel": "ชุดธีม",
-        "import": "นำเข้า",
-        "copy": "คัดลอกธีม",
-        "copied": "คัดลอกแล้ว",
-        "copyError": "คัดลอกไม่สำเร็จ",
-        "custom": "กำหนดเอง"
-      },
-      "designMd": {
-        "title": "นำเข้า DESIGN.md",
-        "description": "วางหรืออัปโหลด DESIGN.md เพื่อใช้สี รัศมี ฟอนต์ ระยะห่าง และเงาทั่วทั้งแอป — จะถูกบันทึกไว้แม้รีโหลด",
-        "applied": "นำไปใช้แล้ว:",
-        "remove": "ลบ"
-      },
       "themeMode": {
         "label": "โหมดธีม",
         "light": "สว่าง",
         "dark": "มืด",
         "system": "ระบบ"
-      },
-      "accent": {
-        "title": "สีเน้น",
-        "description": "เลือกสีเน้นแบรนด์เพื่อเปลี่ยนสีสถานะที่ใช้งานทั่วทั้งแอป",
-        "label": "สีเน้น",
-        "options": {
-          "default": "ค่าเริ่มต้น",
-          "blue": "สีน้ำเงิน",
-          "cyan": "สีฟ้า",
-          "violet": "สีม่วง",
-          "pink": "สีชมพู",
-          "amber": "สีเหลืองอำพัน",
-          "green": "สีเขียว",
-          "red": "สีแดง"
-        }
-      },
-      "colors": {
-        "title": "สี",
-        "description": "สีเน้น สีพื้นหลัง และสีพื้นหน้า",
-        "background": {
-          "label": "พื้นหลัง",
-          "description": "เปลี่ยนสีพื้นหลังของพื้นผิว"
-        },
-        "foreground": {
-          "label": "พื้นหน้า",
-          "description": "เปลี่ยนสีข้อความหลัก"
-        },
-        "resetToDefault": "รีเซ็ตเป็นค่าเริ่มต้น"
-      },
-      "fontFamily": {
-        "uiLabel": "ฟอนต์ UI",
-        "uiDescription": "ตระกูลฟอนต์ที่ใช้ทั่วทั้ง UI",
-        "codeLabel": "ฟอนต์โค้ด",
-        "codeDescription": "ตระกูลฟอนต์ที่ใช้กับพื้นผิวโค้ด",
-        "options": {
-          "ui": {
-            "theme": "ค่าเริ่มต้นของธีม",
-            "system": "ระบบ",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "ค่าเริ่มต้นของธีม",
-            "system": "System mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "ใช้เคอร์เซอร์แบบชี้",
@@ -1049,14 +972,6 @@
         "label": "การตั้งค่าการเคลื่อนไหว",
         "system": "ระบบ",
         "on": "เปิด"
-      },
-      "surface": {
-        "title": "แถบด้านข้างแบบโปร่งแสง",
-        "description": "ใช้วัสดุแบบโปร่งแสงกับแถบด้านข้าง"
-      },
-      "transparency": {
-        "label": "แถบด้านข้างแบบโปร่งแสง",
-        "description": "ใช้วัสดุแบบโปร่งแสงกับแถบด้านข้าง"
       }
     }
   },

@@ -1,0 +1,63 @@
+/*
+ * nebutra.com shell — the few things the Brand Package cannot say by itself.
+ *
+ * `.signature` is the VI decision of 2026-09-27: the blue→cyan gradient as text
+ * fill on one keyword per screen. It reads the package's decorative token, so
+ * the colour lives in brands/nebutra-site/brand.json, not here.
+ */
+html[data-brand="nebutra-site"] .signature {
+  background-image: var(--brand-decorative-signature);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/*
+ * Hero atmosphere. The old landing's video carries the motion; this adds the
+ * signature's two hues as light, not as neon — low alpha, large radius — so
+ * every frame of the video sits in Nebutra's colour.
+ */
+html[data-brand="nebutra-site"] .site-hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 620px at 78% 18%, hsl(223 87.3% 69% / 0.22), transparent 62%),
+    radial-gradient(700px 520px at 96% 62%, hsl(168 91.3% 49.4% / 0.1), transparent 60%);
+}
+html[data-brand="nebutra-site"] .hero-motion-video {
+  opacity: 0.66;
+}
+
+/*
+ * The hero reel: the six live products drift left, one loop per 40s. The list
+ * is rendered twice so the loop has no seam; the second copy is aria-hidden.
+ * Hover pauses it; reduced motion stops it and lets the row scroll by hand.
+ */
+@keyframes site-reel {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+html[data-brand="nebutra-site"] .site-reel-track {
+  animation: site-reel 40s linear infinite;
+}
+html[data-brand="nebutra-site"] .site-reel:hover .site-reel-track {
+  animation-play-state: paused;
+}
+html[data-brand="nebutra-site"] .site-reel {
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-brand="nebutra-site"] .site-reel-track {
+    animation: none;
+  }
+  html[data-brand="nebutra-site"] .site-reel {
+    overflow-x: auto;
+  }
+}

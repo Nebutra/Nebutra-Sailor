@@ -16,8 +16,11 @@
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = path.resolve(import.meta.dirname, "..");
+// `import.meta.dirname` is unset when tsx loads a .ts script as CommonJS
+// (this package has no "type": "module"). `import.meta.url` is set either way.
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ENV_FILE = path.join(ROOT, ".env.local");
 const ENV_EXAMPLE = path.join(ROOT, ".env.example");
 

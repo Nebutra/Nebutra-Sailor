@@ -97,10 +97,12 @@ export function TextLoop({
   };
 
   return (
-    <div className={cn("relative inline-block whitespace-nowrap", className)}>
+    // Inline elements: a text loop sits inside running text, often a <p>.
+    <span className={cn("relative inline-block whitespace-nowrap", className)}>
       <AnimatePresence mode={shouldReduceMotion ? "sync" : "popLayout"} initial={false}>
-        <motion.div
+        <motion.span
           key={currentIndex}
+          className="inline-block"
           initial={shouldReduceMotion ? { opacity: 1 } : "initial"}
           animate={shouldReduceMotion ? { opacity: 1 } : "animate"}
           exit={shouldReduceMotion ? { opacity: 1 } : "exit"}
@@ -108,8 +110,8 @@ export function TextLoop({
           {...(!shouldReduceMotion ? { variants: variants || motionVariants } : {})}
         >
           {items[currentIndex]}
-        </motion.div>
+        </motion.span>
       </AnimatePresence>
-    </div>
+    </span>
   );
 }

@@ -931,88 +931,11 @@
         "title": "ערכת נושא",
         "description": "השתמש בערכת נושא בהירה, כהה, או התאם להעדפת המערכת."
       },
-      "themePreset": {
-        "title": "הגדרת ערכת נושא",
-        "description": "החל ערכת נושא מ-Theme Playground על כל האפליקציה. הפקדים למטה מאפשרים לדייק אותה.",
-        "search": "חיפוש ערכות נושא…",
-        "searchLabel": "חיפוש ערכות נושא",
-        "default": "ברירת מחדל",
-        "defaultMood": "Nebutra base palette",
-        "active": "פעיל",
-        "empty": "אין ערכות נושא התואמות את החיפוש שלך.",
-        "count": "{count} ערכות נושא"
-      },
-      "themeEditor": {
-        "title": "ערכת נושא",
-        "description": "בחר הגדרה מראש, יבא קובץ DESIGN.md, ואז דייק את האסימונים למטה.",
-        "selectLabel": "הגדרת ערכת נושא",
-        "import": "ייבוא",
-        "copy": "העתק ערכת נושא",
-        "copied": "הועתק",
-        "copyError": "ההעתקה נכשלה",
-        "custom": "מותאם אישית"
-      },
-      "designMd": {
-        "title": "ייבוא DESIGN.md",
-        "description": "הדבק או העלה קובץ DESIGN.md כדי להחיל את הצבעים, הרדיוס, הפונטים, המרווחים והצללים שלו בכל האפליקציה — השינויים נשמרים גם לאחר טעינה מחדש.",
-        "applied": "הוחל:",
-        "remove": "הסר"
-      },
       "themeMode": {
         "label": "מצב ערכת נושא",
         "light": "בהיר",
         "dark": "כהה",
         "system": "מערכת"
-      },
-      "accent": {
-        "title": "צבע הדגשה",
-        "description": "בחר צבע הדגשה של המותג שיוסיף גוון למצבים פעילים בכל האפליקציה.",
-        "label": "צבע הדגשה",
-        "options": {
-          "default": "ברירת מחדל",
-          "blue": "כחול",
-          "cyan": "טורקיז",
-          "violet": "סגול",
-          "pink": "ורוד",
-          "amber": "אמבר",
-          "green": "ירוק",
-          "red": "אדום"
-        }
-      },
-      "colors": {
-        "title": "צבעים",
-        "description": "צבע הדגשה, רקע וטקסט.",
-        "background": {
-          "label": "רקע",
-          "description": "החלף את צבע הרקע של הממשק."
-        },
-        "foreground": {
-          "label": "טקסט",
-          "description": "החלף את צבע הטקסט הראשי."
-        },
-        "resetToDefault": "אפס לברירת מחדל"
-      },
-      "fontFamily": {
-        "uiLabel": "גופן ממשק",
-        "uiDescription": "משפחת הגופנים המשמשת בכל הממשק.",
-        "codeLabel": "גופן קוד",
-        "codeDescription": "משפחת הגופנים המשמשת למשטחי קוד.",
-        "options": {
-          "ui": {
-            "theme": "ברירת מחדל של ערכת נושא",
-            "system": "מערכת",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "ברירת מחדל של ערכת נושא",
-            "system": "System mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "שימוש בסמן מצביע",
@@ -1049,14 +972,6 @@
         "label": "העדפת תנועה",
         "system": "מערכת",
         "on": "מופעל"
-      },
-      "surface": {
-        "title": "סרגל צד שקוף",
-        "description": "יישום חומר שקוף על הסרגל הצדדי."
-      },
-      "transparency": {
-        "label": "סרגל צד שקוף",
-        "description": "יישום חומר שקוף על הסרגל הצדדי."
       }
     }
   },

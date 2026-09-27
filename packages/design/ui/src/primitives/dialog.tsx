@@ -5,6 +5,7 @@ import { Cross as X } from "@nebutra/icons";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 
 // We keep these standard export names so the rest of the application using Nebutra UI doesn't break.
@@ -25,6 +26,7 @@ const DialogTrigger = ({
         ref={ref}
         {...props}
         render={children as React.ReactElement<Record<string, unknown>>}
+        nativeButton={rendersNativeButton(children)}
       />
     );
   }
@@ -50,6 +52,7 @@ const DialogClose = ({
         ref={ref}
         {...props}
         render={children as React.ReactElement<Record<string, unknown>>}
+        nativeButton={rendersNativeButton(children)}
       />
     );
   }

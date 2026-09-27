@@ -931,88 +931,11 @@
         "title": "Temă",
         "description": "Folosește tema deschisă, cea închisă sau setează-o să se potrivească cu preferințele sistemului."
       },
-      "themePreset": {
-        "title": "Predefiniție temă",
-        "description": "Aplică orice temă din Theme Playground în întreaga aplicație. Controalele de mai jos se aplică peste ea pentru ajustări fine.",
-        "search": "Caută teme…",
-        "searchLabel": "Caută teme",
-        "default": "Implicită",
-        "defaultMood": "Nebutra base palette",
-        "active": "Activă",
-        "empty": "Nicio temă nu se potrivește căutării tale.",
-        "count": "{count} teme"
-      },
-      "themeEditor": {
-        "title": "Temă",
-        "description": "Alege o predefiniție, importă un DESIGN.md, apoi ajustează fin tokenii de mai jos.",
-        "selectLabel": "Predefiniție temă",
-        "import": "Importă",
-        "copy": "Copiază tema",
-        "copied": "Copiat",
-        "copyError": "Copierea a eșuat",
-        "custom": "Personalizat"
-      },
-      "designMd": {
-        "title": "Importă DESIGN.md",
-        "description": "Lipește sau încarcă un DESIGN.md pentru a aplica culoriloe, raza, fonturile, spațierea și umbrele în întreaga aplicație — păstrate după reîncărcare.",
-        "applied": "Aplicat:",
-        "remove": "Elimină"
-      },
       "themeMode": {
         "label": "Mod temă",
         "light": "Luminos",
         "dark": "Întunecat",
         "system": "Sistem"
-      },
-      "accent": {
-        "title": "Culoare accent",
-        "description": "Alege o culoare accent de brand care să coloreze stările active în întreaga aplicație.",
-        "label": "Culoare accent",
-        "options": {
-          "default": "Implicit",
-          "blue": "Albastru",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Roz",
-          "amber": "Ambră",
-          "green": "Verde",
-          "red": "Roșu"
-        }
-      },
-      "colors": {
-        "title": "Culori",
-        "description": "Accent, fundal și prim-plan.",
-        "background": {
-          "label": "Fundal",
-          "description": "Suprascrie culoarea fundalului suprafeței."
-        },
-        "foreground": {
-          "label": "Prim-plan",
-          "description": "Suprascrie culoarea textului corpului."
-        },
-        "resetToDefault": "Resetează la implicit"
-      },
-      "fontFamily": {
-        "uiLabel": "Font UI",
-        "uiDescription": "Familia de fonturi utilizată în întreaga interfață.",
-        "codeLabel": "Font pentru cod",
-        "codeDescription": "Familia de fonturi utilizată pentru suprafețele de cod.",
-        "options": {
-          "ui": {
-            "theme": "Implicit temă",
-            "system": "Sistem",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Implicit temă",
-            "system": "Sistem mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Folosește cursor pointer",
@@ -1049,14 +972,6 @@
         "label": "Preferință mișcare",
         "system": "Sistem",
         "on": "Activat"
-      },
-      "surface": {
-        "title": "Bară laterală translucidă",
-        "description": "Aplică un material translucid barei laterale."
-      },
-      "transparency": {
-        "label": "Bară laterală translucidă",
-        "description": "Aplică un material translucid barei laterale."
       }
     }
   },

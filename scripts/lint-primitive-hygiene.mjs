@@ -73,12 +73,16 @@ for (const file of files(SRC)) {
   const keptAria = raw.filter((_, i) => !/allow-aria-literal:\s*\S/.test(raw[i - 1] ?? ""));
   const code = strip(keptPalette.join("\n"));
   const ariaCode = strip(keptAria.join("\n"));
+  // A catalog demo is consumer code, not a component: its aria-labels are the
+  // demo's own copy and it declares no props. Only its palette is counted.
+  const isDemo = rel.includes("/src/catalog/demos/");
   const counts = {
-    onchange: raw.filter(
-      (line, i) => VALUE_ONCHANGE.test(line) && !/@deprecated/.test(raw[i - 1] ?? ""),
-    ).length,
+    onchange: isDemo
+      ? 0
+      : raw.filter((line, i) => VALUE_ONCHANGE.test(line) && !/@deprecated/.test(raw[i - 1] ?? ""))
+          .length,
     palette: (code.match(PALETTE) ?? []).length,
-    aria: [...ariaCode.matchAll(ARIA)].length,
+    aria: isDemo ? 0 : [...ariaCode.matchAll(ARIA)].length,
   };
   const allowed = ALLOW[rel];
   if (allowed) seen.add(rel);

@@ -26,6 +26,7 @@ export const brand = {
     "Production-ready Next.js monorepo template for AI SaaS products. Auth, billing, multi-tenancy, AI services, design system, and enterprise infrastructure — pre-configured.",
   descriptionCn:
     "面向AI创业者的一体化SaaS基础设施模板，覆盖认证、计费、多租户、AI服务与设计系统，开箱即产品",
+  logo: "image" as "image" | "wordmark",
 
   story: {
     concept:

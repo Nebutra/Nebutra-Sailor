@@ -115,16 +115,16 @@ export const PLAYBOOK_ITEMS: PlaybookItem[] = [
   },
   // Design & Theming
   {
-    id: "theme-playground",
+    id: "sailor-studio",
     category: "design",
     icon: Sparkles,
-    title: { en: "Theme Playground", zh: "主题游乐场" },
+    title: { en: "Sailor Studio", zh: "Sailor Studio" },
     description: {
-      en: "Tune palette, typography and motion presets and preview them live.",
-      zh: "实时调试调色板、字体与动效 preset 并即时预览。",
+      en: "Choose a project's look, preview it on real pages, apply it with one command.",
+      zh: "选定项目的外观，在真实页面上预览，一条命令落地。",
     },
-    href: "/theme-playground",
-    app: true,
+    href: "/sailor/studio",
+    app: false,
   },
   {
     id: "color-tokens",

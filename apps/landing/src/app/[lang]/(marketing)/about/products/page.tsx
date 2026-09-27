@@ -12,7 +12,6 @@ import {
 import { AnimateIn } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 
 import type { Locale } from "@/i18n/routing";
@@ -242,9 +241,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
   const labels = pick(lang, LABELS);
 
   return (
-    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
-      <Navbar />
-
+    <main id="main-content" className="flex flex-col flex-1 bg-background">
       {/* ─── 1. Hero — Dual Flagship ───────────────────────────────────── */}
       <section className="relative pt-32 md:pt-48 pb-20 md:pb-28 overflow-hidden">
         <AuroraBackground variant="subtle" position="top" intensity={0.5} />
@@ -754,8 +751,6 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
           </AnimateIn>
         </div>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

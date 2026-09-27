@@ -3,6 +3,7 @@
 import type { VariantProps } from "class-variance-authority";
 import type * as React from "react";
 import { cn } from "../utils/cn";
+import { RENDERS_NATIVE_BUTTON } from "../utils/native-button";
 import { Slot } from "../utils/slot";
 import { buttonVariants } from "./button-variants";
 
@@ -178,6 +179,8 @@ const Button = ({
   );
 };
 Button.displayName = "Button";
+// Without asChild, Button renders a native <button> (see utils/native-button).
+(Button as unknown as Record<symbol, boolean>)[RENDERS_NATIVE_BUTTON] = true;
 
 // ─── ButtonLink ───────────────────────────────────────────────────────────────
 

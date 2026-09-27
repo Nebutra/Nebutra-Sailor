@@ -131,8 +131,8 @@
     "columns": {
       "product": "Produs",
       "resources": "Resurse",
-      "legal": "Legal",
-      "community": "Comunitate"
+      "company": "Companie",
+      "legal": "Legal"
     },
     "links": {
       "product": "Produs",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Toate drepturile rezervate.",
+    "copyright": "© 2026 {companyLegalEn} · Toate drepturile rezervate.",
     "fontCredit": "Font chinezesc: MiSans (Xiaomi)",
     "statusOnline": "Toate sistemele funcționale",
     "newsletterTitle": "Rămâi la curent",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "STRUCTURĂ TURBOREPO",
-    "title": "10 aplicații. 112 pachete. 4 căi backend.",
+    "title": "10 aplicații. 111 pachete. 4 căi backend.",
     "description": "Cod partajat, build-uri paralele, zero duplicare. Tipizare completă end-to-end de la bază de date la frontend.",
     "metricApps": "aplicații",
     "metricBackends": "piste backend",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Puteți contacta Ofițerul nostru de Protecție a Datelor la adresa dpo@nebutra.com."
+            "desc": "Puteți contacta Ofițerul nostru de Protecție a Datelor la adresa dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Cum să solicitați o rambursare",
         "step1": {
           "title": "Pasul 1: Contactați suportul",
-          "intro": "Trimiteți-ne un e-mail la billing@nebutra.com cu:",
+          "intro": "Trimiteți-ne un e-mail la billing@{domain} cu:",
           "items": {
             "0": "Adresa de e-mail a contului dvs.",
             "1": "Planul de abonament și perioada de facturare",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Răspundeți la e-mailul cu decizia, furnizând informații suplimentare",
           "1": "Solicitați escaladarea către un supervisor",
-          "2": "Contactați-ne la legal@nebutra.com pentru o analiză suplimentară"
+          "2": "Contactați-ne la legal@{domain} pentru o analiză suplimentară"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Rezolvarea litigiilor",
         "informal": {
           "title": "10.1 Rezolvare informală",
-          "content": "Înainte de a iniția proceduri formale, vă obligați să ne contactați la legal@nebutra.com pentru a încerca rezolvarea informală a litigiilor."
+          "content": "Înainte de a iniția proceduri formale, vă obligați să ne contactați la legal@{domain} pentru a încerca rezolvarea informală a litigiilor."
         },
         "governingLaw": {
           "title": "10.2 Legea aplicabilă",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Începe",
       "title": "Oprește-te din configurat. Începe să construiești.",
       "description": "Inițializează o arhitectură SaaS scalabilă local cu CLI-ul {brandName}.",
-      "button": "Implementează Arhitectura",
       "license": "Open source sub licența FSL-1.1-ALv2. Nu este necesar un card de credit."
     },
     "capability": {

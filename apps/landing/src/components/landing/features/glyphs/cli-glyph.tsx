@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import { Check, TerminalWindow } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
@@ -9,7 +10,7 @@ const LINES: ReadonlyArray<{ kind: "cmd" | "ok"; text: string }> = [
   { kind: "ok", text: "Checking environment" },
   { kind: "ok", text: "Building project (12.4s)" },
   { kind: "ok", text: "Uploading artifacts" },
-  { kind: "ok", text: "Deployed to https://app.nebutra.com" },
+  { kind: "ok", text: `Deployed to https://${brand.domains.app}` },
 ];
 
 export function CliGlyph(_props: SubpackageGlyphProps) {

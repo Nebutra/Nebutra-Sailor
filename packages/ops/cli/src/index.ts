@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
 import { registerAiCommand } from "./commands/ai";
+import { registerApplyCommand } from "./commands/apply";
 import { registerBrandCommand } from "./commands/brand";
 import { registerCompletionsCommand } from "./commands/completions";
 import { registerDbCommand } from "./commands/db";
@@ -113,6 +114,7 @@ export function buildProgram(options: BuildProgramOptions): Command {
   registerTestCommand(program);
   registerE2eCommand(program);
   registerThemeCommand(program);
+  registerApplyCommand(program);
   registerUiCommand(program);
 
   // ─── Platform commands ───────────────────────────────────

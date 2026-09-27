@@ -77,6 +77,10 @@
         "light-first dual mode (dark inverts the gallery)"
       ],
       "tagline": "images sit; chrome recedes"
+    },
+    "nebutra-site": {
+      "catalog": false,
+      "description": "The Nebutra site's own shell: Linear's grayscale with the Nebutra gradient as a signature. Applied by html[data-brand] on that shell only; not a language to pick."
     }
   }
 }

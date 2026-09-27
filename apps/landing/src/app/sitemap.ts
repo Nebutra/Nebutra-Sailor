@@ -5,7 +5,7 @@ import { PACKAGE_FEATURE_ENTRIES } from "@/components/landing/features/package-f
 import { routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 import { staticChangelogVersions } from "@/lib/changelog-releases";
-import { getAllSolutionSlugs } from "@/lib/constants/solutions-data";
+import { EXTRA_FAMILIES } from "@/lib/seo/extra-families";
 import { lastModifiedFor } from "@/lib/seo/lastmod";
 import {
   isHighSignalFeatureEntry,
@@ -137,13 +137,10 @@ async function dynamicFamilyEntries(
         entryFor(route, baseUrl, locale, defaultPublicationSet(`/features/${entry.slug}`)),
       );
     }
-    case "/solutions/*": {
-      return getAllSolutionSlugs().map((slug) =>
-        entryFor(route, baseUrl, locale, defaultPublicationSet(`/solutions/${slug}`)),
-      );
-    }
     default:
-      return [];
+      return (EXTRA_FAMILIES[route.pattern]?.() ?? []).map((path) =>
+        entryFor(route, baseUrl, locale, defaultPublicationSet(path)),
+      );
   }
 }
 

@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -81,7 +82,7 @@ export async function POST(req: NextRequest) {
 
   // 3. BUILD NOTIFICATION CONTENT
   const title = `v${payload.version}: ${payload.title}`;
-  const url = `https://nebutra.com/changelog/${payload.version}`;
+  const url = `https://${brand.domains.landing}/changelog/${payload.version}`;
   const summary = payload.summary || payload.title;
   const type = payload.type || "feature";
 
@@ -213,7 +214,7 @@ async function sendReleaseEmail({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "changelog@nebutra.com",
+      from: `changelog@${brand.domains.landing}`,
       to: audienceId,
       subject: `${title} is now available`,
       html,

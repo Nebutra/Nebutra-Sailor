@@ -79,7 +79,14 @@ export interface SidebarNavProps {
   itemClassName?: string;
   /** Slot rendered above sections (e.g. logo + workspace switcher). */
   header?: React.ReactNode;
-  /** Slot rendered below sections (e.g. theme toggle, sign-out). */
+  /**
+   * Secondary destinations pinned to the bottom (help, feedback, contact).
+   * They are items, drawn exactly like the ones above — same row, icon,
+   * hover, collapsed tooltip — so the bottom of the rail is not a second
+   * visual language. Prefer this to `footer` for anything that is a link.
+   */
+  footerItems?: SidebarNavItem[];
+  /** Slot rendered below everything else, for controls that are not links (theme toggle). */
   footer?: React.ReactNode;
   /** When provided, this is used to render link items. Default: <a>. */
   renderLink?: (props: SidebarNavRenderLinkProps) => React.ReactElement;
@@ -361,6 +368,7 @@ export function SidebarNav({
   className,
   itemClassName,
   header,
+  footerItems,
   footer,
   renderLink = defaultRenderLink,
   navLabel = "Sidebar",
@@ -376,7 +384,10 @@ export function SidebarNav({
           className,
         )}
       >
-        {header ? <div className="shrink-0">{header}</div> : null}
+        {header ? (
+          // Collapsed, the header sits on the same centre line as the icon items.
+          <div className={cn("shrink-0", collapsed && "flex justify-center")}>{header}</div>
+        ) : null}
 
         <div className="flex-1 space-y-4 overflow-y-auto">
           {sections.map((section) => {
@@ -444,6 +455,21 @@ export function SidebarNav({
             );
           })}
         </div>
+
+        {footerItems && footerItems.length > 0 ? (
+          <ul className="flex shrink-0 flex-col gap-0.5">
+            {footerItems.map((item) => (
+              <li key={item.id}>
+                <InteractiveItem
+                  item={item}
+                  collapsed={collapsed}
+                  itemClassName={itemClassName}
+                  renderLink={renderLink}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
         {footer ? (
           <div className="shrink-0 border-t border-sidebar-border pt-3">{footer}</div>

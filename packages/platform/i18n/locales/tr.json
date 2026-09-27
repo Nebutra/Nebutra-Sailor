@@ -931,88 +931,11 @@
         "title": "Tema",
         "description": "Açık, koyu veya sistem tercihine uygun tema kullanın."
       },
-      "themePreset": {
-        "title": "Tema ön ayarı",
-        "description": "Tema Atölyesi'nden herhangi bir temayı tüm uygulamada kullanın. Aşağıdaki kontroller, temayı ince ayar yapmak için üzerine eklenir.",
-        "search": "Temaları ara…",
-        "searchLabel": "Temaları ara",
-        "default": "Varsayılan",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktif",
-        "empty": "Aramanızla eşleşen tema bulunamadı.",
-        "count": "{count} tema"
-      },
-      "themeEditor": {
-        "title": "Tema",
-        "description": "Bir ön ayar seçin, bir DESIGN.md dosyası içe aktarın ve ardından aşağıdaki belirteçleri ince ayarlayın.",
-        "selectLabel": "Tema ön ayarı",
-        "import": "İçe aktar",
-        "copy": "Temayı kopyala",
-        "copied": "Kopyalandı",
-        "copyError": "Kopyalama başarısız",
-        "custom": "Özel"
-      },
-      "designMd": {
-        "title": "DESIGN.md içe aktar",
-        "description": "Tüm uygulamada renkleri, yarıçapı, yazı tiplerini, boşlukları ve gölgeleri uygulamak için bir DESIGN.md yapıştırın veya yükleyin — yeniden yüklemeler arasında kalıcı olarak saklanır.",
-        "applied": "Uygulandı:",
-        "remove": "Kaldır"
-      },
       "themeMode": {
         "label": "Tema modu",
         "light": "Açık",
         "dark": "Koyu",
         "system": "Sistem"
-      },
-      "accent": {
-        "title": "Vurgu rengi",
-        "description": "Uygulamada aktif durumları renklendirecek bir marka vurgusu seçin.",
-        "label": "Vurgu rengi",
-        "options": {
-          "default": "Varsayılan",
-          "blue": "Mavi",
-          "cyan": "Cyan",
-          "violet": "Menekşe",
-          "pink": "Pembe",
-          "amber": "Amber",
-          "green": "Yeşil",
-          "red": "Kırmızı"
-        }
-      },
-      "colors": {
-        "title": "Renkler",
-        "description": "Vurgu, arka plan ve ön plan.",
-        "background": {
-          "label": "Arka plan",
-          "description": "Yüzey arka plan rengini geçersiz kıl."
-        },
-        "foreground": {
-          "label": "Ön plan",
-          "description": "Gövde metin rengini geçersiz kıl."
-        },
-        "resetToDefault": "Varsayılana sıfırla"
-      },
-      "fontFamily": {
-        "uiLabel": "Arayüz yazı tipi",
-        "uiDescription": "Arayüz genelinde kullanılan yazı tipi ailesi.",
-        "codeLabel": "Kod yazı tipi",
-        "codeDescription": "Kod alanlarında kullanılan yazı tipi ailesi.",
-        "options": {
-          "ui": {
-            "theme": "Tema varsayılanı",
-            "system": "Sistem",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Tema varsayılanı",
-            "system": "Sistem mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "İmleç işaretini kullan",
@@ -1049,14 +972,6 @@
         "label": "Hareket tercihi",
         "system": "Sistem",
         "on": "Açık"
-      },
-      "surface": {
-        "title": "Yarı saydam kenar çubuğu",
-        "description": "Kenar çubuğuna yarı saydam bir malzeme uygulayın."
-      },
-      "transparency": {
-        "label": "Yarı saydam kenar çubuğu",
-        "description": "Kenar çubuğına yarı saydam bir malzeme uygulayın."
       }
     }
   },

@@ -1,4 +1,18 @@
-import { client } from "./client";
+import { client, isSanityConfigured } from "./client";
+
+/**
+ * A read that answers `empty` (no documents) when no Sanity project is
+ * configured. Untyped like the `client.fetch` it wraps — each caller already
+ * narrows the GROQ result to its own shape.
+ */
+function read(
+  query: string,
+  params: Record<string, unknown>,
+  empty: [] | null,
+  // biome-ignore lint/suspicious/noExplicitAny: same contract as client.fetch's default overload
+): Promise<any> {
+  return isSanityConfigured ? client.fetch(query, params) : Promise.resolve(empty);
+}
 
 // ============================================
 // Posts
@@ -70,15 +84,15 @@ export const postTranslationByKeyQuery = `*[
 }`;
 
 export async function getPosts(language = "en") {
-  return client.fetch(postsQuery, { language });
+  return read(postsQuery, { language }, []);
 }
 
 export async function getPostBySlug(slug: string, language = "en") {
-  return client.fetch(postBySlugQuery, { slug, language });
+  return read(postBySlugQuery, { slug, language }, null);
 }
 
 export async function getPostTranslationByKey(translationKey: string, language = "en") {
-  return client.fetch(postTranslationByKeyQuery, { translationKey, language });
+  return read(postTranslationByKeyQuery, { translationKey, language }, null);
 }
 
 // ============================================
@@ -94,7 +108,7 @@ export const pageBySlugQuery = `*[_type == "page" && slug.current == $slug][0] {
 }`;
 
 export async function getPageBySlug(slug: string) {
-  return client.fetch(pageBySlugQuery, { slug });
+  return read(pageBySlugQuery, { slug }, null);
 }
 
 // ============================================
@@ -111,7 +125,7 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
 }`;
 
 export async function getSiteSettings() {
-  return client.fetch(siteSettingsQuery);
+  return read(siteSettingsQuery, {}, null);
 }
 
 // ============================================
@@ -126,7 +140,7 @@ export const categoriesQuery = `*[_type == "category"] | order(title asc) {
 }`;
 
 export async function getCategories() {
-  return client.fetch(categoriesQuery);
+  return read(categoriesQuery, {}, []);
 }
 
 // ============================================
@@ -147,7 +161,7 @@ export const showcaseQuery = `*[_type == "showcase"] | order(featured desc, publ
 }`;
 
 export async function getShowcaseProjects() {
-  return client.fetch(showcaseQuery);
+  return read(showcaseQuery, {}, []);
 }
 
 // ============================================
@@ -177,13 +191,13 @@ export const changelogByVersionQuery = `*[_type == "changelogEntry" && version =
 export const changelogTypesQuery = `array::unique(*[_type == "changelogEntry"].type)`;
 
 export async function getChangelogEntries() {
-  return client.fetch(changelogQuery);
+  return read(changelogQuery, {}, []);
 }
 
 export async function getChangelogByVersion(version: string) {
-  return client.fetch(changelogByVersionQuery, { version });
+  return read(changelogByVersionQuery, { version }, null);
 }
 
 export async function getChangelogTypes() {
-  return client.fetch(changelogTypesQuery);
+  return read(changelogTypesQuery, {}, []);
 }

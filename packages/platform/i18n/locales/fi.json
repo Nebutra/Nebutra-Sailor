@@ -931,88 +931,11 @@
         "title": "Teema",
         "description": "Käytä vaaleaa, tummaa tai järjestelmän asetuksen mukaista teemaa."
       },
-      "themePreset": {
-        "title": "Teeman esiasetus",
-        "description": "Käytä Theme Playground -teemaa koko sovelluksessa. Alla olevilla säätöillä voit hienosäätää sitä.",
-        "search": "Hae teemoja…",
-        "searchLabel": "Hae teemoja",
-        "default": "Oletus",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktiivinen",
-        "empty": "Ei teemoja, jotka vastaavat hakua.",
-        "count": "{count} teemaa"
-      },
-      "themeEditor": {
-        "title": "Teema",
-        "description": "Valitse esiasetus, tuo DESIGN.md-tiedosto ja hienosäädä alla olevia arvoja.",
-        "selectLabel": "Teeman esiasetus",
-        "import": "Tuo",
-        "copy": "Kopioi teema",
-        "copied": "Kopioitu",
-        "copyError": "Kopiointi epäonnistui",
-        "custom": "Mukautettu"
-      },
-      "designMd": {
-        "title": "Tuo DESIGN.md",
-        "description": "Liitä tai lataa DESIGN.md, jotta sen värit, säde, fontit, väli ja varjot sovelletaan koko sovellukseen — säilyvät uudelleenlatauksissa.",
-        "applied": "Sovellettu:",
-        "remove": "Poista"
-      },
       "themeMode": {
         "label": "Teemamoodi",
         "light": "Vaalea",
         "dark": "Tumma",
         "system": "Järjestelmä"
-      },
-      "accent": {
-        "title": "Korostusväri",
-        "description": "Valitse brändin korostusväri, joka sävyttää aktiiviset tilat koko sovelluksessa.",
-        "label": "Korostusväri",
-        "options": {
-          "default": "Oletus",
-          "blue": "Sininen",
-          "cyan": "Syaani",
-          "violet": "Violetti",
-          "pink": "Vaaleanpunainen",
-          "amber": "Kultainen",
-          "green": "Vihreä",
-          "red": "Punainen"
-        }
-      },
-      "colors": {
-        "title": "Värit",
-        "description": "Korostus-, tausta- ja etualan värit.",
-        "background": {
-          "label": "Tausta",
-          "description": "Muuta pinnan taustaväriä."
-        },
-        "foreground": {
-          "label": "Etuala",
-          "description": "Muuta päätekstin väriä."
-        },
-        "resetToDefault": "Palauta oletus"
-      },
-      "fontFamily": {
-        "uiLabel": "Käyttöliittymän fontti",
-        "uiDescription": "Fonttiperhe, jota käytetään käyttöliittymässä.",
-        "codeLabel": "Koodifontti",
-        "codeDescription": "Fonttifamilia, jota käytetään koodipinnoilla.",
-        "options": {
-          "ui": {
-            "theme": "Teeman oletus",
-            "system": "Järjestelmä",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Teeman oletus",
-            "system": "Järjestelmä mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Käytä osoitinta",
@@ -1049,14 +972,6 @@
         "label": "Liikeasetus",
         "system": "Järjestelmä",
         "on": "Päällä"
-      },
-      "surface": {
-        "title": "Läpinäkyvä sivupalkki",
-        "description": "Käytä sivupalkissa läpinäkyvää materiaalia."
-      },
-      "transparency": {
-        "label": "Läpinäkyvä sivupalkki",
-        "description": "Käytä sivupalkissa läpinäkyvää materiaalia."
       }
     }
   },

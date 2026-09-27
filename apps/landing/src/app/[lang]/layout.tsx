@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import {
   buildOrganizationJsonLd,
   buildSoftwareApplicationJsonLd,
@@ -23,6 +24,7 @@ import { seoContent } from "@/lib/landing-content";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getPublicNavigationItems } from "@/lib/seo/site-routes";
 import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
+import { SITE_ID } from "@/site.config";
 import { fontVariables } from "../fonts";
 import { Providers } from "../providers";
 
@@ -32,7 +34,8 @@ interface LangLayoutProps {
 }
 
 // Organization JSON-LD: base from metadata-helpers + company-specific fields spread-merged.
-// legalName and contact emails are intentionally kept manual (not in brand object).
+// The legal name is the brand's; the registered address is Nebutra's own fact,
+// so only the Nebutra site states it (the template would publish it as its own).
 const orgBase = buildOrganizationJsonLd();
 const websiteBase = buildWebSiteJsonLd();
 const softwareBase = buildSoftwareApplicationJsonLd();
@@ -41,15 +44,19 @@ const jsonLd = [
   {
     ...orgBase,
     // Company-specific fields not in the brand object:
-    legalName: "无锡云毓智能科技有限公司",
+    legalName: brand.nameFull,
     logo: `${orgBase.url}/icon.png`,
-    foundingDate: "2024",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "无锡市",
-      addressRegion: "江苏省",
-      addressCountry: "CN",
-    },
+    ...(SITE_ID === "nebutra"
+      ? {
+          foundingDate: "2024",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "无锡市",
+            addressRegion: "江苏省",
+            addressCountry: "CN",
+          },
+        }
+      : {}),
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -180,6 +187,9 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
       className={`${fontVariables} min-h-dvh antialiased`}
+      // The Nebutra site wears its own Brand Package on every page; set here on
+      // the server so the first paint already has it. The template has none.
+      data-brand={SITE_ID === "nebutra" ? "nebutra-site" : undefined}
       suppressHydrationWarning
     >
       <body className="antialiased">

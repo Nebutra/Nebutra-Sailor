@@ -1,7 +1,7 @@
 import { CheckCircle } from "@nebutra/icons";
 import { AuroraBackground, Badge, Button, Card } from "@nebutra/ui/primitives";
 import { getTranslations } from "next-intl/server";
-import { createAppSignUpUrl } from "@/lib/app-url";
+import { createAppSignUpUrl, getStartedHref } from "@/lib/app-url";
 
 /**
  * All three tiers read their price from the catalog strings, which mirror
@@ -17,7 +17,7 @@ export async function PricingSection({ hideHeader = false }: { hideHeader?: bool
   const TIERS = [
     {
       key: "community",
-      ctaHref: "/get-license",
+      ctaHref: getStartedHref(),
       highlighted: false,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
       dynamicPrice: t("community.price"), // "Free"

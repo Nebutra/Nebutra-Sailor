@@ -1,6 +1,7 @@
 "use client";
 
 import { motionDurationSec } from "@nebutra/brand";
+import { brand } from "@nebutra/brand/metadata";
 import { ArrowRight, BookOpen, ChevronDown, Copy, Message } from "@nebutra/icons";
 import {
   DropdownMenu,
@@ -73,7 +74,7 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
   const { copied, copy } = useCopyToClipboard({ timeout: 1600, showToast: false });
 
   async function copyPageAsMarkdown() {
-    const title = document.title || (isZh ? "Nebutra 博客" : "Nebutra Blog");
+    const title = document.title || (isZh ? `${brand.name} 博客` : `${brand.name} Blog`);
     const href = window.location.href;
     const markdown = `[${title}](${href})`;
     await copy(markdown);
@@ -126,15 +127,15 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
         <div className="flex flex-col justify-center gap-5">
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
             <BookOpen className="size-3.5" aria-hidden />
-            {isZh ? "Nebutra Journal · 技术札记" : "Nebutra Journal"}
+            {isZh ? `${brand.name} Journal · 技术札记` : `${brand.name} Journal`}
           </div>
           <h1 className="text-balance text-4xl font-semibold text-foreground tracking-heading sm:text-5xl">
             {isZh ? "工程、产品与治理笔记" : "Notes on engineering, product, and governance"}
           </h1>
           <p className="max-w-xl text-base leading-7 text-muted-foreground">
             {isZh
-              ? "少量、认真、可复用的文章：记录 Nebutra 在工程、产品、治理和 AI 原生交付中的真实取舍。"
-              : "Sparse, careful writing on Nebutra's engineering, product, governance, and AI-native delivery decisions."}
+              ? `少量、认真、可复用的文章：记录 ${brand.name} 在工程、产品、治理和 AI 原生交付中的真实取舍。`
+              : `Sparse, careful writing on ${brand.name}'s engineering, product, governance, and AI-native delivery decisions.`}
           </p>
         </div>
 

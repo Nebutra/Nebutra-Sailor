@@ -14,34 +14,31 @@
 # Validate: `pnpm template:check`
 
 # ---------------------------------------------------------------------------
-# Nebutra landing business content
-# Marketing, legal, blog, changelog — all Nebutra-owned pages & sections.
-# The shell (layout, globals, next.config, package.json) is preserved.
+# Nebutra landing — the Nebutra-owned parts only.
+# The template ships the top-nav site: the (marketing) and (legal) pages that
+# apps/landing/src/site-map.ts marks `template: true` (template-build strips
+# the others by reading that map, and swaps in `*.for-template.*` files: the
+# home, the blog index and the site frame), plus the chrome and
+# components/landing. What is listed here is Nebutra's own: the Nebutra site's
+# pages and shell (src/nebutra), investor data, brand imagery.
 # ---------------------------------------------------------------------------
-apps/landing/src/app/\[lang\]/(marketing)/
-apps/landing/src/app/\[lang\]/(legal)/
-apps/landing/src/components/landing/
+apps/landing/src/nebutra/
+apps/landing/src/app/r/
+apps/landing/src/components/landing/solutions/
+apps/landing/src/components/landing/navbar/SolutionsMegaMenu.tsx
+apps/landing/src/lib/constants/solutions-data*
+apps/landing/src/lib/constants/*vc*
+apps/landing/public/logos/
 apps/landing/public/og/
 apps/landing/public/brand/
 apps/landing/public/brand-compliant/
 apps/landing/public/screenshots/
 apps/landing/public/images/
 apps/landing/public/animations/
-apps/landing/src/app/api/changelog/
 apps/landing/src/app/api/license/
-apps/landing/src/app/sitemap.ts
-# Index route imports the stripped sitemap module — leave both out of template.
-apps/landing/src/app/sitemap-index.xml/
-apps/landing/src/lib/constants/landing-data.ts
-# Tests + not-found + mockups that import stripped marketing content.
-# A generic landing 404 is a known follow-up.
 apps/landing/src/__tests__/api/license.test.ts
-apps/landing/src/app/__tests__/sitemap.test.ts
+# audit fixtures that read Nebutra-only landing files.
 apps/landing/src/__tests__/ui-governance.test.ts
-apps/landing/src/lib/constants/landing-data.test.ts
-apps/landing/src/app/not-found.tsx
-apps/landing/src/app/\[lang\]/not-found.tsx
-apps/landing/src/components/ui/mockups/
 
 # ---------------------------------------------------------------------------
 # Nebutra dashboard (apps/web) business surfaces

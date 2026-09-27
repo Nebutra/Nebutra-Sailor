@@ -572,6 +572,13 @@ describe("ci harness dependency closure", () => {
     // rest of the surface does it.
     expect(footer).not.toContain("footer-gradient-line");
     expect(footer).not.toContain("--brand-gradient");
-    expect(footer).toContain("AuroraBackground");
+    // The edge is a hairline on the footer itself; the aurora belongs to the
+    // closing CTA a page places above it (FinalCTA), not to the footer.
+    expect(footer).toContain("border-t border-border");
+    const finalCta = await readFile(
+      join(process.cwd(), "apps/landing/src/components/landing/FinalCTA.tsx"),
+      "utf8",
+    );
+    expect(finalCta).toContain("AuroraBackground");
   });
 });

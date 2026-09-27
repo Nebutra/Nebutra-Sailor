@@ -39,7 +39,6 @@
     "appSurfaces": ["apps/landing/src", "apps/web/src"],
     "allowedFramerMotionImports": [
       "apps/landing/src/components/landing/AnimateIn.tsx",
-      "apps/landing/src/components/landing/GlobalEdgeMap.tsx",
       "apps/landing/src/app/[lang]/(marketing)/layout.tsx",
       "apps/landing/src/components/landing/agentic-engineering/TerminalSnippet.tsx",
       "apps/landing/src/components/landing/design-system/PipelineCard.tsx",
@@ -236,9 +235,9 @@
         ]
       },
       {
-        "name": "web-theme-playground-single-brand-anchor",
+        "name": "studio-single-brand-anchor",
         "description": "Theme Playground content chrome must not repeat the global sidebar brand; the page header should carry product context only.",
-        "file": "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
+        "file": "apps/landing/src/nebutra/studio/studio-workbench.tsx",
         "requiredContains": ["Theme Playground", "Token governance workbench"],
         "forbiddenContains": [
           "BrandLogo",

@@ -131,8 +131,8 @@
     "columns": {
       "product": "제품",
       "resources": "리소스",
-      "legal": "법적 고지",
-      "community": "커뮤니티"
+      "company": "회사",
+      "legal": "법적 고지"
     },
     "links": {
       "product": "제품",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. 모든 권리 보유.",
+    "copyright": "© 2026 {companyLegalEn} · 모든 권리 보유.",
     "fontCredit": "중국어 서체: MiSans (Xiaomi)",
     "statusOnline": "모든 시스템 정상 작동 중",
     "newsletterTitle": "최신 소식 받기",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO 구조",
-    "title": "10개 앱 · 112개 패키지 · 4개 백엔드 라인.",
+    "title": "10개 앱 · 111개 패키지 · 4개 백엔드 라인.",
     "description": "공유 코드, 병렬 빌드, 중복 제거. 데이터베이스부터 프론트엔드까지 완전한 엔드투엔드 타입 안정성을 제공합니다.",
     "metricApps": "앱",
     "metricBackends": "백엔드 라인",
@@ -243,7 +243,7 @@
       "ctaButton": "연락 시작하기"
     },
     "contact": {
-      "title": "기술 및 상업 문의 — {brandName} Intelligence",
+      "title": "기술 및 상업 문의 — {brandName}",
       "description": "상업적 라이선싱, 엔터프라이즈 셀프 호스팅, 그리고 고급 기술 지원을 위한 전용 커뮤니케이션 채널입니다.",
       "heading": "지원 연결 수립",
       "subheading": "명시적인 요구사항을 평가하기 위해 전담 기술 전문가 또는 아키텍트를 배정해 드립니다.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "dpo@nebutra.com으로 당사의 개인정보 보호 책임자에게 문의할 수 있습니다."
+            "desc": "dpo@{domain}으로 당사의 개인정보 보호 책임자에게 문의할 수 있습니다."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "환불 요청 방법",
         "step1": {
           "title": "1단계: 지원팀 문의",
-          "intro": "billing@nebutra.com으로 다음 내용과 함께 이메일을 보내주십시오:",
+          "intro": "billing@{domain}으로 다음 내용과 함께 이메일을 보내주십시오:",
           "items": {
             "0": "계정 이메일 주소",
             "1": "구독 플랜 및 결제 기간",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "결정 이메일에 추가 정보와 함께 회신",
           "1": "관리자에게 에스컬레이션 요청",
-          "2": "추가 검토를 위해 legal@nebutra.com으로 문의"
+          "2": "추가 검토를 위해 legal@{domain}으로 문의"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. 분쟁 해결",
         "informal": {
           "title": "10.1 비공식 해결",
-          "content": "공식 절차를 시작하기 전, 귀하는 분쟁을 비공식적으로 해결하기 위해 legal@nebutra.com으로 당사에 연락하는 것에 동의합니다."
+          "content": "공식 절차를 시작하기 전, 귀하는 분쟁을 비공식적으로 해결하기 위해 legal@{domain}으로 당사에 연락하는 것에 동의합니다."
         },
         "governingLaw": {
           "title": "10.2 준거법",
@@ -1216,7 +1216,6 @@
       "eyebrow": "시작하기",
       "title": "설정은 그만, 이제 빌드할 시간입니다.",
       "description": "{brandName} CLI로 확장 가능한 SaaS 아키텍처를 로컬에서 초기화하십시오.",
-      "button": "아키텍처 배포",
       "license": "FSL-1.1-ALv2 오픈소스 라이선스. 신용카드 불필요."
     },
     "capability": {
@@ -1750,7 +1749,7 @@
           "label": "지원 AI 공급자"
         },
         "projects": {
-          "value": "112",
+          "value": "111",
           "label": "모노레포 패키지"
         },
         "uptime": {

@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EditorialComparisonTable } from "./editorial-comparison-table";
+import { editorialReadingColumnDecorator } from "./story-decorators";
 
 const meta: Meta<typeof EditorialComparisonTable> = {
   title: "Editorial/ComparisonTable",
   component: EditorialComparisonTable,
   tags: ["autodocs"],
+  decorators: [editorialReadingColumnDecorator],
   parameters: {
     docs: {
       description: {

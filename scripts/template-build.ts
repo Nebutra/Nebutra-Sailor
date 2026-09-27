@@ -8,6 +8,9 @@
  * Workflow:
  *   1. Copy the entire repo (minus heavy dev-only dirs) to --out.
  *   2. Apply .templateignore to delete Nebutra business content.
+ *   2b. Strip the landing pages site-map.ts marks `template: false`.
+ *   2c. Put every `X.for-template.<ext>` in place of `X.<ext>`.
+ *   2d. Delete landing modules nothing reaches any more, and tests of them.
  *   3. Replace brand-specific references with template placeholders.
  *   4. Initialize a fresh git repo at the output (optional, with --git).
  *
@@ -22,6 +25,8 @@ import { execFileSync, execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import ignore from "ignore";
+import { SITE_MAP } from "../apps/landing/src/site-map";
+import { localImports, moduleReach, resolveSpecifier } from "./lib/module-reach.mjs";
 
 interface Args {
   out: string;
@@ -378,6 +383,18 @@ function main(): void {
   const stripped = applyTemplateIgnore(out, args.verbose);
   process.stdout.write(`  stripped ${stripped} paths\n`);
 
+  process.stdout.write("  stripping Nebutra-only landing pages (site-map.ts)…\n");
+  const pagesStripped = stripNebutraOnlyPages(out);
+  process.stdout.write(`  stripped ${pagesStripped} Nebutra-only landing routes\n`);
+
+  process.stdout.write("  swapping in template variants (*.for-template.*)…\n");
+  const swapped = applyTemplateVariants(out);
+  process.stdout.write(`  swapped ${swapped} template variants\n`);
+
+  const pruned = pruneUnreachableLanding(out);
+  process.stdout.write(`  pruned ${pruned} landing modules only Nebutra's pages used\n`);
+  pruneEmptyDirs(out);
+
   process.stdout.write("Step 3/5: stripping Nebutra-only Prisma models…\n");
   const prismaStripped = stripNebutraOnlyModels(out);
   process.stdout.write(`  stripped ${prismaStripped} Nebutra-only models from schema.prisma\n`);
@@ -482,6 +499,87 @@ function stripNebutraOnlyModels(targetDir: string): number {
 
   fs.writeFileSync(schemaPath, src);
   return removed;
+}
+
+const LANDING_ROUTES = [
+  "apps/landing/src/app/[lang]/(marketing)",
+  "apps/landing/src/app/[lang]/(legal)",
+];
+
+/**
+ * Delete the landing routes that are Nebutra's own. site-map.ts is the one
+ * place that says which pages ship in the template (`template: true`); this
+ * reads it rather than keeping a second list here.
+ *
+ * A route directory goes whole unless a template page lives under it, in
+ * which case only its own page.tsx goes.
+ */
+function stripNebutraOnlyPages(targetDir: string): number {
+  const kept = SITE_MAP.filter((p) => p.template).map((p) => p.path);
+  let count = 0;
+  for (const page of SITE_MAP) {
+    if (page.template || page.status === "planned" || page.path === "/") continue;
+    const hasTemplateChild = kept.some((k) => k.startsWith(`${page.path}/`));
+    for (const group of LANDING_ROUTES) {
+      const dir = path.join(targetDir, group, page.path);
+      if (!fs.existsSync(dir)) continue;
+      if (hasTemplateChild) {
+        fs.rmSync(path.join(dir, "page.tsx"), { force: true });
+      } else {
+        fs.rmSync(dir, { recursive: true, force: true });
+      }
+      count++;
+    }
+  }
+  return count;
+}
+
+/**
+ * `X.for-template.ts` replaces `X.ts` (any extension). The variant lives next to
+ * the file it replaces and is typechecked in this repo;
+ * apps/landing/src/__tests__/site-links.test.ts checks it exports the same
+ * names.
+ */
+function applyTemplateVariants(targetDir: string): number {
+  const found: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (HARD_SKIP.has(entry.name)) continue;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (/\.for-template\.[a-z]+$/.test(entry.name)) found.push(full);
+    }
+  };
+  walk(targetDir);
+  for (const variant of found) {
+    fs.renameSync(variant, variant.replace(/\.for-template(\.[a-z]+)$/, "$1"));
+  }
+  return found.length;
+}
+
+/**
+ * Stripping Nebutra's pages leaves the helpers and data only they used. The
+ * same reachability the monorepo guards with (no-dead-modules.test.ts) finds
+ * them here; they go, and so does any test that imports something gone.
+ * Repeats until nothing changes, since a pruned module can orphan another.
+ */
+function pruneUnreachableLanding(targetDir: string): number {
+  const app = path.join(targetDir, "apps/landing");
+  const src = path.join(app, "src");
+  if (!fs.existsSync(src)) return 0;
+  let total = 0;
+  for (;;) {
+    const { unreachable, sources } = moduleReach(app);
+    const brokenTests = sources.filter((rel: string) => {
+      if (!/__tests__\/|\.(test|spec)\.tsx?$/.test(rel)) return false;
+      const abs = path.join(app, rel);
+      return localImports(abs).some((spec: string) => resolveSpecifier(src, abs, spec) === null);
+    });
+    const doomed = [...unreachable, ...brokenTests];
+    if (doomed.length === 0) return total;
+    for (const rel of doomed) fs.rmSync(path.join(app, rel), { force: true });
+    total += doomed.length;
+  }
 }
 
 main();

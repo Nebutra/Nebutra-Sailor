@@ -15,7 +15,6 @@ import {
 import { AnimateIn } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
@@ -350,9 +349,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
   };
 
   return (
-    <main id="main-content" className="flex flex-col min-h-dvh bg-background">
-      <Navbar />
-
+    <main id="main-content" className="flex flex-col flex-1 bg-background">
       {/* 1. Hero — R&D Manifesto */}
       <section className="relative pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
         <AuroraBackground variant="vivid" position="top" intensity={0.6} />
@@ -827,8 +824,6 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           </Button>
         </div>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

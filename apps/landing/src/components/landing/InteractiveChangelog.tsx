@@ -1,5 +1,6 @@
 "use client";
 
+import { brand } from "@nebutra/brand/metadata";
 import {
   ChevronDown,
   Copy,
@@ -116,7 +117,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
               <br /> Latest Enhancements & Platform News
             </h1>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-              Follow every product-grade improvement across the Nebutra AI SaaS platform.
+              Follow every product-grade improvement across the {brand.name} AI SaaS platform.
             </p>
           </div>
         </div>

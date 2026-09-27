@@ -131,8 +131,8 @@
     "columns": {
       "product": "产品",
       "resources": "资源",
-      "legal": "法律",
-      "community": "社区"
+      "company": "公司",
+      "legal": "法律"
     },
     "links": {
       "product": "产品",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. 保留所有权利。",
+    "copyright": "© 2026 {companyLegal} · 保留所有权利。",
     "fontCredit": "中文字型：小米 MiSans",
     "statusOnline": "所有子系统在线运行",
     "newsletterTitle": "保持最新动态",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO 架构",
-    "title": "10 个应用 · 112 个包 · 4 条后端线",
+    "title": "10 个应用 · 111 个包 · 4 条后端线",
     "description": "共享代码、并行构建、零冗余。从数据库到前端的完整端到端类型安全。",
     "metricApps": "应用",
     "metricBackends": "后端线",
@@ -243,7 +243,7 @@
       "ctaButton": "建立通讯"
     },
     "contact": {
-      "title": "技术与商务联络 — {brandName} Intelligence",
+      "title": "技术与商务联络 — {brandName}",
       "description": "针对商务授权、企业私有化部署以及疑难技术支持的联系通道。",
       "heading": "建立支持联结",
       "subheading": "我们将指派对应的技术专员或架构师跟进您的具体需求。",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "数据保护官",
-            "desc": "您可通过 dpo@nebutra.com 联系我们的数据保护官。"
+            "desc": "您可通过 dpo@{domain} 联系我们的数据保护官。"
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "如何申请退款",
         "step1": {
           "title": "第一步：联系支持团队",
-          "intro": "请发送邮件至 billing@nebutra.com，并提供以下信息：",
+          "intro": "请发送邮件至 billing@{domain}，并提供以下信息：",
           "items": {
             "0": "您的账户注册邮箱",
             "1": "订阅方案及计费周期",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "回复决定邮件并附上补充信息",
           "1": "申请升级至主管级别处理",
-          "2": "通过 legal@nebutra.com 联系我们寻求进一步审核"
+          "2": "通过 legal@{domain} 联系我们寻求进一步审核"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "十、争议解决",
         "informal": {
           "title": "10.1 非正式解决",
-          "content": "在启动正式程序之前，您同意通过 legal@nebutra.com 联系我们，尝试非正式解决争议。"
+          "content": "在启动正式程序之前，您同意通过 legal@{domain} 联系我们，尝试非正式解决争议。"
         },
         "governingLaw": {
           "title": "10.2 适用法律",
@@ -1216,7 +1216,6 @@
       "eyebrow": "立即开始",
       "title": "停止折腾配置，立即开始构建",
       "description": "使用 {brandName} CLI 即可在本地初始化您的高可用可扩展 SaaS 架构。",
-      "button": "部署云端架构",
       "license": "基於 FSL-1.1-ALv2 開源協議。無需信用卡。"
     },
     "capability": {

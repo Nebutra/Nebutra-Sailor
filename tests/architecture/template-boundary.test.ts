@@ -83,6 +83,9 @@ const IDENTIFIERS = {
   team_c6eOa4: /\bteam_c6eOa4/i, // the Vercel team id (prefix — the full id is longer)
   "next-seagull": /\bnext-seagull\b/i,
   "Nebutra/Nebutra-Sailor": /\bNebutra\/Nebutra-Sailor\b/i, // the source-repo slug
+  // Nebutra's Sanity project. @nebutra/sanity used to default to it, so every
+  // scaffolded site's blog read Nebutra's CMS.
+  wyfqr24v: /\bwyfqr24v\b/,
 } satisfies Record<string, RegExp>;
 type Identifier = keyof typeof IDENTIFIERS;
 const IDENTIFIER_NAMES = Object.keys(IDENTIFIERS) as Identifier[];

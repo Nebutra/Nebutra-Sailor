@@ -3,7 +3,7 @@
 import { ArrowUpRight, ChevronDown } from "@nebutra/icons";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { getGroupResources, pick, RESOURCE_GROUPS } from "@/lib/constants/resources-data";
+import { getGroupResources, pick, RESOURCE_GROUPS_HERE } from "@/lib/constants/resources-data";
 
 /**
  * Desktop Resources trigger + two-column mega-menu (DEVELOPERS / COMPANY).
@@ -29,10 +29,14 @@ export function ResourcesMegaMenu() {
         <ChevronDown className="h-3 w-3 opacity-60 transition-transform duration-300 group-hover/nav:-rotate-180 group-focus-within/nav:-rotate-180" />
       </button>
 
-      <div className="fixed left-1/2 top-16 w-[min(46rem,calc(100vw-2rem))] -translate-x-1/2 origin-top invisible opacity-0 transition-[opacity,visibility] duration-300 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100">
+      <div
+        className={`fixed left-1/2 top-16 ${RESOURCE_GROUPS_HERE.length > 1 ? "w-[min(46rem,calc(100vw-2rem))]" : "w-[min(23rem,calc(100vw-2rem))]"} -translate-x-1/2 origin-top invisible opacity-0 transition-[opacity,visibility] duration-300 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100`}
+      >
         <div className="rounded-[var(--radius-2xl)] border border-border/60 bg-popover/95 p-5 shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] backdrop-blur-xl dark:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.5)]">
-          <div className="grid grid-cols-2 gap-x-8">
-            {RESOURCE_GROUPS.map((group, index) => (
+          <div
+            className={`grid gap-x-8 ${RESOURCE_GROUPS_HERE.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
+          >
+            {RESOURCE_GROUPS_HERE.map((group, index) => (
               <div
                 key={group.id}
                 className={`flex flex-col gap-2 ${index === 0 ? "pr-1" : "border-l border-border/50 pl-8"}`}

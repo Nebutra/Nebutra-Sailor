@@ -67,7 +67,7 @@ describe("NavbarAuthCluster", () => {
       vi.fn().mockResolvedValue(
         jsonResponse({
           name: "Tseka Luk",
-          email: "tseka@nebutra.com",
+          email: "founder@example.com",
           avatarUrl: null,
           activeOrganization: { name: "Nebutra", slug: "nebutra" },
         }),

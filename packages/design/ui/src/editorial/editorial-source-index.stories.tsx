@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EditorialSourceIndex } from "./editorial-source-index";
+import { editorialReadingColumnDecorator } from "./story-decorators";
 
 const meta: Meta<typeof EditorialSourceIndex> = {
   title: "Editorial/SourceIndex",
   component: EditorialSourceIndex,
   tags: ["autodocs"],
+  decorators: [editorialReadingColumnDecorator],
   parameters: {
     docs: {
       description: {

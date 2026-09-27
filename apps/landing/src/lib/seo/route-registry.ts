@@ -1,5 +1,7 @@
+import { brand } from "@nebutra/brand/metadata";
 import { CONTENT_PRIMARY_ROUTE_LOCALES } from "@nebutra/i18n/locales";
 import { routing } from "@/i18n/routing";
+import { belongsHere } from "@/site-map";
 
 /**
  * Single SEO route SSOT for the landing origin.
@@ -37,14 +39,14 @@ export type SeoRouteEntry = {
   };
 };
 
-export const SEO_ROUTE_REGISTRY: ReadonlyArray<SeoRouteEntry> = [
+const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
   // ── UI-scoped marketing / legal pages ───────────────────────────
   {
     pattern: "/",
     changeFrequency: "weekly",
     priority: 1.0,
     localization: "ui",
-    sitelinkCandidate: { label: "Nebutra Agent OS" },
+    sitelinkCandidate: { label: `${brand.name} Agent OS` },
   },
   {
     pattern: "/features",
@@ -148,6 +150,12 @@ export const SEO_ROUTE_REGISTRY: ReadonlyArray<SeoRouteEntry> = [
     localization: "ui",
     sitelinkCandidate: { label: "About Nebutra" },
   },
+  // The Nebutra site's own sections (site-map.ts). Their copy is authored in
+  // English with a Chinese line, not in the message catalogs.
+  { pattern: "/sailor", changeFrequency: "weekly", priority: 0.8, localization: "content" },
+  { pattern: "/sailor/studio", changeFrequency: "weekly", priority: 0.7, localization: "content" },
+  { pattern: "/sleptons", changeFrequency: "weekly", priority: 0.6, localization: "content" },
+  { pattern: "/building", changeFrequency: "weekly", priority: 0.6, localization: "content" },
   { pattern: "/careers", changeFrequency: "weekly", priority: 0.6, localization: "ui" },
   { pattern: "/ideas", changeFrequency: "weekly", priority: 0.6, localization: "ui" },
   { pattern: "/about/products", changeFrequency: "monthly", priority: 0.6, localization: "ui" },
@@ -224,7 +232,23 @@ export const SEO_ROUTE_REGISTRY: ReadonlyArray<SeoRouteEntry> = [
   { pattern: "/blog/tag/*", changeFrequency: "weekly", priority: 0.1, localization: "none" },
   { pattern: "/legal/*", changeFrequency: "monthly", priority: 0.1, localization: "none" },
   { pattern: "/opc", changeFrequency: "monthly", priority: 0.1, localization: "none" },
+  // Studio's catalog frame: part of the Studio page, never a page of its own.
+  {
+    pattern: "/sailor/studio/frame",
+    changeFrequency: "monthly",
+    priority: 0.1,
+    localization: "none",
+  },
 ] as const;
+
+/**
+ * The routes this site serves. site-map.ts owns which pages exist; this list
+ * owns how each is indexed. The template drops Nebutra's own pages here so
+ * its sitemap never advertises a route it does not have.
+ */
+export const SEO_ROUTE_REGISTRY: ReadonlyArray<SeoRouteEntry> = ALL_SEO_ROUTES.filter((entry) =>
+  belongsHere({ href: entry.pattern.replace(/\/\*$/, "/x") }),
+);
 
 const WILDCARD_SUFFIX = "/*";
 

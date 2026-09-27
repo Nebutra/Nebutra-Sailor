@@ -11,6 +11,7 @@ describe("landing footer columns", () => {
       labelKey: "forge",
       href: getBrandOrigin("forge"),
       external: true,
+      site: "nebutra",
     });
     expect(forge?.href).toMatch(/^https:\/\//);
   });
