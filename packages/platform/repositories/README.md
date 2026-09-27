@@ -37,10 +37,8 @@ const allUsers = await userRepo.findAll();
 
 | Type | Description |
 |------|-------------|
-| `CreateUserData` | Input for user creation (clerkId, email, name, avatarUrl) |
+| `IdentityRecord` | Better Auth identity mirrored into the platform `users` table |
 | `UpdateUserData` | Input for user updates |
-| `UpsertByClerkIdData` | Input for upsert by Clerk ID |
-| `CreateOrganizationData` | Input for organization creation |
 | `UpdateOrganizationData` | Input for organization updates |
 | `UpsertMemberData` | Input for membership upsert |
 | `UpsertWebhookEventData` | Input for webhook event upsert |
