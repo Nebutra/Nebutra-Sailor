@@ -6,6 +6,10 @@ export default defineConfig({
     environment: "node",
     globals: true,
     exclude: ["**/node_modules/**", "**/dist/**", "scripts/**"],
+    // The @nebutra/ui primitives barrel reaches react-tweet, which imports CSS
+    // from node_modules; Node cannot load that, so Vite has to (as in web and
+    // router's configs).
+    server: { deps: { inline: [/react-tweet/] } },
   },
   resolve: {
     alias: {

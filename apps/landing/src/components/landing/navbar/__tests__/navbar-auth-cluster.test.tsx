@@ -11,16 +11,18 @@ vi.mock("next-intl", () => ({
   useTranslations: (namespace: string) => (key: string) => `${namespace}.${key}`,
 }));
 
+// Every icon is the same stub. A closed list broke both suites the moment the
+// @nebutra/ui barrel they import started drawing an icon this file never named.
 vi.mock("@nebutra/icons", () => {
   const Icon = (props: React.SVGProps<SVGSVGElement>) => <svg aria-hidden="true" {...props} />;
-  return {
-    BookOpen: Icon,
-    ChevronDown: Icon,
-    CreditCard: Icon,
-    Logout: Icon,
-    SettingsGear: Icon,
-    User: Icon,
-  };
+  return new Proxy(
+    {},
+    {
+      has: () => true,
+      // `then` must stay undefined or the module is mistaken for a promise.
+      get: (_target, name) => (name === "then" ? undefined : Icon),
+    },
+  );
 });
 
 import { NavbarAuthCluster } from "../NavbarAuthCluster";
