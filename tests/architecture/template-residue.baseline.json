@@ -31,7 +31,6 @@
     "apps/landing/src/lib/seo/__tests__/structured-data.test.ts",
     "apps/landing/src/lib/session-home-redirect.test.ts",
     "apps/landing/src/lib/session-home-redirect.ts",
-    "apps/landing/src/lib/status-store.ts",
     "apps/landing/src/proxy.ts",
     "apps/storybook/src/stories/FullPageStatus.stories.tsx",
     "apps/web/.env.example",

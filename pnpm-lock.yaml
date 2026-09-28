@@ -790,6 +790,9 @@ importers:
       '@nebutra/sanity':
         specifier: workspace:*
         version: link:../../packages/ops/sanity
+      '@nebutra/status':
+        specifier: workspace:*
+        version: link:../../packages/platform/status
       '@nebutra/theme':
         specifier: workspace:*
         version: link:../../packages/design/theme
@@ -5284,22 +5287,22 @@ importers:
 
   packages/platform/status:
     dependencies:
-      react:
-        specifier: 19.2.4
-        version: 19.2.4
+      '@nebutra/logger':
+        specifier: workspace:*
+        version: link:../logger
+      p-limit:
+        specifier: ^7.3.0
+        version: 7.3.0
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
-      '@types/node':
-        specifier: ^22.19.15
-        version: 22.19.15
-      '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))
+        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/platform/tenant-store:
     devDependencies:

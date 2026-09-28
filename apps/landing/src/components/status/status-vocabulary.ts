@@ -1,3 +1,5 @@
+import type { IncidentImpact, StatusIncident } from "@nebutra/status";
+import { type DayStats, dayUptime, mergeDayState } from "@nebutra/status/math";
 import type { ServiceState } from "@/lib/status-checks";
 
 /**
@@ -98,44 +100,97 @@ export const overallBannerClass: Record<Exclude<ServiceState, "unknown">, string
 export const UPTIME_WINDOW_DAYS = 90;
 export const PAST_INCIDENT_DAYS = 14;
 
+export interface UptimeDayIncident {
+  id: string;
+  title: string;
+  impact: IncidentImpact;
+}
+
 export interface UptimeDay {
   /** ISO date YYYY-MM-DD (UTC) */
   date: string;
   status: DayCellStatus;
   isToday: boolean;
+  /** Share of the day's checks that passed, 0–1; absent when the day has none. */
+  uptime?: number;
+  incidents: UptimeDayIncident[];
 }
 
 /**
- * Build a Statuspage-style 90-day series from optional durable history.
+ * Build a Statuspage-style 90-day series from durable history.
  * Missing days stay `no_data` (muted) so we never invent green walls.
- * Today prefers live probe state (merged with any stored worst-of-day).
+ * Today is the worse of its recorded share and the live reading, so an outage
+ * in progress shows before it has cost enough checks to colour the day.
+ * An incident touching the component on a day raises that day to at least its impact.
  */
 export function buildUptimeSeries(
   liveState: ServiceState,
   history: Record<string, ServiceState> = {},
   now: Date = new Date(),
+  options: {
+    days?: Record<string, DayStats>;
+    incidents?: StatusIncident[];
+    serviceId?: string;
+  } = {},
 ): UptimeDay[] {
   const days: UptimeDay[] = [];
   // Anchor to UTC midnight so SSR/client agree within the same UTC day.
   const utcToday = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  const touching = (options.incidents ?? []).filter(
+    (i) =>
+      i.kind === "incident" &&
+      (!options.serviceId || i.affectedServiceIds.includes(options.serviceId)),
+  );
 
   for (let offset = UPTIME_WINDOW_DAYS - 1; offset >= 0; offset -= 1) {
-    const ms = utcToday - offset * 86_400_000;
-    const d = new Date(ms);
-    const date = d.toISOString().slice(0, 10);
+    const date = new Date(utcToday - offset * 86_400_000).toISOString().slice(0, 10);
     const isToday = offset === 0;
-    const stored = history[date];
+    const stored: ServiceState | undefined = history[date];
     let status: DayCellStatus;
     if (isToday) {
-      status = liveState;
-    } else if (stored) {
-      status = stored;
+      status = stored && stored !== "unknown" ? mergeDayState(stored, liveState) : liveState;
     } else {
-      status = "no_data";
+      status = stored ?? "no_data";
     }
-    days.push({ date, isToday, status });
+    const dayIncidents = touching.filter((i) => incidentSpansDay(i, date));
+    for (const incident of dayIncidents) {
+      const floor = IMPACT_STATE[incident.impact];
+      if (floor) status = raiseTo(status, floor);
+    }
+    const stats = options.days?.[date];
+    days.push({
+      date,
+      isToday,
+      status,
+      ...(stats && stats.total > 0 ? { uptime: dayUptime(stats) } : {}),
+      incidents: dayIncidents.map(({ id, title, impact }) => ({ id, title, impact })),
+    });
   }
   return days;
+}
+
+function raiseTo(status: DayCellStatus, floor: ServiceState): ServiceState {
+  return status === "no_data" ? floor : mergeDayState(status, floor);
+}
+
+const IMPACT_STATE: Record<IncidentImpact, ServiceState | null> = {
+  none: null,
+  minor: "degraded",
+  major: "degraded",
+  critical: "outage",
+};
+
+function incidentSpansDay(incident: StatusIncident, date: string): boolean {
+  const start = incident.createdAt.slice(0, 10);
+  const end = (incident.resolvedAt ?? new Date().toISOString()).slice(0, 10);
+  return date >= start && date <= end;
+}
+
+export function formatUptime(value: number | null | undefined): string {
+  if (value == null) return "—";
+  const pct = value * 100;
+  // Two decimals like every hosted status page; never round 99.996 up to a claimed 100.
+  return `${(Math.floor(pct * 100) / 100).toFixed(2)}%`;
 }
 
 export function buildPastIncidentDays(now: Date = new Date()): string[] {

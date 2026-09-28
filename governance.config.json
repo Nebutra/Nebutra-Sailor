@@ -321,10 +321,6 @@
         "count": 14
       },
       {
-        "file": "apps/landing/src/components/status/status-page-view.tsx",
-        "count": 13
-      },
-      {
         "file": "apps/router/src/components/keys-client.tsx",
         "count": 13
       },
@@ -1582,10 +1578,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/use-cases/UseCasesSection.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/status/uptime-bar.tsx",
         "count": 1
       },
       {

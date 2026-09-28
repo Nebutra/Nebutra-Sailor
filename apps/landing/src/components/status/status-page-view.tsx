@@ -1,342 +1,446 @@
 import { LogomarkSVG } from "@nebutra/brand";
 import { brand } from "@nebutra/brand/metadata";
+import {
+  Calendar,
+  CheckCircleFill,
+  ChevronRight,
+  CrossCircleFill,
+  Information,
+  WarningFill,
+  Wrench,
+} from "@nebutra/icons";
+import { type IncidentImpact, maintenancePhase, type StatusIncident } from "@nebutra/status";
 import { cn } from "@nebutra/ui/utils";
+import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
-import type { ServiceProbe, StatusSnapshot } from "@/lib/status-checks";
-import type { IncidentImpact, StatusIncident } from "@/lib/status-incidents";
+import type { ServiceProbe, ServiceState, StatusSnapshot } from "@/lib/status-checks";
 import {
   buildPastIncidentDays,
   buildUptimeSeries,
   componentStatusLabel,
+  formatUptime,
   formatUtcDay,
   formatUtcMedium,
-  overallBannerClass,
-  overallCopy,
-  overallDetail,
   stateFillClass,
-  stateSurfaceClass,
+  UPTIME_WINDOW_DAYS,
 } from "./status-vocabulary";
+import { SubscribeMenu } from "./subscribe-menu";
 import { UptimeBar } from "./uptime-bar";
 
 /**
- * Statuspage-paradigm public status surface.
- *
- * IA (GitHub Status / Atlassian Statuspage / incident.io):
- *   chrome → overall banner → active incidents → components (+ 90d bars)
- *   → maintenance → past incidents
+ * Public status surface, modelled on incident.io's hosted status pages:
+ *   chrome (mark + Subscribe) → one-sentence verdict → ongoing incidents →
+ *   maintenance → system status (uptime % + 90-day strip with day popovers)
+ *   → recent incidents → footer feeds.
+ * Marketing chrome is stripped so the page reads as a trust surface.
  */
 
-const impactLabel: Record<IncidentImpact, string> = {
+export const impactLabel: Record<IncidentImpact, string> = {
   none: "No impact",
-  minor: "Minor",
-  major: "Major",
-  critical: "Critical",
+  minor: "Minor impact",
+  major: "Major impact",
+  critical: "Critical impact",
 };
 
-export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
-  const overall = overallCopy[snapshot.overall];
-  const detail = overallDetail(snapshot.overall, snapshot.services);
-  const pastDays = buildPastIncidentDays();
-  const healthy = snapshot.services.filter((s) => s.state === "operational").length;
-  const incidentsByDay = groupByCreatedDay(snapshot.incidents);
+export const incidentStatusLabel: Record<string, string> = {
+  investigating: "Investigating",
+  identified: "Identified",
+  monitoring: "Monitoring",
+  resolved: "Resolved",
+};
 
+const VERDICT: Record<StatusSnapshot["overall"], { title: string; body: string }> = {
+  operational: {
+    title: "We're fully operational",
+    body: "We're not aware of any issues affecting our systems.",
+  },
+  degraded: {
+    title: "We're experiencing degraded performance",
+    body: "Some systems are slower or less reliable than usual.",
+  },
+  outage: {
+    title: "We're experiencing a major outage",
+    body: "One or more systems are unavailable.",
+  },
+};
+
+export function StateIcon({ state, className }: { state: ServiceState; className?: string }) {
+  if (state === "operational") {
+    return <CheckCircleFill aria-hidden className={cn("text-success-strong", className)} />;
+  }
+  if (state === "outage") {
+    return <CrossCircleFill aria-hidden className={cn("text-destructive-strong", className)} />;
+  }
+  return <WarningFill aria-hidden className={cn("text-warning-strong", className)} />;
+}
+
+export function StatusShell({ checkedAt, children }: { checkedAt?: string; children: ReactNode }) {
   return (
-    <div className="min-h-dvh bg-background text-foreground">
-      <StatusChrome checkedAt={snapshot.checkedAt} />
-
-      <main id="main-content" className="px-4 pb-20 pt-8 sm:px-6 sm:pt-10">
-        <div className="mx-auto w-full max-w-[720px]">
-          <section
-            aria-live="polite"
-            aria-atomic="true"
-            className={cn(
-              "rounded-xl border border-l-4 px-4 py-4 sm:px-5 sm:py-4",
-              overallBannerClass[snapshot.overall],
-            )}
-          >
-            <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-              <div className="min-w-0 space-y-1.5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset",
-                      stateSurfaceClass[snapshot.overall],
-                    )}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        "h-1.5 w-1.5 shrink-0 rounded-full",
-                        stateFillClass[snapshot.overall],
-                        snapshot.overall === "operational" && "motion-safe:animate-pulse",
-                      )}
-                    />
-                    {overall.label}
-                  </span>
-                </div>
-                <h1 className="sr-only">{overall.label}</h1>
-                <p className="text-sm leading-6 text-muted-foreground">{detail}</p>
-              </div>
-              <p className="shrink-0 text-xs tabular-nums text-muted-foreground">
-                {healthy}/{snapshot.services.length} operational
-              </p>
-            </div>
-            <p className="mt-2.5 text-xs tabular-nums text-muted-foreground">
-              Updated {formatUtcMedium(snapshot.checkedAt)}
-            </p>
-          </section>
-
-          {snapshot.activeIncidents.length > 0 ? (
-            <section className="mt-8" aria-labelledby="status-active-incidents-heading">
-              <h2
-                id="status-active-incidents-heading"
-                className="text-sm font-semibold tracking-tight text-foreground"
-              >
-                Active incidents
-              </h2>
-              <ul className="mt-3 space-y-3">
-                {snapshot.activeIncidents.map((incident) => (
-                  <li key={incident.id}>
-                    <IncidentCard incident={incident} />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          <section className="mt-8" aria-labelledby="status-components-heading">
-            <div className="mb-3 flex items-end justify-between gap-3">
-              <h2
-                id="status-components-heading"
-                className="text-sm font-semibold tracking-tight text-foreground"
-              >
-                Components
-              </h2>
-              <p className="text-[11px] text-muted-foreground">
-                {snapshot.historyDurable
-                  ? "Durable history · 90-day strip"
-                  : "Live checks · 90-day strip"}
-              </p>
-            </div>
-
-            <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-[color:hsl(var(--border))] bg-background shadow-ambient-sm">
-              <ul className="divide-y divide-[color:hsl(var(--border))]">
-                {snapshot.services.map((service) => (
-                  <ComponentRow key={service.id} service={service} />
-                ))}
-              </ul>
-            </div>
-            <p className="mt-2 text-[11px] leading-5 text-muted-foreground">
-              {snapshot.historyDurable
-                ? "Uptime bars use worst-of-day status recorded from public edge probes."
-                : "History is not durable yet (set UPSTASH_REDIS_REST_*). Prior days stay muted — we do not invent a green wall."}
-            </p>
-          </section>
-
-          <section className="mt-10" aria-labelledby="status-maintenance-heading">
-            <h2
-              id="status-maintenance-heading"
-              className="text-sm font-semibold tracking-tight text-foreground"
-            >
-              Scheduled maintenance
-            </h2>
-            <div className="mt-3 rounded-[var(--radius-2xl)] border border-dashed border-[color:hsl(var(--border))] px-4 py-5">
-              <p className="text-sm text-muted-foreground">
-                No maintenance windows are currently scheduled.
-              </p>
-            </div>
-          </section>
-
-          <section className="mt-10" aria-labelledby="status-history-heading">
-            <h2
-              id="status-history-heading"
-              className="text-sm font-semibold tracking-tight text-foreground"
-            >
-              Past incidents
-            </h2>
-            <ol className="mt-3 overflow-hidden rounded-[var(--radius-2xl)] border border-[color:hsl(var(--border))] bg-background">
-              {pastDays.map((date) => {
-                const dayIncidents = incidentsByDay[date] ?? [];
-                return (
-                  <li
-                    key={date}
-                    className="border-b border-[color:hsl(var(--border))] px-4 py-3 last:border-b-0 sm:px-5"
-                  >
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-                      <time
-                        dateTime={date}
-                        className="shrink-0 text-sm font-medium tabular-nums text-foreground"
-                      >
-                        {formatUtcDay(date)}
-                      </time>
-                      {dayIncidents.length === 0 ? (
-                        <p className="text-sm text-muted-foreground">No incidents reported.</p>
-                      ) : (
-                        <ul className="min-w-0 flex-1 space-y-2">
-                          {dayIncidents.map((incident) => (
-                            <li key={incident.id} className="text-sm">
-                              <span className="font-medium text-foreground">{incident.title}</span>
-                              <span className="text-muted-foreground">
-                                {" "}
-                                · {impactLabel[incident.impact]} · {incident.status}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
-          </section>
-
-          <footer className="mt-12 border-t border-[color:hsl(var(--border))] pt-6 text-center text-xs leading-5 text-muted-foreground">
-            <p>
-              Machine-readable snapshot:{" "}
-              <a
-                href="/status.json"
-                className="font-medium text-foreground underline-offset-4 hover:underline"
-              >
-                /status.json
-              </a>
-            </p>
-            <p className="mt-1">
-              Powered by {brand.name} edge probes · Independent of the app origin when possible
-            </p>
-          </footer>
-        </div>
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
+      <StatusChrome checkedAt={checkedAt} />
+      <main id="main-content" className="flex-1 px-4 pb-16 pt-8 sm:px-6">
+        <div className="mx-auto w-full max-w-[760px]">{children}</div>
       </main>
+      <StatusFooter />
     </div>
   );
 }
 
-function groupByCreatedDay(incidents: StatusIncident[]): Record<string, StatusIncident[]> {
-  const out: Record<string, StatusIncident[]> = {};
-  for (const incident of incidents) {
-    const day = incident.createdAt.slice(0, 10);
-    const bucket = out[day] ?? [];
-    bucket.push(incident);
-    out[day] = bucket;
-  }
-  return out;
-}
+export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
+  // A declared critical incident outranks green probes: people see the
+  // failure before the probe does.
+  const declared: ServiceState = snapshot.activeIncidents.some((i) => i.impact === "critical")
+    ? "outage"
+    : snapshot.activeIncidents.some((i) => i.impact !== "none")
+      ? "degraded"
+      : "operational";
+  const verdictState = worse(snapshot.overall, declared);
+  const verdict = VERDICT[verdictState];
+  const recent = recentIncidents(snapshot.incidents);
+  const now = new Date(snapshot.checkedAt);
 
-function IncidentCard({ incident }: { incident: StatusIncident }) {
   return (
-    <article className="rounded-[var(--radius-2xl)] border border-destructive/25 bg-destructive/5 px-4 py-4 sm:px-5">
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-destructive/15 px-2 py-0.5 text-[11px] font-semibold text-destructive-strong ring-1 ring-destructive/25">
-          {impactLabel[incident.impact]}
-        </span>
-        <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-          {incident.status}
-        </span>
-      </div>
-      <h3 className="mt-2 text-[15px] font-semibold tracking-tight text-foreground">
-        {incident.title}
-      </h3>
-      <p className="mt-1 text-sm leading-6 text-muted-foreground">{incident.message}</p>
-      {incident.updates.length > 1 ? (
-        <ol className="mt-3 space-y-2 border-t border-[color:hsl(var(--border))] pt-3">
-          {[...incident.updates].reverse().map((update) => (
-            <li key={`${update.at}-${update.status}`} className="text-sm">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                {update.status}
-                <span className="mx-1.5 font-normal normal-case tracking-normal">
-                  {formatUtcMedium(update.at)}
-                </span>
-              </p>
-              <p className="mt-0.5 text-muted-foreground">{update.message}</p>
-            </li>
+    <StatusShell checkedAt={snapshot.checkedAt}>
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className={cn("overflow-hidden rounded-xl border", VERDICT_FRAME[verdictState])}
+      >
+        <div className={cn("flex items-center gap-2.5 px-5 py-3.5", VERDICT_HEAD[verdictState])}>
+          <StateIcon state={verdictState} className="h-5 w-5 shrink-0" />
+          <h1 className="text-lg font-medium tracking-tight text-foreground">{verdict.title}</h1>
+        </div>
+        <p className="bg-background px-5 py-4 text-base leading-6 text-foreground">
+          {verdict.body}
+        </p>
+      </section>
+
+      {snapshot.activeIncidents.length > 0 ? (
+        <section className="mt-10 space-y-3" aria-label="Ongoing incidents">
+          {snapshot.activeIncidents.map((incident) => (
+            <IncidentSummaryCard
+              key={incident.id}
+              incident={incident}
+              services={snapshot.services}
+            />
           ))}
-        </ol>
+        </section>
       ) : null}
-    </article>
+
+      {snapshot.maintenance.length > 0 ? (
+        <section className="mt-10 space-y-3" aria-label="Maintenance">
+          {snapshot.maintenance.map((item) => (
+            <MaintenanceCard key={item.id} item={item} now={now} services={snapshot.services} />
+          ))}
+        </section>
+      ) : null}
+
+      <section
+        className="mt-8 rounded-xl border border-border bg-background"
+        aria-labelledby="status-components-heading"
+      >
+        <div className="flex items-center gap-4 border-b border-border px-5 py-4">
+          <h2
+            id="status-components-heading"
+            className="text-lg font-medium tracking-tight text-foreground"
+          >
+            System status
+          </h2>
+          <p className="text-sm tabular-nums text-muted-foreground">{windowRange(now)}</p>
+        </div>
+        <ul className="divide-y divide-border">
+          {snapshot.services.map((service) => (
+            <ComponentRow
+              key={service.id}
+              service={service}
+              incidents={snapshot.incidents}
+              now={now}
+            />
+          ))}
+        </ul>
+        {!snapshot.historyDurable ? (
+          <p className="border-t border-border px-5 py-3 text-xs leading-5 text-muted-foreground">
+            History is not durable on this deployment. Prior days stay muted rather than shown
+            green.
+          </p>
+        ) : null}
+      </section>
+
+      {recent.length > 0 ? (
+        <section className="mt-8" aria-labelledby="status-history-heading">
+          <h2
+            id="status-history-heading"
+            className="mb-3 text-lg font-medium tracking-tight text-foreground"
+          >
+            Recent incidents
+          </h2>
+          <IncidentList incidents={recent} />
+        </section>
+      ) : null}
+
+      <div className="mt-8 flex justify-center">
+        <Link
+          href="/status/history"
+          className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-base font-medium text-foreground shadow-ambient-sm transition-colors hover:bg-muted/50"
+        >
+          <Calendar aria-hidden className="h-4 w-4" />
+          View history
+        </Link>
+      </div>
+    </StatusShell>
   );
 }
 
-/**
- * Trust-page chrome — GitHub Status / Atlassian Statuspage pattern:
- * small monochrome mark + “Status” word, quiet meta, no marketing mega-logo.
- */
-function StatusChrome({ checkedAt }: { checkedAt: string }) {
+const VERDICT_FRAME: Record<StatusSnapshot["overall"], string> = {
+  operational: "border-success/60",
+  degraded: "border-warning/60",
+  outage: "border-destructive/60",
+};
+
+const VERDICT_HEAD: Record<StatusSnapshot["overall"], string> = {
+  operational: "bg-success/12",
+  degraded: "bg-warning/14",
+  outage: "bg-destructive/10",
+};
+
+const RANK: Record<ServiceState, number> = { operational: 0, unknown: 1, degraded: 2, outage: 3 };
+
+function worse(
+  a: StatusSnapshot["overall"],
+  b: StatusSnapshot["overall"],
+): StatusSnapshot["overall"] {
+  return RANK[b] > RANK[a] ? b : a;
+}
+
+export function windowRange(now: Date): string {
+  const fmt = new Intl.DateTimeFormat("en", { month: "short", year: "numeric", timeZone: "UTC" });
+  const start = new Date(now.getTime() - (UPTIME_WINDOW_DAYS - 1) * 86_400_000);
+  return `${fmt.format(start)} – ${fmt.format(now)}`;
+}
+
+function recentIncidents(incidents: StatusIncident[]): StatusIncident[] {
+  const oldest = buildPastIncidentDays().at(-1) ?? "";
+  return incidents.filter(
+    (i) => i.kind === "incident" && i.status === "resolved" && i.createdAt.slice(0, 10) >= oldest,
+  );
+}
+
+export function IncidentList({ incidents }: { incidents: StatusIncident[] }) {
   return (
-    <header className="border-b border-border/80 bg-background">
-      <div className="mx-auto flex h-12 max-w-[720px] items-center justify-between gap-4 px-4 sm:h-[3.25rem] sm:px-6">
+    <ol className="overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-background">
+      {incidents.map((incident) => (
+        <li key={incident.id} className="border-b border-border last:border-b-0">
+          <Link
+            href={`/status/incidents/${incident.id}`}
+            className="group flex items-start justify-between gap-4 px-5 py-4 transition-colors hover:bg-muted/50"
+          >
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium text-foreground">{incident.title}</p>
+              <p className="mt-0.5 text-xs tabular-nums text-muted-foreground">
+                {formatUtcDay(incident.createdAt.slice(0, 10))}
+                {incident.resolvedAt ? ` · ${formatDuration(incident)}` : null}
+                {incident.kind === "maintenance"
+                  ? " · Maintenance"
+                  : ` · ${impactLabel[incident.impact]}`}
+              </p>
+            </div>
+            <ChevronRight
+              aria-hidden
+              className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground motion-safe:transition-transform group-hover:translate-x-0.5"
+            />
+          </Link>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+export function formatDuration(incident: StatusIncident): string {
+  const start = Date.parse(incident.scheduledStart ?? incident.createdAt);
+  const end = Date.parse(incident.resolvedAt ?? incident.scheduledEnd ?? new Date().toISOString());
+  const minutes = Math.max(1, Math.round((end - start) / 60_000));
+  if (minutes < 60) return `${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  if (hours < 48) return rest ? `${hours}h ${rest}m` : `${hours}h`;
+  return `${Math.round(hours / 24)}d`;
+}
+
+export function serviceNames(ids: string[], services: Array<{ id: string; name: string }>) {
+  return ids.map((id) => services.find((s) => s.id === id)?.name ?? id).join(", ");
+}
+
+const IMPACT_RAIL: Record<IncidentImpact, string> = {
+  none: "before:bg-muted-foreground/40",
+  minor: "before:bg-warning",
+  major: "before:bg-warning",
+  critical: "before:bg-destructive",
+};
+
+function IncidentSummaryCard({
+  incident,
+  services,
+}: {
+  incident: StatusIncident;
+  services: ServiceProbe[];
+}) {
+  const latest = incident.updates.at(-1);
+  return (
+    <Link
+      href={`/status/incidents/${incident.id}`}
+      className={cn(
+        "relative block overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-background py-4 pl-6 pr-5 shadow-ambient-sm transition-shadow hover:shadow-ambient-md",
+        "before:absolute before:inset-y-0 before:left-0 before:w-1",
+        IMPACT_RAIL[incident.impact],
+      )}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-xs font-medium text-muted-foreground">
+          {incidentStatusLabel[incident.status]} · {impactLabel[incident.impact]}
+        </p>
+        <ChevronRight aria-hidden className="h-4 w-4 text-muted-foreground" />
+      </div>
+      <h3 className="mt-1 text-base font-semibold tracking-tight text-foreground">
+        {incident.title}
+      </h3>
+      <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
+        {latest?.message ?? incident.message}
+      </p>
+      {incident.affectedServiceIds.length > 0 ? (
+        <p className="mt-2 text-xs text-muted-foreground">
+          Affects {serviceNames(incident.affectedServiceIds, services)}
+        </p>
+      ) : null}
+    </Link>
+  );
+}
+
+function MaintenanceCard({
+  item,
+  now,
+  services,
+}: {
+  item: StatusIncident;
+  now: Date;
+  services: ServiceProbe[];
+}) {
+  const phase = maintenancePhase(item, now);
+  return (
+    <Link
+      href={`/status/incidents/${item.id}`}
+      className="block rounded-[var(--radius-2xl)] border border-border bg-background px-5 py-4 transition-colors hover:bg-muted/40"
+    >
+      <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+        <Wrench aria-hidden className="h-3.5 w-3.5" />
+        {phase === "in_progress" ? "Maintenance in progress" : "Scheduled maintenance"}
+      </p>
+      <h3 className="mt-1 text-base font-semibold tracking-tight text-foreground">{item.title}</h3>
+      {item.scheduledStart ? (
+        <p className="mt-1 text-xs tabular-nums text-muted-foreground">
+          {formatUtcMedium(item.scheduledStart)}
+          {item.scheduledEnd ? ` → ${formatUtcMedium(item.scheduledEnd)}` : null}
+        </p>
+      ) : null}
+      <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-muted-foreground">
+        {item.updates.at(-1)?.message ?? item.message}
+      </p>
+      {item.affectedServiceIds.length > 0 ? (
+        <p className="mt-2 text-xs text-muted-foreground">
+          Affects {serviceNames(item.affectedServiceIds, services)}
+        </p>
+      ) : null}
+    </Link>
+  );
+}
+
+function StatusChrome({ checkedAt }: { checkedAt?: string }) {
+  return (
+    <header className="px-4 pt-8 sm:px-6 sm:pt-10">
+      <div className="mx-auto flex max-w-[760px] items-center justify-between gap-4">
         <Link
           href="/status"
-          className="group flex min-w-0 items-center gap-2 rounded-md outline-offset-2"
+          className="flex min-w-0 items-center gap-2.5 rounded-md"
           aria-label={`${brand.name} Status`}
         >
-          <LogomarkSVG className="h-5 w-5 shrink-0 text-foreground sm:h-[1.375rem] sm:w-[1.375rem]" />
-          <span className="flex min-w-0 items-baseline gap-1.5">
-            <span className="truncate text-[13px] font-semibold tracking-tight text-foreground sm:text-sm">
-              {brand.name}
-            </span>
-            <span aria-hidden className="hidden h-3 w-px shrink-0 bg-border sm:block" />
-            <span className="text-[13px] font-medium tracking-tight text-muted-foreground sm:text-sm">
-              Status
-            </span>
+          <LogomarkSVG className="h-7 w-7 shrink-0 text-foreground" />
+          <span className="truncate text-xl font-semibold tracking-tight text-foreground">
+            {brand.name}
           </span>
         </Link>
-
-        <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-          <time
-            dateTime={checkedAt}
-            className="hidden text-[11px] tabular-nums tracking-tight text-muted-foreground sm:inline"
-          >
-            {formatUtcMedium(checkedAt)}
-          </time>
-          <a
-            href="/status.json"
-            className={cn(
-              "text-[11px] font-medium tracking-wide text-muted-foreground",
-              "underline-offset-4 transition-colors hover:text-foreground hover:underline",
-            )}
-          >
-            JSON
-          </a>
+        <div className="flex shrink-0 items-center gap-3">
+          {checkedAt ? (
+            <time dateTime={checkedAt} className="sr-only">
+              Updated {formatUtcMedium(checkedAt)}
+            </time>
+          ) : null}
+          <SubscribeMenu />
         </div>
       </div>
     </header>
   );
 }
 
-function ComponentRow({ service }: { service: ServiceProbe }) {
-  const days = buildUptimeSeries(service.state, service.history ?? {});
-  const label = componentStatusLabel[service.state];
-  const metaParts = [service.note];
-  if (service.latencyMs != null) metaParts.push(`${service.latencyMs} ms`);
-  if (service.statusCode != null) metaParts.push(`HTTP ${service.statusCode}`);
-
+function StatusFooter() {
   return (
-    <li className="px-4 py-4 sm:px-5 sm:py-5">
-      <div className="min-w-0">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-          <h3 className="text-[15px] font-semibold tracking-tight text-foreground">
-            {service.name}
-          </h3>
-          <span
-            className={cn(
-              "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-semibold ring-1",
-              stateSurfaceClass[service.state],
-            )}
-          >
-            <span
-              aria-hidden="true"
-              className={cn("h-1.5 w-1.5 rounded-full", stateFillClass[service.state])}
-            />
-            {label}
-          </span>
-        </div>
-        <p className="mt-1 text-sm leading-6 text-muted-foreground">{service.description}</p>
-        <p className="mt-1 text-[11px] tabular-nums text-muted-foreground">
-          {metaParts.join(" · ")}
+    <footer className="px-4 pb-10 sm:px-6">
+      <div className="mx-auto max-w-[760px] text-center text-sm text-muted-foreground">
+        <p>
+          Powered by <span className="font-semibold text-foreground">{brand.name} Status</span>
+        </p>
+        <p className="mt-2 text-xs leading-5">
+          Availability is measured by public checks from outside our cloud every few minutes. ·{" "}
+          <a href="/status.atom" className="hover:text-foreground">
+            Atom
+          </a>{" "}
+          ·{" "}
+          <a href="/status.json" className="hover:text-foreground">
+            JSON
+          </a>
         </p>
       </div>
+    </footer>
+  );
+}
 
-      <div className="mt-3.5">
+function ComponentRow({
+  service,
+  incidents,
+  now,
+}: {
+  service: ServiceProbe;
+  incidents: StatusIncident[];
+  now: Date;
+}) {
+  const days = buildUptimeSeries(service.state, service.history ?? {}, now, {
+    days: service.days,
+    incidents,
+    serviceId: service.id,
+  });
+
+  return (
+    <li className="px-5 py-4">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-2">
+          <StateIcon state={service.state} className="h-[18px] w-[18px] shrink-0" />
+          <h3 className="truncate text-base font-medium text-foreground">{service.name}</h3>
+          <span
+            className="hidden text-muted-foreground sm:inline-flex"
+            title={service.description}
+            aria-label={service.description}
+          >
+            <Information aria-hidden className="h-3.5 w-3.5" />
+          </span>
+          {service.state !== "operational" ? (
+            <span className="text-sm text-muted-foreground">
+              {componentStatusLabel[service.state]}
+            </span>
+          ) : null}
+        </div>
+        <span className="shrink-0 text-sm tabular-nums text-muted-foreground">
+          {formatUptime(service.uptime90)} uptime
+        </span>
+      </div>
+      <div className="mt-3">
         <UptimeBar days={days} />
       </div>
     </li>
@@ -347,15 +451,15 @@ export function StatusPageSkeleton() {
   return (
     <div className="min-h-dvh bg-background">
       <div className="border-b border-border/80">
-        <div className="mx-auto flex h-12 max-w-[720px] items-center px-4 sm:h-[3.25rem] sm:px-6">
+        <div className="mx-auto flex h-14 max-w-[760px] items-center px-4 sm:px-6">
           <div className="h-5 w-5 animate-pulse rounded bg-muted" />
           <div className="ml-2 h-3.5 w-28 animate-pulse rounded bg-muted" />
         </div>
       </div>
-      <div className="mx-auto max-w-[720px] px-4 pt-8 sm:px-6">
-        <div className="h-16 animate-pulse rounded-xl border border-border bg-muted/60" />
-        <div className="mt-8 h-72 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />
-        <div className="mt-10 h-48 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />
+      <div className="mx-auto max-w-[760px] px-4 pt-14 sm:px-6">
+        <div className="h-9 w-80 max-w-full animate-pulse rounded bg-muted" />
+        <div className="mt-12 h-80 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />
+        <div className="mt-12 h-32 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />
       </div>
     </div>
   );

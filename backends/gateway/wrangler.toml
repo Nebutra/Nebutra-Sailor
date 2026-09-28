@@ -39,7 +39,7 @@ localConnectionString = "postgresql://postgres:postgres@localhost:5432/nebutra"
 # are scheduled where Actions cron is best-effort.
 # 18:17 UTC = 02:17 Asia/Shanghai.
 [triggers]
-crons = ["17 18 * * *"]
+crons = ["17 18 * * *", "*/5 * * * *"]
 
 [observability]
 enabled = true
@@ -47,6 +47,7 @@ head_sampling_rate = 1
 
 [vars]
 DEPLOY_TARGET_GATEWAY = "cloudflare-workers"
+STATUS_PROBE_URL = "https://status.nebutra.com/api/status/probe"
 
 # @nebutra/db issues `SET LOCAL ROLE` with this inside every tenant
 # transaction. Not a secret — a role name — so it belongs in config where it is

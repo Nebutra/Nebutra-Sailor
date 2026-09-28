@@ -233,6 +233,10 @@ const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
   { pattern: "/blog/tag/*", changeFrequency: "weekly", priority: 0.1, localization: "none" },
   { pattern: "/legal/*", changeFrequency: "monthly", priority: 0.1, localization: "none" },
   { pattern: "/opc", changeFrequency: "monthly", priority: 0.1, localization: "none" },
+  // Status sub-pages: incident timelines and the history calendar are live
+  // operational records, not documents to rank.
+  { pattern: "/status/history", changeFrequency: "daily", priority: 0.1, localization: "none" },
+  { pattern: "/status/incidents/*", changeFrequency: "daily", priority: 0.1, localization: "none" },
   // Studio's catalog frame: part of the Studio page, never a page of its own.
   {
     pattern: "/sailor/studio/frame",

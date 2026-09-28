@@ -71,13 +71,38 @@ async function purgeExpiredRows(env: GatewayEnv): Promise<void> {
   }
 }
 
+/**
+ * Status history sampling. The status page records a probe run when someone
+ * opens it; this cron is the floor, so a quiet night still has data. It runs
+ * on Cloudflare, outside the Fly apps it checks.
+ */
+const STATUS_PROBE_CRON = "*/5 * * * *";
+
+async function sampleStatus(url: string | undefined): Promise<void> {
+  if (!url) return;
+  try {
+    const response = await fetch(url, { signal: AbortSignal.timeout(25_000) });
+    if (!response.ok) console.warn(`[status] probe answered ${response.status}`);
+  } catch (err) {
+    console.error("[status] probe failed", err);
+  }
+}
+
 export default {
   fetch(request: Request, env: GatewayEnv, executionContext?: GatewayExecutionContext) {
     resolveDatabaseUrl(env);
     return app.fetch(request, env, executionContext);
   },
 
-  scheduled(_event: unknown, env: GatewayEnv, ctx: { waitUntil: (p: Promise<unknown>) => void }) {
+  scheduled(
+    event: { cron?: string },
+    env: GatewayEnv,
+    ctx: { waitUntil: (p: Promise<unknown>) => void },
+  ) {
+    if (event.cron === STATUS_PROBE_CRON) {
+      ctx.waitUntil(sampleStatus((env as { STATUS_PROBE_URL?: string }).STATUS_PROBE_URL));
+      return;
+    }
     resolveDatabaseUrl(env);
     ctx.waitUntil(
       purgeExpiredRows(env).catch((err) => {

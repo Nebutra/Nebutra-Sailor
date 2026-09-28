@@ -221,6 +221,17 @@ export default function proxy(request: NextRequest): NextResponse {
         ? `/${locale}/${hostAliasSection}`
         : `/${hostAliasSection}`;
     request = new NextRequest(rewriteUrl, { headers: request.headers });
+  } else if (host === STATUS_HOST) {
+    // Status sub-pages live at the host root too: status.<domain>/incidents/<id>
+    // is the address a chat card links to, not /status/incidents/<id>.
+    const match = /^(\/[A-Za-z-]+)?\/(incidents\/[^/]+|history)$/.exec(pathname);
+    const prefix = match?.[1];
+    const localePrefix = prefix && routing.locales.some((l) => prefix === `/${l}`) ? prefix : "";
+    if (match && (!prefix || localePrefix)) {
+      const rewriteUrl = request.nextUrl.clone();
+      rewriteUrl.pathname = `${localePrefix}/status/${match[2]}`;
+      request = new NextRequest(rewriteUrl, { headers: request.headers });
+    }
   }
 
   // 1. Resolve market: NEXT_MARKET cookie > geo > path language default > US

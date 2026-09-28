@@ -4,33 +4,15 @@ import {
   groupIncidentsByDay,
   listActiveIncidents,
   updateIncident,
-} from "./status-incidents";
-import { type StatusKv, setStatusKvForTests } from "./status-store";
-
-function memoryKv(): StatusKv {
-  const map = new Map<string, string>();
-  return {
-    async get(key) {
-      return map.get(key) ?? null;
-    },
-    async set(key, value) {
-      map.set(key, value);
-    },
-    async hgetall() {
-      return {};
-    },
-    async hset() {},
-  };
-}
+} from "./incidents";
+import { getStatusKv } from "./store";
 
 describe("status incidents", () => {
-  afterEach(() => {
-    setStatusKvForTests(null);
+  afterEach(async () => {
+    await getStatusKv().clear?.();
   });
 
   it("creates and resolves incidents with a timeline", async () => {
-    setStatusKvForTests(memoryKv());
-
     const created = await createIncident(
       {
         title: "API elevated errors",
