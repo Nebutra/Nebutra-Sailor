@@ -532,7 +532,7 @@ describe("ci harness dependency closure", () => {
       join(process.cwd(), "e2e/smoke/changelog.spec.ts"),
       "utf8",
     );
-    const footerSpec = await readFile(join(process.cwd(), "e2e/smoke/footer.spec.ts"), "utf8");
+    const footerSpec = await readFile(join(process.cwd(), "e2e/smoke/site-footer.spec.ts"), "utf8");
     const playwrightConfig = await readFile(
       join(process.cwd(), "e2e/playwright.config.ts"),
       "utf8",
