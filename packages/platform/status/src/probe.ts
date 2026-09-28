@@ -118,7 +118,7 @@ const CONFIRM_DELAY_MS = 1500;
  */
 export async function probeService(
   target: ServiceTarget,
-  userAgent = "Nebutra-Status/1.0",
+  userAgent = "Status-Probe/1.0",
 ): Promise<ServiceProbe> {
   const first = await probeOnce(target, userAgent);
   if (first.state === "operational") return first;
