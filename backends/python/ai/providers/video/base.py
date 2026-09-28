@@ -17,12 +17,52 @@ import os
 import time
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Protocol
-
-if TYPE_CHECKING:
-    from providers.video.registry import VideoModelSpec
+from typing import Literal, Protocol
 
 ProgressFn = Callable[[int], Awaitable[None]]
+
+
+@dataclass(frozen=True)
+class VideoModelSpec:
+    """One PARA video model: what it accepts and which vendor model serves it.
+
+    Lives in the contract rather than the registry so adapters can type against it
+    without importing the registry that imports them (py/unsafe-cyclic-import).
+    """
+
+    id: str
+    label: str
+    # Adapter key (factory.ADAPTERS) for available models; a maker tag for planned ones.
+    vendor: str
+    status: Literal["available", "planned"]
+    durations: tuple[int, ...]
+    default_duration: int
+    resolutions: tuple[str, ...]
+    default_resolution: str
+    # Aspects the vendor takes for text-to-video. Image-to-video follows the frame.
+    aspects: tuple[str, ...]
+    # Vendor model ids for text-to-video and first-frame image-to-video.
+    t2v_model: str = ""
+    i2v_model: str = ""
+    text_to_video: bool = True
+    image_to_video: bool = True
+    # Vendor's own name for a PARA resolution tier, when it differs.
+    resolution_names: tuple[tuple[str, str], ...] = ()
+
+    def vendor_resolution(self, tier: str) -> str:
+        return dict(self.resolution_names).get(tier, tier)
+
+    def capabilities(self) -> dict[str, object]:
+        return {
+            "textToVideo": self.text_to_video,
+            "imageToVideo": self.image_to_video,
+            "durations": list(self.durations),
+            "defaultDuration": self.default_duration,
+            "resolutions": list(self.resolutions),
+            "defaultResolution": self.default_resolution,
+            "aspects": list(self.aspects),
+        }
+
 
 # How long a single clip may take end to end before we stop polling and fail the task.
 # Vendors quote 1-5 minutes; queues add to that. The Celery hard limit on the task
@@ -83,7 +123,8 @@ class VideoAdapter(Protocol):
         spec: VideoModelSpec,
         request: VideoGenerationRequest,
         progress: ProgressFn | None = None,
-    ) -> VideoGenerationResponse: ...
+    ) -> VideoGenerationResponse:
+        """Submit, poll until done or out of time, and return the hosted video."""
 
 
 class PollClock:
