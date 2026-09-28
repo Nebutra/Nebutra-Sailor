@@ -43,7 +43,7 @@
 
 :root {
   --para-topbar-h: 46px;
-  --para-dock-h: 44px;
+  --para-dock-h: 48px;
   --para-drawer-w: 300px;
   /* The app shell's persistent left rail (Home, Projects, Assets). The canvas route has none. */
   --para-sidebar-w: 240px;
@@ -96,6 +96,46 @@ body {
 .para-selected {
   outline: var(--para-select-w) solid var(--para-select-color);
   outline-offset: 0;
+}
+
+/* The `+` ports on a node's sides (LibTV). React Flow draws a 6px dot by default; ours is a 22px ring
+   with a plus, outside the frame, shown on hover or selection (ParaNode sets the opacity). */
+.react-flow__handle.para-port {
+  width: 22px;
+  height: 22px;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--muted-foreground) / 0.7);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  cursor: crosshair;
+  transition:
+    opacity 150ms var(--para-ease),
+    background-color 150ms var(--para-ease);
+}
+
+.react-flow__handle.para-port:hover {
+  background: hsl(var(--accent));
+}
+
+/* A wire is a thin light curve; the selected one reads brighter. */
+.react-flow__edge-path {
+  stroke: hsl(var(--muted-foreground) / 0.55);
+  stroke-width: 1.5;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: hsl(var(--foreground) / 0.85);
+}
+
+.react-flow__connection-path {
+  stroke: hsl(var(--ring));
+  stroke-width: 1.5;
 }
 
 .para-drawer-enter {

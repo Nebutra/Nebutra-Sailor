@@ -10,7 +10,7 @@ export function WorkspaceSurface({ view }: { view: WorkspaceViewType }) {
   if (view === "storyboard") return <StoryboardView />;
   return (
     <div className="flex h-full w-full items-center justify-center bg-background">
-      <p className="text-muted-foreground text-body capitalize">{view} is a labs view.</p>
+      <p className="text-body text-muted-foreground">这个视图还在实验中。</p>
     </div>
   );
 }
