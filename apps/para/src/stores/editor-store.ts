@@ -33,10 +33,12 @@ interface DeriveInput {
 
 interface EditorState {
   documentId: string | null;
+  /** The project the loaded workspace belongs to, so generated assets can point back at it. */
+  projectId: string | null;
   document: WorkspaceDocument | null;
   selection: string[];
   dirty: number;
-  load: (documentId: string, document: WorkspaceDocument) => void;
+  load: (documentId: string, document: WorkspaceDocument, projectId?: string) => void;
   setViewport: (viewport: Partial<Viewport>) => void;
   panBy: (dx: number, dy: number) => void;
   zoomAt: (factor: number, cx: number, cy: number) => void;
@@ -90,11 +92,13 @@ export const useEditorStore = create<EditorState>((set, get) => {
 
   return {
     documentId: null,
+    projectId: null,
     document: null,
     selection: [],
     dirty: 0,
 
-    load: (documentId, document) => set({ documentId, document, selection: [], dirty: 0 }),
+    load: (documentId, document, projectId) =>
+      set({ documentId, document, projectId: projectId ?? null, selection: [], dirty: 0 }),
 
     setViewport: (viewport) => {
       const doc = get().document;

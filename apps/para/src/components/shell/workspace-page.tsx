@@ -2,13 +2,15 @@
 
 // @async-surface-exempt: this is the page shell that decides what to mount; the surfaces it mounts own their own states.
 
-import { useEffect } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { WorkspaceSurface } from "@/components/canvas/workspace-surface";
 import { AgentPanel } from "@/components/overlays/agent-panel";
 import { JobsDrawer } from "@/components/overlays/jobs-drawer";
 import { LibraryDrawer } from "@/components/overlays/library-drawer";
+import { parseSeed, seedNode } from "@/domain/seed";
 import { api, useDocument, useProject, useWorkspace } from "@/mock/queries";
-import { useEditorStore } from "@/stores/editor-store";
+import { nextId, useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
 import { useUiStore } from "@/stores/ui-store";
 import { BottomDock } from "./bottom-dock";
@@ -37,15 +39,43 @@ export function WorkspacePage({
   const setDrawer = useUiStore((s) => s.setDrawer);
   const agentStatus = useUiStore((s) => s.agent.status);
   const [view] = useWorkspaceView();
+  const params = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const seed = parseSeed(params.get("seed"));
+  const seeded = useRef(false);
 
   useEffect(() => {
     if (workspace && doc && loadedId !== workspace.documentId) {
-      load(workspace.documentId, doc);
+      load(workspace.documentId, doc, projectId);
       // Node status is persisted; the jobs store is not. Without this, a reload during a
       // generation leaves the node reading "running" with nothing behind it, and no way back.
       void useJobsStore.getState().reconcile();
     }
-  }, [workspace, doc, loadedId, load]);
+  }, [workspace, doc, loadedId, load, projectId]);
+
+  // `?seed=image|text` (Home tool tiles): one empty generator node, selected, prompt focused. Only
+  // into an empty document, and the param is dropped afterwards so a reload never seeds twice.
+  useEffect(() => {
+    if (!seed || seeded.current || !workspace || loadedId !== workspace.documentId) return;
+    seeded.current = true;
+    const editor = useEditorStore.getState();
+    if (editor.document && Object.keys(editor.document.nodes).length === 0) {
+      const id = nextId();
+      editor.addNode(
+        seedNode(seed, id, editor.document.viewport, {
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }),
+      );
+      editor.select([id]);
+      useUiStore.getState().setPromptFocus(id);
+    }
+    const rest = new URLSearchParams(params.toString());
+    rest.delete("seed");
+    const query = rest.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }, [seed, workspace, loadedId, params, pathname, router]);
 
   // Silent autosave, debounced.
   useEffect(() => {

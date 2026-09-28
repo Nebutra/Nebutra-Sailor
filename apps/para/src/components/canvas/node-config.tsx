@@ -2,11 +2,13 @@
 
 import { ChevronDown } from "@nebutra/icons";
 import { Input, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
+import { useEffect, useRef } from "react";
 import { Chip } from "@/components/ui/chip";
 import { MODELS_BY_MODE } from "@/domain/models";
 import type { GeneratorMode, WorkspaceNode } from "@/domain/types";
 import { useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
+import { useUiStore } from "@/stores/ui-store";
 
 const MODES: GeneratorMode[] = ["image", "video", "text", "audio"];
 
@@ -65,6 +67,15 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
   const updateGenerator = useEditorStore((s) => s.updateGenerator);
   const derive = useEditorStore((s) => s.derive);
   const enqueue = useJobsStore((s) => s.enqueue);
+  const promptFocusNodeId = useUiStore((s) => s.promptFocusNodeId);
+  const promptField = useRef<HTMLInputElement>(null);
+
+  // A workspace opened from a Home tool tile lands here with the prompt as the next thing to do.
+  useEffect(() => {
+    if (promptFocusNodeId !== node.id) return;
+    promptField.current?.focus();
+    useUiStore.getState().setPromptFocus(null);
+  }, [promptFocusNodeId, node.id]);
 
   const g = node.generator ?? {
     mode: node.type === "text" ? "text" : node.type,
@@ -193,6 +204,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
           @
         </Chip>
         <Input
+          ref={promptField}
           size="sm"
           aria-label="Prompt"
           value={prompt}
