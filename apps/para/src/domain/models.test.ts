@@ -12,12 +12,12 @@ describe("model registry accessor", () => {
     const planned = modelsFor("video").filter((m) => !m.live);
     expect(planned.length).toBeGreaterThan(0);
     for (const m of planned) expect(reconcileModel("video", m.id)).toBe(AUTO_MODEL);
-    expect(reconcileModel("video", "wan2.5")).toBe("wan2.5");
-    expect(reconcileModel("image", "wan2.5")).toBe(AUTO_MODEL);
+    expect(reconcileModel("video", "wan-2.7")).toBe("wan-2.7");
+    expect(reconcileModel("image", "wan-2.7")).toBe(AUTO_MODEL);
   });
 
   it("gives video models their durations and resolutions", () => {
-    const wan = modelInfo("video", "wan2.5");
+    const wan = modelInfo("video", "wan-2.7");
     expect(wan.durations?.length).toBeGreaterThan(0);
     expect(wan.resolutions?.length).toBeGreaterThan(0);
     expect(modelInfo("video", "nope").id).toBe(AUTO_MODEL);

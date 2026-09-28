@@ -34,6 +34,7 @@ const ASPECT_CLASS: Record<Asset["aspect"], string> = {
   "4:3": "aspect-[4/3]",
   "1:1": "aspect-square",
   "9:16": "aspect-[9/16]",
+  "3:4": "aspect-[3/4]",
 };
 
 /**
