@@ -94,7 +94,7 @@ function replaceSecretLine(content: string, key: SecretName, value: string): str
 const PREVIEW_HEADER = `# Local preview — written by create-sailor.
 #
 # Everything here stays on this machine. \`pnpm dev\` runs every capability on
-# its local fallback (in-process database, memory queue and cache, console
+# its local fallback (a local PGlite database, memory queue and cache, console
 # email, local file storage), so nothing below is a key you need to find.
 # To take a capability live, copy its key from .env.example into this file;
 # \`pnpm dev\` prints which capabilities are live and which still need a key.

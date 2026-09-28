@@ -29,9 +29,9 @@ describe("pnpm dev — the local preview", () => {
   });
 
   it("rewrites build scripts to their JavaScript-only form", () => {
-    expect(fastBuildCommand("tsup")).toBe("tsup --no-dts");
+    expect(fastBuildCommand("tsup")).toBe("tsup --no-dts --no-clean");
     expect(fastBuildCommand("NODE_OPTIONS='--max-old-space-size=6144' tsup")).toBe(
-      "NODE_OPTIONS='--max-old-space-size=6144' tsup --no-dts",
+      "NODE_OPTIONS='--max-old-space-size=6144' tsup --no-dts --no-clean",
     );
     expect(fastBuildCommand("tsc -p tsconfig.json")).toBe("tsc -p tsconfig.json --noCheck");
     expect(fastBuildCommand("tsc --noEmit")).toBeNull();

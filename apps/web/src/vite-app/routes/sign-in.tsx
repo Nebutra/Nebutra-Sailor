@@ -2,7 +2,13 @@ import { buildAuthCenterSignInUrl, getAuthCenterOrigin } from "@nebutra/auth/cli
 import { Button, Field, Input } from "@nebutra/ui/primitives";
 import { createRoute } from "@tanstack/react-router";
 import { type FormEvent, useEffect, useState } from "react";
-import { resolveApiUrl } from "@/lib/api/browser-client";
+import {
+  DEMO_ACCOUNT,
+  describeError,
+  hasDemoAccount,
+  postAuth,
+  signInWithDemoAccount,
+} from "@/vite-app/preview-auth";
 import { rootRoute } from "./__root";
 
 /**
@@ -23,28 +29,7 @@ function resolveExternalAuthCenter(): string | null {
   return center === appOrigin ? null : center;
 }
 
-/**
- * The demo account the local preview database seeds (packages/platform/db,
- * preview-db.mjs). Offered only while `pnpm dev` runs on that database.
- */
-const DEMO_ACCOUNT = {
-  email: "admin@example.com",
-  password: "nebutra-preview",
-};
-
 type Mode = "sign-in" | "sign-up";
-
-async function postAuth(path: string, body: Record<string, string>): Promise<string | null> {
-  const response = await fetch(resolveApiUrl(`/api/auth/${path}`), {
-    method: "POST",
-    credentials: "include",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (response.ok) return null;
-  const payload = (await response.json().catch(() => null)) as { message?: string } | null;
-  return payload?.message ?? `The auth service answered ${response.status}`;
-}
 
 function authenticate(mode: Mode, email: string, password: string, name: string) {
   return mode === "sign-up"
@@ -52,12 +37,11 @@ function authenticate(mode: Mode, email: string, password: string, name: string)
     : postAuth("sign-in/email", { email, password });
 }
 
-function describeError(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
-}
-
 function SignInForm() {
-  const [mode, setMode] = useState<Mode>("sign-in");
+  // /sign-in?mode=sign-up opens on the sign-up form (the welcome page links there).
+  const [mode, setMode] = useState<Mode>(() =>
+    new URLSearchParams(window.location.search).get("mode") === "sign-up" ? "sign-up" : "sign-in",
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -80,12 +64,7 @@ function SignInForm() {
   const continueWithDemoAccount = async () => {
     setPending(true);
     setError(null);
-    const failure = await authenticate(
-      "sign-in",
-      DEMO_ACCOUNT.email,
-      DEMO_ACCOUNT.password,
-      "",
-    ).catch(describeError);
+    const failure = await signInWithDemoAccount();
     setPending(false);
     if (failure) setError(failure);
     else finish();
@@ -152,7 +131,7 @@ function SignInForm() {
         >
           {mode === "sign-in" ? "Create an account instead" : "Sign in to an existing account"}
         </Button>
-        {import.meta.env.VITE_SAILOR_DEMO_ACCOUNT ? (
+        {hasDemoAccount() ? (
           <div className="mt-6 border-neutral-7 border-t pt-4">
             <Button
               type="button"

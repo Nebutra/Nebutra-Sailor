@@ -9,7 +9,7 @@
  * of that, so this builds the same packages in dependency order with each
  * package's own build script, rewritten per `&&` step:
  *
- *   tsup …          → tsup … --no-dts        (JavaScript only)
+ *   tsup …          → tsup … --no-dts --no-clean  (JavaScript only; keep old .d.ts)
  *   tsc …           → tsc … --noCheck        (emit without type-checking)
  *   tsc --noEmit    → skipped                (a type-check, not a build)
  *   anything else   → unchanged              (style-dictionary, asset copies)
@@ -136,7 +136,9 @@ export function fastBuildCommand(script: string | undefined): string | null {
         if (words.includes("--noEmit")) return [];
         return [`${step} --noCheck`];
       }
-      if (bin === "tsup") return [`${step} --no-dts`];
+      // --no-clean keeps the declarations a full build left in dist/, so an
+      // editor still has types for a package the preview rebuilt.
+      if (bin === "tsup") return [`${step} --no-dts --no-clean`];
       return [step];
     });
   return steps.length > 0 ? steps.join(" && ") : null;
@@ -162,13 +164,30 @@ function newestMtime(dir: string, cutoff: number): number {
   return newest;
 }
 
-/** Built after its sources last changed — by this script or by the full build. */
+/**
+ * Where a package's last dev build is recorded. Not in dist/: some packages
+ * build elsewhere (design-tokens → build/, tokens → styles.css), and a stamp
+ * inside a directory the build cleans would vanish with it.
+ */
+function stampPath(pkg: WorkspacePackage): string {
+  return path.join(pkg.dir, "node_modules", ".cache", STAMP);
+}
+
+/** Built after its sources last changed — by this script, or (dist/) by the full build. */
 function isFresh(pkg: WorkspacePackage): boolean {
+  const stamp = stampPath(pkg);
   const dist = path.join(pkg.dir, "dist");
-  if (!fs.existsSync(dist)) return false;
-  const stamp = path.join(dist, STAMP);
-  const builtAt = fs.existsSync(stamp) ? fs.statSync(stamp).mtimeMs : fs.statSync(dist).mtimeMs;
+  let builtAt: number;
+  if (fs.existsSync(stamp)) builtAt = fs.statSync(stamp).mtimeMs;
+  else if (fs.existsSync(dist)) builtAt = fs.statSync(dist).mtimeMs;
+  else return false;
   return newestMtime(pkg.dir, builtAt) <= builtAt;
+}
+
+function markBuilt(pkg: WorkspacePackage): void {
+  const stamp = stampPath(pkg);
+  fs.mkdirSync(path.dirname(stamp), { recursive: true });
+  fs.writeFileSync(stamp, "");
 }
 
 function run(command: string, cwd: string, env: NodeJS.ProcessEnv, root: string) {
@@ -225,8 +244,7 @@ export async function prebuildWorkspacePackages(options: {
         `${pkg.name} failed to build (${command}). Run \`pnpm --filter ${pkg.name} build\` to see the full error.`,
       );
     }
-    const dist = path.join(pkg.dir, "dist");
-    if (fs.existsSync(dist)) fs.writeFileSync(path.join(dist, STAMP), "");
+    markBuilt(pkg);
     rebuilt.add(pkg.name);
     built++;
     process.stdout.write(`    built ${pkg.name} (${((Date.now() - t0) / 1000).toFixed(1)}s)\n`);
