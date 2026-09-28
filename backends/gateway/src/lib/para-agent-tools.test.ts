@@ -1,6 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const workspaceRepo = { findWorkspace: vi.fn(), putDocument: vi.fn() };
+vi.mock("@nebutra/billing", () => ({
+  deductCredits: vi.fn(),
+  refundCredits: vi.fn(),
+  BillingError: class BillingError extends Error {
+    constructor(
+      message: string,
+      public code: string,
+    ) {
+      super(message);
+    }
+  },
+}));
 vi.mock("@nebutra/repositories", () => ({ getParaWorkspaceRepository: () => workspaceRepo }));
 
 const origin = { tenantId: "org_1", userId: "user_1", role: "org:admin", plan: "PRO" };
@@ -62,9 +74,10 @@ describe("para agent tools", () => {
     const { estimateToolCost } = await load();
     expect(estimateToolCost("canvas_read", {})).toBe(0);
     expect(estimateToolCost("create_text_node", { count: 4 })).toBe(0);
-    expect(estimateToolCost("generate_image", { count: 4 })).toBe(4);
-    expect(estimateToolCost("generate_image", { mode: "video", count: 2 })).toBe(14);
-    expect(estimateToolCost("generate_image", { count: 99 })).toBe(4);
+    // Same table submitParaGenerateJob charges from (para-credits.ts): image 10, video 100.
+    expect(estimateToolCost("generate_image", { count: 4 })).toBe(40);
+    expect(estimateToolCost("generate_image", { mode: "video", count: 2 })).toBe(200);
+    expect(estimateToolCost("generate_image", { count: 99 })).toBe(40);
   });
 
   it("generate_image derives a queued child with a derived edge and never touches the source", async () => {

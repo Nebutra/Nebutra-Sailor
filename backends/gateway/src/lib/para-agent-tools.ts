@@ -13,18 +13,17 @@ import { type RuleDecision, RuntimeToolRegistry } from "@nebutra/agent-runtime";
 import { getParaWorkspaceRepository } from "@nebutra/repositories";
 import { z } from "zod";
 import type { AuthenticatedAiOriginHeaderInput } from "../routes/ai/origin-headers.js";
+import { creditsPerUnit } from "./para-credits.js";
 import { submitParaGenerateJob } from "./para-origin.js";
 
 /** Tools that spend credits. The autonomy switch only ever gates these. */
 export const SPENDING_TOOLS = new Set(["generate_image"]);
 
-const IMAGE_COST = 1;
-const VIDEO_COST = 7;
-
+/** What the approval card quotes is what `submitParaGenerateJob` charges — one price table. */
 export function estimateToolCost(toolName: string, args: unknown): number {
   if (!SPENDING_TOOLS.has(toolName)) return 0;
   const a = (args ?? {}) as { count?: number; mode?: string };
-  const unit = a.mode === "video" ? VIDEO_COST : IMAGE_COST;
+  const unit = creditsPerUnit(a.mode === "video" ? "video" : "image");
   return unit * Math.max(1, Math.min(4, a.count ?? 1));
 }
 

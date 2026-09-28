@@ -8,7 +8,9 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { BillingError } from "@nebutra/billing";
 import { toApiError } from "@nebutra/errors";
+import { logger } from "@nebutra/logger";
 import {
   DocumentVersionConflictError,
   getParaAssetRepository,
@@ -16,13 +18,17 @@ import {
 } from "@nebutra/repositories";
 import { SpanStatusCode, trace } from "@opentelemetry/api";
 import type { Context } from "hono";
-import { env } from "../../config/env.js";
+import { chargeOf, isRefundable, refundParaJob } from "../../lib/para-credits.js";
+import {
+  OriginRejectedError,
+  paraOriginFetch,
+  submitParaGenerateJob,
+} from "../../lib/para-origin.js";
 import { requirePermission } from "../../middlewares/permissions.js";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
-import { aiServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
+import { CircuitOpenError } from "../../services/circuitBreaker.js";
 import {
   type AuthenticatedAiOriginHeaderInput,
-  buildAuthenticatedAiOriginHeaders,
   resolveAiOriginClientIp,
 } from "../ai/origin-headers.js";
 
@@ -244,11 +250,6 @@ export function taskToJob(task: Record<string, unknown>): z.infer<typeof JobSche
 
 // ── Origin proxy (same shape as routes/tasks) ─────────────────────────────────
 
-function originUrl(path: string): string {
-  if (!env.AI_SERVICE_URL) throw new Error("AI_SERVICE_URL is required to run PARA jobs");
-  return `${env.AI_SERVICE_URL.replace(/\/$/, "")}${path}`;
-}
-
 function originContext(c: Context): AuthenticatedAiOriginHeaderInput {
   const tenant = c.get("tenant");
   return {
@@ -261,21 +262,21 @@ function originContext(c: Context): AuthenticatedAiOriginHeaderInput {
   };
 }
 
-async function originFetch(
-  c: Context,
-  path: string,
-  method: string,
-  body?: unknown,
-): Promise<Response> {
-  const headers = await buildAuthenticatedAiOriginHeaders(originContext(c));
-  return aiServiceBreaker.call(() =>
-    fetch(originUrl(path), {
-      method,
-      headers,
-      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-      signal: AbortSignal.timeout(120_000),
-    }),
-  );
+function originFetch(c: Context, path: string, method: string, body?: unknown) {
+  return paraOriginFetch(originContext(c), path, method, body);
+}
+
+/**
+ * A task seen in a terminal failed or cancelled state gets its credits back. Every reader calls
+ * this — poll, cancel, the SSE stream — because none of them is guaranteed to be the one the
+ * browser keeps open; the ledger makes the repeat calls no-ops.
+ */
+function refundIfFailed(organizationId: string, task: Record<string, unknown>): Promise<void> {
+  const charge = chargeOf(task);
+  if (!charge || !isRefundable(task)) return Promise.resolve();
+  return refundParaJob(organizationId, charge).catch((error: unknown) => {
+    logger.error("PARA job refund failed", { taskId: task.id, charge, error });
+  });
 }
 
 async function withOrigin(
@@ -618,20 +619,22 @@ paraRoutes.post("/jobs", async (c) => {
   if (!parsed.success) return c.json({ error: "invalid job", issues: parsed.error.issues }, 400);
   const b = parsed.data;
   return withOrigin(c, "para.jobs.create", async () => {
-    const upstream = await originFetch(c, "/api/v1/tasks/", "POST", {
-      type: "para.generate",
-      queue: "ai",
-      priority: "normal",
-      payload: { workspaceId: b.workspaceId, nodeId: b.nodeId, generator: b.generator },
-      metadata: { product: "para", workspaceId: b.workspaceId, nodeId: b.nodeId },
-      ...(b.idempotencyKey ? { idempotency_key: b.idempotencyKey } : {}),
-    });
-    if (!upstream.ok) {
-      // Pre-admission rejection: no job, no node — shown inline at the trigger (jobs.md decision 5).
-      const detail = await upstream.text().catch(() => "");
-      return c.json({ error: detail || `origin rejected the job (${upstream.status})` }, 502);
+    try {
+      const task = await submitParaGenerateJob(originContext(c), {
+        workspaceId: b.workspaceId,
+        nodeId: b.nodeId,
+        generator: b.generator,
+        ...(b.idempotencyKey ? { idempotencyKey: b.idempotencyKey } : {}),
+      });
+      return c.json(taskToJob(task), 202);
+    } catch (error) {
+      // Pre-admission rejections: no job, no node — shown inline at the trigger (jobs.md decision 5).
+      if (error instanceof OriginRejectedError) return c.json({ error: error.message }, 502);
+      if (error instanceof BillingError && error.code === "INSUFFICIENT_CREDITS") {
+        return c.json({ error: "Not enough credits", code: error.code }, 402);
+      }
+      throw error;
     }
-    return c.json(taskToJob((await upstream.json()) as Record<string, unknown>), 202);
   });
 });
 
@@ -644,7 +647,9 @@ paraRoutes.get("/jobs/:id", (c) =>
     );
     if (upstream.status === 404) return c.json({ error: "job not found" }, 404);
     if (!upstream.ok) return c.json({ error: `origin error (${upstream.status})` }, 503);
-    return c.json(taskToJob((await upstream.json()) as Record<string, unknown>), 200);
+    const task = (await upstream.json()) as Record<string, unknown>;
+    await refundIfFailed(orgId(c), task);
+    return c.json(taskToJob(task), 200);
   }),
 );
 
@@ -658,7 +663,9 @@ paraRoutes.post("/jobs/:id/cancel", (c) =>
     );
     if (upstream.status === 404) return c.json({ error: "job not found" }, 404);
     if (!upstream.ok) return c.json({ error: `origin error (${upstream.status})` }, 503);
-    return c.json(taskToJob((await upstream.json()) as Record<string, unknown>), 200);
+    const task = (await upstream.json()) as Record<string, unknown>;
+    await refundIfFailed(orgId(c), task);
+    return c.json(taskToJob(task), 200);
   }),
 );
 
@@ -669,6 +676,7 @@ paraRoutes.post("/jobs/:id/cancel", (c) =>
  */
 export function mapTaskEventStream(
   upstream: ReadableStream<Uint8Array>,
+  onTask: (task: Record<string, unknown>) => void = () => {},
 ): ReadableStream<Uint8Array> {
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
@@ -683,6 +691,7 @@ export function mapTaskEventStream(
     }
     try {
       const task = JSON.parse(dataLine.slice("data:".length).trim()) as Record<string, unknown>;
+      onTask(task);
       controller.enqueue(
         encoder.encode(`event: task\ndata: ${JSON.stringify(taskToJob(task))}\n\n`),
       );
@@ -722,7 +731,11 @@ paraRoutes.get("/jobs/:id/events", (c) =>
     if (!upstream.ok || !upstream.body) {
       return c.json({ error: `origin error (${upstream.status})` }, 503);
     }
-    return new Response(mapTaskEventStream(upstream.body), {
+    const organizationId = orgId(c);
+    const stream = mapTaskEventStream(upstream.body, (task) => {
+      void refundIfFailed(organizationId, task);
+    });
+    return new Response(stream, {
       status: 200,
       headers: {
         "content-type": "text/event-stream",

@@ -29,6 +29,18 @@ class ApprovalAlreadyDecidedError extends Error {
   }
 }
 
+vi.mock("@nebutra/billing", () => ({
+  deductCredits: vi.fn(),
+  refundCredits: vi.fn(),
+  BillingError: class BillingError extends Error {
+    constructor(
+      message: string,
+      public code: string,
+    ) {
+      super(message);
+    }
+  },
+}));
 vi.mock("@nebutra/repositories", () => ({
   ApprovalAlreadyDecidedError,
   getParaAgentRepository: () => agentRepo,
