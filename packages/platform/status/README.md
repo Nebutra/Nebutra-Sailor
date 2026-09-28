@@ -1,131 +1,36 @@
 # @nebutra/status
 
-Multi-provider public status page integration for Nebutra apps.
+The status and incident core behind `status.nebutra.com`. One implementation, no
+vendor adapters: Nebutra runs its own status page and dogfoods this package.
 
-Native adapters (read-only `fetchSummary`):
+| Piece | File | What it does |
+|---|---|---|
+| Probes | `src/probe.ts` | HTTP checks with a confirm-retry, readiness-body parsing, `buildStatusSnapshot(targets)` |
+| History | `src/history.ts` | Per-day check counts (`total / degraded / outage`), one sample per 55 s window |
+| Uptime math | `src/math.ts` | Day colour and uptime from the ratio (browser-safe, no storage imports) |
+| Incidents | `src/incidents.ts` | Incidents and maintenance windows with an update timeline |
+| Notifications | `src/notify.ts` | Feishu interactive card + Slack blocks on every incident write |
+| Store | `src/store.ts` | Upstash REST KV (outside the app stack), in-memory in dev and tests |
 
-| Provider | `provider` value | Identifier |
-|----------|------------------|------------|
-| **OpenStatus** (default) | `openstatus` or omit | `pageSlug` |
-| **Atlassian Statuspage** | `statuspage` | `pageId` (id or full base URL) |
-| **Better Stack** | `betterstack` | `pageUrl` (full URL or Better Uptime subdomain) |
-| **Instatus** | `instatus` | `pageUrl` (full URL or Instatus subdomain) |
-| **Internal health** | `internal` | `healthUrl` |
+```ts
+import { buildStatusSnapshot } from "@nebutra/status";
 
-This package normalizes vendor payloads into a shared `StatusPageData` shape and
-ships React surfaces (`StatusBadge`, `StatusWidget`). It is **not** a write API
-for creating incidents, and it is **not** the production host for
-`status.nebutra.com` (that surface currently uses first-party probes in
-`apps/landing`).
-
-## Installation
-
-```bash
-pnpm add @nebutra/status
+const snapshot = await buildStatusSnapshot([
+  { id: "api", name: "API", description: "Public API", url: "https://api.example.com/ready", readiness: true },
+]);
 ```
 
-## Programmatic fetch
+## Environment
 
-```typescript
-import { createStatusProvider, fetchStatusPage } from "@nebutra/status";
+| Variable | Purpose |
+|---|---|
+| `UPSTASH_REDIS_REST_URL` / `_TOKEN` | Durable history and incidents. Without them history lives in memory. |
+| `STATUS_FEISHU_WEBHOOK_URL` / `_SECRET` | Feishu custom bot for incident cards (secret = signature check). |
+| `STATUS_SLACK_WEBHOOK_URL` | Slack incoming webhook. |
+| `STATUS_PUBLIC_ORIGIN` | Origin that cards and feeds link to. |
 
-// OpenStatus (default)
-await fetchStatusPage({ pageSlug: "nebutra" });
+## Sampling
 
-// Atlassian Statuspage
-await fetchStatusPage({ provider: "statuspage", pageId: "kctbh9vrtdwd" });
-await fetchStatusPage({
-  provider: "statuspage",
-  pageId: "https://status.example.com",
-});
-
-// Better Stack — public GET {page}/index.json
-await fetchStatusPage({
-  provider: "betterstack",
-  pageUrl: "https://status.betterstack.com",
-});
-
-// Instatus — public GET {page}/summary.json
-await fetchStatusPage({
-  provider: "instatus",
-  pageUrl: "https://instat.us",
-});
-
-// Internal /health
-await fetchStatusPage({
-  provider: "internal",
-  healthUrl: "https://api.example.com/health",
-});
-
-// Or keep a provider instance
-const provider = createStatusProvider({
-  provider: "betterstack",
-  pageUrl: "https://status.example.com",
-});
-const data = await provider.fetchSummary();
-```
-
-## React components
-
-```tsx
-import { StatusBadge, StatusWidget } from "@nebutra/status";
-
-// OpenStatus
-<StatusBadge pageSlug="nebutra" showLabel />
-<StatusWidget pageSlug="nebutra" />
-
-// Atlassian Statuspage
-<StatusBadge provider="statuspage" pageId="kctbh9vrtdwd" showLabel />
-
-// Better Stack
-<StatusBadge provider="betterstack" pageUrl="https://status.example.com" showLabel />
-<StatusWidget provider="betterstack" pageUrl="https://status.example.com" />
-
-// Instatus
-<StatusBadge provider="instatus" pageUrl="https://status.example.com" showLabel />
-<StatusWidget provider="instatus" pageUrl="https://status.example.com" />
-
-// Static (no network)
-<StatusBadge status="operational" showLabel />
-```
-
-## Status vocabulary
-
-| Status           | Description               |
-| ---------------- | ------------------------- |
-| `operational`    | All systems normal        |
-| `degraded`       | Reduced performance       |
-| `partial_outage` | Some features unavailable |
-| `major_outage`   | Service unavailable       |
-| `maintenance`    | Planned maintenance       |
-| `unknown`        | Fetch failed / unmapped   |
-
-## Public endpoints used by adapters
-
-| Provider | Endpoint |
-|----------|----------|
-| OpenStatus | `GET https://api.openstatus.dev/v1/status-page/{slug}/summary` |
-| Statuspage | `GET https://{pageId}.statuspage.io/api/v2/summary.json` (or `{custom}/api/v2/summary.json`) |
-| Better Stack | `GET {pageUrl}/index.json` |
-| Instatus | `GET {pageUrl}/summary.json` |
-| Internal | `GET {healthUrl}` |
-
-Failed or timed-out fetches degrade to safe empty `StatusPageData` (`status: "unknown"`), they do not throw into UI consumers.
-
-## Environment variables (optional)
-
-OpenStatus uptime config (repo root `openstatus.lock` / ops tooling):
-
-```bash
-OPENSTATUS_API_TOKEN=
-OPENSTATUS_PAGE_SLUG=nebutra
-```
-
-Badge/widget read paths for Statuspage / Better Stack / Instatus use **public**
-summary JSON and do not require API tokens.
-
-## Related
-
-- Landing first-party probes: `apps/landing/src/lib/status-checks.ts`
-- Observability notes: `infra/ops/observability/README.md`
-- Package contract: `AGENTS.md`
+History accrues from a scheduled call (the gateway Worker cron hits
+`/api/status/probe` every five minutes) plus page views. A KV lock admits at
+most one recorded run per window, so traffic cannot weight a day.

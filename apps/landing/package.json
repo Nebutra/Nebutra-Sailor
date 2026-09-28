@@ -41,6 +41,7 @@
     "@nebutra/icons": "workspace:*",
     "@nebutra/license": "workspace:*",
     "@nebutra/logger": "workspace:*",
+    "@nebutra/status": "workspace:*",
     "@nebutra/marketing": "workspace:*",
     "@nebutra/sanity": "workspace:*",
     "@nebutra/theme": "workspace:*",

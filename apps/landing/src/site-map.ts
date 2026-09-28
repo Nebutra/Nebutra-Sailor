@@ -253,6 +253,22 @@ export const SITE_MAP: readonly SitePage[] = [
     chrome: "bare",
   },
   {
+    path: "/status/history",
+    section: "sailor",
+    title: { en: "Incident history", zh: "事件历史" },
+    status: "live",
+    template: true,
+    chrome: "bare",
+  },
+  {
+    path: "/status/incidents/[id]",
+    section: "sailor",
+    title: { en: "Incident", zh: "事件" },
+    status: "live",
+    template: true,
+    chrome: "bare",
+  },
+  {
     path: "/security",
     section: "sailor",
     title: { en: "Security", zh: "安全" },

@@ -11,12 +11,16 @@ export interface StatusKv {
   set(key: string, value: string): Promise<void>;
   hgetall(key: string): Promise<Record<string, string>>;
   hset(key: string, field: string, value: string): Promise<void>;
+  hincrby(key: string, field: string, by: number): Promise<void>;
+  /** SET key value NX EX ttl — true when this caller took the key. */
+  setIfAbsent(key: string, value: string, ttlSeconds: number): Promise<boolean>;
   /** Test helper: wipe the backend. */
   clear?(): Promise<void>;
 }
 
 const memory = new Map<string, string>();
 const memoryHashes = new Map<string, Map<string, string>>();
+const memoryExpiry = new Map<string, number>();
 
 function memoryKv(): StatusKv {
   return {
@@ -39,9 +43,25 @@ function memoryKv(): StatusKv {
       }
       hash.set(field, value);
     },
+    async hincrby(key, field, by) {
+      let hash = memoryHashes.get(key);
+      if (!hash) {
+        hash = new Map();
+        memoryHashes.set(key, hash);
+      }
+      hash.set(field, String(Number(hash.get(field) ?? 0) + by));
+    },
+    async setIfAbsent(key, value, ttlSeconds) {
+      const expires = memoryExpiry.get(key);
+      if (memory.has(key) && (expires === undefined || expires > Date.now())) return false;
+      memory.set(key, value);
+      memoryExpiry.set(key, Date.now() + ttlSeconds * 1000);
+      return true;
+    },
     async clear() {
       memory.clear();
       memoryHashes.clear();
+      memoryExpiry.clear();
     },
   };
 }
@@ -110,6 +130,13 @@ function upstashKv(): StatusKv {
     },
     async hset(key, field, value) {
       await upstashCommand(["HSET", key, field, value]);
+    },
+    async hincrby(key, field, by) {
+      await upstashCommand(["HINCRBY", key, field, by]);
+    },
+    async setIfAbsent(key, value, ttlSeconds) {
+      const result = await upstashCommand(["SET", key, value, "NX", "EX", ttlSeconds]);
+      return result === "OK";
     },
   };
 }
