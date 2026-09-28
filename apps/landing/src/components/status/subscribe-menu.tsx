@@ -1,6 +1,6 @@
 "use client";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
+import { Button, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 
 /**
  * "Subscribe to updates" — the feeds a reader can follow without an account.
@@ -11,12 +11,9 @@ export function SubscribeMenu() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button
-          type="button"
-          className="rounded-lg bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground shadow-sheen transition-opacity hover:opacity-90"
-        >
+        <Button type="button" variant="ink">
           Subscribe to updates
-        </button>
+        </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-72 p-2">
         <SubscribeOption

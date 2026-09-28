@@ -124,7 +124,7 @@ async function HistoryContent({ searchParams }: { searchParams: Search }) {
         aria-label="Calendar"
       >
         <div className="flex items-center gap-3 border-b border-border px-5 py-4">
-          <h1 className="text-[17px] font-medium tracking-tight">Calendar</h1>
+          <h1 className="text-lg font-medium tracking-tight">Calendar</h1>
           <nav className="flex items-center gap-1 text-sm tabular-nums text-muted-foreground">
             <Link
               href={`/status/history?month=${prev}`}
@@ -193,7 +193,7 @@ async function HistoryContent({ searchParams }: { searchParams: Search }) {
       </section>
 
       <section className="mt-8" aria-labelledby="month-incidents">
-        <h2 id="month-incidents" className="mb-3 text-[17px] font-medium tracking-tight">
+        <h2 id="month-incidents" className="mb-3 text-lg font-medium tracking-tight">
           {label}
         </h2>
         {inMonth.length === 0 ? (

@@ -65,7 +65,7 @@ async function IncidentContent({ params }: { params: Params }) {
       </Link>
 
       <header className="mt-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-[28px]">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
           {incident.title}
         </h1>
         <dl className="mt-5 grid grid-cols-2 gap-4 rounded-xl border border-border px-5 py-4 text-sm sm:grid-cols-4">
@@ -86,7 +86,7 @@ async function IncidentContent({ params }: { params: Params }) {
       </header>
 
       <section className="mt-10" aria-labelledby="incident-updates">
-        <h2 id="incident-updates" className="text-[17px] font-medium tracking-tight">
+        <h2 id="incident-updates" className="text-lg font-medium tracking-tight">
           Updates
         </h2>
         <ol className="relative mt-5 border-l border-border pl-6">
@@ -102,7 +102,7 @@ async function IncidentContent({ params }: { params: Params }) {
               <time dateTime={update.at} className="text-xs tabular-nums text-muted-foreground">
                 {formatUtcMedium(update.at)}
               </time>
-              <p className="mt-2 whitespace-pre-line text-[15px] leading-7 text-foreground">
+              <p className="mt-2 whitespace-pre-line text-base leading-7 text-foreground">
                 {update.message}
               </p>
             </li>

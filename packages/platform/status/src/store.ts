@@ -1,7 +1,7 @@
 /**
  * Edge-friendly key/value for status history + incidents.
  *
- * Prefer Upstash Redis REST (independent of ECS origin) so status.nebutra.com
+ * Prefer Upstash Redis REST (independent of the app origin) so a status page
  * can still read history when the app stack is degraded. Falls back to an
  * in-process map for local/dev/test when Redis env is absent.
  */

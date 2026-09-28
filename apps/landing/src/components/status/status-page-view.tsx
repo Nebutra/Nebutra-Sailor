@@ -66,12 +66,12 @@ const VERDICT: Record<StatusSnapshot["overall"], { title: string; body: string }
 
 export function StateIcon({ state, className }: { state: ServiceState; className?: string }) {
   if (state === "operational") {
-    return <CheckCircleFill aria-hidden className={cn("text-success", className)} />;
+    return <CheckCircleFill aria-hidden className={cn("text-success-strong", className)} />;
   }
   if (state === "outage") {
-    return <CrossCircleFill aria-hidden className={cn("text-destructive", className)} />;
+    return <CrossCircleFill aria-hidden className={cn("text-destructive-strong", className)} />;
   }
-  return <WarningFill aria-hidden className={cn("text-warning", className)} />;
+  return <WarningFill aria-hidden className={cn("text-warning-strong", className)} />;
 }
 
 export function StatusShell({ checkedAt, children }: { checkedAt?: string; children: ReactNode }) {
@@ -108,11 +108,9 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
       >
         <div className={cn("flex items-center gap-2.5 px-5 py-3.5", VERDICT_HEAD[verdictState])}>
           <StateIcon state={verdictState} className="h-5 w-5 shrink-0" />
-          <h1 className="text-[17px] font-medium tracking-tight text-foreground">
-            {verdict.title}
-          </h1>
+          <h1 className="text-lg font-medium tracking-tight text-foreground">{verdict.title}</h1>
         </div>
-        <p className="bg-background px-5 py-4 text-[15px] leading-6 text-foreground">
+        <p className="bg-background px-5 py-4 text-base leading-6 text-foreground">
           {verdict.body}
         </p>
       </section>
@@ -144,7 +142,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
         <div className="flex items-center gap-4 border-b border-border px-5 py-4">
           <h2
             id="status-components-heading"
-            className="text-[17px] font-medium tracking-tight text-foreground"
+            className="text-lg font-medium tracking-tight text-foreground"
           >
             System status
           </h2>
@@ -172,7 +170,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
         <section className="mt-8" aria-labelledby="status-history-heading">
           <h2
             id="status-history-heading"
-            className="mb-3 text-[17px] font-medium tracking-tight text-foreground"
+            className="mb-3 text-lg font-medium tracking-tight text-foreground"
           >
             Recent incidents
           </h2>
@@ -183,7 +181,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
       <div className="mt-8 flex justify-center">
         <Link
           href="/status/history"
-          className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-[15px] font-medium text-foreground shadow-ambient-sm transition-colors hover:bg-muted/50"
+          className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-base font-medium text-foreground shadow-ambient-sm transition-colors hover:bg-muted/50"
         >
           <Calendar aria-hidden className="h-4 w-4" />
           View history
@@ -365,7 +363,7 @@ function StatusChrome({ checkedAt }: { checkedAt?: string }) {
           aria-label={`${brand.name} Status`}
         >
           <LogomarkSVG className="h-7 w-7 shrink-0 text-foreground" />
-          <span className="truncate text-[22px] font-semibold tracking-tight text-foreground">
+          <span className="truncate text-xl font-semibold tracking-tight text-foreground">
             {brand.name}
           </span>
         </Link>
@@ -424,7 +422,7 @@ function ComponentRow({
       <div className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
           <StateIcon state={service.state} className="h-[18px] w-[18px] shrink-0" />
-          <h3 className="truncate text-[15px] font-medium text-foreground">{service.name}</h3>
+          <h3 className="truncate text-base font-medium text-foreground">{service.name}</h3>
           <span
             className="hidden text-muted-foreground sm:inline-flex"
             title={service.description}

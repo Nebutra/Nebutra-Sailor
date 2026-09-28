@@ -189,9 +189,7 @@ function DayCard({
       <div className="flex items-baseline justify-between gap-2">
         <p className="text-xs font-semibold text-foreground">{formatUtcDay(day.date)}</p>
         {day.uptime != null ? (
-          <p className="text-[11px] tabular-nums text-muted-foreground">
-            {formatUptime(day.uptime)}
-          </p>
+          <p className="text-xs tabular-nums text-muted-foreground">{formatUptime(day.uptime)}</p>
         ) : null}
       </div>
       {day.status === "no_data" ? (
