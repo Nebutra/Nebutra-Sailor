@@ -153,4 +153,47 @@ describe("auth routes", () => {
     await expect(response.json()).resolves.toEqual({ ok: true });
     expect(handler).toHaveBeenCalledTimes(1);
   });
+
+  it("answers /me/public with 401 when signed out", async () => {
+    const app = createAuthRoutes({ authFactory: async () => createFakeAuth() });
+
+    const response = await app.request("/me/public");
+
+    expect(response.status).toBe(401);
+    expect(response.headers.get("cache-control")).toBe("private, no-store");
+  });
+
+  it("answers /me/public with the public profile slice only", async () => {
+    const auth = createFakeAuth({
+      getSession: vi.fn(async () => ({
+        userId: "user_1",
+        organizationId: "org_1",
+        role: "admin",
+        email: "ada@example.com",
+        expiresAt: new Date("2030-01-01T00:00:00.000Z"),
+      })),
+      getUser: vi.fn(async () => ({
+        id: "user_1",
+        email: "ada@example.com",
+        name: "Ada",
+        imageUrl: "https://example.com/ada.png",
+      })) as AuthProvider["getUser"],
+      getOrganization: vi.fn(async () => ({
+        id: "org_1",
+        name: "Analytical Engines",
+        slug: "engines",
+      })) as AuthProvider["getOrganization"],
+    });
+    const app = createAuthRoutes({ authFactory: async () => auth });
+
+    const response = await app.request("/me/public");
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      name: "Ada",
+      email: "ada@example.com",
+      avatarUrl: "https://example.com/ada.png",
+      activeOrganization: { name: "Analytical Engines", slug: "engines" },
+    });
+  });
 });

@@ -63,6 +63,36 @@ export function createAuthRoutes(options: AuthRoutesOptions = {}) {
     }
   });
 
+  /**
+   * GET /api/me/public — the signed-in visitor's name and avatar for the
+   * site's navbar (apps/landing/src/lib/public-me.ts asks the product app's
+   * origin, with credentials). Same contract as the Next route it replaces
+   * (apps/web/src/app/api/me/public): 200 with the slice below, 401 when
+   * signed out. Never ids, plans or roles. CORS is the gateway's allowlist.
+   */
+  app.get("/me/public", async (c) => {
+    c.header("Cache-Control", "private, no-store");
+    let payload: Awaited<ReturnType<typeof resolveSessionPayload>>;
+    try {
+      payload = await resolveSessionPayload(await authFactory(), c.req.raw);
+    } catch (error) {
+      logger.warn("Gateway public profile probe failed", { error });
+      return c.json({ error: "Unable to resolve user" }, 500);
+    }
+    if (!payload) return c.json({ error: "Not authenticated" }, 401);
+    return c.json(
+      {
+        name: payload.user.name ?? "",
+        email: payload.user.email ?? "",
+        avatarUrl: payload.user.imageUrl ?? null,
+        activeOrganization: payload.organization
+          ? { name: payload.organization.name, slug: payload.organization.slug }
+          : null,
+      },
+      200,
+    );
+  });
+
   app.post("/auth/sign-out", async (c) => {
     const auth = await authFactory();
     await auth.signOut(c.req.raw);
