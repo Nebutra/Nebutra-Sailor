@@ -1657,10 +1657,6 @@
         "count": 9
       },
       {
-        "file": "apps/para/src/components/overlays/agent-panel.tsx",
-        "count": 8
-      },
-      {
         "file": "apps/sailor-docs/src/components/feedback/client.tsx",
         "count": 8
       },
@@ -1678,10 +1674,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/blog-share-actions.tsx",
-        "count": 4
-      },
-      {
-        "file": "apps/para/src/components/overlays/library-drawer.tsx",
         "count": 4
       },
       {
@@ -1710,14 +1702,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/solutions/vc/VcDirectory.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/para/src/components/shell/bottom-dock.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/para/src/components/shell/jobs-popover.tsx",
         "count": 3
       },
       {
@@ -1802,10 +1786,6 @@
       },
       {
         "file": "apps/mail-preview/src/components/preview-pane.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/para/src/components/overlays/jobs-drawer.tsx",
         "count": 2
       },
       {
@@ -1961,15 +1941,7 @@
         "count": 1
       },
       {
-        "file": "apps/para/src/components/canvas/storyboard-view.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/para/src/components/shell/profile-button.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/para/src/components/shell/workspace-top-bar.tsx",
         "count": 1
       },
       {

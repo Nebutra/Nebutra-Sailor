@@ -3,64 +3,81 @@
 import {
   Background,
   BackgroundVariant,
+  type Connection,
+  type EdgeChange,
+  type FinalConnectionState,
   type Edge as FlowEdge,
   type NodeChange,
   type OnSelectionChangeParams,
   ReactFlow,
-  ReactFlowProvider,
   useReactFlow,
   type Viewport,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { type DragEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type DragEvent,
+  type MouseEvent as ReactMouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import type { WorkspaceNode } from "@/domain/types";
-import { api } from "@/mock/queries";
-import { nextId, useEditorStore } from "@/stores/editor-store";
+import { uploadAsset } from "@/lib/uploads";
+import { useAssets } from "@/mock/queries";
+import { registerStage } from "@/stores/canvas-geometry";
+import { useEditorStore } from "@/stores/editor-store";
+import { placeAsset } from "@/stores/place-asset";
 import { useUiStore } from "@/stores/ui-store";
-import { ContextToolbar } from "./context-toolbar";
+import { EmptyCanvas } from "./empty-canvas";
 import { NodeConfig } from "./node-config";
-import { NodeContextMenu } from "./node-context-menu";
+import { ParaEdge } from "./para-edge";
 import { PARA_NODE_TYPE, type ParaFlowNode, ParaNode } from "./para-node";
+
+// @async-surface-exempt: reads the asset list only to resolve a dragged-in asset id; the canvas is not a list surface.
 
 const ASSET_MIME = "application/x-para-asset";
 const NODE_TYPES = { [PARA_NODE_TYPE]: ParaNode };
+const EDGE_TYPES = { para: ParaEdge };
 const PRO_OPTIONS = { hideAttribution: true };
 
 /**
- * The canvas, rendered by React Flow rather than a hand-written transform layer
- * (ADR 2026-09-09 para-canvas-renderer). React Flow owns pan, zoom, drag, marquee selection,
- * viewport culling and edges; PARA owns what a node *is* and what appears when one is selected.
+ * The canvas, rendered by React Flow (ADR 2026-09-09 para-canvas-renderer). React Flow owns pan,
+ * zoom, drag, marquee selection, culling and wires; PARA owns what a node is and what appears when
+ * one is selected.
  *
- * The document maps to React Flow inline rather than through `@nebutra/ui`'s graph adapter: that
- * adapter earns its keep on the cycle guard in `tryAddEdge`, and PARA's edges are provenance the
- * system writes, not wires a user draws — `nodesConnectable` is false, so there is no cycle to
- * guard against.
+ * Wires are drawn by hand now, as in LibTV: drag a node's right `+` onto another node to make it an
+ * input (an image into a video is its first frame), or drop it on empty canvas to create the next
+ * node there. Double-click empty canvas for the add-node menu at the pointer.
  *
- * Chrome is ours, not React Flow's: no built-in Controls, no MiniMap, and the dot grid is the one
- * from `shell.css`, so the visual language has a single home.
+ * Must render inside a ReactFlowProvider (WorkspacePage owns it, so the dock can zoom).
  */
 export function CanvasView() {
-  return (
-    <ReactFlowProvider>
-      <CanvasSurface />
-    </ReactFlowProvider>
-  );
-}
-
-function CanvasSurface() {
   const document = useEditorStore((s) => s.document);
   const selection = useEditorStore((s) => s.selection);
   const select = useEditorStore((s) => s.select);
   const setNodePosition = useEditorStore((s) => s.setNodePosition);
   const deleteNodes = useEditorStore((s) => s.deleteNodes);
-  const addNode = useEditorStore((s) => s.addNode);
+  const deleteEdges = useEditorStore((s) => s.deleteEdges);
+  const connect = useEditorStore((s) => s.connect);
   const setViewport = useEditorStore((s) => s.setViewport);
   const addContextNode = useUiStore((s) => s.addContextNode);
+  const openAddMenu = useUiStore((s) => s.openAddMenu);
+  const tool = useUiStore((s) => s.tool);
+  const { data: assetList } = useAssets();
   const { screenToFlowPosition, flowToScreenPosition } = useReactFlow();
   const wrapper = useRef<HTMLDivElement>(null);
+  const [selectedEdges, setSelectedEdges] = useState<string[]>([]);
   // Node-anchored chrome is hidden mid-drag: it cannot keep up with the pointer, and measuring
   // where to put it forces a synchronous layout on every frame of the gesture.
   const [isDragging, setDragging] = useState(false);
+  const [, setViewportTick] = useState(0);
+
+  useEffect(() => {
+    registerStage(wrapper.current);
+    return () => registerStage(null);
+  }, []);
 
   const nodes: ParaFlowNode[] = useMemo(() => {
     if (!document) return [];
@@ -81,22 +98,15 @@ function CanvasSurface() {
       id: e.id,
       source: e.source,
       target: e.target,
-      // A derivation is a fact about provenance, not a wire the user drew: draw it quietly.
-      animated: false,
-      style: { stroke: "hsl(var(--border))", strokeWidth: 1 },
+      type: "para",
+      selected: selectedEdges.includes(e.id),
     }));
-  }, [document]);
+  }, [document, selectedEdges]);
 
   /**
-   * `nodes` is controlled from the store, so every change React Flow emits has to be applied here
-   * or it does not happen — including `select`, which is what makes a click stick.
-   *
-   * Position is applied on EVERY frame, not only when the drag ends. Holding it back meant the
-   * controlled `nodes` prop kept re-rendering the node at the position it started from while the
-   * pointer had already moved, so the node fought the cursor for the whole gesture — the drag read
-   * as stuttering. The comment that used to sit here justified the delay as "one drag is one move",
-   * which was protecting an undo stack that does not exist yet. When one lands, it should coalesce
-   * a gesture at commit time rather than starve the renderer.
+   * `nodes` is controlled from the store, so every change React Flow emits is applied here or it
+   * does not happen — including `select`, which is what makes a click stick. Position is applied on
+   * every frame of a drag, or the controlled prop fights the pointer.
    */
   const onNodesChange = useCallback(
     (changes: NodeChange<ParaFlowNode>[]) => {
@@ -124,6 +134,47 @@ function CanvasSurface() {
     [setNodePosition, deleteNodes, select],
   );
 
+  const onEdgesChange = useCallback(
+    (changes: EdgeChange[]) => {
+      const removed: string[] = [];
+      setSelectedEdges((prev) => {
+        let next = prev;
+        for (const c of changes) {
+          if (c.type === "select")
+            next = c.selected
+              ? [...next.filter((id) => id !== c.id), c.id]
+              : next.filter((id) => id !== c.id);
+        }
+        return next;
+      });
+      for (const c of changes) if (c.type === "remove") removed.push(c.id);
+      if (removed.length) deleteEdges(removed);
+    },
+    [deleteEdges],
+  );
+
+  const onConnect = useCallback(
+    (c: Connection) => {
+      if (c.source && c.target) connect(c.source, c.target);
+    },
+    [connect],
+  );
+
+  /** A wire dropped on empty canvas asks what should be there (LibTV). */
+  const onConnectEnd = useCallback(
+    (event: MouseEvent | TouchEvent, state: FinalConnectionState) => {
+      if (state.isValid || !state.fromNode || state.fromHandle?.type !== "source") return;
+      const point = "changedTouches" in event ? event.changedTouches[0] : event;
+      if (!point) return;
+      openAddMenu({
+        screen: { x: point.clientX, y: point.clientY },
+        flow: screenToFlowPosition({ x: point.clientX, y: point.clientY }),
+        sourceId: state.fromNode.id,
+      });
+    },
+    [openAddMenu, screenToFlowPosition],
+  );
+
   /** A single deliberate pick becomes agent context (selection.md §5); a marquee does not. */
   const onSelectionChange = useCallback(
     ({ nodes: picked }: OnSelectionChangeParams) => {
@@ -132,161 +183,124 @@ function CanvasSurface() {
     [addContextNode],
   );
 
+  const onMove = useCallback(() => setViewportTick((t) => t + 1), []);
   const onMoveEnd = useCallback(
     (_: unknown, viewport: Viewport) => setViewport(viewport),
     [setViewport],
   );
 
-  // From the Library drawer, or from the OS. Both land where the pointer is.
+  const onDoubleClick = useCallback(
+    (e: ReactMouseEvent<HTMLDivElement>) => {
+      const target = e.target as HTMLElement;
+      if (!target.classList.contains("react-flow__pane")) return;
+      openAddMenu({
+        screen: { x: e.clientX, y: e.clientY },
+        flow: screenToFlowPosition({ x: e.clientX, y: e.clientY }),
+      });
+    },
+    [openAddMenu, screenToFlowPosition],
+  );
+
+  // From the 资产管理 panel, or a file from the desktop. Both land where the pointer is.
   const onDrop = useCallback(
     async (e: DragEvent<HTMLDivElement>) => {
       e.preventDefault();
       const at = screenToFlowPosition({ x: e.clientX, y: e.clientY });
       const assetId = e.dataTransfer.getData(ASSET_MIME);
       if (assetId) {
-        addNode(place(assetId, "image", at));
+        const asset = assetList?.find((a) => a.id === assetId);
+        if (asset) placeAsset(asset, at);
         return;
       }
       const file = e.dataTransfer.files?.[0];
-      if (file?.type.startsWith("image/") || file?.type.startsWith("video/")) {
-        const type = file.type.startsWith("video/") ? "video" : "image";
-        const asset = await api.createAsset({
-          type,
-          url: URL.createObjectURL(file),
-          label: file.name,
-          aspect: "16:9",
-          origin: "upload",
-        });
-        addNode(place(asset.id, type, at));
+      if (!file) return;
+      try {
+        const { documentId, projectId } = useEditorStore.getState();
+        placeAsset(await uploadAsset(file, { projectId, workspaceId: documentId }), at);
+      } catch {
+        // Not media, or storage refused it: the drop simply does not land.
       }
     },
-    [screenToFlowPosition, addNode],
+    [screenToFlowPosition, assetList],
   );
 
-  useEffect(() => {
-    const onKey = (ev: KeyboardEvent) => {
-      const t = ev.target as HTMLElement | null;
-      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-      if (ev.key === "Escape" && useEditorStore.getState().selection.length) select([]);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [select]);
-
-  // Chrome is summoned by a settled selection, never by one in motion — so nothing anchored is
-  // computed while the pointer is down. Reading getBoundingClientRect during render forced a
-  // synchronous layout on every frame of a drag, which is the other half of why it stuttered.
   const selected: WorkspaceNode | undefined =
     !isDragging && selection.length === 1 && selection[0]
       ? document?.nodes[selection[0]]
       : undefined;
 
   // Positioned in screen space, so the chrome never scales with the zoom.
-  const anchor = selected
-    ? flowToScreenPosition({ x: selected.x + selected.width / 2, y: selected.y })
-    : null;
-  const anchorBottom = selected
-    ? flowToScreenPosition({ x: selected.x + selected.width / 2, y: selected.y + selected.height })
+  const topLeft = selected ? flowToScreenPosition({ x: selected.x, y: selected.y }) : null;
+  const bottomRight = selected
+    ? flowToScreenPosition({ x: selected.x + selected.width, y: selected.y + selected.height })
     : null;
   const box = selected ? wrapper.current?.getBoundingClientRect() : undefined;
 
   if (!document) return <div className="h-full w-full" />;
+  const empty = Object.keys(document.nodes).length === 0;
+  const hand = tool === "hand";
 
   return (
     <div
       ref={wrapper}
-      className="para-surface relative h-full w-full"
+      className={`para-surface relative h-full w-full ${hand ? "cursor-grab" : ""}`}
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => void onDrop(e)}
+      onDoubleClick={onDoubleClick}
     >
       <ReactFlow
         nodes={nodes}
         edges={edges}
         nodeTypes={NODE_TYPES}
+        edgeTypes={EDGE_TYPES}
         onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        onConnectEnd={onConnectEnd}
         onSelectionChange={onSelectionChange}
+        onMove={onMove}
         onMoveEnd={onMoveEnd}
         defaultViewport={document.viewport}
         minZoom={0.25}
         maxZoom={4}
-        // Trackpad two-finger scroll pans; dragging the empty pane draws a marquee. Without
-        // panOnDrag pinned to the middle button these two gestures both claim a left-drag and
-        // the marquee never starts.
+        // 选择 tool: trackpad scroll pans, a left-drag on empty canvas draws a marquee.
+        // 抓手 tool: a left-drag pans and nothing is picked up.
         panOnScroll
-        selectionOnDrag
-        panOnDrag={[1, 2]}
+        selectionOnDrag={!hand}
+        panOnDrag={hand ? true : [1, 2]}
+        nodesDraggable={!hand}
+        elementsSelectable={!hand}
         selectionKeyCode={null}
+        zoomOnDoubleClick={false}
+        connectOnClick={false}
+        connectionRadius={36}
         proOptions={PRO_OPTIONS}
-        // The dot grid comes from shell.css so one value describes it; React Flow draws none.
-        nodesConnectable={false}
         deleteKeyCode={["Delete", "Backspace"]}
       >
         <Background variant={BackgroundVariant.Dots} gap={0} size={0} color="transparent" />
       </ReactFlow>
 
-      {selected && anchor && anchorBottom && box && (
-        <>
-          <div
-            className="pointer-events-auto absolute z-10"
-            style={{
-              left: anchor.x - box.left,
-              // Clears the 11px identity label just outside the node's top edge.
-              top: anchor.y - box.top - 64,
-              transform: "translateX(-50%)",
-            }}
-          >
-            <NodeContextMenu nodeId={selected.id}>
-              <div>
-                <ContextToolbar node={selected} />
-              </div>
-            </NodeContextMenu>
-          </div>
-          <div
-            className="pointer-events-auto absolute z-10"
-            style={{
-              left: anchor.x - box.left,
-              top: anchorBottom.y - box.top + 12,
-              transform: "translateX(-50%)",
-            }}
-          >
-            {/* No key: the panel holds no state of its own, so there is nothing to reset on
-                reselect — and remounting it used to be what destroyed a half-typed prompt. */}
-            <NodeConfig node={selected} />
-          </div>
-        </>
+      {empty && <EmptyCanvas />}
+
+      {selected && topLeft && bottomRight && box && (
+        <div
+          className="pointer-events-auto absolute z-10"
+          style={{
+            left: (topLeft.x + bottomRight.x) / 2 - box.left,
+            top: bottomRight.y - box.top + 14,
+            transform: "translateX(-50%)",
+          }}
+        >
+          {/* No key: the panel holds no state of its own, so there is nothing to reset on
+              reselect — and remounting it used to be what destroyed a half-typed prompt. */}
+          <NodeConfig
+            node={selected}
+            width={Math.min(680, Math.max(480, bottomRight.x - topLeft.x))}
+          />
+        </div>
       )}
-
-      <ZoomReadout />
     </div>
   );
-}
-
-function ZoomReadout() {
-  const zoom = useEditorStore((s) => s.document?.viewport.zoom ?? 1);
-  return (
-    <div className="pointer-events-none absolute right-3 bottom-3 text-meta text-muted-foreground tabular-nums opacity-60">
-      {Math.round(zoom * 100)}%
-    </div>
-  );
-}
-
-const SIZE = { image: { width: 320, height: 180 }, video: { width: 320, height: 180 } } as const;
-
-function place(
-  assetId: string,
-  type: "image" | "video",
-  at: { x: number; y: number },
-): WorkspaceNode {
-  return {
-    id: nextId(),
-    type,
-    assetId,
-    status: "completed",
-    createdBy: "import",
-    x: at.x,
-    y: at.y,
-    ...SIZE[type],
-  };
 }
 
 export { ASSET_MIME };
