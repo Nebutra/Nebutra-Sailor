@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: landing forge router web pebble design auth kuanlan idp admin sailor-docs para gateway cache carina new-api dns-leak). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api / dns-leak are the remaining ECS leftovers."
+        description: "Apps to deploy (space-separated: landing forge router web design auth kuanlan idp admin sailor-docs para gateway cache carina new-api dns-leak). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api / dns-leak are the remaining ECS leftovers."
         required: false
         default: ""
       cutover:
@@ -34,7 +34,6 @@ on:
       - "apps/forge/**"
       - "apps/router/**"
       - "apps/web/**"
-      - "apps/pebble/**"
       - "apps/design/**"
       - "apps/auth/**"
       - "apps/kuanlan/**"
@@ -97,7 +96,6 @@ jobs:
             {"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","build_command":"build","fly_app":"nebutra-forge","host":"forge","site":"https://forge.nebutra.com"},
             {"app":"router","package":"@nebutra/router","workspace":"apps/router","build_command":"build","fly_app":"nebutra-router","host":"router","site":"https://router.nebutra.com"},
             {"app":"web","package":"@nebutra/web","workspace":"apps/web","build_command":"build:next","fly_app":"nebutra-web","host":"app","site":"https://app.nebutra.com"},
-            {"app":"pebble","package":"@nebutra/pebble-site","workspace":"apps/pebble","build_command":"build","fly_app":"nebutra-pebble","host":"pebble","site":"https://pebble.nebutra.com"},
             {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
             {"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","build_command":"build","fly_app":"nebutra-auth","host":"","site":"https://auth.nebutra.com"},
             {"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","build_command":"build","fly_app":"nebutra-kuanlan","host":"kuanlan","site":"https://kuanlan.nebutra.com"},
