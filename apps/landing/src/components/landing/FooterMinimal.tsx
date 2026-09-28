@@ -52,7 +52,10 @@ export function FooterMinimal({ variant = "default" }: FooterMinimalProps = {}) 
 function LegalFooter() {
   const t = useTranslations("footer");
   return (
-    <footer className="border-t border-border bg-background/[0.08] dark:bg-background">
+    <footer
+      data-testid="site-footer"
+      className="border-t border-border bg-background/[0.08] dark:bg-background"
+    >
       <div className="mx-auto max-w-wide px-6 py-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <nav
@@ -111,7 +114,7 @@ function DefaultFooter() {
 
   return (
     <footer
-      data-testid="footer-minimal"
+      data-testid="site-footer"
       className="relative w-full overflow-hidden border-t border-border bg-neutral-1 text-neutral-12"
     >
       <div className="mx-auto w-full min-w-0 max-w-wide px-4 pt-12 pb-8 sm:px-6 sm:pt-16">
