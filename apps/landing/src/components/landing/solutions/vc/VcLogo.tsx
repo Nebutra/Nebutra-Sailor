@@ -4,7 +4,14 @@ import { glass } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
 import { cn } from "@nebutra/ui/utils";
 import { useMemo, useState } from "react";
+import { LOGO_PLATES } from "@/lib/constants/logo-plates.generated";
 import { vcMonogram } from "@/lib/constants/vc";
+
+/** The computed plate for a curated logo, looked up by its public path. */
+function plateFor(src: string) {
+  const key = src.match(/logos\/[^?#]+\.png/)?.[0];
+  return key ? LOGO_PLATES[key] : undefined;
+}
 
 const SIZE = {
   md: { box: "size-11", text: "text-sm" },
@@ -32,13 +39,18 @@ export function VcLogo({
   const glassUri = useMemo(() => createAvatar(glass, { seed: name, size: 96 }).toDataUri(), [name]);
 
   if (src && !errored) {
+    // The plate is computed from the image (scripts/gen-logo-plates.mjs): the
+    // logo's own background when it has one, else whichever tinted near-white
+    // or near-black its marks contrast with more. A white mark no longer sits
+    // on white.
+    const plate = plateFor(src);
     return (
       <span
         className={cn(
-          // allow-palette: third-party logo mark — fixed white mat so any institution's logo (light or dark) stays legible regardless of theme
-          "flex shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-white p-1.5",
+          "flex shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-border/60 p-1.5",
           s.box,
         )}
+        style={plate ? { backgroundColor: plate.plate } : undefined}
       >
         {/* biome-ignore lint/performance/noImgElement: small static avatar — next/image adds no value */}
         <img
