@@ -29,11 +29,18 @@ const FEISHU_TEMPLATE: Record<StatusIncident["impact"], string> = {
   critical: "red",
 };
 
+/** Linear, no regex: origins can come from env or callers. */
+export function trimTrailingSlashes(value: string): string {
+  let end = value.length;
+  while (end > 0 && value[end - 1] === "/") end -= 1;
+  return value.slice(0, end);
+}
+
 export function incidentUrl(
   incident: StatusIncident,
   origin = process.env.STATUS_PUBLIC_ORIGIN ?? "",
 ): string {
-  return `${origin.replace(/\/+$/, "")}/incidents/${incident.id}`;
+  return `${trimTrailingSlashes(origin)}/incidents/${incident.id}`;
 }
 
 function headline(incident: StatusIncident, event: IncidentEvent): string {
