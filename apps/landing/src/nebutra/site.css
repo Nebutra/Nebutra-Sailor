@@ -61,3 +61,14 @@ html[data-brand="nebutra-site"] .site-reel {
     overflow-x: auto;
   }
 }
+
+/*
+ * No rubber-band past the ends of the page (a16z sets the same on html and
+ * body). With a sticky header, Safari's bounce reads as a strip of empty
+ * page under the footer. Scoped to the Nebutra site; the template keeps the
+ * platform default.
+ */
+html[data-brand="nebutra-site"],
+html[data-brand="nebutra-site"] body {
+  overscroll-behavior-y: none;
+}
