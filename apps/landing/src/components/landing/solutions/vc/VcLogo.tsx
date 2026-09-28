@@ -2,6 +2,7 @@
 
 import { glass } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
+import { useLogoPlate } from "@nebutra/ui/hooks";
 import { cn } from "@nebutra/ui/utils";
 import { useMemo, useState } from "react";
 import { vcMonogram } from "@/lib/constants/vc";
@@ -28,6 +29,10 @@ export function VcLogo({
 }) {
   const [errored, setErrored] = useState(false);
   const s = SIZE[size];
+  // The plate is computed from the image in the browser (useLogoPlate): the
+  // logo's own background when it has one, else whichever tinted near-white or
+  // near-black its marks contrast with more. Nothing is kept per logo.
+  const plate = useLogoPlate(src && !errored ? src : null);
 
   const glassUri = useMemo(() => createAvatar(glass, { seed: name, size: 96 }).toDataUri(), [name]);
 
@@ -35,14 +40,16 @@ export function VcLogo({
     return (
       <span
         className={cn(
-          // allow-palette: third-party logo mark — fixed white mat so any institution's logo (light or dark) stays legible regardless of theme
-          "flex shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-white p-1.5",
+          "flex shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-muted p-1.5 transition-colors duration-flow",
           s.box,
         )}
+        style={plate ? { backgroundColor: plate.plate } : undefined}
       >
         {/* biome-ignore lint/performance/noImgElement: small static avatar — next/image adds no value */}
         <img
           src={src}
+          // Same CORS mode as useLogoPlate's read, so both share one download.
+          crossOrigin="anonymous"
           alt={`${name} logo`}
           loading="lazy"
           onError={() => setErrored(true)}

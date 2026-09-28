@@ -6,6 +6,7 @@
 
 export { DwellHint, type DwellHintProps } from "./DwellHint";
 export { useDebouncedRefresh, useDebouncedValue } from "./use-debounced-refresh";
+export { useLogoPlate } from "./use-logo-plate";
 export { useMediaQuery } from "./use-media-query";
 export { usePendingVisible } from "./use-pending-visible";
 export { useReducedMotion } from "./use-reduced-motion";
