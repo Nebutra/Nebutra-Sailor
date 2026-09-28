@@ -1,13 +1,13 @@
 name: Ops — email sending DNS
 
-# Applies infra/ops/dns/email-sending.json (Resend DKIM / SPF / return path)
+# Applies infra/ops/email/resend-dns.json (Resend DKIM / SPF / return path)
 # to Cloudflare. Idempotent: a re-run only touches records that drifted.
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["infra/ops/dns/email-sending.json"]
+    paths: ["infra/ops/email/resend-dns.json"]
 
 permissions:
   contents: read
@@ -25,4 +25,4 @@ jobs:
       - name: Apply records
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: python3 infra/ops/scripts/apply-dns-records.py infra/ops/dns/email-sending.json
+        run: python3 infra/ops/scripts/apply-dns-records.py infra/ops/email/resend-dns.json
