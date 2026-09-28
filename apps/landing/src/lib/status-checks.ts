@@ -52,7 +52,7 @@ export function getServiceTargets(): ServiceTarget[] {
     {
       id: "docs",
       name: "Documentation",
-      description: "Sailor docs and LLM-readable knowledge surface.",
+      description: "Product documentation and LLM-readable knowledge surface.",
       url: withPath(env.DOCS_ORIGIN_URL, "/llms.txt"),
     },
   ];
