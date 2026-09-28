@@ -3,6 +3,7 @@
 import { CommandMenu as Menu } from "@nebutra/ui/primitives";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useCreateCanvas } from "@/lib/create-canvas";
 import { projects, workspaces } from "@/mock/data";
 import { useUiStore } from "@/stores/ui-store";
 
@@ -14,6 +15,7 @@ export function CommandMenu() {
   const setAgent = useUiStore((s) => s.setAgent);
   const router = useRouter();
   const pathname = usePathname();
+  const { create } = useCreateCanvas();
   const inWorkspace = /^\/p\/[^/]+\/w\/[^/]+/.test(pathname);
 
   useEffect(() => {
@@ -42,6 +44,9 @@ export function CommandMenu() {
           <Menu.Item value="open projects" callback={go("/projects")}>
             Open Projects
           </Menu.Item>
+          <Menu.Item value="open assets page your work" callback={go("/assets")}>
+            Open Assets
+          </Menu.Item>
         </Menu.Group>
         <Menu.Group heading="Workspaces">
           {workspaces.map((w) => (
@@ -68,15 +73,17 @@ export function CommandMenu() {
             Ask PARA
           </Menu.Item>
           <Menu.Item
-            value="open assets library"
+            value="open library drawer"
             callback={() => {
               if (!inWorkspace) router.push("/p/last-animal/w/ep01");
               setDrawer("library");
             }}
           >
-            Open Assets
+            Open Library
           </Menu.Item>
-          <Menu.Item value="create workspace">Create Workspace</Menu.Item>
+          <Menu.Item value="new project canvas" callback={() => void create("blank")}>
+            New Project
+          </Menu.Item>
         </Menu.Group>
       </Menu.List>
     </Menu.Root>
