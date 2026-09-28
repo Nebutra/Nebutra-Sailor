@@ -2,8 +2,35 @@ import fs from "node:fs";
 import path from "node:path";
 
 interface EnvConfig {
-  databaseUrl: string;
+  /**
+   * Written only when given. A fresh project leaves DATABASE_URL unset: with no
+   * URL, @nebutra/db runs an in-process Postgres, so the preview needs no
+   * Docker and no database setup.
+   */
+  databaseUrl?: string;
 }
+
+/**
+ * The local preview's origins — `pnpm dev` serves the site on 3000, the
+ * product app on 3001 and the API gateway on 3002 (it moves them together
+ * when a port is taken). Nothing here may point at a hosted deployment: a
+ * fresh project's links and sign-in must land on the preview itself.
+ */
+export const PREVIEW_ENV: ReadonlyArray<{ name: string; value: string }> = [
+  { name: "AUTH_PROVIDER", value: "better-auth" },
+  { name: "NEXT_PUBLIC_AUTH_PROVIDER", value: "better-auth" },
+  // Better Auth is served by the product app's origin (its /api proxies to the
+  // gateway), so sign-in never leaves the preview.
+  { name: "BETTER_AUTH_URL", value: "http://localhost:3001" },
+  { name: "ACCESS_GATE_MODE", value: "open" },
+  { name: "NEXT_PUBLIC_ACCESS_GATE_MODE", value: "open" },
+  { name: "NEXT_PUBLIC_SITE_URL", value: "http://localhost:3000" },
+  { name: "NEXT_PUBLIC_APP_URL", value: "http://localhost:3001" },
+  { name: "NEXT_PUBLIC_API_URL", value: "http://localhost:3002" },
+  { name: "LANDING_URL", value: "http://localhost:3000" },
+  { name: "WEB_URL", value: "http://localhost:3001" },
+  { name: "API_GATEWAY_URL", value: "http://localhost:3002" },
+];
 
 function hasEnvVar(content: string, name: string): boolean {
   return new RegExp(`^\\s*${name}\\s*=`, "m").test(content);
@@ -21,29 +48,19 @@ export async function injectEnv(targetDir: string, envConfig: EnvConfig) {
   const localEnv = fs.existsSync(localEnvPath) ? fs.readFileSync(localEnvPath, "utf8") : "";
   const visibleEnv = `${rootEnv}\n${localEnv}`;
   const missingLines = [
-    {
-      name: "DATABASE_URL",
-      value: envConfig.databaseUrl,
-    },
-    {
-      name: "AUTH_PROVIDER",
-      value: "better-auth",
-    },
-    {
-      name: "NEXT_PUBLIC_AUTH_PROVIDER",
-      value: "better-auth",
-    },
-    {
-      name: "NEXT_PUBLIC_SITE_URL",
-      value: "http://localhost:3000",
-    },
+    ...(envConfig.databaseUrl ? [{ name: "DATABASE_URL", value: envConfig.databaseUrl }] : []),
+    ...PREVIEW_ENV,
   ]
     .filter((entry) => !hasEnvVar(visibleEnv, entry.name))
     .map((entry) => `${entry.name}="${entry.value}"`);
 
   if (missingLines.length === 0) return;
 
-  const envTemplate = `# Automatically injected by create-sailor\n${missingLines.join("\n")}\n`;
+  const databaseNote =
+    envConfig.databaseUrl || hasEnvVar(visibleEnv, "DATABASE_URL")
+      ? ""
+      : "# DATABASE_URL is unset: the preview runs an in-process Postgres.\n# Set it to use your own Postgres.\n";
+  const envTemplate = `# Local preview origins\n${missingLines.join("\n")}\n${databaseNote}`;
 
   // Race-safe: always open/write without TOCTOU existsSync.
   try {

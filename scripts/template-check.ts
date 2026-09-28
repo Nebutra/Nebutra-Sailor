@@ -76,6 +76,8 @@ const MUST_STRIP = [
   "apps/design",
   "apps/admin",
   "apps/auth",
+  "apps/para",
+  "e2e/sleptons",
   "backends/go",
   "backends/rust",
   "infra/nebutra-router",

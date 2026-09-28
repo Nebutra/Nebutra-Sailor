@@ -49,21 +49,20 @@ export function showDone(opts: DoneOptions): void {
     lines.push(`     ${arrow} ${pm} install`);
   }
 
-  lines.push(`     ${arrow} nebutra status   ${dim("→ what is live, what needs a key")}`);
+  lines.push(
+    `     ${arrow} ${pm} dev          ${dim("→ http://localhost:3001/welcome — no keys, no Docker")}`,
+  );
 
   if (hasDatabase) {
     lines.push(
-      `     ${arrow} ${pm} infra:up     ${dim("→ local Postgres (optional)")}`,
-      `     ${arrow} ${pm} db:migrate   ${dim("→ apply Prisma schema")}`,
+      `     ${arrow} ${pm} db:migrate   ${dim("→ later, once DATABASE_URL points at your Postgres")}`,
     );
   }
 
   lines.push(
-    `     ${arrow} ${pm} dev          ${dim("→ http://localhost:3000")}`,
     "",
-    `   ${dim("More:")} ${dim("nebutra status")} ${dim("·")} ${dim("nebutra.com/docs")}`,
+    `   ${dim("pnpm dev prints what is live and what needs a key.")} ${dim("More:")} ${dim(".sailor/next-steps.md")}`,
   );
-
   lines.push("");
   process.stdout.write(lines.join("\n") + "\n");
 }

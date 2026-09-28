@@ -80,6 +80,8 @@ apps/typelens/
 apps/design/
 apps/admin/
 apps/auth/
+# Para is a Nebutra product (storyboard canvas); its gateway routes stay generic.
+apps/para/
 
 # ---------------------------------------------------------------------------
 # Marketing, PR, and changelog content
@@ -91,6 +93,8 @@ BRAND_GUIDELINES.md
 TRADEMARK.md
 # NOTE: LICENSE-COMMERCIAL.md MUST NOT be stripped — the dual-license
 # model is the core of the template's distribution. Keep it in the mirror.
+# create-sailor removes it from each scaffold (license-emit.ts): a scaffolded
+# project is plain MIT.
 README.ja.md
 README.zh-CN.md
 brand.config.example.ts
@@ -181,6 +185,9 @@ scripts/lint-repository-seam.mjs
 e2e/changelog.spec.ts
 e2e/showcase.spec.ts
 e2e/sleptons-flow.spec.ts
+# Sleptons community suite — apps/sleptons is stripped above.
+e2e/sleptons/
+e2e/playwright.sleptons.config.ts
 tests/load/
 
 # ---------------------------------------------------------------------------

@@ -8,7 +8,7 @@
     "productionReady": false
   },
   "scripts": {
-    "dev": "next dev --port 3000 --webpack",
+    "dev": "next dev",
     "build": "pnpm --filter @nebutra/brand sync && next build --webpack",
     "start": "next start",
     "lint": "biome check .",

@@ -5,6 +5,7 @@ import { indexRoute } from "./routes/index";
 import { settingsRoute } from "./routes/settings";
 import { signInRoute } from "./routes/sign-in";
 import { startupOsRoute } from "./routes/startup-os";
+import { welcomeRoute } from "./routes/welcome";
 import { workspaceRoute } from "./routes/workspace";
 
 const routeTree = rootRoute.addChildren([
@@ -14,6 +15,7 @@ const routeTree = rootRoute.addChildren([
   workspaceRoute,
   settingsRoute,
   billingRoute,
+  welcomeRoute,
 ]);
 
 export const router = createRouter({

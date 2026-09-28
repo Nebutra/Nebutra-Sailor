@@ -195,11 +195,10 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   await generateWelcomePage(resolvedTarget, { projectName });
 
   // -- env --
-  const envDefaults = {
-    databaseUrl: "postgresql://postgres:postgres@localhost:5432/nebutra",
-  };
+  // No DATABASE_URL: the preview runs on @nebutra/db's in-process Postgres,
+  // so `pnpm dev` needs no Docker and no database setup.
   emitJson(useJson, { event: "step", step: "env", status: "start" });
-  await injectEnv(resolvedTarget, envDefaults);
+  await injectEnv(resolvedTarget, {});
   emitJson(useJson, { event: "step", step: "env", status: "ok" });
 
   // -- scaffold extras --

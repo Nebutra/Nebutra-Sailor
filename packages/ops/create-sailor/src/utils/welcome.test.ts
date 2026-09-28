@@ -14,33 +14,33 @@ describe("generateWelcomePage", () => {
     tempDirs.length = 0;
   });
 
-  it("writes fresh-scaffold brand guidance without the removed sailor command", async () => {
+  it("writes the next-steps cheat sheet, leading with the zero-setup preview", async () => {
     const targetDir = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-welcome-"));
     tempDirs.push(targetDir);
-
     fs.mkdirSync(path.join(targetDir, "apps", "web"), { recursive: true });
 
-    await generateWelcomePage(targetDir, {
-      projectName: "Acme",
-    });
+    await generateWelcomePage(targetDir, { projectName: "Acme" });
 
     const nextSteps = fs.readFileSync(path.join(targetDir, ".sailor", "next-steps.md"), "utf8");
-    const welcomePage = fs.readFileSync(
-      path.join(targetDir, "apps", "web", "src", "app", "[locale]", "welcome", "page.tsx"),
-      "utf8",
-    );
-
+    expect(nextSteps).toContain("# Next steps — Acme");
+    expect(nextSteps.indexOf("pnpm dev")).toBeLessThan(nextSteps.indexOf("pnpm db:migrate"));
+    expect(nextSteps).toContain("http://localhost:3001/welcome");
     expect(nextSteps).toContain("pnpm brand:init");
     expect(nextSteps).toContain("pnpm brand:apply");
     expect(nextSteps).not.toContain("pnpm sailor");
-
-    expect(welcomePage).toContain('command="pnpm brand:init"');
-    expect(welcomePage).toContain("pnpm brand:apply");
-    expect(welcomePage).not.toContain("pnpm sailor");
-    expect(welcomePage).not.toContain("get-license");
-    expect(welcomePage).not.toContain("@nebutra/brand/metadata");
-    expect(welcomePage).toContain("https://nebutra.com/licensing");
     expect(nextSteps).not.toContain("get-license");
     expect(nextSteps).toContain("https://nebutra.com/licensing");
+  });
+
+  it("no longer writes a page into the retired Next.js app tree", async () => {
+    const targetDir = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-welcome-"));
+    tempDirs.push(targetDir);
+    fs.mkdirSync(path.join(targetDir, "apps", "web"), { recursive: true });
+
+    await generateWelcomePage(targetDir, { projectName: "Acme" });
+
+    expect(
+      fs.existsSync(path.join(targetDir, "apps", "web", "src", "app", "[locale]", "welcome")),
+    ).toBe(false);
   });
 });

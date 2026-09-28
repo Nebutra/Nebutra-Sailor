@@ -4,7 +4,8 @@
   "private": true,
   "description": "Enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms",
   "scripts": {
-    "dev": "turbo run dev",
+    "dev": "tsx scripts/dev/preview.ts",
+    "dev:all": "turbo run dev --concurrency=64",
     "dev:web": "pnpm --filter @nebutra/web dev",
     "dev:landing": "pnpm --filter @nebutra/landing dev",
     "dev:api": "pnpm --filter @nebutra/gateway dev",

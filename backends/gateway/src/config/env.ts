@@ -11,8 +11,9 @@ const baseSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   PORT: z.string().default("3002"),
 
-  // Database
-  DATABASE_URL: z.string().url(),
+  // Database. Optional outside production: with no URL, @nebutra/db runs an
+  // in-process Postgres so a fresh project's `pnpm dev` needs no database.
+  DATABASE_URL: z.string().url().optional(),
 
   // Redis
   UPSTASH_REDIS_REST_URL: z.string().optional(),
@@ -125,6 +126,13 @@ export function validateEnv(): Env {
   }
 
   const result = envSchema.safeParse(normalizedEnv);
+
+  if (result.success && result.data.NODE_ENV === "production" && !result.data.DATABASE_URL) {
+    process.stderr.write(
+      "❌ Invalid environment variables: DATABASE_URL is required in production\n",
+    );
+    throw new Error("Invalid environment variables");
+  }
 
   if (!result.success) {
     process.stderr.write("❌ Invalid environment variables:\n");

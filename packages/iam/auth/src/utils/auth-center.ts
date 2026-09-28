@@ -48,18 +48,26 @@ function isBrowserOnNebutraProductHost(): boolean {
 
 /**
  * Public origin of the login center.
- * Prefer NEXT_PUBLIC_AUTH_URL, then BETTER_AUTH_URL, then app URL (legacy).
+ * Prefer NEXT_PUBLIC_AUTH_URL, then BETTER_AUTH_URL, then app URL (legacy),
+ * then `ownOrigin`: an app that serves Better Auth itself (a Sailor project,
+ * which ships no separate auth center) passes its own origin, so with nothing
+ * configured sign-in stays in the app. Without it the fallback is the local
+ * auth center (apps/auth, :3101) of the Nebutra monorepo.
  *
  * Safety: when a client bundle was built without NEXT_PUBLIC_AUTH_URL (common
  * on misconfigured ECS builds), the old fallback was localhost:3101 — which
  * breaks production Sign-in links. On *.nebutra.com we always force the
  * production auth center instead of localhost.
  */
-export function getAuthCenterOrigin(env: Record<string, string | undefined> = process.env): string {
+export function getAuthCenterOrigin(
+  env: Record<string, string | undefined> = process.env,
+  ownOrigin?: string,
+): string {
   const raw =
     env.NEXT_PUBLIC_AUTH_URL?.trim() ||
     env.BETTER_AUTH_URL?.trim() ||
     env.NEXT_PUBLIC_APP_URL?.trim() ||
+    ownOrigin?.trim() ||
     LOCAL_AUTH_ORIGIN;
 
   let origin = stripTrailingSlash(raw);

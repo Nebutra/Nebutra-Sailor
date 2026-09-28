@@ -17,10 +17,17 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    port: 3001,
+    // `pnpm dev` (scripts/dev/preview.ts) moves the port when 3001 is taken.
+    port: Number(process.env.PORT) || 3001,
+    // A port chosen for this process must be the one it gets: drifting to the
+    // next free port would take the one the preview gave the API gateway.
+    strictPort: Boolean(process.env.PORT),
     proxy: {
       "/api": {
-        target: process.env.VITE_API_GATEWAY_URL ?? "http://localhost:3002",
+        target:
+          process.env.VITE_API_GATEWAY_URL ??
+          process.env.API_GATEWAY_URL ??
+          "http://localhost:3002",
         changeOrigin: true,
       },
     },

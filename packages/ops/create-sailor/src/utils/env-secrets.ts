@@ -5,10 +5,9 @@ import path from "node:path";
 /**
  * Env secrets generator for create-sailor.
  *
- * Reads `.env.example` at the target root and writes a companion
- * `.env.local` with cryptographically random values injected for each
- * known secret key. `.env.example` is NOT mutated — it stays as a
- * source-controlled template.
+ * Writes the project's `.env.local` with cryptographically random values for
+ * each known secret key. `.env.example` is NOT mutated — it stays the
+ * source-controlled reference of every provider key.
  *
  * Secret conventions:
  *  - 32-byte base64 (url-safe-ish, `=` padding stripped) for auth / JWT /
@@ -92,11 +91,30 @@ function replaceSecretLine(content: string, key: SecretName, value: string): str
   return content.replace(regex, `${key}="${safe}"`);
 }
 
+const PREVIEW_HEADER = `# Local preview — written by create-sailor.
+#
+# Everything here stays on this machine. \`pnpm dev\` runs every capability on
+# its local fallback (in-process database, memory queue and cache, console
+# email, local file storage), so nothing below is a key you need to find.
+# To take a capability live, copy its key from .env.example into this file;
+# \`pnpm dev\` prints which capabilities are live and which still need a key.
+`;
+
 /**
- * Generate `.env.local` with random values filled in for known secrets.
+ * Generate \`.env.local\` with random values filled in for known secrets.
  *
- * @returns the secret map that was written, or `null` if `.env.example`
- *          was absent (caller can decide whether to warn).
+ * A fresh project gets a short preview file: the generated secrets and
+ * nothing else (\`injectEnv\` adds the local URLs). It is deliberately not a
+ * copy of \`.env.example\`: that file documents every provider with
+ * placeholder values (\`sk_test_xxx\`, a localhost Redis, a Docker Postgres)
+ * which, copied into a live env, read as configured providers and send the
+ * preview looking for services that are not running.
+ *
+ * When \`.env.local\` already exists its secret lines are refreshed in place
+ * and everything else is left alone.
+ *
+ * @returns the secret map that was written, or \`null\` if \`.env.example\`
+ *          was absent (the target is not a Sailor template).
  */
 export async function generateEnvSecrets(targetDir: string): Promise<SecretMap | null> {
   const envExample = path.join(targetDir, ".env.example");
@@ -105,16 +123,16 @@ export async function generateEnvSecrets(targetDir: string): Promise<SecretMap |
   if (!fs.existsSync(envExample)) return null;
 
   try {
-    const template = fs.readFileSync(envExample, "utf8");
     const secrets = buildSecretMap();
+    const keys = Object.keys(secrets) as SecretName[];
 
-    // If `.env.local` already exists (e.g. `injectEnv` ran first), honour
-    // it as the base so we don't trample user edits.
-    const base = fs.existsSync(envLocal) ? fs.readFileSync(envLocal, "utf8") : template;
-
-    let next = base;
-    for (const key of Object.keys(secrets) as SecretName[]) {
-      next = replaceSecretLine(next, key, secrets[key]);
+    let next: string;
+    if (fs.existsSync(envLocal)) {
+      next = fs.readFileSync(envLocal, "utf8");
+      for (const key of keys) next = replaceSecretLine(next, key, secrets[key]);
+    } else {
+      const lines = keys.map((key) => `${key}="${escapeEnvValue(secrets[key])}"`);
+      next = `${PREVIEW_HEADER}\n# Generated secrets\n${lines.join("\n")}\n`;
     }
 
     fs.writeFileSync(envLocal, next);

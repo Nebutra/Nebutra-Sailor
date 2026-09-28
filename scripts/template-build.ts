@@ -406,6 +406,10 @@ function main(): void {
   process.stdout.write(
     "  emptied .changeset/config.json fixed group (the mirror never publishes)\n",
   );
+  const workspaceLines = stripNebutraOnlyWorkspaceConfig(out);
+  process.stdout.write(
+    `  removed ${workspaceLines} Nebutra-only pnpm overrides/build approvals (@clerk/*)\n`,
+  );
 
   if (args.git) {
     process.stdout.write("Step 5/5: initializing git repo…\n");
@@ -415,6 +419,46 @@ function main(): void {
   }
 
   process.stdout.write(`\nDone. Template built at: ${out}\n`);
+}
+
+/**
+ * Drop pnpm settings that exist only for apps the template strips.
+ *
+ * `@clerk/*` is used by apps/sleptons alone; its security-floor overrides and
+ * the `@clerk/shared` build approval would otherwise sit in every scaffold's
+ * pnpm-workspace.yaml for a dependency nothing installs. The same override
+ * lines come out of pnpm-lock.yaml so the lockfile's recorded overrides still
+ * match the workspace (a mismatch fails `pnpm install --frozen-lockfile`).
+ */
+const NEBUTRA_ONLY_PNPM_PACKAGE = /^\s+(?:-\s+)?["']@clerk\/[^"']+["'](?::.*)?$/;
+
+function stripNebutraOnlyWorkspaceConfig(targetDir: string): number {
+  let removed = 0;
+  for (const file of ["pnpm-workspace.yaml", "pnpm-lock.yaml"]) {
+    const full = path.join(targetDir, file);
+    let src: string;
+    try {
+      src = fs.readFileSync(full, "utf8");
+    } catch {
+      continue;
+    }
+    const lines = src.split("\n");
+    // Only the top-level `overrides:` / `onlyBuiltDependencies:` blocks: the
+    // lockfile also names @clerk packages under importers and packages, which
+    // pnpm prunes itself on the first install.
+    let block = "";
+    const kept = lines.filter((line) => {
+      if (/^\S/.test(line)) block = line.replace(/:.*$/, "");
+      const inBlock = block === "overrides" || block === "onlyBuiltDependencies";
+      if (inBlock && NEBUTRA_ONLY_PNPM_PACKAGE.test(line)) {
+        removed++;
+        return false;
+      }
+      return true;
+    });
+    fs.writeFileSync(full, kept.join("\n"));
+  }
+  return removed;
 }
 
 /**

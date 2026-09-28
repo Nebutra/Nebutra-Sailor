@@ -58,7 +58,7 @@ function printDryRunPlan(
     "inject compliance boilerplate (footer, cookie banner, privacy, terms)",
     "copy backends/gateway, infra, e2e, tests, deploy (Dockerfile.web + docker-compose)",
     "generate secrets, seed script and welcome page",
-    "inject .env.local (local Postgres, Better Auth)",
+    "write .env.local (generated secrets, localhost origins — no keys needed)",
     "write MIT scaffold license",
     ...(opts.preset
       ? [`write the look: preset ${opts.preset} → packages/design/tokens/project/preset`]

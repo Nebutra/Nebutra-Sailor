@@ -62,7 +62,6 @@ import { shouldSkipGlobalRateLimit } from "./middlewares/rateLimitSkip.js";
 import { tenantContextMiddleware } from "./middlewares/tenantContext.js";
 import { usageMeteringMiddleware } from "./middlewares/usageMetering.js";
 import { adminRoutes } from "./routes/admin/index.js";
-import { agentRuntimeRoutes } from "./routes/agent-runtime/index.js";
 import { agentRoutes } from "./routes/agents/index.js";
 import { apiKeysRoutes } from "./routes/ai/api-keys.js";
 import { createByokResolveUpstreams } from "./routes/ai/byok-upstreams.js";
@@ -82,10 +81,9 @@ import { healthRoutes } from "./routes/misc/health.js";
 import { notificationRoutes } from "./routes/notifications/index.js";
 import { paraAgentRoutes } from "./routes/para/agent.js";
 import { paraRoutes } from "./routes/para/index.js";
-import { pebbleRoutes } from "./routes/pebble/index.js";
+import { mountProductRoutes } from "./routes/product-routes.js";
 import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
-import { startupOsRoutes } from "./routes/startup-os/index.js";
 import { statusRoutes } from "./routes/system/status.js";
 import { taskRoutes } from "./routes/tasks/index.js";
 import { uploadRoutes } from "./routes/uploads/index.js";
@@ -314,8 +312,6 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
   app.route("/api/v1/legal", consentRoutes);
   app.route("/api/v1/events", eventRoutes);
   app.route("/api/v1/agents", agentRoutes);
-  app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
-  app.route("/api/v1/startup-os", startupOsRoutes);
   app.route("/api/v1/workflows", workflowRoutes);
   app.route("/api/v1/ai", aiRoutes);
   app.route("/api/v1/tasks", taskRoutes);
@@ -323,13 +319,10 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
   app.route("/api/v1/para/agent", paraAgentRoutes);
   app.route("/api/v1/para", paraRoutes);
 
-  // Pebble desktop support intake. Unauthenticated by design (desktop users have
-  // no Nebutra account) — the routes carry their own per-IP limits and size caps.
-  // `/pebble` is the frozen product namespace so `/v1/*` stays unclaimed for
-  // other products; see docs/DOMAINS.md. Mounted with and without the `/api`
-  // prefix because the client calls the bare path on api.nebutra.com.
-  app.route("/pebble", pebbleRoutes);
-  app.route("/api/pebble", pebbleRoutes);
+  // Product-line routes (agent runtime, Startup OS, Pebble) live behind one
+  // seam: the template ships routes/product-routes.for-template.ts in its place,
+  // so stripping a product's route directory never leaves a dangling import.
+  mountProductRoutes(app);
 
   app.route("/api", authRoutes);
 

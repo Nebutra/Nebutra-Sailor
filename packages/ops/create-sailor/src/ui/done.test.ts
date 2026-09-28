@@ -34,7 +34,10 @@ describe("showDone", () => {
     expect(output).toContain("pnpm install");
     expect(output).toContain("pnpm db:migrate");
     expect(output).toContain("pnpm dev");
-    expect(output).toContain("nebutra status");
+    // The preview comes first: it needs no database, the migration is for later.
+    expect(output.indexOf("pnpm dev")).toBeLessThan(output.indexOf("pnpm db:migrate"));
+    expect(output).toContain("http://localhost:3001/welcome");
+    expect(output).toContain("what needs a key");
     // Advanced noise removed from golden path
     expect(output).not.toContain("pnpm brand:init");
     expect(output).not.toContain("pnpm audit");

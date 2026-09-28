@@ -784,9 +784,18 @@ function updateEnvTemplate(config: BrandConfig): void {
     return;
   }
 
+  // The values stay local — .env.example seeds a working `pnpm dev`, and a
+  // production origin there sent every fresh project's links to the brand's
+  // live site. The production origin is recorded beside it instead.
   const replacements: Array<[RegExp, string]> = [
-    [/NEXT_PUBLIC_APP_URL=.*/g, `NEXT_PUBLIC_APP_URL=https://${config.domains.app}`],
-    [/NEXT_PUBLIC_API_URL=.*/g, `NEXT_PUBLIC_API_URL=https://${config.domains.api}`],
+    [
+      /NEXT_PUBLIC_APP_URL=.*/g,
+      `NEXT_PUBLIC_APP_URL="http://localhost:3001"           # Production: https://${config.domains.app}`,
+    ],
+    [
+      /NEXT_PUBLIC_API_URL=.*/g,
+      `NEXT_PUBLIC_API_URL="http://localhost:3002"           # Production: https://${config.domains.api}`,
+    ],
   ];
 
   if (replaceInFile(envPath, replacements)) {

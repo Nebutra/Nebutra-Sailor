@@ -26,6 +26,17 @@ describe("auth center URL helpers", () => {
     expect(getAuthCenterOrigin()).toBe("https://auth.nebutra.com");
   });
 
+  it("falls back to the caller's own origin when no auth center is configured", () => {
+    expect(getAuthCenterOrigin({}, "http://localhost:3011/")).toBe("http://localhost:3011");
+    expect(getAuthCenterOrigin({})).toBe("http://localhost:3101");
+    expect(
+      getAuthCenterOrigin(
+        { NEXT_PUBLIC_AUTH_URL: "https://auth.example.com" },
+        "http://localhost:3001",
+      ),
+    ).toBe("https://auth.example.com");
+  });
+
   it("builds sign-in URL with returnTo", () => {
     process.env.NEXT_PUBLIC_AUTH_URL = "https://auth.nebutra.com";
     expect(buildAuthCenterSignInUrl("https://app.nebutra.com/workspace")).toBe(

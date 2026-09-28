@@ -115,6 +115,15 @@ export function emitScaffoldLicense(
     }
   }
 
+  // 1b. The mirror carries the upstream's commercial exception (template-build
+  // refuses to push without it), but a scaffolded project is plain MIT: a
+  // second licence file at its root would read as terms the project is under.
+  const commercialLicense = path.join(targetDir, "LICENSE-COMMERCIAL.md");
+  if (fs.existsSync(commercialLicense)) {
+    fs.rmSync(commercialLicense);
+    wrote.push("LICENSE-COMMERCIAL.md (removed — the project is MIT)");
+  }
+
   // 2. Write the scaffolded project's MIT LICENSE.
   const scaffoldSrc = path.join(templatesRoot, "LICENSE-SCAFFOLD.md");
   if (!fs.existsSync(scaffoldSrc)) {

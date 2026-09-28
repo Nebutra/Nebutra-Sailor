@@ -6,15 +6,20 @@ import { createRootRoute, Link, Outlet, useLocation } from "@tanstack/react-rout
 import { SidebarProvider } from "@/components/navigation/sidebar-context";
 
 const appNav = [
+  // The preview's start page, only while `pnpm dev` runs the local preview.
+  ...(import.meta.env.VITE_SAILOR_PREVIEW ? [{ to: "/welcome", label: "Get started" }] : []),
   { to: "/startup-os", label: "Startup OS" },
   { to: "/settings", label: "Settings" },
   { to: "/billing", label: "Billing" },
 ] as const;
 
+/** Routes that render for signed-out visitors, outside the product shell. */
+const PUBLIC_ROUTES = new Set(["/sign-in", "/welcome"]);
+
 function ProductShell() {
   const location = useLocation();
   const { isLoaded, isSignedIn, user, signOut } = useAuthContext();
-  const isAuthRoute = location.pathname === "/sign-in";
+  const isPublicRoute = PUBLIC_ROUTES.has(location.pathname);
 
   if (!isLoaded) {
     return (
@@ -24,7 +29,15 @@ function ProductShell() {
     );
   }
 
-  if (!isSignedIn && !isAuthRoute) {
+  if (!isSignedIn && isPublicRoute) {
+    return (
+      <div className="min-h-dvh bg-neutral-1 text-neutral-12">
+        <Outlet />
+      </div>
+    );
+  }
+
+  if (!isSignedIn) {
     return (
       <main className="grid min-h-dvh place-items-center bg-neutral-1 px-6 text-neutral-12">
         <section className="w-full max-w-md rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-2 p-6">

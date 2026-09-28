@@ -20,7 +20,8 @@ describe("apps/web Vite migration contract", () => {
       devDependencies: Record<string, string>;
     }>("package.json");
 
-    expect(packageJson.scripts.dev).toBe("vite --host 0.0.0.0 --port 3001");
+    // The port comes from vite.config.ts (PORT, default 3001) so `pnpm dev` can move it.
+    expect(packageJson.scripts.dev).toBe("vite --host 0.0.0.0");
     expect(packageJson.scripts.build).toContain("vite build");
     expect(packageJson.scripts.build).not.toContain("next build");
     // #659 added a second pass over the Next app sources (tsconfig.app.json).
