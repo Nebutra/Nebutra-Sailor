@@ -290,6 +290,11 @@ jobs:
   # This runs the whole graph, but only after merge, so PR feedback stays fast
   # and a break is attributable to the commit that caused it instead of to
   # whoever trips over it next.
+  #
+  # It is also the one job that seeds the shared Turbo cache: it starts empty,
+  # builds every package, and saves exactly that. PR jobs restore it, so they
+  # rebuild only what they changed. Starting empty is what keeps the cache from
+  # growing with every push.
   typecheck-full:
     name: Typecheck (full graph)
     # Source monorepo only. Sailor-Template is a stripped skeleton — full-graph
@@ -310,6 +315,11 @@ jobs:
           node-version: "24"
       - name: Typecheck (every package)
         run: pnpm turbo typecheck
+      - name: Save Turbo cache
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .turbo/cache
+          key: turbo-pkgs-${{ runner.os }}-${{ github.sha }}
 
   # ── Lint & type-check (affected packages only) ──────────────────────────
   lint-typecheck:
@@ -328,6 +338,9 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           verify-supply-chain: "true"
+          # A PR saves what it built, so its next push starts from there. On
+          # main, typecheck-full owns the cache.
+          turbo-cache: ${{ github.event_name == 'pull_request' && 'save' || 'restore' }}
 
       - name: Verify Turbo build contract
         run: pnpm --config.verify-deps-before-run=false ci:verify-turbo-contract
@@ -501,7 +514,9 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [detect-changes, lint-typecheck]
+    # Not after lint-typecheck: a build does not need lint to pass to be worth
+    # running, and waiting for it put 13 minutes in front of every build.
+    needs: detect-changes
     if: needs.detect-changes.outputs.template != 'true'
     steps:
       - name: Checkout
@@ -513,6 +528,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           verify-supply-chain: "true"
+          turbo-cache: restore
 
       - name: Generate Prisma Client
         run: pnpm db:generate
@@ -687,6 +703,8 @@ jobs:
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          turbo-cache: restore
 
       - name: Generate Prisma Client
         run: pnpm db:generate
@@ -721,7 +739,8 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: [detect-changes, lint-typecheck]
+    # Runs beside lint-typecheck, not after it (see build).
+    needs: detect-changes
     if: needs.detect-changes.outputs.template != 'true'
     # packages/platform/db/__tests__/rls-*.test.ts always run their assertions
     # against PGlite; when RLS_ATTACK_DATABASE_URL is set, they replay the
@@ -753,6 +772,8 @@ jobs:
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          turbo-cache: restore
 
       - name: Resolve Turbo base ref
         run: |
@@ -851,6 +872,8 @@ jobs:
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          turbo-cache: restore
 
       - name: Build shared packages
         run: pnpm turbo build --filter="./packages/*/*"
@@ -1021,68 +1044,11 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-  # ── Deploy jobs ──────────────────────────────────────────────────────────
-  # Add a deploy job per app here, gated by detect-changes output.
-  # Each job only runs when its own app directory (or shared packages) changed.
+  # Deploys live in their own workflows (deploy-fly.yml and friends), not here.
   #
-  # Template:
-  #
-  #   deploy-web:
-  #     name: Deploy Web
-  #     runs-on: ubuntu-latest
-  #     needs: [detect-changes, build]
-  #     if: needs.detect-changes.outputs.web == 'true'
-  #     environment: production
-  #     steps:
-  #       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-  #         run: <your deploy command>
-  #
-  #   deploy-api-gateway:
-  #     name: Deploy API Gateway
-  #     runs-on: ubuntu-latest
-  #     needs: [detect-changes, build]
-  #     if: needs.detect-changes.outputs.api-gateway == 'true'
-  #     steps: ...
-
-  # ── Lighthouse CI (landing page, PRs only) ───────────────────────────────
-  # Audits the public marketing site for performance, accessibility,
-  # best-practices, and SEO.
-  #
-  # Thresholds (defined in lighthouserc.json at repo root):
-  #   accessibility  ≥ 0.95  → "error"  — BLOCKS the PR on failure
-  #   performance    ≥ 0.80  → "warn"   — reports but does not block
-  #   best-practices ≥ 0.90  → "warn"   — reports but does not block
-  #   seo            ≥ 0.90  → "warn"   — reports but does not block
-  lighthouse:
-    name: Lighthouse CI (landing page)
-    runs-on: ubuntu-latest
-    needs: [detect-changes, build]
-    # Only run on PRs and only when landing or shared packages changed
-    if: |
-      needs.detect-changes.outputs.template != 'true' &&
-      github.event_name == 'pull_request' &&
-      (needs.detect-changes.outputs.landing == 'true' || needs.detect-changes.outputs.packages == 'true')
-    steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-
-      - name: Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
-
-      - name: Build landing page dependency closure
-        run: pnpm turbo build --filter="@nebutra/landing^..."
-        env:
-          SKIP_ENV_VALIDATION: true
-
-      - name: Build landing page
-        run: pnpm --filter @nebutra/landing build
-        env:
-          SKIP_ENV_VALIDATION: true
-
-      - name: Run Lighthouse CI
-        run: npx @lhci/cli@0.14.0 autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+  # Lighthouse left per-PR CI on 2026-09-28: a 10-minute landing rebuild on
+  # every PR that had not failed once in its last 20 runs. The same
+  # lighthouserc.json budgets run on demand through lighthouse-dashboard.yml.
 
   # ── E2E Tests (sharded 4× for parallelism) ───────────────────────────────
   e2e:
@@ -1099,6 +1065,8 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          turbo-cache: restore
       - name: Build workspace packages (required by landing webServer)
         run: pnpm turbo build --filter="./packages/*/*"
         env:
@@ -1188,6 +1156,8 @@ jobs:
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          turbo-cache: restore
 
       - name: Build api-gateway dependency closure
         run: pnpm turbo build --filter="@nebutra/gateway^..."
@@ -1248,61 +1218,10 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
-  # ── Web app bundle analysis (PRs only) ───────────────────────────────────
-  # Builds the web app with @next/bundle-analyzer and uploads the report.
-  # Does NOT block the PR — purely informational for size regression tracking.
-  bundle-analysis:
-    name: Web Bundle Analysis
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    needs: [detect-changes, build]
-    permissions:
-      contents: read
-      issues: write
-      pull-requests: write
-    if: |
-      needs.detect-changes.outputs.template != 'true' &&
-      github.event_name == 'pull_request' &&
-      (needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true')
-    steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-
-      - name: Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
-
-      - name: Build web app dependency closure
-        run: pnpm turbo build --filter="@nebutra/web^..."
-        env:
-          SKIP_ENV_VALIDATION: true
-
-      - name: Build web app with bundle analyzer
-        run: pnpm --filter @nebutra/web analyze
-        env:
-          ANALYZE: "true"
-          DATABASE_URL: "postgresql://stub:stub@localhost:5432/stub"
-          NODE_OPTIONS: "--max-old-space-size=6144"
-          SKIP_ENV_VALIDATION: true
-
-      - name: Upload bundle analysis report
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: bundle-analysis-${{ github.run_id }}
-          path: apps/web/.next/analyze/
-          retention-days: 30
-
-      - name: Comment PR with bundle analysis link
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
-        with:
-          script: |
-            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## Bundle Analysis\n\nBundle analysis report uploaded. [View artifacts](${runUrl})\n\n> \`client.html\` — client bundle treemap\n> \`edge.html\` — edge runtime bundle`,
-            });
+  # Web bundle analysis left CI on 2026-09-28: an 11-minute rebuild of the web
+  # app on every PR that only uploaded a treemap and commented a link, beside
+  # `bundle-size`, which enforces the budget. `pnpm --filter @nebutra/web
+  # analyze` produces the same report locally when one is wanted.
 
   # ── Merge E2E shard reports ───────────────────────────────────────────────
   e2e-report:
