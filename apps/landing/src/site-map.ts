@@ -96,7 +96,7 @@ export interface SitePage {
   /**
    * How the layout frames the page. Omitted = the site navigation and footer.
    * "over-dark": the page opens on a dark hero, so the navigation starts dark.
-   * "bare": the page draws its own frame (the status page).
+   * "bare": the page draws its own frame (the Studio canvas frame).
    */
   chrome?: "over-dark" | "bare";
   /**
@@ -264,7 +264,6 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Status", zh: "服务状态" },
     status: "live",
     template: true,
-    chrome: "bare",
   },
   {
     path: "/status/history",
@@ -272,7 +271,6 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Incident history", zh: "事件历史" },
     status: "live",
     template: true,
-    chrome: "bare",
   },
   {
     path: "/status/subscription",
@@ -280,7 +278,6 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Status subscription", zh: "状态订阅" },
     status: "live",
     template: true,
-    chrome: "bare",
   },
   {
     path: "/status/incidents/[id]",
@@ -288,7 +285,6 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Incident", zh: "事件" },
     status: "live",
     template: true,
-    chrome: "bare",
   },
   {
     path: "/security",

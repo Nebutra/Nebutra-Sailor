@@ -216,7 +216,8 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         onMouseEnter={() => open === "hover" && clear()}
         onMouseLeave={hoverClose}
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 border-r border-border bg-background shadow-ambient-lg",
+          // overscroll-contain: scrolling the drawer never scrolls the page behind it (Stripe does the same).
+          "fixed inset-y-0 left-0 z-50 w-64 overscroll-contain border-r border-border bg-background shadow-ambient-lg",
           "motion-safe:transition-transform motion-safe:duration-flow motion-safe:ease-brand",
           open ? "translate-x-0" : "-translate-x-full",
         )}
