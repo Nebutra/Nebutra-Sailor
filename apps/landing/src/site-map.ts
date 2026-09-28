@@ -99,6 +99,13 @@ export interface SitePage {
    * "bare": the page draws its own frame (the status page).
    */
   chrome?: "over-dark" | "bare";
+  /**
+   * Listed under its section in the rail. The rail shows sections; a page
+   * without this is reached from its section's own pages, the footer, or not
+   * at all — which is how /features went missing when the rail replaced the
+   * top navigation.
+   */
+  rail?: true;
 }
 
 export const SITE_MAP: readonly SitePage[] = [
@@ -136,6 +143,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/news",
+    rail: true,
     section: "journal",
     title: { en: "News", zh: "新闻" },
     status: "live",
@@ -159,6 +167,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/sailor/studio",
+    rail: true,
     section: "sailor",
     title: { en: "Sailor Studio", zh: "Sailor Studio" },
     status: "live",
@@ -175,6 +184,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/features",
+    rail: true,
     section: "sailor",
     title: { en: "Packages", zh: "功能包" },
     status: "live",
@@ -189,6 +199,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/pricing",
+    rail: true,
     section: "sailor",
     title: { en: "Pricing", zh: "定价" },
     status: "live",
@@ -196,6 +207,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/licensing",
+    rail: true,
     section: "sailor",
     title: { en: "Licensing", zh: "授权" },
     status: "live",
@@ -224,6 +236,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/changelog",
+    rail: true,
     section: "sailor",
     title: { en: "Changelog", zh: "更新日志" },
     status: "live",
@@ -239,6 +252,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/showcase",
+    rail: true,
     section: "sailor",
     title: { en: "Built with Sailor", zh: "作品展示" },
     status: "live",
@@ -293,6 +307,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/ideas",
+    rail: true,
     section: "sleptons",
     title: { en: "Ideas", zh: "创意与需求" },
     status: "live",
@@ -300,6 +315,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/solutions",
+    rail: true,
     section: "sleptons",
     title: { en: "Capital", zh: "资本" },
     status: "live",
@@ -337,6 +353,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/about/products",
+    rail: true,
     section: "building",
     title: { en: "Founder OS", zh: "创始人操作系统" },
     status: "live",
@@ -344,6 +361,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/roadmap",
+    rail: true,
     section: "building",
     title: { en: "Roadmap", zh: "路线图" },
     status: "live",
@@ -351,6 +369,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/playbook",
+    rail: true,
     section: "building",
     title: { en: "Playbook", zh: "演示合集" },
     status: "live",
@@ -396,6 +415,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/careers",
+    rail: true,
     section: "company",
     title: { en: "Careers", zh: "加入我们" },
     status: "live",
@@ -403,6 +423,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/contact",
+    rail: true,
     section: "company",
     title: { en: "Contact", zh: "联系" },
     status: "live",
@@ -410,6 +431,7 @@ export const SITE_MAP: readonly SitePage[] = [
   },
   {
     path: "/faq",
+    rail: true,
     section: "company",
     title: { en: "FAQ", zh: "常见问题" },
     status: "live",
@@ -433,6 +455,14 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/cookies",
     section: "company",
     title: { en: "Cookies", zh: "Cookie 政策" },
+    status: "live",
+    template: true,
+  },
+  {
+    // The typeface credits. MiSans's licence asks the product to state it uses MiSans.
+    path: "/credits",
+    section: "company",
+    title: { en: "Credits", zh: "致谢" },
     status: "live",
     template: true,
   },

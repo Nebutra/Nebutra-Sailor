@@ -155,6 +155,7 @@
       "terms": "Умови",
       "cookies": "Файли cookie",
       "refund": "Повернення коштів",
+      "credits": "Подяки",
       "licensing": "Ліцензування",
       "contact": "Зв'язатися",
       "faq": "ЧаПи",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Усі права захищено.",
-    "fontCredit": "Китайський шрифт: MiSans (Xiaomi)",
     "statusOnline": "Усі системи працюють",
     "newsletterTitle": "Будьте в курсі",
     "newsletterPlaceholder": "you@example.com",

@@ -155,6 +155,7 @@
       "terms": "Käyttöehdot",
       "cookies": "Evästeet",
       "refund": "Palautus",
+      "credits": "Kiitokset",
       "licensing": "Lisenssien hallinta",
       "contact": "Ota yhteyttä",
       "faq": "UKK",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Kaikki oikeudet pidätetään.",
-    "fontCredit": "Kiinalainen kirjasin: MiSans (Xiaomi)",
     "statusOnline": "Kaikki järjestelmät toimivat",
     "newsletterTitle": "Pysy ajan tasalla",
     "newsletterPlaceholder": "you@example.com",

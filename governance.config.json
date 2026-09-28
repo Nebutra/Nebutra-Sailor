@@ -398,7 +398,7 @@
       },
       {
         "file": "apps/landing/src/components/landing/features/glyphs/i18n-glyph.tsx",
-        "count": 9
+        "count": 8
       },
       {
         "file": "apps/landing/src/components/landing/features/glyphs/sandbox-runtime-glyph.tsx",
@@ -2442,5 +2442,40 @@
   "appConsumption": {
     "$description": "scripts/lint-app-consumption.mjs — raw palette classes in apps/**, per file. Shrink-only.",
     "allowlist": {}
+  },
+  "siteClaims": {
+    "scanRoots": ["apps/landing/src", "apps/landing/messages"],
+    "excludePaths": [
+      "\\.test\\.tsx?$",
+      "/__tests__/",
+      "\\.stories\\.tsx$",
+      "/lib/constants/(china|global)-vc-[a-z-]+\\.json$"
+    ],
+    "bannedPatterns": [
+      {
+        "label": "self-hype: calling ourselves a unicorn",
+        "pattern": "[Uu]nicorns?[ .,!;:]|独角兽"
+      },
+      {
+        "label": "a star rating with no source",
+        "pattern": "[Rr][Aa][Tt][Ii][Nn][Gg]_?[Ss][Tt][Aa][Rr][Ss]|★★★"
+      },
+      {
+        "label": "SaaS boilerplate",
+        "pattern": "[Nn]o credit card required|[Ss]hip with confidence|Stop configuring|[Ss]eamless(ly)? |[Ww]orld-class|[Ee]nterprise-grade"
+      }
+    ],
+    "allowlist": [
+      "apps/landing/messages/de.json",
+      "apps/landing/messages/en.json",
+      "apps/landing/messages/ko.json",
+      "apps/landing/src/lib/changelog-releases.ts",
+      "apps/landing/src/nebutra/home/sailor-cli.tsx"
+    ],
+    "_allowlistNotes": {
+      "messages": "SaaS boilerplate (cta, capability, world-class) — rewritten with the page-contract migration.",
+      "changelog-releases.ts": "a record of what a past release said.",
+      "sailor-cli.tsx": "a verbatim recording of the published CLI; re-record after create-sailor ships its new banner."
+    }
   }
 }

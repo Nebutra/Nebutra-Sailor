@@ -155,6 +155,7 @@
       "terms": "Terma",
       "cookies": "Cookie",
       "refund": "Bayaran Balik",
+      "credits": "Penghargaan",
       "licensing": "Lesen",
       "contact": "Hubungi",
       "faq": "Soalan Lazim",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Hak cipta terpelihara.",
-    "fontCredit": "Fon Cina: MiSans (Xiaomi)",
     "statusOnline": "Semua sistem beroperasi",
     "newsletterTitle": "Kekal terkini",
     "newsletterPlaceholder": "you@example.com",

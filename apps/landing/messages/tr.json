@@ -155,6 +155,7 @@
       "terms": "Şartlar",
       "cookies": "Çerezler",
       "refund": "İade",
+      "credits": "Teşekkürler",
       "licensing": "Lisanslama",
       "contact": "İletişim",
       "faq": "SSS",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Tüm hakları saklıdır.",
-    "fontCredit": "Çince yazı tipi: MiSans (Xiaomi)",
     "statusOnline": "Tüm sistemler çalışıyor",
     "newsletterTitle": "Gelişmeleri takip edin",
     "newsletterPlaceholder": "you@example.com",

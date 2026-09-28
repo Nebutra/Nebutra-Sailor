@@ -155,6 +155,7 @@
       "terms": "תנאים",
       "cookies": "עוגיות",
       "refund": "החזר כספי",
+      "credits": "תודות",
       "licensing": "רישוי",
       "contact": "צור קשר",
       "faq": "שאלות נפוצות",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · כל הזכויות שמורות.",
-    "fontCredit": "גופן סיני: MiSans (Xiaomi)",
     "statusOnline": "כל המערכות פעילות",
     "newsletterTitle": "הישארו מעודכנים",
     "newsletterPlaceholder": "you@example.com",

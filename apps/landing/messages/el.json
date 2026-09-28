@@ -155,6 +155,7 @@
       "terms": "Όροι",
       "cookies": "Cookies",
       "refund": "Επιστροφή χρημάτων",
+      "credits": "Ευχαριστίες",
       "licensing": "Άδειες χρήσης",
       "contact": "Επικοινωνία",
       "faq": "Συχνές Ερωτήσεις",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Με επιφύλαξη παντός δικαιώματος.",
-    "fontCredit": "Κινεζική γραμματοσειρά: MiSans (Xiaomi)",
     "statusOnline": "Όλα τα συστήματα λειτουργούν",
     "newsletterTitle": "Μείνετε ενημερωμένοι",
     "newsletterPlaceholder": "you@example.com",

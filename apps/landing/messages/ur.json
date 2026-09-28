@@ -155,6 +155,7 @@
       "terms": "شرائط",
       "cookies": "کوکیز",
       "refund": "واپسی رقم",
+      "credits": "اعتراف",
       "licensing": "لائسنسنگ",
       "contact": "رابطہ",
       "faq": "عمومی سوالات",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · تمام حقوق محفوظ ہیں۔",
-    "fontCredit": "چینی فونٹ: MiSans (Xiaomi)",
     "statusOnline": "تمام نظامات فعال ہیں",
     "newsletterTitle": "تازہ ترین معلومات حاصل کریں",
     "newsletterPlaceholder": "you@example.com",

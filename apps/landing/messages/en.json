@@ -155,6 +155,7 @@
       "terms": "Terms",
       "cookies": "Cookies",
       "refund": "Refund",
+      "credits": "Credits",
       "licensing": "Licensing",
       "contact": "Contact",
       "faq": "FAQ",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · All rights reserved.",
-    "fontCredit": "Chinese typeface: MiSans by Xiaomi",
     "statusOnline": "All systems operational",
     "statusDegraded": "Degraded performance",
     "statusOutage": "Major service outage",

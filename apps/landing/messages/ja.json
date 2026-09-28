@@ -155,6 +155,7 @@
       "terms": "利用規約",
       "cookies": "Cookie ポリシー",
       "refund": "返金ポリシー",
+      "credits": "クレジット",
       "licensing": "ライセンス",
       "contact": "お問い合わせ",
       "faq": "よくある質問",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · 無断複写・転載を禁じます。",
-    "fontCredit": "中国語フォント：MiSans（Xiaomi）",
     "statusOnline": "全システム正常稼働中",
     "newsletterTitle": "最新情報を入手",
     "newsletterPlaceholder": "you@example.com",

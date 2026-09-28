@@ -52,7 +52,10 @@ export function FooterMinimal({ variant = "default" }: FooterMinimalProps = {}) 
 function LegalFooter() {
   const t = useTranslations("footer");
   return (
-    <footer className="border-t border-border bg-background/[0.08] dark:bg-background">
+    <footer
+      data-testid="site-footer"
+      className="border-t border-border bg-background/[0.08] dark:bg-background"
+    >
       <div className="mx-auto max-w-wide px-6 py-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <nav
@@ -83,12 +86,16 @@ function LegalFooter() {
             >
               {t("links.refund")}
             </Link>
+            <Link
+              href="/credits"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {t("links.credits")}
+            </Link>
           </nav>
           <div className="flex flex-col items-center gap-4 sm:flex-row">
             <div className="flex flex-col items-center gap-1 sm:items-end">
               <p className="text-[13px] text-muted-foreground">{t("copyright")}</p>
-              {/* MiSans licence: the product must credit the typeface. */}
-              <p className="text-xs text-muted-foreground">{t("fontCredit")}</p>
             </div>
             <ThemeSwitcher />
           </div>
@@ -111,7 +118,7 @@ function DefaultFooter() {
 
   return (
     <footer
-      data-testid="footer-minimal"
+      data-testid="site-footer"
       className="relative w-full overflow-hidden border-t border-border bg-neutral-1 text-neutral-12"
     >
       <div className="mx-auto w-full min-w-0 max-w-wide px-4 pt-12 pb-8 sm:px-6 sm:pt-16">
@@ -191,8 +198,6 @@ function DefaultFooter() {
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 md:flex-row">
           <div className="flex flex-col items-center gap-1 md:items-start">
             <p className="text-xs text-muted-foreground">{t("copyright")}</p>
-            {/* MiSans licence: the product must credit the typeface. */}
-            <p className="text-xs text-muted-foreground">{t("fontCredit")}</p>
             {/* ICP 备案 — required for websites operated in mainland China */}
             {process.env.NEXT_PUBLIC_ICP_NUMBER && (
               <a

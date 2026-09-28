@@ -1,3 +1,4 @@
+import { ROUTE_LOCALES } from "@nebutra/i18n/locales";
 import { ArrowRight, Sparkles } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
@@ -47,8 +48,7 @@ const ROLES: Role[] = [
   {
     title: "Design Engineer",
     type: "Full-time · Remote · Founding",
-    summary:
-      "Own the design system, brand, and component library. We ship Nebutra UI primitives, Geist icons, and the shared Motion layer at scale across 7 locales.",
+    summary: `Own the design system, brand, and component library. We ship Nebutra UI primitives, Geist icons, and the shared Motion layer at scale across ${ROUTE_LOCALES.length} locales.`,
     stack: ["React", "Tailwind v4", "Storybook", "Figma / Penpot", "Motion"],
     mailto: "mailto:careers@nebutra.com?subject=Design%20Engineer%20%E2%80%94%20GitHub%20Profile",
   },

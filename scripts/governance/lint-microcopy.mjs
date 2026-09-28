@@ -42,7 +42,18 @@ import { readFileSync } from "node:fs";
 import { stripComments as blankSourceComments } from "../lib/strip-comments.mjs";
 import { loadGovernanceConfig } from "./_config.mjs";
 
-const cfg = loadGovernanceConfig("microcopyRules");
+// One engine, several rule sets: `--rules <section>` picks the governance.config.json
+// section (default microcopyRules). siteClaims runs the same checks on the public site.
+const rulesArg = process.argv.indexOf("--rules");
+const section = rulesArg > -1 ? process.argv[rulesArg + 1] : "microcopyRules";
+const cfg = loadGovernanceConfig(section);
+// The report names the rule set; the default keeps the name its output always had.
+const label = section === "microcopyRules" ? "microcopy" : section;
+const include = (cfg.include ?? ["*.ts", "*.tsx"]).map((g) => `--include='${g}'`).join(" ");
+const exemptTag = cfg.exemptTag ?? "@microcopy-exempt";
+const exemptRe = new RegExp(
+  `(//|"_comment"\\s*:\\s*")\\s*${exemptTag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
+);
 
 const scanRoots = cfg.scanRoots;
 const excludePaths = (cfg.excludePaths ?? []).map((p) => new RegExp(p));
@@ -62,7 +73,7 @@ const grepRoots = scanRoots.join(" ");
 // If no patterns are defined (fresh scaffold), nothing to check.
 if (bannedPatterns.length === 0) {
   process.stdout.write(
-    `✓ microcopy: no banned patterns configured (fresh scaffold). Add microcopyRules.bannedPatterns to governance.config.json to enforce the seven prohibitions.\n`,
+    `✓ ${label}: no banned patterns configured (fresh scaffold). Add ${section}.bannedPatterns to governance.config.json to enforce it.\n`,
   );
   process.exit(0);
 }
@@ -82,7 +93,7 @@ for (const { pattern } of bannedPatterns) {
   let raw = "";
   try {
     raw = execSync(
-      `LANG=en_US.UTF-8 grep -rlE '${pattern}' --include='*.ts' --include='*.tsx' ${grepRoots} 2>/dev/null` +
+      `LANG=en_US.UTF-8 grep -rlE '${pattern}' ${include} ${grepRoots} 2>/dev/null` +
         " | grep -v node_modules | grep -v '/dist/' | grep -v '/.next/' | grep -v '/generated/'",
       { encoding: "utf-8" },
     ).trim();
@@ -104,7 +115,7 @@ for (const { pattern } of bannedPatterns) {
       continue;
     }
     // Honor the file-level escape hatch.
-    if (/\/\/\s*@microcopy-exempt/.test(src)) continue;
+    if (exemptRe.test(src)) continue;
 
     // Check against comment-stripped source to avoid false positives.
     const stripped = stripComments(src);
@@ -123,24 +134,28 @@ let failed = false;
 if (newViolations.length > 0) {
   failed = true;
   process.stderr.write(
-    "\nMicrocopy violation (七禁令) — these files contain banned copy patterns\n" +
-      "in governed paths. Route all empty / success / failure / milestone strings\n" +
-      "through the startupOs.* i18n catalog or @nebutra/brand/microcopy SSOT,\n" +
-      "using culturally-grounded 母题 copy per the Nebutra Microcopy System.\n" +
-      "Or add `// @microcopy-exempt: <reason>` if the string is provably not\n" +
-      "user-facing creative copy (e.g. a debug surface or technical API label):\n" +
-      newViolations.map((f) => `  - ${f}`).join("\n") +
-      "\n\nNote: the engine flags the provably wrong only (禁七/禁四/禁一 partial +\n" +
-      "emoji/exclamation). 禁二/禁三/禁五/禁六 and IP red lines (SS6.5) require\n" +
-      "human review via the golden-50 acceptance gate.\n",
+    cfg.title
+      ? `\n${cfg.title}\n${cfg.guidance ?? ""}\nOr add \`// ${exemptTag}: <reason>\` at the top of the file:\n` +
+          newViolations.map((f) => `  - ${f}`).join("\n") +
+          "\n"
+      : "\nMicrocopy violation (七禁令) — these files contain banned copy patterns\n" +
+          "in governed paths. Route all empty / success / failure / milestone strings\n" +
+          "through the startupOs.* i18n catalog or @nebutra/brand/microcopy SSOT,\n" +
+          "using culturally-grounded 母题 copy per the Nebutra Microcopy System.\n" +
+          "Or add `// @microcopy-exempt: <reason>` if the string is provably not\n" +
+          "user-facing creative copy (e.g. a debug surface or technical API label):\n" +
+          newViolations.map((f) => `  - ${f}`).join("\n") +
+          "\n\nNote: the engine flags the provably wrong only (禁七/禁四/禁一 partial +\n" +
+          "emoji/exclamation). 禁二/禁三/禁五/禁六 and IP red lines (SS6.5) require\n" +
+          "human review via the golden-50 acceptance gate.\n",
   );
 }
 
 if (fixedButListed.length > 0) {
   failed = true;
   process.stderr.write(
-    "\nThese files no longer contain raw microcopy violations (migrated) — remove\n" +
-      "them from microcopyRules.allowlist in governance.config.json (the list is\n" +
+    `\nThese files no longer match any ${section} pattern (migrated) — remove\n` +
+      `them from ${section}.allowlist in governance.config.json (the list is\n` +
       "shrink-only):\n" +
       fixedButListed.map((f) => `  - ${f}`).join("\n") +
       "\n",
@@ -150,6 +165,6 @@ if (fixedButListed.length > 0) {
 if (failed) process.exit(1);
 
 process.stdout.write(
-  `✓ microcopy: ${allowlist.size} known allowlisted file(s), 0 new. ` +
+  `✓ ${label}: ${allowlist.size} known allowlisted file(s), 0 new. ` +
     "Migrate allowlisted files on-touch to shrink the list toward zero.\n",
 );

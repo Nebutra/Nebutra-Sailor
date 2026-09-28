@@ -155,6 +155,7 @@
       "terms": "Условия",
       "cookies": "Cookies",
       "refund": "Возврат",
+      "credits": "Благодарности",
       "licensing": "Лицензирование",
       "contact": "Связаться",
       "faq": "Вопросы и ответы",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Все права защищены.",
-    "fontCredit": "Китайский шрифт: MiSans (Xiaomi)",
     "statusOnline": "Все системы работают",
     "newsletterTitle": "Будьте в курсе",
     "newsletterPlaceholder": "you@example.com",

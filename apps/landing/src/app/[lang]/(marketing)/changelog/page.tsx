@@ -68,7 +68,7 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
   if (!blocks || blocks.length === 0) return null;
 
   return (
-    <div className="prose prose-sm dark:prose-invert max-w-none space-y-4">
+    <div className="prose prose-sm max-w-none space-y-4">
       {blocks.map((block, idx) => {
         const blockKey = block._key ?? `${block._type ?? "block"}-${idx}`;
         if (block._type === "block") {
@@ -166,7 +166,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           content: entry.body ? (
             <PortableTextRenderer blocks={entry.body} />
           ) : (
-            <div className="prose prose-sm dark:prose-invert max-w-none">
+            <div className="prose prose-sm max-w-none">
               <ul className="list-disc pl-4 space-y-2 mt-4">
                 {entry.summary
                   ?.split("\n")
@@ -189,7 +189,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           excerpt: r.summary,
           image: FALLBACK_RELEASE_IMAGE,
           content: (
-            <div className="prose prose-sm dark:prose-invert max-w-none">
+            <div className="prose prose-sm max-w-none">
               <ul className="list-disc pl-4 space-y-2 mt-4">
                 {r.highlights.map((h) => (
                   <li key={h}>{h}</li>

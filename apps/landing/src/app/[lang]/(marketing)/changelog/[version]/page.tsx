@@ -89,7 +89,7 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
   if (!blocks || blocks.length === 0) return null;
 
   return (
-    <div className="prose prose-sm dark:prose-invert max-w-none space-y-4">
+    <div className="prose prose-sm max-w-none space-y-4">
       {blocks.map((block, idx) => {
         const blockKey = block._key ?? `${block._type ?? "block"}-${idx}`;
         if (block._type === "block") {
@@ -318,7 +318,7 @@ export default async function ChangelogVersionPage({
             {cmsEntry.body ? (
               <PortableTextRenderer blocks={cmsEntry.body} />
             ) : cmsEntry.summary ? (
-              <div className="prose prose-sm dark:prose-invert max-w-none">
+              <div className="prose prose-sm max-w-none">
                 <ul className="list-disc space-y-2 pl-4">
                   {cmsEntry.summary
                     .split("\n")
@@ -436,7 +436,7 @@ export default async function ChangelogVersionPage({
           </header>
 
           {/* Highlights as bullet list */}
-          <div className="prose prose-sm dark:prose-invert max-w-none">
+          <div className="prose prose-sm max-w-none">
             <ul className="list-disc space-y-3 pl-4">
               {staticRelease.highlights.map((highlight) => (
                 <li key={highlight}>{highlight}</li>

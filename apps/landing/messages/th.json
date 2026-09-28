@@ -155,6 +155,7 @@
       "terms": "ข้อกำหนด",
       "cookies": "คุกกี้",
       "refund": "การคืนเงิน",
+      "credits": "เครดิต",
       "licensing": "ใบอนุญาต",
       "contact": "ติดต่อ",
       "faq": "คำถามที่พบบ่อย",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · สงวนลิขสิทธิ์.",
-    "fontCredit": "ฟอนต์ภาษาจีน: MiSans (Xiaomi)",
     "statusOnline": "ระบบทั้งหมดทำงานปกติ",
     "newsletterTitle": "รับข้อมูลล่าสุด",
     "newsletterPlaceholder": "you@example.com",

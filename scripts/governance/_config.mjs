@@ -144,6 +144,24 @@ const DEFAULTS = {
     // remaining offender set (migrated on-touch).
     allowlist: [],
   },
+  siteClaims: {
+    // The same engine as microcopyRules (scripts/governance/lint-microcopy.mjs
+    // --rules siteClaims), pointed at the public site: what a page claims about
+    // us must be something we can show. Star ratings with no source, calling
+    // ourselves a unicorn, SaaS boilerplate ("No credit card required").
+    scanRoots: ["apps/landing/src", "apps/landing/messages"],
+    // Messages carry copy too; include JSON beside the source files.
+    include: ["*.ts", "*.tsx", "*.json"],
+    excludePaths: ["\\.test\\.tsx?$", "/__tests__/", "\\.stories\\.tsx$"],
+    title: "Site claim violation — a page claims something we cannot show",
+    guidance:
+      "Remove the claim, or back it with its source on the page. Illustrations may\n" +
+      "show example data inside a product window; claims about us may not.",
+    exemptTag: "@claim-exempt",
+    // Default is EMPTY: a fresh scaffold writes its own claims.
+    bannedPatterns: [],
+    allowlist: [],
+  },
 };
 
 const isPlainObject = (value) =>
@@ -176,6 +194,7 @@ export const config = {
   repositorySeam: mergeSection(DEFAULTS.repositorySeam, fileConfig.repositorySeam),
   brandLiterals: mergeSection(DEFAULTS.brandLiterals, fileConfig.brandLiterals),
   microcopyRules: mergeSection(DEFAULTS.microcopyRules, fileConfig.microcopyRules),
+  siteClaims: mergeSection(DEFAULTS.siteClaims, fileConfig.siteClaims),
 };
 
 export { DEFAULTS };

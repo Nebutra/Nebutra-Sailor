@@ -96,7 +96,7 @@
   },
   "hero": {
     "headline1": "睡前的一个念头，",
-    "headline2": "也可能是下一个独角兽。",
+    "headline2": "也能长成一家公司。",
     "subheadline": "基于 <highlight>生产就绪</highlight> 的底座与 受治理的架构 开发，跳过数周平台工作。专为 AI 编程智能体与出海创始人 优化。",
     "copyLabel": "复制环境配置",
     "copiedLabel": "代码已复制",
@@ -155,6 +155,7 @@
       "terms": "服务条款",
       "cookies": "Cookie 政策",
       "refund": "退款政策",
+      "credits": "致谢",
       "licensing": "授权与协议",
       "contact": "联系我们",
       "faq": "常见问题",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegal} · 保留所有权利。",
-    "fontCredit": "中文字体：小米 MiSans",
     "statusOnline": "所有子系统在线运行",
     "newsletterTitle": "保持最新动态",
     "newsletterPlaceholder": "you@example.com",
@@ -1303,7 +1303,7 @@
   "featuresPage": {
     "hero": {
       "badge": "平台能力",
-      "headlinePrefix": "构建独角兽所需的",
+      "headlinePrefix": "构建一家公司所需的",
       "headlineHighlight": "一切就绪。",
       "description": "{brandName} 是全栈 SaaS 平台——AI、计费、多租户、可观测性和安全性从第一天起就内置其中。停止重复造轮子。"
     },

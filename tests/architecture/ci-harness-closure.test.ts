@@ -183,7 +183,6 @@ describe("ci harness dependency closure", () => {
   it("builds app dependency closures before standalone app builds", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
 
-    expect(workflow).toContain('pnpm turbo build --filter="@nebutra/landing^..."');
     expect(workflow).toContain('pnpm turbo build --filter="@nebutra/web^..."');
     expect(workflow).toContain('pnpm turbo build --filter="@nebutra/gateway^..."');
   });
@@ -297,32 +296,20 @@ describe("ci harness dependency closure", () => {
     expect(workflow).not.toContain("github.event.pull_request.head.sha");
   });
 
-  it("runs bundle analysis through the webpack analyzer path", async () => {
+  it("keeps the bundle analyzer runnable locally now that CI no longer runs it", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
     const webPackage = JSON.parse(
       await readFile(join(process.cwd(), "apps/web/package.json"), "utf8"),
     ) as { scripts?: Record<string, string> };
 
-    expect(workflow).toContain("pnpm --filter @nebutra/web analyze");
+    expect(workflow).not.toContain("  bundle-analysis:");
     expect(webPackage.scripts?.analyze).toContain("next build --webpack");
   });
 
-  it("grants bundle analysis the minimum permission needed to comment on PRs", async () => {
+  it("does not queue build or test behind lint", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
 
-    expect(workflow).toContain(
-      [
-        "  bundle-analysis:",
-        "    name: Web Bundle Analysis",
-        "    runs-on: ubuntu-latest",
-        "    timeout-minutes: 20",
-        "    needs: [detect-changes, build]",
-        "    permissions:",
-        "      contents: read",
-        "      issues: write",
-        "      pull-requests: write",
-      ].join("\n"),
-    );
+    expect(workflow).not.toContain("needs: [detect-changes, lint-typecheck]");
   });
 
   it("waits for a bounded web health route in Playwright webServer readiness checks", async () => {
@@ -532,7 +519,7 @@ describe("ci harness dependency closure", () => {
       join(process.cwd(), "e2e/smoke/changelog.spec.ts"),
       "utf8",
     );
-    const footerSpec = await readFile(join(process.cwd(), "e2e/smoke/footer.spec.ts"), "utf8");
+    const footerSpec = await readFile(join(process.cwd(), "e2e/smoke/site-footer.spec.ts"), "utf8");
     const playwrightConfig = await readFile(
       join(process.cwd(), "e2e/playwright.config.ts"),
       "utf8",

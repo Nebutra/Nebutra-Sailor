@@ -55,6 +55,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { labelKey: "cookies", href: "/cookies" },
       { labelKey: "dpa", href: "/dpa" },
       { labelKey: "refund", href: "/refund" },
+      { labelKey: "credits", href: "/credits" },
       { labelKey: "licensing", href: "/licensing" },
       { labelKey: "security", href: "/security" },
     ],
