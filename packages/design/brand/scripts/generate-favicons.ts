@@ -276,6 +276,112 @@ export async function generateFavicons(assetsDir: string): Promise<void> {
   }
 }
 
+// ─── text-wordmark brands: the icon set from the brand's initial ─────────────
+
+export interface InitialIconOptions {
+  /** The brand's name; its first letter is the mark. */
+  name: string;
+  /** Fill of the rounded square, a hex colour (the brand primary). */
+  background: string;
+}
+
+/** Black or white, whichever reads better on `hex` (WCAG relative luminance). */
+function inkOn(hex: string): string {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return "#ffffff";
+  const n = Number.parseInt(m[1] as string, 16);
+  const lin = (c: number) => {
+    const v = c / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  };
+  const l = 0.2126 * lin((n >> 16) & 255) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255);
+  return 1.05 / (l + 0.05) >= (l + 0.05) / 0.05 ? "#ffffff" : "#0b0b0f";
+}
+
+function escapeXml(text: string): string {
+  return text.replace(/[<>&"']/g, (c) => `&#${c.charCodeAt(0)};`);
+}
+
+/**
+ * The mark as SVG: the initial, centred, on a rounded square in the brand
+ * colour. `size` is the viewBox; the corner radius and letter scale with it
+ * the way TextLogomark does in the UI.
+ */
+export function initialIconSvg({ name, background }: InitialIconOptions, size = 512): string {
+  const initial = escapeXml((name.trim().charAt(0) || "?").toUpperCase());
+  const radius = Math.round(size * 0.22);
+  const fontSize = Math.round(size * 0.62);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${escapeXml(name)}"><rect width="${size}" height="${size}" rx="${radius}" fill="${background}"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Inter, 'Helvetica Neue', Helvetica, Arial, 'DejaVu Sans', 'Liberation Sans', sans-serif" font-weight="600" font-size="${fontSize}" fill="${inkOn(background)}">${initial}</text></svg>`;
+}
+
+/**
+ * Whether the rendered PNG actually shows a letter: the centre of the icon must
+ * contain pixels of the ink colour. Rendering text needs a system font; on a
+ * machine without one the square would come out blank.
+ */
+async function hasGlyph(png: Buffer, size: number): Promise<boolean> {
+  const { default: sharpFn } = (await import("sharp")) as unknown as {
+    default: (input: Buffer) => import("sharp").Sharp;
+  };
+  const { data, info } = await sharpFn(png).raw().toBuffer({ resolveWithObject: true });
+  const [r0, g0, b0] = [data[0], data[1], data[2]];
+  let differing = 0;
+  const from = Math.floor(size * 0.3);
+  const to = Math.ceil(size * 0.7);
+  for (let y = from; y < to; y++) {
+    for (let x = from; x < to; x++) {
+      const i = (y * info.width + x) * info.channels;
+      if (Math.abs(data[i] - r0) + Math.abs(data[i + 1] - g0) + Math.abs(data[i + 2] - b0) > 96)
+        differing++;
+    }
+  }
+  return differing > (to - from) ** 2 * 0.04;
+}
+
+/**
+ * The favicon set for a brand with no logo of its own (brand.logo ===
+ * "wordmark"): its initial on a rounded square in the brand colour, in the
+ * same files generateFavicons writes. Returns false (and writes nothing) when
+ * the letter cannot be rendered.
+ */
+export async function generateInitialFavicons(
+  assetsDir: string,
+  options: InitialIconOptions,
+): Promise<boolean> {
+  const { default: sharpFn } = (await import("sharp")) as unknown as {
+    default: (input: Buffer) => import("sharp").Sharp;
+  };
+  const faviconDir = join(assetsDir, "favicon");
+  mkdirSync(faviconDir, { recursive: true });
+
+  const render = async (size: number) =>
+    sharpFn(Buffer.from(initialIconSvg(options, size)))
+      .png()
+      .toBuffer();
+
+  const png512 = await render(512);
+  if (!(await hasGlyph(png512, 512))) {
+    warn("no font could render the brand initial — keeping the existing favicon set");
+    return false;
+  }
+
+  writeFileSync(join(faviconDir, "favicon.svg"), initialIconSvg(options, 32), "utf-8");
+  log("favicon.svg (brand initial)");
+  writeFileSync(join(faviconDir, "android-chrome-512x512.png"), png512);
+  writeFileSync(join(faviconDir, "android-chrome-192x192.png"), await render(192));
+  log("android-chrome-192x192.png, android-chrome-512x512.png");
+  writeFileSync(join(faviconDir, "apple-touch-icon.png"), await render(180));
+  log("apple-touch-icon.png");
+  const ico = buildIco([
+    { png: await render(16), size: 16 },
+    { png: await render(32), size: 32 },
+    { png: await render(48), size: 48 },
+  ]);
+  writeFileSync(join(faviconDir, "favicon.ico"), ico);
+  log("favicon.ico (16+32+48)");
+  return true;
+}
+
 // ─── CLI entrypoint ────────────────────────────────────────────────────────────
 
 const IS_MAIN =

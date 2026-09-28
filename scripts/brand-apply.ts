@@ -11,7 +11,10 @@ import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
-import { generateFavicons } from "../packages/design/brand/scripts/generate-favicons";
+import {
+  generateFavicons,
+  generateInitialFavicons,
+} from "../packages/design/brand/scripts/generate-favicons";
 import {
   type BrandColorPalette,
   type BrandConfig,
@@ -815,6 +818,39 @@ function updateEnvTemplate(config: BrandConfig): void {
 }
 
 /**
+ * The apps serve their icons from their own files, not from the brand
+ * package: put the generated set where each one reads it. Only files an app
+ * already serves (or its public/ directory) are written.
+ */
+const APP_ICON_TARGETS: ReadonlyArray<[source: string, target: string]> = [
+  ...[
+    "favicon.ico",
+    "favicon.svg",
+    "apple-touch-icon.png",
+    "android-chrome-192x192.png",
+    "android-chrome-512x512.png",
+  ].flatMap(
+    (file): Array<[string, string]> => [
+      [file, `apps/landing/public/${file}`],
+      [file, `apps/web/public/${file}`],
+    ],
+  ),
+  ["favicon.svg", "apps/landing/src/app/icon.svg"],
+  ["favicon.ico", "apps/landing/src/app/favicon.ico"],
+];
+
+function syncFaviconsToApps(brandAssetsDir: string): void {
+  logStep("Copying the favicon set into the apps");
+  for (const [source, target] of APP_ICON_TARGETS) {
+    const from = path.join(brandAssetsDir, "favicon", source);
+    const to = path.join(ROOT, target);
+    if (!fs.existsSync(from) || !fs.existsSync(path.dirname(to))) continue;
+    fs.copyFileSync(from, to);
+    logSuccess(`favicon → ${target}`);
+  }
+}
+
+/**
  * Main
  */
 async function main() {
@@ -828,8 +864,18 @@ async function main() {
     // Phase 5: generate favicon set from logo-inverse.svg after copyCustomAssets
     // has had a chance to copy operator-supplied SVGs into brand/assets/.
     const brandAssetsDir = path.join(ROOT, "packages", "design", "brand", "assets");
-    logStep("Generating favicon set from logo-inverse.svg");
-    await generateFavicons(brandAssetsDir);
+    if (config.brand.logo === "wordmark") {
+      // No logo of its own: the brand's initial, not the upstream logomark.
+      logStep("Generating favicon set from the brand initial");
+      await generateInitialFavicons(brandAssetsDir, {
+        name: config.brand.name,
+        background: config.colors.primary["500"],
+      });
+    } else {
+      logStep("Generating favicon set from logo-inverse.svg");
+      await generateFavicons(brandAssetsDir);
+    }
+    syncFaviconsToApps(brandAssetsDir);
     updateBrandMetadata(config);
     // Phase 1: derive + write core.json from DEFAULT_BRAND.colors, then
     // trigger the Style Dictionary build so styles.css regenerates.
