@@ -9,11 +9,11 @@
     "status": "foundation",
     "productionReady": false,
     "requires": [
-      "DATABASE_URL (Postgres + pgvector extension)"
+      "Postgres + pgvector extension, reached through an injected PgvectorDbAdapter (config.db) — this package opens no connection of its own"
     ],
     "gaps": [
       "Provider adapters are stubs — need bulk index + faceted search",
-      "Tenant-scoped index isolation not enforced"
+      "Tenant filtering is a WHERE clause plus the host adapter's tenant-scoped client (getTenantDb) — the dynamic per-index tables carry no Postgres RLS policy of their own"
     ]
   },
   "main": "./dist/index.js",
@@ -34,16 +34,17 @@
   ],
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
-    "pg": "^8.13.1",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/pg": "^8.11.10",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/integrations/search#readme",
   "repository": {

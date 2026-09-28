@@ -6,12 +6,34 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { getSystemDb, getTenantDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
-import { getSearch } from "@nebutra/search";
+import { createSearch, type SearchProvider } from "@nebutra/search";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 
 export const searchRoutes = new OpenAPIHono();
 searchRoutes.use("*", requireAuth);
+
+/**
+ * @nebutra/search's pgvector provider opens no connection of its own — it
+ * needs a `PgvectorDbAdapter` injected. `@nebutra/search` is a standalone,
+ * publishable package and deliberately does not depend on `@nebutra/db`
+ * (private, unpublished — see
+ * tests/architecture/release-surface.test.ts), so this gateway (private)
+ * is where the two are wired together, reusing @nebutra/db's one
+ * connection pool / tenant RLS session / PGlite preview / Hyperdrive
+ * routing instead of opening a second one.
+ */
+let searchProvider: Promise<SearchProvider> | null = null;
+function gatewaySearch(): Promise<SearchProvider> {
+  if (!searchProvider) {
+    searchProvider = createSearch({
+      provider: "pgvector",
+      db: { getSystemDb, getTenantDb },
+    });
+  }
+  return searchProvider;
+}
 
 const SearchRequestSchema = z.object({
   query: z.string().min(1),
@@ -69,7 +91,7 @@ searchRoutes.openapi(searchRoute, async (c) => {
   const body = c.req.valid("json");
 
   try {
-    const searchClient = await getSearch();
+    const searchClient = await gatewaySearch();
 
     // Enforce tenant isolation via filters
     const secureQuery = {

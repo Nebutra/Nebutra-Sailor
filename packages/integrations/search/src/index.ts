@@ -4,10 +4,16 @@
 // Supports:
 //   - pgvector           (Postgres + pgvector extension; BM25 + vector search)
 //
-// Usage:
-//   import { getSearch } from "@nebutra/search";
+// The pgvector provider opens no connection of its own — inject a
+// PgvectorDbAdapter (getSystemDb/getTenantDb) via config.db. Inside the
+// @nebutra/db-owning monorepo that's @nebutra/db's own exports.
 //
-//   const search = await getSearch();  // auto-detects provider
+// Usage:
+//   import { getSystemDb, getTenantDb } from "@nebutra/db";
+//   import { createSearch, setSearch, getSearch } from "@nebutra/search";
+//
+//   setSearch(await createSearch({ provider: "pgvector", db: { getSystemDb, getTenantDb } }));
+//   const search = await getSearch();
 //   await search.indexDocument("products", { id: "123", name: "Widget" });
 //   const results = await search.search("products", { query: "widget" });
 // =============================================================================
@@ -22,6 +28,8 @@ export { PgvectorProvider } from "./providers/pgvector";
 export type {
   IndexSettings,
   PgvectorConfig,
+  PgvectorDbAdapter,
+  PgvectorSqlClient,
   SearchConfig,
   SearchDocument,
   SearchHit,

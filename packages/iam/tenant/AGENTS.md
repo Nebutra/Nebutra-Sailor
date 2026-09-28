@@ -31,8 +31,12 @@ boundary, not the place for app-specific organization UX or billing policy.
   JWT, and API-key resolution semantics should not be duplicated elsewhere.
 - Preserve the isolation split in `src/isolation.ts`:
   `withRls` owns shared-schema RLS setup,
-  `getTenantSchema` owns schema naming,
-  `getTenantDatabaseUrl` owns database-per-tenant URL derivation.
+  `getTenantSchema` owns schema naming.
+  `getTenantDatabaseUrl` (database-per-tenant URL derivation) was removed
+  2026-09 — tenancy is shared-schema RLS, and it had no real caller outside
+  its own module. Do not re-add a URL-per-tenant helper without a real
+  database-per-tenant caller; @nebutra/db's one-source contract
+  (`getSystemDb` / `getTenantDb`) is the only path to Postgres.
 - `src/rls-session.ts` is the tenant session core: the `app.current_tenant_id`
   setting key, the `APP_DB_ROLE` validation, and the `SET LOCAL ROLE` +
   `set_config(..., true)` statement plan. `withRls` here and `withTenantContext`

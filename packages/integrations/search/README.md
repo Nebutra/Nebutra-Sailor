@@ -14,10 +14,24 @@ pnpm add @nebutra/search
 
 ### Basic Usage
 
-```typescript
-import { getSearch } from "@nebutra/search";
+The pgvector provider has no connection of its own — inject a
+`PgvectorDbAdapter` (`getSystemDb` / `getTenantDb`) that reaches your
+Postgres. Inside the Nebutra monorepo that's `@nebutra/db`'s own exports:
 
-// Auto-detects the pgvector provider from DATABASE_URL
+```typescript
+import { getSystemDb, getTenantDb } from "@nebutra/db";
+import { createSearch, setSearch } from "@nebutra/search";
+
+// Once, at startup:
+setSearch(
+  await createSearch({
+    provider: "pgvector",
+    db: { getSystemDb, getTenantDb },
+  }),
+);
+
+// Anywhere after that:
+import { getSearch } from "@nebutra/search";
 const search = await getSearch();
 
 // Index a document
@@ -43,19 +57,33 @@ await search.deleteDocument("products", "prod_123", "org_456");
 
 ## Provider Configuration
 
-`pgvector` is the only supported provider. It reads `DATABASE_URL` by default, or accepts an explicit config:
+`pgvector` is the only supported provider. It never opens a connection of its
+own — `config.db` must inject a `PgvectorDbAdapter`:
 
-```bash
-# .env
-DATABASE_URL=postgres://localhost/nebutra
+```typescript
+interface PgvectorDbAdapter {
+  getSystemDb(): PgvectorSqlClient; // untenanted: table/extension bootstrap, system-wide scans
+  getTenantDb(tenantId: string): PgvectorSqlClient; // tenant-scoped reads/writes
+}
 ```
+
+`@nebutra/search` is a standalone, publishable package and deliberately does
+**not** depend on `@nebutra/db` (the Nebutra monorepo's own database package,
+which is private/unpublished — see
+`tests/architecture/release-surface.test.ts`). Inside the monorepo, wire
+`@nebutra/db`'s own `getSystemDb` / `getTenantDb` as the adapter (see
+`backends/gateway/src/routes/search/index.ts`); this way search shares the
+one connection pool the rest of the app uses, including the local PGlite
+preview database and Hyperdrive routing on Workers. There is no
+`connectionString` / `DATABASE_URL` auto-connect — whatever `db` you inject
+owns that.
 
 ```typescript
 import { createSearch } from "@nebutra/search";
 
 const search = await createSearch({
   provider: "pgvector",
-  connectionString: process.env.DATABASE_URL,
+  db: myPgvectorDbAdapter, // required
   embeddingDim: 1536, // defaults to 1536 (OpenAI text-embedding-3-small)
   tablePrefix: "nebutra_search", // defaults to "nebutra_search"
 });
@@ -231,10 +259,11 @@ Uses `@nebutra/logger` for structured logging. All operations log at debug level
 ```bash
 # Provider selection (optional — pgvector is the only supported provider)
 SEARCH_PROVIDER=pgvector
-
-# pgvector
-DATABASE_URL=postgres://localhost/nebutra
 ```
+
+There is no database env var here — the pgvector provider reaches Postgres
+only through the injected `db` adapter (`config.db`), whatever that adapter's
+own env contract is (for `@nebutra/db`, `DATABASE_URL`).
 
 ## Testing
 

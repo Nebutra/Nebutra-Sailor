@@ -275,24 +275,6 @@ const schemaName = getTenantSchema("acme-corp");
 // pnpm prisma migrate deploy --schema org_acme_corp_public
 ```
 
-### Database Per Tenant
-
-Separate PostgreSQL database per tenant, with connection pooling.
-
-```typescript
-import { getTenantDatabaseUrl } from "@nebutra/tenant/isolation";
-
-const tenantDbUrl = getTenantDatabaseUrl("acme-corp");
-// Returns: "postgresql://user:pass@localhost/nebutra_acme_corp"
-
-// Create new Prisma client for this database:
-const tenantPrisma = new PrismaClient({
-  datasources: {
-    db: { url: tenantDbUrl },
-  },
-});
-```
-
 ## Types
 
 ### `TenantContext`
@@ -389,7 +371,6 @@ interface TenantConfig {
 - `TENANT_SESSION_SETTING` / `TENANT_SESSION_EXPRESSION` — the setting key the policies read and
   the wrappers write
 - `getTenantSchema(tenantId)` — Get schema name for schema-per-tenant
-- `getTenantDatabaseUrl(tenantId, baseUrl?)` — Get DB URL for database-per-tenant
 - `TenantAwarePrismaClient` — Wrapper class for tenant isolation
 - `createTenantPrismaProxy(prisma, tenantId, strategy)` — Factory for isolation proxies
 

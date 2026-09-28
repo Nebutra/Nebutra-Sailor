@@ -1,8 +1,9 @@
 import { logger } from "@nebutra/logger";
-import { Pool, type PoolClient } from "pg";
 import type {
   IndexSettings,
   PgvectorConfig,
+  PgvectorDbAdapter,
+  PgvectorSqlClient,
   SearchDocument,
   SearchHit,
   SearchProvider,
@@ -22,9 +23,23 @@ import type {
 // via tsvector + plainto_tsquery.
 //
 // Multi-tenancy: every row carries `tenant_id`; queries that pass
-// `query.tenantId` add a WHERE clause. Without tenantId the query scans
-// the whole table — appropriate for system-wide search but consumers must
-// be aware.
+// `query.tenantId` add a WHERE clause AND run through `config.db.getTenantDb
+// (tenantId)` instead of a WHERE clause alone. Without tenantId the query
+// scans the whole table via `config.db.getSystemDb()` — appropriate for
+// system-wide search but consumers must be aware.
+//
+// One database path, injected: this provider never opens its own
+// `pg.Pool` or imports `@nebutra/db` directly (which is private and
+// unpublished — a hard runtime dependency on it here would break this
+// package's own publishability; see tests/architecture/release-surface.test.ts
+// "does not publish packages with private runtime workspace dependencies").
+// Instead the host injects a `PgvectorDbAdapter` — inside the
+// @nebutra/db-owning monorepo that is @nebutra/db's `getSystemDb` / `getTenantDb`, wired in
+// backends/gateway/src/routes/search/index.ts — so every query still goes
+// through the host's one connection pool, tenant RLS session, PGlite local
+// preview database, and Hyperdrive routing on Workers. See
+// packages/platform/db/README.md ("Database — one source") and CLAUDE.md
+// ("Data Access — Repository Seam").
 // =============================================================================
 
 const SAFE_NAME_RE = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
@@ -42,28 +57,39 @@ interface DocWithEmbedding {
 export class PgvectorProvider implements SearchProvider {
   readonly name = "pgvector" as const;
 
-  private pool: Pool;
+  private db: PgvectorDbAdapter;
   private embeddingDim: number;
   private tablePrefix: string;
   private bootstrappedTables = new Set<string>();
   private bootstrappedExtension = false;
 
-  constructor(config?: PgvectorConfig) {
-    const connectionString = config?.connectionString ?? process.env.DATABASE_URL;
-    if (!connectionString) {
+  constructor(config: PgvectorConfig) {
+    if (!config?.db) {
       throw new Error(
-        "[search:pgvector] DATABASE_URL not set and no `connectionString` passed in config.",
+        "[search:pgvector] `db` is required — inject a PgvectorDbAdapter (getSystemDb/getTenantDb). " +
+          "In the @nebutra/db-owning monorepo, wire @nebutra/db's getSystemDb/getTenantDb; see " +
+          "backends/gateway/src/routes/search/index.ts.",
       );
     }
-    this.pool = new Pool({ connectionString });
-    this.embeddingDim = config?.embeddingDim ?? 1536;
-    this.tablePrefix = config?.tablePrefix ?? "nebutra_search";
+    this.db = config.db;
+    this.embeddingDim = config.embeddingDim ?? 1536;
+    this.tablePrefix = config.tablePrefix ?? "nebutra_search";
     assertSafeIdentifier(this.tablePrefix, "tablePrefix");
 
     logger.info("[search:pgvector] Provider initialised", {
       embeddingDim: this.embeddingDim,
       tablePrefix: this.tablePrefix,
     });
+  }
+
+  /** System-scoped (no tenant filter) client for DDL and untenanted scans. */
+  private systemDb(): PgvectorSqlClient {
+    return this.db.getSystemDb();
+  }
+
+  /** Tenant-scoped client when a tenantId is available, system-scoped otherwise. */
+  private dbFor(tenantId: string | null | undefined): PgvectorSqlClient {
+    return tenantId ? this.db.getTenantDb(tenantId) : this.db.getSystemDb();
   }
 
   // ── Table & extension bootstrap ─────────────────────────────────────────
@@ -73,10 +99,10 @@ export class PgvectorProvider implements SearchProvider {
     return `${this.tablePrefix}_${index}`;
   }
 
-  private async ensureExtension(client: PoolClient): Promise<void> {
+  private async ensureExtension(): Promise<void> {
     if (this.bootstrappedExtension) return;
     try {
-      await client.query("CREATE EXTENSION IF NOT EXISTS vector");
+      await this.systemDb().$executeRawUnsafe("CREATE EXTENSION IF NOT EXISTS vector");
       this.bootstrappedExtension = true;
     } catch (error) {
       logger.error(
@@ -90,31 +116,29 @@ export class PgvectorProvider implements SearchProvider {
   private async ensureTable(index: string): Promise<void> {
     if (this.bootstrappedTables.has(index)) return;
     const table = this.tableName(index);
-    const client = await this.pool.connect();
-    try {
-      await this.ensureExtension(client);
-      await client.query(`
-        CREATE TABLE IF NOT EXISTS ${table} (
-          id          TEXT PRIMARY KEY,
-          tenant_id   TEXT,
-          doc         JSONB NOT NULL,
-          text        TSVECTOR,
-          embedding   VECTOR(${this.embeddingDim}),
-          updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
-        )
-      `);
-      await client.query(`CREATE INDEX IF NOT EXISTS ${table}_tenant_idx ON ${table} (tenant_id)`);
-      await client.query(
-        `CREATE INDEX IF NOT EXISTS ${table}_text_idx ON ${table} USING GIN (text)`,
-      );
-      // ivfflat needs ANALYZE for good performance; lists=100 is a reasonable default.
-      await client.query(
-        `CREATE INDEX IF NOT EXISTS ${table}_embed_idx ON ${table} USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100)`,
-      );
-      this.bootstrappedTables.add(index);
-    } finally {
-      client.release();
-    }
+    await this.ensureExtension();
+    const db = this.systemDb();
+    await db.$executeRawUnsafe(`
+      CREATE TABLE IF NOT EXISTS ${table} (
+        id          TEXT PRIMARY KEY,
+        tenant_id   TEXT,
+        doc         JSONB NOT NULL,
+        text        TSVECTOR,
+        embedding   VECTOR(${this.embeddingDim}),
+        updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+    await db.$executeRawUnsafe(
+      `CREATE INDEX IF NOT EXISTS ${table}_tenant_idx ON ${table} (tenant_id)`,
+    );
+    await db.$executeRawUnsafe(
+      `CREATE INDEX IF NOT EXISTS ${table}_text_idx ON ${table} USING GIN (text)`,
+    );
+    // ivfflat needs ANALYZE for good performance; lists=100 is a reasonable default.
+    await db.$executeRawUnsafe(
+      `CREATE INDEX IF NOT EXISTS ${table}_embed_idx ON ${table} USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100)`,
+    );
+    this.bootstrappedTables.add(index);
   }
 
   // ── Upsert ──────────────────────────────────────────────────────────────
@@ -144,8 +168,9 @@ export class PgvectorProvider implements SearchProvider {
     const table = this.tableName(index);
     const text = this.extractText(doc);
     const embedding = (doc as T & DocWithEmbedding)._embedding;
+    const tenantId = doc.tenantId ?? null;
 
-    await this.pool.query(
+    await this.dbFor(tenantId).$executeRawUnsafe(
       `
       INSERT INTO ${table} (id, tenant_id, doc, text, embedding, updated_at)
       VALUES ($1, $2, $3::jsonb, to_tsvector('english', $4), $5::vector, NOW())
@@ -156,7 +181,11 @@ export class PgvectorProvider implements SearchProvider {
         embedding = EXCLUDED.embedding,
         updated_at = NOW()
       `,
-      [doc.id, doc.tenantId ?? null, JSON.stringify(doc), text, this.embeddingLiteral(embedding)],
+      doc.id,
+      tenantId,
+      JSON.stringify(doc),
+      text,
+      this.embeddingLiteral(embedding),
     );
   }
 
@@ -177,6 +206,7 @@ export class PgvectorProvider implements SearchProvider {
   ): Promise<SearchResult<T>> {
     await this.ensureTable(index);
     const table = this.tableName(index);
+    const db = this.dbFor(query.tenantId);
     const start = Date.now();
     const page = query.page ?? 1;
     const hitsPerPage = Math.min(query.hitsPerPage ?? 20, 100);
@@ -223,19 +253,19 @@ export class PgvectorProvider implements SearchProvider {
 
     const whereSql = whereParts.length > 0 ? `WHERE ${whereParts.join(" AND ")}` : "";
 
-    const countResult = await this.pool.query<{ count: string }>(
+    const countResult = await db.$queryRawUnsafe<{ count: string }[]>(
       `SELECT COUNT(*)::text AS count FROM ${table} ${whereSql}`,
-      params,
+      ...params,
     );
-    const totalHits = Number.parseInt(countResult.rows[0]?.count ?? "0", 10);
+    const totalHits = Number.parseInt(countResult[0]?.count ?? "0", 10);
 
     params.push(hitsPerPage, offset);
-    const result = await this.pool.query<{ doc: T; score: number }>(
+    const rows = await db.$queryRawUnsafe<{ doc: T; score: number }[]>(
       `SELECT doc, ${selectScore} FROM ${table} ${whereSql} ORDER BY ${orderBy} LIMIT $${++p} OFFSET $${++p}`,
-      params,
+      ...params,
     );
 
-    const hits: SearchHit<T>[] = result.rows.map((row) => ({
+    const hits: SearchHit<T>[] = rows.map((row) => ({
       doc: row.doc,
       score: Math.max(0, Math.min(1, Number(row.score) || 0)),
     }));
@@ -255,13 +285,15 @@ export class PgvectorProvider implements SearchProvider {
   async deleteDocument(index: string, docId: string, tenantId?: string): Promise<void> {
     await this.ensureTable(index);
     const table = this.tableName(index);
+    const db = this.dbFor(tenantId);
     if (tenantId) {
-      await this.pool.query(`DELETE FROM ${table} WHERE id = $1 AND tenant_id = $2`, [
+      await db.$executeRawUnsafe(
+        `DELETE FROM ${table} WHERE id = $1 AND tenant_id = $2`,
         docId,
         tenantId,
-      ]);
+      );
     } else {
-      await this.pool.query(`DELETE FROM ${table} WHERE id = $1`, [docId]);
+      await db.$executeRawUnsafe(`DELETE FROM ${table} WHERE id = $1`, docId);
     }
   }
 
@@ -271,6 +303,8 @@ export class PgvectorProvider implements SearchProvider {
   ): Promise<void> {
     await this.ensureTable(index);
     const table = this.tableName(index);
+    const tenantId = typeof filters.tenantId === "string" ? filters.tenantId : undefined;
+    const db = this.dbFor(tenantId);
     const whereParts: string[] = [];
     const params: unknown[] = [];
     let p = 0;
@@ -287,7 +321,7 @@ export class PgvectorProvider implements SearchProvider {
     if (whereParts.length === 0) {
       throw new Error("[search:pgvector] deleteByFilter requires at least one filter");
     }
-    await this.pool.query(`DELETE FROM ${table} WHERE ${whereParts.join(" AND ")}`, params);
+    await db.$executeRawUnsafe(`DELETE FROM ${table} WHERE ${whereParts.join(" AND ")}`, ...params);
   }
 
   // ── Index Management ────────────────────────────────────────────────────
@@ -305,7 +339,10 @@ export class PgvectorProvider implements SearchProvider {
   }
 
   async close(): Promise<void> {
-    await this.pool.end();
+    // No pool of our own to close — @nebutra/db owns the connection pool
+    // (shared with the rest of the process, including the PGlite preview
+    // database and Hyperdrive routing on Workers). Just reset local state so
+    // a reused instance re-bootstraps its tables/extension check.
     this.bootstrappedTables.clear();
     this.bootstrappedExtension = false;
     logger.info("[search:pgvector] Provider closed");

@@ -54,7 +54,6 @@ export {
   applyTenantSession,
   createTenantPrismaProxy,
   generateRlsPolicySql,
-  getTenantDatabaseUrl,
   getTenantSchema,
   isValidDbRole,
   resolveRlsRole,

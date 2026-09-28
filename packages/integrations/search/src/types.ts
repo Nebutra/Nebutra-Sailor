@@ -190,11 +190,44 @@ export interface IndexSettings {
 
 // ── Provider Configurations ────────────────────────────────────────────────
 
+/**
+ * The narrow raw-SQL shape this provider needs from a Postgres client —
+ * satisfied by a Prisma client's `$executeRawUnsafe` / `$queryRawUnsafe`
+ * (positional `$1, $2, …` parameters, same as `pg`). Matches Prisma's own
+ * signature: pass the row array type as `T` (e.g.
+ * `$queryRawUnsafe<Row[]>(...)`), not the row type itself.
+ */
+export interface PgvectorSqlClient {
+  $executeRawUnsafe(query: string, ...values: unknown[]): Promise<number>;
+  $queryRawUnsafe<T = unknown>(query: string, ...values: unknown[]): Promise<T>;
+}
+
+/**
+ * How the pgvector provider reaches Postgres. There is no connection of its
+ * own (no `pg.Pool`) — the host application injects this, so every query
+ * goes through the host's own one database path: one connection pool,
+ * tenant RLS session setup, local preview database, Hyperdrive routing on
+ * Workers, whatever that host already has.
+ *
+ * Inside the @nebutra/db-owning monorepo this is `@nebutra/db`'s `getSystemDb` /
+ * `getTenantDb` — see `backends/gateway/src/routes/search/index.ts` for the
+ * wiring. `@nebutra/search` itself never imports `@nebutra/db` (a private,
+ * unpublished workspace package) so it stays a genuinely standalone,
+ * publishable package; anyone using it outside this monorepo supplies their
+ * own adapter over the same two-method shape.
+ */
+export interface PgvectorDbAdapter {
+  /** System-scoped (no tenant filter) — DDL bootstrap, untenanted scans. */
+  getSystemDb(): PgvectorSqlClient;
+  /** Tenant-scoped — every query should run inside the host's tenant/RLS session. */
+  getTenantDb(tenantId: string): PgvectorSqlClient;
+}
+
 export interface PgvectorConfig {
   provider: "pgvector";
 
-  /** Postgres connection string (defaults to `process.env.DATABASE_URL`) */
-  connectionString?: string;
+  /** How this provider reaches Postgres. Required — see `PgvectorDbAdapter`. */
+  db: PgvectorDbAdapter;
 
   /**
    * Embedding vector dimension. All documents indexed under this provider

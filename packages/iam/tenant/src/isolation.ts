@@ -311,55 +311,6 @@ export function getTenantSchema(tenantId: string): string {
 }
 
 /**
- * Get the PostgreSQL connection string for database-per-tenant strategy.
- *
- * Constructs a connection URL with the tenant-specific database name.
- * Assumes the base connection URL is available and tenant databases follow
- * a naming pattern (e.g., `nebutra_acme_corp`).
- *
- * @param tenantId The tenant ID
- * @param baseUrl Optional base connection URL (defaults to process.env.DATABASE_URL)
- * @returns The tenant-specific database URL
- * @throws TenantIsolationError if base URL is invalid
- *
- * @example
- * ```ts
- * const dbUrl = getTenantDatabaseUrl("acme-corp");
- * // Returns: "postgresql://user:pass@localhost/nebutra_acme_corp"
- * ```
- */
-export function getTenantDatabaseUrl(tenantId: string, baseUrl?: string): string {
-  const url = baseUrl || process.env.DATABASE_URL;
-
-  if (!url) {
-    throw new TenantIsolationError(
-      "No base database URL available for tenant database resolution",
-      "database_per_tenant",
-    );
-  }
-
-  try {
-    const parsedUrl = new URL(url);
-
-    // Convert tenant ID to safe database name
-    const dbName = `nebutra_${tenantId.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`;
-
-    // Replace pathname (database name)
-    parsedUrl.pathname = `/${dbName}`;
-
-    logger.debug("Tenant database URL constructed", { tenantId, dbName });
-
-    return parsedUrl.toString();
-  } catch (err) {
-    logger.error("Failed to construct tenant database URL", err, { tenantId });
-    throw new TenantIsolationError(
-      `Failed to construct database URL for tenant ${tenantId}`,
-      "database_per_tenant",
-    );
-  }
-}
-
-/**
  * Wrapper for a Prisma client that automatically applies tenant filtering.
  *
  * This is useful for schema-per-tenant or database-per-tenant strategies
@@ -396,13 +347,6 @@ export class TenantAwarePrismaClient {
    */
   getSchema(): string {
     return getTenantSchema(this.tenantId);
-  }
-
-  /**
-   * Get the database URL for this tenant (database-per-tenant strategy).
-   */
-  getDatabaseUrl(baseUrl?: string): string {
-    return getTenantDatabaseUrl(this.tenantId, baseUrl);
   }
 
   /**
