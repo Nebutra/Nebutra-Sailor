@@ -13,7 +13,7 @@ nebutra-sailor/
 ├── backends/            无 UI 后端 —— 按语言切分（gateway/、go/、python/、rust/）
 ├── packages/            共享 TypeScript 库 —— 按领域分类
 ├── infra/               iac/ + runtime/ + data/ + ops/  （Wave 2.2）
-├── workflows/           inngest/ + n8n/ + pusher/        （Wave 2.3）
+├── workflows/           inngest/ + pusher/        （Wave 2.3）
 ├── e2e/                 smoke/ + golden/ + sleptons/     （Wave 2.1）
 ├── tests/               architecture/ + load/            （vitest + k6）
 ├── docs/                内部架构 ADR（仅源仓库可见）
@@ -104,7 +104,6 @@ infra/
 
 workflows/
 ├── inngest/             持久化工作流函数
-├── n8n/                 自托管 n8n 工作流 JSON 导出
 └── pusher/              实时频道
 
 e2e/

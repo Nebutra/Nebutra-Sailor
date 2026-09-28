@@ -21,7 +21,7 @@ describe("config → theme integration", () => {
   it("full end-to-end: config → resolve → env vars", () => {
     const config = defineConfig({
       apps: { blog: false },
-      features: { web3: false },
+      features: { newsletter: false },
       theme: "factory",
       locales: ["en", "zh"],
     });

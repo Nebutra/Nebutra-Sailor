@@ -32,7 +32,6 @@ const acme = buildBrandConfig({
     discord: "",
     linkedin: "",
   },
-  features: { web3: false, ecommerce: false, recsys: false },
   packageScope: "@acme",
 });
 

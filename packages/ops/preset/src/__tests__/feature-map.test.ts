@@ -16,8 +16,6 @@ const mockConfig: ResolvedConfig = {
   features: {
     billing: true,
     ai: true,
-    ecommerce: false,
-    web3: false,
     community: false,
     blog: false,
     growth: true,
@@ -55,8 +53,6 @@ describe("getFeatureEnvVars", () => {
     const vars = getFeatureEnvVars(mockConfig);
     expect(vars.FEATURE_FLAG_BILLING).toBe("true");
     expect(vars.FEATURE_FLAG_AI).toBe("true");
-    expect(vars.FEATURE_FLAG_ECOMMERCE).toBe("false");
-    expect(vars.FEATURE_FLAG_WEB3).toBe("false");
     expect(vars.FEATURE_FLAG_GROWTH).toBe("true");
   });
 

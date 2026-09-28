@@ -11,7 +11,6 @@ conceptual layer as [`packages/integrations/queue/`](../packages/integrations/qu
 ```
 workflows/
 ├── inngest/    # Serverless background jobs + cron + event-driven processing (Inngest CE)
-├── n8n/        # Visual workflow automation (n8n self-hosted)
 └── pusher/     # Real-time messaging glue (Pusher / Soketi)
 ```
 
@@ -20,7 +19,6 @@ workflows/
 | Provider | When to use | Hosting |
 |---------|------------|---------|
 | **Inngest** | TypeScript-defined durable workflows; retries, scheduling, fan-out/fan-in | Self-hosted CE or Inngest Cloud |
-| **n8n** | Non-engineer-authored automations / integrations | Self-hosted (`docker-compose`) |
 | **Pusher** | Low-latency client push (chat, presence) | Pusher Cloud or Soketi self-host |
 
 ## Related packages
