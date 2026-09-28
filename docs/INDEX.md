@@ -49,7 +49,7 @@ Complete navigation to all project documentation.
 | [rate-limit](../packages/platform/rate-limit/README.md)       | Multi-tenant rate limiting    |
 | [saga](../packages/integrations/saga/README.md)                   | Distributed transactions      |
 | [sanity](../packages/ops/sanity/README.md)               | Sanity CMS integration        |
-| [status](../packages/platform/status/README.md)               | Status page utilities         |
+| [status](../packages/platform/status/README.md)               | Status and incident core      |
 | [storage](../packages/integrations/storage/README.md)             | File storage abstraction      |
 | [ui](../packages/design/ui/README.md)                       | Shared UI components          |
 

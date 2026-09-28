@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getStatusKv } from "./status-store";
+import { getStatusKv } from "./store";
 
 const INCIDENTS_KEY = "status:incidents:v1";
 
@@ -10,6 +10,13 @@ export const incidentStatusSchema = z.enum([
   "monitoring",
   "resolved",
 ]);
+
+/**
+ * An incident is reported after the fact; maintenance is announced before it.
+ * Maintenance status follows its window (scheduled → in progress → completed)
+ * unless it is resolved early, so nobody has to remember to flip it.
+ */
+export const incidentKindSchema = z.enum(["incident", "maintenance"]);
 
 export const incidentUpdateSchema = z.object({
   at: z.string().datetime(),
@@ -28,11 +35,15 @@ export const statusIncidentSchema = z.object({
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
   resolvedAt: z.string().datetime().optional(),
+  kind: incidentKindSchema.default("incident"),
+  scheduledStart: z.string().datetime().optional(),
+  scheduledEnd: z.string().datetime().optional(),
 });
 
 export type StatusIncident = z.infer<typeof statusIncidentSchema>;
 export type IncidentStatus = z.infer<typeof incidentStatusSchema>;
 export type IncidentImpact = z.infer<typeof incidentImpactSchema>;
+export type IncidentKind = z.infer<typeof incidentKindSchema>;
 
 export const createIncidentInputSchema = z.object({
   title: z.string().min(1).max(200),
@@ -40,6 +51,9 @@ export const createIncidentInputSchema = z.object({
   status: incidentStatusSchema.default("investigating"),
   message: z.string().min(1).max(4000),
   affectedServiceIds: z.array(z.string()).default([]),
+  kind: incidentKindSchema.default("incident"),
+  scheduledStart: z.string().datetime().optional(),
+  scheduledEnd: z.string().datetime().optional(),
 });
 
 export const updateIncidentInputSchema = z.object({
@@ -71,12 +85,39 @@ export async function listIncidents(): Promise<StatusIncident[]> {
   return all.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 
+export async function getIncident(id: string): Promise<StatusIncident | null> {
+  return (await readAll()).find((i) => i.id === id) ?? null;
+}
+
+/** Open incidents only — maintenance is listed by `listMaintenance`. */
 export async function listActiveIncidents(): Promise<StatusIncident[]> {
-  return (await listIncidents()).filter((i) => i.status !== "resolved");
+  return (await listIncidents()).filter((i) => i.kind === "incident" && i.status !== "resolved");
+}
+
+export type MaintenancePhase = "scheduled" | "in_progress" | "completed";
+
+export function maintenancePhase(
+  incident: StatusIncident,
+  now: Date = new Date(),
+): MaintenancePhase {
+  if (incident.status === "resolved") return "completed";
+  const t = now.getTime();
+  if (incident.scheduledEnd && t >= Date.parse(incident.scheduledEnd)) return "completed";
+  if (incident.scheduledStart && t < Date.parse(incident.scheduledStart)) return "scheduled";
+  return "in_progress";
+}
+
+/** Maintenance that has not finished, soonest first. */
+export async function listOpenMaintenance(now: Date = new Date()): Promise<StatusIncident[]> {
+  return (await listIncidents())
+    .filter((i) => i.kind === "maintenance" && maintenancePhase(i, now) !== "completed")
+    .sort((a, b) =>
+      (a.scheduledStart ?? a.createdAt).localeCompare(b.scheduledStart ?? b.createdAt),
+    );
 }
 
 export async function createIncident(
-  input: z.infer<typeof createIncidentInputSchema>,
+  input: z.input<typeof createIncidentInputSchema>,
   now: Date = new Date(),
 ): Promise<StatusIncident> {
   const parsed = createIncidentInputSchema.parse(input);
@@ -88,6 +129,9 @@ export async function createIncident(
     status: parsed.status,
     message: parsed.message,
     affectedServiceIds: parsed.affectedServiceIds,
+    kind: parsed.kind,
+    ...(parsed.scheduledStart ? { scheduledStart: parsed.scheduledStart } : {}),
+    ...(parsed.scheduledEnd ? { scheduledEnd: parsed.scheduledEnd } : {}),
     updates: [{ at, status: parsed.status, message: parsed.message }],
     createdAt: at,
     updatedAt: at,
@@ -100,7 +144,7 @@ export async function createIncident(
 }
 
 export async function updateIncident(
-  input: z.infer<typeof updateIncidentInputSchema>,
+  input: z.input<typeof updateIncidentInputSchema>,
   now: Date = new Date(),
 ): Promise<StatusIncident | null> {
   const parsed = updateIncidentInputSchema.parse(input);

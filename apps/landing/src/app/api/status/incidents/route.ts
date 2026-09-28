@@ -1,11 +1,15 @@
-import { NextResponse } from "next/server";
 import {
   createIncident,
   createIncidentInputSchema,
+  emailSubscribers,
   listIncidents,
+  notifyIncident,
   updateIncident,
   updateIncidentInputSchema,
-} from "@/lib/status-incidents";
+} from "@nebutra/status";
+import { NextResponse } from "next/server";
+import { statusOrigin } from "@/lib/status-checks";
+import { statusMailContext } from "@/lib/status-mail";
 
 /**
  * Minimal incident write surface for self-hosted status.
@@ -70,6 +74,10 @@ export async function POST(request: Request) {
     if (!updated) {
       return NextResponse.json({ error: "Incident not found" }, { status: 404 });
     }
+    await Promise.all([
+      notifyIncident(updated, "updated", { origin: statusOrigin() }),
+      emailSubscribers(statusMailContext(), updated),
+    ]);
     return NextResponse.json({ incident: updated });
   }
 
@@ -81,5 +89,9 @@ export async function POST(request: Request) {
     );
   }
   const incident = await createIncident(parsed.data);
+  await Promise.all([
+    notifyIncident(incident, "created", { origin: statusOrigin() }),
+    emailSubscribers(statusMailContext(), incident),
+  ]);
   return NextResponse.json({ incident }, { status: 201 });
 }
