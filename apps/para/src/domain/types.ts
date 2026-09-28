@@ -34,7 +34,7 @@ export interface Asset {
   type: AssetType;
   url: string;
   label: string;
-  aspect: "16:9" | "1:1" | "9:16" | "4:3";
+  aspect: "16:9" | "1:1" | "9:16" | "4:3" | "3:4";
   /** B — TapNow, LibTV */
   scope: Scope;
   /** A — 6/6 keep a history of outputs separate from uploads */
@@ -146,6 +146,12 @@ export type GeneratorMode = "image" | "video" | "text" | "audio";
 export interface GeneratorReference {
   kind: "asset" | "subject" | "node";
   id: string;
+  /**
+   * The media the origin should read. For a `node` reference this is the upstream node's current
+   * output — an image wired into a video node is its first frame. Resolved at enqueue, never stored
+   * on the draft, so a regenerated upstream is picked up by the next run.
+   */
+  url?: string;
 }
 
 /** A — params tiered at the node (6/6); refs A (5/5); count A (6/6) */
@@ -168,6 +174,11 @@ export interface Output {
 
 export interface BaseNode extends Provenance, TaskState {
   id: string;
+  /**
+   * What the node is called above its frame — "首帧", "正面". Optional: without one the node is
+   * named by its type (文本 / 图片 / 视频 / 音频), which is what LibTV does for a fresh node.
+   */
+  title?: string;
   x: number;
   y: number;
   width: number;

@@ -17,12 +17,20 @@ pnpm --filter @nebutra/para build
 
 Thesis: **Build the shell first. Hide complexity until the user asks for it.**
 
-- One Primary Surface (canvas). Library / Agent / Jobs are contextual.
-- At most one secondary surface open in M1 (EXPERIMENTAL). No inspector drawer: node config is anchored under the
-  selected node, the floating toolbar sits above it, and the selection becomes a chip in the agent composer.
-- Node = generator state + result. Any derivation creates a placeholder child node linked by a `derived` edge; the
-  source is never overwritten. Job = node; the top-bar jobs indicator is a redundant mirror (EXPERIMENTAL).
+- One Primary Surface (canvas). 资产管理 / Agent / 生成历史 are contextual and can be open together.
+- No inspector drawer: node config is anchored under the selected node, and the selection becomes a chip in the
+  Agent composer.
+- Node = generator state + result. Job = node; the top-bar jobs indicator is a redundant mirror (EXPERIMENTAL).
 - Every entry point is reachable through `Cmd/Ctrl+K`.
+
+Canvas (owner decision 2026-09-28, 守正再创新 — reproduce LibTV's canvas first, Chinese UI): a floating top bar
+(PARA menu · 工作区 · 画布 switcher · 工作流/故事板 · sync pill · 分享 · 开通会员 · credits · Agent), a floating dock
+(添加节点 · 选择/抓手 · 生成历史 · 快捷键 · 帮助) and 资产管理 + zoom bottom-left. Nodes carry a type label above the
+frame and `+` ports; the right port adds or wires a downstream node, and a wired image reaches a video job as
+`references: [{ kind: "node", id, url }]` (its first frame). Templates: `?template=story-script | character-sheet |
+frame-to-video | text-to-video` builds the graph once into an empty canvas (`domain/templates.ts`). Models come from
+`modelsFor(mode)` in `domain/models.ts` — the one seam the live registry replaces. Golden screens:
+`docs/golden-screens/canvas-*.png` (mock mode, 1440×900).
 
 App shell (LibTV's information architecture): `src/app/(shell)/` wraps Home, Projects, Assets, a
 project's overview and Plans in a left rail (New project, Agent, Home / Projects / Assets, PARA Pro,

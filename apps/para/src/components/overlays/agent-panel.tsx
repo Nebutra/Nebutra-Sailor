@@ -1,10 +1,13 @@
 "use client";
 
-// @async-surface-exempt: reads assets only to put a thumbnail on a context chip; a miss renders the chip without one. The panel is not a list surface.
+// @async-surface-exempt: reads assets only to put a thumbnail on a context chip; a miss renders the chip without one. The drawer is not a list surface.
 
-import { ArrowUp, Cross } from "@nebutra/icons";
+import { ArrowUp, Cross, Plus, SidebarRight, Sparkles } from "@nebutra/icons";
 import { Textarea } from "@nebutra/ui/primitives";
-import { useCallback, useEffect, useRef } from "react";
+import { type PointerEvent as ReactPointerEvent, useCallback, useEffect, useRef } from "react";
+import { NodeGlyph } from "@/components/canvas/node-glyph";
+import { Chip } from "@/components/ui/chip";
+import { nodeTitle } from "@/domain/nodes";
 import type { AgentStep } from "@/domain/types";
 import { type AgentRunState, type AgentTraceEvent, agentApi, followRun } from "@/lib/agent-api";
 import { isGatewayMode } from "@/lib/gateway-api";
@@ -14,14 +17,22 @@ import { useJobsStore } from "@/stores/jobs-store";
 import { useUiStore } from "@/stores/ui-store";
 
 const MOCK_PLAN: Array<Pick<AgentStep, "label" | "cost">> = [
-  { label: "Read canvas context" },
-  { label: "Describe references" },
-  { label: "Generate 4 variations", cost: 4 },
-  { label: "Compare continuity" },
+  { label: "读取画布内容" },
+  { label: "理解参考素材" },
+  { label: "生成 4 个变体", cost: 4 },
+  { label: "检查画面一致性" },
+];
+
+const SUGGESTIONS = [
+  "把选中的图片做成 4 个不同光线的变体",
+  "为这个故事写 6 个镜头的分镜",
+  "用首帧生成一段 5 秒的推镜视频",
+  "统一这组角色图的服装和发型",
 ];
 
 /**
- * Bottom composer that expands into a panel (B — recorded departure from the right dock).
+ * The Agent drawer, docked right and resizable like LibTV's. The selected nodes ride along as
+ * context chips; a run's steps, approvals and cost appear above the composer.
  *
  * In gateway mode this panel owns no agent state: starting a turn queues a server run and the
  * panel attaches to its event stream, so closing it does not stop the turn and reopening replays
@@ -30,10 +41,12 @@ const MOCK_PLAN: Array<Pick<AgentStep, "label" | "cost">> = [
 export function AgentPanel({ projectId }: { projectId: string }) {
   const { data: assetList } = useAssets();
   const agent = useUiStore((s) => s.agent);
+  const width = useUiStore((s) => s.agentWidth);
+  const setWidth = useUiStore((s) => s.setAgentWidth);
   const setAgent = useUiStore((s) => s.setAgent);
   const removeContextNode = useUiStore((s) => s.removeContextNode);
   const resetAgent = useUiStore((s) => s.resetAgent);
-  const setDrawer = useUiStore((s) => s.setDrawer);
+  const setAgentOpen = useUiStore((s) => s.setAgentOpen);
   const newThread = useUiStore((s) => s.newThread);
   const nodes = useEditorStore((s) => s.document?.nodes);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -41,8 +54,9 @@ export function AgentPanel({ projectId }: { projectId: string }) {
   const detach = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    if (agent.status === "composing") inputRef.current?.focus();
-  }, [agent.status]);
+    if (agent.status === "idle") setAgent({ status: "composing" });
+    if (agent.status === "composing" || agent.status === "idle") inputRef.current?.focus();
+  }, [agent.status, setAgent]);
 
   useEffect(
     () => () => {
@@ -51,6 +65,20 @@ export function AgentPanel({ projectId }: { projectId: string }) {
     },
     [],
   );
+
+  /** Drag the left edge to resize; the width is clamped in the store. */
+  const startResize = (e: ReactPointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const startW = width;
+    const move = (ev: PointerEvent) => setWidth(startW + (startX - ev.clientX));
+    const up = () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  };
 
   const applyRun = useCallback(
     (run: AgentRunState) => {
@@ -79,12 +107,12 @@ export function AgentPanel({ projectId }: { projectId: string }) {
     [setAgent],
   );
 
-  const close = () => {
+  const newChat = () => {
     if (timer.current) clearInterval(timer.current);
     detach.current?.();
     detach.current = null;
     resetAgent();
-    setDrawer(null);
+    setAgent({ status: "composing" });
   };
 
   const stop = () => {
@@ -139,7 +167,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
         ? { id: agent.threadId }
         : await agentApi.createThread(projectId, prompt);
       const workspaceId = useEditorStore.getState().documentId;
-      if (!workspaceId) throw new Error("no workspace loaded");
+      if (!workspaceId) throw new Error("画布还没有加载完成");
       const run = await agentApi.startTurn(thread.id, {
         workspaceId,
         input: prompt,
@@ -153,7 +181,7 @@ export function AgentPanel({ projectId }: { projectId: string }) {
         steps: [
           {
             id: "s-error",
-            label: e instanceof Error ? e.message : "Could not start the run",
+            label: e instanceof Error ? e.message : "这次对话没能开始",
             state: "done",
           },
         ],
@@ -193,8 +221,8 @@ export function AgentPanel({ projectId }: { projectId: string }) {
         const created: string[] = [];
         for (let i = 0; i < 4; i++) {
           const at = src
-            ? { x: src.x + src.width + 48 + (i % 2) * 240, y: src.y + Math.floor(i / 2) * 142 }
-            : { x: 1050, y: 270 + i * 146 };
+            ? { x: src.x + src.width + 96 + (i % 2) * 272, y: src.y + Math.floor(i / 2) * 180 }
+            : { x: 1050, y: 270 + i * 186 };
           const id = editor.derive({
             ...(source ? { sourceId: source } : {}),
             mode: "image",
@@ -202,11 +230,11 @@ export function AgentPanel({ projectId }: { projectId: string }) {
             createdBy: "agent",
             threadId: thread.id,
             at,
-            size: { width: 224, height: 126 },
+            size: { width: 240, height: 160 },
           });
           if (id) {
             created.push(id);
-            useJobsStore.getState().enqueue(id, `Agent · variation ${i + 1}`, 1);
+            useJobsStore.getState().enqueue(id, `Agent · 变体 ${i + 1}`, 1);
           }
         }
         setAgent({ steps: next, createdNodeIds: created, done: 0 });
@@ -234,91 +262,84 @@ export function AgentPanel({ projectId }: { projectId: string }) {
         (id) => nodes?.[id]?.status === "completed" || nodes?.[id]?.status === "failed",
       ).length;
 
-  if (agent.status === "idle") return null;
-
-  const chips = agent.contextNodeIds.map((id) => nodes?.[id]).filter(Boolean);
+  const chips = agent.contextNodeIds.map((id) => nodes?.[id]).filter((n) => n !== undefined);
   const pending = agent.approvals.filter((a) => a.status === "pending");
+  const composing = agent.status === "composing" || agent.status === "idle";
+  const busy = agent.status === "running";
+  const title =
+    composing && !agent.threadId
+      ? "新对话"
+      : (useUiStore.getState().threads.find((t) => t.id === agent.threadId)?.title ?? "对话");
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-      <div className="para-rise pointer-events-auto flex max-h-[33vh] w-para-dock flex-col rounded-2xl border border-border bg-popover shadow-ambient-lg">
-        <div className="flex items-center justify-between px-4 pt-3">
-          <span className="font-medium text-foreground text-label">Ask PARA</span>
-          <button
-            type="button"
-            aria-label="Close"
-            onClick={close}
-            className="flex size-6 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
+    <aside
+      aria-label="Agent"
+      style={{ width, "--para-drawer-from": "12px" } as React.CSSProperties}
+      className="para-drawer-enter relative flex h-full shrink-0 flex-col border-border/60 border-l bg-popover"
+    >
+      {/* biome-ignore lint/a11y/useSemanticElements: a pointer-draggable resize grip, not a thematic break — <hr> cannot take the pointer handler. */}
+      <div
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="拖动调整宽度"
+        onPointerDown={startResize}
+        className="-left-1 absolute inset-y-0 z-10 w-2 cursor-col-resize hover:bg-border/60"
+      />
+
+      <header className="flex h-14 shrink-0 items-center justify-between gap-2 pr-3 pl-4">
+        <span className="truncate font-medium text-body text-foreground">{title}</span>
+        <div className="flex items-center gap-0.5">
+          <Chip
+            tone="muted"
+            aria-label="新对话"
+            title="新对话"
+            onClick={newChat}
+            className="size-8 justify-center p-0"
           >
-            <Cross className="size-3.5" />
-          </button>
+            <Plus className="size-4" />
+          </Chip>
+          <Chip
+            tone="muted"
+            aria-label="收起 Agent"
+            title="收起"
+            onClick={() => setAgentOpen(false)}
+            className="size-8 justify-center p-0"
+          >
+            <SidebarRight className="size-4" />
+          </Chip>
         </div>
+      </header>
 
-        {chips.length > 0 && (
-          <div className="flex flex-wrap gap-1 px-4 pt-2">
-            {chips.map((n) => {
-              const asset =
-                n && n.type !== "text" && n.assetId
-                  ? assetList?.find((a) => a.id === n.assetId)
-                  : undefined;
-              return n ? (
-                <span
-                  key={n.id}
-                  className="flex h-[var(--para-h-chip)] items-center gap-1 rounded-md border border-border/60 bg-background pr-1 pl-1 text-meta text-foreground"
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
+        {composing && agent.steps.length === 0 ? (
+          <div className="flex h-full flex-col justify-end gap-3 pb-2">
+            <div className="flex items-center gap-2 font-medium text-body text-foreground">
+              <Sparkles aria-hidden="true" className="size-4" />
+              从一个想法出发，抵达成片
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {SUGGESTIONS.map((s) => (
+                <Chip
+                  key={s}
+                  tone="outline"
+                  onClick={() => {
+                    setAgent({ prompt: s });
+                    inputRef.current?.focus();
+                  }}
+                  className="h-auto min-h-14 items-start whitespace-normal rounded-xl border-border/60 p-3 text-left leading-snug"
                 >
-                  {asset ? (
-                    <img src={asset.url} alt="" className="size-4 rounded-sm object-cover" />
-                  ) : (
-                    <span className="size-4 rounded-sm bg-neutral-4" />
-                  )}
-                  {n.id}
-                  <button
-                    type="button"
-                    aria-label={`Remove ${n.id}`}
-                    onClick={() => removeContextNode(n.id)}
-                    className="ml-0.5 text-muted-foreground hover:text-foreground"
-                  >
-                    ×
-                  </button>
-                </span>
-              ) : null;
-            })}
+                  {s}
+                </Chip>
+              ))}
+            </div>
           </div>
-        )}
-
-        {agent.status === "composing" && (
-          <div className="relative px-2 pb-2">
-            <Textarea
-              ref={inputRef}
-              aria-label="Ask PARA"
-              placeholder="Create four colder variations of this."
-              value={agent.prompt}
-              rows={2}
-              onChange={(e) => setAgent({ prompt: e.target.value })}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  run();
-                }
-                if (e.key === "Escape") close();
-              }}
-              tone="bare"
-              className="resize-none px-3 py-2 pr-12 text-body"
-            />
-            <button
-              type="button"
-              aria-label="Send"
-              onClick={run}
-              disabled={!agent.prompt.trim()}
-              className="absolute right-4 bottom-4 flex size-7 items-center justify-center rounded-full bg-foreground text-background disabled:opacity-40"
-            >
-              <ArrowUp className="size-3.5" />
-            </button>
-          </div>
-        )}
-
-        {(agent.status === "running" || agent.status === "done") && (
-          <div className="min-h-0 overflow-y-auto px-4 pt-2 pb-3">
+        ) : (
+          <div className="flex flex-col gap-3 pt-1">
+            {agent.prompt && !composing && (
+              <div className="self-end rounded-xl bg-accent px-3 py-2 text-body text-foreground">
+                {agent.prompt}
+              </div>
+            )}
             <div className="flex items-center justify-between text-body">
               <span className="text-foreground">
                 {headline(agent.runStatus, agent.status, agent.createdNodeIds.length)}
@@ -329,16 +350,24 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                 </span>
               )}
             </div>
+            {agent.total > 0 && (
+              <div className="h-0.5 w-full overflow-hidden rounded-full bg-neutral-4">
+                <div
+                  className="h-full rounded-full bg-primary transition-[width] duration-500"
+                  style={{ width: `${(doneCount / Math.max(1, agent.total)) * 100}%` }}
+                />
+              </div>
+            )}
 
             {pending.map((approval) => (
               <div
                 key={approval.id}
-                className="mt-3 rounded-lg border border-border/70 bg-background p-3"
+                className="rounded-xl border border-border/70 bg-background p-3"
               >
                 <div className="flex items-center justify-between text-label">
                   <span className="text-foreground">{approvalTitle(approval.toolName)}</span>
                   <span className="text-muted-foreground tabular-nums">
-                    ≈ ✦{approval.estimatedCost}
+                    ≈ ⚡{approval.estimatedCost}
                   </span>
                 </div>
                 {typeof approval.args.prompt === "string" && (
@@ -347,64 +376,18 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                   </p>
                 )}
                 <div className="mt-2.5 flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => void decide(approval.id, true)}
-                    className="h-[var(--para-h-chip)] rounded-md bg-primary px-3 font-medium text-primary-foreground text-label"
-                  >
-                    Confirm
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void decide(approval.id, false)}
-                    className="h-[var(--para-h-chip)] rounded-md border border-border px-3 text-foreground text-label hover:bg-accent"
-                  >
-                    Cancel
-                  </button>
+                  <Chip tone="primary" onClick={() => void decide(approval.id, true)}>
+                    确认生成
+                  </Chip>
+                  <Chip tone="outline" onClick={() => void decide(approval.id, false)}>
+                    取消
+                  </Chip>
                 </div>
               </div>
             ))}
 
-            {agent.total > 0 && (
-              <div className="mt-2 h-0.5 w-full overflow-hidden rounded-full bg-neutral-4">
-                <div
-                  className="h-full rounded-full bg-primary transition-[width] duration-500"
-                  style={{ width: `${(doneCount / Math.max(1, agent.total)) * 100}%` }}
-                />
-              </div>
-            )}
-
-            <div className="mt-3 flex items-center gap-2">
-              {agent.status === "running" ? (
-                <button
-                  type="button"
-                  onClick={stop}
-                  className="h-[var(--para-h-chip)] rounded-md border border-border px-2.5 text-foreground text-label hover:bg-accent"
-                >
-                  Stop
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={close}
-                  className="h-[var(--para-h-chip)] rounded-md border border-border px-2.5 text-foreground text-label hover:bg-accent"
-                >
-                  Done
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => setAgent({ activityOpen: !agent.activityOpen })}
-                aria-expanded={agent.activityOpen}
-                className="h-[var(--para-h-chip)] rounded-md px-2.5 text-muted-foreground text-label hover:text-foreground"
-              >
-                {agent.steps.filter((s) => s.state === "done").length} of {agent.steps.length}{" "}
-                actions
-              </button>
-            </div>
-
-            {agent.activityOpen && agent.steps.length > 0 && (
-              <ul className="mt-3 space-y-1 border-border/60 border-t pt-3 text-label">
+            {agent.steps.length > 0 && (
+              <ul className="flex flex-col gap-1.5 rounded-xl border border-border/60 p-3 text-label">
                 {agent.steps.map((s) => (
                   <li key={s.id} className="flex items-center gap-2">
                     <span
@@ -424,46 +407,128 @@ export function AgentPanel({ projectId }: { projectId: string }) {
                       {s.label}
                     </span>
                     {s.cost !== undefined && (
-                      <span className="ml-auto text-muted-foreground tabular-nums">✦{s.cost}</span>
+                      <span className="ml-auto text-muted-foreground tabular-nums">⚡{s.cost}</span>
                     )}
                   </li>
                 ))}
               </ul>
             )}
+
+            <div className="flex gap-2">
+              {busy ? (
+                <Chip tone="outline" onClick={stop}>
+                  停止
+                </Chip>
+              ) : (
+                <Chip tone="outline" onClick={newChat}>
+                  继续新的对话
+                </Chip>
+              )}
+            </div>
           </div>
         )}
       </div>
-    </div>
+
+      <div className="shrink-0 px-3 pb-3">
+        <div className="rounded-2xl border border-border/70 bg-background p-2">
+          {chips.length > 0 && (
+            <div className="flex flex-wrap gap-1 px-1 pt-1 pb-1.5">
+              {chips.map((n) => {
+                const asset =
+                  n.type !== "text" && n.assetId
+                    ? assetList?.find((a) => a.id === n.assetId)
+                    : undefined;
+                return (
+                  <span
+                    key={n.id}
+                    className="flex h-[var(--para-h-chip)] items-center gap-1.5 rounded-md border border-border/60 bg-popover pr-0.5 pl-1 text-label text-foreground"
+                  >
+                    {asset ? (
+                      <img src={asset.url} alt="" className="size-5 rounded-sm object-cover" />
+                    ) : (
+                      <NodeGlyph type={n.type} className="size-3.5 text-muted-foreground" />
+                    )}
+                    <span className="max-w-32 truncate">{nodeTitle(n)}</span>
+                    <Chip
+                      tone="muted"
+                      aria-label={`移除 ${nodeTitle(n)}`}
+                      onClick={() => removeContextNode(n.id)}
+                      className="size-5 h-5 justify-center p-0"
+                    >
+                      <Cross className="size-3" />
+                    </Chip>
+                  </span>
+                );
+              })}
+            </div>
+          )}
+          <Textarea
+            ref={inputRef}
+            aria-label="给 Agent 的指令"
+            placeholder={
+              chips.length ? "说说要对这些节点做什么" : "描述你的创作想法，Agent 会在画布上完成"
+            }
+            value={composing ? agent.prompt : ""}
+            disabled={!composing}
+            rows={3}
+            onChange={(e) => setAgent({ prompt: e.target.value })}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                run();
+              }
+              e.stopPropagation();
+            }}
+            tone="bare"
+            className="resize-none px-2 py-1.5 text-body"
+          />
+          <div className="flex items-center justify-between px-1 pt-1">
+            <span className="text-meta text-muted-foreground">
+              {agent.autonomy === "act" ? "自动生成：已开启" : "生成前会先征求你的确认"}
+            </span>
+            <Chip
+              tone="primary"
+              aria-label="发送"
+              onClick={run}
+              disabled={!composing || !agent.prompt.trim()}
+              className="size-8 h-8 justify-center rounded-full p-0"
+            >
+              <ArrowUp className="size-4" />
+            </Chip>
+          </div>
+        </div>
+      </div>
+    </aside>
   );
 }
 
 function headline(runStatus: string | null, status: string, createdCount: number): string {
-  if (runStatus === "awaiting_approval") return "Waiting for you.";
-  if (runStatus === "failed") return "The run failed.";
-  if (runStatus === "completed" || status === "done") return "Done.";
-  if (runStatus === "queued") return "Queued…";
-  return createdCount > 0 ? "Creating 4 variations…" : "Working…";
+  if (runStatus === "awaiting_approval") return "等你确认";
+  if (runStatus === "failed") return "这次运行失败了";
+  if (runStatus === "completed" || status === "done") return "已完成";
+  if (runStatus === "queued") return "排队中…";
+  return createdCount > 0 ? "正在生成 4 个变体…" : "思考中…";
 }
 
 function approvalTitle(toolName: string): string {
-  return toolName === "generate_image" ? "Generate image" : toolName.replace(/_/g, " ");
+  return toolName === "generate_image" ? "生成图片" : toolName.replace(/_/g, " ");
 }
 
 /** Turn a rollout event into one readable row; unknown shapes are skipped rather than guessed at. */
 function traceLabel(event: AgentTraceEvent): string | null {
-  if (event.type === "turn.started") return "Read canvas context";
+  if (event.type === "turn.started") return "读取画布内容";
   if (event.type !== "item.completed") return null;
   const item = event.item ?? {};
   switch (item.type) {
     case "mcp_tool_call":
     case "tool_call":
-      return `Called ${String(item.name ?? item.tool ?? "a tool")}`;
+      return `调用 ${String(item.name ?? item.tool ?? "工具")}`;
     case "agent_message":
-      return "Answered";
+      return "已回复";
     case "reasoning":
-      return "Considered the canvas";
+      return "分析了画布";
     case "error":
-      return `Failed: ${String(item.message ?? "unknown error")}`;
+      return `出错：${String(item.message ?? "未知错误")}`;
     default:
       return null;
   }

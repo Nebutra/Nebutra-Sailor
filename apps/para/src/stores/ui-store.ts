@@ -3,10 +3,24 @@ import type { AgentStep, AgentThread } from "@/domain/types";
 import type { AgentApproval, AgentRunState } from "@/lib/agent-api";
 
 /**
- * Contextual surfaces. M1: at most one open at a time (EXPERIMENTAL — no competitor enforces it;
- * M2 must allow library + agent together). The Inspector drawer was removed: no competitor has one.
+ * Canvas chrome state. LibTV's surfaces are independent: the 资产管理 outliner on the left and the
+ * Agent drawer on the right can be open together, 生成历史 is a modal over both, and the add-node
+ * menu opens wherever it was asked for (dock, double-click, a node's + port).
  */
-export type ActiveDrawer = "library" | "agent" | "jobs" | null;
+export type CanvasTool = "select" | "hand";
+
+export interface AddMenuRequest {
+  /** Where to draw the menu, in viewport pixels. */
+  screen: { x: number; y: number };
+  /** Where the new node lands, in canvas coordinates. */
+  flow: { x: number; y: number };
+  /** Wire the new node downstream of this one (a node's right + port). */
+  sourceId?: string;
+  /** The dock's + toggles its own menu, so it needs to know the open one is its. */
+  origin?: "dock";
+}
+
+export const AGENT_WIDTH = { min: 340, max: 720, initial: 400 } as const;
 
 export type AgentStatus = "idle" | "composing" | "running" | "done";
 
@@ -30,15 +44,27 @@ export interface AgentRun {
 }
 
 interface UiState {
-  activeDrawer: ActiveDrawer;
+  assetsOpen: boolean;
+  agentOpen: boolean;
+  historyOpen: boolean;
+  tool: CanvasTool;
+  addMenu: AddMenuRequest | null;
+  agentWidth: number;
   commandOpen: boolean;
   /** A node whose prompt should take focus the next time its config mounts (seeded workspaces). */
   promptFocusNodeId: string | null;
   agent: AgentRun;
   /** project-scoped threads (B) — mock */
   threads: AgentThread[];
-  setDrawer: (drawer: ActiveDrawer) => void;
-  toggleDrawer: (drawer: Exclude<ActiveDrawer, null>) => void;
+  setAssetsOpen: (open: boolean) => void;
+  setAgentOpen: (open: boolean) => void;
+  setHistoryOpen: (open: boolean) => void;
+  setTool: (tool: CanvasTool) => void;
+  openAddMenu: (request: AddMenuRequest) => void;
+  closeAddMenu: () => void;
+  setAgentWidth: (width: number) => void;
+  /** Close every canvas surface — leaving the workspace. */
+  closeAll: () => void;
   setCommandOpen: (open: boolean) => void;
   setPromptFocus: (nodeId: string | null) => void;
   setAgent: (patch: Partial<AgentRun>) => void;
@@ -65,13 +91,26 @@ const idleAgent: AgentRun = {
 };
 
 export const useUiStore = create<UiState>((set, get) => ({
-  activeDrawer: null,
+  assetsOpen: false,
+  agentOpen: false,
+  historyOpen: false,
+  tool: "select",
+  addMenu: null,
+  agentWidth: AGENT_WIDTH.initial,
   commandOpen: false,
   promptFocusNodeId: null,
   agent: idleAgent,
   threads: [],
-  setDrawer: (drawer) => set({ activeDrawer: drawer }),
-  toggleDrawer: (drawer) => set({ activeDrawer: get().activeDrawer === drawer ? null : drawer }),
+  setAssetsOpen: (open) => set({ assetsOpen: open }),
+  setAgentOpen: (open) => set({ agentOpen: open }),
+  setHistoryOpen: (open) => set({ historyOpen: open }),
+  setTool: (tool) => set({ tool }),
+  openAddMenu: (request) => set({ addMenu: request }),
+  closeAddMenu: () => set({ addMenu: null }),
+  setAgentWidth: (width) =>
+    set({ agentWidth: Math.round(Math.min(AGENT_WIDTH.max, Math.max(AGENT_WIDTH.min, width))) }),
+  closeAll: () =>
+    set({ assetsOpen: false, agentOpen: false, historyOpen: false, addMenu: null, tool: "select" }),
   setCommandOpen: (open) => set({ commandOpen: open }),
   setPromptFocus: (nodeId) => set({ promptFocusNodeId: nodeId }),
   setAgent: (patch) => set({ agent: { ...get().agent, ...patch } }),
@@ -89,7 +128,7 @@ export const useUiStore = create<UiState>((set, get) => ({
     const thread: AgentThread = {
       id: `t-${Date.now().toString(36)}`,
       projectId,
-      title: title.slice(0, 48) || "New thread",
+      title: title.slice(0, 48) || "新对话",
       createdAt: new Date().toISOString(),
     };
     set({ threads: [thread, ...get().threads] });

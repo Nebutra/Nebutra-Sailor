@@ -31,3 +31,36 @@ describe("jobs-store drives node status", () => {
     expect(useJobsStore.getState().jobs[0]?.error?.type).toBe("cancelled");
   });
 });
+
+describe("jobs carry wired references", () => {
+  beforeEach(() => {
+    useEditorStore
+      .getState()
+      .load("d", { version: 2, nodes: {}, edges: {}, viewport: { x: 0, y: 0, zoom: 1 } });
+    useJobsStore.setState({ jobs: [] });
+  });
+
+  it("a video wired from a finished image sends that image's URL as its first frame", () => {
+    const editor = useEditorStore.getState();
+    const img = editor.createNode({ mode: "image", at: { x: 0, y: 0 } }) as string;
+    editor.completeNode(img, "a001", "j0");
+    const vid = editor.createNode({ mode: "video", at: { x: 500, y: 0 }, sourceId: img }) as string;
+    const jobId = useJobsStore.getState().enqueue(vid, "视频", 100);
+    const job = useJobsStore.getState().jobs.find((j) => j.id === jobId);
+    expect(job?.config?.references).toEqual([{ kind: "node", id: img, url: "/mock/a001.svg" }]);
+    // The draft itself is not rewritten with resolved URLs.
+    expect(useEditorStore.getState().document?.nodes[vid]?.generator?.references).toEqual([
+      { kind: "node", id: img },
+    ]);
+  });
+
+  it("an unwired node sends no references at all", () => {
+    const vid = useEditorStore
+      .getState()
+      .createNode({ mode: "video", at: { x: 0, y: 0 } }) as string;
+    const jobId = useJobsStore.getState().enqueue(vid, "视频", 100);
+    expect(useJobsStore.getState().jobs.find((j) => j.id === jobId)?.config).not.toHaveProperty(
+      "references",
+    );
+  });
+});

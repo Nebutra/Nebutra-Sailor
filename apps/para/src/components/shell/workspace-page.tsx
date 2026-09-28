@@ -2,14 +2,18 @@
 
 // @async-surface-exempt: this is the page shell that decides what to mount; the surfaces it mounts own their own states.
 
+import { ReactFlowProvider } from "@xyflow/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { AddNodeMenu } from "@/components/canvas/add-node-menu";
 import { WorkspaceSurface } from "@/components/canvas/workspace-surface";
 import { AgentPanel } from "@/components/overlays/agent-panel";
-import { JobsDrawer } from "@/components/overlays/jobs-drawer";
-import { LibraryDrawer } from "@/components/overlays/library-drawer";
+import { AssetsPanel } from "@/components/overlays/assets-panel";
+import { HistoryDialog } from "@/components/overlays/history-dialog";
 import { parseSeed, seedNode } from "@/domain/seed";
-import { api, useDocument, useProject, useWorkspace } from "@/mock/queries";
+import { parseTemplate } from "@/domain/templates";
+import { api, useDocument, useWorkspace } from "@/mock/queries";
+import { applyTemplate } from "@/stores/apply-template";
 import { nextId, useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
 import { useUiStore } from "@/stores/ui-store";
@@ -17,10 +21,12 @@ import { BottomDock } from "./bottom-dock";
 import { useWorkspaceView } from "./view-selector";
 import { WorkspaceTopBar } from "./workspace-top-bar";
 
+const AUTOSAVE_MS = 600;
+
 /**
- * Workspace = TopBar + one Primary Surface + BottomDock + contextual overlays.
- * Drawers are flex siblings of the surface. No inspector: node config is anchored to the node (selection.md).
- * The document autosaves silently (A); selection and drawers are client-only.
+ * The canvas workspace, laid out as LibTV's: 资产管理 on the left, the canvas with its floating top
+ * bar and dock in the middle, the Agent drawer on the right — any combination open at once.
+ * The document autosaves (待同步 → 同步中 → 已同步); selection and panels are client-only.
  */
 export function WorkspacePage({
   projectId,
@@ -29,21 +35,22 @@ export function WorkspacePage({
   projectId: string;
   workspaceId: string;
 }) {
-  const { data: project } = useProject(projectId);
   const { data: workspace, isLoading } = useWorkspace(projectId, workspaceId);
   const { data: doc } = useDocument(workspace?.documentId);
   const load = useEditorStore((s) => s.load);
   const loadedId = useEditorStore((s) => s.documentId);
   const dirty = useEditorStore((s) => s.dirty);
-  const activeDrawer = useUiStore((s) => s.activeDrawer);
-  const setDrawer = useUiStore((s) => s.setDrawer);
+  const assetsOpen = useUiStore((s) => s.assetsOpen);
+  const agentOpen = useUiStore((s) => s.agentOpen);
+  const setAgentOpen = useUiStore((s) => s.setAgentOpen);
   const agentStatus = useUiStore((s) => s.agent.status);
   const [view] = useWorkspaceView();
   const params = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const seed = parseSeed(params.get("seed"));
-  const seeded = useRef(false);
+  const template = parseTemplate(params.get("template"));
+  const started = useRef(false);
 
   useEffect(() => {
     if (workspace && doc && loadedId !== workspace.documentId) {
@@ -54,73 +61,139 @@ export function WorkspacePage({
     }
   }, [workspace, doc, loadedId, load, projectId]);
 
-  // `?seed=image|text` (Home tool tiles): one empty generator node, selected, prompt focused. Only
-  // into an empty document, and the param is dropped afterwards so a reload never seeds twice.
+  // `?template=<id>` (Home template tiles) builds a small graph; `?seed=image|text` (Home tool
+  // tiles) one empty generator node. Only into an empty document, and the param is dropped
+  // afterwards so a reload never builds twice. The canvas has to be mounted first so the graph is
+  // centred on what the stage actually shows.
   useEffect(() => {
-    if (!seed || seeded.current || !workspace || loadedId !== workspace.documentId) return;
-    seeded.current = true;
-    const editor = useEditorStore.getState();
-    if (editor.document && Object.keys(editor.document.nodes).length === 0) {
-      const id = nextId();
-      editor.addNode(
-        seedNode(seed, id, editor.document.viewport, {
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }),
-      );
-      editor.select([id]);
-      useUiStore.getState().setPromptFocus(id);
-    }
-    const rest = new URLSearchParams(params.toString());
-    rest.delete("seed");
-    const query = rest.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-  }, [seed, workspace, loadedId, params, pathname, router]);
+    if ((!seed && !template) || started.current) return;
+    if (!workspace || loadedId !== workspace.documentId) return;
+    started.current = true;
+    const run = () => {
+      const editor = useEditorStore.getState();
+      const empty = editor.document && Object.keys(editor.document.nodes).length === 0;
+      if (empty && template) applyTemplate(template);
+      else if (empty && seed && editor.document) {
+        const id = nextId();
+        editor.addNode(
+          seedNode(seed, id, editor.document.viewport, {
+            width: window.innerWidth,
+            height: window.innerHeight,
+          }),
+        );
+        editor.select([id]);
+        useUiStore.getState().setPromptFocus(id);
+      }
+      const rest = new URLSearchParams(params.toString());
+      rest.delete("seed");
+      rest.delete("template");
+      const query = rest.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    };
+    requestAnimationFrame(run);
+  }, [seed, template, workspace, loadedId, params, pathname, router]);
 
-  // Silent autosave, debounced.
+  // Autosave, debounced. The sync pill reads the store: pending on change, saving while the PUT
+  // (If-Match on the document version, lib/gateway-api) is in flight, saved when it lands with
+  // nothing newer behind it.
   useEffect(() => {
     if (!dirty) return;
     const t = setTimeout(() => {
-      const { documentId, document } = useEditorStore.getState();
-      if (documentId && document) void api.saveDocument(documentId, document);
-    }, 600);
+      const { documentId, document, beginSave, endSave } = useEditorStore.getState();
+      if (!documentId || !document) return;
+      const at = beginSave();
+      api.saveDocument(documentId, document).then(
+        () => useEditorStore.getState().endSave(true, at),
+        () => endSave(false, at),
+      );
+    }, AUTOSAVE_MS);
     return () => clearTimeout(t);
   }, [dirty]);
 
-  // A prompt carried over from Home opens the composer once the workspace is up.
+  // A prompt carried over from Home opens the composer once, when the workspace comes up. Only
+  // once: the drawer is the user's to close afterwards, and a composing draft must not reopen it.
+  const carried = useRef(false);
   useEffect(() => {
-    if (agentStatus === "composing" && activeDrawer !== "agent") setDrawer("agent");
-  }, [agentStatus, activeDrawer, setDrawer]);
+    if (carried.current) return;
+    carried.current = true;
+    if (agentStatus === "composing" && !agentOpen) setAgentOpen(true);
+  }, [agentStatus, agentOpen, setAgentOpen]);
 
-  useEffect(() => () => useUiStore.getState().setDrawer(null), []);
+  useCanvasKeys(view === "canvas");
+
+  useEffect(() => () => useUiStore.getState().closeAll(), []);
 
   if (!isLoading && !workspace) {
     return (
-      <div className="flex h-full items-center justify-center text-muted-foreground text-body">
-        This workspace does not exist.
+      <div className="flex h-full items-center justify-center text-body text-muted-foreground">
+        这个画布不存在，或者你没有访问权限。
       </div>
     );
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <WorkspaceTopBar
-        projectId={projectId}
-        projectName={project?.name ?? ""}
-        workspaceId={workspaceId}
-        workspaceName={workspace?.name ?? ""}
-      />
-      <div className="flex min-h-0 flex-1">
-        {activeDrawer === "library" && (
-          <LibraryDrawer projectId={projectId} workspaceId={workspaceId} />
-        )}
+    <ReactFlowProvider>
+      <div className="flex h-full bg-background">
+        {assetsOpen && view === "canvas" && <AssetsPanel projectId={projectId} />}
         <div className="relative min-w-0 flex-1">
           <WorkspaceSurface view={view} />
-          <BottomDock />
-          {activeDrawer === "agent" && <AgentPanel projectId={projectId} />}
+          <WorkspaceTopBar projectId={projectId} workspaceId={workspaceId} />
+          {view === "canvas" && <BottomDock />}
         </div>
-        {activeDrawer === "jobs" && <JobsDrawer />}
+        {agentOpen && <AgentPanel projectId={projectId} />}
       </div>
-    </div>
+      <AddNodeMenu />
+      <HistoryDialog projectId={projectId} workspaceId={workspaceId} />
+    </ReactFlowProvider>
   );
+}
+
+/** V / H switch tools, holding Space pans, ⌘D duplicates, Esc clears. Ignored while typing. */
+function useCanvasKeys(active: boolean) {
+  useEffect(() => {
+    if (!active) return;
+    const typing = (t: EventTarget | null) => {
+      const el = t as HTMLElement | null;
+      return Boolean(
+        el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable),
+      );
+    };
+    let spaceFrom: "select" | "hand" | null = null;
+    const down = (e: KeyboardEvent) => {
+      if (typing(e.target)) return;
+      const ui = useUiStore.getState();
+      const editor = useEditorStore.getState();
+      if (e.key === " " && !spaceFrom) {
+        spaceFrom = ui.tool;
+        ui.setTool("hand");
+        e.preventDefault();
+        return;
+      }
+      if (e.metaKey || e.ctrlKey) {
+        if (e.key.toLowerCase() === "d" && editor.selection.length === 1 && editor.selection[0]) {
+          e.preventDefault();
+          editor.duplicateNode(editor.selection[0]);
+        }
+        return;
+      }
+      if (e.key === "v" || e.key === "V") ui.setTool("select");
+      if (e.key === "h" || e.key === "H") ui.setTool("hand");
+      if (e.key === "Escape") {
+        if (ui.addMenu) ui.closeAddMenu();
+        else if (editor.selection.length) editor.select([]);
+      }
+    };
+    const up = (e: KeyboardEvent) => {
+      if (e.key === " " && spaceFrom) {
+        useUiStore.getState().setTool(spaceFrom);
+        spaceFrom = null;
+      }
+    };
+    window.addEventListener("keydown", down);
+    window.addEventListener("keyup", up);
+    return () => {
+      window.removeEventListener("keydown", down);
+      window.removeEventListener("keyup", up);
+    };
+  }, [active]);
 }
