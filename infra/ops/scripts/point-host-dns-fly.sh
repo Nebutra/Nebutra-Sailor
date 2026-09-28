@@ -86,3 +86,40 @@ else
   RESULT=$(cf -X POST --data "$BODY" "${API}/zones/${ZONE_ID}/dns_records" | ok)
 fi
 printf '%s' "$RESULT" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("cname", d["name"], "->", d["content"])'
+
+# Behind Cloudflare's proxy, Fly cannot see its own addresses on the hostname,
+# so it cannot issue the certificate by looking at A/AAAA/CNAME: it needs the
+# DNS-01 challenge delegated to it and an ownership record. Fly states both;
+# read them rather than guessing, and write them unproxied. Without these the
+# edge answers 525 (it cannot complete TLS to the origin) — acme.nebutra.com
+# shipped that way on 2026-09-28.
+upsert() {
+  local type="$1" name="$2" content="$3" rid body
+  body=$(python3 -c "import json,sys; print(json.dumps({'type':sys.argv[1],'name':sys.argv[2],'content':sys.argv[3],'proxied':False,'ttl':300,'comment':'fly ${FLY_APP} certificate'}))" "$type" "$name" "$content")
+  rid=$(cf "${API}/zones/${ZONE_ID}/dns_records?name=${name}&type=${type}" | ok | record_id)
+  if [ -n "$rid" ]; then
+    cf -X PUT --data "$body" "${API}/zones/${ZONE_ID}/dns_records/${rid}" | ok >/dev/null
+  else
+    cf -X POST --data "$body" "${API}/zones/${ZONE_ID}/dns_records" | ok >/dev/null
+  fi
+  echo "${type} ${name} -> ${content}"
+}
+
+if ! command -v flyctl >/dev/null 2>&1 || [ -z "${FLY_API_TOKEN:-}" ]; then
+  echo "::warning::flyctl or FLY_API_TOKEN missing: the certificate records for ${FQDN} were not written. Run 'flyctl certs setup ${FQDN} -a ${FLY_APP}' and add them."
+  exit 0
+fi
+if ! CERT=$(flyctl certs show "${FQDN}" -a "${FLY_APP}" --json 2>/dev/null); then
+  echo "::warning::${FLY_APP} has no certificate for ${FQDN} yet (flyctl certs add first); certificate records not written."
+  exit 0
+fi
+read -r CHALLENGE_NAME CHALLENGE_TARGET OWNER_NAME OWNER_VALUE < <(printf '%s' "$CERT" | python3 -c '
+import json, sys
+r = json.load(sys.stdin).get("dns_requirements") or {}
+c, o = r.get("acme_challenge") or {}, r.get("ownership") or {}
+print(c.get("name", "-"), (c.get("target") or "-").rstrip("."), o.get("name", "-"), o.get("app_value", "-"))
+')
+[ "$CHALLENGE_NAME" != "-" ] && upsert CNAME "$CHALLENGE_NAME" "$CHALLENGE_TARGET"
+[ "$OWNER_NAME" != "-" ] && upsert TXT "$OWNER_NAME" "$OWNER_VALUE"
+flyctl certs check "${FQDN}" -a "${FLY_APP}" >/dev/null 2>&1 || true
+echo "certificate records written; Fly re-checks ${FQDN} now"
