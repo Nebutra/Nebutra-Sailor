@@ -82,7 +82,7 @@ const PLAN_DEFINITIONS: Omit<BillingPlanOption, "active" | "action">[] = [
     id: "pro_monthly",
     name: "Pro",
     badge: "Most practical",
-    description: `For teams running ${brand.name} as an active SaaS operating surface.`,
+    description: `For teams that run their work on ${brand.name} every day.`,
     priceLabel: "$29",
     cadence: "per month",
     features: ["10 projects", "10 team members", "Advanced analytics", "Priority support"],
@@ -163,9 +163,9 @@ function getProviderState(env: BillingSelfServiceEnv, capabilities: BillingCapab
     return {
       name: "manual",
       status: "disabled" as const,
-      title: "Billing self-service is disabled",
+      title: "Plan changes aren't open yet",
       description:
-        "The billing feature flag or checkout mode is off, so plan changes are shown as read-only.",
+        "You can compare the plans below. Upgrading opens here once payments are switched on.",
     };
   }
 
