@@ -5,6 +5,8 @@ import * as React from "react";
 import { Badge } from "../../primitives/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../primitives/collapsible";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../primitives/tooltip";
+import { LayoutGroup, MotionConfig, motion } from "../../shared/animation/motion";
+import { animationSprings } from "../../shared/animation/motion/tokens";
 import { cn } from "../../utils/cn";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -107,13 +109,28 @@ export interface SidebarNavProps {
 // accent now appears only on the icon, where it costs no contrast and still
 // carries the brand hue.
 const ITEM_BASE_CLASSES =
-  "group flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform] duration-micro ease-brand";
+  "group relative flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform] duration-micro ease-brand";
 // Hover is a whisper of the selected surface, so the ladder reads
 // none -> hover -> current instead of hover == current.
 const ITEM_DEFAULT_CLASSES =
   "text-sidebar-foreground/72 hover:bg-sidebar-accent/55 hover:text-sidebar-foreground";
-const ITEM_ACTIVE_CLASSES =
-  "bg-sidebar-accent text-sidebar-foreground font-medium shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent";
+// The current item's surface is not a class on the item: it is one element
+// (ActiveSurface) that glides from the old item to the new one, so moving
+// between pages reads as the selection travelling, not a cut.
+const ITEM_ACTIVE_CLASSES = "text-sidebar-foreground font-medium";
+// A section holding the current page, drawn quietly: its child carries the surface.
+const PARENT_ACTIVE_CLASSES = "text-sidebar-foreground font-medium";
+
+function ActiveSurface(): React.ReactElement {
+  return (
+    <motion.span
+      layoutId="sidebar-nav-active"
+      aria-hidden="true"
+      className="absolute inset-0 -z-10 rounded-[var(--radius-md)] bg-sidebar-accent shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))]"
+      transition={animationSprings.layout}
+    />
+  );
+}
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
 const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
 const ICON_CLASSES = "size-4 shrink-0";
@@ -218,7 +235,12 @@ function InteractiveItem({
   const ariaCurrent = isActive ? "page" : undefined;
   const ariaDisabled = isDisabled ? true : undefined;
 
-  const inner = <ItemContent item={item} collapsed={collapsed} />;
+  const inner = (
+    <>
+      {isActive ? <ActiveSurface /> : null}
+      <ItemContent item={item} collapsed={collapsed} />
+    </>
+  );
 
   let element: React.ReactElement;
 
@@ -327,7 +349,7 @@ function ParentItem({
   const triggerClasses = cn(
     ITEM_BASE_CLASSES,
     "w-full text-left",
-    isActive ? ITEM_ACTIVE_CLASSES : ITEM_DEFAULT_CLASSES,
+    isActive ? PARENT_ACTIVE_CLASSES : ITEM_DEFAULT_CLASSES,
     isDisabled && ITEM_DISABLED_CLASSES,
     itemClassName,
   );
@@ -373,108 +395,118 @@ export function SidebarNav({
   renderLink = defaultRenderLink,
   navLabel = "Sidebar",
 }: SidebarNavProps): React.ReactElement {
+  // One selection surface per nav: the id scopes its layoutId to this instance.
+  const layoutScope = React.useId();
   return (
-    <TooltipProvider delayDuration={200}>
-      <nav
-        aria-label={navLabel}
-        data-ui="nebutra-sidebar-nav"
-        className={cn(
-          "flex h-full flex-col",
-          collapsed ? "gap-3 px-2 py-3" : "gap-5 px-3 py-4",
-          className,
-        )}
-      >
-        {header ? (
-          // Collapsed, the header sits on the same centre line as the icon items.
-          <div className={cn("shrink-0", collapsed && "flex justify-center")}>{header}</div>
-        ) : null}
+    <MotionConfig reducedMotion="user">
+      <LayoutGroup id={layoutScope}>
+        <TooltipProvider delayDuration={200}>
+          <nav
+            aria-label={navLabel}
+            data-ui="nebutra-sidebar-nav"
+            className={cn(
+              // The nav, not each row, is the stacking context: the travelling
+              // surface paints under every row's content, so a row it glides past
+              // stays readable.
+              "isolate flex h-full flex-col",
+              collapsed ? "gap-3 px-2 py-3" : "gap-5 px-3 py-4",
+              className,
+            )}
+          >
+            {header ? (
+              // Collapsed, the header sits on the same centre line as the icon items.
+              <div className={cn("shrink-0", collapsed && "flex justify-center")}>{header}</div>
+            ) : null}
 
-        <div className="flex-1 space-y-4 overflow-y-auto">
-          {sections.map((section) => {
-            const visibleActions =
-              !collapsed && section.actions && section.actions.length > 0
-                ? section.actions.slice(0, 3)
-                : null;
-            return (
-              <section key={section.id} className="group/section">
-                {section.label && !collapsed ? (
-                  <div className="mb-1.5 flex items-center justify-between px-2.5">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/45">
-                      {section.label}
-                    </span>
-                    {visibleActions ? (
-                      <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-micro group-hover/section:opacity-100 focus-within:opacity-100">
-                        {visibleActions.map((action) => {
-                          const ActionIcon = action.icon;
-                          const defaultButton = (
-                            <button
-                              type="button"
-                              aria-label={action.label}
-                              title={action.label}
-                              onClick={action.onClick}
-                              className="inline-flex size-4 items-center justify-center rounded text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none"
-                            >
-                              <ActionIcon className="size-3" />
-                            </button>
-                          );
-                          return (
-                            <span key={action.id} className="contents">
-                              {action.render ? action.render(defaultButton) : defaultButton}
-                            </span>
-                          );
-                        })}
+            <div className="flex-1 space-y-4 overflow-y-auto">
+              {sections.map((section) => {
+                const visibleActions =
+                  !collapsed && section.actions && section.actions.length > 0
+                    ? section.actions.slice(0, 3)
+                    : null;
+                return (
+                  <section key={section.id} className="group/section">
+                    {section.label && !collapsed ? (
+                      <div className="mb-1.5 flex items-center justify-between px-2.5">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/45">
+                          {section.label}
+                        </span>
+                        {visibleActions ? (
+                          <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-micro group-hover/section:opacity-100 focus-within:opacity-100">
+                            {visibleActions.map((action) => {
+                              const ActionIcon = action.icon;
+                              const defaultButton = (
+                                <button
+                                  type="button"
+                                  aria-label={action.label}
+                                  title={action.label}
+                                  onClick={action.onClick}
+                                  className="inline-flex size-4 items-center justify-center rounded text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none"
+                                >
+                                  <ActionIcon className="size-3" />
+                                </button>
+                              );
+                              return (
+                                <span key={action.id} className="contents">
+                                  {action.render ? action.render(defaultButton) : defaultButton}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        ) : null}
                       </div>
                     ) : null}
-                  </div>
-                ) : null}
-                <ul className="flex flex-col gap-0.5">
-                  {section.items.map((item) => {
-                    const hasChildren = Array.isArray(item.children) && item.children.length > 0;
-                    return (
-                      <li key={item.id}>
-                        {hasChildren ? (
-                          <ParentItem
-                            item={item}
-                            collapsed={collapsed}
-                            itemClassName={itemClassName}
-                            renderLink={renderLink}
-                          />
-                        ) : (
-                          <InteractiveItem
-                            item={item}
-                            collapsed={collapsed}
-                            itemClassName={itemClassName}
-                            renderLink={renderLink}
-                          />
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            );
-          })}
-        </div>
+                    <ul className="flex flex-col gap-0.5">
+                      {section.items.map((item) => {
+                        const hasChildren =
+                          Array.isArray(item.children) && item.children.length > 0;
+                        return (
+                          <li key={item.id}>
+                            {hasChildren ? (
+                              <ParentItem
+                                item={item}
+                                collapsed={collapsed}
+                                itemClassName={itemClassName}
+                                renderLink={renderLink}
+                              />
+                            ) : (
+                              <InteractiveItem
+                                item={item}
+                                collapsed={collapsed}
+                                itemClassName={itemClassName}
+                                renderLink={renderLink}
+                              />
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
+                );
+              })}
+            </div>
 
-        {footerItems && footerItems.length > 0 ? (
-          <ul className="flex shrink-0 flex-col gap-0.5">
-            {footerItems.map((item) => (
-              <li key={item.id}>
-                <InteractiveItem
-                  item={item}
-                  collapsed={collapsed}
-                  itemClassName={itemClassName}
-                  renderLink={renderLink}
-                />
-              </li>
-            ))}
-          </ul>
-        ) : null}
+            {footerItems && footerItems.length > 0 ? (
+              <ul className="flex shrink-0 flex-col gap-0.5">
+                {footerItems.map((item) => (
+                  <li key={item.id}>
+                    <InteractiveItem
+                      item={item}
+                      collapsed={collapsed}
+                      itemClassName={itemClassName}
+                      renderLink={renderLink}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : null}
 
-        {footer ? (
-          <div className="shrink-0 border-t border-sidebar-border pt-3">{footer}</div>
-        ) : null}
-      </nav>
-    </TooltipProvider>
+            {footer ? (
+              <div className="shrink-0 border-t border-sidebar-border pt-3">{footer}</div>
+            ) : null}
+          </nav>
+        </TooltipProvider>
+      </LayoutGroup>
+    </MotionConfig>
   );
 }
