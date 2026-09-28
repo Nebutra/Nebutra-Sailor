@@ -40,7 +40,7 @@ describe("config → theme integration", () => {
     // Features
     expect(envVars.FEATURE_FLAG_AI).toBe("true");
     expect(envVars.FEATURE_FLAG_BILLING).toBe("true");
-    expect(envVars.FEATURE_FLAG_WEB3).toBe("false");
+    expect(envVars.FEATURE_FLAG_NEWSLETTER).toBe("false");
 
     // Locales
     expect(envVars.NEBUTRA_LOCALES).toBe("en,zh");
