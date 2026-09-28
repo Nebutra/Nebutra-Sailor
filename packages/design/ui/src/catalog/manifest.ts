@@ -441,7 +441,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     id: "command",
     title: "Command",
     category: "overlays",
-    status: "experimental",
+    status: "stable",
     import: "@nebutra/ui/primitives",
     files: ["primitives/command-styles.ts", "primitives/command.tsx"],
     demos: ["command-demo", "command-dialog-demo", "command-dialog-simple-demo"],
