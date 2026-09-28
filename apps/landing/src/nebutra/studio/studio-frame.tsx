@@ -126,8 +126,10 @@ function LazyDemo({ id }: { id: string }) {
     <div ref={ref} className="flex w-full items-center justify-center">
       {Demo ? (
         <DemoBoundary id={id}>
-          {/* A column, so a demo that returns several siblings stacks them. */}
-          <div className="flex min-w-0 max-w-full flex-col items-center">
+          {/* A column, so a demo that returns several siblings stacks them. Full
+              width, so a demo that fills its container (w-full, aspect boxes,
+              canvases) has something to fill instead of measuring zero. */}
+          <div className="flex w-full min-w-0 max-w-full flex-col items-center">
             <Demo />
           </div>
         </DemoBoundary>
@@ -138,20 +140,79 @@ function LazyDemo({ id }: { id: string }) {
   );
 }
 
+/** Widest a thumbnail lays its demo out before scaling it down. */
+const THUMB_LAYOUT_WIDTH = 560;
+const THUMB_MIN_WIDTH = 360;
+const THUMB_PADDING = 16;
+
+/**
+ * A demo is laid out at a real width, measured, then scaled down to fit the
+ * card whole — never cropped. The transform also makes this box the
+ * containing block for `position: fixed`, so a demo's toast, island or
+ * overlay stays inside its own card instead of floating over the grid.
+ */
+function FitThumb({ children }: { children: ReactNode }) {
+  const outer = useRef<HTMLDivElement>(null);
+  const inner = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const box = outer.current;
+    const content = inner.current;
+    if (!box || !content) return;
+    const fit = () => {
+      const availW = box.clientWidth - THUMB_PADDING * 2;
+      const availH = box.clientHeight - THUMB_PADDING * 2;
+      const w = content.scrollWidth || THUMB_LAYOUT_WIDTH;
+      const h = content.scrollHeight || 1;
+      // Never enlarge past the demo's own size; shrink only what does not fit.
+      setScale(Math.min(1, availW / w, availH / h));
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(box);
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={outer} className="absolute inset-0 [transform:translateZ(0)]">
+      <div
+        ref={inner}
+        className="absolute top-1/2 left-1/2 flex flex-col items-center"
+        style={{
+          // Natural width up to the layout width: a small control keeps its
+          // real size, a wide table is laid out wide and scaled to fit.
+          width: "max-content",
+          // A floor for demos that fill their container (w-full, aspect
+          // boxes, canvases): with nothing to fill they would measure zero.
+          minWidth: THUMB_MIN_WIDTH,
+          maxWidth: THUMB_LAYOUT_WIDTH,
+          transform: `translate(-50%, -50%) scale(${scale})`,
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 function EntryCard({ entry, onOpen }: { entry: CatalogEntry; onOpen: () => void }) {
   const demo = entry.demos[0];
   return (
     <li className="flex min-w-0 flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card">
       <div
-        className="studio-frame-thumb pointer-events-none relative flex h-56 items-center justify-center overflow-hidden bg-background p-4"
+        className="studio-frame-thumb pointer-events-none relative h-56 overflow-hidden bg-background"
         aria-hidden="true"
       >
         {demo ? (
-          <div className="w-full [zoom:0.75]">
+          <FitThumb>
             <LazyDemo id={demo} />
-          </div>
+          </FitThumb>
         ) : (
-          <span className="text-muted-foreground text-xs">No demo yet</span>
+          <span className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
+            No demo yet
+          </span>
         )}
       </div>
       <Button
