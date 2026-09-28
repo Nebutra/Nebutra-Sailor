@@ -2,21 +2,27 @@
 /**
  * template-check.ts
  *
- * Dry-run validator for `.templateignore`.
+ * Verifies what a fresh `create-sailor` scaffold would contain, by checking
+ * the template scripts/template-build.ts actually produces — not the
+ * `.templateignore` file alone. template-build strips in several steps
+ * (.templateignore, the landing pages site-map.ts marks `template: false`,
+ * `*.for-template.*` swaps, unreachable-module pruning); a check that read
+ * only the ignore file went stale the moment a path moved to another step
+ * (#664), and would equally miss a leak another step let through.
  *
- * Reads `.templateignore` from the repo root, walks the filesystem, and
- * reports what a fresh `create-sailor` scaffold would contain vs. strip.
- *
- * Run: `pnpm template:check`
+ * Run: `pnpm template:check`             builds the template into a temp dir
+ *      `pnpm template:check --dir=<out>`  checks an already built template
  */
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
-import ignore from "ignore";
+import { SITE_MAP } from "../apps/landing/src/site-map";
 
 const REPO_ROOT = path.resolve(__dirname, "..");
 const IGNORE_FILE = path.join(REPO_ROOT, ".templateignore");
 
-// Dirs we never walk into during the dry-run (noise).
+// Dirs we never walk into when counting the output (noise).
 const HARD_SKIP = new Set([
   "node_modules",
   ".git",
@@ -91,9 +97,13 @@ const MUST_STRIP = [
   "e2e/changelog.spec.ts",
   ".templateignore",
   "TEMPLATE.md",
-  "apps/landing/src/components/landing/HeroSection.tsx",
-  "apps/landing/src/app/[lang]/(marketing)/pricing",
-  "apps/landing/src/app/[lang]/(legal)/privacy",
+  // The Nebutra site (rail shell, its pages) and its shadcn registry. The
+  // template ships the top-nav site instead; which (marketing)/(legal) pages
+  // it keeps is apps/landing/src/site-map.ts, checked below page by page.
+  "apps/landing/src/nebutra",
+  "apps/landing/src/app/r",
+  "apps/landing/src/components/landing/solutions",
+  "apps/landing/src/components/landing/navbar/SolutionsMegaMenu.tsx",
   "apps/web/src/app/[locale]/(app)/admin",
   "apps/web/src/app/[locale]/(app)/billing",
   "apps/web/src/app/[locale]/(app)/audit",
@@ -101,8 +111,6 @@ const MUST_STRIP = [
   "apps/web/src/app/[locale]/(app)/feature-flags",
   "apps/landing/public/brand/logo.svg",
   "apps/landing/public/og",
-  "apps/landing/src/app/sitemap.ts",
-  "apps/landing/src/app/sitemap-index.xml",
   // Product deploy / DNS (sample — globs cover the rest in .templateignore)
   ".github/workflows/point-dns.yml",
   ".github/workflows/deploy-carina-ecs.yml",
@@ -129,30 +137,62 @@ const MUST_STRIP = [
   "tests/architecture/platform-reconcile.test.ts",
 ];
 
-type Matcher = ReturnType<typeof ignore>;
+const LANDING_ROUTE_GROUPS = [
+  "apps/landing/src/app/[lang]/(marketing)",
+  "apps/landing/src/app/[lang]/(legal)",
+];
 
-function walk(dir: string, matcher: Matcher, preserved: string[], stripped: string[]): void {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    if (HARD_SKIP.has(entry.name)) continue;
-    const full = path.join(dir, entry.name);
-    const rel = path.relative(REPO_ROOT, full).split(path.sep).join("/");
-    const isDir = entry.isDirectory();
-    // ignore() rejects a leading "/" and dir paths without trailing "/"; the
-    // ignore lib expects relative paths with no leading slash.
-    const probe = isDir ? `${rel}/` : rel;
-
-    if (matcher.ignores(probe)) {
-      stripped.push(rel + (isDir ? "/" : ""));
-      continue;
-    }
-
-    if (isDir) {
-      walk(full, matcher, preserved, stripped);
-    } else {
-      preserved.push(rel);
+/**
+ * site-map.ts decides which landing pages ship: every `template: true` page
+ * the repo has must be in the template, every other live page must not.
+ * Returns [page paths wrongly missing, page paths wrongly shipped].
+ */
+function checkSiteMap(out: string): { missing: string[]; leaked: string[] } {
+  const missing: string[] = [];
+  const leaked: string[] = [];
+  for (const page of SITE_MAP) {
+    if (page.path === "/" || page.status === "planned") continue;
+    for (const group of LANDING_ROUTE_GROUPS) {
+      const rel = path.posix.join(group, page.path, "page.tsx");
+      if (!fs.existsSync(path.join(REPO_ROOT, rel))) continue;
+      const shipped = fs.existsSync(path.join(out, rel));
+      if (page.template && !shipped) missing.push(rel);
+      if (!page.template && shipped) leaked.push(rel);
     }
   }
+  return { missing, leaked };
+}
+
+function countFiles(dir: string): number {
+  let count = 0;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (HARD_SKIP.has(entry.name)) continue;
+    if (entry.isDirectory()) count += countFiles(path.join(dir, entry.name));
+    else count++;
+  }
+  return count;
+}
+
+/** The built template: `--dir=<out>`, else a fresh template-build into a temp dir. */
+function builtTemplate(): { dir: string; cleanup: () => void } {
+  const given = process.argv.slice(2).find((a) => a.startsWith("--dir="));
+  if (given) {
+    const dir = path.resolve(given.slice("--dir=".length));
+    if (!fs.existsSync(dir)) {
+      process.stderr.write(`ERROR: --dir ${dir} does not exist\n`);
+      process.exit(1);
+    }
+    return { dir, cleanup: () => undefined };
+  }
+  const parent = fs.mkdtempSync(path.join(os.tmpdir(), "sailor-template-check-"));
+  const dir = path.join(parent, "template");
+  process.stdout.write(`Building the template (scripts/template-build.ts) into ${dir}…\n`);
+  execFileSync(
+    process.execPath,
+    ["--import", "tsx", path.join(REPO_ROOT, "scripts/template-build.ts"), `--out=${dir}`],
+    { cwd: REPO_ROOT, stdio: ["ignore", "ignore", "inherit"] },
+  );
+  return { dir, cleanup: () => fs.rmSync(parent, { recursive: true, force: true }) };
 }
 
 function main() {
@@ -161,68 +201,48 @@ function main() {
     process.exit(1);
   }
 
-  const patterns = fs.readFileSync(IGNORE_FILE, "utf8");
-  const matcher = ignore().add(patterns);
-  const ruleCount = patterns
-    .split("\n")
-    .filter((l) => l.trim() && !l.trim().startsWith("#")).length;
-  const preserved: string[] = [];
-  const stripped: string[] = [];
-
-  walk(REPO_ROOT, matcher, preserved, stripped);
-
-  process.stdout.write("\n=== Template Check ===\n\n");
-  process.stdout.write(`Rules loaded:     ${ruleCount}\n`);
-  process.stdout.write(`Files preserved:  ${preserved.length}\n`);
-  process.stdout.write(`Paths stripped:   ${stripped.length}\n\n`);
-
-  // Verify must-preserve
-  const missingPreserve: string[] = [];
-  for (const p of MUST_PRESERVE) {
-    const full = path.join(REPO_ROOT, p);
-    if (!fs.existsSync(full)) continue; // Skip if not in repo (informational)
-    if (!preserved.includes(p)) missingPreserve.push(p);
-  }
-
-  // Verify must-strip
-  const leakedBusiness: string[] = [];
-  for (const p of MUST_STRIP) {
-    const full = path.join(REPO_ROOT, p);
-    if (!fs.existsSync(full)) continue;
-    const isDir = fs.statSync(full).isDirectory();
-    const probe = isDir ? `${p}/` : p;
-    if (!matcher.ignores(probe)) leakedBusiness.push(p);
-  }
-
+  const { dir: out, cleanup } = builtTemplate();
   let failed = false;
+  try {
+    // A path the repo does not have cannot leak and need not be preserved;
+    // it is listed so a later re-introduction is caught.
+    const inRepo = (p: string) => fs.existsSync(path.join(REPO_ROOT, p));
+    const inOutput = (p: string) => fs.existsSync(path.join(out, p));
 
-  if (missingPreserve.length > 0) {
-    failed = true;
-    process.stdout.write("FAIL: these skeleton files were incorrectly stripped:\n");
-    for (const p of missingPreserve) process.stdout.write(`  - ${p}\n`);
-    process.stdout.write("\n");
-  } else {
-    process.stdout.write("OK: all required skeleton files preserved.\n");
+    const siteMap = checkSiteMap(out);
+    const missingPreserve = [
+      ...MUST_PRESERVE.filter((p) => inRepo(p) && !inOutput(p)),
+      ...siteMap.missing,
+    ];
+    const leakedBusiness = [...MUST_STRIP.filter(inOutput), ...siteMap.leaked];
+
+    process.stdout.write("\n=== Template Check (built output) ===\n\n");
+    process.stdout.write(`Template:         ${out}\n`);
+    process.stdout.write(`Files in output:  ${countFiles(out)}\n\n`);
+
+    if (missingPreserve.length > 0) {
+      failed = true;
+      process.stdout.write("FAIL: these skeleton files are missing from the template:\n");
+      for (const p of missingPreserve) process.stdout.write(`  - ${p}\n`);
+      process.stdout.write("\n");
+    } else {
+      process.stdout.write("OK: all required skeleton files preserved.\n");
+    }
+
+    if (leakedBusiness.length > 0) {
+      failed = true;
+      process.stdout.write("\nFAIL: these Nebutra business files leaked into the template:\n");
+      for (const p of leakedBusiness) process.stdout.write(`  - ${p}\n`);
+      process.stdout.write(
+        "\n  Strip them in .templateignore, or mark the landing page `template: false`\n" +
+          "  in apps/landing/src/site-map.ts, whichever owns the path.\n\n",
+      );
+    } else {
+      process.stdout.write("OK: all known Nebutra business content stripped.\n");
+    }
+  } finally {
+    cleanup();
   }
-
-  if (leakedBusiness.length > 0) {
-    failed = true;
-    process.stdout.write("\nFAIL: these Nebutra business files leaked into scaffold:\n");
-    for (const p of leakedBusiness) process.stdout.write(`  - ${p}\n`);
-    process.stdout.write("\n");
-  } else {
-    process.stdout.write("OK: all known Nebutra business content stripped.\n");
-  }
-
-  // Preview a small slice of what's kept vs. dropped
-  process.stdout.write("\n--- Sample preserved (first 15) ---\n");
-  for (const p of preserved.slice(0, 15)) process.stdout.write(`  + ${p}\n`);
-  process.stdout.write("\n--- Sample stripped (first 15) ---\n");
-  for (const p of stripped.slice(0, 15)) process.stdout.write(`  - ${p}\n`);
-
-  process.stdout.write(
-    `\nSummary: ${preserved.length} files preserved, ${stripped.length} paths stripped.\n`,
-  );
 
   if (failed) {
     process.stderr.write("\ntemplate-check FAILED\n");
