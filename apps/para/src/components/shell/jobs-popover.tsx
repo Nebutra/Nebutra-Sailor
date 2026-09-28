@@ -28,11 +28,7 @@ export function JobsIndicator() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Chip
-          tone="outline"
-          aria-label={`${active.length} 个生成任务进行中`}
-          className="pointer-events-auto h-10 gap-2 rounded-xl border-border/60 bg-popover/90 px-3 tabular-nums backdrop-blur-md"
-        >
+        <Chip aria-label={`${active.length} 个生成任务进行中`} className="gap-1.5 tabular-nums">
           <span aria-hidden="true" className="size-1.5 animate-pulse rounded-full bg-primary" />
           生成中 {active.length}
         </Chip>
