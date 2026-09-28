@@ -2,6 +2,7 @@ import { logger } from "@nebutra/logger";
 import { tokenColor } from "@nebutra/tokens/values";
 import type { StatusIncident } from "./incidents";
 import type { ServiceState } from "./math";
+import { trimTrailingSlashes } from "./notify";
 import { listConfirmedSubscribers, type Subscriber } from "./subscribers";
 
 /**
@@ -30,7 +31,7 @@ export interface StatusMailContext {
   pageName: string;
 }
 
-const trimOrigin = (origin: string) => origin.replace(/\/+$/, "");
+const trimOrigin = trimTrailingSlashes;
 
 function escape(value: string): string {
   return value
