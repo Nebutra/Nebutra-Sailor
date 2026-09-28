@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
     "p-limit": "^7.3.0",
     "zod": "catalog:"
   },

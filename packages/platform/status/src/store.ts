@@ -12,6 +12,7 @@ export interface StatusKv {
   hgetall(key: string): Promise<Record<string, string>>;
   hset(key: string, field: string, value: string): Promise<void>;
   hincrby(key: string, field: string, by: number): Promise<void>;
+  hdel(key: string, field: string): Promise<void>;
   /** SET key value NX EX ttl — true when this caller took the key. */
   setIfAbsent(key: string, value: string, ttlSeconds: number): Promise<boolean>;
   /** Test helper: wipe the backend. */
@@ -50,6 +51,9 @@ function memoryKv(): StatusKv {
         memoryHashes.set(key, hash);
       }
       hash.set(field, String(Number(hash.get(field) ?? 0) + by));
+    },
+    async hdel(key, field) {
+      memoryHashes.get(key)?.delete(field);
     },
     async setIfAbsent(key, value, ttlSeconds) {
       const expires = memoryExpiry.get(key);
@@ -133,6 +137,9 @@ function upstashKv(): StatusKv {
     },
     async hincrby(key, field, by) {
       await upstashCommand(["HINCRBY", key, field, by]);
+    },
+    async hdel(key, field) {
+      await upstashCommand(["HDEL", key, field]);
     },
     async setIfAbsent(key, value, ttlSeconds) {
       const result = await upstashCommand(["SET", key, value, "NX", "EX", ttlSeconds]);

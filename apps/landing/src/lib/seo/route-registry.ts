@@ -237,6 +237,12 @@ const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
   // operational records, not documents to rank.
   { pattern: "/status/history", changeFrequency: "daily", priority: 0.1, localization: "none" },
   { pattern: "/status/incidents/*", changeFrequency: "daily", priority: 0.1, localization: "none" },
+  {
+    pattern: "/status/subscription",
+    changeFrequency: "yearly",
+    priority: 0.1,
+    localization: "none",
+  },
   // Studio's catalog frame: part of the Studio page, never a page of its own.
   {
     pattern: "/sailor/studio/frame",

@@ -12,8 +12,9 @@ import {
   listOpenMaintenance,
   type StatusIncident,
 } from "./incidents";
+import type { StateChange } from "./mail";
 import { type DayStats, dayState, type ServiceState, utcDateKey } from "./math";
-import { isStatusHistoryDurable } from "./store";
+import { getStatusKv, isStatusHistoryDurable } from "./store";
 
 export interface ServiceProbe {
   id: string;
@@ -187,6 +188,35 @@ export function summarize(services: ServiceProbe[]): StatusSnapshot["overall"] {
   return "operational";
 }
 
+const LAST_STATE_KEY = "status:last-state:v1";
+
+/**
+ * Compare each recorded sample with the previous one. Only recorded samples
+ * count, so the confirm-retry and the sample lock both stand between one
+ * flaky request and an alert. The first sample for a service sets a baseline
+ * and alerts nobody.
+ */
+async function recordStateChanges(probed: ServiceProbe[]): Promise<StateChange[]> {
+  const kv = getStatusKv();
+  const previous = await kv.hgetall(LAST_STATE_KEY);
+  const changes: StateChange[] = [];
+  for (const service of probed) {
+    const before = previous[service.id] as ServiceState | undefined;
+    if (before === service.state) continue;
+    await kv.hset(LAST_STATE_KEY, service.id, service.state);
+    if (before) {
+      changes.push({
+        id: service.id,
+        name: service.name,
+        from: before,
+        to: service.state,
+        note: service.note,
+      });
+    }
+  }
+  return changes;
+}
+
 const UPTIME_WINDOW = 90;
 
 function windowDates(now: Date): string[] {
@@ -208,7 +238,12 @@ function historyStates(history: ServiceHistory): Record<string, ServiceState> {
  */
 export async function buildStatusSnapshot(
   targets: ServiceTarget[],
-  options: { userAgent?: string; concurrency?: number } = {},
+  options: {
+    userAgent?: string;
+    concurrency?: number;
+    /** Called when a recorded sample changes a service's state. */
+    onStateChange?: (changes: StateChange[]) => Promise<void>;
+  } = {},
 ): Promise<StatusSnapshot> {
   const limit = pLimit(options.concurrency ?? STATUS_PROBE_CONCURRENCY);
   const probed = await Promise.all(
@@ -220,6 +255,8 @@ export async function buildStatusSnapshot(
   try {
     if (await claimProbeSample()) {
       await recordProbeHistory(probed.map((s) => ({ id: s.id, state: s.state })));
+      const changes = await recordStateChanges(probed);
+      if (changes.length > 0 && options.onStateChange) await options.onStateChange(changes);
     }
   } catch {
     // History is best-effort — page still serves live probes.
