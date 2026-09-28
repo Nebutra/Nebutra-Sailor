@@ -1,3 +1,4 @@
+import { ROUTE_LOCALES } from "@nebutra/i18n/locales";
 import { Check, Globe } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
@@ -30,13 +31,7 @@ export function I18nGlyph(_props: SubpackageGlyphProps) {
             variant="outline"
             className="h-4 rounded-[var(--radius-sm)] border-border px-1 font-mono text-[9px] text-muted-foreground"
           >
-            7 locales
-          </Badge>
-          <Badge
-            variant="outline"
-            className="h-4 rounded-[var(--radius-sm)] border-border px-1 font-mono text-[9px] text-muted-foreground"
-          >
-            2,401 keys
+            {ROUTE_LOCALES.length} locales
           </Badge>
         </div>
         <span className="font-mono text-[9px] text-muted-foreground">auth.welcome</span>

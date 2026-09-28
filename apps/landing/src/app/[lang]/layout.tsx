@@ -25,6 +25,7 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getPublicNavigationItems } from "@/lib/seo/site-routes";
 import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
 import { SITE_ID } from "@/site.config";
+import { SITE_BRAND } from "@/site-theme";
 import { fontVariables } from "../fonts";
 import { Providers } from "../providers";
 
@@ -187,9 +188,9 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
       className={`${fontVariables} min-h-dvh antialiased`}
-      // The Nebutra site wears its own Brand Package on every page; set here on
-      // the server so the first paint already has it. The template has none.
-      data-brand={SITE_ID === "nebutra" ? "nebutra-site" : undefined}
+      // The site's Brand Package, set on the server so the first paint already
+      // has it (site-theme.ts; the template has none).
+      data-brand={SITE_BRAND}
       suppressHydrationWarning
     >
       <body className="antialiased">

@@ -8,7 +8,7 @@ export function showBanner(): void {
     process.stdout.write(
       [
         `Sailor v${VERSION}`,
-        `AI-Native SaaS Unicorn Template`,
+        `The open-source platform for AI-native companies`,
         `by Nebutra · https://nebutra.com`,
         "",
         "",
@@ -25,5 +25,7 @@ export function showBanner(): void {
     transitionGradient: true,
     space: false,
   });
-  process.stdout.write(pc.dim(`  AI-Native SaaS Template · v${VERSION} · nebutra.com\n\n`));
+  process.stdout.write(
+    pc.dim(`  The open-source platform for AI-native companies · v${VERSION} · nebutra.com\n\n`),
+  );
 }

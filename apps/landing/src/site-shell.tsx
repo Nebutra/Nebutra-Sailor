@@ -1,5 +1,3 @@
-import "@nebutra/theme/scoped/nebutra-site.css";
-import "@/nebutra/site.css";
 import { brand } from "@nebutra/brand/metadata";
 import type { ReactNode } from "react";
 import { RailFrame } from "@/nebutra/shell/rail-frame";

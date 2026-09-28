@@ -1,5 +1,4 @@
 import { brand } from "@nebutra/brand/metadata";
-import { StarFill, User } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
@@ -13,22 +12,6 @@ import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getSiteUrl } from "@/lib/seo/site-routes";
 import { buildProductSchema } from "@/lib/seo/structured-data";
-
-const SOCIAL_AVATARS = [
-  { id: "avatar-alpha" },
-  { id: "avatar-beta" },
-  { id: "avatar-gamma" },
-  { id: "avatar-delta" },
-  { id: "avatar-epsilon" },
-] as const;
-
-const RATING_STARS = [
-  { id: "star-1" },
-  { id: "star-2" },
-  { id: "star-3" },
-  { id: "star-4" },
-  { id: "star-5" },
-] as const;
 
 export async function generateMetadata({
   params,
@@ -90,36 +73,14 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">{pricing("description")}</p>
 
-            {/* Social Proof */}
-            <div className="mt-8 flex flex-col items-center justify-center gap-6">
-              {/* Avatar Group */}
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <div className="flex -space-x-3">
-                  {SOCIAL_AVATARS.map((avatar) => (
-                    <div
-                      key={avatar.id}
-                      className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted"
-                    >
-                      <User className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                  ))}
-                </div>
-                <div className="flex flex-col items-center sm:items-start gap-1">
-                  <div className="flex text-warning-strong">
-                    {RATING_STARS.map((star) => (
-                      <StarFill key={star.id} className="h-4 w-4" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-muted-foreground font-medium">
-                    {pricing.rich("socialProofText", {
-                      highlight: (chunks) => (
-                        <span className="font-semibold text-foreground">{chunks}</span>
-                      ),
-                    })}
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* The licence line — what is true of every tier, not a rating. */}
+            <p className="mt-6 text-sm text-muted-foreground">
+              {pricing.rich("socialProofText", {
+                highlight: (chunks) => (
+                  <span className="font-medium text-foreground">{chunks}</span>
+                ),
+              })}
+            </p>
           </div>
         </AnimateIn>
 

@@ -1,14 +1,21 @@
 import { brand } from "@nebutra/brand/metadata";
 import { FullPageStatus } from "@nebutra/ui/layout";
+import { SITE_BRAND } from "@/site-theme";
 import { fontVariables } from "./fonts";
 
 // Global fallback for non-localized paths that don't match a locale (e.g. /wrong).
 // The root layout (app/layout.tsx) is a passthrough that renders no <html>/<body>,
-// so this global 404 owns its own document shell. Localized 404s render inside
+// so this global 404 owns its own document shell — and wears the site's Brand
+// Package like every other page (site-theme.ts). Localized 404s render inside
 // app/[lang]/layout.tsx's <html lang={locale}> instead.
 export default function GlobalNotFound() {
   return (
-    <html lang="en" className={`${fontVariables} min-h-dvh antialiased`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${fontVariables} min-h-dvh antialiased`}
+      data-brand={SITE_BRAND}
+      suppressHydrationWarning
+    >
       <body className="antialiased">
         <FullPageStatus
           code="404"
