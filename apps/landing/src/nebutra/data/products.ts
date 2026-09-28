@@ -49,15 +49,6 @@ export const PRODUCTS: readonly Product[] = [
     domain: at("typelens"),
   },
   {
-    id: "pebble",
-    name: "Pebble 溪石",
-    line: "Small, precise contributions. Assembled into real work.",
-    what: "The AI orchestrator for 100x builders.",
-    category: "Developer",
-    href: `https://${at("pebble")}`,
-    domain: at("pebble"),
-  },
-  {
     id: "forge",
     name: "Forge",
     line: "Swiss-army knife for online tools.",
