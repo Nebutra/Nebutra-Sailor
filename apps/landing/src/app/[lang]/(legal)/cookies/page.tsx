@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { SITE_ID } from "@/site.config";
 
 export async function generateMetadata({
   params,
@@ -181,25 +182,30 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
         <strong>{t("similarTech.noFingerprinting")}</strong>
       </p>
 
-      {/* CLI telemetry opt-out — applies to `create-sailor` and `nebutra` CLIs.
+      {/* The upstream CLIs; a customer's product has none. */}
+      {SITE_ID === "nebutra" ? (
+        <>
+          {/* CLI telemetry opt-out — applies to `create-sailor` and `nebutra` CLIs.
           Hardcoded English: the env var name is the same in every locale, and
           the policy commitment (opt-out is always available, never collects
           personal data) does not change per region. Documented here too because
           CLI telemetry is a related tracking channel users expect to find
           alongside cookie controls. */}
-      <h2>CLI Telemetry (Separate from Cookies)</h2>
-      <p>
-        The browser cookies described above are unrelated to our developer CLIs (
-        <code>create-sailor</code>, <code>nebutra</code>), which run on your local machine. The CLIs
-        collect <strong>anonymous usage analytics</strong> (command counts, error categories,
-        scaffold selections) — never personal data, secret values, or repository contents.
-      </p>
-      <p>
-        Opt out by setting <code>NEBUTRA_TELEMETRY=0</code> in your shell. The choice persists per
-        machine in <code>~/.config/nebutra/first-run-acked</code>. See the{" "}
-        <Link href="/privacy">Privacy Policy</Link> for the full CLI telemetry commitment.
-      </p>
-
+          <h2>CLI Telemetry (Separate from Cookies)</h2>
+          <p>
+            The browser cookies described above are unrelated to our developer CLIs (
+            <code>create-sailor</code>, <code>nebutra</code>), which run on your local machine. The
+            CLIs collect <strong>anonymous usage analytics</strong> (command counts, error
+            categories, scaffold selections) — never personal data, secret values, or repository
+            contents.
+          </p>
+          <p>
+            Opt out by setting <code>NEBUTRA_TELEMETRY=0</code> in your shell. The choice persists
+            per machine in <code>~/.config/nebutra/first-run-acked</code>. See the{" "}
+            <Link href="/privacy">Privacy Policy</Link> for the full CLI telemetry commitment.
+          </p>
+        </>
+      ) : null}
       {/* Updates */}
       <h2>{t("updates.title")}</h2>
       <p>{t("updates.content")}</p>

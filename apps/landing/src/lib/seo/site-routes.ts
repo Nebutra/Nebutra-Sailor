@@ -2,6 +2,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { toHreflang, toRouteLocale } from "@nebutra/i18n/locales";
 import { type Locale, routing } from "@/i18n/routing";
+import { SITE_ID } from "@/site.config";
 import { localesForPath, SEO_ROUTE_REGISTRY } from "./route-registry";
 
 // DEFAULT_SITE_URL is derived from the brand SSOT so a single `pnpm brand:apply`
@@ -189,6 +190,7 @@ export function getPublicNavigationItems(): ReadonlyArray<{
       name: route.sitelinkCandidate.label,
       url: canonicalUrlForLocale(getSiteUrl(), routing.defaultLocale, route.path),
     })),
-    { name: "Forge", url: getBrandOrigin("forge") },
+    // Forge is Nebutra's own tool station; a template site has no such origin.
+    ...(SITE_ID === "nebutra" ? [{ name: "Forge", url: getBrandOrigin("forge") }] : []),
   ];
 }

@@ -11,6 +11,7 @@ import { routing } from "./routing";
  *
  * Placeholder contract:
  *   {brandName}      → brand.name          e.g. "Nebutra"
+ *   {brandNameUpper} → brand.name, upper case, for all-caps legal clauses
  *   {brandNameCn}    → brand.nameCn        e.g. "云毓智能"
  *   {companyLegal}   → brand.nameFull      e.g. "无锡云毓智能科技有限公司"
  *   {companyLegalEn} → brand.nameFullEn    e.g. "Wuxi Nebutra Intelligence Technology Co., Ltd."
@@ -19,6 +20,7 @@ import { routing } from "./routing";
  */
 export const brandVars: Record<string, string> = {
   brandName: brand.name,
+  brandNameUpper: brand.name.toUpperCase(),
   brandNameCn: brand.nameCn,
   companyLegal: brand.nameFull,
   companyLegalEn: brand.nameFullEn,

@@ -11,7 +11,6 @@ export { FooterMinimal } from "./FooterMinimal";
 export { HeroMockupWindow } from "./HeroMockupWindow";
 export { HeroSection } from "./HeroSection";
 export { InteractiveChangelog } from "./InteractiveChangelog";
-export { LogoStrip } from "./LogoStrip";
 export { MonorepoFileTree } from "./MonorepoFileTree";
 export { Navbar } from "./Navbar";
 export { NewsletterForm } from "./NewsletterForm";

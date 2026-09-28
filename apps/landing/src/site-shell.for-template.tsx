@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import { SiteChrome } from "@/components/site-shell/site-chrome";
+import { StarterChrome } from "@/components/starter/starter-chrome";
 
 /**
- * The template's frame: the top-nav site chrome. See site-shell.tsx;
- * template-build puts this file in its place.
+ * The template's frame: the starter site's top bar and footer. See
+ * site-shell.tsx; template-build puts this file in its place.
  */
 export function SiteShell({
   children,
@@ -12,5 +12,5 @@ export function SiteShell({
   children: ReactNode;
   footer?: "default" | "legal";
 }) {
-  return <SiteChrome footer={footer}>{children}</SiteChrome>;
+  return <StarterChrome footer={footer}>{children}</StarterChrome>;
 }

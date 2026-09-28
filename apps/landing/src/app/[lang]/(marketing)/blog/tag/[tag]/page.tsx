@@ -7,6 +7,7 @@ import {
   resolveBlogCover,
   toBlogLanguage,
 } from "@nebutra/blog";
+import { brand } from "@nebutra/brand/metadata";
 import { BookOpen } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
@@ -110,7 +111,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   // `none` scope: a thin facet over /blog, served but never canonical, so the
   // registry publishes it in zero locales and this is noindex,follow.
   return buildPageMetadata({
-    title: `${tagLabel} — Nebutra Blog`,
+    title: `${tagLabel} — ${brand.name} Blog`,
     description: `Nebutra blog posts tagged ${tagLabel}.`,
     path: `/blog/tag/${tag}`,
     locale: lang as Locale,

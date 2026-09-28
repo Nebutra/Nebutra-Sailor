@@ -1,6 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { CONTENT_PRIMARY_ROUTE_LOCALES } from "@nebutra/i18n/locales";
 import { routing } from "@/i18n/routing";
+import { SITE_ID } from "@/site.config";
 import { belongsHere } from "@/site-map";
 
 /**
@@ -46,7 +47,7 @@ const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
     changeFrequency: "weekly",
     priority: 1.0,
     localization: "ui",
-    sitelinkCandidate: { label: `${brand.name} Agent OS` },
+    sitelinkCandidate: { label: SITE_ID === "nebutra" ? `${brand.name} Agent OS` : brand.name },
   },
   {
     pattern: "/features",

@@ -11,20 +11,20 @@ import type { Metadata, Viewport } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { ConsentGatedTelemetry } from "@/components/consent-gated-telemetry";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { IcpFooter } from "@/components/icp-footer";
 import { PresetPreview } from "@/components/preset-preview";
 import { type Locale, routing } from "@/i18n/routing";
-import { seoContent } from "@/lib/landing-content";
 import { PRESET_PREVIEW } from "@/lib/preset-preview-flag";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getPublicNavigationItems } from "@/lib/seo/site-routes";
 import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
 import { SITE_ID } from "@/site.config";
 import { SITE_BRAND } from "@/site-theme";
+import { SITE_SEO, siteMetadata } from "@/site-meta";
 import { fontVariables } from "../fonts";
 import { Providers } from "../providers";
 
@@ -75,11 +75,11 @@ const jsonLd = [
   {
     ...websiteBase,
     // Use the rich seoContent description for the website JSON-LD
-    description: seoContent.description,
+    description: SITE_SEO.description,
   },
   {
     ...softwareBase,
-    description: "The Startup Agent OS — ship global SaaS in days, not months",
+    description: SITE_SEO.softwareDescription,
     offers: {
       "@type": "Offer",
       price: "0",
@@ -112,11 +112,11 @@ export async function generateMetadata({
   if (!hasLocale(routing.locales, lang)) return {};
 
   setRequestLocale(lang as Locale);
-  const t = await getTranslations({ locale: lang, namespace: "metadata" });
+  const { title, description } = await siteMetadata(lang);
 
   return buildPageMetadata({
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
     path: "/",
     locale: lang as Locale,
   });

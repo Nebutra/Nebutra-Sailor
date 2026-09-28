@@ -111,7 +111,9 @@ export interface SitePage {
 }
 
 export const SITE_MAP: readonly SitePage[] = [
-  // Home — the template keeps its own home (the Sailor story); the Nebutra site leads with the Journal.
+  // Home — the template's is a starter site for the customer's own product (src/content/site.ts);
+  // the Nebutra site leads with the Journal. The template serves: home, pricing, FAQ, contact,
+  // the blog and the legal pages — Sailor's own pages (packages, changelog, roadmap…) stay here.
   { path: "/", section: "home", title: { en: "Home", zh: "首页" }, status: "live", template: true },
 
   // Journal
@@ -149,7 +151,7 @@ export const SITE_MAP: readonly SitePage[] = [
     section: "journal",
     title: { en: "News", zh: "新闻" },
     status: "live",
-    template: true,
+    template: false,
   },
   {
     path: "/about/whitepaper",
@@ -191,14 +193,14 @@ export const SITE_MAP: readonly SitePage[] = [
     section: "sailor",
     title: { en: "Packages", zh: "功能包" },
     status: "live",
-    template: true,
+    template: false,
   },
   {
     path: "/features/[name]",
     section: "sailor",
     title: { en: "Package", zh: "功能包" },
     status: "live",
-    template: true,
+    template: false,
   },
   {
     path: "/pricing",
@@ -243,7 +245,7 @@ export const SITE_MAP: readonly SitePage[] = [
     section: "sailor",
     title: { en: "Changelog", zh: "更新日志" },
     status: "live",
-    template: true,
+    template: false,
     chrome: "over-dark",
   },
   {
@@ -251,7 +253,7 @@ export const SITE_MAP: readonly SitePage[] = [
     section: "sailor",
     title: { en: "Release", zh: "版本" },
     status: "live",
-    template: true,
+    template: false,
   },
   {
     path: "/showcase",
@@ -259,7 +261,7 @@ export const SITE_MAP: readonly SitePage[] = [
     section: "sailor",
     title: { en: "Built with Sailor", zh: "作品展示" },
     status: "live",
-    template: true,
+    template: false,
   },
   {
     path: "/status",
@@ -294,14 +296,14 @@ export const SITE_MAP: readonly SitePage[] = [
     section: "sailor",
     title: { en: "Security", zh: "安全" },
     status: "live",
-    template: true,
+    template: false,
   },
   {
     path: "/refer",
     section: "sailor",
     title: { en: "Refer", zh: "推荐" },
     status: "live",
-    template: true,
+    template: false,
   },
 
   // Sleptons — the ecosystem. Ideas is its UGC of ideas and needs (today a feedback board).
@@ -372,7 +374,7 @@ export const SITE_MAP: readonly SitePage[] = [
     section: "building",
     title: { en: "Roadmap", zh: "路线图" },
     status: "live",
-    template: true,
+    template: false,
   },
   {
     path: "/playbook",

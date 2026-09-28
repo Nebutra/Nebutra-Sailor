@@ -4,6 +4,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { SITE_ID } from "@/site.config";
 import { ContactForm } from "./ContactForm";
 
 export async function generateMetadata({
@@ -105,46 +106,50 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         <ContactForm />
       </section>
 
-      {/* Office Info */}
-      <section className="rounded-[var(--radius-2xl)] bg-muted p-5 sm:p-8">
-        <h2 className="text-xl font-bold text-foreground mb-4">{t("contact.companyInfoTitle")}</h2>
-        <div className="space-y-4 text-muted-foreground">
-          <div>
-            <h3 className="font-semibold text-foreground">{t("contact.companyNameChinese")}</h3>
-            <p className="text-sm text-muted-foreground">{t("contact.companyNameEnglish")}</p>
-            <p>{t("contact.companyAddress")}</p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-foreground">{t("contact.socialMedia")}</h3>
-            <div className="flex gap-4 mt-2">
-              <a
-                href="https://twitter.com/nebutra"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
-              >
-                Twitter
-              </a>
-              <a
-                href="https://linkedin.com/company/nebutra"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
-              >
-                LinkedIn
-              </a>
-              <a
-                href="https://github.com/nebutra"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
-              >
-                GitHub
-              </a>
+      {/* The upstream company's office and accounts; a customer's site states its own when it has them. */}
+      {SITE_ID === "nebutra" ? (
+        <section className="rounded-[var(--radius-2xl)] bg-muted p-5 sm:p-8">
+          <h2 className="text-xl font-bold text-foreground mb-4">
+            {t("contact.companyInfoTitle")}
+          </h2>
+          <div className="space-y-4 text-muted-foreground">
+            <div>
+              <h3 className="font-semibold text-foreground">{t("contact.companyNameChinese")}</h3>
+              <p className="text-sm text-muted-foreground">{t("contact.companyNameEnglish")}</p>
+              <p>{t("contact.companyAddress")}</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-foreground">{t("contact.socialMedia")}</h3>
+              <div className="flex gap-4 mt-2">
+                <a
+                  href="https://twitter.com/nebutra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
+                >
+                  Twitter
+                </a>
+                <a
+                  href="https://linkedin.com/company/nebutra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href="https://github.com/nebutra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-blue-11 dark:hover:text-[color:hsl(var(--primary))]"
+                >
+                  GitHub
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </div>
   );
 }

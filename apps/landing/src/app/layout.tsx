@@ -1,6 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 import { seoContent } from "@/lib/landing-content";
+import { SITE_SEO } from "@/site-meta";
 import "./globals.css";
 
 /**
@@ -23,13 +24,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: `https://${brand.domains.landing}`,
-    siteName: `${brand.name} Sailor`,
+    siteName: SITE_SEO.siteName,
     images: [
       {
         url: seoContent.ogImage,
         width: 1200,
         height: 630,
-        alt: `${brand.name} Sailor`,
+        alt: SITE_SEO.siteName,
       },
     ],
   },

@@ -178,12 +178,9 @@ describe("landing UI governance", () => {
     expect(mobileDrawerSource).not.toContain('className="md:hidden flex items-center"');
   });
 
-  it("uses mobile-specific section skeleton heights for lazy landing content", () => {
-    expect(marketingHomePageSource).toContain("--section-skeleton-mobile-min-h");
-    expect(marketingHomePageSource).toContain('mobileMinH="34rem"');
-    expect(marketingHomePageSource).not.toContain(
-      '<section aria-hidden className="w-full" style={{ minHeight: minH }} />',
-    );
+  it("renders the template home from the content file, not the Sailor sections", () => {
+    expect(marketingHomePageSource).toContain('from "@/content/site"');
+    expect(marketingHomePageSource).not.toContain("@/components/landing");
   });
 
   it("keeps the blog index on branded motion selectors instead of static hover only", () => {

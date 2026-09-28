@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import type { ComponentType, SVGProps } from "react";
 import { useMemo, useState } from "react";
+import { SITE_ID } from "@/site.config";
 
 type BlogShareActionsProps = {
   excerpt?: string | null;
@@ -181,15 +182,23 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
                 title={copied === item.label ? (isZh ? "已复制" : "Copied") : item.label}
               >
                 <span className="relative inline-flex size-5 items-center justify-center overflow-hidden rounded-full bg-muted text-[10px] font-semibold text-muted-foreground">
-                  <Image
-                    src={item.iconUrl}
-                    alt=""
-                    width={14}
-                    height={14}
-                    className="size-3.5"
-                    unoptimized
-                  />
-                  <span className="sr-only">{item.monogram}</span>
+                  {/* The platform logos are hotlinked; a template site shows the
+                      monogram instead of loading another host's images. */}
+                  {SITE_ID === "nebutra" ? (
+                    <>
+                      <Image
+                        src={item.iconUrl}
+                        alt=""
+                        width={14}
+                        height={14}
+                        className="size-3.5"
+                        unoptimized
+                      />
+                      <span className="sr-only">{item.monogram}</span>
+                    </>
+                  ) : (
+                    <span aria-hidden="true">{item.monogram}</span>
+                  )}
                 </span>
                 {item.label}
               </button>

@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { SITE_ID } from "@/site.config";
 
 export async function generateMetadata({
   params,
@@ -61,49 +62,53 @@ export default async function TermsOfServicePage({
         {t("intro2End")}
       </p>
 
-      {/* Scope clarifier — TODO LEGAL: review wording with counsel.
+      {/* The upstream site's own: how its codebase is licensed. A customer's site has no such section. */}
+      {SITE_ID === "nebutra" ? (
+        <>
+          {/* Scope clarifier — TODO LEGAL: review wording with counsel.
           Hardcoded English: split SaaS-subscription Terms (this document) from
           source-code licensing (LICENSE / LICENSE-COMMERCIAL.md). Without this
           clarifier, customers conflate the two when conflicts arise. */}
-      <h2>Scope of These Terms</h2>
-      <p>
-        These Terms govern your use of the <strong>{brand.name} hosted SaaS services</strong> (the
-        marketing site, dashboard at <code>{brand.domains.app}</code>, and related APIs). They do{" "}
-        <strong>not</strong> govern your use of the {brand.name}-Sailor codebase.
-      </p>
-      <p>
-        Source-code use is governed by a separate license, whichever applies to you. Both are free
-        and neither requires registration:
-      </p>
-      <ul>
-        <li>
-          <strong>Published npm packages</strong> — MIT.
-        </li>
-        <li>
-          <strong>Clone or fork from GitHub</strong> — FSL-1.1-ALv2 (see <code>LICENSE</code> in the
-          repository), converting to Apache-2.0 two years after each release.
-        </li>
-        <li>
-          <strong>
-            Project scaffolded with <code>create-sailor</code>
-          </strong>{" "}
-          — MIT.
-        </li>
-      </ul>
-      <p>
-        Paid tiers sell support, SLAs, indemnification, compliance documentation, and trademark
-        rights — not permission to use the software. See <code>LICENSE-COMMERCIAL.md</code> and{" "}
-        <a
-          href={`${getBrandOrigin("landing")}/get-license`}
-        >{`${brand.domains.landing}/get-license`}</a>
-        .
-      </p>
-      <p>
-        Where these Terms and a source-code license appear to conflict regarding rights to the
-        codebase itself, the source-code license controls. Where they appear to conflict regarding
-        use of the hosted services, these Terms control.
-      </p>
-
+          <h2>Scope of These Terms</h2>
+          <p>
+            These Terms govern your use of the <strong>{brand.name} hosted SaaS services</strong>{" "}
+            (the marketing site, dashboard at <code>{brand.domains.app}</code>, and related APIs).
+            They do <strong>not</strong> govern your use of the {brand.name}-Sailor codebase.
+          </p>
+          <p>
+            Source-code use is governed by a separate license, whichever applies to you. Both are
+            free and neither requires registration:
+          </p>
+          <ul>
+            <li>
+              <strong>Published npm packages</strong> — MIT.
+            </li>
+            <li>
+              <strong>Clone or fork from GitHub</strong> — FSL-1.1-ALv2 (see <code>LICENSE</code> in
+              the repository), converting to Apache-2.0 two years after each release.
+            </li>
+            <li>
+              <strong>
+                Project scaffolded with <code>create-sailor</code>
+              </strong>{" "}
+              — MIT.
+            </li>
+          </ul>
+          <p>
+            Paid tiers sell support, SLAs, indemnification, compliance documentation, and trademark
+            rights — not permission to use the software. See <code>LICENSE-COMMERCIAL.md</code> and{" "}
+            <a
+              href={`${getBrandOrigin("landing")}/get-license`}
+            >{`${brand.domains.landing}/get-license`}</a>
+            .
+          </p>
+          <p>
+            Where these Terms and a source-code license appear to conflict regarding rights to the
+            codebase itself, the source-code license controls. Where they appear to conflict
+            regarding use of the hosted services, these Terms control.
+          </p>
+        </>
+      ) : null}
       {/* 1. Acceptance of Terms */}
       <h2>{t("acceptance.title")}</h2>
 
