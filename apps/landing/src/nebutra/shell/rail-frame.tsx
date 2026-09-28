@@ -5,30 +5,25 @@ import { usePathname } from "@/i18n/navigation";
 import { pageAt } from "@/site-map";
 
 /**
- * Rail, page, footer. A page the site map marks `chrome: "bare"` (the status
- * page) draws its own frame and gets none.
+ * Top bar, page, footer. The navigation lives in a drawer the header owns, so
+ * the page always gets the full width. A page the site map marks
+ * `chrome: "bare"` (the status page) draws its own frame and gets none.
  */
 export function RailFrame({
-  nav,
-  mobileNav,
+  header,
   footer,
   children,
 }: {
-  nav: ReactNode;
-  /** The phone top bar; the rail itself is hidden below lg. */
-  mobileNav: ReactNode;
+  header: ReactNode;
   footer: ReactNode;
   children: ReactNode;
 }) {
   if (pageAt(usePathname())?.chrome === "bare") return children;
   return (
-    <div className="flex min-h-dvh bg-background text-foreground">
-      {nav}
-      <div className="flex min-w-0 flex-1 flex-col">
-        {mobileNav}
-        <div className="flex-1">{children}</div>
-        {footer}
-      </div>
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
+      {header}
+      <div className="flex-1">{children}</div>
+      {footer}
     </div>
   );
 }
