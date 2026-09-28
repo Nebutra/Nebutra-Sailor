@@ -3,7 +3,7 @@ import path from "node:path";
 import type { Command } from "commander";
 import pc from "picocolors";
 import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
-import { delegate, findMonorepoRoot } from "../utils/delegate";
+import { delegate, findMonorepoRootOrExit } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 import { dryRunOutput } from "../utils/output";
@@ -29,7 +29,7 @@ export async function e2eCommand(suite: string, options: E2EOptions = {}): Promi
     process.exit(ExitCode.INVALID_ARGS);
   }
 
-  const root = findMonorepoRoot();
+  const root = findMonorepoRootOrExit();
   const { config, suiteDir } = SUITE_CONFIG[suite as E2ESuite];
   const configAbs = path.join(root, config);
   const suiteDirAbs = path.join(root, suiteDir);

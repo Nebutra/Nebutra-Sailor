@@ -1,9 +1,43 @@
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, findMonorepoRoot } from "../utils/delegate";
+import { delegate, findMonorepoRoot, findMonorepoRootOrExit } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { debug, output, status } from "../utils/output";
+
+/**
+ * Read the top-level service names straight out of docker-compose.yml,
+ * rather than hardcoding a list that drifts every time services are added
+ * or removed (this list previously still mentioned meilisearch/novu/openfga,
+ * long after those were deleted per ADR 2026-09-24 sailor-convergence).
+ * Falls back to a short static list if the compose file can't be parsed.
+ */
+function listComposeServices(root: string): string[] {
+  const fallback = ["postgres", "redis", "clickhouse"];
+  const composePath = resolve(root, "docker-compose.yml");
+  if (!existsSync(composePath)) return fallback;
+
+  try {
+    const content = readFileSync(composePath, "utf-8");
+    const lines = content.split("\n");
+    const servicesIndex = lines.findIndex((l) => /^services:\s*$/.test(l));
+    if (servicesIndex === -1) return fallback;
+
+    const names: string[] = [];
+    for (let i = servicesIndex + 1; i < lines.length; i++) {
+      const line = lines[i];
+      // Next top-level key (volumes:, networks:, etc.) ends the services block.
+      if (/^[a-zA-Z]/.test(line)) break;
+      const match = line.match(/^ {2}([a-zA-Z0-9_-]+):\s*$/);
+      if (match) names.push(match[1]);
+    }
+    return names.length > 0 ? names : fallback;
+  } catch {
+    return fallback;
+  }
+}
 
 interface ServiceCommandOptions {
   dryRun?: boolean;
@@ -68,7 +102,7 @@ async function handleStatus(options: ServiceCommandOptions): Promise<void> {
   const result = await delegate({
     command: "docker",
     args: ["compose", "ps", "--format", "json"],
-    cwd: findMonorepoRoot(),
+    cwd: findMonorepoRootOrExit(),
     interactive: false,
     label: "Docker Compose PS",
     dryRun: options.dryRun,
@@ -138,7 +172,7 @@ async function handleLogs(service: string, options: ServiceCommandOptions): Prom
   const result = await delegate({
     command: "docker",
     args,
-    cwd: findMonorepoRoot(),
+    cwd: findMonorepoRootOrExit(),
     interactive: true,
     label: `Docker Compose Logs (${service})`,
     dryRun: options.dryRun,
@@ -182,7 +216,7 @@ async function handleRestart(service: string, options: ServiceCommandOptions): P
   const result = await delegate({
     command: "docker",
     args,
-    cwd: findMonorepoRoot(),
+    cwd: findMonorepoRootOrExit(),
     interactive: false,
     label: `Docker Compose Restart (${service})`,
     dryRun: options.dryRun,
@@ -204,66 +238,68 @@ async function handleRestart(service: string, options: ServiceCommandOptions): P
 async function handleHealth(options: ServiceCommandOptions): Promise<void> {
   status("Running deep health check...", "info");
 
-  const healthChecks: Array<{ service: string; healthy: boolean; message: string }> = [];
+  const healthChecks: Array<{
+    service: string;
+    healthy: boolean;
+    message: string;
+  }> = [];
+
+  const HEALTH_CHECK_TIMEOUT_MS = 10_000;
 
   // PostgreSQL check
   const pgResult = await delegate({
     command: "docker",
     args: ["compose", "exec", "-T", "postgres", "pg_isready"],
-    cwd: findMonorepoRoot(),
+    cwd: findMonorepoRootOrExit(),
     interactive: false,
     label: "PostgreSQL Health",
     dryRun: options.dryRun,
+    timeoutMs: HEALTH_CHECK_TIMEOUT_MS,
   });
   healthChecks.push({
     service: "PostgreSQL",
     healthy: pgResult.exitCode === 0,
-    message: pgResult.exitCode === 0 ? "Ready" : "Not responding",
+    message: pgResult.timedOut ? "Timed out" : pgResult.exitCode === 0 ? "Ready" : "Not responding",
   });
 
   // Redis check
   const redisResult = await delegate({
     command: "docker",
     args: ["compose", "exec", "-T", "redis", "redis-cli", "ping"],
-    cwd: findMonorepoRoot(),
+    cwd: findMonorepoRootOrExit(),
     interactive: false,
     label: "Redis Health",
     dryRun: options.dryRun,
+    timeoutMs: HEALTH_CHECK_TIMEOUT_MS,
   });
   healthChecks.push({
     service: "Redis",
     healthy: redisResult.exitCode === 0,
-    message: redisResult.exitCode === 0 ? "Ready" : "Not responding",
+    message: redisResult.timedOut
+      ? "Timed out"
+      : redisResult.exitCode === 0
+        ? "Ready"
+        : "Not responding",
   });
 
   // ClickHouse check
   const clickhouseResult = await delegate({
     command: "docker",
     args: ["compose", "exec", "-T", "clickhouse", "curl", "-s", "http://localhost:8123/ping"],
-    cwd: findMonorepoRoot(),
+    cwd: findMonorepoRootOrExit(),
     interactive: false,
     label: "ClickHouse Health",
     dryRun: options.dryRun,
+    timeoutMs: HEALTH_CHECK_TIMEOUT_MS,
   });
   healthChecks.push({
     service: "ClickHouse",
     healthy: clickhouseResult.exitCode === 0,
-    message: clickhouseResult.exitCode === 0 ? "Ready" : "Not responding",
-  });
-
-  // Meilisearch check
-  const meilisearchResult = await delegate({
-    command: "docker",
-    args: ["compose", "exec", "-T", "meilisearch", "curl", "-s", "http://localhost:7700/health"],
-    cwd: findMonorepoRoot(),
-    interactive: false,
-    label: "Meilisearch Health",
-    dryRun: options.dryRun,
-  });
-  healthChecks.push({
-    service: "Meilisearch",
-    healthy: meilisearchResult.exitCode === 0,
-    message: meilisearchResult.exitCode === 0 ? "Healthy" : "Not responding",
+    message: clickhouseResult.timedOut
+      ? "Timed out"
+      : clickhouseResult.exitCode === 0
+        ? "Ready"
+        : "Not responding",
   });
 
   if (options.format === "json") {
@@ -307,7 +343,7 @@ async function handleScale(
   const result = await delegate({
     command: "docker",
     args: ["compose", "up", "-d", "--scale", `${service}=${numReplicas}`],
-    cwd: findMonorepoRoot(),
+    cwd: findMonorepoRootOrExit(),
     interactive: false,
     label: `Docker Compose Scale (${service})`,
     dryRun: options.dryRun,
@@ -329,9 +365,7 @@ async function handleScale(
 export function registerServicesCommand(program: Command): void {
   const servicesCommand = program
     .command("services <verb> [args...]")
-    .description(
-      "Manage Docker Compose microservices (postgres, redis, clickhouse, meilisearch, novu, openfga, etc.)",
-    )
+    .description("Manage Docker Compose microservices (see `nebutra services --help` for the list)")
     .option("--dry-run", "Show what would be run without executing")
     .option("--yes", "Skip confirmations")
     .option("--format <type>", "Output format: json, plain, table", "plain")
@@ -339,16 +373,17 @@ export function registerServicesCommand(program: Command): void {
     .option("--since <duration>", "Show logs since duration (e.g., 10m, 1h)")
     .option("--timeout <seconds>", "Timeout for service restart")
     .action(
-      async (
-        verb: string,
-        args: string[],
-        options: ServiceCommandOptions & { optsWithGlobals?: () => ServiceCommandOptions },
-      ) => {
-        const globalOptions = options.optsWithGlobals?.();
+      async (verb: string, args: string[], options: ServiceCommandOptions, command: Command) => {
+        // See the equivalent comment in db.ts's action: `--format` is also a
+        // global root-program option, so a user-supplied value binds there,
+        // not to this subcommand's local option — read it via
+        // `command.optsWithGlobals()`, not `options.optsWithGlobals?.()`
+        // (which is always undefined; `options` is a plain object).
+        const globalOptions = command.optsWithGlobals?.() as ServiceCommandOptions | undefined;
         const mergedOptions: ServiceCommandOptions = {
           dryRun: options.dryRun || globalOptions?.dryRun,
           yes: options.yes || globalOptions?.yes,
-          format: (options.format || globalOptions?.format) as "json" | "plain" | "table",
+          format: (globalOptions?.format || options.format) as "json" | "plain" | "table",
           tail: options.tail ?? 100,
           since: options.since,
           timeout: options.timeout,
@@ -357,6 +392,7 @@ export function registerServicesCommand(program: Command): void {
         try {
           switch (verb) {
             case "status":
+            case "list": // alias — users reflexively try `services list`
               await handleStatus(mergedOptions);
               break;
 
@@ -396,7 +432,7 @@ export function registerServicesCommand(program: Command): void {
 
             default:
               status(
-                `Unknown services subcommand: ${verb}. Valid commands: status, logs, restart, health, scale`,
+                `Unknown services subcommand: ${verb}. Valid commands: status, list, logs, restart, health, scale`,
                 "error",
               );
               process.exit(ExitCode.ERROR);
@@ -410,22 +446,31 @@ export function registerServicesCommand(program: Command): void {
       },
     );
 
-  // Add help text
-  servicesCommand.addHelpText(
-    "after",
-    `
+  // Add help text. Computed lazily (only when help is actually printed) so
+  // that resolving the project root and reading docker-compose.yml never
+  // runs on the hot path of building the program (e.g. `nebutra --version`).
+  servicesCommand.addHelpText("after", () => {
+    let servicesList =
+      "postgres, redis, clickhouse (run `nebutra services status` for the live list)";
+    try {
+      servicesList = listComposeServices(findMonorepoRoot()).join(", ");
+    } catch {
+      // No project root found (e.g. help shown outside a Sailor project) —
+      // help text still renders with the fallback above, never exits here.
+    }
+
+    return `
 Examples:
   nebutra services status                 Show all service status
+  nebutra services list                   Alias for \`status\`
   nebutra services logs postgres          Stream postgres logs
   nebutra services logs postgres --tail 50  Show last 50 postgres logs
   nebutra services restart redis          Restart redis service
-  nebutra services health                 Deep health check (pg, redis, clickhouse, meilisearch)
+  nebutra services health                 Deep health check (postgres, redis, clickhouse)
   nebutra services scale ai-service 3     Scale ai-service to 3 replicas
 
-Services Available:
-  postgres, redis, clickhouse, meilisearch, novu, openfga, ai-service, content-service,
-  recsys-service, ecommerce-service, web3-service, billing-service, event-ingest, idp,
-  jaeger, nginx
+Services Available (from docker-compose.yml):
+  ${servicesList}
 
 Flags:
   --dry-run                       Show what would be run without executing
@@ -434,6 +479,6 @@ Flags:
   --tail <n>                      Log lines to show (default: 100)
   --since <duration>              Show logs since (e.g., 10m, 1h)
   --timeout <seconds>             Timeout for restart
-    `,
-  );
+    `;
+  });
 }

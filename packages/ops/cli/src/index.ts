@@ -141,13 +141,13 @@ export function buildProgram(options: BuildProgramOptions): Command {
     .action(() =>
       runCommand(async () => {
         const { logger } = await import("./utils/logger");
-        const { findMonorepoRoot } = await import("./utils/delegate");
+        const { findMonorepoRootOrExit } = await import("./utils/delegate");
         const fs = await import("node:fs");
         const path = await import("node:path");
 
         logger.info("Running project health check...");
         let hasErrors = false;
-        const root = findMonorepoRoot();
+        const root = findMonorepoRootOrExit();
 
         // Check Node version
         const nodeVersion = process.version;
@@ -261,10 +261,11 @@ export function buildProgram(options: BuildProgramOptions): Command {
         ) {
           logger.info("");
           logger.info("Golden path to a running app:");
-          logger.info("  1. Fill .env.local (copy keys from .env.example)");
-          logger.info("  2. pnpm infra:up     # local Postgres/Redis if needed");
-          logger.info("  3. pnpm db:migrate && pnpm db:seed");
-          logger.info("  4. pnpm dev          # http://localhost:3000");
+          logger.info("  1. nebutra status    # what is live, what needs a key");
+          logger.info("  2. pnpm dev          # http://localhost:3001");
+          logger.info("");
+          logger.info("Optional, once you want your own Postgres:");
+          logger.info("  pnpm infra:up && pnpm db:migrate");
         }
 
         if (hasErrors) {

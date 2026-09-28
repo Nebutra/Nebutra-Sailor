@@ -207,19 +207,21 @@ export const nebultraCommand: CommandMeta = {
     },
     {
       name: "license",
-      description: "Manage Nebutra Sailor commercial license activation and status",
+      description:
+        "Record a Nebutra support/billing license key locally (Sailor scaffolds are MIT — nothing in the CLI is gated by this)",
       usage: "nebutra license [subcommand]",
       arguments: [],
       options: [],
       subcommands: [
         {
           name: "activate",
-          description: "Activate a commercial license key for local development",
+          description:
+            "Validate and record a license key locally (support/billing record, not a feature unlock)",
           usage: "nebutra license activate <key>",
           arguments: [
             {
               name: "key",
-              description: "Your Nebutra Sailor commercial license key",
+              description: "Your Nebutra support/billing license key",
               required: true,
             },
           ],
@@ -232,7 +234,7 @@ export const nebultraCommand: CommandMeta = {
           examples: [
             {
               command: "nebutra license activate liz_1234567890",
-              description: "Activate your license key globally",
+              description: "Record your license key locally",
             },
           ],
         },

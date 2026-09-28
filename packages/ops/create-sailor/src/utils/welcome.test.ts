@@ -30,6 +30,16 @@ describe("generateWelcomePage", () => {
     expect(nextSteps).not.toContain("pnpm sailor");
     expect(nextSteps).not.toContain("get-license");
     expect(nextSteps).toContain("https://nebutra.com/licensing");
+
+    // `pnpm db:seed` does not exist as a root script — the golden path must
+    // not tell users to run it. `pnpm dev` is a zero-config preview; a real
+    // Postgres is optional, not part of the must-do steps.
+    expect(nextSteps).not.toContain("db:seed");
+    expect(welcomePage).not.toContain("db:seed");
+    expect(nextSteps).toContain("nebutra status");
+    expect(nextSteps).toContain("pnpm dev");
+    expect(nextSteps).toContain("localhost:3001");
+    expect(nextSteps).toContain("Optional");
   });
 
   it("no longer writes a page into the retired Next.js app tree", async () => {

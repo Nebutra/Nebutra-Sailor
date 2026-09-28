@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import * as p from "@clack/prompts";
 import type { Command, OptionValues } from "commander";
 import pc from "picocolors";
-import { findMonorepoRoot } from "../utils/delegate";
+import { findMonorepoRootOrExit } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { debug, output, sectionHeader, status } from "../utils/output";
 
@@ -101,7 +101,7 @@ function maskValue(value: string): string {
 async function handleValidate(options: EnvCommandOptions): Promise<void> {
   status("Validating environment variables...", "info");
 
-  const root = findMonorepoRoot();
+  const root = findMonorepoRootOrExit();
   const exampleVars = loadEnvExample(root);
   const currentVars = loadEnvFile(root);
   const processEnv = process.env;
@@ -154,7 +154,7 @@ async function handleValidate(options: EnvCommandOptions): Promise<void> {
  * `nebutra env template` — Generate .env from .env.example with prompts
  */
 async function handleTemplate(options: EnvCommandOptions): Promise<void> {
-  const root = findMonorepoRoot();
+  const root = findMonorepoRootOrExit();
   const exampleVars = loadEnvExample(root);
   const envLocalPath = resolve(root, ".env.local");
 
@@ -227,7 +227,7 @@ async function handleTemplate(options: EnvCommandOptions): Promise<void> {
 async function handleDiff(options: EnvCommandOptions): Promise<void> {
   status("Comparing environment variables...", "info");
 
-  const root = findMonorepoRoot();
+  const root = findMonorepoRootOrExit();
   const exampleVars = loadEnvExample(root);
   const currentVars = loadEnvFile(root);
 
@@ -291,7 +291,7 @@ async function handleDiff(options: EnvCommandOptions): Promise<void> {
 async function handleShow(options: EnvCommandOptions): Promise<void> {
   status("Reading environment variables...", "info");
 
-  const root = findMonorepoRoot();
+  const root = findMonorepoRootOrExit();
   const currentVars = loadEnvFile(root);
   const exampleVars = loadEnvExample(root);
 
@@ -339,12 +339,16 @@ export function registerEnvCommand(program: Command): void {
     .option("--dry-run", "Show what would be done without making changes")
     .option("--yes", "Skip confirmations and use defaults")
     .option("--format <type>", "Output format: json, plain", "plain")
-    .action(async (verb: string, options: OptionValues) => {
-      const globalOptions = options.optsWithGlobals?.();
+    .action(async (verb: string, options: OptionValues, command: Command) => {
+      // `--format` is also a global root-program option, so a user-supplied
+      // value binds there, not to this subcommand's local option — read it
+      // via `command.optsWithGlobals()`, not `options.optsWithGlobals?.()`
+      // (which is always undefined; `options` is a plain object).
+      const globalOptions = command.optsWithGlobals?.();
       const mergedOptions: EnvCommandOptions = {
         dryRun: options.dryRun || globalOptions?.dryRun,
         yes: options.yes || globalOptions?.yes,
-        format: (options.format || globalOptions?.format) as "json" | "plain",
+        format: (globalOptions?.format || options.format) as "json" | "plain",
       };
 
       try {

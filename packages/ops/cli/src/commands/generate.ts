@@ -4,7 +4,7 @@ import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
 import { mergeGlobalOptions, type RegisterCommand } from "../utils/commander-types";
-import { findMonorepoRoot } from "../utils/delegate";
+import { findMonorepoRootOrExit } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 
@@ -382,7 +382,7 @@ async function getFilesToCreate(
   name: string,
   options: GenerateOptions & { category?: string },
 ): Promise<Array<{ path: string; size: number }>> {
-  const root = findMonorepoRoot();
+  const root = findMonorepoRootOrExit();
   const files: Array<{ path: string; size: number }> = [];
 
   let templates: Record<string, string> = {};
@@ -432,7 +432,7 @@ async function createFiles(
   name: string,
   options: { category?: string } = {},
 ): Promise<Array<string>> {
-  const root = findMonorepoRoot();
+  const root = findMonorepoRootOrExit();
   const createdFiles: string[] = [];
 
   let templates: Record<string, string> = {};

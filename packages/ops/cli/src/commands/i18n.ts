@@ -1,13 +1,10 @@
 import fs, { lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import type { Command } from "commander";
 import pc from "picocolors";
-import { delegate, pnpmRun } from "../utils/delegate";
+import { delegate, findMonorepoRootOrExit, pnpmRun } from "../utils/delegate";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface I18nCommandOptions {
   dryRun?: boolean;
@@ -36,7 +33,7 @@ interface StatusResult {
  */
 function findMessageDirectories(): Map<string, string> {
   const dirs = new Map<string, string>();
-  const appsDir = path.join(__dirname, "../../../apps");
+  const appsDir = path.join(findMonorepoRootOrExit(), "apps");
 
   if (!fs.existsSync(appsDir)) {
     return dirs;

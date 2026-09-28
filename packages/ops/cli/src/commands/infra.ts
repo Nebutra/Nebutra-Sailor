@@ -32,7 +32,7 @@ async function handleUp(options: InfraCommandOptions): Promise<void> {
   if (result.exitCode === 0) {
     status("Infrastructure stack started successfully", "success");
   } else {
-    status("Failed to start infrastructure stack", "error");
+    status(explainDockerFailure(result) ?? "Failed to start infrastructure stack", "error");
     debug("Docker compose output", { stderr: result.stderr });
     process.exit(result.exitCode || 1);
   }
@@ -51,10 +51,25 @@ async function handleDown(options: InfraCommandOptions): Promise<void> {
   if (result.exitCode === 0) {
     status("Infrastructure stack stopped", "success");
   } else {
-    status("Failed to stop infrastructure stack", "error");
+    status(explainDockerFailure(result) ?? "Failed to stop infrastructure stack", "error");
     debug("Docker compose output", { stderr: result.stderr });
     process.exit(result.exitCode || 1);
   }
+}
+
+/**
+ * Detect docker missing / daemon down from a failed `docker compose` call and
+ * surface a clear message instead of a raw stderr dump.
+ */
+function explainDockerFailure(result: { exitCode: number; stderr: string }): string | undefined {
+  const stderr = result.stderr || "";
+  if (result.exitCode === 127 || /command not found|ENOENT/i.test(stderr)) {
+    return "Docker CLI not found. Install Docker Desktop (or the docker CLI) and make sure it's on your PATH.";
+  }
+  if (/cannot connect to the docker daemon|is the docker daemon running/i.test(stderr)) {
+    return "Docker daemon is not running. Start Docker Desktop (or `dockerd`) and try again.";
+  }
+  return undefined;
 }
 
 /**
@@ -64,34 +79,63 @@ async function handleDown(options: InfraCommandOptions): Promise<void> {
 async function handleStatus(options: InfraCommandOptions): Promise<void> {
   status("Checking infrastructure status...", "info");
 
-  const result = await dockerCompose("ps --format json", {
+  // `--format json` isn't understood by older Docker Compose (v1, or early
+  // v2) — it exits non-zero with "unknown flag: --format". Detect that and
+  // fall back to plain `docker compose ps` text instead of failing outright.
+  let result = await dockerCompose("ps --format json", {
     dryRun: options.dryRun,
+    interactive: false,
   });
 
-  if (result.exitCode === 0) {
-    try {
-      const services = JSON.parse(result.stdout);
+  if (options.dryRun) return;
 
-      if (options.format === "json") {
-        output(services, { format: "json" });
-      } else {
-        // Human-readable table format
-        const rows = services.map((service: Record<string, unknown>) => ({
-          name: service.Name,
-          status: service.Status,
-          ports: service.Ports || "-",
-        }));
+  const usesLegacyFlag =
+    result.exitCode !== 0 && /unknown (flag|shorthand flag)/i.test(result.stderr);
 
-        output(rows, { format: "table" });
-      }
-    } catch (_e) {
-      // Fallback: output raw docker compose ps
-      output(result.stdout, { format: "plain" });
-    }
-  } else {
-    status("Failed to check infrastructure status", "error");
+  if (usesLegacyFlag) {
+    debug("docker compose ps --format json unsupported, falling back to plain ps", {
+      stderr: result.stderr,
+    });
+    result = await dockerCompose("ps", { interactive: false });
+  }
+
+  if (result.exitCode !== 0) {
+    const hint = explainDockerFailure(result);
+    status(hint ?? "Failed to check infrastructure status", "error");
     debug("Docker compose output", { stderr: result.stderr });
     process.exit(result.exitCode || 1);
+  }
+
+  if (usesLegacyFlag) {
+    // No structured data available on old Compose — best effort text output.
+    if (options.format === "json") {
+      status(
+        "This Docker Compose version doesn't support `--format json`; showing plain text instead.",
+        "warn",
+      );
+    }
+    output(result.stdout, { format: "plain" });
+    return;
+  }
+
+  try {
+    const services = JSON.parse(result.stdout);
+
+    if (options.format === "json") {
+      output(services, { format: "json" });
+    } else {
+      // Human-readable table format
+      const rows = services.map((service: Record<string, unknown>) => ({
+        name: service.Name,
+        status: service.Status,
+        ports: service.Ports || "-",
+      }));
+
+      output(rows, { format: "table" });
+    }
+  } catch (_e) {
+    // Fallback: output raw docker compose ps
+    output(result.stdout, { format: "plain" });
   }
 }
 
@@ -116,7 +160,7 @@ async function handleLogs(service?: string, options?: InfraCommandOptions): Prom
   if (result.exitCode === 0) {
     output(result.stdout, { format: "plain" });
   } else {
-    status("Failed to fetch logs", "error");
+    status(explainDockerFailure(result) ?? "Failed to fetch logs", "error");
     debug("Docker compose output", { stderr: result.stderr });
     process.exit(result.exitCode || 1);
   }
@@ -162,7 +206,7 @@ async function handleReset(options: InfraCommandOptions): Promise<void> {
   if (result.exitCode === 0) {
     status("Infrastructure reset successfully", "success");
   } else {
-    status("Failed to reset infrastructure", "error");
+    status(explainDockerFailure(result) ?? "Failed to reset infrastructure", "error");
     debug("Docker compose output", { stderr: result.stderr });
     process.exit(result.exitCode || 1);
   }
@@ -181,52 +225,64 @@ export function registerInfraCommand(program: Command): void {
     .option("--lite", "Use lite stack (PostgreSQL + Redis only)")
     .option("--profile <name>", "Docker Compose profile to use (e.g., search)")
     .option("--format <type>", "Output format: json, plain", "plain")
-    .action(async (verb: string, service: string | undefined, options: OptionValues) => {
-      const globalOptions = options.optsWithGlobals?.();
-      const mergedOptions: InfraCommandOptions = {
-        dryRun: options.dryRun || globalOptions?.dryRun,
-        yes: options.yes || globalOptions?.yes,
-        format: (options.format || globalOptions?.format) as "json" | "plain",
-        lite: options.lite || false,
-        profile: options.profile,
-      };
+    .action(
+      async (
+        verb: string,
+        service: string | undefined,
+        options: OptionValues,
+        command: Command,
+      ) => {
+        // See the equivalent comment in db.ts's action: `--format` is also a
+        // global root-program option, so a user-supplied value binds there,
+        // not to this subcommand's local option — read it via
+        // `command.optsWithGlobals()`, not `options.optsWithGlobals?.()`
+        // (which is always undefined; `options` is a plain object).
+        const globalOptions = command.optsWithGlobals?.();
+        const mergedOptions: InfraCommandOptions = {
+          dryRun: options.dryRun || globalOptions?.dryRun,
+          yes: options.yes || globalOptions?.yes,
+          format: (globalOptions?.format || options.format) as "json" | "plain",
+          lite: options.lite || false,
+          profile: options.profile,
+        };
 
-      try {
-        switch (verb) {
-          case "up":
-            await handleUp(mergedOptions);
-            break;
+        try {
+          switch (verb) {
+            case "up":
+              await handleUp(mergedOptions);
+              break;
 
-          case "down":
-            await handleDown(mergedOptions);
-            break;
+            case "down":
+              await handleDown(mergedOptions);
+              break;
 
-          case "status":
-            await handleStatus(mergedOptions);
-            break;
+            case "status":
+              await handleStatus(mergedOptions);
+              break;
 
-          case "logs":
-            await handleLogs(service, mergedOptions);
-            break;
+            case "logs":
+              await handleLogs(service, mergedOptions);
+              break;
 
-          case "reset":
-            await handleReset(mergedOptions);
-            break;
+            case "reset":
+              await handleReset(mergedOptions);
+              break;
 
-          default:
-            status(
-              `Unknown infra subcommand: ${verb}. Valid commands: up, down, status, logs, reset`,
-              "error",
-            );
-            process.exit(ExitCode.INVALID_ARGS);
+            default:
+              status(
+                `Unknown infra subcommand: ${verb}. Valid commands: up, down, status, logs, reset`,
+                "error",
+              );
+              process.exit(ExitCode.INVALID_ARGS);
+          }
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          status(`Infrastructure command failed: ${message}`, "error");
+          debug("Full error", { error });
+          process.exit(ExitCode.ERROR);
         }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        status(`Infrastructure command failed: ${message}`, "error");
-        debug("Full error", { error });
-        process.exit(ExitCode.ERROR);
-      }
-    });
+      },
+    );
 
   // Add help text
   infraCommand.addHelpText(
