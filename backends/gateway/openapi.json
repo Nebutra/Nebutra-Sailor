@@ -5340,6 +5340,25 @@
               }
             }
           },
+          "402": {
+            "description": "The para wallet cannot pay for the approved generation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "code"]
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not found",
             "content": {

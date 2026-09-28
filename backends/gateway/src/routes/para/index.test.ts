@@ -23,6 +23,19 @@ class DocumentVersionConflictError extends Error {
   }
 }
 
+const billing = { deductCredits: vi.fn(), refundCredits: vi.fn() };
+class BillingError extends Error {
+  constructor(
+    message: string,
+    public code: string,
+    public statusCode = 400,
+  ) {
+    super(message);
+    this.name = "BillingError";
+  }
+}
+vi.mock("@nebutra/billing", () => ({ ...billing, BillingError }));
+
 vi.mock("@nebutra/repositories", () => ({
   DocumentVersionConflictError,
   getParaWorkspaceRepository: () => repo,
@@ -76,6 +89,7 @@ describe("/api/v1/para", () => {
     vi.stubEnv("SERVICE_SECRET", "service-secret");
     for (const fn of Object.values(repo)) fn.mockReset();
     for (const fn of Object.values(assets)) fn.mockReset();
+    for (const fn of Object.values(billing)) fn.mockReset();
   });
   afterEach(() => {
     vi.restoreAllMocks();
@@ -120,34 +134,41 @@ describe("/api/v1/para", () => {
     expect(await res.json()).toMatchObject({ documentVersion: 5, document: { nodes: { s: 1 } } });
   });
 
-  it("creates a job through the origin task envelope and maps the status", async () => {
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
-      new Response(
+  /** The origin stores the metadata it is sent and returns it on every read. */
+  function echoOrigin(overrides: Record<string, unknown> = {}) {
+    return vi.spyOn(globalThis, "fetch").mockImplementationOnce(async (_url, init) => {
+      const sent = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      return new Response(
         JSON.stringify({
           id: "task_1",
           type: "para.generate",
           status: "queued",
           progress: 0,
-          payload: { workspaceId: "w1", nodeId: "n9" },
-          metadata: { queue_position: 2 },
+          payload: sent.payload,
+          metadata: { ...(sent.metadata as object), queue_position: 2 },
           started_at: null,
           completed_at: null,
           result: null,
           error: null,
+          ...overrides,
         }),
         { status: 202, headers: { "content-type": "application/json" } },
-      ),
-    );
-    const app = await createApp();
-    const res = await app.request("/jobs", {
+      );
+    });
+  }
+
+  function postJob(app: Awaited<ReturnType<typeof createApp>>, generator: object, extra = {}) {
+    return app.request("/jobs", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        workspaceId: "w1",
-        nodeId: "n9",
-        generator: { mode: "image", prompt: "colder" },
-      }),
+      body: JSON.stringify({ workspaceId: "w1", nodeId: "n9", generator, ...extra }),
     });
+  }
+
+  it("creates a job through the origin task envelope and maps the status", async () => {
+    const fetchMock = echoOrigin();
+    const app = await createApp();
+    const res = await postJob(app, { mode: "image", prompt: "colder" });
     expect(res.status).toBe(202);
     expect(await res.json()).toMatchObject({
       id: "task_1",
@@ -165,18 +186,113 @@ describe("/api/v1/para", () => {
     expect((init.headers as Record<string, string>)["x-organization-id"]).toBe("org_1");
   });
 
-  it("origin rejection is a 502 with no job", async () => {
+  it("charges the para wallet before the origin admits the job, and records the charge on it", async () => {
+    const fetchMock = echoOrigin();
+    const app = await createApp();
+    await postJob(app, { mode: "image", prompt: "colder", count: 2 });
+
+    expect(billing.deductCredits).toHaveBeenCalledTimes(1);
+    const charged = billing.deductCredits.mock.calls[0]?.[0] as Record<string, unknown>;
+    expect(charged).toMatchObject({ organizationId: "org_1", product: "para", amount: 20 });
+    const sent = JSON.parse(String((fetchMock.mock.calls[0]?.[1] as RequestInit).body)) as {
+      metadata: { charge: { key: string; credits: number } };
+    };
+    expect(sent.metadata.charge.credits).toBe(20);
+    expect(charged.relatedId).toBe(`para-job:${sent.metadata.charge.key}`);
+    expect(billing.refundCredits).not.toHaveBeenCalled();
+    expect(billing.deductCredits.mock.invocationCallOrder[0]).toBeLessThan(
+      fetchMock.mock.invocationCallOrder[0] as number,
+    );
+  });
+
+  it("answers 402 and never reaches the origin when the para wallet is short", async () => {
+    billing.deductCredits.mockRejectedValueOnce(
+      new BillingError("Insufficient credits", "INSUFFICIENT_CREDITS", 402),
+    );
+    const fetchMock = vi.spyOn(globalThis, "fetch");
+    const app = await createApp();
+    const res = await postJob(app, { mode: "image", prompt: "colder" });
+    expect(res.status).toBe(402);
+    expect(await res.json()).toEqual({ error: "Not enough credits", code: "INSUFFICIENT_CREDITS" });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("a charge key that already exists reads as paid, not as an error", async () => {
+    billing.deductCredits.mockRejectedValueOnce(Object.assign(new Error("dup"), { code: "P2002" }));
+    echoOrigin();
+    const app = await createApp();
+    expect((await postJob(app, { mode: "image", prompt: "x" })).status).toBe(202);
+  });
+
+  it("an idempotent replay returns the earlier task and gives this attempt's charge back", async () => {
+    echoOrigin({ metadata: { charge: { key: "earlier-attempt", credits: 10 } } });
+    const app = await createApp();
+    const res = await postJob(app, { mode: "image", prompt: "x" }, { idempotencyKey: "k1" });
+    expect(res.status).toBe(202);
+    const charged = billing.deductCredits.mock.calls[0]?.[0] as { relatedId: string };
+    expect(billing.refundCredits).toHaveBeenCalledWith(
+      expect.objectContaining({ relatedId: charged.relatedId, amount: 10, product: "para" }),
+    );
+  });
+
+  it("origin rejection is a 502 with no job, and the charge comes back", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
-      new Response("insufficient credits", { status: 402 }),
+      new Response("model seat unavailable", { status: 503 }),
     );
     const app = await createApp();
-    const res = await app.request("/jobs", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ workspaceId: "w1", nodeId: "n9", generator: { mode: "image" } }),
-    });
+    const res = await postJob(app, { mode: "image" });
     expect(res.status).toBe(502);
-    expect(await res.json()).toEqual({ error: "insufficient credits" });
+    expect(await res.json()).toEqual({ error: "model seat unavailable" });
+    const charged = billing.deductCredits.mock.calls[0]?.[0] as { relatedId: string };
+    expect(billing.refundCredits).toHaveBeenCalledWith(
+      expect.objectContaining({ relatedId: charged.relatedId, amount: 10 }),
+    );
+  });
+
+  it("reading a failed or cancelled job refunds its charge; a finished one does not", async () => {
+    const charge = { key: "c1", credits: 10 };
+    const app = await createApp();
+    for (const [status, refunds] of [
+      ["failed", 1],
+      ["cancelled", 1],
+      ["succeeded", 0],
+      ["running", 0],
+    ] as const) {
+      billing.refundCredits.mockReset();
+      vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+        Response.json({
+          id: "task_1",
+          status,
+          payload: { nodeId: "n", workspaceId: "w" },
+          metadata: { charge },
+        }),
+      );
+      expect((await app.request("/jobs/task_1")).status).toBe(200);
+      expect(billing.refundCredits).toHaveBeenCalledTimes(refunds);
+      if (refunds) {
+        expect(billing.refundCredits).toHaveBeenCalledWith(
+          expect.objectContaining({
+            organizationId: "org_1",
+            relatedId: "para-job:c1",
+            amount: 10,
+          }),
+        );
+      }
+    }
+  });
+
+  it("a refund that already happened is not an error on the next read", async () => {
+    billing.refundCredits.mockRejectedValueOnce(Object.assign(new Error("dup"), { code: "P2002" }));
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      Response.json({
+        id: "task_1",
+        status: "failed",
+        payload: { nodeId: "n", workspaceId: "w" },
+        metadata: { charge: { key: "c1", credits: 10 } },
+      }),
+    );
+    const app = await createApp();
+    expect((await app.request("/jobs/task_1")).status).toBe(200);
   });
 
   it("maps cancelled and failed origin tasks to a terminal error payload", async () => {
@@ -234,7 +350,8 @@ describe("/api/v1/para", () => {
     });
 
     const out: string[] = [];
-    const reader = mapTaskEventStream(source).getReader();
+    const seen: string[] = [];
+    const reader = mapTaskEventStream(source, (task) => seen.push(String(task.status))).getReader();
     const decoder = new TextDecoder();
     for (;;) {
       const { done, value } = await reader.read();
@@ -248,6 +365,8 @@ describe("/api/v1/para", () => {
       .map((frame) => frame.split("\ndata: "));
 
     expect(events).toHaveLength(4);
+    // Every task frame reaches the refund hook; the error frame does not.
+    expect(seen).toEqual(["queued", "running", "succeeded"]);
     expect(JSON.parse(events[0]?.[1] as string)).toMatchObject({
       status: "queued",
       nodeId: "n1",
