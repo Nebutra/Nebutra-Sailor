@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
 import { useRouter } from "next/navigation";
+import { useCreateCanvas } from "@/lib/create-canvas";
 import { useUiStore } from "@/stores/ui-store";
 
 /** One Create entry point (secondary to the composer at rest — A). Zero-step workspace create (A). */
@@ -23,6 +24,7 @@ export function CreateMenu({
   const setDrawer = useUiStore((s) => s.setDrawer);
   const setAgent = useUiStore((s) => s.setAgent);
   const router = useRouter();
+  const { create, pending } = useCreateCanvas();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,7 +40,9 @@ export function CreateMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-48">
-        <DropdownMenuItem disabled>New project</DropdownMenuItem>
+        <DropdownMenuItem disabled={pending !== null} onClick={() => void create("blank")}>
+          New project
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push(`/p/${projectId ?? "last-animal"}/w/new`)}>
           New workspace
         </DropdownMenuItem>

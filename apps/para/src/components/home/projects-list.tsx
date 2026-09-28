@@ -15,8 +15,8 @@ export function ProjectsList() {
         query={{ isLoading, isError, refetch }}
         isEmpty={!data?.length}
         skeleton={<CardGridSkeleton count={6} />}
-        emptyTitle="No projects yet"
-        emptyDescription="Describe something on the home surface to start one."
+        emptyTitle="Projects live here"
+        emptyDescription="Start one with New project in the sidebar."
         errorTitle="Projects could not be loaded"
       >
         <CardGrid>

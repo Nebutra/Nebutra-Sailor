@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { projectThumbnail } from "@/domain/gallery";
 import type { Project } from "@/domain/types";
-import { findAsset } from "@/mock/queries";
+import { useAssets } from "@/mock/queries";
+import { AssetThumb } from "./asset-thumb";
 
 const fmt = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -13,19 +17,22 @@ const fmt = (iso: string) =>
  * The media now fills the card and the label sits on it, so a grid of these scans as work.
  */
 export function ProjectCard({ project }: { project: Project }) {
-  const cover = project.coverAssetId ? findAsset(project.coverAssetId) : undefined;
+  // Read through the selected adapter, not the mock fixtures, so gateway projects get real covers:
+  // the explicit cover, else the newest asset made in the project.
+  const { data: assets } = useAssets();
+  const cover = projectThumbnail(project, assets ?? []);
   return (
     <Link
       href={`/p/${project.id}`}
       className="group relative flex aspect-para-card flex-col justify-end overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-neutral-8"
     >
       {cover ? (
-        <img
-          src={cover.url}
-          alt=""
-          loading="lazy"
-          className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-        />
+        <div className="absolute inset-0">
+          <AssetThumb
+            asset={cover}
+            className="transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        </div>
       ) : (
         /* An empty project is a real state, not a missing image: say so rather than show a void. */
         <div className="absolute inset-0 flex items-center justify-center bg-neutral-3">
