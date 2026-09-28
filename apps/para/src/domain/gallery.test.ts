@@ -29,14 +29,14 @@ const assets: Asset[] = [
 describe("galleryTabs", () => {
   it("lists All plus one tab per type present, in a fixed order", () => {
     expect(galleryTabs(assets)).toEqual([
-      { value: "all", label: "All", count: 3 },
-      { value: "image", label: "Images", count: 2 },
-      { value: "video", label: "Videos", count: 1 },
+      { value: "all", label: "全部", count: 3 },
+      { value: "image", label: "图片", count: 2 },
+      { value: "video", label: "视频", count: 1 },
     ]);
   });
 
   it("hides every typed tab when there is nothing", () => {
-    expect(galleryTabs([])).toEqual([{ value: "all", label: "All", count: 0 }]);
+    expect(galleryTabs([])).toEqual([{ value: "all", label: "全部", count: 0 }]);
   });
 });
 

@@ -1,22 +1,31 @@
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AgentComposer } from "@/components/home/agent-composer";
 import { AssetGallery } from "@/components/home/asset-gallery";
-import { NewCanvasHero } from "@/components/home/new-canvas-hero";
+import { LaunchHero } from "@/components/home/launch-hero";
 import { RecentProjects } from "@/components/home/recent-projects";
-import { ToolTiles } from "@/components/home/tool-tiles";
+
+export const metadata = { title: "首页" };
 
 /**
- * Home, in LibTV's order: start something (the New canvas hero), start something specific (tool
- * tiles), pick up where you left off (Recent), then everything you have made (Your work).
- *
- * There is no prompt composer here any more — LibTV's home has none, and the agent composer lives
- * on the canvas, one click away through the sidebar's Agent entry.
+ * 首页, in LibTV's order: start something (新建画布创作 beside the model and tool launchers), pick
+ * up where you left off (最近项目), ask the agent or start from a template (the composer), then
+ * everything you have made (我的作品, where LibTV has TV Show — PARA has no community feed).
  */
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-12">
-      <NewCanvasHero />
-      <ToolTiles />
-      <RecentProjects />
-      <AssetGallery heading="Your work" level={2} limit={12} />
-    </div>
+    <AnimateInGroup stagger="fast" className="flex flex-col gap-10">
+      <AnimateIn preset="fadeUp">
+        <LaunchHero />
+      </AnimateIn>
+      <AnimateIn preset="fadeUp">
+        <RecentProjects />
+      </AnimateIn>
+      <AnimateIn preset="fadeUp">
+        <AgentComposer />
+      </AnimateIn>
+      <AnimateIn preset="fadeUp">
+        <AssetGallery heading="我的作品" level={2} limit={16} />
+      </AnimateIn>
+    </AnimateInGroup>
   );
 }
