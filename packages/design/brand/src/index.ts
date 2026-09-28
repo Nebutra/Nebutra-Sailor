@@ -5,8 +5,9 @@
  * Based on: 云毓智能品牌视觉识别手册 (Nebutra Brand Visual Identity Manual)
  */
 
-export type { LogoEdition, LogoProps, LogoVariant } from "./components/Logo";
 // Components
+export { BrandMark, BrandWordmark } from "./components/BrandLockup";
+export type { LogoEdition, LogoProps, LogoVariant } from "./components/Logo";
 export { Logo, Logomark, logoPublicSrc, Wordmark } from "./components/Logo";
 export type { LogoEnSVGProps } from "./components/LogoSVG";
 // Inline SVG: mono (currentColor) + color VI (gradient mark)

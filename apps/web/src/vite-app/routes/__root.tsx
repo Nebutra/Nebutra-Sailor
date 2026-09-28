@@ -1,6 +1,6 @@
 import { useAuthContext } from "@nebutra/auth/react/context";
+import { BrandMark, BrandWordmark } from "@nebutra/brand";
 import { brand } from "@nebutra/brand/metadata";
-import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { SidebarProvider } from "@/components/navigation/sidebar-context";
@@ -72,12 +72,10 @@ function ProductShell() {
               className="inline-flex h-8 items-center"
               aria-label="Open product home"
             >
-              <img
-                src={publicAssetUrl("brand/logo/logo-horizontal-en.svg")}
-                alt={brand.name}
-                className="h-5 w-auto"
-                draggable={false}
-              />
+              <span className="inline-flex items-center gap-2 text-neutral-12">
+                <BrandMark size={20} />
+                <BrandWordmark height={16} />
+              </span>
             </Link>
             <nav className="flex items-center gap-1" aria-label="Product">
               {appNav.map((item) => (

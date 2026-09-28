@@ -1,6 +1,5 @@
-import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
+import { BrandMark } from "@nebutra/brand";
 import { cn } from "@nebutra/ui/utils";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 interface AuthBannerProps {
@@ -55,14 +54,12 @@ export function AuthBanner({ className }: AuthBannerProps) {
 
       <div className="relative z-10 flex w-full flex-col items-start justify-between px-14 py-20 xl:px-20 xl:py-24">
         <div className="flex max-w-[28rem] flex-col items-start">
-          <Image
-            src={publicAssetUrl("brand/logo/logo-color.svg")}
-            alt={t("logoAlt")}
-            width={72}
-            height={72}
-            className="mb-10 h-12 w-auto drop-shadow-[0_18px_44px_color-mix(in_srgb,hsl(var(--primary))_22%,transparent)]"
-            priority
-          />
+          <span role="img" aria-label={t("logoAlt")} className="mb-10">
+            <BrandMark
+              size={48}
+              className="drop-shadow-[0_18px_44px_color-mix(in_srgb,hsl(var(--primary))_22%,transparent)]"
+            />
+          </span>
           <h2 className="text-balance text-[clamp(28px,3.2vw,40px)] font-semibold leading-[1.15] tracking-[-0.02em] text-foreground">
             {t("slogan")}
           </h2>

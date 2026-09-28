@@ -1,6 +1,5 @@
 import { useAuthContext } from "@nebutra/auth/react/context";
-import { brand } from "@nebutra/brand/metadata";
-import { publicAssetUrl } from "@nebutra/brand/metadata-helpers";
+import { BrandMark, BrandWordmark } from "@nebutra/brand";
 import {
   Analytics,
   ArrowRight,
@@ -223,8 +222,8 @@ const NEXT_STEPS: ReadonlyArray<{ icon: Icon; title: string; body: string; comma
   {
     icon: Key,
     title: "Take a capability live",
-    body: "Copy a provider key from .env.example into .env.local, then restart the preview.",
-    command: "pnpm dev",
+    body: "Add the keys a capability needs to .env.local, restart the preview, and check what went live.",
+    command: "nebutra status",
   },
   {
     icon: Database,
@@ -234,7 +233,7 @@ const NEXT_STEPS: ReadonlyArray<{ icon: Icon; title: string; body: string; comma
   },
 ];
 
-function Hero() {
+function Hero({ keysNeeded }: { keysNeeded: number }) {
   const { isSignedIn, user } = useAuthContext();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -255,12 +254,7 @@ function Hero() {
     <AnimateIn preset="emerge">
       <section className="space-y-8">
         <div className="flex flex-wrap items-center gap-3">
-          <img
-            src={publicAssetUrl("brand/logo/logo-color.svg")}
-            alt=""
-            className="size-9 rounded-[var(--radius-md)]"
-            draggable={false}
-          />
+          <BrandMark size={36} />
           <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-neutral-6 bg-neutral-2 px-3 py-1 text-xs text-neutral-11">
             <span className="relative flex size-2">
               <span className="absolute -inset-1 rounded-full bg-success opacity-25" />
@@ -270,13 +264,18 @@ function Hero() {
             <span aria-hidden="true">·</span>
             <span>{demo ? "local database" : "your database"}</span>
             <span aria-hidden="true">·</span>
-            <span>0 keys needed</span>
+            <span>
+              {keysNeeded === 0
+                ? "no keys needed"
+                : `${keysNeeded} ${keysNeeded === 1 ? "capability needs" : "capabilities need"} a key`}
+            </span>
           </span>
         </div>
 
         <div className="space-y-4">
           <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-neutral-12 md:text-6xl">
-            {brand.name} <span className="text-neutral-10">is running locally</span>
+            <BrandWordmark height={48} className="mr-[0.25em] h-[0.74em] w-auto align-baseline" />
+            <span className="text-neutral-10">is running locally</span>
           </h1>
           <p className="max-w-2xl text-lg text-neutral-11">
             The product app, the site and the API are up on this machine. Every capability runs
@@ -434,9 +433,10 @@ function NextSteps() {
 
 function WelcomeRoute() {
   const capabilities = readCapabilities();
+  const keysNeeded = capabilities?.filter((row) => row.state === "missing-key").length ?? 0;
   return (
     <div className="mx-auto w-full max-w-content space-y-20 px-4 py-12 md:px-6 md:py-20">
-      <Hero />
+      <Hero keysNeeded={keysNeeded} />
       <Capabilities rows={capabilities} />
       <NextSteps />
       <p className="text-center text-xs text-neutral-10">
