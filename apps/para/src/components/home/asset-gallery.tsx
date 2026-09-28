@@ -84,14 +84,17 @@ export function AssetGallery({
 
       {all.length > 0 ? (
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <Tabs
-            aria-label="Filter by type"
-            variant="secondary"
-            size="sm"
-            value={active}
-            onValueChange={(v) => setTab(v as GalleryTab)}
-            tabs={tabs.map((t) => ({ value: t.value, title: t.label }))}
-          />
+          {/* Tabs fills its container; the wrapper sizes it to its triggers so search shares the row. */}
+          <div className="min-w-0">
+            <Tabs
+              aria-label="Filter by type"
+              variant="secondary"
+              size="sm"
+              value={active}
+              onValueChange={(v) => setTab(v as GalleryTab)}
+              tabs={tabs.map((t) => ({ value: t.value, title: t.label }))}
+            />
+          </div>
           <Input
             aria-label={`Search ${heading.toLowerCase()}`}
             placeholder="Search"
