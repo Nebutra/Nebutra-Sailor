@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { GeneratorState, Job } from "@/domain/types";
-import { gatewayApi, isGatewayMode } from "@/lib/gateway-api";
+import { GatewayError, gatewayApi, isGatewayMode } from "@/lib/gateway-api";
 import { assets } from "@/mock/data";
 import { useEditorStore } from "./editor-store";
 
@@ -80,8 +80,15 @@ export const useJobsStore = create<JobsState>((set, get) => ({
           })
           .catch((e: unknown) => {
             // Pre-admission rejection (credits, quota, origin down): terminal on the node, shown inline.
-            const message = e instanceof Error ? e.message : "Generation was rejected";
-            const error = { type: "rejected", message, retryable: true };
+            // A short wallet gets its own type so the node can offer the way to top up.
+            const error =
+              e instanceof GatewayError && e.status === 402
+                ? { type: "insufficient_credits", message: "Not enough credits", retryable: true }
+                : {
+                    type: "rejected",
+                    message: e instanceof Error ? e.message : "Generation was rejected",
+                    retryable: true,
+                  };
             set({
               jobs: get().jobs.map((j) => (j.id === id ? { ...j, status: "failed", error } : j)),
             });
