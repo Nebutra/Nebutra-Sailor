@@ -16,11 +16,22 @@ const emptyDoc = (): WorkspaceDocument => ({
 });
 
 let wsSeq = 1;
+let projectSeq = 1;
 
 export const api = {
   listProjects: (): Promise<Project[]> => latency([...projects]),
   getProject: (id: string): Promise<Project | null> =>
     latency(projects.find((p) => p.id === id) ?? null),
+  /** Zero-step create (A): the caller names it or it is "Untitled project"; newest first. */
+  createProject: (name = "Untitled project"): Promise<Project> => {
+    const project: Project = {
+      id: `p-${Date.now().toString(36)}-${projectSeq++}`,
+      name,
+      updatedAt: new Date().toISOString(),
+    };
+    projects.unshift(project);
+    return latency(project);
+  },
   listWorkspaces: (projectId: string): Promise<Workspace[]> =>
     latency(workspaces.filter((w) => w.projectId === projectId)),
   getWorkspace: (projectId: string, workspaceId: string): Promise<Workspace | null> =>
