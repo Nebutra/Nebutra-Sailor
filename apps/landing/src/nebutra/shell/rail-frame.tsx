@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { PageTransition } from "@/components/site-shell/page-transition";
 import { usePathname } from "@/i18n/navigation";
 import { pageAt } from "@/site-map";
 
@@ -22,7 +23,7 @@ export function RailFrame({
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       {header}
-      <div className="flex-1">{children}</div>
+      <PageTransition>{children}</PageTransition>
       {footer}
     </div>
   );

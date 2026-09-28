@@ -11,6 +11,7 @@ import { normalizeReferralCode } from "@nebutra/waitlist";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { type ReactNode, Suspense } from "react";
 import {
   ReferWaitlistForm,
   type ReferWaitlistFormCopy,
@@ -54,13 +55,29 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
 }
 
+/**
+ * The referral code is the only request-time input on this page, so only what
+ * depends on it waits for `searchParams`, each behind its own small boundary
+ * whose fallback is the no-code rendering. The rest of the page is static and
+ * in the HTML in place (scripts/verify-landing-ssr.mjs).
+ */
+async function WithReferralCode({
+  searchParams,
+  render,
+}: {
+  searchParams: ReferPageProps["searchParams"];
+  render: (code: string | null) => ReactNode;
+}) {
+  const query = await searchParams;
+  return render(normalizeReferralCode(firstParam(query.code)));
+}
+
 export default async function ReferPage({ params, searchParams }: ReferPageProps) {
-  const [{ lang }, query] = await Promise.all([params, searchParams]);
+  const { lang } = await params;
   const locale = lang as Locale;
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "refer" });
-  const initialCode = normalizeReferralCode(firstParam(query.code));
   const formCopy: ReferWaitlistFormCopy = {
     emailLabel: t("form.emailLabel"),
     emailPlaceholder: t("form.emailPlaceholder"),
@@ -120,6 +137,10 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
     },
   ] as const;
 
+  const signal = (code: string | null) =>
+    code ? t("signal.codeDetected", { code }) : t("signal.direct");
+  const form = (code: string | null) => <ReferWaitlistForm copy={formCopy} initialCode={code} />;
+
   return (
     <main id="main-content" className="flex-1 overflow-x-hidden bg-background text-foreground">
       <section className="relative isolate overflow-hidden border-b border-border px-6 pb-12 pt-24 md:pb-20 md:pt-36">
@@ -148,16 +169,18 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground">
                   <ArrowRight aria-hidden="true" className="h-4 w-4 text-warning-strong" />
-                  {initialCode
-                    ? t("signal.codeDetected", { code: initialCode })
-                    : t("signal.direct")}
+                  <Suspense fallback={signal(null)}>
+                    <WithReferralCode searchParams={searchParams} render={signal} />
+                  </Suspense>
                 </span>
               </div>
             </div>
           </AnimateIn>
 
           <AnimateIn preset="fadeUp" inView>
-            <ReferWaitlistForm copy={formCopy} initialCode={initialCode} />
+            <Suspense fallback={form(null)}>
+              <WithReferralCode searchParams={searchParams} render={form} />
+            </Suspense>
           </AnimateIn>
         </div>
       </section>

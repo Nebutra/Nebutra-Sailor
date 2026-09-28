@@ -3,15 +3,14 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { FinalCTA, PricingSection } from "@/components/landing";
 import { PricingComparisonTable } from "@/components/landing/pricing-comparison-table";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { getSiteUrl } from "@/lib/seo/site-routes";
-import { buildProductSchema } from "@/lib/seo/structured-data";
+import { canonicalUrlForLocale, getSiteUrl } from "@/lib/seo/site-routes";
+import { buildFaqPageSchema, buildProductSchema } from "@/lib/seo/structured-data";
 
 export async function generateMetadata({
   params,
@@ -47,22 +46,35 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
   const faq = await getTranslations({ locale: lang as Locale, namespace: "microLanding.faq" });
   type FaqTranslationKey = Parameters<typeof faq>[0];
 
+  // The canonical URL (no /en prefix for the default locale), not /${lang}/pricing.
+  const pageUrl = canonicalUrlForLocale(getSiteUrl(), lang, "/pricing");
+  const faqKeys = ["q1", "q2", "q3"] as const;
+
   const productLd = buildProductSchema({
     name: `${brand.name} Sailor`,
     description: pricing("description"),
-    url: `${getSiteUrl()}/${lang}/pricing`,
+    url: pageUrl,
     brand: brand.name,
     offers: {
       price: "0",
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
-      url: `${getSiteUrl()}/${lang}/pricing`,
+      url: pageUrl,
     },
   });
+
+  // The FAQ below, as data: answer engines quote FAQPage entries directly.
+  const faqLd = buildFaqPageSchema(
+    faqKeys.map((qKey) => ({
+      question: faq(`${qKey}.q` as FaqTranslationKey),
+      answer: faq(`${qKey}.a` as FaqTranslationKey),
+    })),
+  );
 
   return (
     <main id="main-content" className="flex-1 bg-background">
       <StructuredData data={productLd} id="pricing-product-jsonld" />
+      <StructuredData data={faqLd} id="pricing-faq-jsonld" />
 
       <section className="mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-8">
         {/* Header */}
@@ -86,9 +98,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
 
         {/* Pricing cards — 3 tier grid */}
         <div className="mt-16">
-          <Suspense fallback={<div className="h-96" aria-hidden />}>
-            <PricingSection hideHeader />
-          </Suspense>
+          <PricingSection hideHeader />
         </div>
 
         {/* Comparison Table — license tier breakdown */}
@@ -107,7 +117,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
             stagger="normal"
             className="mx-auto mt-12 max-w-3xl divide-y divide-border"
           >
-            {(["q1", "q2", "q3"] as const).map((qKey) => (
+            {faqKeys.map((qKey) => (
               <AnimateIn key={qKey} preset="fadeUp">
                 <details className="group py-6">
                   <summary className="flex cursor-pointer items-center justify-between text-left font-medium text-foreground">

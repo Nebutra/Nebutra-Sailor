@@ -219,7 +219,6 @@ const MISSING_STORY_ALLOWLIST: readonly string[] = [
   "BrandMark @ packages/design/ui/src/primitives/brand-mark.tsx",
   "BulkActionConfirmDialog @ packages/design/ui/src/primitives/confirm-dialog.tsx",
   "ChartLegend @ packages/design/ui/src/primitives/chart.tsx",
-  "ClientXPostCard @ packages/design/ui/src/primitives/x-post-card.tsx",
   "CodeBlockLanguageIcon @ packages/design/ui/src/primitives/code-block-language-icon.tsx",
   "Collapsible @ packages/design/ui/src/primitives/collapsible.tsx",
   "ConfirmDeleteDialog @ packages/design/ui/src/primitives/confirm-dialog.tsx",

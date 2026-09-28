@@ -34,20 +34,12 @@
         "count": 1
       },
       {
-        "file": "packages/design/ui/src/primitives/display-cards.stories.tsx",
-        "count": 2
-      },
-      {
         "file": "packages/design/ui/src/primitives/dithering-background.tsx",
         "count": 1
       },
       {
         "file": "packages/design/ui/src/primitives/gauge.tsx",
         "count": 2
-      },
-      {
-        "file": "packages/design/ui/src/primitives/globe.tsx",
-        "count": 1
       },
       {
         "file": "packages/design/ui/src/primitives/input-otp.tsx",
@@ -2319,7 +2311,6 @@
       "packages/design/tokens/src/brand-package/presets/vercel.ts": "Another design language's own palette; overlap with House hex is coincidence, not a copy.",
       "packages/design/tokens/src/brand-package/presets/generic.ts": "Another design language's own palette; overlap with House hex is coincidence, not a copy.",
       "scripts/lint-token-mirrors.mjs": "This guard.",
-      "packages/design/ui/src/primitives/safari.tsx": "Draws Safari's own window chrome; its greys are Apple's, not ours.",
       "apps/router/src/components/brand-marks.tsx": "Per-product cover washes — art direction for each product card, not token restatements.",
       "scripts/verify-brand-token-sync.ts": "The brand:apply drift verifier: names the values it asserts."
     },
@@ -2337,9 +2328,6 @@
       "packages/design/ui/src/catalog/demos/border-trail-demo.tsx": {
         "palette": 3
       },
-      "packages/design/ui/src/catalog/demos/canvas-reveal-effect-demo.tsx": {
-        "palette": 1
-      },
       "packages/design/ui/src/catalog/demos/card-spotlight-demo.tsx": {
         "palette": 2
       },
@@ -2348,9 +2336,6 @@
       },
       "packages/design/ui/src/catalog/demos/dialog-success-demo.tsx": {
         "palette": 2
-      },
-      "packages/design/ui/src/catalog/demos/display-cards-demo.tsx": {
-        "palette": 6
       },
       "packages/design/ui/src/catalog/demos/dotted-map-demo.tsx": {
         "palette": 1

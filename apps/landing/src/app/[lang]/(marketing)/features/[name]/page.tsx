@@ -75,6 +75,13 @@ function scopeLabel(group: string, locale: "en" | "zh") {
   return COPY.govScopeGlobal[locale];
 }
 
+/**
+ * Params outside generateStaticParams render on demand as a blocking route
+ * rather than streaming behind a <Suspense> fallback: a streamed page reaches a
+ * reader without JavaScript as its fallback (scripts/verify-landing-ssr.mjs).
+ */
+export const instant = false;
+
 export function generateStaticParams() {
   // Same predicate the sitemap uses — one definition of "worth indexing", so
   // the prerender set and the published set cannot drift apart.

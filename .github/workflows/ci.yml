@@ -69,6 +69,7 @@ jobs:
             landing:
               - 'apps/landing/**'
               - 'packages/**'
+              - 'scripts/verify-landing-ssr.mjs'
             studio:
               - 'apps/studio/**'
               - 'packages/**'
@@ -570,6 +571,29 @@ jobs:
           # validation when SKIP_ENV_VALIDATION isn't honored inside the build
           # worker (t3-env reads process.env at module load, build workers may
           # not inherit env reliably).
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
+
+      # ── Landing readable without JavaScript ─────────────────────────────
+      # AI crawlers and HTML-to-text extractors run no JavaScript and drop
+      # `hidden` elements. React 19 streams a completed <Suspense> boundary out
+      # of line once the document passes ~12.8 KB (fallback in place, content in
+      # a `<div hidden>`), so a page-level boundary made every page read as
+      # "Loading…" to them while browsers looked fine. This serves the build
+      # the step above produced and asserts each public route's no-JS text:
+      # h1, known copy, prices, title/description/canonical, JSON-LD.
+      - name: Landing readable without JavaScript
+        if: needs.detect-changes.outputs.landing == 'true'
+        run: |
+          if [ ! -f apps/landing/.next/BUILD_ID ]; then
+            echo "apps/landing was not built by the affected filter — nothing to serve."
+            exit 0
+          fi
+          node scripts/verify-landing-ssr.mjs
+        env:
+          SKIP_ENV_VALIDATION: "true"
+          AUTH_PROVIDER: "better-auth"
+          NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
       # The css-var-types job below audits BUILT stylesheets — Tailwind

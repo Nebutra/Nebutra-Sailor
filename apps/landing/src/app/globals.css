@@ -24,6 +24,34 @@
 /* Typography plugin — enables prose classes for legal/content pages */
 @plugin "@tailwindcss/typography";
 
+/* The site menu (nebutra/shell/site-menu.tsx): its lines rise in one after
+ * another as it opens (delays set inline), and a section's panel slides in
+ * beside the first level. Entrance curve; reduced motion shows them at rest. */
+.site-menu-in {
+  animation: site-menu-in var(--duration-reveal) var(--ease-out) both;
+}
+.site-menu-panel {
+  animation: site-menu-panel var(--duration-reveal) var(--ease-out) both;
+}
+@keyframes site-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes site-menu-panel {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-menu-in,
+  .site-menu-panel {
+    animation: none;
+  }
+}
+
 /* Prose reads its colours from the semantic tokens, so it follows whatever the
  * page is wearing: light, dark, or a Brand Package such as the Nebutra site's
  * void, which is dark without a `.dark` class. The plugin's own palettes
@@ -50,6 +78,25 @@
   --tw-prose-pre-bg: hsl(var(--muted));
   --tw-prose-th-borders: hsl(var(--border));
   --tw-prose-td-borders: hsl(var(--border));
+}
+
+/* A page change (PageTransition): the incoming page rises in on the entrance
+ * curve while the frame holds still. Entrance only — the outgoing page is
+ * replaced at once, as the page it becomes is already the answer. */
+.site-page-enter {
+  animation: site-page-enter var(--duration-cinematic) var(--ease-out) both;
+}
+@keyframes site-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-page-enter {
+    animation: none;
+  }
 }
 /*---break---
  */

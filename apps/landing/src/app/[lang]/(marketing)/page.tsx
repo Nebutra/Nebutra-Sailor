@@ -1,6 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { NewsletterForm } from "@/components/landing/NewsletterForm";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { EssayFeature, essays, FEATURED, toCard } from "@/nebutra/home/essay-feature";
@@ -50,17 +49,13 @@ export default async function SiteHome({ params }: { params: Promise<{ lang: str
       </section>
 
       <Band>
-        <Suspense>
-          <EssayFeature />
-        </Suspense>
+        <EssayFeature />
       </Band>
 
       <Band>
         <Intro title="Latest" cn="最新文章" />
         <div className="mt-12">
-          <Suspense>
-            <Latest />
-          </Suspense>
+          <Latest />
         </div>
         <More href={ROUTES.journal}>All essays</More>
       </Band>
