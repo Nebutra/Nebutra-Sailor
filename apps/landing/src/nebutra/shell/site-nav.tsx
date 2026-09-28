@@ -18,7 +18,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { ROUTES } from "@/nebutra/routes";
 import { SiteMenu } from "@/nebutra/shell/site-menu";
-import { SECTIONS, SITE_MAP } from "@/site-map";
+import { pageAt, SECTIONS, SITE_MAP } from "@/site-map";
 
 /**
  * a16z-style chrome: a thin top bar — the mono mark top-left opens the
@@ -33,6 +33,8 @@ const CLOSE_DELAY_MS = 240;
 
 export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: string }) {
   const pathname = usePathname() ?? "";
+  // A full-viewport tool keeps the bar but gives the screen back to the tool.
+  const compact = pageAt(pathname)?.chrome === "tool";
   // "hover" closes when the pointer leaves; "pinned" stays until dismissed.
   const [open, setOpen] = useState<false | "hover" | "pinned">(false);
   const [searching, setSearching] = useState(false);
@@ -77,7 +79,12 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
 
   return (
     <>
-      <header className="sticky top-0 z-40 grid h-16 grid-cols-[1fr_auto_1fr] items-center bg-background/85 px-3 backdrop-blur-xl sm:px-5">
+      <header
+        className={cn(
+          "sticky top-0 z-40 grid shrink-0 grid-cols-[1fr_auto_1fr] items-center bg-background/85 px-3 backdrop-blur-xl sm:px-5",
+          compact ? "h-12 border-border/80 border-b" : "h-16",
+        )}
+      >
         <div className="flex items-center" onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
           <Button
             type="button"
@@ -92,7 +99,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
               setOpen((o) => (o === "pinned" ? false : "pinned"));
             }}
           >
-            <Logomark variant="mono" size={24} inverted />
+            <Logomark variant="mono" size={compact ? 20 : 24} inverted />
           </Button>
         </div>
 
@@ -102,7 +109,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
           className="flex items-center justify-center"
         >
           {/* The official wordmark, reversed for the void — never the name typed in a font. */}
-          <Logo variant="en" size={112} inverted />
+          <Logo variant="en" size={compact ? 88 : 112} inverted />
         </Link>
 
         <div className="flex items-center justify-end">

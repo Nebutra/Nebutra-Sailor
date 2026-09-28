@@ -80,6 +80,8 @@ describe("pageAt", () => {
     expect(pageAt("/solutions/china-vc/abc")?.path).toBe("/solutions/china-vc/[id]");
     expect(pageAt("/blog/tag/ai")?.path).toBe("/blog/tag/[tag]");
     expect(pageAt("/sailor/studio/frame")?.chrome).toBe("bare");
+    // Studio is a tool: top bar, no footer, the rest of the viewport.
+    expect(pageAt("/sailor/studio")?.chrome).toBe("tool");
     // The status page sits in the site frame; it carries no brand header of its own.
     expect(pageAt("/status")?.chrome).toBeUndefined();
     expect(pageAt("/nowhere")).toBeUndefined();

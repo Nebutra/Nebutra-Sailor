@@ -97,8 +97,10 @@ export interface SitePage {
    * How the layout frames the page. Omitted = the site navigation and footer.
    * "over-dark": the page opens on a dark hero, so the navigation starts dark.
    * "bare": the page draws its own frame (the Studio canvas frame).
+   * "tool": a full-viewport tool (Sailor Studio): a compact top bar, no footer,
+   * and the page fills the rest of the screen instead of scrolling it.
    */
-  chrome?: "over-dark" | "bare";
+  chrome?: "over-dark" | "bare" | "tool";
   /**
    * Listed under its section in the rail. The rail shows sections; a page
    * without this is reached from its section's own pages, the footer, or not
@@ -172,6 +174,7 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Sailor Studio", zh: "Sailor Studio" },
     status: "live",
     template: false,
+    chrome: "tool",
   },
   {
     // The document Studio's Components view renders in; part of the Studio page.

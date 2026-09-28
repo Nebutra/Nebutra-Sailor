@@ -16,13 +16,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 /**
  * Sailor Studio — where a project's look is chosen (ADR 2026-09-27 Sailor
- * Studio). A tool, so it takes the full height of the viewport beside the rail.
+ * Studio). A tool: the site map gives it `chrome: "tool"`, so the frame hands
+ * it everything under the top bar, and it fills that instead of scrolling.
  */
 export default async function StudioPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang);
   return (
-    <section className="flex h-dvh min-h-0 flex-col" aria-label="Sailor Studio">
+    <section className="flex min-h-0 flex-1 flex-col" aria-label="Sailor Studio">
       <StudioWorkbench />
     </section>
   );
