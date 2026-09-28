@@ -11,26 +11,24 @@
  * charge twice, and two pollers that both see a failed job cannot refund twice — the second
  * insert violates the constraint and its transaction rolls back.
  *
- * Price: Para credits sell at 1,000 for USD 9.99 (ops/nebutra/offers.json), so a credit is about
- * one cent: an image is 10 credits (USD 0.10), a text turn 1. Competitors price one image per
+ * Price (defaults in @nebutra/billing/prices): Para credits sell at 1,000 for USD 9.99
+ * (ops/nebutra/offers.json), so a credit is about one cent: an image is 10 credits (USD 0.10), a
+ * text turn 1. Competitors price one image per
  * model — Lovart 1–15 credits, Seko 1–7 (research/competitors/{lovart/business/generation,
  * seko/business/jobs}.md) — on credits of their own value, so the number is ours, not copied.
  * Every mode is overridable per deployment without a code change.
  */
 
 import { deductCredits, refundCredits } from "@nebutra/billing";
+import { PARA_CREDITS_PER_OUTPUT } from "@nebutra/billing/prices";
 import type { ParaGeneratorInput } from "./para-origin.js";
 
 export const PARA_WALLET_PRODUCT = "para" as const;
 
-const DEFAULT_CREDITS: Record<ParaGeneratorInput["mode"], number> = {
-  image: 10,
-  text: 1,
-  // Not generated yet — the origin fails these closed — but priced so a future provider cannot
-  // ship free by accident.
-  video: 100,
-  audio: 20,
-};
+// The defaults the canvas quotes from too (@nebutra/billing/prices), so "✦10" before Generate and
+// the 10 taken after it are one number. The env overrides below are server-only by design.
+const DEFAULT_CREDITS: Readonly<Record<ParaGeneratorInput["mode"], number>> =
+  PARA_CREDITS_PER_OUTPUT;
 
 const ENV_KEYS: Record<ParaGeneratorInput["mode"], string> = {
   image: "PARA_CREDITS_PER_IMAGE",
