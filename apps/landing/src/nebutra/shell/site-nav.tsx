@@ -1,22 +1,7 @@
 "use client";
 
 import { Logo, Logomark } from "@nebutra/brand";
-import {
-  BookOpen,
-  Box,
-  Buildings,
-  Envelope,
-  MagnifyingGlass,
-  TerminalWindow,
-  Users,
-} from "@nebutra/icons";
-import {
-  SidebarNav,
-  type SidebarNavIcon,
-  type SidebarNavItem,
-  type SidebarNavRenderLinkProps,
-  type SidebarNavSection,
-} from "@nebutra/ui/patterns";
+import { MagnifyingGlass } from "@nebutra/icons";
 import {
   Button,
   CommandDialog,
@@ -31,8 +16,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "@/i18n/navigation";
-import { ROUTES, SECTION_PATH } from "@/nebutra/routes";
-import { pageAt, SECTIONS, SERVED_PAGES, type SectionId, SITE_MAP } from "@/site-map";
+import { ROUTES } from "@/nebutra/routes";
+import { SiteMenu } from "@/nebutra/shell/site-menu";
+import { SECTIONS, SITE_MAP } from "@/site-map";
 
 /**
  * a16z-style chrome: a thin top bar — the mono mark top-left opens the
@@ -41,76 +27,9 @@ import { pageAt, SECTIONS, SERVED_PAGES, type SectionId, SITE_MAP } from "@/site
  * slides the drawer out; leaving it slides it back. A click pins it open,
  * which is also how touch screens and keyboards reach it.
  */
-const ICONS: Partial<Record<SectionId, SidebarNavIcon>> = {
-  journal: BookOpen,
-  sailor: TerminalWindow,
-  sleptons: Users,
-  building: Box,
-  company: Buildings,
-};
-
 /** Hover intent: a pointer crossing the mark on its way elsewhere opens nothing. */
 const OPEN_DELAY_MS = 120;
 const CLOSE_DELAY_MS = 240;
-
-const within = (pathname: string, path: string) =>
-  pathname === path || pathname.startsWith(`${path}/`);
-
-/**
- * The rail's content, shared by the desktop rail and the phone sheet. A
- * section with pages marked `rail` in the site map opens into them, its own
- * index first; the section holding the current page starts open.
- */
-function railSections(pathname: string): SidebarNavSection[] {
-  const here = pageAt(pathname)?.section;
-  return [
-    {
-      id: "site",
-      items: SECTIONS.filter((s) => s.nav).map((s) => {
-        const pages = SERVED_PAGES.filter((p) => p.section === s.id && p.rail);
-        const item: SidebarNavItem = {
-          id: s.id,
-          label: s.title.en,
-          href: SECTION_PATH[s.id],
-          icon: ICONS[s.id],
-          isActive: here === s.id,
-        };
-        if (pages.length === 0) return item;
-        const children: SidebarNavItem[] = [
-          {
-            id: `${s.id}-index`,
-            label: "Overview",
-            href: SECTION_PATH[s.id],
-            isActive: pathname === SECTION_PATH[s.id],
-          },
-          ...pages.map((p) => ({
-            id: p.path,
-            label: p.title.en,
-            href: p.path,
-            isActive: within(pathname, p.path),
-          })),
-        ];
-        return { ...item, children };
-      }),
-    },
-  ];
-}
-
-const railFooter = (mailto: string): SidebarNavItem[] => [
-  { id: "founder", label: "Write to the founder", href: mailto, icon: Envelope },
-];
-
-function railLink({ href, children, className, onClick, ...aria }: SidebarNavRenderLinkProps) {
-  return href.startsWith("mailto:") ? (
-    <a href={href} className={className} onClick={onClick} {...aria}>
-      {children}
-    </a>
-  ) : (
-    <Link href={href} className={className} onClick={onClick} {...aria}>
-      {children}
-    </Link>
-  );
-}
 
 export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: string }) {
   const pathname = usePathname() ?? "";
@@ -136,7 +55,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
   const close = useCallback(() => {
     clear();
     setOpen(false);
-  }, []);
+  }, [clear]);
 
   // A destination reached closes the drawer.
   // biome-ignore lint/correctness/useExhaustiveDependencies: the path is the trigger.
@@ -154,7 +73,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
     return () => window.removeEventListener("keydown", onKey);
   }, [close]);
 
-  useEffect(() => clear, []);
+  useEffect(() => clear, [clear]);
 
   return (
     <>
@@ -205,7 +124,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         aria-hidden
         onClick={close}
         className={cn(
-          "fixed inset-0 z-40 bg-background/40 backdrop-blur-[2px] motion-safe:transition-opacity motion-safe:duration-flow",
+          "fixed inset-0 z-40 bg-background/60 motion-safe:transition-opacity motion-safe:duration-flow",
           open === "pinned" ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       />
@@ -217,24 +136,17 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         onMouseLeave={hoverClose}
         className={cn(
           // overscroll-contain: scrolling the drawer never scrolls the page behind it (Stripe does the same).
-          "fixed inset-y-0 left-0 z-50 w-64 overscroll-contain border-r border-border bg-background shadow-ambient-lg",
+          "fixed inset-y-0 left-0 z-50 max-w-[100vw] overflow-y-auto overscroll-contain border-r border-border bg-background shadow-ambient-lg",
           "motion-safe:transition-transform motion-safe:duration-flow motion-safe:ease-brand",
           open ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <SidebarNav
-          navLabel="Site"
-          sections={railSections(pathname)}
-          renderLink={railLink}
-          footerItems={railFooter(mailto)}
-          header={
-            <div className="flex h-16 items-center pl-3">
-              <Link href={ROUTES.home} aria-label={brandName} onClick={close}>
-                <Logo variant="en" size={104} inverted />
-              </Link>
-            </div>
-          }
-          className="h-dvh"
+        <SiteMenu
+          open={Boolean(open)}
+          pathname={pathname}
+          mailto={mailto}
+          onNavigate={close}
+          onClose={close}
         />
       </aside>
 
