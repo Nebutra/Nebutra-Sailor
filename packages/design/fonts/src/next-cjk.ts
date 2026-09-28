@@ -2,16 +2,16 @@
  * @nebutra/fonts/next/cjk — the self-hosted brand faces (server-only).
  *
  * The Latin brand face lives here through `next/font/local` so first-party apps work
- * offline, in CI and in the network sandbox (`next/font/google` fails there):
+ * offline, in CI and in the network sandbox (the registry in `./next` is local too):
  *
  *  - MiSans — the Simplified-Chinese face — is CDN-hosted; see <CjkFontFace /> below.
  *  - DM Sans — the Latin display/heading face (SIL OFL). Chosen the same day
  *    from the same measurement (DeepSeek, Databricks). Body/UI Latin stays
  *    Geist: its tabular figures are what dense dashboard tables need.
  *
- * WHY A SEPARATE ENTRY FROM `./next`: that module declares ~16
- * `next/font/google` faces for the theme / DESIGN.md registry; importing it for
- * the brand faces would drag those build-time downloads into every app. `./next`
+ * WHY A SEPARATE ENTRY FROM `./next`: that module declares 19
+ * faces for the theme / DESIGN.md registry; importing it for the brand faces
+ * would put all of them into every app's CSS. `./next`
  * re-exports this file, so an app already applying `fontRegistryClassName`
  * still needs one import.
  *

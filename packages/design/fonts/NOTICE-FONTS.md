@@ -17,6 +17,18 @@ have its appearance altered. Licence text: `vendor/misans/LICENSE.txt`.
 This software uses the **DM Sans** typeface, licensed under the SIL Open Font
 License 1.1. Licence text: `vendor/dm-sans/OFL.txt`.
 
+## Theme / DESIGN.md registry faces
+
+`src/next.ts` loads 19 faces from `@fontsource-variable/*` npm packages
+(Fontsource, version 5.3.0), each licensed under the **SIL Open Font License
+1.1**, which permits use, embedding and redistribution, including bundling with
+software: Inter, Inter Tight, Space Grotesk, Playfair Display, Source Serif 4,
+Fraunces, JetBrains Mono, Manrope, Sora, Work Sans, DM Sans, Plus Jakarta Sans,
+Outfit, Figtree, Montserrat, Lexend, Fira Code, Roboto Mono, Source Code Pro.
+Each package carries its licence text (`LICENSE`) and copyright notice; the
+font binaries are not copied into this package — they are installed as
+dependencies and emitted into the app's build by `next/font/local`.
+
 ## Distribution
 
 The DM Sans subset (`generated/dm-sans.woff2`) is committed so

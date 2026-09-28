@@ -4,8 +4,8 @@ Status: **WIP** — not yet published to npm.
 
 The Simplified-Chinese face is wired into every Next app that loads Geist (web,
 landing, design-docs, sailor-docs, admin, forge, router, sleptons, typelens,
-mail-preview). The theme / DESIGN.md registry (the ~16 Google faces) is still used
-only by `apps/web`.
+mail-preview). The theme / DESIGN.md registry (19 OSS faces) is applied by
+`apps/web`, `apps/landing` and `apps/design`.
 
 Self-hosted fonts for Nebutra: the CJK body face, plus an OSS font registry for
 themes and imported DESIGN.md font families.
@@ -19,9 +19,10 @@ The package has three entries:
   also keeps it working in a network-sandboxed dev server. **This is the one every
   app needs.**
 - `@nebutra/fonts/next` is server-only and declares the build-time
-  `next/font/google` registry faces plus the combined registry class name. It
-  re-exports the CJK face, but importing it just for that would drag ~16 Google
-  font downloads into the app — use `./next/cjk`.
+  registry faces (`next/font/local` over `@fontsource-variable/*` packages — no
+  network at build or dev time) plus the combined registry class name. It
+  re-exports the CJK face, but importing it just for that would pull 19 faces
+  into the app's CSS — use `./next/cjk`.
 
 ## Installation
 
@@ -180,17 +181,34 @@ Both licences are separate from this package's MIT licence. See
 
 ## Registered Families
 
-The registry includes Geist, Inter, Space Grotesk, Playfair Display, JetBrains
-Mono, Manrope, Sora, Work Sans, DM Sans, Plus Jakarta Sans, Outfit, Figtree,
-Montserrat, Lexend, Fira Code, Roboto Mono, and Source Code Pro.
+The registry includes Geist, Inter, Inter Tight, Space Grotesk, Playfair
+Display, Source Serif 4, Fraunces, JetBrains Mono, Manrope, Sora, Work Sans, DM
+Sans, Plus Jakarta Sans, Outfit, Figtree, Montserrat, Lexend, Fira Code, Roboto
+Mono, and Source Code Pro.
 
 ## Runtime Model
 
-`next/font` downloads and self-hosts Google fonts at build time. At runtime,
-the browser requests fonts from the application origin only when an element
-uses the corresponding CSS variable.
+Every face is a file that arrives with `pnpm install`: the registry loads the
+Latin, upright, `wght`-axis variable build from its `@fontsource-variable/*`
+package through `next/font/local`, so `next build` and `next dev` never contact
+fonts.googleapis.com / fonts.gstatic.com. That matters wherever Google is
+unreachable — mainland China, corporate proxies, offline machines — where
+`next/font/google` failed the build and made the Turbopack dev server answer
+500. npm packages come through any registry mirror (npmmirror in China).
+
+The files are Google Fonts' own builds as republished by Fontsource (same font
+version, same axis; shaping checked glyph by glyph against what
+`next/font/google` downloaded) and the `@font-face` family names are Google's,
+so pages render pixel-identically. Only the Latin subset is shipped — the one
+the registry declared and preloaded; characters outside it fall back to the
+metric-matched system font. `scripts/lint-no-google-fonts.mjs` (in `pnpm lint`)
+keeps `next/font/google` out of every file the template ships.
+
+At runtime the browser requests fonts from the application origin only when an
+element uses the corresponding CSS variable.
 
 ## License
 
-MIT for first-party code. DM Sans is SIL OFL 1.1. MiSans binaries are never
+MIT for first-party code. DM Sans and every registry face are SIL OFL 1.1
+(see `NOTICE-FONTS.md`). MiSans binaries are never
 committed or published to npm; they are served from the deployment's asset CDN.

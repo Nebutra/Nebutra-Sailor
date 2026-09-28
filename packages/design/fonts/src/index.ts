@@ -28,7 +28,7 @@ export const FONT_REGISTRY: Record<string, string> = {
   // Latin away from Geist. DM Sans is the Latin display/heading face.
   misans: "--font-misans",
   "dm sans display": "--font-dm-sans",
-  // Self-hosted via next/font/google (see ./next)
+  // Self-hosted via next/font/local over @fontsource-variable/* (see ./next)
   inter: "--font-inter",
   "inter tight": "--font-reg-inter-tight",
   "space grotesk": "--font-space-grotesk",

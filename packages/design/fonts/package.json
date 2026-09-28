@@ -75,6 +75,25 @@
     "build": "tsup"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "5.3.0",
+    "@fontsource-variable/figtree": "5.3.0",
+    "@fontsource-variable/fira-code": "5.3.0",
+    "@fontsource-variable/fraunces": "5.3.0",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/inter-tight": "5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/lexend": "5.3.0",
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource-variable/montserrat": "5.3.0",
+    "@fontsource-variable/outfit": "5.3.0",
+    "@fontsource-variable/playfair-display": "5.3.0",
+    "@fontsource-variable/plus-jakarta-sans": "5.3.0",
+    "@fontsource-variable/roboto-mono": "5.3.0",
+    "@fontsource-variable/sora": "5.3.0",
+    "@fontsource-variable/source-code-pro": "5.3.0",
+    "@fontsource-variable/source-serif-4": "5.3.0",
+    "@fontsource-variable/space-grotesk": "5.3.0",
+    "@fontsource-variable/work-sans": "5.3.0",
     "@nebutra/brand": "workspace:*"
   },
   "devDependencies": {
