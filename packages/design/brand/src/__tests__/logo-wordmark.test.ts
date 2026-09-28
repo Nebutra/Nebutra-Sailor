@@ -29,6 +29,8 @@ describe("Logo for a brand without logo files", () => {
   it("keeps the official SVGs for a brand that has them", async () => {
     vi.resetModules();
     const { Logo } = await import("../components/Logo");
-    expect(renderToStaticMarkup(createElement(Logo, { variant: "en", size: 120 }))).toContain("<img");
+    expect(renderToStaticMarkup(createElement(Logo, { variant: "en", size: 120 }))).toContain(
+      "<img",
+    );
   });
 });
