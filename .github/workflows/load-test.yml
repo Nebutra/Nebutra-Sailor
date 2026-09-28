@@ -2,8 +2,6 @@ name: Load Test
 
 on:
   # Run a weekly smoke check on Monday 02:00 UTC (off-peak hours).
-  schedule:
-    - cron: "0 2 * * 1"
   # Allow manual trigger with scenario selection
   workflow_dispatch:
     inputs:
