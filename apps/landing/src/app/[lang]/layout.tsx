@@ -23,8 +23,8 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getPublicNavigationItems } from "@/lib/seo/site-routes";
 import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
 import { SITE_ID } from "@/site.config";
-import { SITE_BRAND } from "@/site-theme";
 import { SITE_SEO, siteMetadata } from "@/site-meta";
+import { SITE_BRAND } from "@/site-theme";
 import { fontVariables } from "../fonts";
 import { Providers } from "../providers";
 
