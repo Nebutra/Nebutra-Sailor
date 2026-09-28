@@ -23,6 +23,34 @@
 
 /* Typography plugin — enables prose classes for legal/content pages */
 @plugin "@tailwindcss/typography";
+
+/* Prose reads its colours from the semantic tokens, so it follows whatever the
+ * page is wearing: light, dark, or a Brand Package such as the Nebutra site's
+ * void, which is dark without a `.dark` class. The plugin's own palettes
+ * (prose-gray, dark:prose-invert) key off that class and painted gray-900
+ * headings on the void. Unlayered on purpose, so it beats the plugin's rules in
+ * @layer utilities. An attribute selector, not `.prose`: Tailwind folds a
+ * plain `.prose` rule into the plugin's own and this block disappears from
+ * the build without a word. */
+[class~="prose"] {
+  --tw-prose-body: hsl(var(--foreground) / 0.86);
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-lead: hsl(var(--muted-foreground));
+  --tw-prose-links: hsl(var(--ring));
+  --tw-prose-bold: hsl(var(--foreground));
+  --tw-prose-counters: hsl(var(--muted-foreground));
+  --tw-prose-bullets: hsl(var(--muted-foreground));
+  --tw-prose-hr: hsl(var(--border));
+  --tw-prose-quotes: hsl(var(--foreground));
+  --tw-prose-quote-borders: hsl(var(--border));
+  --tw-prose-captions: hsl(var(--muted-foreground));
+  --tw-prose-kbd: hsl(var(--foreground));
+  --tw-prose-code: hsl(var(--foreground));
+  --tw-prose-pre-code: hsl(var(--foreground));
+  --tw-prose-pre-bg: hsl(var(--muted));
+  --tw-prose-th-borders: hsl(var(--border));
+  --tw-prose-td-borders: hsl(var(--border));
+}
 /*---break---
  */
 @custom-variant dark (&:is(.dark *));

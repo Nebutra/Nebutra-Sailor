@@ -51,6 +51,20 @@ describe("site map", () => {
     for (const p of SITE_MAP) expect(ids.has(p.section), p.path).toBe(true);
   });
 
+  it("the rail lists live, linkable pages only — and keeps Sailor's product pages in reach", () => {
+    const rail = SITE_MAP.filter((p) => p.rail);
+    for (const p of rail) {
+      expect(p.status, `${p.path} is in the rail but ${p.status}`).toBe("live");
+      expect(p.path, `${p.path} is a pattern, not a page`).not.toMatch(/\[/);
+      expect(p.chrome, `${p.path} draws its own frame`).not.toBe("bare");
+    }
+    // These were unreachable from the site's navigation once the rail replaced
+    // the top nav (2026-09-28).
+    for (const path of ["/features", "/pricing", "/changelog", "/sailor/studio"]) {
+      expect(listed.get(path)?.rail, path).toBe(true);
+    }
+  });
+
   it("Ideas belongs to Sleptons — it is the UGC of ideas and needs, not the essays", () => {
     expect(listed.get("/ideas")?.section).toBe("sleptons");
     expect(SECTIONS.find((s) => s.id === "journal")?.path).toBe("/blog");

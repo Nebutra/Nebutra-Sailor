@@ -49,21 +49,33 @@ function markTooltipOpened() {
   for (const listener of skipDelayListeners) listener();
 }
 
-function shouldSkipDelay() {
-  return Date.now() - lastTooltipOpenAt < SKIP_DELAY_WINDOW_MS;
-}
-
+/**
+ * Whether a tooltip opened within the skip window. The clock is read only in
+ * effects, never while rendering: a render-time Date.now() makes Next's
+ * prerender (cacheComponents) give up on the nearest Suspense boundary and
+ * ship it client-rendered. Through SidebarNav's TooltipProvider that was every
+ * page of nebutra.com — the server HTML carried only "Loading…".
+ */
 function useSkipDelay() {
-  const [, tick] = React.useReducer((count: number) => count + 1, 0);
+  const [skip, setSkip] = React.useState(false);
 
   React.useEffect(() => {
-    skipDelayListeners.add(tick);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const sync = () => {
+      const left = SKIP_DELAY_WINDOW_MS - (Date.now() - lastTooltipOpenAt);
+      setSkip(left > 0);
+      clearTimeout(timer);
+      if (left > 0) timer = setTimeout(() => setSkip(false), left);
+    };
+    sync();
+    skipDelayListeners.add(sync);
     return () => {
-      skipDelayListeners.delete(tick);
+      skipDelayListeners.delete(sync);
+      clearTimeout(timer);
     };
   }, []);
 
-  return shouldSkipDelay();
+  return skip;
 }
 
 const TooltipInstantContext = React.createContext(false);
