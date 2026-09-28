@@ -64,11 +64,11 @@ describe("generator config ownership", () => {
     editor().updateGenerator("a", { mode: "video" });
     expect(editor().document?.nodes.a?.generator?.model).toBe("Auto");
 
-    editor().updateGenerator("a", { model: "wan2.5" });
-    expect(editor().document?.nodes.a?.generator?.model).toBe("wan2.5");
+    editor().updateGenerator("a", { model: "wan-2.7" });
+    expect(editor().document?.nodes.a?.generator?.model).toBe("wan-2.7");
 
     // A planned model is on the roster but no seat serves it: the store will not hold it.
-    editor().updateGenerator("a", { model: "Kling 3" });
+    editor().updateGenerator("a", { model: "kling-3" });
     expect(editor().document?.nodes.a?.generator?.model).toBe("Auto");
 
     // The guard belongs to the store, so a caller that bypasses the panel is corrected too —

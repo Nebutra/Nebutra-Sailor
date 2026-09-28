@@ -98,9 +98,16 @@ export function NodeConfig({ node, width }: { node: WorkspaceNode; width: number
   const aspect = String(params.aspect ?? model.aspects?.[0] ?? "16:9");
   const resolution = String(params.resolution ?? model.resolutions?.[0] ?? "");
   const duration =
-    typeof params.duration === "number" ? params.duration : (model.durations?.[0] ?? 5);
-  // TODO(integration): pass duration — generationCost gains a duration argument for per-second video.
-  const est = generationCost(mode, count);
+    typeof params.duration === "number"
+      ? params.duration
+      : (model.defaultDuration ?? model.durations?.[0] ?? 5);
+  // Video is priced per second of the chosen model at the chosen resolution — the gateway snaps
+  // and charges from the same table, so this is the number that will leave the wallet.
+  const est = generationCost(mode, count, {
+    model: g.model,
+    durationSeconds: duration,
+    resolution,
+  });
   const busy = node.status === "queued" || node.status === "running";
   const isMedia = mode === "image" || mode === "video";
 
