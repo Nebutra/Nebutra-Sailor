@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { setRequestLocale } from "next-intl/server";
@@ -30,8 +31,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   return buildPageMetadata({
-    title: "Nebutra Status",
-    description: "Live operational status for Nebutra public services.",
+    title: `${brand.name} Status`,
+    description: `Live operational status for ${brand.name} public services.`,
     path: "/status",
     locale: lang as Locale,
   });
