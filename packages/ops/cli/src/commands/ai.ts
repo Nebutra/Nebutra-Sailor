@@ -280,10 +280,22 @@ function summarizeAiConfig(config: NebutraConfig) {
   };
 }
 
-function getCommandOptions(options: CommanderOptionSource): Record<string, unknown> {
+function getCommandOptions(
+  options: CommanderOptionSource,
+  command?: { optsWithGlobals?: () => Record<string, unknown> },
+): Record<string, unknown> {
   const local = typeof options.opts === "function" ? options.opts() : options;
+  // `--format` (and `--yes`, `--quiet`) are also global root-program options,
+  // so a user-supplied value binds there, not to this subcommand's local
+  // option — `options.optsWithGlobals` is never a function (`options` is a
+  // plain object; only the Command instance has that method), so prefer
+  // reading it off `command` when the caller passes one.
   const withGlobals =
-    typeof options.optsWithGlobals === "function" ? options.optsWithGlobals() : local;
+    typeof command?.optsWithGlobals === "function"
+      ? command.optsWithGlobals()
+      : typeof options.optsWithGlobals === "function"
+        ? options.optsWithGlobals()
+        : local;
   const format = local.format ?? withGlobals.format ?? readFormatFromArgv();
 
   return {
@@ -768,8 +780,8 @@ export function registerAiCommand(program: Command) {
     .command("list")
     .description("List supported and enabled AI providers")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleProviderList({
         format: commandOptions.format as string | undefined,
         interactive: commandOptions.yes !== true,
@@ -781,8 +793,8 @@ export function registerAiCommand(program: Command) {
     .description("Enable one or more runtime AI providers in nebutra.config.json")
     .option("--env", "Print required environment variable placeholders")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (providers: string[], options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (providers: string[], options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleProviderEnable(providers, {
         env: commandOptions.env === true,
         format: commandOptions.format as string | undefined,
@@ -794,8 +806,8 @@ export function registerAiCommand(program: Command) {
     .command("disable <providers...>")
     .description("Disable one or more runtime AI providers in nebutra.config.json")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (providers: string[], options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (providers: string[], options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleProviderDisable(providers, {
         format: commandOptions.format as string | undefined,
         interactive: commandOptions.yes !== true,
@@ -808,8 +820,8 @@ export function registerAiCommand(program: Command) {
     .command("init")
     .description("Initialize the local AI gateway governance block")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleGatewayInit({
         format: commandOptions.format as string | undefined,
         interactive: commandOptions.yes !== true,
@@ -820,8 +832,8 @@ export function registerAiCommand(program: Command) {
     .command("status")
     .description("Show local AI gateway governance status")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleGatewayStatus({
         format: commandOptions.format as string | undefined,
         interactive: commandOptions.yes !== true,
@@ -836,8 +848,8 @@ export function registerAiCommand(program: Command) {
     .requiredOption("--policy <policy>", "Routing policy id")
     .requiredOption("--fallback <list>", "Comma-separated provider:model fallback chain")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (name: string, options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (name: string, options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleRouteSet(name, {
         policy: commandOptions.policy as string | undefined,
         fallback: commandOptions.fallback as string | undefined,
@@ -850,8 +862,8 @@ export function registerAiCommand(program: Command) {
     .command("list")
     .description("List configured AI routes")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleRouteList({
         format: commandOptions.format as string | undefined,
         interactive: commandOptions.yes !== true,
@@ -863,8 +875,8 @@ export function registerAiCommand(program: Command) {
     .description("List configured AI models and providers")
     .option("--dry-run", "Preview without making changes")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleAiModels({
         dryRun: commandOptions.dryRun === true,
         format: commandOptions.format as string | undefined,
@@ -877,8 +889,8 @@ export function registerAiCommand(program: Command) {
     .description("List available agents in the project")
     .option("--dry-run", "Preview without making changes")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleAiAgents({
         dryRun: commandOptions.dryRun === true,
         format: commandOptions.format as string | undefined,
@@ -891,8 +903,8 @@ export function registerAiCommand(program: Command) {
     .description("Send a test prompt to the default AI model (requires running API gateway)")
     .option("--dry-run", "Preview without executing")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (prompt: string, options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (prompt: string, options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleAiTest(prompt, {
         dryRun: commandOptions.dryRun === true,
         format: commandOptions.format as string | undefined,
@@ -905,8 +917,8 @@ export function registerAiCommand(program: Command) {
     .description("Show current AI configuration and provider status")
     .option("--dry-run", "Preview without making changes")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const commandOptions = getCommandOptions(options);
+    .action(async (options, command: Command) => {
+      const commandOptions = getCommandOptions(options, command);
       await handleAiConfig({
         dryRun: commandOptions.dryRun === true,
         format: commandOptions.format as string | undefined,

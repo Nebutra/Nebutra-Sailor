@@ -504,8 +504,12 @@ export function registerI18nCommand(program: Command) {
     .description("Synchronize language translations across the project")
     .option("--dry-run", "Preview changes without executing")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options, command: Command) => {
+      // `--format` is also a global root-program option, so a user-supplied
+      // value binds there, not to this subcommand's local option — read it
+      // via `command.optsWithGlobals()`, not `options.optsWithGlobals?.()`
+      // (which is always undefined; `options` is a plain object).
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleI18nSync({
         dryRun: options.dryRun || false,
         format: options.format || globalOptions.format,
@@ -518,8 +522,8 @@ export function registerI18nCommand(program: Command) {
     .command("validate")
     .description("Validate all locale files for missing or extra keys")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options, command: Command) => {
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleI18nValidate({
         format: options.format || globalOptions.format,
         interactive: globalOptions.yes !== true,
@@ -532,8 +536,8 @@ export function registerI18nCommand(program: Command) {
     .description("Add a new locale with template files (e.g. 'en', 'es', 'zh-CN')")
     .option("--dry-run", "Preview what would be created without writing files")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (locale: string, options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (locale: string, options, command: Command) => {
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleI18nAdd(locale, {
         dryRun: options.dryRun || false,
         format: options.format || globalOptions.format,
@@ -546,8 +550,8 @@ export function registerI18nCommand(program: Command) {
     .command("status")
     .description("Show translation coverage per locale and app")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options, command: Command) => {
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleI18nStatus({
         format: options.format || globalOptions.format,
         interactive: globalOptions.yes !== true,

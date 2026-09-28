@@ -206,8 +206,12 @@ export function registerBrandCommand(program: Command) {
     .description("Initialize brand system configuration")
     .option("--dry-run", "Preview changes without executing")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options, command: Command) => {
+      // `--format` is also a global root-program option, so a user-supplied
+      // value binds there, not to this subcommand's local option — read it
+      // via `command.optsWithGlobals()`, not `options.optsWithGlobals?.()`
+      // (which is always undefined; `options` is a plain object).
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleBrandInit({
         dryRun: options.dryRun || false,
         format: options.format || globalOptions.format,
@@ -221,8 +225,8 @@ export function registerBrandCommand(program: Command) {
     .description("Apply brand configuration to the project")
     .option("--dry-run", "Preview changes without executing")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options, command: Command) => {
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleBrandApply({
         dryRun: options.dryRun || false,
         format: options.format || globalOptions.format,
@@ -238,8 +242,8 @@ export function registerBrandCommand(program: Command) {
     .option("--secondary <hex>", "Secondary brand color (hex format, e.g. #0BF1C3)")
     .option("--dry-run", "Preview changes without executing")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options, command: Command) => {
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleBrandPalette({
         primary: options.primary,
         secondary: options.secondary,
@@ -255,8 +259,8 @@ export function registerBrandCommand(program: Command) {
     .description("Synchronize brand tokens across all packages")
     .option("--dry-run", "Preview changes without executing")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options, command: Command) => {
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleBrandSync({
         dryRun: options.dryRun || false,
         format: options.format || globalOptions.format,
@@ -270,8 +274,8 @@ export function registerBrandCommand(program: Command) {
     .description("Verify brand token consistency across the project")
     .option("--dry-run", "Preview changes without executing")
     .option("--format <type>", "Output format: json or plain")
-    .action(async (options) => {
-      const globalOptions = options.optsWithGlobals?.() || options;
+    .action(async (options, command: Command) => {
+      const globalOptions = command.optsWithGlobals?.() || options;
       await handleBrandVerify({
         dryRun: options.dryRun || false,
         format: options.format || globalOptions.format,

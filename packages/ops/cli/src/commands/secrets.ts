@@ -358,16 +358,16 @@ export function registerSecretsCommand(program: Command): void {
     .option("--since <date>", "Audit log start date (ISO 8601)")
     .option("--limit <n>", "Maximum audit log entries (default: 50)")
     .action(
-      async (
-        verb: string,
-        args: string[],
-        options: SecretsCommandOptions & { optsWithGlobals?: () => SecretsCommandOptions },
-      ) => {
-        const globalOptions = options.optsWithGlobals?.();
+      async (verb: string, args: string[], options: SecretsCommandOptions, command: Command) => {
+        // `--format` is also a global root-program option, so a user-supplied
+        // value binds there, not to this subcommand's local option — read it
+        // via `command.optsWithGlobals()`, not `options.optsWithGlobals?.()`
+        // (which is always undefined; `options` is a plain object).
+        const globalOptions = command.optsWithGlobals?.() as SecretsCommandOptions | undefined;
         const mergedOptions: SecretsCommandOptions = {
           dryRun: options.dryRun || globalOptions?.dryRun,
           yes: options.yes || globalOptions?.yes,
-          format: (options.format || globalOptions?.format) as "json" | "plain" | "table",
+          format: (globalOptions?.format || options.format) as "json" | "plain" | "table",
           tenant: options.tenant || globalOptions?.tenant,
           unmask: options.unmask || false,
           description: options.description,
