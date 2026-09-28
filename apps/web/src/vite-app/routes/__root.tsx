@@ -1,17 +1,9 @@
 import { useAuthContext } from "@nebutra/auth/react/context";
 import { BrandMark, BrandWordmark } from "@nebutra/brand";
-import { brand } from "@nebutra/brand/metadata";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Button } from "@nebutra/ui/primitives";
 import { createRootRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { SidebarProvider } from "@/components/navigation/sidebar-context";
-
-const appNav = [
-  // The preview's start page, only while `pnpm dev` runs the local preview.
-  ...(import.meta.env.VITE_SAILOR_PREVIEW ? [{ to: "/welcome", label: "Get started" }] : []),
-  { to: "/startup-os", label: "Startup OS" },
-  { to: "/settings", label: "Settings" },
-  { to: "/billing", label: "Billing" },
-] as const;
+import { APP_HOME, APP_NAV, AppDevtools } from "@/vite-app/app-shell";
 
 /**
  * Routes that render for signed-out visitors, outside the product shell. "/"
@@ -27,7 +19,7 @@ function ProductShell() {
   if (!isLoaded) {
     return (
       <main className="grid min-h-dvh place-items-center bg-neutral-1 text-neutral-12">
-        <p className="text-sm text-neutral-11">Loading session...</p>
+        <p className="text-sm text-neutral-11">Loading…</p>
       </main>
     );
   }
@@ -44,19 +36,13 @@ function ProductShell() {
     return (
       <main className="grid min-h-dvh place-items-center bg-neutral-1 px-6 text-neutral-12">
         <section className="w-full max-w-md rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-2 p-6">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-neutral-10">
-            Product App
-          </p>
-          <h1 className="mt-3 text-2xl font-semibold">Sign in to continue</h1>
+          <h1 className="text-2xl font-semibold">Sign in to continue</h1>
           <p className="mt-2 text-sm text-neutral-11">
-            Authentication stays behind the existing provider-agnostic {brand.name} auth facade.
+            Your session has ended, or you haven't signed in on this device.
           </p>
-          <a
-            className="mt-5 inline-flex rounded-[var(--radius-md)] bg-neutral-12 px-4 py-2 text-sm font-medium text-neutral-1"
-            href="/sign-in"
-          >
-            Continue
-          </a>
+          <Button asChild variant="ink" className="mt-5">
+            <a href="/sign-in">Sign in</a>
+          </Button>
         </section>
       </main>
     );
@@ -67,18 +53,14 @@ function ProductShell() {
       <div className="min-h-dvh bg-neutral-1 text-neutral-12">
         <header className="sticky top-0 z-30 border-neutral-7 border-b bg-neutral-1/90 backdrop-blur">
           <div className="mx-auto flex h-14 w-full max-w-wide items-center justify-between px-4">
-            <Link
-              to="/startup-os"
-              className="inline-flex h-8 items-center"
-              aria-label="Open product home"
-            >
+            <Link to={APP_HOME} className="inline-flex h-8 items-center" aria-label="Home">
               <span className="inline-flex items-center gap-2 text-neutral-12">
                 <BrandMark size={20} />
                 <BrandWordmark height={16} />
               </span>
             </Link>
             <nav className="flex items-center gap-1" aria-label="Product">
-              {appNav.map((item) => (
+              {APP_NAV.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
@@ -93,20 +75,16 @@ function ProductShell() {
               <span className="hidden max-w-[12rem] truncate sm:inline">
                 {user?.name ?? user?.email ?? "Account"}
               </span>
-              <button
-                type="button"
-                className="rounded-[var(--radius-sm)] border border-neutral-7 px-3 py-1.5 text-neutral-12"
-                onClick={() => void signOut()}
-              >
+              <Button type="button" variant="outline" size="sm" onClick={() => void signOut()}>
                 Sign out
-              </button>
+              </Button>
             </div>
           </div>
         </header>
         <main className="mx-auto w-full max-w-wide px-4 py-6">
           <Outlet />
         </main>
-        {import.meta.env.DEV ? <ReactQueryDevtools initialIsOpen={false} /> : null}
+        <AppDevtools />
       </div>
     </SidebarProvider>
   );

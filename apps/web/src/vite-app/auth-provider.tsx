@@ -3,7 +3,16 @@ import {
   type AuthContextValue,
   createUnauthenticatedAuthContext,
 } from "@nebutra/auth/react/context";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  use,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { resolveApiUrl } from "@/lib/api/browser-client";
 import { getViteAuthProvider } from "@/vite-app/app-env";
 
@@ -70,51 +79,76 @@ async function loadSession(): Promise<SessionPayload | null> {
   return (await response.json().catch(() => null)) as SessionPayload | null;
 }
 
+/**
+ * Re-reads the session after something changed it here — a new display name,
+ * say — so the header and every other reader of the auth context catch up
+ * without a page load. Resolves once the new session is in place.
+ */
+const SessionReloadContext = createContext<() => Promise<void>>(async () => undefined);
+
+export function useReloadSession(): () => Promise<void> {
+  return use(SessionReloadContext);
+}
+
 export function BrowserAuthProvider({ children }: { children: ReactNode }) {
   const provider = getViteAuthProvider();
   const [authState, setAuthState] = useState<AuthContextValue>(() =>
     createUnauthenticatedAuthContext(provider, false),
   );
+  // Bumped on every load, so a slow response never overwrites a newer one.
+  const generation = useRef(0);
+
+  const reloadSession = useCallback(async () => {
+    const current = ++generation.current;
+    try {
+      const sessionPayload = await loadSession();
+      if (current !== generation.current) return;
+      setAuthState({
+        ...createUnauthenticatedAuthContext(provider, true),
+        ...normalizeSession(sessionPayload),
+        provider,
+        isLoaded: true,
+        getToken: async () => null,
+        signOut: async () => {
+          await fetch(resolveApiUrl("/api/auth/sign-out"), {
+            method: "POST",
+            credentials: "include",
+          }).catch(() => undefined);
+          setAuthState(createUnauthenticatedAuthContext(provider, true));
+        },
+        setActiveOrganization: async (orgId: string) => {
+          await fetch(resolveApiUrl("/api/organizations/active"), {
+            method: "POST",
+            credentials: "include",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ organizationId: orgId }),
+          });
+        },
+      });
+    } catch {
+      // A failed first load reads as signed out; a failed reload keeps what
+      // the page already shows rather than signing the user out.
+      if (current === generation.current) {
+        setAuthState((previous) =>
+          previous.isLoaded ? previous : createUnauthenticatedAuthContext(provider, true),
+        );
+      }
+    }
+  }, [provider]);
 
   useEffect(() => {
-    let cancelled = false;
-
-    loadSession()
-      .then((sessionPayload) => {
-        if (cancelled) return;
-        setAuthState({
-          ...createUnauthenticatedAuthContext(provider, true),
-          ...normalizeSession(sessionPayload),
-          provider,
-          isLoaded: true,
-          getToken: async () => null,
-          signOut: async () => {
-            await fetch(resolveApiUrl("/api/auth/sign-out"), {
-              method: "POST",
-              credentials: "include",
-            }).catch(() => undefined);
-            setAuthState(createUnauthenticatedAuthContext(provider, true));
-          },
-          setActiveOrganization: async (orgId: string) => {
-            await fetch(resolveApiUrl("/api/organizations/active"), {
-              method: "POST",
-              credentials: "include",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify({ organizationId: orgId }),
-            });
-          },
-        });
-      })
-      .catch(() => {
-        if (!cancelled) setAuthState(createUnauthenticatedAuthContext(provider, true));
-      });
-
+    void reloadSession();
     return () => {
-      cancelled = true;
+      // Unmounted: whatever is in flight is stale.
+      generation.current += 1;
     };
-  }, [provider]);
+  }, [reloadSession]);
 
   const value = useMemo(() => authState, [authState]);
 
-  return <AuthContextProvider value={value}>{children}</AuthContextProvider>;
+  return (
+    <SessionReloadContext value={reloadSession}>
+      <AuthContextProvider value={value}>{children}</AuthContextProvider>
+    </SessionReloadContext>
+  );
 }

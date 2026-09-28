@@ -931,10 +931,6 @@
         "count": 4
       },
       {
-        "file": "apps/landing/src/components/landing/LogoStrip.tsx",
-        "count": 4
-      },
-      {
         "file": "apps/landing/src/components/landing/navbar/MobileDrawer.tsx",
         "count": 4
       },
@@ -1527,10 +1523,6 @@
         "count": 1
       },
       {
-        "file": "apps/landing/src/components/landing/faq-section.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/landing/src/components/landing/features/showcases/agent-runtime-showcase.tsx",
         "count": 1
       },
@@ -1652,10 +1644,6 @@
       },
       {
         "file": "apps/web/src/components/webhooks/webhooks-list.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/vite-app/routes/__root.tsx",
         "count": 1
       },
       {
@@ -2000,10 +1988,6 @@
         "count": 1
       },
       {
-        "file": "apps/landing/src/components/landing/faq-section.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/landing/src/components/landing/features/showcases/audit-showcase.tsx",
         "count": 1
       },
@@ -2225,14 +2209,6 @@
       },
       {
         "file": "apps/web/src/components/startup-os/startup-thread-panel.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/vite-app/routes/__root.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/vite-app/routes/settings.tsx",
         "count": 1
       }
     ]
