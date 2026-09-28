@@ -973,12 +973,6 @@ export function StudioWorkbench() {
             ref={panelBodyRef}
             className="studio-panel-body min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-4 pb-6"
           >
-            {/* The cookie question lands here, not on the canvas (cookie-consent-banner.tsx). */}
-            <div
-              id={CONSENT_SLOT_ID}
-              data-ready={ready ? "" : undefined}
-              className="mb-4 empty:hidden"
-            />
             <div className="mb-4">
               <h2 className="font-semibold text-foreground text-base">{current.title}</h2>
               <p className="mt-1 text-muted-foreground text-xs">{current.hint}</p>
@@ -1011,6 +1005,13 @@ export function StudioWorkbench() {
                 Next: {nextStep.label.toLowerCase()}
               </Button>
             ) : null}
+            {/* The cookie question lands here — after the step, never on the canvas
+                and never ahead of the work (cookie-consent-banner.tsx). */}
+            <div
+              id={CONSENT_SLOT_ID}
+              data-ready={ready ? "" : undefined}
+              className="mt-6 empty:hidden"
+            />
           </div>
         </aside>
         <PreviewCanvas
