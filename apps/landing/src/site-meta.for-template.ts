@@ -10,6 +10,12 @@ export const SITE_SEO = {
   siteName: brand.name,
   description: say(SITE.meta.description, "en"),
   softwareDescription: say(SITE.meta.description, "en"),
+  /** The product is the customer's own application, served from this site's domain. */
+  software: {
+    name: brand.name,
+    applicationCategory: "BusinessApplication",
+    url: `https://${brand.domains.landing}`,
+  } as { name?: string; applicationCategory?: string; url?: string },
 };
 
 /** The default title and description for a locale. */

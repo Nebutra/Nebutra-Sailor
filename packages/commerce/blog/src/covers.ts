@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import type { BlogPostWithSource, ResolvedBlogCover } from "./types";
 
@@ -15,7 +16,20 @@ function landingCoverSrc(file: string): string {
   return `${origin}/landing/images/blog/covers/${file}`;
 }
 
-export const DEFAULT_BLOG_COVER = landingCoverSrc("nebutra-default.png");
+/** `<brand>-default.png` in the brand's asset bucket ("nebutra-default.png" for Nebutra). */
+export const DEFAULT_BLOG_COVER = landingCoverSrc(
+  `${brand.name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}-default.png`,
+);
+
+/**
+ * The cover of a sample post (source "fallback": the site has no CMS yet).
+ * The site's own generated brand card (app/opengraph-image), because a new
+ * project's asset bucket holds no cover images.
+ */
+export const SAMPLE_POST_COVER = "/opengraph-image";
 
 export const BLOG_COVER_BY_TRANSLATION_KEY: Record<string, string> = {
   "nebutra-sailor-why-exists": landingCoverSrc("nebutra-sailor-exists.png"),
@@ -80,7 +94,10 @@ export function resolveBlogCover(
   },
   options: { alt?: string | null; imageUrl?: string | null } = {},
 ): ResolvedBlogCover {
-  const fallback = getFallbackBlogCover(post);
+  const fallback: BlogCover =
+    post.source === "fallback"
+      ? { alt: `${post.title} cover`, src: SAMPLE_POST_COVER }
+      : getFallbackBlogCover(post);
   const primarySrc = options.imageUrl?.trim();
   const hasPrimary = isUsableBlogImageUrl(primarySrc);
   const alt = options.alt?.trim() || fallback.alt;

@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { brand } from "@nebutra/brand/metadata";
-import { getServerClient } from "@nebutra/sanity/client";
+import { getServerClient, isSanityConfigured } from "@nebutra/sanity/client";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getSessionFromRequest, getUserById } from "@/lib/auth";
@@ -98,6 +98,15 @@ export async function GET(req: NextRequest) {
   }
 
   const { user, viewer } = await getViewer(req);
+  // Comments and reactions live in the CMS. Without one (a new project's
+  // sample posts) there are none yet — an answer, not a failure.
+  if (!isSanityConfigured) {
+    return NextResponse.json({
+      comments: [],
+      reactions: { likeCount: 0, saveCount: 0, viewerLiked: false, viewerSaved: false },
+      viewer,
+    });
+  }
   const client = getServerClient();
   const [comments, reactions] = await Promise.all([
     client.fetch(

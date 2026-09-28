@@ -118,7 +118,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   // registry publishes it in zero locales and this is noindex,follow.
   return buildPageMetadata({
     title: `${authorLabel} — ${brand.name} Blog`,
-    description: `Posts by ${authorLabel} on the Nebutra blog.`,
+    description: `Posts by ${authorLabel} on the ${brand.name} blog.`,
     path: `/blog/author/${author}`,
     locale: lang as Locale,
   });

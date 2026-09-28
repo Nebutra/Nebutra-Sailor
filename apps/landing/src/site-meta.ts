@@ -11,6 +11,8 @@ export const SITE_SEO = {
   siteName: `${brand.name} Sailor`,
   description: seoContent.description,
   softwareDescription: "The Startup Agent OS — ship global SaaS in days, not months",
+  /** Fields replacing buildSoftwareApplicationJsonLd()'s; none on this site. */
+  software: {} as { name?: string; applicationCategory?: string; url?: string },
 };
 
 /** The default title and description for a locale. */

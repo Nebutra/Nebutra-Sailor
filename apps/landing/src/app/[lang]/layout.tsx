@@ -79,6 +79,7 @@ const jsonLd = [
   },
   {
     ...softwareBase,
+    ...SITE_SEO.software,
     description: SITE_SEO.softwareDescription,
     offers: {
       "@type": "Offer",
