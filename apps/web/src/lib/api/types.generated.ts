@@ -7933,6 +7933,18 @@ export interface operations {
           };
         };
       };
+      /** @description The para wallet cannot pay for the approved generation */
+      402: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+            code: string;
+          };
+        };
+      };
       /** @description Not found */
       404: {
         headers: {
