@@ -91,6 +91,8 @@ async function recordOutput(job: Job): Promise<void> {
       origin: "generated",
       jobId: job.id,
       ...(editor.documentId ? { workspaceId: editor.documentId } : {}),
+      // Without the project the asset cannot open its workspace from the gallery on Home.
+      ...(editor.projectId ? { projectId: editor.projectId } : {}),
     });
     useEditorStore.getState().completeNode(job.nodeId, asset.id, job.id);
   } catch (e) {

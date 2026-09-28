@@ -32,12 +32,15 @@ export interface AgentRun {
 interface UiState {
   activeDrawer: ActiveDrawer;
   commandOpen: boolean;
+  /** A node whose prompt should take focus the next time its config mounts (seeded workspaces). */
+  promptFocusNodeId: string | null;
   agent: AgentRun;
   /** project-scoped threads (B) — mock */
   threads: AgentThread[];
   setDrawer: (drawer: ActiveDrawer) => void;
   toggleDrawer: (drawer: Exclude<ActiveDrawer, null>) => void;
   setCommandOpen: (open: boolean) => void;
+  setPromptFocus: (nodeId: string | null) => void;
   setAgent: (patch: Partial<AgentRun>) => void;
   addContextNode: (id: string) => void;
   removeContextNode: (id: string) => void;
@@ -64,11 +67,13 @@ const idleAgent: AgentRun = {
 export const useUiStore = create<UiState>((set, get) => ({
   activeDrawer: null,
   commandOpen: false,
+  promptFocusNodeId: null,
   agent: idleAgent,
   threads: [],
   setDrawer: (drawer) => set({ activeDrawer: drawer }),
   toggleDrawer: (drawer) => set({ activeDrawer: get().activeDrawer === drawer ? null : drawer }),
   setCommandOpen: (open) => set({ commandOpen: open }),
+  setPromptFocus: (nodeId) => set({ promptFocusNodeId: nodeId }),
   setAgent: (patch) => set({ agent: { ...get().agent, ...patch } }),
   addContextNode: (id) => {
     const a = get().agent;
