@@ -2,16 +2,10 @@
 
 import { glass } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
+import { useLogoPlate } from "@nebutra/ui/hooks";
 import { cn } from "@nebutra/ui/utils";
 import { useMemo, useState } from "react";
-import { LOGO_PLATES } from "@/lib/constants/logo-plates.generated";
 import { vcMonogram } from "@/lib/constants/vc";
-
-/** The computed plate for a curated logo, looked up by its public path. */
-function plateFor(src: string) {
-  const key = src.match(/logos\/[^?#]+\.png/)?.[0];
-  return key ? LOGO_PLATES[key] : undefined;
-}
 
 const SIZE = {
   md: { box: "size-11", text: "text-sm" },
@@ -35,19 +29,18 @@ export function VcLogo({
 }) {
   const [errored, setErrored] = useState(false);
   const s = SIZE[size];
+  // The plate is computed from the image in the browser (useLogoPlate): the
+  // logo's own background when it has one, else whichever tinted near-white or
+  // near-black its marks contrast with more. Nothing is kept per logo.
+  const plate = useLogoPlate(src && !errored ? src : null);
 
   const glassUri = useMemo(() => createAvatar(glass, { seed: name, size: 96 }).toDataUri(), [name]);
 
   if (src && !errored) {
-    // The plate is computed from the image (scripts/gen-logo-plates.mjs): the
-    // logo's own background when it has one, else whichever tinted near-white
-    // or near-black its marks contrast with more. A white mark no longer sits
-    // on white.
-    const plate = plateFor(src);
     return (
       <span
         className={cn(
-          "flex shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-border/60 p-1.5",
+          "flex shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-muted p-1.5 transition-colors duration-flow",
           s.box,
         )}
         style={plate ? { backgroundColor: plate.plate } : undefined}
@@ -55,6 +48,8 @@ export function VcLogo({
         {/* biome-ignore lint/performance/noImgElement: small static avatar — next/image adds no value */}
         <img
           src={src}
+          // Same CORS mode as useLogoPlate's read, so both share one download.
+          crossOrigin="anonymous"
           alt={`${name} logo`}
           loading="lazy"
           onError={() => setErrored(true)}
