@@ -126,7 +126,11 @@ export const PARA_VIDEO_FALLBACK_CREDITS_PER_SECOND = 20;
 export function parseDurationSeconds(value: unknown): number | null {
   if (typeof value === "number") return Number.isFinite(value) ? value : null;
   if (typeof value !== "string") return null;
-  const match = /^\s*(\d+(?:\.\d+)?)\s*s?\s*$/i.exec(value);
+  // Trim first and cap the length, so the pattern has no two whitespace runs to split input
+  // between — `\s*s?\s*$` backtracked polynomially on long whitespace (CodeQL js/polynomial-redos).
+  const text = value.trim();
+  if (text.length > 16) return null;
+  const match = /^(\d+(?:\.\d+)?) ?s?$/i.exec(text);
   return match ? Number(match[1]) : null;
 }
 

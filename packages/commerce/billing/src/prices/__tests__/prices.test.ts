@@ -73,6 +73,10 @@ describe("parseDurationSeconds", () => {
     expect(parseDurationSeconds("5s")).toBe(5);
     expect(parseDurationSeconds(" 7.5 s ")).toBe(7.5);
     expect(parseDurationSeconds("5 seconds")).toBeNull();
+    // Client input: a long whitespace run is refused outright, not backtracked over.
+    const started = performance.now();
+    expect(parseDurationSeconds(`0${"\t".repeat(50_000)}!`)).toBeNull();
+    expect(performance.now() - started).toBeLessThan(50);
     expect(parseDurationSeconds("-5")).toBeNull();
     expect(parseDurationSeconds(Number.NaN)).toBeNull();
     expect(parseDurationSeconds(null)).toBeNull();
