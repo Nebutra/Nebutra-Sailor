@@ -14,12 +14,22 @@ from typing import Any
 from app.tasks.models import StoredTask
 from app.uploads.persist import PersistError, persist_from_url
 from app.uploads.store import sanitize_filename
+from providers.audio import (
+    SpeechGenerationError,
+    SpeechRequest,
+    get_speech_provider,
+)
 from providers.base import ChatCompletionRequest, ChatMessage
 from providers.factory import get_default_provider
 from providers.image import (
     ImageGenerationError,
     ImageGenerationRequest,
     get_image_provider,
+)
+from providers.video import (
+    VideoGenerationError,
+    get_video_generator,
+    normalize_request,
 )
 
 ProgressFn = Callable[[int], Awaitable[None]]
@@ -78,12 +88,133 @@ async def _llm_generate(payload: dict[str, Any]) -> dict[str, Any]:
 # ── para.generate ─────────────────────────────────────────────────────────────
 # Payload (from backends/gateway routes/para):
 #   {workspaceId, nodeId, generator: {mode, model?, prompt?,
-#    params?: {aspect?, negative_prompt?, seed?},
+#    params?: {aspect?|ratio?, resolution?, duration?, negative_prompt?, seed?, voice?},
 #    references?: [{kind, id, url?}], count?}}
-# Result, image mode:
-#   {"assets": [{url, key, contentType, size}], "model", "provider", "usage"}
+# Result, image / video / audio mode:
+#   {"mode", "assets": [{url, key, contentType, size}], "model", "provider", "usage"}
+#   video usage carries {"seconds": n}; audio carries the provider's character count.
 # Result, text mode:  {"text", ...}
-# video / audio fail closed with `unsupported_mode` until a provider lands.
+
+
+def _reference_urls(generator: dict[str, Any]) -> tuple[str, ...]:
+    return tuple(
+        str(ref["url"])
+        for ref in (generator.get("references") or [])
+        if isinstance(ref, dict) and ref.get("url")
+    )
+
+
+def _asset_key(task: StoredTask, workspace_id: str, node_id: str, name: str) -> str:
+    return (
+        f"para/{sanitize_filename(task.tenant_id)}/{sanitize_filename(workspace_id)}/"
+        f"{sanitize_filename(node_id)}/{task.id}-{name}"
+    )
+
+
+async def _persist(url: str, key: str, content_type: str) -> dict[str, Any]:
+    try:
+        persisted = await persist_from_url(url, key, content_type=content_type)
+    except PersistError as exc:
+        raise TaskFailureError(exc.code, str(exc), retryable=exc.retryable) from exc
+    return {
+        "url": persisted.url,
+        "key": persisted.key,
+        "contentType": persisted.content_type,
+        "size": persisted.size,
+    }
+
+
+async def _para_video(
+    task: StoredTask,
+    progress: ProgressFn,
+    generator: dict[str, Any],
+    workspace_id: str,
+    node_id: str,
+) -> dict[str, Any]:
+    prompt = str(generator.get("prompt") or "").strip()
+    references = _reference_urls(generator)
+    if not prompt and not references:
+        raise TaskFailureError(
+            "invalid_payload", "prompt or a first-frame reference is required for video"
+        )
+    try:
+        adapter, spec = get_video_generator(
+            None if generator.get("model") in (None, "") else str(generator["model"])
+        )
+    except VideoGenerationError as exc:
+        raise TaskFailureError(exc.code, str(exc), retryable=exc.retryable) from exc
+
+    request = normalize_request(
+        spec,
+        prompt=prompt,
+        params=generator.get("params") or {},
+        # The first reference is the first frame; the rest are not used by video yet.
+        first_frame_url=references[0] if references else None,
+    )
+    await progress(5)
+    try:
+        generated = await adapter.generate(spec, request, progress)
+    except VideoGenerationError as exc:
+        raise TaskFailureError(exc.code, str(exc), retryable=exc.retryable) from exc
+    await progress(90)
+    asset = await _persist(
+        generated.url, _asset_key(task, workspace_id, node_id, "1.mp4"), "video/mp4"
+    )
+    return {
+        "mode": "video",
+        "assets": [asset],
+        "model": generated.model,
+        "vendorModel": generated.vendor_model,
+        "provider": generated.provider,
+        "usage": {**generated.usage, "seconds": generated.duration_seconds},
+        "params": {
+            "duration": request.duration_seconds,
+            "resolution": request.resolution,
+            "aspect": request.aspect,
+            "firstFrame": request.first_frame_url is not None,
+        },
+        "nodeId": node_id,
+        "workspaceId": workspace_id,
+    }
+
+
+async def _para_audio(
+    task: StoredTask,
+    progress: ProgressFn,
+    generator: dict[str, Any],
+    workspace_id: str,
+    node_id: str,
+) -> dict[str, Any]:
+    text = str(generator.get("prompt") or "").strip()
+    if not text:
+        raise TaskFailureError("invalid_payload", "prompt is required for audio")
+    params = generator.get("params") or {}
+    model = generator.get("model")
+    request = SpeechRequest(
+        text=text,
+        voice=str(params.get("voice") or "Cherry"),
+        model=None if model in (None, "", "Auto") else str(model),
+        language_type=str(params["language"]) if params.get("language") else None,
+    )
+    await progress(10)
+    try:
+        spoken = await get_speech_provider().synthesize(request)
+    except SpeechGenerationError as exc:
+        raise TaskFailureError(exc.code, str(exc), retryable=exc.retryable) from exc
+    await progress(70)
+    asset = await _persist(
+        spoken.url, _asset_key(task, workspace_id, node_id, "1.wav"), "audio/wav"
+    )
+    return {
+        "mode": "audio",
+        "assets": [asset],
+        "model": spoken.model,
+        "provider": spoken.provider,
+        "voice": spoken.voice,
+        "usage": spoken.usage,
+        "nodeId": node_id,
+        "workspaceId": workspace_id,
+    }
 
 
 async def handle_para_generate(
@@ -107,6 +238,10 @@ async def handle_para_generate(
         )
         return {**result, "mode": "text"}
 
+    if mode == "video":
+        return await _para_video(task, progress, generator, workspace_id, node_id)
+    if mode == "audio":
+        return await _para_audio(task, progress, generator, workspace_id, node_id)
     if mode != "image":
         raise TaskFailureError(
             "unsupported_mode", f"para.generate does not support mode '{mode}' yet"
@@ -118,11 +253,7 @@ async def handle_para_generate(
             "invalid_payload", "prompt is required for image generation"
         )
     params = generator.get("params") or {}
-    references = tuple(
-        str(ref["url"])
-        for ref in (generator.get("references") or [])
-        if isinstance(ref, dict) and ref.get("url")
-    )
+    references = _reference_urls(generator)
     count = int(generator.get("count") or 1)
 
     try:
@@ -138,7 +269,7 @@ async def handle_para_generate(
             if generator.get("model") in (None, "", "Auto")
             else str(generator["model"])
         ),
-        aspect=str(params.get("aspect") or "16:9"),
+        aspect=str(params.get("aspect") or params.get("ratio") or "16:9"),
         n=count,
         negative_prompt=(
             str(params["negative_prompt"]) if params.get("negative_prompt") else None
