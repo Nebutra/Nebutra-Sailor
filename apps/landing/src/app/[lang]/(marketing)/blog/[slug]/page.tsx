@@ -16,7 +16,6 @@ import { notFound, redirect } from "next/navigation";
 import { connection } from "next/server";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { NewsletterForm } from "@/components/landing";
 import { BlogAuthorAvatar } from "@/components/landing/blog-author-avatar";
 import { BlogComments } from "@/components/landing/blog-comments";
@@ -40,6 +39,15 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { unpublishedSet } from "@/lib/seo/site-routes";
 
 type Params = { lang: string; slug: string };
+
+/**
+ * A blocking route: the article is read at request time (`connection()`), and
+ * the response waits for it instead of streaming it behind <Suspense>. A
+ * streamed boundary reaches a reader that runs no JavaScript as its fallback,
+ * with the article in a `<div hidden>` — so answer engines saw an empty post.
+ * The article is cached (loadCachedBlogArticle), so the wait is one cache read.
+ */
+export const instant = false;
 
 /**
  * Cache Components requires at least one generateStaticParams result. Returning
@@ -188,11 +196,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
   const { slug } = await params;
   if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) notFound();
 
-  return (
-    <Suspense fallback={<BlogPostSkeleton />}>
-      <BlogPostLoader params={params} />
-    </Suspense>
-  );
+  return <BlogPostLoader params={params} />;
 }
 
 async function BlogPostLoader({ params }: { params: Promise<Params> }) {
@@ -200,12 +204,17 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
 
   if (!hasLocale(routing.locales, lang)) notFound();
   if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) notFound();
-  await connection();
   setRequestLocale(lang as Locale);
 
+  // Resolve not-found and the localized-slug redirect from the cached article
+  // BEFORE `connection()`. Past that call the response is already committed as
+  // a 200 stream, so notFound()/redirect() could only reach the client as an
+  // error document that needs JavaScript to act on — a reader without it got
+  // an empty page instead of a 404 or a 307.
   const article = await loadCachedBlogArticle(lang, slug);
   if (article.kind === "not-found") notFound();
   if (article.kind === "redirect") redirect(article.href);
+  await connection();
 
   const {
     post,
@@ -420,41 +429,6 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
           </div>
         </AnimateIn>
       </article>
-    </main>
-  );
-}
-
-function BlogPostSkeleton() {
-  return (
-    <main id="main-content" className="flex-1 bg-background" aria-busy="true">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
-        <div className="hidden gap-3 sm:flex">
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-        </div>
-      </div>
-      <article className="mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8">
-        <div className="mb-8 h-5 w-28 animate-pulse rounded bg-muted" />
-        <div className="h-10 w-3/4 animate-pulse rounded bg-muted" />
-        <div className="mt-4 h-5 w-1/2 animate-pulse rounded bg-muted" />
-        <div className="mt-8 h-32 w-full animate-pulse rounded bg-muted" />
-        <div className="mt-8 space-y-3">
-          <div className="h-4 w-full animate-pulse rounded bg-muted" />
-          <div className="h-4 w-11/12 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-10/12 animate-pulse rounded bg-muted" />
-        </div>
-      </article>
-      <div className="mx-auto max-w-6xl border-t border-border px-4 py-12 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
-        <div className="mt-5 grid gap-3 sm:grid-cols-4">
-          <div className="h-4 animate-pulse rounded bg-muted" />
-          <div className="h-4 animate-pulse rounded bg-muted" />
-          <div className="h-4 animate-pulse rounded bg-muted" />
-          <div className="h-4 animate-pulse rounded bg-muted" />
-        </div>
-      </div>
     </main>
   );
 }

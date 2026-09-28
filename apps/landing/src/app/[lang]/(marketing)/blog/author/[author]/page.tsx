@@ -18,12 +18,18 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+
+/**
+ * Params outside generateStaticParams render on demand as a blocking route
+ * rather than streaming behind a <Suspense> fallback: a streamed page reaches a
+ * reader without JavaScript as its fallback (scripts/verify-landing-ssr.mjs).
+ */
+export const instant = false;
 
 type Params = { author: string; lang: string };
 
@@ -118,11 +124,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 export default function BlogAuthorPage({ params }: { params: Promise<Params> }) {
-  return (
-    <Suspense fallback={<BlogAuthorPageSkeleton />}>
-      <BlogAuthorPageLoader params={params} />
-    </Suspense>
-  );
+  return <BlogAuthorPageLoader params={params} />;
 }
 
 async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
@@ -180,34 +182,6 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
             isZh={isZh}
           />
         </AnimateIn>
-      </section>
-    </main>
-  );
-}
-
-function BlogAuthorPageSkeleton() {
-  return (
-    <main id="main-content" className="flex-1 bg-background" aria-busy="true">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
-        <div className="hidden gap-3 sm:flex">
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-        </div>
-      </div>
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="border-y border-border py-10 sm:py-14">
-          <div className="flex items-center gap-5">
-            <div className="size-20 animate-pulse rounded-full bg-muted" />
-            <div className="flex-1">
-              <div className="h-4 w-20 animate-pulse rounded bg-muted" />
-              <div className="mt-4 h-11 w-64 animate-pulse rounded bg-muted" />
-              <div className="mt-4 h-4 w-48 animate-pulse rounded bg-muted" />
-            </div>
-          </div>
-        </div>
-        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-muted" />
       </section>
     </main>
   );

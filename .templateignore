@@ -293,6 +293,7 @@ tests/architecture/nebutra/
 .github/workflows/deploy-auth-cloudflare.yml
 .github/workflows/deploy-fly-gateway.yml
 .github/workflows/deploy-fly.yml
+.github/workflows/deploy-acme.yml
 .github/workflows/deploy-redis-fly.yml
 .github/workflows/deploy-kuanlan-nginx.yml
 .github/workflows/issue-fly-certs.yml
@@ -303,7 +304,10 @@ tests/architecture/nebutra/
 .github/workflows/ops-issue-router-key.yml
 .github/workflows/ops-db-role-check.yml
 .github/workflows/ops-db-role-grant.yml
-||||||| 2568d2b44
+# Nebutra's own Resend sending domain: the DNS records and the workflow that
+# applies them. A new project configures its own domain.
+.github/workflows/ops-email-dns.yml
+infra/ops/email/
 .github/workflows/ops-database-migrate.yml
 .github/workflows/ops-kuanlan-r2-uploads.yml
 .github/workflows/ops-origin-r2-uploads.yml
@@ -316,6 +320,7 @@ tests/architecture/nebutra/
 # Brand replacement does not rewrite Fly app names, so none is a template
 # default. The two Dockerfiles and the nginx conf exist only for carina /
 # dns-leak, whose deploy workflows are stripped above.
+infra/fly/acme.toml
 infra/fly/admin.toml
 infra/fly/ai.toml
 infra/fly/auth.toml

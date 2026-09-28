@@ -1,237 +1,197 @@
 "use client";
 
 import { Logo, Logomark } from "@nebutra/brand";
-import {
-  BookOpen,
-  Box,
-  Buildings,
-  Envelope,
-  Menu,
-  SidebarLeft,
-  TerminalWindow,
-  Users,
-} from "@nebutra/icons";
-import {
-  SidebarNav,
-  type SidebarNavIcon,
-  type SidebarNavItem,
-  type SidebarNavRenderLinkProps,
-  type SidebarNavSection,
-} from "@nebutra/ui/patterns";
+import { MagnifyingGlass } from "@nebutra/icons";
 import {
   Button,
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetTitle,
-  SheetTrigger,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "@/i18n/navigation";
-import { ROUTES, SECTION_PATH } from "@/nebutra/routes";
-import { pageAt, SECTIONS, SERVED_PAGES, type SectionId } from "@/site-map";
+import { ROUTES } from "@/nebutra/routes";
+import { SiteMenu } from "@/nebutra/shell/site-menu";
+import { SECTIONS, SITE_MAP } from "@/site-map";
 
 /**
- * The rail, on the design system's SidebarNav: sections and their order come
- * from the site map, each with its icon, and it collapses to icons only.
+ * a16z-style chrome: a thin top bar — the mono mark top-left opens the
+ * navigation, the wordmark sits centred, search sits top-right — and a
+ * navigation drawer that is fully hidden until asked for. Hovering the mark
+ * slides the drawer out; leaving it slides it back. A click pins it open,
+ * which is also how touch screens and keyboards reach it.
  */
-const ICONS: Partial<Record<SectionId, SidebarNavIcon>> = {
-  journal: BookOpen,
-  sailor: TerminalWindow,
-  sleptons: Users,
-  building: Box,
-  company: Buildings,
-};
+/** Hover intent: a pointer crossing the mark on its way elsewhere opens nothing. */
+const OPEN_DELAY_MS = 120;
+const CLOSE_DELAY_MS = 240;
 
-const STORE = "nebutra-site-rail-collapsed";
-
-const within = (pathname: string, path: string) =>
-  pathname === path || pathname.startsWith(`${path}/`);
-
-/**
- * The rail's content, shared by the desktop rail and the phone sheet. A
- * section with pages marked `rail` in the site map opens into them, its own
- * index first; the section holding the current page starts open.
- */
-function railSections(pathname: string): SidebarNavSection[] {
-  const here = pageAt(pathname)?.section;
-  return [
-    {
-      id: "site",
-      items: SECTIONS.filter((s) => s.nav).map((s) => {
-        const pages = SERVED_PAGES.filter((p) => p.section === s.id && p.rail);
-        const item: SidebarNavItem = {
-          id: s.id,
-          label: s.title.en,
-          href: SECTION_PATH[s.id],
-          icon: ICONS[s.id],
-          isActive: here === s.id,
-        };
-        if (pages.length === 0) return item;
-        const children: SidebarNavItem[] = [
-          {
-            id: `${s.id}-index`,
-            label: "Overview",
-            href: SECTION_PATH[s.id],
-            isActive: pathname === SECTION_PATH[s.id],
-          },
-          ...pages.map((p) => ({
-            id: p.path,
-            label: p.title.en,
-            href: p.path,
-            isActive: within(pathname, p.path),
-          })),
-        ];
-        return { ...item, children };
-      }),
-    },
-  ];
-}
-
-const railFooter = (mailto: string): SidebarNavItem[] => [
-  { id: "founder", label: "Write to the founder", href: mailto, icon: Envelope },
-];
-
-function railLink({ href, children, className, onClick, ...aria }: SidebarNavRenderLinkProps) {
-  return href.startsWith("mailto:") ? (
-    <a href={href} className={className} onClick={onClick} {...aria}>
-      {children}
-    </a>
-  ) : (
-    <Link href={href} className={className} onClick={onClick} {...aria}>
-      {children}
-    </Link>
-  );
-}
-
-export function SiteNav({ brandName, mailto }: { brandName: string; mailto: string }) {
+export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: string }) {
   const pathname = usePathname() ?? "";
-  const [collapsed, setCollapsed] = useState(false);
+  // "hover" closes when the pointer leaves; "pinned" stays until dismissed.
+  const [open, setOpen] = useState<false | "hover" | "pinned">(false);
+  const [searching, setSearching] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // A per-viewer convenience: remember the choice, never depend on it.
-  useEffect(() => {
-    try {
-      setCollapsed(localStorage.getItem(STORE) === "1");
-    } catch {}
-  }, []);
-  const toggle = () => {
-    setCollapsed((c) => {
-      try {
-        localStorage.setItem(STORE, c ? "0" : "1");
-      } catch {}
-      return !c;
-    });
+  const clear = () => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = null;
   };
-
-  const sections = railSections(pathname);
-
-  return (
-    <aside
-      className={cn(
-        "sticky top-0 hidden h-dvh shrink-0 border-r border-border transition-[width] duration-flow ease-brand lg:block",
-        collapsed ? "w-16" : "w-60",
-      )}
-    >
-      <SidebarNav
-        navLabel="Site"
-        collapsed={collapsed}
-        sections={sections}
-        renderLink={railLink}
-        footerItems={railFooter(mailto)}
-        header={
-          collapsed ? (
-            // Collapsed: the mark is the expand control — it shows the sidebar
-            // glyph on hover and focus, one control instead of two.
-            <Button
-              type="button"
-              variant="ghost"
-              shape="square"
-              iconSize="lg"
-              onClick={toggle}
-              aria-label="Expand navigation"
-              className="group relative"
-            >
-              <span className="transition-opacity duration-micro group-hover:opacity-0 group-focus-visible:opacity-0">
-                <Logomark variant="mono" size={22} inverted />
-              </span>
-              <SidebarLeft className="absolute size-4 -scale-x-100 text-foreground opacity-0 transition-opacity duration-micro group-hover:opacity-100 group-focus-visible:opacity-100" />
-            </Button>
-          ) : (
-            <div className="flex items-center justify-between gap-2 py-1.5 pl-3">
-              <Link href={ROUTES.home} aria-label={brandName} className="flex items-center">
-                {/* The official wordmark, reversed for the void — never the name typed in a font. */}
-                <Logo variant="en" size={104} inverted />
-              </Link>
-              <Button
-                type="button"
-                variant="ghost"
-                shape="square"
-                iconSize="md"
-                onClick={toggle}
-                aria-label="Collapse navigation"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <SidebarLeft />
-              </Button>
-            </div>
-          )
-        }
-        className="h-dvh"
-      />
-    </aside>
-  );
-}
-
-/**
- * Below lg the rail is hidden, so phones get a top bar: the wordmark and a
- * menu that opens the same rail in a sheet — same sections, same footer item.
- */
-export function SiteMobileNav({ brandName, mailto }: { brandName: string; mailto: string }) {
-  const pathname = usePathname() ?? "";
-  const [open, setOpen] = useState(false);
-
-  // Close once a destination is reached.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the path is the trigger.
-  useEffect(() => {
+  const hoverOpen = () => {
+    clear();
+    if (open) return;
+    timer.current = setTimeout(() => setOpen("hover"), OPEN_DELAY_MS);
+  };
+  const hoverClose = () => {
+    clear();
+    if (open !== "hover") return;
+    timer.current = setTimeout(() => setOpen(false), CLOSE_DELAY_MS);
+  };
+  const close = useCallback(() => {
+    clear();
     setOpen(false);
-  }, [pathname]);
+  }, [clear]);
+
+  // A destination reached closes the drawer.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the path is the trigger.
+  useEffect(() => close(), [pathname]);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        setSearching((s) => !s);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [close]);
+
+  useEffect(() => clear, [clear]);
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-border border-b bg-background/85 px-4 backdrop-blur-xl lg:hidden">
-      <Link href={ROUTES.home} aria-label={brandName} className="flex items-center">
-        <Logo variant="en" size={92} inverted />
-      </Link>
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
+    <>
+      <header className="sticky top-0 z-40 grid h-16 grid-cols-[1fr_auto_1fr] items-center bg-background/85 px-3 backdrop-blur-xl sm:px-5">
+        <div className="flex items-center" onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
+          <Button
+            type="button"
+            variant="ghost"
+            shape="square"
+            iconSize="lg"
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-expanded={Boolean(open)}
+            aria-controls="site-drawer"
+            onClick={() => {
+              clear();
+              setOpen((o) => (o === "pinned" ? false : "pinned"));
+            }}
+          >
+            <Logomark variant="mono" size={24} inverted />
+          </Button>
+        </div>
+
+        <Link
+          href={ROUTES.home}
+          aria-label={brandName}
+          className="flex items-center justify-center"
+        >
+          {/* The official wordmark, reversed for the void — never the name typed in a font. */}
+          <Logo variant="en" size={112} inverted />
+        </Link>
+
+        <div className="flex items-center justify-end">
           <Button
             type="button"
             variant="ghost"
             shape="square"
             iconSize="md"
-            aria-label="Open navigation"
+            aria-label="Search the site"
+            onClick={() => setSearching(true)}
           >
-            <Menu />
+            <MagnifyingGlass />
           </Button>
-        </SheetTrigger>
-        <SheetContent side="left" closeLabel="Close navigation" className="p-0">
-          <SheetTitle className="sr-only">{brandName}</SheetTitle>
-          <SheetDescription className="sr-only">Site navigation</SheetDescription>
-          <SidebarNav
-            navLabel="Site"
-            sections={railSections(pathname)}
-            renderLink={railLink}
-            footerItems={railFooter(mailto)}
-            header={
-              <div className="py-1.5 pl-3">
-                <Logo variant="en" size={104} inverted />
-              </div>
-            }
-            className="h-full"
-          />
-        </SheetContent>
-      </Sheet>
-    </header>
+        </div>
+      </header>
+
+      {/* The drawer: out of the layout entirely, so pages always get the full width. */}
+      <div
+        aria-hidden
+        onClick={close}
+        className={cn(
+          "fixed inset-0 z-40 bg-background/60 motion-safe:transition-opacity motion-safe:duration-flow",
+          open === "pinned" ? "opacity-100" : "pointer-events-none opacity-0",
+        )}
+      />
+      <aside
+        id="site-drawer"
+        aria-label="Site navigation"
+        inert={!open}
+        onMouseEnter={() => open === "hover" && clear()}
+        onMouseLeave={hoverClose}
+        className={cn(
+          // overscroll-contain: scrolling the drawer never scrolls the page behind it (Stripe does the same).
+          "fixed inset-y-0 left-0 z-50 max-w-[100vw] overflow-y-auto overscroll-contain border-r border-border bg-background shadow-ambient-lg",
+          "motion-safe:transition-transform motion-safe:duration-flow motion-safe:ease-brand",
+          open ? "translate-x-0" : "-translate-x-full",
+        )}
+      >
+        <SiteMenu
+          open={Boolean(open)}
+          pathname={pathname}
+          mailto={mailto}
+          onNavigate={close}
+          onClose={close}
+        />
+      </aside>
+
+      <SiteSearch open={searching} onOpenChange={setSearching} />
+    </>
+  );
+}
+
+/** Every live, static page in the site map, grouped by section. */
+function SiteSearch({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const router = useRouter();
+  const pages = SITE_MAP.filter((p) => p.status === "live" && !p.path.includes("["));
+  return (
+    <CommandDialog open={open} onOpenChange={onOpenChange}>
+      <CommandInput placeholder="Search pages" />
+      <CommandList>
+        <CommandEmpty>Nothing matches that.</CommandEmpty>
+        {SECTIONS.map((section) => {
+          const inSection = pages.filter((p) => p.section === section.id);
+          if (inSection.length === 0) return null;
+          return (
+            <CommandGroup key={section.id} heading={section.title.en}>
+              {inSection.map((page) => (
+                <CommandItem
+                  key={page.path}
+                  value={`${page.title.en} ${page.title.zh} ${page.path}`}
+                  onSelect={() => {
+                    onOpenChange(false);
+                    router.push(page.path);
+                  }}
+                >
+                  {page.title.en}
+                  <span className="ml-auto text-xs text-muted-foreground">{page.path}</span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          );
+        })}
+      </CommandList>
+    </CommandDialog>
   );
 }

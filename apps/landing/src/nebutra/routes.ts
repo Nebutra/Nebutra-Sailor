@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { type SectionId, sectionOf } from "@/site-map";
 
 /**
@@ -14,3 +15,10 @@ export const ROUTES = {
   ...SECTION_PATH,
   studio: `${SECTION_PATH.sailor}/studio`,
 } as const;
+
+/**
+ * The site a Sailor project starts as — the template, deployed on its own
+ * (infra/fly/acme.toml). It follows Sailor Studio: it wears the look the
+ * visitor last chose there (components/preset-preview.tsx).
+ */
+export const ACME_SITE = `https://acme.${brand.domains.landing}`;

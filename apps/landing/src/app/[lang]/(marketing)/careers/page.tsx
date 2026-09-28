@@ -5,7 +5,6 @@ import { Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -59,78 +58,74 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
   setRequestLocale(lang as Locale);
 
   return (
-    <Suspense>
-      <main id="main-content" className="flex flex-col flex-1 bg-background">
-        <section className="container mx-auto max-w-4xl px-4 py-32">
-          <AnimateIn preset="emerge">
-            <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
-              Careers
-            </p>
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-6"
-              style={{
-                letterSpacing: "var(--tracking-display)",
-                lineHeight: "var(--leading-display)",
-              }}
-            >
-              Signal over credentials.
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed mb-16 max-w-3xl">
-              We hire on engineering signal — public code, shipping history, taste. No GPA filters.
-              No prestige bias. Send us the link to what you have built.
-            </p>
-          </AnimateIn>
+    <main id="main-content" className="flex flex-col flex-1 bg-background">
+      <section className="container mx-auto max-w-4xl px-4 py-32">
+        <AnimateIn preset="emerge">
+          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">Careers</p>
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-6"
+            style={{
+              letterSpacing: "var(--tracking-display)",
+              lineHeight: "var(--leading-display)",
+            }}
+          >
+            Signal over credentials.
+          </h1>
+          <p className="text-xl text-muted-foreground leading-relaxed mb-16 max-w-3xl">
+            We hire on engineering signal — public code, shipping history, taste. No GPA filters. No
+            prestige bias. Send us the link to what you have built.
+          </p>
+        </AnimateIn>
 
-          <AnimateInGroup stagger="normal" className="grid gap-4">
-            {ROLES.map((role) => (
-              <AnimateIn key={role.title} preset="fadeUp">
-                <article className="rounded-[var(--radius-card)] border border-border bg-card/30 p-8 hover:border-primary/40 hover:bg-card/50 transition-colors">
-                  <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
-                    <div>
-                      <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                        {role.title}
-                      </h2>
-                      <p className="text-sm text-muted-foreground mt-1">{role.type}</p>
-                    </div>
-                    <Button asChild size="sm" className="rounded-full shrink-0">
-                      <a href={role.mailto}>
-                        Submit GitHub <ArrowRight className="ml-1 h-3.5 w-3.5" />
-                      </a>
-                    </Button>
+        <AnimateInGroup stagger="normal" className="grid gap-4">
+          {ROLES.map((role) => (
+            <AnimateIn key={role.title} preset="fadeUp">
+              <article className="rounded-[var(--radius-card)] border border-border bg-card/30 p-8 hover:border-primary/40 hover:bg-card/50 transition-colors">
+                <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
+                  <div>
+                    <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                      {role.title}
+                    </h2>
+                    <p className="text-sm text-muted-foreground mt-1">{role.type}</p>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed mb-4">{role.summary}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {role.stack.map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              </AnimateIn>
-            ))}
-          </AnimateInGroup>
+                  <Button asChild size="sm" className="rounded-full shrink-0">
+                    <a href={role.mailto}>
+                      Submit GitHub <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                    </a>
+                  </Button>
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-4">{role.summary}</p>
+                <div className="flex flex-wrap gap-2">
+                  {role.stack.map((s) => (
+                    <span
+                      key={s}
+                      className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            </AnimateIn>
+          ))}
+        </AnimateInGroup>
 
-          <AnimateIn preset="fadeUp" className="mt-12">
-            <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-10 text-center">
-              <Sparkles className="h-8 w-8 mx-auto text-primary mb-4" />
-              <h3 className="text-2xl font-bold tracking-tight mb-3">Don&apos;t see your role?</h3>
-              <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-                We are growing across engineering, design, and developer relations. If your GitHub
-                speaks for itself, we want to hear from you.
-              </p>
-              <Button asChild size="lg" className="rounded-full">
-                <a href="mailto:careers@nebutra.com?subject=GitHub%20Profile%20Submission">
-                  Submit your GitHub profile <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-            </div>
-          </AnimateIn>
-        </section>
-      </main>
-    </Suspense>
+        <AnimateIn preset="fadeUp" className="mt-12">
+          <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-10 text-center">
+            <Sparkles className="h-8 w-8 mx-auto text-primary mb-4" />
+            <h3 className="text-2xl font-bold tracking-tight mb-3">Don&apos;t see your role?</h3>
+            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+              We are growing across engineering, design, and developer relations. If your GitHub
+              speaks for itself, we want to hear from you.
+            </p>
+            <Button asChild size="lg" className="rounded-full">
+              <a href="mailto:careers@nebutra.com?subject=GitHub%20Profile%20Submission">
+                Submit your GitHub profile <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          </div>
+        </AnimateIn>
+      </section>
+    </main>
   );
 }

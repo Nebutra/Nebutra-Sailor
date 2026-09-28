@@ -40,23 +40,6 @@ export async function LegalDocumentContent({ slug, lang }: { slug: string; lang:
   );
 }
 
-export function LegalDocumentSkeleton() {
-  return (
-    <article className="prose max-w-none" aria-busy="true">
-      <div className="h-9 w-2/3 animate-pulse rounded bg-muted" />
-      <div className="mt-3 h-4 w-1/3 animate-pulse rounded bg-muted" />
-      <div className="mt-2 h-4 w-1/2 animate-pulse rounded bg-muted" />
-      <hr />
-      <div className="space-y-2">
-        <div className="h-3 w-full animate-pulse rounded bg-muted" />
-        <div className="h-3 w-11/12 animate-pulse rounded bg-muted" />
-        <div className="h-3 w-10/12 animate-pulse rounded bg-muted" />
-        <div className="h-3 w-9/12 animate-pulse rounded bg-muted" />
-      </div>
-    </article>
-  );
-}
-
 function formatDate(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;

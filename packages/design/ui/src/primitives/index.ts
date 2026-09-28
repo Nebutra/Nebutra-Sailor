@@ -77,7 +77,6 @@ export * from "./border-trail";
 export * from "./box";
 export * from "./brand-mark";
 export * from "./breadcrumb";
-export * from "./browser-mockup";
 // Dashboard patterns (migrated from production)
 export {
   Button,
@@ -170,7 +169,6 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
-export * from "./display-cards";
 export * from "./dithering-background";
 export * from "./dot-pattern";
 export * from "./dotted-map";
@@ -195,7 +193,6 @@ export * from "./edit-tool";
 export * from "./empty-state";
 export * from "./entity";
 export * from "./error-message";
-export * from "./expandable-gallery";
 export * from "./expandable-tabs";
 export * from "./expanding-textarea";
 /**
@@ -245,7 +242,6 @@ export * from "./github-inline-diff";
  *   npm remains canonical for monorepo apps; registry serves external customers
  *   via `npx shadcn@latest add ...`. See docs/architecture/2026-05-14-registry-dual-track-distribution.md.
  */
-export * from "./globe";
 export * from "./gradient-animated-text";
 export * from "./grain-gradient-background";
 export * from "./grid-feature-card";
@@ -258,7 +254,6 @@ export * from "./hover-card";
 export * from "./infinite-slider";
 export { Input, type InputProps } from "./input";
 export * from "./input-otp";
-export * from "./iphone-mockup";
 export * from "./kbd";
 /**
  * @registry https://ui.nebutra.com/r/kpi-card.json
@@ -353,7 +348,6 @@ export * from "./reaction-chip";
  */
 export * from "./relative-time-card";
 export * from "./resizable";
-export * from "./safari";
 export * from "./scroll-velocity";
 export * from "./scroller";
 /**
@@ -445,9 +439,6 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
-export * from "./video-player";
-export * from "./video-text";
 export * from "./warp-background";
 export * from "./wave-animation";
 export * from "./word-fade-in";
-export * from "./x-post-card";

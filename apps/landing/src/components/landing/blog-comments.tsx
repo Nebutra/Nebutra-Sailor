@@ -4,7 +4,7 @@ import { Heart, HeartFill, Message, PaperAirplane, Star, StarFill } from "@nebut
 import { Textarea } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ComponentType, SVGProps } from "react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isZhUiLocale } from "@/lib/i18n/localized";
 import { queryKeys } from "@/lib/query-keys";
 
@@ -176,6 +176,19 @@ function ReactionButton({
   );
 }
 
+/**
+ * Sign in, then come back to this article's discussion. Without a return
+ * address the app's sign-in page falls back to the workspace, and the reader
+ * never finds their way back to the comment they came to write.
+ */
+function signInHref(appUrl: string): string {
+  const back =
+    typeof window === "undefined"
+      ? ""
+      : `${window.location.origin}${window.location.pathname}#comments`;
+  return back ? `${appUrl}/sign-in?returnUrl=${encodeURIComponent(back)}` : `${appUrl}/sign-in`;
+}
+
 export function BlogComments({
   appUrl,
   labels,
@@ -183,6 +196,9 @@ export function BlogComments({
   slug,
   translationKey,
 }: BlogCommentsProps) {
+  // The return address is only known in the browser; render the bare link first.
+  const [signInLink, setSignInLink] = useState(`${appUrl}/sign-in`);
+  useEffect(() => setSignInLink(signInHref(appUrl)), [appUrl]);
   const queryClient = useQueryClient();
   const [body, setBody] = useState("");
 
@@ -297,7 +313,7 @@ export function BlogComments({
   function handleReaction(kind: ReactionKind) {
     if (reactionMutation.isPending) return;
     if (!viewer?.isSignedIn) {
-      window.location.href = `${appUrl}/sign-in`;
+      window.location.href = signInHref(appUrl);
       return;
     }
     reactionMutation.mutate(kind);
@@ -441,7 +457,7 @@ export function BlogComments({
           </form>
         ) : (
           <a
-            href={`${appUrl}/sign-in`}
+            href={signInLink}
             className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
           >
             {labels.signIn}
