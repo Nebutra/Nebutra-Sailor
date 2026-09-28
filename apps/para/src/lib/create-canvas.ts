@@ -3,17 +3,17 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { canvasHref, type SeedMode } from "@/domain/seed";
 import { api } from "@/lib/api";
 import { useUiStore } from "@/stores/ui-store";
+import {
+  type CanvasOptions,
+  type CanvasStart,
+  NEW_PROJECT_NAME,
+  startHref,
+  startKey,
+} from "./canvas-start";
 
-/**
- * What a create entry on the shell starts with.
- * - `blank`: an empty canvas (sidebar New project, the Home hero).
- * - `agent`: an empty canvas with the agent composer open.
- * - a seed mode: an empty canvas holding one generator node of that mode (Home tool tiles).
- */
-export type CanvasStart = "blank" | "agent" | SeedMode;
+export type { CanvasOptions, CanvasStart } from "./canvas-start";
 
 /**
  * Zero-step create (A): a new project and its first workspace, then straight into the canvas.
@@ -22,21 +22,25 @@ export type CanvasStart = "blank" | "agent" | SeedMode;
 export function useCreateCanvas() {
   const router = useRouter();
   const qc = useQueryClient();
-  const [pending, setPending] = useState<CanvasStart | null>(null);
+  const [pending, setPending] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
 
   const create = useCallback(
-    async (start: CanvasStart) => {
+    async (start: CanvasStart, opts: CanvasOptions = {}) => {
       if (pending) return;
-      setPending(start);
+      setPending(startKey(start, opts));
       setFailed(false);
       try {
-        const project = await api.createProject();
+        const project = await api.createProject(NEW_PROJECT_NAME);
         const ws = await api.createWorkspace(project.id);
         void qc.invalidateQueries({ queryKey: ["projects"] });
-        if (start === "agent") useUiStore.getState().setAgent({ status: "composing" });
-        const seed = start === "blank" || start === "agent" ? null : start;
-        router.push(canvasHref(project.id, ws.id, seed));
+        if (start === "agent") {
+          const prompt = opts.prompt?.trim();
+          useUiStore
+            .getState()
+            .setAgent(prompt ? { status: "composing", prompt } : { status: "composing" });
+        }
+        router.push(startHref(project.id, ws.id, start, opts));
       } catch {
         // Signed out (gateway 401) or offline. The entry stays usable; the caller says what happened.
         setFailed(true);

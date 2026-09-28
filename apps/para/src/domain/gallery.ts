@@ -1,7 +1,7 @@
 import type { Asset, AssetType, Project } from "./types";
 
 /**
- * "Your work": the gallery on Home and /assets. Pure, so the tab strip, the search and the card
+ * "我的作品": the gallery on Home and /assets. Pure, so the tab strip, the search and the card
  * target are decided in one place and tested without a browser.
  */
 
@@ -9,10 +9,10 @@ export type GalleryTab = "all" | AssetType;
 
 const TAB_ORDER: readonly AssetType[] = ["image", "video", "audio"];
 const TAB_LABEL: Record<GalleryTab, string> = {
-  all: "All",
-  image: "Images",
-  video: "Videos",
-  audio: "Audio",
+  all: "全部",
+  image: "图片",
+  video: "视频",
+  audio: "音频",
 };
 
 export interface GalleryTabItem {

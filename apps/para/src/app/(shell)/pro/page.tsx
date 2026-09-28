@@ -2,7 +2,7 @@ import { Button, Card } from "@nebutra/ui/primitives";
 import { checkoutFor, loadOffers, type ParaOffer, priceLabel } from "@/lib/billing";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Plans & credits" };
+export const metadata = { title: "会员与积分" };
 
 function MembershipCard({ tier, offers }: { tier: string; offers: ParaOffer[] }) {
   const month = offers.find((o) => o.grants.days === 30);
@@ -12,17 +12,17 @@ function MembershipCard({ tier, offers }: { tier: string; offers: ParaOffer[] })
     <Card className="flex flex-col gap-2 p-5">
       <h3 className="font-medium text-foreground text-body capitalize">{tier}</h3>
       <p className="text-muted-foreground text-label">
-        {monthly.toLocaleString("en-US")} credits every month, for your organization
+        每月 {monthly.toLocaleString("zh-CN")} 积分，全组织共用
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         {month ? (
           <Button asChild variant="ink" size="sm">
-            <a href={checkoutFor(month.id)}>Monthly · {priceLabel(month)}</a>
+            <a href={checkoutFor(month.id)}>按月 · {priceLabel(month)}</a>
           </Button>
         ) : null}
         {year ? (
           <Button asChild variant="outline" size="sm">
-            <a href={checkoutFor(year.id)}>Yearly · {priceLabel(year)}</a>
+            <a href={checkoutFor(year.id)}>按年 · {priceLabel(year)}</a>
           </Button>
         ) : null}
       </div>
@@ -44,22 +44,19 @@ export default async function ProPage() {
 
   return (
     <div className="pt-8">
-      <h1 className="mb-2 font-medium text-display text-foreground tracking-tight">
-        Plans & credits
-      </h1>
+      <h1 className="mb-2 font-medium text-display text-foreground tracking-tight">会员与积分</h1>
       <p className="mb-10 max-w-para-focus text-muted-foreground">
-        A plan's monthly credits are spent first and lapse at the end of their month. Credits from a
-        pack last two years.
+        会员每月发放的积分优先扣除，当月用不完即失效；积分包购买的积分两年内有效。
       </p>
 
       {offers === null ? (
-        <p className="text-muted-foreground">Prices could not be loaded. Try again in a moment.</p>
+        <p className="text-muted-foreground">价格没有加载出来，请稍后再试。</p>
       ) : null}
 
       {tiers.length > 0 ? (
         <section aria-labelledby="plans" className="mb-12">
           <h2 id="plans" className="mb-4 font-medium text-foreground text-body">
-            Plans
+            会员
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {tiers.map((tier) => (
@@ -74,17 +71,17 @@ export default async function ProPage() {
       ) : null}
 
       {packs.length > 0 ? (
-        <section aria-labelledby="packs">
-          <h2 id="packs" className="mb-4 font-medium text-foreground text-body">
-            Credit packs
+        <section id="packs" aria-labelledby="packs-heading" className="scroll-mt-6">
+          <h2 id="packs-heading" className="mb-4 font-medium text-foreground text-body">
+            积分充值
           </h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {packs.map((pack) => (
               <Card key={pack.id} className="flex flex-col gap-2 p-5">
                 <h3 className="font-medium text-foreground text-body">
-                  {(pack.grants.credits ?? 0).toLocaleString("en-US")} credits
+                  {(pack.grants.credits ?? 0).toLocaleString("zh-CN")} 积分
                 </h3>
-                <p className="text-muted-foreground text-label">Valid for two years</p>
+                <p className="text-muted-foreground text-label">两年内有效</p>
                 <Button asChild variant="outline" size="sm" className="mt-3 self-start">
                   <a href={checkoutFor(pack.id)}>{priceLabel(pack)}</a>
                 </Button>
