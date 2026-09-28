@@ -34,7 +34,7 @@ export interface Asset {
   type: AssetType;
   url: string;
   label: string;
-  aspect: "16:9" | "1:1" | "9:16" | "4:3";
+  aspect: "16:9" | "1:1" | "9:16" | "4:3" | "3:4";
   /** B — TapNow, LibTV */
   scope: Scope;
   /** A — 6/6 keep a history of outputs separate from uploads */

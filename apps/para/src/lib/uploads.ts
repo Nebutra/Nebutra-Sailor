@@ -66,6 +66,37 @@ async function storeInGateway(file: File): Promise<string> {
   return `${PUBLIC_BASE.replace(/\/$/, "")}/${presign.key}`;
 }
 
+const ASPECTS: ReadonlyArray<[Asset["aspect"], number]> = [
+  ["16:9", 16 / 9],
+  ["4:3", 4 / 3],
+  ["1:1", 1],
+  ["3:4", 3 / 4],
+  ["9:16", 9 / 16],
+];
+
+/** The asset aspect closest to a width × height. */
+export function nearestAspect(width: number, height: number): Asset["aspect"] {
+  if (!width || !height) return "16:9";
+  const r = width / height;
+  let best = ASPECTS[0] as [Asset["aspect"], number];
+  for (const a of ASPECTS)
+    if (Math.abs(Math.log(a[1] / r)) < Math.abs(Math.log(best[1] / r))) best = a;
+  return best[0];
+}
+
+/** An image's shape, read before upload so the node frames it uncropped. Video defaults to 16:9. */
+async function measure(file: File): Promise<Asset["aspect"]> {
+  if (!file.type.startsWith("image/") || typeof createImageBitmap !== "function") return "16:9";
+  try {
+    const bitmap = await createImageBitmap(file);
+    const aspect = nearestAspect(bitmap.width, bitmap.height);
+    bitmap.close();
+    return aspect;
+  } catch {
+    return "16:9";
+  }
+}
+
 export function mediaTypeOf(file: File): "image" | "video" | null {
   if (file.type.startsWith("image/")) return "image";
   if (file.type.startsWith("video/")) return "video";
@@ -79,12 +110,13 @@ export async function uploadAsset(
 ): Promise<Asset> {
   const type = mediaTypeOf(file);
   if (!type) throw new Error("只支持图片和视频");
+  const aspect = await measure(file);
   const url = isGatewayMode ? await storeInGateway(file) : URL.createObjectURL(file);
   const asset = await api.createAsset({
     type,
     url,
     label: file.name,
-    aspect: "16:9",
+    aspect,
     origin: "upload",
     ...(where.projectId ? { projectId: where.projectId } : {}),
     ...(where.workspaceId ? { workspaceId: where.workspaceId } : {}),

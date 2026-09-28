@@ -86,7 +86,10 @@ async function recordOutput(job: Job): Promise<void> {
       url: first.url,
       // The prompt, not the node id: it is what the gallery shows under the card and searches.
       label: assetLabel(node?.generator?.prompt, job.nodeId),
-      aspect: aspect === "1:1" || aspect === "9:16" || aspect === "4:3" ? aspect : "16:9",
+      aspect:
+        aspect === "1:1" || aspect === "9:16" || aspect === "4:3" || aspect === "3:4"
+          ? aspect
+          : "16:9",
       origin: "generated",
       jobId: job.id,
       ...(editor.documentId ? { workspaceId: editor.documentId } : {}),
