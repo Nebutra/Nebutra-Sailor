@@ -19,8 +19,15 @@ export const PROBE_SAMPLE_SECONDS = 55;
 const PROBE_LOCK_KEY = "status:probe-lock:v1";
 
 export interface ServiceHistory {
-  /** UTC date → stats. Legacy days carry a synthetic single check. */
+  /** UTC date → check counts. Only days recorded since counting began. */
   days: Record<string, DayStats>;
+  /**
+   * UTC date → the worst single reading, for days before counting began.
+   * They keep their colour on the strip but never count toward uptime: one
+   * timeout set a whole day's value, so they cannot say how long anything
+   * was down.
+   */
+  legacy: Record<string, ServiceState>;
 }
 
 /** True when this caller should record — at most one run per sample window. */
@@ -44,12 +51,6 @@ export async function recordProbeHistory(
   );
 }
 
-function legacyStats(state: ServiceState): DayStats {
-  if (state === "outage") return { total: 1, degraded: 0, outage: 1 };
-  if (state === "operational") return { total: 1, degraded: 0, outage: 0 };
-  return { total: 1, degraded: 1, outage: 0 };
-}
-
 export async function loadServiceHistory(serviceId: string): Promise<ServiceHistory> {
   const kv = getStatusKv();
   const [counts, legacy] = await Promise.all([
@@ -67,11 +68,12 @@ export async function loadServiceHistory(serviceId: string): Promise<ServiceHist
     else if (bucket === "outage") day.outage = value;
     days[date] = day;
   }
+  const legacyDays: Record<string, ServiceState> = {};
   for (const [date, value] of Object.entries(legacy)) {
     if (days[date] || !KNOWN_STATES.has(value)) continue;
-    days[date] = legacyStats(value as ServiceState);
+    legacyDays[date] = value as ServiceState;
   }
-  return { days };
+  return { days, legacy: legacyDays };
 }
 
 export async function loadAllServiceHistory(
