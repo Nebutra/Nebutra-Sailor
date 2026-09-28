@@ -8,6 +8,7 @@ import {
 } from "@nebutra/i18n/resolve-market-request";
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
+import { type HostAlias, routeHost } from "@/lib/host-aliases";
 import { routing } from "./i18n/routing";
 import { createLegacyAppRedirectUrl } from "./lib/app-redirects";
 import { createDocsLocaleRedirectPath, createDocsRewriteUrl } from "./lib/docs-routing";
@@ -17,6 +18,15 @@ import { shouldBounceSignedInVisitorToApp } from "./lib/session-home-redirect";
 const intlMiddleware = createMiddleware(routing);
 const STATUS_HOST = brand.domains.status;
 const OPEN_HOST = brand.domains.open;
+const HOST_ALIASES: readonly HostAlias[] = [
+  {
+    host: STATUS_HOST,
+    section: "status",
+    subPaths: /^(incidents\/[^/]+|history|subscription)$/,
+    canonical: "host",
+  },
+  { host: OPEN_HOST, section: "open", canonical: "apex" },
+];
 
 /**
  * Cross-subdomain "user is signed in somewhere" hint.
@@ -209,29 +219,25 @@ export default function proxy(request: NextRequest): NextResponse {
     return withSecurityHeaders(redirect);
   }
 
-  // Host aliases whose root is a section of this app: status → /status,
-  // open → /open. Keep the locale prefix when the visitor already carries one.
-  const hostAliasSection =
-    host === STATUS_HOST ? "status" : host === OPEN_HOST ? "open" : undefined;
-  if (hostAliasSection && (pathname === "/" || routing.locales.some((l) => pathname === `/${l}`))) {
+  // Hosts that are one section of this app (lib/host-aliases.ts): the section
+  // at the host root, every other path on the apex, and the apex's copy of the
+  // section on its host — one address per page.
+  const hostRoute = routeHost({
+    host,
+    pathname,
+    search: request.nextUrl.search,
+    apex: brand.domains.landing,
+    aliases: HOST_ALIASES,
+    locales: routing.locales,
+    defaultLocale: routing.defaultLocale,
+  });
+  if (hostRoute.kind === "redirect") {
+    return withSecurityHeaders(NextResponse.redirect(hostRoute.url, 308));
+  }
+  if (hostRoute.kind === "rewrite") {
     const rewriteUrl = request.nextUrl.clone();
-    const locale = routing.locales.find((l) => pathname === `/${l}`);
-    rewriteUrl.pathname =
-      locale && locale !== routing.defaultLocale
-        ? `/${locale}/${hostAliasSection}`
-        : `/${hostAliasSection}`;
+    rewriteUrl.pathname = hostRoute.pathname;
     request = new NextRequest(rewriteUrl, { headers: request.headers });
-  } else if (host === STATUS_HOST) {
-    // Status sub-pages live at the host root too: status.<domain>/incidents/<id>
-    // is the address a chat card links to, not /status/incidents/<id>.
-    const match = /^(\/[A-Za-z-]+)?\/(incidents\/[^/]+|history|subscription)$/.exec(pathname);
-    const prefix = match?.[1];
-    const localePrefix = prefix && routing.locales.some((l) => prefix === `/${l}`) ? prefix : "";
-    if (match && (!prefix || localePrefix)) {
-      const rewriteUrl = request.nextUrl.clone();
-      rewriteUrl.pathname = `${localePrefix}/status/${match[2]}`;
-      request = new NextRequest(rewriteUrl, { headers: request.headers });
-    }
   }
 
   // 1. Resolve market: NEXT_MARKET cookie > geo > path language default > US

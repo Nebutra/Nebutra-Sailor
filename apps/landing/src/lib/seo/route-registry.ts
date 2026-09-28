@@ -129,13 +129,9 @@ const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
     localization: "ui",
     sitelinkCandidate: { label: "Roadmap" },
   },
-  {
-    pattern: "/status",
-    changeFrequency: "always",
-    priority: 0.6,
-    localization: "ui",
-    sitelinkCandidate: { label: "Status" },
-  },
+  // The status page's address is its own host (lib/host-aliases.ts); the
+  // apex path redirects there, so it is no document of the apex's.
+  { pattern: "/status", changeFrequency: "always", priority: 0.1, localization: "none" },
   {
     pattern: "/security",
     changeFrequency: "monthly",
