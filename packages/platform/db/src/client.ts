@@ -2,6 +2,10 @@ import { logger } from "@nebutra/logger";
 import { isValidDbRole } from "@nebutra/tenant/isolation";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
+// Pure env check; Workers resolve a stub that always answers null. See
+// preview-mode.ts — with a real DATABASE_URL it returns null and nothing else
+// preview-related runs.
+import { awaitPreviewDatabase, previewDatabase } from "#preview-db";
 // Resolved by the "#prisma-client" condition in package.json: workerd gets the
 // wasm-compiler-edge build, everything else gets the Node one. A direct
 // relative import here would bake the Node runtime into the Workers bundle,
@@ -20,7 +24,12 @@ const globalForPrisma = globalThis as unknown as {
 // tenant session core validates `APP_DB_ROLE` with, so this stays the one
 // other copy tests/architecture/tenant-cutover-contract.test.ts pins, not a
 // second regex that could drift from it.
-const RAW_APP_DB_ROLE = process.env.APP_DB_ROLE;
+//
+// Local preview only (no DATABASE_URL outside production, or `pglite:`): the
+// preview database's runtime role, so getTenantDb enforces RLS there exactly
+// as it does on a deployment that sets APP_DB_ROLE. `null` everywhere else.
+const PREVIEW = previewDatabase(process.env);
+const RAW_APP_DB_ROLE = process.env.APP_DB_ROLE ?? PREVIEW?.role;
 const RLS_ROLE = RAW_APP_DB_ROLE && isValidDbRole(RAW_APP_DB_ROLE) ? RAW_APP_DB_ROLE : null;
 
 // Verified once — on the first tenant-scoped query — and cached for the
@@ -46,13 +55,14 @@ const STATEMENT_TIMEOUT_MS = (() => {
 })();
 
 function createPrismaClient(): PrismaClient {
-  if (!process.env.DATABASE_URL) {
+  const preview = previewDatabase(process.env);
+  if (!process.env.DATABASE_URL && !preview) {
     throw new Error("[db] DATABASE_URL is not set. Cannot initialize database connection pool.");
   }
 
   // Use connection pool for PostgreSQL with explicit production-ready settings.
   const pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: preview ? preview.url : process.env.DATABASE_URL,
     // Max connections per pool instance.
     // Rule of thumb: (2 × CPU cores) + effective_spindle_count
     // Default 10 is fine for most apps; override via env for large deployments.
@@ -70,6 +80,13 @@ function createPrismaClient(): PrismaClient {
   pool.on("error", (err) => {
     logger.error("[db] Unexpected pool error", err);
   });
+
+  if (preview) {
+    logger.info(
+      `[db] DATABASE_URL is not set — using the local preview database (PGlite) at 127.0.0.1:${preview.port}`,
+    );
+    awaitPreviewDatabase(pool, preview);
+  }
 
   const adapter = new PrismaPg(pool);
 

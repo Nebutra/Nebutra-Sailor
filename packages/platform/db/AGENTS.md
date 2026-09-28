@@ -44,6 +44,15 @@ client, and the shared database runtime used across the monorepo.
   `withRls` and `withTenantContext` run through; `rls-role.ts` exists only
   because `client.ts` has not yet been routed onto that core (see above).
 
+- Local preview database (no `DATABASE_URL` outside production, or
+  `pglite:`): `src/preview-mode.ts` (pure detection + pool gate, workerd stub
+  via `#preview-db`), `src/preview-server.ts` (starts the process, via
+  `#preview-db-server`), `scripts/preview-db.mjs` + `scripts/preview/wire.mjs`
+  (PGlite + wire server; builds the database with `scripts/db.mjs deploy`).
+  PGlite is imported only by those scripts and `src/testing.ts` — never by
+  runtime code; `src/client-preview.test.ts` pins that a real `DATABASE_URL`
+  never loads any of it.
+
 If behavior is derived from the schema, change the schema first and regenerate
 the client in the same change.
 

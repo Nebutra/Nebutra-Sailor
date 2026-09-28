@@ -3,9 +3,8 @@ import path from "node:path";
 
 interface EnvConfig {
   /**
-   * Written only when given. A fresh project leaves DATABASE_URL unset: with no
-   * URL, @nebutra/db runs an in-process Postgres, so the preview needs no
-   * Docker and no database setup.
+   * Written only when given. A fresh project gets `pglite:` — @nebutra/db's
+   * local preview database — so the preview needs no Docker and no setup.
    */
   databaseUrl?: string;
 }
@@ -59,8 +58,12 @@ export async function injectEnv(targetDir: string, envConfig: EnvConfig) {
   const databaseNote =
     envConfig.databaseUrl || hasEnvVar(visibleEnv, "DATABASE_URL")
       ? ""
-      : "# DATABASE_URL is unset: the preview runs an in-process Postgres.\n# Set it to use your own Postgres.\n";
-  const envTemplate = `# Local preview origins\n${missingLines.join("\n")}\n${databaseNote}`;
+      : "# DATABASE_URL is unset: the preview runs a local PGlite database.\n";
+  const pgliteNote =
+    envConfig.databaseUrl === "pglite:"
+      ? "# pglite: = the local preview database (PGlite, data in .nebutra/pglite/).\n# Point DATABASE_URL at your own Postgres when you have one.\n"
+      : "";
+  const envTemplate = `# Local preview origins\n${pgliteNote}${missingLines.join("\n")}\n${databaseNote}`;
 
   // Race-safe: always open/write without TOCTOU existsSync.
   try {

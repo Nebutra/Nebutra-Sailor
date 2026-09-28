@@ -113,6 +113,9 @@ apps/*/.source/
 # LLM gateway debug traces — local-only call logs, never commit
 **/.nebutra/debug/
 
+# Local preview database (PGlite data, bootstrap stamp, server log) — per checkout
+**/.nebutra/pglite/
+
 # tsup temp bundled configs — auto-generated next to tsup.config.ts on build,
 # safe to delete, never commit
 **/tsup.config.bundled*.mjs

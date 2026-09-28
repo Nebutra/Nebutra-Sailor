@@ -195,10 +195,12 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   await generateWelcomePage(resolvedTarget, { projectName });
 
   // -- env --
-  // No DATABASE_URL: the preview runs on @nebutra/db's in-process Postgres,
-  // so `pnpm dev` needs no Docker and no database setup.
+  // `pglite:` = the local preview database (@nebutra/db, PGlite): a new project
+  // runs with no Postgres to install. A localhost Postgres URL here meant the
+  // first `pnpm dev` failed for everyone without Docker. Replace it with a real
+  // URL when there is one; it passes the apps' URL validation meanwhile.
   emitJson(useJson, { event: "step", step: "env", status: "start" });
-  await injectEnv(resolvedTarget, {});
+  await injectEnv(resolvedTarget, { databaseUrl: "pglite:" });
   emitJson(useJson, { event: "step", step: "env", status: "ok" });
 
   // -- scaffold extras --

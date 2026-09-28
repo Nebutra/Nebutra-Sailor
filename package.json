@@ -73,6 +73,8 @@
     "db:check": "pnpm --filter @nebutra/db db:check",
     "db:push": "turbo run db:push",
     "db:studio": "pnpm --filter @nebutra/db db:studio",
+    "db:preview": "node packages/platform/db/scripts/preview-db.mjs serve",
+    "db:seed": "node packages/platform/db/scripts/preview-db.mjs seed",
     "format": "biome format --write .",
     "infra:up": "docker-compose up -d",
     "infra:down": "docker-compose down",

@@ -75,6 +75,41 @@ uses. Use `public.current_tenant_id()` in custom SQL.
 | `db:check` | read-only drift report; exit 1 on any drift |
 | `db:adopt` | once, for a database that predates the baseline (checks, then records it) |
 
+## Local preview — no database to set up
+
+With **no `DATABASE_URL`** (outside production), or `DATABASE_URL=pglite:[dir]`,
+`@nebutra/db` uses the preview database: PGlite (Postgres 17 in WASM) owned by
+one small process and served on `127.0.0.1:54329` over the ordinary wire
+protocol. The app keeps using `pg` + `@prisma/adapter-pg`; only the URL
+differs. A real `DATABASE_URL` takes the exact production path — the preview
+code is never loaded (`src/client-preview.test.ts`), and Workers resolve a stub
+(`#preview-db` / `#preview-db-server` import conditions).
+
+| Command | Does |
+|---|---|
+| `pnpm db:preview` | start it in the foreground; prints `DATABASE_URL` and the demo sign-in |
+| `node packages/platform/db/scripts/preview-db.mjs serve --run "<cmd>"` | start it, run `<cmd>` with `DATABASE_URL`, `DIRECT_URL`, `APP_DB_ROLE` set, stop when `<cmd>` exits |
+| `pnpm db:seed` | preview: add the demo organization + admin (idempotent). Real URL: the package's Prisma seed |
+| `pnpm --filter @nebutra/db db:preview:reset` | delete the preview data |
+
+- **Built by `db:deploy`.** First start creates the `app_user` role, then runs
+  `scripts/db.mjs deploy` against it — migrations, `platform.sql`, `rls.sql`,
+  drift check. It re-runs only when one of those files changes (hash in
+  `.nebutra/pglite/deployed.sha256`). Data lives in `.nebutra/pglite/data`.
+- **Demo data:** organization/tenant `preview_org`, owner `admin@example.com` /
+  `nebutra-preview` (Better Auth credential; override with
+  `NEBUTRA_PREVIEW_ADMIN_EMAIL` / `_PASSWORD`). Printed when the database starts.
+- **Started for you** if nothing listens when the first query runs: the first
+  process spawns it detached (log `.nebutra/pglite/server.log`), later
+  processes share it, and it exits after 10 idle minutes.
+- **Limits** (printed at start): one Postgres session shared by every
+  connection, so transactions take turns (switching happens only at
+  ReadyForQuery-idle, see `scripts/preview/wire.mjs`); a connection idle in a
+  transaction for 60 s is dropped; `statement_timeout` / `lock_timeout` are
+  accepted but not enforced; no login roles — every connection is the owner,
+  and `getTenantDb` switches to `app_user` so RLS is enforced as in production;
+  no query cancel.
+
 ## Prisma 7 Critical Changes
 
 ### What Changed in Prisma 7 (Released 2025)

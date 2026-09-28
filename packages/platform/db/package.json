@@ -54,7 +54,10 @@
     "build": "tsc -p tsconfig.json && cp src/generated/prisma-workerd/internal/query_compiler_fast_bg.js src/generated/prisma-workerd/internal/query_compiler_fast_bg.wasm dist/generated/prisma-workerd/internal/",
     "db:deploy": "node scripts/db.mjs deploy",
     "db:check": "node scripts/db.mjs check",
-    "db:adopt": "node scripts/db.mjs adopt"
+    "db:adopt": "node scripts/db.mjs adopt",
+    "db:preview": "node scripts/preview-db.mjs serve",
+    "db:preview:seed": "node scripts/preview-db.mjs seed",
+    "db:preview:reset": "node scripts/preview-db.mjs reset"
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
@@ -87,6 +90,14 @@
     "#prisma-client": {
       "workerd": "./dist/generated/prisma-workerd/client.js",
       "default": "./dist/generated/prisma/client.js"
+    },
+    "#preview-db": {
+      "workerd": "./dist/preview-mode.workerd.js",
+      "default": "./dist/preview-mode.js"
+    },
+    "#preview-db-server": {
+      "workerd": "./dist/preview-server.workerd.js",
+      "default": "./dist/preview-server.js"
     }
   }
 }
