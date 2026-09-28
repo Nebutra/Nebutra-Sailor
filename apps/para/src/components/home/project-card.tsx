@@ -1,5 +1,7 @@
 "use client";
 
+// @async-surface-exempt: looks up one cover asset by id for a thumbnail; a miss (loading, error or absent) is the placeholder tile, not a surface state.
+
 import Link from "next/link";
 import { projectThumbnail } from "@/domain/gallery";
 import type { Project } from "@/domain/types";
