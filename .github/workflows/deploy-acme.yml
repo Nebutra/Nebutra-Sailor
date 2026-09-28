@@ -101,6 +101,10 @@ jobs:
         run: bash infra/ops/scripts/assemble-next-standalone.sh apps/landing "$RUNNER_TEMP/stage-acme" landing
 
       - name: Deploy Machine
+        # A cutover only needs a healthy app, not a new one: the smoke below
+        # checks the running machine. So a deploy Fly refuses (the org machine
+        # limit did, 2026-09-28) does not hold the certificate and DNS hostage.
+        continue-on-error: ${{ github.event.inputs.cutover == 'true' }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
