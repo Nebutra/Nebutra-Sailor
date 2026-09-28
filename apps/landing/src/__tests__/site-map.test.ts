@@ -79,7 +79,9 @@ describe("pageAt", () => {
     expect(pageAt("/changelog/1.8.0")?.path).toBe("/changelog/[version]");
     expect(pageAt("/solutions/china-vc/abc")?.path).toBe("/solutions/china-vc/[id]");
     expect(pageAt("/blog/tag/ai")?.path).toBe("/blog/tag/[tag]");
-    expect(pageAt("/status")?.chrome).toBe("bare");
+    expect(pageAt("/sailor/studio/frame")?.chrome).toBe("bare");
+    // The status page sits in the site frame; it carries no brand header of its own.
+    expect(pageAt("/status")?.chrome).toBeUndefined();
     expect(pageAt("/nowhere")).toBeUndefined();
   });
 });

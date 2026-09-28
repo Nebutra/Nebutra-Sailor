@@ -227,9 +227,10 @@ function windowDates(now: Date): string[] {
 }
 
 function historyStates(history: ServiceHistory): Record<string, ServiceState> {
-  return Object.fromEntries(
-    Object.entries(history.days).map(([date, stats]) => [date, dayState(stats)]),
-  );
+  return Object.fromEntries([
+    ...Object.entries(history.legacy),
+    ...Object.entries(history.days).map(([date, stats]) => [date, dayState(stats)] as const),
+  ]);
 }
 
 /**
@@ -273,7 +274,7 @@ export async function buildStatusSnapshot(
   const dates = windowDates(now);
   const today = utcDateKey(now);
   const services = probed.map((service) => {
-    const history = historyByService[service.id] ?? { days: {} };
+    const history = historyByService[service.id] ?? { days: {}, legacy: {} };
     const states = historyStates(history);
     // Today's cell shows the live reading until the day has checks of its own.
     if (!history.days[today]) states[today] = service.state;
