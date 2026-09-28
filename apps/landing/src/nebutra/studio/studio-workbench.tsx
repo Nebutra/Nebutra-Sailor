@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowUpRight,
   BarChart,
   Check,
   Clipboard,
@@ -18,6 +19,7 @@ import { PRESET_BASES, type Preset, type PresetBase, parsePreset } from "@nebutr
 import {
   Badge,
   Button,
+  ButtonLink,
   Checkbox,
   Input,
   Select,
@@ -43,6 +45,8 @@ import {
   useState,
 } from "react";
 import { carrierForPreset, type PreviewCarrier } from "@/lib/preset-carrier";
+import { writePresetCookie } from "@/lib/preset-cookie";
+import { ACME_SITE } from "@/nebutra/routes";
 import type { CatalogFilter } from "./frame-protocol";
 import { CatalogControls, CatalogFrame } from "./studio-catalog";
 import { StudioKnobs } from "./studio-knobs";
@@ -197,9 +201,12 @@ function BasePanel({ base, onSelect }: { base: PresetBase; onSelect: (base: Pres
 function TopBar({
   mode,
   onModeChange,
+  siteUrl,
 }: {
   mode: ThemeMode;
   onModeChange: (mode: ThemeMode) => void;
+  /** The template site, wearing this look. */
+  siteUrl: string;
 }) {
   return (
     <header className="flex flex-col gap-3 border-border/80 border-b bg-background/85 p-3 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:p-4">
@@ -210,6 +217,16 @@ function TopBar({
         </p>
       </div>
       <div className="flex items-center gap-2">
+        <ButtonLink
+          href={siteUrl}
+          target="_blank"
+          rel="noopener"
+          variant="secondary"
+          size="sm"
+          suffix={<ArrowUpRight className="size-3.5" />}
+        >
+          See it as a site
+        </ButtonLink>
         <span className="text-muted-foreground text-xs">Preview</span>
         <ToggleGroup
           type="single"
@@ -790,6 +807,8 @@ export function StudioWorkbench() {
     else url.searchParams.set("preset", presetArgument(preset));
     window.history.replaceState(null, "", url);
     setShareUrl(url.toString());
+    // The template site follows Studio: it reads this look from the shared cookie.
+    writePresetCookie(plainFactory ? null : presetArgument(preset));
   }, [preset, ready]);
 
   const carrier = useMemo<PreviewCarrier>(() => carrierForPreset(preset), [preset]);
@@ -814,7 +833,11 @@ export function StudioWorkbench() {
 
   return (
     <div className="studio-frame flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-background text-foreground">
-      <TopBar mode={mode} onModeChange={setMode} />
+      <TopBar
+        mode={mode}
+        onModeChange={setMode}
+        siteUrl={`${ACME_SITE}/?preset=${encodeURIComponent(presetArgument(preset))}`}
+      />
       <main className="studio-layout min-h-0 flex-1 overflow-hidden border-border/70 border-t">
         <BasePanel base={preset.base} onSelect={(base) => setPreset({ ...preset, base })} />
         <PreviewCanvas
