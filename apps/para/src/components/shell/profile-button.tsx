@@ -20,9 +20,12 @@ import { AuthActions, type ShellAccount } from "./auth-actions";
 export function ProfileButton({
   account,
   switchUrl = null,
+  className,
 }: {
   account?: ShellAccount;
   switchUrl?: string | null;
+  /** Replaces the default avatar box, e.g. to sit inside the canvas top-bar island. */
+  className?: string;
 } = {}) {
   const initial = account?.label.trim()[0]?.toUpperCase();
   return (
@@ -31,7 +34,10 @@ export function ProfileButton({
         <button
           type="button"
           aria-label="账户"
-          className="ml-1 flex size-8 items-center justify-center rounded-full bg-neutral-4 font-medium text-foreground text-label hover:bg-neutral-5"
+          className={
+            className ??
+            "ml-1 flex size-8 items-center justify-center rounded-full bg-neutral-4 font-medium text-foreground text-label hover:bg-neutral-5"
+          }
         >
           {initial ?? <User className="size-4" />}
         </button>

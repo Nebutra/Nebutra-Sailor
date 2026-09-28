@@ -152,53 +152,66 @@ export function WorkspaceTopBar({
         </Island>
       </div>
 
+      {/*
+        The right side is one island in the same recipe as the left — one height, one fill, one
+        radius, chips inside — grouped by dividers: document state · sharing · money · account.
+        It used to be seven separately boxed controls in three heights, half bordered, one with a
+        yellow gradient icon, which is what made the corner read as assembled rather than designed.
+        Agent stands alone, as on LibTV, because it opens a surface rather than reporting state.
+      */}
       <div className="flex shrink-0 items-center gap-2">
-        <SyncPill />
-        <JobsIndicator />
-        <SharePopover />
-        <Link
-          href="/pro"
-          className={`${chipClass({ tone: "outline" })} pointer-events-auto h-10 rounded-xl border-border/60 bg-popover/90 px-3 backdrop-blur-md`}
-        >
-          <Sparkles aria-hidden="true" className="size-3.5 text-warning-strong" />
-          开通会员
-        </Link>
-        <Credits />
-        <span className="pointer-events-auto">
-          <ProfileButton />
-        </span>
-        <Chip
-          tone="outline"
-          pressed={agentOpen}
-          aria-pressed={agentOpen}
-          onClick={() => {
-            const next = !agentOpen;
-            setAgentOpen(next);
-            if (next && agentStatus === "idle") setAgent({ status: "composing" });
-          }}
-          className="pointer-events-auto h-10 rounded-xl border-border/60 bg-popover/90 px-3 font-medium backdrop-blur-md"
-        >
-          <Agent aria-hidden="true" className="size-4" />
-          Agent
-        </Chip>
+        <Island>
+          <SyncStatus />
+          <JobsIndicator />
+          <Divider />
+          <SharePopover />
+          <Divider />
+          <Link href="/pro" className={chipClass()}>
+            <Sparkles aria-hidden="true" className="size-3.5 text-brand-accent" />
+            开通会员
+          </Link>
+          <Credits />
+          <Divider />
+          <ProfileButton className="mx-0.5 flex size-7 items-center justify-center rounded-full bg-neutral-4 font-medium text-foreground text-meta hover:bg-neutral-5" />
+        </Island>
+        <Island>
+          <Chip
+            pressed={agentOpen}
+            aria-pressed={agentOpen}
+            onClick={() => {
+              const next = !agentOpen;
+              setAgentOpen(next);
+              if (next && agentStatus === "idle") setAgent({ status: "composing" });
+            }}
+            className="gap-1.5 px-2.5 font-medium"
+          >
+            <Agent aria-hidden="true" className="size-4" />
+            Agent
+          </Chip>
+        </Island>
       </div>
     </div>
   );
 }
 
-function SyncPill() {
+function Divider() {
+  return <span aria-hidden="true" className="mx-0.5 h-4 w-px bg-border" />;
+}
+
+function SyncStatus() {
   const sync = useEditorStore((s) => s.sync);
   return (
-    <Island className="px-3">
-      <span className="flex items-center gap-2 text-label text-foreground" role="status">
-        <span
-          aria-hidden="true"
-          className="size-2 rounded-full"
-          style={{ backgroundColor: SYNC_DOT[sync] }}
-        />
-        {SYNC_LABEL[sync]}
-      </span>
-    </Island>
+    <span
+      className="flex h-[var(--para-h-chip)] items-center gap-1.5 px-2 text-label text-muted-foreground"
+      role="status"
+    >
+      <span
+        aria-hidden="true"
+        className="size-1.5 rounded-full"
+        style={{ backgroundColor: SYNC_DOT[sync] }}
+      />
+      {SYNC_LABEL[sync]}
+    </span>
   );
 }
 
@@ -209,19 +222,11 @@ function SyncPill() {
  */
 function Credits() {
   if (isGatewayMode) {
-    return (
-      <span className="pointer-events-auto">
-        <CreditsChip />
-      </span>
-    );
+    return <CreditsChip className={`${chipClass()} gap-1.5 tabular-nums`} />;
   }
   return (
-    <Link
-      href="/pro"
-      aria-label="积分"
-      className={`${chipClass({ tone: "outline" })} pointer-events-auto h-10 rounded-xl border-border/60 bg-popover/90 px-3 backdrop-blur-md`}
-    >
-      <Lightning aria-hidden="true" className="size-3.5" />
+    <Link href="/pro" aria-label="积分" className={`${chipClass()} gap-1.5`}>
+      <Lightning aria-hidden="true" className="size-3.5 text-muted-foreground" />
       积分
     </Link>
   );
@@ -233,12 +238,8 @@ function SharePopover() {
   return (
     <Popover onOpenChange={(open) => open || setCopied(false)}>
       <PopoverTrigger asChild>
-        <Chip
-          tone="outline"
-          aria-label="分享"
-          className="pointer-events-auto size-10 h-10 justify-center rounded-xl border-border/60 bg-popover/90 p-0 backdrop-blur-md"
-        >
-          <Share className="size-4" />
+        <Chip aria-label="分享" title="分享" className="w-[var(--para-h-chip)] justify-center px-0">
+          <Share className="size-3.5" />
         </Chip>
       </PopoverTrigger>
       <PopoverContent align="end" className="flex w-80 flex-col gap-3 p-4">
