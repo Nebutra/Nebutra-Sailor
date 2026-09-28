@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { carrierForPreset, PREVIEW_CARRIER_ROOT } from "../preset-carrier";
+import { carrierForPreset, PREVIEW_CARRIER_ROOT, paintedCarrierForPreset } from "../preset-carrier";
 
 describe("carrierForPreset", () => {
   it("emits the production carrier scoped to the preview artboard", () => {
@@ -24,5 +24,15 @@ describe("carrierForPreset", () => {
 
   it("says when a knob cannot apply", () => {
     expect(carrierForPreset({ base: "gsap", mode: "light" }).warning).toMatch(/one palette/);
+  });
+
+  it("paints factory explicitly where the page around it wears another brand", () => {
+    const carrier = paintedCarrierForPreset({ base: "factory" });
+    expect(carrier.brandId).toBe("studio");
+    expect(carrier.css).toContain(`${PREVIEW_CARRIER_ROOT}[data-brand="studio"]`);
+    expect(carrier.css).toContain(`${PREVIEW_CARRIER_ROOT}.dark[data-brand="studio"]`);
+    expect(paintedCarrierForPreset({ base: "linear" })).toEqual(
+      carrierForPreset({ base: "linear" }),
+    );
   });
 });

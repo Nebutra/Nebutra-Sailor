@@ -1,8 +1,17 @@
 "use client";
 
+import { ArrowUpRight, ChevronDown } from "@nebutra/icons";
 import { encodePreset, type Preset } from "@nebutra/tokens/preset";
-import { Badge, CopyButton } from "@nebutra/ui/primitives";
-import type { ReactNode } from "react";
+import {
+  Badge,
+  ButtonLink,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  CopyButton,
+} from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
+import { type ReactNode, useState } from "react";
 import { contrastLevel, contrastRatio } from "./contrast";
 import { channelsToCss, type TokenRow } from "./theme-token-data";
 
@@ -15,6 +24,13 @@ export function presetArgument(preset: Preset): string {
   return Object.keys(preset).length === 1 ? preset.base : encodePreset(preset);
 }
 
+/** Existing project — the command the apply bar always shows. */
+export const applyCommand = (preset: Preset) => `nebutra apply --preset ${presetArgument(preset)}`;
+
+/** New project. */
+export const createCommand = (preset: Preset) =>
+  `npx create-sailor@latest my-app --preset ${presetArgument(preset)}`;
+
 const copyProps = {
   variant: "tertiary",
   size: "tiny",
@@ -25,17 +41,22 @@ const copyProps = {
 
 function Block({
   title,
+  hint,
   action,
   children,
 }: {
   title: string;
+  hint?: string;
   action?: ReactNode;
   children: ReactNode;
 }) {
   return (
     <section className="grid min-w-0 gap-2">
       <div className="flex items-center justify-between gap-3">
-        <h3 className="font-medium text-muted-foreground text-xs">{title}</h3>
+        <div className="min-w-0">
+          <h3 className="font-medium text-foreground text-xs">{title}</h3>
+          {hint ? <p className="text-2xs text-muted-foreground">{hint}</p> : null}
+        </div>
         {action}
       </div>
       {children}
@@ -75,19 +96,24 @@ export function StudioOutput({
   preset,
   rows,
   shareUrl,
+  siteUrl,
 }: {
   preset: Preset;
   /** The variables the artboard actually resolves (read off its computed style). */
   rows: TokenRow[];
   shareUrl: string;
+  /** The template site, wearing this look. */
+  siteUrl: string;
 }) {
   const argument = presetArgument(preset);
   const value = (name: string) => rows.find((row) => row.name === name)?.value;
+  const [tokensOpen, setTokensOpen] = useState(false);
 
   return (
     <div className="grid min-w-0 gap-5">
       <Block
         title="Your preset"
+        hint="The whole look, as one code"
         action={<CopyButton {...copyProps} value={argument} label="Copy" />}
       >
         <div className="truncate rounded-[var(--radius-md)] border border-border bg-background px-3 py-2 font-mono text-foreground text-lg tracking-wide">
@@ -95,22 +121,43 @@ export function StudioOutput({
         </div>
       </Block>
 
-      <Block title="New project">
-        <Command command={`npx create-sailor@latest my-app --preset ${argument}`} />
+      <Block title="Existing project" hint="Run it at the project root">
+        <Command command={applyCommand(preset)} />
       </Block>
 
-      <Block title="Existing project">
-        <Command command={`nebutra apply --preset ${argument}`} />
+      <Block title="New project">
+        <Command command={createCommand(preset)} />
       </Block>
 
       <Block
         title="Share"
-        action={<CopyButton {...copyProps} value={shareUrl} label="Copy link" />}
+        hint="Opens Studio on this look"
+        action={
+          <CopyButton
+            {...copyProps}
+            value={shareUrl}
+            label="Copy link"
+            copiedLabel="Link copied"
+            iconType="link"
+          />
+        }
       >
         <p className="truncate font-mono text-2xs text-muted-foreground">{shareUrl}</p>
       </Block>
 
-      <Block title="Contrast">
+      <ButtonLink
+        href={siteUrl}
+        target="_blank"
+        rel="noopener"
+        variant="secondary"
+        size="sm"
+        className="w-full"
+        suffix={<ArrowUpRight className="size-3.5" />}
+      >
+        See it as a site
+      </ButtonLink>
+
+      <Block title="Contrast" hint="WCAG ratio for the three pairs that carry text">
         <div className="grid gap-1.5">
           <ContrastRow
             label="Text on canvas"
@@ -130,27 +177,39 @@ export function StudioOutput({
         </div>
       </Block>
 
-      <Block title="Tokens">
-        <div className="grid gap-1.5">
-          {rows.map((row) => (
-            <div
-              key={row.name}
-              className="grid grid-cols-[1rem_minmax(0,1fr)] items-center gap-2 text-xs"
-            >
-              <span
-                className="size-4 rounded-[var(--radius-sm)] border border-border"
-                style={{ background: channelsToCss(row.value, "transparent") }}
-              />
-              <div className="flex min-w-0 justify-between gap-2">
-                <span className="truncate font-mono text-foreground">{row.name}</span>
-                <span className="truncate font-mono text-muted-foreground text-2xs">
-                  {row.value}
-                </span>
+      <Collapsible
+        open={tokensOpen}
+        onOpenChange={setTokensOpen}
+        className="border-border/70 border-t pt-3"
+      >
+        <CollapsibleTrigger className="flex h-8 w-full items-center justify-between rounded-[var(--radius-md)] text-left font-medium text-muted-foreground text-xs hover:text-foreground">
+          <span>Tokens — the values the preview resolves</span>
+          <ChevronDown
+            className={cn("size-4 transition-transform duration-flow", tokensOpen && "rotate-180")}
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className="grid gap-1.5 pt-2">
+            {rows.map((row) => (
+              <div
+                key={row.name}
+                className="grid grid-cols-[1rem_minmax(0,1fr)] items-center gap-2 text-xs"
+              >
+                <span
+                  className="size-4 rounded-[var(--radius-sm)] border border-border"
+                  style={{ background: channelsToCss(row.value, "transparent") }}
+                />
+                <div className="flex min-w-0 justify-between gap-2">
+                  <span className="truncate font-mono text-foreground">{row.name}</span>
+                  <span className="truncate font-mono text-2xs text-muted-foreground">
+                    {row.value}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </Block>
+            ))}
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 }

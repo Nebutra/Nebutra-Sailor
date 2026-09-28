@@ -62,11 +62,36 @@ describe("Studio layout contract", () => {
     expect(source).not.toContain("h-[calc(100dvh-3rem)]");
   });
 
-  it("keeps the canvas beside the stacked registry on a mid-width Studio", () => {
+  it("puts the controls beside the canvas when wide and under it as a sheet when narrow", () => {
     const css = readFileSync(STUDIO_CSS, "utf8");
 
-    expect(css).toContain('"registry canvas"');
-    expect(css).toContain('"inspector canvas"');
-    expect(css).not.toContain("grid-column: 1 / -1");
+    expect(css).toContain('"panel canvas"');
+    expect(css).toMatch(/grid-template-areas:\s*"canvas"\s*"panel"/);
+    expect(css).toContain('.studio-panel[data-sheet="closed"] .studio-panel-body');
+  });
+
+  it("keeps the apply command outside every scroll region", () => {
+    const source = readFileSync(WORKBENCH, "utf8");
+    const layoutEnd = source.lastIndexOf("<PreviewCanvas");
+    const bar = source.lastIndexOf("<ApplyBar");
+
+    expect(bar).toBeGreaterThan(layoutEnd);
+    expect(source).toContain("applyCommand(preset)");
+  });
+
+  it("opens on a real page, with the component catalog as the last tab", () => {
+    const source = readFileSync(WORKBENCH, "utf8");
+
+    expect(source).toContain('useState<PreviewSuite>("dashboard")');
+    expect(source).toMatch(/\{ id: "components", label: "All components" \},\n\];/);
+  });
+
+  it("names an untouched knob Default, never the jargon chip", () => {
+    const knobs = readFileSync(join(__dirname, "../studio-knobs.tsx"), "utf8");
+
+    expect(knobs).not.toContain(">\n            Language\n");
+    expect(knobs).not.toContain('"base" ? "Language"');
+    expect(knobs).toContain("Default");
+    expect(knobs).toContain("Reset");
   });
 });

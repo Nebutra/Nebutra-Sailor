@@ -1,14 +1,12 @@
 "use client";
 
 import {
+  ArrowRight,
   ArrowUpRight,
-  BarChart,
   Check,
+  ChevronDown,
+  ChevronUp,
   Clipboard,
-  Command,
-  CreditCard,
-  Layers,
-  Layout,
   Moon,
   MagnifyingGlass as Search,
   Sparkles,
@@ -21,6 +19,7 @@ import {
   Button,
   ButtonLink,
   Checkbox,
+  CopyButton,
   Input,
   Select,
   SelectContent,
@@ -44,23 +43,27 @@ import {
   useRef,
   useState,
 } from "react";
-import { carrierForPreset, type PreviewCarrier } from "@/lib/preset-carrier";
+import { CONSENT_SLOT_ID } from "@/components/cookie-consent-banner";
+import { type PreviewCarrier, paintedCarrierForPreset } from "@/lib/preset-carrier";
 import { writePresetCookie } from "@/lib/preset-cookie";
 import { ACME_SITE } from "@/nebutra/routes";
 import type { CatalogFilter } from "./frame-protocol";
 import { CatalogControls, CatalogFrame } from "./studio-catalog";
-import { StudioKnobs } from "./studio-knobs";
-import { presetArgument, StudioOutput } from "./studio-output";
-import { getThemeSwatches, type ThemeMode, type TokenRow } from "./theme-token-data";
+import { changedKnobs, StudioKnobs } from "./studio-knobs";
+import { applyCommand, presetArgument, StudioOutput } from "./studio-output";
+import type { ThemeMode, TokenRow } from "./theme-token-data";
 
 /**
  * Sailor Studio — where a project's look is chosen (ADR 2026-09-27 Sailor
- * Studio). Start from a language, turn the knobs, watch the artboard, take the
- * code. The artboard is painted by the same resolver and emitter the project
- * build uses, so what it shows is what `nebutra apply --preset` produces.
+ * Studio). Three steps, one question each: choose a look, adjust it, apply
+ * it. The apply command is always on screen (the bar under the canvas), so the
+ * goal is never below the fold. The artboard is painted by the same resolver
+ * and emitter the project build uses, so what it shows is what
+ * `nebutra apply --preset` produces.
  */
 
-type PreviewSuite = "components" | "forms" | "pricing" | "dashboard" | "ai-chat" | "charts";
+type PreviewSuite = "dashboard" | "pricing" | "forms" | "ai-chat" | "components";
+type Step = "look" | "adjust" | "apply";
 
 /** The Components view's filter — what the catalog frame is asked to show. */
 interface CatalogView {
@@ -71,21 +74,42 @@ interface CatalogView {
   setQuery: (query: string) => void;
   setEntry: (entry: string | null) => void;
 }
-type ViewportId = "1280x800" | "1440x1024" | "390x844";
+type ViewportId = "1440x1024" | "1280x800" | "390x844";
 
 const viewportSpec: Record<ViewportId, { width: number; height: number; label: string }> = {
-  "1280x800": { width: 1280, height: 800, label: "1280 × 800" },
-  "1440x1024": { width: 1440, height: 1024, label: "1440 × 1024" },
-  "390x844": { width: 390, height: 844, label: "390 × 844" },
+  "1440x1024": { width: 1440, height: 1024, label: "Desktop, 1440 × 1024" },
+  "1280x800": { width: 1280, height: 800, label: "Laptop, 1280 × 800" },
+  "390x844": { width: 390, height: 844, label: "Phone, 390 × 844" },
 };
 
-const suites: Array<{ id: PreviewSuite; label: string; icon: ReactNode }> = [
-  { id: "components", label: "Components", icon: <Layers /> },
-  { id: "forms", label: "Forms", icon: <Sparkles /> },
-  { id: "pricing", label: "Pricing", icon: <CreditCard /> },
-  { id: "dashboard", label: "Dashboard", icon: <Layout /> },
-  { id: "ai-chat", label: "AI Chat", icon: <Command /> },
-  { id: "charts", label: "Charts", icon: <BarChart /> },
+/** Real pages first — the result is legible at a glance. The catalog is last. */
+const suites: Array<{ id: PreviewSuite; label: string }> = [
+  { id: "dashboard", label: "Dashboard" },
+  { id: "pricing", label: "Pricing" },
+  { id: "forms", label: "Sign-up" },
+  { id: "ai-chat", label: "AI chat" },
+  { id: "components", label: "All components" },
+];
+
+const steps: Array<{ id: Step; label: string; title: string; hint: string }> = [
+  {
+    id: "look",
+    label: "Look",
+    title: "Choose a look",
+    hint: "A design language to start from. You can adjust it next.",
+  },
+  {
+    id: "adjust",
+    label: "Adjust",
+    title: "Make it yours",
+    hint: "Four knobs change most of what a page reads as.",
+  },
+  {
+    id: "apply",
+    label: "Apply",
+    title: "Put it on a project",
+    hint: "One command, for a new project or one you already have.",
+  },
 ];
 
 /**
@@ -105,34 +129,56 @@ const INSPECTED_VARS = [
 ] as const;
 
 const LANGUAGES = new Map(LANGUAGE_REGISTRY.languages.map((lang) => [lang.id, lang]));
+const languageName = (id: string) => LANGUAGES.get(id)?.name ?? id;
 
-function ThemeSwatches({
-  themeId,
-  size = "md",
-  swatchColors,
-}: {
-  themeId: string;
-  size?: "sm" | "md";
-  swatchColors?: string[];
-}) {
-  const colors = swatchColors ?? getThemeSwatches(themeId);
+/** Each thumbnail wears its own language, scoped to its own class. */
+const thumbClass = (id: PresetBase) => `studio-thumb-${id}`;
+const THUMB_CSS = PRESET_BASES.map(
+  (id) => paintedCarrierForPreset({ base: id }, `.${thumbClass(id)}`).css,
+).join("\n");
+
+/** A miniature page in the language: heading face, surfaces, radius, the action fill. */
+function LanguageThumb({ id, mode }: { id: PresetBase; mode: ThemeMode }) {
   return (
-    <div className="flex items-center gap-1.5" aria-hidden="true">
-      {colors.map((color, i) => (
+    <div
+      aria-hidden="true"
+      data-brand="studio"
+      className={cn(
+        thumbClass(id),
+        "pointer-events-none flex h-20 flex-col gap-1.5 overflow-hidden bg-background p-2.5 text-foreground",
+        mode === "dark" && "dark",
+      )}
+    >
+      <div className="flex items-center justify-between">
         <span
-          key={`${themeId}-${i}-${color}`}
-          className={cn(
-            "rounded-[var(--radius-sm)] border border-neutral-6 shadow-sm",
-            size === "sm" ? "size-4" : "size-5",
-          )}
-          style={{ background: color }}
-        />
-      ))}
+          className="font-semibold text-2xs leading-none"
+          style={{ fontFamily: "var(--font-heading, var(--font-sans))" }}
+        >
+          Aa
+        </span>
+        <span className="h-1 w-7 rounded-full bg-muted-foreground/30" />
+      </div>
+      <div className="flex min-h-0 flex-1 flex-col justify-center gap-1 rounded-[var(--radius-md)] border border-border bg-card px-1.5">
+        <span className="h-1 w-3/4 rounded-full bg-foreground/70" />
+        <span className="h-1 w-1/2 rounded-full bg-muted-foreground/40" />
+      </div>
+      <div className="flex gap-1">
+        <span className="h-3.5 flex-1 rounded-[var(--radius-sm)] bg-primary" />
+        <span className="h-3.5 flex-1 rounded-[var(--radius-sm)] border border-border bg-secondary" />
+      </div>
     </div>
   );
 }
 
-function BasePanel({ base, onSelect }: { base: PresetBase; onSelect: (base: PresetBase) => void }) {
+function LookStep({
+  base,
+  mode,
+  onSelect,
+}: {
+  base: PresetBase;
+  mode: ThemeMode;
+  onSelect: (base: PresetBase) => void;
+}) {
   const [query, setQuery] = useState("");
   const bases = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -144,22 +190,17 @@ function BasePanel({ base, onSelect }: { base: PresetBase; onSelect: (base: Pres
   }, [query]);
 
   return (
-    <aside className="studio-registry flex min-h-0 flex-col border-border/80 border-r bg-card">
-      <div className="border-border/70 border-b p-4">
-        <h2 className="font-semibold text-foreground text-sm">Start from</h2>
-        <p className="mt-1 mb-3 text-muted-foreground text-xs">
-          A design language; the knobs go on top.
-        </p>
-        <Input
-          aria-label="Search languages"
-          placeholder="Search languages..."
-          value={query}
-          onValueChange={setQuery}
-          prefix={<Search className="size-4" />}
-          size="sm"
-        />
-      </div>
-      <div className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
+    <div className="grid gap-3">
+      <style>{THUMB_CSS}</style>
+      <Input
+        aria-label="Search languages"
+        placeholder="Search languages"
+        value={query}
+        onValueChange={setQuery}
+        prefix={<Search className="size-4" />}
+        size="sm"
+      />
+      <div className="grid grid-cols-2 gap-2.5">
         {bases.map((id) => {
           const lang = LANGUAGES.get(id);
           const active = id === base;
@@ -171,52 +212,86 @@ function BasePanel({ base, onSelect }: { base: PresetBase; onSelect: (base: Pres
               aria-pressed={active}
               onClick={() => onSelect(id)}
               className={cn(
-                "block h-auto w-full whitespace-normal rounded-[var(--radius-lg)] border p-3 text-left font-normal",
-                "bg-background/55 hover:border-primary/50 hover:bg-background/80",
-                active ? "border-primary/70" : "border-border/75",
+                "block h-auto w-full min-w-0 overflow-hidden whitespace-normal rounded-[var(--radius-lg)] border p-0 text-left font-normal",
+                "hover:bg-transparent hover:shadow-ambient-sm",
+                active
+                  ? "border-foreground ring-1 ring-foreground"
+                  : "border-border hover:border-muted-foreground/50",
               )}
             >
-              <div className="mb-3 flex items-start justify-between gap-3">
-                <div>
-                  <div className="font-semibold text-foreground text-sm">{lang?.name ?? id}</div>
-                  <div className="mt-1 line-clamp-2 text-muted-foreground text-xs">
+              <LanguageThumb id={id} mode={mode} />
+              <div className="flex items-start justify-between gap-2 border-border/70 border-t px-2.5 py-2">
+                <div className="min-w-0">
+                  <div className="truncate font-medium text-foreground text-xs">
+                    {lang?.name ?? id}
+                  </div>
+                  <div className="truncate text-2xs text-muted-foreground">
                     {lang?.tagline ?? lang?.description}
                   </div>
                 </div>
-                {active && (
-                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
-                    <Check className="size-3" />
+                {active ? (
+                  <span className="grid size-4 shrink-0 place-items-center rounded-full bg-foreground text-background">
+                    <Check className="size-2.5" />
                   </span>
-                )}
+                ) : null}
               </div>
-              <ThemeSwatches themeId={id} />
             </Button>
           );
         })}
       </div>
-    </aside>
+      {bases.length === 0 ? (
+        <p className="text-muted-foreground text-xs">Nothing matches “{query}”.</p>
+      ) : null}
+    </div>
   );
 }
 
-function TopBar({
-  mode,
-  onModeChange,
+/** The goal, always on screen: what you have, the command, share, see it live. */
+function ApplyBar({
+  preset,
+  shareUrl,
   siteUrl,
 }: {
-  mode: ThemeMode;
-  onModeChange: (mode: ThemeMode) => void;
-  /** The template site, wearing this look. */
+  preset: Preset;
+  shareUrl: string;
   siteUrl: string;
 }) {
+  const command = applyCommand(preset);
+  const changes = changedKnobs(preset);
   return (
-    <header className="flex flex-col gap-3 border-border/80 border-b bg-background/85 p-3 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:p-4">
-      <div className="min-w-0">
-        <h1 className="font-semibold text-base text-foreground">Sailor Studio</h1>
-        <p className="mt-0.5 text-muted-foreground text-xs">
-          Choose how your project looks. Apply it with one command.
-        </p>
+    <div className="studio-apply-bar flex min-w-0 items-center gap-3 border-border/80 border-t bg-card px-3 py-2.5 sm:px-4">
+      <div className="studio-apply-summary min-w-0 shrink-0">
+        <div className="font-medium text-foreground text-xs">{languageName(preset.base)}</div>
+        <div className="text-2xs text-muted-foreground">
+          {changes === 0 ? "As designed" : `${changes} ${changes === 1 ? "change" : "changes"}`}
+        </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex min-w-0 flex-1 items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background py-1 pr-1 pl-3">
+        <span aria-hidden="true" className="select-none font-mono text-2xs text-muted-foreground">
+          $
+        </span>
+        <code className="min-w-0 flex-1 truncate font-mono text-foreground text-xs">{command}</code>
+        <CopyButton
+          value={command}
+          label="Copy"
+          variant="default"
+          size="tiny"
+          showToast={false}
+          timeout={1400}
+          className="shrink-0"
+        />
+      </div>
+      <div className="studio-apply-extra flex shrink-0 items-center gap-1.5">
+        <CopyButton
+          value={shareUrl}
+          label="Copy link"
+          copiedLabel="Link copied"
+          iconType="link"
+          variant="secondary"
+          size="sm"
+          showToast={false}
+          timeout={1400}
+        />
         <ButtonLink
           href={siteUrl}
           target="_blank"
@@ -227,98 +302,89 @@ function TopBar({
         >
           See it as a site
         </ButtonLink>
-        <span className="text-muted-foreground text-xs">Preview</span>
-        <ToggleGroup
-          type="single"
-          aria-label="Preview mode"
-          value={mode}
-          onValueChange={(next) => next && onModeChange(next as ThemeMode)}
-          className="rounded-[var(--radius-md)] border border-border bg-muted p-0.5"
-        >
-          <ToggleGroupItem
-            value="light"
-            className="h-7 gap-1.5 rounded-[calc(var(--radius-md)-2px)] px-2.5 text-xs"
-          >
-            <Sun /> Light
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value="dark"
-            className="h-7 gap-1.5 rounded-[calc(var(--radius-md)-2px)] px-2.5 text-xs"
-          >
-            <Moon /> Dark
-          </ToggleGroupItem>
-        </ToggleGroup>
       </div>
-    </header>
+    </div>
   );
 }
 
-function CanvasHeader({
+function CanvasToolbar({
   activeSuite,
   onSuiteChange,
   viewport,
   onViewportChange,
-  catalog,
+  mode,
+  onModeChange,
 }: {
   activeSuite: PreviewSuite;
   onSuiteChange: (suite: PreviewSuite) => void;
   viewport: ViewportId;
   onViewportChange: (viewport: ViewportId) => void;
-  catalog: CatalogView;
+  mode: ThemeMode;
+  onModeChange: (mode: ThemeMode) => void;
 }) {
   return (
-    <div className="flex flex-col gap-3 border-border/70 border-b px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-      <div className="min-w-0">
-        {activeSuite === "components" ? (
-          <CatalogControls
-            category={catalog.category}
-            onCategoryChange={catalog.setCategory}
-            query={catalog.query}
-            onQueryChange={catalog.setQuery}
-            entry={catalog.entry}
-            onBack={() => catalog.setEntry(null)}
-          />
-        ) : (
-          <>
-            <h2 className="font-semibold text-foreground text-sm">Live Preview Canvas</h2>
-            <p className="mt-0.5 text-muted-foreground text-xs">
-              One suite at a time. Tokens stay the same.
-            </p>
-          </>
-        )}
+    <div className="flex min-w-0 items-center gap-2 border-border/70 border-b px-3 py-2">
+      {/* Wide canvas: every page as a tab. Narrow: one select — never a clipped row. */}
+      <div className="studio-page-tabs min-w-0 flex-1">
+        <Tabs
+          value={activeSuite}
+          size="sm"
+          onValueChange={(value) => onSuiteChange(value as PreviewSuite)}
+        >
+          <TabsList aria-label="Preview page">
+            {suites.map((suite) => (
+              <TabsTrigger key={suite.id} value={suite.id}>
+                {suite.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
       </div>
-      <div className="flex min-w-0 items-center gap-2">
-        <div className="min-w-0 flex-1 overflow-x-auto">
-          <Tabs
-            value={activeSuite}
-            size="sm"
-            onValueChange={(value) => onSuiteChange(value as PreviewSuite)}
-          >
-            <TabsList className="min-w-max border border-border bg-card/80">
-              {suites.map((suite) => (
-                <TabsTrigger key={suite.id} value={suite.id}>
-                  <span className="inline-flex items-center gap-1.5">
-                    {suite.icon}
-                    {suite.label}
-                  </span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-        </div>
-        <Select value={viewport} onValueChange={(v) => onViewportChange(v as ViewportId)}>
-          <SelectTrigger size="small" className="h-8 w-[8.5rem] shrink-0">
-            <SelectValue />
+      <div className="studio-page-select min-w-0 flex-1">
+        <Select value={activeSuite} onValueChange={(v) => onSuiteChange(v as PreviewSuite)}>
+          <SelectTrigger size="small" className="h-8 w-40" aria-label="Preview page">
+            <SelectValue>{suites.find((suite) => suite.id === activeSuite)?.label}</SelectValue>
           </SelectTrigger>
           <SelectContent>
-            {(Object.keys(viewportSpec) as ViewportId[]).map((id) => (
-              <SelectItem key={id} value={id}>
-                {viewportSpec[id].label}
+            {suites.map((suite) => (
+              <SelectItem key={suite.id} value={suite.id}>
+                {suite.label}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
       </div>
+      <ToggleGroup
+        type="single"
+        aria-label="Preview width"
+        value={viewport}
+        onValueChange={(next) => next && onViewportChange(next as ViewportId)}
+        className="studio-viewport shrink-0 rounded-[var(--radius-md)] border border-border bg-muted p-0.5"
+      >
+        {(Object.keys(viewportSpec) as ViewportId[]).map((id) => (
+          <ToggleGroupItem
+            key={id}
+            value={id}
+            aria-label={viewportSpec[id].label}
+            title={viewportSpec[id].label}
+            className="h-7 rounded-[calc(var(--radius-md)-2px)] px-2 font-mono text-2xs tabular-nums"
+          >
+            {viewportSpec[id].width}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+      <Button
+        type="button"
+        variant="secondary"
+        size="sm"
+        shape="square"
+        aria-label={mode === "dark" ? "Preview in light mode" : "Preview in dark mode"}
+        title={mode === "dark" ? "Preview in light mode" : "Preview in dark mode"}
+        onClick={() => onModeChange(mode === "dark" ? "light" : "dark")}
+        className="size-8 shrink-0 p-0"
+      >
+        {mode === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
+      </Button>
     </div>
   );
 }
@@ -327,6 +393,7 @@ function PreviewCanvas({
   preset,
   carrier,
   mode,
+  onModeChange,
   activeSuite,
   onSuiteChange,
   viewport,
@@ -337,6 +404,7 @@ function PreviewCanvas({
   preset: Preset;
   carrier: PreviewCarrier;
   mode: ThemeMode;
+  onModeChange: (mode: ThemeMode) => void;
   activeSuite: PreviewSuite;
   onSuiteChange: (suite: PreviewSuite) => void;
   viewport: ViewportId;
@@ -356,17 +424,35 @@ function PreviewCanvas({
     [preset, mode, catalog.category, catalog.query, catalog.entry],
   );
 
+  const toolbar = (
+    <CanvasToolbar
+      activeSuite={activeSuite}
+      onSuiteChange={onSuiteChange}
+      viewport={viewport}
+      onViewportChange={onViewportChange}
+      mode={mode}
+      onModeChange={onModeChange}
+    />
+  );
+
   if (activeSuite === "components") {
     return (
-      <section className="theme-preview-canvas flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-background/55">
-        <CanvasHeader
-          activeSuite={activeSuite}
-          onSuiteChange={onSuiteChange}
-          viewport={viewport}
-          onViewportChange={onViewportChange}
-          catalog={catalog}
-        />
-        <div className="min-h-0 flex-1 p-4">
+      <section
+        aria-label="Preview"
+        className="theme-preview-canvas studio-canvas flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-muted/30"
+      >
+        {toolbar}
+        <div className="border-border/70 border-b px-3 py-2">
+          <CatalogControls
+            category={catalog.category}
+            onCategoryChange={catalog.setCategory}
+            query={catalog.query}
+            onQueryChange={catalog.setQuery}
+            entry={catalog.entry}
+            onBack={() => catalog.setEntry(null)}
+          />
+        </div>
+        <div className="min-h-0 flex-1 p-3 sm:p-4">
           {/* The token readout still needs an element wearing the look. */}
           <div
             ref={artboardRef}
@@ -392,32 +478,26 @@ function PreviewCanvas({
   // `html[data-brand]` swap sets, and mode is the canonical `.dark` class the
   // tokens SSOT reads. No inline token map, no `--color-*` indirection.
   return (
-    <section className="theme-preview-canvas flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-background/55">
-      <CanvasHeader
-        activeSuite={activeSuite}
-        onSuiteChange={onSuiteChange}
-        viewport={viewport}
-        onViewportChange={onViewportChange}
-        catalog={catalog}
-      />
-      <div className="min-h-0 flex-1 overflow-auto p-4">
+    <section
+      aria-label="Preview"
+      className="theme-preview-canvas studio-canvas flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-muted/30"
+    >
+      {toolbar}
+      <div className="min-h-0 flex-1 overflow-auto p-3 sm:p-4">
         {carrier.warning ? (
           <p className="mx-auto mb-3 max-w-[80ch] rounded-[var(--radius-md)] border border-warning/40 bg-warning/10 px-3 py-2 text-warning-strong text-xs">
             {carrier.warning}
           </p>
         ) : null}
-        {/* Viewport frame — centered, max-width/min-height follow the selected device.
-            The pane scrolls when that artboard is taller than the remaining slot. */}
+        {/* Viewport frame — centered; its width follows the chosen device. The
+            pane scrolls when that artboard is taller than the remaining slot. */}
         <div
           ref={artboardRef}
           data-brand={carrier.brandId}
           data-mode={mode}
-          style={{
-            maxWidth: `${viewportWidth}px`,
-            minHeight: `${viewportHeight}px`,
-          }}
+          style={{ maxWidth: `${viewportWidth}px`, minHeight: "100%" }}
           className={cn(
-            "theme-preview-artboard mx-auto w-full overflow-hidden rounded-[var(--radius-lg)] bg-background text-foreground transition-[max-width] duration-200",
+            "theme-preview-artboard mx-auto w-full overflow-hidden rounded-[var(--radius-lg)] border border-border/70 bg-background text-foreground transition-[max-width] duration-200",
             mode === "dark" && "dark",
             // Force theme fonts onto ALL descendants, beating any intermediate CSS
             // rule (e.g. globals.css @layer base h1-h6 / body font-family) that
@@ -435,11 +515,15 @@ function PreviewCanvas({
         >
           {carrier.css ? <style>{carrier.css}</style> : null}
           <div className="theme-preview-grid gap-[var(--space-source-md,var(--studio-gap))] p-[var(--space-source-lg,var(--studio-pad))]">
-            {activeSuite === "forms" ? <FormsPanel /> : null}
+            {activeSuite === "dashboard" ? (
+              <>
+                <DashboardPanel />
+                <ChartsPanel />
+              </>
+            ) : null}
             {activeSuite === "pricing" ? <PricingPanel /> : null}
-            {activeSuite === "dashboard" ? <DashboardPanel /> : null}
+            {activeSuite === "forms" ? <FormsPanel /> : null}
             {activeSuite === "ai-chat" ? <AiChatPanel /> : null}
-            {activeSuite === "charts" ? <ChartsPanel /> : null}
           </div>
         </div>
       </div>
@@ -752,21 +836,24 @@ function MiniChart({
 }
 
 /** The preset in the page's URL (`?preset=`), so a look is a link. */
-function presetFromLocation(): Preset {
-  if (typeof window === "undefined") return { base: "factory" };
+function presetFromLocation(): Preset | null {
+  if (typeof window === "undefined") return null;
   const raw = new URLSearchParams(window.location.search).get("preset");
-  if (!raw) return { base: "factory" };
+  if (!raw) return null;
   try {
     return parsePreset(raw);
   } catch {
-    return { base: "factory" };
+    return null;
   }
 }
 
 export function StudioWorkbench() {
   const [preset, setPreset] = useState<Preset>({ base: "factory" });
   const [mode, setMode] = useState<ThemeMode>("dark");
-  const [activeSuite, setActiveSuite] = useState<PreviewSuite>("components");
+  const [step, setStep] = useState<Step>("look");
+  // Phone: the controls are a sheet under the preview; it can fold down to its tabs.
+  const [sheetOpen, setSheetOpen] = useState(true);
+  const [activeSuite, setActiveSuite] = useState<PreviewSuite>("dashboard");
   const [catalogCategory, setCatalogCategory] = useState<CatalogFilter>("all");
   const [catalogQuery, setCatalogQuery] = useState("");
   const [catalogEntry, setCatalogEntry] = useState<string | null>(null);
@@ -794,9 +881,13 @@ export function StudioWorkbench() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const initial = presetFromLocation();
-    setPreset(initial);
-    // Open the preview in the mode the look greets a visitor with, when it says.
-    if (initial.mode === "light" || initial.mode === "dark") setMode(initial.mode);
+    if (initial) {
+      setPreset(initial);
+      // A shared look opens where it can be adjusted, not back at the start.
+      setStep("adjust");
+      // Open the preview in the mode the look greets a visitor with, when it says.
+      if (initial.mode === "light" || initial.mode === "dark") setMode(initial.mode);
+    }
     setReady(true);
   }, []);
   useEffect(() => {
@@ -811,7 +902,7 @@ export function StudioWorkbench() {
     writePresetCookie(plainFactory ? null : presetArgument(preset));
   }, [preset, ready]);
 
-  const carrier = useMemo<PreviewCarrier>(() => carrierForPreset(preset), [preset]);
+  const carrier = useMemo<PreviewCarrier>(() => paintedCarrierForPreset(preset), [preset]);
 
   const artboardRef = useRef<HTMLDivElement>(null);
   const [tokenRows, setTokenRows] = useState<TokenRow[]>([]);
@@ -831,19 +922,102 @@ export function StudioWorkbench() {
     return () => cancelAnimationFrame(frame);
   }, [mode, carrier.css, activeSuite]);
 
+  // The panel is one scroll region; a new step starts at its top.
+  const panelBodyRef = useRef<HTMLDivElement>(null);
+  const goTo = (next: Step) => {
+    setStep(next);
+    setSheetOpen(true);
+    panelBodyRef.current?.scrollTo({ top: 0 });
+  };
+
+  const siteUrl = `${ACME_SITE}/?preset=${encodeURIComponent(presetArgument(preset))}`;
+  const current = steps.find((s) => s.id === step) ?? steps[0];
+  const nextStep = steps[steps.findIndex((s) => s.id === step) + 1];
+
   return (
     <div className="studio-frame flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-background text-foreground">
-      <TopBar
-        mode={mode}
-        onModeChange={setMode}
-        siteUrl={`${ACME_SITE}/?preset=${encodeURIComponent(presetArgument(preset))}`}
-      />
-      <main className="studio-layout min-h-0 flex-1 overflow-hidden border-border/70 border-t">
-        <BasePanel base={preset.base} onSelect={(base) => setPreset({ ...preset, base })} />
+      <div className="studio-layout min-h-0 flex-1 overflow-hidden">
+        <aside
+          aria-label="Studio controls"
+          data-sheet={sheetOpen ? "open" : "closed"}
+          className="studio-panel flex min-h-0 flex-col bg-card"
+        >
+          <div className="border-border/70 border-b px-4 pt-3 pb-3">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h1 className="font-semibold text-foreground text-sm">Sailor Studio</h1>
+              <Button
+                type="button"
+                variant="ghost"
+                size="tiny"
+                className="studio-sheet-toggle -mr-2 text-muted-foreground"
+                aria-expanded={sheetOpen}
+                onClick={() => setSheetOpen((open) => !open)}
+                suffix={sheetOpen ? <ChevronDown /> : <ChevronUp />}
+              >
+                {sheetOpen ? "Hide controls" : "Show controls"}
+              </Button>
+            </div>
+            <Tabs value={step} size="sm" onValueChange={(value) => goTo(value as Step)}>
+              <TabsList aria-label="Steps" className="grid w-full grid-cols-3">
+                {steps.map((s, i) => (
+                  <TabsTrigger key={s.id} value={s.id}>
+                    <span className="mr-1 text-muted-foreground tabular-nums">{i + 1}</span>
+                    {s.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
+          {/* The one scroll region of the panel. */}
+          <div
+            ref={panelBodyRef}
+            className="studio-panel-body min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-4 pb-6"
+          >
+            {/* The cookie question lands here, not on the canvas (cookie-consent-banner.tsx). */}
+            <div
+              id={CONSENT_SLOT_ID}
+              data-ready={ready ? "" : undefined}
+              className="mb-4 empty:hidden"
+            />
+            <div className="mb-4">
+              <h2 className="font-semibold text-foreground text-base">{current.title}</h2>
+              <p className="mt-1 text-muted-foreground text-xs">{current.hint}</p>
+            </div>
+            {step === "look" ? (
+              <LookStep
+                base={preset.base}
+                mode={mode}
+                onSelect={(base) => setPreset({ ...preset, base })}
+              />
+            ) : null}
+            {step === "adjust" ? <StudioKnobs preset={preset} onChange={setPreset} /> : null}
+            {step === "apply" ? (
+              <StudioOutput
+                preset={preset}
+                rows={tokenRows}
+                shareUrl={shareUrl}
+                siteUrl={siteUrl}
+              />
+            ) : null}
+            {nextStep ? (
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                className="mt-6 w-full"
+                onClick={() => goTo(nextStep.id)}
+                suffix={<ArrowRight className="size-3.5" />}
+              >
+                Next: {nextStep.label.toLowerCase()}
+              </Button>
+            ) : null}
+          </div>
+        </aside>
         <PreviewCanvas
           preset={preset}
           carrier={carrier}
           mode={mode}
+          onModeChange={setMode}
           activeSuite={activeSuite}
           onSuiteChange={setActiveSuite}
           viewport={viewport}
@@ -851,18 +1025,8 @@ export function StudioWorkbench() {
           artboardRef={artboardRef}
           catalog={catalog}
         />
-        <aside className="studio-inspector flex min-h-0 flex-col border-border/80 border-l bg-card">
-          <div className="min-h-0 flex-1 space-y-6 overflow-y-auto p-4">
-            <section className="min-w-0">
-              <h2 className="mb-4 font-semibold text-foreground text-sm">Tune</h2>
-              <StudioKnobs preset={preset} onChange={setPreset} />
-            </section>
-            <section className="min-w-0 border-border/70 border-t pt-5">
-              <StudioOutput preset={preset} rows={tokenRows} shareUrl={shareUrl} />
-            </section>
-          </div>
-        </aside>
-      </main>
+      </div>
+      <ApplyBar preset={preset} shareUrl={shareUrl} siteUrl={siteUrl} />
     </div>
   );
 }

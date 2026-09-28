@@ -55,3 +55,18 @@ export function carrierForPreset(preset: Preset, root = PREVIEW_CARRIER_ROOT): P
   if (warnings[0]) carrier.warning = warnings[0];
   return carrier;
 }
+
+/**
+ * The same carrier for an element inside a page that wears a brand of its own
+ * (Sailor Studio's artboard and thumbnails on the Nebutra site): there plain
+ * factory cannot inherit — it would inherit the site's look — so the House
+ * tokens are painted explicitly, both modes, like any other language.
+ */
+export function paintedCarrierForPreset(
+  preset: Preset,
+  root = PREVIEW_CARRIER_ROOT,
+): PreviewCarrier {
+  if (!isPlainFactory(preset)) return carrierForPreset(preset, root);
+  const { brand } = resolvePreset(preset, factoryBrandPackage(), { id: "studio", name: "Studio" });
+  return { css: carrierCssForBrand(brand, root), brandId: PRESET_PREVIEW_BRAND };
+}
