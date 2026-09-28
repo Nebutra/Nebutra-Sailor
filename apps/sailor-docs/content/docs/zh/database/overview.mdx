@@ -34,16 +34,14 @@ Nebutra 使用 **Prisma v7** 作为 ORM，**PostgreSQL** 作为数据库引擎�
 
 ## 架构布局
 
-Prisma 架构分布在四个 PostgreSQL 架构中，每个代表一个产品域：
+Prisma 架构使用两个 PostgreSQL schema：
 
-| PostgreSQL 架构 | 用途 | 关键模型 |
-|----------------|------|---------|
-| `public` | 核心 SaaS 平台 | `Organization`、`User`、`Subscription`、`AuditLog`、`ApiKey` |
-| `ecommerce` | 电商功能 | `Product`、`Order`、`Cart`、`Payment`、`Fulfillment` |
-| `recsys` | 推荐系统 | `Embedding`、`Interaction`、`Recommendation`、`FeatureVector` |
-| `web3` | 区块链/钱包功能 | `Wallet`、`Token`、`Transaction`、`SmartContract` |
+| PostgreSQL schema | 用途 | 主要模型 |
+|-------------------|------|----------|
+| `public` | 平台本身：租户、身份、计费、内容、智能体 | `Organization`、`User`、`Subscription`、`Product`、`Order`、`Payment`、`AuditLog`、`ApiKey` |
+| `better_auth` | Better Auth 的组织插件 | `BAOrganization`、`BAMember`、`BAInvitation`、`BAPasskey` |
 
-完整架构位于 `packages/platform/db/prisma/schema.prisma`（约 1,400 行）。
+完整架构位于 `packages/platform/db/prisma/schema.prisma`。
 
 ## 关键模型
 
@@ -62,12 +60,11 @@ Prisma 架构分布在四个 PostgreSQL 架构中，每个代表一个产品域�
 
 每个 Nebutra 数据库都启用了 PostgreSQL 的 `pgvector` 扩展，用于支持：
 
-- **语义搜索** — 对 `recsys` 架构中的 `Embedding` 向量进行余弦相似度计算
+- **语义搜索** — 对 `ContentEmbedding` 向量进行余弦相似度计算（`@nebutra/search`）
 - **RAG 管道** — 存储在内容旁边的分块文档嵌入
-- **推荐引擎** — 通过近似最近邻（ANN）查询实现协同过滤
 
 <Note>
-在运行迁移之前，必须在 PostgreSQL 实例上启用 pgvector。Neon 和 Supabase 默认启用它。自托管 PostgreSQL 需要执行 `CREATE EXTENSION vector;`。
+在运行迁移之前，必须在 PostgreSQL 实例上启用 pgvector。大多数托管 PostgreSQL 服务默认启用它。自托管 PostgreSQL 需要执行 `CREATE EXTENSION vector;`。
 </Note>
 
 ## 命令参考

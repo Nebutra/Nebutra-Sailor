@@ -274,7 +274,7 @@ if (result.allowed) {
 
 // Require entitlement (throws if not allowed)
 try {
-  requireEntitlement("org_xxx", "web3.contracts");
+  requireEntitlement("org_xxx", "ai.embeddings");
 } catch (error) {
   // Handle EntitlementError
 }
@@ -308,24 +308,6 @@ const FEATURES = {
     name: "Comments",
     plans: ["FREE", "PRO", "ENTERPRISE"],
   },
-
-  // Recommendations
-  "recsys.basic": {
-    name: "Basic Recommendations",
-    plans: ["PRO", "ENTERPRISE"],
-  },
-  "recsys.advanced": {
-    name: "Advanced Recommendations",
-    plans: ["ENTERPRISE"],
-  },
-
-  // E-commerce
-  "ecommerce.basic": { name: "Basic E-commerce", plans: ["PRO", "ENTERPRISE"] },
-  "ecommerce.advanced": { name: "Advanced E-commerce", plans: ["ENTERPRISE"] },
-
-  // Web3
-  "web3.contracts": { name: "Smart Contracts", plans: ["ENTERPRISE"] },
-  "web3.indexing": { name: "Blockchain Indexing", plans: ["ENTERPRISE"] },
 };
 ```
 

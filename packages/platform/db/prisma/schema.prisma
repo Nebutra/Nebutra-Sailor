@@ -1229,10 +1229,10 @@ enum UsageLedgerSource {
 /// @rls global
 model FeatureDefinition {
   id           String   @id @default(cuid())
-  key          String   @unique @db.VarChar(100) // ai.chat, ai.embeddings, web3.nft
+  key          String   @unique @db.VarChar(100) // ai.chat, ai.embeddings, team.roles
   name         String
   description  String?
-  category     String   @db.VarChar(50) // ai, content, recsys, ecommerce, web3
+  category     String   @db.VarChar(50) // ai, content, team, platform
   valueType    String   @default("boolean") @map("value_type") @db.VarChar(20) // boolean, number, unlimited
   defaultValue Json     @default("false") @map("default_value")
   metadata     Json     @default("{}")

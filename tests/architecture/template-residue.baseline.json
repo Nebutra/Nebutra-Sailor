@@ -254,9 +254,7 @@
     "tests/architecture/auth-provider-boundary.test.ts",
     "tests/architecture/brand-metadata-drift.test.ts",
     "tests/architecture/governance/schemas/ui-governance.schema.json",
-    "tests/architecture/point-dns-workflow.test.ts",
-    "workflows/n8n/README.md",
-    "workflows/n8n/workflows/daily-digest.json"
+    "tests/architecture/point-dns-workflow.test.ts"
   ],
   "api.nebutra.com": [
     ".env.example",

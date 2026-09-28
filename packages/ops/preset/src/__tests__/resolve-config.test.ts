@@ -15,15 +15,15 @@ describe("resolveConfig", () => {
   it("applies user overrides on top of defaults", () => {
     const config = defineConfig({
       apps: { blog: false },
-      features: { web3: false },
+      features: { newsletter: false },
     });
     const resolved = resolveConfig(config);
     // Default: web=true (unchanged)
     expect(resolved.apps.web).toBe(true);
     // Override: blog=false
     expect(resolved.apps.blog).toBe(false);
-    // Override: web3=false
-    expect(resolved.features.web3).toBe(false);
+    // Override: newsletter=false
+    expect(resolved.features.newsletter).toBe(false);
     // Default: ai=true (unchanged)
     expect(resolved.features.ai).toBe(true);
   });

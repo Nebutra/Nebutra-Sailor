@@ -23,7 +23,7 @@ re-expression in Sailor's own design system (see `ANTI_PATTERNS.md`).
 | 7 | Real-time collaborative CRDT | **PORT** | `@nebutra/collab` (Yjs, multi-tenant, on `@nebutra/tenant-store`) |
 | 8 | Code-artifact execution sandbox | **WRAP** | `@nebutra/agent-runtime` external-sandbox seam |
 | 9 | Skill export (API / MCP / Claude Code) | **SKIP/WRAP** | `@nebutra/agent-runtime` definitions + MCP bridge |
-| 10 | Scheduled triggers (cron) | **SKIP** | `@nebutra/queue` + inngest + n8n |
+| 10 | Scheduled triggers (cron) | **SKIP** | `@nebutra/queue` + inngest |
 | 11 | MCP server integration + dynamic tool registry | **SKIP/WRAP** | `@nebutra/agent-runtime` MCP bridge + tool registry |
 
 **Net PORT surface: 3 blocks** (#2, #6, #7). The remaining 8 were already

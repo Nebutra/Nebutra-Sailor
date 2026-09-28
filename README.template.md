@@ -454,7 +454,6 @@ Nebula • Nurture • Ultra • Future
 <td><strong>Workflows</strong></td>
 <td>
   <a href="https://www.inngest.com/"><img src="https://img.shields.io/badge/Inngest-6366F1?style=flat-square" alt="Inngest" /></a>
-  <a href="https://n8n.io/"><img src="https://img.shields.io/badge/n8n-EA4B71?style=flat-square&logo=n8n&logoColor=white&v=1" alt="n8n" /></a>
   <img src="https://img.shields.io/badge/Saga_Orchestrator-gray?style=flat-square" alt="Saga" />
 </td>
 </tr>
@@ -555,7 +554,6 @@ Sailor is **provider-agnostic**: every platform package below auto-detects its b
 ├── ops/                       # Declared provider state per brand, checked daily by platform-reconcile
 ├── workflows/                 # Event-driven business workflows (extracted in W2.3)
 │   ├── inngest/               # Serverless background jobs + cron
-│   ├── n8n/                   # Visual workflow automation
 │   └── pusher/                # Real-time messaging glue
 ├── e2e/                       # Playwright E2E tests (smoke / golden / sleptons)
 ├── tests/                     # Architecture invariants + load tests + UI governance
@@ -603,7 +601,6 @@ Each component has its own README with setup instructions and API documentation:
   <a href="infra/runtime/docker/">Docker</a> · 
   <a href="infra/iac/terraform/">Terraform</a> · 
   <a href="workflows/inngest/">Inngest</a> · 
-  <a href="workflows/n8n/">n8n</a> · 
   <a href="workflows/pusher/">Pusher</a> · 
   <a href="infra/ops/observability/">Observability</a>
 </td>

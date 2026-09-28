@@ -62,20 +62,6 @@ export const FEATURES = {
   "content.publish": { name: "Content Publishing", description: "Publish content" },
   "content.analytics": { name: "Content Analytics", description: "View content analytics" },
 
-  // Recommendations
-  "recommendations.basic": {
-    name: "Basic Recommendations",
-    description: "Basic recommendation features",
-  },
-  "recommendations.advanced": {
-    name: "Advanced Recommendations",
-    description: "Advanced ML-based recommendations",
-  },
-
-  // Web3 Features
-  "web3.nft": { name: "NFT Features", description: "NFT minting and management" },
-  "web3.wallet": { name: "Wallet Integration", description: "Web3 wallet integration" },
-
   // Team Features
   "team.members": { name: "Team Members", description: "Add team members" },
   "team.roles": { name: "Custom Roles", description: "Create custom roles" },
@@ -94,7 +80,7 @@ export type FeatureKey = keyof typeof FEATURES;
 // ============================================
 
 export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
-  FREE: ["ai.chat", "content.create", "recommendations.basic"],
+  FREE: ["ai.chat", "content.create"],
   PRO: [
     "ai.chat",
     "ai.embeddings",
@@ -102,8 +88,6 @@ export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
     "content.create",
     "content.publish",
     "content.analytics",
-    "recommendations.basic",
-    "recommendations.advanced",
     "team.members",
     "api.access",
     "webhooks",
@@ -116,10 +100,6 @@ export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
     "content.create",
     "content.publish",
     "content.analytics",
-    "recommendations.basic",
-    "recommendations.advanced",
-    "web3.nft",
-    "web3.wallet",
     "team.members",
     "team.roles",
     "api.access",

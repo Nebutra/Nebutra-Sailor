@@ -26,8 +26,7 @@ backends/                        # No-UI backends, split by language
   gateway/                       # TS / Hono — BFF, auth, tenancy, rate-limit
                                  # DEFAULT for new backend work
   python/                        # FastAPI — only when batch/ML/libs justify (ADR 2026-05-10)
-    active:  _shared, ai, ecommerce, event-ingest, recsys
-    stub:    content, third-party, web3
+    active:  _shared, ai
 
 packages/                        # categorized: <category>/<name>
   design/        ui  tokens  design-tokens  brand  theme  icons  design-sync
@@ -39,7 +38,7 @@ packages/                        # categorized: <category>/<name>
   ai/            mcp  ai-providers
 
 infra/      iac/ + runtime/ + data/ + ops/
-workflows/  inngest/ + n8n/ + pusher/
+workflows/  inngest/ + pusher/
 e2e/        smoke/ + golden/ + sleptons/
 tests/      architecture/ + load/
 ```

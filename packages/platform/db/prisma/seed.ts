@@ -78,75 +78,6 @@ const FEATURES = [
     defaultValue: false,
   },
 
-  // Recommendations
-  {
-    key: "recsys.basic",
-    name: "Basic Recommendations",
-    category: "recsys",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-  {
-    key: "recsys.advanced",
-    name: "Advanced ML Recommendations",
-    category: "recsys",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-  {
-    key: "recsys.realtime",
-    name: "Real-time Recommendations",
-    category: "recsys",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-
-  // E-commerce
-  {
-    key: "ecommerce.products",
-    name: "Product Catalog",
-    category: "ecommerce",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-  {
-    key: "ecommerce.orders",
-    name: "Order Management",
-    category: "ecommerce",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-  {
-    key: "ecommerce.shopify",
-    name: "Shopify Integration",
-    category: "ecommerce",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-
-  // Web3
-  {
-    key: "web3.contracts",
-    name: "Smart Contracts",
-    category: "web3",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-  {
-    key: "web3.indexing",
-    name: "Blockchain Indexing",
-    category: "web3",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-  {
-    key: "web3.nft",
-    name: "NFT Support",
-    category: "web3",
-    valueType: "boolean",
-    defaultValue: false,
-  },
-
   // Team & Collaboration
   {
     key: "team.members",
@@ -279,9 +210,6 @@ const PLANS = [
       "content.posts": true,
       "content.comments": true,
       "content.media": true,
-      "recsys.basic": false,
-      "ecommerce.products": false,
-      "web3.contracts": false,
       "team.members": 1,
       "support.email": true,
       "analytics.basic": true,
@@ -312,12 +240,6 @@ const PLANS = [
       "content.comments": true,
       "content.media": true,
       "content.moderation": true,
-      "recsys.basic": true,
-      "recsys.advanced": false,
-      "ecommerce.products": true,
-      "ecommerce.orders": true,
-      "ecommerce.shopify": true,
-      "web3.contracts": false,
       "team.members": 10,
       "team.roles": true,
       "support.email": true,
@@ -352,15 +274,6 @@ const PLANS = [
       "content.comments": true,
       "content.media": true,
       "content.moderation": true,
-      "recsys.basic": true,
-      "recsys.advanced": true,
-      "recsys.realtime": true,
-      "ecommerce.products": true,
-      "ecommerce.orders": true,
-      "ecommerce.shopify": true,
-      "web3.contracts": true,
-      "web3.indexing": true,
-      "web3.nft": true,
       "team.members": -1, // unlimited
       "team.roles": true,
       "team.sso": true,

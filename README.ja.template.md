@@ -443,7 +443,6 @@ Next.js 16、React 19、Prisma 7、Vercel AI SDK で構築され、AI をガバ�
 <td><strong>ワークフロー</strong></td>
 <td>
   <a href="https://www.inngest.com/"><img src="https://img.shields.io/badge/Inngest-6366F1?style=flat-square" alt="Inngest" /></a>
-  <a href="https://n8n.io/"><img src="https://img.shields.io/badge/n8n-EA4B71?style=flat-square&logo=n8n&logoColor=white&v=1" alt="n8n" /></a>
   <img src="https://img.shields.io/badge/Saga_オーケストレーター-gray?style=flat-square" alt="Saga" />
 </td>
 </tr>
@@ -596,7 +595,6 @@ pnpm db:generate && pnpm dev
 │   ├── email/             # トランザクションメール (Magic Link, Resend)
 │   ├── agents/            # Vercel AI SDK ラッパー、エージェント、ストリーミング補助
 │   ├── ai-providers/      # マルチプロバイダー AI レジストリとメタデータ
-│   ├── billing/           # Creem 課金（カード、merchant of record）+ WeChat Pay/Alipay、プラン、使用量計測
 │   ├── brand/             # ブランドアセット、ガイドライン
 │   ├── preset/            # 機能ベースのテンプレート設定
 │   ├── theme/             # グローバルテーマトークン & CSS 変数
@@ -612,13 +610,7 @@ pnpm db:generate && pnpm dev
 │   ├── logger/            # 構造化ロギング
 │   └── ...                # その他多数
 ├── services/
-│   ├── ai/                # Python FastAPI - LLM、Embeddings
-│   ├── billing/           # 課金マイクロサービス
-│   ├── content/           # Python FastAPI - 投稿、フィード
-│   ├── recsys/            # Python - レコメンドエンジン
-│   ├── ecommerce/         # Python - Shopify/Shopline 連携
-│   ├── event-ingest/      # イベント取り込みパイプライン
-│   └── web3/              # Python - ブロックチェーンインデクサー
+│   └── ai/                # Python FastAPI - LLM、Embeddings
 └── infra/                 # インフラ設定
 ```
 

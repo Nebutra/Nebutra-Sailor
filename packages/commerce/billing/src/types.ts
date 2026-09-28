@@ -59,14 +59,7 @@ export const DEFAULT_PLAN_LIMITS: Record<Plan, PlanLimits> = {
     storage: 10 * 1024 * 1024 * 1024, // 10GB
     teamMembers: 10,
     projects: 10,
-    features: [
-      "basic_ai",
-      "basic_content",
-      "advanced_ai",
-      "recommendations",
-      "analytics",
-      "api_access",
-    ],
+    features: ["basic_ai", "basic_content", "advanced_ai", "analytics", "api_access"],
   },
   ENTERPRISE: {
     apiCalls: -1, // unlimited
@@ -78,10 +71,8 @@ export const DEFAULT_PLAN_LIMITS: Record<Plan, PlanLimits> = {
       "basic_ai",
       "basic_content",
       "advanced_ai",
-      "recommendations",
       "analytics",
       "api_access",
-      "web3",
       "custom_models",
       "sso",
       "audit_logs",

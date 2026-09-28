@@ -107,12 +107,6 @@ async function main() {
     logStep("Brand Colors");
     logInfo("Using the default palette. Edit brand.config.ts to customize.");
 
-    // Features
-    logStep("Feature Toggles");
-    const web3 = await promptBoolean(rl, "Enable Web3/blockchain features?", false);
-    const ecommerce = await promptBoolean(rl, "Enable e-commerce (Shopify) integration?", false);
-    const recsys = await promptBoolean(rl, "Enable recommendation system?", false);
-
     // Package scope
     logStep("Package Configuration");
     const packageScope = await prompt(rl, "NPM package scope", `@${name.toLowerCase()}`);
@@ -129,7 +123,6 @@ async function main() {
       repoOwner,
       repoName,
       social,
-      features: { web3, ecommerce, recsys },
       packageScope,
     });
 

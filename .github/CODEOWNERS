@@ -25,7 +25,7 @@ backends/python/**                             @tseka_luk
 # Kubernetes, Docker, Terraform (infra)
 infra/**                                       @tseka_luk
 
-# Workflow definitions (Inngest, n8n, Pusher)
+# Workflow definitions (Inngest, Pusher)
 workflows/**                                   @tseka_luk
 
 # CI/CD pipelines — highest sensitivity (can exfiltrate secrets)
