@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { ROUTE_LOCALES } from "@nebutra/i18n/locales";
 import {
   BookOpen,
   Robot as Bot,
@@ -263,7 +264,7 @@ export const TREE_DATA: FileNode[] = [
         id: "apps-landing",
         label: "landing",
         path: "apps/landing",
-        description: "- Public marketing site (next-intl, 7 locales)",
+        description: `- Public marketing site (next-intl, ${ROUTE_LOCALES.length} locales)`,
         icon: React.createElement(Megaphone, { className: "h-4 w-4" }),
       },
       {

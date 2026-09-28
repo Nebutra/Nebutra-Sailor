@@ -1,17 +1,21 @@
 import { useTranslations } from "next-intl";
-import { FooterMinimal, Navbar } from "@/components/landing";
-import { Unicorn404 } from "@/components/landing/404/Unicorn404";
+import { NotFoundPanel } from "@/components/landing/404/not-found-panel";
+import { SiteShell } from "@/site-shell";
 
+/** A missing page wears the site's own frame — the rail or the top nav — like any other page. */
 export default function LocalizedNotFound() {
   const t = useTranslations("notFound");
 
   return (
-    <div className="flex min-h-dvh flex-col">
-      <Navbar />
-      <main className="flex-1 flex flex-col justify-center">
-        <Unicorn404 title={t("title")} desc={t("desc")} homeText={t("home")} docsText={t("docs")} />
+    <SiteShell>
+      <main id="main-content" className="flex flex-1 flex-col justify-center">
+        <NotFoundPanel
+          title={t("title")}
+          desc={t("desc")}
+          homeText={t("home")}
+          docsText={t("docs")}
+        />
       </main>
-      <FooterMinimal />
-    </div>
+    </SiteShell>
   );
 }

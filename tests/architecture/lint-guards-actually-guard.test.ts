@@ -172,6 +172,18 @@ const CASES: Case[] = [
     path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
   },
   {
+    // The site calling itself a unicorn — a claim nothing on the page can show.
+    guard: "lint-site-claims",
+    violation: "export const C = () => <p>The unicorn template for founders.</p>;\n",
+    path: "apps/landing/src/__lint_guard_probe.tsx",
+  },
+  {
+    // A rating with no source behind it.
+    guard: "lint-site-claims",
+    violation: "export const RATING_STARS = [1, 2, 3, 4, 5];\n",
+    path: "apps/landing/src/__lint_guard_probe.tsx",
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

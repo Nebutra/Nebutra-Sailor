@@ -589,13 +589,13 @@ export const PILLARS: ReadonlyArray<
       number: "02",
       title: "Vibe Business 联合孵化",
       description:
-        '面向海外市场赋能优秀创业者极速验证商业直觉，共同孵化具备高人效杠杆的下一代"独角兽"项目。我们是您最可靠的技术合伙人。',
+        "帮助面向海外市场的创业者快速验证商业直觉，以极高的人效杠杆共同孵化能走得长远的公司。我们是您最可靠的技术合伙人。",
     },
     en: {
       number: "02",
       title: "Vibe Business Incubation",
       description:
-        "Empower global founders to rapidly validate commercial intuition and co-incubate the next unicorn with high human-leverage. We are your most reliable technical co-founder.",
+        "Help founders going global validate commercial intuition fast, and co-incubate companies built to last, with high human leverage. We are your most reliable technical co-founder.",
     },
   },
   {

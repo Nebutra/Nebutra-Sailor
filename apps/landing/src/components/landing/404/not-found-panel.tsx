@@ -1,13 +1,13 @@
 import { FullPageStatus } from "@nebutra/ui/layout";
 
-interface Unicorn404Props {
+interface NotFoundPanelProps {
   title: string;
   desc: string;
   homeText: string;
   docsText: string;
 }
 
-export function Unicorn404({ title, desc, homeText, docsText }: Unicorn404Props) {
+export function NotFoundPanel({ title, desc, homeText, docsText }: NotFoundPanelProps) {
   return (
     <FullPageStatus
       code="404"
