@@ -1,0 +1,19 @@
+{
+  "$comment": "Resend sending records for nebutra.com (region ap-northeast-1). All on subdomains, so the Aliyun Qiye MX and apex SPF that receive company mail are untouched. Applied by .github/workflows/ops-email-dns.yml.",
+  "zone": "nebutra.com",
+  "records": [
+    {
+      "type": "TXT",
+      "name": "resend._domainkey",
+      "content": "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0yWKh2D7sq/HpxCdQp94RSdk1F5cekzm5Mde7bd9PxGH6uPt5y0Vy/AfV2Jp8HnN6O3FqXWzQpEC3tnyAtrzxVC/2arhG+XqO3ZFS/oURD/tEJ3NE8Szgbl7+539GwY6exOrIyvsYwXQSI5NGBe6O+c1LUVMNBPwL8z3bfjxyXwIDAQAB"
+    },
+    {
+      "type": "MX",
+      "name": "send",
+      "content": "feedback-smtp.ap-northeast-1.amazonses.com",
+      "priority": 10
+    },
+    { "type": "TXT", "name": "send", "content": "v=spf1 include:amazonses.com ~all" },
+    { "type": "CNAME", "name": "rsend", "content": "send.forge.rmta.net" }
+  ]
+}
