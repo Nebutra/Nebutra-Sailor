@@ -98,11 +98,10 @@ const SHRINK_ONLY = {
     "apps/idp/src/app/page.tsx",
   ],
   /**
-   * Shadows coloured with the foreground token. The one absorbed case mixes
-   * foreground 94% into transparent, which is the *correct* adaptive hairline
-   * rather than the white-glow failure the rule targets.
+   * Shadows coloured with the foreground token. EMPTY since the old roadmap
+   * timeline went; it glows white in dark mode, so keep it that way.
    */
-  "shadow-foreground": ["apps/landing/src/components/landing/RoadmapTimeline.tsx"],
+  "shadow-foreground": [],
   /**
    * Negative spread exceeding blur. EMPTY, and it must stay that way — this
    * failure class paints nothing, so an entry here is a bug someone chose to

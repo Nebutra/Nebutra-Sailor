@@ -1,197 +1,198 @@
-import { brand } from "@nebutra/brand/metadata";
-import { AnimateIn } from "@nebutra/ui/components";
-import { AuroraBackground, Button } from "@nebutra/ui/primitives";
-import type { Metadata } from "next";
-import { hasLocale } from "next-intl";
+import Link from "next/link";
 import { setRequestLocale } from "next-intl/server";
-import { RoadmapTimeline } from "@/components/landing/RoadmapTimeline";
-import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import {
+  BETS,
+  DIRECTION_ESSAY,
+  HORIZONS,
+  LANDED,
+  LAYERS,
+  type LayerId,
+  NINE_LAYERS_ESSAY,
+  prUrl,
+} from "@/nebutra/data/roadmap";
+import { sitePageMeta } from "@/nebutra/seo";
+import { Band, Intro } from "@/nebutra/ui/page";
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ lang: locale }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ lang: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  if (!hasLocale(routing.locales, lang)) return {};
-  return buildPageMetadata({
-    title: `Platform Roadmap — ${brand.name}`,
-    description: `The capability roadmap for ${brand.name}'s governed AI platform.`,
-    path: "/roadmap",
-    locale: lang as Locale,
+  return buildPageMetadata(
+    sitePageMeta(lang, "/roadmap", {
+      description:
+        "Nebutra's roadmap in the founder's nine layers: why we exist, where we are going, and what ships next.",
+    }),
+  );
+}
+
+const layerNo = (id: LayerId) => id.slice(1);
+const layerName = (id: LayerId) => LAYERS.find((l) => l.id === id)?.name.en ?? "";
+
+/** "Serves L5 · Product" — a link down to the layer a piece of work answers to. */
+function Serves({ id }: { id: LayerId }) {
+  return (
+    <a
+      href={`#${id}`}
+      className="text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground"
+    >
+      L{layerNo(id)} · {layerName(id)}
+    </a>
+  );
+}
+
+const monthLabel = (ym: string) =>
+  new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en", {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
   });
-}
-
-type PhaseStatus = "done" | "active" | "upcoming";
-
-interface Milestone {
-  label: string;
-}
-
-interface Phase {
-  number: number;
-  name: string;
-  versions: string;
-  funding?: string;
-  status: PhaseStatus;
-  milestones: Milestone[];
-  vision: string;
-}
-
-const PHASES: Phase[] = [
-  {
-    number: 0,
-    name: "Foundation: The Kernel",
-    versions: "v0.1 – v0.4",
-    status: "done",
-    vision:
-      "Establish the governed baseline: shared packages, typed contracts, auth, data, and operational primitives.",
-    milestones: [
-      {
-        label:
-          "Categorized monorepo — Turborepo with packages grouped by domain (design / iam / commerce / integrations / platform / ops / ai)",
-      },
-      { label: "Hono API Gateway — OpenAPI, oRPC, tRPC with middleware composition" },
-      { label: "Database foundation — Prisma + Supabase (PostgreSQL + pgvector)" },
-      { label: "Absolute Identity — Multi-tenant auth with Clerk + org membership" },
-      { label: "Permission matrix — 17 typed RBAC scopes" },
-    ],
-  },
-  {
-    number: 1,
-    name: "The Builder Core",
-    versions: "v0.5 – v0.10",
-    status: "done",
-    vision:
-      "Turn repeated product setup into a reusable platform baseline teams can ship against immediately.",
-    milestones: [
-      { label: "Complete Settings schema — Team, API Keys, Security configurations" },
-      { label: "Monetization engine — FREE / PRO / ENTERPRISE tier tracking" },
-      { label: "Transactional ops — Resend email integrations" },
-      { label: "Telemetry & Observability — Sentry, Analytics, 30-day funnels" },
-      { label: "CMS integration — Sanity v5 powered blog & changelogs" },
-    ],
-  },
-  {
-    number: 2,
-    name: "Verified Delivery",
-    versions: "v1.0",
-    funding: "Current Focus",
-    status: "active",
-    vision:
-      "Make scaffolding, release, and adoption verifiable through trusted artifacts, reproducible flows, and safer defaults.",
-    milestones: [
-      { label: "Trusted publishing and provenance for public packages" },
-      { label: "Immutable template bundles with checksum verification" },
-      { label: "Scaffold smoke validation against fresh installs" },
-      { label: "Governed onboarding flows and safer defaults" },
-      { label: "Operator-facing release and adoption guardrails" },
-    ],
-  },
-  {
-    number: 3,
-    name: "Extension Registry",
-    versions: "v1.x",
-    funding: "Next",
-    status: "upcoming",
-    vision:
-      "Add capabilities safely through a remote registry with compatibility checks, migrations, and governed application of changes.",
-    milestones: [
-      { label: "Registry-backed nebutra add flows for platform capabilities" },
-      { label: "Compatibility ranges, migrations, and rollback metadata" },
-      { label: "Provider-aware integration bundles and diagnostics" },
-      { label: "Integrations marketplace — Slack, Notion, GitHub, Linear" },
-      { label: "Cross-project upgrade guidance and health checks" },
-    ],
-  },
-  {
-    number: 4,
-    name: "Harness Runtime",
-    versions: "v2.0",
-    funding: "Longer Horizon",
-    status: "upcoming",
-    vision:
-      "Ship first-class agent, MCP, and workflow primitives so teams can run AI-native operations on the same governed platform surface.",
-    milestones: [
-      { label: "Project-scoped harness diagnostics and runtime contracts" },
-      { label: "Workflow orchestration for agents, tools, and approvals" },
-      { label: "Enterprise controls — SSO, audit routing, governed operations" },
-      { label: "Global deployment resilience and runtime policy enforcement" },
-      { label: "Operational feedback loops across product, infra, and AI systems" },
-    ],
-  },
-];
 
 export default async function RoadmapPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  setRequestLocale(lang as Locale);
+  setRequestLocale(lang);
+  const months = [...new Set(LANDED.map((l) => l.month))];
 
   return (
-    <main id="main-content" className="flex-1 bg-background relative overflow-hidden">
-      {/* Hero */}
-      <section className="relative mx-auto max-w-wide px-4 pt-20 pb-16 md:px-6 text-center">
-        <AuroraBackground variant="vivid" position="top" intensity={0.5} />
-        <AnimateIn preset="fade">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-6 bg-[color:hsl(var(--primary))]/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[color:hsl(var(--primary))]">
-            Ecosystem Rollout
-          </span>
-        </AnimateIn>
+    <main id="main-content">
+      <section className="px-8 pt-28 pb-20 xl:px-16">
+        <Intro
+          level={1}
+          title="From why, to what ships next."
+          lead="Nine layers, top to bottom. The first eight say why Nebutra exists and what it has to become; they hold still. The ninth is what we are doing about it, and it moves every week."
+          cn="从为什么，到下一步。"
+        />
+        <Link
+          href={NINE_LAYERS_ESSAY}
+          className="mt-10 inline-flex text-sm text-secondary-foreground hover:text-foreground"
+        >
+          The nine layers, and why we write them down →
+        </Link>
+      </section>
 
-        <AnimateIn preset="emerge">
-          <h1
-            className="mt-4 text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-semibold text-foreground text-balance"
-            style={{
-              letterSpacing: "var(--tracking-display)",
-              lineHeight: "var(--leading-display)",
-            }}
-          >
-            Where we&apos;re{" "}
-            <span
-              style={{
-                background: "hsl(var(--primary))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
+      <Band>
+        <Intro
+          title="Direction"
+          lead="Each line is the founder's, taken as written from the Journal."
+          cn="方向，L1 到 L8。"
+        />
+        <ol className="mt-12 max-w-content divide-y divide-border border-y border-border">
+          {LAYERS.map((layer) => (
+            <li
+              key={layer.id}
+              id={layer.id}
+              className="grid scroll-mt-24 grid-cols-1 gap-3 py-8 md:grid-cols-[4rem_10rem_minmax(0,1fr)] md:gap-8"
             >
-              going
-            </span>
-          </h1>
-        </AnimateIn>
+              <span className="text-sm text-muted-foreground tabular-nums">
+                L{layerNo(layer.id)}
+              </span>
+              <span className="flex items-baseline gap-2 md:flex-col md:gap-1">
+                <span className="text-base text-foreground">{layer.name.en}</span>
+                <span className="text-sm text-muted-foreground">{layer.name.zh}</span>
+              </span>
+              <div className="max-w-2xl">
+                <p className="font-heading text-2xl text-balance text-foreground">{layer.line}</p>
+                {layer.also ? (
+                  <p className="mt-3 text-base text-muted-foreground">{layer.also}</p>
+                ) : null}
+              </div>
+            </li>
+          ))}
+        </ol>
+        <Link
+          href={DIRECTION_ESSAY.href}
+          className="mt-10 inline-flex text-sm text-secondary-foreground hover:text-foreground"
+        >
+          {DIRECTION_ESSAY.title} →
+        </Link>
+      </Band>
 
-        <AnimateIn preset="fade">
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            The capability roadmap behind {brand.name}&apos;s governed AI platform, from baseline
-            scaffolding to registry-driven upgrades and harness runtime primitives.
-          </p>
-        </AnimateIn>
-      </section>
+      <Band>
+        <Intro
+          title="Execution"
+          lead="L9. Every bet names the layer it answers to; a bet that serves none does not go on the list."
+          cn="执行：现在、接下来、更远。"
+        />
+        <div className="mt-12 grid max-w-wide grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-10">
+          {HORIZONS.map((h) => (
+            <section key={h.id} aria-labelledby={`horizon-${h.id}`}>
+              <div className="border-b border-border pb-4">
+                <h3
+                  id={`horizon-${h.id}`}
+                  className="flex items-baseline gap-3 font-heading text-2xl text-foreground"
+                >
+                  {h.en}
+                  <span className="font-sans text-sm text-muted-foreground">{h.zh}</span>
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">{h.is}</p>
+              </div>
+              <ul className="divide-y divide-border">
+                {BETS.filter((b) => b.horizon === h.id).map((bet) => (
+                  <li key={bet.title} className="py-6">
+                    {bet.href ? (
+                      <Link
+                        href={bet.href}
+                        className="text-base text-foreground underline-offset-4 hover:underline"
+                      >
+                        {bet.title}
+                      </Link>
+                    ) : (
+                      <p className="text-base text-foreground">{bet.title}</p>
+                    )}
+                    <p className="mt-2 text-sm text-muted-foreground">{bet.what}</p>
+                    <p className="mt-3">
+                      <Serves id={bet.serves} />
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </Band>
 
-      {/* Phase Timeline — scroll-driven beam (adapted Aceternity pattern) */}
-      <section className="mx-auto px-4 pb-24 md:px-6">
-        <RoadmapTimeline data={PHASES} />
-
-        {/* Footer CTA */}
-        <AnimateIn preset="fade" inView>
-          <div className="mx-auto mt-12 max-w-[1100px] rounded-[var(--radius-card)] bg-muted p-8 text-center">
-            <p className="mb-2 text-sm font-semibold text-foreground">
-              Build on the current baseline
-            </p>
-            <p className="mb-6 text-sm text-muted-foreground">
-              Start with the governed platform today, then adopt new capabilities through verified
-              upgrades instead of one-off rewrites.
-            </p>
-            <Button asChild variant="ink" size="lg">
-              <a href={`/${lang}/get-license`}>Explore licensing →</a>
-            </Button>
-          </div>
-        </AnimateIn>
-      </section>
+      <Band>
+        <Intro
+          title="Landed"
+          lead="What moved out of Now, with the work it took. The release notes have the rest."
+          cn="已经落地的。"
+        />
+        <div className="mt-12 flex max-w-content flex-col gap-12">
+          {months.map((month) => (
+            <section key={month} aria-label={monthLabel(month)}>
+              <h3 className="text-sm text-muted-foreground">{monthLabel(month)}</h3>
+              <ul className="mt-4 divide-y divide-border border-y border-border">
+                {LANDED.filter((l) => l.month === month).map((item) => (
+                  <li
+                    key={item.title}
+                    className="grid grid-cols-1 gap-2 py-5 sm:grid-cols-[minmax(0,1fr)_9rem_8rem] sm:items-baseline sm:gap-6"
+                  >
+                    <span className="text-base text-foreground">{item.title}</span>
+                    <Serves id={item.serves} />
+                    <span className="flex gap-3 text-sm tabular-nums sm:justify-end">
+                      {item.prs.map((n) => (
+                        <a
+                          key={n}
+                          href={prUrl(n)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground transition-colors duration-micro hover:text-foreground"
+                        >
+                          #{n}
+                        </a>
+                      ))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+        <Link
+          href="/changelog"
+          className="mt-10 inline-flex text-sm text-secondary-foreground hover:text-foreground"
+        >
+          Release notes →
+        </Link>
+      </Band>
     </main>
   );
 }
