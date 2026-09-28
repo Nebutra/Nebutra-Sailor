@@ -37,6 +37,23 @@ describe("CJK face redistribution", () => {
     expect(notice).not.toMatch(/vivo Sans/);
   });
 
+  it("states in the product that it uses MiSans, and every public footer reaches that statement", () => {
+    // The licence: 您应在软件中特别注明使用了 MiSans 字体. The statement lives on
+    // /credits (2026-09-28); the footers carry a link to it, not the line.
+    const credits = readFileSync(
+      join(ROOT, "apps/landing/src/app/[lang]/(legal)/credits/page.tsx"),
+      "utf8",
+    );
+    expect(credits).toContain("本网站使用了 MiSans 字体");
+    for (const footer of [
+      "apps/landing/src/nebutra/shell/site-footer.tsx",
+      "apps/landing/src/components/landing/FooterMinimal.tsx",
+      "apps/web/src/components/navigation/public-page-chrome.tsx",
+    ]) {
+      expect(readFileSync(join(ROOT, footer), "utf8"), footer).toContain("/credits");
+    }
+  });
+
   it("never tracks MiSans binaries — the licence forbids redistributing the font", () => {
     // Same class of restriction that removed vivo Sans (b5e73db35). The subsets
     // are served from the asset CDN; only their keys are committed.

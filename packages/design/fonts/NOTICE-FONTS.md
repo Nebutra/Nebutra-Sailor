@@ -8,8 +8,8 @@ This package's MIT licence covers **first-party code only**.
 This software uses the **MiSans** typeface by Xiaomi.
 
 MiSans is free for commercial use and may be embedded in software on the
-condition that the software states it uses MiSans (this notice, and the credit
-line on the product surfaces). The font may not be distributed on its own or
+condition that the software states it uses MiSans (this notice, and the
+landing site's /credits page, which every public footer links to). The font may not be distributed on its own or
 have its appearance altered. Licence text: `vendor/misans/LICENSE.txt`.
 
 ## DM Sans

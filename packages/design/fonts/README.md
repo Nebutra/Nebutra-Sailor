@@ -88,7 +88,10 @@ the reason vivo Sans was removed (b5e73db35). `pnpm subset:cjk --upload` writes
 content-hashed subsets to the bucket behind your public asset origin
 (`MISANS_R2_BUCKET`, under `fonts/misans/`) and commits only their keys. Until
 they are uploaded, or offline, the requests fail and the stack falls back to
-PingFang / YaHei. Credit MiSans on product surfaces (see NOTICE-FONTS.md).
+PingFang / YaHei. The product states it uses MiSans on the landing site's
+`/credits` page, linked from every public footer — the licence asks for the
+statement, not a footer line (see NOTICE-FONTS.md; guarded by
+`tests/architecture/font-license.test.ts`).
 
 ### Stack order is the design decision
 
