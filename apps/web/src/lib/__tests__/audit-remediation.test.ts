@@ -386,12 +386,19 @@ describe("UI/UX audit remediation invariants", () => {
     expect(webLayout).toMatch(/main-content|skip/i);
   });
 
-  it("uses safe JSON-LD script injection without dangerouslySetInnerHTML", () => {
+  it("injects JSON-LD only through toSafeJsonLd", () => {
     const landingLayout = readFromRepo("apps/landing/src/app/[lang]/layout.tsx");
 
     expect(landingLayout).toContain("toSafeJsonLd");
     expect(landingLayout).toContain('type="application/ld+json"');
-    expect(landingLayout).not.toContain("dangerouslySetInnerHTML");
+    // 310fd9b72 moved the JSON-LD from next/script to a raw <script> so it is in the HTML for
+    // readers without JavaScript; that needs __html. The property that matters is the escape
+    // (`<` → <, so the payload cannot close the tag), so every __html must be toSafeJsonLd.
+    const injections =
+      landingLayout.match(/dangerouslySetInnerHTML=\{\{\s*__html:\s*[^}]*\}\}/g) ?? [];
+    for (const injection of injections) {
+      expect(injection).toMatch(/__html:\s*toSafeJsonLd\(/);
+    }
   });
 
   it("about page exists in marketing route group", () => {
