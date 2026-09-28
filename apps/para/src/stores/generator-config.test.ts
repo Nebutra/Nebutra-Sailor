@@ -46,20 +46,20 @@ describe("generator config ownership", () => {
   });
 
   it("admits a job with a snapshot of the config, not a live reference", () => {
-    editor().updateGenerator("a", { mode: "image", model: "GPT Image 2", prompt: "a heron" });
+    editor().updateGenerator("a", { mode: "image", model: "qwen-image-2.0", prompt: "a heron" });
     const jobId = jobs().enqueue("a", "Generate · a", 1);
 
     // The user keeps editing while it runs. That configures the next run, not the running one.
-    editor().updateGenerator("a", { model: "Nano Banana 2", prompt: "a heron at dusk" });
+    editor().updateGenerator("a", { model: "Auto", prompt: "a heron at dusk" });
 
     const job = jobs().jobs.find((j) => j.id === jobId);
-    expect(job?.config?.model).toBe("GPT Image 2");
+    expect(job?.config?.model).toBe("qwen-image-2.0");
     expect(job?.config?.prompt).toBe("a heron");
-    expect(editor().document?.nodes.a?.generator?.model).toBe("Nano Banana 2");
+    expect(editor().document?.nodes.a?.generator?.model).toBe("Auto");
   });
 
   it("cannot hold a model the mode does not offer", () => {
-    editor().updateGenerator("a", { mode: "image", model: "GPT Image 2" });
+    editor().updateGenerator("a", { mode: "image", model: "qwen-image-2.0" });
     // Switching to video must not leave an image model behind for the origin to reject.
     editor().updateGenerator("a", { mode: "video" });
     expect(editor().document?.nodes.a?.generator?.model).toBe("Auto");
@@ -67,8 +67,9 @@ describe("generator config ownership", () => {
     editor().updateGenerator("a", { model: "Kling 3" });
     expect(editor().document?.nodes.a?.generator?.model).toBe("Kling 3");
 
-    // The guard belongs to the store, so a caller that bypasses the panel is corrected too.
-    editor().updateGenerator("a", { model: "Nano Banana 2" });
+    // The guard belongs to the store, so a caller that bypasses the panel is corrected too —
+    // including a model no seat serves, which the origin would reject after charging.
+    editor().updateGenerator("a", { model: "GPT Image 2" });
     expect(editor().document?.nodes.a?.generator?.model).toBe("Auto");
   });
 

@@ -58,6 +58,10 @@
     "./links": {
       "import": "./dist/links/index.js",
       "types": "./dist/links/index.d.ts"
+    },
+    "./prices": {
+      "import": "./dist/prices/index.js",
+      "types": "./dist/prices/index.d.ts"
     }
   },
   "scripts": {
