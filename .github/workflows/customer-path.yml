@@ -1,0 +1,71 @@
+name: Customer Path
+
+# What a new customer gets, end to end (scripts/verify-customer-path.ts):
+# template:build → create-sailor scaffold (outside the repo) → install →
+# `pnpm dev` → Playwright walks /welcome, the one-click demo sign-in and
+# settings, and reads the site's server HTML. Fails on any page error, failed
+# same-origin request, or Nebutra's name shown in the customer's product.
+#
+# The release workflow runs the same gate before it publishes; this runs it on
+# the pull requests that can break that path, so a break is found at review,
+# not at release.
+
+on:
+  pull_request:
+    paths:
+      - "packages/ops/**"
+      - "scripts/dev/**"
+      - "scripts/template-*"
+      - "scripts/verify-customer-path.ts"
+      - "scripts/brand-*.ts"
+      - ".templateignore"
+      - "apps/web/src/vite-app/**"
+      - "packages/platform/db/**"
+      - ".github/workflows/customer-path.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  npm_config_verify_deps_before_run: "false"
+
+jobs:
+  customer-path:
+    name: Scaffold → pnpm dev → browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Verify the customer path
+        timeout-minutes: 35
+        run: pnpm verify:customer-path --out=artifacts/customer-path
+
+      - name: Upload screenshots, timings and logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: customer-path
+          path: artifacts/customer-path
+          retention-days: 14
+          if-no-files-found: ignore

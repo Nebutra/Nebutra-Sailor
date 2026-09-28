@@ -84,6 +84,25 @@ jobs:
       - name: Smoke test CLI bundle
         run: node packages/ops/create-sailor/dist/index.js --help
 
+      # Required before anything publishes: a scaffold from this commit
+      # installs, `pnpm dev` serves it, and a browser signs in with the
+      # customer's own brand (scripts/verify-customer-path.ts).
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Verify the customer path (scaffold → pnpm dev → browser)
+        timeout-minutes: 35
+        run: pnpm verify:customer-path --out=artifacts/customer-path
+
+      - name: Upload customer-path screenshots, timings and logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: customer-path
+          path: artifacts/customer-path
+          retention-days: 30
+          if-no-files-found: ignore
+
       - name: Ensure npm CLI supports trusted publishing
         run: npm install -g npm@11.5.1
 
