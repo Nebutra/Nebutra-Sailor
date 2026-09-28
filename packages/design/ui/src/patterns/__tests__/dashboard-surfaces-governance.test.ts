@@ -53,7 +53,13 @@ describe("@nebutra/ui dashboard surface governance", () => {
     // the accent surgically; a saturated fill made the active row the loudest
     // thing on screen. This replaces the older `bg-sidebar-primary` fill
     // contract deliberately — see the component comment for the reasoning.
-    expect(source).toContain("bg-sidebar-accent text-sidebar-foreground font-medium");
+    // The surface is one element that glides between rows (layoutId), not a
+    // class per row, so changing page reads as the selection travelling.
+    expect(source).toContain('layoutId="sidebar-nav-active"');
+    expect(source).toContain(
+      "bg-sidebar-accent shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))]",
+    );
+    expect(source).toContain('reducedMotion="user"');
     // `--sidebar-border` is a bare channel triple, so the shadow colour must
     // wrap it in hsl() — unwrapped, the whole declaration is invalid and the
     // hairline silently never paints (lint-ui-contracts bare-channel rule).
