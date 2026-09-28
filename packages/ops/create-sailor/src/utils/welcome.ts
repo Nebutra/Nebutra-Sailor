@@ -40,8 +40,8 @@ pnpm dev
 That builds what the apps need, starts the product app (http://localhost:3001),
 the site (http://localhost:3000) and the API gateway (http://localhost:3002),
 and prints which capabilities are live and which still run a local fallback.
-Open http://localhost:3001/welcome — sign up there, or use the one-click
-preview account.
+Open http://localhost:3001/welcome — sign up there, or sign in with the demo
+account the local database seeds: admin@example.com / nebutra-preview.
 
 Then:
 
@@ -54,8 +54,9 @@ Then:
 2. **Take a capability live** — copy its key from \`.env.example\` into
    \`.env.local\` (random secrets are already generated there) and restart \`pnpm dev\`.
 
-3. **Use your own Postgres** — the preview keeps its data in an in-process
-   database. Set \`DATABASE_URL\` in \`.env.local\`, then apply the schema:
+3. **Use your own Postgres** — the preview keeps its data in a local PGlite
+   database (\`DATABASE_URL="pglite:"\`, data under \`.nebutra/pglite/\`). Point
+   \`DATABASE_URL\` in \`.env.local\` at your Postgres, then apply the schema:
    \`\`\`bash
    pnpm db:migrate
    pnpm db:seed

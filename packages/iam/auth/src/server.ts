@@ -21,7 +21,10 @@ import type { AuthConfig, AuthProvider } from "./types";
 export async function createAuth(config: AuthConfig): Promise<AuthProvider> {
   switch (config.provider) {
     case "better-auth":
-      return (await import("./providers/better-auth")).createBetterAuthProvider(config);
+      // Explicit extension: `providers/better-auth` is both a file and a
+      // directory, and Node-side resolvers (tsx, the gateway's dev server)
+      // pick the directory's index and fail.
+      return (await import("./providers/better-auth.js")).createBetterAuthProvider(config);
     case "dev":
       return (await import("./providers/dev")).createDevAuthProvider(config);
     default:

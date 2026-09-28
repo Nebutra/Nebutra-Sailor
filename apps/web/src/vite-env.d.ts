@@ -16,4 +16,6 @@ interface ImportMetaEnv {
   readonly VITE_SAILOR_SITE_URL?: string;
   readonly VITE_SAILOR_API_URL?: string;
   readonly VITE_SAILOR_CAPABILITIES?: string;
+  /** Set when the preview database (PGlite) seeded its demo account. */
+  readonly VITE_SAILOR_DEMO_ACCOUNT?: string;
 }

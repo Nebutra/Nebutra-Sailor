@@ -163,7 +163,6 @@
       "packages/ops/create-sailor/src/steps/cli-setup.ts",
       "packages/ops/create-sailor/src/steps/scaffold.ts",
       "packages/ops/create-sailor/src/ui/banner.ts",
-      "packages/ops/create-sailor/src/ui/done.ts",
       "packages/ops/create-sailor/src/utils/config.ts",
       "packages/ops/create-sailor/src/utils/first-run.ts",
       "packages/ops/create-sailor/src/utils/git.ts",

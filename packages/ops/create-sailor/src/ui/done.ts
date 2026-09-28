@@ -51,6 +51,7 @@ export function showDone(opts: DoneOptions): void {
 
   lines.push(
     `     ${arrow} ${pm} dev          ${dim("→ http://localhost:3001/welcome — no keys, no Docker")}`,
+    `                        ${dim("demo sign-in: admin@example.com / nebutra-preview")}`,
   );
 
   if (hasDatabase) {

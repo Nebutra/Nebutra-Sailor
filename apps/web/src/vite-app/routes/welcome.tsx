@@ -60,7 +60,9 @@ function CapabilityTable({ rows }: { rows: CapabilityRow[] }) {
                   : row.next}
             </p>
           </div>
-          <Badge variant={STATE_VARIANT[row.state]}>{STATE_LABEL[row.state]}</Badge>
+          <Badge variant={STATE_VARIANT[row.state]} className="shrink-0">
+            {STATE_LABEL[row.state]}
+          </Badge>
         </li>
       ))}
     </ul>
@@ -80,7 +82,7 @@ const NEXT_STEPS = [
   },
   {
     title: "Use your own Postgres",
-    body: "The preview keeps its data in an in-process database. Set DATABASE_URL to switch.",
+    body: "The preview keeps its data in a local PGlite database under .nebutra/. Point DATABASE_URL at your Postgres to switch.",
     command: "pnpm db:migrate",
   },
 ] as const;
@@ -103,7 +105,9 @@ function WelcomeRoute() {
         <div className="flex flex-wrap gap-3 pt-2">
           {isSignedIn ? (
             <Button asChild>
-              <Link to="/settings">Open your workspace</Link>
+              <Link to="/settings" search={{ tab: "profile" }}>
+                Open your workspace
+              </Link>
             </Button>
           ) : (
             <Button asChild>
@@ -123,6 +127,10 @@ function WelcomeRoute() {
         </div>
         {isSignedIn ? (
           <p className="text-sm text-neutral-11">Signed in as {user?.email ?? user?.name}.</p>
+        ) : import.meta.env.VITE_SAILOR_DEMO_ACCOUNT ? (
+          <p className="text-sm text-neutral-11">
+            The local database has a demo account: admin@example.com / nebutra-preview.
+          </p>
         ) : null}
       </header>
 

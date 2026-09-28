@@ -59,7 +59,7 @@ const APPS: readonly PreviewApp[] = [
     pkg: "@nebutra/gateway",
     label: "API gateway",
     defaultPort: 3002,
-    readyPath: "/api/misc/health",
+    readyPath: "/",
   },
 ];
 
@@ -79,12 +79,30 @@ function canListen(port: number, host: string): Promise<boolean> {
   });
 }
 
+function answers(port: number, host: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const socket = net.connect({ port, host });
+    socket.setTimeout(500);
+    socket.once("connect", () => {
+      socket.destroy();
+      resolve(true);
+    });
+    socket.once("timeout", () => {
+      socket.destroy();
+      resolve(false);
+    });
+    socket.once("error", () => resolve(false));
+  });
+}
+
 /**
- * Free on both stacks. Probing one bind is not enough: on macOS a listener
- * on 0.0.0.0:3001 does not stop a new bind on [::]:3001, and the dev server
- * would then share the port with whatever already answers there.
+ * Nothing answers on it, and both stacks can bind it. A bind probe alone lies:
+ * Node listens with SO_REUSEADDR, so on macOS a wildcard bind succeeds while
+ * another program holds 127.0.0.1 on the same port, and the dev server would
+ * then share the port with whatever already answers there.
  */
 async function isPortFree(port: number): Promise<boolean> {
+  if ((await answers(port, "127.0.0.1")) || (await answers(port, "::1"))) return false;
   return (await canListen(port, "0.0.0.0")) && (await canListen(port, "::"));
 }
 
@@ -137,6 +155,9 @@ function buildPreviewEnv(ports: Record<PreviewApp["id"], number>): NodeJS.Proces
   }
 
   env.NODE_ENV = "development";
+  // `pnpm dev` itself already checked the install; the per-app `pnpm run dev`
+  // children would only repeat it three times over.
+  env.npm_config_verify_deps_before_run ??= "false";
   env.NEXT_TELEMETRY_DISABLED ??= "1";
   env.AUTH_PROVIDER ??= "better-auth";
   env.NEXT_PUBLIC_AUTH_PROVIDER ??= "better-auth";
@@ -260,11 +281,105 @@ function startApp(app: PreviewApp, dir: string, port: number, env: NodeJS.Proces
   });
 }
 
+// ---------------------------------------------------------------------------
+// Preview database
+// ---------------------------------------------------------------------------
+
+const PREVIEW_DB_SCRIPT = path.join(ROOT, "packages/platform/db/scripts/preview-db.mjs");
+
+/** No real database configured: DATABASE_URL unset or `pglite:` (the scaffold's default). */
+function wantsPreviewDatabase(env: NodeJS.ProcessEnv): boolean {
+  const url = env.DATABASE_URL?.trim() ?? "";
+  return (!url || /^(pglite|file):/i.test(url)) && fs.existsSync(PREVIEW_DB_SCRIPT);
+}
+
+/**
+ * Start the local preview database (PGlite served on 127.0.0.1) as one of the
+ * preview's processes and resolve the env the apps need to reach it. It runs
+ * alongside the package build, so its first-start migration costs nothing.
+ * Stops with the rest of the preview.
+ */
+/**
+ * The preview database's port: the one this project's running database holds
+ * (a second `pnpm dev` shares it), else 54329, else the next free one — a
+ * port taken by some other program must not stop the preview.
+ */
+async function pickDatabasePort(env: NodeJS.ProcessEnv, taken: Set<number>): Promise<number> {
+  if (env.NEBUTRA_PREVIEW_DB_PORT) return Number(env.NEBUTRA_PREVIEW_DB_PORT);
+  try {
+    const lock = path.join(ROOT, ".nebutra/pglite/server.json");
+    const held = JSON.parse(fs.readFileSync(lock, "utf8")) as { pid: number; port: number };
+    process.kill(held.pid, 0);
+    return held.port;
+  } catch {
+    // no database running for this project
+  }
+  return pickPort(54329, taken);
+}
+
+function startPreviewDatabase(env: NodeJS.ProcessEnv): Promise<Record<string, string>> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [PREVIEW_DB_SCRIPT, "serve"], {
+      cwd: ROOT,
+      env,
+      stdio: ["ignore", "pipe", "pipe"],
+      detached: process.platform !== "win32",
+    });
+    children.push(child);
+    let settled = false;
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      // The same lines `preview-db.mjs env` prints — one source for the URL.
+      const result = spawnSync(process.execPath, [PREVIEW_DB_SCRIPT, "env"], {
+        cwd: ROOT,
+        env,
+        encoding: "utf8",
+      });
+      const values: Record<string, string> = {};
+      for (const line of result.stdout.split("\n")) {
+        const eq = line.indexOf("=");
+        if (eq > 0) values[line.slice(0, eq).trim()] = line.slice(eq + 1).trim();
+      }
+      if (values.DATABASE_URL) resolve(values);
+      else reject(new Error("the preview database did not report its URL"));
+    };
+    const onLine = (line: string) => {
+      process.stdout.write(`[db]       ${line}\n`);
+      if (/\[preview-db\] (ready in|already running)/.test(line)) settle();
+    };
+    let buffer = "";
+    const read = (chunk: Buffer) => {
+      buffer += chunk.toString();
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+      for (const line of lines) onLine(line);
+    };
+    child.stdout?.on("data", read);
+    child.stderr?.on("data", read);
+    child.on("exit", (code) => {
+      // "already running" returns at once: another preview of this project owns it.
+      if (settled && code === 0) return;
+      if (!settled) {
+        settled = true;
+        reject(new Error(`the preview database exited with code ${code ?? "?"}`));
+        return;
+      }
+      if (!stopping) {
+        process.stderr.write("\n[db] the preview database stopped — stopping the preview.\n");
+        stopAll(code ?? 1);
+      }
+    });
+  });
+}
+
 async function waitForReady(url: string, timeoutMs: number): Promise<number | null> {
   const started = Date.now();
   while (Date.now() - started < timeoutMs && !stopping) {
     try {
-      const res = await fetch(url, { redirect: "manual", signal: AbortSignal.timeout(60_000) });
+      // Follow redirects: the site's "/" redirects to its locale page, and the
+      // page — not the redirect — is what has to compile.
+      const res = await fetch(url, { signal: AbortSignal.timeout(120_000) });
       if (res.status < 500) return Date.now() - started;
     } catch {
       // not listening yet
@@ -298,6 +413,15 @@ async function main(): Promise<void> {
   const env = buildPreviewEnv(ports);
 
   const started = Date.now();
+  process.on("SIGINT", () => stopAll(0));
+  process.on("SIGTERM", () => stopAll(0));
+
+  const previewDb = wantsPreviewDatabase(env);
+  if (previewDb) env.NEBUTRA_PREVIEW_DB_PORT = String(await pickDatabasePort(env, taken));
+  const database = previewDb ? startPreviewDatabase(env) : null;
+  // Surface a database failure now rather than after the build.
+  database?.catch(() => undefined);
+
   if (!skipBuild) {
     await prebuildWorkspacePackages({
       root: ROOT,
@@ -306,6 +430,7 @@ async function main(): Promise<void> {
       env,
     });
   }
+  if (database) Object.assign(env, await database);
 
   syncBrandAssets(env);
 
@@ -316,9 +441,8 @@ async function main(): Promise<void> {
   env.VITE_SAILOR_SITE_URL = env.NEXT_PUBLIC_SITE_URL;
   env.VITE_SAILOR_API_URL = env.API_GATEWAY_URL;
   env.VITE_SAILOR_CAPABILITIES = JSON.stringify(reports);
-
-  process.on("SIGINT", () => stopAll(0));
-  process.on("SIGTERM", () => stopAll(0));
+  // The preview database seeds a demo account; the sign-in page offers it.
+  if (previewDb) env.VITE_SAILOR_DEMO_ACCOUNT = "1";
 
   for (const app of apps) {
     const dir = workspace.get(app.pkg)?.dir;
@@ -329,21 +453,28 @@ async function main(): Promise<void> {
     apps.map(async (app) => {
       const url = `http://localhost:${ports[app.id]}${app.readyPath}`;
       const ms = await waitForReady(url, 300_000);
-      return { app, ms };
+      const at = ((Date.now() - started) / 1000).toFixed(0);
+      if (ms !== null) process.stdout.write(`\n  ${app.label} answered 200 at ${at}s\n`);
+      return { app, ms, at };
     }),
   );
   if (stopping) return;
 
   const total = ((Date.now() - started) / 1000).toFixed(1);
   process.stdout.write(`\n  Sailor preview is running (${total}s)\n\n`);
-  for (const { app, ms } of readiness) {
-    const status = ms === null ? "not answering yet" : `ready`;
+  for (const { app, ms, at } of readiness) {
+    const status = ms === null ? "not answering yet" : `first 200 at ${at}s`;
     process.stdout.write(
       `    ${app.label.padEnd(12)} http://localhost:${ports[app.id]}   ${status}\n`,
     );
   }
   if (apps.some((app) => app.id === "web")) {
     process.stdout.write(`\n  Start here: http://localhost:${ports.web}/welcome\n`);
+  }
+  if (previewDb) {
+    process.stdout.write(
+      "  Database: local preview (PGlite). Demo account admin@example.com / nebutra-preview\n",
+    );
   }
   printCapabilities(reports);
   process.stdout.write("\n  Ctrl+C stops everything.\n\n");

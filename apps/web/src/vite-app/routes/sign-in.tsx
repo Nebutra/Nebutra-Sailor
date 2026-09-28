@@ -1,4 +1,4 @@
-import { buildAuthCenterSignInUrl, getAuthCenterOrigin } from "@nebutra/auth";
+import { buildAuthCenterSignInUrl, getAuthCenterOrigin } from "@nebutra/auth/client";
 import { Button, Field, Input } from "@nebutra/ui/primitives";
 import { createRoute } from "@tanstack/react-router";
 import { type FormEvent, useEffect, useState } from "react";
@@ -23,11 +23,13 @@ function resolveExternalAuthCenter(): string | null {
   return center === appOrigin ? null : center;
 }
 
-/** A one-click account for trying the app locally; offered in development builds only. */
-const PREVIEW_ACCOUNT = {
-  email: "preview@example.com",
-  password: "sailor-preview",
-  name: "Preview User",
+/**
+ * The demo account the local preview database seeds (packages/platform/db,
+ * preview-db.mjs). Offered only while `pnpm dev` runs on that database.
+ */
+const DEMO_ACCOUNT = {
+  email: "admin@example.com",
+  password: "nebutra-preview",
 };
 
 type Mode = "sign-in" | "sign-up";
@@ -75,19 +77,15 @@ function SignInForm() {
     else finish();
   };
 
-  const continueWithPreviewAccount = async () => {
+  const continueWithDemoAccount = async () => {
     setPending(true);
     setError(null);
-    const { email: previewEmail, password: previewPassword, name: previewName } = PREVIEW_ACCOUNT;
-    // The first time, the account does not exist yet: sign-in fails, so create it.
-    let failure = await authenticate("sign-in", previewEmail, previewPassword, previewName).catch(
-      describeError,
-    );
-    if (failure) {
-      failure = await authenticate("sign-up", previewEmail, previewPassword, previewName).catch(
-        describeError,
-      );
-    }
+    const failure = await authenticate(
+      "sign-in",
+      DEMO_ACCOUNT.email,
+      DEMO_ACCOUNT.password,
+      "",
+    ).catch(describeError);
     setPending(false);
     if (failure) setError(failure);
     else finish();
@@ -138,7 +136,7 @@ function SignInForm() {
             />
           </Field>
           {error ? (
-            <p role="alert" className="text-sm text-destructive">
+            <p role="alert" className="text-sm text-destructive-strong">
               {error}
             </p>
           ) : null}
@@ -154,19 +152,19 @@ function SignInForm() {
         >
           {mode === "sign-in" ? "Create an account instead" : "Sign in to an existing account"}
         </Button>
-        {import.meta.env.DEV ? (
+        {import.meta.env.VITE_SAILOR_DEMO_ACCOUNT ? (
           <div className="mt-6 border-neutral-7 border-t pt-4">
             <Button
               type="button"
               variant="outline"
               className="w-full"
               disabled={pending}
-              onClick={() => void continueWithPreviewAccount()}
+              onClick={() => void continueWithDemoAccount()}
             >
-              Continue with the preview account
+              Continue with the demo account
             </Button>
             <p className="mt-2 text-xs text-neutral-10">
-              Development builds only: {PREVIEW_ACCOUNT.email} / {PREVIEW_ACCOUNT.password}
+              Local preview database: {DEMO_ACCOUNT.email} / {DEMO_ACCOUNT.password}
             </p>
           </div>
         ) : null}

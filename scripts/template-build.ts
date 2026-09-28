@@ -395,9 +395,14 @@ function main(): void {
   process.stdout.write(`  pruned ${pruned} landing modules only Nebutra's pages used\n`);
   pruneEmptyDirs(out);
 
-  process.stdout.write("Step 3/5: stripping Nebutra-only Prisma models…\n");
-  const prismaStripped = stripNebutraOnlyModels(out);
-  process.stdout.write(`  stripped ${prismaStripped} Nebutra-only models from schema.prisma\n`);
+  // Step 3 used to strip Nebutra-only Prisma models (Sleptons*, CommunityProfile)
+  // from schema.prisma. Since the database became one generated source (ADR
+  // 2026-09-25) the checksum-pinned baseline migration, the generated rls.sql
+  // and the committed Prisma client all carry those tables, so a schema without
+  // them is drift: `db:deploy` — and the preview database built by it — refused
+  // every fresh project. The schema ships whole; removing those tables is a
+  // migration, not a text edit.
+  process.stdout.write("Step 3/5: schema.prisma ships whole (it must match its migrations)\n");
 
   process.stdout.write("Step 4/5: injecting license & template marker…\n");
   injectLicenseAndMarker(out);
@@ -458,94 +463,6 @@ function stripNebutraOnlyWorkspaceConfig(targetDir: string): number {
     });
     fs.writeFileSync(full, kept.join("\n"));
   }
-  return removed;
-}
-
-/**
- * Remove Nebutra-only Prisma models from the template schema.
- *
- * These models power Nebutra's own products (Sleptons community, etc.) and
- * have no place in a generic SaaS template. Unlike @conditional-annotated
- * models (which are opt-in via CLI flags), these are hardcoded strips at
- * mirror-sync time — downstream users of Sailor-Template never see them.
- *
- * If you're adding a new Nebutra-only model, add it to NEBUTRA_ONLY_MODELS.
- */
-const NEBUTRA_ONLY_MODELS = [
-  "SleptonsaMemberProfile",
-  "SleptonsProduct",
-  "SleptonsUpvote",
-  "SleptonsConnection",
-  "CommunityProfile", // licensing/community table tied to Nebutra's OPC network
-  // License model is generic SaaS infrastructure (issued, validated, renewed) —
-  // keep it in the template so packages/commerce/license works downstream.
-];
-
-const NEBUTRA_ONLY_ENUMS = [
-  "SleptonsTier",
-  "ProductStage", // used only by Sleptons
-  // LicenseTier/LicenseType travel with the License model.
-];
-
-function stripNebutraOnlyModels(targetDir: string): number {
-  const schemaPath = path.join(targetDir, "packages/platform/db/prisma/schema.prisma");
-
-  let src: string;
-  try {
-    src = fs.readFileSync(schemaPath, "utf8");
-  } catch {
-    return 0; // no schema in this tree
-  }
-  let removed = 0;
-
-  const removeBlock = (kind: "model" | "enum", name: string) => {
-    const re = new RegExp(`^${kind}\\s+${name}\\s*\\{`, "m");
-    const m = re.exec(src);
-    if (!m) return;
-    const start = m.index;
-    // find balanced closing brace
-    let depth = 0;
-    let i = m.index;
-    while (i < src.length) {
-      if (src[i] === "{") depth++;
-      else if (src[i] === "}") {
-        depth--;
-        if (depth === 0) {
-          // consume trailing newline
-          let end = i + 1;
-          if (src[end] === "\n") end++;
-          src = src.slice(0, start) + src.slice(end);
-          removed++;
-          return;
-        }
-      }
-      i++;
-    }
-  };
-
-  for (const m of NEBUTRA_ONLY_MODELS) removeBlock("model", m);
-  for (const e of NEBUTRA_ONLY_ENUMS) removeBlock("enum", e);
-
-  // Strip relation fields from remaining models that point to removed models.
-  const deletedNames = NEBUTRA_ONLY_MODELS.join("|");
-  const relationFieldRe = new RegExp(
-    `^\\s+\\w+\\s+(?:${deletedNames})(?:\\[\\])?(?:\\?)?\\s*(?:@relation\\([^)]*\\))?\\s*$\\n`,
-    "gm",
-  );
-  src = src.replace(relationFieldRe, "");
-
-  // Strip enum field references
-  const deletedEnums = NEBUTRA_ONLY_ENUMS.join("|");
-  const enumFieldRe = new RegExp(
-    `^\\s+\\w+\\s+(?:${deletedEnums})(?:\\?)?(?:\\s+@default\\([^)]*\\))?\\s*$\\n`,
-    "gm",
-  );
-  src = src.replace(enumFieldRe, "");
-
-  // Collapse excess blank lines
-  src = src.replace(/\n{3,}/g, "\n\n");
-
-  fs.writeFileSync(schemaPath, src);
   return removed;
 }
 

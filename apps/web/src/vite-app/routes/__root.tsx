@@ -13,8 +13,11 @@ const appNav = [
   { to: "/billing", label: "Billing" },
 ] as const;
 
-/** Routes that render for signed-out visitors, outside the product shell. */
-const PUBLIC_ROUTES = new Set(["/sign-in", "/welcome"]);
+/**
+ * Routes that render for signed-out visitors, outside the product shell. "/"
+ * only redirects; the page it lands on applies its own rule.
+ */
+const PUBLIC_ROUTES = new Set(["/", "/sign-in", "/welcome"]);
 
 function ProductShell() {
   const location = useLocation();
