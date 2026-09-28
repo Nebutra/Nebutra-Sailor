@@ -13,20 +13,35 @@
  *      and not Nebutra's, the one-click demo sign-in signs in, settings open;
  *      no page errors and no failed same-origin requests on the way. The
  *      site's / answers server-rendered HTML with real text.
- *   6. screenshots (welcome light + dark desktop, mobile, signed in, settings,
- *      site) and timings into the output dir, then tears everything down.
+ *   6. what the customer reads is theirs: every page walked (welcome,
+ *      sign-in, each settings tab, billing, and every page the site serves
+ *      per site-map.ts, en + zh) shows no Nebutra, no upstream product copy
+ *      (Sailor, Agent OS, its prices, Nebutra's product names) and — in the
+ *      product app — no notes meant for developers; the signed-in nav has no
+ *      Startup OS, settings shows the demo account's email, no devtools
+ *      widget floats over the app, no page loads images or media from
+ *      another host, and every icon the app and the site serve (link rel
+ *      icons, manifest icons, /favicon.ico) is an image that is not
+ *      byte-equal to Nebutra's own.
+ *   7. screenshots (welcome light + dark, mobile, signed in, settings
+ *      profile, site desktop + mobile, the pricing section) and timings into
+ *      the output dir, then tears everything down.
  *
  * Exits non-zero, naming the failed step, on any failure.
  *
- * Usage: pnpm verify:customer-path [--out=<dir>] [--keep]
+ * Usage: pnpm verify:customer-path [--out=<dir>] [--keep] [--attach=<web>,<site>]
  *   --out   screenshots, timings.json and logs (default: artifacts/customer-path)
  *   --keep  leave the temp scaffold on disk (it is printed)
+ *   --attach  run only the browser checks, against a preview already running
+ *             (e.g. a --keep scaffold's `pnpm dev`) — for iterating on a
+ *             failure; a release is gated by the full run
  */
 import { type ChildProcess, execFileSync, spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Browser, BrowserContext, Page } from "playwright";
+import { SITE_MAP } from "../apps/landing/src/site-map";
 
 const ROOT = path.resolve(__dirname, "..");
 const PROJECT = "acme-rocket";
@@ -46,20 +61,71 @@ const ALLOWED_NEBUTRA = [
   /\b(?:npx |pnpm (?:exec )?)?nebutra (?:status|apply|init|login|doctor|rls-audit|[a-z-]+)\b/gi,
 ];
 
+/**
+ * The upstream product showing through: Sailor's own sales copy and prices,
+ * and Nebutra's product names. None of it belongs on a customer's pages.
+ */
+const UPSTREAM_DENYLIST: ReadonlyArray<[label: string, pattern: RegExp]> = [
+  ["Sailor", /\bSailor\b/i],
+  ["Agent OS", /Agent\s?OS/i],
+  ["$2,000", /\$\s?2,000/],
+  ["$30,000", /\$\s?30,000/],
+  ["Startup OS", /Startup\s?OS/i],
+  ["Founder OS", /Founder\s?OS/i],
+  ["Sleptons", /Sleptons/i],
+  ["Kuanlan", /Kuanlan|观澜/i],
+  ["Pebble", /\bPebble\b/],
+  ["TypeLens", /TypeLens/i],
+  ["Forge", /\bForge\b/],
+];
+
+/** Notes written for the template's developers, not for the people using the product. */
+const DEVELOPER_NOTES: ReadonlyArray<[label: string, pattern: RegExp]> = [
+  ["TanStack", /TanStack/i],
+  ["React Query", /React Query/i],
+  ["browser-safe", /browser-safe/i],
+  ["BFF", /\bBFF\b/],
+  ["gateway", /\bgateway\b/i],
+  ["boundary", /\bboundary\b/i],
+  ["facade", /\bfacade\b/i],
+  ["URL search state", /search state/i],
+  ["Product App", /Product App/],
+  ["feature flag", /feature flag/i],
+  ["browser-rendered", /browser-rendered/i],
+];
+
+/** The preview database's demo account (apps/web/src/vite-app/preview-auth.ts). */
+const DEMO_EMAIL = "admin@example.com";
+
+/** Hosts a page may load images and media from: its own origins and data:/blob: URLs. */
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
+
 // ---------------------------------------------------------------------------
 
 interface Args {
   out: string;
   keep: boolean;
+  /** Browser checks only, against a preview already running: [web, site]. */
+  attach: [string, string] | null;
 }
 
 function parseArgs(): Args {
-  const args: Args = { out: path.join(ROOT, "artifacts", "customer-path"), keep: false };
+  const args: Args = {
+    out: path.join(ROOT, "artifacts", "customer-path"),
+    keep: false,
+    attach: null,
+  };
   for (const arg of process.argv.slice(2)) {
     if (arg.startsWith("--out=")) args.out = path.resolve(arg.slice("--out=".length));
     else if (arg === "--keep") args.keep = true;
-    else if (arg === "--help" || arg === "-h") {
-      process.stdout.write("Usage: pnpm verify:customer-path [--out=<dir>] [--keep]\n");
+    else if (arg.startsWith("--attach=")) {
+      const [web, site] = arg.slice("--attach=".length).split(",");
+      if (!web || !site) throw new Error("--attach=<product app URL>,<site URL>");
+      args.attach = [web.replace(/\/+$/, ""), site.replace(/\/+$/, "")];
+    } else if (arg === "--help" || arg === "-h") {
+      process.stdout.write(
+        "Usage: pnpm verify:customer-path [--out=<dir>] [--keep] [--attach=<web>,<site>]\n",
+      );
       process.exit(0);
     }
   }
@@ -337,9 +403,35 @@ function nebutraLeaks(text: string): string[] {
   return [...new Set(leaks)];
 }
 
-async function expectBrand(page: Page, where: string): Promise<void> {
+function denied(
+  text: string,
+  list: ReadonlyArray<readonly [string, RegExp]>,
+): Array<{ label: string; context: string }> {
+  const hits: Array<{ label: string; context: string }> = [];
+  for (const [label, pattern] of list) {
+    const m = new RegExp(pattern.source, pattern.flags.replace("g", "")).exec(text);
+    if (m) {
+      const at = m.index;
+      hits.push({
+        label,
+        context: text.slice(Math.max(0, at - 50), at + m[0].length + 50).replace(/\s+/g, " "),
+      });
+    }
+  }
+  return hits;
+}
+
+/**
+ * The customer's page shows neither Nebutra nor the upstream product, and —
+ * for the product app — no notes meant for the template's developers.
+ */
+async function expectCustomerCopy(
+  page: Page,
+  where: string,
+  opts: { developerNotes?: boolean; brand?: boolean } = {},
+): Promise<string> {
   const text = await readableText(page);
-  if (!text.includes(BRAND)) {
+  if (opts.brand !== false && !text.includes(BRAND)) {
     throw new GateError("brand", `${where} does not show the project's name "${BRAND}"`);
   }
   const leaks = nebutraLeaks(text);
@@ -349,6 +441,125 @@ async function expectBrand(page: Page, where: string): Promise<void> {
       `${where} shows Nebutra to the customer:\n  ${leaks.slice(0, 15).join("\n  ")}`,
     );
   }
+  const upstream = denied(text, UPSTREAM_DENYLIST);
+  if (upstream.length > 0) {
+    throw new GateError(
+      "customer copy",
+      `${where} shows the upstream product:\n  ${upstream.map((h) => `${h.label}: …${h.context}…`).join("\n  ")}`,
+    );
+  }
+  if (opts.developerNotes) {
+    const notes = denied(text, DEVELOPER_NOTES);
+    if (notes.length > 0) {
+      throw new GateError(
+        "customer copy",
+        `${where} shows notes meant for developers:\n  ${notes.map((h) => `${h.label}: …${h.context}…`).join("\n  ")}`,
+      );
+    }
+  }
+  return text;
+}
+
+/** Images and media the page loads from a host that is not the preview's own. */
+function watchForeignMedia(page: Page, into: Set<string>): void {
+  page.on("request", (request) => {
+    if (!["image", "media"].includes(request.resourceType())) return;
+    let url: URL;
+    try {
+      url = new URL(request.url());
+    } catch {
+      return;
+    }
+    if (url.protocol === "data:" || url.protocol === "blob:") return;
+    if (!LOCAL_HOSTS.has(url.hostname)) into.add(`${url.host} (${page.url()})`);
+  });
+}
+
+/** Dismisses the cookie banner so screenshots show the page, when it is there. */
+async function dismissCookieBanner(page: Page): Promise<void> {
+  const button = page.getByRole("button", { name: /essential only/i });
+  if (await button.isVisible().catch(() => false)) {
+    await button.click().catch(() => undefined);
+    await page.waitForTimeout(300);
+  }
+}
+
+/**
+ * Nebutra's own icon files, as this checkout has them. A scaffold's served
+ * icons are its brand's (brand:apply generates them); byte-equal to one of
+ * these means the customer's browser tab shows Nebutra's mark.
+ */
+function nebutraIconBytes(): Map<string, string> {
+  const files = [
+    "apps/landing/src/app/icon.svg",
+    "apps/landing/src/app/favicon.ico",
+    ...[
+      "favicon.ico",
+      "favicon.svg",
+      "apple-touch-icon.png",
+      "android-chrome-192x192.png",
+      "android-chrome-512x512.png",
+    ].flatMap((f) => [
+      `apps/landing/public/${f}`,
+      `apps/web/public/${f}`,
+      `packages/design/brand/assets/favicon/${f}`,
+    ]),
+  ];
+  const bytes = new Map<string, string>();
+  for (const rel of files) {
+    const abs = path.join(ROOT, rel);
+    if (fs.existsSync(abs)) bytes.set(fs.readFileSync(abs).toString("base64"), rel);
+  }
+  return bytes;
+}
+
+/**
+ * Every icon a page declares (link rel=icon / apple-touch-icon, the web
+ * manifest's icons) plus /favicon.ico: each must answer with an image and
+ * none may be Nebutra's.
+ */
+async function expectBrandIcons(page: Page, origin: string, where: string): Promise<string[]> {
+  const hrefs = await page.evaluate(() => {
+    const out: string[] = [];
+    for (const link of Array.from(document.querySelectorAll("link[rel]"))) {
+      const rel = link.getAttribute("rel") ?? "";
+      if (/(^|\s)(icon|apple-touch-icon|shortcut)(\s|$)/.test(rel)) {
+        out.push((link as HTMLLinkElement).href);
+      }
+    }
+    const manifest = document.querySelector('link[rel="manifest"]') as HTMLLinkElement | null;
+    return { icons: out, manifest: manifest?.href ?? null };
+  });
+  const urls = new Set<string>([...hrefs.icons, `${origin}/favicon.ico`]);
+  if (hrefs.manifest) {
+    const res = await fetch(hrefs.manifest).catch(() => null);
+    const json = res?.ok
+      ? ((await res.json().catch(() => null)) as { icons?: { src: string }[] } | null)
+      : null;
+    for (const icon of json?.icons ?? []) urls.add(new URL(icon.src, hrefs.manifest).href);
+  }
+  const nebutra = nebutraIconBytes();
+  const checked: string[] = [];
+  for (const url of urls) {
+    const res = await fetch(url, { signal: AbortSignal.timeout(60_000) }).catch(() => null);
+    if (!res?.ok) {
+      throw new GateError("icons", `${where}: ${url} answered ${res?.status ?? "nothing"}`);
+    }
+    const type = res.headers.get("content-type") ?? "";
+    if (!/^image\/|icon/.test(type)) {
+      throw new GateError("icons", `${where}: ${url} is ${type || "untyped"}, not an image`);
+    }
+    const body = Buffer.from(await res.arrayBuffer());
+    const same = nebutra.get(body.toString("base64"));
+    if (same) {
+      throw new GateError("icons", `${where}: ${url} is Nebutra's icon (${same})`);
+    }
+    if (/svg/.test(type) && /aria-label="Nebutra"|Nebutra/i.test(body.toString("utf8"))) {
+      throw new GateError("icons", `${where}: ${url} is labelled Nebutra`);
+    }
+    checked.push(new URL(url).pathname);
+  }
+  return checked;
 }
 
 async function browserChecks(
@@ -358,18 +569,20 @@ async function browserChecks(
   outDir: string,
 ): Promise<string[]> {
   const shots: string[] = [];
-  const shot = async (page: Page, name: string) => {
+  const shot = async (page: Page, name: string, fullPage = true) => {
     const file = path.join(outDir, `${name}.png`);
-    await page.screenshot({ path: file, fullPage: true });
+    await page.screenshot({ path: file, fullPage });
     shots.push(file);
   };
   const origins = [webUrl, ...(siteUrl ? [siteUrl] : [])];
   const desktop = { width: 1440, height: 900 };
+  const foreignMedia = new Set<string>();
 
   // -- welcome, light, desktop: / → /welcome, the project's name, no Nebutra
   const light = await browser.newContext({ viewport: desktop, colorScheme: "light" });
   const lightWatch = watch(light, origins);
   const page = await light.newPage();
+  watchForeignMedia(page, foreignMedia);
   const firstLoad = Date.now();
   await page.goto(`${webUrl}/`, { waitUntil: "domcontentloaded", timeout: 180_000 });
   await page
@@ -389,8 +602,17 @@ async function browserChecks(
   if (!h1.includes(BRAND)) {
     throw new GateError("welcome", `the welcome headline reads "${h1}", expected "${BRAND}"`);
   }
-  await expectBrand(page, "/welcome");
+  await expectCustomerCopy(page, "/welcome");
+  const appIcons = await expectBrandIcons(page, webUrl, "the product app");
+  log(`icons (product app): ${appIcons.join(", ")}`);
   await shot(page, "welcome-light-desktop");
+
+  // -- sign-in page, signed out
+  const signInPage = await light.newPage();
+  await signInPage.goto(`${webUrl}/sign-in`, { waitUntil: "domcontentloaded", timeout: 120_000 });
+  await settle(signInPage);
+  await expectCustomerCopy(signInPage, "/sign-in", { developerNotes: true });
+  await signInPage.close();
 
   // -- the one-click demo sign-in → signed in
   const signIn = page.getByRole("button", { name: /sign in with the demo account/i });
@@ -411,16 +633,46 @@ async function browserChecks(
     );
   }
   timings["browser: demo sign-in"] = Date.now() - signInStarted;
-  await expectBrand(page, "/welcome (signed in)");
+  await expectCustomerCopy(page, "/welcome (signed in)");
+  const nav = await page.getByRole("navigation", { name: "Product" }).innerText();
+  if (/Startup\s?OS/i.test(nav)) {
+    throw new GateError("app nav", `the signed-in navigation offers Nebutra's product: ${nav}`);
+  }
   await shot(page, "signed-in-desktop");
 
-  // -- settings, signed in
+  // -- settings, signed in: the demo account's own details, every tab customer copy
   await page.getByRole("link", { name: /open your workspace/i }).click();
   await page.waitForURL(/\/settings/, { timeout: 30_000 });
   await page.getByRole("heading", { name: "Settings" }).waitFor({ timeout: 30_000 });
   await settle(page);
-  await expectBrand(page, "/settings");
-  await shot(page, "settings-desktop");
+  try {
+    await page.getByText(DEMO_EMAIL).first().waitFor({ timeout: 30_000 });
+  } catch {
+    throw new GateError("settings", `the profile does not show the signed-in email ${DEMO_EMAIL}`);
+  }
+  await expectCustomerCopy(page, "/settings (profile)", { developerNotes: true });
+  const devtools = await page.evaluate(
+    () => document.querySelectorAll('[class*="tsqd"], .TanStackRouterDevtools').length,
+  );
+  if (devtools > 0) {
+    throw new GateError("settings", "a developer tools widget floats over the product app");
+  }
+  await shot(page, "settings-profile-desktop");
+  const tabs = page.getByRole("tab");
+  const tabCount = await tabs.count();
+  for (let i = 0; i < tabCount; i++) {
+    const tab = tabs.nth(i);
+    const name = (await tab.innerText()).trim();
+    await tab.click();
+    await page.waitForTimeout(600);
+    await settle(page);
+    await expectCustomerCopy(page, `/settings (${name})`, { developerNotes: true });
+  }
+  for (const route of ["/billing", "/startup-os"]) {
+    await page.goto(`${webUrl}${route}`, { waitUntil: "domcontentloaded", timeout: 60_000 });
+    await settle(page);
+    await expectCustomerCopy(page, route, { developerNotes: true });
+  }
   await light.close();
 
   // -- welcome, dark, desktop
@@ -457,43 +709,134 @@ async function browserChecks(
   await shot(mobilePage, "welcome-mobile");
   await mobile.close();
 
-  // -- the site: server-rendered HTML with real text, then a rendered look
-  if (siteUrl) {
-    const started = Date.now();
-    const response = await fetch(`${siteUrl}/`, { signal: AbortSignal.timeout(180_000) });
-    const html = await response.text();
-    timings["site: / server HTML"] = Date.now() - started;
-    if (!response.ok) throw new GateError("site", `the site's / answered ${response.status}`);
-    const text = html
-      .replace(/<script[\s\S]*?<\/script>/gi, " ")
-      .replace(/<style[\s\S]*?<\/style>/gi, " ")
-      .replace(/<[^>]+>/g, " ")
-      .replace(/&[a-z#0-9]+;/gi, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-    if (!/<h1[\s>]/i.test(html) || text.length < 400) {
-      throw new GateError(
-        "site",
-        `the site's / has no server-rendered content (${text.length} chars of text)`,
-      );
-    }
-    if (!text.includes(BRAND)) {
-      throw new GateError("site", `the site's server HTML does not name "${BRAND}"`);
-    }
-    const site = await browser.newContext({ viewport: desktop, colorScheme: "light" });
-    const siteWatch = watch(site, origins);
-    const sitePage = await site.newPage();
-    await sitePage.goto(`${siteUrl}/`, { waitUntil: "domcontentloaded", timeout: 180_000 });
-    await settle(sitePage);
-    await expectBrand(sitePage, "the site's /");
-    await shot(sitePage, "site-desktop");
-    await site.close();
-    lightWatch.problems.push(...siteWatch.problems);
-  } else {
-    throw new GateError("site", "pnpm dev did not print the site's URL");
+  // -- the site: server-rendered HTML with real text, then every page it serves
+  if (!siteUrl) throw new GateError("site", "pnpm dev did not print the site's URL");
+  const started = Date.now();
+  const response = await fetch(`${siteUrl}/`, { signal: AbortSignal.timeout(180_000) });
+  const html = await response.text();
+  timings["site: / server HTML"] = Date.now() - started;
+  if (!response.ok) throw new GateError("site", `the site's / answered ${response.status}`);
+  const serverText = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&[a-z#0-9]+;/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!/<h1[\s>]/i.test(html) || serverText.length < 400) {
+    throw new GateError(
+      "site",
+      `the site's / has no server-rendered content (${serverText.length} chars of text)`,
+    );
+  }
+  if (!serverText.includes(BRAND)) {
+    throw new GateError("site", `the site's server HTML does not name "${BRAND}"`);
   }
 
-  const problems = [...lightWatch.problems, ...darkWatch.problems, ...mobileWatch.problems];
+  const site = await browser.newContext({ viewport: desktop, colorScheme: "light" });
+  const siteWatch = watch(site, origins);
+  const sitePage = await site.newPage();
+  watchForeignMedia(sitePage, foreignMedia);
+  const crawlStarted = Date.now();
+
+  // The template's pages, as site-map.ts marks them; a dynamic route is
+  // visited through the first link to it the other pages show.
+  const templatePages = SITE_MAP.filter((p) => p.template && p.status === "live");
+  const staticPaths = templatePages.filter((p) => !p.path.includes("[")).map((p) => p.path);
+  const dynamic = templatePages
+    .filter((p) => p.path.includes("["))
+    .map((p) => ({
+      path: p.path,
+      re: new RegExp(`^${p.path.replace(/\[[^\]]+\]/g, "[^/]+")}/?$`),
+      found: null as string | null,
+    }));
+  const queue = [...staticPaths, "/zh-Hans", "/zh-Hans/pricing"];
+  const visited: string[] = [];
+  for (let i = 0; i < queue.length; i++) {
+    const route = queue[i] as string;
+    const res = await sitePage.goto(`${siteUrl}${route}`, {
+      waitUntil: "domcontentloaded",
+      timeout: 180_000,
+    });
+    if (!res || res.status() >= 400) {
+      throw new GateError("site", `the site's ${route} answered ${res?.status() ?? "nothing"}`);
+    }
+    await settle(sitePage);
+    await expectCustomerCopy(sitePage, `the site's ${route}`);
+    visited.push(route);
+    const hrefs = await sitePage.evaluate(() =>
+      Array.from(document.querySelectorAll("a[href]")).map((a) => a.getAttribute("href") ?? ""),
+    );
+    for (const d of dynamic) {
+      if (d.found) continue;
+      const hit = hrefs.find((h) => h.startsWith("/") && d.re.test(h.split(/[?#]/)[0] ?? ""));
+      if (hit) {
+        d.found = hit;
+        queue.push(hit);
+      }
+    }
+    if (route === "/") {
+      const siteIcons = await expectBrandIcons(sitePage, siteUrl, "the site");
+      log(`icons (site): ${siteIcons.join(", ")}`);
+      await dismissCookieBanner(sitePage);
+      await sitePage.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await sitePage.waitForTimeout(800);
+      await sitePage.evaluate(() => window.scrollTo(0, 0));
+      await shot(sitePage, "site-desktop");
+      const pricing = sitePage.locator("#pricing");
+      await pricing.scrollIntoViewIfNeeded();
+      await sitePage.waitForTimeout(600);
+      const file = path.join(outDir, "site-pricing.png");
+      await pricing.screenshot({ path: file });
+      shots.push(file);
+    }
+  }
+  timings["site: every template page"] = Date.now() - crawlStarted;
+  log(`site pages checked: ${visited.join(" ")}`);
+  const unvisited = dynamic.filter((d) => !d.found).map((d) => d.path);
+  if (unvisited.length > 0) log(`site: no link to ${unvisited.join(", ")} on the pages above`);
+  await site.close();
+
+  // -- the site on a phone
+  const siteMobile = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    deviceScaleFactor: 2,
+    isMobile: true,
+    hasTouch: true,
+    colorScheme: "light",
+  });
+  const siteMobileWatch = watch(siteMobile, origins);
+  const siteMobilePage = await siteMobile.newPage();
+  watchForeignMedia(siteMobilePage, foreignMedia);
+  await siteMobilePage.goto(`${siteUrl}/`, { waitUntil: "domcontentloaded", timeout: 120_000 });
+  await settle(siteMobilePage);
+  const siteOverflow = await siteMobilePage.evaluate(
+    () => document.documentElement.scrollWidth - window.innerWidth,
+  );
+  if (siteOverflow > 1) {
+    throw new GateError("site", `the site on a phone scrolls sideways by ${siteOverflow}px`);
+  }
+  await dismissCookieBanner(siteMobilePage);
+  await siteMobilePage.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await siteMobilePage.waitForTimeout(800);
+  await siteMobilePage.evaluate(() => window.scrollTo(0, 0));
+  await shot(siteMobilePage, "site-mobile");
+  await siteMobile.close();
+
+  if (foreignMedia.size > 0) {
+    throw new GateError(
+      "third-party media",
+      `pages load images or media from other hosts:\n  ${[...foreignMedia].slice(0, 15).join("\n  ")}`,
+    );
+  }
+
+  const problems = [
+    ...lightWatch.problems,
+    ...darkWatch.problems,
+    ...mobileWatch.problems,
+    ...siteWatch.problems,
+    ...siteMobileWatch.problems,
+  ];
   if (problems.length > 0) {
     throw new GateError(
       "browser",
@@ -513,6 +856,24 @@ async function main(): Promise<void> {
   fs.rmSync(outDir, { recursive: true, force: true });
   const logs = path.join(outDir, "logs");
   fs.mkdirSync(logs, { recursive: true });
+
+  if (args.attach) {
+    const { chromium } = await import("playwright");
+    const browser = await chromium.launch();
+    try {
+      const shots = await browserChecks(browser, args.attach[0], args.attach[1], outDir);
+      process.stdout.write(`\n✓ browser checks OK\n    ${shots.join("\n    ")}\n`);
+    } catch (error) {
+      const step = error instanceof GateError ? error.step : "unexpected";
+      process.stderr.write(
+        `\n✘ browser checks FAILED at "${step}": ${String((error as Error).message)}\n`,
+      );
+      process.exitCode = 1;
+    } finally {
+      await browser.close();
+    }
+    return;
+  }
 
   // realpath: macOS's tmpdir is a symlink, and the process scan in teardown
   // matches the path the children actually run under.
