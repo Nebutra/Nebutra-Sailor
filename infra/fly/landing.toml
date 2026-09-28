@@ -9,6 +9,10 @@ primary_region = "sin"
   # smoke and the Cloudflare 525 preflight both hit that host, so it has to be
   # listed. Setting the variable also turns off the loopback soft mode.
   ALLOWED_HOSTS = "nebutra-landing.fly.dev"
+  # Status page mail (@nebutra/status). Probe alerts go to the operator; the
+  # sender needs the domain verified in Resend (RESEND_API_KEY is a secret).
+  STATUS_ALERT_EMAILS = "tseka@nebutra.com"
+  EMAIL_FROM = "Nebutra Status <status@nebutra.com>"
 
 [http_service]
   internal_port = 8080

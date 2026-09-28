@@ -40,6 +40,7 @@
     "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/license": "workspace:*",
+    "@nebutra/email": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/status": "workspace:*",
     "@nebutra/marketing": "workspace:*",

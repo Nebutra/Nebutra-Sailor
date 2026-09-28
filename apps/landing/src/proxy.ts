@@ -224,7 +224,7 @@ export default function proxy(request: NextRequest): NextResponse {
   } else if (host === STATUS_HOST) {
     // Status sub-pages live at the host root too: status.<domain>/incidents/<id>
     // is the address a chat card links to, not /status/incidents/<id>.
-    const match = /^(\/[A-Za-z-]+)?\/(incidents\/[^/]+|history)$/.exec(pathname);
+    const match = /^(\/[A-Za-z-]+)?\/(incidents\/[^/]+|history|subscription)$/.exec(pathname);
     const prefix = match?.[1];
     const localePrefix = prefix && routing.locales.some((l) => prefix === `/${l}`) ? prefix : "";
     if (match && (!prefix || localePrefix)) {

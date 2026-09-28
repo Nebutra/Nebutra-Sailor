@@ -1,6 +1,11 @@
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
-import { buildStatusSnapshot, type ServiceTarget, type StatusSnapshot } from "@nebutra/status";
+import {
+  buildStatusSnapshot,
+  type ServiceTarget,
+  type StatusSnapshot,
+  sendAlerts,
+} from "@nebutra/status";
 import { env } from "@/lib/env";
 
 export type { ServiceProbe, ServiceState, StatusSnapshot } from "@nebutra/status";
@@ -57,6 +62,10 @@ export function getStatusSnapshot(): Promise<StatusSnapshot> {
   return buildStatusSnapshot(getServiceTargets(), {
     userAgent: `${brand.name}-Status/1.0`,
     concurrency: STATUS_PROBE_CONCURRENCY,
+    onStateChange: async (changes) => {
+      const { statusMailContext } = await import("./status-mail");
+      await sendAlerts(statusMailContext(), changes);
+    },
   });
 }
 
