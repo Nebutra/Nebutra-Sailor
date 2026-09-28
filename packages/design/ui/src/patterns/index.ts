@@ -78,6 +78,12 @@ export {
 // primitives + sibling MarkdownEditor / MarkdownRenderer / VoteButtons /
 // UserInfo pieces.
 
+// ConsentCard — the cookie/consent prompt as a corner card, not a page-wide bar
+export {
+  ConsentCard,
+  type ConsentCardAction,
+  type ConsentCardProps,
+} from "./consent-card";
 // DataTable — TanStack table with toolbar, faceted filters, column visibility, virtualization
 export {
   createDataTableTranslator,

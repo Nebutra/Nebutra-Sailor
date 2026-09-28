@@ -620,6 +620,15 @@ export const CATALOG: readonly CatalogEntry[] = [
     demos: ["pagination-demo"],
   },
   {
+    id: "consent-card",
+    title: "Consent Card",
+    category: "feedback",
+    status: "stable",
+    import: "@nebutra/ui/patterns",
+    files: ["patterns/consent-card.tsx"],
+    demos: ["consent-card-demo"],
+  },
+  {
     id: "sidebar-nav",
     title: "Sidebar Nav",
     category: "navigation",

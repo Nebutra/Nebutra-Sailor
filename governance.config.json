@@ -1878,10 +1878,6 @@
         "count": 2
       },
       {
-        "file": "apps/landing/src/components/cookie-consent-banner.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/landing/src/components/landing/blog-comments.tsx",
         "count": 2
       },
