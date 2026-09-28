@@ -90,7 +90,6 @@ import { OpenAI, Search, Settings } from "@nebutra/ui/icons";
 | `@nebutra/ui` | Theme bridge plus selected common icon exports |
 | `@nebutra/ui/components` | Nebutra components, chat input/list surfaces, animation helpers, AI prompt box, node graph canvas, and product widgets |
 | `@nebutra/ui/layout` | App shell, page header, status, section, and empty/loading/error states |
-| `@nebutra/ui/layouts` | Section container, themed section, and bento grid layouts |
 | `@nebutra/ui/icons` | Lobe, Lucide, and Nebutra icon exports |
 | `@nebutra/ui/theme` | `NebutraThemeProvider` and compatibility theme bridge types |
 | `@nebutra/ui/primitives` | Low-level UI primitives and visual building blocks |

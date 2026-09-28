@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { ArrowUpRight, Envelope, Rss } from "@nebutra/icons";
 import Link from "next/link";
 import type { ComponentType } from "react";
@@ -20,8 +21,8 @@ export function NewsroomHero({ contactHref, rssHref, isZh }: NewsroomHeroProps) 
   const rows: InquiryRow[] = [
     {
       label: isZh ? "媒体垂询" : "Press inquiries",
-      value: "contact@nebutra.com",
-      href: "mailto:contact@nebutra.com",
+      value: `contact@${brand.domains.landing}`,
+      href: `mailto:contact@${brand.domains.landing}`,
       icon: Envelope,
       external: true,
     },

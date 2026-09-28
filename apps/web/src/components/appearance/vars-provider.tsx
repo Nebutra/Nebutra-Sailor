@@ -1,27 +1,18 @@
 "use client";
 
-import { withRegistryFont } from "@nebutra/fonts";
 import { useEffect } from "react";
-
-import {
-  accentRingChannels,
-  CODE_FONT_STACKS,
-  isFactoryLanguageId,
-  UI_FONT_STACKS,
-  useAppearance,
-  useAppearanceStore,
-} from "./store";
+import { useAppearance, useAppearanceStore } from "./store";
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
 /**
- * Applies Appearance store → DOM:
- *   - user overrides (--user-*, the accent's --ring, the motion-reduce class)
- *   - design language / DESIGN.md import via Brand Package carrier only
- *     (applyLanguage / applyImportedBrandPackage → inject skin + data-brand)
+ * Applies the viewer's Appearance preferences to the DOM: font sizes
+ * (--user-*), and the cursor, smoothing, diff-marker and motion-reduce classes.
  *
- * Light/dark is owned by @nebutra/tokens ThemeProvider (class="dark").
- * Dual-mode Brand Packages emit separate light/dark CSS blocks; no canvas HSL probe.
+ * The product's look — design language, colours, fonts — is not a viewer
+ * setting. It is chosen in Sailor Studio and applied to the project
+ * (ADR 2026-09-27 Sailor Studio). Light/dark is owned by @nebutra/tokens
+ * ThemeProvider (class="dark").
  */
 export default function AppearanceVarsProvider(): null {
   const [state] = useAppearance();
@@ -51,37 +42,6 @@ export default function AppearanceVarsProvider(): null {
       root.style.setProperty("--user-code-font-size", `${state.codeFontSize}px`);
     }
 
-    if (state.backgroundColor) {
-      root.style.setProperty("--user-background", state.backgroundColor);
-    } else {
-      root.style.removeProperty("--user-background");
-    }
-
-    if (state.foregroundColor) {
-      root.style.setProperty("--user-foreground", state.foregroundColor);
-    } else {
-      root.style.removeProperty("--user-foreground");
-    }
-
-    // "theme" defers to the active theme/DESIGN font (--font-sans / --font-mono):
-    // we REMOVE the user override so the theme value drives the UI. An explicit
-    // family pins its own stack on top, winning over the theme.
-    if (state.uiFontFamily === "theme") {
-      root.style.removeProperty("--user-ui-font");
-    } else {
-      const stack = UI_FONT_STACKS[state.uiFontFamily];
-      root.style.setProperty("--user-ui-font", withRegistryFont(stack) ?? stack);
-    }
-    if (state.codeFontFamily === "theme") {
-      root.style.removeProperty("--user-code-font");
-    } else {
-      const stack = CODE_FONT_STACKS[state.codeFontFamily];
-      root.style.setProperty("--user-code-font", withRegistryFont(stack) ?? stack);
-    }
-    const ring = accentRingChannels(state.accent);
-    if (ring) root.style.setProperty("--ring", ring);
-    else root.style.removeProperty("--ring");
-    root.classList.toggle("surface-translucent", state.transparency);
     root.classList.toggle("cursor-pointer-interactive", state.pointerCursor);
     root.classList.toggle("font-smoothing-mac", state.fontSmoothing);
     root.classList.toggle("diff-markers-plusminus", state.diffMarkers === "plusminus");
@@ -89,54 +49,9 @@ export default function AppearanceVarsProvider(): null {
     const prefersReduced =
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
     // "Reduce motion: On" reduces; "System" follows the OS.
     root.classList.toggle("motion-reduce", state.motion === "on" || prefersReduced);
   }, [state]);
-
-  // Apply design language (Brand Package carrier) or imported DESIGN.md.
-  // Precedence: importedTheme > design language > factory (tokens SSOT).
-  // Carrier only — no partial --color-* / canvas HSL dual path.
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-
-    // ── Branch 1: DESIGN.md import → Brand Package carrier only ──────────────
-    if (state.importedTheme) {
-      const snapshot = state.importedTheme;
-      let cancelled = false;
-      void import("./apply-imported-brand").then(({ applyImportedBrandPackage }) => {
-        if (cancelled) return;
-        const carrier = applyImportedBrandPackage(snapshot.name, snapshot.tokenSet);
-        if (carrier.ok) return;
-        // Carrier failed: restore factory SSOT
-        void import("@nebutra/theme/client").then((m) => {
-          if (!cancelled) m.clearLanguage();
-        });
-      });
-      return () => {
-        cancelled = true;
-      };
-    }
-
-    // ── Branch 2: catalog design language ────────────────────────────────────
-    let cancelled = false;
-    void import("@nebutra/theme/client").then(({ applyLanguage, clearLanguage }) => {
-      if (cancelled) return;
-      if (isFactoryLanguageId(state.theme)) {
-        clearLanguage();
-        return;
-      }
-      try {
-        applyLanguage(state.theme);
-      } catch {
-        clearLanguage();
-      }
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [state.importedTheme, state.theme]);
 
   useEffect(() => {
     if (state.motion !== "system" || typeof window === "undefined") return;

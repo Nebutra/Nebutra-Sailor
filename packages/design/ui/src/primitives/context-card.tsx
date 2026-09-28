@@ -5,6 +5,7 @@ import * as React from "react";
 import { type ContextCardWidth, contextCardTokens } from "../tokens/components/context-card";
 import { overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { rendersNativeButton } from "../utils/native-button";
 
 // =============================================================================
 // Types
@@ -154,12 +155,18 @@ const ContextCardTrigger = ({
 
   const triggerElement = React.isValidElement(children) ? children : <span>{children}</span>;
   const renderTrigger = triggerElement as React.ReactElement<Record<string, unknown>>;
+  // Tell Base UI what it is rendering. A native <button> keeps its own
+  // semantics; anything else (<time>, <span>, a custom component) gets
+  // role="button" and a tab stop from Base UI instead of a console warning and
+  // an element that looks interactive but is not announced as one.
+  const nativeButton = rendersNativeButton(triggerElement);
 
   return (
     <BasePopover.Root open={open} onOpenChange={setOpen}>
       <BasePopover.Trigger
         ref={composeRefs(triggerRef, forwardedRef)}
         render={renderTrigger}
+        nativeButton={nativeButton}
         onMouseEnter={scheduleOpen}
         onMouseLeave={scheduleClose}
         onFocus={scheduleOpen}

@@ -1,8 +1,7 @@
 /**
  * Pagination Component Tokens — Layer 3
  *
- * Sibling-page navigation for docs/blog/onboarding flows. Dataset paging stays
- * in PaginationControl.
+ * Sibling-page navigation for docs/blog/onboarding flows.
  */
 
 import {

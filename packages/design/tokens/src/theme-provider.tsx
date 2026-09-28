@@ -29,6 +29,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { PROJECT_THEME } from "./project.generated";
 
 type Theme = "light" | "dark" | "system";
 type ResolvedTheme = "light" | "dark";
@@ -148,11 +149,18 @@ export interface ThemeProviderProps {
   children: ReactNode;
   /** Which DOM attribute to set on `<html>`. Default: `"class"`. */
   attribute?: "class" | "data-theme";
-  /** Default theme when no preference is stored. Default: `"system"`. */
+  /**
+   * Default theme when no preference is stored. Default: the project's
+   * (`PROJECT_THEME.defaultMode`, set by its preset) — `"system"` for factory.
+   */
   defaultTheme?: Theme;
   /** Whether `"system"` is a valid theme that tracks `prefers-color-scheme`. */
   enableSystem?: boolean;
-  /** Lock the rendered theme and expose read-only state to controls. */
+  /**
+   * Lock the rendered theme and expose read-only state to controls. Default:
+   * the project's (`PROJECT_THEME.forcedMode`) — set when its language has one
+   * palette, so the other mode cannot fall through to the House tokens.
+   */
   forcedTheme?: Theme | undefined;
   /** Suppress CSS transitions during the swap. Default: `true`. */
   disableTransitionOnChange?: boolean;
@@ -165,9 +173,9 @@ export interface ThemeProviderProps {
 export function ThemeProvider({
   children,
   attribute = "class",
-  defaultTheme = "system",
+  defaultTheme = PROJECT_THEME.defaultMode,
   enableSystem = true,
-  forcedTheme,
+  forcedTheme = PROJECT_THEME.forcedMode,
   disableTransitionOnChange = true,
   storageKey = THEME_STORAGE_KEY,
   nonce,

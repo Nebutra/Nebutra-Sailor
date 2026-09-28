@@ -131,8 +131,8 @@
     "columns": {
       "product": "Produkt",
       "resources": "Zasoby",
-      "legal": "Prawne",
-      "community": "Społeczność"
+      "company": "Firma",
+      "legal": "Prawne"
     },
     "links": {
       "product": "Produkt",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Wszelkie prawa zastrzeżone.",
+    "copyright": "© 2026 {companyLegalEn} · Wszelkie prawa zastrzeżone.",
     "fontCredit": "Chiński krój pisma: MiSans (Xiaomi)",
     "statusOnline": "Wszystkie systemy działają",
     "newsletterTitle": "Bądź na bieżąco",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "STRUKTURA TURBOREPO",
-    "title": "10 aplikacji. 112 pakiety. 4 tory backendowe.",
+    "title": "10 aplikacji. 111 pakietów. 4 tory backendowe.",
     "description": "Wspólny kod, równoległe budowanie, zero duplikacji. Pełne typowanie od bazy danych po frontend.",
     "metricApps": "aplikacje",
     "metricBackends": "korytarze backendowe",
@@ -243,7 +243,7 @@
       "ctaButton": "Nawiąż kontakt"
     },
     "contact": {
-      "title": "Zapytanie techniczne i komercyjne — {brandName} Intelligence",
+      "title": "Zapytanie techniczne i komercyjne — {brandName}",
       "description": "Dedykowany kanał komunikacji dotyczący licencjonowania komercyjnego, samodzielnego hostowania dla przedsiębiorstw oraz zaawansowanego wsparcia technicznego.",
       "heading": "Nawiąż połączenie wsparcia",
       "subheading": "Wyślemy dedykowanego specjalistę technicznego lub architekta, który oceni Twoje wyraźne wymagania.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Możesz skontaktować się z naszym Inspektorem Ochrony Danych pod adresem dpo@nebutra.com."
+            "desc": "Możesz skontaktować się z naszym Inspektorem Ochrony Danych pod adresem dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Jak złożyć wniosek o zwrot",
         "step1": {
           "title": "Krok 1: Skontaktuj się z pomocą techniczną",
-          "intro": "Wyślij e-mail na adres billing@nebutra.com z informacjami:",
+          "intro": "Wyślij e-mail na adres billing@{domain} z informacjami:",
           "items": {
             "0": "Adres e-mail Twojego konta",
             "1": "Plan subskrypcji i okres rozliczeniowy",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Odpowiedz na e-mail z decyzją, dodając dodatkowe informacje",
           "1": "Złóż wniosek o eskalację do przełożonego",
-          "2": "Skontaktuj się z nami pod adresem legal@nebutra.com w celu dalszego rozpatrzenia"
+          "2": "Skontaktuj się z nami pod adresem legal@{domain} w celu dalszego rozpatrzenia"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Rozwiązywanie sporów",
         "informal": {
           "title": "10.1 Rozwiązanie nieformalne",
-          "content": "Zanim rozpoczniesz formalne postępowanie, zgadzasz się skontaktować z nami pod adresem legal@nebutra.com, aby spróbować rozwiązać spór w sposób nieformalny."
+          "content": "Zanim rozpoczniesz formalne postępowanie, zgadzasz się skontaktować z nami pod adresem legal@{domain}, aby spróbować rozwiązać spór w sposób nieformalny."
         },
         "governingLaw": {
           "title": "10.2 Prawo właściwe",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Zacznij",
       "title": "Koniec z konfiguracją. Czas na budowanie.",
       "description": "Zainicjuj skalowalną architekturę SaaS lokalnie za pomocą CLI {brandName}.",
-      "button": "Wdróż architekturę",
       "license": "Open source na licencji FSL-1.1-ALv2. Bez karty kredytowej."
     },
     "capability": {

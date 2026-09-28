@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
+import { FinalCTA } from "@/components/landing";
 import { SolutionsIndex } from "@/components/landing/solutions/SolutionsIndex";
 import { type Locale, routing } from "@/i18n/routing";
 import { isZhUiLocale } from "@/lib/i18n/localized";
@@ -36,11 +36,10 @@ export default async function SolutionsPage({ params }: { params: Promise<{ lang
   return (
     <main
       id="main-content"
-      className="relative min-h-dvh overflow-hidden bg-background selection:bg-primary/30"
+      className="relative flex-1 overflow-hidden bg-background selection:bg-primary/30"
     >
-      <Navbar />
       <SolutionsIndex locale={lang as Locale} />
-      <FooterMinimal showFinalCta />
+      <FinalCTA />
     </main>
   );
 }

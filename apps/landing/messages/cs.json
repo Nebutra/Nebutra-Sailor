@@ -131,8 +131,8 @@
     "columns": {
       "product": "Produkt",
       "resources": "Zdroje",
-      "legal": "Právní",
-      "community": "Komunita"
+      "company": "Společnost",
+      "legal": "Právní"
     },
     "links": {
       "product": "Produkt",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Všechna práva vyhrazena.",
+    "copyright": "© 2026 {companyLegalEn} · Všechna práva vyhrazena.",
     "fontCredit": "Čínské písmo: MiSans (Xiaomi)",
     "statusOnline": "Všechny systémy fungují",
     "newsletterTitle": "Zůstaňte informováni",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "STRUKTURA TURBOREPO",
-    "title": "10 aplikací. 112 balíčků. 4 backendové dráhy.",
+    "title": "10 aplikací. 111 balíčků. 4 backendové dráhy.",
     "description": "Sdílený kód, paralelní sestavování, žádná duplicita. Kompletní typování od databáze až po frontend.",
     "metricApps": "aplikace",
     "metricBackends": "backendové dráhy",
@@ -243,7 +243,7 @@
       "ctaButton": "Navázat kontakt"
     },
     "contact": {
-      "title": "Technický a obchodní dotaz — {brandName} Intelligence",
+      "title": "Technický a obchodní dotaz — {brandName}",
       "description": "Věcný komunikační kanál pro obchodní licencování, podnikové self-hosting a pokročilou technickou podporu.",
       "heading": "Navázat spojení podpory",
       "subheading": "Zašleme vám vyhrazeného technického specialistu nebo architekta k posouzení vašich explicitních požadavků.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Můžete kontaktovat našeho správce ochrany osobních údajů na adrese dpo@nebutra.com."
+            "desc": "Můžete kontaktovat našeho správce ochrany osobních údajů na adrese dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Jak požádat o vrácení peněz",
         "step1": {
           "title": "Krok 1: Kontaktujte podporu",
-          "intro": "Napište nám na billing@nebutra.com s těmito údaji:",
+          "intro": "Napište nám na billing@{domain} s těmito údaji:",
           "items": {
             "0": "E-mailová adresa vašeho účtu",
             "1": "Plán předplatného a fakturační období",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Odpovězte na e-mail s rozhodnutím a přidejte další informace",
           "1": "Požádejte o eskalaci na vedoucího",
-          "2": "Kontaktujte nás na adrese legal@nebutra.com pro další přezkum"
+          "2": "Kontaktujte nás na adrese legal@{domain} pro další přezkum"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Řešení sporů",
         "informal": {
           "title": "10.1 Neformální řešení",
-          "content": "Před zahájením formálního řízení souhlasíte s tím, že nás kontaktujete na adrese legal@nebutra.com, abyste se pokusili spory vyřešit neformálně."
+          "content": "Před zahájením formálního řízení souhlasíte s tím, že nás kontaktujete na adrese legal@{domain}, abyste se pokusili spory vyřešit neformálně."
         },
         "governingLaw": {
           "title": "10.2 Řídicí právo",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Začněte",
       "title": "Přestaňte konfigurovat. Začněte budovat.",
       "description": "Inicializujte škálovatelnou SaaS architekturu lokálně pomocí CLI {brandName}.",
-      "button": "Nasadit architekturu",
       "license": "Open source pod licencí FSL-1.1-ALv2. Karta není vyžadována."
     },
     "capability": {

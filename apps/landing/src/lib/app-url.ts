@@ -1,4 +1,5 @@
 import { env } from "@/lib/env";
+import { belongsHere } from "@/site-map";
 
 type QueryValue = string | null | undefined;
 
@@ -30,4 +31,13 @@ export function createAppSignUpUrl(
   appUrl: string = env.NEXT_PUBLIC_APP_URL,
 ): string {
   return createAppUrl("/sign-up", { returnUrl }, appUrl);
+}
+
+/**
+ * Where "get started" leads. On the Nebutra site that is the Sailor licence flow;
+ * the template does not ship /get-license, so there it is the app's sign-up.
+ * site-map.ts decides which pages exist — this only asks it.
+ */
+export function getStartedHref(): string {
+  return belongsHere({ href: "/get-license" }) ? "/get-license" : createAppSignUpUrl();
 }

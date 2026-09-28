@@ -74,7 +74,7 @@ export const env = createEnv({
     NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["better-auth", "dev"]).default("better-auth"),
 
     // Sanity CMS
-    NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().default("wyfqr24v"),
+    NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().default(""),
     NEXT_PUBLIC_SANITY_DATASET: z.string().default("production"),
     NEXT_PUBLIC_SANITY_API_VERSION: z.string().default("2024-01-01"),
 

@@ -43,15 +43,16 @@ export const LANGUAGES: DesignLanguageEntry[] = [
   ...LANGUAGE_REGISTRY.languages.filter((l) => l.id !== "factory"),
 ];
 
-function readStored(): string {
-  if (typeof window === "undefined") return "factory";
+/** The language this visitor chose in this tab, or null when they chose none. */
+function readStored(): string | null {
+  if (typeof window === "undefined") return null;
   try {
     const value = sessionStorage.getItem(STORAGE_KEY);
     if (value && LANGUAGES.some((l) => l.id === value)) return value;
   } catch {
     /* private mode */
   }
-  return "factory";
+  return null;
 }
 
 /**
@@ -154,10 +155,18 @@ export function useDesignLanguage(): {
 
   React.useEffect(() => {
     const stored = readStored();
-    // No animation on restore: there is no previous language to move away from,
-    // and a page that fades into its own colours on load looks like a bug.
-    applyLanguageAttribute(stored, false);
-    setActive(stored);
+    if (stored) {
+      // No animation on restore: there is no previous language to move away from,
+      // and a page that fades into its own colours on load looks like a bug.
+      applyLanguageAttribute(stored, false);
+      setActive(stored);
+    } else {
+      // Nothing chosen: leave the page as the server rendered it. Writing
+      // "factory" here deleted a data-brand the page set on purpose — a site's
+      // own Brand Package, or the Studio look on the preview site.
+      const current = document.documentElement.dataset.brand;
+      setActive(current && LANGUAGES.some((l) => l.id === current) ? current : "factory");
+    }
     setReady(true);
 
     const onChange = (event: Event) => setActive((event as CustomEvent<string>).detail);

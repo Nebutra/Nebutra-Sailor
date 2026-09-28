@@ -22,7 +22,7 @@ export const MARKETING_GSAP_SELECTORS = {
   scrub: "[data-gsap-scrub]",
 } as const;
 
-export const marketingMotion = {
+const marketingMotion = {
   duration: {
     micro: 0.16,
     quick: 0.32,
@@ -47,8 +47,6 @@ export const marketingMotion = {
     scrub: 0.8,
   },
 } as const;
-
-export type MarketingAnimationScope = { current: Element | null } | Element | string;
 
 let isRegistered = false;
 
@@ -80,47 +78,9 @@ export function prefersReducedMarketingMotion() {
   return window.matchMedia(MARKETING_MOTION_QUERIES.reduce).matches;
 }
 
-export function resolveMarketingAnimationScope(scope?: MarketingAnimationScope) {
-  if (typeof window === "undefined" || !scope) return null;
-  if (typeof scope === "string") return document.querySelector(scope);
-  if ("current" in scope) return scope.current;
-  return scope;
-}
-
-export function createMarketingTimeline(vars: gsap.TimelineVars = {}) {
-  registerMarketingGsap();
-
-  return gsap.timeline({
-    ...vars,
-    defaults: {
-      duration: marketingMotion.duration.standard,
-      ease: marketingMotion.ease.entrance,
-      ...vars.defaults,
-    },
-  });
-}
-
 export function createMarketingMatchMedia(scope?: Element | string) {
   registerMarketingGsap();
   return gsap.matchMedia(scope);
-}
-
-export function refreshMarketingScrollMotion() {
-  if (typeof window === "undefined") return;
-  registerMarketingGsap();
-  ScrollTrigger.refresh();
-}
-
-export function killMarketingScrollMotion(scope?: Element) {
-  registerMarketingGsap();
-
-  for (const trigger of ScrollTrigger.getAll()) {
-    const triggerElement = trigger.trigger;
-
-    if (!scope || (triggerElement instanceof Element && scope.contains(triggerElement))) {
-      trigger.kill();
-    }
-  }
 }
 
 export { gsap as marketingGsap, ScrollTrigger, useGSAP };

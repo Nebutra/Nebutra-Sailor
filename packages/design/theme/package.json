@@ -47,6 +47,7 @@
     "./keyframes.css": "./keyframes.css",
     "./themes.css": "./themes.css",
     "./skins.css": "./skins.css",
+    "./scoped/*": "./scoped/*",
     "./morph.css": "./morph.css",
     "./styles/sources.css": "./styles/sources.css"
   },
@@ -94,6 +95,7 @@
     "LICENSE",
     "CHANGELOG.md",
     "morph.css",
-    "styles"
+    "styles",
+    "scoped"
   ]
 }

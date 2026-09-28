@@ -131,8 +131,8 @@
     "columns": {
       "product": "Produk",
       "resources": "Sumber Daya",
-      "legal": "Legal",
-      "community": "Komunitas"
+      "company": "Perusahaan",
+      "legal": "Legal"
     },
     "links": {
       "product": "Produk",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Hak cipta dilindungi.",
+    "copyright": "© 2026 {companyLegalEn} · Hak cipta dilindungi.",
     "fontCredit": "Huruf Tionghoa: MiSans (Xiaomi)",
     "statusOnline": "Semua sistem beroperasi",
     "newsletterTitle": "Tetap dapatkan update",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "STRUKTUR TURBOREPO",
-    "title": "10 aplikasi. 112 paket. 4 jalur backend.",
+    "title": "10 aplikasi. 111 paket. 4 jalur backend.",
     "description": "Kode bersama, build paralel, tanpa duplikasi. Tiping end-to-end lengkap dari database hingga frontend.",
     "metricApps": "aplikasi",
     "metricBackends": "jalur backend",
@@ -243,7 +243,7 @@
       "ctaButton": "Hubungi Kami"
     },
     "contact": {
-      "title": "Pertanyaan Teknis & Komersial — {brandName} Intelligence",
+      "title": "Pertanyaan Teknis & Komersial — {brandName}",
       "description": "Saluran komunikasi khusus untuk lisensi komersial, self-hosting perusahaan, dan dukungan teknis lanjutan.",
       "heading": "Hubungkan Dukungan",
       "subheading": "Kami akan mengirimkan spesialis teknis atau arsitek khusus untuk mengevaluasi kebutuhan eksplisit Anda.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Anda dapat menghubungi Petugas Perlindungan Data kami di dpo@nebutra.com."
+            "desc": "Anda dapat menghubungi Petugas Perlindungan Data kami di dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Cara Meminta Pengembalian Dana",
         "step1": {
           "title": "Langkah 1: Hubungi Dukungan",
-          "intro": "Kirim email ke billing@nebutra.com dengan menyertakan:",
+          "intro": "Kirim email ke billing@{domain} dengan menyertakan:",
           "items": {
             "0": "Alamat email akun Anda",
             "1": "Rencana langganan dan periode penagihan",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Balas email keputusan dengan informasi tambahan",
           "1": "Minta eskalasi ke supervisor",
-          "2": "Hubungi kami di legal@nebutra.com untuk tinjauan lebih lanjut"
+          "2": "Hubungi kami di legal@{domain} untuk tinjauan lebih lanjut"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Penyelesaian Sengketa",
         "informal": {
           "title": "10.1 Penyelesaian Informal",
-          "content": "Sebelum memulai prosedur formal, Anda setuju untuk menghubungi kami di legal@nebutra.com untuk berupaya menyelesaikan sengketa secara informal."
+          "content": "Sebelum memulai prosedur formal, Anda setuju untuk menghubungi kami di legal@{domain} untuk berupaya menyelesaikan sengketa secara informal."
         },
         "governingLaw": {
           "title": "10.2 Hukum yang Berlaku",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Mulai Sekarang",
       "title": "Berhenti mengonfigurasi. Mulai membangun.",
       "description": "Inisialisasi arsitektur SaaS yang dapat diskalakan secara lokal dengan CLI {brandName}.",
-      "button": "Terapkan Arsitektur",
       "license": "Sumber terbuka di bawah lisensi FSL-1.1-ALv2. Tidak perlu kartu kredit."
     },
     "capability": {

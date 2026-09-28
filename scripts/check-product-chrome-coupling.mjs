@@ -17,14 +17,7 @@ const targets = [
   "apps/auth/src",
   "apps/idp/src",
 ];
-const skipDir = new Set([
-  "node_modules",
-  "__tests__",
-  "stories",
-  "theme-playground",
-  "dist",
-  ".next",
-]);
+const skipDir = new Set(["node_modules", "__tests__", "stories", "dist", ".next"]);
 const pattern =
   /\b(bg-blue-\d+|text-blue-\d+|border-blue-\d+|ring-blue-\d+|from-blue-\d+|to-blue-\d+|bg-blue-\d{3}|text-blue-\d{3}|border-blue-\d{3}|#0033[Ff][Ee]|#0[Bb][Ff]1[Cc]3)\b|var\(--blue-\d+\)|rgba\(59,\s*130,\s*246/g;
 

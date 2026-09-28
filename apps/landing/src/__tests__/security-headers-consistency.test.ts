@@ -23,10 +23,38 @@ describe("security header consistency (landing)", () => {
 
     // next.config securityHeaders entry
     expect(nextConfig).toMatch(/key:\s*"X-Frame-Options"[\s\S]*?value:\s*"DENY"/);
-    expect(nextConfig).not.toMatch(/X-Frame-Options"[\s\S]*?SAMEORIGIN/);
+    // SAMEORIGIN appears exactly once, on the rule for the one self-framed page.
+    expect(nextConfig.match(/"SAMEORIGIN"/g) ?? []).toHaveLength(1);
+    expect(nextConfig).toMatch(
+      /SELF_FRAMED_SOURCES\.map[\s\S]*?"X-Frame-Options", value: "SAMEORIGIN"/,
+    );
 
-    // proxy edge
+    // proxy edge — DENY, relaxed only for SELF_FRAMED_PAGE
     expect(proxy).toMatch(/X-Frame-Options["']?\s*,\s*["']DENY["']/);
+    expect(proxy.match(/"SAMEORIGIN"/g) ?? []).toHaveLength(1);
+    expect(proxy).toMatch(
+      /if \(SELF_FRAMED_PAGE\.test\(pathname\)\) response\.headers\.set\("X-Frame-Options", "SAMEORIGIN"\)/,
+    );
+  });
+
+  it("frames only Studio's catalog page, and only by its own origin", async () => {
+    const { SELF_FRAMED_PAGE } = await import("../lib/security/framing");
+    for (const path of [
+      "/sailor/studio/frame",
+      "/zh-Hans/sailor/studio/frame",
+      "/en/sailor/studio/frame",
+    ]) {
+      expect(SELF_FRAMED_PAGE.test(path), path).toBe(true);
+    }
+    for (const path of [
+      "/",
+      "/sailor/studio",
+      "/sailor/studio/frame/x",
+      "/blog/sailor/studio/frame",
+      "/evil/x/sailor/studio/frame",
+    ]) {
+      expect(SELF_FRAMED_PAGE.test(path), path).toBe(false);
+    }
   });
 
   it("does not set legacy X-XSS-Protection (G38)", () => {
@@ -37,8 +65,10 @@ describe("security header consistency (landing)", () => {
     expect(proxy).not.toContain("X-XSS-Protection");
   });
 
-  it("CSP frame-ancestors is none (matches X-Frame DENY)", () => {
+  it("CSP frame-ancestors is none (matches X-Frame DENY), 'self' only for the framed page", () => {
     const nextConfig = read("next.config.ts");
-    expect(nextConfig).toMatch(/frame-ancestors["']?\s*,\s*\[["']'none'["']\]/);
+    expect(nextConfig).toMatch(
+      /"frame-ancestors", framing\.framedBySelf \? \["'self'"\] : \["'none'"\]/,
+    );
   });
 });

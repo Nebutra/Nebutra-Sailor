@@ -45,6 +45,8 @@ export interface DescriptionProps {
   content: ReactNode;
   /** Optional one-sentence definition shown via a hover/focus tooltip on the info glyph. Sentence case, ends with a period. */
   tooltip?: ReactNode;
+  /** Accessible name of the info button. Pass a translated string; defaults to "About {title}". */
+  tooltipLabel?: string;
   className?: string;
 }
 
@@ -67,6 +69,7 @@ export const Description = function Description({
   title,
   content,
   tooltip,
+  tooltipLabel,
   className,
 }: DescriptionProps & { ref?: Ref<HTMLDListElement> | undefined }) {
   return (
@@ -75,7 +78,14 @@ export const Description = function Description({
         {title}
         {tooltip && (
           <ContextCard.Trigger content={tooltip} side="top" sideOffset={6}>
-            <Info aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
+            {/* A real button: the definition must be reachable by keyboard, not only by hover. */}
+            <button
+              type="button"
+              aria-label={tooltipLabel ?? `About ${title}`}
+              className="inline-grid size-4 shrink-0 place-items-center rounded-[var(--radius-sm)] text-muted-foreground transition-colors duration-micro hover:text-foreground"
+            >
+              <Info aria-hidden="true" className="size-3.5" />
+            </button>
           </ContextCard.Trigger>
         )}
       </dt>

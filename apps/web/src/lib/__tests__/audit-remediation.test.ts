@@ -12,9 +12,8 @@ describe("UI/UX audit remediation invariants", () => {
     const hero = readFromRepo("apps/landing/src/components/landing/HeroSection.tsx");
     const cta = readFromRepo("apps/landing/src/components/landing/FinalCTA.tsx");
     const navbar = readFromRepo("apps/landing/src/components/landing/Navbar.tsx");
-    const features = readFromRepo("apps/landing/src/components/landing/FeatureCards.tsx");
 
-    const critical = [hero, cta, navbar, features].join("\n");
+    const critical = [hero, cta, navbar].join("\n");
     expect(critical).not.toMatch(/indigo-\d+/);
   });
 
@@ -77,13 +76,19 @@ describe("UI/UX audit remediation invariants", () => {
     expect(twitterImage).toMatch(/Nebutra Sailor|Sailor/);
   });
 
+  // The Sailor marketing home is the template's home (page.for-template.tsx);
+  // the Nebutra site's own home at page.tsx is the Journal and loads no sections.
   it("enables lazy-loaded sections on the localized marketing page", () => {
-    const marketingPage = readFromRepo("apps/landing/src/app/[lang]/(marketing)/page.tsx");
+    const marketingPage = readFromRepo(
+      "apps/landing/src/app/[lang]/(marketing)/page.for-template.tsx",
+    );
     expect(marketingPage).toMatch(/dynamic\(/);
   });
 
   it("defines page-level marketing metadata on localized home route", () => {
-    const marketingPage = readFromRepo("apps/landing/src/app/[lang]/(marketing)/page.tsx");
+    const marketingPage = readFromRepo(
+      "apps/landing/src/app/[lang]/(marketing)/page.for-template.tsx",
+    );
 
     expect(marketingPage).toContain("export async function generateMetadata");
     expect(marketingPage).toContain('namespace: "metadata"');
@@ -155,9 +160,7 @@ describe("UI/UX audit remediation invariants", () => {
     const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
     const publicChrome = readFromRepo("apps/web/src/components/navigation/public-page-chrome.tsx");
     const demoEmbed = readFromRepo("apps/web/src/app/demo/embed/page.tsx");
-    const themePlayground = readFromRepo(
-      "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
-    );
+    const studio = readFromRepo("apps/landing/src/nebutra/studio/studio-workbench.tsx");
 
     expect(brandAssets).toContain('from "@nebutra/brand"');
     expect(brandAssets).toContain("LogomarkSVG");
@@ -176,10 +179,10 @@ describe("UI/UX audit remediation invariants", () => {
     expect(publicChrome).not.toContain('alt="Nebutra"');
     expect(demoEmbed).toContain("BrandLogo");
     expect(demoEmbed).not.toContain("Nebutra Sailor Dashboard");
-    expect(themePlayground).toContain("Token governance workbench");
-    expect(themePlayground).not.toContain("BrandLogo");
-    expect(themePlayground).not.toContain("ThemeBrandMark");
-    expect(themePlayground).not.toContain("function NebutraMark");
+    expect(studio).toContain("Sailor Studio");
+    expect(studio).not.toContain("BrandLogo");
+    expect(studio).not.toContain("ThemeBrandMark");
+    expect(studio).not.toContain("function NebutraMark");
   });
 
   it("keeps subscription plan status out of the dashboard header chrome", () => {
@@ -311,15 +314,6 @@ describe("UI/UX audit remediation invariants", () => {
     expect(link).toContain("startViewTransition");
     expect(globals).toContain("::view-transition-old(dashboard-content)");
     expect(globals).toContain("view-transition-name: dashboard-content");
-  });
-
-  it("adds container-query based responsive behavior for key landing sections", () => {
-    const globals = readFromRepo("apps/landing/src/app/globals.css");
-    const featureCards = readFromRepo("apps/landing/src/components/landing/FeatureCards.tsx");
-
-    expect(globals).toContain("@container feature-cards");
-    expect(featureCards).toContain("feature-cards-cq");
-    expect(featureCards).toContain("feature-cards-grid");
   });
 
   it("contains a token-sync verification script for CI guardrails", () => {

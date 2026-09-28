@@ -17,8 +17,8 @@ Nebutra-Sailor 被设计为完全可白标化。每一个视觉和结构元素�
   <Card title="引导流程" icon="map" href="/zh/customization/onboarding">
     添加、删除或重新排序引导步骤。自定义欢迎文案、各套餐的跳过逻辑，以及配置插图。
   </Card>
-  <Card title="组件库" icon="blocks" href="https://localhost:6006">
-    在 Storybook 中浏览所有组件，独立开发新组件，以及使用 CVA 变体扩展现有原语组件。
+  <Card title="组件库" icon="blocks" href="https://nebutra.com/sailor/studio">
+    在 Sailor Studio 中按你选定的外观浏览全部 188 个 `@nebutra/ui` 组件及其实时 demo，并用一条命令把任意 demo 加进项目。
   </Card>
 </CardGroup>
 
@@ -41,27 +41,29 @@ token 构建会据此重新生成（generated）`packages/design/tokens/styles.c
 
 ## 快速上手（5 分钟以内）
 
-### 更改品牌颜色
+### 在 Sailor Studio 里选定外观
+
+打开 [Sailor Studio](https://nebutra.com/sailor/studio)，从一种设计语言（Linear、Stripe、Vercel……）开始，再调旋钮：品牌色、中性色冷暖、圆角、密度、字体、标题字重、首次访问的明暗模式。预览就是整个组件目录——菜单、对话框、toast 都在内——可切换桌面和手机宽度。Studio 给出一个简短的 preset 代码，一条命令即可应用：
 
 ```bash
-# 将蓝色换为紫色，青色换为琥珀色，只需一条命令
-node scripts/generate-palette.mjs --primary=#7C3AED --secondary=#F59E0B
+# 新项目
+npx create-sailor@latest my-app --preset <code>
+
+# 已有项目——写入 packages/design/tokens/project/preset 并重建 token
+nebutra apply --preset <code>
+
+# 纯设计语言本身就是 preset；只改一组旋钮
+nebutra apply --preset vanta --only theme
 ```
 
-该脚本会推导出两条 11 阶色阶，并以 `brand.config.ts` 中 `colors` 块的形式打印出来。粘贴进去后运行 `pnpm brand:apply`：它会把色阶写入 token 源（`packages/design/design-tokens/tokens/core.json`），并重新生成下游的一切——`styles.css`、品牌元数据，以及 Storybook 和文档展示的数值。不存在叠加在上面的覆盖样式表；改的是源头，所以每个界面都一致。
+设计系统的其它部分不会被改动：preset 会在其基础语言之上解析为 `project.css`，所有应用在 House token 之后立即加载它，ThemeProvider 也从中读取默认明暗模式。Studio 表达不了的外观，写进 `packages/design/tokens/project/brand.json`（手写，优先于任何 preset）——这是声明过的逃生口，不是常规路径。
 
-### 切换活跃的 Brand Package
+### 添加组件示例
 
-```ts
-import { applyLanguage, clearLanguage } from "@nebutra/theme";
-
-applyLanguage("vanta", { persist: true }); // LANGUAGE_REGISTRY 中任意内置 id
-clearLanguage(); // 恢复出厂默认
-```
+Studio 里的每个 demo 都是一个 shadcn registry 条目。在 Sailor 项目中（`@nebutra/ui` 已是工作区包），可以把它加进来作为起点：
 
 ```bash
-nebutra theme list
-nebutra theme use vanta
+npx shadcn@latest add https://nebutra.com/r/data-table-demo.json
 ```
 
 ### 切换深色模式
@@ -81,7 +83,7 @@ setTheme("dark"); // "light" | "dark" | "system"
 | 新建 UI 原语组件 | `packages/design/ui/src/components/` + Storybook 故事 |
 | 新建仪表板板块 | `apps/web/src/app/(dashboard)/[section]/page.tsx` |
 | 修改引导步骤 | `apps/web/src/app/(onboarding)/` |
-| 重写调色板生成器 | `scripts/generate-palette.mjs` |
+| preset 表达不了的外观 | `packages/design/tokens/project/brand.json`（覆盖 preset），然后运行 `pnpm --filter @nebutra/tokens build` |
 
 ## Token 架构一览
 

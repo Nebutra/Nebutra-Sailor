@@ -2,6 +2,7 @@ import { getBrandOrigin, publicAssetOrigin } from "@nebutra/brand/metadata-helpe
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { SELF_FRAMED_SOURCES, SELF_FRAMING_SOURCES } from "./src/lib/security/framing";
 
 const cdnOrigin = getBrandOrigin("cdn");
 const apiOrigin = (process.env.NEXT_PUBLIC_API_URL ?? getBrandOrigin("api")).replace(/\/$/, "");
@@ -46,7 +47,17 @@ function firstPartyConnectOrigins(): string[] {
   return [...origins].sort();
 }
 
-function buildContentSecurityPolicy(): string {
+/**
+ * `framing` loosens directives for exactly two pages (see
+ * src/lib/security/framing.ts): Studio may frame its own catalog page, and that
+ * page may be framed by its own origin. The catalog page also renders library
+ * demos whose sample media lives on other hosts (avatars, a video, a tweet), so
+ * it alone takes https images/media, the tweet API and blob workers.
+ * Everything else keeps 'none' and the lists below.
+ */
+function buildContentSecurityPolicy(
+  framing: { frameSelf?: boolean; framedBySelf?: boolean } = {},
+): string {
   const scriptSrc = [
     "'self'",
     "'unsafe-inline'",
@@ -78,18 +89,28 @@ function buildContentSecurityPolicy(): string {
       "https://images.clerk.com",
       "https://ui-avatars.com",
       cdnOrigin,
+      ...(framing.framedBySelf ? ["https:"] : []),
     ]),
     // MiSans is served from the public asset origin (<CjkFontFace />).
     cspDirective("font-src", ["'self'", "data:", publicAssetOrigin()]),
-    cspDirective("media-src", ["'self'", "https://d8j0ntlcm91z4.cloudfront.net"]),
+    cspDirective("media-src", [
+      "'self'",
+      "https://d8j0ntlcm91z4.cloudfront.net",
+      ...(framing.framedBySelf ? ["https:"] : []),
+    ]),
     cspDirective("connect-src", [
       "'self'",
       ...firstPartyConnectOrigins(),
       googleIdentityServices.connect,
       cdnOrigin,
+      ...(framing.framedBySelf ? ["https://react-tweet.vercel.app"] : []),
     ]),
-    cspDirective("frame-src", [googleIdentityServices.frame]),
-    cspDirective("frame-ancestors", ["'none'"]),
+    ...(framing.framedBySelf ? [cspDirective("worker-src", ["'self'", "blob:"])] : []),
+    cspDirective(
+      "frame-src",
+      framing.frameSelf ? ["'self'", googleIdentityServices.frame] : [googleIdentityServices.frame],
+    ),
+    cspDirective("frame-ancestors", framing.framedBySelf ? ["'self'"] : ["'none'"]),
   ].join("; ");
 }
 
@@ -135,6 +156,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // The rail owns the bottom-left corner; the dev badge would sit on its last item.
+  devIndicators: { position: "bottom-right" },
   /**
    * `/sitemap.xml` is the URL robots.txt advertises and Search Console has on
    * record, but the file that serves it cannot live at that path: `sitemap.ts`
@@ -256,6 +279,26 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: securityHeaders,
       },
+      // The two framing exceptions. Later rules override the same header keys.
+      ...SELF_FRAMING_SOURCES.map((source) => ({
+        source,
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: buildContentSecurityPolicy({ frameSelf: true }),
+          },
+        ],
+      })),
+      ...SELF_FRAMED_SOURCES.map((source) => ({
+        source,
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          {
+            key: "Content-Security-Policy",
+            value: buildContentSecurityPolicy({ framedBySelf: true }),
+          },
+        ],
+      })),
       {
         // API answers are per-session/per-request; never let a CDN hold them.
         // Moved from vercel.json when the site left Vercel.

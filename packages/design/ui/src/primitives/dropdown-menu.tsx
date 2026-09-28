@@ -5,6 +5,7 @@ import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 
 type DropdownMenuContextValue = {
@@ -94,6 +95,7 @@ const DropdownMenuTrigger = ({
     <BaseMenu.Trigger
       ref={ref}
       render={renderElement as React.ComponentProps<typeof BaseMenu.Trigger>["render"]}
+      nativeButton={rendersNativeButton(renderElement)}
       {...(renderElement ? props : { ...props, children })}
     />
   );

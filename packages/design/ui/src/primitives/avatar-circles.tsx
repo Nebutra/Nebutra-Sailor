@@ -104,6 +104,8 @@ export function AvatarCircles({
             height={size}
             style={{ width: size, height: size }}
             alt={avatar.alt || `Avatar ${index + 1}`}
+            // Avatars come from any host; a library must not demand image config in every app.
+            unoptimized
           />
         </a>
       ))}

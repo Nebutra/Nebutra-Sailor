@@ -1,10 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import {
-  ACCENT_SWATCHES,
-  type AppearanceMotion,
-  accentRingChannels,
-  useAppearanceStore,
-} from "../store";
+import { type AppearanceMotion, useAppearanceStore } from "../store";
 
 // The store persists through localStorage, which zustand resolves when the
 // module is imported; the node test environment has none, so provide it first.
@@ -18,11 +13,12 @@ vi.hoisted(() => {
 });
 
 describe("appearance store", () => {
-  it("turns each accent preset into the bare HSL channels --ring holds", () => {
-    expect(accentRingChannels("default")).toBeNull();
-    expect(accentRingChannels("blue")).toBe("217.2 91.2% 59.8%"); // #3b82f6
-    for (const accent of Object.keys(ACCENT_SWATCHES) as Array<keyof typeof ACCENT_SWATCHES>) {
-      expect(accentRingChannels(accent)).toMatch(/^[\d.]+ [\d.]+% [\d.]+%$/);
+  it("keeps the viewer's preferences only; the product's look is chosen in Studio", () => {
+    const { update } = useAppearanceStore.getState();
+    update({ theme: "linear", accent: "blue" } as never);
+    const state = useAppearanceStore.getState();
+    for (const retired of ["theme", "importedTheme", "accent", "backgroundColor", "uiFontFamily"]) {
+      expect(retired in state).toBe(false);
     }
   });
 

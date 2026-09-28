@@ -8,7 +8,6 @@ import { useTheme } from "@nebutra/tokens";
 import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
-import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { useMount } from "@/hooks/useMount";
 import { cn } from "@/lib/utils";
 import { DesktopNav } from "./navbar/DesktopNav";
@@ -17,7 +16,8 @@ import { NavbarAuthCluster } from "./navbar/NavbarAuthCluster";
 import { UserAvatarMenu } from "./navbar/UserAvatarMenu";
 
 /**
- * Navbar - Fixed navigation with brand logo and theme toggle
+ * Navbar - Fixed navigation: brand, sections, locale and account. The theme
+ * switcher lives in the footer (and the mobile drawer), as on Vercel.
  */
 export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean }) {
   const locale = useLocale();
@@ -66,17 +66,12 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
         {/* --- GLOBAL CONTROLS (Desktop) --- */}
         <div className="hidden lg:flex items-center gap-3 xl:gap-5">
           <MarketLocalePicker />
-          <ThemeSwitcher />
-
           <NavbarAuthCluster />
         </div>
 
         {/* --- GLOBAL CONTROLS & DRAWER (Mobile) --- */}
         <div className="flex items-center gap-1 lg:hidden">
           <MarketLocalePicker />
-          <div className="hidden sm:block">
-            <ThemeSwitcher />
-          </div>
           <UserAvatarMenu />
           <MobileDrawer />
         </div>

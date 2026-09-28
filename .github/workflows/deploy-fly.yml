@@ -198,6 +198,10 @@ jobs:
           NEXT_PUBLIC_AUTH_MAGIC_LINK: ${{ vars.NEXT_PUBLIC_AUTH_MAGIC_LINK || '0' }}
           NEXT_PUBLIC_AUTH_PASSKEYS: ${{ vars.NEXT_PUBLIC_AUTH_PASSKEYS || '0' }}
           NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY || secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+          # Nebutra's Sanity project. @nebutra/sanity has no default any more
+          # (it used to hand this id to every scaffolded site), so the build
+          # names it; inlined at build time like every NEXT_PUBLIC_ value.
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID || 'wyfqr24v' }}
           PASSKEY_RP_ID: ${{ vars.PASSKEY_RP_ID || 'auth.nebutra.com' }}
           PASSKEY_RP_NAME: ${{ vars.PASSKEY_RP_NAME || 'Nebutra' }}
           PASSKEY_ORIGIN: ${{ vars.PASSKEY_ORIGIN || 'https://auth.nebutra.com' }}

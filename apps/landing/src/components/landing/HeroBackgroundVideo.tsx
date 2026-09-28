@@ -16,9 +16,10 @@ export const HERO_BACKGROUND_VIDEOS = {
  * `prefers-reduced-motion` is honored via CSS in globals.css — no JS hook
  * needed, which lets the rule apply before hydration.
  */
-export function HeroBackgroundVideo() {
+export function HeroBackgroundVideo({ theme }: { theme?: "light" | "dark" } = {}) {
   const { resolvedTheme } = useTheme();
-  const themeKey = resolvedTheme === "dark" ? "dark" : "light";
+  // A surface that is dark in both modes (the Nebutra site's shell) pins the cut.
+  const themeKey = theme ?? (resolvedTheme === "dark" ? "dark" : "light");
   const videoSource = HERO_BACKGROUND_VIDEOS[themeKey];
 
   return (

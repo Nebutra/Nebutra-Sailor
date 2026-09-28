@@ -5,6 +5,7 @@ import {
   type PortableTextBlock,
   toBlogLanguage,
 } from "@nebutra/blog";
+import { isSanityConfigured } from "@nebutra/sanity/client";
 import {
   getPostBySlug as fetchSanityPostBySlug,
   getPostTranslationByKey as fetchSanityPostTranslationByKey,
@@ -78,7 +79,7 @@ function normalizeSanityPost(post: SanityPost | null): BlogPostWithSource | null
 }
 
 function shouldUseFallbackSource(): boolean {
-  return process.env.NEXT_PUBLIC_BLOG_SOURCE === "fallback";
+  return process.env.NEXT_PUBLIC_BLOG_SOURCE === "fallback" || !isSanityConfigured;
 }
 
 function getFallbackPosts(): BlogPostWithSource[] {

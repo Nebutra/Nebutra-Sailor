@@ -15,7 +15,6 @@ describe("microcopy governance", () => {
     const sources = [
       "packages/commerce/marketing/src/components/LaunchBanner.tsx",
       "packages/commerce/marketing/src/components/Waitlist.tsx",
-      "apps/landing/src/components/marketing/LaunchBannerWrapper.tsx",
       "apps/landing/src/lib/landing-content.ts",
     ].map(read);
 

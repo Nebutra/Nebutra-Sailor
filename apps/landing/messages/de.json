@@ -131,8 +131,8 @@
     "columns": {
       "product": "Produkt",
       "resources": "Ressourcen",
-      "legal": "Rechtliches",
-      "community": "Community"
+      "company": "Unternehmen",
+      "legal": "Rechtliches"
     },
     "links": {
       "product": "Produkt",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Alle Rechte vorbehalten.",
+    "copyright": "© 2026 {companyLegalEn} · Alle Rechte vorbehalten.",
     "fontCredit": "Chinesische Schrift: MiSans (Xiaomi)",
     "statusOnline": "Alle Systeme betriebsbereit",
     "newsletterTitle": "Bleiben Sie auf dem Laufenden",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUKTUR",
-    "title": "10 Apps. 112 Pakete. 4 Backend-Lanes.",
+    "title": "10 Apps. 111 Pakete. 4 Backend-Lanes.",
     "description": "Gemeinsamer Code, parallele Builds, keine Duplizierung. Vollständige End-to-End-Typisierung von der Datenbank bis zum Frontend.",
     "metricApps": "Apps",
     "metricBackends": "Backend-Lanes",
@@ -243,7 +243,7 @@
       "ctaButton": "Kontakt aufnehmen"
     },
     "contact": {
-      "title": "Technische & kommerzielle Anfrage — {brandName} Intelligence",
+      "title": "Technische & kommerzielle Anfrage — {brandName}",
       "description": "Der dedizierte Kommunikationskanal für kommerzielle Lizenzierung, Enterprise-Self-Hosting und erweiterten technischen Support.",
       "heading": "Support-Verbindung herstellen",
       "subheading": "Wir entsenden eine:n dedizierte:n technische:n Spezialist:in oder Architekt:in, um Ihre konkreten Anforderungen zu bewerten.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "Datenschutzbeauftragter",
-            "desc": "Sie können unseren Datenschutzbeauftragten unter dpo@nebutra.com kontaktieren."
+            "desc": "Sie können unseren Datenschutzbeauftragten unter dpo@{domain} kontaktieren."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "So beantragen Sie eine Erstattung",
         "step1": {
           "title": "Schritt 1: Support kontaktieren",
-          "intro": "Senden Sie uns eine E-Mail an billing@nebutra.com mit:",
+          "intro": "Senden Sie uns eine E-Mail an billing@{domain} mit:",
           "items": {
             "0": "Ihrer Konto-E-Mail-Adresse",
             "1": "Abonnementtarif und Abrechnungszeitraum",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Antworten Sie auf die Entscheidungs-E-Mail mit zusätzlichen Informationen",
           "1": "Beantragen Sie eine Eskalation an eine vorgesetzte Person",
-          "2": "Kontaktieren Sie uns unter legal@nebutra.com zur weiteren Prüfung"
+          "2": "Kontaktieren Sie uns unter legal@{domain} zur weiteren Prüfung"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Streitbeilegung",
         "informal": {
           "title": "10.1 Informelle Beilegung",
-          "content": "Vor Einleitung förmlicher Verfahren verpflichten Sie sich, uns unter legal@nebutra.com zu kontaktieren, um Streitigkeiten informell beizulegen."
+          "content": "Vor Einleitung förmlicher Verfahren verpflichten Sie sich, uns unter legal@{domain} zu kontaktieren, um Streitigkeiten informell beizulegen."
         },
         "governingLaw": {
           "title": "10.2 Geltendes Recht",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Loslegen",
       "title": "Schluss mit Konfigurieren. Anfangen zu bauen.",
       "description": "Initialisieren Sie eine skalierbare SaaS-Architektur lokal mit der {brandName} CLI.",
-      "button": "Architektur deployen",
       "license": "Open Source unter FSL-1.1-ALv2. Keine Kreditkarte erforderlich."
     },
     "capability": {
@@ -1750,7 +1749,7 @@
           "label": "unterstützte KI-Anbieter"
         },
         "projects": {
-          "value": "112",
+          "value": "111",
           "label": "Monorepo-Pakete"
         },
         "uptime": {

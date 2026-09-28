@@ -1,3 +1,6 @@
-export type * from "@nebutra/docs-shared/components/api-page.client";
-export * from "@nebutra/docs-shared/components/api-page.client";
-export { default } from "@nebutra/docs-shared/components/api-page.client";
+"use client";
+import { defineClientConfig } from "fumadocs-openapi/ui/client";
+
+export default defineClientConfig({
+  // Configure API playground behavior here
+});

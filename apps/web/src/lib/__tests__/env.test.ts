@@ -9,7 +9,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3002"),
   NEXT_PUBLIC_STUDIO_URL: z.string().url().default("http://localhost:3003"),
   NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["better-auth", "dev"]).default("better-auth"),
-  NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().default("wyfqr24v"),
+  NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().default(""),
   NEXT_PUBLIC_SANITY_DATASET: z.string().default("production"),
   NEXT_PUBLIC_SANITY_API_VERSION: z.string().default("2024-01-01"),
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
@@ -109,10 +109,10 @@ describe("web env schema", () => {
     expect(result.success).toBe(true);
   });
 
-  it("uses correct default Sanity config", () => {
+  it("defaults to no Sanity project, so a new project reads no one else's CMS", () => {
     const result = envSchema.safeParse({});
     expect(result.success).toBe(true);
-    expect(result.data?.NEXT_PUBLIC_SANITY_PROJECT_ID).toBe("wyfqr24v");
+    expect(result.data?.NEXT_PUBLIC_SANITY_PROJECT_ID).toBe("");
     expect(result.data?.NEXT_PUBLIC_SANITY_DATASET).toBe("production");
   });
 

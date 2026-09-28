@@ -161,7 +161,6 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const workspaceMode = productCapabilities?.workspace.mode ?? "organization";
   const startupAgentOSEnabled = productCapabilities?.prototypes?.startupAgentOS ?? true;
   const navCapabilities = { startupAgentOS: startupAgentOSEnabled };
-  const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
   const isStartupOSRoute = pathname.includes("/startup-os");
   // Single signal governing startup-os sidebar chrome: the command center
   // publishes home|workspace; hook is called unconditionally and route-guarded
@@ -658,13 +657,11 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
             // the page's absolute gradient fills it edge-to-edge. Banner +
             // content header sit on top of the gradient.
             "relative p-0 sm:p-0 md:p-0 2xl:p-0"
-          : isWorkspaceCanvasRoute
-            ? "mx-0 max-w-none flex flex-col overflow-hidden p-0 sm:p-0 md:p-0 2xl:p-0"
-            : isStartupOSRoute
-              ? "mx-0 max-w-none p-0 sm:p-0 md:p-0 2xl:p-0"
-              : // Two-tier surface: tint the outer main bg so the `bg-card`
-                // panels inside each page read as inset floating cards.
-                "dashboard-app-content bg-muted/40"
+          : isStartupOSRoute
+            ? "mx-0 max-w-none p-0 sm:p-0 md:p-0 2xl:p-0"
+            : // Two-tier surface: tint the outer main bg so the `bg-card`
+              // panels inside each page read as inset floating cards.
+              "dashboard-app-content bg-muted/40"
       }
     >
       {isWorkspaceHomeRoute ? (
@@ -701,7 +698,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         </div>
       ) : null}
       {contentHeader}
-      {isWorkspaceHomeRoute || isStartupOSRoute || isWorkspaceCanvasRoute ? (
+      {isWorkspaceHomeRoute || isStartupOSRoute ? (
         // No `.content-area` wrapper on full-bleed workspaces: `contain: paint`
         // would clip edge-to-edge canvases and add an unnecessary route shell.
         children

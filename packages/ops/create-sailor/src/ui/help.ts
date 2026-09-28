@@ -17,6 +17,7 @@ Options:
       --no-install          skip package install
       --no-git              skip git init
   -y, --yes                 non-interactive
+      --preset <code>       the look from Sailor Studio (preset code or language id)
       --dry-run             preview actions without writing files
       --json                machine-readable output (NDJSON events)
       --no-color            disable color output

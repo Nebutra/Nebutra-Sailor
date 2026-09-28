@@ -1,6 +1,6 @@
-import { IconGallery } from "@nebutra/docs-shared/components/icon-gallery";
 import * as AllIcons from "@nebutra/icons";
 import type { Metadata } from "next";
+import { IconGallery } from "@/components/icon-gallery";
 import { Mono, PageHeader, Section } from "../../(tokens)/tokens/_components/primitives";
 
 export const metadata: Metadata = {

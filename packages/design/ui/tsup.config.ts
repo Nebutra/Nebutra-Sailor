@@ -88,7 +88,6 @@ const ENTRIES: Record<string, string> = {
   "chat/index": "src/chat/index.ts",
   "agent/index": "src/agent/index.ts",
   "layout/index": "src/layout/index.ts",
-  "layouts/index": "src/layouts/index.ts",
   "icons/index": "src/icons/index.ts",
   "theme/index": "src/theme/index.ts",
   // Editorial blocks are deliberately free of "use client": the blog article
@@ -108,7 +107,22 @@ const ENTRIES: Record<string, string> = {
   // See SERVER_ONLY_ENTRIES: utils/* must never ship a "use client" stamp.
   "utils/auth-surfaces": "src/utils/auth-surfaces.ts",
   "tailwind.preset": "src/tailwind.preset.ts",
+  // The catalog manifest is plain data a server reads (Studio pages, the
+  // registry route), so it must not carry a "use client" stamp.
+  "catalog/index": "src/catalog/index.ts",
+  "catalog/loaders": "src/catalog/loaders.ts",
 };
+
+/**
+ * One entry per catalog demo, so each is its own chunk behind DEMO_LOADERS.
+ * Their imports of `@nebutra/ui/*` stay external (the @nebutra rule below):
+ * a demo is compiled against the published entry points, exactly as copied.
+ */
+const DEMO_ENTRIES: Record<string, string> = Object.fromEntries(
+  readdirSync("src/catalog/demos")
+    .filter((file) => file.endsWith(".tsx"))
+    .map((file) => [`catalog/demos/${file.slice(0, -4)}`, `src/catalog/demos/${file}`]),
+);
 
 // Entries that must NOT get a "use client" banner.
 //
@@ -123,15 +137,19 @@ const SERVER_ONLY_ENTRIES = new Set<string>([
   "tailwind.preset",
   "utils/index",
   "utils/auth-surfaces",
+  "catalog/index",
+  // Plain loader functions; the demos they reach each carry their own stamp.
+  "catalog/loaders",
 ]);
 
 export default defineConfig({
-  entry: ENTRIES,
+  entry: { ...ENTRIES, ...DEMO_ENTRIES },
   format: ["esm"],
   // No DTS-only relaxation: src/** is strict-clean under the package tsconfig
   // (exactOptionalPropertyTypes + noUncheckedIndexedAccess), so declaration
   // emit runs on the same rules as `pnpm typecheck`.
-  dts: true,
+  // Demos ship no declarations: nothing imports them by type, only through DEMO_LOADERS.
+  dts: { entry: ENTRIES },
   splitting: false,
   sourcemap: true,
   clean: true,
@@ -168,7 +186,6 @@ export default defineConfig({
     "tailwind-merge",
     "canvas-confetti",
     "cobe",
-    "dotted-map",
     "rough-notation",
     "react-syntax-highlighter",
     "react-tweet",
@@ -180,11 +197,10 @@ export default defineConfig({
     "react-day-picker",
     "class-variance-authority",
     "piri",
-    "react-ascii-text",
     "@icons-pack/react-simple-icons",
     "@react-three/fiber",
     "three",
-    /^(react|react-dom|next|framer-motion|@base-ui|@lobehub|antd|@paper-design|@number-flow|@react-types|@internationalized|@nebutra|recharts|react-hook-form|embla-carousel-react|cmdk|vaul|sonner|clsx|tailwind-merge|canvas-confetti|cobe|dotted-map|rough-notation|react-syntax-highlighter|react-tweet|react-use-measure|react-resizable-panels|react-day-picker|input-otp|usehooks-ts|date-fns|class-variance-authority|piri|react-ascii-text|@icons-pack|@react-three|three)(\/.*)?$/,
+    /^(react|react-dom|next|framer-motion|@base-ui|@lobehub|antd|@paper-design|@number-flow|@react-types|@internationalized|@nebutra|recharts|react-hook-form|embla-carousel-react|cmdk|vaul|sonner|clsx|tailwind-merge|canvas-confetti|cobe|rough-notation|react-syntax-highlighter|react-tweet|react-use-measure|react-resizable-panels|react-day-picker|input-otp|usehooks-ts|date-fns|class-variance-authority|piri|@icons-pack|@react-three|three)(\/.*)?$/,
   ],
   onSuccess: async () => {
     const cwd = process.cwd();
@@ -193,7 +209,7 @@ export default defineConfig({
 
     // 1. For every entry, decide if its bundled output needs "use client".
     //    Scan the entry source AND everything beneath the entry's directory.
-    for (const [distKey, srcEntry] of Object.entries(ENTRIES)) {
+    for (const [distKey, srcEntry] of Object.entries({ ...ENTRIES, ...DEMO_ENTRIES })) {
       if (SERVER_ONLY_ENTRIES.has(distKey)) continue;
       // Strip leading "src/" so it resolves against srcDir, not srcDir/src/.
       const relSource = srcEntry.replace(/^src\//, "");
@@ -201,7 +217,18 @@ export default defineConfig({
       prependUseClient(join(distDir, `${distKey}.js`));
     }
 
-    // 2. Copy CSS / static assets that are referenced via package exports.
+    // 2. Demo sources as data, for the registry: a served demo is the file a
+    //    reader copies, and a deployed app does not carry this package's src/.
+    const demoDir = join(srcDir, "catalog/demos");
+    const sources = Object.fromEntries(
+      readdirSync(demoDir)
+        .filter((file) => file.endsWith(".tsx"))
+        .sort()
+        .map((file) => [file.slice(0, -4), readFileSync(join(demoDir, file), "utf-8")]),
+    );
+    writeFileSync(join(distDir, "catalog/sources.json"), `${JSON.stringify(sources)}\n`);
+
+    // 3. Copy CSS / static assets that are referenced via package exports.
     copyAsset(join(srcDir, "typography/fonts.css"), join(distDir, "typography/fonts.css"));
   },
 });

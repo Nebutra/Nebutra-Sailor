@@ -29,6 +29,15 @@
     "Berkeley Mono",
     "JetBrains Mono"
   ],
+  "nebutra-site": [
+    "var(--font-geist-sans)",
+    "Geist",
+    "MiSans",
+    "var(--font-reg-dm-sans)",
+    "DM Sans",
+    "var(--font-geist-mono)",
+    "Geist Mono"
+  ],
   "notion": [
     "var(--font-inter)",
     "NotionInter",

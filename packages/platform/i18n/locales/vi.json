@@ -931,88 +931,11 @@
         "title": "Chủ đề",
         "description": "Sử dụng sáng, tối, hoặc khớp với tùy chọn hệ thống."
       },
-      "themePreset": {
-        "title": "Mẫu chủ đề",
-        "description": "Áp dụng bất kỳ chủ đề nào từ Theme Playground cho toàn bộ ứng dụng. Các điều khiển bên dưới sẽ tinh chỉnh thêm trên đó.",
-        "search": "Tìm kiếm chủ đề…",
-        "searchLabel": "Tìm kiếm chủ đề",
-        "default": "Mặc định",
-        "defaultMood": "Nebutra base palette",
-        "active": "Đang dùng",
-        "empty": "Không có chủ đề nào khớp với tìm kiếm của bạn.",
-        "count": "{count} chủ đề"
-      },
-      "themeEditor": {
-        "title": "Chủ đề",
-        "description": "Chọn một mẫu, nhập DESIGN.md, sau đó tinh chỉnh các token bên dưới.",
-        "selectLabel": "Mẫu chủ đề",
-        "import": "Nhập",
-        "copy": "Sao chép chủ đề",
-        "copied": "Đã sao chép",
-        "copyError": "Sao chép thất bại",
-        "custom": "Tùy chỉnh"
-      },
-      "designMd": {
-        "title": "Nhập DESIGN.md",
-        "description": "Dán hoặc tải lên DESIGN.md để áp dụng màu sắc, bo góc, phông chữ, khoảng cách và đổ bóng cho toàn bộ ứng dụng — được lưu giữ qua các lần tải lại.",
-        "applied": "Đã áp dụng:",
-        "remove": "Xóa"
-      },
       "themeMode": {
         "label": "Chế độ chủ đề",
         "light": "Sáng",
         "dark": "Tối",
         "system": "Hệ thống"
-      },
-      "accent": {
-        "title": "Màu nhấn",
-        "description": "Chọn màu nhấn thương hiệu để tô màu các trạng thái đang hoạt động trên toàn bộ ứng dụng.",
-        "label": "Màu nhấn",
-        "options": {
-          "default": "Mặc định",
-          "blue": "Xanh dương",
-          "cyan": "Xanh ngọc",
-          "violet": "Tím",
-          "pink": "Hồng",
-          "amber": "Vàng hổ phách",
-          "green": "Xanh lá",
-          "red": "Đỏ"
-        }
-      },
-      "colors": {
-        "title": "Màu sắc",
-        "description": "Màu nhấn, nền và nền trước.",
-        "background": {
-          "label": "Nền",
-          "description": "Ghi đè màu nền bề mặt."
-        },
-        "foreground": {
-          "label": "Nền trước",
-          "description": "Ghi đè màu văn bản nội dung."
-        },
-        "resetToDefault": "Đặt lại mặc định"
-      },
-      "fontFamily": {
-        "uiLabel": "Phông chữ UI",
-        "uiDescription": "Bộ phông chữ dùng trong giao diện.",
-        "codeLabel": "Phông chữ code",
-        "codeDescription": "Dòng phông chữ dùng cho bề mặt code.",
-        "options": {
-          "ui": {
-            "theme": "Mặc định theme",
-            "system": "Hệ thống",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Mặc định theme",
-            "system": "System mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Sử dụng con trỏ pointer",
@@ -1049,14 +972,6 @@
         "label": "Tùy chọn chuyển động",
         "system": "Hệ thống",
         "on": "Bật"
-      },
-      "surface": {
-        "title": "Thanh bên trong suốt",
-        "description": "Áp dụng chất liệu trong suốt cho thanh bên."
-      },
-      "transparency": {
-        "label": "Thanh bên trong suốt",
-        "description": "Áp dụng chất liệu trong suốt cho thanh bên."
       }
     }
   },

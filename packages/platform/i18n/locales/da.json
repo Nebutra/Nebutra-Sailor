@@ -931,88 +931,11 @@
         "title": "Tema",
         "description": "Brug lys, mørk eller match systemets præference."
       },
-      "themePreset": {
-        "title": "Temamønster",
-        "description": "Anvend ethvert Theme Playground-tema i hele appen. Kontrollerne nedenfor lægges ovenpå for finjustering.",
-        "search": "Søg efter temaer…",
-        "searchLabel": "Søg efter temaer",
-        "default": "Standard",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktiv",
-        "empty": "Ingen temaer matcher din søgning.",
-        "count": "{count} temaer"
-      },
-      "themeEditor": {
-        "title": "Tema",
-        "description": "Vælg et mønster, importer en DESIGN.md, og finjustér derefter tokens nedenfor.",
-        "selectLabel": "Temamønster",
-        "import": "Importer",
-        "copy": "Kopier tema",
-        "copied": "Kopieret",
-        "copyError": "Kopiering mislykkedes",
-        "custom": "Brugerdefineret"
-      },
-      "designMd": {
-        "title": "Importer DESIGN.md",
-        "description": "Indsæt eller upload en DESIGN.md for at anvende dens farver, radius, skrifttyper, afstande og skygger i hele appen — gemmes ved genindlæsning.",
-        "applied": "Anvendt:",
-        "remove": "Fjern"
-      },
       "themeMode": {
         "label": "Tema-tilstand",
         "light": "Lys",
         "dark": "Mørk",
         "system": "System"
-      },
-      "accent": {
-        "title": "Accent-farve",
-        "description": "Vælg en brand-accent, der farver aktive tilstande i hele appen.",
-        "label": "Accent-farve",
-        "options": {
-          "default": "Standard",
-          "blue": "Blå",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Lyserød",
-          "amber": "Guldgul",
-          "green": "Grøn",
-          "red": "Rød"
-        }
-      },
-      "colors": {
-        "title": "Farver",
-        "description": "Accent, baggrund og forgrund.",
-        "background": {
-          "label": "Baggrund",
-          "description": "Overskriv overfladens baggrundsfarve."
-        },
-        "foreground": {
-          "label": "Forgrund",
-          "description": "Overskriv brødtekstens farve."
-        },
-        "resetToDefault": "Nulstil til standard"
-      },
-      "fontFamily": {
-        "uiLabel": "Skrifttype til brugerfladen",
-        "uiDescription": "Skrifttypefamilie brugt i hele brugerfladen.",
-        "codeLabel": "Skrifttype til kode",
-        "codeDescription": "Skrifttypefamilie brugt til kodeflader.",
-        "options": {
-          "ui": {
-            "theme": "Standardtema",
-            "system": "System",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Standardtema",
-            "system": "System mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Brug pegecursor",
@@ -1049,14 +972,6 @@
         "label": "Indstilling for bevægelse",
         "system": "System",
         "on": "Tændt"
-      },
-      "surface": {
-        "title": "Gennemsigtig sidebjælke",
-        "description": "Anvend et gennemsigtigt materiale på sidebjælken."
-      },
-      "transparency": {
-        "label": "Gennemsigtig sidebjælke",
-        "description": "Anvend et gennemsigtigt materiale på sidebjælken."
       }
     }
   },

@@ -1,14 +1,19 @@
 {
   "//": [
     "Whole-package typecheck. `include` covers all of src/**, so src/marketing,",
-    "src/patterns, src/layouts, src/hooks and every *.stories.tsx are inside the",
-    "program.",
+    "src/patterns, src/hooks and every *.stories.tsx are inside the program.",
     "",
     "Do NOT narrow this back to a hand-listed subset. Until 2026-07-28 those four",
     "directories and all stories sat outside the program, and shipped real breakage",
     "no CI run could see: imports of modules that never existed, a free `t`",
     "identifier in useDataTable, and three dependencies that resolved only through",
     "the repo-wide public-hoist-pattern in .npmrc.",
+    "",
+    "`paths` maps the package's public entry points onto src/: catalog demos import",
+    "`@nebutra/ui/primitives` exactly as an app would, so their source is the code a",
+    "reader copies. `@nebutra/ui/catalog/demos/*` is deliberately not mapped",
+    "(src/catalog/demo-modules.d.ts types it): the loader table must not pull every",
+    "demo into the declaration build.",
     "",
     "*.test.* / *.spec.* stay excluded — vitest typechecks those on its own config."
   ],
@@ -18,7 +23,17 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "composite": false,
-    "preserveSymlinks": false
+    "preserveSymlinks": false,
+    "paths": {
+      "@nebutra/ui": ["./src/index.ts"],
+      "@nebutra/ui/primitives": ["./src/primitives/index.ts"],
+      "@nebutra/ui/components": ["./src/components/index.ts"],
+      "@nebutra/ui/patterns": ["./src/patterns/index.ts"],
+      "@nebutra/ui/layout": ["./src/layout/index.ts"],
+      "@nebutra/ui/utils": ["./src/utils/index.ts"],
+      "@nebutra/ui/hooks": ["./src/hooks/index.ts"],
+      "@nebutra/ui/typography": ["./src/typography/index.ts"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [

@@ -931,88 +931,11 @@
         "title": "थीम",
         "description": "लाइट, डार्क, या सिस्टम पसंद के अनुसार उपयोग करें।"
       },
-      "themePreset": {
-        "title": "थीम प्रीसेट",
-        "description": "पूरे ऐप में किसी भी Theme Playground थीम लागू करें। नीचे दिए गए नियंत्रण इसे और परिष्कृत करने के लिए ऊपर से जोड़े जाते हैं।",
-        "search": "थीम खोजें…",
-        "searchLabel": "थीम खोजें",
-        "default": "डिफ़ॉल्ट",
-        "defaultMood": "Nebutra base palette",
-        "active": "सक्रिय",
-        "empty": "आपकी खोज से कोई थीम मेल नहीं खाती।",
-        "count": "{count} थीम"
-      },
-      "themeEditor": {
-        "title": "थीम",
-        "description": "एक प्रीसेट चुनें, DESIGN.md आयात करें, फिर नीचे दिए गए टोकन को परिष्कृत करें।",
-        "selectLabel": "थीम प्रीसेट",
-        "import": "आयात करें",
-        "copy": "थीम कॉपी करें",
-        "copied": "कॉपी किया गया",
-        "copyError": "कॉपी करने में विफल",
-        "custom": "कस्टम"
-      },
-      "designMd": {
-        "title": "DESIGN.md आयात करें",
-        "description": "पूरे ऐप में रंग, रेडियस, फ़ॉन्ट, स्पेसिंग और शैडो लागू करने के लिए DESIGN.md पेस्ट या अपलोड करें — रीलोड के बाद भी बने रहेंगे।",
-        "applied": "लागू किया गया:",
-        "remove": "हटाएं"
-      },
       "themeMode": {
         "label": "थीम मोड",
         "light": "लाइट",
         "dark": "डार्क",
         "system": "सिस्टम"
-      },
-      "accent": {
-        "title": "एक्सेंट रंग",
-        "description": "ऐप में सक्रिय स्थितियों को रंग देने के लिए एक ब्रांड एक्सेंट चुनें।",
-        "label": "एक्सेंट रंग",
-        "options": {
-          "default": "डिफ़ॉल्ट",
-          "blue": "नीला",
-          "cyan": "सायन",
-          "violet": "बैंगनी",
-          "pink": "गुलाबी",
-          "amber": "एम्बर",
-          "green": "हरा",
-          "red": "लाल"
-        }
-      },
-      "colors": {
-        "title": "रंग",
-        "description": "एक्सेंट, बैकग्राउंड और फोरग्राउंड।",
-        "background": {
-          "label": "बैकग्राउंड",
-          "description": "सतह के बैकग्राउंड रंग को ओवरराइड करें।"
-        },
-        "foreground": {
-          "label": "फोरग्राउंड",
-          "description": "बॉडी टेक्स्ट के रंग को ओवरराइड करें।"
-        },
-        "resetToDefault": "डिफ़ॉल्ट पर रीसेट करें"
-      },
-      "fontFamily": {
-        "uiLabel": "UI फ़ॉन्ट",
-        "uiDescription": "UI में इस्तेमाल होने वाला फ़ॉन्ट परिवार।",
-        "codeLabel": "कोड फ़ॉन्ट",
-        "codeDescription": "कोड सतहों के लिए उपयोग किया जाने वाला फ़ॉन्ट परिवार।",
-        "options": {
-          "ui": {
-            "theme": "थीम डिफ़ॉल्ट",
-            "system": "सिस्टम",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "थीम डिफ़ॉल्ट",
-            "system": "सिस्टम मोनो",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "पॉइंटर कर्सर का उपयोग करें",
@@ -1049,14 +972,6 @@
         "label": "मोशन पसंद",
         "system": "सिस्टम",
         "on": "ऑन"
-      },
-      "surface": {
-        "title": "पारदर्शी साइडबार",
-        "description": "साइडबार पर पारदर्शी मटीरियल लागू करें।"
-      },
-      "transparency": {
-        "label": "पारदर्शी साइडबार",
-        "description": "साइडबार पर पारदर्शी मटीरियल लागू करें।"
       }
     }
   },

@@ -4,6 +4,7 @@ import { AlertDialog as BaseAlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { rendersNativeButton } from "../utils/native-button";
 import { buttonVariants } from "./button-variants";
 
 const AlertDialog = BaseAlertDialog.Root;
@@ -23,6 +24,7 @@ const AlertDialogTrigger = ({
         ref={ref}
         {...props}
         render={children as React.ReactElement<Record<string, unknown>>}
+        nativeButton={rendersNativeButton(children)}
       />
     );
   }
@@ -130,6 +132,7 @@ const AlertDialogAction = ({
         {...props}
         className={cn(className)}
         render={children as React.ReactElement<Record<string, unknown>>}
+        nativeButton={rendersNativeButton(children)}
       />
     );
   }
@@ -158,6 +161,7 @@ const AlertDialogCancel = ({
         {...props}
         className={cn(className)}
         render={children as React.ReactElement<Record<string, unknown>>}
+        nativeButton={rendersNativeButton(children)}
       />
     );
   }

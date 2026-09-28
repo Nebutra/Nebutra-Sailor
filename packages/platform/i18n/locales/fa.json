@@ -931,88 +931,11 @@
         "title": "پوسته",
         "description": "از حالت روشن، تیره یا هماهنگ با تنظیمات سیستم استفاده کنید."
       },
-      "themePreset": {
-        "title": "پیش‌فرض پوسته",
-        "description": "هر پوسته‌ای از Theme Playground را در کل برنامه اعمال کنید. کنترل‌های زیر برای تنظیم دقیق روی آن قرار می‌گیرند.",
-        "search": "جستجوی پوسته‌ها…",
-        "searchLabel": "جستجوی پوسته‌ها",
-        "default": "پیش‌فرض",
-        "defaultMood": "Nebutra base palette",
-        "active": "فعال",
-        "empty": "هیچ پوسته‌ای با جستجوی شما مطابقت ندارد.",
-        "count": "{count} پوسته"
-      },
-      "themeEditor": {
-        "title": "پوسته",
-        "description": "یک پیش‌فرض انتخاب کنید، یک فایل DESIGN.md وارد کنید، سپس توکن‌های زیر را تنظیم دقیق کنید.",
-        "selectLabel": "پیش‌فرض پوسته",
-        "import": "وارد کردن",
-        "copy": "کپی تم",
-        "copied": "کپی شد",
-        "copyError": "کپی ناموفق بود",
-        "custom": "سفارشی"
-      },
-      "designMd": {
-        "title": "وارد کردن DESIGN.md",
-        "description": "یک DESIGN.md را پیست یا آپلود کنید تا رنگ‌ها، شعاع، فونت‌ها، فاصله‌ها و سایه‌های آن در کل برنامه اعمال شوند — و پس از بارگذاری مجدد حفظ شوند.",
-        "applied": "اعمال شد:",
-        "remove": "حذف"
-      },
       "themeMode": {
         "label": "حالت تم",
         "light": "روشن",
         "dark": "تاریک",
         "system": "سیستم"
-      },
-      "accent": {
-        "title": "رنگ تأکیدی",
-        "description": "یک رنگ تأکیدی برند انتخاب کنید که حالت‌های فعال در کل برنامه را رنگ‌آمیزی کند.",
-        "label": "رنگ تأکیدی",
-        "options": {
-          "default": "پیش‌فرض",
-          "blue": "آبی",
-          "cyan": "فیروزه‌ای",
-          "violet": "بنفش",
-          "pink": "صورتی",
-          "amber": "کهربایی",
-          "green": "سبز",
-          "red": "قرمز"
-        }
-      },
-      "colors": {
-        "title": "رنگ‌ها",
-        "description": "رنگ تأکیدی، پس‌زمینه و پیش‌زمینه.",
-        "background": {
-          "label": "پس‌زمینه",
-          "description": "تغییر رنگ پس‌زمینه سطح."
-        },
-        "foreground": {
-          "label": "پیش‌زمینه",
-          "description": "تغییر رنگ متن اصلی."
-        },
-        "resetToDefault": "بازنشانی به پیش‌فرض"
-      },
-      "fontFamily": {
-        "uiLabel": "فونت رابط کاربری",
-        "uiDescription": "خانواده فونت استفاده‌شده در رابط کاربری.",
-        "codeLabel": "فونت کد",
-        "codeDescription": "خانواده فونت استفاده‌شده برای سطوح کد.",
-        "options": {
-          "ui": {
-            "theme": "پیش‌فرض تم",
-            "system": "سیستم",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "پیش‌فرض تم",
-            "system": "سیستم مونو",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "استفاده از نشانگر اشاره‌گر",
@@ -1049,14 +972,6 @@
         "label": "ترجیح حرکت",
         "system": "سیستم",
         "on": "روشن"
-      },
-      "surface": {
-        "title": "نوار کناری شفاف",
-        "description": "اعمال متریال شفاف به نوار کناری."
-      },
-      "transparency": {
-        "label": "نوار کناری شفاف",
-        "description": "اعمال متریال شفاف به نوار کناری."
       }
     }
   },

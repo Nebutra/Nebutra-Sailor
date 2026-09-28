@@ -17,11 +17,13 @@
  *   @import "tailwindcss";
  *   @import "…third-party…";
  *   @import "@nebutra/tokens/styles.css";
+ *   @import "@nebutra/tokens/project.css";
  *   @import "@nebutra/ui/styles/sources.css";
  */
 
 @import "tailwindcss";
 @import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/project.css"; /* this project's look (Sailor Studio preset) */
 @import "@nebutra/tokens/recipe.css";
 @import "./sources.css";
 @import "../typography/fonts.css";

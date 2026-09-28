@@ -29,6 +29,7 @@ import {
 import type { ComponentType } from "react";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { type LocalizedCopy, pick } from "@/lib/i18n/localized";
+import { hereOnly, type SiteId } from "@/site-map";
 
 export type { LocalizedCopy };
 export { pick };
@@ -48,6 +49,8 @@ export interface ResourceLink {
   href: string;
   /** Opens in a new tab and shows an outbound arrow. */
   external?: boolean;
+  /** An external link that belongs to one site only (see site-map `belongsHere`). */
+  site?: SiteId;
 }
 
 export const RESOURCE_GROUPS: ResourceGroup[] = [
@@ -85,6 +88,7 @@ export const RESOURCES: ResourceLink[] = [
     },
     href: getBrandOrigin("forge"),
     external: true,
+    site: "nebutra",
   },
   {
     groupId: "developers",
@@ -114,6 +118,7 @@ export const RESOURCES: ResourceLink[] = [
     tagline: { en: "Tokens, components, and brand", zh: "令牌、组件与品牌" },
     href: "https://design.nebutra.com",
     external: true,
+    site: "nebutra",
   },
   {
     groupId: "developers",
@@ -167,6 +172,12 @@ export const RESOURCES: ResourceLink[] = [
   },
 ];
 
+/** A group's links that belong on this site (the template drops Nebutra's own). */
 export function getGroupResources(group: ResourceGroup): ResourceLink[] {
-  return RESOURCES.filter((resource) => resource.groupId === group.id);
+  return hereOnly(RESOURCES).filter((resource) => resource.groupId === group.id);
 }
+
+/** The groups with at least one link on this site. */
+export const RESOURCE_GROUPS_HERE: ResourceGroup[] = RESOURCE_GROUPS.filter(
+  (group) => getGroupResources(group).length > 0,
+);

@@ -16,6 +16,7 @@ import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import * as p from "@clack/prompts";
+import type { Preset } from "@nebutra/tokens/preset";
 import pc from "picocolors";
 import { buildProgram } from "./steps/cli-setup";
 import { runScaffold } from "./steps/scaffold";
@@ -23,6 +24,7 @@ import { type CliOptions, detectPm, type JsonEvent } from "./steps/types";
 import { showBanner } from "./ui/banner";
 import { showHelp } from "./ui/help";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
+import { readPresetOption } from "./utils/preset";
 import {
   DEFAULT_PROJECT_NAME,
   describeUnsafeTarget,
@@ -58,6 +60,9 @@ function printDryRunPlan(
     "generate secrets, seed script and welcome page",
     "inject .env.local (local Postgres, Better Auth)",
     "write MIT scaffold license",
+    ...(opts.preset
+      ? [`write the look: preset ${opts.preset} → packages/design/tokens/project/preset`]
+      : []),
     opts.install === false ? "skip install" : `run ${resolvedPm} install`,
     opts.git === false ? "skip git init" : "run git init",
   ];
@@ -91,6 +96,17 @@ async function run(): Promise<void> {
   const isDry = Boolean(opts.dryRun);
   const autoYes = Boolean(opts.yes);
   const nonInteractive = autoYes || !process.stdin.isTTY;
+
+  // A mistyped preset fails here, before anything is downloaded.
+  let preset: Preset | null;
+  try {
+    preset = readPresetOption(opts.preset);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (useJson) emitJson(true, { event: "error", step: "preset", message });
+    else process.stderr.write(`${pc.red("✘")} --preset: ${message}\n`);
+    process.exit(2);
+  }
 
   if (!useJson) {
     // Show telemetry opt-out banner once per machine (no-op on subsequent
@@ -229,6 +245,7 @@ async function run(): Promise<void> {
       projectName,
       resolvedPm,
       opts,
+      preset,
       useJson,
       startedAt: Date.now(),
       reportCreatedEntries: (entries) => {

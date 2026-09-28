@@ -131,8 +131,8 @@
     "columns": {
       "product": "Produk",
       "resources": "Sumber",
-      "legal": "Undang-undang",
-      "community": "Komuniti"
+      "company": "Syarikat",
+      "legal": "Undang-undang"
     },
     "links": {
       "product": "Produk",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Hak cipta terpelihara.",
+    "copyright": "© 2026 {companyLegalEn} · Hak cipta terpelihara.",
     "fontCredit": "Fon Cina: MiSans (Xiaomi)",
     "statusOnline": "Semua sistem beroperasi",
     "newsletterTitle": "Kekal terkini",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "STRUKTUR TURBOREPO",
-    "title": "10 aplikasi. 112 pakej. 4 lorong backend.",
+    "title": "10 aplikasi. 111 pakej. 4 lorong backend.",
     "description": "Kod kongsi, binaan selari, sifar penduaan. Pengetikan hujung-ke-hujung lengkap dari pangkalan data ke hadapan.",
     "metricApps": "aplikasi",
     "metricBackends": "lorong backend",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Anda boleh menghubungi Pegawai Perlindungan Data kami di dpo@nebutra.com."
+            "desc": "Anda boleh menghubungi Pegawai Perlindungan Data kami di dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Cara Memohon Bayaran Balik",
         "step1": {
           "title": "Langkah 1: Hubungi Sokongan",
-          "intro": "E-mel kami di billing@nebutra.com dengan:",
+          "intro": "E-mel kami di billing@{domain} dengan:",
           "items": {
             "0": "Alamat e-mel akaun anda",
             "1": "Pelanggan langganan dan tempoh pengebilan",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Balas e-mel keputusan dengan maklumat tambahan",
           "1": "Minta pengesahan kepada penyelia",
-          "2": "Hubungi kami di legal@nebutra.com untuk semakan lanjut"
+          "2": "Hubungi kami di legal@{domain} untuk semakan lanjut"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Penyelesaian Pertikaian",
         "informal": {
           "title": "10.1 Penyelesaian Tidak Rasmi",
-          "content": "Sebelum memulakan prosedur rasmi, anda bersetuju untuk menghubungi kami di legal@nebutra.com bagi cuba menyelesaikan pertikaian secara tidak rasmi."
+          "content": "Sebelum memulakan prosedur rasmi, anda bersetuju untuk menghubungi kami di legal@{domain} bagi cuba menyelesaikan pertikaian secara tidak rasmi."
         },
         "governingLaw": {
           "title": "10.2 Undang-Undang Berkuat Kuasa",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Mula Sekarang",
       "title": "Berhenti konfigurasi. Mula membina.",
       "description": "Inisialisasi senibina SaaS berskala secara tempatan dengan CLI {brandName}.",
-      "button": "Laksanakan Seni Bina",
       "license": "Sumber terbuka di bawah lesen FSL-1.1-ALv2. Kad kredit tidak diperlukan."
     },
     "capability": {

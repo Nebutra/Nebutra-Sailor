@@ -931,88 +931,11 @@
         "title": "Tema",
         "description": "Gunakan terang, gelap, atau sesuaikan preferensi sistem."
       },
-      "themePreset": {
-        "title": "Preset tema",
-        "description": "Terapkan tema apa pun dari Theme Playground ke seluruh aplikasi. Kontrol di bawah ini ditumpuk di atasnya untuk penyesuaian lebih lanjut.",
-        "search": "Cari tema…",
-        "searchLabel": "Cari tema",
-        "default": "Bawaan",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktif",
-        "empty": "Tidak ada tema yang cocok dengan pencarian Anda.",
-        "count": "{count} tema"
-      },
-      "themeEditor": {
-        "title": "Tema",
-        "description": "Pilih preset, impor DESIGN.md, lalu sesuaikan token di bawah ini.",
-        "selectLabel": "Preset tema",
-        "import": "Impor",
-        "copy": "Salin tema",
-        "copied": "Tersalin",
-        "copyError": "Gagal menyalin",
-        "custom": "Kustom"
-      },
-      "designMd": {
-        "title": "Impor DESIGN.md",
-        "description": "Tempel atau unggah DESIGN.md untuk menerapkan warna, radius, font, spasi, dan bayangan ke seluruh aplikasi — tetap tersimpan meski halaman dimuat ulang.",
-        "applied": "Diterapkan:",
-        "remove": "Hapus"
-      },
       "themeMode": {
         "label": "Mode tema",
         "light": "Terang",
         "dark": "Gelap",
         "system": "Sistem"
-      },
-      "accent": {
-        "title": "Warna aksen",
-        "description": "Pilih aksen merek yang memberi warna pada status aktif di seluruh aplikasi.",
-        "label": "Warna aksen",
-        "options": {
-          "default": "Bawaan",
-          "blue": "Biru",
-          "cyan": "Cyan",
-          "violet": "Ungu",
-          "pink": "Merah Muda",
-          "amber": "Amber",
-          "green": "Hijau",
-          "red": "Merah"
-        }
-      },
-      "colors": {
-        "title": "Warna",
-        "description": "Aksen, latar belakang, dan latar depan.",
-        "background": {
-          "label": "Latar Belakang",
-          "description": "Timpa warna latar permukaan."
-        },
-        "foreground": {
-          "label": "Latar Depan",
-          "description": "Timpa warna teks isi."
-        },
-        "resetToDefault": "Kembalikan ke bawaan"
-      },
-      "fontFamily": {
-        "uiLabel": "Font UI",
-        "uiDescription": "Keluarga font yang digunakan di seluruh UI.",
-        "codeLabel": "Font kode",
-        "codeDescription": "Keluarga font yang digunakan untuk tampilan kode.",
-        "options": {
-          "ui": {
-            "theme": "Bawaan tema",
-            "system": "Sistem",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Bawaan tema",
-            "system": "Sistem mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Gunakan kursor pointer",
@@ -1049,14 +972,6 @@
         "label": "Preferensi gerakan",
         "system": "Sistem",
         "on": "Aktif"
-      },
-      "surface": {
-        "title": "Sidebar transparan",
-        "description": "Terapkan material transparan pada sidebar."
-      },
-      "transparency": {
-        "label": "Sidebar transparan",
-        "description": "Terapkan material transparan pada sidebar."
       }
     }
   },

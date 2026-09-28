@@ -2,6 +2,7 @@ import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 
 function Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
@@ -19,6 +20,7 @@ function PopoverTrigger({ asChild, children, render, ...props }: PopoverTriggerP
     <PopoverPrimitive.Trigger
       data-slot="popover-trigger"
       render={renderElement}
+      nativeButton={rendersNativeButton(renderElement)}
       {...(renderElement ? props : { ...props, children })}
     />
   );

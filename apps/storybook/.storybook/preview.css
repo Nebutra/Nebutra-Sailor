@@ -21,6 +21,7 @@
 }
 
 @import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/project.css"; /* this project's look (Sailor Studio preset) */
 @import "@nebutra/ui/typography/fonts.css";
 
 /* Tailwind v4 auto-scans files reached via the module graph, but tsup-built

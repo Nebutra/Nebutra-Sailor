@@ -130,7 +130,6 @@ const docsDriftSources = [
   "DESIGN.md",
   "packages/design/brand/README.md",
   "apps/storybook/src/stories/Typography.stories.tsx",
-  "apps/sailor-docs/src/components/typography-demos.tsx",
 ].map((relativePath) => ({ relativePath, content: read(relativePath) }));
 const runtimeFontSources = [
   {
@@ -151,10 +150,6 @@ const runtimeFontSources = [
   { relativePath: "packages/design/ui/src/typography/tokens.ts", content: typographyTs },
   { relativePath: "packages/design/ui/src/typography/fonts.css", content: typographyFontsCss },
   { relativePath: "packages/design/ui/src/tailwind.preset.ts", content: tailwindPresetTs },
-  {
-    relativePath: "apps/landing/src/components/ui/mockups/MatrixLogOcean.tsx",
-    content: read("apps/landing/src/components/ui/mockups/MatrixLogOcean.tsx"),
-  },
   {
     relativePath: "apps/web/src/app/global-error.tsx",
     content: read("apps/web/src/app/global-error.tsx"),

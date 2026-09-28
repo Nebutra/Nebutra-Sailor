@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar, PricingSection } from "@/components/landing";
+import { FinalCTA, PricingSection } from "@/components/landing";
 import { PricingComparisonTable } from "@/components/landing/pricing-comparison-table";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Link } from "@/i18n/navigation";
@@ -78,9 +78,8 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
   });
 
   return (
-    <main id="main-content" className="min-h-dvh bg-background">
+    <main id="main-content" className="flex-1 bg-background">
       <StructuredData data={productLd} id="pricing-product-jsonld" />
-      <Navbar />
 
       <section className="mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-8">
         {/* Header */}
@@ -178,7 +177,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
         </AnimateIn>
       </section>
 
-      <FooterMinimal showFinalCta />
+      <FinalCTA />
     </main>
   );
 }

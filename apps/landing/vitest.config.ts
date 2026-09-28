@@ -14,6 +14,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "server-only": path.resolve(__dirname, "./src/test/server-only.shim.ts"),
       "@nebutra/billing": path.resolve(__dirname, "../../packages/commerce/billing/src/index.ts"),
       "@nebutra/icons": path.resolve(__dirname, "../../packages/design/icons/src/index.ts"),
       "@nebutra/license": path.resolve(__dirname, "../../packages/commerce/license/src/index.ts"),

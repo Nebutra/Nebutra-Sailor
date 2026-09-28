@@ -26,6 +26,7 @@ export function buildProgram(): Command {
     .option("--no-install", "skip package install")
     .option("--no-git", "skip git init")
     .option("-y, --yes", "non-interactive (use ./my-app when no name is given)")
+    .option("--preset <code>", "the look from Sailor Studio: a preset code or design-language id")
     .option("--dry-run", "preview actions without writing files")
     .option("--json", "machine-readable output")
     .option("--no-color", "disable color output")

@@ -931,88 +931,11 @@
         "title": "Tema",
         "description": "Gunakan terang, gelap, atau padankan dengan pilihan sistem."
       },
-      "themePreset": {
-        "title": "Tetapan tema",
-        "description": "Laksanakan mana-mana tema Theme Playground di seluruh aplikasi. Kawalan di bawah akan ditindih untuk penalaan halus.",
-        "search": "Cari tema…",
-        "searchLabel": "Cari tema",
-        "default": "Lalai",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktif",
-        "empty": "Tiada tema yang sepadan dengan carian anda.",
-        "count": "{count} tema"
-      },
-      "themeEditor": {
-        "title": "Tema",
-        "description": "Pilih tetapan, import DESIGN.md, kemudian tala semula token di bawah.",
-        "selectLabel": "Tetapan tema",
-        "import": "Import",
-        "copy": "Salin tema",
-        "copied": "Disalin",
-        "copyError": "Salinan gagal",
-        "custom": "Tersuai"
-      },
-      "designMd": {
-        "title": "Import DESIGN.md",
-        "description": "Tampal atau muat naik DESIGN.md untuk menggunakan warna, jejari, fon, jarak, dan bayangannya di seluruh aplikasi — kekal walaupun selepas dimuat semula.",
-        "applied": "Digunakan:",
-        "remove": "Buang"
-      },
       "themeMode": {
         "label": "Mod tema",
         "light": "Terang",
         "dark": "Gelap",
         "system": "Sistem"
-      },
-      "accent": {
-        "title": "Warna aksen",
-        "description": "Pilih aksen jenama untuk mewarnakan keadaan aktif di seluruh aplikasi.",
-        "label": "Warna aksen",
-        "options": {
-          "default": "Lalai",
-          "blue": "Biru",
-          "cyan": "Sian",
-          "violet": "Ungu",
-          "pink": "Merah Jambu",
-          "amber": "Amber",
-          "green": "Hijau",
-          "red": "Merah"
-        }
-      },
-      "colors": {
-        "title": "Warna",
-        "description": "Aksen, latar belakang, dan latar hadapan.",
-        "background": {
-          "label": "Latar Belakang",
-          "description": "Tindas warna latar belakang permukaan."
-        },
-        "foreground": {
-          "label": "Latar Hadapan",
-          "description": "Tindas warna teks badan."
-        },
-        "resetToDefault": "Set semula ke lalai"
-      },
-      "fontFamily": {
-        "uiLabel": "Fon UI",
-        "uiDescription": "Keluarga fon yang digunakan merentasi UI.",
-        "codeLabel": "Fon kod",
-        "codeDescription": "Keluarga fon yang digunakan untuk permukaan kod.",
-        "options": {
-          "ui": {
-            "theme": "Lalai tema",
-            "system": "Sistem",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Lalai tema",
-            "system": "Sistem mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Gunakan kursor pointer",
@@ -1049,14 +972,6 @@
         "label": "Keutamaan gerakan",
         "system": "Sistem",
         "on": "Hidup"
-      },
-      "surface": {
-        "title": "Bar sisi lutsinar",
-        "description": "Gunakan bahan lutsinar pada bar sisi."
-      },
-      "transparency": {
-        "label": "Bar sisi lutsinar",
-        "description": "Gunakan bahan lutsinar pada bar sisi."
       }
     }
   },

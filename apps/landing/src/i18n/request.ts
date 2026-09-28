@@ -15,6 +15,7 @@ import { routing } from "./routing";
  *   {companyLegal}   → brand.nameFull      e.g. "无锡云毓智能科技有限公司"
  *   {companyLegalEn} → brand.nameFullEn    e.g. "Wuxi Nebutra Intelligence Technology Co., Ltd."
  *   {productName}    → brand.name + " Sailor"
+ *   {domain}         → brand.domains.landing (the host in mail addresses)
  */
 export const brandVars: Record<string, string> = {
   brandName: brand.name,
@@ -22,6 +23,7 @@ export const brandVars: Record<string, string> = {
   companyLegal: brand.nameFull,
   companyLegalEn: brand.nameFullEn,
   productName: `${brand.name} Sailor`,
+  domain: brand.domains.landing,
 };
 
 /**

@@ -1,153 +1,98 @@
-import dynamic from "next/dynamic";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { CSSProperties } from "react";
+import { brand } from "@nebutra/brand/metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { HeroMockupWindow, LogoStrip, Navbar } from "@/components/landing";
-import { HeroSection } from "@/components/landing/HeroSection";
-import type { Locale } from "@/i18n/routing";
+import { NewsletterForm } from "@/components/landing/NewsletterForm";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-
-// Skeleton uses min-h so longer locales don't clip. Heights track real
-// section sizes to keep CLS down while content streams in; mobile uses a
-// separate contract because several dense demos stay desktop-only.
-const SectionSkeleton = ({
-  minH = "32rem",
-  mobileMinH = "24rem",
-}: {
-  minH?: string;
-  mobileMinH?: string;
-}) => (
-  <section
-    aria-hidden
-    className="w-full min-h-[var(--section-skeleton-mobile-min-h)] md:min-h-[var(--section-skeleton-min-h)]"
-    style={
-      {
-        "--section-skeleton-min-h": minH,
-        "--section-skeleton-mobile-min-h": mobileMinH,
-      } as CSSProperties
-    }
-  />
-);
-
-/**
- * Each section streams into its own boundary, with the skeleton as that
- * boundary's fallback.
- *
- * These were `dynamic(..., { loading: () => <SectionSkeleton/> })`. On a server
- * component that resolves the import and streams the real section, while the
- * client's lazy component renders the skeleton until its chunk lands — so React
- * hydrated a skeleton against real markup and threw a recoverable mismatch for
- * every one of them, regenerating seven subtrees on the client. It was
- * invisible: the content was correct either way, and the only evidence was six
- * minified #418s in the console on the homepage and nowhere else.
- *
- * As a Suspense fallback the skeleton shows while the boundary is pending and
- * is replaced by the same markup the server sent, which is what a fallback is.
- */
-const AIConstellationMarquee = dynamic(() =>
-  import("@/components/landing/AIConstellationMarquee").then((m) => m.AIConstellationMarquee),
-);
-
-const CapabilityMatrixSection = dynamic(() =>
-  import("@/components/landing/CapabilityMatrixSection").then((m) => m.CapabilityMatrixSection),
-);
-
-const UseCasesSection = dynamic(() =>
-  import("@/components/landing/use-cases/UseCasesSection").then((m) => m.UseCasesSection),
-);
-
-const DesignSystemSection = dynamic(() =>
-  import("@/components/landing/DesignSystemSection").then((m) => m.DesignSystemSection),
-);
-
-const PricingSection = dynamic(() =>
-  import("@/components/landing/PricingSection").then((m) => m.PricingSection),
-);
-
-const FAQSection = dynamic(() =>
-  import("@/components/landing/faq-section").then((m) => m.FAQSection),
-);
-
-const FooterMinimal = dynamic(() =>
-  import("@/components/landing/FooterMinimal").then((m) => m.FooterMinimal),
-);
+import { EssayFeature, essays, FEATURED, toCard } from "@/nebutra/home/essay-feature";
+import { EssayGrid } from "@/nebutra/home/essay-grid";
+import { ROUTES } from "@/nebutra/routes";
+import { sitePageMeta } from "@/nebutra/seo";
+import { Band, Intro, More } from "@/nebutra/ui/page";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const locale = lang as Locale;
-  setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: "metadata" });
-
-  return buildPageMetadata({
-    title: t("title"),
-    description: t("description"),
-    path: "/",
-    locale,
-  });
+  return buildPageMetadata(
+    sitePageMeta(lang, "/", {
+      description: `No company should be hard to start. ${brand.name} builds the platform, the products and the network that make it so.`,
+    }),
+  );
 }
 
-export default async function MarketingHomePage({ params }: { params: Promise<{ lang: string }> }) {
+async function Latest() {
+  const posts = (await essays()).filter((p) => p.slug !== FEATURED).slice(0, 6);
+  return <EssayGrid posts={posts.map(toCard)} />;
+}
+
+/**
+ * nebutra.com — media first, as a16z's front page is. The thinking leads; the
+ * platform you can use today and what we are building follow, stated plainly.
+ */
+export default async function SiteHome({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const locale = lang as Locale;
-  setRequestLocale(locale);
+  setRequestLocale(lang);
 
   return (
-    <Suspense>
-      {/* React 19 hoists these to <head>. Keep the decorative hero video out of
-          the preload scanner; preconnect is enough and avoids competing with
-          text/CSS during LCP. */}
-      <link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net" crossOrigin="anonymous" />
-      <link rel="dns-prefetch" href="https://d8j0ntlcm91z4.cloudfront.net" />
-      <main id="main-content" className="flex flex-col min-h-dvh bg-background overflow-x-hidden">
-        <Navbar />
-        <div className="hero-stage relative isolate overflow-hidden bg-background">
-          {/* 1. Hero */}
-          <HeroSection />
-
-          {/* 2. Trust strip */}
-          <LogoStrip locale={lang as Locale} />
-
-          {/* 3. Hero Mockup */}
-          <section className="relative z-20 w-full overflow-visible bg-transparent pb-32 pt-2">
-            <HeroMockupWindow />
-          </section>
+    <main id="main-content">
+      <section className="relative isolate overflow-hidden px-8 pt-28 pb-24 xl:px-16">
+        <div aria-hidden className="site-hero-glow" />
+        <div className="relative z-10">
+          <Intro
+            level={1}
+            title={
+              <>
+                No company should be hard to <span className="signature">start.</span>
+              </>
+            }
+            cn="让世界上没有难创的业。"
+            lead={`Founders rarely die of bad ideas. They die of the Founder Tax — a dozen brilliant tools, each seeing one slice, none knowing you are building a company. ${brand.name} is building the system that does, and writing down what we learn on the way.`}
+          />
         </div>
+      </section>
 
-        {/* 4. AI Constellation Marquee */}
-        <Suspense fallback={<SectionSkeleton minH="14rem" mobileMinH="10rem" />}>
-          <AIConstellationMarquee />
+      <Band>
+        <Suspense>
+          <EssayFeature />
         </Suspense>
+      </Band>
 
-        {/* 5. Capability Matrix */}
-        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="42rem" />}>
-          <CapabilityMatrixSection />
-        </Suspense>
+      <Band>
+        <Intro title="Latest" cn="最新文章" />
+        <div className="mt-12">
+          <Suspense>
+            <Latest />
+          </Suspense>
+        </div>
+        <More href={ROUTES.journal}>All essays</More>
+      </Band>
 
-        {/* 6. Design System */}
-        <Suspense fallback={<SectionSkeleton minH="48rem" mobileMinH="38rem" />}>
-          <DesignSystemSection />
-        </Suspense>
+      <Band>
+        <div className="grid grid-cols-1 gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] xl:items-end">
+          <Intro
+            title="Read it as it's written."
+            lead="New essays on agents, the layer after them, and the founder's craft — when they are ready, not on a schedule."
+          />
+          <NewsletterForm />
+        </div>
+      </Band>
 
-        {/* 7. Use Cases */}
-        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="34rem" />}>
-          <UseCasesSection />
-        </Suspense>
-
-        {/* 8. Pricing */}
-        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="42rem" />}>
-          <PricingSection />
-        </Suspense>
-
-        {/* 9. FAQ */}
-        <Suspense fallback={<SectionSkeleton minH="36rem" mobileMinH="28rem" />}>
-          <FAQSection />
-        </Suspense>
-
-        {/* Footer (includes Final CTA at top) */}
-        <Suspense fallback={<SectionSkeleton minH="20rem" mobileMinH="16rem" />}>
-          <FooterMinimal showFinalCta />
-        </Suspense>
-      </main>
-    </Suspense>
+      <Band>
+        <div className="grid grid-cols-1 gap-14 md:grid-cols-2">
+          <div>
+            <Intro
+              title="Sailor"
+              lead="The open-source platform we build everything on. Usable today: npx create-sailor."
+            />
+            <More href={ROUTES.sailor}>The platform</More>
+          </div>
+          <div>
+            <Intro
+              title="What we're building"
+              lead={`${brand.name} OS, the Sleptons network, and the early products growing on the platform.`}
+            />
+            <More href={ROUTES.building}>In progress</More>
+          </div>
+        </div>
+      </Band>
+    </main>
   );
 }

@@ -537,10 +537,10 @@ Nebutra-Sailor/
 ├── packages/                  # Shared TS libraries (categorized in W3b)
 │   ├── ai/                # 42 pkgs — e.g. agents, agent-runtime, ai-providers, startup-os, knowledge-rag, mcp
 │   ├── commerce/          # 9 pkgs — e.g. billing, metering, contracts, license, access-gate, waitlist
-│   ├── design/            # 10 pkgs — e.g. ui, tokens, design-tokens, brand, theme, icons, fonts
+│   ├── design/            # 9 pkgs  — e.g. ui, tokens, design-tokens, brand, theme, icons, fonts
 │   ├── iam/               # 8 pkgs — auth, audit, vault, oauth, permissions, tenant, identity, captcha
 │   ├── integrations/      # 17 pkgs — e.g. queue, search, email, notifications, storage, webhooks, cache
-│   ├── ops/               # 6 pkgs — cli, create-sailor, preset, sanity, supabase, china-compliance
+│   ├── ops/               # 5 pkgs — cli, create-sailor, preset, sanity, china-compliance
 │   └── platform/          # 21 pkgs — e.g. db, logger, repositories, rate-limit, feature-flags, i18n, status
 ├── backends/                  # No-UI backends (split by language à la vercel/vercel)
 │   ├── gateway/               # TypeScript / Hono — BFF, auth, tenancy, routing

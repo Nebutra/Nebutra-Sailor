@@ -15,7 +15,7 @@ describe("theme command formatters", () => {
       expect.arrayContaining(CORE_LANGUAGES),
     );
     const factory = parsed.languages.find((lang: { id: string }) => lang.id === "factory");
-    expect(factory?.install?.command).toBe("nebutra theme use factory");
+    expect(factory?.install?.command).toBe("nebutra apply --preset factory");
   });
 
   it("formats inspect output for a known design language", () => {
@@ -25,7 +25,7 @@ describe("theme command formatters", () => {
 
     expect(parsed.id).toBe("linear");
     expect(parsed.kind).toBe("design-language");
-    expect(parsed.install.command).toBe("nebutra theme use linear");
+    expect(parsed.install.command).toBe("nebutra apply --preset linear");
     expect(parsed.skinPath).toBeTruthy();
   });
 

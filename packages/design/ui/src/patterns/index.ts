@@ -28,9 +28,7 @@ export {
   CardRoot,
   CardTitle,
 } from "./Card";
-export type { CommandBoxProps } from "./CommandBox";
 // CommandBox
-export { CommandBox } from "./CommandBox";
 
 // Dashboard surfaces — dense SaaS command, panel, and metric primitives
 export {
@@ -79,23 +77,16 @@ export {
 // vote / action chrome. Composed from Card / Button / Badge / Separator
 // primitives + sibling MarkdownEditor / MarkdownRenderer / VoteButtons /
 // UserInfo pieces.
-export {
-  type AnswerType,
-  type Author,
-  MarkdownEditor,
-  type MarkdownEditorProps,
-  MarkdownRenderer,
-  type MarkdownRendererProps,
-  QAPage,
-  type QAPageProps,
-  type QuestionType,
-  UserInfo,
-  type UserInfoProps,
-  VoteButtons,
-  type VoteButtonsProps,
-  type VoteType,
-} from "./qa-page";
 
+// DataTable — TanStack table with toolbar, faceted filters, column visibility, virtualization
+export {
+  createDataTableTranslator,
+  DataTable,
+  type DataTableFilter,
+  type DataTableLabels,
+  type DataTableProps,
+  DEFAULT_DATA_TABLE_LABELS,
+} from "./data-table";
 // SidebarNav — grouped app sidebar with badges, nested children, collapsed mode
 export {
   SidebarNav,
@@ -108,20 +99,6 @@ export {
   type SidebarNavSection,
   type SidebarNavSectionAction,
 } from "./sidebar-nav";
-export type {
-  TerminalBodyProps,
-  TerminalHeaderProps,
-  TerminalLineProps,
-  TerminalProps,
-} from "./Terminal";
-// Terminal compound component
-export {
-  Terminal,
-  TerminalBody,
-  TerminalHeader,
-  TerminalLine,
-  TerminalRoot,
-} from "./Terminal";
 // UserMenu — avatar dropdown with workspace slot + grouped action items
 export {
   UserMenu,

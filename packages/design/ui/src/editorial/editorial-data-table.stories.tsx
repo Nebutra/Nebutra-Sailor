@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { EditorialDataTable } from "./editorial-data-table";
+import { editorialReadingColumnDecorator } from "./story-decorators";
 
 const meta: Meta<typeof EditorialDataTable> = {
   // The leaf segment has to be the exact component name. The story-coverage
@@ -8,6 +9,7 @@ const meta: Meta<typeof EditorialDataTable> = {
   title: "Editorial/EditorialDataTable",
   component: EditorialDataTable,
   tags: ["autodocs"],
+  decorators: [editorialReadingColumnDecorator],
   parameters: {
     docs: {
       description: {

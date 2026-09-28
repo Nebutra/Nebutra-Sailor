@@ -260,7 +260,7 @@ export const PATTERNS: readonly Pattern[] = [
       },
     ],
     cast: ["ChartContainer", "ChartTooltip", "ChartLegend"],
-    note: "Live chart demos — bar, line, gauge, calendar — are on the Showcase, which renders the docs-shared set directly.",
+    note: "Live chart demos — bar, line, gauge, calendar — are on the Showcase, which renders the catalog demos directly.",
   },
 ];
 

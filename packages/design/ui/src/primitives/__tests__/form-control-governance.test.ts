@@ -14,7 +14,6 @@ const focusVisibleOnlySources = [
   "filter-pills.tsx",
   "grid-system.tsx",
   "menubar.tsx",
-  "multi-select.tsx",
   "multiple-selector.tsx",
   "navigation-menu.tsx",
   "radio-group-card.tsx",
@@ -24,7 +23,7 @@ const focusVisibleOnlySources = [
   "sheet.tsx",
   "toggle-group.tsx",
 ] as const;
-const overlayPrimitiveSources = ["navigation-menu.tsx", "menu.tsx", "sheet.tsx"] as const;
+const overlayPrimitiveSources = ["navigation-menu.tsx", "sheet.tsx"] as const;
 const overlayFamilyPrimitiveSources = [
   "command.tsx",
   "dialog.tsx",

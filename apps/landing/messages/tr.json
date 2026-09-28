@@ -131,8 +131,8 @@
     "columns": {
       "product": "Ürün",
       "resources": "Kaynaklar",
-      "legal": "Yasal",
-      "community": "Topluluk"
+      "company": "Şirket",
+      "legal": "Yasal"
     },
     "links": {
       "product": "Ürün",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Tüm hakları saklıdır.",
+    "copyright": "© 2026 {companyLegalEn} · Tüm hakları saklıdır.",
     "fontCredit": "Çince yazı tipi: MiSans (Xiaomi)",
     "statusOnline": "Tüm sistemler çalışıyor",
     "newsletterTitle": "Gelişmeleri takip edin",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO YAPISI",
-    "title": "10 uygulama. 112 paket. 4 arka uç hattı.",
+    "title": "10 uygulama. 111 paket. 4 arka uç hattı.",
     "description": "Paylaşılan kod, paralel derlemeler, sıfır tekrar. Veritabanından ön yüzeye kadar uçtan uca tam tipleme.",
     "metricApps": "uygulama",
     "metricBackends": "arka uç şeritleri",
@@ -243,7 +243,7 @@
       "ctaButton": "İletişime Geç"
     },
     "contact": {
-      "title": "Teknik & Ticari Soruşturma — {brandName} Intelligence",
+      "title": "Teknik & Ticari Soruşturma — {brandName}",
       "description": "Ticari lisanslama, kurumsal kendi barındırma ve gelişmiş teknik destek için özel iletişim kanalı.",
       "heading": "Destek Bağlantısı Kur",
       "subheading": "Belirgin gereksinimlerinizi değerlendirmek için özel bir teknik uzman veya mimar göndereceğiz.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "KVKK",
-            "desc": "Veri Koruma Sorumlumuz ile dpo@nebutra.com adresinden iletişime geçebilirsiniz."
+            "desc": "Veri Koruma Sorumlumuz ile dpo@{domain} adresinden iletişime geçebilirsiniz."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "İade Nasıl Talep Edilir",
         "step1": {
           "title": "Adım 1: Destek ile İletişime Geçin",
-          "intro": "Aşağıdaki bilgileri billing@nebutra.com adresine gönderin:",
+          "intro": "Aşağıdaki bilgileri billing@{domain} adresine gönderin:",
           "items": {
             "0": "Hesap e-posta adresiniz",
             "1": "Abonelik planı ve faturalama dönemi",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Karar e-postasına ek bilgilerle yanıt verin",
           "1": "Bir yöneticiye yükseltme talep edin",
-          "2": "Daha fazla inceleme için legal@nebutra.com adresinden bizimle iletişime geçin"
+          "2": "Daha fazla inceleme için legal@{domain} adresinden bizimle iletişime geçin"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Uyuşmazlık Çözümü",
         "informal": {
           "title": "10.1 Bilgi Düzeyinde Çözüm",
-          "content": "Resmi yargı sürecini başlatmadan önce, uyuşmazlıkları bilgilendirme düzeyinde çözmek için legal@nebutra.com adresinden bizimle iletişime geçmeyi kabul edersiniz."
+          "content": "Resmi yargı sürecini başlatmadan önce, uyuşmazlıkları bilgilendirme düzeyinde çözmek için legal@{domain} adresinden bizimle iletişime geçmeyi kabul edersiniz."
         },
         "governingLaw": {
           "title": "10.2 Uygulanabilir Hukuk",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Başlayın",
       "title": "Yapılandırmayı bırakın. İnşa etmeye başlayın.",
       "description": "{brandName} CLI ile ölçeklenebilir bir SaaS mimarisini yerel olarak başlatın.",
-      "button": "Mimarisi Dağıt",
       "license": "FSL-1.1-ALv2 lisansı altında açık kaynak. Kredi kartı gerekmez."
     },
     "capability": {

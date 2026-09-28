@@ -78,7 +78,7 @@ const EXEMPT_PATH = [
   /\.test\.tsx?$/,
   /\/__tests__\//,
   /-demos?\.tsx$/, // docs/registry demo surfaces that render the literal
-  /theme-playground\//,
+  /nebutra\/studio\//, // Sailor Studio renders each language's literal swatches
   /content\/docs\//, // mdx token docs may print the literal
 
   // ── Structural: the token / brand SSOT defines the hex ───────────────────

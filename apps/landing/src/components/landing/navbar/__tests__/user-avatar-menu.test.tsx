@@ -73,7 +73,7 @@ describe("UserAvatarMenu", () => {
       vi.fn().mockResolvedValue(
         jsonResponse({
           name: "Tseka Luk",
-          email: "tseka@nebutra.com",
+          email: "founder@example.com",
           avatarUrl: null,
           activeOrganization: { name: "Nebutra", slug: "nebutra" },
         }),
@@ -94,7 +94,7 @@ describe("UserAvatarMenu", () => {
       vi.fn().mockResolvedValue(
         jsonResponse({
           name: "Tseka Luk",
-          email: "tseka@nebutra.com",
+          email: "founder@example.com",
           avatarUrl: "https://lh3.googleusercontent.com/a/blocked",
           activeOrganization: null,
         }),

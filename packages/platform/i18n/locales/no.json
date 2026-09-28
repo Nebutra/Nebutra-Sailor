@@ -931,88 +931,11 @@
         "title": "Tema",
         "description": "Bruk lyst, mørkt eller følg systemets innstilling."
       },
-      "themePreset": {
-        "title": "Temamal",
-        "description": "Bruk et tema fra Theme Playground i hele appen. Kontrollene nedenfor lar deg finjustere det.",
-        "search": "Søk etter temaer…",
-        "searchLabel": "Søk etter temaer",
-        "default": "Standard",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktiv",
-        "empty": "Ingen temaer matcher søket ditt.",
-        "count": "{count} temaer"
-      },
-      "themeEditor": {
-        "title": "Tema",
-        "description": "Velg en mal, importer en DESIGN.md, og finjuster deretter tokenene nedenfor.",
-        "selectLabel": "Temamal",
-        "import": "Importer",
-        "copy": "Kopier tema",
-        "copied": "Kopiert",
-        "copyError": "Kopiering mislyktes",
-        "custom": "Egendefinert"
-      },
-      "designMd": {
-        "title": "Importer DESIGN.md",
-        "description": "Lim inn eller last opp en DESIGN.md for å bruke farger, radius, skrifttyper, avstander og skygger over hele appen — lagret over gjennombelastninger.",
-        "applied": "Brukt:",
-        "remove": "Fjern"
-      },
       "themeMode": {
         "label": "Temamodus",
         "light": "Lys",
         "dark": "Mørk",
         "system": "System"
-      },
-      "accent": {
-        "title": "Accentfarge",
-        "description": "Velg en merkevareaccent som farger aktive tilstander over hele appen.",
-        "label": "Accentfarge",
-        "options": {
-          "default": "Standard",
-          "blue": "Blå",
-          "cyan": "Cyan",
-          "violet": "Violet",
-          "pink": "Rosa",
-          "amber": "Amber",
-          "green": "Grønn",
-          "red": "Rød"
-        }
-      },
-      "colors": {
-        "title": "Farger",
-        "description": "Accent, bakgrunn og forgrunn.",
-        "background": {
-          "label": "Bakgrunn",
-          "description": "Overstyr bakgrunnsfargen på overflaten."
-        },
-        "foreground": {
-          "label": "Forgrunn",
-          "description": "Overstyr tekstfargen i hovedinnholdet."
-        },
-        "resetToDefault": "Tilbakestill til standard"
-      },
-      "fontFamily": {
-        "uiLabel": "Skrifttype for grensesnitt",
-        "uiDescription": "Skrifttype som brukes i hele grensesnittet.",
-        "codeLabel": "Skrifttype for kode",
-        "codeDescription": "Skriftfamilie som brukes for kodeflater.",
-        "options": {
-          "ui": {
-            "theme": "Tema standard",
-            "system": "System",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Tema standard",
-            "system": "System mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Bruk pekermarkør",
@@ -1049,14 +972,6 @@
         "label": "Bevegelsespreferanse",
         "system": "System",
         "on": "På"
-      },
-      "surface": {
-        "title": "Gjennomsiktig sidepanel",
-        "description": "Bruk et gjennomsiktig materiale på sidepanelet."
-      },
-      "transparency": {
-        "label": "Gjennomsiktig sidepanel",
-        "description": "Bruk et gjennomsiktig materiale på sidepanelet."
       }
     }
   },

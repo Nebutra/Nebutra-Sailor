@@ -69,8 +69,21 @@ describe("@nebutra/theme design-language catalog", () => {
   });
 
   it("keeps languages.json, brands/ dirs, and built-in packages in sync", () => {
+    // A package marked `catalog: false` in languages.meta.json is a site skin
+    // (its scoped CSS is emitted, it is never picked), so it is not a language.
+    const siteSkins = new Set(
+      Object.entries(
+        (
+          JSON.parse(readFileSync(resolve(__dirname, "../languages.meta.json"), "utf8")) as {
+            languages?: Record<string, { catalog?: boolean }>;
+          }
+        ).languages ?? {},
+      )
+        .filter(([, m]) => m.catalog === false)
+        .map(([id]) => id),
+    );
     const diskBrandIds = readdirSync(brandsRoot, { withFileTypes: true })
-      .filter((d) => d.isDirectory())
+      .filter((d) => d.isDirectory() && !siteSkins.has(d.name))
       .map((d) => d.name)
       .sort();
     const catalogSkinIds = listSkinLanguages()

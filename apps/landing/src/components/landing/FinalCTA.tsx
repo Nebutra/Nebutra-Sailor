@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "@nebutra/icons";
+import { AuroraBackground, Button, Heading } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { heroContent } from "@/lib/landing-content";
@@ -8,51 +9,59 @@ import { AnimateIn } from "./AnimateIn";
 import { CommandInstallBox } from "./CommandInstallBox";
 
 /**
- * FinalCTA - Closing conversion section.
+ * The closing product pitch, "stop fiddling, start building". It is page
+ * content, so a page places it last in its own markup, on the page canvas;
+ * the footer below draws the edge.
+ *
+ * Only conversion-intent pages carry it (home, features, pricing, solutions).
+ * It used to be a `FooterMinimal` prop. When it was on by default it polluted
+ * careers, legal and blog pages with a misplaced pitch.
+ *
+ * The button continues the command above it: install, then read how. It used
+ * to say "Deploy Architecture" and open /get-license, under a line that says no
+ * licence or card is needed.
  */
 export function FinalCTA() {
-  const t = useTranslations("cta");
+  const t = useTranslations("microLanding.cta");
+  const tCommand = useTranslations("cta");
 
   return (
-    <section className="relative w-full overflow-hidden border-t border-border bg-background py-28 md:py-36 dark:border-muted dark:bg-background">
-      <div
-        className="landing-cta-rule pointer-events-none absolute inset-x-0 top-0 h-px"
-        aria-hidden="true"
-      />
-      <div className="relative z-10 mx-auto w-full min-w-0 max-w-4xl px-4 text-center sm:px-6">
-        <AnimateIn preset="emerge" inView className="w-full min-w-0">
-          <h2 className="w-full text-balance text-3xl font-bold text-neutral-12 tracking-heading md:text-5xl lg:text-6xl">
-            {t("heading")}
-          </h2>
-        </AnimateIn>
-
-        <AnimateIn preset="fadeUp" inView className="mt-6 w-full min-w-0">
-          <p className="w-full text-balance text-base text-neutral-11 sm:text-lg md:text-xl">
-            {t("subheading")}
-          </p>
-        </AnimateIn>
-
-        <AnimateIn preset="fadeUp" inView className="mx-auto mt-10 w-full min-w-0 max-w-xl">
+    <section
+      data-testid="footer-final-cta"
+      className="relative w-full overflow-hidden bg-background text-foreground"
+    >
+      <AuroraBackground variant="vivid" position="bottom" intensity={0.5} />
+      <AnimateIn
+        preset="emerge"
+        inView
+        className="relative mx-auto max-w-wide px-6 py-24 text-center"
+      >
+        <p className="mb-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+          {t("eyebrow")}
+        </p>
+        <Heading level={2} display align="center">
+          {t("title")}
+        </Heading>
+        <p className="mx-auto mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
+          {t("description")}
+        </p>
+        <div className="mx-auto mt-8 max-w-xl">
           <CommandInstallBox
             command={heroContent.command}
-            copyLabel={t("copyLabel")}
-            copiedLabel={t("copiedLabel")}
+            copyLabel={tCommand("copyLabel")}
+            copiedLabel={tCommand("copiedLabel")}
           />
-        </AnimateIn>
-
-        <AnimateIn preset="fadeUp" inView className="mt-8 w-full min-w-0">
-          <a
-            href={createPublicDocsUrl("getting-started/installation")}
-            // allow-palette: .landing-brand-action is a fixed brand-gradient fill (globals.css), not driven by --primary, so its ink stays fixed too
-            className="landing-brand-action group inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full px-8 py-3.5 font-medium text-white transition-transform hover:-translate-y-0.5 sm:w-auto sm:max-w-none"
-          >
-            {t("startBuilding")}
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </a>
-        </AnimateIn>
-      </div>
+        </div>
+        <div className="mt-6">
+          <Button asChild variant="ink" size="lg">
+            <a href={createPublicDocsUrl("getting-started/installation")}>
+              {tCommand("startBuilding")}
+              <ArrowRight className="ml-2 size-4" />
+            </a>
+          </Button>
+        </div>
+        <p className="mt-6 text-sm text-muted-foreground">{t("license")}</p>
+      </AnimateIn>
     </section>
   );
 }
-
-FinalCTA.displayName = "FinalCTA";

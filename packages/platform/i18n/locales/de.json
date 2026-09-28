@@ -931,88 +931,11 @@
         "title": "Design",
         "description": "Verwenden Sie Hell, Dunkel oder System-Einstellung."
       },
-      "themePreset": {
-        "title": "Design-Voreinstellung",
-        "description": "Wenden Sie jedes Theme-Playground-Design auf die ganze App an. Die folgenden Steuerelemente lagern sich zur Feinabstimmung auf.",
-        "search": "Designs suchen…",
-        "searchLabel": "Designs suchen",
-        "default": "Standard",
-        "defaultMood": "Nebutra-Basis-Palette",
-        "active": "Aktiv",
-        "empty": "Keine Designs stimmen mit Ihrer Suche überein.",
-        "count": "{count} Designs"
-      },
-      "themeEditor": {
-        "title": "Design",
-        "description": "Wählen Sie eine Voreinstellung, importieren Sie eine DESIGN.md, und passen Sie dann die folgenden Token an.",
-        "selectLabel": "Design-Voreinstellung",
-        "import": "Importieren",
-        "copy": "Design kopieren",
-        "copied": "Kopiert",
-        "copyError": "Kopieren fehlgeschlagen",
-        "custom": "Benutzerdefiniert"
-      },
-      "designMd": {
-        "title": "DESIGN.md importieren",
-        "description": "Fügen Sie eine DESIGN.md ein oder laden Sie sie hoch, um ihre Farben, Radius, Schriftarten, Abstände und Schatten auf die gesamte App anzuwenden – über Neuladen beibehalten.",
-        "applied": "Angewendet:",
-        "remove": "Entfernen"
-      },
       "themeMode": {
         "label": "Design-Modus",
         "light": "Hell",
         "dark": "Dunkel",
         "system": "System"
-      },
-      "accent": {
-        "title": "Akzentfarbe",
-        "description": "Wählen Sie eine Markenakzentfarbe, die aktive Zustände in der gesamten App färbt.",
-        "label": "Akzentfarbe",
-        "options": {
-          "default": "Standard",
-          "blue": "Blau",
-          "cyan": "Cyan",
-          "violet": "Violett",
-          "pink": "Rosa",
-          "amber": "Bernstein",
-          "green": "Grün",
-          "red": "Rot"
-        }
-      },
-      "colors": {
-        "title": "Farben",
-        "description": "Akzent-, Hintergrund- und Vordergrundfarbe.",
-        "background": {
-          "label": "Hintergrund",
-          "description": "Überschreiben Sie die Oberflächenhintergrundfarbe."
-        },
-        "foreground": {
-          "label": "Vordergrund",
-          "description": "Überschreiben Sie die Textkörperfarbe."
-        },
-        "resetToDefault": "Auf Standard zurücksetzen"
-      },
-      "fontFamily": {
-        "uiLabel": "UI-Schrift",
-        "uiDescription": "Schriftfamilie, die in der gesamten UI verwendet wird.",
-        "codeLabel": "Code-Schrift",
-        "codeDescription": "Schriftfamilie, die in Code-Oberflächen verwendet wird.",
-        "options": {
-          "ui": {
-            "theme": "Design-Standard",
-            "system": "System",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Design-Standard",
-            "system": "System-Monospace",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Zeigercursor verwenden",
@@ -1049,14 +972,6 @@
         "label": "Bewegungseinstellung",
         "system": "System",
         "on": "Ein"
-      },
-      "surface": {
-        "title": "Halbtransparente Seitenleiste",
-        "description": "Wenden Sie transluzentes Material auf die Seitenleiste an."
-      },
-      "transparency": {
-        "label": "Halbtransparente Seitenleiste",
-        "description": "Wenden Sie transluzentes Material auf die Seitenleiste an."
       }
     }
   },

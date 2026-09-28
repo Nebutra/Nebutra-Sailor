@@ -12,6 +12,9 @@ export function CookieConsentBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    // A framed document (Studio's catalog frame) never asks: the page that
+    // embeds it already did, and the choice is shared by origin.
+    if (window.self !== window.top) return;
     setVisible(readConsent() === null);
   }, []);
 

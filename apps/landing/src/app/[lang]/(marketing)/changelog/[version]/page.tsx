@@ -10,7 +10,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import {
@@ -279,9 +278,7 @@ export default async function ChangelogVersionPage({
         );
 
     return (
-      <main id="main-content" className="min-h-dvh bg-background text-foreground">
-        <Navbar />
-
+      <main id="main-content" className="flex-1 bg-background text-foreground">
         <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
           <AnimateIn preset="fadeUp">
             {/* Back link */}
@@ -372,8 +369,6 @@ export default async function ChangelogVersionPage({
             </nav>
           </AnimateIn>
         </article>
-
-        <FooterMinimal />
       </main>
     );
   }
@@ -404,9 +399,7 @@ export default async function ChangelogVersionPage({
       : null;
 
   return (
-    <main id="main-content" className="min-h-dvh bg-background text-foreground">
-      <Navbar />
-
+    <main id="main-content" className="flex-1 bg-background text-foreground">
       <article className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
         <AnimateIn preset="fadeUp">
           {/* Back link */}
@@ -477,8 +470,6 @@ export default async function ChangelogVersionPage({
           </nav>
         </AnimateIn>
       </article>
-
-      <FooterMinimal />
     </main>
   );
 }

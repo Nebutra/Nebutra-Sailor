@@ -5,6 +5,7 @@ import {
   getBlogViewTransitionName,
   resolveBlogCover,
 } from "@nebutra/blog";
+import { brand } from "@nebutra/brand/metadata";
 import { ArrowLeft, ArrowRight, BookOpen, Calendar, Clock, Globe, Message } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
@@ -16,7 +17,7 @@ import { connection } from "next/server";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar, NewsletterForm } from "@/components/landing";
+import { NewsletterForm } from "@/components/landing";
 import { BlogAuthorAvatar } from "@/components/landing/blog-author-avatar";
 import { BlogComments } from "@/components/landing/blog-comments";
 import { BlogCopyButton } from "@/components/landing/blog-copy-button";
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { lang, slug } = await params;
   if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
     return buildPageMetadata({
-      title: "Not found — Nebutra Blog",
+      title: `Not found — ${brand.name} Blog`,
       description: "This article is not published.",
       path: `/blog/${slug}`,
       locale: lang,
@@ -152,7 +153,7 @@ function BlogArticleFooter({
         </div>
         <aside className="min-w-0 overflow-hidden rounded-[var(--radius-lg)] bg-muted p-5">
           <p className="text-sm font-semibold text-foreground">
-            {isZh ? "订阅 Nebutra Originals" : "Subscribe to Nebutra Originals"}
+            {isZh ? `订阅 ${brand.name} Originals` : `Subscribe to ${brand.name} Originals`}
           </p>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             {isZh
@@ -229,9 +230,8 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   } = article;
 
   return (
-    <main id="main-content" className="min-h-dvh bg-background">
+    <main id="main-content" className="flex-1 bg-background">
       <StructuredData data={[articleLd, breadcrumbLd]} id="blog-article-jsonld" />
-      <Navbar />
 
       <article className="px-4 pt-24 pb-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-4xl">
@@ -267,7 +267,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                 <div>
                   <div className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     <BookOpen className="size-3.5" aria-hidden />
-                    {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
+                    {isZh ? `${brand.name} 技术博客` : `${brand.name} Journal`}
                   </div>
                   <h1 className="max-w-4xl text-4xl font-semibold text-foreground sm:text-5xl lg:text-6xl">
                     {post.title}
@@ -398,8 +398,8 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
               labels={{
                 title: isZh ? "讨论" : "Discussion",
                 subtitle: isZh
-                  ? "使用 Nebutra 账号参与评论。评论会先进入审核队列。"
-                  : "Join with your Nebutra account. New comments enter moderation first.",
+                  ? `使用 ${brand.name} 账号参与评论。评论会先进入审核队列。`
+                  : `Join with your ${brand.name} account. New comments enter moderation first.`,
                 empty: isZh ? "还没有评论。来写下第一条。" : "No comments yet. Start the thread.",
                 signIn: isZh ? "登录后评论" : "Sign in to comment",
                 placeholder: isZh ? "写下你的想法..." : "Share your thought...",
@@ -420,15 +420,13 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
           </div>
         </AnimateIn>
       </article>
-
-      <FooterMinimal />
     </main>
   );
 }
 
 function BlogPostSkeleton() {
   return (
-    <main id="main-content" className="min-h-dvh bg-background" aria-busy="true">
+    <main id="main-content" className="flex-1 bg-background" aria-busy="true">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
         <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">

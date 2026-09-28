@@ -49,6 +49,7 @@
     "@nebutra/brand": "workspace:*",
     "@nebutra/preset": "workspace:*",
     "@nebutra/theme": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@types/node": "catalog:",
     "@types/node-fetch": "^2.6.13",

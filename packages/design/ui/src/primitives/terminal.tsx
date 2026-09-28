@@ -177,6 +177,12 @@ export function TypingAnimation({
 
   const sequence = useSequence();
   const itemIndex = useItemIndex();
+  // The typing effect reads the sequence through a ref. The context object is
+  // rebuilt every time any later line completes; with it in the effect's deps,
+  // each completion restarted this line from its first character, so a
+  // terminal of N lines retyped its command N times — a steady flicker.
+  const sequenceRef = useRef(sequence);
+  sequenceRef.current = sequence;
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -233,8 +239,8 @@ export function TypingAnimation({
         i++;
       } else {
         clearInterval(typingEffect);
-        if (sequence && itemIndex !== null) {
-          sequence.completeItem(itemIndex);
+        if (sequenceRef.current && itemIndex !== null) {
+          sequenceRef.current.completeItem(itemIndex);
         }
       }
     }, duration);
@@ -242,7 +248,7 @@ export function TypingAnimation({
     return () => {
       clearInterval(typingEffect);
     };
-  }, [children, duration, started, sequence, itemIndex, shouldReduceMotion]);
+  }, [children, duration, started, itemIndex, shouldReduceMotion]);
 
   return (
     <MotionComponent
@@ -326,7 +332,9 @@ export function Terminal({
     <div
       ref={containerRef}
       className={cn(
-        "border-border bg-background z-0 h-full max-h-[400px] w-full max-w-lg rounded-[var(--radius-xl)] border",
+        // A column that clips: the content scrolls inside the frame. It used to
+        // paint past max-h-[400px] onto whatever came next on the page.
+        "border-border bg-background z-0 flex h-full max-h-[400px] w-full max-w-lg flex-col overflow-hidden rounded-[var(--radius-xl)] border",
         className,
       )}
     >
@@ -342,8 +350,8 @@ export function Terminal({
         </div>
       </div>
       {/* Content */}
-      <pre className="p-4">
-        <code className="grid gap-y-1 overflow-auto">{wrappedChildren}</code>
+      <pre className="min-h-0 flex-1 overflow-auto p-4">
+        <code className="grid gap-y-1">{wrappedChildren}</code>
       </pre>
     </div>
   );

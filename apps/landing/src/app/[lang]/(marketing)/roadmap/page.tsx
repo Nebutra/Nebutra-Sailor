@@ -1,9 +1,9 @@
+import { brand } from "@nebutra/brand/metadata";
 import { AnimateIn } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { RoadmapTimeline } from "@/components/landing/RoadmapTimeline";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -20,8 +20,8 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
   return buildPageMetadata({
-    title: "Platform Roadmap — Nebutra",
-    description: "The capability roadmap for Nebutra's governed AI platform.",
+    title: `Platform Roadmap — ${brand.name}`,
+    description: `The capability roadmap for ${brand.name}'s governed AI platform.`,
     path: "/roadmap",
     locale: lang as Locale,
   });
@@ -132,9 +132,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
   setRequestLocale(lang as Locale);
 
   return (
-    <main id="main-content" className="min-h-dvh bg-background relative overflow-hidden">
-      <Navbar />
-
+    <main id="main-content" className="flex-1 bg-background relative overflow-hidden">
       {/* Hero */}
       <section className="relative mx-auto max-w-wide px-4 pt-20 pb-16 md:px-6 text-center">
         <AuroraBackground variant="vivid" position="top" intensity={0.5} />
@@ -168,7 +166,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
 
         <AnimateIn preset="fade">
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            The capability roadmap behind Nebutra&apos;s governed AI platform, from baseline
+            The capability roadmap behind {brand.name}&apos;s governed AI platform, from baseline
             scaffolding to registry-driven upgrades and harness runtime primitives.
           </p>
         </AnimateIn>
@@ -194,8 +192,6 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
           </div>
         </AnimateIn>
       </section>
-
-      <FooterMinimal />
     </main>
   );
 }

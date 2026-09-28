@@ -307,6 +307,11 @@ export const nebultraCommand: CommandMeta = {
       usage: "nebutra theme [subcommand]",
     },
     {
+      name: "apply",
+      description: "Put a Sailor Studio preset on this project (its look, in one code)",
+      usage: "nebutra apply --preset <code> [--only theme|fonts]",
+    },
+    {
       name: "ui",
       description: "Search, inspect, validate, and plan migrations for @nebutra/ui components",
       usage: "nebutra ui [subcommand]",

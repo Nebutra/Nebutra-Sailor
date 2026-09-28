@@ -9,9 +9,12 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as readline from "node:readline";
-import { type BrandConfig, DEFAULT_BRAND } from "./brand-types";
+import { fileURLToPath } from "node:url";
+import { buildBrandConfig } from "./brand-types";
 
-const ROOT = path.resolve(import.meta.dirname, "..");
+// `import.meta.dirname` is unset when tsx loads a .ts script as CommonJS
+// (this package has no "type": "module"). `import.meta.url` is set either way.
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 // ANSI colors
 const colors = {
@@ -67,96 +70,71 @@ async function main() {
     output: process.stdout,
   });
 
-  const config: BrandConfig = JSON.parse(JSON.stringify(DEFAULT_BRAND));
-
   try {
     // Brand Identity
     logStep("Brand Identity");
-    config.brand.name = await prompt(rl, "Brand name", "MyBrand");
-    config.brand.tagline = await prompt(rl, "Tagline", "The Open-Source Enterprise SaaS Platform");
-    config.brand.description = await prompt(rl, "Description", "AI-native enterprise platform");
+    const name = await prompt(rl, "Brand name", "MyBrand");
+    const tagline = await prompt(rl, "Tagline", "The Open-Source Enterprise SaaS Platform");
+    const description = await prompt(rl, "Description", "AI-native enterprise platform");
 
     // Company
     logStep("Company Information");
-    config.company.name = await prompt(rl, "Company name", "My Company Inc.");
-    config.company.nameCN = await prompt(rl, "Company name (Chinese, optional)", "");
-    config.company.email = await prompt(
-      rl,
-      "Contact email",
-      `hello@${config.brand.name.toLowerCase()}.com`,
-    );
+    const companyName = await prompt(rl, "Company name", "My Company Inc.");
+    const companyNameCN = await prompt(rl, "Company name (Chinese, optional)", "");
+    const email = await prompt(rl, "Contact email", `hello@${name.toLowerCase()}.com`);
     const yearStr = await prompt(rl, "Founded year", "2024");
-    config.company.year = parseInt(yearStr, 10) || 2024;
 
     // Domains
     logStep("Domains");
-    const baseDomain = await prompt(rl, "Base domain", `${config.brand.name.toLowerCase()}.com`);
-    config.domains = {
-      landing: baseDomain,
-      app: `app.${baseDomain}`,
-      api: `api.${baseDomain}`,
-      auth: `auth.${baseDomain}`,
-      sso: `sso.${baseDomain}`,
-      docs: `docs.${baseDomain}`,
-      studio: `studio.${baseDomain}`,
-      cdn: `cdn.${baseDomain}`,
-      router: `router.${baseDomain}`,
-      forge: `forge.${baseDomain}`,
-      design: `design.${baseDomain}`,
-      status: `status.${baseDomain}`,
-    };
+    const baseDomain = await prompt(rl, "Base domain", `${name.toLowerCase()}.com`);
     logInfo(`Will use: ${baseDomain}, app.${baseDomain}, api.${baseDomain}, ...`);
 
     // Repository
     logStep("GitHub Repository");
-    config.repo.owner = await prompt(rl, "GitHub owner/org", config.brand.name.toLowerCase());
-    config.repo.name = await prompt(
-      rl,
-      "Repository name",
-      `${config.brand.name.toLowerCase()}-platform`,
-    );
+    const repoOwner = await prompt(rl, "GitHub owner/org", name.toLowerCase());
+    const repoName = await prompt(rl, "Repository name", `${name.toLowerCase()}-platform`);
 
     // Social
     logStep("Social Links (press Enter to skip)");
-    config.social = {
+    const social = {
       twitter: await prompt(rl, "Twitter URL", ""),
-      github: await prompt(
-        rl,
-        "GitHub URL",
-        `https://github.com/${config.repo.owner}/${config.repo.name}`,
-      ),
+      github: await prompt(rl, "GitHub URL", `https://github.com/${repoOwner}/${repoName}`),
       discord: await prompt(rl, "Discord URL", ""),
       linkedin: await prompt(rl, "LinkedIn URL", ""),
     };
 
     // Colors
     logStep("Brand Colors");
-    logInfo("Using default Indigo/Teal palette. Edit brand.config.ts to customize.");
+    logInfo("Using the default palette. Edit brand.config.ts to customize.");
 
     // Features
     logStep("Feature Toggles");
-    config.features.web3 = await promptBoolean(rl, "Enable Web3/blockchain features?", false);
-    config.features.ecommerce = await promptBoolean(
-      rl,
-      "Enable e-commerce (Shopify) integration?",
-      false,
-    );
-    config.features.recsys = await promptBoolean(rl, "Enable recommendation system?", false);
+    const web3 = await promptBoolean(rl, "Enable Web3/blockchain features?", false);
+    const ecommerce = await promptBoolean(rl, "Enable e-commerce (Shopify) integration?", false);
+    const recsys = await promptBoolean(rl, "Enable recommendation system?", false);
 
     // Package scope
     logStep("Package Configuration");
-    config.packageScope = await prompt(
-      rl,
-      "NPM package scope",
-      `@${config.brand.name.toLowerCase()}`,
-    );
+    const packageScope = await prompt(rl, "NPM package scope", `@${name.toLowerCase()}`);
+
+    const config = buildBrandConfig({
+      name,
+      tagline,
+      description,
+      companyName,
+      companyNameCN,
+      email,
+      year: Number.parseInt(yearStr, 10) || 2024,
+      baseDomain,
+      repoOwner,
+      repoName,
+      social,
+      features: { web3, ecommerce, recsys },
+      packageScope,
+    });
 
     // License
     logStep("License");
-    config.license.commercialExempt = [config.company.name];
-    if (config.company.nameCN) {
-      config.license.commercialExempt.push(config.company.nameCN);
-    }
     logInfo(`Commercial exemption: ${config.license.commercialExempt.join(", ")}`);
 
     rl.close();

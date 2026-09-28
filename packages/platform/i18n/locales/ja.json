@@ -931,88 +931,11 @@
         "title": "テーマ",
         "description": "ライト、ダーク、またはシステム設定に一致させます。"
       },
-      "themePreset": {
-        "title": "テーマ プリセット",
-        "description": "アプリ全体に任意のテーマ プレイグラウンド テーマを適用します。下のコントロールがそれに層状になり、微調整されます。",
-        "search": "テーマを検索…",
-        "searchLabel": "テーマを検索",
-        "default": "デフォルト",
-        "defaultMood": "Nebutra ベース パレット",
-        "active": "アクティブ",
-        "empty": "テーマが見つかりません。",
-        "count": "{count} テーマ"
-      },
-      "themeEditor": {
-        "title": "テーマ",
-        "description": "プリセットを選択し、DESIGN.md をインポートしてから、下のトークンを微調整します。",
-        "selectLabel": "テーマ プリセット",
-        "import": "インポート",
-        "copy": "テーマをコピー",
-        "copied": "コピーしました",
-        "copyError": "コピーに失敗しました",
-        "custom": "カスタム"
-      },
-      "designMd": {
-        "title": "DESIGN.md をインポート",
-        "description": "DESIGN.md を貼り付けるか、アップロードすると、その色、半径、フォント、スペーシング、および シャドウがアプリ全体に適用され、再読み込み後も保持されます。",
-        "applied": "適用済み：",
-        "remove": "削除"
-      },
       "themeMode": {
         "label": "テーマ モード",
         "light": "ライト",
         "dark": "ダーク",
         "system": "システム"
-      },
-      "accent": {
-        "title": "アクセント色",
-        "description": "アプリ全体のアクティブ状態に色合いを付けるブランド アクセントを選択します。",
-        "label": "アクセント色",
-        "options": {
-          "default": "デフォルト",
-          "blue": "青",
-          "cyan": "シアン",
-          "violet": "紫",
-          "pink": "ピンク",
-          "amber": "琥珀",
-          "green": "緑",
-          "red": "赤"
-        }
-      },
-      "colors": {
-        "title": "色",
-        "description": "アクセント、背景、および前景。",
-        "background": {
-          "label": "背景",
-          "description": "サーフェスの背景色をオーバーライドします。"
-        },
-        "foreground": {
-          "label": "前景",
-          "description": "本文のテキスト色をオーバーライドします。"
-        },
-        "resetToDefault": "デフォルトにリセット"
-      },
-      "fontFamily": {
-        "uiLabel": "UI フォント",
-        "uiDescription": "UI 全体で使用されるフォント ファミリー。",
-        "codeLabel": "コード フォント",
-        "codeDescription": "コード サーフェスで使用されるフォント ファミリー。",
-        "options": {
-          "ui": {
-            "theme": "テーマ デフォルト",
-            "system": "システム",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "テーマ デフォルト",
-            "system": "システム モノスペース",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "ポインター カーソルを使用",
@@ -1049,14 +972,6 @@
         "label": "モーション優先設定",
         "system": "システム",
         "on": "オン"
-      },
-      "surface": {
-        "title": "半透明サイドバー",
-        "description": "サイドバーに半透明素材を適用します。"
-      },
-      "transparency": {
-        "label": "半透明サイドバー",
-        "description": "サイドバーに半透明素材を適用します。"
       }
     }
   },

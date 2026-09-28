@@ -58,7 +58,7 @@ describe("ReferWaitlistForm", () => {
           email: "founder@example.com",
           position: 42,
           referralCode: "NX7Q2P9A",
-          referralUrl: "https://nebutra.com/refer?code=NX7Q2P9A",
+          referralUrl: "https://example.com/refer?code=NX7Q2P9A",
           referralCount: 0,
           referredBy: null,
           status: "waiting",
@@ -110,7 +110,7 @@ describe("ReferWaitlistForm", () => {
             email: "founder@example.com",
             position: 1,
             referralCode: "NX7Q2P9A",
-            referralUrl: "https://nebutra.com/refer?code=NX7Q2P9A",
+            referralUrl: "https://example.com/refer?code=NX7Q2P9A",
             referralCount: 0,
             referredBy: null,
             status: "waiting",
@@ -130,7 +130,7 @@ describe("ReferWaitlistForm", () => {
       fireEvent.click(await screen.findByRole("button", { name: "Copy link" }));
     });
 
-    expect(writeText).toHaveBeenCalledWith("https://nebutra.com/refer?code=NX7Q2P9A");
+    expect(writeText).toHaveBeenCalledWith("https://example.com/refer?code=NX7Q2P9A");
     expect(screen.getByRole("button", { name: "Copied" })).toBeInTheDocument();
   });
 

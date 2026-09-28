@@ -1,6 +1,6 @@
 "use client";
 
-import { Display as MonitorIcon, Moon as MoonStarIcon, Sun as SunIcon } from "@nebutra/icons";
+import { DeviceDesktop as MonitorIcon, Moon as MoonStarIcon, Sun as SunIcon } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
 import type { JSX } from "react";
 import { useMount } from "@/hooks/useMount";
@@ -22,8 +22,9 @@ function ThemeOption({
     <button
       type="button"
       className={cn(
-        "relative flex size-11 cursor-pointer items-center justify-center rounded-full transition-[background-color,color,box-shadow,transform] [&_svg]:size-4",
-        isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+        // 44px touch target on phones; footer-sized on a pointer device.
+        "flex size-11 cursor-pointer items-center justify-center rounded-full transition-[background-color,color] md:size-7 [&_svg]:size-4 md:[&_svg]:size-3.5",
+        isActive ? "bg-muted text-foreground" : "text-muted-foreground hover:text-foreground",
       )}
       role="radio"
       aria-checked={isActive}
@@ -31,7 +32,6 @@ function ThemeOption({
       onClick={() => onClick(value)}
     >
       {icon}
-      {isActive && <span className="absolute inset-0 rounded-full border border-border" />}
     </button>
   );
 }
@@ -45,11 +45,11 @@ function ThemeSwitcher() {
   const isMounted = useMount();
   const currentTheme = theme ?? "system";
   if (!isMounted) {
-    return <div className="flex h-11 w-[8.25rem]" />;
+    return <div className="h-12 w-34 md:h-8 md:w-22" />;
   }
   return (
     <div
-      className="inline-flex items-center overflow-hidden rounded-full bg-background ring-1 ring-border ring-inset"
+      className="inline-flex items-center rounded-full p-0.5 ring-1 ring-border ring-inset"
       role="radiogroup"
       aria-label="Select color theme"
     >

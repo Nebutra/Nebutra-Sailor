@@ -18,7 +18,6 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
@@ -132,8 +131,7 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
   const tagLabel = decodeURIComponent(tag).replace(/-/g, " ");
 
   return (
-    <main id="main-content" className="min-h-dvh bg-background">
-      <Navbar />
+    <main id="main-content" className="flex-1 bg-background">
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
           <div className="border-y border-border py-10 sm:py-14">
@@ -154,14 +152,13 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
           />
         </AnimateIn>
       </section>
-      <FooterMinimal />
     </main>
   );
 }
 
 function BlogTagPageSkeleton() {
   return (
-    <main id="main-content" className="min-h-dvh bg-background" aria-busy="true">
+    <main id="main-content" className="flex-1 bg-background" aria-busy="true">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
         <div className="h-8 w-36 animate-pulse rounded bg-muted" />
         <div className="hidden gap-3 sm:flex">

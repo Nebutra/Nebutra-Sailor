@@ -931,88 +931,11 @@
         "title": "Motyw",
         "description": "Użyj jasnego, ciemnego lub dopasuj do preferencji systemu."
       },
-      "themePreset": {
-        "title": "Wzorzec motywu",
-        "description": "Zastosuj dowolny motyw z Theme Playground w całej aplikacji. Poniższe sterowania nakładają się, aby go doprecyzować.",
-        "search": "Szukaj motywów…",
-        "searchLabel": "Szukaj motywów",
-        "default": "Domyślny",
-        "defaultMood": "Nebutra base palette",
-        "active": "Aktywny",
-        "empty": "Żaden motyw nie pasuje do wyszukiwania.",
-        "count": "{count} motywów"
-      },
-      "themeEditor": {
-        "title": "Motyw",
-        "description": "Wybierz wzorzec, zaimportuj DESIGN.md, a następnie doprecyzuj tokeny poniżej.",
-        "selectLabel": "Wzorzec motywu",
-        "import": "Importuj",
-        "copy": "Kopiuj motyw",
-        "copied": "Skopiowano",
-        "copyError": "Kopiowanie nieudane",
-        "custom": "Własny"
-      },
-      "designMd": {
-        "title": "Importuj DESIGN.md",
-        "description": "Wklej lub prześlij plik DESIGN.md, aby zastosować jego kolory, zaokrąglenia, czcionki, odstępy i cienie w całej aplikacji — zmiany są zachowywane po przeładowaniu.",
-        "applied": "Zastosowano:",
-        "remove": "Usuń"
-      },
       "themeMode": {
         "label": "Tryb motywu",
         "light": "Jasny",
         "dark": "Ciemny",
         "system": "Systemowy"
-      },
-      "accent": {
-        "title": "Kolor akcentu",
-        "description": "Wybierz kolor akcentu marki, który nada barwę aktywnym stanom w całej aplikacji.",
-        "label": "Kolor akcentu",
-        "options": {
-          "default": "Domyślny",
-          "blue": "Niebieski",
-          "cyan": "Cyjan",
-          "violet": "Fioletowy",
-          "pink": "Różowy",
-          "amber": "Bursztynowy",
-          "green": "Zielony",
-          "red": "Czerwony"
-        }
-      },
-      "colors": {
-        "title": "Kolory",
-        "description": "Akcent, tło i pierwszy plan.",
-        "background": {
-          "label": "Tło",
-          "description": "Nadpisz kolor tła powierzchni."
-        },
-        "foreground": {
-          "label": "Pierwszy plan",
-          "description": "Nadpisz kolor tekstu treści."
-        },
-        "resetToDefault": "Przywróć domyślne"
-      },
-      "fontFamily": {
-        "uiLabel": "Czcionka interfejsu",
-        "uiDescription": "Rodzina czcionek używana w interfejsie.",
-        "codeLabel": "Czcionka kodu",
-        "codeDescription": "Rodzina czcionek używana w blokach kodu.",
-        "options": {
-          "ui": {
-            "theme": "Domyślna motywu",
-            "system": "Systemowa",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "Domyślna motywu",
-            "system": "Systemowa mono",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "Użyj kursora wskaźnika",
@@ -1049,14 +972,6 @@
         "label": "Preferencje ruchu",
         "system": "Systemowy",
         "on": "Włączone"
-      },
-      "surface": {
-        "title": "Półprzezroczysty pasek boczny",
-        "description": "Zastosuj półprzezroczysty materiał do paska bocznego."
-      },
-      "transparency": {
-        "label": "Półprzezroczysty pasek boczny",
-        "description": "Zastosuj półprzezroczysty materiał do paska bocznego."
       }
     }
   },

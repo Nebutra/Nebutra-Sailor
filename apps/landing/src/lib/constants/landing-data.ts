@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import {
   BookOpen,
   Robot as Bot,
@@ -127,7 +128,6 @@ const packageGroups = [
       "brand",
       "design-sync",
       "design-tokens",
-      "docs-shared",
       "fonts",
       "icons",
       "theme",
@@ -235,7 +235,7 @@ export const TREE_DATA: FileNode[] = [
         id: "apps-admin",
         label: "admin",
         path: "apps/admin",
-        description: "- Internal control plane (admin.nebutra.com)",
+        description: `- Internal control plane (${brand.domains.admin})`,
         icon: React.createElement(Shield, { className: "h-4 w-4" }),
       },
       {
@@ -348,7 +348,7 @@ export const TREE_DATA: FileNode[] = [
     id: "packages",
     label: "packages",
     path: "packages",
-    tag: "112",
+    tag: "111",
     icon: React.createElement(Box, {
       className: "h-[15px] w-[15px] text-success-strong fill-success/20",
     }),
@@ -456,7 +456,7 @@ export const HARNESS_CARDS = [
 
 export const NAV_LINKS = [
   { labelKey: "features", href: "/features" },
-  { labelKey: "solutions", mega: true },
+  { labelKey: "solutions", mega: true, href: "/solutions" },
   { labelKey: "pricing", href: "/pricing" },
   { labelKey: "about", href: "/about" },
   // Two-column mega menu (DEVELOPERS / COMPANY) — content lives in
@@ -466,10 +466,12 @@ export const NAV_LINKS = [
     labelKey: "npm",
     href: "https://www.npmjs.com/package/create-sailor",
     icon: Package,
+    site: "nebutra",
   },
   {
     labelKey: "github",
-    href: "https://github.com/Nebutra/Nebutra-Sailor",
+    href: `${brand.social.github}/${brand.name}-Sailor`,
     icon: LogoGithub,
+    site: "nebutra",
   },
 ] as const;

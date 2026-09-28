@@ -4,10 +4,10 @@ import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import { Cross as XIcon } from "@nebutra/icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
-
 import { overlayClassNames, overlayTokens, overlayZIndex } from "../tokens/components/overlay";
 import { sheetTokens } from "../tokens/components/sheet";
 import { cn } from "../utils/cn";
+import { rendersNativeButton } from "../utils/native-button";
 import { asPlainStyle } from "../utils/primitive-props";
 
 type SheetCssVar =
@@ -91,6 +91,7 @@ const SheetTrigger = ({
         data-slot="sheet-trigger"
         {...props}
         render={children as React.ReactElement<Record<string, unknown>>}
+        nativeButton={rendersNativeButton(children)}
       />
     );
   }
@@ -119,6 +120,7 @@ const SheetClose = ({
         data-slot="sheet-close"
         {...props}
         render={children as React.ReactElement<Record<string, unknown>>}
+        nativeButton={rendersNativeButton(children)}
       />
     );
   }

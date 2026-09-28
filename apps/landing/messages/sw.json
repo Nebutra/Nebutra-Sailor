@@ -131,8 +131,8 @@
     "columns": {
       "product": "Bidhaa",
       "resources": "Rasilimali",
-      "legal": "Kisheria",
-      "community": "Jamii"
+      "company": "Kampuni",
+      "legal": "Kisheria"
     },
     "links": {
       "product": "Bidhaa",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Haki zote zimehifadhiwa.",
+    "copyright": "© 2026 {companyLegalEn} · Haki zote zimehifadhiwa.",
     "fontCredit": "Fonti ya Kichina: MiSans (Xiaomi)",
     "statusOnline": "Mifumo yote inafanya kazi",
     "newsletterTitle": "Kaa kwa sasa",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "MUUNGO WA TURBOREPO",
-    "title": "Programu 10. Pakiti 113. Njia 4 za backend.",
+    "title": "Programu 10. Pakiti 111. Njia 4 za backend.",
     "description": "Msimbo wa pamoja, ujenzi sambamba, hakuna upitishaji. Aina kamili kutoka hifadha ya data hadi frontend.",
     "metricApps": "programu",
     "metricBackends": "njia za backend",
@@ -243,7 +243,7 @@
       "ctaButton": "Kuanzisha Mawasiliano"
     },
     "contact": {
-      "title": "Utafuta wa Kiufundi na wa Biashara — {brandName} Intelligence",
+      "title": "Utafuta wa Kiufundi na wa Biashara — {brandName}",
       "description": "Njia maalum ya mawasiliano kwa leseni za biashara, kujikimu kwa biashara, na msaada wa kiufundi wa hali ya juu.",
       "heading": "Kuanzisha Uunganisho wa Msaada",
       "subheading": "Tutatumia mtaalamu wa kiufundi au mhandisi maalum kufanya tathmini ya mahitaji yako.",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Unaweza kuwasiliana na Mkuu wa Ulinzi wa Data wetu kwa dpo@nebutra.com."
+            "desc": "Unaweza kuwasiliana na Mkuu wa Ulinzi wa Data wetu kwa dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Jinsi ya Kuhitajia Kurudishiwa Pesa",
         "step1": {
           "title": "Hatua 1: Wasiliana na Msaada",
-          "intro": "Tuma barua pepe kwa billing@nebutra.com na:",
+          "intro": "Tuma barua pepe kwa billing@{domain} na:",
           "items": {
             "0": "Barua pepe ya akaunti yako",
             "1": "Mpango wa usajili na kipindi cha bili",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Jibu barua pepe ya uamuzi kwa taarifa za ziada",
           "1": "Omba kupelekwa kwa mkuu",
-          "2": "Wasiliana nasi kwa legal@nebutra.com kwa ukaguzi zaidi"
+          "2": "Wasiliana nasi kwa legal@{domain} kwa ukaguzi zaidi"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Ufumbuzi wa Migongano",
         "informal": {
           "title": "10.1 Ufumbuzi Usio Rasmi",
-          "content": "Kabla ya kuanzisha mchakato rasmi, unakubali kututembelea kwa legal@nebutra.com kujaribu kutatua migogoro kwa njia isiyo rasmi."
+          "content": "Kabla ya kuanzisha mchakato rasmi, unakubali kututembelea kwa legal@{domain} kujaribu kutatua migogoro kwa njia isiyo rasmi."
         },
         "governingLaw": {
           "title": "10.2 Sheria Inayosimamia",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Anza Sasa",
       "title": "Acha kuweka mipangilio. Anza kujenga.",
       "description": "Anzisha muundo wa SaaS unaoweza kupanuka ndani kwa kutumia {brandName} CLI.",
-      "button": "Weka Muundo",
       "license": "Chanzo huria chini ya leseni ya FSL-1.1-ALv2. Hakuna kadi ya mkopo inayohitajika."
     },
     "capability": {

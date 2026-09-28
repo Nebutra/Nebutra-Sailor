@@ -526,6 +526,16 @@ export function deriveTypographyFontFamily(core: {
 /**
  * Update packages/design/brand/src/metadata.ts
  */
+/**
+ * A project that supplied its own logo files renders them; otherwise the
+ * config decides (a new brand from brand:init starts as "wordmark").
+ */
+function logoMode(config: BrandConfig): "image" | "wordmark" {
+  const custom = path.join(ROOT, "brand.config", "assets", "logo");
+  if (fs.existsSync(custom) && fs.readdirSync(custom).length > 0) return "image";
+  return config.brand.logo ?? "image";
+}
+
 function updateBrandMetadata(config: BrandConfig): void {
   logStep("Updating brand metadata");
 
@@ -577,6 +587,7 @@ export const brand = {
   taglineCn: ${JSON.stringify(config.brand.taglineCn ?? config.brand.tagline)},
   description: ${JSON.stringify(config.brand.description)},
   descriptionCn: ${JSON.stringify(config.brand.descriptionCn ?? config.brand.description)},
+  logo: ${JSON.stringify(logoMode(config))} as "image" | "wordmark",
 
 ${storyBlock}  domains: ${serialize(config.domains)},
 

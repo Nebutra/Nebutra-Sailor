@@ -45,7 +45,6 @@ export {
   type CheckboxProps,
 } from "./checkbox-group";
 export * from "./code-block";
-export * from "./collapse";
 export {
   Combobox,
   ComboboxEmpty,
@@ -86,15 +85,10 @@ export { Input, type InputProps } from "./input";
 export * from "./input-otp";
 export * from "./kbd";
 export { Label, type LabelProps, labelVariants } from "./label";
-export * from "./layout";
 export * from "./loading-dots";
-export * from "./menu";
 export * from "./menubar";
-export * from "./modal";
-export * from "./multi-select";
 export * from "./navigation-menu";
 export { navigationMenuTriggerStyle } from "./navigation-menu-variants";
-export * from "./note";
 export * from "./pagination";
 export * from "./popover";
 export * from "./progress";

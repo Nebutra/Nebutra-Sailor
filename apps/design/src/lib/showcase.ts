@@ -1,9 +1,8 @@
-import { readdirSync } from "node:fs";
-import { join } from "node:path";
+import { CATALOG } from "@nebutra/ui/catalog";
 import { coveredNames } from "@/lib/components/registry";
 
 /**
- * The demo surface that lives in `@nebutra/docs-shared`, read off disk.
+ * The demo surface of the @nebutra/ui catalog (ADR 2026-09-27 UI catalog).
  *
  * There are around a hundred and ninety of these and they are the half of the
  * library this site never showed: globes, shaders, aurora text, confetti, device
@@ -11,24 +10,12 @@ import { coveredNames } from "@/lib/components/registry";
  * design-docs, which is the app being retired, so retiring it would have taken
  * them with it.
  *
- * Nothing here is a hand-kept list. The directory is the list — a demo added to
- * docs-shared appears on the next build, and one deleted disappears. The split
+ * Nothing here is a hand-kept list. The catalog is the list — a demo added to
+ * it appears on the next build, and one deleted disappears. The split
  * between "already documented" and "showcase" is derived too: a demo whose base
  * name matches a component that has a page belongs to that page, and everything
  * else is what this section is for.
  */
-
-const PREVIEWS_DIR = join(
-  process.cwd(),
-  "..",
-  "..",
-  "packages",
-  "design",
-  "docs-shared",
-  "src",
-  "components",
-  "previews",
-);
 
 export interface ShowcaseDemo {
   /** File base name, which is also the import specifier suffix. */
@@ -58,7 +45,7 @@ function toLabel(id: string): string {
  *
  * The rest is a taste call, made deliberately: a design system's job is to make
  * a product coherent, and a scrambling-text effect or a scroll-velocity marquee
- * is a trick that dates the surface it lands on. They remain in docs-shared for
+ * is a trick that dates the surface it lands on. They remain in the catalog for
  * anyone who wants one — they are just not held up here as something to reach
  * for.
  */
@@ -66,13 +53,11 @@ const EXCLUDED: ReadonlySet<string> = new Set([
   // Canvas and WebGL — the crash, and unreadable at this size.
   "canvas-reveal-effect-demo",
   "dithering-background-demo",
-  "dithering-shader-demo",
   "stars-canvas-demo",
   "warp-background-demo",
   "light-rays-demo",
   "flickering-grid-demo",
   "globe-demo",
-  "dotted-world-map-demo",
   "dotted-map-demo",
   "wave-animation-demo",
   "confetti-demo",
@@ -116,7 +101,7 @@ const EXCLUDED: ReadonlySet<string> = new Set([
   // registers a global ⌘K, which is this site's own shortcut: opening the
   // search on the showcase would open the demo too.
   //
-  // A thumbnail may not reach outside its frame. Both remain in docs-shared,
+  // A thumbnail may not reach outside its frame. Both remain in the catalog,
   // where a page devoted to one of them is the right place for that behaviour.
   "command-dialog-simple-demo",
   "command-dialog-demo",
@@ -150,25 +135,13 @@ let cached: ShowcaseDemo[] | null = null;
 export function showcaseDemos(): ShowcaseDemo[] {
   if (cached) return cached;
 
-  let files: string[] = [];
-  try {
-    files = readdirSync(PREVIEWS_DIR);
-  } catch {
-    // The design site must still build when docs-shared is absent from the
-    // graph — an empty showcase is a visible gap, a build failure is not.
-    cached = [];
-    return cached;
-  }
-
   // Slugs rather than export names: the files are kebab-case, and a slug is
   // already the kebab form of the component this site documents.
   const slugs = [...coveredNames()].map((name) =>
     name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(),
   );
 
-  cached = files
-    .filter((file) => file.endsWith(".tsx"))
-    .map((file) => file.replace(/\.tsx$/, ""))
+  cached = CATALOG.flatMap((entry) => entry.demos)
     .filter((id) => !EXCLUDED.has(id))
     .filter((id) => !documentedElsewhere(id, slugs))
     .sort()

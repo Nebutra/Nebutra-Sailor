@@ -1,0 +1,117 @@
+/*
+ * Sailor Studio layout. The panels follow the Studio frame's own width
+ * (container queries), not the viewport: registry and inspector stack under
+ * the canvas when narrow, flank it when wide.
+ */
+.studio-frame {
+  container: studio / inline-size;
+}
+
+.studio-layout {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(12rem, 0.7fr) minmax(16rem, 1fr) minmax(12rem, 0.8fr);
+}
+
+.studio-registry,
+.studio-inspector,
+.theme-preview-canvas {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.studio-registry {
+  border-right-width: 0;
+  border-bottom: 1px solid hsl(var(--border) / 0.8);
+}
+
+.studio-inspector {
+  border-left-width: 0;
+  border-top: 1px solid hsl(var(--border) / 0.8);
+}
+
+.theme-preview-artboard {
+  container: theme-preview / inline-size;
+}
+
+.theme-preview-grid,
+.theme-pricing-grid,
+.theme-stats-grid,
+.theme-charts-grid {
+  display: grid;
+}
+
+.theme-preview-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.theme-pricing-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.theme-stats-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.theme-charts-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@container studio (min-width: 66rem) {
+  .studio-layout {
+    grid-template-columns: minmax(20rem, 22rem) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "registry canvas"
+      "inspector canvas";
+  }
+
+  .studio-registry {
+    grid-area: registry;
+    border-right: 1px solid hsl(var(--border) / 0.8);
+    border-bottom: 1px solid hsl(var(--border) / 0.8);
+  }
+
+  .studio-inspector {
+    grid-area: inspector;
+    border-left-width: 0;
+    border-top-width: 0;
+    border-right: 1px solid hsl(var(--border) / 0.8);
+  }
+
+  .theme-preview-canvas {
+    grid-area: canvas;
+  }
+}
+
+@container studio (min-width: 92rem) {
+  .studio-layout {
+    grid-template-columns: minmax(17rem, 18rem) minmax(40rem, 1fr) minmax(21rem, 23rem);
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: "registry canvas inspector";
+  }
+
+  .studio-registry {
+    border-bottom-width: 0;
+  }
+
+  .studio-inspector {
+    border-right-width: 0;
+    border-left: 1px solid hsl(var(--border) / 0.8);
+    border-top-width: 0;
+  }
+}
+
+@container theme-preview (min-width: 46rem) {
+  .theme-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@container theme-preview (min-width: 40rem) {
+  .theme-pricing-grid,
+  .theme-charts-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

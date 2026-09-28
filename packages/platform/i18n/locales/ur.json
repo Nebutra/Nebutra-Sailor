@@ -931,88 +931,11 @@
         "title": "تھیم",
         "description": "لائٹ، ڈارک، یا سسٹم کی ترجیح کے مطابق استعمال کریں۔"
       },
-      "themePreset": {
-        "title": "تھیم پری سیٹ",
-        "description": "پورے ایپ پر Theme Playground کا کوئی بھی تھیم لاگو کریں۔ نیچے دیے گئے کنٹرولز اسے مزید بہتر بنانے کے لیے اوپر تہہ کیے جاتے ہیں۔",
-        "search": "تھیمز تلاش کریں…",
-        "searchLabel": "تھیمز تلاش کریں",
-        "default": "ڈیفالٹ",
-        "defaultMood": "Nebutra base palette",
-        "active": "فعال",
-        "empty": "کوئی تھیم آپ کی تلاش سے مطابقت نہیں رکھتا۔",
-        "count": "{count} تھیمز"
-      },
-      "themeEditor": {
-        "title": "تھیم",
-        "description": "ایک پری سیٹ منتخب کریں، DESIGN.md درآمد کریں، پھر نیچے دیے گئے ٹوکنز کو بہتر بنائیں۔",
-        "selectLabel": "تھیم پری سیٹ",
-        "import": "درآمد کریں",
-        "copy": "تھیم کاپی کریں",
-        "copied": "کاپی ہو گیا",
-        "copyError": "کاپی ناکام رہی",
-        "custom": "حسب ضرورت"
-      },
-      "designMd": {
-        "title": "DESIGN.md درآمد کریں",
-        "description": "DESIGN.md پیسٹ کریں یا اپ لوڈ کریں تاکہ اس کے رنگ، رداس، فونٹس، فاصلے اور سایے پورے ایپ پر لاگو ہوں — دوبارہ لوڈ کرنے پر بھی برقرار رہیں گے۔",
-        "applied": "لاگو ہوا:",
-        "remove": "ہٹائیں"
-      },
       "themeMode": {
         "label": "تھیم موڈ",
         "light": "ہلکا",
         "dark": "گہرا",
         "system": "سسٹم"
-      },
-      "accent": {
-        "title": "ایکسینٹ رنگ",
-        "description": "ایک برانڈ ایکسینٹ منتخب کریں جو ایپ بھر میں فعال حالتوں کو رنگ دے۔",
-        "label": "ایکسینٹ رنگ",
-        "options": {
-          "default": "ڈیفالٹ",
-          "blue": "نیلا",
-          "cyan": "سائین",
-          "violet": "جامنی",
-          "pink": "گلابی",
-          "amber": "عنبر",
-          "green": "سبز",
-          "red": "لال"
-        }
-      },
-      "colors": {
-        "title": "رنگ",
-        "description": "ایکسینٹ، بیک گراؤنڈ، اور فار گراؤنڈ۔",
-        "background": {
-          "label": "بیک گراؤنڈ",
-          "description": "سطح کے بیک گراؤنڈ رنگ کو تبدیل کریں۔"
-        },
-        "foreground": {
-          "label": "فار گراؤنڈ",
-          "description": "بڈی ٹیکسٹ کے رنگ کو تبدیل کریں۔"
-        },
-        "resetToDefault": "ڈیفالٹ پر واپس کریں"
-      },
-      "fontFamily": {
-        "uiLabel": "UI فونٹ",
-        "uiDescription": "UI میں استعمال ہونے والا فونٹ فیملی۔",
-        "codeLabel": "کوڈ فونٹ",
-        "codeDescription": "کوڈ سطحوں کے لیے استعمال ہونے والا فونٹ فیملی۔",
-        "options": {
-          "ui": {
-            "theme": "تھیم ڈیفالٹ",
-            "system": "سسٹم",
-            "geist": "Geist",
-            "inter": "Inter",
-            "sf": "SF Pro"
-          },
-          "code": {
-            "theme": "تھیم ڈیفالٹ",
-            "system": "سسٹم مونو",
-            "geist-mono": "Geist Mono",
-            "sf-mono": "SF Mono",
-            "jetbrains-mono": "JetBrains Mono"
-          }
-        }
       },
       "pointerCursor": {
         "title": "پوائنٹر کرسر استعمال کریں",
@@ -1049,14 +972,6 @@
         "label": "حرکت کی ترجیح",
         "system": "سسٹم",
         "on": "آن"
-      },
-      "surface": {
-        "title": "شفاف سائیڈبار",
-        "description": "سائیڈبار پر شفاف مواد لگائیں۔"
-      },
-      "transparency": {
-        "label": "شفاف سائیڈبار",
-        "description": "سائیڈبار پر شفاف مواد لگائیں۔"
       }
     }
   },

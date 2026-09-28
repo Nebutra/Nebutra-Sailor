@@ -50,7 +50,10 @@ describe("Completions Command", () => {
     for (const command of registeredCommands) {
       expect(result.stdout).toContain(command);
     }
-    expect(result.stdout).not.toContain("preset");
+    // There is no `preset` subcommand (a preset is what `apply --preset` takes);
+    // a description may say the word, a subcommand slot may not.
+    expect(result.stdout).not.toMatch(/-a\s+["']?preset\b/);
+    expect(result.stdout).not.toMatch(/__fish_seen_subcommand_from[^"]*\bpreset\b/);
   });
 
   it("zsh completions should include command descriptions", async () => {
@@ -67,6 +70,9 @@ describe("Completions Command", () => {
     for (const command of registeredCommands) {
       expect(result.stdout).toContain(command);
     }
-    expect(result.stdout).not.toContain("preset");
+    // There is no `preset` subcommand (a preset is what `apply --preset` takes);
+    // a description may say the word, a subcommand slot may not.
+    expect(result.stdout).not.toMatch(/-a\s+["']?preset\b/);
+    expect(result.stdout).not.toMatch(/__fish_seen_subcommand_from[^"]*\bpreset\b/);
   });
 });

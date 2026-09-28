@@ -20,6 +20,7 @@
       "!**/.vscode",
       "!**/*.html",
       "!**/generated",
+      "!packages/design/ui/src/catalog/demo-loaders.generated.ts",
       "!**/.source",
       "!apps/landing/src/lib/constants/china-vc-data.json"
     ]

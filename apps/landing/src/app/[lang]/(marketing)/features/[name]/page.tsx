@@ -6,7 +6,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FooterMinimal, Navbar } from "@/components/landing";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import { getCodeSampleForEntry } from "@/components/landing/features/feature-code-samples";
 import { getGroupTokens } from "@/components/landing/features/feature-group-tokens";
@@ -130,11 +129,9 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
   return (
     <main
-      className="relative min-h-dvh overflow-hidden bg-background text-foreground"
+      className="relative flex-1 overflow-hidden bg-background text-foreground"
       id="main-content"
     >
-      <Navbar />
-
       {/* HERO */}
       <FeatureHero
         backHref={`/${lang}/features`}
@@ -398,8 +395,6 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
           </AnimateInGroup>
         </section>
       ) : null}
-
-      <FooterMinimal />
     </main>
   );
 }

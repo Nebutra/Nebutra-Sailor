@@ -11,6 +11,7 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { createLegacyAppRedirectUrl } from "./lib/app-redirects";
 import { createDocsLocaleRedirectPath, createDocsRewriteUrl } from "./lib/docs-routing";
+import { SELF_FRAMED_PAGE } from "./lib/security/framing";
 import { shouldBounceSignedInVisitorToApp } from "./lib/session-home-redirect";
 
 const intlMiddleware = createMiddleware(routing);
@@ -50,9 +51,11 @@ function createLegacyLocaleRedirectUrl(url: URL, pathname: string): URL | null {
   return redirectUrl;
 }
 
-function withSecurityHeaders(response: NextResponse): NextResponse {
+function withSecurityHeaders(response: NextResponse, pathname = ""): NextResponse {
   response.headers.set("X-Content-Type-Options", "nosniff");
+  // DENY everywhere but the one self-framed page (src/lib/security/framing.ts).
   response.headers.set("X-Frame-Options", "DENY");
+  if (SELF_FRAMED_PAGE.test(pathname)) response.headers.set("X-Frame-Options", "SAMEORIGIN");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set(
     "Permissions-Policy",
@@ -238,7 +241,7 @@ export default function proxy(request: NextRequest): NextResponse {
   // 3. Process with next-intl
   const response = intlMiddleware(request) as NextResponse;
 
-  return withSecurityHeaders(response);
+  return withSecurityHeaders(response, pathname);
 }
 
 export const config = {

@@ -11,20 +11,11 @@ import {
 } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "../utils";
+import { type ContributionDay, getContributionLevel } from "./github-calendar-data";
 
 // =============================================================================
 // Types
 // =============================================================================
-
-/**
- * Single contribution day data
- */
-export interface ContributionDay {
-  /** ISO date string (e.g., "2025-09-13") */
-  date: string;
-  /** Number of contributions on this day */
-  count: number;
-}
 
 /**
  * Props for GitHubCalendar component
@@ -106,9 +97,33 @@ export interface GitHubCalendarProps {
 // Default Values
 // =============================================================================
 
+/**
+ * Legacy GitHub-green default palette, kept for callers that pass their own
+ * `colors` array. When `colors` is left unset the component renders the
+ * token-based grayscale ramp below instead (`DEFAULT_LEVEL_CLASSES`), so it
+ * reads correctly in both light and dark mode.
+ */
 const DEFAULT_COLORS = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
 
+/**
+ * Token-based grayscale ramp used whenever the caller does not supply a
+ * custom `colors` array. Empty cells sit on `bg-muted`; each level up is a
+ * rising `bg-foreground` opacity, so the ramp is legible in light and dark
+ * without any hardcoded hex.
+ */
+const DEFAULT_LEVEL_CLASSES = [
+  "bg-muted",
+  "bg-foreground/20",
+  "bg-foreground/40",
+  "bg-foreground/65",
+  "bg-foreground/90",
+];
+
 const DEFAULT_DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+// =============================================================================
+// Helpers
+// =============================================================================
 
 // =============================================================================
 // Component
@@ -144,6 +159,11 @@ export const GitHubCalendar: React.FC<GitHubCalendarProps> = ({
 }) => {
   const [contributions, setContributions] = useState<ContributionDay[]>([]);
 
+  // Whether the caller left `colors` at its default — in that case cells are
+  // painted with the token-based `DEFAULT_LEVEL_CLASSES` ramp (className)
+  // rather than an inline `backgroundColor`, so dark mode stays legible.
+  const usesDefaultRamp = colors === DEFAULT_COLORS;
+
   const today = useMemo(() => new Date(), []);
   const startDate = useMemo(() => subDays(today, (weeks - 1) * 7), [today, weeks]);
 
@@ -152,23 +172,15 @@ export const GitHubCalendar: React.FC<GitHubCalendarProps> = ({
     setContributions(data);
   }, [data]);
 
-  // Get color based on contribution count
+  const getLevel = (count: number): number =>
+    getContributionLevel(count, thresholds, colors.length);
+
+  // Get color based on contribution count (only used when `colors` is a
+  // custom, caller-supplied CSS color array — see `usesDefaultRamp`).
   const getColor = (count: number): string => {
     const fallback = colors[0] ?? "#ebedf0";
-
-    if (thresholds && thresholds.length === colors.length) {
-      for (let i = thresholds.length - 1; i >= 0; i--) {
-        if (count >= (thresholds[i] ?? 0)) return colors[i] ?? fallback;
-      }
-      return fallback;
-    }
-
-    // Default threshold logic
-    if (count === 0) return fallback;
-    if (count === 1) return colors[1] ?? fallback;
-    if (count === 2) return colors[2] ?? colors[1] ?? fallback;
-    if (count === 3) return colors[3] ?? colors[2] ?? colors[1] ?? fallback;
-    return colors[4] ?? colors[colors.length - 1] ?? fallback;
+    const level = getLevel(count);
+    return colors[level] ?? fallback;
   };
 
   // Format tooltip
@@ -265,7 +277,7 @@ export const GitHubCalendar: React.FC<GitHubCalendarProps> = ({
                 {week.days.map((day, dayIndex) => {
                   const contribution = contributions.find((c) => isSameDay(new Date(c.date), day));
                   const count = contribution?.count ?? 0;
-                  const color = getColor(count);
+                  const level = getLevel(count);
 
                   return (
                     // biome-ignore lint/a11y/useSemanticElements: ARIA semantic rendering
@@ -273,9 +285,11 @@ export const GitHubCalendar: React.FC<GitHubCalendarProps> = ({
                       key={dayIndex}
                       className={cn(
                         "h-3 w-3 rounded-[3px] transition-transform hover:scale-125",
+                        usesDefaultRamp &&
+                          (DEFAULT_LEVEL_CLASSES[level] ?? DEFAULT_LEVEL_CLASSES[0]),
                         cellClassName,
                       )}
-                      style={{ backgroundColor: color }}
+                      style={usesDefaultRamp ? undefined : { backgroundColor: getColor(count) }}
                       title={formatTooltip(day, count)}
                       role="gridcell"
                       aria-label={formatTooltip(day, count)}
@@ -292,14 +306,22 @@ export const GitHubCalendar: React.FC<GitHubCalendarProps> = ({
       {showLegend && (
         <div className="mt-4 flex items-center justify-center gap-2 text-xs">
           <span className="text-muted-foreground">{legendLabels.less}</span>
-          {colors.map((color, index) => (
-            <div
-              key={index}
-              className="h-3 w-3 rounded-[3px]"
-              style={{ backgroundColor: color }}
-              aria-hidden="true"
-            />
-          ))}
+          {usesDefaultRamp
+            ? DEFAULT_LEVEL_CLASSES.map((levelClassName, index) => (
+                <div
+                  key={index}
+                  className={cn("h-3 w-3 rounded-[3px]", levelClassName)}
+                  aria-hidden="true"
+                />
+              ))
+            : colors.map((color, index) => (
+                <div
+                  key={index}
+                  className="h-3 w-3 rounded-[3px]"
+                  style={{ backgroundColor: color }}
+                  aria-hidden="true"
+                />
+              ))}
           <span className="text-muted-foreground">{legendLabels.more}</span>
         </div>
       )}
@@ -308,3 +330,10 @@ export const GitHubCalendar: React.FC<GitHubCalendarProps> = ({
 };
 
 export default GitHubCalendar;
+
+// =============================================================================
+// Data Adapters
+// =============================================================================
+
+export type { ContributionDay, WeeklyCommitActivity } from "./github-calendar-data";
+export { fromWeeklyCommitActivity, getContributionLevel } from "./github-calendar-data";

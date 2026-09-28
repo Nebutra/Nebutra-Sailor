@@ -1,12 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { LARGE_FEATURES } from "../components/landing/features/features-data";
 
-const featureCardSource = readFileSync(
-  path.join(process.cwd(), "src/components/landing/features/FeatureBentoCard.tsx"),
-  "utf8",
-);
 const featuresPageSource = readFileSync(
   path.join(process.cwd(), "src/app/[lang]/(marketing)/features/page.tsx"),
   "utf8",
@@ -31,8 +26,8 @@ const commandInstallBoxSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/CommandInstallBox.tsx"),
   "utf8",
 );
-const footerMinimalSource = readFileSync(
-  path.join(process.cwd(), "src/components/landing/FooterMinimal.tsx"),
+const finalCtaSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/FinalCTA.tsx"),
   "utf8",
 );
 const designSystemSectionSource = readFileSync(
@@ -85,11 +80,12 @@ const themeSwitcherSource = readFileSync(
   "utf8",
 );
 const marketingHomePageSource = readFileSync(
-  path.join(process.cwd(), "src/app/[lang]/(marketing)/page.tsx"),
+  // The Sailor home is the template's; nebutra.com leads with the Journal.
+  path.join(process.cwd(), "src/app/[lang]/(marketing)/page.for-template.tsx"),
   "utf8",
 );
 const blogPageSource = readFileSync(
-  path.join(process.cwd(), "src/app/[lang]/(marketing)/blog/page.tsx"),
+  path.join(process.cwd(), "src/app/[lang]/(marketing)/blog/page.for-template.tsx"),
   "utf8",
 );
 const blogMotionShowcaseSource = readFileSync(
@@ -100,17 +96,12 @@ const EXTERNAL_TASTE_PREFIX = ["cu", "lt-"].join("");
 
 describe("landing UI governance", () => {
   it("keeps feature exploration CTAs semantic and localized", () => {
-    expect(featureCardSource).toContain("<a");
-    expect(featureCardSource).toContain("href={href}");
     expect(featuresPageSource).toContain("<CapabilityFolderShowcase");
     expect(capabilityFolderShowcaseSource).toContain("SECTION_COPY");
     expect(capabilityFolderShowcaseSource).toContain(
       'detail: { en: "View artifact", zh: "查看能力" }',
     );
     expect(capabilityFolderShowcaseSource).toContain("{SECTION_COPY.detail[localeKey]}");
-    expect(featureCardSource).not.toContain(">Explore feature<");
-    expect(featureCardSource).not.toContain("t: any");
-    expect(featureCardSource).not.toContain("FeatureTranslator");
   });
 
   it("consumes the design-system artifact shift pattern for capability cards", () => {
@@ -147,19 +138,8 @@ describe("landing UI governance", () => {
     expect(commandInstallBoxSource).toContain("<KineticCommandBox");
     expect(commandInstallBoxSource).not.toContain("navigator.clipboard.writeText");
     expect(commandInstallBoxSource).not.toContain(EXTERNAL_TASTE_PREFIX);
-    expect(footerMinimalSource).toContain("<CommandInstallBox");
-    expect(footerMinimalSource).toContain("heroContent.command");
-  });
-
-  it("routes every large feature card to a canonical docs page", () => {
-    expect(LARGE_FEATURES.length).toBeGreaterThan(0);
-
-    for (const feature of LARGE_FEATURES) {
-      // Docs are a path on this site, not a subdomain. The shape still has to
-      // be pinned — a card pointing at some other host is the thing this
-      // guards — so the host moved, the assertion did not loosen.
-      expect(feature.href).toMatch(/^https:\/\/nebutra\.com\/docs\/[a-z0-9/-]+$/);
-    }
+    expect(finalCtaSource).toContain("<CommandInstallBox");
+    expect(finalCtaSource).toContain("heroContent.command");
   });
 
   it("keeps use-case demo mockups out of the mobile landing flow", () => {

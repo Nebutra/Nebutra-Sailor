@@ -131,8 +131,8 @@
     "columns": {
       "product": "Produto",
       "resources": "Recursos",
-      "legal": "Legal",
-      "community": "Comunidade"
+      "company": "Empresa",
+      "legal": "Legal"
     },
     "links": {
       "product": "Produto",
@@ -162,7 +162,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 {brandName} Intelligence. Todos os direitos reservados.",
+    "copyright": "© 2026 {companyLegalEn} · Todos os direitos reservados.",
     "fontCredit": "Fonte chinesa: MiSans (Xiaomi)",
     "statusOnline": "Todos os sistemas operacionais",
     "newsletterTitle": "Fique por dentro",
@@ -179,7 +179,7 @@
   },
   "monorepoTree": {
     "badge": "ESTRUTURA TURBOREPO",
-    "title": "10 apps. 112 pacotes. 4 trilhos de backend.",
+    "title": "10 apps. 111 pacotes. 4 trilhos de backend.",
     "description": "Código compartilhado, builds paralelos, zero duplicação. Tipagem completa de ponta a ponta, do banco de dados ao frontend.",
     "metricApps": "aplicativos",
     "metricBackends": "trilhas de backend",
@@ -790,7 +790,7 @@
           },
           "2": {
             "label": "DPO",
-            "desc": "Você pode entrar em contato com nosso Encarregado de Proteção de Dados em dpo@nebutra.com."
+            "desc": "Você pode entrar em contato com nosso Encarregado de Proteção de Dados em dpo@{domain}."
           }
         }
       },
@@ -914,7 +914,7 @@
         "title": "Como Solicitar um Reembolso",
         "step1": {
           "title": "Passo 1: Entre em contato com o Suporte",
-          "intro": "Envie um e-mail para billing@nebutra.com com:",
+          "intro": "Envie um e-mail para billing@{domain} com:",
           "items": {
             "0": "Seu endereço de e-mail da conta",
             "1": "Plano de assinatura e período de faturamento",
@@ -973,7 +973,7 @@
         "steps": {
           "0": "Responda ao e-mail da decisão com informações adicionais",
           "1": "Solicite a escalada para um supervisor",
-          "2": "Entre em contato conosco em legal@nebutra.com para uma análise adicional"
+          "2": "Entre em contato conosco em legal@{domain} para uma análise adicional"
         }
       },
       "contactUs": {
@@ -1118,7 +1118,7 @@
         "title": "10. Resolução de Disputas",
         "informal": {
           "title": "10.1 Resolução Informal",
-          "content": "Antes de iniciar procedimentos formais, você concorda em entrar em contato conosco em legal@nebutra.com para tentar resolver disputas de forma informal."
+          "content": "Antes de iniciar procedimentos formais, você concorda em entrar em contato conosco em legal@{domain} para tentar resolver disputas de forma informal."
         },
         "governingLaw": {
           "title": "10.2 Lei Aplicável",
@@ -1216,7 +1216,6 @@
       "eyebrow": "Começar",
       "title": "Pare de configurar. Comece a construir.",
       "description": "Inicialize uma arquitetura SaaS escalável localmente com o CLI {brandName}.",
-      "button": "Implantar Arquitetura",
       "license": "Código aberto sob a licença FSL-1.1-ALv2. Não é necessário cartão de crédito."
     },
     "capability": {

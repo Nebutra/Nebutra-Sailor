@@ -6,7 +6,6 @@ import {
   FontSmoothingToggle,
   MotionSegmented,
   PointerCursorToggle,
-  ThemeEditorCard,
   ThemeModeSegmented,
 } from "@/components/appearance";
 
@@ -22,9 +21,6 @@ export default async function AppearancePage() {
         description={t("theme.description")}
         action={<ThemeModeSegmented />}
       />
-
-      {/* Consolidated theme editor — preset selector + import/copy + per-token rows. */}
-      <ThemeEditorCard />
 
       <AppearanceSection
         title={t("pointerCursor.title")}

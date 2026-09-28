@@ -7,6 +7,7 @@
  */
 
 import { execFileSync } from "node:child_process";
+import type { Preset } from "@nebutra/tokens/preset";
 import pc from "picocolors";
 import updateNotifier from "update-notifier";
 import { showDone } from "../ui/done";
@@ -19,6 +20,7 @@ import { type CloneProgressEvent, cloneTemplate, formatBytes } from "../utils/gi
 import { applyGovernanceLints } from "../utils/governance-lints";
 import { emitScaffoldLicense } from "../utils/license-emit";
 import { updatePackageJson } from "../utils/npm";
+import { renderScaffoldPreset, writeScaffoldPreset } from "../utils/preset";
 import { applyScaffoldExtras } from "../utils/scaffold-extras";
 import { generateSeedData } from "../utils/seed";
 import { generateWelcomePage } from "../utils/welcome";
@@ -42,6 +44,8 @@ export interface ScaffoldContext {
   projectName: string;
   resolvedPm: string;
   opts: CliOptions;
+  /** The look from Sailor Studio (`--preset`), parsed; null for factory. */
+  preset?: Preset | null;
   useJson: boolean;
   startedAt: number;
   /**
@@ -157,6 +161,11 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   // -- nebutra.config.json --
   emitJson(useJson, { event: "step", step: "config", status: "start" });
   await writeNebutraConfig(resolvedTarget, config);
+
+  // -- the look (Sailor Studio preset) --
+  const presetCode = writeScaffoldPreset(resolvedTarget, ctx.preset ?? null);
+  if (presetCode)
+    emitJson(useJson, { event: "step", step: "preset", status: "ok", code: presetCode });
   emitJson(useJson, { event: "step", step: "config", status: "ok" });
 
   // -- governance lints --
@@ -259,6 +268,15 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
       emitJson(useJson, { event: "step", step: "install", status: "ok" });
       if (!useJson) {
         process.stdout.write(pc.green(`  ✓ Dependencies installed (${resolvedPm})\n`));
+      }
+      if (presetCode) {
+        try {
+          renderScaffoldPreset(resolvedTarget);
+          if (!useJson) process.stdout.write(pc.green(`  ✓ Look applied (preset ${presetCode})\n`));
+        } catch {
+          // The preset file is written; the next tokens build renders it.
+          emitJson(useJson, { event: "step", step: "preset-render", status: "warn" });
+        }
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);

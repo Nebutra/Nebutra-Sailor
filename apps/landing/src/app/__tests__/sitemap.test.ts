@@ -40,7 +40,7 @@ import robots from "../robots";
 import sitemap, { generateSitemaps } from "../sitemap";
 import { GET as sitemapIndex } from "../sitemap-index.xml/route";
 
-const BASE_URL = "https://nebutra.com";
+const BASE_URL = "https://example.com";
 
 /** Captured before any sitemap runs, so a build-time `new Date()` is detectable. */
 const TEST_START = Date.now();
