@@ -28,10 +28,7 @@ export function followJob(job: Job): () => void {
         next.startedAt ? { startedAt: next.startedAt } : {},
       );
     else if (next.status === "failed")
-      editor.failNode(
-        next.nodeId,
-        next.error ?? { type: "task_failed", message: "Generation failed" },
-      );
+      editor.failNode(next.nodeId, next.error ?? { type: "task_failed", message: "生成失败" });
     else if (next.status === "completed") {
       es.close();
       void recordOutput(next);
@@ -79,7 +76,7 @@ async function recordOutput(job: Job): Promise<void> {
     if (!first) {
       editor.failNode(job.nodeId, {
         type: "no_output",
-        message: "Completed without an output asset",
+        message: "生成完成，但没有产出",
       });
       return;
     }
@@ -101,7 +98,7 @@ async function recordOutput(job: Job): Promise<void> {
   } catch (e) {
     useEditorStore.getState().failNode(job.nodeId, {
       type: "asset_record_failed",
-      message: e instanceof Error ? e.message : "Could not record the output",
+      message: e instanceof Error ? e.message : "产出没能保存",
     });
   }
 }
