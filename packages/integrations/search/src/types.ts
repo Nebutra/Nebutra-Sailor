@@ -203,11 +203,11 @@ export interface PgvectorSqlClient {
 }
 
 /**
- * How the pgvector provider reaches Postgres. There is no connection of its
- * own (no `pg.Pool`) — the host application injects this, so every query
+ * How the pgvector provider reaches Postgres. Inject this so every query
  * goes through the host's own one database path: one connection pool,
  * tenant RLS session setup, local preview database, Hyperdrive routing on
- * Workers, whatever that host already has.
+ * Workers, whatever that host already has — instead of the provider's own,
+ * deprecated fallback `pg.Pool` (see `PgvectorConfig.db`).
  *
  * Inside the @nebutra/db-owning monorepo this is `@nebutra/db`'s `getSystemDb` /
  * `getTenantDb` — see `backends/gateway/src/routes/search/index.ts` for the
@@ -226,8 +226,28 @@ export interface PgvectorDbAdapter {
 export interface PgvectorConfig {
   provider: "pgvector";
 
-  /** How this provider reaches Postgres. Required — see `PgvectorDbAdapter`. */
-  db: PgvectorDbAdapter;
+  /**
+   * How this provider reaches Postgres — see `PgvectorDbAdapter`. Strongly
+   * preferred: it routes every query through your app's own connection
+   * pool, tenant RLS session, preview database, and Hyperdrive routing
+   * instead of a second, private connection.
+   *
+   * Omitting it falls back to a `pg.Pool` this provider opens and owns
+   * itself, built from `connectionString` / `DATABASE_URL`. That fallback
+   * is DEPRECATED (kept only for backward compatibility with pre-`db`
+   * callers) and logs a one-time warning; it will be removed in a future
+   * major version.
+   */
+  db?: PgvectorDbAdapter;
+
+  /**
+   * Postgres connection string for the deprecated no-`db` fallback
+   * (defaults to `process.env.DATABASE_URL`). Ignored when `db` is
+   * provided.
+   *
+   * @deprecated Pass `db` instead.
+   */
+  connectionString?: string;
 
   /**
    * Embedding vector dimension. All documents indexed under this provider

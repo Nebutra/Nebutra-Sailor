@@ -14,9 +14,10 @@ pnpm add @nebutra/search
 
 ### Basic Usage
 
-The pgvector provider has no connection of its own — inject a
-`PgvectorDbAdapter` (`getSystemDb` / `getTenantDb`) that reaches your
-Postgres. Inside the Nebutra monorepo that's `@nebutra/db`'s own exports:
+Inject a `PgvectorDbAdapter` (`getSystemDb` / `getTenantDb`) that reaches
+your Postgres — see "Provider Configuration" below for the deprecated
+no-`db` fallback. Inside the Nebutra monorepo that's `@nebutra/db`'s own
+exports:
 
 ```typescript
 import { getSystemDb, getTenantDb } from "@nebutra/db";
@@ -57,8 +58,8 @@ await search.deleteDocument("products", "prod_123", "org_456");
 
 ## Provider Configuration
 
-`pgvector` is the only supported provider. It never opens a connection of its
-own — `config.db` must inject a `PgvectorDbAdapter`:
+`pgvector` is the only supported provider. Give it `config.db` to inject a
+`PgvectorDbAdapter`:
 
 ```typescript
 interface PgvectorDbAdapter {
@@ -74,18 +75,31 @@ which is private/unpublished — see
 `@nebutra/db`'s own `getSystemDb` / `getTenantDb` as the adapter (see
 `backends/gateway/src/routes/search/index.ts`); this way search shares the
 one connection pool the rest of the app uses, including the local PGlite
-preview database and Hyperdrive routing on Workers. There is no
-`connectionString` / `DATABASE_URL` auto-connect — whatever `db` you inject
-owns that.
+preview database and Hyperdrive routing on Workers.
 
 ```typescript
 import { createSearch } from "@nebutra/search";
 
 const search = await createSearch({
   provider: "pgvector",
-  db: myPgvectorDbAdapter, // required
+  db: myPgvectorDbAdapter, // strongly preferred
   embeddingDim: 1536, // defaults to 1536 (OpenAI text-embedding-3-small)
   tablePrefix: "nebutra_search", // defaults to "nebutra_search"
+});
+```
+
+**Deprecated fallback.** Omitting `db` falls back to a `pg.Pool` this
+provider opens and owns itself, from `connectionString` or `DATABASE_URL` —
+the pre-3.1 behavior, kept for backward compatibility. It logs a one-time
+deprecation warning and does not share your app's connection pool, tenant
+RLS session, or preview/Hyperdrive routing. It will be removed in a future
+major version; migrate to `db`.
+
+```typescript
+// Deprecated — logs a one-time warning:
+const search = await createSearch({
+  provider: "pgvector",
+  connectionString: process.env.DATABASE_URL, // or omit to read DATABASE_URL directly
 });
 ```
 
@@ -259,11 +273,14 @@ Uses `@nebutra/logger` for structured logging. All operations log at debug level
 ```bash
 # Provider selection (optional — pgvector is the only supported provider)
 SEARCH_PROVIDER=pgvector
+
+# Only read by the deprecated no-`db` fallback (see "Provider Configuration")
+DATABASE_URL=postgres://localhost/nebutra
 ```
 
-There is no database env var here — the pgvector provider reaches Postgres
-only through the injected `db` adapter (`config.db`), whatever that adapter's
-own env contract is (for `@nebutra/db`, `DATABASE_URL`).
+With a `db` adapter injected (preferred), Postgres is reached only through
+it — whatever that adapter's own env contract is (for `@nebutra/db`,
+`DATABASE_URL`, but resolved by `@nebutra/db`, not by this package).
 
 ## Testing
 

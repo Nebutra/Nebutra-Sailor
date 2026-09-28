@@ -24,10 +24,13 @@ function detectProvider(): SearchProviderType {
 /**
  * Create a search provider instance.
  *
- * The pgvector provider has no connection of its own — `config.db` must
- * inject a `PgvectorDbAdapter` (`getSystemDb` / `getTenantDb`). Inside the
- * @nebutra/db-owning monorepo that is `@nebutra/db`'s exports; see
- * `backends/gateway/src/routes/search/index.ts` for the wiring.
+ * The pgvector provider should be given `config.db` — a `PgvectorDbAdapter`
+ * (`getSystemDb` / `getTenantDb`). Inside the @nebutra/db-owning monorepo
+ * that is `@nebutra/db`'s exports; see
+ * `backends/gateway/src/routes/search/index.ts` for the wiring. Omitting
+ * `db` falls back to a private `pg.Pool` from `connectionString` /
+ * `DATABASE_URL` — kept for backward compatibility, DEPRECATED, logs a
+ * one-time warning.
  *
  * @example
  * ```ts
@@ -52,20 +55,16 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
     case "pgvector": {
       const { PgvectorProvider } = await import("./providers/pgvector");
       const pgvectorConfig = config;
-      if (!pgvectorConfig?.db) {
-        throw new Error(
-          '[search] createSearch({ provider: "pgvector" }) requires `db` — inject a ' +
-            "PgvectorDbAdapter (getSystemDb/getTenantDb). Inside the @nebutra/db-owning monorepo that " +
-            "is @nebutra/db's exports.",
-        );
-      }
       return new PgvectorProvider({
         provider: "pgvector",
-        db: pgvectorConfig.db,
-        ...(pgvectorConfig.embeddingDim !== undefined
+        ...(pgvectorConfig?.db !== undefined ? { db: pgvectorConfig.db } : {}),
+        ...(pgvectorConfig?.connectionString !== undefined
+          ? { connectionString: pgvectorConfig.connectionString }
+          : {}),
+        ...(pgvectorConfig?.embeddingDim !== undefined
           ? { embeddingDim: pgvectorConfig.embeddingDim }
           : {}),
-        ...(pgvectorConfig.tablePrefix !== undefined
+        ...(pgvectorConfig?.tablePrefix !== undefined
           ? { tablePrefix: pgvectorConfig.tablePrefix }
           : {}),
       });
@@ -78,9 +77,11 @@ export async function createSearch(config?: SearchConfig): Promise<SearchProvide
 
 /**
  * Get the default (singleton) search provider — set it first with
- * `setSearch()` (the pgvector provider needs `db` injected; there is no
- * env-var auto-connect). Uses lazy initialisation so import-time side
- * effects are avoided.
+ * `setSearch()`, or let the first call construct one from `SEARCH_PROVIDER`
+ * / defaults. Prefer `setSearch(await createSearch({ provider: "pgvector",
+ * db }))` so the pgvector provider gets a `db` adapter instead of falling
+ * back to its deprecated private `pg.Pool`. Uses lazy initialisation so
+ * import-time side effects are avoided.
  */
 export async function getSearch(): Promise<SearchProvider> {
   if (!defaultProvider) {

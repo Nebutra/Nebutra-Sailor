@@ -4,9 +4,10 @@
 // Supports:
 //   - pgvector           (Postgres + pgvector extension; BM25 + vector search)
 //
-// The pgvector provider opens no connection of its own — inject a
-// PgvectorDbAdapter (getSystemDb/getTenantDb) via config.db. Inside the
-// @nebutra/db-owning monorepo that's @nebutra/db's own exports.
+// The pgvector provider should be given a PgvectorDbAdapter
+// (getSystemDb/getTenantDb) via config.db — inside the @nebutra/db-owning
+// monorepo that's @nebutra/db's own exports. Omitting db falls back to a
+// private pg.Pool from DATABASE_URL (deprecated, logs a one-time warning).
 //
 // Usage:
 //   import { getSystemDb, getTenantDb } from "@nebutra/db";

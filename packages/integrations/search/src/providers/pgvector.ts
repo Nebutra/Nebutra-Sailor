@@ -1,4 +1,5 @@
 import { logger } from "@nebutra/logger";
+import { Pool } from "pg";
 import type {
   IndexSettings,
   PgvectorConfig,
@@ -28,18 +29,26 @@ import type {
 // scans the whole table via `config.db.getSystemDb()` — appropriate for
 // system-wide search but consumers must be aware.
 //
-// One database path, injected: this provider never opens its own
-// `pg.Pool` or imports `@nebutra/db` directly (which is private and
+// One database path, preferably injected: the host application should pass
+// `config.db` — inside the @nebutra/db-owning monorepo that is @nebutra/db's
+// `getSystemDb` / `getTenantDb`, wired in
+// backends/gateway/src/routes/search/index.ts — so every query goes through
+// the host's one connection pool, tenant RLS session, PGlite local preview
+// database, and Hyperdrive routing on Workers, instead of a second
+// connection this provider would open and own itself. See
+// packages/platform/db/README.md ("Database — one source") and CLAUDE.md
+// ("Data Access — Repository Seam").
+//
+// `@nebutra/search` itself never imports `@nebutra/db` directly (private,
 // unpublished — a hard runtime dependency on it here would break this
 // package's own publishability; see tests/architecture/release-surface.test.ts
 // "does not publish packages with private runtime workspace dependencies").
-// Instead the host injects a `PgvectorDbAdapter` — inside the
-// @nebutra/db-owning monorepo that is @nebutra/db's `getSystemDb` / `getTenantDb`, wired in
-// backends/gateway/src/routes/search/index.ts — so every query still goes
-// through the host's one connection pool, tenant RLS session, PGlite local
-// preview database, and Hyperdrive routing on Workers. See
-// packages/platform/db/README.md ("Database — one source") and CLAUDE.md
-// ("Data Access — Repository Seam").
+//
+// Omitting `config.db` falls back to a private `pg.Pool` built from
+// `connectionString` / `DATABASE_URL`, matching this package's pre-3.1
+// behaviour — kept for backward compatibility with existing 3.x callers.
+// That fallback is DEPRECATED (logs a one-time warning) and will be removed
+// in a future major version; always prefer `db`.
 // =============================================================================
 
 const SAFE_NAME_RE = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
@@ -54,31 +63,73 @@ interface DocWithEmbedding {
   _embedding?: number[];
 }
 
+let legacyPoolDeprecationWarned = false;
+
+function warnLegacyPoolDeprecatedOnce(): void {
+  if (legacyPoolDeprecationWarned) return;
+  legacyPoolDeprecationWarned = true;
+  logger.warn(
+    "[search:pgvector] No `db` adapter was provided (config.db) — falling back to a private " +
+      "pg.Pool built from `connectionString`/DATABASE_URL. This bypasses your app's own " +
+      "connection pool, tenant RLS session, and preview/Hyperdrive routing. This fallback is " +
+      "DEPRECATED — inject `db: { getSystemDb, getTenantDb }` instead (e.g. from @nebutra/db) " +
+      "and it will be removed in a future major version.",
+  );
+}
+
+/** Wraps a bare `pg.Pool` in the same raw-SQL shape `PgvectorDbAdapter` expects. */
+function legacyPoolClient(pool: Pool): PgvectorSqlClient {
+  return {
+    async $executeRawUnsafe(query, ...values) {
+      const result = await pool.query(query, values);
+      return result.rowCount ?? 0;
+    },
+    async $queryRawUnsafe<T>(query: string, ...values: unknown[]) {
+      const result = await pool.query(query, values);
+      return result.rows as T;
+    },
+  };
+}
+
 export class PgvectorProvider implements SearchProvider {
   readonly name = "pgvector" as const;
 
   private db: PgvectorDbAdapter;
+  private legacyPool: Pool | null = null;
   private embeddingDim: number;
   private tablePrefix: string;
   private bootstrappedTables = new Set<string>();
   private bootstrappedExtension = false;
 
   constructor(config: PgvectorConfig) {
-    if (!config?.db) {
-      throw new Error(
-        "[search:pgvector] `db` is required — inject a PgvectorDbAdapter (getSystemDb/getTenantDb). " +
-          "In the @nebutra/db-owning monorepo, wire @nebutra/db's getSystemDb/getTenantDb; see " +
-          "backends/gateway/src/routes/search/index.ts.",
-      );
-    }
-    this.db = config.db;
     this.embeddingDim = config.embeddingDim ?? 1536;
     this.tablePrefix = config.tablePrefix ?? "nebutra_search";
     assertSafeIdentifier(this.tablePrefix, "tablePrefix");
 
+    if (config.db) {
+      this.db = config.db;
+    } else {
+      const connectionString = config.connectionString ?? process.env.DATABASE_URL;
+      if (!connectionString) {
+        throw new Error(
+          "[search:pgvector] No `db` adapter and no `connectionString`/DATABASE_URL — cannot " +
+            "reach Postgres. Pass `db` (preferred) or `connectionString`.",
+        );
+      }
+      warnLegacyPoolDeprecatedOnce();
+      const pool = new Pool({ connectionString });
+      pool.on("error", (err) => {
+        logger.error("[search:pgvector] Unexpected pool error", err);
+      });
+      this.legacyPool = pool;
+      const client = legacyPoolClient(pool);
+      this.db = { getSystemDb: () => client, getTenantDb: () => client };
+    }
+
     logger.info("[search:pgvector] Provider initialised", {
       embeddingDim: this.embeddingDim,
       tablePrefix: this.tablePrefix,
+      mode: config.db ? "injected" : "legacy-pool (deprecated)",
     });
   }
 
@@ -339,10 +390,14 @@ export class PgvectorProvider implements SearchProvider {
   }
 
   async close(): Promise<void> {
-    // No pool of our own to close — @nebutra/db owns the connection pool
-    // (shared with the rest of the process, including the PGlite preview
-    // database and Hyperdrive routing on Workers). Just reset local state so
-    // a reused instance re-bootstraps its tables/extension check.
+    // Injected mode: the host owns the connection pool (shared with the
+    // rest of the process, including the PGlite preview database and
+    // Hyperdrive routing on Workers) — nothing of ours to close. Legacy
+    // fallback mode: we opened the pool ourselves, so we end it.
+    if (this.legacyPool) {
+      await this.legacyPool.end();
+      this.legacyPool = null;
+    }
     this.bootstrappedTables.clear();
     this.bootstrappedExtension = false;
     logger.info("[search:pgvector] Provider closed");
