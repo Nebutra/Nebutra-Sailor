@@ -155,6 +155,7 @@
       "terms": "الشروط",
       "cookies": "ملفات تعريف الارتباط",
       "refund": "الاسترداد",
+      "credits": "شكر وتقدير",
       "licensing": "التراخيص",
       "contact": "تواصل معنا",
       "faq": "الأسئلة الشائعة",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · جميع الحقوق محفوظة.",
-    "fontCredit": "الخط الصيني: MiSans (Xiaomi)",
     "statusOnline": "جميع الأنظمة تعمل",
     "newsletterTitle": "ابقَ على اطلاع",
     "newsletterPlaceholder": "you@example.com",

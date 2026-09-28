@@ -155,6 +155,7 @@
       "terms": "服务条款",
       "cookies": "Cookie 政策",
       "refund": "退款政策",
+      "credits": "致谢",
       "licensing": "授权与协议",
       "contact": "联系我们",
       "faq": "常见问题",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegal} · 保留所有权利。",
-    "fontCredit": "中文字体：小米 MiSans",
     "statusOnline": "所有子系统在线运行",
     "newsletterTitle": "保持最新动态",
     "newsletterPlaceholder": "you@example.com",

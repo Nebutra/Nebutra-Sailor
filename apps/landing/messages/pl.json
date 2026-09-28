@@ -155,6 +155,7 @@
       "terms": "Regulamin",
       "cookies": "Ciasteczka",
       "refund": "Zwroty",
+      "credits": "Podziękowania",
       "licensing": "Licencjonowanie",
       "contact": "Kontakt",
       "faq": "FAQ",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Wszelkie prawa zastrzeżone.",
-    "fontCredit": "Chiński krój pisma: MiSans (Xiaomi)",
     "statusOnline": "Wszystkie systemy działają",
     "newsletterTitle": "Bądź na bieżąco",
     "newsletterPlaceholder": "you@example.com",

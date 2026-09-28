@@ -28,10 +28,10 @@ import {
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { usePathname } from "@/i18n/navigation";
 import { ROUTES, SECTION_PATH } from "@/nebutra/routes";
-import { SECTIONS, type SectionId } from "@/site-map";
+import { pageAt, SECTIONS, SERVED_PAGES, type SectionId } from "@/site-map";
 
 /**
  * The rail, on the design system's SidebarNav: sections and their order come
@@ -47,18 +47,45 @@ const ICONS: Partial<Record<SectionId, SidebarNavIcon>> = {
 
 const STORE = "nebutra-site-rail-collapsed";
 
-/** The rail's content, shared by the desktop rail and the phone sheet. */
+const within = (pathname: string, path: string) =>
+  pathname === path || pathname.startsWith(`${path}/`);
+
+/**
+ * The rail's content, shared by the desktop rail and the phone sheet. A
+ * section with pages marked `rail` in the site map opens into them, its own
+ * index first; the section holding the current page starts open.
+ */
 function railSections(pathname: string): SidebarNavSection[] {
+  const here = pageAt(pathname)?.section;
   return [
     {
       id: "site",
-      items: SECTIONS.filter((s) => s.nav).map((s) => ({
-        id: s.id,
-        label: s.title.en,
-        href: SECTION_PATH[s.id],
-        icon: ICONS[s.id],
-        isActive: pathname.includes(SECTION_PATH[s.id]),
-      })),
+      items: SECTIONS.filter((s) => s.nav).map((s) => {
+        const pages = SERVED_PAGES.filter((p) => p.section === s.id && p.rail);
+        const item: SidebarNavItem = {
+          id: s.id,
+          label: s.title.en,
+          href: SECTION_PATH[s.id],
+          icon: ICONS[s.id],
+          isActive: here === s.id,
+        };
+        if (pages.length === 0) return item;
+        const children: SidebarNavItem[] = [
+          {
+            id: `${s.id}-index`,
+            label: "Overview",
+            href: SECTION_PATH[s.id],
+            isActive: pathname === SECTION_PATH[s.id],
+          },
+          ...pages.map((p) => ({
+            id: p.path,
+            label: p.title.en,
+            href: p.path,
+            isActive: within(pathname, p.path),
+          })),
+        ];
+        return { ...item, children };
+      }),
     },
   ];
 }

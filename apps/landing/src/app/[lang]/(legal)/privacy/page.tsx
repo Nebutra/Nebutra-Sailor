@@ -41,7 +41,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
   const t = await getTranslations({ locale, namespace: "legalPages.privacy" });
 
   return (
-    <article className="prose prose-gray dark:prose-invert max-w-none">
+    <article className="prose max-w-none">
       <h1>{t("heading")}</h1>
 
       <p className="lead">

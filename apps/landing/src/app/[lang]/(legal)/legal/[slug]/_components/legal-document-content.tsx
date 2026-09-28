@@ -24,7 +24,7 @@ export async function LegalDocumentContent({ slug, lang }: { slug: string; lang:
   const effectiveDate = formatDate(doc.effectiveAt);
 
   return (
-    <article className="prose prose-gray dark:prose-invert max-w-none">
+    <article className="prose max-w-none">
       <h1>{doc.title}</h1>
       <p className="text-sm text-muted-foreground">
         Version {doc.version} · Effective {effectiveDate}
@@ -42,7 +42,7 @@ export async function LegalDocumentContent({ slug, lang }: { slug: string; lang:
 
 export function LegalDocumentSkeleton() {
   return (
-    <article className="prose prose-gray dark:prose-invert max-w-none" aria-busy="true">
+    <article className="prose max-w-none" aria-busy="true">
       <div className="h-9 w-2/3 animate-pulse rounded bg-muted" />
       <div className="mt-3 h-4 w-1/3 animate-pulse rounded bg-muted" />
       <div className="mt-2 h-4 w-1/2 animate-pulse rounded bg-muted" />

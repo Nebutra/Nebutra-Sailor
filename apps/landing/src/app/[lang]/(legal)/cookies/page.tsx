@@ -66,7 +66,7 @@ export default async function CookiePolicyPage({ params }: { params: Promise<{ l
   type CookieTranslationKey = Parameters<typeof t>[0];
 
   return (
-    <article className="prose prose-gray dark:prose-invert max-w-none">
+    <article className="prose max-w-none">
       <h1>{t("heading")}</h1>
 
       <p className="lead">

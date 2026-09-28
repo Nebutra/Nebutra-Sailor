@@ -170,6 +170,7 @@ const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
   { pattern: "/privacy", changeFrequency: "monthly", priority: 0.2, localization: "ui" },
   { pattern: "/terms", changeFrequency: "monthly", priority: 0.2, localization: "ui" },
   { pattern: "/cookies", changeFrequency: "monthly", priority: 0.2, localization: "ui" },
+  { pattern: "/credits", changeFrequency: "yearly", priority: 0.1, localization: "none" },
   { pattern: "/refund", changeFrequency: "monthly", priority: 0.2, localization: "ui" },
   { pattern: "/dpa", changeFrequency: "monthly", priority: 0.2, localization: "ui" },
 

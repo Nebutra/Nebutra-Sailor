@@ -155,6 +155,7 @@
       "terms": "شرایط",
       "cookies": "کوکی‌ها",
       "refund": "استرداد",
+      "credits": "قدردانی",
       "licensing": "مجوزها",
       "contact": "تماس",
       "faq": "سوالات متداول",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · تمامی حقوق محفوظ است.",
-    "fontCredit": "قلم چینی: MiSans (Xiaomi)",
     "statusOnline": "تمام سیستم‌ها فعال هستند",
     "newsletterTitle": "از آخرین اخبار مطلع شوید",
     "newsletterPlaceholder": "you@example.com",
