@@ -3,13 +3,18 @@
 import { MoreHorizontal } from "@nebutra/icons";
 import { Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 import { Chip } from "@/components/ui/chip";
+import { generatableModes, generationCost } from "@/domain/generation";
+import { modelLabel } from "@/domain/models";
 import type { WorkspaceNode } from "@/domain/types";
+import { isGatewayMode } from "@/lib/gateway-api";
+import { useAsset } from "@/mock/queries";
 import { useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
 
 /**
  * Floating toolbar above the selection (A). Cap: 8 visible + `···` overflow. M2 vocabulary for an image:
- * Vary · Upscale · Crop · Edit · To video · Download · Duplicate · Delete. Slots without an M1 behaviour render disabled.
+ * Vary · Upscale · Crop · Edit · To video · Download · Duplicate · Delete. Slots without an M1 behaviour render disabled;
+ * To video is absent where the origin cannot generate video, rather than a button that can only fail.
  * Running node: Cancel only (C).
  */
 export function ContextToolbar({ node }: { node: WorkspaceNode }) {
@@ -22,9 +27,12 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
     s.jobs.find((j) => j.nodeId === node.id && (j.status === "queued" || j.status === "running")),
   );
 
+  const asset = useAsset(node.type === "text" ? undefined : node.assetId);
+  const canVideo = generatableModes(isGatewayMode).includes("video");
+
   const run = (mode: "image" | "video", label: string) => {
     const id = derive({ sourceId: node.id, mode, createdBy: "user" });
-    if (id) enqueue(id, `${label} · ${node.id}`, mode === "video" ? 7 : 1);
+    if (id) enqueue(id, `${label} · ${node.id}`, generationCost(mode));
   };
 
   if (node.status === "queued" || node.status === "running") {
@@ -58,10 +66,18 @@ export function ContextToolbar({ node }: { node: WorkspaceNode }) {
       </Chip>
       {!isText && (
         <>
-          <Chip className="px-2.5" onClick={() => run("video", "To video")}>
-            To video
-          </Chip>
-          <Chip className="px-2.5" disabled title="M2">
+          {canVideo && (
+            <Chip className="px-2.5" onClick={() => run("video", "To video")}>
+              To video
+            </Chip>
+          )}
+          <Chip
+            className="px-2.5"
+            disabled={!asset?.url}
+            onClick={() => {
+              if (asset?.url) window.open(asset.url, "_blank", "noopener,noreferrer");
+            }}
+          >
             Download
           </Chip>
         </>
@@ -105,7 +121,7 @@ function InfoPopover({ node }: { node: WorkspaceNode }) {
         <div className="mb-1.5 font-medium text-foreground text-label">Info</div>
         {row("Type", node.type)}
         {row("Status", node.status)}
-        {row("Model", node.generator?.model)}
+        {row("Model", node.generator?.model ? modelLabel(node.generator.model) : undefined)}
         {row("Count", node.generator?.count?.toString())}
         {row("Source", node.sourceNodeIds?.join(", "))}
         {row("Created by", node.createdBy)}

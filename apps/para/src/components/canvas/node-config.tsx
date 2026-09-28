@@ -4,15 +4,15 @@ import { ChevronDown } from "@nebutra/icons";
 import { Input, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 import { useEffect, useRef } from "react";
 import { Chip } from "@/components/ui/chip";
-import { MODELS_BY_MODE } from "@/domain/models";
-import type { GeneratorMode, WorkspaceNode } from "@/domain/types";
+import { generatableModes, generationCost } from "@/domain/generation";
+import { MODELS_BY_MODE, modelLabel } from "@/domain/models";
+import type { WorkspaceNode } from "@/domain/types";
+import { isGatewayMode } from "@/lib/gateway-api";
 import { useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
 import { useUiStore } from "@/stores/ui-store";
 
-const MODES: GeneratorMode[] = ["image", "video", "text", "audio"];
-
-const COST: Record<GeneratorMode, number> = { image: 1, video: 7, text: 0, audio: 2 };
+const MODES = generatableModes(isGatewayMode);
 
 const RATIOS = ["16:9", "4:3", "1:1", "9:16"];
 const RESOLUTIONS = ["1K", "2K", "4K"];
@@ -85,7 +85,7 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
   const mode = g.mode;
   const count = g.count ?? 1;
   const prompt = g.prompt ?? "";
-  const est = COST[mode] * count;
+  const est = generationCost(mode, count);
   const busy = node.status === "queued" || node.status === "running";
   const ratio = String(g.params?.ratio ?? "16:9");
   const resolution = String(g.params?.resolution ?? "1K");
@@ -137,14 +137,14 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
         <Popover>
           <PopoverTrigger asChild>
             <Chip aria-label="Model">
-              {g.model ?? "Auto"}
+              {modelLabel(g.model)}
               <ChevronDown className="size-3 text-muted-foreground" />
             </Chip>
           </PopoverTrigger>
           <PopoverContent align="start" className="w-44 p-1">
             {MODELS_BY_MODE[mode].map((m) => (
               <Chip key={m} size="row" onClick={() => updateGenerator(node.id, { model: m })}>
-                {m}
+                {modelLabel(m)}
               </Chip>
             ))}
           </PopoverContent>
@@ -216,7 +216,13 @@ export function NodeConfig({ node }: { node: WorkspaceNode }) {
             }
             e.stopPropagation();
           }}
-          placeholder={mode === "text" ? "Write…" : "Describe the change…"}
+          placeholder={
+            mode === "text"
+              ? "Write…"
+              : "assetId" in node && node.assetId
+                ? "Describe the change…"
+                : `Describe the ${mode}…`
+          }
           className="flex-1"
         />
         <Chip tone="primary" size="control" onClick={generate} disabled={busy}>
