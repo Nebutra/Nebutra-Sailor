@@ -26,9 +26,12 @@ on:
 permissions:
   contents: read
 
+# A cutover run points DNS and issues certificates; a push that lands mid-way
+# must not cancel it (it did, twice, on acme). It gets its own group and is
+# never cancelled; ordinary deploys still supersede each other.
 concurrency:
-  group: deploy-fly-gateway-${{ github.ref }}
-  cancel-in-progress: true
+  group: deploy-fly-gateway-${{ github.ref }}${{ github.event.inputs.cutover == 'true' && '-cutover' || '' }}
+  cancel-in-progress: ${{ github.event.inputs.cutover != 'true' }}
 
 jobs:
   database:
