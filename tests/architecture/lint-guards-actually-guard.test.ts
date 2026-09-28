@@ -66,6 +66,17 @@ const CASES: Case[] = [
     timeoutMs: 240_000,
   },
   {
+    // A build-time Google Fonts fetch in an app the template ships: the build
+    // fails and the dev server answers 500 wherever Google is unreachable.
+    // The default PROBE sits in apps/design, which .templateignore strips —
+    // out of this guard's scope by design — so the probe goes in the landing.
+    // Formatter-wrapped, so the specifier is lines away from `import`. The
+    // specifier is assembled so this file does not itself trip the guard.
+    guard: "lint-no-google-fonts",
+    violation: `import {\n  Inter,\n} from "${["next", "font", "google"].join("/")}";\n\nexport const inter = Inter({ subsets: ["latin"] });\n`,
+    path: "apps/landing/src/__lint_guard_probe.tsx",
+  },
+  {
     guard: "lint-no-raw-inputs",
     violation: 'export const C = () => <input type="text" />;\n',
   },
