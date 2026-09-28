@@ -9,6 +9,7 @@
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { BillingError } from "@nebutra/billing";
+import { PARA_VIDEO_MODELS } from "@nebutra/billing/prices";
 import { toApiError } from "@nebutra/errors";
 import { logger } from "@nebutra/logger";
 import {
@@ -18,7 +19,14 @@ import {
 } from "@nebutra/repositories";
 import { SpanStatusCode, trace } from "@opentelemetry/api";
 import type { Context } from "hono";
-import { chargeOf, isRefundable, refundParaJob } from "../../lib/para-credits.js";
+import { isParaAssetUrl, ReferenceUrlError } from "../../lib/para-assets.js";
+import {
+  chargeOf,
+  creditsPerUnit,
+  isRefundable,
+  ModelUnavailableError,
+  refundParaJob,
+} from "../../lib/para-credits.js";
 import {
   OriginRejectedError,
   paraOriginFetch,
@@ -142,7 +150,19 @@ const JobCreateSchema = z.object({
       prompt: z.string().max(4000).optional(),
       params: z.record(z.string(), z.unknown()).optional(),
       references: z
-        .array(z.object({ kind: z.enum(["asset", "subject", "node"]), id: z.string() }))
+        .array(
+          z.object({
+            kind: z.enum(["asset", "subject", "node"]),
+            id: z.string(),
+            // The asset's own URL, so the origin can hand it to the model (image edit, first frame).
+            // Only PARA's asset hosts: the vendor fetches it, so an arbitrary URL is refused.
+            url: z
+              .string()
+              .max(2048)
+              .refine(isParaAssetUrl, { message: "reference_url_not_allowed" })
+              .optional(),
+          }),
+        )
         .max(16)
         .optional(),
       count: z.union([z.literal(1), z.literal(2), z.literal(4)]).optional(),
@@ -611,6 +631,42 @@ paraRoutes.openapi(
   },
 );
 
+// ── Models ───────────────────────────────────────────────────────────────────
+
+/**
+ * The origin's live catalogue with prices attached from the table the gateway charges from.
+ * Video models carry `creditsPerSecond` by resolution (null while planned); other modes carry
+ * `creditsPerOutput`. Shape: backends/python/ai/app/api/v1/routes_para.py.
+ */
+export function priceCatalogue(catalogue: Record<string, unknown>): Record<string, unknown> {
+  const modes = (catalogue.modes as Record<string, Record<string, unknown>> | undefined) ?? {};
+  const priced: Record<string, unknown> = {};
+  for (const [mode, section] of Object.entries(modes)) {
+    const models = Array.isArray(section.models) ? section.models : [];
+    priced[mode] = {
+      ...section,
+      models: models.map((raw) => {
+        const model = raw as Record<string, unknown>;
+        if (mode === "video") {
+          const price = PARA_VIDEO_MODELS[String(model.id)];
+          return { ...model, creditsPerSecond: price?.creditsPerSecond ?? null };
+        }
+        const known = mode === "image" || mode === "text" || mode === "audio";
+        return { ...model, creditsPerOutput: known ? creditsPerUnit(mode) : null };
+      }),
+    };
+  }
+  return { ...catalogue, modes: priced };
+}
+
+paraRoutes.get("/models", (c) =>
+  withOrigin(c, "para.models.list", async () => {
+    const upstream = await originFetch(c, "/api/v1/para/models", "GET");
+    if (!upstream.ok) return c.json({ error: `origin error (${upstream.status})` }, 503);
+    return c.json(priceCatalogue((await upstream.json()) as Record<string, unknown>), 200);
+  }),
+);
+
 // ── Jobs = task envelope ─────────────────────────────────────────────────────
 // Plain handlers: these return proxied Responses, which zod-openapi's typed responses cannot express.
 
@@ -630,6 +686,9 @@ paraRoutes.post("/jobs", async (c) => {
     } catch (error) {
       // Pre-admission rejections: no job, no node — shown inline at the trigger (jobs.md decision 5).
       if (error instanceof OriginRejectedError) return c.json({ error: error.message }, 502);
+      if (error instanceof ModelUnavailableError || error instanceof ReferenceUrlError) {
+        return c.json({ error: error.message, code: error.code }, 400);
+      }
       if (error instanceof BillingError && error.code === "INSUFFICIENT_CREDITS") {
         return c.json({ error: "Not enough credits", code: error.code }, 402);
       }
@@ -720,12 +779,18 @@ export function mapTaskEventStream(
   );
 }
 
+// Bounds the proxied stream as a whole: long enough for a video job (the origin gives up on one
+// after 20 minutes, PARA_VIDEO_MAX_WAIT_SECONDS), short enough that a stuck stream is released.
+const JOB_EVENTS_TIMEOUT_MS = 30 * 60 * 1000;
+
 paraRoutes.get("/jobs/:id/events", (c) =>
   withOrigin(c, "para.jobs.events", async () => {
-    const upstream = await originFetch(
-      c,
+    const upstream = await paraOriginFetch(
+      originContext(c),
       `/api/v1/tasks/${encodeURIComponent(c.req.param("id"))}/events`,
       "GET",
+      undefined,
+      { timeoutMs: JOB_EVENTS_TIMEOUT_MS },
     );
     if (upstream.status === 404) return c.json({ error: "job not found" }, 404);
     if (!upstream.ok || !upstream.body) {
