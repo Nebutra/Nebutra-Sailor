@@ -217,6 +217,119 @@ describe("/api/v1/para", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it("passes a reference URL on PARA's own asset host through to the origin", async () => {
+    vi.stubEnv("UPLOAD_PUBLIC_BASE_URL", "https://cdn.para.test/assets");
+    const fetchMock = echoOrigin();
+    const app = await createApp();
+    const url = "https://cdn.para.test/assets/para/org_1/w1/n1/t-1.png";
+    const res = await postJob(app, {
+      mode: "image",
+      prompt: "same, at night",
+      references: [{ kind: "node", id: "n1", url }],
+    });
+    expect(res.status).toBe(202);
+    const sent = JSON.parse(String((fetchMock.mock.calls[0]?.[1] as RequestInit).body)) as {
+      payload: { generator: { references: Array<{ url: string }> } };
+    };
+    expect(sent.payload.generator.references[0]?.url).toBe(url);
+  });
+
+  it("rejects reference URLs outside PARA's asset hosts with 400 and charges nothing", async () => {
+    vi.stubEnv("UPLOAD_PUBLIC_BASE_URL", "https://cdn.para.test/assets");
+    const fetchMock = vi.spyOn(globalThis, "fetch");
+    const app = await createApp();
+    for (const url of [
+      "https://evil.example/x.png",
+      "https://cdn.para.test.evil.example/assets/x.png",
+      "https://cdn.para.test/other/x.png",
+      "http://cdn.para.test/assets/x.png",
+      "https://user:pw@cdn.para.test/assets/x.png",
+      "not a url",
+    ]) {
+      const res = await postJob(app, {
+        mode: "video",
+        prompt: "move",
+        references: [{ kind: "asset", id: "a1", url }],
+      });
+      expect(res.status, url).toBe(400);
+    }
+    expect(billing.deductCredits).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("rejects every reference URL when no asset base is configured", async () => {
+    vi.stubEnv("UPLOAD_PUBLIC_BASE_URL", "");
+    const app = await createApp();
+    const res = await postJob(app, {
+      mode: "image",
+      prompt: "x",
+      references: [{ kind: "node", id: "n1", url: "https://cdn.para.test/assets/x.png" }],
+    });
+    expect(res.status).toBe(400);
+  });
+
+  it("charges video per second and pins Auto to the model that will run", async () => {
+    const fetchMock = echoOrigin();
+    const app = await createApp();
+    const res = await postJob(app, {
+      mode: "video",
+      model: "Auto",
+      prompt: "waves",
+      params: { duration: "10s", ratio: "9:16" },
+    });
+    expect(res.status).toBe(202);
+    expect(billing.deductCredits.mock.calls[0]?.[0]).toMatchObject({ amount: 130 });
+    const sent = JSON.parse(String((fetchMock.mock.calls[0]?.[1] as RequestInit).body)) as {
+      payload: { generator: { model: string; params: Record<string, unknown> } };
+    };
+    expect(sent.payload.generator.model).toBe("wan-2.7");
+    expect(sent.payload.generator.params).toEqual({
+      duration: 10,
+      resolution: "720P",
+      ratio: "9:16",
+    });
+  });
+
+  it("refuses a planned video model with 400 model_unavailable before charging", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch");
+    const app = await createApp();
+    const res = await postJob(app, { mode: "video", model: "seedance-2.5", prompt: "x" });
+    expect(res.status).toBe(400);
+    expect(await res.json()).toMatchObject({ code: "model_unavailable" });
+    expect(billing.deductCredits).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("lists models from the origin with prices from the charge table", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          modes: {
+            image: { auto: "qwen-image-2.0", models: [{ id: "qwen-image-2.0", live: true }] },
+            video: {
+              auto: "wan-2.7",
+              models: [
+                { id: "wan-2.7", status: "available", live: true },
+                { id: "seedance-2.5", status: "planned", live: false },
+              ],
+            },
+          },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      ),
+    );
+    const app = await createApp();
+    const res = await app.request("/models");
+    expect(res.status).toBe(200);
+    expect(String(fetchMock.mock.calls[0]?.[0])).toBe("https://origin.example/api/v1/para/models");
+    const body = (await res.json()) as {
+      modes: Record<string, { models: Array<Record<string, unknown>> }>;
+    };
+    expect(body.modes.image?.models[0]?.creditsPerOutput).toBe(10);
+    expect(body.modes.video?.models[0]?.creditsPerSecond).toEqual({ "720P": 13, "1080P": 21 });
+    expect(body.modes.video?.models[1]?.creditsPerSecond).toBeNull();
+  });
+
   it("a charge key that already exists reads as paid, not as an error", async () => {
     billing.deductCredits.mockRejectedValueOnce(Object.assign(new Error("dup"), { code: "P2002" }));
     echoOrigin();

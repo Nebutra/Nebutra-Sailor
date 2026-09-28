@@ -13,14 +13,18 @@
  *
  * Price (defaults in @nebutra/billing/prices): Para credits sell at 1,000 for USD 9.99
  * (ops/nebutra/offers.json), so a credit is about one cent: an image is 10 credits (USD 0.10), a
- * text turn 1. Competitors price one image per
+ * text turn 1, video per second per model (Wan 2.7 at 720P: 13/s). Competitors price one image per
  * model — Lovart 1–15 credits, Seko 1–7 (research/competitors/{lovart/business/generation,
  * seko/business/jobs}.md) — on credits of their own value, so the number is ours, not copied.
  * Every mode is overridable per deployment without a code change.
  */
 
 import { deductCredits, refundCredits } from "@nebutra/billing";
-import { PARA_CREDITS_PER_OUTPUT } from "@nebutra/billing/prices";
+import {
+  PARA_CREDITS_PER_OUTPUT,
+  type ParaVideoQuote,
+  paraVideoQuote,
+} from "@nebutra/billing/prices";
 import type { ParaGeneratorInput } from "./para-origin.js";
 
 export const PARA_WALLET_PRODUCT = "para" as const;
@@ -30,6 +34,7 @@ export const PARA_WALLET_PRODUCT = "para" as const;
 const DEFAULT_CREDITS: Readonly<Record<ParaGeneratorInput["mode"], number>> =
   PARA_CREDITS_PER_OUTPUT;
 
+// For video the override is credits per SECOND, applied to every video model.
 const ENV_KEYS: Record<ParaGeneratorInput["mode"], string> = {
   image: "PARA_CREDITS_PER_IMAGE",
   text: "PARA_CREDITS_PER_TEXT",
@@ -37,15 +42,59 @@ const ENV_KEYS: Record<ParaGeneratorInput["mode"], string> = {
   audio: "PARA_CREDITS_PER_AUDIO",
 };
 
-export function creditsPerUnit(mode: ParaGeneratorInput["mode"]): number {
+function envOverride(mode: ParaGeneratorInput["mode"]): number | null {
   const raw = process.env[ENV_KEYS[mode]];
-  const parsed = raw === undefined ? Number.NaN : Number(raw);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : DEFAULT_CREDITS[mode];
+  const parsed = raw === undefined || raw === "" ? Number.NaN : Number(raw);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
 }
 
-/** Credits one job costs: per unit, times the number of outputs asked for. */
-export function paraJobCost(generator: Pick<ParaGeneratorInput, "mode" | "count">): number {
-  return creditsPerUnit(generator.mode) * (generator.count ?? 1);
+/** Credits per output for image / text / audio; for video, one default clip (see below). */
+export function creditsPerUnit(mode: ParaGeneratorInput["mode"]): number {
+  if (mode === "video") {
+    const quote = paraVideoQuote();
+    return quote ? videoRate(quote) * quote.durationSeconds : DEFAULT_CREDITS.video;
+  }
+  return envOverride(mode) ?? DEFAULT_CREDITS[mode];
+}
+
+function videoRate(quote: ParaVideoQuote): number {
+  return envOverride("video") ?? quote.creditsPerSecond;
+}
+
+/** The generator's video quote, or null when the model cannot be run (planned, unknown). */
+export function videoQuoteFor(
+  generator: Pick<ParaGeneratorInput, "model" | "params">,
+): ParaVideoQuote | null {
+  return paraVideoQuote({
+    model: generator.model,
+    durationSeconds: generator.params?.duration,
+    resolution: generator.params?.resolution,
+  });
+}
+
+/** A video job for a model that is planned or unknown: refused before any charge. */
+export class ModelUnavailableError extends Error {
+  readonly code = "model_unavailable";
+  constructor(public readonly model: string | undefined) {
+    super(`Video model '${model ?? "Auto"}' is not available`);
+    this.name = "ModelUnavailableError";
+  }
+}
+
+/**
+ * Credits one job costs: per unit, times the number of outputs asked for. Video is credits per
+ * second of the resolved model × the duration it will actually run (snapped to what the model
+ * accepts, the same rule the origin applies) × outputs. Throws ModelUnavailableError for a video
+ * model that cannot run — never a price for work that will not happen.
+ */
+export function paraJobCost(
+  generator: Pick<ParaGeneratorInput, "mode" | "count" | "model" | "params">,
+): number {
+  const count = generator.count ?? 1;
+  if (generator.mode !== "video") return creditsPerUnit(generator.mode) * count;
+  const quote = videoQuoteFor(generator);
+  if (!quote) throw new ModelUnavailableError(generator.model);
+  return videoRate(quote) * quote.durationSeconds * count;
 }
 
 /** Recorded on the task so a later reader can refund exactly what was taken. */

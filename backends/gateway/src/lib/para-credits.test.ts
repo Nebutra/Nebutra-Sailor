@@ -2,7 +2,9 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@nebutra/billing", () => ({ deductCredits: vi.fn(), refundCredits: vi.fn() }));
 
-const { chargeOf, isRefundable, paraJobCost } = await import("./para-credits.js");
+const { chargeOf, isRefundable, ModelUnavailableError, paraJobCost } = await import(
+  "./para-credits.js"
+);
 
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -24,6 +26,42 @@ describe("para job cost", () => {
     expect(paraJobCost({ mode: "image" })).toBe(10);
     vi.stubEnv("PARA_CREDITS_PER_IMAGE", "-3");
     expect(paraJobCost({ mode: "image" })).toBe(10);
+  });
+});
+
+describe("video job cost", () => {
+  it("is credits per second of the resolved model times the duration it will run", () => {
+    // Auto → Wan 2.7, 720P (13/s), default 5 s.
+    expect(paraJobCost({ mode: "video" })).toBe(65);
+    expect(paraJobCost({ mode: "video", params: { duration: 10 } })).toBe(130);
+    expect(paraJobCost({ mode: "video", params: { duration: "10s" } })).toBe(130);
+    expect(paraJobCost({ mode: "video", count: 2, params: { duration: 5 } })).toBe(130);
+    expect(
+      paraJobCost({
+        mode: "video",
+        model: "wan-2.7",
+        params: { duration: 5, resolution: "1080P" },
+      }),
+    ).toBe(105);
+  });
+
+  it("clamps duration to what the model accepts and ignores malformed input", () => {
+    expect(paraJobCost({ mode: "video", params: { duration: 600 } })).toBe(13 * 15);
+    expect(paraJobCost({ mode: "video", params: { duration: 1 } })).toBe(13 * 2);
+    expect(paraJobCost({ mode: "video", params: { duration: "5 minutes" } })).toBe(65);
+    expect(paraJobCost({ mode: "video", params: { duration: { s: 5 } } })).toBe(65);
+  });
+
+  it("the video override is per second", () => {
+    vi.stubEnv("PARA_CREDITS_PER_VIDEO", "30");
+    expect(paraJobCost({ mode: "video", params: { duration: 4 } })).toBe(120);
+  });
+
+  it("refuses planned and unknown models instead of pricing them", () => {
+    expect(() => paraJobCost({ mode: "video", model: "seedance-2.5" })).toThrow(
+      ModelUnavailableError,
+    );
+    expect(() => paraJobCost({ mode: "video", model: "Kling 3" })).toThrow(ModelUnavailableError);
   });
 });
 
