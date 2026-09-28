@@ -64,7 +64,6 @@ describe("site SEO route registry", () => {
         "/blog",
         "/changelog",
         "/roadmap",
-        "/status",
         "/open",
         "/security",
         "/about",
