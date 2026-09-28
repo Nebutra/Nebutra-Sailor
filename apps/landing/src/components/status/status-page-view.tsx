@@ -1,4 +1,3 @@
-import { LogomarkSVG } from "@nebutra/brand";
 import { brand } from "@nebutra/brand/metadata";
 import {
   Calendar,
@@ -76,10 +75,12 @@ export function StateIcon({ state, className }: { state: ServiceState; className
 
 export function StatusShell({ checkedAt, children }: { checkedAt?: string; children: ReactNode }) {
   return (
-    <div className="flex min-h-dvh flex-col bg-background text-foreground">
-      <StatusChrome checkedAt={checkedAt} />
-      <main id="main-content" className="flex-1 px-4 pb-16 pt-8 sm:px-6">
-        <div className="mx-auto w-full max-w-[760px]">{children}</div>
+    <div className="bg-background text-foreground">
+      <main id="main-content" className="px-4 pb-16 pt-8 sm:px-6">
+        <div className="mx-auto w-full max-w-[760px]">
+          <StatusActions checkedAt={checkedAt} />
+          {children}
+        </div>
       </main>
       <StatusFooter />
     </div>
@@ -353,51 +354,29 @@ function MaintenanceCard({
   );
 }
 
-function StatusChrome({ checkedAt }: { checkedAt?: string }) {
+/**
+ * The site header already carries the brand, so the status page adds only
+ * its own action: Subscribe, top-right of the content column.
+ */
+function StatusActions({ checkedAt }: { checkedAt?: string }) {
   return (
-    <header className="px-4 pt-8 sm:px-6 sm:pt-10">
-      <div className="mx-auto flex max-w-[760px] items-center justify-between gap-4">
-        <Link
-          href="/status"
-          className="flex min-w-0 items-center gap-2.5 rounded-md"
-          aria-label={`${brand.name} Status`}
-        >
-          <LogomarkSVG className="h-7 w-7 shrink-0 text-foreground" />
-          <span className="truncate text-xl font-semibold tracking-tight text-foreground">
-            {brand.name}
-          </span>
-        </Link>
-        <div className="flex shrink-0 items-center gap-3">
-          {checkedAt ? (
-            <time dateTime={checkedAt} className="sr-only">
-              Updated {formatUtcMedium(checkedAt)}
-            </time>
-          ) : null}
-          <SubscribeMenu />
-        </div>
-      </div>
-    </header>
+    <div className="flex items-center justify-end gap-3 pb-6">
+      {checkedAt ? (
+        <time dateTime={checkedAt} className="text-xs tabular-nums text-muted-foreground">
+          Updated {formatUtcMedium(checkedAt)}
+        </time>
+      ) : null}
+      <SubscribeMenu />
+    </div>
   );
 }
 
 function StatusFooter() {
   return (
     <footer className="px-4 pb-10 sm:px-6">
-      <div className="mx-auto max-w-[760px] text-center text-sm text-muted-foreground">
-        <p>
-          Powered by <span className="font-semibold text-foreground">{brand.name} Status</span>
-        </p>
-        <p className="mt-2 text-xs leading-5">
-          Availability is measured by public checks from outside our cloud every few minutes. ·{" "}
-          <a href="/status.atom" className="hover:text-foreground">
-            Atom
-          </a>{" "}
-          ·{" "}
-          <a href="/status.json" className="hover:text-foreground">
-            JSON
-          </a>
-        </p>
-      </div>
+      <p className="mx-auto max-w-[760px] text-center text-sm text-muted-foreground">
+        Powered by <span className="font-semibold text-foreground">{brand.name} Status</span>
+      </p>
     </footer>
   );
 }
