@@ -1,8 +1,14 @@
 "use client";
 
 import { ClockRewind, CloudUpload } from "@nebutra/icons";
-import { useEffect, useRef, useState } from "react";
-import { Chip } from "@/components/ui/chip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@nebutra/ui/primitives";
+import { useRef, useState } from "react";
 import { generatableModes } from "@/domain/generation";
 import { NODE_SIZE, NODE_TYPE_LABEL } from "@/domain/nodes";
 import type { GeneratorMode } from "@/domain/types";
@@ -16,15 +22,15 @@ import { NodeGlyph } from "./node-glyph";
 const MODES = generatableModes(isGatewayMode);
 const ORDER: readonly GeneratorMode[] = ["text", "image", "video", "audio"];
 const MENU_W = 224;
-const MENU_H = 320;
 
 /**
  * 添加节点 — one menu, three ways in: the dock's +, a double-click on empty canvas, and a node's
  * right + port (which wires the new node downstream). Lists only the node types the origin can
  * generate, then the two ways to bring media in: 上传 and 从生成历史选择.
  *
- * Positioned by hand rather than as a Popover: it opens at a point on the canvas (where the
- * double-click was), not against a trigger element.
+ * It opens at a point on the canvas (where the double-click was) rather than against a button, so
+ * the design system's DropdownMenu is anchored to an invisible 1px trigger placed at that point —
+ * focus, keyboard, outside-click, Escape and the portal come from the primitive, not by hand.
  */
 export function AddNodeMenu() {
   const request = useUiStore((s) => s.addMenu);
@@ -32,26 +38,9 @@ export function AddNodeMenu() {
   const setHistoryOpen = useUiStore((s) => s.setHistoryOpen);
   const setPromptFocus = useUiStore((s) => s.setPromptFocus);
   const createNode = useEditorStore((s) => s.createNode);
-  const panel = useRef<HTMLDivElement>(null);
   const file = useRef<HTMLInputElement>(null);
   const pendingAt = useRef<{ x: number; y: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!request) return;
-    const onDown = (e: PointerEvent) => {
-      if (panel.current && !panel.current.contains(e.target as Node)) close();
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-    window.addEventListener("pointerdown", onDown, true);
-    window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("pointerdown", onDown, true);
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [request, close]);
 
   const add = (mode: GeneratorMode) => {
     if (!request) return;
@@ -93,11 +82,6 @@ export function AddNodeMenu() {
 
   const fromSource = Boolean(request?.sourceId);
   const modes = ORDER.filter((m) => MODES.includes(m));
-  const left = request
-    ? Math.min(Math.max(8, request.screen.x), window.innerWidth - MENU_W - 8)
-    : 0;
-  const above = request ? request.screen.y + MENU_H > window.innerHeight - 8 : false;
-
   return (
     <>
       <input
@@ -121,53 +105,38 @@ export function AddNodeMenu() {
           {error}
         </div>
       )}
-      {request && (
-        <div
-          ref={panel}
-          role="menu"
+      <DropdownMenu open={Boolean(request)} onOpenChange={(open) => open || close()}>
+        <DropdownMenuTrigger
+          aria-hidden="true"
+          tabIndex={-1}
+          className="pointer-events-none fixed size-px opacity-0"
+          style={request ? { left: request.screen.x, top: request.screen.y } : undefined}
+        />
+        <DropdownMenuContent
+          align="start"
+          sideOffset={0}
           aria-label="添加节点"
-          style={{
-            left,
-            top: above ? undefined : request.screen.y,
-            bottom: above ? window.innerHeight - request.screen.y : undefined,
-            width: MENU_W,
-          }}
-          className="para-rise fixed z-40 flex flex-col rounded-xl border border-border bg-popover p-1.5 shadow-ambient-lg"
+          style={{ width: MENU_W }}
           onPointerDown={(e) => e.stopPropagation()}
         >
-          <div className="px-2 pt-1 pb-1.5 text-meta text-muted-foreground">
-            {fromSource ? "添加下游节点" : "添加节点"}
-          </div>
+          <DropdownMenuLabel>{fromSource ? "添加下游节点" : "添加节点"}</DropdownMenuLabel>
           {modes.map((m) => (
-            <Chip
-              key={m}
-              role="menuitem"
-              size="row"
-              className="h-9 gap-2.5 text-body"
-              onClick={() => add(m)}
-            >
+            <DropdownMenuItem key={m} className="gap-2.5" onClick={() => add(m)}>
               <NodeGlyph type={m} className="size-4 text-muted-foreground" />
               {NODE_TYPE_LABEL[m]}
-            </Chip>
+            </DropdownMenuItem>
           ))}
           {!fromSource && (
             <>
-              <div className="px-2 pt-2.5 pb-1.5 text-meta text-muted-foreground">添加资源</div>
+              <DropdownMenuLabel className="pt-2.5">添加资源</DropdownMenuLabel>
               {canUpload && (
-                <Chip
-                  role="menuitem"
-                  size="row"
-                  className="h-9 gap-2.5 text-body"
-                  onClick={pickFile}
-                >
+                <DropdownMenuItem className="gap-2.5" onClick={pickFile}>
                   <CloudUpload aria-hidden="true" className="size-4 text-muted-foreground" />
                   上传
-                </Chip>
+                </DropdownMenuItem>
               )}
-              <Chip
-                role="menuitem"
-                size="row"
-                className="h-9 gap-2.5 text-body"
+              <DropdownMenuItem
+                className="gap-2.5"
                 onClick={() => {
                   close();
                   setHistoryOpen(true);
@@ -175,11 +144,11 @@ export function AddNodeMenu() {
               >
                 <ClockRewind aria-hidden="true" className="size-4 text-muted-foreground" />
                 从生成历史选择
-              </Chip>
+              </DropdownMenuItem>
             </>
           )}
-        </div>
-      )}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </>
   );
 }
