@@ -40,7 +40,7 @@ export const api = {
   createWorkspace: (projectId: string): Promise<Workspace> => {
     const n = workspaces.filter((w) => w.projectId === projectId).length + 1;
     const id = `ws-${Date.now().toString(36)}-${wsSeq++}`;
-    const ws: Workspace = { id, projectId, name: `Untitled ${n}`, documentId: `doc-${id}` };
+    const ws: Workspace = { id, projectId, name: `画布 ${n}`, documentId: `doc-${id}` };
     workspaces.push(ws);
     documents[ws.documentId] = emptyDoc();
     return latency(ws);

@@ -5,37 +5,65 @@ import type { Asset, Project, Subject, Workspace, WorkspaceDocument } from "@/do
 export const projects: Project[] = [
   {
     id: "last-animal",
-    name: "The Last Animal",
+    name: "最后的动物",
     updatedAt: "2026-09-07T18:20:00Z",
     coverAssetId: "a001",
   },
+  { id: "bamboo", name: "竹林问剑", updatedAt: "2026-09-06T21:10:00Z", coverAssetId: "a007" },
   {
     id: "kuanlan-launch",
-    name: "Kuanlan Launch",
+    name: "观澜发布片",
     updatedAt: "2026-09-05T09:00:00Z",
     coverAssetId: "a004",
   },
-  // Deliberately without a cover: the empty project is a real state, and the card has to say so.
-  { id: "studio-reel", name: "Studio Reel 2026", updatedAt: "2026-08-30T14:45:00Z" },
+  { id: "neon-rain", name: "霓虹雨夜", updatedAt: "2026-09-02T12:30:00Z" },
+  // Deliberately without a cover or assets: the empty project is a real state, and the card has to say so.
+  { id: "studio-reel", name: "工作室年度样片", updatedAt: "2026-08-30T14:45:00Z" },
 ];
 
 export const workspaces: Workspace[] = [
-  { id: "ep01", projectId: "last-animal", name: "EP01", documentId: "doc-ep01" },
-  { id: "ep02", projectId: "last-animal", name: "EP02", documentId: "doc-ep02" },
-  { id: "trailer", projectId: "last-animal", name: "Trailer", documentId: "doc-trailer" },
-  { id: "poster", projectId: "last-animal", name: "Poster", documentId: "doc-poster" },
-  { id: "hero", projectId: "kuanlan-launch", name: "Hero film", documentId: "doc-hero" },
-  { id: "stills", projectId: "kuanlan-launch", name: "Stills", documentId: "doc-stills" },
-  { id: "cut-a", projectId: "studio-reel", name: "Cut A", documentId: "doc-cut-a" },
+  { id: "ep01", projectId: "last-animal", name: "第一集", documentId: "doc-ep01" },
+  { id: "ep02", projectId: "last-animal", name: "第二集", documentId: "doc-ep02" },
+  { id: "trailer", projectId: "last-animal", name: "预告片", documentId: "doc-trailer" },
+  { id: "poster", projectId: "last-animal", name: "海报", documentId: "doc-poster" },
+  { id: "hero", projectId: "kuanlan-launch", name: "主片", documentId: "doc-hero" },
+  { id: "stills", projectId: "kuanlan-launch", name: "剧照", documentId: "doc-stills" },
+  { id: "bamboo-1", projectId: "bamboo", name: "分镜", documentId: "doc-bamboo-1" },
+  { id: "neon-1", projectId: "neon-rain", name: "街景", documentId: "doc-neon-1" },
+  { id: "cut-a", projectId: "studio-reel", name: "粗剪 A", documentId: "doc-cut-a" },
 ];
 
 const t = "2026-09-06T10:00:00Z";
+
+/** A generated fixture asset, made on a known canvas. */
+const made = (
+  id: string,
+  type: Asset["type"],
+  label: string,
+  aspect: Asset["aspect"],
+  projectId: string,
+  workspaceId: string,
+  createdAt: string,
+): Asset => ({
+  id,
+  type,
+  url: `/mock/${id}.svg`,
+  label,
+  aspect,
+  scope: "account",
+  origin: "generated",
+  jobId: `j-${id}`,
+  workspaceId,
+  projectId,
+  createdAt,
+});
+
 export const assets: Asset[] = [
   {
     id: "a001",
     type: "image",
     url: "/mock/a001.svg",
-    label: "A001",
+    label: "黎明港口",
     aspect: "16:9",
     scope: "account",
     origin: "upload",
@@ -45,7 +73,7 @@ export const assets: Asset[] = [
     id: "a002",
     type: "image",
     url: "/mock/a002.svg",
-    label: "A002",
+    label: "月下山脊",
     aspect: "16:9",
     scope: "account",
     origin: "upload",
@@ -55,7 +83,7 @@ export const assets: Asset[] = [
     id: "a003",
     type: "image",
     url: "/mock/a003.svg",
-    label: "A003",
+    label: "玛拉 · 侧光肖像",
     aspect: "1:1",
     scope: "account",
     origin: "upload",
@@ -65,44 +93,26 @@ export const assets: Asset[] = [
     id: "a004",
     type: "video",
     url: "/mock/a004.svg",
-    label: "A004",
+    label: "潮汐循环",
     aspect: "16:9",
     scope: "account",
     origin: "upload",
     createdAt: t,
   },
-  {
-    id: "a005",
-    type: "image",
-    url: "/mock/a005.svg",
-    label: "A005",
-    aspect: "4:3",
-    scope: "account",
-    origin: "generated",
-    jobId: "j-past-1",
-    workspaceId: "ep01",
-    projectId: "last-animal",
-    createdAt: t,
-  },
-  {
-    id: "a006",
-    type: "image",
-    url: "/mock/a006.svg",
-    label: "A006",
-    aspect: "9:16",
-    scope: "account",
-    origin: "generated",
-    jobId: "j-past-2",
-    workspaceId: "poster",
-    projectId: "last-animal",
-    createdAt: t,
-  },
+  made("a005", "image", "沉没之城", "4:3", "last-animal", "ep01", t),
+  made("a006", "image", "落日海报", "9:16", "last-animal", "poster", t),
+  made("a007", "video", "竹林光束", "16:9", "bamboo", "bamboo-1", "2026-09-06T21:00:00Z"),
+  made("a008", "image", "沙丘远行", "1:1", "bamboo", "bamboo-1", "2026-09-06T20:40:00Z"),
+  made("a009", "image", "雨夜红伞", "9:16", "neon-rain", "neon-1", "2026-09-02T12:20:00Z"),
+  made("a010", "video", "雪山航拍", "16:9", "kuanlan-launch", "hero", "2026-09-05T08:50:00Z"),
+  made("a011", "image", "灯笼长街", "4:3", "neon-rain", "neon-1", "2026-09-02T12:00:00Z"),
+  made("a012", "video", "极光延时", "16:9", "kuanlan-launch", "stills", "2026-09-04T22:15:00Z"),
 ];
 
 export const subjects: Subject[] = [
-  { id: "s-mara", name: "Mara", category: "character", sheet: ["a001", "a003"], scope: "account" },
-  { id: "s-wolf", name: "The Wolf", category: "character", sheet: ["a002"], scope: "account" },
-  { id: "s-city", name: "Drowned City", category: "scene", sheet: ["a005"], scope: "account" },
+  { id: "s-mara", name: "玛拉", category: "character", sheet: ["a001", "a003"], scope: "account" },
+  { id: "s-wolf", name: "狼", category: "character", sheet: ["a002"], scope: "account" },
+  { id: "s-city", name: "沉没之城", category: "scene", sheet: ["a005"], scope: "account" },
 ];
 
 const emptyDoc = (): WorkspaceDocument => ({
@@ -157,7 +167,7 @@ export const documents: Record<string, WorkspaceDocument> = {
       n4: {
         id: "n4",
         type: "text",
-        text: "Cold open — Mara wakes before the tide.",
+        text: "开场：玛拉在涨潮前醒来。",
         status: "completed",
         createdBy: "user",
         x: 1040,
@@ -190,4 +200,6 @@ export const documents: Record<string, WorkspaceDocument> = {
   "doc-hero": emptyDoc(),
   "doc-stills": emptyDoc(),
   "doc-cut-a": emptyDoc(),
+  "doc-bamboo-1": emptyDoc(),
+  "doc-neon-1": emptyDoc(),
 };
