@@ -767,6 +767,15 @@ function updateREADMEs(config: BrandConfig): void {
     const exemptList = config.license.commercialExempt.join(", ");
     content = content.replace("{{license.commercialExempt}}", exemptList);
 
+    // A scaffold's README opens with create-sailor's license notice; the
+    // template does not carry it, so keep it across the regeneration.
+    if (fs.existsSync(outputPath)) {
+      const notice = /^> \*\*License notice:\*\*[^\n]*\n(?:>[^\n]*\n)*\n/.exec(
+        fs.readFileSync(outputPath, "utf-8"),
+      );
+      if (notice && !content.startsWith(notice[0])) content = notice[0] + content;
+    }
+
     fs.writeFileSync(outputPath, content, "utf-8");
     logSuccess(`Generated ${output}`);
   }

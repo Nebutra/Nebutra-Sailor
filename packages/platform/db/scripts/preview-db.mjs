@@ -91,7 +91,7 @@ export const previewUrl = (p = port) =>
 
 const ADMIN = {
   email: process.env.NEBUTRA_PREVIEW_ADMIN_EMAIL || "admin@example.com",
-  password: process.env.NEBUTRA_PREVIEW_ADMIN_PASSWORD || "nebutra-preview",
+  password: process.env.NEBUTRA_PREVIEW_ADMIN_PASSWORD || "preview-demo",
 };
 
 // ── helpers ─────────────────────────────────────────────────────────────────

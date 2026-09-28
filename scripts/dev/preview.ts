@@ -221,6 +221,40 @@ function printCapabilities(reports: CapabilityReport[]): void {
  * Logos and favicons are copied into each app's public/ (gitignored) by the
  * brand package; the full build does it before `next build` / `vite build`.
  */
+/**
+ * A project scaffolded without its install (`create-sailor --no-install`)
+ * leaves its name in .sailor/brand.json; create-sailor could not run the
+ * brand pipeline then. Run it now — brand:init --yes, brand:apply — before the
+ * packages build, so the preview shows the project's name, not Nebutra's.
+ */
+function applyPendingBrand(env: NodeJS.ProcessEnv): void {
+  const marker = path.join(ROOT, ".sailor/brand.json");
+  const tsx = path.join(ROOT, "node_modules/.bin/tsx");
+  if (!fs.existsSync(marker) || !fs.existsSync(tsx)) return;
+  let name: string | undefined;
+  try {
+    name = (JSON.parse(fs.readFileSync(marker, "utf8")) as { name?: string }).name?.trim();
+  } catch {
+    // unreadable marker: leave the brand as it is
+  }
+  if (!name) return;
+  const run = (script: string, args: string[] = []) =>
+    spawnSync(tsx, [path.join(ROOT, "scripts", script), ...args], {
+      cwd: ROOT,
+      env,
+      stdio: "ignore",
+    }).status === 0;
+  const configured =
+    fs.existsSync(path.join(ROOT, "brand.config.ts")) ||
+    run("brand-init.ts", ["--yes", "--name", name]);
+  if (configured && run("brand-apply.ts")) {
+    fs.rmSync(marker, { force: true });
+    process.stdout.write(`  Brand set to ${name} (brand.config.ts)\n`);
+  } else {
+    process.stderr.write("  [dev] could not apply the brand — run pnpm brand:apply\n");
+  }
+}
+
 function syncBrandAssets(env: NodeJS.ProcessEnv): void {
   const script = path.join(ROOT, "packages/design/brand/scripts/sync-assets.ts");
   const tsx = path.join(ROOT, "node_modules/.bin/tsx");
@@ -422,6 +456,8 @@ async function main(): Promise<void> {
   // Surface a database failure now rather than after the build.
   database?.catch(() => undefined);
 
+  applyPendingBrand(env);
+
   if (!skipBuild) {
     await prebuildWorkspacePackages({
       root: ROOT,
@@ -473,7 +509,7 @@ async function main(): Promise<void> {
   }
   if (previewDb) {
     process.stdout.write(
-      "  Database: local preview (PGlite). Demo account admin@example.com / nebutra-preview\n",
+      "  Database: local preview (PGlite). Demo account admin@example.com / preview-demo\n",
     );
   }
   printCapabilities(reports);

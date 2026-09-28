@@ -33,6 +33,8 @@
  * Source assets: packages/design/brand/assets/logo/
  */
 
+import type { CSSProperties } from "react";
+
 import { brandGradient } from "../guidelines/color";
 
 /** Default logo fill = brand-mark (not product CTA primary). */
@@ -45,6 +47,8 @@ function mergeLogoClass(className?: string): string {
 
 interface SVGProps {
   className?: string;
+  /** Inline style, e.g. an em height so the mark scales with the text around it. */
+  style?: CSSProperties;
   width?: number;
   height?: number;
   "aria-label"?: string;
@@ -169,6 +173,7 @@ function WordmarkPaths() {
 
 export function WordmarkEnSVG({
   className,
+  style,
   width = 150,
   height,
   "aria-label": ariaLabel,
@@ -183,6 +188,7 @@ export function WordmarkEnSVG({
         width={width}
         height={computedHeight}
         className={mergedClass}
+        style={style}
         aria-label={ariaLabel}
         role="img"
         fill="currentColor"
@@ -198,6 +204,7 @@ export function WordmarkEnSVG({
       width={width}
       height={computedHeight}
       className={mergedClass}
+      style={style}
       aria-hidden="true"
       role="img"
       fill="currentColor"

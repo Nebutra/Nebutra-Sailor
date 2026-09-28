@@ -21,7 +21,7 @@ export interface CliOptions {
 export type JsonEvent = {
   event: string;
   step?: string;
-  status?: "ok" | "error" | "skip" | "start" | "warn";
+  status?: "ok" | "error" | "skip" | "start" | "warn" | "pending";
   message?: string;
   [k: string]: unknown;
 };

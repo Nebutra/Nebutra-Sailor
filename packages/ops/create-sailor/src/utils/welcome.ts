@@ -41,20 +41,22 @@ That builds what the apps need, starts the product app (http://localhost:3001),
 the site (http://localhost:3000) and the API gateway (http://localhost:3002),
 and prints which capabilities are live and which still run a local fallback.
 Open http://localhost:3001/welcome — sign up there, or sign in with the demo
-account the local database seeds: admin@example.com / nebutra-preview.
+account the local database seeds: admin@example.com / preview-demo.
 
 Then:
 
-1. **Make it yours** — generate \`brand.config.ts\`, edit it, apply it everywhere
+1. **Make it yours** — \`brand.config.ts\` already carries the project's name
+   (the logo is a text wordmark until you add files under
+   \`brand.config/assets/logo/\`). Edit the name, colours or links, then apply
+   it everywhere:
    \`\`\`bash
-   pnpm brand:init
    pnpm brand:apply
    \`\`\`
 
 2. **Take a capability live** — copy its key from \`.env.example\` into
    \`.env.local\` (random secrets are already generated there) and restart \`pnpm dev\`.
 
-3. **Use your own Postgres** — the preview keeps its data in a local PGlite
+3. **Use your own Postgres (optional)** — the preview keeps its data in a local PGlite
    database (\`DATABASE_URL="pglite:"\`, data under \`.nebutra/pglite/\`). Point
    \`DATABASE_URL\` in \`.env.local\` at your Postgres, then apply the schema:
    \`\`\`bash

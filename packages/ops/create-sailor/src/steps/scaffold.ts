@@ -12,13 +12,14 @@ import pc from "picocolors";
 import updateNotifier from "update-notifier";
 import { showDone } from "../ui/done";
 import { emitScaffoldCompleted } from "../utils/analytics-emit";
+import { applyScaffoldBrand, brandNameFromProject, writePendingBrand } from "../utils/brand";
 import { applyComplianceTemplates } from "../utils/compliance";
 import { defaultConfig, writeNebutraConfig } from "../utils/config";
 import { injectEnv } from "../utils/env";
 import { generateEnvSecrets } from "../utils/env-secrets";
 import { type CloneProgressEvent, cloneTemplate, formatBytes } from "../utils/git";
 import { applyGovernanceLints } from "../utils/governance-lints";
-import { emitScaffoldLicense } from "../utils/license-emit";
+import { emitScaffoldLicense, prependReadmeLicenseNotice } from "../utils/license-emit";
 import { updatePackageJson } from "../utils/npm";
 import { renderScaffoldPreset, writeScaffoldPreset } from "../utils/preset";
 import { applyScaffoldExtras } from "../utils/scaffold-extras";
@@ -253,9 +254,13 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
 
   // -- install --
   const shouldInstall = opts.install !== false;
+  let installed = false;
   if (shouldInstall) {
     const installProgram = resolvedPm === "bun" ? "bun" : resolvedPm;
-    const installArgs = ["install"];
+    // A scaffold always rewrites package.json (name, stripped apps), so its
+    // lockfile needs reconciling; under CI=true pnpm defaults to a frozen
+    // install and would refuse every fresh project.
+    const installArgs = resolvedPm === "pnpm" ? ["install", "--no-frozen-lockfile"] : ["install"];
     if (useJson) {
       emitJson(true, { event: "step", step: "install", pm: resolvedPm, status: "start" });
     } else {
@@ -266,6 +271,7 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
         cwd: resolvedTarget,
         stdio: useJson ? "ignore" : "inherit",
       });
+      installed = true;
       emitJson(useJson, { event: "step", step: "install", status: "ok" });
       if (!useJson) {
         process.stdout.write(pc.green(`  ✓ Dependencies installed (${resolvedPm})\n`));
@@ -295,6 +301,36 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
     }
   } else {
     emitJson(useJson, { event: "step", step: "install", status: "skip" });
+  }
+
+  // -- brand --
+  // The project's name, not Nebutra's, from the first render (utils/brand.ts).
+  const brandName = brandNameFromProject(projectName);
+  if (installed) {
+    emitJson(useJson, { event: "step", step: "brand", status: "start", name: brandName });
+    const brand = applyScaffoldBrand(resolvedTarget, brandName, resolvedPm);
+    // brand:apply renders README.md from its template; keep the license notice on it.
+    prependReadmeLicenseNotice(resolvedTarget);
+    if (brand.applied) {
+      emitJson(useJson, { event: "step", step: "brand", status: "ok", name: brandName });
+      if (!useJson) process.stdout.write(pc.green(`  ✓ Brand set to ${brandName}\n`));
+    } else {
+      emitJson(useJson, {
+        event: "step",
+        step: "brand",
+        status: "warn",
+        name: brandName,
+        message: brand.error,
+      });
+      if (!useJson) {
+        process.stdout.write(
+          pc.yellow(`  ⚠ Brand not applied yet — the first ${resolvedPm} dev applies it.\n`),
+        );
+      }
+    }
+  } else {
+    writePendingBrand(resolvedTarget, brandName);
+    emitJson(useJson, { event: "step", step: "brand", status: "pending", name: brandName });
   }
 
   // -- git init --

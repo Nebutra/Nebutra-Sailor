@@ -23,6 +23,7 @@ import { runScaffold } from "./steps/scaffold";
 import { type CliOptions, detectPm, type JsonEvent } from "./steps/types";
 import { showBanner } from "./ui/banner";
 import { showHelp } from "./ui/help";
+import { brandNameFromProject } from "./utils/brand";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
 import { readPresetOption } from "./utils/preset";
 import {
@@ -60,6 +61,7 @@ function printDryRunPlan(
     "generate secrets, seed script and welcome page",
     "write .env.local (generated secrets, localhost origins — no keys needed)",
     "write MIT scaffold license",
+    `set the brand to ${brandNameFromProject(path.basename(path.resolve(resolvedTarget)))} (brand:init --yes, brand:apply)`,
     ...(opts.preset
       ? [`write the look: preset ${opts.preset} → packages/design/tokens/project/preset`]
       : []),

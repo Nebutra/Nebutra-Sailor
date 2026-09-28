@@ -97,7 +97,7 @@ code is never loaded (`src/client-preview.test.ts`), and Workers resolve a stub
   drift check. It re-runs only when one of those files changes (hash in
   `.nebutra/pglite/deployed.sha256`). Data lives in `.nebutra/pglite/data`.
 - **Demo data:** organization/tenant `preview_org`, owner `admin@example.com` /
-  `nebutra-preview` (Better Auth credential; override with
+  `preview-demo` (Better Auth credential; override with
   `NEBUTRA_PREVIEW_ADMIN_EMAIL` / `_PASSWORD`). Printed when the database starts.
 - **Started for you** if nothing listens when the first query runs: the first
   process spawns it detached (log `.nebutra/pglite/server.log`), later

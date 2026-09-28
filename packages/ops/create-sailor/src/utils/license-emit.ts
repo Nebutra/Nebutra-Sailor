@@ -156,18 +156,27 @@ export function emitScaffoldLicense(
   // 4. Inject a license notice at the top of README.md if one exists. We
   // skip silently if the file is missing — scaffolders may emit READMEs
   // later in the flow.
-  const readmePath = path.join(targetDir, "README.md");
-  if (fs.existsSync(readmePath)) {
-    const existing = fs.readFileSync(readmePath, "utf-8");
-    if (!existing.includes("Scaffolded by `create-sailor`")) {
-      const notice = `> **License notice:** Scaffolded by \`create-sailor\`. The Nebutra-Sailor
-> code in this project is [MIT licensed](./LICENSE) — commercial use, closed
-> source, no fee, no attribution required. The upstream monorepo is
-> FSL-1.1-ALv2 — see \`LICENSE-UPSTREAM-REFERENCE.md\`.\n\n`;
-      fs.writeFileSync(readmePath, notice + existing);
-      wrote.push("README.md (prepended license notice)");
-    }
+  if (prependReadmeLicenseNotice(targetDir)) {
+    wrote.push("README.md (prepended license notice)");
   }
 
   return { wrote };
+}
+
+/**
+ * The one-line license notice at the top of README.md. Idempotent; returns
+ * whether it wrote. Re-run after anything regenerates the README
+ * (`brand:apply` renders it from README.template.md).
+ */
+export function prependReadmeLicenseNotice(targetDir: string): boolean {
+  const readmePath = path.join(targetDir, "README.md");
+  if (!fs.existsSync(readmePath)) return false;
+  const existing = fs.readFileSync(readmePath, "utf-8");
+  if (existing.includes("Scaffolded by `create-sailor`")) return false;
+  const notice = `> **License notice:** Scaffolded by \`create-sailor\`. The Nebutra-Sailor
+> code in this project is [MIT licensed](./LICENSE) — commercial use, closed
+> source, no fee, no attribution required. The upstream monorepo is
+> FSL-1.1-ALv2 — see \`LICENSE-UPSTREAM-REFERENCE.md\`.\n\n`;
+  fs.writeFileSync(readmePath, notice + existing);
+  return true;
 }

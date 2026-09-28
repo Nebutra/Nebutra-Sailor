@@ -216,8 +216,8 @@ const NEXT_STEPS: ReadonlyArray<{ icon: Icon; title: string; body: string; comma
   {
     icon: PencilEdit,
     title: "Make it yours",
-    body: "Name the product and pick its colours in brand.config.ts, then run pnpm brand:apply.",
-    command: "pnpm brand:init",
+    body: "brand.config.ts already carries the project's name. Change the name, colours or logo there, then apply it everywhere.",
+    command: "pnpm brand:apply",
   },
   {
     icon: Key,
@@ -274,7 +274,7 @@ function Hero({ keysNeeded }: { keysNeeded: number }) {
 
         <div className="space-y-4">
           <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-neutral-12 md:text-6xl">
-            <BrandWordmark height={48} className="mr-[0.25em] h-[0.74em] w-auto align-baseline" />
+            <BrandWordmark inline className="mr-[0.25em]" />
             <span className="text-neutral-10">is running locally</span>
           </h1>
           <p className="max-w-2xl text-lg text-neutral-11">

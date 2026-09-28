@@ -7,7 +7,7 @@ import { resolveApiUrl } from "@/lib/api/browser-client";
  */
 export const DEMO_ACCOUNT = {
   email: "admin@example.com",
-  password: "nebutra-preview",
+  password: "preview-demo",
 } as const;
 
 export const hasDemoAccount = (): boolean => Boolean(import.meta.env.VITE_SAILOR_DEMO_ACCOUNT);

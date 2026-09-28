@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { buildBrandConfig, DEFAULT_BRAND, rebaseDomains } from "../../scripts/brand-types";
+import {
+  brandSlug,
+  buildBrandConfig,
+  DEFAULT_BRAND,
+  defaultBrandAnswers,
+  rebaseDomains,
+} from "../../scripts/brand-types";
 
 /**
  * `pnpm brand:init` → `pnpm brand:apply` is the first thing a new project does
@@ -56,5 +62,40 @@ describe("brand:init identity", () => {
     expect(acme.brand.nameFull).toBe("Acme Inc.");
     expect(acme.brand.story).toBeUndefined();
     expect(acme.license.commercialExempt).toEqual(["Acme Inc."]);
+  });
+});
+
+/**
+ * `brand:init --yes --name <name>` — what create-sailor runs for every new
+ * project — must give the project its own identity from the name alone.
+ */
+describe("brand:init --yes", () => {
+  const config = buildBrandConfig(defaultBrandAnswers("Acme Rocket"));
+
+  it("derives every identity field from the name, as a text wordmark", () => {
+    expect(config.brand.name).toBe("Acme Rocket");
+    expect(config.brand.logo).toBe("wordmark");
+    expect(config.company.name).toBe("Acme Rocket");
+    expect(config.domains.landing).toBe("acme-rocket.com");
+    expect(config.company.email).toBe("hello@acme-rocket.com");
+  });
+
+  it("carries none of Nebutra's identity, and keeps the workspace package scope", () => {
+    const { logoAssets, fontAssets, faviconAssets, colors, typography, packageScope, ...identity } =
+      config;
+    expect(JSON.stringify(identity)).not.toMatch(/nebutra|云毓|无锡/i);
+    // Renaming @nebutra/* is a deliberate `--scope`, never a side effect.
+    expect(packageScope).toBe("@nebutra");
+    expect(colors).toEqual(DEFAULT_BRAND.colors);
+  });
+
+  it("links nothing the project has not given", () => {
+    expect(Object.values(config.social).every((v) => v === "")).toBe(true);
+  });
+
+  it("slugs names safely", () => {
+    expect(brandSlug("Acme Rocket")).toBe("acme-rocket");
+    expect(brandSlug("  Ünïcode — App ")).toBe("unicode-app");
+    expect(brandSlug("云毓")).toBe("mybrand");
   });
 });
