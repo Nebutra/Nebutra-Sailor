@@ -443,6 +443,14 @@ export const SITE_MAP: readonly SitePage[] = [
     template: true,
   },
   {
+    // The typeface credits. MiSans's licence asks the product to state it uses MiSans.
+    path: "/credits",
+    section: "company",
+    title: { en: "Credits", zh: "致谢" },
+    status: "live",
+    template: true,
+  },
+  {
     path: "/dpa",
     section: "company",
     title: { en: "DPA", zh: "数据处理协议" },

@@ -155,6 +155,7 @@
       "terms": "Vilkår",
       "cookies": "Cookies",
       "refund": "Refusion",
+      "credits": "Tak",
       "licensing": "Licensiering",
       "contact": "Kontakt",
       "faq": "FAQ",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Alle rettigheder forbeholdes.",
-    "fontCredit": "Kinesisk skrifttype: MiSans (Xiaomi)",
     "statusOnline": "Alle systemer er operative",
     "newsletterTitle": "Hold dig opdateret",
     "newsletterPlaceholder": "you@example.com",

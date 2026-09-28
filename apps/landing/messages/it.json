@@ -155,6 +155,7 @@
       "terms": "Termini",
       "cookies": "Cookie",
       "refund": "Rimborso",
+      "credits": "Crediti",
       "licensing": "Licenze",
       "contact": "Contatti",
       "faq": "FAQ",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Tutti i diritti riservati.",
-    "fontCredit": "Carattere cinese: MiSans (Xiaomi)",
     "statusOnline": "Tutti i sistemi operativi",
     "newsletterTitle": "Resta aggiornato",
     "newsletterPlaceholder": "you@example.com",

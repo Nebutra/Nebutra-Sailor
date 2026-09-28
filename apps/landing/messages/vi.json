@@ -155,6 +155,7 @@
       "terms": "Điều khoản",
       "cookies": "Cookies",
       "refund": "Hoàn tiền",
+      "credits": "Ghi công",
       "licensing": "Giấy phép",
       "contact": "Liên hệ",
       "faq": "Câu hỏi thường gặp",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Bảo lưu mọi quyền.",
-    "fontCredit": "Phông chữ tiếng Trung: MiSans (Xiaomi)",
     "statusOnline": "Tất cả hệ thống hoạt động bình thường",
     "newsletterTitle": "Cập nhật tin tức",
     "newsletterPlaceholder": "you@example.com",

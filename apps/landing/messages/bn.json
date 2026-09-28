@@ -155,6 +155,7 @@
       "terms": "শর্তাবলী",
       "cookies": "কুকিজ",
       "refund": "রিফান্ড",
+      "credits": "কৃতজ্ঞতা",
       "licensing": "লাইসেন্সিং",
       "contact": "যোগাযোগ",
       "faq": "প্রশ্নাবলী",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · সর্বস্বত্ব সংরক্ষিত।",
-    "fontCredit": "চীনা টাইপফেস: MiSans (Xiaomi)",
     "statusOnline": "সকল সিস্টেম কার্যকর",
     "newsletterTitle": "সর্বশেষ আপডেট পান",
     "newsletterPlaceholder": "you@example.com",

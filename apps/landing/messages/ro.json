@@ -155,6 +155,7 @@
       "terms": "Termeni",
       "cookies": "Cookies",
       "refund": "Rambursare",
+      "credits": "Mulțumiri",
       "licensing": "Licențiere",
       "contact": "Contact",
       "faq": "FAQ",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Toate drepturile rezervate.",
-    "fontCredit": "Font chinezesc: MiSans (Xiaomi)",
     "statusOnline": "Toate sistemele funcționale",
     "newsletterTitle": "Rămâi la curent",
     "newsletterPlaceholder": "you@example.com",

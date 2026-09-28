@@ -155,6 +155,7 @@
       "terms": "Masharti",
       "cookies": "Vikuki",
       "refund": "Rudisho",
+      "credits": "Shukrani",
       "licensing": "Leseni",
       "contact": "Wasiliana",
       "faq": "Maswali Yanayoulizwa Mara kwa Mara",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Haki zote zimehifadhiwa.",
-    "fontCredit": "Fonti ya Kichina: MiSans (Xiaomi)",
     "statusOnline": "Mifumo yote inafanya kazi",
     "newsletterTitle": "Kaa kwa sasa",
     "newsletterPlaceholder": "you@example.com",

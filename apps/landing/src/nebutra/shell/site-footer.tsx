@@ -30,6 +30,8 @@ export function SiteFooter() {
         { label: "Write to the founder", href: `mailto:tseka@${brand.domains.landing}` },
         { label: "Privacy", href: "/privacy" },
         { label: "Terms", href: "/terms" },
+        // MiSans licence: the product states it uses MiSans — on /credits.
+        { label: "Credits", href: "/credits" },
       ],
     },
   ];
@@ -76,8 +78,6 @@ export function SiteFooter() {
               {process.env.NEXT_PUBLIC_ICP_NUMBER}
             </a>
           ) : null}
-          {/* MiSans licence: the product must credit the typeface. */}
-          <span>Chinese typeface: MiSans by Xiaomi</span>
         </span>
       </div>
     </footer>

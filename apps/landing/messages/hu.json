@@ -155,6 +155,7 @@
       "terms": "Feltételek",
       "cookies": "Süti",
       "refund": "Visszatérítés",
+      "credits": "Köszönetnyilvánítás",
       "licensing": "Licensz",
       "contact": "Kapcsolat",
       "faq": "GYIK",
@@ -163,7 +164,6 @@
       "twitter": "X (Twitter)"
     },
     "copyright": "© 2026 {companyLegalEn} · Minden jog fenntartva.",
-    "fontCredit": "Kínai betűtípus: MiSans (Xiaomi)",
     "statusOnline": "Minden rendszer működik",
     "newsletterTitle": "Maradj naprakész",
     "newsletterPlaceholder": "you@example.com",
