@@ -1,4 +1,5 @@
 import type { Asset, WorkspaceNode } from "@/domain/types";
+import { nearestAspect } from "@/lib/uploads";
 
 /**
  * What the mock scheduler "generates". Mock mode exists for the golden screens and for working on
@@ -40,8 +41,7 @@ export function mockOutputAsset(
   upstreamUrl?: string,
 ): Asset {
   const url = mockOutputUrl(node, upstreamUrl);
-  const aspect =
-    node.width >= node.height * 1.5 ? "16:9" : node.width >= node.height ? "4:3" : "9:16";
+  const aspect = nearestAspect(node.width, node.height);
   return {
     id: `a-gen-${jobId}`,
     type: node.type === "video" ? "video" : node.type === "audio" ? "audio" : "image",
