@@ -1,14 +1,13 @@
 "use client";
 
 import { ThemeProvider } from "@nebutra/tokens";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { type ReactNode, Suspense, useState } from "react";
 import { CommandMenu } from "@/components/shell/command-menu";
+import { getQueryClient } from "@/lib/query-client";
 
 export function Providers({ children }: { children: ReactNode }) {
-  const [client] = useState(
-    () => new QueryClient({ defaultOptions: { queries: { staleTime: 60_000, retry: false } } }),
-  );
+  const [client] = useState(getQueryClient);
   return (
     // Dark is the default, not a literal class: a dark canvas is evidence-backed (Seko, TapNow,
     // LibTV) but a dark-only product is not — four of six mapped products are light or ship both.
