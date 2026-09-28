@@ -4,8 +4,8 @@
  * A reference URL is fetched by the model vendor (first frame, image to edit), so accepting any URL
  * would let a caller point our paid vendor call at arbitrary hosts. Only PARA's own asset hosts are
  * allowed: the public base the origin publishes generated and uploaded assets under
- * (`UPLOAD_PUBLIC_BASE_URL` on nebutra-ai, backends/python/ai/app/uploads/persist.py). The gateway
- * reads the same variable — set it to the same value on nebutra-gateway — plus optional extra
+ * (`UPLOAD_PUBLIC_BASE_URL` on the AI origin, backends/python/ai/app/uploads/persist.py). The
+ * gateway reads the same variable — set it to the same value on the gateway — plus optional extra
  * bases in `PARA_ASSET_BASE_URLS` (comma-separated). Unset means no URL is accepted: fail closed.
  */
 
