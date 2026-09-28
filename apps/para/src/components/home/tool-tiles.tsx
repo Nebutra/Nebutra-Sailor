@@ -29,7 +29,9 @@ export function ToolTiles() {
       <h2 id="tools-heading" className="mb-4 text-label text-muted-foreground">
         Tools
       </h2>
-      <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+      {/* LibTV's launcher row: a wide icon plate with the label under it, outside the plate,
+          at a fixed width so two tiles read as a row that has room to grow, not a stretched grid. */}
+      <div className="flex flex-wrap gap-x-6 gap-y-5">
         {TOOLS.map(({ seed, label, hint, icon: Icon }) => (
           <button
             key={seed}
@@ -38,12 +40,14 @@ export function ToolTiles() {
             onClick={() => void create(seed)}
             disabled={pending !== null}
             aria-busy={pending === seed || undefined}
-            className="group flex aspect-square flex-col items-center justify-center gap-3 rounded-xl bg-card transition-colors hover:bg-neutral-4 disabled:cursor-wait"
+            className="group flex w-32 flex-col items-center gap-3 disabled:cursor-wait"
           >
-            <span className="flex size-11 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors group-hover:text-foreground">
-              <Icon className="size-5" />
+            <span className="flex h-[4.5rem] w-full items-center justify-center rounded-2xl bg-card text-muted-foreground transition-colors group-hover:bg-neutral-4 group-hover:text-foreground">
+              <Icon className="size-6" />
             </span>
-            <span className="text-body text-foreground">{label}</span>
+            <span className="text-body text-muted-foreground transition-colors group-hover:text-foreground">
+              {label}
+            </span>
           </button>
         ))}
       </div>
