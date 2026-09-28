@@ -30,12 +30,15 @@ Planned entries — capabilities from public model pages (fal.ai model pages, gl
 
 from __future__ import annotations
 
+import math
 import os
 from collections.abc import Mapping
-from dataclasses import dataclass
-from typing import Literal
 
-from providers.video.base import VideoGenerationError, VideoGenerationRequest
+from providers.video.base import (
+    VideoGenerationError,
+    VideoGenerationRequest,
+    VideoModelSpec,
+)
 
 AUTO = "Auto"
 RESOLUTION_TIERS = ("480P", "720P", "1080P")
@@ -44,42 +47,6 @@ RESOLUTION_TIERS = ("480P", "720P", "1080P")
 VENDOR_KEYS: dict[str, str] = {
     "dashscope": "DASHSCOPE_API_KEY",
 }
-
-
-@dataclass(frozen=True)
-class VideoModelSpec:
-    id: str
-    label: str
-    # Adapter key (factory.ADAPTERS) for available models; a maker tag for planned ones.
-    vendor: str
-    status: Literal["available", "planned"]
-    durations: tuple[int, ...]
-    default_duration: int
-    resolutions: tuple[str, ...]
-    default_resolution: str
-    # Aspects the vendor takes for text-to-video. Image-to-video follows the frame.
-    aspects: tuple[str, ...]
-    # Vendor model ids for text-to-video and first-frame image-to-video.
-    t2v_model: str = ""
-    i2v_model: str = ""
-    text_to_video: bool = True
-    image_to_video: bool = True
-    # Vendor's own name for a PARA resolution tier, when it differs.
-    resolution_names: tuple[tuple[str, str], ...] = ()
-
-    def vendor_resolution(self, tier: str) -> str:
-        return dict(self.resolution_names).get(tier, tier)
-
-    def capabilities(self) -> dict[str, object]:
-        return {
-            "textToVideo": self.text_to_video,
-            "imageToVideo": self.image_to_video,
-            "durations": list(self.durations),
-            "defaultDuration": self.default_duration,
-            "resolutions": list(self.resolutions),
-            "defaultResolution": self.default_resolution,
-            "aspects": list(self.aspects),
-        }
 
 
 def _span(lo: int, hi: int) -> tuple[int, ...]:
@@ -226,7 +193,7 @@ def snap_duration(spec: VideoModelSpec, value: object) -> int:
             seconds = float(value.strip().lower().removesuffix("s").strip())
         except ValueError:
             seconds = None
-    if seconds is None or seconds != seconds or abs(seconds) == float("inf"):
+    if seconds is None or not math.isfinite(seconds):
         return spec.default_duration
     target = seconds
     return min(spec.durations, key=lambda d: (abs(d - target), -d))
