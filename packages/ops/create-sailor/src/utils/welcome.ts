@@ -20,9 +20,8 @@ function renderWhatYouCanDoNext(): string {
 ## What you can do next
 
 - See which capabilities are live and which keys they need: \`nebutra status\`
-- Manage API keys at \`/settings/api-keys\`
-- Configure webhooks at \`/settings/webhooks\`
-- Press ⌘K to open the command palette
+- Write your marketing site's words in \`apps/landing/src/content/site.ts\`
+- Your account, workspace and sessions: \`/settings\` in the product app
 - For China deployments, set \`NEBUTRA_LOCALE=cn\` and see \`packages/ops/china-compliance/README.md\`
 `;
 }
