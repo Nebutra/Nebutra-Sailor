@@ -1,52 +1,40 @@
 "use client";
 
-import { buildAuthCenterSignInUrl, useAuth } from "@nebutra/auth/client";
-import { useEffect, useMemo, useState } from "react";
-
 /**
- * Sign in / sign out, rendered inside the profile menu so the top bar keeps one visual level.
- * Returns the viewer to wherever they were, which for PARA is usually a workspace.
+ * Who is signed in, and the way to the auth center, inside the profile menu.
+ *
+ * The session is read on the server (shell layout) and passed down. This used to call
+ * `useAuth()`, which needs an <AuthProvider> PARA never mounts, so opening the menu threw.
+ * PARA has no sign-out route of its own; 切换账号 goes to the auth center, which owns sessions.
  */
-export function AuthActions({ onNavigate }: { onNavigate?: () => void }) {
-  const { user, isSignedIn, isLoaded, signOut } = useAuth();
-  const [returnTo, setReturnTo] = useState<string | null>(null);
+export interface ShellAccount {
+  /** What to call the account: email, else name. */
+  label: string;
+  /** Mock mode has no auth; the menu says so instead of offering a sign-in that goes nowhere. */
+  demo: boolean;
+}
 
-  useEffect(() => {
-    setReturnTo(window.location.href);
-  }, []);
-
-  const href = useMemo(() => {
-    return returnTo ? buildAuthCenterSignInUrl(returnTo) : buildAuthCenterSignInUrl();
-  }, [returnTo]);
-
+export function AuthActions({
+  account,
+  switchUrl,
+  onNavigate,
+}: {
+  account: ShellAccount;
+  switchUrl: string | null;
+  onNavigate?: () => void;
+}) {
   const item =
     "flex h-[var(--para-h-control)] w-full items-center rounded-md px-2 text-left text-foreground text-body hover:bg-accent";
-
-  if (!isLoaded) return <span className={`${item} text-muted-foreground`}>…</span>;
-
-  if (isSignedIn) {
-    return (
-      <>
-        <span className="flex h-[var(--para-h-control)] w-full items-center truncate px-2 text-muted-foreground text-label">
-          {user?.email ?? user?.name ?? "Signed in"}
-        </span>
-        <button
-          type="button"
-          className={item}
-          onClick={() => {
-            onNavigate?.();
-            void signOut();
-          }}
-        >
-          Sign out
-        </button>
-      </>
-    );
-  }
-
   return (
-    <a className={item} href={href} onClick={onNavigate}>
-      Sign in
-    </a>
+    <>
+      <span className="flex h-[var(--para-h-control)] w-full items-center truncate px-2 text-muted-foreground text-label">
+        {account.demo ? "演示模式（本地数据）" : account.label}
+      </span>
+      {switchUrl ? (
+        <a className={item} href={switchUrl} onClick={onNavigate}>
+          切换账号
+        </a>
+      ) : null}
+    </>
   );
 }
