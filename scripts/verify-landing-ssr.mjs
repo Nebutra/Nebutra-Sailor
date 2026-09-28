@@ -36,7 +36,7 @@ const APP_DIR = path.join(ROOT, "apps/landing");
 const UA = "Mozilla/5.0 (compatible; GPTBot/1.2; +https://openai.com/gptbot)";
 
 /**
- * Which site this checkout builds: "nebutra" (nebutra.com) or "template" (the
+ * Which site this checkout builds: "nebutra" (the upstream site) or "template" (the
  * Sailor scaffold, whose home and frame are the `*.for-template.*` variants).
  */
 function readSiteId() {
@@ -48,7 +48,7 @@ function readSiteId() {
  * Each public route and what a reader without JavaScript must find on it.
  * `text`: phrases that must appear in the visible (non-hidden) body text.
  * `jsonLd`: schema.org @types that must be present in the initial HTML.
- * `nebutra: true` routes exist only on nebutra.com (site-map.ts `template:
+ * `nebutra: true` routes exist only on the upstream site (site-map.ts `template:
  * false`); their copy markers are Nebutra's. Every route also gets the generic
  * checks: a visible h1 and <main>, no loading fallback, title, description,
  * canonical. Markers are content that ships in the repo, not CMS data, so the
