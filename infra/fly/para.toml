@@ -8,9 +8,7 @@ primary_region = "sin"
   NEXT_PUBLIC_AUTH_PROVIDER = "better-auth"
   NEXT_PUBLIC_AUTH_URL = "https://auth.nebutra.com"
   BETTER_AUTH_URL = "https://auth.nebutra.com"
-  # Unset on purpose until the migration is applied and a session reaches the gateway.
-  # With it unset the shell runs on mock data instead of 401-ing every call.
-  # NEXT_PUBLIC_PARA_API_URL = "https://api.nebutra.com"
+  # NEXT_PUBLIC_PARA_API_URL is a build-time value: deploy-fly.yml sets it on the build step.
 
 [http_service]
   internal_port = 8080

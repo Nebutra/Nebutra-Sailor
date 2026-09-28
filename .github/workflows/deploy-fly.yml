@@ -192,6 +192,10 @@ jobs:
           # it. Only `web` reads GATEWAY_MODE; harmless no-op for other apps
           # in this matrix. See docs/architecture/2026-09-24-sailor-convergence.md §6.
           GATEWAY_MODE: "external"
+          # PARA's data adapter. Inlined at build time (NEXT_PUBLIC_), so it lives here and not in
+          # infra/fly/para.toml. Set, the shell reads and writes projects, assets and jobs through
+          # backends/gateway /api/v1/para; unset, it runs on mock data. Only apps/para reads it.
+          NEXT_PUBLIC_PARA_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_PUBLIC_AUTH_URL: "https://auth.nebutra.com"
           BETTER_AUTH_URL: "https://auth.nebutra.com"
@@ -326,8 +330,6 @@ jobs:
           args+=(BETTER_AUTH_URL="https://auth.nebutra.com")
           args+=(NEXT_PUBLIC_AUTH_PROVIDER="better-auth")
           args+=(NEXT_PUBLIC_SITE_URL="https://para.nebutra.com")
-          # NEXT_PUBLIC_PARA_API_URL stays unset until the PARA migration is applied on the
-          # origin database; the shell falls back to mock data rather than 401-ing every call.
           flyctl secrets set "${args[@]}" -a nebutra-para --stage
 
       - name: Deploy Machine
