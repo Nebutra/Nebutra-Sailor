@@ -1,8 +1,10 @@
 "use client";
 
 import { PlayFill } from "@nebutra/icons";
+import Link from "next/link";
+import { modelLabel } from "@/domain/models";
 import type { WorkspaceNode } from "@/domain/types";
-import { findAsset } from "@/mock/queries";
+import { useAsset } from "@/mock/queries";
 
 /**
  * At rest a node is its media: full-bleed, no border, no shadow, no title bar. What the node *is*
@@ -15,12 +17,12 @@ import { findAsset } from "@/mock/queries";
  * the surface tells (docs/product-intelligence/visual-language.md §4).
  */
 export function MediaNode({ node, selected }: { node: WorkspaceNode; selected: boolean }) {
-  const asset = node.type === "text" || !node.assetId ? undefined : findAsset(node.assetId);
+  const asset = useAsset(node.type === "text" ? undefined : node.assetId);
   const hover = selected ? "" : "hover:ring-1 hover:ring-neutral-7/60";
   const model = node.generator?.model;
   const identity = [
     asset?.label ?? (node.type === "text" ? "Text" : node.type),
-    model && model !== "Auto" ? model : null,
+    model && model !== "Auto" ? modelLabel(model) : null,
   ]
     .filter(Boolean)
     .join(" · ");
@@ -68,8 +70,21 @@ export function MediaNode({ node, selected }: { node: WorkspaceNode; selected: b
               <span className="text-meta text-destructive-strong">
                 {node.error?.message ?? "Failed"}
               </span>
-              {node.error?.type && (
-                <span className="font-mono text-meta text-muted-foreground">{node.error.type}</span>
+              {node.error?.type === "insufficient_credits" ? (
+                <Link
+                  href="/pro"
+                  // The canvas treats a pointer-down as the start of a drag or a selection.
+                  onPointerDown={(e) => e.stopPropagation()}
+                  className="text-meta text-foreground underline underline-offset-2"
+                >
+                  Get credits
+                </Link>
+              ) : (
+                node.error?.type && (
+                  <span className="font-mono text-meta text-muted-foreground">
+                    {node.error.type}
+                  </span>
+                )
               )}
             </div>
           )}

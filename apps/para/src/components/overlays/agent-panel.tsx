@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef } from "react";
 import type { AgentStep } from "@/domain/types";
 import { type AgentRunState, type AgentTraceEvent, agentApi, followRun } from "@/lib/agent-api";
 import { isGatewayMode } from "@/lib/gateway-api";
-import { findAsset } from "@/mock/queries";
+import { useAssets } from "@/mock/queries";
 import { useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
 import { useUiStore } from "@/stores/ui-store";
@@ -26,6 +26,7 @@ const MOCK_PLAN: Array<Pick<AgentStep, "label" | "cost">> = [
  * the trace. In standalone mode a local timer stands in for the run.
  */
 export function AgentPanel({ projectId }: { projectId: string }) {
+  const { data: assetList } = useAssets();
   const agent = useUiStore((s) => s.agent);
   const setAgent = useUiStore((s) => s.setAgent);
   const removeContextNode = useUiStore((s) => s.removeContextNode);
@@ -254,7 +255,10 @@ export function AgentPanel({ projectId }: { projectId: string }) {
         {chips.length > 0 && (
           <div className="flex flex-wrap gap-1 px-4 pt-2">
             {chips.map((n) => {
-              const asset = n && n.type !== "text" && n.assetId ? findAsset(n.assetId) : undefined;
+              const asset =
+                n && n.type !== "text" && n.assetId
+                  ? assetList?.find((a) => a.id === n.assetId)
+                  : undefined;
               return n ? (
                 <span
                   key={n.id}
