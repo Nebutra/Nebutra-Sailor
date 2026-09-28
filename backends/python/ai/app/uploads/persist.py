@@ -50,8 +50,12 @@ async def persist_from_url(
     *,
     storage: UploadStorageProvider | None = None,
     client: httpx.AsyncClient | None = None,
+    content_type: str | None = None,
 ) -> PersistedObject:
-    http = client or httpx.AsyncClient(timeout=120.0)
+    """Copy `source_url` to `key`. `content_type` overrides the source's header, which
+    vendor CDNs often leave as application/octet-stream for video and audio."""
+    # Five minutes: a 15 s 1080p clip is tens of MB from a cross-border CDN.
+    http = client or httpx.AsyncClient(timeout=300.0)
     try:
         try:
             download = await http.get(source_url)
@@ -63,7 +67,10 @@ async def persist_from_url(
                 f"source returned {download.status_code}",
                 retryable=True,
             )
-        content_type = download.headers.get("content-type", "image/png").split(";")[0]
+        content_type = (
+            content_type
+            or download.headers.get("content-type", "image/png").split(";")[0]
+        )
         body = download.content
 
         try:

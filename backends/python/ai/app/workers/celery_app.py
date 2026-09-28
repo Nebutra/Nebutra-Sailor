@@ -55,6 +55,10 @@ def create_celery_app() -> Celery:
 
     app.conf.update(
         accept_content=["json"],
+        # With task_acks_late, Redis redelivers any task not acked within this window.
+        # Kept well above the envelope task's 30 min hard limit (task_envelope.py) so a
+        # long video job is never run twice. Celery's default is 1 h; stated explicitly.
+        broker_transport_options={"visibility_timeout": 2 * 60 * 60},
         broker_connection_retry_on_startup=True,
         result_serializer="json",
         task_acks_late=True,
