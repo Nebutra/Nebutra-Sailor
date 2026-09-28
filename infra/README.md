@@ -25,7 +25,7 @@ infra/
     └── scripts/            # Deployment & maintenance shell/TS scripts
 ```
 
-> Event-driven workflow definitions (Inngest / n8n / Pusher) live at the
+> Event-driven workflow definitions (Inngest / Pusher) live at the
 > top-level [`workflows/`](../workflows/) directory — they are business logic,
 > not infrastructure.
 

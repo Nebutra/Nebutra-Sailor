@@ -34,16 +34,14 @@ All application code imports the pre-configured `db` singleton from `@nebutra/db
 
 ## Schema layout
 
-The Prisma schema is split across four PostgreSQL schemas, each representing a product domain:
+The Prisma schema uses two PostgreSQL schemas:
 
 | PostgreSQL schema | Purpose | Key models |
 |-------------------|---------|------------|
-| `public` | Core SaaS platform | `Organization`, `User`, `Subscription`, `AuditLog`, `ApiKey` |
-| `ecommerce` | E-commerce features | `Product`, `Order`, `Cart`, `Payment`, `Fulfillment` |
-| `recsys` | Recommendation system | `Embedding`, `Interaction`, `Recommendation`, `FeatureVector` |
-| `web3` | Blockchain / wallet features | `Wallet`, `Token`, `Transaction`, `SmartContract` |
+| `public` | The platform: tenants, identity, billing, content, agents | `Organization`, `User`, `Subscription`, `Product`, `Order`, `Payment`, `AuditLog`, `ApiKey` |
+| `better_auth` | Better Auth's organization plugin | `BAOrganization`, `BAMember`, `BAInvitation`, `BAPasskey` |
 
-The full schema lives at `packages/platform/db/prisma/schema.prisma` (~1,400 lines).
+The full schema lives at `packages/platform/db/prisma/schema.prisma`.
 
 ## Key models
 
@@ -62,12 +60,11 @@ The full schema lives at `packages/platform/db/prisma/schema.prisma` (~1,400 lin
 
 PostgreSQL's `pgvector` extension is enabled on every Nebutra database. It powers:
 
-- **Semantic search** — cosine similarity over `Embedding` vectors in the `recsys` schema
+- **Semantic search** — cosine similarity over `ContentEmbedding` vectors (`@nebutra/search`)
 - **RAG pipelines** — chunked document embeddings stored alongside content
-- **Recommendation engine** — collaborative filtering via ANN (approximate nearest-neighbour) queries
 
 <Note>
-pgvector must be enabled on your PostgreSQL instance before running migrations. Both Neon and Supabase enable it by default. Self-hosted PostgreSQL requires `CREATE EXTENSION vector;`.
+pgvector must be enabled on your PostgreSQL instance before running migrations. Most managed PostgreSQL providers enable it by default. Self-hosted PostgreSQL requires `CREATE EXTENSION vector;`.
 </Note>
 
 ## Command reference

@@ -21,7 +21,7 @@ describe("config → theme integration", () => {
   it("full end-to-end: config → resolve → env vars", () => {
     const config = defineConfig({
       apps: { blog: false },
-      features: { web3: false },
+      features: { newsletter: false },
       theme: "factory",
       locales: ["en", "zh"],
     });
@@ -40,7 +40,7 @@ describe("config → theme integration", () => {
     // Features
     expect(envVars.FEATURE_FLAG_AI).toBe("true");
     expect(envVars.FEATURE_FLAG_BILLING).toBe("true");
-    expect(envVars.FEATURE_FLAG_WEB3).toBe("false");
+    expect(envVars.FEATURE_FLAG_NEWSLETTER).toBe("false");
 
     // Locales
     expect(envVars.NEBUTRA_LOCALES).toBe("en,zh");

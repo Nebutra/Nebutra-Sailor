@@ -115,30 +115,6 @@ const config: BrandConfig = {
   },
 
   /**
-   * Feature Toggles
-   * Disable features you don't need - they will be excluded from builds
-   */
-  features: {
-    // Core features (usually keep enabled)
-    multiTenant: true,
-    ai: true,
-
-    // Optional modules
-    web3: false, // Blockchain/crypto features
-    ecommerce: false, // Shopify/Shopline integration
-    recsys: false, // Recommendation system
-    content: true, // Content/feed system
-
-    // Providers
-    stripe: true, // Stripe payments
-    resend: true, // Resend email
-
-    // i18n
-    i18n: true,
-    supportedLocales: ["en", "zh-CN"],
-  },
-
-  /**
    * Package Naming
    * Change the npm scope for all packages
    */

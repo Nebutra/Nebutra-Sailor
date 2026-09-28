@@ -22,8 +22,6 @@ export const AppId = z.enum([
 export const FeatureId = z.enum([
   "billing",
   "ai",
-  "ecommerce",
-  "web3",
   "community",
   "blog",
   "growth",
@@ -86,8 +84,6 @@ const DEFAULT_APPS: Record<z.infer<typeof AppId>, boolean> = {
 const DEFAULT_FEATURES: Record<z.infer<typeof FeatureId>, boolean> = {
   billing: true,
   ai: true,
-  ecommerce: true,
-  web3: true,
   community: true,
   blog: true,
   growth: true,

@@ -25,7 +25,7 @@ describe("NebutraConfigSchema", () => {
   it("parses full config", () => {
     const result = NebutraConfigSchema.parse({
       apps: { web: true, blog: false },
-      features: { billing: true, web3: false },
+      features: { billing: true, newsletter: false },
       deployTargets: { gateway: "k8s", "python-ai": "aws" },
       theme: "vanta",
       locales: ["en", "zh"],
@@ -35,7 +35,7 @@ describe("NebutraConfigSchema", () => {
     expect(result.locales).toEqual(["en", "zh"]);
     expect(result.defaultLocale).toBe("zh");
     expect(result.apps).toEqual({ web: true, blog: false });
-    expect(result.features).toEqual({ billing: true, web3: false });
+    expect(result.features).toEqual({ billing: true, newsletter: false });
     expect(result.deployTargets).toMatchObject({ gateway: "k8s", "python-ai": "aws" });
     expect(result.deployTargets.web).toBe("fly");
   });
@@ -72,12 +72,10 @@ describe("AppId", () => {
 });
 
 describe("FeatureId", () => {
-  it("accepts all 14 feature IDs", () => {
+  it("accepts all 12 feature IDs", () => {
     const ids = [
       "billing",
       "ai",
-      "ecommerce",
-      "web3",
       "community",
       "blog",
       "growth",

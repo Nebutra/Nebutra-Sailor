@@ -251,21 +251,6 @@ async function handleHealth(options: ServiceCommandOptions): Promise<void> {
     message: clickhouseResult.exitCode === 0 ? "Ready" : "Not responding",
   });
 
-  // Meilisearch check
-  const meilisearchResult = await delegate({
-    command: "docker",
-    args: ["compose", "exec", "-T", "meilisearch", "curl", "-s", "http://localhost:7700/health"],
-    cwd: findMonorepoRoot(),
-    interactive: false,
-    label: "Meilisearch Health",
-    dryRun: options.dryRun,
-  });
-  healthChecks.push({
-    service: "Meilisearch",
-    healthy: meilisearchResult.exitCode === 0,
-    message: meilisearchResult.exitCode === 0 ? "Healthy" : "Not responding",
-  });
-
   if (options.format === "json") {
     output(healthChecks, { format: "json" });
   } else {
@@ -330,7 +315,7 @@ export function registerServicesCommand(program: Command): void {
   const servicesCommand = program
     .command("services <verb> [args...]")
     .description(
-      "Manage Docker Compose microservices (postgres, redis, clickhouse, meilisearch, novu, openfga, etc.)",
+      "Manage Docker Compose services (postgres, redis, clickhouse, ai-service, idp, jaeger)",
     )
     .option("--dry-run", "Show what would be run without executing")
     .option("--yes", "Skip confirmations")
@@ -419,13 +404,11 @@ Examples:
   nebutra services logs postgres          Stream postgres logs
   nebutra services logs postgres --tail 50  Show last 50 postgres logs
   nebutra services restart redis          Restart redis service
-  nebutra services health                 Deep health check (pg, redis, clickhouse, meilisearch)
+  nebutra services health                 Deep health check (pg, redis, clickhouse)
   nebutra services scale ai-service 3     Scale ai-service to 3 replicas
 
-Services Available:
-  postgres, redis, clickhouse, meilisearch, novu, openfga, ai-service, content-service,
-  recsys-service, ecommerce-service, web3-service, billing-service, event-ingest, idp,
-  jaeger, nginx
+Services Available (docker-compose.yml):
+  postgres, db-migrate, redis, clickhouse, ai-service, idp, jaeger
 
 Flags:
   --dry-run                       Show what would be run without executing

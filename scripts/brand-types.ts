@@ -301,19 +301,6 @@ export interface BrandConfig {
   faviconAssets: FaviconAssetConfig;
   ogImageDimensions: OgImageDimensions;
 
-  features: {
-    multiTenant: boolean;
-    ai: boolean;
-    web3: boolean;
-    ecommerce: boolean;
-    recsys: boolean;
-    content: boolean;
-    stripe: boolean;
-    resend: boolean;
-    i18n: boolean;
-    supportedLocales: string[];
-  };
-
   packageScope: string;
 
   license: {
@@ -571,18 +558,6 @@ export const DEFAULT_BRAND: BrandConfig = {
     twitter: { width: 1200, height: 600 },
     square: { width: 1200, height: 1200 },
   },
-  features: {
-    multiTenant: true,
-    ai: true,
-    web3: true,
-    ecommerce: true,
-    recsys: true,
-    content: true,
-    stripe: true,
-    resend: true,
-    i18n: true,
-    supportedLocales: ["en", "zh-CN"],
-  },
   packageScope: "@nebutra",
   license: {
     type: "FSL-1.1-ALv2",
@@ -629,7 +604,6 @@ export interface NewBrandAnswers {
   repoOwner: string;
   repoName: string;
   social: BrandConfig["social"];
-  features: Pick<BrandConfig["features"], "web3" | "ecommerce" | "recsys">;
   packageScope: string;
 }
 
@@ -660,7 +634,6 @@ export function buildBrandConfig(a: NewBrandAnswers): BrandConfig {
     domains: rebaseDomains(DEFAULT_BRAND.domains, a.baseDomain),
     social: a.social,
     repo: { ...base.repo, owner: a.repoOwner, name: a.repoName },
-    features: { ...base.features, ...a.features },
     packageScope: a.packageScope,
     license: { ...base.license, commercialExempt: cn ? [a.companyName, cn] : [a.companyName] },
   };
