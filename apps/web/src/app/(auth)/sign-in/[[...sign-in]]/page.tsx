@@ -1,6 +1,7 @@
 import {
   buildAuthCenterSignInUrl,
   getAuthCenterOrigin,
+  getAuthReturnAllowedHosts,
   isAuthFeatureEnabled,
   sanitizeReturnUrl,
 } from "@nebutra/auth";
@@ -53,7 +54,11 @@ async function SignInPageContent({
     searchParams,
     headers(),
   ]);
-  const sanitized = sanitizeReturnUrl(query.returnUrl ?? query.returnTo ?? query.redirect);
+  // First-party hosts (the marketing site's blog, product apps) may be named in
+  // full; the auth center checks the same list before it sends anyone back.
+  const sanitized = sanitizeReturnUrl(query.returnUrl ?? query.returnTo ?? query.redirect, {
+    allowedHosts: getAuthReturnAllowedHosts(),
+  });
   const returnUrl = sanitized === "/" ? undefined : sanitized;
   const subroute = slug?.[0];
 
@@ -67,7 +72,10 @@ async function SignInPageContent({
     isAuthCenterHost = false;
   }
   if (!isAuthCenterHost) {
-    const returnTo = returnUrl || `${thisOrigin}/workspace`;
+    // A relative return path belongs to this app, not the auth center.
+    const returnTo = returnUrl?.startsWith("/")
+      ? `${thisOrigin}${returnUrl}`
+      : returnUrl || `${thisOrigin}/workspace`;
     // Preserve subroutes as query only — magic/passkey live on auth-center.
     if (subroute === "magic-link") {
       redirect(
