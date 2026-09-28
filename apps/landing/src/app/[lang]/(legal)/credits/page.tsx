@@ -60,7 +60,7 @@ function Face({
     <section className="grid gap-8 border-t border-border py-12 md:grid-cols-[12rem_1fr]">
       <div
         aria-hidden="true"
-        className="text-[8rem] leading-none text-foreground select-none"
+        className="text-9xl leading-none text-foreground select-none"
         style={glyphStyle}
       >
         {glyph}

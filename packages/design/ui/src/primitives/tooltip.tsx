@@ -54,7 +54,7 @@ function markTooltipOpened() {
  * effects, never while rendering: a render-time Date.now() makes Next's
  * prerender (cacheComponents) give up on the nearest Suspense boundary and
  * ship it client-rendered. Through SidebarNav's TooltipProvider that was every
- * page of nebutra.com — the server HTML carried only "Loading…".
+ * page of a rail-framed site — the server HTML carried only "Loading…".
  */
 function useSkipDelay() {
   const [skip, setSkip] = React.useState(false);
