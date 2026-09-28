@@ -39,10 +39,12 @@ describe("recordProbeHistory", () => {
     expect(windowUptime(history, ["2026-07-30", "2026-07-31"])).toBe(0.75);
   });
 
-  it("reads legacy worst-of-day entries for days without counters", async () => {
+  it("shows legacy worst-of-day entries but leaves them out of uptime", async () => {
     await getStatusKv().hset("status:uptime:v1:api", "2026-07-01", "degraded");
     const history = await loadServiceHistory("api");
-    expect(history.days["2026-07-01"]).toEqual({ total: 1, degraded: 1, outage: 0 });
+    expect(history.legacy["2026-07-01"]).toBe("degraded");
+    // Colour only: a worst-of-day reading says nothing about how long it lasted.
+    expect(windowUptime(history, ["2026-07-01"])).toBeNull();
   });
 });
 
