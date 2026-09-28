@@ -139,8 +139,8 @@ export default async function CreditsPage({ params }: { params: Promise<{ lang: 
         licence="SIL Open Font License 1.1"
         sample={
           <>
-            Everything you read in the interface, and{" "}
-            <span style={GEIST_MONO}>npx create-sailor</span> in code.
+            Everything you read in the interface, and <span style={GEIST_MONO}>pnpm dev</span> in
+            code.
           </>
         }
         sampleStyle={GEIST}
