@@ -374,21 +374,9 @@ function StatusActions({ checkedAt }: { checkedAt?: string }) {
 function StatusFooter() {
   return (
     <footer className="px-4 pb-10 sm:px-6">
-      <div className="mx-auto max-w-[760px] text-center text-sm text-muted-foreground">
-        <p>
-          Powered by <span className="font-semibold text-foreground">{brand.name} Status</span>
-        </p>
-        <p className="mt-2 text-xs leading-5">
-          Availability is measured by public checks from outside our cloud every few minutes. ·{" "}
-          <a href="/status.atom" className="hover:text-foreground">
-            Atom
-          </a>{" "}
-          ·{" "}
-          <a href="/status.json" className="hover:text-foreground">
-            JSON
-          </a>
-        </p>
-      </div>
+      <p className="mx-auto max-w-[760px] text-center text-sm text-muted-foreground">
+        Powered by <span className="font-semibold text-foreground">{brand.name} Status</span>
+      </p>
     </footer>
   );
 }

@@ -15,7 +15,6 @@ import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -148,166 +147,157 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
   setRequestLocale(lang as Locale);
 
   return (
-    <Suspense>
-      <main
-        id="main-content"
-        className="flex flex-col flex-1 bg-background relative overflow-hidden"
-      >
-        <AuroraBackground variant="subtle" position="top" intensity={0.4} />
-        <section className="container mx-auto max-w-[1100px] px-4 py-32 relative">
-          {/* Hero */}
-          <AnimateIn preset="emerge" className="mb-20 max-w-3xl">
-            <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
-              Security
-            </p>
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
-              style={{
-                letterSpacing: "var(--tracking-display)",
-                lineHeight: "var(--leading-display)",
-              }}
-            >
-              Security as code, not as claims.
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              The Sailor skeleton ships with audit logging, tenant isolation, encryption, and
-              permission primitives as installable packages — not slideware.
-            </p>
-          </AnimateIn>
+    <main id="main-content" className="flex flex-col flex-1 bg-background relative overflow-hidden">
+      <AuroraBackground variant="subtle" position="top" intensity={0.4} />
+      <section className="container mx-auto max-w-[1100px] px-4 py-32 relative">
+        {/* Hero */}
+        <AnimateIn preset="emerge" className="mb-20 max-w-3xl">
+          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">Security</p>
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
+            style={{
+              letterSpacing: "var(--tracking-display)",
+              lineHeight: "var(--leading-display)",
+            }}
+          >
+            Security as code, not as claims.
+          </h1>
+          <p className="text-xl text-muted-foreground leading-relaxed">
+            The Sailor skeleton ships with audit logging, tenant isolation, encryption, and
+            permission primitives as installable packages — not slideware.
+          </p>
+        </AnimateIn>
 
-          {/* Capabilities */}
-          <div className="mb-24">
-            <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-2"
-              style={{
-                letterSpacing: "var(--tracking-heading)",
-                lineHeight: "var(--leading-heading)",
-              }}
-            >
-              Built-in capabilities
-            </h2>
-            <p className="text-muted-foreground mb-10 max-w-2xl">
-              Each item below is a package in this repository. Audit our source on GitHub.
-            </p>
-            <AnimateInGroup stagger="fast" className="grid gap-4 md:grid-cols-2">
-              {CAPABILITIES.map((cap) => (
-                <AnimateIn key={cap.title} preset="fadeUp">
-                  <article
-                    className="rounded-[var(--radius-card)] bg-card/30 p-7 h-full transition-colors"
-                    style={{ boxShadow: "var(--ring-hairline)" }}
-                  >
-                    <div className="flex items-start gap-4 mb-3">
-                      <div className="rounded-[var(--radius-xl)] bg-primary/10 p-2.5 shrink-0">
-                        <cap.icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-baseline gap-2 flex-wrap">
-                          <h3 className="text-lg font-bold text-foreground">{cap.title}</h3>
-                          {cap.wip && (
-                            <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                              Integration WIP
-                            </span>
-                          )}
-                        </div>
-                        <code className="text-xs text-muted-foreground/80 font-mono">
-                          {cap.pkg}
-                        </code>
-                      </div>
+        {/* Capabilities */}
+        <div className="mb-24">
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-2"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
+          >
+            Built-in capabilities
+          </h2>
+          <p className="text-muted-foreground mb-10 max-w-2xl">
+            Each item below is a package in this repository. Audit our source on GitHub.
+          </p>
+          <AnimateInGroup stagger="fast" className="grid gap-4 md:grid-cols-2">
+            {CAPABILITIES.map((cap) => (
+              <AnimateIn key={cap.title} preset="fadeUp">
+                <article
+                  className="rounded-[var(--radius-card)] bg-card/30 p-7 h-full transition-colors"
+                  style={{ boxShadow: "var(--ring-hairline)" }}
+                >
+                  <div className="flex items-start gap-4 mb-3">
+                    <div className="rounded-[var(--radius-xl)] bg-primary/10 p-2.5 shrink-0">
+                      <cap.icon className="h-5 w-5 text-primary" />
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{cap.summary}</p>
-                  </article>
-                </AnimateIn>
-              ))}
-            </AnimateInGroup>
-          </div>
+                    <div className="flex-1">
+                      <div className="flex items-baseline gap-2 flex-wrap">
+                        <h3 className="text-lg font-bold text-foreground">{cap.title}</h3>
+                        {cap.wip && (
+                          <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                            Integration WIP
+                          </span>
+                        )}
+                      </div>
+                      <code className="text-xs text-muted-foreground/80 font-mono">{cap.pkg}</code>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{cap.summary}</p>
+                </article>
+              </AnimateIn>
+            ))}
+          </AnimateInGroup>
+        </div>
 
-          {/* Compliance */}
-          <div className="mb-24">
-            <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-2"
+        {/* Compliance */}
+        <div className="mb-24">
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-2"
+            style={{
+              letterSpacing: "var(--tracking-heading)",
+              lineHeight: "var(--leading-heading)",
+            }}
+          >
+            Compliance posture
+          </h2>
+          <p className="text-muted-foreground mb-10 max-w-2xl">
+            We list current state plainly — what is in place today versus what is on the roadmap. No
+            badges we have not earned.
+          </p>
+          <div
+            className="rounded-[var(--radius-card)] bg-card/20 divide-y divide-border overflow-hidden"
+            style={{ boxShadow: "var(--ring-hairline)" }}
+          >
+            {COMPLIANCE.map((row) => (
+              <div
+                key={row.label}
+                className="grid grid-cols-1 md:grid-cols-[1fr_auto_2fr] items-start gap-3 md:gap-6 p-6"
+              >
+                <div className="font-bold text-foreground">{row.label}</div>
+                <span
+                  className={`rounded-full px-3 py-1 text-xs font-bold ${TONE_CLASS[row.tone]} shrink-0 self-start`}
+                >
+                  {row.state}
+                </span>
+                <p className="text-sm text-muted-foreground leading-relaxed">{row.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTAs */}
+        <AnimateIn preset="fadeUp">
+          <div
+            className="rounded-[var(--radius-card)] bg-muted/30 p-10 text-center"
+            style={{ boxShadow: "var(--ring-hairline)" }}
+          >
+            <FileLock className="h-10 w-10 mx-auto text-primary mb-4" />
+            <h3
+              className="text-2xl md:text-3xl font-semibold mb-3"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              Compliance posture
-            </h2>
-            <p className="text-muted-foreground mb-10 max-w-2xl">
-              We list current state plainly — what is in place today versus what is on the roadmap.
-              No badges we have not earned.
+              Need our DPA, a security questionnaire, or a chat?
+            </h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              We respond to security inquiries within one business day. For DPA requests, attach
+              your draft or use ours.
             </p>
-            <div
-              className="rounded-[var(--radius-card)] bg-card/20 divide-y divide-border overflow-hidden"
-              style={{ boxShadow: "var(--ring-hairline)" }}
-            >
-              {COMPLIANCE.map((row) => (
-                <div
-                  key={row.label}
-                  className="grid grid-cols-1 md:grid-cols-[1fr_auto_2fr] items-start gap-3 md:gap-6 p-6"
-                >
-                  <div className="font-bold text-foreground">{row.label}</div>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-bold ${TONE_CLASS[row.tone]} shrink-0 self-start`}
-                  >
-                    {row.state}
-                  </span>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{row.detail}</p>
-                </div>
-              ))}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
+              <Button asChild variant="ink" size="lg">
+                <Link href="/dpa">
+                  <FileText className="mr-2 h-4 w-4" /> Read our DPA stance
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-[var(--radius-button)]"
+              >
+                <a href={`mailto:security@${brand.domains.landing}?subject=Security%20Inquiry`}>
+                  <Mail className="mr-2 h-4 w-4" /> security@{brand.domains.landing}
+                </a>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-[var(--radius-button)]"
+              >
+                <a href={`mailto:legal@${brand.domains.landing}?subject=DPA%20Request`}>
+                  Request DPA <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
             </div>
           </div>
-
-          {/* CTAs */}
-          <AnimateIn preset="fadeUp">
-            <div
-              className="rounded-[var(--radius-card)] bg-muted/30 p-10 text-center"
-              style={{ boxShadow: "var(--ring-hairline)" }}
-            >
-              <FileLock className="h-10 w-10 mx-auto text-primary mb-4" />
-              <h3
-                className="text-2xl md:text-3xl font-semibold mb-3"
-                style={{
-                  letterSpacing: "var(--tracking-heading)",
-                  lineHeight: "var(--leading-heading)",
-                }}
-              >
-                Need our DPA, a security questionnaire, or a chat?
-              </h3>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                We respond to security inquiries within one business day. For DPA requests, attach
-                your draft or use ours.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
-                <Button asChild variant="ink" size="lg">
-                  <Link href="/dpa">
-                    <FileText className="mr-2 h-4 w-4" /> Read our DPA stance
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="rounded-[var(--radius-button)]"
-                >
-                  <a href={`mailto:security@${brand.domains.landing}?subject=Security%20Inquiry`}>
-                    <Mail className="mr-2 h-4 w-4" /> security@{brand.domains.landing}
-                  </a>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="rounded-[var(--radius-button)]"
-                >
-                  <a href={`mailto:legal@${brand.domains.landing}?subject=DPA%20Request`}>
-                    Request DPA <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </AnimateIn>
-        </section>
-      </main>
-    </Suspense>
+        </AnimateIn>
+      </section>
+    </main>
   );
 }

@@ -65,6 +65,9 @@ jobs:
           - app: gateway
             fly_app: nebutra-gateway
             host: origin
+          - app: acme
+            fly_app: nebutra-acme
+            host: acme
     steps:
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1

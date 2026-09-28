@@ -217,6 +217,13 @@ function toIsoDate(date: string): string | undefined {
 }
 
 /**
+ * Params outside generateStaticParams render on demand as a blocking route
+ * rather than streaming behind a <Suspense> fallback: a streamed page reaches a
+ * reader without JavaScript as its fallback (scripts/verify-landing-ssr.mjs).
+ */
+export const instant = false;
+
+/**
  * Pre-build the default locale only. Other locales render on-demand and are
  * then cached via PPR — `dynamicParams = true` is forbidden under
  * cacheComponents and also redundant (on-demand is the default).

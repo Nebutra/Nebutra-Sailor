@@ -18,7 +18,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import {
   type BlogHeroTopic,
@@ -190,11 +189,7 @@ function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean):
 }
 
 export default function BlogPage({ params }: { params: Promise<{ lang: string }> }) {
-  return (
-    <Suspense fallback={<BlogPageSkeleton />}>
-      <BlogPageLoader params={params} />
-    </Suspense>
-  );
+  return <BlogPageLoader params={params} />;
 }
 
 async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> }) {
@@ -275,38 +270,6 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
           </div>
         )}
       </section>
-    </main>
-  );
-}
-
-function BlogPageSkeleton() {
-  return (
-    <main id="main-content" className="flex-1 bg-background" aria-busy="true">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
-        <div className="hidden gap-3 sm:flex">
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-        </div>
-      </div>
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="border-y border-border py-10 sm:py-14">
-          <div className="h-6 w-40 animate-pulse rounded bg-muted" />
-          <div className="mt-6 h-12 w-3/4 animate-pulse rounded bg-muted" />
-          <div className="mt-5 h-5 w-1/2 animate-pulse rounded bg-muted" />
-        </div>
-        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-muted" />
-      </section>
-      <div className="mx-auto max-w-6xl border-t border-border px-4 py-12 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
-        <div className="mt-5 grid gap-3 sm:grid-cols-4">
-          <div className="h-4 animate-pulse rounded bg-muted" />
-          <div className="h-4 animate-pulse rounded bg-muted" />
-          <div className="h-4 animate-pulse rounded bg-muted" />
-          <div className="h-4 animate-pulse rounded bg-muted" />
-        </div>
-      </div>
     </main>
   );
 }

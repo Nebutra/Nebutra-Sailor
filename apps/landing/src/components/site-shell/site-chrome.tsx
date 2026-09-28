@@ -5,6 +5,7 @@ import { FooterMinimal } from "@/components/landing/FooterMinimal";
 import { Navbar } from "@/components/landing/Navbar";
 import { usePathname } from "@/i18n/navigation";
 import { pageAt } from "@/site-map";
+import { PageTransition } from "./page-transition";
 
 /**
  * The frame around every template page: navigation, the page, the footer.
@@ -27,7 +28,7 @@ export function SiteChrome({
   return (
     <div className="flex min-h-dvh flex-col bg-background">
       <Navbar forceDarkTheme={chrome === "over-dark"} />
-      {children}
+      <PageTransition className="flex flex-1 flex-col">{children}</PageTransition>
       <FooterMinimal variant={footer} />
     </div>
   );
