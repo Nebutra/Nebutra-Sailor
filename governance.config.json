@@ -73,7 +73,6 @@
       "apps/landing/src/app/[lang]/(marketing)/about/business-portfolio/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/about/global/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
-      "apps/landing/src/app/[lang]/(marketing)/about/products/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/about/whitepaper/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/ai/models/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/blog/author/[author]/page.tsx",
@@ -271,10 +270,6 @@
       {
         "file": "apps/router/src/components/product-detail.tsx",
         "count": 34
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/products/page.tsx",
-        "count": 32
       },
       {
         "file": "apps/design/src/app/(brand)/brand/page.tsx",
