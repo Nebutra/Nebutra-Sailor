@@ -24,6 +24,12 @@ Thesis: **Build the shell first. Hide complexity until the user asks for it.**
   source is never overwritten. Job = node; the top-bar jobs indicator is a redundant mirror (EXPERIMENTAL).
 - Every entry point is reachable through `Cmd/Ctrl+K`.
 
+App shell (LibTV's information architecture): `src/app/(shell)/` wraps Home, Projects, Assets, a
+project's overview and Plans in a left rail (New project, Agent, Home / Projects / Assets, PARA Pro,
+version) and an account bar. Home: New canvas hero → Image / Script tool tiles (`?seed=image|text`
+opens the canvas with one empty generator node, prompt focused) → Recent projects → Your work. The
+workspace canvas route stays full-screen.
+
 State ownership: URL → Next router · remote data → TanStack Query (mock adapters) ·
 workspace document → `stores/editor-store` (zustand) · UI → `stores/ui-store` · jobs → `stores/jobs-store`.
 
