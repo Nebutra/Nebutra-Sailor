@@ -1,5 +1,7 @@
 "use client";
 
+// @async-surface-exempt: reads assets only to put a thumbnail on a context chip; a miss renders the chip without one. The panel is not a list surface.
+
 import { ArrowUp, Cross } from "@nebutra/icons";
 import { Textarea } from "@nebutra/ui/primitives";
 import { useCallback, useEffect, useRef } from "react";
