@@ -1,5 +1,4 @@
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { EssayFeature, essays, FEATURED, toCard } from "@/nebutra/home/essay-feature";
 import { EssayGrid } from "@/nebutra/home/essay-grid";
@@ -30,14 +29,10 @@ export default async function JournalPage({ params }: { params: Promise<{ lang: 
         />
       </section>
       <Band>
-        <Suspense>
-          <EssayFeature />
-        </Suspense>
+        <EssayFeature />
       </Band>
       <Band>
-        <Suspense>
-          <All />
-        </Suspense>
+        <All />
       </Band>
     </main>
   );

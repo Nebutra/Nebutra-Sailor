@@ -15,6 +15,13 @@ type SolutionDetailPageProps = {
   params: Promise<{ lang: string; slug: string }>;
 };
 
+/**
+ * Params outside generateStaticParams render on demand as a blocking route
+ * rather than streaming behind a <Suspense> fallback: a streamed page reaches a
+ * reader without JavaScript as its fallback (scripts/verify-landing-ssr.mjs).
+ */
+export const instant = false;
+
 export function generateStaticParams() {
   return prerenderDefaultLocale(getAllSolutionSlugs(), (slug) => ({ slug }));
 }

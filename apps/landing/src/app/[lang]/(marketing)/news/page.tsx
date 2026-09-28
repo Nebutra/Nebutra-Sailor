@@ -13,7 +13,6 @@ import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { NewsArchive, type NewsArchiveItem } from "@/components/landing/news-archive";
 import {
   NewsFeatured,
@@ -141,11 +140,7 @@ function toRailSlide(post: BlogPostWithSource, lang: string): NewsRailSlide {
 }
 
 export default function NewsPage({ params }: { params: Promise<{ lang: string }> }) {
-  return (
-    <Suspense fallback={<NewsPageSkeleton />}>
-      <NewsPageLoader params={params} />
-    </Suspense>
-  );
+  return <NewsPageLoader params={params} />;
 }
 
 async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> }) {
@@ -197,31 +192,6 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
             </div>
           </AnimateIn>
         )}
-      </div>
-    </main>
-  );
-}
-
-function NewsPageSkeleton() {
-  return (
-    <main id="main-content" className="flex-1 bg-background" aria-busy="true">
-      <div className="mx-auto flex max-w-wide items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
-        <div className="h-8 w-36 animate-pulse rounded bg-muted" />
-        <div className="hidden gap-3 sm:flex">
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-16 animate-pulse rounded bg-muted" />
-        </div>
-      </div>
-      <div className="mx-auto max-w-wide px-4 pt-16 sm:px-6 lg:px-8">
-        <div className="h-14 w-72 animate-pulse rounded bg-muted" />
-        <div className="mt-14 grid gap-12 border-t border-border pt-14 lg:grid-cols-[1.65fr_1fr]">
-          <div className="h-[26rem] animate-pulse rounded-[var(--radius-xl)] bg-muted" />
-          <div className="flex flex-col gap-6">
-            <div className="h-24 animate-pulse rounded bg-muted" />
-            <div className="h-24 animate-pulse rounded bg-muted" />
-            <div className="h-24 animate-pulse rounded bg-muted" />
-          </div>
-        </div>
       </div>
     </main>
   );

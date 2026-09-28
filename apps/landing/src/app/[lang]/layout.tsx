@@ -10,16 +10,13 @@ import { Toaster } from "@nebutra/ui/primitives";
 import type { Metadata, Viewport } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { ConsentGatedTelemetry } from "@/components/consent-gated-telemetry";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { IcpFooter } from "@/components/icp-footer";
 import { PresetPreview } from "@/components/preset-preview";
-import RouteSkeleton from "@/components/ui/route-skeleton";
 import { type Locale, routing } from "@/i18n/routing";
 import { seoContent } from "@/lib/landing-content";
 import { PRESET_PREVIEW } from "@/lib/preset-preview-flag";
@@ -209,20 +206,32 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
           Skip to content
         </a>
 
-        <Script id="nebutra-jsonld" type="application/ld+json" strategy="beforeInteractive">
-          {toSafeJsonLd(jsonLd)}
-        </Script>
+        {/*
+         * A plain <script>, not next/script: `beforeInteractive` serialises its
+         * children into a `self.__next_s.push(...)` call, so the HTML carried no
+         * application/ld+json element and parsers that do not run JavaScript
+         * found no Organization/WebSite/SoftwareApplication data.
+         */}
+        <script
+          id="nebutra-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: toSafeJsonLd(jsonLd) }}
+        />
 
         <Providers>
           <ErrorBoundary>
             <NextIntlClientProvider locale={locale} messages={clientMessages}>
               {/*
-               * Suspense boundary: the shell (IcpFooter, Toaster) is outside so
-               * it renders immediately from the cached layout. Children stream
-               * in via RouteSkeleton → reduces the visible stall on locale
-               * switches to near-zero.
+               * No <Suspense> around the page. React 19 streams any completed
+               * boundary larger than ~12.8 KB of document out of line: the
+               * fallback stays in place and the page arrives in a
+               * `<div hidden>` that an inline script swaps in. A reader that
+               * runs no JavaScript — GPTBot, ClaudeBot, PerplexityBot, most
+               * HTML-to-text extractors — saw "Loading…" on every page. Page
+               * content belongs in the shell; only request-time islands get a
+               * boundary of their own. Guarded by scripts/verify-landing-ssr.mjs.
                */}
-              <Suspense fallback={<RouteSkeleton />}>{children}</Suspense>
+              {children}
               {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
                 <IcpFooter
                   locale={locale}

@@ -3,12 +3,11 @@ import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { getLegalDocument } from "@/lib/legal-documents";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { LegalDocumentContent, LegalDocumentSkeleton } from "./_components/legal-document-content";
+import { LegalDocumentContent } from "./_components/legal-document-content";
 
 // Known canonical legal documents — enumerated so Next.js 16 cacheComponents
 // can build a finite prerender set. Slugs outside this list render on-demand
@@ -23,6 +22,13 @@ const KNOWN_LEGAL_SLUGS = [
   "acceptable-use",
 ] as const;
 
+/**
+ * Params outside generateStaticParams render on demand as a blocking route
+ * rather than streaming behind a <Suspense> fallback: a streamed page reaches a
+ * reader without JavaScript as its fallback (scripts/verify-landing-ssr.mjs).
+ */
+export const instant = false;
+
 export function generateStaticParams() {
   return prerenderDefaultLocale([...KNOWN_LEGAL_SLUGS], (slug) => ({ slug }));
 }
@@ -36,8 +42,8 @@ interface LegalSlugPageProps {
  *
  * Routes like `/legal/privacy-policy`, `/legal/terms-of-service` resolve their
  * content from the LegalDocument table (via `/api/legal/[slug]` exposed by
- * `/web`). The body fetch lives in a child wrapped in <Suspense> so the page
- * shell can stream first under Next.js 16 cacheComponents.
+ * `/web`). The body renders in place — not behind <Suspense> — so a reader
+ * without JavaScript gets the document (scripts/verify-landing-ssr.mjs).
  */
 
 // `'use cache'` cannot live directly on `generateMetadata` because Next.js
@@ -65,15 +71,7 @@ export async function generateMetadata({ params }: LegalSlugPageProps): Promise<
 }
 
 export default function LegalSlugPage({ params }: LegalSlugPageProps) {
-  // Next.js 16 cacheComponents requires all uncached data access (including
-  // `await params` and `setRequestLocale`) to be wrapped in <Suspense>.
-  // Pushing the param resolution into LegalDocumentLoader keeps the page
-  // shell synchronous so the streaming boundary fires immediately.
-  return (
-    <Suspense fallback={<LegalDocumentSkeleton />}>
-      <LegalDocumentLoader params={params} />
-    </Suspense>
-  );
+  return <LegalDocumentLoader params={params} />;
 }
 
 async function LegalDocumentLoader({ params }: LegalSlugPageProps) {

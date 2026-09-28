@@ -178,12 +178,17 @@ describe("landing UI governance", () => {
     expect(mobileDrawerSource).not.toContain('className="md:hidden flex items-center"');
   });
 
-  it("uses mobile-specific section skeleton heights for lazy landing content", () => {
-    expect(marketingHomePageSource).toContain("--section-skeleton-mobile-min-h");
-    expect(marketingHomePageSource).toContain('mobileMinH="34rem"');
-    expect(marketingHomePageSource).not.toContain(
-      '<section aria-hidden className="w-full" style={{ minHeight: minH }} />',
+  it("renders every template home section in place, not behind a streamed boundary", () => {
+    // A completed <Suspense> boundary past ~12.8 KB of document is streamed out
+    // of line (fallback in place, section in a <div hidden>), so readers that
+    // run no JavaScript got skeletons. scripts/verify-landing-ssr.mjs checks
+    // the built site; this keeps the template source from drifting back.
+    expect(marketingHomePageSource).not.toMatch(
+      /import\s*\{[^}]*\bSuspense\b[^}]*\}\s*from\s*"react"/,
     );
+    expect(marketingHomePageSource).not.toContain("next/dynamic");
+    expect(marketingHomePageSource).toContain("<CapabilityMatrixSection />");
+    expect(marketingHomePageSource).toContain("<PricingSection />");
   });
 
   it("keeps the blog index on branded motion selectors instead of static hover only", () => {

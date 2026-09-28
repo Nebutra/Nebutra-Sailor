@@ -1,73 +1,28 @@
-import dynamic from "next/dynamic";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { CSSProperties } from "react";
-import { Suspense } from "react";
-import { FinalCTA, HeroMockupWindow, LogoStrip } from "@/components/landing";
+import { FinalCTA, HeroMockupWindow, LogoStrip, PricingSection } from "@/components/landing";
+import { AIConstellationMarquee } from "@/components/landing/AIConstellationMarquee";
+import { CapabilityMatrixSection } from "@/components/landing/CapabilityMatrixSection";
+import { DesignSystemSection } from "@/components/landing/DesignSystemSection";
+import { FAQSection } from "@/components/landing/faq-section";
 import { HeroSection } from "@/components/landing/HeroSection";
+import { UseCasesSection } from "@/components/landing/use-cases/UseCasesSection";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
-// Skeleton uses min-h so longer locales don't clip. Heights track real
-// section sizes to keep CLS down while content streams in; mobile uses a
-// separate contract because several dense demos stay desktop-only.
-const SectionSkeleton = ({
-  minH = "32rem",
-  mobileMinH = "24rem",
-}: {
-  minH?: string;
-  mobileMinH?: string;
-}) => (
-  <section
-    aria-hidden
-    className="w-full min-h-[var(--section-skeleton-mobile-min-h)] md:min-h-[var(--section-skeleton-min-h)]"
-    style={
-      {
-        "--section-skeleton-min-h": minH,
-        "--section-skeleton-mobile-min-h": mobileMinH,
-      } as CSSProperties
-    }
-  />
-);
-
 /**
- * Each section streams into its own boundary, with the skeleton as that
- * boundary's fallback.
+ * Every section is in the server-rendered HTML, in place.
  *
- * These were `dynamic(..., { loading: () => <SectionSkeleton/> })`. On a server
- * component that resolves the import and streams the real section, while the
- * client's lazy component renders the skeleton until its chunk lands — so React
- * hydrated a skeleton against real markup and threw a recoverable mismatch for
- * every one of them, regenerating seven subtrees on the client. It was
- * invisible: the content was correct either way, and the only evidence was six
- * minified #418s in the console on the homepage and nowhere else.
- *
- * As a Suspense fallback the skeleton shows while the boundary is pending and
- * is replaced by the same markup the server sent, which is what a fallback is.
+ * Sections used to sit in their own <Suspense> boundaries around `dynamic()`
+ * imports. React 19 streams a completed boundary out of line once the document
+ * passes ~12.8 KB: the fallback stays where the section belongs and the section
+ * arrives in a `<div hidden>` that an inline script moves into place. A reader
+ * that runs no JavaScript — search and AI crawlers, HTML-to-text extractors —
+ * got empty skeletons. Client sections are plain imports: a Server Component
+ * already code-splits them into their own client chunks, and a plain import
+ * has no lazy wrapper to hydrate a skeleton against real markup (the #418
+ * mismatch `dynamic(..., { loading })` caused). Guarded by
+ * scripts/verify-landing-ssr.mjs.
  */
-const AIConstellationMarquee = dynamic(() =>
-  import("@/components/landing/AIConstellationMarquee").then((m) => m.AIConstellationMarquee),
-);
-
-const CapabilityMatrixSection = dynamic(() =>
-  import("@/components/landing/CapabilityMatrixSection").then((m) => m.CapabilityMatrixSection),
-);
-
-const UseCasesSection = dynamic(() =>
-  import("@/components/landing/use-cases/UseCasesSection").then((m) => m.UseCasesSection),
-);
-
-const DesignSystemSection = dynamic(() =>
-  import("@/components/landing/DesignSystemSection").then((m) => m.DesignSystemSection),
-);
-
-const PricingSection = dynamic(() =>
-  import("@/components/landing/PricingSection").then((m) => m.PricingSection),
-);
-
-const FAQSection = dynamic(() =>
-  import("@/components/landing/faq-section").then((m) => m.FAQSection),
-);
-
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const locale = lang as Locale;
@@ -88,7 +43,7 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
   setRequestLocale(locale);
 
   return (
-    <Suspense>
+    <>
       {/* React 19 hoists these to <head>. Keep the decorative hero video out of
           the preload scanner; preconnect is enough and avoids competing with
           text/CSS during LCP. */}
@@ -109,38 +64,26 @@ export default async function MarketingHomePage({ params }: { params: Promise<{ 
         </div>
 
         {/* 4. AI Constellation Marquee */}
-        <Suspense fallback={<SectionSkeleton minH="14rem" mobileMinH="10rem" />}>
-          <AIConstellationMarquee />
-        </Suspense>
+        <AIConstellationMarquee />
 
         {/* 5. Capability Matrix */}
-        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="42rem" />}>
-          <CapabilityMatrixSection />
-        </Suspense>
+        <CapabilityMatrixSection />
 
         {/* 6. Design System */}
-        <Suspense fallback={<SectionSkeleton minH="48rem" mobileMinH="38rem" />}>
-          <DesignSystemSection />
-        </Suspense>
+        <DesignSystemSection />
 
         {/* 7. Use Cases */}
-        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="34rem" />}>
-          <UseCasesSection />
-        </Suspense>
+        <UseCasesSection />
 
         {/* 8. Pricing */}
-        <Suspense fallback={<SectionSkeleton minH="56rem" mobileMinH="42rem" />}>
-          <PricingSection />
-        </Suspense>
+        <PricingSection />
 
         {/* 9. FAQ */}
-        <Suspense fallback={<SectionSkeleton minH="36rem" mobileMinH="28rem" />}>
-          <FAQSection />
-        </Suspense>
+        <FAQSection />
 
         {/* Final CTA — sits directly above the layout's footer */}
         <FinalCTA />
       </main>
-    </Suspense>
+    </>
   );
 }

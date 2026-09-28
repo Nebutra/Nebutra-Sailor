@@ -1,7 +1,6 @@
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { setRequestLocale } from "next-intl/server";
-import { Suspense } from "react";
+import { CapabilityMatrixSection } from "@/components/landing/CapabilityMatrixSection";
 import { CommandInstallBox } from "@/components/landing/CommandInstallBox";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { REPO_URL } from "@/nebutra/data/repo";
@@ -14,11 +13,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   return buildPageMetadata(sitePageMeta(lang, "/sailor"));
 }
-
-// The old landing's capability section, unchanged: it is Sailor's own craft.
-const CapabilityMatrixSection = dynamic(() =>
-  import("@/components/landing/CapabilityMatrixSection").then((m) => m.CapabilityMatrixSection),
-);
 
 export default async function SailorPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -66,9 +60,8 @@ export default async function SailorPage({ params }: { params: Promise<{ lang: s
         <SailorCli />
       </Band>
       <div className="border-t border-border">
-        <Suspense>
-          <CapabilityMatrixSection />
-        </Suspense>
+        {/* The old landing's capability section, unchanged: it is Sailor's own craft. */}
+        <CapabilityMatrixSection />
       </div>
     </main>
   );

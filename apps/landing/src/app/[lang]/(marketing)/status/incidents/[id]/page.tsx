@@ -20,6 +20,14 @@ import { getServiceTargets } from "@/lib/status-checks";
 
 type Params = Promise<{ lang: string; id: string }>;
 
+/**
+ * Incident ids are unbounded, so the route shell renders on demand (blocking)
+ * instead of prerendering a fallback shell; the site nav reads the pathname,
+ * which a fallback shell cannot provide outside <Suspense>. The incident itself
+ * still streams behind the boundary below.
+ */
+export const instant = false;
+
 export const metadata: Metadata = {
   title: "Incident",
   robots: { index: false },

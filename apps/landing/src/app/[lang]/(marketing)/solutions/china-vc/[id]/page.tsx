@@ -15,6 +15,13 @@ type Props = { params: Promise<{ lang: string; id: string }> };
 
 const PRERENDERED_CHINA_VC_ORGS = CHINA_VC_ORGS.slice(0, 24);
 
+/**
+ * Params outside generateStaticParams render on demand as a blocking route
+ * rather than streaming behind a <Suspense> fallback: a streamed page reaches a
+ * reader without JavaScript as its fallback (scripts/verify-landing-ssr.mjs).
+ */
+export const instant = false;
+
 export function generateStaticParams() {
   return prerenderDefaultLocale(PRERENDERED_CHINA_VC_ORGS, (o) => ({ id: String(o.id) }));
 }
