@@ -2,8 +2,20 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import type { CSSProperties, ReactNode } from "react";
+import { SITE } from "@/content/site";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { SITE_ID } from "@/site.config";
+
+/**
+ * The specimen lines. A site set up from the template shows its own pitch
+ * (content/site.ts), so the page speaks in the owner's words from the first
+ * build; Nebutra's own site keeps its founder's lines.
+ */
+const SPECIMEN =
+  SITE_ID === "nebutra"
+    ? { zh: "好的架构，意味着你能走很远。", en: "Build the company, not the platform under it." }
+    : SITE.hero.pitch;
 
 export async function generateMetadata({
   params,
@@ -115,7 +127,7 @@ export default async function CreditsPage({ params }: { params: Promise<{ lang: 
         maker="小米科技有限责任公司 · Xiaomi"
         use="Chinese text"
         licence="本网站使用了 MiSans 字体 · MiSans Font License"
-        sample="好的架构，意味着你能走很远。"
+        sample={SPECIMEN.zh}
         sampleStyle={MISANS}
         href="https://hyperos.mi.com/font"
       />
@@ -126,7 +138,7 @@ export default async function CreditsPage({ params }: { params: Promise<{ lang: 
         maker="Colophon Foundry"
         use="Headings"
         licence="SIL Open Font License 1.1"
-        sample="Build the company, not the platform under it."
+        sample={SPECIMEN.en}
         sampleStyle={DM_SANS}
         href="https://github.com/googlefonts/dm-fonts"
       />

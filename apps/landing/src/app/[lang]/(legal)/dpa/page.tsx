@@ -42,9 +42,9 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
       <section className="space-y-4">
         <h2 className="text-xl font-bold text-foreground">Availability</h2>
         <p className="leading-relaxed text-muted-foreground">
-          {brand.name} Intelligence (“{brand.name}”) provides a Data Processing Addendum to
-          customers whose use of our services involves processing personal data of EU, UK, Swiss, or
-          California residents, or any other jurisdiction with comparable data protection laws.
+          {brand.name} (“we”) provides a Data Processing Addendum to customers whose use of our
+          services involves processing personal data of EU, UK, Swiss, or California residents, or
+          any other jurisdiction with comparable data protection laws.
         </p>
         <p className="leading-relaxed text-muted-foreground">
           Our DPA aligns with Article 28 GDPR, includes standard contractual clauses (EU 2021/914)
