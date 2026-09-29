@@ -1,6 +1,5 @@
 "use client";
 
-import { Logo, Logomark } from "@nebutra/brand";
 import { MagnifyingGlass } from "@nebutra/icons";
 import {
   Button,
@@ -18,6 +17,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { ROUTES } from "@/nebutra/routes";
 import { SiteMenu } from "@/nebutra/shell/site-menu";
+import { ThemedLogo, ThemedLogomark } from "@/nebutra/shell/themed-logo";
 import { pageAt, SECTIONS, SITE_MAP } from "@/site-map";
 
 /**
@@ -99,7 +99,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
               setOpen((o) => (o === "pinned" ? false : "pinned"));
             }}
           >
-            <Logomark variant="mono" size={compact ? 20 : 24} inverted />
+            <ThemedLogomark size={compact ? 20 : 24} />
           </Button>
         </div>
 
@@ -109,7 +109,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
           className="flex items-center justify-center"
         >
           {/* The official wordmark, reversed for the void — never the name typed in a font. */}
-          <Logo variant="en" size={compact ? 88 : 112} inverted />
+          <ThemedLogo size={compact ? 88 : 112} />
         </Link>
 
         <div className="flex items-center justify-end">

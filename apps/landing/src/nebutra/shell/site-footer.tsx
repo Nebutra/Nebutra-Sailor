@@ -1,8 +1,9 @@
-import { Logo } from "@nebutra/brand";
 import { brand } from "@nebutra/brand/metadata";
 import Link from "next/link";
+import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { REPO_URL } from "@/nebutra/data/repo";
 import { ROUTES } from "@/nebutra/routes";
+import { ThemedLogo } from "@/nebutra/shell/themed-logo";
 
 /** Nebutra's own footer — the company, its products, its writing, the legal line. */
 export function SiteFooter() {
@@ -39,7 +40,7 @@ export function SiteFooter() {
     <footer data-testid="site-footer" className="border-t border-border px-8 pt-16 pb-10 xl:px-16">
       <div className="grid grid-cols-2 gap-10 md:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
         <div className="col-span-2 md:col-span-1">
-          <Logo variant="en" size={112} inverted />
+          <ThemedLogo size={112} />
           <p className="mt-2 max-w-xs text-sm text-muted-foreground">
             An AI-native company builder. No company should be hard to start.
           </p>
@@ -82,7 +83,7 @@ export function SiteFooter() {
         <span>
           © 2026 {brand.nameFullEn} · {brand.nameFull}
         </span>
-        <span className="flex flex-wrap gap-4">
+        <span className="flex flex-wrap items-center gap-4">
           {/* ICP 备案 — required for a site operated in mainland China */}
           {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
             <a
@@ -94,6 +95,7 @@ export function SiteFooter() {
               {process.env.NEXT_PUBLIC_ICP_NUMBER}
             </a>
           ) : null}
+          <ThemeSwitcher />
         </span>
       </div>
     </footer>
