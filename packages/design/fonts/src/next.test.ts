@@ -37,23 +37,35 @@ describe("registry faces (@nebutra/fonts/next)", () => {
     expect(faces.map((f) => f.name).sort()).toEqual([...names].sort());
   });
 
-  it("loads each face from an installed @fontsource-variable package (Latin, upright, wght)", () => {
+  it("loads each face from the package's own vendored generated/registry/ (not node_modules)", () => {
+    // Package-relative, not `../node_modules/@fontsource-variable/...`: that
+    // path only existed because pnpm nests a workspace package's own deps
+    // under its own node_modules. A hoisted `npm install` of the published
+    // package resolves @fontsource-variable/* elsewhere, so the woff2 bytes
+    // are vendored into the package itself (scripts/copy-registry-fonts.mjs)
+    // and referenced from a path that resolves the same everywhere.
     for (const { path } of faces) {
-      expect(path).toMatch(
-        /^\.\.\/node_modules\/@fontsource-variable\/([a-z0-9-]+)\/files\/\1-latin-wght-normal\.woff2$/,
-      );
+      expect(path).toMatch(/^\.\.\/generated\/registry\/([a-z0-9-]+)-latin-wght-normal\.woff2$/);
       expect(existsSync(here(path)), path).toBe(true);
     }
   });
 
-  it("depends on every package it loads from, pinned", () => {
+  it("depends on every @fontsource-variable package it vendors from, pinned (devDependency)", () => {
     const pkg = JSON.parse(readFileSync(here("../package.json"), "utf8")) as {
-      dependencies: Record<string, string>;
+      devDependencies: Record<string, string>;
     };
     for (const { path } of faces) {
-      const name = /@fontsource-variable\/[a-z0-9-]+/.exec(path)?.[0] ?? "";
-      expect(pkg.dependencies[name], name).toMatch(/^\d+\.\d+\.\d+$/);
+      const fileName = /registry\/([a-z0-9-]+)-latin-wght-normal\.woff2$/.exec(path)?.[1] ?? "";
+      const name = `@fontsource-variable/${fileName}`;
+      expect(pkg.devDependencies[name], name).toMatch(/^\d+\.\d+\.\d+$/);
     }
+  });
+
+  it("ships the vendored registry woff2 files in the npm `files` list", () => {
+    const pkg = JSON.parse(readFileSync(here("../package.json"), "utf8")) as {
+      files: string[];
+    };
+    expect(pkg.files).toContain("generated/registry");
   });
 
   it("keeps the variables FONT_REGISTRY resolves to, and distinct family names", () => {

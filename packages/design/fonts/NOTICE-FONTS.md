@@ -19,21 +19,27 @@ License 1.1. Licence text: `vendor/dm-sans/OFL.txt`.
 
 ## Theme / DESIGN.md registry faces
 
-`src/next.ts` loads 19 faces from `@fontsource-variable/*` npm packages
+`src/next.ts` loads 19 faces from woff2 files vendored under
+`generated/registry/`, sourced from `@fontsource-variable/*` npm packages
 (Fontsource, version 5.3.0), each licensed under the **SIL Open Font License
 1.1**, which permits use, embedding and redistribution, including bundling with
 software: Inter, Inter Tight, Space Grotesk, Playfair Display, Source Serif 4,
 Fraunces, JetBrains Mono, Manrope, Sora, Work Sans, DM Sans, Plus Jakarta Sans,
 Outfit, Figtree, Montserrat, Lexend, Fira Code, Roboto Mono, Source Code Pro.
-Each package carries its licence text (`LICENSE`) and copyright notice; the
-font binaries are not copied into this package — they are installed as
-dependencies and emitted into the app's build by `next/font/local`.
+Each package carries its licence text (`LICENSE`) and copyright notice. The
+`@fontsource-variable/*` packages are devDependencies only, used to vendor the
+woff2 bytes at build time (`scripts/copy-registry-fonts.mjs`, wired into
+`build` and `prepack`); they are not required at runtime by anything that
+depends on `@nebutra/fonts`.
 
 ## Distribution
 
-The DM Sans subset (`generated/dm-sans.woff2`) is committed so
-`next/font/local` can load it offline; it is **not** in the npm `files` list.
-MiSans subsets are never committed at all: the licence forbids distributing
-the font on its own, so they are uploaded to the deployment's asset CDN and
-`<CjkFontFace />` points at them. Do not add `generated/*.woff2` or other font
-binaries to a publishable `files` glob.
+The DM Sans subset (`generated/dm-sans.woff2`) and the 19 registry faces
+(`generated/registry/*.woff2`) are committed to git AND included in the npm
+`files` list, so `next/font/local`'s package-relative `path` resolves the
+same whether the package is a pnpm workspace symlink or a hoisted `npm
+install` of the published tarball — the installing project's node_modules
+layout no longer matters. MiSans subsets are the one exception: never
+committed and never shipped, because the licence forbids distributing the
+font on its own; they are uploaded to the deployment's asset CDN and
+`<CjkFontFace />` points at them instead.

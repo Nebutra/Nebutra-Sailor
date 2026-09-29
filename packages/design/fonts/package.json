@@ -27,6 +27,8 @@
     "src",
     "generated/subset-manifest.json",
     "generated/index.ts",
+    "generated/dm-sans.woff2",
+    "generated/registry",
     "vendor/misans/LICENSE.txt",
     "vendor/dm-sans/OFL.txt",
     "NOTICE-FONTS.md",
@@ -70,11 +72,16 @@
   },
   "scripts": {
     "subset:cjk": "node scripts/subset-cjk.mjs",
+    "fonts:registry": "node scripts/copy-registry-fonts.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "build": "tsup"
+    "build": "pnpm run fonts:registry && tsup",
+    "prepack": "node scripts/copy-registry-fonts.mjs"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*"
+  },
+  "devDependencies": {
     "@fontsource-variable/dm-sans": "5.3.0",
     "@fontsource-variable/figtree": "5.3.0",
     "@fontsource-variable/fira-code": "5.3.0",
@@ -94,9 +101,6 @@
     "@fontsource-variable/source-serif-4": "5.3.0",
     "@fontsource-variable/space-grotesk": "5.3.0",
     "@fontsource-variable/work-sans": "5.3.0",
-    "@nebutra/brand": "workspace:*"
-  },
-  "devDependencies": {
     "@types/react": "^19.2.14",
     "typescript": "catalog:",
     "vitest": "catalog:",

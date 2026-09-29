@@ -3762,6 +3762,16 @@ importers:
 
   packages/design/fonts:
     dependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../brand
+      next:
+        specifier: ^16.3.3
+        version: 16.3.4(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react:
+        specifier: 19.2.4
+        version: 19.2.4
+    devDependencies:
       '@fontsource-variable/dm-sans':
         specifier: 5.3.0
         version: 5.3.0
@@ -3819,16 +3829,6 @@ importers:
       '@fontsource-variable/work-sans':
         specifier: 5.3.0
         version: 5.3.0
-      '@nebutra/brand':
-        specifier: workspace:*
-        version: link:../brand
-      next:
-        specifier: ^16.3.3
-        version: 16.3.4(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      react:
-        specifier: 19.2.4
-        version: 19.2.4
-    devDependencies:
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14

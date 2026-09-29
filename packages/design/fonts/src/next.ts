@@ -1,14 +1,15 @@
 /**
  * @nebutra/fonts/next — the theme / DESIGN.md registry faces (server-only).
  *
- * Every face is loaded through `next/font/local` from an `@fontsource-variable/*`
- * package that arrives with `pnpm install` — the build and the dev server make
- * NO request to fonts.googleapis.com / fonts.gstatic.com. That is the point:
- * with `next/font/google`, a machine that cannot reach Google (mainland China,
- * a corporate proxy, a plane) failed `next build` outright and answered 500 from
- * the Turbopack dev server ("Can't resolve '@vercel/turbopack-next/internal/font/google/font'"),
- * so a scaffold's preview site was dead on arrival. npm packages are mirrored
- * everywhere (npmmirror in China); Google Fonts is not.
+ * Every face is loaded through `next/font/local` from a woff2 vendored into
+ * this package's own `../generated/registry/` — the build and the dev server
+ * make NO request to fonts.googleapis.com / fonts.gstatic.com. That is the
+ * point: with `next/font/google`, a machine that cannot reach Google
+ * (mainland China, a corporate proxy, a plane) failed `next build` outright
+ * and answered 500 from the Turbopack dev server ("Can't resolve
+ * '@vercel/turbopack-next/internal/font/google/font'"), so a scaffold's
+ * preview site was dead on arrival. npm packages are mirrored everywhere
+ * (npmmirror in China); Google Fonts is not.
  *
  * The files are the same Google Fonts builds (same font version, same `wght`
  * axis, identical shaping — checked glyph by glyph against what
@@ -31,10 +32,20 @@
  * matches. Keep the `variable` names in sync with FONT_REGISTRY in `../index.ts`.
  *
  * next/font is a compile-time transform: SWC statically analyses each call, so
- * every options object is a literal and every `path` a string literal. The path
- * is relative to this file and goes through the package's own node_modules
- * (pnpm links every dependency there), so it resolves the same from `src/` and
- * `dist/`. `scripts/lint-no-google-fonts.mjs` keeps `next/font/google` out of
+ * every options object is a literal and every `path` a string literal,
+ * resolved relative to this file. It used to point at
+ * `../node_modules/@fontsource-variable/<name>/files/...`, which only exists
+ * because pnpm nests every workspace package's own dependencies under its own
+ * node_modules — a hoisted `npm install` of the published `@nebutra/fonts`
+ * commonly resolves `@fontsource-variable/*` to the installing project's
+ * top-level node_modules instead, so that path did not exist there and
+ * `next build` failed to resolve the font file. The woff2 files are copied
+ * into `../generated/registry/` by `scripts/copy-registry-fonts.mjs` (wired
+ * into `build` and `prepack`, and the copies are committed so a clean clone
+ * works without running it) and committed to git — same pattern as
+ * `../generated/dm-sans.woff2` below — so the path is package-relative and
+ * resolves the same regardless of how npm/pnpm/yarn laid out node_modules.
+ * `scripts/lint-no-google-fonts.mjs` keeps `next/font/google` out of
  * template-shipped code.
  *
  * The brand faces live in `./next-cjk` — DM Sans (next/font/local) and
@@ -53,7 +64,7 @@ export { brandFontClassName, CjkFontFace, cjkFontClassName, dmSans } from "./nex
 const inter = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
+      path: "../generated/registry/inter-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
@@ -65,7 +76,7 @@ const inter = localFont({
 const interTight = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2",
+      path: "../generated/registry/inter-tight-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
@@ -77,7 +88,7 @@ const interTight = localFont({
 const spaceGrotesk = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2",
+      path: "../generated/registry/space-grotesk-latin-wght-normal.woff2",
       weight: "300 700",
       style: "normal",
     },
@@ -89,7 +100,7 @@ const spaceGrotesk = localFont({
 const playfairDisplay = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2",
+      path: "../generated/registry/playfair-display-latin-wght-normal.woff2",
       weight: "400 900",
       style: "normal",
     },
@@ -102,7 +113,7 @@ const playfairDisplay = localFont({
 const fraunces = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2",
+      path: "../generated/registry/fraunces-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
@@ -115,7 +126,7 @@ const fraunces = localFont({
 const jetbrainsMono = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2",
+      path: "../generated/registry/jetbrains-mono-latin-wght-normal.woff2",
       weight: "100 800",
       style: "normal",
     },
@@ -127,7 +138,7 @@ const jetbrainsMono = localFont({
 const manrope = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",
+      path: "../generated/registry/manrope-latin-wght-normal.woff2",
       weight: "200 800",
       style: "normal",
     },
@@ -139,7 +150,7 @@ const manrope = localFont({
 const sora = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/sora/files/sora-latin-wght-normal.woff2",
+      path: "../generated/registry/sora-latin-wght-normal.woff2",
       weight: "100 800",
       style: "normal",
     },
@@ -151,7 +162,7 @@ const sora = localFont({
 const workSans = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/work-sans/files/work-sans-latin-wght-normal.woff2",
+      path: "../generated/registry/work-sans-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
@@ -163,7 +174,7 @@ const workSans = localFont({
 const dmSans = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2",
+      path: "../generated/registry/dm-sans-latin-wght-normal.woff2",
       weight: "100 1000",
       style: "normal",
     },
@@ -175,7 +186,7 @@ const dmSans = localFont({
 const plusJakartaSans = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2",
+      path: "../generated/registry/plus-jakarta-sans-latin-wght-normal.woff2",
       weight: "200 800",
       style: "normal",
     },
@@ -187,7 +198,7 @@ const plusJakartaSans = localFont({
 const outfit = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2",
+      path: "../generated/registry/outfit-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
@@ -199,7 +210,7 @@ const outfit = localFont({
 const figtree = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2",
+      path: "../generated/registry/figtree-latin-wght-normal.woff2",
       weight: "300 900",
       style: "normal",
     },
@@ -211,7 +222,7 @@ const figtree = localFont({
 const montserrat = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2",
+      path: "../generated/registry/montserrat-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
@@ -223,7 +234,7 @@ const montserrat = localFont({
 const lexend = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/lexend/files/lexend-latin-wght-normal.woff2",
+      path: "../generated/registry/lexend-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
@@ -235,7 +246,7 @@ const lexend = localFont({
 const firaCode = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/fira-code/files/fira-code-latin-wght-normal.woff2",
+      path: "../generated/registry/fira-code-latin-wght-normal.woff2",
       weight: "300 700",
       style: "normal",
     },
@@ -247,7 +258,7 @@ const firaCode = localFont({
 const robotoMono = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/roboto-mono/files/roboto-mono-latin-wght-normal.woff2",
+      path: "../generated/registry/roboto-mono-latin-wght-normal.woff2",
       weight: "100 700",
       style: "normal",
     },
@@ -259,7 +270,7 @@ const robotoMono = localFont({
 const sourceSerif4 = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2",
+      path: "../generated/registry/source-serif-4-latin-wght-normal.woff2",
       weight: "200 900",
       style: "normal",
     },
@@ -272,7 +283,7 @@ const sourceSerif4 = localFont({
 const sourceCodePro = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/source-code-pro/files/source-code-pro-latin-wght-normal.woff2",
+      path: "../generated/registry/source-code-pro-latin-wght-normal.woff2",
       weight: "200 900",
       style: "normal",
     },

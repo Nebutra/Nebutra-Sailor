@@ -53,4 +53,13 @@ describe("DM Sans wiring", () => {
     expect(NEXT_CJK_SOURCE).toContain('variable: "--font-dm-sans"');
     expect(FONT_REGISTRY["dm sans display"]).toBe("--font-dm-sans");
   });
+
+  it("ships generated/dm-sans.woff2 in the npm `files` list", () => {
+    // Previously omitted: `path` is package-relative (correct — see next.ts),
+    // but the woff2 wasn't in `files`, so a published install never actually
+    // had the byte the path points at. Same root cause as the 19 registry
+    // faces, caught by the same audit.
+    const pkg = JSON.parse(read("../package.json")) as { files: string[] };
+    expect(pkg.files).toContain("generated/dm-sans.woff2");
+  });
 });
