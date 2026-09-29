@@ -130,7 +130,7 @@ export function useAuthEffect(user: User, subscription: Subscription, org: Org) 
 
 ## 功能开关
 
-功能开关决策归 `@nebutra/feature-flags` 管，不归 `@nebutra/analytics` 管。PostHog 将来可以作为功能开关 provider，但产品事件采集和功能开关评估保持分离。
+功能开关决策归 `@nebutra/feature-flags` 管（一个 `foundation` 级包——需要显式添加，不属于零配置默认脚手架），不归 `@nebutra/analytics` 管。它的 env 驱动 + Redis 缓存运行时今天已经可用于生产；根据该包自己的 README，托管服务商适配器（Vercel Flags、GrowthBook、ConfigCat）还在对接中——PostHog 并不是它对接的功能开关服务商之一。产品事件采集和功能开关评估始终是两个独立的包。
 
 ```typescript
 import { useFeatureFlag } from "@nebutra/feature-flags";

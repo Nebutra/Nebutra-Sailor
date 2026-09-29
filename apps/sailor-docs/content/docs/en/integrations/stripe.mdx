@@ -46,6 +46,7 @@ In your Stripe Dashboard: **Developers → Webhooks → Add endpoint**
 - URL: `https://api.nebutra.com/api/webhooks/stripe`
 - Events to listen for:
   - `checkout.session.completed`
+  - `customer.subscription.created`
   - `customer.subscription.updated`
   - `customer.subscription.deleted`
   - `invoice.paid`
@@ -59,30 +60,38 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 
 ## Step 4: Webhook handler
 
-The Stripe webhook handler is pre-built in the monorepo:
+The Stripe webhook handler is pre-built in the monorepo — as a Hono route on the API gateway, not a Next.js route handler:
 
-```typescript apps/web/src/app/api/webhooks/stripe/route.ts
-import { handleStripeWebhook } from "@nebutra/billing/stripe";
+```typescript backends/gateway/src/routes/webhooks/stripe.ts
+const stripeWebhookRoute = createRoute({ method: "post", path: "/stripe" /* … */ });
 
-export async function POST(req: Request) {
-  return handleStripeWebhook(req);
-}
+stripeWebhookRoutes.openapi(stripeWebhookRoute, async (c) => {
+  const body = await c.req.text();
+  const sig = c.req.header("stripe-signature");
+  const event = stripe.webhooks.constructEvent(body, sig!, process.env.STRIPE_WEBHOOK_SECRET!);
+
+  await handleStripeEvent(event, stripe, prisma);
+
+  return c.json({ received: true });
+});
 ```
+
+Mounted at `app.route("/api/webhooks", stripeWebhookRoutes)` in `backends/gateway/src/app.ts`, so the public path is `POST /api/webhooks/stripe`. There is no `@nebutra/billing/stripe` webhook-handling export — application code does not call into this route; it only reads what it wrote (subscription status, payment orders).
 
 ## Step 5: Billing portal
 
-Customers can manage their subscription via the Stripe customer portal:
+Customers can manage their subscription via the Stripe customer portal, using `createBillingPortalSession` from `@nebutra/billing`:
 
 ```typescript
-const session = await stripe.billingPortal.sessions.create({
-  customer: org.stripeCustomerId,
-  return_url: `${process.env.WEB_URL}/settings/billing`,
-});
+import { createBillingPortalSession } from "@nebutra/billing";
+
+const session = await createBillingPortalSession(
+  org.stripeCustomerId,
+  `${process.env.WEB_URL}/settings/billing`,
+);
 
 redirect(session.url);
 ```
-
-This is pre-wired in **Settings → Billing → Manage Subscription**.
 
 ## Stripe test cards
 

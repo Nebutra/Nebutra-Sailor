@@ -20,10 +20,10 @@ Nebutra 通过 `@nebutra/event-bus` 封装 Inngest，在整个 Monorepo 中预�
   </Step>
 
   <Step title="注册 Inngest 接口">
-    API 网关已暴露 `POST /api/v1/inngest`。这是 Inngest 调用以执行函数的 URL。在 [Inngest 控制台](https://app.inngest.com) 的 **Apps → Add App** 中注册：
+    API 网关已暴露 `POST /api/inngest`。这是 Inngest 调用以执行函数的 URL。在 [Inngest 控制台](https://app.inngest.com) 的 **Apps → Add App** 中注册：
 
     ```
-    https://api.yourdomain.com/api/v1/inngest
+    https://api.yourdomain.com/api/inngest
     ```
 
     本地开发时，请改用 Inngest Dev Server（见下文）。
@@ -250,7 +250,7 @@ await inngest.send([
 本地开发时，运行 Inngest Dev Server 在本地执行函数，无需连接 Inngest Cloud：
 
 ```bash
-npx inngest-cli@latest dev -u http://localhost:3001/api/v1/inngest
+npx inngest-cli@latest dev -u http://localhost:3001/api/inngest
 ```
 
 Dev Server 功能：

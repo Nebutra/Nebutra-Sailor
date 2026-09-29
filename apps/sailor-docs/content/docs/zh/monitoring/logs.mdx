@@ -3,7 +3,7 @@ title: "结构化日志"
 description: "在 Nebutra 全栈中使用 @nebutra/logger 进行结构化、感知租户的 JSON 日志记录。"
 ---
 
-`@nebutra/logger` 是 Nebutra 的结构化日志库。它将换行符分隔的 JSON 写入 stdout，自动注入租户上下文，并将 `warn` 和 `error` 级别的事件作为面包屑和捕获的异常转发给 Sentry。
+`@nebutra/logger` 是 Nebutra 的结构化日志库。它将换行符分隔的 JSON 写入 stdout，并自动注入租户上下文。它的 Sentry 桥接——把 `warn`/`error` 级事件转发为面包屑和捕获的异常——是**可选启用**的，不是自动行为：只有设置了 `LOGGER_SENTRY_ENABLED=true` 和 `SENTRY_DSN` 才会激活，它会懒加载 `@sentry/node`，否则静默空操作（参见[监控概览](/zh/monitoring/overview)）。
 
 ## 为什么不用 `console.log`？
 
@@ -12,7 +12,7 @@ description: "在 Nebutra 全栈中使用 @nebutra/logger 进行结构化、感�
 - **结构化 JSON** — 每行日志都是一个具有一致字段的可解析对象
 - **租户上下文** — `tenantId`、`orgId` 和 `userId` 自动注入
 - **日志级别** — 通过设置 `LOG_LEVEL=warn` 在生产环境中过滤噪音
-- **Sentry 集成** — `warn` 和 `error` 日志成为 Sentry 面包屑；未捕获的错误成为 Sentry 问题
+- **可选的 Sentry 桥接** — 设置 `LOGGER_SENTRY_ENABLED=true` 后，`warn` 和 `error` 日志成为 Sentry 面包屑/捕获的异常；无论是否开启该设置，Sentry SDK 自身依旧会独立自动捕获未处理的错误
 - **生产环境零 `console.log`** — 由项目的 ESLint 规则强制执行
 
 <Warning>
@@ -131,12 +131,12 @@ try {
 ```
 
 <Note>
-`logger.error` 会自动以额外属性作为上下文调用 `Sentry.captureException(error)`。错误将在几秒内出现在 Sentry 的**问题**标签页中。
+设置 `LOGGER_SENTRY_ENABLED=true` 后，`logger.error` 会以额外属性作为上下文调用 `Sentry.captureException(error)`；未设置时这是空操作——日志桥接不会向 Sentry 发送任何内容。
 </Note>
 
 ## Sentry 集成详情
 
-日志记录器的 Sentry 集成工作方式如下：
+开启桥接后（`LOGGER_SENTRY_ENABLED=true` + `SENTRY_DSN`），日志记录器的 Sentry 集成工作方式如下：
 
 | 日志调用 | Sentry 行为 |
 |---------|------------|

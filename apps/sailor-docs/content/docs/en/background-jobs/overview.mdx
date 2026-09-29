@@ -18,7 +18,15 @@ Nebutra ships two systems for this, each optimized for different workload shapes
 
 ## Inngest vs Queue — when to use each
 
-| | Inngest (`@nebutra/event-bus`) | Queue (`@nebutra/queue`) |
+<Note>
+Inngest's client and functions live inside `backends/gateway/src/inngest/` (a raw `inngest` SDK
+client, `new Inngest({ id: "nebutra-api-gateway" })`) — they are not exposed through a published
+package. `@nebutra/event-bus` is a separate, unrelated internal pub/sub primitive (`EventBus`
+class + dead-letter queue) that application code uses for its own in-process event fan-out; it
+does not wrap or re-export the Inngest client.
+</Note>
+
+| | Inngest (`backends/gateway/src/inngest/`) | Queue (`@nebutra/queue`) |
 |---|---|---|
 | **Best for** | Complex multi-step workflows | Simple deferred tasks |
 | **Steps** | Yes — each step retried independently | No — job is atomic |
@@ -41,27 +49,26 @@ Event emitter / API gateway
         │                               Inngest function
         │                               (multi-step, retries)
         │                                      │
-        │                               POST /api/v1/inngest
-        │                               (your API gateway)
+        │                               GET/POST/PUT /api/inngest
+        │                               (backends/gateway/src/inngest/index.ts)
         │
         └─── queue.enqueue(job) ───────► QStash (serverless)
                                                 │
                                          queue.registerHandler()
-                                         POST /api/v1/queue/:queue/:type
+                                         POST /api/queue/:queue/:type
 ```
 
 ## Common use cases
 
-### Welcome email on sign-up
+### Illustrative pattern — a durable multi-step function
 
-```typescript
-// Emit from your auth callback
-await inngest.send({
-  name: "user/signed-up",
-  data: { userId: user.id },
-});
+The gateway's real registered functions (`backends/gateway/src/inngest/functions/`) handle
+billing sync, GDPR deletion, payment-order reconcile, wallet upkeep, and a few automation/workflow
+runners — not a generic "welcome email" function. The shape of a new one looks like this:
 
-// Handled by a durable Inngest function with retries
+```typescript backends/gateway/src/inngest/functions/example.ts
+import { inngest } from "../client.js";
+
 export const sendWelcomeEmail = inngest.createFunction(
   { id: "send-welcome-email", retries: 3 },
   { event: "user/signed-up" },
@@ -70,11 +77,14 @@ export const sendWelcomeEmail = inngest.createFunction(
       db.user.findUnique({ where: { id: event.data.userId } })
     );
     await step.run("send-email", () =>
-      email.send({ to: user.email, template: "welcome" })
+      sendWelcomeEmail({ to: user.email, firstName: user.firstName, orgName: user.orgName })
     );
   }
 );
 ```
+
+Register the new function in `inngestFunctions` in `backends/gateway/src/inngest/index.ts` so
+`serve()` picks it up.
 
 ### Monthly report generation
 

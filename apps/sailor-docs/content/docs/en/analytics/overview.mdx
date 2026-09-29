@@ -75,16 +75,10 @@ Once the variables are set, all built-in events begin flowing automatically.
 
 ## Analytics Dashboard
 
-An aggregate analytics view is available in the admin panel at `/admin/analytics`. It surfaces:
-
-- Daily/weekly/monthly active users
-- Top funnel conversion rates
-- Plan distribution breakdown
-- Quota utilisation across tenants
-
-<Note>
-The admin analytics dashboard requires the `admin` role. Standard users cannot access `/admin/*` routes.
-</Note>
+There is no built-in `/admin/analytics` route today. PostHog's own dashboard (active users,
+funnels, retention, cohorts) and Dub.co's own dashboard (link/campaign analytics) are where this
+data lives out of the box; `@nebutra/analytics`'s `getAnalytics()` and the metering package's
+`getQuota()` are the building blocks if you want to embed an in-product admin view.
 
 ## Privacy Considerations
 

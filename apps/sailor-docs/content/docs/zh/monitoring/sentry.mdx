@@ -88,13 +88,13 @@ Sentry.init({
 
 ## 租户上下文注入
 
-Nebutra 会自动将组织和用户上下文附加到每个 Sentry 事件，方便你按租户筛选问题：
+代码库中没有内置的中间件会自动给 Sentry 事件打上租户/组织上下文标签——需要你自己在租户上下文解析完成后加上：
 
 ```typescript
 import * as Sentry from "@sentry/nextjs";
 import { getCurrentTenant } from "@nebutra/tenant";
 
-// 在租户解析后的中间件中调用
+// 在租户解析完成之后调用，例如在你自己的中间件中
 export function setSentryTenantContext() {
   const tenant = getCurrentTenant();
   if (!tenant) return;
@@ -104,8 +104,6 @@ export function setSentryTenantContext() {
   Sentry.setTag("plan", tenant.plan);
 }
 ```
-
-这已集成到 Nebutra 的中间件链中，无需在应用代码中手动调用。
 
 ## 告警规则
 

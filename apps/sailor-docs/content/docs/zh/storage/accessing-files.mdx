@@ -1,9 +1,9 @@
 ---
 title: 访问文件
-description: 使用签名 URL 检索私有文件，通过 CDN 提供公共资源，以及使用 @nebutra/uploads 分页列举文件。
+description: 使用签名 URL 检索私有文件，并通过 CDN 提供公共资源，基于 @nebutra/uploads。
 ---
 
-文件上传到存储桶后，需要将其提供给用户访问。`@nebutra/uploads` 提供了签名 URL（私有文件）、公共 CDN 分发和分页文件列表等辅助功能。
+文件上传到存储桶后，需要将其提供给用户访问。`@nebutra/uploads` 提供了签名 URL（私有文件）和公共 CDN 分发的辅助功能。`UploadProvider` 接口没有文件列表方法——如果需要列出存储桶，请用你的 S3 兼容服务商自己的 SDK/控制台（`ListObjectsV2`），或者把已上传的 key 记录在你自己的数据库表里（出于归属和租户隔离的考虑，你多半本来就需要这张表）。
 
 ## 私有文件的签名 URL
 
@@ -15,10 +15,11 @@ import { getUploadProvider } from "@nebutra/uploads";
 const uploads = await getUploadProvider();
 
 // 生成 1 小时（3600 秒）有效期的签名 URL
-const url = await uploads.getSignedUrl(
+// getDownloadUrl(bucket, key, expiresInSec?) —— 第三个参数是普通数字，不是选项对象
+const url = await uploads.getDownloadUrl(
   "nebutra-uploads",
   `${tenantId}/docs/report.pdf`,
-  { expiresIn: 3600 }
+  3600
 );
 
 // url → https://nebutra-uploads.s3.amazonaws.com/org_acme/docs/report.pdf?X-Amz-Expires=3600&...
@@ -59,10 +60,10 @@ export async function GET(
   }
 
   const uploads = await getUploadProvider();
-  const url = await uploads.getSignedUrl(
-    process.env.AWS_BUCKET_NAME!,
+  const url = await uploads.getDownloadUrl(
+    "nebutra-uploads",
     decodedKey,
-    { expiresIn: 3600 }
+    3600
   );
 
   return Response.json({ url, expiresIn: 3600 });
@@ -169,30 +170,10 @@ export async function GET(
 
 ## 文件列表
 
-检索租户命名空间内的分页文件列表。
-
-```typescript
-import { getUploadProvider } from "@nebutra/uploads";
-
-const uploads = await getUploadProvider();
-
-// 获取第一页（每次请求最多 1000 个文件）
-const { files, nextCursor } = await uploads.listFiles({
-  bucket: "nebutra-uploads",
-  prefix: `${tenantId}/docs/`,
-  limit: 50,
-  cursor: undefined, // 传入上次响应的 nextCursor 以翻页
-});
-
-// files → [{ key, size, lastModified, contentType }, ...]
-// nextCursor → string | null（无更多页时为 null）
-```
-
-### API 路由中的分页列表
+`@nebutra/uploads` 的 `UploadProvider` 接口没有 `listFiles` 方法——它覆盖预签名上传、分片上传、删除和签名下载，不覆盖存储桶列举。请在自己的表中记录已上传的文件（反正你也需要一张表来把 key 关联到租户、所有者和内容类型），查询这张表而不是查询存储桶：
 
 ```typescript
 // app/api/files/route.ts
-import { getUploadProvider } from "@nebutra/uploads";
 import { getCurrentTenant } from "@nebutra/tenant";
 import { z } from "zod";
 
@@ -209,16 +190,18 @@ export async function GET(request: Request) {
     Object.fromEntries(searchParams)
   );
 
-  const uploads = await getUploadProvider();
-  const result = await uploads.listFiles({
-    bucket: process.env.AWS_BUCKET_NAME!,
-    prefix: `${tenant.tenantId}/${prefix ?? ""}`,
-    limit,
-    cursor,
+  const files = await db.attachment.findMany({
+    where: { tenantId: tenant.tenantId, key: { startsWith: prefix ?? "" } },
+    take: limit,
+    ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
+    orderBy: { createdAt: "desc" },
   });
 
-  return Response.json(result);
+  return Response.json({ files, nextCursor: files.at(-1)?.id ?? null });
 }
+```
+
+如果需要列举存储桶本身（对账、管理工具），直接调用底层 S3 SDK 的 `ListObjectsV2Command`——这在 `@nebutra/uploads` 的抽象层之外。
 ```
 
 ## 删除文件

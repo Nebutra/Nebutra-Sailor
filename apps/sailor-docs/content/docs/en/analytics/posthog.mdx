@@ -130,7 +130,12 @@ export function useAuthEffect(user: User, subscription: Subscription, org: Org) 
 
 ## Feature Flags
 
-Feature-flag decisions are owned by `@nebutra/feature-flags`, not by `@nebutra/analytics`. PostHog can be used as a future flag provider, but product-event capture and flag evaluation stay separate.
+Feature-flag decisions are owned by `@nebutra/feature-flags` (a `foundation`-tier package — added
+explicitly, not part of the zero-question default scaffold), not by `@nebutra/analytics`. Its
+env-backed and Redis-cached runtimes are production-usable today; managed-provider adapters
+(Vercel Flags, GrowthBook, ConfigCat) are still provider-wiring work per the package's own README —
+PostHog is not one of the flag providers it wires to. Product-event capture and flag evaluation
+stay separate packages.
 
 ```typescript
 import { useFeatureFlag } from "@nebutra/feature-flags";

@@ -9,12 +9,12 @@ Nebutra ships AI features out of the box via `@nebutra/agents`, a thin wrapper a
 
 The following capabilities are available to every tenant:
 
-| Feature | Description | Feature Flag |
+| Feature | Description | Plan entitlement |
 |---------|-------------|--------------|
 | **Chat completions** | Streaming and non-streaming LLM responses | `ai.chat` |
 | **Embeddings** | Vector representations for semantic search and RAG | `ai.embeddings` |
-| **Image analysis** | Vision-capable model support (GPT-5) | `ai.chat` |
-| **Model selection** | Per-tenant model overrides (Enterprise) | `ai.model_selection` |
+| **Image analysis / generation** | Vision-capable model support and image generation | `ai.images` |
+| **Reasoning** | Extended-reasoning model calls | `ai.reasoning` |
 
 ## Architecture
 
@@ -24,7 +24,7 @@ Requests flow through the API gateway, which applies auth, rate limiting, and me
 Client App
     │
     ▼
-POST /api/v1/ai/chat          (API Gateway — Hono)
+POST /api/v1/ai/chat/completions   (API Gateway — Hono)
     │
     ├─ Auth check (API key)
     ├─ Feature flag check (ai.chat)
@@ -76,19 +76,21 @@ Pass the full model slug to `streamText` / `generateText`. Live catalog: [models
   </Tab>
 </Tabs>
 
-## Feature flags
+## Plan entitlements
 
-AI features are disabled by default and must be enabled per tenant. The flags are checked in the API gateway before any model call is made — no tokens are consumed if a flag is off.
+AI features are gated by plan, not by a standalone feature-flag toggle. `ai.chat`, `ai.embeddings`,
+`ai.images`, and `ai.reasoning` are entries in `PLAN_FEATURES` (`@nebutra/billing`
+`entitlements/service.ts`) — which plans include a given feature is data on that table, not a
+per-tenant switch. The API gateway checks entitlement (and, where the feature maps to a metered
+resource, remaining quota) before any model call is made — no tokens are consumed if the check
+fails:
 
-```typescript
-// Programmatically enable AI for a tenant
-import { setFeatureFlag } from "@nebutra/preset";
-
-await setFeatureFlag("org_123", "ai.chat", true);
-await setFeatureFlag("org_123", "ai.embeddings", true);
+```typescript backends/gateway/src/middlewares/entitlements.ts
+app.post("/api/v1/ai/generate", requireFeature("ai.images", 1), handler);
 ```
 
-You can also toggle flags from the dashboard under **Organization → Features**.
+See [Paywall](/payments/paywall) for the full entitlement-checking API
+(`checkEntitlement`, `requireEntitlement`, `requireFeature`, `isPlanFeature`).
 
 ## Environment variables
 
@@ -100,13 +102,12 @@ OPENAI_API_KEY=""
 
 # Optional: enables multi-model routing via OpenRouter
 OPENROUTER_API_KEY=""
-
-# Default model used when none is specified per-request
-AI_DEFAULT_MODEL="gpt-5.4-mini"
-
-# Optional: override for embedding model
-AI_EMBEDDING_MODEL="text-embedding-3-small"
 ```
+
+There is no `AI_DEFAULT_MODEL` / `AI_EMBEDDING_MODEL` env var. The default chat model is set by
+calling `configure({ defaultModel: "…" })` once at startup (`@nebutra/agents`'s
+`NebutraAIConfigSchema` defaults `defaultModel` to `models.flagship`); the default embedding model
+is fixed to the `"embedding"` preset alias unless a call passes its own `model`.
 
 <Warning>
 Never expose `OPENAI_API_KEY` or `OPENROUTER_API_KEY` to the client. All model calls must go through the API gateway.
@@ -134,32 +135,29 @@ Quota limits by plan:
 
 ## Quick usage example
 
+`generateText`, `streamText`, and `embed` take the messages/value as the first positional
+argument, and an options object second — not one combined object:
+
 ```typescript
 import { streamText, generateText, embed } from "@nebutra/agents";
 
 // Streaming chat (SSE)
-const result = await streamText({
-  model: "gpt-5.5",
-  messages: [
+const result = await streamText(
+  [
     { role: "system", content: "You are a helpful assistant." },
     { role: "user", content: userMessage },
   ],
-  tenantId,
-});
+  { model: "gpt-5.5" },
+);
 
 // Non-streaming
-const { text } = await generateText({
-  model: "gpt-5.4-mini",
-  prompt: "Summarize: " + content,
-  tenantId,
-});
+const { text } = await generateText(
+  [{ role: "user", content: "Summarize: " + content }],
+  { model: "gpt-5.4-mini" },
+);
 
-// Embeddings
-const { embedding } = await embed({
-  model: "text-embedding-3-small",
-  value: "text to embed",
-  tenantId,
-});
+// Embeddings — preset alias "embedding" by default
+const embedding = await embed("text to embed", { model: "text-embedding-3-small" });
 ```
 
 ## Related

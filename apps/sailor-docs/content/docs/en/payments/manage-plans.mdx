@@ -48,76 +48,64 @@ Each billing tier maps to a Stripe product with one or more prices. Run the Stri
 
 ## Step 2: Set price ID environment variables
 
-After creating prices in Stripe, record their IDs:
+After creating prices in Stripe, record their IDs — one per interval, matching `packages/commerce/billing/src/catalog/checkout-plan.ts`:
 
 ```bash
-STRIPE_PRO_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
-STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_PRO_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_PRO_YEARLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_ENTERPRISE_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_ENTERPRISE_YEARLY=price_xxxxxxxxxxxxxxxxxxxx
+
+# Optional trial override per plan
+STRIPE_TRIAL_DAYS_PRO=14
+STRIPE_TRIAL_DAYS_ENTERPRISE=0
 ```
 
-## Step 3: Configure plan limits in code
+`resolveCheckoutOffer` reads the price id for a `{ plan, interval }` selection straight from these
+env vars — there is no hardcoded price table to edit for the checkout price itself.
 
-Plan limits are defined in `packages/commerce/billing/src/plans.ts`. Each entry maps a plan name to its resource quotas.
+## Step 3: Configure plan limits and features
 
-```typescript packages/commerce/billing/src/plans.ts
-export const PLANS = {
-  free: {
-    id: "free",
-    name: "FREE",
-    stripePriceId: null,
-    limits: {
-      apiCallsPerMonth: 1_000,
-      orgMembers: 1,
-    },
-    features: {
-      emailSupport: false,
-      sso: false,
-    },
-  },
-  pro: {
-    id: "pro",
-    name: "PRO",
-    stripePriceId: process.env.STRIPE_PRO_PRICE_ID!,
-    limits: {
-      apiCallsPerMonth: 100_000,
-      orgMembers: 10,
-    },
-    features: {
-      emailSupport: true,
-      sso: false,
-    },
-  },
-  enterprise: {
-    id: "enterprise",
-    name: "ENTERPRISE",
-    stripePriceId: process.env.STRIPE_ENTERPRISE_PRICE_ID!,
-    limits: {
-      apiCallsPerMonth: Infinity,
-      orgMembers: Infinity,
-    },
-    features: {
-      emailSupport: true,
-      sso: true,
-    },
-  },
+Plan quotas and feature gates are **not** a static file — they are `PlanConfigService`
+(`packages/commerce/billing/src/config/plan-config.ts`), a database-driven, Redis-cached config
+keyed by `plan: "FREE" | "PRO" | "ENTERPRISE"`, with a `version` field for grandfathering existing
+customers when you change limits. Each `PlanConfig` row holds `features` (`Record<string,
+FeatureValue>`) and `limits` (`Record<string, LimitConfig>` — `limit: -1` means unlimited).
+
+What *is* code is the entitlement catalog each plan draws from —
+`packages/commerce/billing/src/entitlements/service.ts`:
+
+```typescript packages/commerce/billing/src/entitlements/service.ts
+export const FEATURES = {
+  // feature keys checked by requireFeature() — e.g. "ai.chat", "ai.embeddings", "api.access"
 } as const;
 
-export type PlanId = keyof typeof PLANS;
-export type Plan = (typeof PLANS)[PlanId];
+export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
+  FREE: [/* … */],
+  PRO: [/* … */],
+  ENTERPRISE: [/* … */],
+};
 ```
 
-## Step 4: Retrieve a plan by ID
+## Step 4: Check a feature entitlement
 
-Use the `getPlan` helper anywhere in your backend code:
+Use `isPlanFeature` or `checkEntitlement` from `@nebutra/billing` anywhere in backend code:
 
 ```typescript
-import { getPlan } from "@nebutra/billing";
+import { isPlanFeature, checkEntitlement } from "@nebutra/billing";
 
-const plan = getPlan("pro");
-// → { id: "pro", name: "PRO", limits: { apiCallsPerMonth: 100000, ... }, ... }
+const allowed = isPlanFeature("PRO", "ai.chat");
+// → true/false, from the static PLAN_FEATURES table
 
-const limit = plan.limits.apiCallsPerMonth;
-// → 100000
+const result = await checkEntitlement(organizationId, "ai.chat");
+// → also accounts for per-organization grants/overrides, not just the plan default
+```
+
+The API gateway enforces this at the edge with the `requireFeature` middleware
+(`backends/gateway/src/middlewares/entitlements.ts`):
+
+```typescript
+app.post("/api/v1/ai/generate", requireFeature("ai.images", 1), handler);
 ```
 
 ## Adding a new plan tier
@@ -126,39 +114,38 @@ const limit = plan.limits.apiCallsPerMonth;
   <Step title="Create the product and price in Stripe">
     Use the Stripe CLI or Dashboard to create a new product and price. Copy the Price ID.
   </Step>
-  <Step title="Add the price ID to environment variables">
+  <Step title="Add the price id to environment variables">
     ```bash
-    STRIPE_TEAMS_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+    STRIPE_PRICE_ID_TEAMS_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
     ```
+
+    `CHECKOUT_PLANS` in `catalog/checkout-plan.ts` is currently `["pro", "enterprise"]` — a new
+    tier also needs an entry there so checkout can resolve its price id.
   </Step>
-  <Step title="Add the plan entry to PLANS">
-    ```typescript packages/commerce/billing/src/plans.ts
-    teams: {
-      id: "teams",
-      name: "TEAMS",
-      stripePriceId: process.env.STRIPE_TEAMS_PRICE_ID!,
-      limits: {
-        apiCallsPerMonth: 500_000,
-        orgMembers: 50,
-      },
-      features: {
-        emailSupport: true,
-        sso: false,
-      },
-    },
+  <Step title="Add the plan's config row">
+    Insert or update the `PlanConfig` row (via the database, not a source file) with the new
+    plan's `limits` and `features`.
+  </Step>
+  <Step title="Add the plan to PLAN_FEATURES">
+    ```typescript packages/commerce/billing/src/entitlements/service.ts
+    export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
+      // …
+      TEAMS: ["ai.chat", "ai.embeddings", "api.access"],
+    };
     ```
-  </Step>
-  <Step title="Update any plan-gating logic">
-    If you use `requirePlan('pro')` checks, update them to also accept the new tier where appropriate (see [Paywall](/payments/paywall)).
   </Step>
 </Steps>
 
 ## Updating plan limits
 
-Edit the `limits` object for the relevant plan in `packages/commerce/billing/src/plans.ts`. Changes take effect immediately after the next deployment — no database migration required, since limits are resolved at request time.
+Plan limits live in the database (`PlanConfigService`), cached in Redis — not in a source file —
+so changing a limit does not require a deploy. `PlanConfig.version` supports grandfathering: a
+customer's active `planVersion` override keeps them on the limits they signed up for until you
+migrate them.
 
 <Note>
-Plan changes in the database take effect as soon as the Stripe webhook is received and processed. There is no polling delay. Quota enforcement uses the latest plan record on every request.
+Subscription state itself (which plan a tenant is on) updates as soon as the Stripe webhook is
+received and processed — see [Webhooks](/payments/webhooks). There is no polling delay.
 </Note>
 
 ## Related

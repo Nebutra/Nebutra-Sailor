@@ -15,30 +15,23 @@ description: 使用 Nebutra 的聊天补全 API 构建聊天机器人——系�
 
     ```bash
     OPENAI_API_KEY=""
-    AI_DEFAULT_MODEL="gpt-5.4-mini"
 
     # 可选：启用多模型路由
     OPENROUTER_API_KEY=""
     ```
+
+    默认聊天模型通过 `@nebutra/agents` 里启动时调用一次的 `configure({ defaultModel: "…" })` 设置，不是环境变量。
   </Step>
 
-  <Step title="启用功能标志">
-    AI 聊天默认关闭，需为租户启用：
-
-    ```typescript
-    import { setFeatureFlag } from "@nebutra/preset";
-
-    await setFeatureFlag("org_123", "ai.chat", true);
-    ```
-
-    也可在**控制台 → 组织 → 功能 → AI 聊天**中切换。
+  <Step title="确认计划包含 ai.chat">
+    AI 聊天是一项计划权益（`PLAN_FEATURES` 中的 `ai.chat`，`@nebutra/billing` 的 `entitlements/service.ts`），不是按租户切换的开关。网关会通过 `requireFeature("ai.chat")` 中间件在每次 `/api/v1/ai/chat/completions` 请求上自动检查——只要所在计划包含该功能，就不需要为组织单独启用什么。完整的权益检查 API 参见[付费墙](/zh/payments/paywall)。
   </Step>
 
   <Step title="调用聊天接口">
-    在 `Authorization` 请求头中携带 API Key，向 `/api/v1/ai/chat` 发送 `POST` 请求：
+    在 `Authorization` 请求头中携带 API Key，向 `/api/v1/ai/chat/completions` 发送 `POST` 请求：
 
     ```bash
-    curl -X POST https://api.yourdomain.com/api/v1/ai/chat \
+    curl -X POST https://api.yourdomain.com/api/v1/ai/chat/completions \
       -H "Authorization: Bearer nbk_live_org123_xxx" \
       -H "Content-Type: application/json" \
       -d '{
@@ -52,7 +45,7 @@ description: 使用 Nebutra 的聊天补全 API 构建聊天机器人——系�
 
 ## 请求格式
 
-`POST /api/v1/ai/chat`
+`POST /api/v1/ai/chat/completions`
 
 ```typescript
 interface ChatRequest {
@@ -117,7 +110,7 @@ interface ChatRequest {
 
 **单次请求覆盖：**
 ```typescript
-const response = await fetch("/api/v1/ai/chat", {
+const response = await fetch("/api/v1/ai/chat/completions", {
   method: "POST",
   headers: {
     Authorization: `Bearer ${apiKey}`,
@@ -146,7 +139,7 @@ await updateTenantAiSettings("org_123", {
 
 ```typescript
 // 第一条消息——创建新对话
-const res1 = await fetch("/api/v1/ai/chat", {
+const res1 = await fetch("/api/v1/ai/chat/completions", {
   method: "POST",
   headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -156,7 +149,7 @@ const res1 = await fetch("/api/v1/ai/chat", {
 });
 
 // 后续消息——自动读取历史上下文
-const res2 = await fetch("/api/v1/ai/chat", {
+const res2 = await fetch("/api/v1/ai/chat/completions", {
   method: "POST",
   headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
   body: JSON.stringify({

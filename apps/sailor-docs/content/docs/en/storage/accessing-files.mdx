@@ -1,9 +1,9 @@
 ---
 title: Accessing Files
-description: Retrieve private files with signed URLs, serve public assets via CDN, and list files with pagination using @nebutra/uploads.
+description: Retrieve private files with signed URLs and serve public assets via CDN using @nebutra/uploads.
 ---
 
-Once a file is uploaded to your storage bucket, you need to serve it back to users. `@nebutra/uploads` provides helpers for signed URLs (private files), public CDN delivery, and paginated file listing.
+Once a file is uploaded to your storage bucket, you need to serve it back to users. `@nebutra/uploads` provides helpers for signed URLs (private files) and public CDN delivery. The `UploadProvider` interface does not include a file-listing method — list objects via your S3-compatible provider's own SDK/console (`ListObjectsV2`) if you need that, or track uploaded keys in your own database table, which you likely already want for ownership and tenant-scoping anyway.
 
 ## Signed URLs for private files
 
@@ -15,10 +15,11 @@ import { getUploadProvider } from "@nebutra/uploads";
 const uploads = await getUploadProvider();
 
 // Generate a signed URL valid for 1 hour (3600 seconds)
-const url = await uploads.getSignedUrl(
+// getDownloadUrl(bucket, key, expiresInSec?) — the third argument is a plain number, not an options object
+const url = await uploads.getDownloadUrl(
   "nebutra-uploads",
   `${tenantId}/docs/report.pdf`,
-  { expiresIn: 3600 }
+  3600
 );
 
 // url → https://nebutra-uploads.s3.amazonaws.com/org_acme/docs/report.pdf?X-Amz-Expires=3600&...
@@ -59,10 +60,10 @@ export async function GET(
   }
 
   const uploads = await getUploadProvider();
-  const url = await uploads.getSignedUrl(
-    process.env.AWS_BUCKET_NAME!,
+  const url = await uploads.getDownloadUrl(
+    "nebutra-uploads",
     decodedKey,
-    { expiresIn: 3600 }
+    3600
   );
 
   return Response.json({ url, expiresIn: 3600 });
@@ -169,30 +170,13 @@ Signed URLs contain query parameters that change on every generation. This preve
 
 ## Listing files
 
-Retrieve a paginated list of files within a tenant's namespace.
-
-```typescript
-import { getUploadProvider } from "@nebutra/uploads";
-
-const uploads = await getUploadProvider();
-
-// List first page (1000 files max per request)
-const { files, nextCursor } = await uploads.listFiles({
-  bucket: "nebutra-uploads",
-  prefix: `${tenantId}/docs/`,
-  limit: 50,
-  cursor: undefined, // pass nextCursor from previous response to paginate
-});
-
-// files → [{ key, size, lastModified, contentType }, ...]
-// nextCursor → string | null (null when no more pages)
-```
-
-### Paginated listing in an API route
+`@nebutra/uploads`'s `UploadProvider` interface has no `listFiles` method — it covers presigned
+upload, multipart, delete, and signed download, not bucket listing. Track uploaded files in your
+own table (you need one anyway to associate a key with a tenant, owner, and content type) and
+query that instead of the bucket:
 
 ```typescript
 // app/api/files/route.ts
-import { getUploadProvider } from "@nebutra/uploads";
 import { getCurrentTenant } from "@nebutra/tenant";
 import { z } from "zod";
 
@@ -209,17 +193,19 @@ export async function GET(request: Request) {
     Object.fromEntries(searchParams)
   );
 
-  const uploads = await getUploadProvider();
-  const result = await uploads.listFiles({
-    bucket: process.env.AWS_BUCKET_NAME!,
-    prefix: `${tenant.tenantId}/${prefix ?? ""}`,
-    limit,
-    cursor,
+  const files = await db.attachment.findMany({
+    where: { tenantId: tenant.tenantId, key: { startsWith: prefix ?? "" } },
+    take: limit,
+    ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
+    orderBy: { createdAt: "desc" },
   });
 
-  return Response.json(result);
+  return Response.json({ files, nextCursor: files.at(-1)?.id ?? null });
 }
 ```
+
+If you need to list the bucket itself (reconciliation, an admin tool), call the underlying S3
+SDK's `ListObjectsV2Command` directly — it is outside the `@nebutra/uploads` abstraction.
 
 ## Deleting files
 

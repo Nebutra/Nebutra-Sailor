@@ -63,7 +63,7 @@ All billing integration code (Creem, Stripe, WeChat Pay/Alipay) lives in `packag
     The user is redirected to a Stripe-hosted checkout page. On success, Stripe fires a `checkout.session.completed` event.
   </Step>
   <Step title="Webhook received and verified">
-    The API gateway endpoint `POST /api/v1/webhooks/stripe` receives the event, verifies the signature using `STRIPE_WEBHOOK_SECRET`, and routes it to the correct handler in `@nebutra/billing`.
+    The API gateway endpoint `POST /api/webhooks/stripe` (`backends/gateway/src/routes/webhooks/stripe.ts`) receives the event, verifies the signature using `STRIPE_WEBHOOK_SECRET`, and dispatches it to the matching handler inline.
   </Step>
   <Step title="Tenant plan record updated">
     The handler updates the tenant's `plan` and `planExpiresAt` columns in the database, synchronizing the Stripe subscription state.
@@ -95,11 +95,13 @@ All billing integration code (Creem, Stripe, WeChat Pay/Alipay) lives in `packag
 | Location | Purpose |
 |----------|---------|
 | `packages/commerce/billing/src/creem/index.ts` | Creem client — checkout, reconcile, refund, webhook signature |
-| `packages/commerce/billing/src/stripe.ts` | Stripe client initialization (legacy — subscriptions) |
-| `packages/commerce/billing/src/plans.ts` | Plan definitions and limit constants |
-| `packages/commerce/billing/src/handlers/` | Webhook event handlers |
-| `packages/commerce/billing/src/checkout.ts` | Checkout session creation helpers |
-| `packages/commerce/billing/src/portal.ts` | Stripe Customer Portal session helpers (legacy) |
+| `packages/commerce/billing/src/stripe/` | Stripe client, customers, checkout/billing-portal sessions (legacy — subscriptions) |
+| `packages/commerce/billing/src/config/plan-config.ts` | Database-driven plan configuration (`PlanConfig`, limits, features) |
+| `packages/commerce/billing/src/entitlements/` | Plan-based feature entitlements (`FEATURES`, `PLAN_FEATURES`, `checkEntitlement`) |
+| `backends/gateway/src/routes/webhooks/stripe.ts` | Stripe webhook handler (inline Hono route, not a re-exported helper) |
+| `backends/gateway/src/routes/webhooks/creem.ts` | Creem webhook handler |
+| `packages/commerce/billing/src/checkout/` | Checkout session creation helpers (Stripe, Creem, ChinaPay, manual) |
+| `packages/commerce/billing/src/orders/` | Payment orders — offer → order → fulfillment (ADR 2026-09-25) |
 
 ## Environment variables
 
@@ -123,8 +125,10 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxxxxxxxxxx
 
 # Price IDs for each paid plan (from Stripe Dashboard → Products → Prices)
-STRIPE_PRO_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
-STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_PRO_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_PRO_YEARLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_ENTERPRISE_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_ENTERPRISE_YEARLY=price_xxxxxxxxxxxxxxxxxxxx
 ```
 
 <Warning>

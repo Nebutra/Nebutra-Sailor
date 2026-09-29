@@ -33,10 +33,11 @@ description: 将 Nebutra 与你团队已经在使用的工具连接起来。
   <Card title="Sentry" icon="bug">
     含租户上下文的错误追踪，已预配置。
   </Card>
-  <Card title="Supabase" icon="server">
-    PostgreSQL + pgvector，已为多租户预配置 RLS 策略。
-  </Card>
 </CardGroup>
+
+<Note>
+没有 Supabase 集成。根据 ADR 2026-09-25（数据库收敛），通过 Prisma 使用 Postgres 是唯一的数据源——`packages/platform/db/`，RLS 由 `schema.prisma` 的 `@rls` 注解生成，而不是 Supabase 专属的适配器。`DATABASE_URL` 可以指向任意 Postgres 实例，包括 Supabase 托管的实例，但 Nebutra 不使用 Supabase 自己的客户端、鉴权或 RLS 工具链。
+</Note>
 
 ## 内置 vs 可配置
 

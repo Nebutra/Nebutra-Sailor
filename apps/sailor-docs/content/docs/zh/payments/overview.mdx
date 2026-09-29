@@ -20,7 +20,7 @@ Nebutra 的订阅账单流水线由三层协同工作，根据计划控制访问
 用户
  └─▶ Stripe 结账
        └─▶ Stripe 发送 webhook
-             └─▶ /api/v1/webhooks/stripe
+             └─▶ /api/webhooks/stripe
                    └─▶ 数据库计划更新（租户记录）
                          └─▶ @nebutra/metering 执行配额限制
 ```
@@ -63,7 +63,7 @@ Nebutra 的订阅账单流水线由三层协同工作，根据计划控制访问
     用户被重定向至 Stripe 托管的结账页面。支付成功后，Stripe 触发 `checkout.session.completed` 事件。
   </Step>
   <Step title="接收并验证 Webhook">
-    API 网关端点 `POST /api/v1/webhooks/stripe` 接收事件，使用 `STRIPE_WEBHOOK_SECRET` 验证签名，并将事件路由到 `@nebutra/billing` 中对应的处理程序。
+    API 网关端点 `POST /api/webhooks/stripe` 接收事件，使用 `STRIPE_WEBHOOK_SECRET` 验证签名，并将事件路由到 `@nebutra/billing` 中对应的处理程序。
   </Step>
   <Step title="租户计划记录更新">
     处理程序更新数据库中租户的 `plan` 和 `planExpiresAt` 字段，使 Stripe 订阅状态与本地保持同步。
@@ -95,11 +95,13 @@ Nebutra 的订阅账单流水线由三层协同工作，根据计划控制访问
 | 位置 | 用途 |
 |------|------|
 | `packages/commerce/billing/src/creem/index.ts` | Creem 客户端——结账、对账、退款、Webhook 签名 |
-| `packages/commerce/billing/src/stripe.ts` | Stripe 客户端初始化（历史遗留——订阅） |
-| `packages/commerce/billing/src/plans.ts` | 计划定义和限额常量 |
-| `packages/commerce/billing/src/handlers/` | Webhook 事件处理程序 |
-| `packages/commerce/billing/src/checkout.ts` | 结账会话创建辅助函数 |
-| `packages/commerce/billing/src/portal.ts` | Stripe 客户门户会话辅助函数（历史遗留） |
+| `packages/commerce/billing/src/stripe/` | Stripe 客户端、客户、结账/账单门户会话（历史遗留——订阅） |
+| `packages/commerce/billing/src/config/plan-config.ts` | 数据库驱动的计划配置（`PlanConfig`、限额、功能） |
+| `packages/commerce/billing/src/entitlements/` | 按计划划分的功能权益（`FEATURES`、`PLAN_FEATURES`、`checkEntitlement`） |
+| `backends/gateway/src/routes/webhooks/stripe.ts` | Stripe Webhook 处理程序（内联 Hono 路由，不是可复用的导出函数） |
+| `backends/gateway/src/routes/webhooks/creem.ts` | Creem Webhook 处理程序 |
+| `packages/commerce/billing/src/checkout/` | 结账会话创建辅助函数（Stripe、Creem、ChinaPay、manual） |
+| `packages/commerce/billing/src/orders/` | 支付订单——offer → order → fulfillment（ADR 2026-09-25） |
 
 ## 环境变量
 
@@ -123,8 +125,8 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxxxxxxxxxx
 
 # 各付费计划的价格 ID（从 Stripe Dashboard → Products → Prices 获取）
-STRIPE_PRO_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
-STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_PRO_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_ENTERPRISE_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
 ```
 
 <Warning>
@@ -141,7 +143,7 @@ STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
     进入 **Stripe Dashboard → Products → Add product**。分别为 PRO（$49/月循环计费）和 ENTERPRISE（自定义）创建产品，并将价格 ID 填入环境变量。
   </Step>
   <Step title="注册 Webhook 端点">
-    进入 **Developers → Webhooks → Add endpoint**，将 URL 设为 `https://api.yourdomain.com/api/v1/webhooks/stripe`，并选择 [Webhooks](/zh/payments/webhooks) 页面中列出的事件。
+    进入 **Developers → Webhooks → Add endpoint**，将 URL 设为 `https://api.yourdomain.com/api/webhooks/stripe`，并选择 [Webhooks](/zh/payments/webhooks) 页面中列出的事件。
   </Step>
   <Step title="复制 Webhook 签名密钥">
     创建端点后，展开并复制 **Signing secret**（`whsec_...`），填入 `STRIPE_WEBHOOK_SECRET`。

@@ -20,10 +20,10 @@ Nebutra stores embeddings in PostgreSQL using the **pgvector** extension, so the
   <Step title="Set environment variables">
     ```bash
     OPENAI_API_KEY=""
-
-    # Optional: override default embedding model
-    AI_EMBEDDING_MODEL="text-embedding-3-small"
     ```
+
+    There is no `AI_EMBEDDING_MODEL` env var — pass `model` per call, or rely on the
+    `"embedding"` preset alias default.
   </Step>
 
   <Step title="Run the pgvector migration">
@@ -79,13 +79,13 @@ Response:
 
 ### Via `@nebutra/agents` (server-side)
 
+`embed` takes the value as the first positional argument, options (including `model`) second:
+
 ```typescript
 import { embed } from "@nebutra/agents";
 
-const { embedding } = await embed({
+const { embedding } = await embed("How do I reset my password?", {
   model: "text-embedding-3-small",
-  value: "How do I reset my password?",
-  tenantId,
 });
 
 // embedding is a Float32Array / number[]
@@ -101,11 +101,7 @@ import { embed } from "@nebutra/agents";
 import { prisma } from "@/lib/db";
 
 async function indexDocument(content: string, tenantId: string) {
-  const { embedding } = await embed({
-    model: "text-embedding-3-small",
-    value: content,
-    tenantId,
-  });
+  const { embedding } = await embed(content, { model: "text-embedding-3-small" });
 
   await prisma.embedding.create({
     data: {
@@ -132,11 +128,7 @@ import { prisma } from "@/lib/db";
 
 async function semanticSearch(query: string, tenantId: string, topK = 5) {
   // 1. Embed the query
-  const { embedding } = await embed({
-    model: "text-embedding-3-small",
-    value: query,
-    tenantId,
-  });
+  const { embedding } = await embed(query, { model: "text-embedding-3-small" });
 
   // 2. Search using cosine similarity (<=> operator in pgvector)
   const results = await prisma.$queryRaw<Array<{ id: string; content: string; similarity: number }>>`
@@ -174,11 +166,7 @@ const texts = [
   "How do I invite team members?",
 ];
 
-const { embeddings } = await embedMany({
-  model: "text-embedding-3-small",
-  values: texts,
-  tenantId,
-});
+const { embeddings } = await embedMany(texts, { model: "text-embedding-3-small" });
 
 // embeddings is an array, one vector per input text
 for (let i = 0; i < texts.length; i++) {
@@ -201,11 +189,7 @@ import { embed, generateText } from "@nebutra/agents";
 
 async function ragQuery(userQuestion: string, tenantId: string) {
   // 1. Retrieve relevant documents
-  const { embedding } = await embed({
-    model: "text-embedding-3-small",
-    value: userQuestion,
-    tenantId,
-  });
+  const { embedding } = await embed(userQuestion, { model: "text-embedding-3-small" });
 
   const docs = await prisma.$queryRaw<Array<{ content: string }>>`
     SELECT content
@@ -219,16 +203,20 @@ async function ragQuery(userQuestion: string, tenantId: string) {
   const context = docs.map((d) => d.content).join("\n\n---\n\n");
 
   // 3. Generate answer with context injected
-  const { text } = await generateText({
-    model: "gpt-5.4-mini",
-    prompt: `Answer the question using ONLY the context below.
+  const { text } = await generateText(
+    [
+      {
+        role: "user",
+        content: `Answer the question using ONLY the context below.
 
 Context:
 ${context}
 
 Question: ${userQuestion}`,
-    tenantId,
-  });
+      },
+    ],
+    { model: "gpt-5.4-mini" },
+  );
 
   return text;
 }

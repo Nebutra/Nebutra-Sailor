@@ -47,7 +47,7 @@ Sentry 云端
     └──► 告警（邮件、Slack、PagerDuty）
 ```
 
-`@nebutra/logger` 发出的每条 `warn` 和 `error` 日志都会自动作为 Sentry 面包屑或事件转发。无需手动调用 `Sentry.captureException`——日志记录器会自动处理。
+`@nebutra/logger` 里的 Sentry 桥接**默认关闭**——这是一个可选的传输层，不是自动转发。设置 `LOGGER_SENTRY_ENABLED=true`（并配置 `SENTRY_DSN`）后，`error` 级日志才会作为 Sentry 异常转发，`warn` 级日志才会作为面包屑转发。无论是否开启该设置，Sentry SDK 自身依旧会独立自动捕获未处理的异常和 Promise rejection；日志桥接是为那些你仍想在 Sentry 中看到的、已被处理的错误而存在的。它会懒加载 `@sentry/node`，未安装该包时自动空操作，因此即使某个应用还没接入 Sentry，开启它也是安全的。
 
 ## 告警渠道
 
@@ -80,7 +80,7 @@ Sentry 支持多种告警目标。推荐配置：
 
 - **来源**：`quota_warning` 和 `quota_exceeded` 事件（PostHog + 日志）
 - **目标**：每月触发配额超限的租户 < 5%
-- **仪表盘**：管理面板 `/admin/analytics`
+- **仪表盘**：PostHog（代码库中没有内置的 `/admin/analytics` 路由——参见[分析概览](/zh/analytics/overview)）
 
 ## 环境变量
 
@@ -90,6 +90,9 @@ SENTRY_DSN=https://xxxx@oXXX.ingest.sentry.io/XXXX
 SENTRY_AUTH_TOKEN=sntrys_xxxxxxxxxxxx   # 用于 CI 中的源码映射上传
 SENTRY_ORG=your-sentry-org-slug
 SENTRY_PROJECT=nebutra
+
+# 可选——同时把 @nebutra/logger 的 warn/error 日志转发到 Sentry
+LOGGER_SENTRY_ENABLED=true
 
 # Sentry — 客户端（浏览器，必须以 NEXT_PUBLIC_ 开头）
 NEXT_PUBLIC_SENTRY_DSN=https://xxxx@oXXX.ingest.sentry.io/XXXX
@@ -109,11 +112,12 @@ NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 
 ## 在开发环境中禁用监控
 
-默认情况下，Sentry 在 `development` 环境中被禁用，以避免污染生产数据。这由 `@nebutra/logger` 中的 `NODE_ENV` 检查控制：
+`@nebutra/logger` → Sentry 的桥接是可选启用的，不是按环境判断的——只要没有显式设置 `LOGGER_SENTRY_ENABLED=true`（见上文），无论 `SENTRY_DSN` 是否设置，日志桥接都不会发送任何内容。你在 `apps/web/sentry.*.config.ts` 中直接初始化的 Sentry SDK 与此桥接是分开的，遵循它自己的 `SENTRY_DSN` 判断：
 
 ```bash
-# .env.local — 当此变量为空或环境为 development 时，Sentry 不会上报
-SENTRY_DSN=   # 留空以禁用
+# .env.local
+LOGGER_SENTRY_ENABLED=   # 留空以保持 @nebutra/logger 桥接关闭
+SENTRY_DSN=              # 留空以禁用 Sentry SDK 本身
 ```
 
 <Info>

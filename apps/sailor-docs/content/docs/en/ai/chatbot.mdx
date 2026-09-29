@@ -15,30 +15,28 @@ The chat completions endpoint accepts a list of messages and returns a model res
 
     ```bash
     OPENAI_API_KEY=""
-    AI_DEFAULT_MODEL="gpt-5.4-mini"
 
     # Optional: enable multi-model routing
     OPENROUTER_API_KEY=""
     ```
+
+    The default chat model is set once at boot via `configure({ defaultModel: "…" })` in
+    `@nebutra/agents`, not an env var.
   </Step>
 
-  <Step title="Enable the feature flag">
-    AI chat is disabled by default. Enable it for your tenant:
-
-    ```typescript
-    import { setFeatureFlag } from "@nebutra/preset";
-
-    await setFeatureFlag("org_123", "ai.chat", true);
-    ```
-
-    Or toggle it from **Dashboard → Organization → Features → AI Chat**.
+  <Step title="Confirm the plan includes ai.chat">
+    AI chat is a plan entitlement (`ai.chat` in `PLAN_FEATURES`, `@nebutra/billing`
+    `entitlements/service.ts`), not a per-tenant toggle. The gateway checks it automatically on
+    every `/api/v1/ai/chat/completions` request via the `requireFeature("ai.chat")` middleware —
+    there is nothing to enable per organization beyond being on a plan that includes it. See
+    [Paywall](/payments/paywall) for the entitlement-checking API.
   </Step>
 
   <Step title="Call the chat endpoint">
-    Make a `POST` request to `/api/v1/ai/chat` with your API key in the `Authorization` header:
+    Make a `POST` request to `/api/v1/ai/chat/completions` with your API key in the `Authorization` header:
 
     ```bash
-    curl -X POST https://api.yourdomain.com/api/v1/ai/chat \
+    curl -X POST https://api.yourdomain.com/api/v1/ai/chat/completions \
       -H "Authorization: Bearer nbk_live_org123_xxx" \
       -H "Content-Type: application/json" \
       -d '{
@@ -52,7 +50,7 @@ The chat completions endpoint accepts a list of messages and returns a model res
 
 ## Request format
 
-`POST /api/v1/ai/chat`
+`POST /api/v1/ai/chat/completions`
 
 ```typescript
 interface ChatRequest {
@@ -60,7 +58,7 @@ interface ChatRequest {
     role: "system" | "user" | "assistant";
     content: string;
   }>;
-  model?: string;           // defaults to AI_DEFAULT_MODEL
+  model?: string;           // defaults to the configured defaultModel
   stream?: boolean;         // defaults to true
   conversationId?: string;  // persist history in @nebutra/db
   systemPrompt?: string;    // overrides the default system prompt
@@ -117,7 +115,7 @@ You can override the default system prompt per request or globally per tenant.
 
 **Per request:**
 ```typescript
-const response = await fetch("/api/v1/ai/chat", {
+const response = await fetch("/api/v1/ai/chat/completions", {
   method: "POST",
   headers: {
     Authorization: `Bearer ${apiKey}`,
@@ -146,7 +144,7 @@ Pass a `conversationId` to automatically persist and retrieve message history. T
 
 ```typescript
 // First message — creates a new conversation
-const res1 = await fetch("/api/v1/ai/chat", {
+const res1 = await fetch("/api/v1/ai/chat/completions", {
   method: "POST",
   headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -156,7 +154,7 @@ const res1 = await fetch("/api/v1/ai/chat", {
 });
 
 // Follow-up — history is retrieved automatically
-const res2 = await fetch("/api/v1/ai/chat", {
+const res2 = await fetch("/api/v1/ai/chat/completions", {
   method: "POST",
   headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -188,27 +186,21 @@ X-Nebutra-Messages-Trimmed: 4
 
 ## Calling from server code
 
-Use `@nebutra/agents` directly in server-side code (API routes, background jobs):
+Use `@nebutra/agents` directly in server-side code (API routes, background jobs). `generateText`
+and `streamText` take the message array as the first positional argument and an options object
+second:
 
 ```typescript
 import { generateText, streamText } from "@nebutra/agents";
-import { getCurrentTenant } from "@nebutra/tenant";
-
-const { tenantId } = getCurrentTenant();
 
 // Non-streaming — good for background processing
-const { text } = await generateText({
-  model: "gpt-5.4-mini",
-  prompt: "Summarize this document: " + document.content,
-  tenantId,
-});
+const { text } = await generateText(
+  [{ role: "user", content: "Summarize this document: " + document.content }],
+  { model: "gpt-5.4-mini" },
+);
 
 // Streaming — good for real-time UI
-const stream = await streamText({
-  model: "gpt-5.5",
-  messages: conversation.messages,
-  tenantId,
-});
+const stream = await streamText(conversation.messages, { model: "gpt-5.5" });
 ```
 
 ## Rate limits
@@ -235,7 +227,7 @@ When a rate limit is hit, the API returns `429 Too Many Requests` with a `Retry-
 
 | Code | Status | Meaning |
 |------|--------|---------|
-| `feature_disabled` | 403 | `ai.chat` flag is off for this tenant |
+| `feature_disabled` | 403 | plan does not include the `ai.chat` entitlement |
 | `quota_exceeded` | 402 | Monthly AI token quota exhausted |
 | `rate_limit_exceeded` | 429 | Per-minute rate limit hit |
 | `invalid_model` | 400 | Model slug not recognized |
@@ -251,7 +243,7 @@ When a rate limit is hit, the API returns `429 Too Many Requests` with a `Retry-
     Add semantic search to your chatbot with RAG.
   </Card>
   <Card title="AI Overview" icon="sparkles" href="/ai/overview">
-    Supported models, feature flags, and quotas.
+    Supported models, plan entitlements, and quotas.
   </Card>
   <Card title="API Reference" icon="code" href="/api-reference/overview">
     Full OpenAPI spec for the chat endpoint.

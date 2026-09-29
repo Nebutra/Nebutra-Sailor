@@ -3,14 +3,13 @@ title: Email Providers
 description: Configure Resend credentials and verified sending domains for @nebutra/email.
 ---
 
-`@nebutra/email` currently delivers through **Resend**. The package can be
-imported without credentials for tests and preview checks; a real
-`RESEND_API_KEY` is required only when a sender helper dispatches an email.
-
-<Note>
-Alternative providers can be added later behind the same public sender helpers.
-Keep provider-specific behavior out of callers.
-</Note>
+`@nebutra/email` has two providers: **Resend** for real delivery, and a built-in **console**
+provider (`ConsoleEmailProvider`) that logs the rendered email instead of sending it — the dev/test
+fallback kept per ADR 2026-09-24 sailor convergence (Nodemailer was deleted; console stayed).
+Selection is auto-detected: `EMAIL_PROVIDER` env var (`"resend"` | `"console"`) wins if set,
+otherwise `RESEND_API_KEY` present selects Resend, otherwise console. The package can be imported
+without credentials for tests and preview checks — a real `RESEND_API_KEY` is required only when a
+sender helper actually dispatches through Resend.
 
 ## Resend setup
 
@@ -64,6 +63,16 @@ EMAIL_FROM=Nebutra <noreply@nebutra.com>
 Never use a test key in production. Test emails are not delivered to real
 recipients.
 </Warning>
+
+## Console provider (dev/test)
+
+With no `RESEND_API_KEY` set — or with `EMAIL_PROVIDER=console` forced explicitly — every sender
+helper logs the rendered subject/HTML to stdout instead of calling Resend. This is what lets
+`pnpm --filter @nebutra/email test` and `pnpm mail:check` run with an empty `.env`.
+
+```bash
+EMAIL_PROVIDER=console
+```
 
 ## Domain troubleshooting
 

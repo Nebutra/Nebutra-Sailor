@@ -10,34 +10,32 @@ description: Nebutra 邮件目录项、公开发送函数和预览产物。
 
 | Catalog ID | 函数 | 必填参数重点 |
 |------------|------|--------------|
-| `welcome` | `sendWelcomeEmail` | `to`, `firstName`, `orgName` |
-| `order-confirmation` | `sendOrderConfirmationEmail` | `to`, `orderId`, `totalAmount`, `items` |
-| `api-key-created` | `sendApiKeyCreatedEmail` | `to`, `firstName`, `keyPrefix`, `keyName`, `plaintextKey` |
-| `quota-warning` | `sendQuotaWarningEmail` | `to`, `orgName`, `metric`, `used`, `limit`, `percentUsed` |
-| `team-invitation` | `sendInviteEmail` | `to`, `inviterName`, `orgName`, `role`, `inviteUrl` |
+| `welcome` | `sendWelcomeEmail` | `to`, `firstName`, `orgName`, `dashboardUrl?` |
+| `order-confirmation` | `sendOrderConfirmationEmail` | `to`, `orderId`, `totalAmount`（最小货币单位）, `currency?` |
 | `magic-link` | `sendMagicLinkEmail` | `to`, `magicLinkUrl` |
+| `email-change` | `sendEmailChangeEmail` | `to`, `confirmUrl`, `newEmail?` |
 | `contact-form-received` | `sendContactFormReceivedEmail` | `to`, `name`, `subject` |
-| `checkout-completed` | `sendCheckoutCompletedEmail` | `to`, `firstName`, `orgName`, `planName` |
-| `trial-ending` | `sendTrialEndingEmail` | `to`, `firstName`, `orgName`, `trialEndDate` |
-| `invoice-paid` | `sendInvoicePaidEmail` | `to`, `orgName`, `invoiceId`, `amountPaid` |
-| `payment-failed` | `sendPaymentFailedEmail` | `to`, `orgName`, `attemptCount` |
-| `subscription-canceled` | `sendSubscriptionCanceledEmail` | `to`, `firstName`, `orgName` |
-| `upcoming-invoice` | `sendUpcomingInvoiceEmail` | `to`, `orgName`, `amountDue` |
-| `plan-changed` | `sendPlanChangedEmail` | `to`, `firstName`, `orgName`, `newPlan` |
 | `license-created` | `sendLicenseCreatedEmail` | `to`, `firstName`, `licenseKey`, `tier` |
+| `welcome-react` | `sendWelcomeReactEmail` | `to`, `userName`, `loginUrl`, `brandName` |
+| `password-reset` | `sendPasswordResetEmail` | `to`, `userName`, `resetUrl`, `expiresInMinutes`, `brandName` |
+| `invitation` | `sendInvitationEmail` | `to`, `inviterName`, `organizationName`, `role`, `acceptUrl`, `expiresAt`, `brandName` |
+| `receipt` | `sendReceiptEmail` | `to`, `customerName`, `invoiceNumber`, `amount`, `currency`, `periodStart`, `periodEnd`, `downloadUrl`, `brandName` |
+
+`welcome-react`、`password-reset`、`invitation`、`receipt` 通过 React Email 模板渲染（`packages/integrations/email/src/templates/*.tsx`）——它们的参数就是该模板的 `Props` 接口加上 `to`。其余六个在 `index.ts` 的 `baseLayout()` 里内联构建 HTML。
 
 ## 示例
 
 ```typescript
-import { sendInvoicePaidEmail } from "@nebutra/email";
+import { sendInvitationEmail } from "@nebutra/email";
 
-await sendInvoicePaidEmail({
-  to: "owner@example.com",
-  orgName: "Acme Corp",
-  invoiceId: "in_123",
-  amountPaid: 9900,
-  currency: "USD",
-  invoiceUrl: "https://billing.stripe.com/invoice/in_123",
+await sendInvitationEmail({
+  to: "newmember@example.com",
+  inviterName: "Alex",
+  organizationName: "Acme Corp",
+  role: "member",
+  acceptUrl: "https://app.nebutra.com/invite/abc123",
+  expiresAt: "2026-10-06",
+  brandName: "Nebutra",
 });
 ```
 

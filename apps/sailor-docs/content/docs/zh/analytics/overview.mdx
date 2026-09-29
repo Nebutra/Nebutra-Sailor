@@ -75,16 +75,7 @@ DUB_API_KEY=dub_xxxxxxxxxxxx
 
 ## 分析仪表盘
 
-管理面板中的 `/admin/analytics` 提供聚合分析视图，展示：
-
-- 日/周/月活跃用户
-- 核心漏斗转化率
-- 套餐分布情况
-- 各租户的配额使用率
-
-<Note>
-管理分析仪表盘需要 `admin` 角色。普通用户无法访问 `/admin/*` 路由。
-</Note>
+代码库中目前没有内置的 `/admin/analytics` 路由。开箱即用的这类数据来自 PostHog 自己的仪表盘（活跃用户、漏斗、留存、群组）和 Dub.co 自己的仪表盘（链接/活动分析）；如果要自建产品内的管理视图，`@nebutra/analytics` 的 `getAnalytics()` 与 metering 包的 `getQuota()` 是可用的构建单元。
 
 ## 隐私注意事项
 

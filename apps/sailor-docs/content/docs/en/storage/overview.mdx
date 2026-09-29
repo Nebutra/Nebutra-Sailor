@@ -1,9 +1,15 @@
 ---
 title: Storage Overview
-description: Provider-agnostic file storage for Nebutra — presigned URLs, multipart uploads, and resumable uploads via @nebutra/uploads.
+description: One S3-compatible adapter for object storage — presigned URLs, multipart uploads, and a local dev fallback via @nebutra/uploads.
 ---
 
-Nebutra provides a unified file storage abstraction through `@nebutra/uploads`. Application code calls a single API regardless of whether files are stored on AWS S3, Cloudflare R2, or any S3-compatible backend. Switching providers requires only environment variable changes — no code modifications.
+Per ADR 2026-09-24 (Sailor convergence), object storage has exactly **one** provider: a single
+S3-compatible client (`S3UploadProvider`) that talks to Cloudflare R2, AWS S3, Aliyun OSS, or any
+other S3-compatible endpoint through the same code path — there is no separate "R2 provider" or
+"S3 provider" implementation to choose between, and the deleted Vercel Blob adapter is not coming
+back. `@nebutra/uploads` exposes exactly two provider types: `"s3"` and `"local"` (an in-process
+filesystem fallback for development). Switching between R2, AWS S3, and OSS is an environment
+variable change; there is no code path difference between them.
 
 ## Architecture
 
@@ -25,8 +31,8 @@ Nebutra provides a unified file storage abstraction through `@nebutra/uploads`. 
 └──────────────┬───────────────────────┘
                │ 3. File lands in bucket
 ┌──────────────▼───────────────────────┐
-│     AWS S3 / Cloudflare R2 / MinIO   │
-│     Bucket: nebutra-uploads          │
+│   R2 / AWS S3 / OSS / any S3-compat  │
+│   (one adapter — S3UploadProvider)   │
 └──────────────┬───────────────────────┘
                │ 4. Served via CDN
 ┌──────────────▼───────────────────────┐
@@ -60,7 +66,10 @@ Splits large files into smaller parts (minimum 5 MB each) and uploads them in pa
 An open protocol for resumable uploads. If the connection drops, the upload resumes from the last acknowledged byte. Best for large files on unreliable networks.
 
 <Note>
-Tus resumable upload support depends on your storage provider configuration. AWS S3 and Cloudflare R2 support Tus via a proxy layer. See [Uploads](/storage/uploads) for setup details.
+`getTusEndpoint()` on the S3-compatible provider opens a multipart upload and returns a resumable
+config (endpoint, chunk size, retry delays) — it is not a full Tus-protocol server you can point
+an off-the-shelf `tus-js-client` at. See [Uploads](/storage/uploads) for what it returns and the
+more direct multipart-resume pattern.
 </Note>
 
 ## Tenant isolation
@@ -110,25 +119,27 @@ await uploads.deleteFile("nebutra-uploads", key);
 
 ## Environment variables
 
+There is no separate bucket-name env var — the bucket is always a parameter on the call
+(`createPresignedUpload({ bucket, key, … })`, etc.), the same for every S3-compatible endpoint.
+
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `STORAGE_PROVIDER` | No | Explicit provider: `"s3"` \| `"r2"` \| `"s3-compatible"` |
-| `AWS_BUCKET_NAME` | S3 only | Default bucket name |
-| `AWS_REGION` | S3 only | AWS region, e.g. `us-east-1` |
-| `AWS_ACCESS_KEY_ID` | S3 only | IAM access key |
-| `AWS_SECRET_ACCESS_KEY` | S3 only | IAM secret key |
-| `R2_BUCKET_NAME` | R2 only | Cloudflare R2 bucket name |
-| `R2_ACCOUNT_ID` | R2 only | Cloudflare account ID |
-| `R2_ACCESS_KEY_ID` | R2 only | R2 API token ID |
-| `R2_SECRET_ACCESS_KEY` | R2 only | R2 API token secret |
-| `R2_PUBLIC_URL` | R2 only | Public CDN base URL for R2 |
+| `UPLOAD_PROVIDER` | No | Explicit override: `"s3"` \| `"local"` \| `"r2"` (an alias that maps to `"s3"` using the `R2_*` vars below) |
+| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | For AWS S3 | Falls back to `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY` if unset — it is the same client either way |
+| `AWS_REGION` | No | Defaults to `"auto"` |
+| `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY` | For R2 | R2 API token id/secret |
+| `R2_ENDPOINT` / `S3_ENDPOINT` | For a custom endpoint | Cloudflare R2, Aliyun OSS, MinIO, Backblaze, etc. — `S3_ENDPOINT` takes priority if both are set |
+| `R2_PUBLIC_URL` / `S3_PUBLIC_URL` | No | Public CDN base URL for served assets |
+| `S3_FORCE_PATH_STYLE` | No | `"true"` for path-style URLs (self-hosted MinIO, etc.) |
 
-Provider auto-detection follows this priority:
+Provider auto-detection (`createUploadProvider()`, no explicit `UPLOAD_PROVIDER`) follows this
+priority:
 
-1. `STORAGE_PROVIDER` env var (if set)
-2. `AWS_BUCKET_NAME` present → `s3`
-3. `R2_ACCOUNT_ID` present → `r2`
-4. Fallback → in-memory (development only)
+1. `UPLOAD_PROVIDER` env var, if set (`"r2"` resolves to the S3 provider configured from `R2_*` vars)
+2. `R2_ACCESS_KEY_ID` or `R2_SECRET_ACCESS_KEY` present → S3 provider, configured from `R2_*` vars
+3. `AWS_ACCESS_KEY_ID` or `AWS_SECRET_ACCESS_KEY` present → S3 provider, configured from `AWS_*` vars (falling back to `R2_*` for anything unset)
+4. `S3_ENDPOINT` present → S3 provider, custom endpoint (Aliyun OSS, MinIO, Backblaze, …)
+5. Fallback → local filesystem (development only)
 
 <CardGroup cols={2}>
   <Card title="Uploads" icon="upload" href="/storage/uploads">

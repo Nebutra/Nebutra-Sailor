@@ -10,7 +10,7 @@ description: 通过 Server-Sent Events 实现实时 AI 响应——服务端配�
 ```
 客户端                    API 网关                  OpenAI
   │                          │                        │
-  ├─ POST /api/v1/ai/chat ──►│                        │
+  ├─ POST /api/v1/ai/chat/completions ──►│                        │
   │                          ├── streamText() ────────►│
   │                          │◄── 片段 1 ──────────────┤
   │◄─── data: 片段 1 ────────┤                        │
@@ -30,7 +30,7 @@ import { getCurrentTenant } from "@nebutra/tenant";
 import { stream } from "hono/streaming";
 
 // 在 Hono 路由处理器中
-app.post("/api/v1/ai/chat", async (c) => {
+app.post("/api/v1/ai/chat/completions", async (c) => {
   const { messages, model, systemPrompt } = await c.req.json();
   const { tenantId } = getCurrentTenant();
 
@@ -83,7 +83,7 @@ data: [DONE]
 
 ```typescript
 async function streamChat(messages: Message[], apiKey: string) {
-  const response = await fetch("/api/v1/ai/chat", {
+  const response = await fetch("/api/v1/ai/chat/completions", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -144,7 +144,7 @@ import { useChat } from "ai/react";
 export function ChatWidget() {
   const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
     useChat({
-      api: "/api/v1/ai/chat",        // 通过 Next.js 路由代理
+      api: "/api/v1/ai/chat/completions",        // 通过 Next.js 路由代理
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
       },
@@ -190,7 +190,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
 
   const upstream = await fetch(
-    `${process.env.API_GATEWAY_URL}/api/v1/ai/chat`,
+    `${process.env.API_GATEWAY_URL}/api/v1/ai/chat/completions`,
     {
       method: "POST",
       headers: {
@@ -239,7 +239,7 @@ if (json.error) {
 ```typescript
 const controller = new AbortController();
 
-const response = await fetch("/api/v1/ai/chat", {
+const response = await fetch("/api/v1/ai/chat/completions", {
   method: "POST",
   headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
   body: JSON.stringify({ messages }),

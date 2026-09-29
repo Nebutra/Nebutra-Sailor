@@ -33,44 +33,40 @@ Dub.co 是 Nebutra 的链接管理和营销分析层。它负责用户到达产�
     ```
   </Step>
   <Step title="验证连接">
-    在本地脚本或 API Gateway REPL 中运行以下代码片段，确认认证成功：
+    用客户端创建一条测试链接以确认认证成功——没有单独的 `workspaces.list()` 验证调用：
 
     ```typescript
-    import { dub } from "@nebutra/analytics";
+    import { createAnalyticsClient } from "@nebutra/analytics";
 
-    const workspaces = await dub.workspaces.list();
-    console.log(workspaces);
+    const analytics = createAnalyticsClient({ apiKey: process.env.DUB_API_KEY! });
+    const link = await analytics.links.create({ url: "https://nebutra.com" });
+    console.log(link);
     ```
-
-    如无错误并返回你的工作区，则连接正常。
   </Step>
 </Steps>
 
 ## 创建可追踪链接
 
-使用 `@nebutra/analytics` 中的 `dub` 客户端以编程方式创建链接：
+`@nebutra/analytics` 没有独立导出的 `dub` 客户端——客户端是 `AnalyticsClient`（`createAnalyticsClient(config)` / `analytics` 单例），内部通过一个私有字段包装了 `dub` npm SDK。UTM 参数要放进嵌套的 `utm` 对象里，而不是顶层的 `utm_source` / `utm_medium` 字段：
 
 ```typescript
-import { dub } from "@nebutra/analytics";
+import { createAnalyticsClient } from "@nebutra/analytics";
+
+const analytics = createAnalyticsClient({ apiKey: process.env.DUB_API_KEY! });
 
 // 欢迎邮件链接
-const welcomeLink = await dub.links.create({
+const welcomeLink = await analytics.links.create({
   url: "https://app.nebutra.com/dashboard",
   domain: "links.nebutra.com",
-  slug: "welcome",
-  utm_source: "email",
-  utm_medium: "transactional",
-  utm_campaign: "onboarding",
+  key: "welcome",
+  utm: { source: "email", medium: "transactional", campaign: "onboarding" },
 });
 
 // 应用内升级提示横幅链接
-const upgradeLink = await dub.links.create({
+const upgradeLink = await analytics.links.create({
   url: "https://app.nebutra.com/settings/billing",
   domain: "links.nebutra.com",
-  utm_source: "app",
-  utm_medium: "banner",
-  utm_campaign: "upgrade-pro",
-  utm_content: "quota-warning-banner",
+  utm: { source: "app", medium: "banner", campaign: "upgrade-pro", content: "quota-warning-banner" },
 });
 
 console.log(welcomeLink.shortLink); // → https://links.nebutra.com/welcome
@@ -99,16 +95,13 @@ Nebutra 在所有活动中使用统一的 UTM 分类体系。遵守这些规范�
 每封事务性邮件的 CTA 都应使用可追踪链接：
 
 ```typescript
-import { dub } from "@nebutra/analytics";
+import { analytics } from "@nebutra/analytics";
 
 async function sendWelcomeEmail(user: User) {
-  const ctaLink = await dub.links.create({
+  const ctaLink = await analytics.links.create({
     url: `https://app.nebutra.com/onboarding?userId=${user.id}`,
     domain: "links.nebutra.com",
-    utm_source: "email",
-    utm_medium: "transactional",
-    utm_campaign: "onboarding",
-    utm_content: "welcome-email-cta",
+    utm: { source: "email", medium: "transactional", campaign: "onboarding", content: "welcome-email-cta" },
   });
 
   await sendEmail({
@@ -121,42 +114,37 @@ async function sendWelcomeEmail(user: User) {
 
 ### 应用内推荐链接
 
-```typescript
-import { dub } from "@nebutra/analytics";
+优先使用专门的 `referrals.createLink` 辅助函数，而不是直接调用 `links.create`——它会帮你补全目标 URL 和标签：
 
-async function generateReferralLink(userId: string, orgSlug: string) {
-  return dub.links.create({
-    url: `https://nebutra.com/?ref=${orgSlug}`,
-    domain: "links.nebutra.com",
-    utm_source: "referral",
-    utm_medium: "in-app",
-    utm_campaign: "user-referral",
-    utm_content: userId,
-    // 在 Dub.co 仪表盘中用于分组的标签
-    tags: ["referral", `user-${userId}`],
+```typescript
+import { analytics } from "@nebutra/analytics";
+
+async function generateReferralLink(userId: string, tenantId: string, rewardType: string, rewardValue: number) {
+  return analytics.referrals.createLink({
+    userId,
+    tenantId,
+    rewardType,
+    rewardValue,
   });
 }
 ```
 
 ### 营销活动
 
-对于付费活动，可通过 Dub.co 仪表盘或 API 批量创建链接并分配活动标签：
+对于付费活动，可通过 Dub.co 仪表盘或 `links.createMany` 批量创建链接：
 
 ```typescript
+import { analytics } from "@nebutra/analytics";
+
 const variants = ["headline-a", "headline-b", "headline-c"];
 
-const links = await Promise.all(
-  variants.map((variant) =>
-    dub.links.create({
-      url: "https://nebutra.com/landing/paid",
-      domain: "links.nebutra.com",
-      utm_source: "google",
-      utm_medium: "cpc",
-      utm_campaign: "q1-acquisition",
-      utm_content: variant,
-      tags: ["paid", "q1-acquisition"],
-    })
-  )
+const links = await analytics.links.createMany(
+  variants.map((variant) => ({
+    url: "https://nebutra.com/landing/paid",
+    domain: "links.nebutra.com",
+    utm: { source: "google", medium: "cpc", campaign: "q1-acquisition", content: variant },
+    tags: ["paid", "q1-acquisition"],
+  }))
 );
 ```
 
@@ -169,15 +157,17 @@ const links = await Promise.all(
 - **热门链接** — 按点击量排名
 
 <Note>
-  Dub.co 链接分析目前可通过 **Dub.co 控制台** [app.dub.co](https://app.dub.co) 查看。内嵌到 `/admin/analytics` 管理面板的功能已在 Roadmap 中。在此之前，可使用下方的 `retrieveLinkStats()` 工具函数，以编程方式将数据指标嵌入自定义管理视图。
+  代码库中目前没有内置的 `/admin/analytics` 路由来在产品内展示这些数据。如果你要自建管理视图，可以用下方的 `analytics.getAnalytics()` 以编程方式嵌入数据指标。
 </Note>
 
 ## 通过 API 获取链接统计数据
 
-```typescript
-import { dub } from "@nebutra/analytics";
+`AnalyticsClient` 的方法名是 `getAnalytics`，而不是某个原始 `dub` 客户端上的 `analytics.retrieve`：
 
-const stats = await dub.analytics.retrieve({
+```typescript
+import { analytics } from "@nebutra/analytics";
+
+const stats = await analytics.getAnalytics({
   linkId: welcomeLink.id,
   interval: "30d",
   groupBy: "referrer",

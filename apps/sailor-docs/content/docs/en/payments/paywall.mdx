@@ -5,119 +5,70 @@ description: Gate UI features and API routes by plan using requirePlan and the P
 
 ## Overview
 
-Nebutra provides two complementary mechanisms for enforcing plan-based access:
+Nebutra gates access with **plan-based feature entitlements**
+(`packages/commerce/billing/src/entitlements/`), not a standalone plan-comparison helper:
 
 | Mechanism | Where to use |
 |-----------|-------------|
-| `requirePlan(planId)` | Server-side: API route middleware, Server Components, Server Actions |
-| `<PlanGate require="plan">` | Client-side: React components, conditional UI rendering |
+| `requireFeature(feature, quantity?)` | Server-side: API gateway middleware (Hono) |
+| `checkEntitlement` / `requireEntitlement` | Server-side: anywhere else in backend code (Server Components, Server Actions, jobs) |
+| `isPlanFeature(plan, feature)` | A pure, static lookup against `PLAN_FEATURES` — no DB round-trip |
 
-Both read the current tenant's active plan from the database — no client-side state to spoof.
+All three ultimately resolve against the tenant's plan (`FREE < PRO < ENTERPRISE`) and its
+`PLAN_FEATURES` entry, cross-checked with usage limits via `requireEntitlementUsage` where a
+feature also has a metered quota (`FEATURE_METER_MAP` in the gateway middleware maps `ai.chat` /
+`ai.embeddings` / `ai.images` / `ai.reasoning` to the `ai_tokens` meter, `api.access` to
+`api_calls`).
 
-## Server Component paywall
+## API route gating
 
-Use `requirePlan` in a Next.js Server Component to redirect users below the required plan:
+Protect gateway routes with `requireFeature` as middleware:
+
+```typescript backends/gateway/src/middlewares/entitlements.ts
+import { requireFeature } from "@nebutra/billing"; // re-exported via the gateway middleware
+
+app.post("/api/v1/ai/generate", requireFeature("ai.images", 1), async (c) => {
+  // ... handle the request
+});
+```
+
+An insufficient plan or exhausted usage quota returns a structured error (`ENTITLEMENT_DENIED` or
+`USAGE_LIMIT_EXCEEDED`) that the gateway's error handler converts to a `403`/`429` JSON response.
+
+## Server-side checks elsewhere
+
+Outside the gateway's Hono middleware chain, call `checkEntitlement` / `requireEntitlement`
+directly:
 
 ```typescript apps/web/src/app/dashboard/analytics/page.tsx
-import { requirePlan } from "@nebutra/billing";
+import { requireEntitlement } from "@nebutra/billing";
 import { getCurrentTenant } from "@nebutra/tenant";
+import { redirect } from "next/navigation";
 
 export default async function AnalyticsPage() {
   const tenant = getCurrentTenant();
 
-  // Redirects to /billing/upgrade if the tenant is not on PRO or higher
-  await requirePlan("pro", tenant.tenantId);
+  const result = await checkEntitlement(tenant.tenantId, "ai.chat");
+  if (!result.allowed) {
+    redirect("/billing/upgrade");
+  }
 
   return <AnalyticsDashboard />;
 }
 ```
 
-### `requirePlan` behavior
+## Client-side UI gating
 
-| Tenant plan | Required plan | Result |
-|-------------|--------------|--------|
-| `free` | `pro` | Redirects to `/billing/upgrade` |
-| `pro` | `pro` | Passes through |
-| `enterprise` | `pro` | Passes through (enterprise ≥ pro) |
-| `pro` | `enterprise` | Redirects to `/billing/upgrade` |
-
-<Note>
-Plan hierarchy is `free < pro < enterprise`. `requirePlan("pro")` allows both `pro` and `enterprise` tenants through.
-</Note>
-
-## API route gating
-
-Protect API routes with `requirePlan` as middleware:
-
-```typescript backends/gateway/src/routes/exports.ts
-import { requirePlan } from "@nebutra/billing";
-import { getCurrentTenant } from "@nebutra/tenant";
-
-app.post("/api/v1/exports", async (c) => {
-  const tenant = getCurrentTenant();
-
-  // Returns 403 Forbidden with a structured error if plan is insufficient
-  await requirePlan("pro", tenant.tenantId, { throwOnFail: true });
-
-  // ... handle the export
-});
-```
-
-When `throwOnFail: true`, `requirePlan` throws a structured error that the API gateway error handler converts to:
-
-```json
-HTTP 403 Forbidden
-
-{
-  "success": false,
-  "error": {
-    "code": "PLAN_REQUIRED",
-    "message": "This feature requires the PRO plan.",
-    "details": {
-      "requiredPlan": "pro",
-      "currentPlan": "free",
-      "upgradeUrl": "https://app.nebutra.com/billing/upgrade"
-    }
-  }
-}
-```
-
-## React `<PlanGate>` component
-
-Use `<PlanGate>` to conditionally render UI based on the current tenant's plan. This is a Server Component — plan data is never exposed to the client.
+`@nebutra/billing` does not ship a `<PlanGate>` React component. Gate UI by fetching the
+entitlement result server-side (a Server Component, or a route that calls `checkEntitlement`) and
+passing a plain boolean prop down — the same rule as any other server-derived authorization state:
+never trust a client-only check for something that must actually be denied.
 
 ```typescript
-import { PlanGate } from "@nebutra/billing/react";
+const { allowed } = await checkEntitlement(tenant.tenantId, "ai.chat");
 
-// Hard block — shows an upgrade prompt when plan is insufficient
-<PlanGate require="pro">
-  <AdvancedAnalytics />
-</PlanGate>
-
-// Custom fallback — show your own upgrade UI
-<PlanGate require="pro" fallback={<UpgradeBanner feature="Advanced Analytics" />}>
-  <AdvancedAnalytics />
-</PlanGate>
-
-// Silent hide — renders nothing when plan is insufficient (no upgrade prompt)
-<PlanGate require="pro" fallback={null}>
-  <ExportButton />
-</PlanGate>
+return allowed ? <AdvancedAnalytics /> : <UpgradeBanner feature="Advanced Analytics" />;
 ```
-
-### Default upgrade prompt
-
-When no `fallback` is provided, `<PlanGate>` renders the built-in upgrade prompt:
-
-```
-┌────────────────────────────────────────────────┐
-│  🔒  This feature requires the PRO plan.        │
-│                                                  │
-│  [Upgrade to PRO →]                              │
-└────────────────────────────────────────────────┘
-```
-
-The button links to `/billing/upgrade`.
 
 ## Upgrade redirect target
 
@@ -135,13 +86,13 @@ Use the following heuristics to choose between a soft prompt and a hard block:
 
 | Scenario | Recommendation |
 |----------|---------------|
-| Feature is discoverable but gated (e.g., export button) | Soft prompt — show `<PlanGate>` with upgrade CTA |
-| Route only makes sense on the paid plan (e.g., SSO settings) | Hard redirect via `requirePlan` in the Server Component |
-| Sensitive data that must never reach FREE users | Hard block on both Server Component **and** API route |
-| Feature preview / teaser | Render a disabled/locked version with tooltip via `<PlanGate fallback={...}>` |
+| Feature is discoverable but gated (e.g., export button) | Soft prompt — render an upgrade CTA when `checkEntitlement` denies |
+| Route only makes sense on the paid plan (e.g., SSO settings) | Hard redirect via `requireEntitlement` in the Server Component |
+| Sensitive data that must never reach FREE users | Hard block on both the Server Component **and** the gateway route (`requireFeature`) |
+| Feature preview / teaser | Render a disabled/locked version, still checked server-side |
 
 <Warning>
-Never rely on client-side plan checks alone. Always enforce access on the server using `requirePlan`. A motivated user can bypass any client-side guard.
+Never rely on client-side plan checks alone. Always enforce access on the server using `requireEntitlement` (elsewhere) or `requireFeature` (gateway routes). A motivated user can bypass any client-side guard.
 </Warning>
 
 ## Related

@@ -34,10 +34,10 @@ description: 用于延迟处理和高吞吐任务的简单队列——QStash,Ser
     API 网关已经在以下地址暴露了 QStash Webhook：
 
     ```
-    POST /api/v1/queue/:queue/:type
+    POST /api/queue/:queue/:type
     ```
 
-    当 `report.generate` 任务就绪时,QStash 会向 `https://api.yourdomain.com/api/v1/queue/report/generate` 发起 POST。
+    当 `report.generate` 任务就绪时,QStash 会向 `https://api.yourdomain.com/api/queue/report/generate` 发起 POST。
 
     <Warning>
       QStash 需要一个**可公网访问的 HTTPS 地址**,无法投递到 `localhost`。本地开发时请使用隧道工具（如 `ngrok`）。

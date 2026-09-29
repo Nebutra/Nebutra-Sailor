@@ -11,22 +11,23 @@ description: 重定向至 Stripe 结账、处理订阅生命周期状态，以�
 
 <Steps>
   <Step title="将用户重定向至 Stripe 结账">
-    调用 `@nebutra/billing` 中的 `createCheckoutSession` 生成 Stripe 托管的结账 URL，然后将用户重定向至该 URL。
+    调用 `@nebutra/billing` 中的 `createCheckoutSession` 生成 Stripe 托管的结账 URL，然后将用户重定向至该 URL。该辅助函数接收的是 Stripe `customerId`（来自 `getOrCreateCustomer`），而不是原始租户 id；试用期字段名是 `trialPeriodDays`。
 
     ```typescript apps/web/src/app/billing/upgrade/route.ts
-    import { createCheckoutSession } from "@nebutra/billing";
+    import { createCheckoutSession, getOrCreateCustomer } from "@nebutra/billing";
     import { redirect } from "next/navigation";
     import { getCurrentTenant } from "@nebutra/tenant";
 
     export async function GET() {
       const tenant = getCurrentTenant();
+      const customer = await getOrCreateCustomer(tenant.tenantId, tenant.ownerEmail);
 
       const session = await createCheckoutSession({
-        orgId: tenant.tenantId,
-        priceId: process.env.STRIPE_PRO_PRICE_ID!,
+        customerId: customer.id,
+        priceId: process.env.STRIPE_PRICE_ID_PRO_MONTHLY!,
         successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing/success`,
         cancelUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing`,
-        trialDays: 14,
+        trialPeriodDays: 14,
       });
 
       redirect(session.url);
@@ -64,20 +65,14 @@ description: 重定向至 Stripe 结账、处理订阅生命周期状态，以�
 
 ## 查询订阅状态
 
-使用 `getSubscription` 获取某个组织的当前订阅状态：
+`@nebutra/billing` 没有 `getSubscription` 这个函数。使用 `getStripeSubscription`（按 Stripe 订阅 id）或 `getCustomerSubscriptions`（按 Stripe 客户 id）获取当前订阅状态：
 
 ```typescript
-import { getSubscription } from "@nebutra/billing";
+import { getCustomerSubscriptions, mapStripeStatusToLocal } from "@nebutra/billing";
 
-const subscription = await getSubscription("org_123");
-// → {
-//     orgId: "org_123",
-//     plan: "pro",
-//     status: "active",
-//     currentPeriodEnd: "2026-04-30T00:00:00.000Z",
-//     cancelAtPeriodEnd: false,
-//     trialEnd: null,
-//   }
+const [subscription] = await getCustomerSubscriptions(customer.id);
+// Stripe.Subscription —— 通过 mapStripeStatusToLocal() 映射为
+// @nebutra/billing 其余部分使用的本地 SubscriptionStatus 枚举。
 ```
 
 ### 订阅生命周期状态
@@ -93,18 +88,16 @@ const subscription = await getSubscription("org_123");
 ### 在 UI 中展示状态
 
 ```typescript apps/web/src/app/settings/billing/page.tsx
-import { getSubscription } from "@nebutra/billing";
-import { getCurrentTenant } from "@nebutra/tenant";
+import { getCustomerSubscriptions, mapStripeStatusToLocal } from "@nebutra/billing";
 
-export default async function BillingSettingsPage() {
-  const tenant = getCurrentTenant();
-  const subscription = await getSubscription(tenant.tenantId);
+export default async function BillingSettingsPage({ stripeCustomerId }: { stripeCustomerId: string }) {
+  const [subscription] = await getCustomerSubscriptions(stripeCustomerId);
+  const status = subscription ? mapStripeStatusToLocal(subscription.status) : "CANCELED";
 
   return (
     <div>
-      <p>当前计划：<strong>{subscription.plan.toUpperCase()}</strong></p>
-      <p>状态：{subscription.status}</p>
-      {subscription.status === "past_due" && (
+      <p>状态：{status}</p>
+      {status === "PAST_DUE" && (
         <a href="/billing/portal">更新支付方式</a>
       )}
     </div>
@@ -116,47 +109,44 @@ export default async function BillingSettingsPage() {
 
 PRO 订阅包含 **14 天免费试用期**，试用期结束前不会向信用卡收费。
 
-- 试用状态在 `getSubscription` 中表现为 `status: "trialing"`。
+- 试用状态通过 `mapStripeStatusToLocal(subscription.status)` 映射为 `TRIALING`。
 - 试用到期后，Stripe 向绑定的信用卡收费，状态变为 `active`。
-- 若试用期结束前未提供支付方式，订阅变为 `canceled`，租户被降级至 FREE。
+- 若试用期结束前未提供支付方式，订阅变为 `canceled`。
 
 ```typescript
-// 创建结账会话时传入 trialDays 以开启试用期
+// 创建结账会话时传入 trialPeriodDays 以开启试用期
 const session = await createCheckoutSession({
-  orgId: "org_123",
-  priceId: process.env.STRIPE_PRO_PRICE_ID!,
+  customerId: customer.id,
+  priceId: process.env.STRIPE_PRICE_ID_PRO_MONTHLY!,
   successUrl: "https://app.nebutra.com/billing/success",
   cancelUrl: "https://app.nebutra.com/billing",
-  trialDays: 14,
+  trialPeriodDays: 14,
 });
 ```
 
 <Tip>
-对于特定用户（例如从旧计划迁移的用户或使用促销码的用户），可以设置 `trialDays: 0` 以跳过试用期。
+省略 `trialPeriodDays`（或传 `0`）即可为特定用户（例如从旧计划迁移的用户或使用促销码的用户）跳过试用期。
 </Tip>
 
 ## 取消与自助管理
 
-客户可通过 **Stripe 客户门户**自助取消、升级或更新支付方式，无需自定义 UI：
+客户可通过 **Stripe 客户门户**自助取消、升级或更新支付方式，使用 `@nebutra/billing` 的 `createBillingPortalSession`：
 
 ```typescript apps/web/src/app/billing/portal/route.ts
-import { createPortalSession } from "@nebutra/billing";
+import { createBillingPortalSession } from "@nebutra/billing";
 import { redirect } from "next/navigation";
-import { getCurrentTenant } from "@nebutra/tenant";
 
-export async function GET() {
-  const tenant = getCurrentTenant();
-
-  const session = await createPortalSession({
-    orgId: tenant.tenantId,
-    returnUrl: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`,
-  });
+export async function GET({ stripeCustomerId }: { stripeCustomerId: string }) {
+  const session = await createBillingPortalSession(
+    stripeCustomerId,
+    `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`,
+  );
 
   redirect(session.url);
 }
 ```
 
-该路由已连接至 Dashboard 中的 **Settings → Billing → Manage Subscription** 按钮。
+若需要在托管门户之外提供完整的取消/暂停/恢复能力，`@nebutra/billing` 还导出了 `cancelStripeSubscription`、`pauseStripeSubscription`、`resumeStripeSubscription`、`unpauseStripeSubscription`、`updateStripeSubscription` 与 `previewSubscriptionChange`。
 
 ## 相关文档
 

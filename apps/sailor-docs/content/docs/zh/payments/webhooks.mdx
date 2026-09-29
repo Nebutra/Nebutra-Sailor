@@ -10,7 +10,7 @@ description: 处理 Creem 与 Stripe 的 Webhook 事件，覆盖一次性卡支�
 | 端点 | 服务商 | 覆盖范围 |
 |----------|----------|--------|
 | `POST /api/webhooks/creem` | Creem（当前） | 一次性卡支付购买，面向全球，记录商户模式 |
-| `POST /api/v1/webhooks/stripe` | Stripe（历史遗留） | 订阅、计费门户、切换前的历史结账 |
+| `POST /api/webhooks/stripe` | Stripe（历史遗留） | 订阅、计费门户、切换前的历史结账 |
 
 两者都已预先构建——你无需自行编写路由逻辑，仅在需要时为新事件添加处理程序。
 
@@ -50,7 +50,7 @@ if (event.eventType === "checkout.completed" && event.object.order?.status === "
 所有 Stripe 事件均发送至 API 网关的单一端点：
 
 ```
-POST /api/v1/webhooks/stripe
+POST /api/webhooks/stripe
 ```
 
 该端点已预置于 `backends/gateway/src/routes/webhooks/stripe.ts`。它仅供尚未迁移至 Creem 的表面使用：订阅、计费门户、许可证 Webhook 以及历史遗留的积分购买会话。不会在其上构建任何新功能。
@@ -61,129 +61,34 @@ POST /api/v1/webhooks/stripe
 在处理任何事件之前，务必验证 Stripe Webhook 的签名。跳过验证将允许任何人向您的端点发送伪造事件，从而操纵账单状态。
 </Warning>
 
-Stripe 使用 `Stripe-Signature` 请求头对每个请求进行签名。处理程序使用 `STRIPE_WEBHOOK_SECRET` 进行验证：
-
-```typescript backends/gateway/src/routes/webhooks/stripe.ts
-import Stripe from "stripe";
-import { PLANS } from "@nebutra/billing";
-import { db } from "@nebutra/db";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-export async function POST(req: Request) {
-  const body = await req.text();
-  const sig = req.headers.get("stripe-signature");
-
-  if (!sig) {
-    return new Response("Missing stripe-signature header", { status: 400 });
-  }
-
-  let event: Stripe.Event;
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
-  } catch {
-    return new Response("Invalid signature", { status: 400 });
-  }
-
-  await handleStripeEvent(event);
-
-  return new Response("OK", { status: 200 });
-}
-```
+Stripe 使用 `Stripe-Signature` 请求头对每个请求进行签名。处理程序是 `backends/gateway/src/routes/webhooks/stripe.ts` 中的一个 Hono 路由——不是 Next.js 路由——使用 `stripe` SDK 的 `webhooks.constructEvent` 校验该请求头（密钥为 `STRIPE_WEBHOOK_SECRET`），再按 `event.type` 分发。
 
 ## 已处理事件
 
-| Stripe 事件 | 处理程序动作 |
+该路由的 `handleStripeEvent` switch 语句会分发以下事件类型：
+
+| Stripe 事件 | 处理动作 |
 |------------|------------|
-| `customer.subscription.updated` | 更新数据库中租户的 `plan`、`status` 和 `currentPeriodEnd` |
-| `customer.subscription.deleted` | 将租户降级至 FREE 计划 |
-| `invoice.payment_succeeded` | 记录支付成功；清除 `past_due` 标记 |
-| `invoice.payment_failed` | 将租户状态设为 `past_due`；触发支付失败邮件 |
+| `checkout.session.completed` | 若该 Checkout Session 携带支付订单 id，则结算对应的 `PaymentOrder`（ADR 2026-09-25）；同时上报结账完成的分析事件并解析许可证等级 |
+| `customer.subscription.created` | 创建本地订阅记录 |
+| `customer.subscription.updated` | 更新本地订阅的状态与账期 |
+| `customer.subscription.deleted` | 将本地订阅标记为已取消 |
+| `invoice.paid` | 记录支付成功 |
+| `invoice.payment_failed` | 将订阅标记为 past-due |
 
-### 事件处理程序实现
-
-<CodeGroup>
-```typescript subscription.updated
-async function handleSubscriptionUpdated(
-  subscription: Stripe.Subscription
-) {
-  const orgId = subscription.metadata.orgId;
-  const priceId = subscription.items.data[0]?.price.id;
-
-  const plan = Object.values(PLANS).find(
-    (p) => p.stripePriceId === priceId
-  );
-
-  await db.tenant.update({
-    where: { id: orgId },
-    data: {
-      plan: plan?.id ?? "free",
-      subscriptionStatus: subscription.status,
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-      cancelAtPeriodEnd: subscription.cancel_at_period_end,
-    },
-  });
-}
-```
-```typescript subscription.deleted
-async function handleSubscriptionDeleted(
-  subscription: Stripe.Subscription
-) {
-  const orgId = subscription.metadata.orgId;
-
-  await db.tenant.update({
-    where: { id: orgId },
-    data: {
-      plan: "free",
-      subscriptionStatus: "canceled",
-      currentPeriodEnd: null,
-    },
-  });
-}
-```
-```typescript invoice.payment_failed
-async function handlePaymentFailed(invoice: Stripe.Invoice) {
-  const customerId = invoice.customer as string;
-
-  const tenant = await db.tenant.findFirst({
-    where: { stripeCustomerId: customerId },
-  });
-
-  if (!tenant) return;
-
-  await db.tenant.update({
-    where: { id: tenant.id },
-    data: { subscriptionStatus: "past_due" },
-  });
-
-  // 通过 @nebutra/notifications 通知用户
-  await notifications.send({
-    id: crypto.randomUUID(),
-    type: "billing.payment_failed",
-    recipientId: tenant.ownerId,
-    tenantId: tenant.id,
-    channels: ["email"],
-    data: { invoiceUrl: invoice.hosted_invoice_url },
-  });
-}
-```
-</CodeGroup>
+其余事件类型会被记录日志后忽略（`log.info("Unhandled Stripe event type", …)`）。
 
 ## 在 Stripe Dashboard 中注册事件（历史遗留）
 
 设置生产环境 Webhook 端点时，只需启用以下事件：
 
 ```
+checkout.session.completed
+customer.subscription.created
 customer.subscription.updated
 customer.subscription.deleted
-invoice.payment_succeeded
+invoice.paid
 invoice.payment_failed
-checkout.session.completed
 ```
 
 进入 **Stripe Dashboard → Developers → Webhooks → Add endpoint**，填写 API URL 并选择上述事件。
@@ -207,7 +112,7 @@ checkout.session.completed
   </Step>
   <Step title="将事件转发至本地服务器">
     ```bash
-    stripe listen --forward-to localhost:3001/api/v1/webhooks/stripe
+    stripe listen --forward-to localhost:3001/api/webhooks/stripe
     ```
 
     CLI 会打印本地 Webhook 签名密钥（`whsec_...`）。在本地开发时，将其设置为 `.env.local` 中的 `STRIPE_WEBHOOK_SECRET`。
@@ -221,6 +126,9 @@ checkout.session.completed
 
     # 模拟支付失败
     stripe trigger invoice.payment_failed
+
+    # 模拟发票已支付
+    stripe trigger invoice.paid
     ```
   </Step>
 </Steps>
@@ -233,7 +141,7 @@ Stripe CLI 的签名密钥与生产环境的 Webhook 签名密钥不同。本地
 
 两个服务商都可能多次发送同一事件（至少一次投递语义）。请确保您的处理程序具备幂等性——处理同一事件两次的结果应与处理一次相同。
 
-Creem 的处理程序会在执行任何副作用之前先将事件记录进 Webhook 收件箱，因此重复投递只是空操作。上述 Stripe `subscription.updated` 和 `subscription.deleted` 处理程序已具备幂等性，因为它们使用了 upsert 式的数据库更新操作。
+Creem 的处理程序会在执行任何副作用之前先将事件记录进 Webhook 收件箱，因此重复投递只是空操作。Stripe 中结算 `PaymentOrder` 的 `checkout.session.completed` 分支复用了与 Creem 相同的订单级幂等性（`settlePaymentOrder` 的条件更新）。订阅相关处理程序按 Stripe 订阅 id 更新本地记录，因此重复投递的 `customer.subscription.updated`/`.deleted` 事件也是空操作。
 
 ## 相关文档
 

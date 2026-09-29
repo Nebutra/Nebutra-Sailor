@@ -33,44 +33,44 @@ Dub.co is Nebutra's link management and marketing analytics layer. It handles ev
     ```
   </Step>
   <Step title="Verify the connection">
-    Run the following snippet in a local script or the API gateway REPL to confirm authentication:
+    Create a test link with the client to confirm authentication — there is no separate
+    `workspaces.list()` verification call:
 
     ```typescript
-    import { dub } from "@nebutra/analytics";
+    import { createAnalyticsClient } from "@nebutra/analytics";
 
-    const workspaces = await dub.workspaces.list();
-    console.log(workspaces);
+    const analytics = createAnalyticsClient({ apiKey: process.env.DUB_API_KEY! });
+    const link = await analytics.links.create({ url: "https://nebutra.com" });
+    console.log(link);
     ```
-
-    You should see your workspace returned without errors.
   </Step>
 </Steps>
 
 ## Creating Tracked Links
 
-Use the `dub` client from `@nebutra/analytics` to create links programmatically:
+There is no standalone `dub` export from `@nebutra/analytics` — the client is `AnalyticsClient`
+(`createAnalyticsClient(config)` / the `analytics` singleton), wrapping the `dub` npm SDK
+internally under `AnalyticsClient["dub"]` (a private field). UTM parameters go under a nested
+`utm` object, not individual `utm_source` / `utm_medium` top-level fields:
 
 ```typescript
-import { dub } from "@nebutra/analytics";
+import { createAnalyticsClient } from "@nebutra/analytics";
+
+const analytics = createAnalyticsClient({ apiKey: process.env.DUB_API_KEY! });
 
 // Welcome email link
-const welcomeLink = await dub.links.create({
+const welcomeLink = await analytics.links.create({
   url: "https://app.nebutra.com/dashboard",
   domain: "links.nebutra.com",
-  slug: "welcome",
-  utm_source: "email",
-  utm_medium: "transactional",
-  utm_campaign: "onboarding",
+  key: "welcome",
+  utm: { source: "email", medium: "transactional", campaign: "onboarding" },
 });
 
 // Upgrade nudge in-app banner
-const upgradeLink = await dub.links.create({
+const upgradeLink = await analytics.links.create({
   url: "https://app.nebutra.com/settings/billing",
   domain: "links.nebutra.com",
-  utm_source: "app",
-  utm_medium: "banner",
-  utm_campaign: "upgrade-pro",
-  utm_content: "quota-warning-banner",
+  utm: { source: "app", medium: "banner", campaign: "upgrade-pro", content: "quota-warning-banner" },
 });
 
 console.log(welcomeLink.shortLink); // → https://links.nebutra.com/welcome
@@ -99,16 +99,13 @@ Always use lowercase kebab-case for all UTM values. Mixed case causes duplicate 
 Every transactional email CTA should use a tracked link:
 
 ```typescript
-import { dub } from "@nebutra/analytics";
+import { analytics } from "@nebutra/analytics";
 
 async function sendWelcomeEmail(user: User) {
-  const ctaLink = await dub.links.create({
+  const ctaLink = await analytics.links.create({
     url: `https://app.nebutra.com/onboarding?userId=${user.id}`,
     domain: "links.nebutra.com",
-    utm_source: "email",
-    utm_medium: "transactional",
-    utm_campaign: "onboarding",
-    utm_content: "welcome-email-cta",
+    utm: { source: "email", medium: "transactional", campaign: "onboarding", content: "welcome-email-cta" },
   });
 
   await sendEmail({
@@ -121,42 +118,38 @@ async function sendWelcomeEmail(user: User) {
 
 ### In-App Referral Links
 
-```typescript
-import { dub } from "@nebutra/analytics";
+Use the dedicated `referrals.createLink` helper rather than `links.create` directly — it fills in
+the destination URL and tags for you:
 
-async function generateReferralLink(userId: string, orgSlug: string) {
-  return dub.links.create({
-    url: `https://nebutra.com/?ref=${orgSlug}`,
-    domain: "links.nebutra.com",
-    utm_source: "referral",
-    utm_medium: "in-app",
-    utm_campaign: "user-referral",
-    utm_content: userId,
-    // tag for grouping in Dub.co dashboard
-    tags: ["referral", `user-${userId}`],
+```typescript
+import { analytics } from "@nebutra/analytics";
+
+async function generateReferralLink(userId: string, tenantId: string, rewardType: string, rewardValue: number) {
+  return analytics.referrals.createLink({
+    userId,
+    tenantId,
+    rewardType,
+    rewardValue,
   });
 }
 ```
 
 ### Marketing Campaigns
 
-For paid campaigns, create links in bulk via the Dub.co dashboard or the API and assign them to a campaign tag:
+For paid campaigns, create links in bulk via the Dub.co dashboard or `links.createMany`:
 
 ```typescript
+import { analytics } from "@nebutra/analytics";
+
 const variants = ["headline-a", "headline-b", "headline-c"];
 
-const links = await Promise.all(
-  variants.map((variant) =>
-    dub.links.create({
-      url: "https://nebutra.com/landing/paid",
-      domain: "links.nebutra.com",
-      utm_source: "google",
-      utm_medium: "cpc",
-      utm_campaign: "q1-acquisition",
-      utm_content: variant,
-      tags: ["paid", "q1-acquisition"],
-    })
-  )
+const links = await analytics.links.createMany(
+  variants.map((variant) => ({
+    url: "https://nebutra.com/landing/paid",
+    domain: "links.nebutra.com",
+    utm: { source: "google", medium: "cpc", campaign: "q1-acquisition", content: variant },
+    tags: ["paid", "q1-acquisition"],
+  }))
 );
 ```
 
@@ -169,15 +162,19 @@ Link analytics are available in the Dub.co dashboard at [app.dub.co](https://app
 - **Top links** — ranked by click volume
 
 <Note>
-  Dub.co link analytics are currently available via the **Dub.co dashboard** at [app.dub.co](https://app.dub.co). In-app surfacing under `/admin/analytics` is on the roadmap. Until then, use the `retrieveLinkStats()` helper (see below) to embed metrics programmatically into your own admin views.
+  There is no `/admin/analytics` route in the codebase today for surfacing this in-app. Use
+  `analytics.getAnalytics()` (below) to embed metrics programmatically into your own admin view if
+  you build one.
 </Note>
 
 ## Retrieving Link Stats via API
 
-```typescript
-import { dub } from "@nebutra/analytics";
+`AnalyticsClient`'s method is `getAnalytics`, not `analytics.retrieve` on a raw `dub` client:
 
-const stats = await dub.analytics.retrieve({
+```typescript
+import { analytics } from "@nebutra/analytics";
+
+const stats = await analytics.getAnalytics({
   linkId: welcomeLink.id,
   interval: "30d",
   groupBy: "referrer",

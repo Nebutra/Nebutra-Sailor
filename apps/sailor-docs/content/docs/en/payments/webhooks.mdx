@@ -10,7 +10,7 @@ Per [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/ar
 | Endpoint | Provider | Covers |
 |----------|----------|--------|
 | `POST /api/webhooks/creem` | Creem (current) | One-time card purchases, worldwide, merchant of record |
-| `POST /api/v1/webhooks/stripe` | Stripe (legacy) | Subscriptions, billing portal, pre-switch checkouts |
+| `POST /api/webhooks/stripe` | Stripe (legacy) | Subscriptions, billing portal, pre-switch checkouts |
 
 Both are pre-built — you do not need to write the routing logic, only add handlers for new events if needed.
 
@@ -50,7 +50,7 @@ A pending checkout can be reconciled directly with `GET /v1/checkouts?checkout_i
 All Stripe events are delivered to a single endpoint on the API gateway:
 
 ```
-POST /api/v1/webhooks/stripe
+POST /api/webhooks/stripe
 ```
 
 This endpoint is pre-built in `backends/gateway/src/routes/webhooks/stripe.ts`. It only feeds surfaces that have not yet moved to Creem: subscriptions, the billing portal, the licence webhook, and legacy credit-purchase sessions. Nothing new is built on it.
@@ -61,129 +61,34 @@ This endpoint is pre-built in `backends/gateway/src/routes/webhooks/stripe.ts`. 
 Always verify the Stripe webhook signature before processing any event. Skipping verification allows anyone to send fake events to your endpoint and manipulate billing state.
 </Warning>
 
-Stripe signs every request with the `Stripe-Signature` header. The handler verifies this against `STRIPE_WEBHOOK_SECRET`:
-
-```typescript backends/gateway/src/routes/webhooks/stripe.ts
-import Stripe from "stripe";
-import { PLANS } from "@nebutra/billing";
-import { db } from "@nebutra/db";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-export async function POST(req: Request) {
-  const body = await req.text();
-  const sig = req.headers.get("stripe-signature");
-
-  if (!sig) {
-    return new Response("Missing stripe-signature header", { status: 400 });
-  }
-
-  let event: Stripe.Event;
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
-  } catch {
-    return new Response("Invalid signature", { status: 400 });
-  }
-
-  await handleStripeEvent(event);
-
-  return new Response("OK", { status: 200 });
-}
-```
+Stripe signs every request with the `Stripe-Signature` header. The handler is a Hono route in `backends/gateway/src/routes/webhooks/stripe.ts` — not a Next.js route — and verifies the header against `STRIPE_WEBHOOK_SECRET` with the `stripe` SDK's `webhooks.constructEvent` before dispatching by `event.type`.
 
 ## Handled events
 
+The route's `handleStripeEvent` switch dispatches on these event types:
+
 | Stripe event | Handler action |
 |-------------|---------------|
-| `customer.subscription.updated` | Updates tenant `plan`, `status`, and `currentPeriodEnd` in the database |
-| `customer.subscription.deleted` | Downgrades tenant to FREE plan |
-| `invoice.payment_succeeded` | Logs successful payment; clears any `past_due` flag |
-| `invoice.payment_failed` | Sets tenant status to `past_due`; triggers payment failure email |
+| `checkout.session.completed` | If the session carries a payment-order id, settles that `PaymentOrder` (ADR 2026-09-25); also emits the checkout-completed analytics event and resolves the licence tier |
+| `customer.subscription.created` | Creates the local subscription record |
+| `customer.subscription.updated` | Updates the local subscription's status and period |
+| `customer.subscription.deleted` | Marks the local subscription canceled |
+| `invoice.paid` | Records the payment |
+| `invoice.payment_failed` | Marks the subscription past-due |
 
-### Event handler implementations
-
-<CodeGroup>
-```typescript subscription.updated
-async function handleSubscriptionUpdated(
-  subscription: Stripe.Subscription
-) {
-  const orgId = subscription.metadata.orgId;
-  const priceId = subscription.items.data[0]?.price.id;
-
-  const plan = Object.values(PLANS).find(
-    (p) => p.stripePriceId === priceId
-  );
-
-  await db.tenant.update({
-    where: { id: orgId },
-    data: {
-      plan: plan?.id ?? "free",
-      subscriptionStatus: subscription.status,
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-      cancelAtPeriodEnd: subscription.cancel_at_period_end,
-    },
-  });
-}
-```
-```typescript subscription.deleted
-async function handleSubscriptionDeleted(
-  subscription: Stripe.Subscription
-) {
-  const orgId = subscription.metadata.orgId;
-
-  await db.tenant.update({
-    where: { id: orgId },
-    data: {
-      plan: "free",
-      subscriptionStatus: "canceled",
-      currentPeriodEnd: null,
-    },
-  });
-}
-```
-```typescript invoice.payment_failed
-async function handlePaymentFailed(invoice: Stripe.Invoice) {
-  const customerId = invoice.customer as string;
-
-  const tenant = await db.tenant.findFirst({
-    where: { stripeCustomerId: customerId },
-  });
-
-  if (!tenant) return;
-
-  await db.tenant.update({
-    where: { id: tenant.id },
-    data: { subscriptionStatus: "past_due" },
-  });
-
-  // Notify the user via @nebutra/notifications
-  await notifications.send({
-    id: crypto.randomUUID(),
-    type: "billing.payment_failed",
-    recipientId: tenant.ownerId,
-    tenantId: tenant.id,
-    channels: ["email"],
-    data: { invoiceUrl: invoice.hosted_invoice_url },
-  });
-}
-```
-</CodeGroup>
+Any other event type is logged and ignored (`log.info("Unhandled Stripe event type", …)`).
 
 ## Registering events in the Stripe Dashboard (legacy)
 
 When setting up your production webhook endpoint, enable exactly these events:
 
 ```
+checkout.session.completed
+customer.subscription.created
 customer.subscription.updated
 customer.subscription.deleted
-invoice.payment_succeeded
+invoice.paid
 invoice.payment_failed
-checkout.session.completed
 ```
 
 Go to **Stripe Dashboard → Developers → Webhooks → Add endpoint**, enter your API URL, and select the events above.
@@ -207,7 +112,7 @@ Go to **Stripe Dashboard → Developers → Webhooks → Add endpoint**, enter y
   </Step>
   <Step title="Forward events to your local server">
     ```bash
-    stripe listen --forward-to localhost:3001/api/v1/webhooks/stripe
+    stripe listen --forward-to localhost:3001/api/webhooks/stripe
     ```
 
     The CLI prints a local webhook signing secret (`whsec_...`). Set this as `STRIPE_WEBHOOK_SECRET` in your `.env.local` during development.
@@ -221,6 +126,9 @@ Go to **Stripe Dashboard → Developers → Webhooks → Add endpoint**, enter y
 
     # Simulate a payment failure
     stripe trigger invoice.payment_failed
+
+    # Simulate a paid invoice
+    stripe trigger invoice.paid
     ```
   </Step>
 </Steps>
@@ -233,7 +141,7 @@ The Stripe CLI signing secret is different from your production webhook signing 
 
 Both providers may deliver the same event more than once (at-least-once delivery). Make your handlers idempotent — processing the same event twice should produce the same result as processing it once.
 
-The Creem handler records each event in a webhook inbox before any side effect, so a redelivery is a no-op. The Stripe `subscription.updated` and `subscription.deleted` handlers above are already idempotent because they use upsert-style database updates.
+The Creem handler records each event in a webhook inbox before any side effect, so a redelivery is a no-op. The Stripe `checkout.session.completed` branch that settles a `PaymentOrder` reuses the same order-level idempotency as Creem (`settlePaymentOrder`'s conditional update). Subscription handlers update the local record by its Stripe subscription id, so a redelivered `customer.subscription.updated`/`.deleted` event is a no-op.
 
 ## Related
 

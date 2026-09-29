@@ -48,7 +48,13 @@ Sentry Cloud
     └──► Alerts (email, Slack, PagerDuty)
 ```
 
-Every `warn` and `error` log emitted by `@nebutra/logger` is automatically forwarded as a Sentry breadcrumb or event. You do not need to call `Sentry.captureException` manually — the logger handles it.
+The Sentry bridge in `@nebutra/logger` is **off by default** — it is an opt-in transport, not
+automatic forwarding. Set `LOGGER_SENTRY_ENABLED=true` (and `SENTRY_DSN`) to make `error`-level log
+entries forward as Sentry exceptions and `warn`-level entries forward as breadcrumbs. Sentry's own
+SDK still auto-captures unhandled exceptions and promise rejections on its own regardless of this
+setting; the logger bridge exists for *handled* errors you still want visible in Sentry. It loads
+`@sentry/node` lazily and no-ops if the package isn't installed, so enabling it is safe even before
+you've wired Sentry into a given app.
 
 ## Alert Channels
 
@@ -81,7 +87,7 @@ Configure alert rules in Sentry under **Alerts** → **Create Alert Rule**.
 
 - **Source**: `quota_warning` and `quota_exceeded` events (PostHog + logger)
 - **Target**: < 5% of tenants hitting quota exceeded in any month
-- **Dashboard**: Admin panel `/admin/analytics`
+- **Dashboard**: PostHog (there is no built-in `/admin/analytics` route — see [Analytics Overview](/analytics/overview))
 
 ## Environment Variables
 
@@ -89,6 +95,9 @@ Configure alert rules in Sentry under **Alerts** → **Create Alert Rule**.
 # Sentry — server-side (API gateway + Next.js server components)
 SENTRY_DSN=https://xxxx@oXXX.ingest.sentry.io/XXXX
 SENTRY_AUTH_TOKEN=sntrys_xxxxxxxxxxxx   # for source map upload in CI
+
+# Opt-in only — forwards @nebutra/logger warn/error entries into Sentry too
+LOGGER_SENTRY_ENABLED=true
 SENTRY_ORG=your-sentry-org-slug
 SENTRY_PROJECT=nebutra
 
@@ -110,11 +119,16 @@ NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 
 ## Disabling Monitoring in Development
 
-By default, Sentry is disabled in `development` environments to avoid polluting production data. This is controlled by the `NODE_ENV` check in `@nebutra/logger`:
+The `@nebutra/logger` → Sentry bridge is opt-in, not environment-gated — it stays off unless you
+explicitly set `LOGGER_SENTRY_ENABLED=true` (see above), so a development `.env.local` with no
+`LOGGER_SENTRY_ENABLED` sends nothing through the logger bridge regardless of `SENTRY_DSN`. A
+Sentry SDK you've initialized directly in `apps/web/sentry.*.config.ts` is separate from this
+bridge and follows its own `SENTRY_DSN` presence check:
 
 ```bash
-# .env.local — Sentry is a no-op when this is unset or environment is development
-SENTRY_DSN=   # leave empty to disable
+# .env.local
+LOGGER_SENTRY_ENABLED=   # leave unset to keep the @nebutra/logger bridge off
+SENTRY_DSN=              # leave empty to disable the Sentry SDK itself
 ```
 
 <Info>

@@ -33,10 +33,15 @@ description: Connect Nebutra with the tools your team already uses.
   <Card title="Sentry" icon="bug">
     Error tracking with tenant context, pre-configured.
   </Card>
-  <Card title="Supabase" icon="server">
-    PostgreSQL + pgvector. RLS policies pre-configured for multi-tenancy.
-  </Card>
 </CardGroup>
+
+<Note>
+There is no Supabase integration. Per ADR 2026-09-25 (database convergence), Postgres via Prisma
+is the one database source — `packages/platform/db/`, with RLS generated from `schema.prisma`
+`@rls` annotations, not a Supabase-specific adapter. Point `DATABASE_URL` at any Postgres instance,
+including a Supabase-hosted one, but Nebutra does not use Supabase's own client, auth, or RLS
+tooling.
+</Note>
 
 ## Built-in vs configurable
 
@@ -53,27 +58,13 @@ Some integrations are pre-wired and active by default. Others require API keys t
 | Slack | Requires OAuth setup | Via Settings → Integrations |
 | GitHub | Requires OAuth setup | Via Settings → Integrations |
 | Linear | Requires API key | Via Settings → Integrations |
-| Supabase | Active when `DATABASE_URL` is set | RLS pre-configured |
+| Database (Postgres) | Active when `DATABASE_URL` is set | Prisma + generated RLS — not Supabase-specific |
 
 ## Adding a new integration
 
-To add a custom integration for your own product, implement the `Integration` interface:
-
-```typescript
-import { defineIntegration } from "@nebutra/integrations";
-
-export const myIntegration = defineIntegration({
-  id: "my-service",
-  name: "My Service",
-  events: ["project.created", "invoice.paid"],
-  onEvent: async (event, config) => {
-    await fetch(`${config.webhookUrl}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(event),
-    });
-  },
-});
-```
-
-Register it in `apps/web/src/integrations/registry.ts`.
+There is no `@nebutra/integrations` package and no `defineIntegration` helper — `packages/integrations/`
+is a category directory (email, storage, queue, search, webhooks, …), each a normal standalone
+package, not entries in a shared integration registry. Nebutra's own outbound-event delivery to a
+third party runs through [`@nebutra/webhooks`](/guides/webhooks) (signing, retries, replay
+protection) — build a new integration as its own package under `packages/integrations/<name>/`, or
+as an outbound webhook subscriber if it only needs to react to Nebutra events.

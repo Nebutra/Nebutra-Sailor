@@ -88,13 +88,14 @@ Increase `tracesSampleRate` temporarily when debugging a performance regression,
 
 ## Tenant Context Enrichment
 
-Nebutra automatically attaches org and user context to every Sentry event so you can filter issues by tenant:
+There is no built-in middleware that tags Sentry events with tenant/org context automatically —
+add it yourself where tenant context is resolved, once per request:
 
 ```typescript
 import * as Sentry from "@sentry/nextjs";
 import { getCurrentTenant } from "@nebutra/tenant";
 
-// Called in middleware after tenant resolution
+// Call this after tenant resolution, e.g. in your own middleware
 export function setSentryTenantContext() {
   const tenant = getCurrentTenant();
   if (!tenant) return;
@@ -104,8 +105,6 @@ export function setSentryTenantContext() {
   Sentry.setTag("plan", tenant.plan);
 }
 ```
-
-This is already wired into Nebutra's middleware chain. You do not need to call it manually in application code.
 
 ## Alert Rules
 

@@ -1,13 +1,21 @@
 ---
 title: Inngest
-description: Durable multi-step background functions with automatic retries, event fan-out, and a local dev server — powered by @nebutra/event-bus.
+description: Durable multi-step background functions with automatic retries, event fan-out, and a local dev server — backed by the raw Inngest SDK inside backends/gateway.
 ---
 
 ## Overview
 
 Inngest is the primary background job system in Nebutra. It treats each function step as a durable checkpoint — if a step fails, only that step is retried, not the entire job. This makes it ideal for multi-step workflows like onboarding flows, report pipelines, and notification sequences.
 
-Nebutra wraps Inngest via `@nebutra/event-bus`, which pre-configures the client with your credentials and exposes it across the monorepo.
+The Inngest client and every registered function live inside the API gateway, at
+`backends/gateway/src/inngest/` — `client.ts` constructs the raw `inngest` SDK client
+(`new Inngest({ id: "nebutra-api-gateway" })`, reading `INNGEST_EVENT_KEY` /
+`INNGEST_SIGNING_KEY` from the environment automatically), and `index.ts` collects every function
+into `inngestFunctions` and serves them with `inngest/hono`'s `serve()`. There is no published
+`@nebutra/event-bus` wrapper around Inngest — `@nebutra/event-bus` is a separate internal
+pub/sub primitive (an `EventBus` class with a dead-letter queue) used for in-process event
+fan-out elsewhere in the monorepo; it ships Inngest-flavoured Zod schemas for a few payload types
+but does not construct or re-export the Inngest client itself.
 
 ## Setup
 
@@ -20,47 +28,56 @@ Nebutra wraps Inngest via `@nebutra/event-bus`, which pre-configures the client 
   </Step>
 
   <Step title="Register the Inngest endpoint">
-    The API gateway already exposes `POST /api/v1/inngest`. This is the URL Inngest calls to execute your functions. Register it in the [Inngest dashboard](https://app.inngest.com) under **Apps → Add App**:
+    The API gateway already exposes `GET/POST/PUT /api/inngest` (mounted in `app.ts` via
+    `app.on(["GET", "POST", "PUT"], "/api/inngest", (c) => inngestHandler(c))`). This is the URL
+    Inngest calls to execute your functions. Register it in the [Inngest dashboard](https://app.inngest.com) under **Apps → Add App**:
 
     ```
-    https://api.yourdomain.com/api/v1/inngest
+    https://api.yourdomain.com/api/inngest
     ```
 
     For local development, use the Inngest Dev Server instead (see below).
   </Step>
 
   <Step title="Define your first function">
+    New functions live beside the existing ones in `backends/gateway/src/inngest/functions/`, and
+    import the shared client from `../client.js` — not from a published package:
+
     ```typescript
-    // packages/integrations/event-bus/src/functions/welcome-email.ts
-    import { inngest } from "@nebutra/event-bus";
-    import { db } from "@nebutra/db";
-    import { email } from "@nebutra/email";
+    // backends/gateway/src/inngest/functions/welcome-email.ts
+    import { inngest } from "../client.js";
+    import { getSystemDb } from "@nebutra/db";
+    import { sendWelcomeEmail as sendWelcomeEmailNotification } from "@nebutra/email";
 
     export const sendWelcomeEmail = inngest.createFunction(
       { id: "send-welcome-email", retries: 3 },
       { event: "user/signed-up" },
       async ({ event, step }) => {
+        const db = getSystemDb();
         const user = await step.run("fetch-user", async () => {
           return db.user.findUnique({ where: { id: event.data.userId } });
         });
 
         await step.run("send-email", async () => {
-          return email.send({
+          return sendWelcomeEmailNotification({
             to: user.email,
-            template: "welcome",
-            data: { userName: user.name },
+            firstName: user.firstName,
+            orgName: user.orgName,
           });
         });
       }
     );
     ```
+
+    Then add it to the `inngestFunctions` array exported from `backends/gateway/src/inngest/index.ts` —
+    `serve()` only registers functions listed there.
   </Step>
 
   <Step title="Emit an event">
     ```typescript
-    import { inngest } from "@nebutra/event-bus";
+    import { inngest } from "../client.js"; // from within backends/gateway
 
-    // From anywhere in your server code
+    // From anywhere in the gateway's server code
     await inngest.send({
       name: "user/signed-up",
       data: { userId: "user_abc123" },
@@ -74,7 +91,7 @@ Nebutra wraps Inngest via `@nebutra/event-bus`, which pre-configures the client 
 ### Basic function
 
 ```typescript
-import { inngest } from "@nebutra/event-bus";
+import { inngest } from "../client.js"; // from within backends/gateway/src/inngest/functions/
 
 export const myFunction = inngest.createFunction(
   {
@@ -224,7 +241,7 @@ Keep event names lowercase with forward-slash separators. Avoid generic names li
 ## Sending events with data
 
 ```typescript
-import { inngest } from "@nebutra/event-bus";
+import { inngest } from "../client.js"; // from within backends/gateway/src/inngest/functions/
 
 // Single event
 await inngest.send({
@@ -250,7 +267,7 @@ await inngest.send([
 During local development, run the Inngest Dev Server to execute functions locally without connecting to Inngest Cloud:
 
 ```bash
-npx inngest-cli@latest dev -u http://localhost:3001/api/v1/inngest
+npx inngest-cli@latest dev -u http://localhost:3001/api/inngest
 ```
 
 The Dev Server:

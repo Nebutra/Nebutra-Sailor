@@ -9,12 +9,12 @@ Nebutra 通过 `@nebutra/agents` 开箱即用地提供 AI 功能。该包是 [Ve
 
 每个租户可使用以下功能：
 
-| 功能 | 描述 | 功能标志 |
+| 功能 | 描述 | 计划权益 |
 |------|------|----------|
 | **聊天补全** | 流式和非流式 LLM 响应 | `ai.chat` |
 | **嵌入向量** | 用于语义搜索和 RAG 的向量表示 | `ai.embeddings` |
-| **图像分析** | 支持视觉能力的模型（GPT-5） | `ai.chat` |
-| **模型选择** | 每租户模型覆盖（企业版） | `ai.model_selection` |
+| **图像分析 / 生成** | 支持视觉能力的模型与图像生成 | `ai.images` |
+| **推理** | 扩展推理模型调用 | `ai.reasoning` |
 
 ## 架构
 
@@ -24,10 +24,10 @@ Nebutra 通过 `@nebutra/agents` 开箱即用地提供 AI 功能。该包是 [Ve
 客户端应用
     │
     ▼
-POST /api/v1/ai/chat          (API 网关 — Hono)
+POST /api/v1/ai/chat/completions   (API 网关 — Hono)
     │
     ├─ 鉴权检查（API Key）
-    ├─ 功能标志检查（ai.chat）
+    ├─ 计划权益检查（ai.chat）
     ├─ 限流（按租户，@nebutra/rate-limit）
     │
     ▼
@@ -76,19 +76,15 @@ pgvector（仅嵌入向量）         （PostgreSQL 向量存储）
   </Tab>
 </Tabs>
 
-## 功能标志
+## 计划权益
 
-AI 功能默认关闭，需要按租户启用。标志在 API 网关发起任何模型调用之前检查——如果标志关闭，不会消耗任何 Token。
+AI 功能由计划门控，而不是一个独立的功能开关。`ai.chat`、`ai.embeddings`、`ai.images`、`ai.reasoning` 是 `PLAN_FEATURES`（`@nebutra/billing` 的 `entitlements/service.ts`）中的条目——哪些计划包含某项功能是这张表里的数据，不是一个按租户切换的开关。API 网关会在发起任何模型调用之前检查权益（以及该功能若挂有用量额度时剩余的额度）——检查失败则不消耗任何 Token：
 
-```typescript
-// 以编程方式为租户启用 AI
-import { setFeatureFlag } from "@nebutra/preset";
-
-await setFeatureFlag("org_123", "ai.chat", true);
-await setFeatureFlag("org_123", "ai.embeddings", true);
+```typescript backends/gateway/src/middlewares/entitlements.ts
+app.post("/api/v1/ai/generate", requireFeature("ai.images", 1), handler);
 ```
 
-也可以在控制台的 **组织 → 功能** 中切换标志。
+完整的权益检查 API（`checkEntitlement`、`requireEntitlement`、`requireFeature`、`isPlanFeature`）参见[付费墙](/zh/payments/paywall)。
 
 ## 环境变量
 
@@ -100,13 +96,9 @@ OPENAI_API_KEY=""
 
 # 可选：通过 OpenRouter 启用多模型路由
 OPENROUTER_API_KEY=""
-
-# 未在请求中指定模型时使用的默认模型
-AI_DEFAULT_MODEL="gpt-5.4-mini"
-
-# 可选：覆盖默认嵌入模型
-AI_EMBEDDING_MODEL="text-embedding-3-small"
 ```
+
+没有 `AI_DEFAULT_MODEL` / `AI_EMBEDDING_MODEL` 环境变量。默认聊天模型是在启动时调用一次 `configure({ defaultModel: "…" })` 设置的（`@nebutra/agents` 的 `NebutraAIConfigSchema` 把 `defaultModel` 默认设为 `models.flagship`）；默认嵌入模型固定为 `"embedding"` 这个预设别名，除非调用时自己传入 `model`。
 
 <Warning>
 切勿将 `OPENAI_API_KEY` 或 `OPENROUTER_API_KEY` 暴露给客户端。所有模型调用必须通过 API 网关进行。
@@ -134,32 +126,28 @@ const quota = await metering.getQuota("org_123", "ai_tokens");
 
 ## 快速使用示例
 
+`generateText`、`streamText`、`embed` 的第一个参数是消息/文本值，第二个参数是选项对象——不是一个合并的对象：
+
 ```typescript
 import { streamText, generateText, embed } from "@nebutra/agents";
 
 // 流式聊天（SSE）
-const result = await streamText({
-  model: "gpt-5.5",
-  messages: [
+const result = await streamText(
+  [
     { role: "system", content: "你是一个有帮助的助手。" },
     { role: "user", content: userMessage },
   ],
-  tenantId,
-});
+  { model: "gpt-5.5" },
+);
 
 // 非流式
-const { text } = await generateText({
-  model: "gpt-5.4-mini",
-  prompt: "总结以下内容：" + content,
-  tenantId,
-});
+const { text } = await generateText(
+  [{ role: "user", content: "总结以下内容：" + content }],
+  { model: "gpt-5.4-mini" },
+);
 
-// 嵌入向量
-const { embedding } = await embed({
-  model: "text-embedding-3-small",
-  value: "需要嵌入的文本",
-  tenantId,
-});
+// 嵌入向量——默认使用 "embedding" 预设别名
+const embedding = await embed("需要嵌入的文本", { model: "text-embedding-3-small" });
 ```
 
 ## 相关文档

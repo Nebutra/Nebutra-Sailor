@@ -3,11 +3,7 @@ title: 邮件提供商
 description: 为 @nebutra/email 配置 Resend 凭证和已验证发件域名。
 ---
 
-`@nebutra/email` 当前通过 **Resend** 投递。测试和预览校验可以无凭证导入包；只有发送函数真正投递邮件时才需要 `RESEND_API_KEY`。
-
-<Note>
-后续可以在相同公开发送函数后面增加其他 provider。调用方不要感知 provider 私有逻辑。
-</Note>
+`@nebutra/email` 有两个 provider：用于真实投递的 **Resend**，以及内置的 **console** provider（`ConsoleEmailProvider`），后者只打印渲染出的邮件而不真正发送——按 ADR 2026-09-24（Sailor 收敛）保留的开发/测试兜底（Nodemailer 已被删除，console 被保留）。选择方式是自动探测：设置了 `EMAIL_PROVIDER`（`"resend"` | `"console"`）就用它，否则存在 `RESEND_API_KEY` 就选 Resend，否则用 console。测试和预览校验可以无凭证导入包——发送函数真正通过 Resend 投递时才需要 `RESEND_API_KEY`。
 
 ## Resend 配置
 
@@ -58,6 +54,14 @@ EMAIL_FROM=Nebutra <noreply@nebutra.com>
 <Warning>
 不要在生产环境使用 test key。测试邮件不会投递给真实收件人。
 </Warning>
+
+## Console provider（开发/测试）
+
+没有设置 `RESEND_API_KEY`——或显式设置 `EMAIL_PROVIDER=console`——时，每个发送函数都会把渲染出的主题/HTML 打印到标准输出，而不是调用 Resend。这正是 `pnpm --filter @nebutra/email test` 和 `pnpm mail:check` 能在空 `.env` 下运行的原因。
+
+```bash
+EMAIL_PROVIDER=console
+```
 
 ## 域名排错
 

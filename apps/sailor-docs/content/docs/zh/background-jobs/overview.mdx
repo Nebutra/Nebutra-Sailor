@@ -41,13 +41,13 @@ Nebutra 为此提供了两套系统，分别针对不同的工作负载类型进
         │                               Inngest 函数
         │                               （多步骤、重试）
         │                                      │
-        │                               POST /api/v1/inngest
+        │                               POST /api/inngest
         │                               （你的 API 网关）
         │
         └─── queue.enqueue(job) ───────► QStash（Serverless）
                                                 │
                                          queue.registerHandler()
-                                         POST /api/v1/queue/:queue/:type
+                                         POST /api/queue/:queue/:type
 ```
 
 ## 常见使用场景

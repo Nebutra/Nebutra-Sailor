@@ -3,7 +3,7 @@ title: "Structured Logs"
 description: "Use @nebutra/logger for structured, tenant-aware JSON logging across the Nebutra stack."
 ---
 
-`@nebutra/logger` is Nebutra's structured logging library. It writes newline-delimited JSON to stdout, automatically injects tenant context, and forwards `warn` and `error` level events to Sentry as breadcrumbs and captured exceptions.
+`@nebutra/logger` is Nebutra's structured logging library. It writes newline-delimited JSON to stdout and automatically injects tenant context. Its Sentry bridge — forwarding `warn`/`error` level events as breadcrumbs and captured exceptions — is **opt-in**, not automatic: it only activates with `LOGGER_SENTRY_ENABLED=true` and `SENTRY_DSN` set, loads `@sentry/node` lazily, and silently no-ops otherwise (see [Monitoring Overview](/monitoring/overview)).
 
 ## Why Not `console.log`?
 
@@ -12,7 +12,7 @@ description: "Use @nebutra/logger for structured, tenant-aware JSON logging acro
 - **Structured JSON** — every log line is a parseable object with consistent fields
 - **Tenant context** — `tenantId`, `orgId`, and `userId` are injected automatically
 - **Log levels** — filter noise in production by setting `LOG_LEVEL=warn`
-- **Sentry integration** — `warn` and `error` logs become Sentry breadcrumbs; uncaught errors become Sentry issues
+- **Optional Sentry bridge** — with `LOGGER_SENTRY_ENABLED=true`, `warn` and `error` logs become Sentry breadcrumbs/captured exceptions; Sentry's own SDK still auto-captures uncaught errors independently of this setting
 - **Zero `console.log` in production** — enforced by the project's ESLint rules
 
 <Warning>
@@ -131,12 +131,12 @@ try {
 ```
 
 <Note>
-`logger.error` automatically calls `Sentry.captureException(error)` with the extra properties as context. The error will appear in Sentry's **Issues** tab within seconds.
+With `LOGGER_SENTRY_ENABLED=true`, `logger.error` calls `Sentry.captureException(error)` with the extra properties as context. Without it, this is a no-op — nothing goes to Sentry through the logger bridge.
 </Note>
 
 ## Sentry Integration Detail
 
-The logger's Sentry integration works as follows:
+With the bridge enabled (`LOGGER_SENTRY_ENABLED=true` + `SENTRY_DSN`), the logger's Sentry integration works as follows:
 
 | Logger call | Sentry behaviour |
 |-------------|-----------------|

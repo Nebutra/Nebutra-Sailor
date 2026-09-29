@@ -63,30 +63,23 @@ Common schedules:
 All Inngest cron times are in **UTC**. Convert tenant-local times before scheduling if your users expect jobs at a specific local time.
 </Warning>
 
-## Vercel cron
+## Deploy-target HTTP cron
 
-For simple scheduled tasks that just need to hit an endpoint, configure Vercel cron in `vercel.json`:
+The template ships no pre-built cron route (`backends/gateway/src/routes/` has no `cron.ts`) and
+no `vercel.json`, because the deploy target is not the template's decision (ADR 2026-06-04
+production runtime closure) — Nebutra's own instance runs on Fly + Cloudflare Workers, not Vercel.
+Inngest's own `{ cron: "…" }` trigger above is the supported, deploy-target-independent way to
+schedule work.
 
-```json
-{
-  "crons": [
-    {
-      "path": "/api/v1/cron/quota-reset",
-      "schedule": "0 0 1 * *"
-    },
-    {
-      "path": "/api/v1/cron/cleanup-expired-sessions",
-      "schedule": "0 3 * * *"
-    }
-  ]
-}
-```
-
-The Vercel cron runner calls your endpoint via an authenticated GET request. Verify the request is from Vercel using the `Authorization` header:
+If your deploy target's own scheduler (Vercel cron, Fly Machines scheduled runs, Cloudflare Cron
+Triggers, a `systemd` timer, …) needs a plain HTTP endpoint to hit instead, write one yourself and
+have it do nothing but emit an Inngest event — the step isolation, retries, and observability stay
+on the Inngest side:
 
 ```typescript
-// backends/gateway/src/routes/cron.ts
+// backends/gateway/src/routes/cron.ts — not part of the template; an example to add
 import { Hono } from "hono";
+import { inngest } from "../inngest/client.js";
 
 const cron = new Hono();
 
@@ -96,17 +89,18 @@ cron.get("/quota-reset", async (c) => {
     return c.json({ error: "Unauthorized" }, 401);
   }
 
-  // Trigger an Inngest event instead of doing work inline
   await inngest.send({ name: "quota/monthly-reset", data: {} });
 
   return c.json({ ok: true });
 });
 ```
 
-Set `CRON_SECRET` to a random secret in your Vercel environment variables.
+Mount it, then point your deploy target's scheduler at it with a `CRON_SECRET` bearer token it
+knows how to send (Vercel's cron runner sends one automatically via `Authorization`; other
+targets need their own secret-injection mechanism).
 
 <Note>
-Prefer triggering an Inngest event from the cron endpoint rather than doing heavy work inline. This gives you retries, step isolation, and observability for free.
+Prefer triggering an Inngest event from a cron endpoint rather than doing heavy work inline. This gives you retries, step isolation, and observability for free.
 </Note>
 
 ## Common cron jobs
@@ -222,7 +216,7 @@ Use the Inngest Dev Server to trigger a cron function on demand without waiting 
 
 ```bash
 # Start the Dev Server
-npx inngest-cli@latest dev -u http://localhost:3001/api/v1/inngest
+npx inngest-cli@latest dev -u http://localhost:3001/api/inngest
 ```
 
 Then open `http://localhost:8288`, navigate to your function, and click **Trigger**. You can also send a manual trigger from the CLI:

@@ -48,76 +48,57 @@ description: 创建 Stripe 产品、在代码中配置计划限额，并为 Nebu
 
 ## 第二步：设置价格 ID 环境变量
 
-在 Stripe 中创建价格后，记录其 ID：
+在 Stripe 中创建价格后，记录其 ID——每个计费周期一个，与 `packages/commerce/billing/src/catalog/checkout-plan.ts` 对应：
 
 ```bash
-STRIPE_PRO_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
-STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_PRO_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_PRO_YEARLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_ENTERPRISE_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
+STRIPE_PRICE_ID_ENTERPRISE_YEARLY=price_xxxxxxxxxxxxxxxxxxxx
+
+# 每个计划可选的试用期覆盖
+STRIPE_TRIAL_DAYS_PRO=14
+STRIPE_TRIAL_DAYS_ENTERPRISE=0
 ```
 
-## 第三步：在代码中配置计划限额
+`resolveCheckoutOffer` 会直接从这些环境变量中，按 `{ plan, interval }` 组合读取对应的价格 ID——不存在一张需要手动维护结账价格的硬编码表。
 
-计划限额定义在 `packages/commerce/billing/src/plans.ts` 中。每个条目将计划名称映射到其资源配额。
+## 第三步：配置计划限额与功能
 
-```typescript packages/commerce/billing/src/plans.ts
-export const PLANS = {
-  free: {
-    id: "free",
-    name: "FREE",
-    stripePriceId: null,
-    limits: {
-      apiCallsPerMonth: 1_000,
-      orgMembers: 1,
-    },
-    features: {
-      emailSupport: false,
-      sso: false,
-    },
-  },
-  pro: {
-    id: "pro",
-    name: "PRO",
-    stripePriceId: process.env.STRIPE_PRO_PRICE_ID!,
-    limits: {
-      apiCallsPerMonth: 100_000,
-      orgMembers: 10,
-    },
-    features: {
-      emailSupport: true,
-      sso: false,
-    },
-  },
-  enterprise: {
-    id: "enterprise",
-    name: "ENTERPRISE",
-    stripePriceId: process.env.STRIPE_ENTERPRISE_PRICE_ID!,
-    limits: {
-      apiCallsPerMonth: Infinity,
-      orgMembers: Infinity,
-    },
-    features: {
-      emailSupport: true,
-      sso: true,
-    },
-  },
+计划配额与功能门控**不是**一个静态文件——而是 `PlanConfigService`（`packages/commerce/billing/src/config/plan-config.ts`），一个数据库驱动、Redis 缓存的配置，以 `plan: "FREE" | "PRO" | "ENTERPRISE"` 为键，并带有 `version` 字段用于在你修改限额时为存量客户保留原有条款。每条 `PlanConfig` 记录都持有 `features`（`Record<string, FeatureValue>`）和 `limits`（`Record<string, LimitConfig>`——`limit: -1` 表示无限制）。
+
+真正属于代码的，是每个计划所依赖的功能权益清单——`packages/commerce/billing/src/entitlements/service.ts`：
+
+```typescript packages/commerce/billing/src/entitlements/service.ts
+export const FEATURES = {
+  // requireFeature() 检查的功能键——如 "ai.chat"、"ai.embeddings"、"api.access"
 } as const;
 
-export type PlanId = keyof typeof PLANS;
-export type Plan = (typeof PLANS)[PlanId];
+export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
+  FREE: [/* … */],
+  PRO: [/* … */],
+  ENTERPRISE: [/* … */],
+};
 ```
 
-## 第四步：通过 ID 获取计划
+## 第四步：检查某项功能权益
 
-在后端代码的任意位置使用 `getPlan` 辅助函数：
+在后端代码的任意位置使用 `@nebutra/billing` 的 `isPlanFeature` 或 `checkEntitlement`：
 
 ```typescript
-import { getPlan } from "@nebutra/billing";
+import { isPlanFeature, checkEntitlement } from "@nebutra/billing";
 
-const plan = getPlan("pro");
-// → { id: "pro", name: "PRO", limits: { apiCallsPerMonth: 100000, ... }, ... }
+const allowed = isPlanFeature("PRO", "ai.chat");
+// → true/false，来自静态的 PLAN_FEATURES 表
 
-const limit = plan.limits.apiCallsPerMonth;
-// → 100000
+const result = await checkEntitlement(organizationId, "ai.chat");
+// → 同时会考虑按组织的授权/覆盖项，而不只是计划的默认值
+```
+
+API 网关通过 `requireFeature` 中间件（`backends/gateway/src/middlewares/entitlements.ts`）在边缘层执行这一检查：
+
+```typescript
+app.post("/api/v1/ai/generate", requireFeature("ai.images", 1), handler);
 ```
 
 ## 添加新计划层级
@@ -128,37 +109,30 @@ const limit = plan.limits.apiCallsPerMonth;
   </Step>
   <Step title="将价格 ID 添加到环境变量">
     ```bash
-    STRIPE_TEAMS_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+    STRIPE_PRICE_ID_TEAMS_MONTHLY=price_xxxxxxxxxxxxxxxxxxxx
     ```
+
+    `catalog/checkout-plan.ts` 中的 `CHECKOUT_PLANS` 目前是 `["pro", "enterprise"]`——新增层级也需要在此添加一项，结账逻辑才能解析出它的价格 ID。
   </Step>
-  <Step title="在 PLANS 中添加计划条目">
-    ```typescript packages/commerce/billing/src/plans.ts
-    teams: {
-      id: "teams",
-      name: "TEAMS",
-      stripePriceId: process.env.STRIPE_TEAMS_PRICE_ID!,
-      limits: {
-        apiCallsPerMonth: 500_000,
-        orgMembers: 50,
-      },
-      features: {
-        emailSupport: true,
-        sso: false,
-      },
-    },
+  <Step title="添加该计划的配置记录">
+    在数据库中新增或更新对应的 `PlanConfig` 记录（不是源码文件），填入新计划的 `limits` 与 `features`。
+  </Step>
+  <Step title="将计划加入 PLAN_FEATURES">
+    ```typescript packages/commerce/billing/src/entitlements/service.ts
+    export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
+      // …
+      TEAMS: ["ai.chat", "ai.embeddings", "api.access"],
+    };
     ```
-  </Step>
-  <Step title="更新计划门控逻辑">
-    如果使用了 `requirePlan('pro')` 检查，在适当的地方更新逻辑以接受新层级（参见[付费墙](/zh/payments/paywall)）。
   </Step>
 </Steps>
 
 ## 更新计划限额
 
-编辑 `packages/commerce/billing/src/plans.ts` 中相应计划的 `limits` 对象。修改在下次部署后立即生效——无需数据库迁移，因为限额在每次请求时动态解析。
+计划限额存放在数据库中（`PlanConfigService`），并有 Redis 缓存——不在源码文件里——因此修改限额不需要重新部署。`PlanConfig.version` 支持为存量客户保留原有条款：某个客户处于激活状态的 `planVersion` 覆盖项会让他们继续沿用注册时的限额，直到你主动迁移。
 
 <Note>
-数据库中的计划变更在收到并处理 Stripe Webhook 后立即生效，不存在轮询延迟。配额执行在每次请求时使用最新的计划记录。
+租户所处的计划本身（订阅状态）在收到并处理 Stripe Webhook 后立即更新——参见[Webhooks](/zh/payments/webhooks)。不存在轮询延迟。
 </Note>
 
 ## 相关文档
