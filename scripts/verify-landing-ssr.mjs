@@ -63,8 +63,9 @@ const NEBUTRA_ROUTES = [
   },
   {
     path: "/zh-Hans",
-    h1: "No company should be hard to start",
-    text: ["让世界上没有难创的业"],
+    // The Chinese home leads in Chinese since the site gained 中文 (#700).
+    h1: "让世界上没有难创的业",
+    text: [],
     jsonLd: ["Organization", "WebSite"],
   },
   {

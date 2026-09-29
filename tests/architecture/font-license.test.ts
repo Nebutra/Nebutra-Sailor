@@ -70,8 +70,16 @@ describe("CJK face redistribution", () => {
     };
     const files = manifest.files ?? [];
     expect(files.length).toBeGreaterThan(0);
-    const binaries = files.filter((entry) => FONT_BINARY.test(entry) || entry.includes("*.woff"));
-    expect(binaries).toEqual([]);
+    // Open-licence faces (DM Sans, the registry faces) ship on purpose so a
+    // hoisted npm install resolves them (NOTICE-FONTS.md "Distribution"). What
+    // may never ship is a face whose licence forbids redistribution, by name
+    // or swept in by a wildcard.
+    const isText = (entry: string) => /\.(txt|md)$/i.test(entry);
+    const restricted = files.filter(
+      (entry) =>
+        (/misans|vivo/i.test(entry) && !isText(entry)) || /\*\.(woff2?|ttf|otf)/.test(entry),
+    );
+    expect(restricted).toEqual([]);
     expect(files).toContain("NOTICE-FONTS.md");
     expect(files).toContain("vendor/misans/LICENSE.txt");
     expect(files.some((entry) => /vivo/i.test(entry))).toBe(false);
