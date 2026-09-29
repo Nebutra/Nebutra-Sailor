@@ -1,7 +1,7 @@
 import { Heading } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { Link } from "@/i18n/navigation";
 
 /**
  * The site's two composition pieces. Everything visual below them is a design

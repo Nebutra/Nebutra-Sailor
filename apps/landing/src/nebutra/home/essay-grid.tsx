@@ -2,8 +2,8 @@
 
 import { FilterPills } from "@nebutra/ui/primitives";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
+import { Link } from "@/i18n/navigation";
 import type { EssayCardData } from "./essay-feature";
 
 /** The Journal as a grid of covers, optionally filterable by the essays' own tags. */

@@ -11,10 +11,10 @@ import {
   CommandList,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { usePathname } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { pick, siteLang } from "@/nebutra/i18n";
 import { ROUTES } from "@/nebutra/routes";
 import { SiteMenu } from "@/nebutra/shell/site-menu";
 import { ThemedLogo, ThemedLogomark } from "@/nebutra/shell/themed-logo";
@@ -33,6 +33,7 @@ const CLOSE_DELAY_MS = 240;
 
 export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: string }) {
   const pathname = usePathname() ?? "";
+  const l = siteLang(useLocale());
   // A full-viewport tool keeps the bar but gives the screen back to the tool.
   const compact = pageAt(pathname)?.chrome === "tool";
   // "hover" closes when the pointer leaves; "pinned" stays until dismissed.
@@ -91,7 +92,11 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
             variant="ghost"
             shape="square"
             iconSize="lg"
-            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-label={
+              open
+                ? pick(l, { en: "Close navigation", zh: "关闭导航" })
+                : pick(l, { en: "Open navigation", zh: "打开导航" })
+            }
             aria-expanded={Boolean(open)}
             aria-controls="site-drawer"
             onClick={() => {
@@ -118,7 +123,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
             variant="ghost"
             shape="square"
             iconSize="md"
-            aria-label="Search the site"
+            aria-label={pick(l, { en: "Search the site", zh: "搜索本站" })}
             onClick={() => setSearching(true)}
           >
             <MagnifyingGlass />
@@ -137,7 +142,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
       />
       <aside
         id="site-drawer"
-        aria-label="Site navigation"
+        aria-label={pick(l, { en: "Site navigation", zh: "站点导航" })}
         inert={!open}
         onMouseEnter={() => open === "hover" && clear()}
         onMouseLeave={hoverClose}
@@ -170,18 +175,24 @@ function SiteSearch({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const l = siteLang(useLocale());
   const router = useRouter();
   const pages = SITE_MAP.filter((p) => p.status === "live" && !p.path.includes("["));
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder="Search pages" />
+      <CommandInput placeholder={pick(l, { en: "Search pages", zh: "搜索页面" })} />
       <CommandList>
-        <CommandEmpty>Nothing matches that.</CommandEmpty>
+        <CommandEmpty>
+          {pick(l, { en: "Nothing matches that.", zh: "没有匹配的页面。" })}
+        </CommandEmpty>
         {SECTIONS.map((section) => {
           const inSection = pages.filter((p) => p.section === section.id);
           if (inSection.length === 0) return null;
           return (
-            <CommandGroup key={section.id} heading={section.title.en}>
+            <CommandGroup
+              key={section.id}
+              heading={l === "zh" ? section.title.zh : section.title.en}
+            >
               {inSection.map((page) => (
                 <CommandItem
                   key={page.path}
@@ -191,7 +202,7 @@ function SiteSearch({
                     router.push(page.path);
                   }}
                 >
-                  {page.title.en}
+                  {l === "zh" ? page.title.zh : page.title.en}
                   <span className="ml-auto text-xs text-muted-foreground">{page.path}</span>
                 </CommandItem>
               ))}
