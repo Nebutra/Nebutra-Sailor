@@ -5,7 +5,7 @@ name: Deploy Sailor Docs
 # Cloudflare Workers is now the only deploy path: OpenNext → Worker + Assets
 # (same pattern as typelens). nebutra-docs (Fly) was retired 2026-09-29 to
 # free a machine slot under the org's 20-machine cap — see
-# docs/architecture/2026-09-29-fly-machine-shrink.md. Runs on every push to
+# docs/ops/nebutra/2026-09-29-fly-machine-shrink.md. Runs on every push to
 # main that touches a trigger path below, and always on workflow_dispatch.
 #
 # The Vercel path was retired on 2026-09-22 with the rest of the Vercel

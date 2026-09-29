@@ -1,6 +1,13 @@
 # Fly machine shrink: free slots under the 20-machine org cap
 
-Date: 2026-09-29 · Status: Accepted · Owner: platform · Related: [2026-06-04 production runtime closure](./2026-06-04-production-runtime-closure.md), [2026-09-24 Sailor convergence](./2026-09-24-sailor-convergence.md), [DOMAINS.md](../DOMAINS.md)
+Date: 2026-09-29 · Status: Accepted · Owner: platform · Related: [2026-06-04 production runtime closure](../../architecture/2026-06-04-production-runtime-closure.md), [2026-09-24 Sailor convergence](../../architecture/2026-09-24-sailor-convergence.md), [DOMAINS.md](../../DOMAINS.md)
+
+Filed under `docs/ops/nebutra/` rather than `docs/architecture/` because it
+names Nebutra's own hostnames and Fly app IDs throughout — the
+template-boundary test (`tests/architecture/template-boundary.test.ts`) keeps
+`docs/architecture/` free of instance identifiers so the ADR folder stays
+portable to `create-sailor` scaffolds. It otherwise reads and cites like any
+other dated ADR.
 
 ## Context
 

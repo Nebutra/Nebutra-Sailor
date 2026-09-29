@@ -9,7 +9,7 @@ name: Deploy origin apps to Fly
 # SSO / admin / design ship as Next Machines here. Carina and New-API are
 # separate Fly apps (deploy-carina-fly.yml, deploy-new-api-fly.yml).
 # sailor-docs moved off Fly to Cloudflare Workers (deploy-sailor-docs.yml) —
-# see docs/architecture/2026-09-29-fly-machine-shrink.md. (design was
+# see docs/ops/nebutra/2026-09-29-fly-machine-shrink.md. (design was
 # evaluated for the same move and stays on Fly: apps/design reads the
 # monorepo source tree — packages/design/design-tokens/tokens/*.json,
 # packages/design/ui/src — over node:fs at request time by design, which the

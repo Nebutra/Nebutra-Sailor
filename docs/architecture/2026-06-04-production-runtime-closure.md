@@ -54,7 +54,7 @@ DEPLOY_TARGET_PYTHON_AI=fly
 ```
 # Note: cloudflare-pages remains allowed for create-sailor DX. sailor-docs
 # moved off Fly to Cloudflare Workers on 2026-09-29 (see
-# docs/architecture/2026-09-29-fly-machine-shrink.md) — `minify: true` in
+# docs/ops/nebutra/2026-09-29-fly-machine-shrink.md) — `minify: true` in
 # wrangler.jsonc keeps the OpenNext bundle under the Workers script size
 # limit; the earlier note here (that it "exceeds" the limit) was stale.
 
