@@ -33,12 +33,14 @@ brand colour (Linear's lime) belongs to its own mark, not to their product.
 ## 2. Show it — always, before pulling
 
 ```bash
-nebutra studio preview '<preset json>' --from claude-code --json
+nebutra studio preview '<preset json>' --json
 ```
 
 It returns `reviewUrl`, `code`, `apply` and `create`. Send the person the
 `reviewUrl` and say what you chose and why, in one or two lines. Studio opens
-on the look with a banner naming you as the proposer; they can adjust it there.
+on the look with a banner saying their agent proposed it; they can adjust it
+there, and save it to their account if they want to keep it. You never save
+for them — `nebutra studio list` / `pull --latest` read what they saved.
 
 Wait for them. They answer "looks good" or paste back a `nebutra studio pull
 <code>` command — if they adjusted the look in Studio, that command carries

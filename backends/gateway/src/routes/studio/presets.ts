@@ -111,6 +111,12 @@ studioPresetRoutes.openapi(listRoute, async (c) => {
   return c.json({ presets: presets.map(toJson) }, 200);
 });
 
+/** "Linear · Sep 29": the look's language and the day it was saved. */
+function defaultName(base: string): string {
+  const day = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return `${base.charAt(0).toUpperCase()}${base.slice(1)} · ${day}`;
+}
+
 const saveBody = z.object({
   code: z.string().min(1).max(32),
   name: z.string().trim().min(1).max(80).optional(),
@@ -147,7 +153,7 @@ studioPresetRoutes.openapi(saveRoute, async (c) => {
   const source = body.source ?? "web";
   // AUDIT(no-tenant): personal presets (@rls deny); written for the caller only.
   const preset = await getSystemDb().studioPreset.create({
-    data: { userId, code: body.code, source, name: body.name ?? `${base} · ${source}` },
+    data: { userId, code: body.code, source, name: body.name ?? defaultName(base) },
   });
   return c.json({ preset: toJson(preset) }, 201);
 });
