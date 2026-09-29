@@ -13,7 +13,14 @@ import { MarketingClientProviders } from "./marketing-client-providers";
  * `SiteShell` draws the frame (the rail on the Nebutra site, the top nav in the
  * template), so pages render content only.
  */
-export default function MarketingLayout({ children }: { children: ReactNode }) {
+export default async function MarketingLayout({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
   return (
     <MarketingClientProviders
       appUrl={env.NEXT_PUBLIC_APP_URL}
@@ -21,7 +28,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
       googleClientId={env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
       googleOneTapEnabled={env.NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP !== "false"}
     >
-      <SiteShell>{children}</SiteShell>
+      <SiteShell lang={lang}>{children}</SiteShell>
     </MarketingClientProviders>
   );
 }

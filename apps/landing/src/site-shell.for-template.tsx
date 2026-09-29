@@ -11,6 +11,8 @@ export function SiteShell({
 }: {
   children: ReactNode;
   footer?: "default" | "legal";
+  /** The route locale; the Nebutra frame's footer reads it. */
+  lang?: string;
 }) {
   return <StarterChrome footer={footer}>{children}</StarterChrome>;
 }

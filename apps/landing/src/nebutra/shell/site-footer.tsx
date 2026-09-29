@@ -1,5 +1,4 @@
 import { brand } from "@nebutra/brand/metadata";
-import { getLocale } from "next-intl/server";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { REPO_URL } from "@/nebutra/data/repo";
@@ -8,9 +7,16 @@ import { ROUTES } from "@/nebutra/routes";
 import { LanguageSwitch } from "@/nebutra/shell/language-switch";
 import { ThemedLogo } from "@/nebutra/shell/themed-logo";
 
-/** Nebutra's own footer — the company, its products, its writing, the legal line. */
-export async function SiteFooter() {
-  const l = siteLang(await getLocale());
+/**
+ * Nebutra's own footer — the company, its products, its writing, the legal line.
+ *
+ * The locale arrives as a prop from the layout's params. `getLocale()` here
+ * ran in a layout that never set the request locale, so next-intl fell back
+ * to reading request headers — runtime data in every prerender, which failed
+ * the production build on the first route it reached (/blog, /refer).
+ */
+export function SiteFooter({ lang }: { lang?: string }) {
+  const l = siteLang(lang);
   const t = (en: string, zh: string) => pick(l, { en, zh });
   const cols = [
     {

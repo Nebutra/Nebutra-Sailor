@@ -20,7 +20,7 @@ export default async function LegalLayout({ children, params }: LegalLayoutProps
   setRequestLocale(lang as Locale);
 
   return (
-    <SiteShell footer="legal">
+    <SiteShell footer="legal" lang={lang}>
       {/* pt-24 clears the fixed Navbar (h-16) plus a reading-lede gap.
           flex-1 turns this into a sticky-footer layout — on short legal
           pages the footer hugs the viewport bottom instead of leaving a
