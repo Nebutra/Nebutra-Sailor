@@ -375,7 +375,19 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
       }
     }
   } catch (err) {
-    logger.error("[gateway] Failed to initialize gateway deps — AI Gateway routes disabled", err);
+    // Missing Redis/Upstash keys is the expected, documented state in preview
+    // mode (no keys configured) — it must read as an informational notice,
+    // not an error, so a fresh scaffold's `pnpm dev` output stays calm.
+    // Anything else genuinely failed to initialize and should still be loud.
+    const isMissingRedisCredentials =
+      err instanceof Error && err.message.includes("Redis credentials not configured");
+    if (isMissingRedisCredentials) {
+      logger.warn(
+        "[gateway] AI Gateway routes are off — Redis/Upstash keys are not set. Configure UPSTASH_REDIS_REST_URL/UPSTASH_REDIS_REST_TOKEN to enable them.",
+      );
+    } else {
+      logger.error("[gateway] Failed to initialize gateway deps — AI Gateway routes disabled", err);
+    }
   }
 
   app.route("/api/v1/ai/api-keys", apiKeysRoutes);
