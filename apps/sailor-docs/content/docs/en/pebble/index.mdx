@@ -29,4 +29,4 @@ Pebble is Nebutra's AI orchestrator for builders: run Codex, Claude Code, OpenCo
 
 ## Platform topology
 
-See the Pebble repository's [`docs/reference/infra-index.md`](https://github.com/Nebutra/pebble/blob/main/docs/reference/infra-index.md) for the frozen host map (Cloudflare → Vercel brand front + ECS API origin).
+See the Pebble repository's [`docs/reference/infra-index.md`](https://github.com/Nebutra/pebble/blob/main/docs/reference/infra-index.md) for the frozen host map. Within this monorepo, `pebble.nebutra.com` (`apps/pebble`) runs the same way every other Nebutra app does post-Vercel-retirement — as a standalone Next app behind nginx (PM2 on the shared ECS host, or Fly Machines) — not on Vercel.

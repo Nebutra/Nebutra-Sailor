@@ -5,7 +5,7 @@ description: Nebutra-Sailor 单体仓库简介 — 每个应用的功能介绍�
 
 ## 什么是 Nebutra-Sailor？
 
-Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形式提供完整的 AI 原生 SaaS 产品。它包含 7 个可独立部署的应用和 20+ 个共享包，从头到尾均有完整类型定义，共享同一套设计系统、API 契约和运行时 Token 系统。
+Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形式提供完整的 AI 原生 SaaS 产品。`apps/` 下有 17 个应用（外加 `backends/gateway` API），另有 100+ 个共享包分布在 `packages/{ai,commerce,design,iam,integrations,ops,platform}` 中，从头到尾均有完整类型定义，共享同一套设计系统、API 契约和运行时 Token 系统。
 
 该仓库是 `nebutra.com`、`app.nebutra.com`、`auth.nebutra.com`、`api.nebutra.com` 与 `nebutra.com/docs` 的源码真相来源。
 
@@ -13,14 +13,17 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
 
 | 应用 | 端口 | 用途 | 框架 |
 |-----|------|------|------|
-| `apps/web` | 3000 / 3001 | 已认证 SaaS 控制台 | Next.js 16（生产）+ 可选 Vite |
-| `apps/auth` | 3101 | 登录中心 `auth.nebutra.com` | Next.js 16 + Better Auth |
-| `backends/gateway` | 3002 | REST API — 认证、RBAC、计费、AI 代理 | Hono（`@nebutra/gateway`） |
-| `apps/landing` | — | 公开营销网站 | Next.js 16 + next-intl |
-| `apps/sailor-docs` | — | 公开产品文档（本站） | Next.js 16 + Fumadocs |
-| `apps/design-docs` | — | 内部设计系统文档 | Next.js 16 + Fumadocs |
+| `apps/landing` | 3000 | 公开营销网站（34 种语言） | Next.js 16 + next-intl |
+| `apps/web` | 3001 | 已认证 SaaS 控制台 | Vite + React |
+| `backends/gateway` | 3002 | REST API — 认证、RBAC、计费、AI 代理 | Hono + OpenAPI（`@nebutra/gateway`） |
+| `apps/auth` | 3101 | 登录中心（`auth.nebutra.com`），`@nebutra/auth-center` | Next.js 16 + Better Auth |
+| `apps/admin` | — | 管理员的管理台（admin-of-admins） | Next.js 16 |
+| `apps/sailor-docs` | 3004 | 公开产品文档（本站） | Next.js 16 + Fumadocs |
+| `apps/design` | 3109 | 内部设计系统文档 | Next.js 16 |
 | `apps/storybook` | 6006 | 组件库演示平台 | Storybook |
 | `apps/studio` | 3333 | 内容管理 | Sanity Studio |
+
+`apps/` 下的其他应用：`forge`、`idp`、`kuanlan`、`mail-preview`、`para`、`pebble`、`router`、`sleptons`、`typelens`——每一个都是独立的产品或内部工具，不属于控制台/网关/营销网站这个核心三件套。
 
 ## 前置条件
 
@@ -76,12 +79,13 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
   </Step>
   <Step title="启动开发服务器">
     ```bash
-    pnpm dev           # 并行启动所有应用
+    pnpm dev           # 轻量预览：landing + web + gateway，无需密钥/Docker/数据库
     ```
-    或者仅启动您需要的部分：
+    如需启动其余部分——每个应用、Storybook、文档站点——使用：
     ```bash
-    pnpm dev:dashboard   # web + gateway（见根 package.json scripts）
-    pnpm dev:marketing   # landing + studio
+    pnpm dev:all         # 通过 Turborepo 并行启动所有应用
+    pnpm dev:dashboard   # web + admin + gateway
+    pnpm dev:marketing   # landing + blog + studio
     ```
   </Step>
 </Steps>
@@ -96,7 +100,7 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
 - **Linter + 格式化：** Biome（替代 ESLint + Prettier）。运行 `pnpm lint:fix` 自动修复。
 - **类型检查：** `pnpm typecheck` 通过 Turbo 在所有包中运行 `tsc --noEmit`。
 - **测试：** 单元测试使用 Vitest，E2E 测试使用 Playwright。运行 `pnpm test` 和 `pnpm e2e`。
-- **构建系统：** Turborepo，支持 Vercel Remote Cache。任务定义在 `turbo.json` 中。
+- **构建系统：** Turborepo。任务定义在 `turbo.json` 中。
 
 ## 相关内容
 

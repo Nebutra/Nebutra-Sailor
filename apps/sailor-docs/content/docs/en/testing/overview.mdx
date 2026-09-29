@@ -109,14 +109,19 @@ describe("CreateProjectButton", () => {
 
 ## Writing E2E Tests (Playwright)
 
-E2E test files live in the `e2e/` directory at the root of each app:
+E2E test files live in one top-level `e2e/` directory at the repo root, not scattered per-app:
 
 ```
-apps/web/
-  e2e/
-    auth.spec.ts          ← sign-up, sign-in, sign-out
-    projects.spec.ts      ← create, rename, delete project
-    billing.spec.ts       ← upgrade, downgrade, cancel
+e2e/
+  smoke/         ← fast, always-on checks
+  golden/        ← golden-path flows (auth.spec.ts, projects.spec.ts, billing.spec.ts, …)
+  sleptons/      ← sleptons-specific suite
+  visual/        ← visual regression
+  fixtures/ helpers/
+  playwright.config.ts
+  playwright.golden.config.ts
+  playwright.sleptons.config.ts
+  playwright.visual.config.ts
 ```
 
 ### Example: E2E User Flow

@@ -109,14 +109,19 @@ describe("CreateProjectButton", () => {
 
 ## 编写端到端测试（Playwright）
 
-端到端测试文件位于每个应用根目录下的 `e2e/` 目录中：
+端到端测试文件统一存放在仓库根目录下**唯一一个**顶层 `e2e/` 目录中，不会分散到各个应用下：
 
 ```
-apps/web/
-  e2e/
-    auth.spec.ts          ← 注册、登录、登出
-    projects.spec.ts      ← 创建、重命名、删除项目
-    billing.spec.ts       ← 升级、降级、取消
+e2e/
+  smoke/         ← 快速的常驻冒烟检查
+  golden/        ← 黄金路径流程（auth.spec.ts、projects.spec.ts、billing.spec.ts……）
+  sleptons/      ← Sleptons 专属套件
+  visual/        ← 视觉回归
+  fixtures/ helpers/
+  playwright.config.ts
+  playwright.golden.config.ts
+  playwright.sleptons.config.ts
+  playwright.visual.config.ts
 ```
 
 ### 示例：端到端用户流程

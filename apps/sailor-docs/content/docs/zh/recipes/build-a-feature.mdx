@@ -10,7 +10,7 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
 - 基于 `@nebutra/metering` 的 `GET /api/v1/analytics/usage` Hono 端点
 - 带有加载/错误状态的 React Server Component 页面
 - 使用 CSS 变量颜色自适应深色模式的响应式 Recharts 面积图
-- 通过 `analytics:read` 权限进行 RBAC 访问控制
+- 通过 `requirePermission("read", "AnalyticsUsage")` 进行 RBAC 访问控制
 - 侧边栏导航条目
 - API 处理器的 Vitest 单元测试
 - 页面的 Playwright E2E 测试
@@ -80,7 +80,7 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
 
     analyticsRouter.get(
       "/usage",
-      requirePermission("analytics:read"),
+      requirePermission("read", "AnalyticsUsage"),
       zValidator("query", usageQuerySchema),
       async (c) => {
         const { meterId, days } = c.req.valid("query");
@@ -90,10 +90,10 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
         const since = new Date();
         since.setDate(since.getDate() - days);
 
-        const series = await metering.getTimeSeries(tenantId, meterId, {
-          from: since,
-          to: new Date(),
-          granularity: "day",
+        const history = await metering.getUsageHistory(tenantId, meterId, {
+          period: "daily",
+          startDate: since.toISOString(),
+          endDate: new Date().toISOString(),
         });
 
         return c.json({
@@ -101,9 +101,9 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
           data: {
             meterId,
             tenantId,
-            series: series.map((point) => ({
-              date:  point.timestamp.toISOString().split("T")[0],
-              value: Number(point.value),
+            series: history.map((summary) => ({
+              date:  summary.periodStart.slice(0, 10),
+              value: summary.value,
             })),
           },
         });
@@ -124,7 +124,7 @@ description: 端到端实战指南——从 Prisma 模式到已部署功能。�
 </Steps>
 
 <Note>
-  `requirePermission` 是来自 `@nebutra/permissions` 的 Hono 中间件。它从 `Authorization` 请求头读取 JWT，若解析出的角色不包含所请求的权限范围，则返回 403。
+  `requirePermission(action, resource, options?)` 是来自 `@nebutra/permissions` 的 Hono 中间件，基于 CASL 构建。它接收一个操作（`"read"`、`"create"` 等）和一个资源名，而不是一个冒号分隔的权限范围字符串——参见 `packages/iam/permissions/src/middleware.ts`。
 </Note>
 
 ---
@@ -352,19 +352,27 @@ import { browserApiClient } from "@/lib/api/browser-client";
 ## 第 6 阶段：权限控制
 
 <Steps>
-  <Step title="将 analytics:read 权限范围添加到 RBAC 矩阵">
+  <Step title="将 AnalyticsUsage 资源添加到 RBAC 矩阵">
+    `@nebutra/permissions` 基于 CASL：角色是 `{ action: string[], resource: string[] }` 规则集，而不是冒号分隔的权限范围字符串。
+
     ```typescript
-    // packages/iam/permissions/src/roles.ts
-    export const ROLE_PERMISSIONS = {
-      OWNER:  ["*"],
-      ADMIN:  ["analytics:read", "analytics:export", /* …其他管理员权限 */],
-      MEMBER: ["analytics:read"],
-      VIEWER: [],                   // 访客不能查看分析数据
-    } as const;
+    // packages/iam/permissions/src/roles.ts —— 把 "AnalyticsUsage" 加到应该能看到它的
+    // 规则的 resource 列表中（owner/admin 已经通过对一切的 "manage" 权限拥有它；
+    // member 需要一条显式规则）：
+    export const DEFAULT_ROLES: Record<string, RoleDefinition> = {
+      // ...
+      member: {
+        role: "member",
+        rules: [
+          { action: ["read"], resource: ["AnalyticsUsage", /* …其他 member 已有的资源 */] },
+        ],
+      },
+      // viewer 没有 AnalyticsUsage 规则——不能查看分析数据
+    };
     ```
   </Step>
   <Step title="API 路由权限守卫（已在第 2 阶段完成）">
-    第 2 阶段添加的 `requirePermission("analytics:read")` 中间件已经足够。它对不包含该权限范围的角色返回 HTTP 403。
+    第 2 阶段添加的 `requirePermission("read", "AnalyticsUsage")` 中间件已经足够。它对规则中未授予 `AnalyticsUsage` 上 `read` 权限的角色返回 HTTP 403。
   </Step>
   <Step title="为 VIEWER 角色添加 UI 页面权限守卫">
     ```tsx
@@ -423,9 +431,9 @@ import { analyticsRouter } from "./analytics";
 
 vi.mock("@nebutra/metering", () => ({
   getMetering: vi.fn().mockResolvedValue({
-    getTimeSeries: vi.fn().mockResolvedValue([
-      { timestamp: new Date("2025-01-01"), value: BigInt(1500) },
-      { timestamp: new Date("2025-01-02"), value: BigInt(2300) },
+    getUsageHistory: vi.fn().mockResolvedValue([
+      { meterId: "api_calls", tenantId: "org_test_123", periodStart: "2025-01-01T00:00:00Z", periodEnd: "2025-01-02T00:00:00Z", value: 1500 },
+      { meterId: "api_calls", tenantId: "org_test_123", periodStart: "2025-01-02T00:00:00Z", periodEnd: "2025-01-03T00:00:00Z", value: 2300 },
     ]),
   }),
 }));
@@ -584,7 +592,7 @@ pnpm --filter @nebutra/storybook dev
 | 3 | 自动生成的 TypeScript 类型 |
 | 4 | `AnalyticsPage` React Server Component |
 | 5 | 使用 Token 颜色的 `AnalyticsChart` Recharts 组件 |
-| 6 | `analytics:read` RBAC 权限范围 + 套餐限制 |
+| 6 | `AnalyticsUsage` 上的 `read` RBAC 规则 + 套餐限制 |
 | 7 | 侧边栏导航条目 |
 | 8 | Vitest 单元测试 + Playwright E2E 测试 |
 | 9 | 带合成数据的 Storybook 故事 |

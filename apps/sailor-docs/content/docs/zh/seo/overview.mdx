@@ -11,7 +11,7 @@ Nebutra-Sailor 开箱即提供完整的 SEO 基础设施。您无需安装第三
 |------|------|------|
 | 静态元数据 | 内置 | 页面文件中的 `export const metadata` |
 | 动态元数据 | 内置 | 页面文件中的 `generateMetadata()` |
-| OG 图片生成 | 内置 | `@vercel/og`，通过 `opengraph-image.tsx` 约定 |
+| OG 图片生成 | 内置 | `next/og`，通过 `opengraph-image.tsx` 约定 |
 | robots.txt | 内置 | `apps/landing/src/app/robots.ts` |
 | XML 网站地图 | 内置 | `apps/landing/src/app/sitemap.ts` |
 | 规范 URL | 内置 | 通过 `metadata.alternates.canonical` 设置 |
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
 ```typescript apps/landing/src/app/[lang]/blog/[slug]/page.tsx
 import type { Metadata } from "next";
-import { getPost } from "@/lib/sanity";
+import { getPost } from "@/lib/blog";
 
 export async function generateMetadata({
   params,
@@ -63,7 +63,7 @@ export async function generateMetadata({
 
 ## OG 图片生成
 
-Nebutra 使用 Vercel 的 `@vercel/og` 库在边缘生成 Open Graph 图片。OG 图片通过 Next.js 文件系统约定定义：
+Nebutra 使用 Next.js 内置的 `next/og` 模块（`ImageResponse`）生成 Open Graph 图片。OG 图片通过 Next.js 文件系统约定定义：
 
 ```
 apps/landing/src/app/[lang]/blog/[slug]/opengraph-image.tsx
@@ -74,7 +74,6 @@ apps/landing/src/app/[lang]/blog/[slug]/opengraph-image.tsx
 ```typescript opengraph-image.tsx（模式）
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -95,7 +94,7 @@ export default async function OgImage({
 ```
 
 <Note>
-  `runtime = "edge"` 导出是 `@vercel/og` 的必要条件。若缺少它，OG 图片生成将在 Node.js 运行时上运行，速度会显著降低。
+  不要在这里添加 `runtime = "edge"` 导出——Next 16.3 会拒绝它（`cacheComponents` 同理），而 `next/og` 在 Node.js 运行时上运行良好。
 </Note>
 
 ## 结构化数据（JSON-LD）
@@ -128,7 +127,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ## 通过 hreflang 实现 i18n SEO
 
-落地页通过 `next-intl` 支持 7 种语言。每个页面自动生成 `alternates.languages` 元数据，以便搜索引擎理解不同 URL 之间的语言关系。
+落地页支持 34 种语言（`packages/platform/i18n/src/languages.ts` 中的 `PRODUCT_LANGUAGES`），其中中文按书写系统拆分为 `zh-Hans` 和 `zh-Hant`——绝不使用单一的裸 `zh` 语言包。每个页面自动生成 `alternates.languages` 元数据，以便搜索引擎理解不同 URL 之间的语言关系。
 
 ```typescript apps/landing/src/app/[lang]/page.tsx
 export async function generateMetadata({
@@ -142,9 +141,10 @@ export async function generateMetadata({
       canonical: `https://nebutra.com/${lang}`,
       languages: {
         "en": "https://nebutra.com/en",
-        "zh": "https://nebutra.com/zh",
+        "zh-Hans": "https://nebutra.com/zh-Hans",
+        "zh-Hant": "https://nebutra.com/zh-Hant",
         "ja": "https://nebutra.com/ja",
-        // ... 其他语言
+        // ... 其他语言，每个 PRODUCT_LANGUAGES 条目对应一行
       },
     },
   };

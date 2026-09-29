@@ -14,17 +14,7 @@ Nebutra's webhook system (`@nebutra/webhooks`) allows you to:
 
 ### Register an endpoint
 
-Customers register webhook endpoints from **Settings → Webhooks → Add Endpoint**.
-
-Programmatically:
-
-```typescript
-const endpoint = await nebutra.webhooks.createEndpoint({
-  url: "https://your-app.com/webhooks/nebutra",
-  events: ["project.created", "invoice.paid", "member.invited"],
-  orgId: "org_123",
-});
-```
+Customers register webhook endpoints from **Settings → Webhooks → Add Endpoint**. There's no separate client SDK for this — the settings page calls the gateway route directly, which stores the endpoint and its event subscriptions via `@nebutra/webhooks`.
 
 ### Send an event
 
@@ -53,7 +43,7 @@ Nebutra handles delivery, retries (with exponential backoff), and signature sign
 | Property | Value |
 |----------|-------|
 | Delivery | At-least-once |
-| Retry attempts | 3 (with exponential backoff: 1s, 10s, 60s) |
+| Retry attempts | 6 (exponential backoff, 5s initial delay) |
 | Signature | HMAC-SHA256 |
 | Payload format | JSON |
 | Timeout per attempt | 30 seconds |

@@ -5,24 +5,25 @@ description: Step-by-step guide to creating tenants, managing members, switching
 
 ## Create an organization
 
-New users are prompted to create an organization after sign-up. You can also create one programmatically:
+New users are prompted to create an organization after sign-up. There's no separate client SDK — tenant/org management goes through Better Auth's organization plugin, client-side via `authClient.organization.*` or server-side via `auth.api.*`:
 
 ```typescript
-const org = await nebutra.orgs.create({
+import { authClient } from "@/lib/auth-client";
+
+const { data: org } = await authClient.organization.create({
   name: "Acme Corp",
   slug: "acme",
-  ownerId: userId,
 });
-// org.id → "org_2a8bXXXXXXXXX"
+// org.id → the new organization's id
 ```
 
 ## Invite a member
 
 ```typescript
-await nebutra.members.invite({
-  orgId: "org_123",
+await authClient.organization.inviteMember({
+  organizationId: "org_123",
   email: "alice@acme.com",
-  role: "MEMBER",  // OWNER | ADMIN | MEMBER | VIEWER
+  role: "member",  // owner | admin | member | viewer
 });
 ```
 
@@ -31,23 +32,23 @@ Alice receives a transactional email with an invitation link. Accepting the invi
 ## Change a member's role
 
 ```typescript
-await nebutra.members.updateRole({
-  orgId: "org_123",
-  userId: "user_456",
-  role: "ADMIN",
+await authClient.organization.updateMemberRole({
+  organizationId: "org_123",
+  memberId: "member_456",
+  role: "admin",
 });
 ```
 
 <Warning>
-  You cannot change an `OWNER`'s role unless you first transfer ownership. There must always be at least one `OWNER`.
+  You cannot change an `owner`'s role unless you first transfer ownership. There must always be at least one `owner`.
 </Warning>
 
 ## Remove a member
 
 ```typescript
-await nebutra.members.remove({
-  orgId: "org_123",
-  userId: "user_456",
+await authClient.organization.removeMember({
+  organizationId: "org_123",
+  memberIdOrEmail: "user_456",
 });
 ```
 
@@ -105,35 +106,31 @@ export async function getProjects() {
 
 ## Tenant-scoped API keys
 
-API keys belong to a tenant, not a user. Create them in **Settings → API Keys**:
+API keys belong to a tenant, not a user. Create them in **Settings → API Keys**, which calls the gateway route directly (`backends/gateway/src/routes/ai/api-keys.ts`, mounted at `/api/v1/ai/api-keys`):
 
 ```typescript
-const key = await nebutra.apiKeys.create({
-  orgId: "org_123",
-  name: "Production CI",
-  scopes: ["project:read", "project:create"],
-  expiresAt: new Date("2027-01-01"),
+const res = await fetch("/api/v1/ai/api-keys", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ name: "Production CI" }),
 });
-// key.secret is shown ONCE — store it securely
+const { key } = await res.json();
+// key is shown ONCE — store it securely
 ```
 
-API keys are hashed with SHA-256 before storage. We cannot recover the plaintext.
+API keys are hashed (SHA-256) before storage; we cannot recover the plaintext. List with `GET`, revoke with `DELETE /:id`, rename with `PATCH /:id`.
 
 ## Delete an organization
 
+Deleting an organization requires the `owner` role and re-authentication. Client-side, this goes through the Better Auth organization plugin:
+
 ```typescript
-await nebutra.orgs.delete({
-  orgId: "org_123",
-  // Requires OWNER role and re-authentication
-  confirmationToken: token,
+await authClient.organization.delete({
+  organizationId: "org_123",
 });
 ```
 
-Deleting an org:
-- Cancels the Stripe subscription
-- Soft-deletes all org data (30-day recovery window)
-- Sends a confirmation email to the owner
-- Triggers the `org.deleted` webhook event
+Deleting an org soft-deletes org data and triggers the corresponding webhook event on `@nebutra/webhooks` — see [Webhooks](/guides/webhooks) for the event payload shape.
 
 ## Related
 

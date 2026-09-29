@@ -1,0 +1,31 @@
+---
+title: "营销组件套件"
+description: "开始印钞"
+---
+
+Vibe Business 的核心法则是：**先把落地页做出来，再做后端**。
+
+Nebutra Sailor 在 `packages/commerce/marketing`（以 `@nebutra/marketing` 发布）中内置了一套专注转化的 UI 套件。这些不是通用组件，而是专门为 SaaS 落地页和定价页打造的。
+
+## 可用组件
+
+### 1. 候补名单与社会认同
+使用 `<Waitlist />` 在产品发布之前就开始收集邮箱。它自带 `socialProofCount` 属性，用于展示「已有 N 人加入」这样的文案——把它设置为你的真实数字。
+
+```tsx
+import { Waitlist } from "@nebutra/marketing";
+
+export default function Page() {
+  return <Waitlist socialProofCount={2431} />;
+}
+```
+
+### 2. 定价表
+高对比度、带光效的 `<PricingTable />`，专门设计用来把用户的视线直接吸引到「Pro」档位上。
+
+### 3. FAQ 折叠面板
+我们刻意在这里避开了较重的 framer-motion。`<FAQ />` 组件使用原生 HTML `<details>` 标签，并用 Tailwind 精心还原了样式，确保它以零 JavaScript 开销运行，从而获得最好的 SEO 和 Lighthouse 评分。
+
+## Magic Links（魔法链接）
+
+为了把注册的阻力降到接近于零，可以使用内置的、来自 `@nebutra/email` 的 `sendMagicLinkEmail`。它会发送一封暗色调、观感高级的直接登录链接邮件。

@@ -5,23 +5,25 @@ description: 创建租户、管理成员、切换组织和隔离数据的分步�
 
 ## 创建组织
 
-新用户注册后会被提示创建组织。也可以通过代码创建：
+新用户注册后会被提示创建组织。这里没有单独的客户端 SDK——租户/组织管理通过 Better Auth 的 organization 插件完成，客户端用 `authClient.organization.*`，服务端用 `auth.api.*`：
 
 ```typescript
-const org = await nebutra.orgs.create({
-  name: "Acme 公司",
+import { authClient } from "@/lib/auth-client";
+
+const { data: org } = await authClient.organization.create({
+  name: "Acme Corp",
   slug: "acme",
-  ownerId: userId,
 });
+// org.id → 新组织的 id
 ```
 
 ## 邀请成员
 
 ```typescript
-await nebutra.members.invite({
-  orgId: "org_123",
+await authClient.organization.inviteMember({
+  organizationId: "org_123",
   email: "alice@acme.com",
-  role: "MEMBER",  // OWNER | ADMIN | MEMBER | VIEWER
+  role: "member",  // owner | admin | member | viewer
 });
 ```
 
@@ -30,24 +32,56 @@ Alice 将收到包含邀请链接的事务性邮件。接受邀请会创建其�
 ## 更改成员角色
 
 ```typescript
-await nebutra.members.updateRole({
-  orgId: "org_123",
-  userId: "user_456",
-  role: "ADMIN",
+await authClient.organization.updateMemberRole({
+  organizationId: "org_123",
+  memberId: "member_456",
+  role: "admin",
 });
 ```
 
 <Warning>
-  无法更改 `OWNER` 的角色，除非先转让所有权。必须始终至少有一个 `OWNER`。
+  无法更改 `owner` 的角色，除非先转让所有权。必须始终至少有一个 `owner`。
 </Warning>
 
 ## 移除成员
 
 ```typescript
-await nebutra.members.remove({
-  orgId: "org_123",
-  userId: "user_456",
+await authClient.organization.removeMember({
+  organizationId: "org_123",
+  memberIdOrEmail: "user_456",
 });
+```
+
+移除成员会：
+- 撤销该用户在此组织下的所有活跃会话
+- 撤销该用户创建的所有 API 密钥
+- 不会删除其数据（项目、资源仍然保留）
+
+## 切换组织
+
+用户可以在自己所属的组织之间切换。在仪表盘中，组织切换器位于左上角导航栏。以代码方式实现：
+
+```typescript
+// 客户端 —— Better Auth
+import { authClient } from "@/lib/auth-client";
+
+function OrgSwitcher() {
+  const { data: organizations } = authClient.useListOrganizations();
+  const { data: activeOrganization } = authClient.useActiveOrganization();
+
+  return (
+    <select
+      value={activeOrganization?.id}
+      onChange={(e) => authClient.organization.setActive({ organizationId: e.target.value })}
+    >
+      {organizations?.map((org) => (
+        <option key={org.id} value={org.id}>
+          {org.name}
+        </option>
+      ))}
+    </select>
+  );
+}
 ```
 
 ## 数据隔离实践
@@ -72,17 +106,31 @@ export async function getProjects() {
 
 ## 租户级 API 密钥
 
-API 密钥属于租户，而非用户。在**设置 → API 密钥**中创建：
+API 密钥属于租户，而非用户。在**设置 → API 密钥**中创建，该操作会直接调用网关路由（`backends/gateway/src/routes/ai/api-keys.ts`，挂载在 `/api/v1/ai/api-keys`）：
 
 ```typescript
-const key = await nebutra.apiKeys.create({
-  orgId: "org_123",
-  name: "生产 CI",
-  scopes: ["project:read", "project:create"],
-  expiresAt: new Date("2027-01-01"),
+const res = await fetch("/api/v1/ai/api-keys", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ name: "Production CI" }),
 });
-// key.secret 只显示一次——请安全存储
+const { key } = await res.json();
+// key 只显示一次——请安全存储
 ```
+
+API 密钥在存储前会做哈希处理（SHA-256）；我们无法恢复明文。列表用 `GET`，吊销用 `DELETE /:id`，重命名用 `PATCH /:id`。
+
+## 删除组织
+
+删除组织需要 `owner` 角色并重新验证身份。客户端通过 Better Auth 的 organization 插件完成：
+
+```typescript
+await authClient.organization.delete({
+  organizationId: "org_123",
+});
+```
+
+删除组织会软删除组织数据，并在 `@nebutra/webhooks` 上触发相应的 webhook 事件——事件负载结构见 [Webhooks](/zh/guides/webhooks)。
 
 ## 相关文档
 

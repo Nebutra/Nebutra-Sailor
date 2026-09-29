@@ -21,6 +21,14 @@ Nebutra 执行两种类型的限制：
 | `x-ratelimit-reset` | 窗口重置的 Unix 时间戳 |
 | `retry-after` | 重试前等待的秒数（仅在 429 时） |
 
+响应头示例：
+
+```
+x-ratelimit-limit: 1000
+x-ratelimit-remaining: 847
+x-ratelimit-reset: 1743430800
+```
+
 ## 各套餐默认限制
 
 | 套餐 | API 调用/月 | AI Token/月 | 请求/分钟 |
@@ -31,6 +39,26 @@ Nebutra 执行两种类型的限制：
 
 ## 处理 429 响应
 
+超出限流时，API 会返回：
+
+```json
+HTTP/1.1 429 Too Many Requests
+retry-after: 12
+
+{
+  "success": false,
+  "error": {
+    "code": "RATE_LIMITED",
+    "message": "Too many requests. Retry after 12 seconds.",
+    "details": {
+      "limit": 60,
+      "window": "1m",
+      "retry_after": 12
+    }
+  }
+}
+```
+
 ### 指数退避重试
 
 ```typescript
@@ -39,6 +67,7 @@ async function fetchWithRetry(url: string, options?: RequestInit, maxRetries = 3
     const res = await fetch(url, options);
 
     if (res.status !== 429) return res;
+
     if (attempt === maxRetries) throw new Error("超过最大重试次数");
 
     const retryAfter = parseInt(res.headers.get("retry-after") ?? "1", 10);
@@ -49,33 +78,48 @@ async function fetchWithRetry(url: string, options?: RequestInit, maxRetries = 3
 }
 ```
 
-### SDK 自动重试
-
-```typescript
-const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  retry: {
-    maxAttempts: 3,
-    backoff: "exponential",
-  },
-});
-```
+这里没有客户端 SDK 可以配置重试——上面的 `fetchWithRetry`（或者你自己 HTTP 客户端的重试策略）才是实际用到的模式，因为 `backends/gateway` 是唯一的 API 表面。
 
 ## 查询配额使用情况
 
-```typescript
-const quota = await nebutra.metering.getQuota("api_calls");
-// → { limit: 1000, used: 847, remaining: 153, percentage: 0.847 }
+在服务端，用 `@nebutra/metering` 查询当前配额使用情况：
 
-if (quota.percentage > 0.9) {
+```typescript
+import { getMetering } from "@nebutra/metering";
+
+const metering = await getMetering();
+const quota = await metering.getQuota(tenantId, "api_calls", "monthly");
+// → {
+//     meterId: "api_calls",
+//     tenantId,
+//     limit: 1000,
+//     used: 847,
+//     remaining: 153,
+//     percentage: 84.7,   // 0–100 的百分比，不是 0–1 的小数
+//     period: "monthly",
+//     periodStart: "2026-03-01T00:00:00Z",
+//     periodEnd: "2026-04-01T00:00:00Z",
+//   }
+
+if (quota && quota.percentage > 90) {
   // 警告用户 / 提示升级
 }
 ```
+
+## 配额预警
+
+当租户使用量达到以下阈值时，Nebutra 会自动发送事务性邮件：
+
+- **80%** 月度配额——预警邮件
+- **100%** 配额——超额邮件并提示升级
+
+你可以在 Sanity Studio 或 Resend 的模板编辑器中自定义这些邮件模板。
 
 ## 提升限额
 
 - **FREE → PRO**：从计费设置页面升级
 - **PRO → ENTERPRISE**：[联系我们](mailto:founders@nebutra.com)获取自定义限额
+- **临时突发流量**：一次性大流量操作，请联系支持团队
 
 ## 相关文档
 

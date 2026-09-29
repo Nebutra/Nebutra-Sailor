@@ -1,6 +1,6 @@
 ---
 title: 主题配置
-description: 更改品牌颜色，配置明暗模式，切换多主题预设，以及创建自定义 oklch 主题。
+description: 更改品牌颜色，配置明暗模式，并在内置的 Brand Package 之间切换。
 ---
 
 Nebutra-Sailor 的主题系统由三个独立的层级组合而成：
@@ -9,14 +9,25 @@ Nebutra-Sailor 的主题系统由三个独立的层级组合而成：
 |------|----|------|
 | **运行时 Token** | `@nebutra/tokens` | CSS 变量——颜色、间距、字体排版 |
 | **明暗模式** | `@nebutra/tokens`（next-themes） | `ThemeProvider` + `useTheme` |
-| **多主题预设** | `@nebutra/theme` | 6 个 oklch 预设，通过 `data-theme` 属性应用 |
+| **Brand Package** | `@nebutra/theme` | 7 种内置设计语言，通过 `data-brand` 属性应用 |
 
 ## 编辑 CSS 变量
 
-所有设计 token 存储在单一文件中，可直接编辑：
+不要手动编辑 `packages/design/tokens/styles.css`——它是一个**生成的构建产物**。在这里做的修改会一直保留到该包的下一次 token 构建，然后悄无声息地消失（文件依旧能解析，只是 token 不见了，且不会有任何报错）。
+
+唯一的事实来源是 DTCG token 源：
 
 ```
-packages/design/tokens/styles.css
+packages/design/design-tokens/tokens/
+├── core.json           # 基础色阶
+├── themes/light.json   # ┐ 语义 + 层级——始终成对编辑
+└── themes/dark.json    # ┘
+```
+
+在这里编辑，然后重新构建以让改动生效：
+
+```bash
+pnpm --filter @nebutra/design-tokens build && pnpm --filter @nebutra/tokens build
 ```
 
 ### 关键 Token 参考
@@ -25,12 +36,16 @@ packages/design/tokens/styles.css
   <Tab title="品牌色">
     ```css
     :root {
-      --brand-primary:   var(--blue-9);    /* 主要 CTA、链接、图表 */
+      --brand-primary:   var(--blue-9);    /* VI 品牌锁定色——logo、favicon、印刷品，不作为 CTA 填充色使用 */
       --brand-accent:    var(--cyan-9);    /* 强调色、成功高亮 */
       --brand-tertiary:  #8b5cf6;          /* 基础设施、第三层数据可视化 */
       --brand-gradient:  135deg, var(--blue-9) 0%, var(--cyan-9) 100%;
+
+      --primary:            225 7.7% 10.2%; /* 墨色——真正的动作填充色：按钮、链接、焦点态 */
+      --primary-foreground: 0 0% 100%;
     }
     ```
+    `--brand-primary`（`--blue-9`，`#0033FE`）专门用于 logo、favicon 和印刷品——它的饱和度远超一个舒适的 UI 填充色所需。按钮、链接、焦点环用的是 `--primary`（墨色，接近黑色）。这一区分的完整来龙去脉见根目录 `CLAUDE.md`。
   </Tab>
   <Tab title="中性色阶">
     ```css
@@ -72,7 +87,7 @@ packages/design/tokens/styles.css
 
 ## 使用调色板生成器重新品牌化
 
-更改整个品牌调色板最快的方式是使用生成器脚本。它从两个颜色推导出两条色阶，经 `brand:apply` 写入 token 源，所有生成文件随之更新：
+更改整个品牌调色板最快的方式是使用生成器脚本。它从两个颜色推导出两条色阶，并通过 `brand:apply` 写入 token 源，所有生成文件随之更新：
 
 <Steps>
   <Step title="运行调色板生成器">
@@ -107,18 +122,15 @@ packages/design/tokens/styles.css
 
 如果您更倾向于手动编辑 token：
 
-```css
-/* packages/design/tokens/styles.css */
-:root {
-  --brand-primary:   #7C3AED;   /* 紫色 */
-  --brand-accent:    #F59E0B;   /* 琥珀色 */
-  --brand-gradient:  135deg, #7C3AED 0%, #F59E0B 100%;
-
-  /* 同时更新源色阶 */
-  --blue-9:  #7C3AED;
-  --cyan-9:  #F59E0B;
+```json
+// packages/design/design-tokens/tokens/core.json（节选）
+{
+  "blue": { "9": { "$value": "#7C3AED", "$type": "color" } },
+  "cyan": { "9": { "$value": "#F59E0B", "$type": "color" } }
 }
 ```
+
+然后重新构建 token 流水线（`pnpm --filter @nebutra/design-tokens build && pnpm --filter @nebutra/tokens build`），`styles.css` 就会用新调色板重新生成。
 
 <Warning>
   编辑中性色阶时，务必同时更新明色模式（`:root`）和暗色模式（`.dark` / `[data-theme]`）两个代码块。跳过暗色模式代码块会导致深色模式下的对比度问题。
@@ -163,7 +175,7 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       aria-label="切换深色模式"
-      className="rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]"
+      className="rounded-md p-2"
     >
       {theme === "dark" ? "浅色" : "深色"}
     </button>
@@ -180,48 +192,26 @@ const { resolvedTheme } = useTheme();
 // → "light" | "dark"
 ```
 
-## 多主题预设
+## Brand Package
 
-`@nebutra/theme` 提供 6 个基于 oklch（感知均匀色彩空间）构建的即用主题预设。每个预设通过 `<html>` 上的 `data-theme` 属性应用完整的 token 覆盖。
+`@nebutra/theme` 内置 7 个 **Brand Package**——它们是完整的设计语言（角色、chrome 组件配方、层级、区域、字体，作为一个整体应用，而非单纯换色）：`gsap`、`linear`、`notion`、`raycast`、`stripe`、`vanta`、`vercel`。每个 Brand Package 通过 `<html>` 上的 `data-brand` 属性应用，作用域由 `skins.css` 限定（由 `emit-skins.mjs` 根据各 Package 的 `emit-css.ts` 生成）。
 
-| 预设 | 风格特点 |
-|------|---------|
-| `nebutra` | 蓝/青——Nebutra 品牌色（默认） |
-| `dark-dense` | 信息密度高，色调低饱和 |
-| `minimal` | 接近单色，留白充足 |
-| `vibrant` | 高饱和，活泼，面向消费者 |
-| `ocean` | 深蓝与青蓝，沉静专注 |
-
-### 切换预设
+### 切换 Brand Package
 
 ```tsx
 // 静态方式——在 layout 中设置
-<html data-theme="nebutra">
+<html data-brand="linear">
 
-// 动态方式——用户偏好存储在 cookie 或 localStorage 中
+// 动态方式
 "use client";
-import { useState } from "react";
+import { applyLanguage, LANGUAGE_REGISTRY } from "@nebutra/theme";
 
-const PRESETS = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean"] as const;
-
-export function ThemePresetSelector() {
-  const [preset, setPreset] = useState<string>("default");
-
-  function applyPreset(name: string) {
-    document.documentElement.setAttribute("data-theme", name);
-    setPreset(name);
-  }
-
+export function BrandPackageSelector() {
   return (
     <div className="flex gap-2">
-      {PRESETS.map((name) => (
-        <button
-          key={name}
-          type="button"
-          onClick={() => applyPreset(name)}
-          className={`rounded px-3 py-1 text-sm ${preset === name ? "bg-[var(--brand-primary)] text-white" : "bg-neutral-2"}`}
-        >
-          {name}
+      {Object.keys(LANGUAGE_REGISTRY).map((id) => (
+        <button key={id} type="button" onClick={() => applyLanguage(id)} className="rounded px-3 py-1 text-sm bg-neutral-2">
+          {id}
         </button>
       ))}
     </div>
@@ -229,57 +219,47 @@ export function ThemePresetSelector() {
 }
 ```
 
-## 创建自定义主题预设
+在 Sailor 项目中，更简单的路径是 [Sailor Studio](https://nebutra.com/sailor/studio)：选一个 Brand Package 作为基础设计语言，调整各项参数，再用 `nebutra apply --preset <code>` 应用生成的预设——参见[定制概览](/zh/customization/overview)。
+
+## 新增一个 Brand Package
 
 <Steps>
-  <Step title="打开主题文件">
+  <Step title="添加品牌定义">
     ```
-    packages/design/theme/themes.css
+    packages/design/tokens/brands/<id>/brand.json
     ```
   </Step>
-  <Step title="添加新的 data-theme 代码块">
-    复制一个现有的预设代码块并修改 oklch 值。主题名称必须为小写短横线命名。
+  <Step title="注册它">
+    在 `packages/design/theme/src/languages.meta.json` 中添加一条记录，然后运行：
 
-    ```css
-    /* packages/design/theme/themes.css */
-    [data-theme="forest"] {
-      --brand-primary:   oklch(45% 0.18 145);   /* 森林绿 */
-      --brand-accent:    oklch(75% 0.15 80);    /* 暖金色 */
-      --brand-gradient:  135deg,
-        oklch(45% 0.18 145) 0%,
-        oklch(75% 0.15 80) 100%;
-
-      --neutral-1:  oklch(99% 0.005 145);
-      --neutral-12: oklch(12% 0.02 145);
-    }
+    ```bash
+    node packages/design/theme/scripts/sync-languages.mjs
     ```
+
+    这会写入生成的 `languages.json`——切勿手动编辑该文件。
   </Step>
   <Step title="应用并验证">
     ```tsx
-    <html data-theme="forest">
+    <html data-brand="your-id">
     ```
 
     打开 Storybook 并检查 **Design Tokens** 版块，验证对比度比率符合 WCAG AA 标准。
   </Step>
 </Steps>
 
-<Note>
-  oklch 值的格式为 `oklch(亮度% 色度 色相)`。可使用 [oklch.com](https://oklch.com) 等工具选取感知均匀的颜色。
-</Note>
-
 ## 字体排版
 
-字体通过 `next/font` 加载并注入为 CSS 变量，无外部字体请求。
+字体通过 `next/font` 加载并注入为 CSS 变量，无外部字体请求。字号系统本身存放在 `core.json:type` 中——每一档 `text-*` 都自带对应的行高与字距。
 
 ```css
-/* packages/design/tokens/styles.css */
+/* packages/design/tokens/styles.css —— 生成文件 */
 :root {
   --font-sans: var(--font-geist-sans), "Geist", system-ui, sans-serif;       /* UI 文本 */
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace; /* 代码、指标 */
 }
 ```
 
-如需更换字体族，请更新应用 layout 中的 `next/font` 配置，然后同步更新 `packages/design/tokens/styles.css` 中的 token 回退栈。
+如需更换字体族，请更新应用 layout 中的 `next/font` 配置，然后更新 `packages/design/design-tokens/tokens/core.json` 中的源回退栈并重新构建——切勿直接编辑 `styles.css`。
 
 ## Storybook Design Tokens 参考
 

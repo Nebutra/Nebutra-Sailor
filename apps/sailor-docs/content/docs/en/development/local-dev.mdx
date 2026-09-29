@@ -49,12 +49,14 @@ Make sure the following are installed before you begin:
     ```bash
     pnpm infra:up
     ```
-    This starts three containers via `docker-compose.infra.yml`:
-    - **PostgreSQL 16** on port `5432`
+    This runs `docker-compose up -d` against the root `docker-compose.yml`, which includes:
+    - **PostgreSQL 16** (pgvector) on port `5432`
     - **Redis 7** on port `6379`
     - **ClickHouse 24** on port `8123`
 
-    If you only need the database (no Redis or ClickHouse), run `pnpm infra:lite` instead.
+    If you only need Postgres and Redis (no ClickHouse), run `pnpm infra:lite` instead — it uses `docker-compose.lite.yml`. Note that `infra:lite` still starts Redis; it only skips ClickHouse.
+
+    You don't strictly need any of this to start developing: with no `DATABASE_URL` set, `@nebutra/db` falls back to a zero-key PGlite (Postgres 17 in WASM) preview database automatically.
   </Step>
   <Step title="Configure environment variables">
     Copy the example files for each app you plan to run:
@@ -85,23 +87,29 @@ Make sure the following are installed before you begin:
   </Step>
   <Step title="Start the development servers">
     <Tabs>
-      <Tab title="All apps">
+      <Tab title="Lightweight preview">
         ```bash
         pnpm dev
         ```
-        Starts all apps in parallel using Turborepo.
+        Starts just the three core apps — `apps/landing` (site, port 3000), `apps/web` (app, port 3001), and `backends/gateway` (API, port 3002) — with no keys, no Docker, and no database setup required. Picks free ports automatically if those are taken.
+      </Tab>
+      <Tab title="All apps">
+        ```bash
+        pnpm dev:all
+        ```
+        Starts every app, Storybook, and the docs site in parallel using Turborepo (`turbo run dev --concurrency=64`).
       </Tab>
       <Tab title="Dashboard only">
         ```bash
         pnpm dev:dashboard
         ```
-        Starts `apps/web` (port 3000) and `backends/gateway` (port 3001).
+        Starts `apps/web`, `apps/admin`, and `backends/gateway`.
       </Tab>
       <Tab title="Marketing only">
         ```bash
         pnpm dev:marketing
         ```
-        Starts `apps/landing` (port 3002) and `apps/studio` (port 3333).
+        Starts `apps/landing`, `packages/commerce/blog`, and `apps/studio`.
       </Tab>
     </Tabs>
     All apps support **Hot Module Replacement (HMR)**. Changes to source files apply instantly without a full page reload.
@@ -112,10 +120,11 @@ Make sure the following are installed before you begin:
 
 | Service | URL | Notes |
 |---------|-----|-------|
-| SaaS dashboard | http://localhost:3000 | Requires Better Auth |
-| API gateway | http://localhost:3001 | REST API + OpenAPI docs at `/doc` |
-| Landing page | http://localhost:3002 | 7 locales, default is `/en` |
-| Design docs | http://localhost:3004 | Internal only |
+| Landing page | http://localhost:3000 | 34 locales (script-split zh-Hans/zh-Hant), default is `/en` |
+| SaaS dashboard | http://localhost:3001 | Requires Better Auth |
+| API gateway | http://localhost:3002 | REST API + OpenAPI docs at `/doc` |
+| Sailor docs (this site) | http://localhost:3004 | `apps/sailor-docs` |
+| Internal design docs | http://localhost:3109 | `apps/design`, internal only |
 | Storybook | http://localhost:6006 | Component library |
 | Sanity Studio | http://localhost:3333 | Content management |
 | PostgreSQL | localhost:5432 | Database |
@@ -149,7 +158,7 @@ Make sure the following are installed before you begin:
 | `BETTER_AUTH_SECRET` | For a live auth backend | Self-hosted Better Auth signing secret |
 | `GOOGLE_CLIENT_ID` | If using Google OAuth | Google OAuth web client id |
 | `GOOGLE_CLIENT_SECRET` | If using Google OAuth | Google OAuth web client secret |
-| `NEXT_PUBLIC_API_URL` | Yes | Base URL of the API gateway, e.g. `http://localhost:3001` |
+| `NEXT_PUBLIC_API_URL` | Yes | Base URL of the API gateway, e.g. `http://localhost:3002` |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | For subscriptions (legacy) | Stripe publishable key for client-side billing |
 | `DATABASE_URL` | Yes | PostgreSQL connection string (for Server Actions) |
 
@@ -187,15 +196,16 @@ pnpm infra:up
 
 ### "Error: connect ECONNREFUSED 127.0.0.1:6379"
 
-Redis is not running. Use `pnpm infra:up` (not `pnpm infra:lite`, which skips Redis).
+Redis is not running. Run `pnpm infra:up` or `pnpm infra:lite` — both start Redis; `infra:lite` only skips ClickHouse.
 
 ### Port already in use
 
-Another process is using the port. Find and kill it:
+`pnpm dev` picks a free port automatically when the default is taken, but for the other dev commands you can free the port yourself:
 
 ```bash
-lsof -ti:3000 | xargs kill   # free port 3000
-lsof -ti:3001 | xargs kill   # free port 3001
+lsof -ti:3000 | xargs kill   # free port 3000 (landing)
+lsof -ti:3001 | xargs kill   # free port 3001 (web)
+lsof -ti:3002 | xargs kill   # free port 3002 (gateway)
 ```
 
 ### pnpm version mismatch

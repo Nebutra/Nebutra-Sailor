@@ -82,11 +82,13 @@ Biome 在仓库根目录的 `biome.json` 中进行配置。关键规则：
 - 字符串使用**双引号**
 - **必须使用分号**
 
+`pnpm lint` 不仅仅是 Biome——它把 Biome 和数十个仓库自定义的守护脚本（`scripts/lint-*.mjs`）串联在一起，覆盖原生 `<input>` 的使用、仓储层（repository seam）、数据库迁移规范、路由处理器的存放位置、微文案规则等等——其中会影响你实际编写的应用代码的部分，见[代码检查规则](/zh/customization/linting-rules)。
+
 手动运行代码检查器：
 
 ```bash
-pnpm lint          # 检查
-pnpm lint:fix      # 检查 + 自动修复
+pnpm lint          # Biome + 全部守护脚本
+pnpm lint:fix      # 检查 + 尽可能自动修复
 ```
 
 ## TypeScript

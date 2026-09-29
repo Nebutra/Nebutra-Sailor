@@ -11,7 +11,7 @@ Nebutra API 的所有错误响应使用统一的 JSON 封装：
 {
   "success": false,
   "error": {
-    "code": "RESOURCE_NOT_FOUND",
+    "code": "NOT_FOUND",
     "message": "项目 proj_123 未找到。",
     "details": { "resource": "Project", "id": "proj_123" },
     "request_id": "req_2a8bXXXXXXXXX"
@@ -19,69 +19,123 @@ Nebutra API 的所有错误响应使用统一的 JSON 封装：
 }
 ```
 
-向支持团队报告问题时，请务必记录 `request_id`。
+向支持团队报告问题时，请务必记录 `request_id`——这样我们才能在日志中定位到具体请求。
 
 ## HTTP 状态码
 
 | 状态码 | 含义 |
 |--------|------|
 | `200` | 成功 |
+| `201` | 已创建 |
+| `204` | 无内容（例如 DELETE） |
 | `400` | 请求错误——参数无效 |
 | `401` | 未授权——令牌缺失或无效 |
 | `403` | 禁止访问——令牌有效但权限不足 |
 | `404` | 未找到 |
+| `409` | 冲突——资源重复或状态冲突 |
 | `422` | 不可处理的实体——验证错误 |
-| `429` | 超过限流/配额 |
+| `429` | 超过限流 |
 | `500` | 内部服务器错误 |
+| `503` | 服务不可用——依赖不健康 |
 
 ## 错误码参考
 
-| 错误码 | HTTP | 描述 |
-|--------|------|------|
-| `INVALID_REQUEST` | 400 | 请求体或参数格式错误 |
-| `VALIDATION_ERROR` | 422 | 一个或多个字段验证失败 |
-| `UNAUTHORIZED` | 401 | 无有效认证令牌 |
-| `TOKEN_EXPIRED` | 401 | JWT 已过期——刷新后重试 |
-| `FORBIDDEN` | 403 | 操作所需权限不足 |
-| `RESOURCE_NOT_FOUND` | 404 | 请求的资源不存在 |
-| `RATE_LIMIT_EXCEEDED` | 429 | 时间窗口内请求过多 |
-| `QUOTA_EXCEEDED` | 429 | 月度使用配额已耗尽 |
-| `INTERNAL_ERROR` | 500 | 意外的服务器错误 |
+以下是 `@nebutra/errors`（`packages/platform/errors`）以 `ERROR_CODES` 形式定义的错误码：
 
-## SDK 错误处理
+| 错误码 | 描述 |
+|--------|------|
+| `BAD_REQUEST` | 请求体或参数格式错误 |
+| `VALIDATION_ERROR` | 一个或多个字段验证失败 |
+| `UNAUTHORIZED` | 无有效认证令牌 |
+| `FORBIDDEN` | 操作所需权限不足 |
+| `NOT_FOUND` | 请求的资源不存在 |
+| `CONFLICT` | 资源键已存在，或存在状态冲突 |
+| `RATE_LIMITED` | 时间窗口内请求过多 |
+| `QUOTA_EXCEEDED` | 使用配额已耗尽 |
+| `INTERNAL_ERROR` | 意外的服务器错误——请联系支持团队 |
+| `SERVICE_UNAVAILABLE` | 依赖项（数据库、缓存）暂时不可用 |
+| `EXTERNAL_SERVICE_ERROR` | 上游服务（AI、支付、邮件等）调用失败 |
+| `DATABASE_ERROR` | 数据库操作失败 |
+| `TIMEOUT` | 下游调用超过截止时间 |
+| `PAYMENT_REQUIRED` | 该操作需要有效的付费方案 |
+| `SUBSCRIPTION_EXPIRED` | 租户订阅已过期 |
+| `FEATURE_DISABLED` | 该租户未启用此功能开关 |
+| `TENANT_SUSPENDED` | 该租户已被暂停 |
+
+## 验证错误
+
+验证错误包含字段级别的详情：
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "2 个字段验证失败。",
+    "details": {
+      "fields": [
+        { "field": "email", "message": "必须是有效的邮箱地址" },
+        { "field": "name", "message": "必填，且至少 2 个字符" }
+      ]
+    }
+  }
+}
+```
+
+## 用 `@nebutra/errors` 处理错误
+
+没有客户端 SDK——`backends/gateway` 是唯一的 API 表面，路由处理函数会抛出一个带类型的 `AppError`：
 
 ```typescript
-import { NebutraError, NotFoundError, ValidationError, RateLimitError } from "@nebutra/sdk";
+import { AppError, ERROR_CODES } from "@nebutra/errors";
 
-try {
-  await nebutra.projects.get("proj_123");
-} catch (error) {
-  if (error instanceof NotFoundError) {
-    return notFound();
+app.get("/api/v1/projects/:id", async (c) => {
+  const project = await getProject(c.req.param("id"));
+  if (!project) {
+    throw new AppError({
+      code: ERROR_CODES.NOT_FOUND,
+      message: `Project ${c.req.param("id")} not found.`,
+      statusCode: 404,
+    });
   }
-  if (error instanceof ValidationError) {
-    return { errors: error.fields };
-  }
-  if (error instanceof RateLimitError) {
-    await sleep(error.retryAfter * 1000);
-  }
-  if (error instanceof NebutraError) {
-    console.error(`[${error.code}] ${error.message} (请求 ID: ${error.requestId})`);
-    throw error;
-  }
+  return c.json(project);
+});
+```
+
+在调用方这一侧，应该以 JSON 封装里的 `error.code` 作为分支判断依据——由于响应跨越了 HTTP 边界，并没有可以用 `instanceof` 检查的类型化错误类：
+
+```typescript
+const res = await fetch("/api/v1/projects/proj_123");
+const body = await res.json();
+if (!body.success) {
+  if (body.error.code === "NOT_FOUND") return notFound();
+  if (body.error.code === "VALIDATION_ERROR") return { errors: body.error.details };
+  console.error(`[${body.error.code}] ${body.error.message} (请求 ID: ${body.error.request_id})`);
 }
 ```
 
 ## 幂等性
 
-对于可能需要重试的变更请求，传递幂等性密钥：
+幂等性中间件对可能被重试的变更端点（`POST`、`PUT`、`DELETE`）去重——由于没有 SDK 包装调用，需要在请求上传递一个幂等性密钥请求头，而不是客户端选项：
 
 ```typescript
-await nebutra.invoices.create(
-  { amount: 9900, currency: "usd" },
-  { idempotencyKey: `invoice-${Date.now()}-${crypto.randomUUID()}` }
-);
+await fetch("/api/v1/invoices", {
+  method: "POST",
+  headers: { "Idempotency-Key": `invoice-${Date.now()}-${crypto.randomUUID()}` },
+  body: JSON.stringify({ amount: 9900, currency: "usd", orgId: "org_123" }),
+});
 ```
+
+在配置的时间窗口内，携带相同幂等性密钥的同一请求会返回原始响应，而不会创建重复资源。
+
+## 错误监控
+
+Nebutra 内置了 Sentry 集成用于服务端错误追踪。错误会自动打上以下标签：
+
+- `tenant_id` —— 触发错误的组织
+- `user_id` —— 发起请求的用户
+- `request_id` —— 与 API 日志关联
+- `route` —— 被调用的端点
 
 ## 相关文档
 

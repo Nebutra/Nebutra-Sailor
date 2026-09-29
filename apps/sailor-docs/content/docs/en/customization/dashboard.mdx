@@ -89,7 +89,7 @@ export default async function AnalyticsPage() {
       {
         title: "My Section",
         href: "/my-section",
-        icon: "layers",          // any Lucide icon name
+        icon: "layers",          // any @nebutra/icons (Geist) name
         group: "product",        // "product" | "settings" | "admin"
       },
     ];
@@ -204,7 +204,7 @@ import { PlanGate } from "@/components/plan-gate";
 export interface NavItem {
   title: string;
   href: string;
-  icon: string;           // Lucide icon name
+  icon: string;           // @nebutra/icons (Geist) name
   group: NavGroup;
   plans?: Plan[];         // if set, only show for these plans
   badge?: string;         // optional badge text e.g. "New", "Beta"

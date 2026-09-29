@@ -5,12 +5,18 @@ description: 在 Nebutra 和你的外部系统之间发送和接收实时事件�
 
 ## 概述
 
-Nebutra 的 Webhook 系统允许你：
+Nebutra 的 Webhook 系统（`@nebutra/webhooks`）允许你：
 
 1. **接收**来自 Nebutra 的事件（入站 Webhook——如 Creem、GitHub）
 2. **发送**事件到你客户的系统（出站 Webhook——当产品中发生事情时）
 
-## 发送 Webhook 事件
+## 出站 Webhook
+
+### 注册端点
+
+客户从**设置 → Webhooks → 添加端点**中注册 Webhook 端点。这里没有单独的客户端 SDK——设置页面会直接调用网关路由，由 `@nebutra/webhooks` 存储端点及其事件订阅。
+
+### 发送事件
 
 ```typescript
 import { getWebhooks } from "@nebutra/webhooks";
@@ -26,7 +32,21 @@ await webhooks.sendEvent({
 });
 ```
 
-## 验证签名
+Nebutra 会自动处理投递、重试（指数退避）和签名。
+
+### 投递保证
+
+| 属性 | 值 |
+|------|-----|
+| 投递方式 | 至少一次 |
+| 重试次数 | 6 次（指数退避，初始延迟 5 秒） |
+| 签名算法 | HMAC-SHA256 |
+| 负载格式 | JSON |
+| 单次尝试超时 | 30 秒 |
+
+## 入站 Webhook（接收事件）
+
+### 验证签名
 
 接收 Webhook 时，始终先验证签名。Nebutra 自己当前的卡支付通道（Creem，根据 [ADR 2026-09-26](https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/architecture/2026-09-26-creem-global-payments.md)）会在解析请求体之前先验证原始字节——同样的模式适用于你接收的任何入站 Webhook：
 

@@ -11,7 +11,7 @@ Nebutra-Sailor ships with a complete SEO foundation out of the box. You do not n
 |---------|--------|----------|
 | Static metadata | Built in | `export const metadata` in page files |
 | Dynamic metadata | Built in | `generateMetadata()` in page files |
-| OG image generation | Built in | `@vercel/og` via `opengraph-image.tsx` convention |
+| OG image generation | Built in | `next/og` via `opengraph-image.tsx` convention |
 | Robots.txt | Built in | `apps/landing/src/app/robots.ts` |
 | XML sitemap | Built in | `apps/landing/src/app/sitemap.ts` |
 | Canonical URLs | Built in | Set via `metadata.alternates.canonical` |
@@ -42,7 +42,7 @@ For pages that depend on route parameters (e.g., a blog post slug), use `generat
 
 ```typescript apps/landing/src/app/[lang]/blog/[slug]/page.tsx
 import type { Metadata } from "next";
-import { getPost } from "@/lib/sanity";
+import { getPost } from "@/lib/blog";
 
 export async function generateMetadata({
   params,
@@ -63,7 +63,7 @@ export async function generateMetadata({
 
 ## OG image generation
 
-Nebutra uses Vercel's `@vercel/og` library to generate Open Graph images at the edge. OG images are defined using the Next.js file-system convention:
+Nebutra uses Next.js's built-in `next/og` module (`ImageResponse`) to generate Open Graph images. OG images are defined using the Next.js file-system convention:
 
 ```
 apps/landing/src/app/[lang]/blog/[slug]/opengraph-image.tsx
@@ -74,7 +74,6 @@ The `opengraph-image.tsx` file exports an `ImageResponse` that renders a React c
 ```typescript opengraph-image.tsx (pattern)
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -95,7 +94,7 @@ export default async function OgImage({
 ```
 
 <Note>
-  The `runtime = "edge"` export is required for `@vercel/og`. Without it, OG image generation runs on the Node.js runtime, which is significantly slower.
+  Don't add a `runtime = "edge"` export here — Next 16.3 rejects it alongside `cacheComponents`, and `next/og` renders fine on the Node.js runtime.
 </Note>
 
 ## Structured data (JSON-LD)
@@ -128,7 +127,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ## i18n SEO with hreflang
 
-The landing page supports 7 locales via `next-intl`. Each page automatically generates `alternates.languages` metadata so search engines understand the language relationship between URLs.
+The landing page supports 34 locales (`PRODUCT_LANGUAGES` in `packages/platform/i18n/src/languages.ts`), including Chinese script-split as `zh-Hans` and `zh-Hant` — never a single bare `zh` catalog. Each page automatically generates `alternates.languages` metadata so search engines understand the language relationship between URLs.
 
 ```typescript apps/landing/src/app/[lang]/page.tsx
 export async function generateMetadata({
@@ -142,9 +141,10 @@ export async function generateMetadata({
       canonical: `https://nebutra.com/${lang}`,
       languages: {
         "en": "https://nebutra.com/en",
-        "zh": "https://nebutra.com/zh",
+        "zh-Hans": "https://nebutra.com/zh-Hans",
+        "zh-Hant": "https://nebutra.com/zh-Hant",
         "ja": "https://nebutra.com/ja",
-        // ... other locales
+        // ... other locales, one per PRODUCT_LANGUAGES entry
       },
     },
   };

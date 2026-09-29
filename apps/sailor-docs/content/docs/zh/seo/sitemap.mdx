@@ -1,125 +1,103 @@
 ---
 title: 网站地图
-description: Nebutra-Sailor 中 XML 网站地图的生成方式、如何包含来自 Sanity 的动态博客文章，以及如何向 Google Search Console 提交。
+description: Nebutra-Sailor 中分片、按语言的 XML 网站地图的生成方式，以及如何向 Google Search Console 提交。
 ---
 
 ## 网站地图的工作原理
 
-网站地图通过 Next.js App Router 文件系统约定生成。位于 `app` 目录根部的 `sitemap.ts` 文件导出一个异步函数，该函数返回一个 URL 对象数组。Next.js 将其转换为有效的 XML 网站地图，在 `/sitemap.xml` 提供服务。
+网站地图通过 Next.js App Router 文件系统约定生成，但它**按路由语言分片，每个语言一个子文件**，而不是单一的扁平文件——在 34 个产品语言下，一个巨大的网站地图会让 Search Console 把索引健康状况报告成一整团无法区分的数据。`generateSitemaps()` 从路由的唯一事实来源（SSOT）为每个语言返回一个分片 id，Next 会将其分别提供在 `/sitemap/<locale>.xml`。
 
 **文件位置：**
 ```
 apps/landing/src/app/sitemap.ts
 ```
 
-## 静态网站地图
+## 分片、按语言的网站地图
 
-对于只有静态页面的站点，导出一个 URL 对象数组：
-
-```typescript apps/landing/src/app/sitemap.ts
+```typescript apps/landing/src/app/sitemap.ts（节选）
 import type { MetadataRoute } from "next";
+import { routing } from "@/i18n/routing";
+import { SEO_ROUTE_REGISTRY, localesForPath } from "@/lib/seo/route-registry";
+import { getSiteUrl } from "@/lib/seo/site-routes";
 
-const BASE_URL = "https://nebutra.com";
-const LOCALES = ["en", "zh", "ja", "ko", "de", "fr", "es"];
+// 每个路由语言一个分片——Next 会将它们提供在 /sitemap/<locale>.xml。
+export function generateSitemaps(): Array<{ id: string }> {
+  return routing.locales.map((id) => ({ id }));
+}
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = [
-    "",
-    "/pricing",
-    "/changelog",
-    "/about",
-    "/contact",
-    "/blog",
-  ];
+// Next 16 会以 Promise 的形式传入分片 id——如果当作裸字符串读取，
+// 每个分片都会悄悄返回空结果。
+export default async function sitemap({
+  id,
+}: {
+  id: Promise<string | undefined> | string | undefined;
+}): Promise<MetadataRoute.Sitemap> {
+  const locale = await id;
+  if (!locale || !routing.locales.includes(locale)) return [];
 
+  const baseUrl = getSiteUrl();
   const entries: MetadataRoute.Sitemap = [];
 
-  for (const locale of LOCALES) {
-    for (const path of staticPages) {
-      entries.push({
-        url: `${BASE_URL}/${locale}${path}`,
-        lastModified: new Date(),
-        changeFrequency: path === "" ? "weekly" : "monthly",
-        priority: path === "" ? 1.0 : 0.8,
-      });
-    }
+  for (const route of SEO_ROUTE_REGISTRY) {
+    if (!localesForPath(route.pattern).includes(locale)) continue;
+    entries.push({
+      url: `${baseUrl}/${locale}${route.pattern}`,
+      changeFrequency: route.changeFrequency,
+      priority: route.priority,
+    });
   }
 
   return entries;
 }
 ```
 
-## 包含 Sanity 博客文章的动态网站地图
+静态路由元数据（`changeFrequency`、`priority`，以及某个路由发布在哪些语言下）保存在 `SEO_ROUTE_REGISTRY`（`apps/landing/src/lib/seo/route-registry.ts`）中，而不是在 `sitemap.ts` 里按路由硬编码——新增页面时应在那里添加，而不是修改网站地图函数。
 
-当 `FEATURE_BLOG=true` 时，从 Sanity 获取博客文章 slug 并添加到网站地图：
+博客文章来自 `@/lib/blog` 中的 `getAllPosts()`（而不是直接使用 Sanity 客户端），并汇入上面由注册表驱动的条目，而不是作为单独的静态列表附加。
 
-```typescript apps/landing/src/app/sitemap.ts
-import type { MetadataRoute } from "next";
-import { getAllPostSlugs } from "@/lib/sanity";
-
-const BASE_URL = "https://nebutra.com";
-const LOCALES = ["en", "zh", "ja", "ko", "de", "fr", "es"];
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticPages = ["", "/pricing", "/changelog", "/about", "/blog"];
-
-  const staticEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
-    staticPages.map((path) => ({
-      url: `${BASE_URL}/${locale}${path}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: path === "" ? 1.0 : 0.7,
-    }))
-  );
-
-  // 来自 Sanity 的动态博客文章
-  const posts = await getAllPostSlugs(); // 返回 [{ slug, updatedAt, locale }]
-  const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${BASE_URL}/${post.locale}/blog/${post.slug}`,
-    lastModified: new Date(post.updatedAt),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
-
-  return [...staticEntries, ...blogEntries];
-}
-```
-
-<Note>
-  仅在需要获取动态数据时才将 `sitemap()` 设为 `async`。对于纯静态站点，同步函数可以避免不必要的异步开销。
-</Note>
+对于分片网站地图，Next **不会**生成索引——`/sitemap.xml` 处的 `<sitemapindex>` 是在 `app/sitemap-index.xml/route.ts` 中手写的，并由 `next.config.ts` 重写到该路径，因为在那里放一个路由文件会与 `sitemap.ts` 这个元数据文件冲突。
 
 ## robots.txt
 
-`robots.ts` 文件控制爬虫可以访问哪些路径。它独立于网站地图，但通常会引用它：
+`robots.ts` 文件控制爬虫可以访问哪些路径。它还为指定的 AI/答案引擎爬虫（GPTBot、ClaudeBot、Google-Extended、Applebot-Extended、CCBot、Bytespider）声明了一份更窄的允许列表，这些爬虫只能看到产品相关的页面，而不是整个站点：
 
-```typescript apps/landing/src/app/robots.ts
+```typescript apps/landing/src/app/robots.ts（节选）
 import type { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/seo/site-routes";
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = getSiteUrl();
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/", "/studio/"],
+        disallow: ["/api/", "/_next/", "/sign-in", "/sign-up", "/admin/", "/settings/"],
       },
+      ...(["GPTBot", "ClaudeBot", "Google-Extended", "Applebot-Extended", "CCBot", "Bytespider"] as const).map(
+        (userAgent) => ({
+          userAgent,
+          allow: ["/", "/blog/", "/features", "/features/", "/pricing", "/llms.txt"],
+          disallow: ["/api/", "/_next/", "/sign-in", "/sign-up", "/admin/", "/settings/"],
+        })
+      ),
     ],
-    sitemap: "https://nebutra.com/sitemap.xml",
+    sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }
 ```
 
 <Warning>
-  切勿在网站地图中包含已认证的应用路由（如 `app.nebutra.com/dashboard`）。只有公开落地页（`nebutra.com`）应该被索引。`apps/web` 应用应有自己的 `robots.ts`，拒绝所有爬虫访问。
+  切勿在网站地图中包含已认证的应用路由（如 `app.nebutra.com/dashboard`）。只有公开落地页（`nebutra.com`）会被索引。`apps/web` 和 `apps/sailor-docs` 各自都有自己的 `robots.ts`。
 </Warning>
 
 ## 在本地验证网站地图
 
 ```bash
 pnpm --filter @nebutra/landing dev
-# 访问：http://localhost:3002/sitemap.xml
-# 访问：http://localhost:3002/robots.txt
+# 访问：http://localhost:3000/sitemap/en.xml
+# 访问：http://localhost:3000/robots.txt
 ```
 
 在开发环境中，网站地图按需渲染；在生产环境中，网站地图会在 CDN 边缘缓存。
@@ -143,49 +121,7 @@ pnpm --filter @nebutra/landing dev
 
 ## 网站地图大小限制
 
-Google 支持最多 50,000 个 URL 或 50 MB（未压缩）的网站地图。若超出此限制：
-
-1. 将其拆分为多个网站地图（如 `sitemap-static.xml`、`sitemap-blog.xml`）。
-2. 在 `/sitemap.xml` 创建引用子网站地图的网站地图索引文件。
-
-当需要网站地图索引时，使用 Next.js 内置的 `generateSitemaps()` 导出，将路由拆分到多个 `sitemap.ts` 文件：
-
-```typescript
-// app/sitemap.ts  ← 成为 /sitemap.xml 的索引
-import type { MetadataRoute } from "next";
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  // 仅包含静态和短生命周期页面
-  return [
-    { url: "https://nebutra.com", lastModified: new Date() },
-    { url: "https://nebutra.com/pricing", lastModified: new Date() },
-  ];
-}
-```
-
-```typescript
-// app/blog/sitemap.ts  ← /blog/sitemap.xml
-import type { MetadataRoute } from "next";
-import { getAllPostSlugs } from "@/lib/blog";
-
-export async function generateSitemaps() {
-  // 每批最多 5,000 个 URL
-  const slugs = await getAllPostSlugs();
-  const batches = Math.ceil(slugs.length / 5000);
-  return Array.from({ length: batches }, (_, i) => ({ id: i }));
-}
-
-export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
-  const slugs = await getAllPostSlugs();
-  const page = slugs.slice(id * 5000, (id + 1) * 5000);
-  return page.map((slug) => ({
-    url: `https://nebutra.com/blog/${slug}`,
-    lastModified: new Date(),
-  }));
-}
-```
-
-Next.js 会自动在 `/sitemap.xml` 生成一个网站地图索引，引用 `/blog/sitemap/0.xml`、`/blog/sitemap/1.xml` 等子地图。请在 Google Search Console 中注册索引 URL。
+Google 支持每个文件最多 50,000 个 URL 或 50 MB（未压缩）——按语言分片（如上所述）已经让每个分片在 34 个语言的页面规模下远低于这个限制。如果某个语言的分片接近这个限制（例如博客文章非常多），可以用同样的方式对该语言进一步分片：让嵌套的 `generateSitemaps()` 除了语言 id 之外，再按一个次级 id（如文章批次）分片，并更新 `app/sitemap-index.xml/route.ts` 中手写的索引，列出新增的子文件。
 
 ## 相关文档
 
@@ -197,7 +133,7 @@ Next.js 会自动在 `/sitemap.xml` 生成一个网站地图索引，引用 `/bl
     静态和动态元数据——标题、描述、OG、Twitter 卡片。
   </Card>
   <Card title="功能开关" icon="toggle-on" href="/zh/configuration/feature-flags">
-    启用向网站地图添加动态 URL 的博客和更新日志。
+    启用会向网站地图添加动态 URL 的博客和更新日志功能。
   </Card>
   <Card title="部署" icon="rocket" href="/zh/deployment/overview">
     规范 URL 和网站地图基础 URL 的生产域名配置。

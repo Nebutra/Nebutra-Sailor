@@ -80,7 +80,7 @@ Create the analytics route in the api-gateway. The endpoint reads the last 30 da
 
     analyticsRouter.get(
       "/usage",
-      requirePermission("analytics:read"),
+      requirePermission("read", "AnalyticsUsage"),
       zValidator("query", usageQuerySchema),
       async (c) => {
         const { meterId, days } = c.req.valid("query");
@@ -90,10 +90,10 @@ Create the analytics route in the api-gateway. The endpoint reads the last 30 da
         const since = new Date();
         since.setDate(since.getDate() - days);
 
-        const series = await metering.getTimeSeries(tenantId, meterId, {
-          from: since,
-          to: new Date(),
-          granularity: "day",
+        const history = await metering.getUsageHistory(tenantId, meterId, {
+          period: "daily",
+          startDate: since.toISOString(),
+          endDate: new Date().toISOString(),
         });
 
         return c.json({
@@ -101,9 +101,9 @@ Create the analytics route in the api-gateway. The endpoint reads the last 30 da
           data: {
             meterId,
             tenantId,
-            series: series.map((point) => ({
-              date:  point.timestamp.toISOString().split("T")[0],
-              value: Number(point.value),
+            series: history.map((summary) => ({
+              date:  summary.periodStart.slice(0, 10),
+              value: summary.value,
             })),
           },
         });
@@ -124,7 +124,7 @@ Create the analytics route in the api-gateway. The endpoint reads the last 30 da
 </Steps>
 
 <Note>
-  `requirePermission` is Hono middleware from `@nebutra/permissions`. It reads the JWT from the `Authorization` header and throws a 403 if the resolved role does not include the requested scope.
+  `requirePermission(action, resource, options?)` is Hono middleware from `@nebutra/permissions`, built on CASL. It takes an action (`"read"`, `"create"`, …) and a resource name, not a colon-delimited scope string — see `packages/iam/permissions/src/middleware.ts`.
 </Note>
 
 ---
@@ -352,19 +352,27 @@ The chart component is a Client Component (Recharts requires the browser). It re
 ## Phase 6: Permission gating
 
 <Steps>
-  <Step title="Add the analytics:read scope to the RBAC matrix">
+  <Step title="Add the AnalyticsUsage resource to the RBAC matrix">
+    `@nebutra/permissions` is CASL-based: roles are `{ action: string[], resource: string[] }` rule sets, not colon-delimited scope strings.
+
     ```typescript
-    // packages/iam/permissions/src/roles.ts
-    export const ROLE_PERMISSIONS = {
-      OWNER:  ["*"],
-      ADMIN:  ["analytics:read", "analytics:export", /* …other admin scopes */],
-      MEMBER: ["analytics:read"],
-      VIEWER: [],                   // viewers cannot see analytics
-    } as const;
+    // packages/iam/permissions/src/roles.ts — add "AnalyticsUsage" to the resource
+    // list of the rule(s) that should see it (owner/admin already have it via
+    // "manage" on everything; member needs an explicit rule):
+    export const DEFAULT_ROLES: Record<string, RoleDefinition> = {
+      // ...
+      member: {
+        role: "member",
+        rules: [
+          { action: ["read"], resource: ["AnalyticsUsage", /* …existing member resources */] },
+        ],
+      },
+      // viewer gets no AnalyticsUsage rule — cannot see analytics
+    };
     ```
   </Step>
   <Step title="Gate the API route (already done in Phase 2)">
-    The `requirePermission("analytics:read")` middleware added in Phase 2 is sufficient. It returns HTTP 403 for any role that does not include the scope.
+    The `requirePermission("read", "AnalyticsUsage")` middleware added in Phase 2 is sufficient. It returns HTTP 403 for any role whose rules don't grant `read` on `AnalyticsUsage`.
   </Step>
   <Step title="Gate the UI page for VIEWER role">
     ```tsx
@@ -423,9 +431,9 @@ import { analyticsRouter } from "./analytics";
 
 vi.mock("@nebutra/metering", () => ({
   getMetering: vi.fn().mockResolvedValue({
-    getTimeSeries: vi.fn().mockResolvedValue([
-      { timestamp: new Date("2025-01-01"), value: BigInt(1500) },
-      { timestamp: new Date("2025-01-02"), value: BigInt(2300) },
+    getUsageHistory: vi.fn().mockResolvedValue([
+      { meterId: "api_calls", tenantId: "org_test_123", periodStart: "2025-01-01T00:00:00Z", periodEnd: "2025-01-02T00:00:00Z", value: 1500 },
+      { meterId: "api_calls", tenantId: "org_test_123", periodStart: "2025-01-02T00:00:00Z", periodEnd: "2025-01-03T00:00:00Z", value: 2300 },
     ]),
   }),
 }));

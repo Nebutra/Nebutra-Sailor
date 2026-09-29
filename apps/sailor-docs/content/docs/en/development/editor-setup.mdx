@@ -82,11 +82,13 @@ Biome is configured at the repo root in `biome.json`. Key rules:
 - **Double quotes** for strings
 - **Semicolons** required
 
+`pnpm lint` is not just Biome — it chains Biome with dozens of repo-specific guard scripts (`scripts/lint-*.mjs`) covering things like raw `<input>` usage, the repository seam, database migration hygiene, route-handler placement, and microcopy rules — see [Linting Rules](/customization/linting-rules) for the ones that affect app code you'll actually write.
+
 To run the linter manually:
 
 ```bash
-pnpm lint          # check
-pnpm lint:fix      # check + auto-fix
+pnpm lint          # Biome + every guard script
+pnpm lint:fix      # check + auto-fix where possible
 ```
 
 ## TypeScript

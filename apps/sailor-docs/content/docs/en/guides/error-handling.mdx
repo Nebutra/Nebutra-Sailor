@@ -11,7 +11,7 @@ All error responses from the Nebutra API use a consistent JSON envelope:
 {
   "success": false,
   "error": {
-    "code": "RESOURCE_NOT_FOUND",
+    "code": "NOT_FOUND",
     "message": "Project proj_123 not found.",
     "details": {
       "resource": "Project",
@@ -43,19 +43,27 @@ Always log the `request_id` when reporting issues to support — it enables us t
 
 ## Error codes
 
-| Code | HTTP | Description |
-|------|------|-------------|
-| `INVALID_REQUEST` | 400 | Request body or parameters are malformed |
-| `VALIDATION_ERROR` | 422 | One or more fields failed validation |
-| `UNAUTHORIZED` | 401 | No valid authentication token |
-| `TOKEN_EXPIRED` | 401 | JWT has expired — refresh and retry |
-| `FORBIDDEN` | 403 | Insufficient scope for this action |
-| `RESOURCE_NOT_FOUND` | 404 | The requested resource does not exist |
-| `DUPLICATE_RESOURCE` | 409 | A resource with this key already exists |
-| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests in the time window |
-| `QUOTA_EXCEEDED` | 429 | Monthly usage quota exhausted |
-| `INTERNAL_ERROR` | 500 | Unexpected server error — contact support |
-| `SERVICE_UNAVAILABLE` | 503 | Dependency (DB, cache) temporarily unavailable |
+These are the codes `@nebutra/errors` (`packages/platform/errors`) defines as `ERROR_CODES`:
+
+| Code | Description |
+|------|-------------|
+| `BAD_REQUEST` | Request body or parameters are malformed |
+| `VALIDATION_ERROR` | One or more fields failed validation |
+| `UNAUTHORIZED` | No valid authentication token |
+| `FORBIDDEN` | Insufficient permission for this action |
+| `NOT_FOUND` | The requested resource does not exist |
+| `CONFLICT` | A resource with this key already exists, or a state conflict |
+| `RATE_LIMITED` | Too many requests in the time window |
+| `QUOTA_EXCEEDED` | Usage quota exhausted |
+| `INTERNAL_ERROR` | Unexpected server error — contact support |
+| `SERVICE_UNAVAILABLE` | Dependency (DB, cache) temporarily unavailable |
+| `EXTERNAL_SERVICE_ERROR` | An upstream provider (AI, payments, email, …) failed |
+| `DATABASE_ERROR` | A database operation failed |
+| `TIMEOUT` | A downstream call exceeded its deadline |
+| `PAYMENT_REQUIRED` | Action requires an active paid plan |
+| `SUBSCRIPTION_EXPIRED` | The tenant's subscription has lapsed |
+| `FEATURE_DISABLED` | Feature flag is off for this tenant |
+| `TENANT_SUSPENDED` | The tenant has been suspended |
 
 ## Validation errors
 
@@ -77,48 +85,51 @@ Validation errors include field-level details:
 }
 ```
 
-## Error handling in the SDK
+## Error handling with `@nebutra/errors`
 
-The SDK throws typed errors:
+There's no client SDK — `backends/gateway` is the sole API surface, and route handlers throw a typed `AppError`:
 
 ```typescript
-import { NebutraError, NotFoundError, ValidationError } from "@nebutra/sdk";
+import { AppError, ERROR_CODES } from "@nebutra/errors";
 
-try {
-  const project = await nebutra.projects.get("proj_123");
-} catch (error) {
-  if (error instanceof NotFoundError) {
-    // Project doesn't exist — show 404 UI
-    return notFound();
+app.get("/api/v1/projects/:id", async (c) => {
+  const project = await getProject(c.req.param("id"));
+  if (!project) {
+    throw new AppError({
+      code: ERROR_CODES.NOT_FOUND,
+      message: `Project ${c.req.param("id")} not found.`,
+      statusCode: 404,
+    });
   }
+  return c.json(project);
+});
+```
 
-  if (error instanceof ValidationError) {
-    // Show field errors to user
-    return { errors: error.fields };
-  }
+On the caller side, treat the JSON envelope's `error.code` as the thing to branch on — there's no typed error class to `instanceof`-check against, since responses cross an HTTP boundary:
 
-  if (error instanceof NebutraError) {
-    // Generic Nebutra error
-    console.error(`[${error.code}] ${error.message} (request: ${error.requestId})`);
-    throw error;
-  }
-
-  throw error; // Re-throw unexpected errors
+```typescript
+const res = await fetch("/api/v1/projects/proj_123");
+const body = await res.json();
+if (!body.success) {
+  if (body.error.code === "NOT_FOUND") return notFound();
+  if (body.error.code === "VALIDATION_ERROR") return { errors: body.error.details };
+  console.error(`[${body.error.code}] ${body.error.message} (request: ${body.error.request_id})`);
 }
 ```
 
 ## Idempotency
 
-For mutation requests (`POST`, `PUT`, `DELETE`) that could be retried, pass an idempotency key:
+Idempotency middleware deduplicates mutation endpoints (`POST`, `PUT`, `DELETE`) that could be retried — pass an idempotency key header on the request rather than a client-side option, since there's no SDK wrapping the call:
 
 ```typescript
-await nebutra.invoices.create(
-  { amount: 9900, currency: "usd", orgId: "org_123" },
-  { idempotencyKey: `invoice-${Date.now()}-${crypto.randomUUID()}` }
-);
+await fetch("/api/v1/invoices", {
+  method: "POST",
+  headers: { "Idempotency-Key": `invoice-${Date.now()}-${crypto.randomUUID()}` },
+  body: JSON.stringify({ amount: 9900, currency: "usd", orgId: "org_123" }),
+});
 ```
 
-The same request with the same idempotency key within 24 hours will return the original response instead of creating a duplicate resource.
+The same request with the same idempotency key within the configured window returns the original response instead of creating a duplicate resource.
 
 ## Error monitoring
 

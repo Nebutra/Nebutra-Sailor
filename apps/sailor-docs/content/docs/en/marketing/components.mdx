@@ -5,18 +5,18 @@ description: "Start printing money"
 
 The core rule of Vibe Business is: **Build the landing page before the backend**.
 
-Nebutra Sailor packs an entire high-conversion UI kit inside `packages/marketing`. These aren't generic components; they are heavily engineered specifically for SaaS conversions, inspired by titans like Shipfast.
+Nebutra Sailor packs a conversion-focused UI kit inside `packages/commerce/marketing` (published as `@nebutra/marketing`). These aren't generic components; they're built specifically for SaaS landing and pricing pages.
 
 ## Available Components
 
 ### 1. Waitlist & Social Proof
-Use `<Waitlist />` to capture emails before you even launch. It includes built-in fake "social proof" (e.g., "Join 2,431 others").
+Use `<Waitlist />` to capture emails before you even launch. It ships with a `socialProofCount` prop for a "Join N others" line — set it to your real number.
 
 ```tsx
 import { Waitlist } from "@nebutra/marketing";
 
 export default function Page() {
-  return <Waitlist userCount={2431} onSubmit={async (email) => { ... }} />;
+  return <Waitlist socialProofCount={2431} />;
 }
 ```
 

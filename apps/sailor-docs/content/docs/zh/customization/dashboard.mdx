@@ -89,7 +89,7 @@ export default async function AnalyticsPage() {
       {
         title: "我的板块",
         href: "/my-section",
-        icon: "layers",          // 任意 Lucide 图标名称
+        icon: "layers",          // 任意 @nebutra/icons（Geist）图标名称
         group: "product",        // "product" | "settings" | "admin"
       },
     ];
@@ -204,7 +204,7 @@ import { PlanGate } from "@/components/plan-gate";
 export interface NavItem {
   title: string;
   href: string;
-  icon: string;           // Lucide 图标名称
+  icon: string;           // @nebutra/icons（Geist）图标名称
   group: NavGroup;
   plans?: Plan[];         // 若设置，则仅对这些套餐的用户显示
   badge?: string;         // 可选徽章文本，例如 "新功能"、"Beta"

@@ -9,8 +9,8 @@ The Nebutra-Sailor monorepo is organized by **purpose** at the top level (`apps/
 
 ```
 nebutra-sailor/
-├── apps/                User-facing apps (Next.js / Hono / Storybook / docs)
-├── backends/            Non-UI backends — split by language (gateway/, python/)
+├── apps/                User-facing apps (Next.js / Vite / Storybook / docs)
+├── backends/            Non-UI backends — split by language (gateway/, go/, python/, rust/)
 ├── packages/            Shared TypeScript libraries — categorized by domain
 ├── infra/               iac/ + runtime/ + data/ + ops/  (Wave 2.2)
 ├── workflows/           inngest/ + n8n/ + pusher/        (Wave 2.3)
@@ -18,7 +18,7 @@ nebutra-sailor/
 ├── tests/               architecture/ + load/            (vitest + k6)
 ├── docs/                Internal architecture ADRs (source repo only)
 ├── scripts/             Repo-level utility scripts
-├── docker-compose.infra.yml
+├── docker-compose.yml
 ├── turbo.json
 ├── pnpm-workspace.yaml
 └── package.json
@@ -28,15 +28,17 @@ nebutra-sailor/
 
 | App | Framework | Purpose |
 |-----|-----------|---------|
-| `apps/landing` | Next.js 16 + Tailwind v4 | Public marketing site (7 locales) |
-| `apps/web` | Next.js 16 + Tailwind v4 | Authenticated SaaS dashboard |
+| `apps/landing` | Next.js 16 + Tailwind v4 | Public marketing site (34 locales) |
+| `apps/web` | Vite + React + Tailwind v4 | Authenticated SaaS dashboard |
+| `apps/auth` | Next.js 16 + Better Auth | Login center (`@nebutra/auth-center`) |
+| `apps/admin` | Next.js 16 | Admin-of-admins console |
 | `apps/storybook` | Storybook 8.x | Component library documentation |
-| `apps/design-docs` | Next.js + Fumadocs | Internal design system docs |
-| `apps/sailor-docs` | Next.js + Fumadocs | Public product docs (this site) |
+| `apps/design` | Next.js 16 | Internal design system docs (`@nebutra/design`) |
+| `apps/sailor-docs` | Next.js 16 + Fumadocs | Public product docs (this site) |
 | `apps/studio` | Sanity Studio v4 | CMS — content management |
-| `apps/docs` | Mintlify | Public product docs (Mintlify variant) |
 | `apps/idp` | Next.js | Self-hosted identity provider |
 | `apps/mail-preview` | Next.js | React Email template preview |
+| `apps/forge`, `apps/kuanlan`, `apps/para`, `apps/pebble`, `apps/router`, `apps/typelens` | — | Distinct Nebutra products, each documented under its own section |
 | `apps/sleptons` | — | Auxiliary product surface |
 
 ## `backends/` — non-UI services
@@ -45,12 +47,14 @@ nebutra-sailor/
 backends/
 ├── gateway/             TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
 │                        DEFAULT for new backend work per ADR 2026-05-10
-└── python/              Python / FastAPI — batch / ML / specialized libs only
-    ├── _shared/         Cross-service utilities (active)
-    └── ai/              LLM, embeddings, agent orchestration (active)
+├── go/                  Go — event-ingest and shared Go utilities
+├── python/              Python / FastAPI — batch / ML / specialized libs only
+│   ├── _shared/         Cross-service utilities (active)
+│   └── ai/              LLM, embeddings, agent orchestration (active)
+└── rust/                Rust — sandbox runtime
 ```
 
-The TS/Python split mirrors `vercel/vercel`'s `pkg/` layout. **New backend work goes in `backends/gateway`** unless the [TS-by-Default ADR](/docs/architecture/backend-language-policy) exception applies.
+**New backend work goes in `backends/gateway`** unless the [TS-by-Default ADR](/docs/architecture/backend-language-policy) exception applies.
 
 Each Python module has exactly one of three lifecycle tiers — `active` (has real callers, builds in CI), `stub` (interface preserved, `src/` empty), or `incubator` (excluded from workspaces and CI).
 
@@ -139,7 +143,7 @@ tests/
 | Add a new Python service | `backends/python/<name>/` (must cite ADR justification) |
 | Add a new UI component | `packages/design/ui/src/components/` + Storybook story |
 | Add a new layout wrapper | `packages/design/ui/src/layout/` |
-| Add a new design token | `packages/design/tokens/styles.css` |
+| Add a new design token | `packages/design/design-tokens/tokens/*.json` (DTCG source — `styles.css` is generated, never hand-edit it) |
 | Add a new email template | `packages/integrations/email/src/templates/` |
 | Add a new Prisma model | `packages/platform/db/prisma/schema.prisma` |
 | Add a queue handler | `packages/integrations/queue/src/handlers/` |

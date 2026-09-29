@@ -1,0 +1,43 @@
+---
+title: 更新日志
+description: 每一次发布，都精心打磨每一个细节。
+---
+
+完整的交互式更新日志——包含发布说明、功能亮点和版本历史——位于：
+
+**[nebutra.com/en/changelog →](https://nebutra.com/en/changelog)**
+
+您也可以通过 RSS 或 Atom 订阅发布说明：
+
+- **RSS**：[nebutra.com/api/changelog/rss](https://nebutra.com/api/changelog/rss)
+- **Atom**：[nebutra.com/api/changelog/atom](https://nebutra.com/api/changelog/atom)
+- **Twitter/X**：[@nebutra_ai](https://x.com/nebutra_ai)
+
+---
+
+## 近期发布
+
+### create-sailor 2.0.x — 2026 年 9 月
+
+**一套技术栈，零提问**（ADR 2026-09-24 Sailor convergence）
+- `create-sailor` 现在除了项目存放位置以外不再问任何问题——每一个技术栈选项标志（`--region`、`--auth`、`--payment`、`--email`、`--storage`、`--queue`、`--search`、`--deploy` 等）都已移除。每个项目都是同一套收敛后的技术栈，各项能力在对应密钥配置好之后自动生效。
+- `nebutra status [--json]` 取代了原先 `create` / `add` / `auth` / `billing` / `search` / … 这一堆零散子命令，直接报告哪些能力已经生效、每项能力还缺什么。
+- 全新项目从渲染的第一步起就带有自己的品牌——`create-sailor` 在脚手架搭建时会运行模板的品牌流水线，让欢迎页、页头和登录页展示的是你的项目名，而不是 Nebutra 的。
+- 2.0.2 修复了 CLI 在已脚手架项目内部运行时的根目录解析问题、非交互式的 `db status`，并移除了对已不存在的服务和脚本的引用。
+
+### 数据库收敛 — 2026 年 9 月
+
+- 单一数据库源：一次 schema 变更只需要改 `packages/platform/db/prisma/schema.prisma` 这一个文件——表结构以及每张表的 `/// @rls` 访问规则都在其中。行级安全是生成出来的（`prisma/generated/rls.sql`），绝不手写，且每次部署都会在应用启动前先运行 `pnpm db:deploy`。
+- 零密钥预览数据库：未设置 `DATABASE_URL` 时，`@nebutra/db` 会自动运行在 PGlite（WASM 中的 Postgres 17）上——不需要外部 Postgres 即可开始开发。
+
+### @nebutra/* 设计类 packages 4.0.0 / 4.0.1
+
+- `@nebutra/ui`、`@nebutra/tokens`、`@nebutra/brand`、`@nebutra/icons`、`@nebutra/graph-model` 和 `@nebutra/design-tokens` 一同升级到 4.0.0，随后又发布 4.0.1 修复了一处字体依赖问题——整个设计类 package 组作为一个整体协同发布。
+
+### 支付 — Creem 银行卡通道
+
+- `nebutra status`/`sync` 会检查 `CREEM_API_KEY` 和 `CREEM_PRODUCT_ID`，以判断 `billing` 能力中银行卡供应商是否就绪；脚手架文案与文档中，Creem（面向全球的银行卡支付，记录商户模式）与微信支付/支付宝搭配，是当前的支付技术栈（ADR 2026-09-26）。
+
+---
+
+关于路线图和即将发布的版本，请参见 [nebutra.com/en/roadmap](https://nebutra.com/en/roadmap)。

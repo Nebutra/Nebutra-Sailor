@@ -48,7 +48,7 @@ retry-after: 12
 {
   "success": false,
   "error": {
-    "code": "RATE_LIMIT_EXCEEDED",
+    "code": "RATE_LIMITED",
     "message": "Too many requests. Retry after 12 seconds.",
     "details": {
       "limit": 60,
@@ -78,37 +78,30 @@ async function fetchWithRetry(url: string, options?: RequestInit, maxRetries = 3
 }
 ```
 
-### SDK retry configuration
-
-The Nebutra SDK handles retries automatically:
-
-```typescript
-const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
-  retry: {
-    maxAttempts: 3,
-    backoff: "exponential", // or "linear" | "constant"
-    initialDelay: 1000,     // ms
-  },
-});
-```
+There's no client SDK to configure retries on — `fetchWithRetry` above (or your own HTTP client's retry policy) is the actual pattern, since `backends/gateway` is the only API surface.
 
 ## Checking quota usage
 
-Query your current quota usage before making expensive operations:
+Server-side, query current quota usage with `@nebutra/metering`:
 
 ```typescript
-const quota = await nebutra.metering.getQuota("api_calls");
+import { getMetering } from "@nebutra/metering";
+
+const metering = await getMetering();
+const quota = await metering.getQuota(tenantId, "api_calls", "monthly");
 // → {
+//     meterId: "api_calls",
+//     tenantId,
 //     limit: 1000,
 //     used: 847,
 //     remaining: 153,
-//     percentage: 0.847,
-//     reset_at: "2026-04-01T00:00:00Z"
+//     percentage: 84.7,   // 0–100, not a 0–1 fraction
+//     period: "monthly",
+//     periodStart: "2026-03-01T00:00:00Z",
+//     periodEnd: "2026-04-01T00:00:00Z",
 //   }
 
-if (quota.percentage > 0.9) {
+if (quota && quota.percentage > 90) {
   // Warn user / prompt upgrade
 }
 ```
