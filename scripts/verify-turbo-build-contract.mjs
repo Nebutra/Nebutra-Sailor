@@ -200,6 +200,26 @@ assert(
   "@nebutra/theme#build must explicitly depend on @nebutra/design-tokens#build",
 );
 
+// A package turbo.json that overrides build.dependsOn replaces the root's
+// "^build" instead of adding to it. Without "^build" the package builds before
+// the workspace packages it imports (2026-09-29: @nebutra/tokens imported
+// @nebutra/brand and every Fly deploy failed on a missing .d.ts).
+for (const file of spawnSync("git", ["ls-files", "*turbo.json"], {
+  cwd: repoRoot,
+  encoding: "utf8",
+})
+  .stdout.split("\n")
+  .filter((f) => f && f !== "turbo.json")) {
+  const deps = JSON.parse(
+    readFileSync(resolve(repoRoot, file), "utf8").replace(/^\s*\/\/.*$/gm, ""),
+  ).tasks?.build?.dependsOn;
+  if (deps)
+    assert(
+      deps.includes("^build"),
+      `${file}: build.dependsOn overrides the root and must include "^build"`,
+    );
+}
+
 // The registry-generation contract belonged to apps/design-docs, deleted 2026-08-11.
 
 process.stdout.write("turbo build contract: ok\n");
