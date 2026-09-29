@@ -128,14 +128,13 @@ describe("docs zone seam", () => {
     expect(legacy.slice(0, legacy.indexOf("}") + 1)).toContain("NextResponse.redirect");
   });
 
-  it("gives the zone root a route the middleware actually reaches", () => {
-    const middleware = code("apps/sailor-docs/src/middleware.ts");
+  it("prerenders the zone root, since a static export has no middleware to reach it", () => {
+    const page = code("apps/sailor-docs/src/app/[lang]/[[...slug]]/page.tsx");
 
-    // Under basePath, Next prefixes every matcher, so `/((?!…).*)` never matches
-    // bare `/docs` — the zone root 404'd while every page under it worked. The
-    // root has to be listed on its own.
-    expect(middleware).toContain("rewriteZoneRoot");
-    expect(middleware).toMatch(/matcher:\s*\[\s*"\/"/);
+    // The docs ship as a static export on Cloudflare (2026-09-29): nothing runs
+    // per request, so bare `/docs` and each language root exist only if
+    // generateStaticParams emits an empty slug for every language.
+    expect(page).toMatch(/i18n\.languages\.map\(\(lang\) => \(\{ lang, slug: \[\]/);
   });
 
   it("takes the upstream origin from the deployment, with no instance default", () => {

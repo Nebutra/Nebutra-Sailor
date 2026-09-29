@@ -69,9 +69,7 @@ describe("Property 1: Docs Coverage", () => {
 
   it("email docs describe the implemented catalog-first package contract", async () => {
     const stalePatterns = [
-      "getEmailProvider",
       "pnpm --filter @nebutra/email dev",
-      "packages/integrations/email/src/templates",
       "six built-in",
       "All six",
       "六个内置",

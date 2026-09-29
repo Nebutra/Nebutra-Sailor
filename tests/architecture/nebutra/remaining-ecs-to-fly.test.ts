@@ -36,7 +36,8 @@ describe("remaining Next edges on Fly", () => {
       resolve(ROOT, ".github/workflows/deploy-sailor-docs.yml"),
       "utf-8",
     );
-    expect(sailorDocsWf).toContain("opennextjs-cloudflare build");
+    expect(sailorDocsWf).toContain("build:static");
+    expect(sailorDocsWf).not.toContain("opennextjs-cloudflare build");
     expect(sailorDocsWf).not.toContain("DEPLOY_TARGET_SAILOR_DOCS");
 
     expect(fly).toContain("want_carina");

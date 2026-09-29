@@ -114,10 +114,7 @@ describe("bare-zh URL literals", () => {
    * a *route* locale), so a handful of files legitimately emit a `/zh` segment.
    * Entries migrate on touch; the list may only shrink.
    */
-  const KNOWN_BARE_ZH: Readonly<Record<string, string>> = {
-    "apps/sailor-docs/next.config.ts":
-      "docs origin serves /<contentLocale>/<slug> with languages ['en','zh']; these are its own back-compat 301 sources.",
-  };
+  const KNOWN_BARE_ZH: Readonly<Record<string, string>> = {};
 
   function candidateFiles(): string[] {
     const fromSrc = appNames().flatMap((app) =>
