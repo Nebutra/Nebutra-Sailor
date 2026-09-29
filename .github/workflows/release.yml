@@ -212,6 +212,27 @@ jobs:
       - name: Verify release surface
         run: pnpm verify:release-surface
 
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      # This job checks out a fresh runner — dist/ from the `release` job's
+      # build does not carry over — and `changeset publish` below triggers
+      # each publishable package's own `prepublishOnly`/build (e.g.
+      # create-sailor's `tsup`), which resolves its workspace deps by their
+      # `dist` output (@nebutra/brand/metadata-helpers, @nebutra/tokens/preset,
+      # …). Skipping this step is what made "Publish scoped packages to GitHub
+      # Packages" fail: create-sailor's bundler couldn't resolve dist files
+      # that were never built on this runner.
+      - name: Resolve publishable package filters
+        id: release_filters
+        run: |
+          filters="$(node scripts/print-release-filters.mjs)"
+          echo "filters=${filters}" >> "$GITHUB_OUTPUT"
+          echo "$filters"
+
+      - name: Build publishable package graph
+        run: pnpm turbo run build ${{ steps.release_filters.outputs.filters }}
+
       - name: Publish scoped packages to GitHub Packages
         run: bash ./scripts/release-publish-github-packages.sh
         env:
