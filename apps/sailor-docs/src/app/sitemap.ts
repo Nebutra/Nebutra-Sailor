@@ -1,8 +1,13 @@
-import { getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
+import { getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import type { MetadataRoute } from "next";
 import { languagesWithPage, publicPathFor, xDefaultLanguage } from "@/lib/docs-fallback";
 import { htmlLangForLanguage } from "@/lib/i18n";
 import { source } from "@/lib/source";
+
+// Required explicitly for `output: "export"` — Next won't infer it for
+// metadata route files (sitemap.ts/robots.ts) the way it does for plain
+// route.ts handlers, even though this has no dynamic API usage either way.
+export const dynamic = "force-static";
 
 /**
  * Sitemap for the public docs origin.

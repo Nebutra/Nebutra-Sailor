@@ -3,24 +3,42 @@
   "name": "nebutra-sailor-docs",
   // Same account as typelens/gateway; required when API token cannot list accounts.
   "account_id": "a4248a5738df319996a70092fe598d37",
-  "main": ".open-next/worker.js",
   "compatibility_date": "2026-06-04",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  // Shrink Worker upload (handler.mjs was ~99 MiB uncompressed / ~15 MiB gzip).
-  "minify": true,
+  // No `main`: this is a Workers static-assets-only deploy, not a Worker
+  // script. Docs is a pure `next build` (output: "export") static site now —
+  // see next.config.ts and scripts/postbuild-static-export.mjs. There is no
+  // server code to run a request through, so there is nothing for
+  // `compatibility_flags` or a `nodejs_compat` runtime to apply to either.
+  //
+  // This replaces the OpenNext → Worker deploy (2026-09-29). That path
+  // rendered every page fresh per request with no working cache, which
+  // intermittently exceeded the Worker's CPU/resource ceiling —
+  // "error code: 1102" — even after the incremental-cache fix landed
+  // (commit 21efbab9e): the live Worker kept flaking between 200/404/503 on
+  // the SAME url from request to request. A static site removes the failure
+  // mode at the root: there is no per-request render left to exceed a limit.
   "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    // scripts/postbuild-static-export.mjs writes here: `out/` (Next's export
+    // output) nested under `dist/docs/`, matching next.config.ts's basePath
+    // — this deploy has no route bound to a hostname, so its own workers.dev
+    // URL must itself serve the site at /docs (see the comment above).
+    "directory": "dist",
+    // Next's static export writes `<route>/index.html` for every page
+    // (trailingSlash: false is still clean-URL output, just nested), so a
+    // request for `/getting-started/installation` needs the trailing-slash
+    // variant tried automatically.
+    "html_handling": "auto-trailing-slash",
+    // Next's own `out/404.html` (in the zone's basePath) is what should
+    // answer an unmatched path, not a generic Cloudflare error page.
+    "not_found_handling": "404-page"
   },
   "observability": {
     "enabled": true
   },
-  "vars": {
-    "NEXT_PUBLIC_DOCS_ORIGIN_URL": "https://nebutra.com/docs"
-  },
   // No routes: documentation has no host of its own. The public URL is
-  // <site>/docs, which the landing proxy rewrites to the docs origin — so this
-  // Worker is reached as an upstream (workers.dev), never bound to a hostname.
-  // Binding a route here is what created the docs subdomain in the first place.
+  // <site>/docs, which the landing proxy rewrites to the docs origin — so
+  // this deploy is reached as an upstream (workers.dev), never bound to a
+  // hostname. Binding a route here is what created the docs subdomain in the
+  // first place.
   "workers_dev": true
 }

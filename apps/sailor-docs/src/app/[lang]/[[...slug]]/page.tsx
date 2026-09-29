@@ -1,12 +1,12 @@
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import type { MDXComponents } from "mdx/types";
 import { notFound } from "next/navigation";
-import { Feedback } from "@/components/feedback/client";
 import { FigmaLink } from "@/components/figma-link";
 import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
 import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
+import { BASE_PATH } from "@/lib/base-path";
 import { fallbackPageFor } from "@/lib/docs-fallback";
-import { onPageFeedbackAction } from "@/lib/github";
+import { i18n } from "@/lib/i18n";
 import { getPageImage, source } from "@/lib/source";
 import { useMDXComponents } from "../../../../mdx-components";
 
@@ -75,9 +75,9 @@ export default async function Page({ params }: PageProps) {
       )}
       {(page.data as { status?: string }).status === "deprecated" && <DeprecatedBanner />}
       <div className="gap-2 pt-2 pb-6 flex flex-row items-center border-b">
-        <LLMCopyButton markdownUrl={`/llms.mdx/docs/${page.path}`} />
+        <LLMCopyButton markdownUrl={`${BASE_PATH}/llms.mdx/docs/${page.path}`} />
         <ViewOptions
-          markdownUrl={`/llms.mdx/docs/${page.path}`}
+          markdownUrl={`${BASE_PATH}/llms.mdx/docs/${page.path}`}
           githubUrl={`https://github.com/Nebutra/Nebutra-Sailor/blob/main/apps/sailor-docs/content/docs/${page.path}`}
         />
         {(page.data as { figma?: string }).figma && (
@@ -87,13 +87,25 @@ export default async function Page({ params }: PageProps) {
       <DocsBody>
         <MDX components={components} />
       </DocsBody>
-      <Feedback onSendAction={onPageFeedbackAction} />
     </DocsPage>
   );
 }
 
+/**
+ * `source.generateParams()` alone never includes the empty-slug case — the
+ * docs tree has no `index.mdx` for any language, by design (see
+ * docs-fallback.ts). In server mode that was fine: a request for the zone
+ * root or `/zh` fell through to `resolvePage`'s fallback logic at request
+ * time. A static export has no request time — every path that should exist
+ * must be enumerated here so `next build` actually writes a file for it.
+ * Appending one empty-slug entry per configured language makes `/en`
+ * (→ the zone root, after scripts/postbuild-static-export.mjs drops the
+ * `/en` prefix) and `/zh` real prerendered pages instead of a 404-by-omission.
+ */
 export async function generateStaticParams() {
-  return source.generateParams();
+  const pages = source.generateParams();
+  const roots = i18n.languages.map((lang) => ({ lang, slug: [] as string[] }));
+  return [...pages, ...roots];
 }
 
 export async function generateMetadata({ params }: PageProps) {

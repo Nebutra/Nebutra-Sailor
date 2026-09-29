@@ -1,24 +1,30 @@
 import { existsSync, readFileSync } from "node:fs";
-import { dirname, resolve as resolvePath } from "node:path";
+import { resolve as resolvePath } from "node:path";
 import { brand } from "@nebutra/brand/metadata";
-import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import { createMDX } from "fumadocs-mdx/next";
 import type { NextConfig } from "next";
-
-// Enables Cloudflare bindings when running `next dev` against the OpenNext
-// Workers runtime. No-op for plain local Next and production builds.
-initOpenNextCloudflareForDev();
+import { TAXONOMY_REDIRECTS } from "./scripts/taxonomy-redirects.mjs";
 
 const withMDX = createMDX({
   configPath: "source.config.ts",
   outDir: ".source",
 });
 
-// ECS self-host still uses Next standalone. OpenNext Cloudflare also consumes
-// the standalone output during `opennextjs-cloudflare build`, so keep it on
-// for both targets. Pure static export is not supported (search/chat/OG).
-const useStandalone =
-  process.env.NEXT_OUTPUT !== "export" && process.env.SAILOR_DOCS_OUTPUT !== "export";
+/**
+ * Docs is now pure static output (2026-09-29): `next build` runs `output:
+ * "export"` and the result is uploaded to Cloudflare as Workers static
+ * assets, no Worker script at all — see wrangler.jsonc and
+ * scripts/postbuild-static-export.mjs. The prior path (OpenNext →
+ * Cloudflare Worker) rendered every page fresh per request with no working
+ * cache, which intermittently exceeded the Worker's CPU/resource ceiling
+ * (Cloudflare error 1102) even after the incremental-cache fix — a static
+ * site has no per-request render to exceed a limit on. `output: "standalone"`
+ * is kept only for the ECS self-host target (`NEXT_OUTPUT=standalone`),
+ * which still runs `next start` against a real Node process.
+ */
+const isStaticExport =
+  process.env.NEXT_OUTPUT === "export" || process.env.SAILOR_DOCS_OUTPUT === "export";
+const useStandalone = process.env.NEXT_OUTPUT === "standalone";
 
 /**
  * Path this bundle is mounted at on the site that serves it.
@@ -43,7 +49,22 @@ const basePath = process.env.DOCS_BASE_PATH ?? "/docs";
 
 const nextConfig: NextConfig = {
   ...(useStandalone ? { output: "standalone" as const } : {}),
+  ...(isStaticExport ? { output: "export" as const } : {}),
   ...(basePath ? { basePath } : {}),
+  // Handed to `src/lib/base-path.ts` for the raw-string fetch URLs
+  // (`next/link` and friends already get basePath rewritten for free and
+  // don't need this).
+  env: {
+    NEXT_PUBLIC_DOCS_BASE_PATH: basePath,
+  },
+  // output: "export" has no Image Optimization API to call (no server), so
+  // every next/image use must skip it. Applying this unconditionally rather
+  // than gating it to isStaticExport keeps one image config for every target
+  // instead of two that can drift.
+  images: {
+    unoptimized: true,
+    remotePatterns: [{ protocol: "https", hostname: brand.domains.cdn, pathname: "/brand/**" }],
+  },
   // Skip in-build tsc on production deploys — the strict typecheck runs as
   // its own pre-push lefthook job (`pnpm --filter @nebutra/sailor-docs
   // typecheck`), so the build pipeline doesn't need to redo it.
@@ -51,10 +72,11 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors:
       process.env.NEXT_OUTPUT === "standalone" ||
       process.env.OPEN_NEXT_BUILD === "true" ||
+      isStaticExport ||
       process.env.CI === "true",
   },
-  // Keep native/heavy packages out of the OpenNext esbuild graph when possible.
-  // Mermaid is 75MB on disk; OG image renderer is native; octokit only for feedback.
+  // Keep native/heavy packages out of the build graph when possible. Mermaid
+  // is 75MB on disk; OG image renderer is native; octokit only for feedback.
   serverExternalPackages: ["@takumi-rs/image-response", "mermaid", "playwright", "playwright-core"],
   experimental: {
     // No source maps for the server bundle.
@@ -81,11 +103,13 @@ const nextConfig: NextConfig = {
       "fumadocs-ui/components",
     ],
   },
-  // OpenNext/Workers size cuts:
+  // Bundle size cuts (Worker size limits no longer apply now that docs is a
+  // static export, but the static bundle still ships to every visitor, so
+  // keep it lean):
   // - `@nebutra/ui/primitives` barrel statically imports streamdown → full shiki
   //   (~8 MiB langs). Docs never render MessageContent; stub streamdown out.
   // - Prefer shiki/bundle/web if anything still imports shiki.
-  ...(process.env.OPEN_NEXT_BUILD === "true"
+  ...(process.env.OPEN_NEXT_BUILD === "true" || isStaticExport
     ? {
         turbopack: {
           resolveAlias: {
@@ -145,65 +169,55 @@ const nextConfig: NextConfig = {
 
   reactStrictMode: true,
   /**
-   * Redirects, in the zone's PUBLIC path shape.
+   * `redirects()` and `rewrites()` require a server to evaluate on every
+   * request — Next refuses to build at all with `output: "export"` if either
+   * key is present, regardless of what it returns. Both are therefore static-
+   * export-only OMITTED here (not just made to return `[]`), and their
+   * public-facing behavior is reproduced as real static files instead:
    *
-   * Two things changed the shape of this table. `basePath` means every `source`
-   * here is already under `/docs`, so the old `/docs/<slug>` sources addressed
-   * `<site>/docs/docs/<slug>` — a URL nothing links to. And `i18n.hideLocale`
-   * means the default language has no segment, so an `/en/<slug>` destination
-   * hands the visitor a URL the middleware immediately redirects away from.
+   *  - the taxonomy-rename redirect table below becomes real static HTML
+   *    "meta refresh" redirect pages, written by
+   *    scripts/postbuild-static-export.mjs from this same table (imported,
+   *    not duplicated) so the two can't drift.
+   *  - the `<slug>.mdx` shorthand becomes a plain file copy of the already
+   *    statically-exported `/llms.mdx/docs/<lang>/<slug>` route output, done
+   *    by the same postbuild script.
    *
-   * What remains is what is still true: pages that were RENAMED. A prefix strip
-   * needs no entry — landing 308s `/<locale>/docs/*` onto the zone, and the
-   * hideLocale rewrite absorbs `/docs/en/*`.
+   * See that script for both. Kept live (not omitted) for the ECS standalone
+   * target, which still runs `next start` against a real Node process.
    */
-  async redirects() {
-    // One taxonomy rename, in both locales. The default language's entry carries
-    // no locale segment, matching what the zone actually serves.
-    const renamed = (from: string, to: string) => [
-      { source: `/${from}`, destination: `/${to}`, permanent: true as const },
-      { source: `/zh/${from}`, destination: `/zh/${to}`, permanent: true as const },
-    ];
-
-    return [
-      {
-        source: "/sailor/getting-started",
-        destination: "/getting-started/installation",
-        permanent: true,
-      },
-      ...renamed("whitelabel", "customization/overview"),
-      ...renamed("billing", "payments/overview"),
-      ...renamed("authentication", "guides/authentication"),
-      ...renamed("multi-tenancy", "guides/multi-tenancy"),
-      ...renamed("ai-integrations", "ai/overview"),
-      ...renamed("integrations", "integrations/overview"),
-      ...renamed("infrastructure", "deployment/overview"),
-      ...renamed("monorepo", "development/project-structure"),
-    ];
-  },
-  // `<lang>/<slug>.mdx` returns the raw Markdown via the llms.mdx internal API.
-  // The internal API path keeps its `docs/` segment — it is not a user-visible
-  // URL, just the underlying handler at app/llms.mdx/docs/[[...slug]]/route.tsx.
-  async rewrites() {
-    return [
-      {
-        source: "/:lang(en|zh)/:path*.mdx",
-        // Carry the language through. Dropping it answered `/zh/<slug>.mdx`
-        // with the English page.
-        destination: "/llms.mdx/docs/:lang/:path*",
-      },
-      // The same for the default language, whose URLs carry no locale segment
-      // under `i18n.hideLocale` — without this, `<slug>.mdx` 404'd for English
-      // while `zh/<slug>.mdx` worked.
-      {
-        source: "/:path*.mdx",
-        destination: "/llms.mdx/docs/:path*",
-      },
-    ];
-  },
-  images: {
-    remotePatterns: [{ protocol: "https", hostname: brand.domains.cdn, pathname: "/brand/**" }],
-  },
+  ...(isStaticExport
+    ? {}
+    : {
+        async redirects() {
+          return TAXONOMY_REDIRECTS.map(({ source, destination }) => ({
+            source,
+            destination,
+            permanent: true as const,
+          }));
+        },
+        // `<lang>/<slug>.mdx` returns the raw Markdown via the llms.mdx internal
+        // API. The internal API path keeps its `docs/` segment — it is not a
+        // user-visible URL, just the underlying handler at
+        // app/llms.mdx/docs/[[...slug]]/route.tsx.
+        async rewrites() {
+          return [
+            {
+              source: "/:lang(en|zh)/:path*.mdx",
+              // Carry the language through. Dropping it answered
+              // `/zh/<slug>.mdx` with the English page.
+              destination: "/llms.mdx/docs/:lang/:path*",
+            },
+            // The same for the default language, whose URLs carry no locale
+            // segment under `i18n.hideLocale` — without this, `<slug>.mdx`
+            // 404'd for English while `zh/<slug>.mdx` worked.
+            {
+              source: "/:path*.mdx",
+              destination: "/llms.mdx/docs/:path*",
+            },
+          ];
+        },
+      }),
 };
 
 export default withMDX(nextConfig);

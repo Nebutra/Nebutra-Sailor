@@ -14,6 +14,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { BASE_PATH } from "@/lib/base-path";
 import { htmlLangForLanguage, i18n } from "@/lib/i18n";
 
 /**
@@ -112,7 +113,11 @@ export default async function RootLayout({
         <RootProvider
           search={{
             options: {
-              api: "/api/search",
+              // Static export, no server: the client fetches the exported
+              // Orama index once (route.ts below) and searches it in-browser
+              // — see src/app/api/search/route.ts.
+              type: "static",
+              api: `${BASE_PATH}/api/search`,
             },
           }}
         >

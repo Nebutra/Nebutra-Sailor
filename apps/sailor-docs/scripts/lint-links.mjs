@@ -44,7 +44,6 @@ const scanned = await scanURLs({
   populate: {
     "[lang]": supportedLanguages.map((lang) => ({ value: { lang } })),
     "[lang]/[[...slug]]": [...docsRoutes.values()],
-    "[lang]/remote/[[...slug]]": supportedLanguages.map((lang) => ({ value: { lang } })),
   },
 });
 

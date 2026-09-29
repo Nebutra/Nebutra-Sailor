@@ -40,6 +40,22 @@ then `pnpm exec opennextjs-cloudflare build`, both unchanged) before deleting
 app matrix. The Cloudflare job in `deploy-sailor-docs.yml` now runs
 unconditionally instead of behind the now-moot deploy-target variable.
 
+**Update, same day:** the OpenNext-on-Workers path above shipped and passed
+CI, but the deployed Worker intermittently 503'd in production — Cloudflare
+error 1102, "Worker exceeded resource limits" — flaking between 200/404/503
+on the identical URL from request to request. A first fix (wiring the
+incremental cache that had silently been a no-op, commit 21efbab9e) helped
+but did not close it: the ~53 MB handler still paid a real per-request cost
+evaluating and cache-checking on every hit. `apps/sailor-docs` was converted
+the same day to a pure `next build` (`output: "export"`) static site —
+`wrangler.jsonc` now has no `main`, no Worker script, just Workers static
+assets (`dist/docs/**`, produced by `scripts/postbuild-static-export.mjs`).
+See that script and `next.config.ts` for the shape, and the current
+`deploy-sailor-docs.yml` for the (5x-per-path) hard smoke gate this failure
+mode is now guarded by. Chat and the GitHub-App feedback widget were dropped
+(both needed a server: an AI SDK route and a `"use server"` action); search
+moved to a client-side static Orama index (`src/app/api/search/route.ts`).
+
 ### forge-dns-leak → embedded in `nebutra-forge`
 
 `apps/forge`'s own route handlers already defaulted `FORGE_DNS_LEAK_URL` to

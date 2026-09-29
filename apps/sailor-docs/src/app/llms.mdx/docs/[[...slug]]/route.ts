@@ -38,6 +38,40 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug?: 
   });
 }
 
+/**
+ * Drop any param whose `slug` is a strict prefix of another param's `slug`.
+ *
+ * This route returns raw text via a Route Handler, so `output: "export"`
+ * writes its static output as a literal file named after the slug (unlike an
+ * HTML page, which always gets an `index.html` inside a directory). A
+ * section that has both an index page AND child pages — `content/docs/en/
+ * pebble/index.mdx` alongside `content/docs/en/pebble/mobile.mdx` — needs a
+ * file at `pebble` AND a directory at `pebble/` for its children, which
+ * collides (`EISDIR`) and fails the whole export. Skipping the index-only
+ * param for those sections is the narrow fix: the section's own rendered
+ * HTML page (`/pebble`) is unaffected — only its raw-markdown mirror at
+ * `/llms.mdx/docs/pebble` is dropped, in favor of every child page's mirror
+ * still working.
+ */
+function withoutIndexCollisions<T extends { slug?: string[]; lang?: string }>(params: T[]): T[] {
+  // Scoped per language: an "en"-only section's index page must not be
+  // dropped just because some unrelated "zh" page happens to share a slug
+  // prefix.
+  const byLang = new Map<string, string[][]>();
+  for (const p of params) {
+    const lang = p.lang ?? "";
+    const list = byLang.get(lang) ?? [];
+    list.push(p.slug ?? []);
+    byLang.set(lang, list);
+  }
+  const isPrefixOfAnother = (lang: string, slug: string[]) =>
+    (byLang.get(lang) ?? []).some(
+      (other) =>
+        other.length > slug.length && slug.every((segment, index) => other[index] === segment),
+    );
+  return params.filter((p) => !isPrefixOfAnother(p.lang ?? "", p.slug ?? []));
+}
+
 export function generateStaticParams() {
-  return source.generateParams();
+  return withoutIndexCollisions(source.generateParams());
 }

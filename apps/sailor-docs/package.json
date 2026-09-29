@@ -14,14 +14,10 @@
     "build": "_FUMADOCS_MDX=1 next build",
     "build:vm": "fumadocs-mdx && _FUMADOCS_MDX=1 next build --webpack",
     "start": "next start",
-    "build:worker": "opennextjs-cloudflare build",
-    "preview:worker": "opennextjs-cloudflare preview",
-    "preview": "pnpm build:worker && pnpm preview:worker",
-    "deploy:worker": "opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv",
+    "build:static": "fumadocs-mdx && SAILOR_DOCS_OUTPUT=export _FUMADOCS_MDX=1 next build && node scripts/postbuild-static-export.mjs",
     "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
     "lint:links": "node ./scripts/lint-links.mjs",
-    "clean": "rm -rf .next .open-next .wrangler",
+    "clean": "rm -rf .next .open-next .wrangler out dist",
     "test": "vitest run"
   },
   "dependencies": {

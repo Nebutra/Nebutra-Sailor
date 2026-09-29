@@ -2,11 +2,25 @@ name: Deploy Sailor Docs
 
 # Deploy for apps/sailor-docs (served at <site>/docs).
 #
-# Cloudflare Workers is now the only deploy path: OpenNext → Worker + Assets
-# (same pattern as typelens). nebutra-docs (Fly) was retired 2026-09-29 to
-# free a machine slot under the org's 20-machine cap — see
-# docs/ops/nebutra/2026-09-29-fly-machine-shrink.md. Runs on every push to
-# main that touches a trigger path below, and always on workflow_dispatch.
+# Cloudflare Workers static assets (2026-09-29, second cutover) — a pure
+# `next build` (output: "export") static site, no Worker script at all. See
+# next.config.ts and scripts/postbuild-static-export.mjs for how the export
+# is produced and reshaped, and wrangler.jsonc for why it has no `main`.
+#
+# This replaces the OpenNext → Cloudflare Worker path from earlier the same
+# day (commit 21efbab9e — "wire the OpenNext incremental cache..."). That
+# fix was real (it took x-nextjs-cache from permanent MISS to HIT) but did
+# not fully close the failure: the live Worker kept flaking between
+# 200/404/503 on the SAME url from request to request, body `error code:
+# 1102` ("Worker exceeded resource limits") — the ~53 MB handler.mjs's
+# per-request render cost (MDX compile + the full docs component tree, even
+# on a cache hit that skips re-rendering the PAGE body, still pays the cost
+# of loading and evaluating that bundle) exceeded the Workers CPU/resource
+# ceiling often enough to matter. A static site has no per-request render or
+# multi-megabyte handler to evaluate — the failure mode is gone at the root,
+# not mitigated. nebutra-docs (Fly) was retired 2026-09-29 to free a machine
+# slot under the org's 20-machine cap — see
+# docs/ops/nebutra/2026-09-29-fly-machine-shrink.md.
 #
 # The Vercel path was retired on 2026-09-22 with the rest of the Vercel
 # deploy surface; its quota notes live in git history.
@@ -17,11 +31,9 @@ name: Deploy Sailor Docs
 # authenticated as the stale one — typelens worked only because it never read
 # the second name. Two secrets for one credential, resolved by a precedence
 # rule nobody sees, is the whole failure.
-# must include Workers Scripts Edit (preflight probes assets-upload-session).
+# must include Workers Scripts Edit (preflight probes assets-upload-session;
+# an assets-only deploy still needs it — it is what uploads the site).
 # See docs/ops/cloudflare-ci-token.md.
-#
-# Historical note: old monorepo Workers builds could exceed script size; modern
-# OpenNext keeps handler thin and static under ASSETS.
 
 on:
   workflow_dispatch:
@@ -37,7 +49,8 @@ on:
       # main rebuilt an unchanged site. A dependency change that matters to docs
       # also touches a path above.
       - "apps/sailor-docs/wrangler.jsonc"
-      - "apps/sailor-docs/open-next.config.ts"
+      - "apps/sailor-docs/next.config.ts"
+      - "apps/sailor-docs/scripts/postbuild-static-export.mjs"
       - ".github/workflows/deploy-sailor-docs.yml"
 
 permissions:
@@ -49,7 +62,7 @@ concurrency:
 
 jobs:
   cloudflare:
-    name: Deploy Cloudflare Worker
+    name: Deploy Cloudflare Static Assets
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -119,30 +132,23 @@ jobs:
       - name: Build workspace dependencies
         run: pnpm turbo build --filter="@nebutra/sailor-docs^..."
 
-      - name: Build OpenNext worker
+      # `next build` (output: "export") writes `out/`; the postbuild script
+      # (a plain Node fs script, no Cloudflare calls) reshapes it into
+      # `dist/docs/**` — folding the default language up to the zone root and
+      # nesting the whole tree under `docs/` to match this zone's basePath —
+      # which is what wrangler.jsonc's `assets.directory` actually points at.
+      # See both files for why each step is there.
+      - name: Build static export
         working-directory: apps/sailor-docs
         env:
-          OPEN_NEXT_BUILD: "true"
           CI: "true"
           NEXT_PUBLIC_DOCS_ORIGIN_URL: https://nebutra.com/docs
-        run: pnpm exec opennextjs-cloudflare build
+        run: pnpm run build:static
 
-      # `open-next.config.ts` selects the static-assets incremental cache, which
-      # reads prerendered pages back out of the `ASSETS` binding — but `build`
-      # only writes them to `.open-next/cache`, a directory nothing deploys.
-      # This copies that output into `.open-next/assets/cdn-cgi/_next_cache`,
-      # where the cache override actually looks for it. Skip it and the cache
-      # override is permanently empty: every request falls through to a full
-      # fresh render, which is what produced the intermittent HTTP 503
-      # (Cloudflare error 1102, "Worker exceeded resource limits") the smoke
-      # step below now fails the build on. `local` mode is a plain
-      # `fs.cpSync` — no Cloudflare API calls, no credentials needed, works
-      # for this workers_dev-only deploy.
-      - name: Populate static-assets incremental cache
-        working-directory: apps/sailor-docs
-        run: pnpm exec opennextjs-cloudflare populateCache local
-
-      - name: Deploy Worker
+      # Assets-only deploy: wrangler.jsonc has no `main`, so this uploads
+      # dist/** as Workers static assets and runs no Worker script at all —
+      # there is nothing left to exceed a CPU/resource limit.
+      - name: Deploy static assets
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
           # Workers-scoped token first; general API token as fallback.
@@ -154,47 +160,45 @@ jobs:
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
 
-      # Hard gate on the Worker itself (workers_dev, no route bound — see
+      # Hard gate on the deploy itself (workers_dev, no route bound — see
       # wrangler.jsonc), not on nebutra.com/docs: landing's proxy still points
       # DOCS_UPSTREAM_ORIGIN at the Fly app until the cutover, so nebutra.com/docs
-      # passing here would prove nothing about this deploy. Every prior version
-      # of this step only `::warning::`'d on a non-200 and always exited 0 — the
-      # Worker deploy step "succeeding" is just an upload ack, not evidence the
-      # thing it uploaded serves traffic. That gap is exactly how the missing
-      # incremental-cache wiring (see open-next.config.ts) shipped and sat
-      # 503'ing in production while every run of this workflow stayed green.
-      # Both routes below MUST return 200 or the job fails: the zone root
-      # (through the [lang] layout + fallback) and one real content page (through
-      # MDX compile + the docs component tree) are the two request shapes that
-      # were flaking between 200/404/503 per-request under the "dummy" cache.
-      - name: Smoke docs (hard gate)
+      # passing here would prove nothing about this deploy. An earlier version
+      # of this step only `::warning::`'d on a non-200 and always exited 0 —
+      # "the deploy step succeeded" is just an upload ack, not evidence the
+      # thing it uploaded serves traffic; that gap is exactly how the previous
+      # Worker's intermittent 503s shipped and sat unnoticed while every run of
+      # this workflow stayed green. Each path is requested 5 times, not once:
+      # the whole reason this gate exists is a failure mode ("error code:
+      # 1102" on the OLD Worker deploy) that came and went request to request
+      # on the identical URL — a single 200 proved nothing about the next
+      # request. `-L` follows the one expected redirect (`/docs` → `/docs/`,
+      # `auto-trailing-slash` asset routing landing on `docs/index.html`) —
+      # not a failure, the same shape a browser follows transparently.
+      - name: Smoke docs (hard gate, 5x per path)
         run: |
           set -euo pipefail
           worker_base="https://nebutra-sailor-docs.omichiliriku.workers.dev"
           fail=0
-          for path in "/docs" "/docs/getting-started/installation"; do
+          for path in "/docs" "/docs/getting-started/installation" "/docs/zh" "/docs/changelog" "/docs/api/search"; do
             url="${worker_base}${path}"
-            code=$(curl -sS -o /tmp/docs-smoke.html -w '%{http_code}' --max-time 30 "$url" || echo 000)
-            echo "$url → $code"
-            if [ "$code" != "200" ]; then
-              echo "::error::Worker smoke failed: $url returned $code (expected 200). Body:"
-              head -c 500 /tmp/docs-smoke.html; echo
-              fail=1
-              continue
-            fi
-            if grep -qE '535\.71|LogoEn|currentColor|text-brand-mark|viewBox="0 0 535' /tmp/docs-smoke.html; then
-              echo "logo: inline SVG markers present"
-            elif grep -qi 'logo-horizontal-en' /tmp/docs-smoke.html; then
-              echo "::warning::still serving public/logo img path"
-            fi
+            for attempt in 1 2 3 4 5; do
+              code=$(curl -sS -L -o /tmp/docs-smoke.html -w '%{http_code}' --max-time 30 "$url" || echo 000)
+              echo "$url (attempt $attempt/5) → $code"
+              if [ "$code" != "200" ]; then
+                echo "::error::Worker smoke failed: $url returned $code on attempt $attempt/5 (expected 200). Body:"
+                head -c 500 /tmp/docs-smoke.html; echo
+                fail=1
+              fi
+            done
           done
           if [ "$fail" -ne 0 ]; then
-            echo "::error::One or more Worker routes did not return 200 — failing the build. See docs/ops/nebutra/2026-09-29-fly-machine-shrink.md and open-next.config.ts for the incremental-cache wiring this depends on."
+            echo "::error::One or more requests did not return 200 — failing the build. See wrangler.jsonc / scripts/postbuild-static-export.mjs for how this deploy is assembled."
             exit 1
           fi
 
           # Informational only, against the CURRENT public path (still Fly until
-          # DOCS_UPSTREAM_ORIGIN is switched to this Worker) — never gates the job.
+          # DOCS_UPSTREAM_ORIGIN is switched to this deploy) — never gates the job.
           for url in "https://nebutra.com/docs" "https://pebble.nebutra.com/docs"; do
             code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -L "$url" || echo 000)
             echo "$url → $code (informational, current public origin)"
