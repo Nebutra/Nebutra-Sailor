@@ -2,7 +2,10 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "dependsOn": ["@nebutra/design-tokens#build"],
+      // ^build keeps the workspace dependencies (@nebutra/brand, @nebutra/fonts)
+      // built first: a package-level dependsOn replaces the root's, and without
+      // it src/preset/schema.ts could not resolve @nebutra/brand/metadata-helpers.
+      "dependsOn": ["^build", "@nebutra/design-tokens#build"],
       "inputs": [
         "$TURBO_EXTENDS$",
         "../design-tokens/build/css/styles.generated.css",
