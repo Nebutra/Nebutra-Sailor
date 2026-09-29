@@ -10,6 +10,10 @@ import { AnimatedSpan, Terminal, TypingAnimation } from "@nebutra/ui/primitives"
  * its output verbatim, with the download progress folded to its last line.
  * Re-record when the CLI's output changes.
  */
+/** The deployed template: what `npm dev` shows on localhost, live. */
+const ACME_SITE = "https://acme.nebutra.com";
+const LOCAL_URL = "http://localhost:3000";
+
 const OUTPUT: { text: string; tone?: "muted" | "strong" }[] = [
   { text: "Sailor v2.0.0", tone: "strong" },
   { text: "AI-Native SaaS Unicorn Template", tone: "muted" },
@@ -40,12 +44,37 @@ export function SailorCli() {
             key={l.text}
             className={l.tone === "strong" ? "text-foreground" : "text-muted-foreground"}
           >
-            {l.text}
+            {l.text.endsWith(LOCAL_URL) ? (
+              <span className="whitespace-pre">
+                {l.text.slice(0, -LOCAL_URL.length)}
+                <a
+                  href={ACME_SITE}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Open acme — this template, deployed"
+                  className="text-foreground underline decoration-dotted underline-offset-4 hover:decoration-solid"
+                >
+                  {LOCAL_URL}
+                </a>
+              </span>
+            ) : (
+              l.text
+            )}
           </AnimatedSpan>
         ))}
       </Terminal>
       <figcaption className="mt-4 text-sm text-muted-foreground">
         A real run of the published CLI, recorded on 27 September 2026 — install and git skipped.
+        The localhost link opens{" "}
+        <a
+          href={ACME_SITE}
+          target="_blank"
+          rel="noreferrer"
+          className="text-foreground underline-offset-4 hover:underline"
+        >
+          acme.nebutra.com
+        </a>
+        , this exact template deployed.
       </figcaption>
     </figure>
   );
