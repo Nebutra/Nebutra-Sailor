@@ -82,8 +82,9 @@ describe("pageAt", () => {
     expect(pageAt("/sailor/studio/frame")?.chrome).toBe("bare");
     // Studio is a tool: top bar, no footer, the rest of the viewport.
     expect(pageAt("/sailor/studio")?.chrome).toBe("tool");
-    // The status page sits in the site frame; it carries no brand header of its own.
-    expect(pageAt("/status")?.chrome).toBeUndefined();
+    // The status pages sit under the site navigation and end without the footer.
+    expect(pageAt("/status")?.chrome).toBe("no-footer");
+    expect(pageAt("/status/incidents/abc")?.chrome).toBe("no-footer");
     expect(pageAt("/nowhere")).toBeUndefined();
   });
 });

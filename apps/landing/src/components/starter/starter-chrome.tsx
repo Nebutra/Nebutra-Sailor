@@ -9,7 +9,7 @@ import { StarterNav } from "./starter-nav";
 /**
  * The frame around every page of the starter site: the top bar, the page, the
  * footer. Pages render content only; a page site-map.ts marks `chrome: "bare"`
- * draws its own frame.
+ * draws its own frame; one marked `chrome: "no-footer"` ends without the footer.
  */
 export function StarterChrome({
   children,
@@ -18,12 +18,13 @@ export function StarterChrome({
   children: ReactNode;
   footer?: "default" | "legal";
 }) {
-  if (pageAt(usePathname())?.chrome === "bare") return children;
+  const chrome = pageAt(usePathname())?.chrome;
+  if (chrome === "bare") return children;
   return (
     <div className="flex min-h-dvh flex-col bg-background">
       <StarterNav />
       {children}
-      <StarterFooter variant={footer} />
+      {chrome === "no-footer" ? null : <StarterFooter variant={footer} />}
     </div>
   );
 }

@@ -10,7 +10,8 @@ import { pageAt } from "@/site-map";
  * the page always gets the full width. A page the site map marks
  * `chrome: "bare"` (the status page) draws its own frame and gets none; a
  * `chrome: "tool"` page (Sailor Studio) gets the top bar and the rest of the
- * viewport — no footer, and the document itself never scrolls.
+ * viewport — no footer, and the document itself never scrolls. A
+ * `chrome: "no-footer"` page (the status pages) gets the top bar and the page.
  */
 export function RailFrame({
   header,
@@ -35,7 +36,7 @@ export function RailFrame({
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       {header}
       <PageTransition>{children}</PageTransition>
-      {footer}
+      {chrome === "no-footer" ? null : footer}
     </div>
   );
 }
