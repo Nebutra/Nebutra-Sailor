@@ -27,7 +27,7 @@
     // (trailingSlash: false is still clean-URL output, just nested), so a
     // request for `/getting-started/installation` needs the trailing-slash
     // variant tried automatically.
-    "html_handling": "auto-trailing-slash",
+    "html_handling": "drop-trailing-slash",
     // Next's own `out/404.html` (in the zone's basePath) is what should
     // answer an unmatched path, not a generic Cloudflare error page.
     "not_found_handling": "404-page"
