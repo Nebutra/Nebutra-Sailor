@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/contracts",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Canonical API/event/domain contracts for Nebutra superstarter",
   "private": false,
   "nebutra": {

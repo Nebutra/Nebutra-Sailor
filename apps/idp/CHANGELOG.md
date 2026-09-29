@@ -1,5 +1,17 @@
 # @nebutra/idp
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/contracts@4.0.0
+  - @nebutra/fonts@4.0.0
+  - @nebutra/tokens@4.0.0
+  - @nebutra/ui@4.0.0
+  - @nebutra/oauth@0.1.5
+  - @nebutra/db@0.1.5
+
 ## 0.1.5
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @nebutra/knowledge-base
 
+## 0.2.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/knowledge-rag@4.0.0
+  - @nebutra/capability-kit@4.0.0
+  - @nebutra/errors@4.0.0
+  - @nebutra/integration-vault@4.0.0
+  - @nebutra/content-store@0.1.7
+  - @nebutra/document-pipeline@0.1.6
+
 ## 0.2.6
 
 ### Patch Changes

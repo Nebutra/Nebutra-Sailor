@@ -1,5 +1,42 @@
 # @nebutra/web
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`8d858d0`](https://github.com/Nebutra/Nebutra-Sailor/commit/8d858d02344d55fb78053f6e52a904d4b3c8f609)]:
+  - @nebutra/auth@3.0.0
+  - @nebutra/gateway@0.2.5
+  - @nebutra/agent-runtime@4.0.0
+  - @nebutra/agents@4.0.0
+  - @nebutra/audit@4.0.0
+  - @nebutra/billing@4.0.0
+  - @nebutra/brand@4.0.0
+  - @nebutra/design-sync@4.0.0
+  - @nebutra/design-tokens@4.0.0
+  - @nebutra/email@4.0.0
+  - @nebutra/fonts@4.0.0
+  - @nebutra/icons@4.0.0
+  - @nebutra/logger@4.0.0
+  - @nebutra/metering@4.0.0
+  - @nebutra/notifications@4.0.0
+  - @nebutra/queue@4.0.0
+  - @nebutra/theme@4.0.0
+  - @nebutra/tokens@4.0.0
+  - @nebutra/ui@4.0.0
+  - @nebutra/uploads@4.0.0
+  - @nebutra/webhooks@4.0.0
+  - @nebutra/startup-os@0.1.4
+  - @nebutra/atelier-canvas@4.0.0
+  - @nebutra/reel@4.0.0
+  - @nebutra/analytics@0.0.7
+  - @nebutra/i18n@4.0.0
+  - @nebutra/feature-flags@0.1.6
+  - @nebutra/cinema@0.2.6
+  - @nebutra/db@0.1.5
+  - @nebutra/preset@0.1.5
+  - @nebutra/repositories@0.0.6
+
 ## 0.1.5
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @nebutra/startup-os
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agent-runtime@4.0.0
+  - @nebutra/agents@4.0.0
+  - @nebutra/icons@4.0.0
+  - @nebutra/tokens@4.0.0
+  - @nebutra/db@0.1.5
+  - @nebutra/preset@0.1.5
+
 ## 0.1.3
 
 ### Patch Changes

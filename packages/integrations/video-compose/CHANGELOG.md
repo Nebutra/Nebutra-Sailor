@@ -1,5 +1,13 @@
 # @nebutra/video-compose
 
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.0
+  - @nebutra/provider-factory@4.0.0
+
 ## 0.2.5
 
 ### Patch Changes

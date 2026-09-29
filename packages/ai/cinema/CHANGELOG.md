@@ -1,5 +1,13 @@
 # @nebutra/cinema
 
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.0
+  - @nebutra/graph-model@4.0.0
+
 ## 0.2.5
 
 ### Patch Changes

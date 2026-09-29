@@ -1,5 +1,16 @@
 # @nebutra/video-pipeline
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.0
+  - @nebutra/errors@4.0.0
+  - @nebutra/reel@4.0.0
+  - @nebutra/image-pipeline@0.1.6
+  - @nebutra/generation-context@0.1.6
+
 ## 0.1.5
 
 ### Patch Changes

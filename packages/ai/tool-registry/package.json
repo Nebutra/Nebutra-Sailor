@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/tool-registry",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "SKILL.md registry with progressive disclosure and content-store backing",
   "private": false,
   "license": "MIT",

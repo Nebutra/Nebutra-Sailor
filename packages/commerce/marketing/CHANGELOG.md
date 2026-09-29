@@ -1,5 +1,13 @@
 # @nebutra/marketing
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@4.0.0
+  - @nebutra/ui@4.0.0
+
 ## 0.1.5
 
 ### Patch Changes

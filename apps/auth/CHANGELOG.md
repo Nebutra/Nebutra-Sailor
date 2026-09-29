@@ -1,5 +1,21 @@
 # @nebutra/auth-center
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`8d858d0`](https://github.com/Nebutra/Nebutra-Sailor/commit/8d858d02344d55fb78053f6e52a904d4b3c8f609)]:
+  - @nebutra/auth@3.0.0
+  - @nebutra/brand@4.0.0
+  - @nebutra/fonts@4.0.0
+  - @nebutra/icons@4.0.0
+  - @nebutra/logger@4.0.0
+  - @nebutra/tokens@4.0.0
+  - @nebutra/ui@4.0.0
+  - @nebutra/i18n@4.0.0
+  - @nebutra/sms@0.1.5
+  - @nebutra/db@0.1.5
+
 ## 0.1.3
 
 ### Patch Changes

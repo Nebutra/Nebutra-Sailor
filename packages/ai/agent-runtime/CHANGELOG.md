@@ -1,5 +1,16 @@
 # @nebutra/agent-runtime
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agents@4.0.0
+  - @nebutra/capability-kit@4.0.0
+  - @nebutra/execution-policy@4.0.0
+  - @nebutra/graph-model@4.0.0
+  - @nebutra/mcp@4.0.0
+
 ## 3.0.0
 
 ### Patch Changes
