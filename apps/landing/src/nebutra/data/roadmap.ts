@@ -1,3 +1,6 @@
+// @brand-exempt: every "Nebutra" here is the founder's own word from the
+// Journal, quoted verbatim (see comment below) — narrative content, not a
+// config value a rebrand could substitute. Same pattern as _about-data.ts.
 import { REPO_URL } from "./repo";
 
 /**

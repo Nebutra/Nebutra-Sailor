@@ -1,3 +1,6 @@
+// @brand-exempt: page copy quotes the founder's own words about the company by
+// name (SEO description + section lead) — narrative prose, not a config value
+// a rebrand could substitute programmatically. Same pattern as _about-data.ts.
 import Link from "next/link";
 import { setRequestLocale } from "next-intl/server";
 import { buildPageMetadata } from "@/lib/seo/metadata";
