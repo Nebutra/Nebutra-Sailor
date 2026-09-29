@@ -79,7 +79,6 @@
       "apps/landing/src/app/[lang]/(marketing)/changelog/[version]/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/changelog/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/features/[name]/page.tsx",
-      "apps/landing/src/app/[lang]/(marketing)/features/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx",
       "apps/landing/src/app/[lang]/(marketing)/ideas/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/news/page.tsx",
@@ -93,7 +92,6 @@
       "apps/landing/src/app/api/changelog/webhook/route.ts",
       "apps/landing/src/app/api/og/route.ts",
       "apps/landing/src/components/landing/blog-comments.tsx",
-      "apps/landing/src/components/landing/features/feature-code-samples.ts",
       "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/sms-glyph.tsx",
@@ -292,10 +290,6 @@
         "count": 14
       },
       {
-        "file": "apps/landing/src/app/[lang]/(marketing)/features/[name]/page.tsx",
-        "count": 14
-      },
-      {
         "file": "packages/design/ui/src/primitives/file-card.tsx",
         "count": 14
       },
@@ -389,10 +383,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/features/glyphs/ui-glyph.tsx",
-        "count": 9
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/ai-group-showcase.tsx",
         "count": 9
       },
       {
@@ -716,18 +706,6 @@
         "count": 5
       },
       {
-        "file": "apps/landing/src/components/landing/features/showcases/commerce-group-showcase.tsx",
-        "count": 5
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/iam-group-showcase.tsx",
-        "count": 5
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/integrations-group-showcase.tsx",
-        "count": 5
-      },
-      {
         "file": "apps/landing/src/components/landing/use-cases/mockups/MultimodalMockup.tsx",
         "count": 5
       },
@@ -781,10 +759,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/capability-cards/BillingCard.tsx",
-        "count": 4
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/CapabilityFolderShowcase.tsx",
         "count": 4
       },
       {
@@ -864,10 +838,6 @@
         "count": 4
       },
       {
-        "file": "apps/landing/src/components/landing/features/glyphs/llm-gateway-glyph.tsx",
-        "count": 4
-      },
-      {
         "file": "apps/landing/src/components/landing/features/glyphs/logger-glyph.tsx",
         "count": 4
       },
@@ -893,10 +863,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/features/glyphs/preset-glyph.tsx",
-        "count": 4
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/provider-registry-glyph.tsx",
         "count": 4
       },
       {
@@ -1029,14 +995,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/features/glyphs/waitlist-glyph.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/design-group-showcase.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/platform-group-showcase.tsx",
         "count": 3
       },
       {
@@ -1237,14 +1195,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/features/showcases/gateway-core-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/gateway-group-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/ops-group-showcase.tsx",
         "count": 2
       },
       {

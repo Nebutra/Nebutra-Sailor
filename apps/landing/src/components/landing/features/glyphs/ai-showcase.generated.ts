@@ -16,10 +16,10 @@ export interface AiShowcaseRow {
 }
 
 export const AI_SHOWCASE_ROWS: readonly AiShowcaseRow[] = [
-  { model: "claude-sonnet-4-6", context: "1M", price: "$3" },
-  { model: "gpt-5.5", context: "1.1M", price: "$5" },
+  { model: "claude-sonnet-5.5", context: "1M", price: "$2" },
+  { model: "gpt-5.6-luna", context: "1.1M", price: "$0.2" },
   { model: "gemini-3.1-pro-preview", context: "1M", price: "$2" },
-  { model: "deepseek-v4-pro", context: "1M", price: "$1.3" },
+  { model: "deepseek-flash", context: "1M", price: "$0.15" },
 ];
 
 /** Count of supported provider buckets (from the provider registry). */

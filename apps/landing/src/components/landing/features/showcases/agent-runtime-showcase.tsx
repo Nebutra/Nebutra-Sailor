@@ -158,7 +158,7 @@ export function AgentRuntimeShowcase({ locale }: PackageShowcaseProps) {
             </span>
             <span className="text-sm font-semibold text-foreground">{copy.agentRun}</span>
             <Badge variant="outline" size="sm" className="font-mono">
-              claude-sonnet-4-6
+              claude-sonnet-5
             </Badge>
           </div>
           <StatusDot state="READY" label titlePrefix="This agent run" />

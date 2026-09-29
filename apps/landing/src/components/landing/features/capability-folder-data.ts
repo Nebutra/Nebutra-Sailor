@@ -384,8 +384,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     },
     title: copy("Identity, Access & Tenant Trust", "身份、访问与租户信任"),
     summary: copy(
-      "Provider-agnostic authentication, tenant context, permission gates, audit, captcha, OAuth, and encrypted vault behavior live in one trust boundary.",
-      "供应商无关认证、租户上下文、权限门禁、审计、验证码、OAuth 与加密 vault 行为被放在同一个信任边界里。",
+      "Authentication on Better Auth, tenant context, permission gates, audit, captcha, OAuth, and encrypted vault behavior live in one trust boundary.",
+      "基于 Better Auth 的认证、租户上下文、权限门禁、审计、验证码、OAuth 与加密 vault 行为被放在同一个信任边界里。",
     ),
     designIntent: copy(
       "The card is a trust corridor: external identity enters on one side, then tenant context, permission, audit, and vault checks narrow the path.",

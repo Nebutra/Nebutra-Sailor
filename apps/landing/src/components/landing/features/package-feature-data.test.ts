@@ -29,10 +29,10 @@ describe("package feature data", () => {
 
   it("uses the serializable entry helper for showcase and glyph props", () => {
     expect(featureDetailPageSource).toContain(
-      "const serializableEntry = toSerializablePackageFeatureEntry(entry);",
+      "const serializable = toSerializablePackageFeatureEntry(entry);",
     );
-    expect(featureDetailPageSource).toContain("toSerializablePackageFeatureEntry(childEntry)");
+    expect(featureDetailPageSource).toContain("<Showcase entry={serializable}");
+    expect(featureDetailPageSource).toContain("<Glyph entry={serializable}");
     expect(featureDetailPageSource).not.toContain("entry={{ ...entry, icon: undefined }}");
-    expect(featureDetailPageSource).not.toContain("entry={childEntry}");
   });
 });

@@ -1,5 +1,5 @@
 /**
- * Sub-package glyph registry — 102 bespoke ~160px thumbnails.
+ * Sub-package glyph registry — bespoke ~160px thumbnails.
  *
  * Coverage: 100% of the slugs that appear as children of any group on
  * `/[lang]/features/[group]`. Each glyph is a custom mini-visual hinting
@@ -68,7 +68,6 @@ import { KnowledgeRagGlyph } from "./knowledge-rag-glyph";
 import { LandingBuilderGlyph } from "./landing-builder-glyph";
 import { LegalGlyph } from "./legal-glyph";
 import { LicenseGlyph } from "./license-glyph";
-import { LlmGatewayGlyph } from "./llm-gateway-glyph";
 import { LocalEmbeddingGlyph } from "./local-embedding-glyph";
 import { LoggerGlyph } from "./logger-glyph";
 import { MarketingGlyph } from "./marketing-glyph";
@@ -83,7 +82,6 @@ import { PlayLoaderGlyph } from "./play-loader-glyph";
 import { PlayMarketplaceGlyph } from "./play-marketplace-glyph";
 import { PresetGlyph } from "./preset-glyph";
 import { ProviderFactoryGlyph } from "./provider-factory-glyph";
-import { ProviderRegistryGlyph } from "./provider-registry-glyph";
 import { QueueGlyph } from "./queue-glyph";
 import { RateLimitGlyph } from "./rate-limit-glyph";
 import { ReelGlyph } from "./reel-glyph";
@@ -176,14 +174,13 @@ export const SUBPACKAGE_GLYPHS: Record<string, SubpackageGlyph> = {
   "landing-builder": LandingBuilderGlyph,
   legal: LegalGlyph,
   license: LicenseGlyph,
-  "llm-gateway": LlmGatewayGlyph,
   "local-embedding": LocalEmbeddingGlyph,
   logger: LoggerGlyph,
   marketing: MarketingGlyph,
   mcp: McpGlyph,
   metering: MeteringGlyph,
   notifications: NotificationsGlyph,
-  "oauth-server": OauthServerGlyph,
+  oauth: OauthServerGlyph,
   onboarding: OnboardingGlyph,
   "outreach-engine": OutreachEngineGlyph,
   permissions: PermissionsGlyph,
@@ -191,7 +188,6 @@ export const SUBPACKAGE_GLYPHS: Record<string, SubpackageGlyph> = {
   "play-marketplace": PlayMarketplaceGlyph,
   preset: PresetGlyph,
   "provider-factory": ProviderFactoryGlyph,
-  "provider-registry": ProviderRegistryGlyph,
   queue: QueueGlyph,
   "rate-limit": RateLimitGlyph,
   reel: ReelGlyph,

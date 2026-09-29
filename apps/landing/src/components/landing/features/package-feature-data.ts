@@ -112,24 +112,6 @@ export function getPackageFeatureEntry(slug: string) {
   return PACKAGE_FEATURE_ENTRIES.find((entry) => entry.slug === slug);
 }
 
-export function getRelatedEntries(entry: PackageFeatureEntry, limit = 4): PackageFeatureEntry[] {
-  const candidates = PACKAGE_FEATURE_ENTRIES.filter(
-    (candidate) =>
-      candidate.group === entry.group &&
-      candidate.kind === "package" &&
-      candidate.slug !== entry.slug,
-  );
-
-  if (candidates.length <= limit) return candidates;
-
-  // Stable selection: pick the first N in the natural source order.
-  return candidates.slice(0, limit);
-}
-
-export function getGroupLabel(group: string, locale: "en" | "zh"): string {
-  return GROUP_LABELS[group]?.[locale] ?? group;
-}
-
 export function getPackageFeatureHref(locale: string, node: FileNode) {
   const slug = featureSlugForNode(node);
   return slug ? `/${locale}/features/${slug}` : null;
@@ -166,9 +148,9 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     en: "Shared actor primitive — usr_/svc_/api_ ID space, role/membership lookup, tenant attachment. The single identity object every iam package reads.",
     zh: "统一 actor 原语 — usr_/svc_/api_ ID 空间，角色/成员关系，租户绑定；所有 iam 子包都从同一个 identity 对象读取上下文。",
   },
-  "oauth-server": {
-    en: "Stand up your own OAuth 2.1 / OIDC provider. Authorization code + PKCE, refresh rotation, third-party app consent, JWT issuance with 1h default TTL.",
-    zh: "自建 OAuth 2.1 / OIDC provider；授权码 + PKCE、refresh 轮换、三方应用同意、JWT 默认 1h TTL。",
+  oauth: {
+    en: 'Your own OIDC identity provider — "Sign in with Nebutra" for third-party apps. Authorization code + PKCE, refresh-token rotation, consent, clients stored in Postgres.',
+    zh: "自建 OIDC 身份提供方 — 让第三方应用「用 Nebutra 登录」；授权码 + PKCE、refresh token 轮换、授权同意，client 存于 Postgres。",
   },
   permissions: {
     en: "RBAC + ABAC engine — CASL for in-process checks. defineAbility() server, <Can /> in React.",
@@ -187,6 +169,10 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
   billing: {
     en: "Billing on Creem (cards worldwide, merchant of record), plus WeChat Pay / Alipay for mainland China (or manual, for offline invoicing). Same Subscription / Invoice / Customer surface for every backend.",
     zh: "计费基于 Creem（全球卡组织，交易商户），另有微信支付 / 支付宝覆盖中国大陆（或手动开票）；Subscription / Invoice / Customer 接口对所有后端保持一致。",
+  },
+  blog: {
+    en: "Framework-agnostic blog rules shared by every content surface: PortableText types, reading time, related-post ranking, table-of-contents extraction.",
+    zh: "各内容面共用的博客领域规则，与框架无关：PortableText 类型、阅读时长、相关文章排序、目录提取。",
   },
   contracts: {
     en: "Cross-package event, identity, billing, and notification type contracts. The shared TypeScript boundary that lets commerce talk to iam, queue, webhooks.",
@@ -284,6 +270,18 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     en: "Typed Prisma client wrapper — extension-aware, RLS-friendly, with per-tenant connection pinning when the deployment splits writes from reads.",
     zh: "类型化 Prisma client 包装 — extension 友好、RLS 兼容、读写分离时按租户绑定连接。",
   },
+  "prepaid-wallet": {
+    en: "Prepaid balances and API keys for Nebutra Router and Forge: a wallet port, sk-sailor- keys stored as SHA-256 fingerprints, and a usage envelope that records the charge and the supply cost.",
+    zh: "Nebutra Router 与 Forge 的预付余额与 API key：钱包端口、以 SHA-256 指纹存储的 sk-sailor- key，以及同时记录收费与供给成本的用量信封。",
+  },
+  "router-supply": {
+    en: "Supply routing for Nebutra Router: model aliases, engine discovery from the environment, and an upstream chain that falls back when a provider fails.",
+    zh: "Nebutra Router 的供给路由：模型别名、从环境变量发现引擎，以及在上游失败时自动回退的供给链。",
+  },
+  "browser-utils": {
+    en: "Small browser helpers every app needs: storage that survives private mode and blocked site data, and fetch with a timeout.",
+    zh: "每个应用都需要的浏览器小工具：在隐私模式和禁用站点数据时也不出错的存储，以及带超时的 fetch。",
+  },
   config: {
     en: "Typed environment + runtime config — Zod schemas at boot, no scattered process.env reads, fail-fast on missing keys.",
     zh: "类型化环境与运行时配置 — boot 时 Zod 校验,杜绝散落的 process.env 引用,缺 key 立刻失败。",
@@ -354,6 +352,14 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
   },
 
   // ─── design ─────────────────────────────────────────────────────────────
+  "typelens-catalog": {
+    en: "The data layer for TypeLens: typographic works, pairings and extract packs for designers and design agents. Work in progress — the catalog model exists, the seed content does not yet.",
+    zh: "TypeLens 的数据层：字体作品、搭配与供设计师和设计 agent 使用的提取包。仍在开发中，目录模型已就绪，种子内容尚未完成。",
+  },
+  fonts: {
+    en: "Self-hosted open-source fonts: the Chinese body face every app loads, plus a registry of 19 faces that themes and DESIGN.md files can name — no request leaves for a font CDN.",
+    zh: "自托管开源字体：每个应用加载的中文正文字体，以及主题与 DESIGN.md 可引用的 19 款字体注册表；不向任何字体 CDN 发请求。",
+  },
   brand: {
     en: "Brand primitives — color definitions, gradient tokens, motion language. Source data; not imported at runtime by apps.",
     zh: "品牌原语 — 颜色定义、渐变 token、动效语言;为源数据,不被 app 运行时直接引用。",
@@ -384,6 +390,22 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
   },
 
   // ─── ai ─────────────────────────────────────────────────────────────────
+  "forge-dns-leak": {
+    en: "An authoritative DNS zone for real leak tests: probe names resolved by the visitor's recursive resolver are logged by source IP. Work in progress — needs a delegated zone.",
+    zh: "用于真实 DNS 泄漏检测的权威 DNS 区：访客递归解析器查询的探针域名按来源 IP 记录。仍在开发中，需要委派的 DNS 区。",
+  },
+  "forge-runtime": {
+    en: "The capability registry and invoke pipeline behind Nebutra Forge: pure tools, one invoke path for the page and the API, charged against the credit ledger.",
+    zh: "Nebutra Forge 背后的能力注册表与调用流水线：纯函数工具，页面与 API 同一条调用路径，按积分账本计费。",
+  },
+  "startup-os": {
+    en: "Typed contracts for Startup OS: company context, founder conversation streaming, run state, generated files and rollout gates. Work in progress — no production app uses it yet.",
+    zh: "Startup OS 的类型化契约：公司上下文、创始人对话流、运行状态、生成文件与发布闸门。仍在开发中，尚未接入生产应用。",
+  },
+  "workflow-runtime": {
+    en: "Tenant-written workflows — agent(), parallel(), phase() — run only inside a fail-closed sandbox. Untrusted script source never reaches eval, new Function or node:vm.",
+    zh: "租户编写的工作流（agent()、parallel()、phase()）只在失败即关闭的沙箱中运行；不可信脚本永远不经过 eval、new Function 或 node:vm。",
+  },
   agents: {
     en: "Multi-step agent runtime — Vercel AI SDK foundation, tool registry, streaming UI, MCP integration. The skeleton for every Sailor agentic feature.",
     zh: "多步骤 agent 运行时 — Vercel AI SDK 为底、tool registry、流式 UI、MCP 接入;所有 Sailor agentic 能力的脚手架。",
@@ -404,10 +426,7 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     en: "Model Context Protocol server primitives — register tools, expose resources, stream subscriptions. Run inside Sailor or stand-alone.",
     zh: "Model Context Protocol server 原语 — 注册 tool、暴露 resource、流式订阅;可作为 Sailor 内嵌或独立部署。",
   },
-  "llm-gateway": {
-    en: "Provider-routing edge for LLM calls — fallback chains, per-tenant quota, response caching, usage metering wired in.",
-    zh: "LLM 调用的 provider 路由层 — 回退链、按租户 quota、响应缓存、用量计量统一接入。",
-  },
+
   "knowledge-rag": {
     en: "Retrieval-augmented generation pipeline — chunk, embed, store, retrieve, rerank — pluggable per vector store.",
     zh: "检索增强生成流水线 — chunk → embed → store → retrieve → rerank;vector store 可插拔。",
@@ -560,10 +579,7 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     en: "Cold-outreach orchestrator — list dedupe, persona-aware drafting, send via SES/Resend, reply detection. Routes hot replies back into @nebutra/agents.",
     zh: "Cold-outreach 调度器 — 名单去重、按 persona 撰写、SES/Resend 投递、自动识别回复;热回复回灌 @nebutra/agents。",
   },
-  "provider-registry": {
-    en: "Authoritative catalog of every supported provider — billing, queue, search, LLM — with capability matrix and per-region availability.",
-    zh: "支持的所有 provider 权威目录 — billing / queue / search / LLM — 含能力矩阵与按区可用性。",
-  },
+
   reel: {
     en: "Short-form vertical video primitive — captures atelier moments, auto-captions via TTS pipeline, publishes to social channels.",
     zh: "竖屏短视频原语 — 抓取 atelier 高光、走 TTS 流水线自动加字幕、发到社媒通道。",
@@ -578,36 +594,19 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
   },
 };
 
-export function getFeatureSummary(entry: PackageFeatureEntry, locale: "en" | "zh") {
-  // Per-package authored copy takes precedence over the boilerplate fallback.
-  const authored = PACKAGE_DESCRIPTIONS[entry.slug];
-  if (authored && entry.kind === "package") {
-    return authored[locale];
-  }
-
-  if (isZhUiLocale(locale)) {
-    if (entry.kind === "group" || entry.kind === "capability") {
-      return ZH_GROUP_SUMMARIES[entry.group] ?? entry.description;
-    }
-
-    const groupLabel = GROUP_LABELS[entry.group]?.zh ?? entry.group;
-    return `${entry.label} 是 ${groupLabel} 能力域中的独立 package,边界保持在 ${entry.path},向上层暴露稳定的能力接口。`;
-  }
-
-  if (entry.kind === "group" || entry.kind === "capability") {
-    return entry.description || `${entry.label} capability surface inside Nebutra Sailor.`;
-  }
-
-  const groupLabel = GROUP_LABELS[entry.group]?.en ?? entry.group;
-  return `${entry.label} — focused capability inside the ${groupLabel} domain, boundary at ${entry.path}.`;
+/** A domain's name where no capability folder gives it a title: "Operations", "运维". */
+export function getGroupLabel(group: string, locale: "en" | "zh"): string {
+  const label = GROUP_LABELS[group]?.[locale] ?? group;
+  return locale === "en" ? label.charAt(0).toUpperCase() + label.slice(1) : label;
 }
 
-export function getFeatureTitle(entry: PackageFeatureEntry, locale: "en" | "zh") {
-  if (isZhUiLocale(locale)) {
-    if (entry.kind === "package") return `${entry.label} 能力包`;
-    return `${GROUP_LABELS[entry.group]?.zh ?? entry.label}能力面`;
+export function getFeatureSummary(entry: PackageFeatureEntry, locale: "en" | "zh") {
+  // Every package has authored copy (package-feature-data.test.ts holds that),
+  // so there is no boilerplate sentence to fall back to.
+  if (entry.kind === "package") {
+    return PACKAGE_DESCRIPTIONS[entry.slug]?.[locale] ?? entry.description;
   }
 
-  if (entry.kind === "package") return `${entry.label} package`;
-  return `${GROUP_LABELS[entry.group]?.en ?? entry.label} capability`;
+  if (isZhUiLocale(locale)) return ZH_GROUP_SUMMARIES[entry.group] ?? entry.description;
+  return entry.description;
 }

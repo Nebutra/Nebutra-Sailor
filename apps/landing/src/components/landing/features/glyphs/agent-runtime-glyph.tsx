@@ -6,11 +6,11 @@ import type { SubpackageGlyphProps } from "./types";
 
 const COPY = {
   en: {
-    header: "agent.run · claude-sonnet-4-6",
+    header: "agent.run · claude-sonnet-5",
     footer: "durable · resumable on crash",
   },
   zh: {
-    header: "agent.run · claude-sonnet-4-6",
+    header: "agent.run · claude-sonnet-5",
     footer: "持久 · 崩溃可恢复",
   },
 } as const;
