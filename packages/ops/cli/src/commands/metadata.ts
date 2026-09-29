@@ -314,6 +314,12 @@ export const nebultraCommand: CommandMeta = {
       usage: "nebutra apply --preset <code> [--only theme|fonts]",
     },
     {
+      name: "studio",
+      description:
+        "Sailor Studio for agents: preset schema, review link in the browser, pull onto the project",
+      usage: "nebutra studio <schema|preview|pull> [preset] [--json]",
+    },
+    {
       name: "ui",
       description: "Search, inspect, validate, and plan migrations for @nebutra/ui components",
       usage: "nebutra ui [subcommand]",

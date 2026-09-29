@@ -23,7 +23,10 @@ import {
  * reads it before anything whose meaning a later version might change.
  *
  *   version 3 · base 5 · neutral 2 · radius 3 · density 2 · sans 4 ·
- *   heading 4 · mono 3 · weight 3 · mode 2 · hasColor 1 · color 24
+ *   heading 4 · mono 3 · weight 3 · mode 2 · hasColor 1 · color 24 · tintLogo 1
+ *
+ * A field added later goes at the most significant end: every code written
+ * before it decodes with that field at 0, which must mean "as before".
  */
 export const PRESET_CODE_VERSION = 1;
 
@@ -51,6 +54,7 @@ const FIELDS = {
   mode: { bits: 2, list: PRESET_MODES },
   hasColor: { bits: 1 },
   color: { bits: 24 },
+  tintLogo: { bits: 1 },
 } satisfies Record<string, Field>;
 
 type FieldName = keyof typeof FIELDS;
@@ -87,6 +91,7 @@ export function encodePreset(preset: Preset): string {
     mode: indexOf("mode", preset.mode),
     hasColor: preset.brandColor ? 1 : 0,
     color: 0,
+    tintLogo: preset.tintLogo ? 1 : 0,
   };
   if (preset.brandColor) {
     if (!HEX_RE.test(preset.brandColor)) {
@@ -151,6 +156,7 @@ export function decodePreset(code: string): Preset {
     const value = pick<Preset[typeof name]>(name);
     if (value !== "base") (preset as unknown as Record<string, unknown>)[name] = value;
   }
+  if (values.tintLogo) preset.tintLogo = true;
   if (values.hasColor) {
     preset.brandColor = `#${values.color.toString(16).padStart(6, "0")}`;
   }

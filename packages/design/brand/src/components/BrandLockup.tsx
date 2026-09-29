@@ -71,7 +71,12 @@ export function BrandWordmark({
       height={height}
       aria-label={brand.name}
       className={["inline-block shrink-0", className].filter(Boolean).join(" ")}
-      style={inline ? { height: "0.74em", width: "auto", verticalAlign: "baseline" } : undefined}
+      style={{
+        // A Studio preset sets the wordmark's ink (ink by default, the brand
+        // colour when it asks); without one the brand colour stays.
+        color: "var(--brand-decorative-logo-ink, hsl(var(--brand-mark)))",
+        ...(inline ? { height: "0.74em", width: "auto", verticalAlign: "baseline" } : null),
+      }}
     />
   );
 }

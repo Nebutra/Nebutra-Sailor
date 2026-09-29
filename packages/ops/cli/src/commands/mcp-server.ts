@@ -1,4 +1,6 @@
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as p from "@clack/prompts";
@@ -10,30 +12,27 @@ import { logger } from "../utils/logger";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
- * Resolve the nebutra-mcp server binary from multiple sources:
- * 1. Sibling package in monorepo (development)
- * 2. Global system PATH
+ * The nebutra-mcp server entry: the monorepo sibling when running from source
+ * or a workspace build, then the installed @nebutra/mcp package, then
+ * `nebutra-mcp` on PATH. Each candidate is checked, so a wrong guess never
+ * becomes an ENOENT at spawn time.
  */
-function resolveMcpServerBinary(): string {
-  const strategies = [
-    // Strategy 1: Monorepo sibling (pnpm/yarn workspace)
-    () => {
-      const siblingPath = resolve(__dirname, "../../../mcp/dist/server/contextServer.js");
-      return siblingPath;
-    },
+function resolveMcpServer(): { command: string; args: string[] } {
+  const siblings = [
+    // packages/ops/cli/{src,dist}/commands → packages/ai/mcp
+    resolve(__dirname, "../../../../ai/mcp/dist/server/contextServer.js"),
+    resolve(__dirname, "../../../ai/mcp/dist/server/contextServer.js"),
   ];
-
-  for (const strategy of strategies) {
-    try {
-      const path = strategy();
-      return path;
-    } catch (error) {
-      logger.debug("MCP server binary resolution strategy failed", { error });
-    }
+  for (const entry of siblings) {
+    if (existsSync(entry)) return { command: process.execPath, args: [entry] };
   }
-
-  // Fallback: try to find via PATH
-  return "nebutra-mcp";
+  try {
+    const entry = createRequire(import.meta.url).resolve("@nebutra/mcp/bin/nebutra-mcp.js");
+    return { command: process.execPath, args: [entry] };
+  } catch (error) {
+    logger.debug("@nebutra/mcp is not installed next to the CLI", { error });
+  }
+  return { command: "nebutra-mcp", args: [] };
 }
 
 interface SpawnError extends Error {
@@ -51,25 +50,23 @@ export function registerMcpCommand(program: Command) {
     .description("Start the Nebutra MCP server for Cursor/Windsurf")
     .option("--stdio", "Use stdio transport (default)", true)
     .action(async (_options: Record<string, unknown>) => {
-      p.intro(pc.bgCyan(pc.black(" nebutra mcp ")));
-
+      // stdout belongs to the MCP protocol: any banner there breaks the client's
+      // first message. Everything human-facing goes to stderr.
       try {
-        const mcpServerBin = resolveMcpServerBinary();
+        const server = resolveMcpServer();
+        process.stderr.write(pc.dim("nebutra mcp: stdio server running — Ctrl+C to stop\n"));
 
-        p.log.info(pc.cyan("Starting Nebutra MCP server for Cursor/Windsurf integration..."));
-        p.log.info(pc.dim("Press Ctrl+C to stop the server.\n"));
-
-        const child = spawn(process.execPath, [mcpServerBin], {
+        const child = spawn(server.command, server.args, {
           stdio: "inherit",
           env: { ...process.env },
         });
 
         child.on("close", (code) => {
           if (code === 0) {
-            p.outro(pc.green("MCP server stopped gracefully."));
+            process.stderr.write(pc.green("MCP server stopped.\n"));
           } else if (code === null) {
             // Process terminated by signal
-            p.outro(pc.yellow("MCP server terminated."));
+            process.stderr.write(pc.yellow("MCP server terminated.\n"));
           }
           process.exit(code ?? 0);
         });
@@ -88,12 +85,12 @@ export function registerMcpCommand(program: Command) {
 
         // Handle Ctrl+C gracefully
         process.on("SIGINT", () => {
-          p.log.info(pc.yellow("\nShutting down MCP server..."));
+          process.stderr.write(pc.yellow("\nShutting down MCP server...\n"));
           child.kill("SIGINT");
         });
 
         process.on("SIGTERM", () => {
-          p.log.info(pc.yellow("Terminating MCP server..."));
+          process.stderr.write(pc.yellow("Terminating MCP server...\n"));
           child.kill("SIGTERM");
         });
       } catch (error: unknown) {

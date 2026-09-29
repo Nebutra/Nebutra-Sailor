@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, ChevronDown } from "@nebutra/icons";
-import { encodePreset, type Preset } from "@nebutra/tokens/preset";
+import { encodePreset, PRESET_SCHEMA_ID, type Preset } from "@nebutra/tokens/preset";
 import {
   Badge,
   ButtonLink,
@@ -26,6 +26,20 @@ export function presetArgument(preset: Preset): string {
 
 /** Existing project — the command the apply bar always shows. */
 export const applyCommand = (preset: Preset) => `nebutra apply --preset ${presetArgument(preset)}`;
+
+/** Existing project, as an agent runs it (same apply path, reads JSON / links too). */
+export const pullCommand = (preset: Preset) => `nebutra studio pull ${presetArgument(preset)}`;
+
+/**
+ * What a person pastes to their coding agent: the look, how to apply it, and
+ * how to propose the next one — so the loop continues in the agent, not here.
+ */
+export const agentPrompt = (preset: Preset) =>
+  [
+    `Use this Sailor Studio look: ${presetArgument(preset)}.`,
+    `In this Sailor project run \`${pullCommand(preset)}\` (new project: \`${createCommand(preset)}\`).`,
+    `To change it, write a preset against ${PRESET_SCHEMA_ID}, run \`nebutra studio preview '<json>' --from claude-code\`, and send me the link to review before pulling.`,
+  ].join("\n");
 
 /** New project. */
 export const createCommand = (preset: Preset) =>
@@ -119,6 +133,16 @@ export function StudioOutput({
         <div className="truncate rounded-[var(--radius-md)] border border-border bg-background px-3 py-2 font-mono text-foreground text-lg tracking-wide">
           {argument}
         </div>
+      </Block>
+
+      <Block
+        title="Hand to your agent"
+        hint="Paste into Claude Code, Codex or Cursor — it applies this look and can propose the next"
+        action={<CopyButton {...copyProps} value={agentPrompt(preset)} label="Copy" />}
+      >
+        <pre className="whitespace-pre-wrap rounded-[var(--radius-md)] border border-border bg-background px-3 py-2 font-mono text-2xs text-muted-foreground leading-relaxed">
+          {agentPrompt(preset)}
+        </pre>
       </Block>
 
       <Block title="Existing project" hint="Run it at the project root">

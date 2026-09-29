@@ -14,3 +14,12 @@ export {
 export { factoryBrandPackage } from "./factory";
 export * from "./knobs";
 export { type ResolvedPreset, resolvePreset } from "./resolve";
+export {
+  PRESET_SCHEMA_ID,
+  presetArgument,
+  presetFromJson,
+  presetJsonSchema,
+  readPresetInput,
+  STUDIO_URL,
+  studioReviewUrl,
+} from "./schema";

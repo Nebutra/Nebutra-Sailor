@@ -10,6 +10,13 @@ import {
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
+import {
+  encodePreset,
+  presetArgument,
+  presetJsonSchema,
+  readPresetInput,
+  studioReviewUrl,
+} from "@nebutra/tokens/preset";
 
 /**
  * Nebutra MCP Context Server
@@ -132,11 +139,19 @@ export function createContextServerHandlers(projectRoot: string) {
               required: [],
             },
           },
+          ...STUDIO_TOOLS,
         ],
       };
     },
 
-    async callTool({ name }: { name: string; arguments?: Record<string, unknown> | undefined }) {
+    async callTool({
+      name,
+      arguments: args,
+    }: {
+      name: string;
+      arguments?: Record<string, unknown> | undefined;
+    }) {
+      if (name.startsWith("studio_")) return callStudioTool(projectRoot, name, args ?? {});
       if (name !== "get_project_structure") {
         throw new Error(`Unknown tool: ${name}`);
       }
@@ -163,6 +178,90 @@ export function createContextServerHandlers(projectRoot: string) {
       }
     },
   };
+}
+
+/**
+ * Sailor Studio for an agent (the same loop as `nebutra studio`): read the
+ * preset schema, turn a preset into a Studio review link for the person, and
+ * once they approve, write it onto the project.
+ */
+const PRESET_ARG = {
+  preset: {
+    description:
+      "A preset object (see studio_preset_schema), its JSON text, a preset code, a base id, or a Studio link.",
+  },
+};
+
+export const STUDIO_TOOLS = [
+  {
+    name: "studio_preset_schema",
+    description:
+      "JSON Schema for a Sailor Studio preset: the base design language and every knob with its allowed values.",
+    inputSchema: { type: "object", properties: {}, required: [] },
+  },
+  {
+    name: "studio_preview",
+    description:
+      "Validate a preset and return the Sailor Studio link to show the person, plus the commands that apply it. Ask them to review the link before pulling.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        ...PRESET_ARG,
+        from: { type: "string", description: "Who proposed it, shown on the Studio banner" },
+      },
+      required: ["preset"],
+    },
+  },
+  {
+    name: "studio_pull",
+    description:
+      "Write an approved preset onto this Sailor project (packages/design/tokens/project/preset). Run `pnpm --filter @nebutra/tokens build` afterwards, or use `nebutra studio pull`, which does both.",
+    inputSchema: { type: "object", properties: PRESET_ARG, required: ["preset"] },
+  },
+];
+
+const text = (value: unknown) => ({
+  content: [
+    { type: "text", text: typeof value === "string" ? value : JSON.stringify(value, null, 2) },
+  ],
+});
+
+export function callStudioTool(projectRoot: string, name: string, args: Record<string, unknown>) {
+  try {
+    if (name === "studio_preset_schema") return text(presetJsonSchema());
+    const preset = readPresetInput(args.preset);
+    const code = presetArgument(preset);
+    if (name === "studio_preview") {
+      const from = typeof args.from === "string" ? args.from : "agent";
+      return text({
+        code,
+        preset,
+        reviewUrl: studioReviewUrl(preset, from),
+        apply: `nebutra studio pull ${code}`,
+        create: `npx create-sailor@latest my-app --preset ${code}`,
+      });
+    }
+    if (name === "studio_pull") {
+      const tokens = path.join(projectRoot, "packages", "design", "tokens");
+      if (!fs.existsSync(path.join(tokens, "package.json"))) {
+        throw new Error(`${projectRoot} is not a Sailor project (no packages/design/tokens).`);
+      }
+      const file = path.join(tokens, "project", "preset");
+      fs.mkdirSync(path.dirname(file), { recursive: true });
+      fs.writeFileSync(file, `${encodePreset(preset)}\n`);
+      return text({
+        written: path.relative(projectRoot, file),
+        code,
+        next: "pnpm --filter @nebutra/tokens build",
+      });
+    }
+    throw new Error(`Unknown tool: ${name}`);
+  } catch (error) {
+    return {
+      ...text(`Error: ${error instanceof Error ? error.message : String(error)}`),
+      isError: true,
+    };
+  }
 }
 
 function getProjectStructure(projectRoot: string): string {
