@@ -7,7 +7,9 @@
 #   CLOUDFLARE_API_TOKEN=… VERIFY_DNS=1 bash infra/ops/scripts/verify-cloudflare-ci-token.sh
 set -euo pipefail
 
-TOKEN="${CLOUDFLARE_WORKERS_API_TOKEN:-${CLOUDFLARE_API_TOKEN:-}}"
+# CLOUDFLARE_API_TOKEN first, the legacy Workers token only as a fallback — the
+# same order the deploy steps use (a stale legacy token used to mask a new one).
+TOKEN="${CLOUDFLARE_API_TOKEN:-${CLOUDFLARE_WORKERS_API_TOKEN:-}}"
 if [ -z "$TOKEN" ]; then
   echo "Set CLOUDFLARE_API_TOKEN or CLOUDFLARE_WORKERS_API_TOKEN" >&2
   exit 1
