@@ -2,6 +2,7 @@
 
 import { Box, Calendar, Menu, MagnifyingGlass as Search } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { BlogAuthorAvatar } from "./blog-author-avatar";
@@ -20,6 +21,8 @@ export type BlogIndexPost = {
   fallbackImageAlt: string;
   fallbackImageUrl: string;
   imageBlurDataURL?: string;
+  /** False for a post with no picture of its own: the card has no image area. */
+  hasImage: boolean;
   imageUrl: string;
   imageAlt: string;
   searchText?: string;
@@ -79,23 +82,25 @@ function GridCard({ post }: { post: BlogIndexPost }) {
       href={post.href}
       className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-border bg-background transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:bg-muted"
     >
-      <div
-        className="relative h-52 overflow-hidden bg-muted"
-        style={
-          post.viewTransitionName ? { viewTransitionName: post.viewTransitionName } : undefined
-        }
-      >
-        <BlogImage
-          src={post.imageUrl}
-          alt={post.imageAlt}
-          fallbackSrc={post.fallbackImageUrl}
-          fallbackAlt={post.fallbackImageAlt}
-          blurDataURL={post.imageBlurDataURL}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-          className="object-cover transition-transform [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:scale-[1.015]"
-        />
-      </div>
+      {post.hasImage ? (
+        <div
+          className="relative h-52 overflow-hidden bg-muted"
+          style={
+            post.viewTransitionName ? { viewTransitionName: post.viewTransitionName } : undefined
+          }
+        >
+          <BlogImage
+            src={post.imageUrl}
+            alt={post.imageAlt}
+            fallbackSrc={post.fallbackImageUrl}
+            fallbackAlt={post.fallbackImageAlt}
+            blurDataURL={post.imageBlurDataURL}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+            className="object-cover transition-transform [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:scale-[1.015]"
+          />
+        </div>
+      ) : null}
 
       <div className="flex flex-1 flex-col p-5">
         <PostMeta post={post} />
@@ -110,7 +115,10 @@ function GridCard({ post }: { post: BlogIndexPost }) {
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-5">
           <div className="flex min-w-0 items-center gap-2">
-            <BlogAuthorAvatar name={post.authorName} src={post.authorAvatarUrl} />
+            {/* No author, no silhouette: an empty avatar is a stand-in. */}
+            {post.authorName ? (
+              <BlogAuthorAvatar name={post.authorName} src={post.authorAvatarUrl} />
+            ) : null}
             {post.authorName && (
               <span className="truncate text-xs font-medium text-muted-foreground">
                 {post.authorName}
@@ -128,25 +136,30 @@ function ListCard({ post }: { post: BlogIndexPost }) {
   return (
     <Link
       href={post.href}
-      className="group grid gap-5 rounded-[var(--radius-md)] border border-border bg-background p-3 transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:bg-muted sm:grid-cols-[220px_1fr]"
+      className={cn(
+        "group grid gap-5 rounded-[var(--radius-md)] border border-border bg-background p-3 transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:bg-muted",
+        post.hasImage && "sm:grid-cols-[220px_1fr]",
+      )}
     >
-      <div
-        className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-muted"
-        style={
-          post.viewTransitionName ? { viewTransitionName: post.viewTransitionName } : undefined
-        }
-      >
-        <BlogImage
-          src={post.imageUrl}
-          alt={post.imageAlt}
-          fallbackSrc={post.fallbackImageUrl}
-          fallbackAlt={post.fallbackImageAlt}
-          blurDataURL={post.imageBlurDataURL}
-          fill
-          sizes="(max-width: 640px) 100vw, 220px"
-          className="object-cover transition-transform [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:scale-[1.015]"
-        />
-      </div>
+      {post.hasImage ? (
+        <div
+          className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-muted"
+          style={
+            post.viewTransitionName ? { viewTransitionName: post.viewTransitionName } : undefined
+          }
+        >
+          <BlogImage
+            src={post.imageUrl}
+            alt={post.imageAlt}
+            fallbackSrc={post.fallbackImageUrl}
+            fallbackAlt={post.fallbackImageAlt}
+            blurDataURL={post.imageBlurDataURL}
+            fill
+            sizes="(max-width: 640px) 100vw, 220px"
+            className="object-cover transition-transform [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:scale-[1.015]"
+          />
+        </div>
+      ) : null}
 
       <div className="flex min-w-0 flex-col py-1 pr-2">
         <PostMeta post={post} />
@@ -160,7 +173,10 @@ function ListCard({ post }: { post: BlogIndexPost }) {
         )}
         <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
           <div className="flex min-w-0 items-center gap-2">
-            <BlogAuthorAvatar name={post.authorName} src={post.authorAvatarUrl} size="md" />
+            {/* No author, no silhouette: an empty avatar is a stand-in. */}
+            {post.authorName ? (
+              <BlogAuthorAvatar name={post.authorName} src={post.authorAvatarUrl} size="md" />
+            ) : null}
             {post.authorName && (
               <span className="truncate text-sm font-medium text-muted-foreground">
                 {post.authorName}

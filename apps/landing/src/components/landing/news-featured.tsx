@@ -1,3 +1,4 @@
+import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { BlogImage } from "./blog-image";
 import { NewsDecorTile } from "./news-decor-tile";
@@ -9,6 +10,7 @@ export type NewsFeaturedItem = {
   category: string | null;
   dateLabel: string | null;
   excerpt: string;
+  hasImage: boolean;
   imageUrl: string;
   imageAlt: string;
   fallbackImageUrl: string;
@@ -52,19 +54,26 @@ export function NewsFeatured({
     <section className="grid gap-x-12 gap-y-12 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
       {/* Lead story */}
       <Link href={featured.href} className="group flex flex-col">
-        <div className="grid grid-cols-2 overflow-hidden rounded-[var(--radius-xl)] border border-border">
-          <div className="relative min-h-[18rem] bg-muted sm:min-h-[26rem]">
-            <BlogImage
-              src={featured.imageUrl}
-              alt={featured.imageAlt}
-              fallbackSrc={featured.fallbackImageUrl}
-              fallbackAlt={featured.fallbackImageAlt}
-              blurDataURL={featured.imageBlurDataURL}
-              fill
-              sizes="(max-width: 1024px) 50vw, 460px"
-              className="object-cover [transition-duration:var(--motion-duration-flow)] [transition-property:transform] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.015] motion-reduce:transition-none"
-            />
-          </div>
+        <div
+          className={cn(
+            "grid overflow-hidden rounded-[var(--radius-xl)] border border-border",
+            featured.hasImage && "grid-cols-2",
+          )}
+        >
+          {featured.hasImage ? (
+            <div className="relative min-h-[18rem] bg-muted sm:min-h-[26rem]">
+              <BlogImage
+                src={featured.imageUrl}
+                alt={featured.imageAlt}
+                fallbackSrc={featured.fallbackImageUrl}
+                fallbackAlt={featured.fallbackImageAlt}
+                blurDataURL={featured.imageBlurDataURL}
+                fill
+                sizes="(max-width: 1024px) 50vw, 460px"
+                className="object-cover [transition-duration:var(--motion-duration-flow)] [transition-property:transform] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.015] motion-reduce:transition-none"
+              />
+            </div>
+          ) : null}
           <NewsDecorTile
             variant="aurora"
             className="min-h-[18rem] rounded-none sm:min-h-[26rem]"

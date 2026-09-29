@@ -132,18 +132,20 @@ function BlogArticleFooter({
                   href={localizedPostHref(lang, relatedPost.slug)}
                   className="group overflow-hidden rounded-[var(--radius-md)] bg-muted transition-colors hover:bg-muted"
                 >
-                  <div className="relative h-36 overflow-hidden bg-muted">
-                    <BlogImage
-                      src={cover.src}
-                      alt={cover.alt}
-                      fallbackSrc={cover.fallbackSrc}
-                      fallbackAlt={cover.fallbackAlt}
-                      blurDataURL={cover.blurDataURL}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 360px"
-                      className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
-                    />
-                  </div>
+                  {cover.hasImage ? (
+                    <div className="relative h-36 overflow-hidden bg-muted">
+                      <BlogImage
+                        src={cover.src}
+                        alt={cover.alt}
+                        fallbackSrc={cover.fallbackSrc}
+                        fallbackAlt={cover.fallbackAlt}
+                        blurDataURL={cover.blurDataURL}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 360px"
+                        className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
+                      />
+                    </div>
+                  ) : null}
                   <div className="p-4">
                     {relatedPost.tags[0] && (
                       <p className="text-xs font-medium text-muted-foreground">
@@ -341,27 +343,29 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
           </header>
         </div>
 
-        {/* Hero image */}
-        <AnimateIn preset="fadeUp" inView>
-          <div className="mx-auto max-w-4xl">
-            <div
-              className="relative mt-8 aspect-[16/7] min-h-60 w-full overflow-hidden rounded-[var(--radius-lg)] bg-muted sm:min-h-80"
-              style={{ viewTransitionName: getBlogViewTransitionName(post.id) }}
-            >
-              <BlogImage
-                src={imageUrl}
-                alt={imageAlt}
-                fallbackSrc={fallbackCover.src}
-                fallbackAlt={fallbackCover.alt}
-                blurDataURL={cover.blurDataURL}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 1024px"
-              />
+        {/* Hero image — only when the post has one of its own. */}
+        {cover.hasImage ? (
+          <AnimateIn preset="fadeUp" inView>
+            <div className="mx-auto max-w-4xl">
+              <div
+                className="relative mt-8 aspect-[16/7] min-h-60 w-full overflow-hidden rounded-[var(--radius-lg)] bg-muted sm:min-h-80"
+                style={{ viewTransitionName: getBlogViewTransitionName(post.id) }}
+              >
+                <BlogImage
+                  src={imageUrl}
+                  alt={imageAlt}
+                  fallbackSrc={fallbackCover.src}
+                  fallbackAlt={fallbackCover.alt}
+                  blurDataURL={cover.blurDataURL}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 1024px"
+                />
+              </div>
             </div>
-          </div>
-        </AnimateIn>
+          </AnimateIn>
+        ) : null}
 
         <AnimateIn preset="fadeUp" inView>
           {/* `data-blog-content` scopes the floating TOC scan to the article body —

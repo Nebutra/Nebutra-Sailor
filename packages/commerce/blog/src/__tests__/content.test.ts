@@ -292,8 +292,12 @@ describe("blog content helpers", () => {
         "https://cdn.nebutra.com/landing/images/blog/covers/founder-top-design-nine-layers.png",
       src: "https://cdn.sanity.io/cover.webp",
       source: "sanity",
+      hasImage: true,
     });
     expect(resolveBlogCover(post, { imageUrl: "" }).source).toBe("fallback");
+    // A CMS post keeps its brand cover; a sample post has no picture of its own.
+    expect(resolveBlogCover(post, { imageUrl: "" }).hasImage).toBe(true);
+    expect(resolveBlogCover({ ...post, source: "fallback" }).hasImage).toBe(false);
     expect(getBlogImagePlaceholder("same seed")).toBe(getBlogImagePlaceholder("same seed"));
   });
 

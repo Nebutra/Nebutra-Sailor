@@ -10,6 +10,7 @@ export type NewsRailSlide = {
   href: string;
   title: string;
   category: string | null;
+  hasImage: boolean;
   imageUrl: string;
   imageAlt: string;
   fallbackImageUrl: string;
