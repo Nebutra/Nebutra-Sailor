@@ -444,6 +444,19 @@ const STRUCTURAL_EXEMPTIONS: readonly Exemption[] = [
     // upload tokens (diagnostics.ts verifies the Bearer token on /upload).
     why: "public desktop support intake — no account exists to authorize; per-IP rate-limited",
   },
+  {
+    id: "personal-owner-scoped",
+    // studio/presets.ts: a person's own Sailor Studio presets. There is no role
+    // to hold — the row belongs to the caller or it does not. The table is
+    // `@rls deny`; the rule requires every write to name the caller in its where
+    // (deleteMany({ where: { id, userId } })) and every create to set userId.
+    applies: (r, f) =>
+      r.file === "studio/presets.ts" &&
+      /\bcallerId\s*\(/.test(f.text) &&
+      /deleteMany\(\{\s*where:\s*\{\s*id,\s*userId\s*\}/.test(f.text) &&
+      /create\(\{\s*data:\s*\{\s*userId,/.test(f.text),
+    why: "a person's own rows — every write is scoped to the caller's user id",
+  },
   // Internal cron with a service-token check: no such HTTP route exists under
   // routes/ today (retention runs as a Cloudflare Cron Trigger in
   // worker-retention.ts). Add a rule here — with the verification it relies on

@@ -48,6 +48,7 @@ import { type PreviewCarrier, paintedCarrierForPreset } from "@/lib/preset-carri
 import { writePresetCookie } from "@/lib/preset-cookie";
 import { ACME_SITE } from "@/nebutra/routes";
 import type { CatalogFilter } from "./frame-protocol";
+import { YourPresets } from "./studio-account";
 import { CatalogControls, CatalogFrame } from "./studio-catalog";
 import { changedKnobs, StudioKnobs } from "./studio-knobs";
 import { applyCommand, presetArgument, pullCommand, StudioOutput } from "./studio-output";
@@ -1039,6 +1040,17 @@ export function StudioWorkbench() {
               <h2 className="font-semibold text-foreground text-base">{current.title}</h2>
               <p className="mt-1 text-muted-foreground text-xs">{current.hint}</p>
             </div>
+            {step === "look" ? (
+              <div className="mb-4">
+                <YourPresets
+                  preset={preset}
+                  onOpen={(next) => {
+                    setPreset(next);
+                    goTo("adjust");
+                  }}
+                />
+              </div>
+            ) : null}
             {step === "look" ? (
               <LookStep
                 base={preset.base}

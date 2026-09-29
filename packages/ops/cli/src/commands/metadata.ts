@@ -317,7 +317,7 @@ export const nebultraCommand: CommandMeta = {
       name: "studio",
       description:
         "Sailor Studio for agents: preset schema, review link in the browser, pull onto the project",
-      usage: "nebutra studio <schema|preview|pull> [preset] [--json]",
+      usage: "nebutra studio <schema|preview|list|pull> [preset] [--latest] [--json]",
     },
     {
       name: "ui",

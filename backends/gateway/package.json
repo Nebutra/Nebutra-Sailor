@@ -39,6 +39,7 @@
     "@nebutra/analytics": "workspace:*",
     "@nebutra/audit": "workspace:*",
     "@nebutra/auth": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
     "@nebutra/billing": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/cache": "workspace:*",

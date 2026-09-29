@@ -12,7 +12,32 @@
     }
   ],
   "components": {
-    "schemas": {},
+    "schemas": {
+      "StudioPreset": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name", "code", "source", "createdAt", "updatedAt"]
+      }
+    },
     "parameters": {}
   },
   "paths": {
@@ -2012,6 +2037,180 @@
         }
       }
     },
+    "/api/v1/studio/presets": {
+      "get": {
+        "tags": ["Studio"],
+        "summary": "List your saved Sailor Studio presets, newest first",
+        "responses": {
+          "200": {
+            "description": "Presets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "presets": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/StudioPreset"
+                      }
+                    }
+                  },
+                  "required": ["presets"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Studio"],
+        "summary": "Save a Sailor Studio preset to your account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 32
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  }
+                },
+                "required": ["code"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "preset": {
+                      "$ref": "#/components/schemas/StudioPreset"
+                    }
+                  },
+                  "required": ["preset"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Not a preset",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/studio/presets/{id}": {
+      "delete": {
+        "tags": ["Studio"],
+        "summary": "Delete one of your saved presets",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["deleted"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/events/ingest": {
       "post": {
         "tags": ["Events"],
@@ -2415,156 +2614,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/v1/agent-runtime/carina/status": {
-      "get": {
-        "tags": ["Agent Runtime"],
-        "operationId": "getCarinaStatus",
-        "summary": "Probe Carina Track-B connectivity",
-        "responses": {
-          "200": {
-            "description": "Carina configuration + optional hello probe",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "enabled": {
-                      "type": "boolean"
-                    },
-                    "workspaceConfigured": {
-                      "type": "boolean"
-                    },
-                    "autoApprove": {
-                      "type": "boolean"
-                    },
-                    "protocolVersion": {
-                      "type": "number"
-                    },
-                    "error": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["enabled", "workspaceConfigured", "autoApprove"]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthenticated"
-          }
-        }
-      }
-    },
-    "/api/v1/agent-runtime/carina/approvals": {
-      "post": {
-        "tags": ["Agent Runtime"],
-        "operationId": "resolveCarinaApproval",
-        "summary": "Approve or deny a Carina governance decision",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "decisionId": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "approve": {
-                    "type": "boolean"
-                  },
-                  "scope": {
-                    "type": "string",
-                    "enum": ["once", "session", "project"]
-                  }
-                },
-                "required": ["decisionId", "approve"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Carina resolve result",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "result": {},
-                    "error": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["ok"]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthenticated"
-          },
-          "503": {
-            "description": "Carina not configured"
-          }
-        }
-      }
-    },
-    "/api/v1/agent-runtime/turns": {
-      "post": {
-        "tags": ["Agent Runtime"],
-        "operationId": "createAgentRuntimeTurn",
-        "summary": "Run an agent runtime turn",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "input": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "threadId": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "model": {
-                    "type": "string"
-                  }
-                },
-                "required": ["input", "threadId"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "SSE stream of thread events",
-            "content": {
-              "text/event-stream": {
-                "schema": {
-                  "type": "string",
-                  "description": "Server-Sent Events payload (thread event frames)"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthenticated"
-          },
-          "403": {
-            "description": "Feature disabled"
-          },
-          "503": {
-            "description": "Model stack unavailable"
           }
         }
       }
@@ -6271,6 +6320,156 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/v1/agent-runtime/carina/status": {
+      "get": {
+        "tags": ["Agent Runtime"],
+        "operationId": "getCarinaStatus",
+        "summary": "Probe Carina Track-B connectivity",
+        "responses": {
+          "200": {
+            "description": "Carina configuration + optional hello probe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "workspaceConfigured": {
+                      "type": "boolean"
+                    },
+                    "autoApprove": {
+                      "type": "boolean"
+                    },
+                    "protocolVersion": {
+                      "type": "number"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["enabled", "workspaceConfigured", "autoApprove"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          }
+        }
+      }
+    },
+    "/api/v1/agent-runtime/carina/approvals": {
+      "post": {
+        "tags": ["Agent Runtime"],
+        "operationId": "resolveCarinaApproval",
+        "summary": "Approve or deny a Carina governance decision",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "decisionId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "approve": {
+                    "type": "boolean"
+                  },
+                  "scope": {
+                    "type": "string",
+                    "enum": ["once", "session", "project"]
+                  }
+                },
+                "required": ["decisionId", "approve"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Carina resolve result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {},
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["ok"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "503": {
+            "description": "Carina not configured"
+          }
+        }
+      }
+    },
+    "/api/v1/agent-runtime/turns": {
+      "post": {
+        "tags": ["Agent Runtime"],
+        "operationId": "createAgentRuntimeTurn",
+        "summary": "Run an agent runtime turn",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "threadId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "model": {
+                    "type": "string"
+                  }
+                },
+                "required": ["input", "threadId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SSE stream of thread events",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "Server-Sent Events payload (thread event frames)"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Feature disabled"
+          },
+          "503": {
+            "description": "Model stack unavailable"
           }
         }
       }

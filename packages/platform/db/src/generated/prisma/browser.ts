@@ -591,3 +591,13 @@ export type PebbleFeedback = Prisma.PebbleFeedbackModel
  * @rls deny
  */
 export type PlatformStaff = Prisma.PlatformStaffModel
+/**
+ * Model StudioPreset
+ * A Sailor Studio look saved to a person's account: what their agent proposed
+ * (`nebutra studio preview` while logged in) or what they saved in Studio, so
+ * either side can open the other's latest without copying links. The code is
+ * the whole preset (@nebutra/tokens/preset). Personal, not tenant data: the
+ * gateway reaches it through the system client and filters on the caller.
+ * @rls deny
+ */
+export type StudioPreset = Prisma.StudioPresetModel
