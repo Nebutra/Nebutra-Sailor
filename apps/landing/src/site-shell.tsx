@@ -14,16 +14,19 @@ import { SiteHeader } from "@/nebutra/shell/site-nav";
  */
 export function SiteShell({
   children,
+  lang,
 }: {
   children: ReactNode;
   /** Only the template's frame has a separate legal footer. */
   footer?: "default" | "legal";
+  /** The route locale, from the layout's params. Absent (not-found) reads English. */
+  lang?: string;
 }) {
   const mailto = `mailto:tseka@${brand.domains.landing}`;
   return (
     <RailFrame
       header={<SiteHeader brandName={brand.name} mailto={mailto} />}
-      footer={<SiteFooter />}
+      footer={<SiteFooter lang={lang} />}
     >
       {children}
     </RailFrame>
