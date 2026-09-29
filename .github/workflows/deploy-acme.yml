@@ -82,6 +82,18 @@ jobs:
         working-directory: ${{ runner.temp }}/acme
         run: pnpm install --no-frozen-lockfile --ignore-scripts
 
+      - name: Give the template its own brand
+        # Exactly what create-sailor does for a new project (utils/brand.ts):
+        # without it acme is the template wearing Nebutra's name, legal entity
+        # and wordmark, which is not "the site you get".
+        working-directory: ${{ runner.temp }}/acme
+        env:
+          CI: "1"
+        run: |
+          set -euo pipefail
+          pnpm run brand:init -- --yes --name Acme
+          pnpm run brand:apply
+
       - name: Build the template's landing
         working-directory: ${{ runner.temp }}/acme
         env:
