@@ -74,6 +74,7 @@ import { creditsRoutes } from "./routes/billing/credits.js";
 import { billingRoutes } from "./routes/billing/index.js";
 import { orderRoutes } from "./routes/billing/orders.js";
 import { usageLedgerRoutes } from "./routes/billing/usage.js";
+import { docsRoutes } from "./routes/docs/index.js";
 import { eventRoutes } from "./routes/events/index.js";
 import { integrationRoutes } from "./routes/integrations/index.js";
 import { consentRoutes } from "./routes/legal/consent.js";
@@ -401,6 +402,7 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
   app.route("/api/v1/billing", usageLedgerRoutes);
   app.route("/api/v1/notifications", notificationRoutes);
   app.route("/api/v1/search", searchRoutes);
+  app.route("/api/v1/docs", docsRoutes);
   app.route("/api/v1/integrations", integrationRoutes);
 
   // Admin routes — protected by X-Admin-Key, not exposed through public ingress

@@ -76,6 +76,23 @@ const baseSchema = z.object({
   DOMAIN_APP: z.string().url().optional(),
   DOMAIN_API: z.string().url().optional(),
   DOMAIN_STUDIO: z.string().url().optional(),
+
+  // Docs assistant (routes/docs/chat.ts) — public, unauthenticated, rate-
+  // limited by IP. Optional: no LLM provider key configured degrades the
+  // endpoint to a clear 503 rather than failing, and the docs UI hides the
+  // chat entry point.
+  DOCS_ORIGIN: z.string().url().optional(),
+  // Extra CORS origins for the docs-only routes (routes/docs/*), on top of
+  // DOMAINS.docs — comma-separated. Kept separate from the main CORS_ORIGINS
+  // allowlist above: docs endpoints are public/anonymous, so they must not
+  // widen to the credentialed app/studio/landing origins that list serves.
+  DOCS_CORS_ORIGINS: z.string().optional(),
+
+  // Docs page-feedback widget (routes/docs/feedback.ts) — GitHub App that
+  // posts feedback as a GitHub Discussion. Optional: unset degrades the
+  // endpoint to a clear 503 and the widget UI degrades gracefully.
+  GITHUB_APP_ID: z.string().optional(),
+  GITHUB_APP_PRIVATE_KEY: z.string().optional(),
 });
 
 const envSchema = z.intersection(baseSchema, authConfigSchema);

@@ -10815,6 +10815,191 @@
         }
       }
     },
+    "/api/v1/docs/chat": {
+      "post": {
+        "tags": ["Docs"],
+        "summary": "Ask the docs assistant a question",
+        "description": "Public, rate-limited (20/min/IP), unauthenticated. Answers from the live docs corpus (llms-full.txt). Returns { configured: false } when no LLM provider key is set.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": ["user", "assistant"]
+                        },
+                        "content": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 4000
+                        }
+                      },
+                      "required": ["role", "content"]
+                    },
+                    "minItems": 1,
+                    "maxItems": 20
+                  }
+                },
+                "required": ["messages"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assistant reply, or a not-configured notice",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "configured": {
+                          "type": "boolean",
+                          "enum": [true]
+                        },
+                        "reply": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["configured", "reply"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "configured": {
+                          "type": "boolean",
+                          "enum": [false]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["configured", "message"]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "502": {
+            "description": "Every configured LLM provider failed"
+          }
+        }
+      }
+    },
+    "/api/v1/docs/feedback": {
+      "post": {
+        "tags": ["Docs"],
+        "summary": "Submit page or block feedback as a GitHub Discussion",
+        "description": "Public, rate-limited (10/min/IP), unauthenticated.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": ["page"]
+                      },
+                      "url": {
+                        "type": "string"
+                      },
+                      "opinion": {
+                        "type": "string",
+                        "enum": ["good", "bad"]
+                      },
+                      "message": {
+                        "type": "string",
+                        "maxLength": 4000
+                      }
+                    },
+                    "required": ["kind", "url", "opinion", "message"]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": ["block"]
+                      },
+                      "url": {
+                        "type": "string"
+                      },
+                      "blockId": {
+                        "type": "string"
+                      },
+                      "blockBody": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string",
+                        "maxLength": 4000
+                      }
+                    },
+                    "required": ["kind", "url", "blockId", "message"]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Feedback posted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "githubUrl": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GitHub API call failed"
+          },
+          "503": {
+            "description": "GitHub App not configured on this deployment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": ["not_configured"]
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error", "message"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/integrations": {
       "get": {
         "tags": ["Integrations"],
