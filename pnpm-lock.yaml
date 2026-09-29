@@ -1817,6 +1817,9 @@ importers:
       '@nebutra/onboarding':
         specifier: workspace:*
         version: link:../../packages/integrations/onboarding
+      '@nebutra/permissions':
+        specifier: workspace:*
+        version: link:../../packages/iam/permissions
       '@nebutra/preset':
         specifier: workspace:*
         version: link:../../packages/ops/preset
@@ -1883,6 +1886,9 @@ importers:
       geist:
         specifier: 'catalog:'
         version: 1.7.0(next@16.3.8(@babel/core@7.29.6(supports-color@10.2.2))(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+      jose:
+        specifier: ^6.1.0
+        version: 6.2.0
       next:
         specifier: ~16.3.8
         version: 16.3.8(@babel/core@7.29.6(supports-color@10.2.2))(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(@types/node@22.19.15)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
