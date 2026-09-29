@@ -5,6 +5,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { useLocale } from "next-intl";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { SITE } from "@/content/site";
+import { useMount } from "@/hooks/useMount";
 import { Link } from "@/i18n/navigation";
 import { hereOnly } from "@/site-map";
 import { say } from "./starter-copy";
@@ -14,7 +15,15 @@ import { StarterLink } from "./starter-link";
 export function StarterFooter({ variant = "default" }: { variant?: "default" | "legal" }) {
   const locale = useLocale();
   const { footer } = SITE;
-  const year = new Date().getFullYear();
+  // `new Date()` is an "unstable value" under Next 16 cacheComponents when read
+  // during a Client Component's render — it makes the prerendered shell
+  // non-deterministic. Same `useMount` gate FooterMinimal uses for
+  // hydration-unsafe values: resolve the year only once mounted client-side,
+  // so the prerendered shell and the first client render agree (both omit
+  // it), and it fills in right after — fine for a copyright year that is
+  // never load-bearing content.
+  const isMounted = useMount();
+  const year = isMounted ? new Date().getFullYear() : null;
   const columns = footer.columns
     .map((column) => ({ ...column, links: hereOnly(column.links) }))
     .filter((column) => column.links.length > 0);
@@ -55,7 +64,7 @@ export function StarterFooter({ variant = "default" }: { variant?: "default" | "
       ) : null}
       <div className="mx-auto flex max-w-wide flex-wrap items-center justify-between gap-4 border-t border-border py-6 first:border-t-0">
         <p className="text-sm text-muted-foreground">
-          © {year} {brand.nameFull || brand.name}. {say(footer.rights, locale)}
+          © {year ?? ""} {brand.nameFull || brand.name}. {say(footer.rights, locale)}
         </p>
         <ThemeSwitcher />
       </div>
