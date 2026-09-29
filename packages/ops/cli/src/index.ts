@@ -25,6 +25,7 @@ import { registerSchemaCommand } from "./commands/schema";
 import { registerSecretsCommand } from "./commands/secrets";
 import { registerServicesCommand } from "./commands/services";
 import { registerStatusCommand } from "./commands/status";
+import { registerStudioCommand } from "./commands/studio";
 import { registerSyncCommand } from "./commands/sync";
 import { registerTestCommand } from "./commands/test";
 import { registerThemeCommand } from "./commands/theme";
@@ -115,6 +116,7 @@ export function buildProgram(options: BuildProgramOptions): Command {
   registerE2eCommand(program);
   registerThemeCommand(program);
   registerApplyCommand(program);
+  registerStudioCommand(program);
   registerUiCommand(program);
 
   // ─── Platform commands ───────────────────────────────────

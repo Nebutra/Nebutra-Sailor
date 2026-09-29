@@ -55,7 +55,14 @@ const SWATCHES = [
 const HEX_RE = /^#[0-9a-f]{6}$/i;
 
 /** Knobs that sit under "More". */
-const SECONDARY_KNOBS: readonly Knob[] = ["sans", "heading", "headingWeight", "mono", "mode"];
+const SECONDARY_KNOBS: readonly Knob[] = [
+  "sans",
+  "heading",
+  "headingWeight",
+  "mono",
+  "mode",
+  "tintLogo",
+];
 
 const LABELS: Record<string, string> = {
   base: "Default",
@@ -72,7 +79,12 @@ const LABELS: Record<string, string> = {
   spacious: "Spacious",
   light: "Light",
   dark: "Dark",
+  off: "Off",
+  on: "On",
 };
+
+/** Off unless asked: a language's brand colour belongs to its own mark, not yours. */
+const LOGO_TINT = ["off", "on"] as const;
 
 const label = (value: string | number) => LABELS[String(value)] ?? String(value);
 
@@ -357,6 +369,18 @@ export function StudioKnobs({
                 value={preset.mode}
                 options={PRESET_MODES}
                 onChange={(v) => set("mode", v)}
+              />
+            </Row>
+            <Row
+              title="Logo in the brand colour"
+              changed={preset.tintLogo !== undefined}
+              onReset={reset("tintLogo")}
+            >
+              <Segmented
+                ariaLabel="Paint the wordmark in the language's brand colour"
+                value={preset.tintLogo ? "on" : "off"}
+                options={LOGO_TINT}
+                onChange={(v) => set("tintLogo", v === "on" ? true : undefined)}
               />
             </Row>
           </div>

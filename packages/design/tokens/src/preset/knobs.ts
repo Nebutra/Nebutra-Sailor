@@ -98,6 +98,12 @@ export interface Preset {
   mono?: PresetMono;
   headingWeight?: PresetWeight;
   mode?: PresetMode;
+  /**
+   * Paint the wordmark in the language's brand colour. Off by default: a
+   * language's brand colour belongs to its own mark (Linear's lime), and on
+   * your product the wordmark reads in ink.
+   */
+  tintLogo?: boolean;
 }
 
 /** Radius slots per choice. `pill` stays round in every choice but `none`. */

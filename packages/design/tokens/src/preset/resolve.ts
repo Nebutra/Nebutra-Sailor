@@ -124,6 +124,15 @@ export function resolvePreset(
     }
   }
 
+  // ── Logo ink: the wordmark reads in ink unless the preset asks for the brand colour ──
+  brand.extensions = {
+    ...brand.extensions,
+    decorative: {
+      ...brand.extensions?.decorative,
+      "logo-ink": preset.tintLogo ? "hsl(var(--brand-mark))" : "hsl(var(--foreground))",
+    },
+  };
+
   // ── Shape and room ──
   if (preset.radius && preset.radius !== "base") {
     brand.recipe.radii = { ...RADIUS_VALUES[preset.radius] };

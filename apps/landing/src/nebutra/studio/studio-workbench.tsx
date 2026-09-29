@@ -50,7 +50,7 @@ import { ACME_SITE } from "@/nebutra/routes";
 import type { CatalogFilter } from "./frame-protocol";
 import { CatalogControls, CatalogFrame } from "./studio-catalog";
 import { changedKnobs, StudioKnobs } from "./studio-knobs";
-import { applyCommand, presetArgument, StudioOutput } from "./studio-output";
+import { applyCommand, presetArgument, pullCommand, StudioOutput } from "./studio-output";
 import type { ThemeMode, TokenRow } from "./theme-token-data";
 
 /**
@@ -835,6 +835,57 @@ function MiniChart({
   );
 }
 
+/** Who proposed the look in the URL (`?from=claude-code`), set by `nebutra studio preview`. */
+function proposerFromLocation(): string | null {
+  if (typeof window === "undefined") return null;
+  const from = new URLSearchParams(window.location.search).get("from")?.trim();
+  return from ? from.slice(0, 40) : null;
+}
+
+/**
+ * The agent loop's review step: a look an agent proposed, shown as such. The
+ * person approves by handing the pull command back — unchanged, or with what
+ * they adjusted here, since the command always carries the current look.
+ */
+function ProposalBanner({
+  from,
+  proposed,
+  preset,
+  onDismiss,
+}: {
+  from: string;
+  proposed: string;
+  preset: Preset;
+  onDismiss: () => void;
+}) {
+  const changed = presetArgument(preset) !== proposed;
+  return (
+    <div
+      role="status"
+      className="flex flex-wrap items-center gap-x-3 gap-y-2 border-border/70 border-b bg-muted/40 px-4 py-2.5 text-xs"
+    >
+      <span className="min-w-0 flex-1 text-muted-foreground">
+        <span className="font-medium text-foreground">{from}</span> proposed this look.{" "}
+        {changed
+          ? "You have changed it — hand back the new command."
+          : "Look it over; approve by handing the command back."}
+      </span>
+      <CopyButton
+        value={pullCommand(preset)}
+        label={changed ? "Copy updated command" : "Approve · copy command"}
+        copiedLabel="Copied — paste it to your agent"
+        variant="ink"
+        size="tiny"
+        showToast={false}
+        timeout={2500}
+      />
+      <Button type="button" variant="ghost" size="tiny" onClick={onDismiss}>
+        Dismiss
+      </Button>
+    </div>
+  );
+}
+
 /** The preset in the page's URL (`?preset=`), so a look is a link. */
 function presetFromLocation(): Preset | null {
   if (typeof window === "undefined") return null;
@@ -879,8 +930,11 @@ export function StudioWorkbench() {
   // then keep the URL following it — but only once it has been read: writing
   // first would drop the `?preset=` the page was opened with.
   const [ready, setReady] = useState(false);
+  const [proposal, setProposal] = useState<{ from: string; code: string } | null>(null);
   useEffect(() => {
     const initial = presetFromLocation();
+    const from = proposerFromLocation();
+    if (initial && from) setProposal({ from, code: presetArgument(initial) });
     if (initial) {
       setPreset(initial);
       // A shared look opens where it can be adjusted, not back at the start.
@@ -936,6 +990,14 @@ export function StudioWorkbench() {
 
   return (
     <div className="studio-frame flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-background text-foreground">
+      {proposal ? (
+        <ProposalBanner
+          from={proposal.from}
+          proposed={proposal.code}
+          preset={preset}
+          onDismiss={() => setProposal(null)}
+        />
+      ) : null}
       <div className="studio-layout min-h-0 flex-1 overflow-hidden">
         <aside
           aria-label="Studio controls"

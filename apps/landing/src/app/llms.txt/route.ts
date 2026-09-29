@@ -36,6 +36,21 @@ multi-tenant products with agent workflows.
 - [Status](${base}/status): Service health
 - [Open Platform](${base}/open): Public API catalog and developer console index
 
+## Sailor Studio for agents
+
+A project's whole look is one preset object (base design language + knobs). Agents
+set it; people review it in the browser; then it is pulled onto a project.
+
+1. Read the contract: [preset schema](${base}/studio/preset.schema.json)
+   (or \`nebutra studio schema\`, or the MCP tool \`studio_preset_schema\`).
+2. Write a preset and get the review link: \`nebutra studio preview '<json>' --from claude-code --json\`
+   (MCP: \`studio_preview\`). Ask the person to open the link; Studio shows it as
+   proposed by their agent.
+3. Once approved: \`nebutra studio pull <code>\` in a Sailor project (MCP: \`studio_pull\`),
+   or \`npx create-sailor@latest my-app --preset <code>\` for a new one.
+
+- [Sailor Studio](${base}/sailor/studio): the review surface
+
 ## Documentation (separate origin)
 
 - [Docs home](${docs}/)

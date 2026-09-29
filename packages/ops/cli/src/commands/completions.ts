@@ -30,6 +30,7 @@ const COMMAND_DESCRIPTIONS: Record<string, string> = {
   e2e: "Run browser E2E suites",
   theme: "Theme registry and governance metadata",
   apply: "Put a Sailor Studio preset on this project",
+  studio: "Sailor Studio for agents: preset schema, review link, pull",
   ai: "AI provider and gateway routing configuration",
   services: "Microservice management",
   secrets: "Encrypted secrets management",

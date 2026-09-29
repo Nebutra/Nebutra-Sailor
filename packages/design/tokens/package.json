@@ -59,6 +59,7 @@
     "emit-values": "node scripts/emit-values.mjs"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
     "@nebutra/design-tokens": "workspace:*",
     "@nebutra/fonts": "workspace:*"
   },
