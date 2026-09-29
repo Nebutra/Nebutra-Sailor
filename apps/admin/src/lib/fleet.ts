@@ -174,7 +174,7 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     pm2Name: "forge-dns-leak",
     runtime: "fly",
     health: null,
-    note: "Authoritative leak zone on the nebutra-dns-leak Machine (dedicated IPv4). No PORT env.",
+    note: "Authoritative leak zone embedded in the nebutra-forge Machine (dedicated IPv4, no longer its own nebutra-dns-leak app — merged 2026-09-29). No PORT env.",
   },
   {
     id: "@nebutra/admin",
@@ -196,10 +196,10 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     envKey: "SAILOR_DOCS",
     pm2Name: "sailor-docs",
     port: 3005,
-    runtime: "fly",
+    runtime: "cloudflare-worker",
     deployService: "sailor-docs",
     health: DEFAULT_HEALTH_PATH,
-    note: "Reached at <site>/docs via rewrite; the bundle has no host of its own. The Cloudflare Worker is the alternate path.",
+    note: "Reached at <site>/docs via rewrite; the bundle has no host of its own. Fly (nebutra-docs) retired 2026-09-29 — Cloudflare Worker is now the only path.",
   },
   {
     id: "@nebutra/design",

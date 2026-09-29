@@ -1,5 +1,10 @@
 export const TARGETS_BY_SURFACE = {
-  frontend: ["vercel", "standalone", "cloudflare-pages", "railway", "fly"],
+  // cloudflare-workers joined the list 2026-09-29: sailor-docs moved off Fly
+  // to an OpenNext-on-Workers deploy (deploy-sailor-docs.yml) — see
+  // docs/architecture/2026-09-29-fly-machine-shrink.md. The shared frontend
+  // default stays "fly"; this only makes "cloudflare-workers" a legal
+  // override for services that ship that way (sailor-docs today).
+  frontend: ["vercel", "standalone", "cloudflare-pages", "cloudflare-workers", "railway", "fly"],
   edgeGateway: [
     "cloudflare-workers",
     "vercel-functions",

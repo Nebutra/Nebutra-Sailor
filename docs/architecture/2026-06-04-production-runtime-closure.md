@@ -37,23 +37,26 @@ scaffold that wants Vercel selects it explicitly (`--deploy=vercel`):
 | `web` | `fly` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
 | `landing` | `fly` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
 | `design-docs` | `fly` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
-| `sailor-docs` | `fly` | `vercel`, `standalone`, `cloudflare-pages`, `railway`, `fly` |
+| `sailor-docs` | `cloudflare-workers` | `vercel`, `standalone`, `cloudflare-pages`, `cloudflare-workers`, `railway`, `fly` |
 | `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `gcp`, `railway`, `fly` |
 | `python-ai` | `fly` | `ecs-docker`, `k8s`, `aws`, `gcp`, `railway`, `fly` |
 
 Selector env keys are service-specific:
 
 ```env
-# Nebutra's own deployment (2026-09-22), which matches the preset defaults.
+# Nebutra's own deployment (2026-09-29 for sailor-docs; 2026-09-22 for the rest),
+# which matches the preset defaults.
 DEPLOY_TARGET_WEB=fly
 DEPLOY_TARGET_LANDING=fly
-DEPLOY_TARGET_SAILOR_DOCS=fly
+DEPLOY_TARGET_SAILOR_DOCS=cloudflare-workers
 DEPLOY_TARGET_GATEWAY=cloudflare-workers
 DEPLOY_TARGET_PYTHON_AI=fly
 ```
-# Note: cloudflare-pages remains allowed for create-sailor DX, but production
-# sailor-docs exceeds the Cloudflare Workers script size limit (~87MiB); the
-# Fly Machine (deploy-fly.yml app=sailor-docs) is the active path.
+# Note: cloudflare-pages remains allowed for create-sailor DX. sailor-docs
+# moved off Fly to Cloudflare Workers on 2026-09-29 (see
+# docs/architecture/2026-09-29-fly-machine-shrink.md) — `minify: true` in
+# wrangler.jsonc keeps the OpenNext bundle under the Workers script size
+# limit; the earlier note here (that it "exceeds" the limit) was stale.
 
 The governance rule is:
 

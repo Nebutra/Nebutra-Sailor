@@ -37,6 +37,12 @@ describe("deploy-target selector", () => {
     expect(resolveDeployTarget("web", { DEPLOY_TARGET_WEB: "railway" })).toBe("railway");
     expect(resolveDeployTarget("web", { DEPLOY_TARGET_WEB: "fly" })).toBe("fly");
     expect(resolveDeployTarget("forge", { DEPLOY_TARGET_FORGE: "fly" })).toBe("fly");
+    // sailor-docs moved off Fly to Cloudflare Workers 2026-09-29 — a frontend
+    // service, so it needed cloudflare-workers added to that surface's
+    // allowed targets (it previously only reached edgeGateway/originBackend).
+    expect(
+      resolveDeployTarget("sailor-docs", { DEPLOY_TARGET_SAILOR_DOCS: "cloudflare-workers" }),
+    ).toBe("cloudflare-workers");
     expect(resolveDeployTarget("gateway", { DEPLOY_TARGET_GATEWAY: "ecs-docker" })).toBe(
       "ecs-docker",
     );
@@ -73,6 +79,7 @@ describe("deploy-target selector", () => {
       "vercel",
       "standalone",
       "cloudflare-pages",
+      "cloudflare-workers",
       "railway",
       "fly",
     ]);
