@@ -21,7 +21,9 @@ export function StarterChrome({
   const chrome = pageAt(usePathname())?.chrome;
   if (chrome === "bare") return children;
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
+    // The nav is fixed over the page. Pages that start with a hero pad
+    // themselves; shared pages (the status page) read this to clear it.
+    <div className="flex min-h-dvh flex-col bg-background [--frame-overlay-top:4rem]">
       <StarterNav />
       {children}
       {chrome === "no-footer" ? null : <StarterFooter variant={footer} />}

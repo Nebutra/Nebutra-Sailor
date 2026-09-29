@@ -76,7 +76,10 @@ export function StateIcon({ state, className }: { state: ServiceState; className
 export function StatusShell({ checkedAt, children }: { checkedAt?: string; children: ReactNode }) {
   return (
     <div className="bg-background text-foreground">
-      <main id="main-content" className="px-4 pb-16 pt-8 sm:px-6">
+      <main
+        id="main-content"
+        className="px-4 pb-16 pt-[calc(var(--frame-overlay-top,0px)+2rem)] sm:px-6"
+      >
         <div className="mx-auto w-full max-w-[760px]">
           <StatusActions checkedAt={checkedAt} />
           {children}
