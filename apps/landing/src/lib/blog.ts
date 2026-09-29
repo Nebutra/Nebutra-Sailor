@@ -49,6 +49,19 @@ function normalizeFallbackPost(post: BlogPost, idx: number): BlogPostWithSource 
     description: post.excerpt,
     date: post.date,
     tags: [],
+    body:
+      post.body?.map((text, i) => {
+        const heading = text.startsWith("## ");
+        return {
+          _type: "block",
+          _key: `p${i}`,
+          style: heading ? "h2" : "normal",
+          markDefs: [],
+          children: [
+            { _type: "span", _key: `s${i}`, text: heading ? text.slice(3) : text, marks: [] },
+          ],
+        };
+      }) ?? null,
     source: "fallback",
   };
 }

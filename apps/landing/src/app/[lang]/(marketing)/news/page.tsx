@@ -94,6 +94,7 @@ function toFeaturedItem(post: BlogPostWithSource, lang: string, isZh: boolean): 
     category: getCategory(post),
     dateLabel: formatPostDate(post, isZh),
     excerpt: post.excerpt,
+    hasImage: cover.hasImage,
     imageUrl: cover.src,
     imageAlt: cover.alt,
     fallbackImageUrl: cover.fallbackSrc,
@@ -131,6 +132,7 @@ function toRailSlide(post: BlogPostWithSource, lang: string): NewsRailSlide {
     href: articleHref(lang, post.slug),
     title: post.title,
     category: getCategory(post),
+    hasImage: cover.hasImage,
     imageUrl: cover.src,
     imageAlt: cover.alt,
     fallbackImageUrl: cover.fallbackSrc,
@@ -157,7 +159,11 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
   const featured = posts[0] ? toFeaturedItem(posts[0], lang, isZh) : null;
   const rail = posts.slice(1, 5).map((post) => toRailItem(post, lang, isZh));
   const archive = posts.map((post) => toArchiveItem(post, lang, isZh));
-  const railSlides = posts.slice(0, 6).map((post) => toRailSlide(post, lang));
+  // The carousel shows covers; a post without a picture of its own has none to show.
+  const railSlides = posts
+    .slice(0, 6)
+    .map((post) => toRailSlide(post, lang))
+    .filter((slide) => slide.hasImage);
 
   return (
     <main id="main-content" className="flex-1 bg-background">

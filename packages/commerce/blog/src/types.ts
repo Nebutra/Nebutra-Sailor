@@ -184,6 +184,11 @@ export type ResolvedBlogCover = {
   fallbackSrc: string;
   src: string;
   source: BlogSource;
+  /**
+   * Whether the post has a picture of its own. A sample post does not, and
+   * its card shows no image area at all rather than a stand-in.
+   */
+  hasImage: boolean;
 };
 
 export type BlogTocItem = {

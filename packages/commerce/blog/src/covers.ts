@@ -25,9 +25,10 @@ export const DEFAULT_BLOG_COVER = landingCoverSrc(
 );
 
 /**
- * The cover of a sample post (source "fallback": the site has no CMS yet).
- * The site's own generated brand card (app/opengraph-image), because a new
- * project's asset bucket holds no cover images.
+ * What a sample post (source "fallback": the site has no CMS yet) shares
+ * as its link preview: the site's own brand card (app/opengraph-image). It is
+ * never drawn as the post's cover — `hasImage` is false, and cards show no
+ * image area. A stand-in picture reads as a mock.
  */
 export const SAMPLE_POST_COVER = "/opengraph-image";
 
@@ -110,5 +111,6 @@ export function resolveBlogCover(
     fallbackSrc: fallback.src,
     src,
     source: hasPrimary ? "sanity" : "fallback",
+    hasImage: hasPrimary || post.source !== "fallback",
   };
 }

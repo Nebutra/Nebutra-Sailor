@@ -100,6 +100,7 @@ function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean):
     readTime: estimateReadTime(post, isZh),
     authorName: getAuthorName(post.author),
     authorAvatarUrl: getAuthorAvatarUrl(post.author),
+    hasImage: cover.hasImage,
     imageUrl: cover.src,
     imageAlt: cover.alt,
     fallbackImageUrl: cover.fallbackSrc,
