@@ -160,6 +160,33 @@ jobs:
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
 
+      # Warm-up: right after `wrangler deploy` returns, the new static-assets
+      # version can still be propagating across Cloudflare's edge, and the
+      # first requests can 503 for a handful of seconds even though the
+      # deploy itself is fine — that's what failed run 36548179031, seconds
+      # before the same URL was serving 200s. Poll until the first 200 (or
+      # ~60s) before running the real hard gate below. A timeout here is
+      # informational only — it never fails the job — because the hard gate
+      # immediately after it makes its own 5x-per-path requirement of every
+      # path; this step exists only to absorb ordinary propagation lag so
+      # that gate isn't the one measuring it.
+      - name: Warm up static assets
+        run: |
+          set -uo pipefail
+          worker_base="https://nebutra-sailor-docs.omichiliriku.workers.dev"
+          url="${worker_base}/docs"
+          deadline=$((SECONDS + 60))
+          while [ "$SECONDS" -lt "$deadline" ]; do
+            code=$(curl -sS -L -o /dev/null -w '%{http_code}' --max-time 10 "$url" || echo 000)
+            echo "$url -> $code ($(( deadline - SECONDS ))s left)"
+            if [ "$code" = "200" ]; then
+              echo "Warm - proceeding to hard gate."
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::warning::Warm-up did not see a 200 within 60s - proceeding to the hard gate, which will fail the job if this isn't transient propagation."
+
       # Hard gate on the deploy itself (workers_dev, no route bound — see
       # wrangler.jsonc), not on nebutra.com/docs: landing's proxy still points
       # DOCS_UPSTREAM_ORIGIN at the Fly app until the cutover, so nebutra.com/docs
