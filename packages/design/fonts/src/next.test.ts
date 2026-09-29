@@ -13,7 +13,13 @@ const faces = [
   ...SOURCE.matchAll(
     /const (\w+) = localFont\(\{\s*src: \[\s*\{\s*path: "([^"]+)",\s*weight: "(\d+ \d+)",\s*style: "normal",\s*\},\s*\],\s*display: "swap",\s*(?:adjustFontFallback: "Times New Roman",\s*)?declarations: \[\{ prop: "font-family", value: "'([^']+)'" \}\],\s*(?:adjustFontFallback: "Times New Roman",\s*)?variable: "(--font-[\w-]+)",/g,
   ),
-].map(([, name, path, weight, family, variable]) => ({ name, path, weight, family, variable }));
+].map(([, name = "", path = "", weight = "", family = "", variable = ""]) => ({
+  name,
+  path,
+  weight,
+  family,
+  variable,
+}));
 
 describe("registry faces (@nebutra/fonts/next)", () => {
   it("never fetches from Google at build or dev time", () => {
