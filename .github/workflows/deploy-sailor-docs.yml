@@ -1,13 +1,12 @@
 name: Deploy Sailor Docs
 
-# Alternate deploy for apps/sailor-docs (served at <site>/docs).
+# Deploy for apps/sailor-docs (served at <site>/docs).
 #
-# Production is the Fly Machine (deploy-fly.yml, app=sailor-docs). This
-# workflow keeps the Cloudflare Workers path: OpenNext → Worker + Assets
-# (same pattern as typelens), gated by vars.DEPLOY_TARGET_SAILOR_DOCS:
-#   cloudflare-workers | cloudflare-pages → Cloudflare job
-#   anything else (or unset) → no push deploy; the Fly path owns production
-# workflow_dispatch always runs the Cloudflare job.
+# Cloudflare Workers is now the only deploy path: OpenNext → Worker + Assets
+# (same pattern as typelens). nebutra-docs (Fly) was retired 2026-09-29 to
+# free a machine slot under the org's 20-machine cap — see
+# docs/architecture/2026-09-29-fly-machine-shrink.md. Runs on every push to
+# main that touches a trigger path below, and always on workflow_dispatch.
 #
 # The Vercel path was retired on 2026-09-22 with the rest of the Vercel
 # deploy surface; its quota notes live in git history.
@@ -53,12 +52,6 @@ jobs:
     name: Deploy Cloudflare Worker
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' && (
-        vars.DEPLOY_TARGET_SAILOR_DOCS == 'cloudflare-pages' ||
-        vars.DEPLOY_TARGET_SAILOR_DOCS == 'cloudflare-workers'
-      ))
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
@@ -117,7 +110,7 @@ jobs:
             echo "::error::Cloudflare token cannot deploy Workers (often error 10000 — missing Workers Scripts Edit)."
             echo "::error::Fix: docs/ops/cloudflare-ci-token.md — create token from Edit Cloudflare Workers template, then:"
             echo "::error::  printf '%s' \"\$NEW_TOKEN\" | gh secret set CLOUDFLARE_API_TOKEN -R Nebutra/Nebutra-Sailor"
-            echo "::error::Temporary path: production is already served by the Fly Machine (deploy-fly.yml app=sailor-docs); this workflow can be re-run after the token is fixed."
+            echo "::error::This is now the only deploy path for docs (Fly retired 2026-09-29) — fix the token, then re-run this workflow."
             exit 1
           fi
 
