@@ -571,8 +571,13 @@ const NEGATED = [
   /\bbuild artifact\b/i,
   /\bdeprecated\b/i,
   /\bauto-generated\b/i,
-  /\b请勿/,
-  /\b不要/,
+  // No \b before CJK: \b is an ASCII word boundary and never matches before
+  // a Chinese character, which silently disabled these two until 2026-09-29.
+  /请勿/,
+  /不要/,
+  /切勿/,
+  /生成的/,
+  /构建产物/,
 ];
 
 describe("generated files are never presented as editable", () => {
@@ -807,16 +812,9 @@ describe("governed docs — banned recommendations", () => {
  * exist and whose replacement is a product call, never a claim someone could
  * simply correct.
  */
-const MISSING_PACKAGE_ALLOWLIST: readonly string[] = [
-  "@nebutra/integrations @ apps/sailor-docs/content/docs/en/integrations/overview.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/en/guides/error-handling.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/zh/guides/error-handling.mdx",
-];
+const MISSING_PACKAGE_ALLOWLIST: readonly string[] = [];
 
-const UNRESOLVED_SUBPATH_ALLOWLIST: readonly string[] = [
-  "@nebutra/billing/react @ apps/sailor-docs/content/docs/en/payments/paywall.mdx",
-  "@nebutra/billing/react @ apps/sailor-docs/content/docs/zh/payments/paywall.mdx",
-];
+const UNRESOLVED_SUBPATH_ALLOWLIST: readonly string[] = [];
 
 /**
  * Applies a shrink-only allowlist to a set of observed offenders.
