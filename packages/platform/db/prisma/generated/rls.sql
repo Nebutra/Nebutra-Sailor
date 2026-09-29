@@ -591,6 +591,9 @@ ALTER TABLE "public"."pebble_feedback" DISABLE ROW LEVEL SECURITY;
 -- PlatformStaff
 ALTER TABLE "public"."platform_staff" ENABLE ROW LEVEL SECURITY;
 
+-- StudioPreset
+ALTER TABLE "public"."studio_presets" ENABLE ROW LEVEL SECURITY;
+
 -- The second helper from before convergence; nothing references it once
 -- the stale policies above are gone.
 DROP FUNCTION IF EXISTS public.current_org_id();

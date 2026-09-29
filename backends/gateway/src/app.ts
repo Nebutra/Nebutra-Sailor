@@ -84,6 +84,7 @@ import { paraRoutes } from "./routes/para/index.js";
 import { mountProductRoutes } from "./routes/product-routes.js";
 import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
+import { studioPresetRoutes } from "./routes/studio/presets.js";
 import { statusRoutes } from "./routes/system/status.js";
 import { taskRoutes } from "./routes/tasks/index.js";
 import { uploadRoutes } from "./routes/uploads/index.js";
@@ -310,6 +311,7 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
   // skip list). /api/v1/legal/* and /api/v1/events/* are intentionally NOT in
   // the skip list so they receive full rate limiting.
   app.route("/api/v1/legal", consentRoutes);
+  app.route("/api/v1/studio", studioPresetRoutes);
   app.route("/api/v1/events", eventRoutes);
   app.route("/api/v1/agents", agentRoutes);
   app.route("/api/v1/workflows", workflowRoutes);

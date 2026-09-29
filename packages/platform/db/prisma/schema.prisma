@@ -359,6 +359,7 @@ model User {
   threads             Thread[]
   tenant              Tenant?
   platformStaff       PlatformStaff?
+  studioPresets       StudioPreset[]
 
   @@map("users")
   @@schema("public")
@@ -3252,5 +3253,28 @@ model PlatformStaff {
 
   @@index([role, revokedAt])
   @@map("platform_staff")
+  @@schema("public")
+}
+
+/// A Sailor Studio look saved to a person's account: what their agent proposed
+/// (`nebutra studio preview` while logged in) or what they saved in Studio, so
+/// either side can open the other's latest without copying links. The code is
+/// the whole preset (@nebutra/tokens/preset). Personal, not tenant data: the
+/// gateway reaches it through the system client and filters on the caller.
+/// @rls deny
+model StudioPreset {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  name      String
+  code      String
+  /// Who proposed it: "web" for Studio itself, or an agent's name.
+  source    String   @default("web")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, updatedAt])
+  @@map("studio_presets")
   @@schema("public")
 }

@@ -2007,6 +2007,9 @@ importers:
       '@nebutra/tenant':
         specifier: workspace:*
         version: link:../../packages/iam/tenant
+      '@nebutra/tokens':
+        specifier: workspace:*
+        version: link:../../packages/design/tokens
       '@nebutra/uploads':
         specifier: workspace:*
         version: link:../../packages/integrations/uploads

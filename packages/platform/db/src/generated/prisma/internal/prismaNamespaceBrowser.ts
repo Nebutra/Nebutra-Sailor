@@ -150,7 +150,8 @@ export const ModelName = {
   AgentRolloutLine: 'AgentRolloutLine',
   PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
   PebbleFeedback: 'PebbleFeedback',
-  PlatformStaff: 'PlatformStaff'
+  PlatformStaff: 'PlatformStaff',
+  StudioPreset: 'StudioPreset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1876,6 +1877,19 @@ export const PlatformStaffScalarFieldEnum = {
 } as const
 
 export type PlatformStaffScalarFieldEnum = (typeof PlatformStaffScalarFieldEnum)[keyof typeof PlatformStaffScalarFieldEnum]
+
+
+export const StudioPresetScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  code: 'code',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudioPresetScalarFieldEnum = (typeof StudioPresetScalarFieldEnum)[keyof typeof StudioPresetScalarFieldEnum]
 
 
 export const SortOrder = {

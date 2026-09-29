@@ -205,6 +205,7 @@ export type UserWhereInput = {
   threads?: Prisma.ThreadListRelationFilter
   tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
   platformStaff?: Prisma.XOR<Prisma.PlatformStaffNullableScalarRelationFilter, Prisma.PlatformStaffWhereInput> | null
+  studioPresets?: Prisma.StudioPresetListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -222,6 +223,7 @@ export type UserOrderByWithRelationInput = {
   threads?: Prisma.ThreadOrderByRelationAggregateInput
   tenant?: Prisma.TenantOrderByWithRelationInput
   platformStaff?: Prisma.PlatformStaffOrderByWithRelationInput
+  studioPresets?: Prisma.StudioPresetOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -242,6 +244,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   threads?: Prisma.ThreadListRelationFilter
   tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
   platformStaff?: Prisma.XOR<Prisma.PlatformStaffNullableScalarRelationFilter, Prisma.PlatformStaffWhereInput> | null
+  studioPresets?: Prisma.StudioPresetListRelationFilter
 }, "id" | "clerkId" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -285,6 +288,7 @@ export type UserCreateInput = {
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -302,6 +306,7 @@ export type UserUncheckedCreateInput = {
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffUncheckedCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -319,6 +324,7 @@ export type UserUpdateInput = {
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -336,6 +342,7 @@ export type UserUncheckedUpdateInput = {
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUncheckedUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -508,6 +515,20 @@ export type UserUpdateOneRequiredWithoutPlatformStaffNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPlatformStaffInput, Prisma.UserUpdateWithoutPlatformStaffInput>, Prisma.UserUncheckedUpdateWithoutPlatformStaffInput>
 }
 
+export type UserCreateNestedOneWithoutStudioPresetsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStudioPresetsInput, Prisma.UserUncheckedCreateWithoutStudioPresetsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudioPresetsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutStudioPresetsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStudioPresetsInput, Prisma.UserUncheckedCreateWithoutStudioPresetsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudioPresetsInput
+  upsert?: Prisma.UserUpsertWithoutStudioPresetsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudioPresetsInput, Prisma.UserUpdateWithoutStudioPresetsInput>, Prisma.UserUncheckedUpdateWithoutStudioPresetsInput>
+}
+
 export type UserCreateWithoutTenantInput = {
   id?: string
   clerkId?: string | null
@@ -522,6 +543,7 @@ export type UserCreateWithoutTenantInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
   platformStaff?: Prisma.PlatformStaffCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTenantInput = {
@@ -538,6 +560,7 @@ export type UserUncheckedCreateWithoutTenantInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
   platformStaff?: Prisma.PlatformStaffUncheckedCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTenantInput = {
@@ -570,6 +593,7 @@ export type UserUpdateWithoutTenantInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTenantInput = {
@@ -586,6 +610,7 @@ export type UserUncheckedUpdateWithoutTenantInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUncheckedUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrganizationsInput = {
@@ -602,6 +627,7 @@ export type UserCreateWithoutOrganizationsInput = {
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationsInput = {
@@ -618,6 +644,7 @@ export type UserUncheckedCreateWithoutOrganizationsInput = {
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffUncheckedCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationsInput = {
@@ -650,6 +677,7 @@ export type UserUpdateWithoutOrganizationsInput = {
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationsInput = {
@@ -666,6 +694,7 @@ export type UserUncheckedUpdateWithoutOrganizationsInput = {
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUncheckedUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutContentsInput = {
@@ -682,6 +711,7 @@ export type UserCreateWithoutContentsInput = {
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutContentsInput = {
@@ -698,6 +728,7 @@ export type UserUncheckedCreateWithoutContentsInput = {
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffUncheckedCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutContentsInput = {
@@ -730,6 +761,7 @@ export type UserUpdateWithoutContentsInput = {
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutContentsInput = {
@@ -746,6 +778,7 @@ export type UserUncheckedUpdateWithoutContentsInput = {
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUncheckedUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -762,6 +795,7 @@ export type UserCreateWithoutOrdersInput = {
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -778,6 +812,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffUncheckedCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -810,6 +845,7 @@ export type UserUpdateWithoutOrdersInput = {
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -826,6 +862,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUncheckedUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOauthAuthorizationsInput = {
@@ -842,6 +879,7 @@ export type UserCreateWithoutOauthAuthorizationsInput = {
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOauthAuthorizationsInput = {
@@ -858,6 +896,7 @@ export type UserUncheckedCreateWithoutOauthAuthorizationsInput = {
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffUncheckedCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOauthAuthorizationsInput = {
@@ -890,6 +929,7 @@ export type UserUpdateWithoutOauthAuthorizationsInput = {
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOauthAuthorizationsInput = {
@@ -906,6 +946,7 @@ export type UserUncheckedUpdateWithoutOauthAuthorizationsInput = {
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUncheckedUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutThreadsInput = {
@@ -922,6 +963,7 @@ export type UserCreateWithoutThreadsInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutThreadsInput = {
@@ -938,6 +980,7 @@ export type UserUncheckedCreateWithoutThreadsInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
   platformStaff?: Prisma.PlatformStaffUncheckedCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutThreadsInput = {
@@ -970,6 +1013,7 @@ export type UserUpdateWithoutThreadsInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutThreadsInput = {
@@ -986,6 +1030,7 @@ export type UserUncheckedUpdateWithoutThreadsInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
   platformStaff?: Prisma.PlatformStaffUncheckedUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlatformStaffInput = {
@@ -1002,6 +1047,7 @@ export type UserCreateWithoutPlatformStaffInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlatformStaffInput = {
@@ -1018,6 +1064,7 @@ export type UserUncheckedCreateWithoutPlatformStaffInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
   tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
+  studioPresets?: Prisma.StudioPresetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlatformStaffInput = {
@@ -1050,6 +1097,7 @@ export type UserUpdateWithoutPlatformStaffInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlatformStaffInput = {
@@ -1066,6 +1114,91 @@ export type UserUncheckedUpdateWithoutPlatformStaffInput = {
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
   tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
+  studioPresets?: Prisma.StudioPresetUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutStudioPresetsInput = {
+  id?: string
+  clerkId?: string | null
+  email?: string | null
+  name?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  contents?: Prisma.ContentCreateNestedManyWithoutAuthorInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
+  platformStaff?: Prisma.PlatformStaffCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutStudioPresetsInput = {
+  id?: string
+  clerkId?: string | null
+  email?: string | null
+  name?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutAuthorInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
+  platformStaff?: Prisma.PlatformStaffUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutStudioPresetsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutStudioPresetsInput, Prisma.UserUncheckedCreateWithoutStudioPresetsInput>
+}
+
+export type UserUpsertWithoutStudioPresetsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStudioPresetsInput, Prisma.UserUncheckedUpdateWithoutStudioPresetsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStudioPresetsInput, Prisma.UserUncheckedCreateWithoutStudioPresetsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutStudioPresetsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStudioPresetsInput, Prisma.UserUncheckedUpdateWithoutStudioPresetsInput>
+}
+
+export type UserUpdateWithoutStudioPresetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutAuthorNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
+  platformStaff?: Prisma.PlatformStaffUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutStudioPresetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutAuthorNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
+  platformStaff?: Prisma.PlatformStaffUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -1079,6 +1212,7 @@ export type UserCountOutputType = {
   orders: number
   oauthAuthorizations: number
   threads: number
+  studioPresets: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1087,6 +1221,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   orders?: boolean | UserCountOutputTypeCountOrdersArgs
   oauthAuthorizations?: boolean | UserCountOutputTypeCountOauthAuthorizationsArgs
   threads?: boolean | UserCountOutputTypeCountThreadsArgs
+  studioPresets?: boolean | UserCountOutputTypeCountStudioPresetsArgs
 }
 
 /**
@@ -1134,6 +1269,13 @@ export type UserCountOutputTypeCountThreadsArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.ThreadWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStudioPresetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StudioPresetWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1150,6 +1292,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   threads?: boolean | Prisma.User$threadsArgs<ExtArgs>
   tenant?: boolean | Prisma.User$tenantArgs<ExtArgs>
   platformStaff?: boolean | Prisma.User$platformStaffArgs<ExtArgs>
+  studioPresets?: boolean | Prisma.User$studioPresetsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1192,6 +1335,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   threads?: boolean | Prisma.User$threadsArgs<ExtArgs>
   tenant?: boolean | Prisma.User$tenantArgs<ExtArgs>
   platformStaff?: boolean | Prisma.User$platformStaffArgs<ExtArgs>
+  studioPresets?: boolean | Prisma.User$studioPresetsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1207,6 +1351,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     threads: Prisma.$ThreadPayload<ExtArgs>[]
     tenant: Prisma.$TenantPayload<ExtArgs> | null
     platformStaff: Prisma.$PlatformStaffPayload<ExtArgs> | null
+    studioPresets: Prisma.$StudioPresetPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1617,6 +1762,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   threads<T extends Prisma.User$threadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$threadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tenant<T extends Prisma.User$tenantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tenantArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   platformStaff<T extends Prisma.User$platformStaffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$platformStaffArgs<ExtArgs>>): Prisma.Prisma__PlatformStaffClient<runtime.Types.Result.GetResult<Prisma.$PlatformStaffPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  studioPresets<T extends Prisma.User$studioPresetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studioPresetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudioPresetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2196,6 +2342,30 @@ export type User$platformStaffArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   include?: Prisma.PlatformStaffInclude<ExtArgs> | null
   where?: Prisma.PlatformStaffWhereInput
+}
+
+/**
+ * User.studioPresets
+ */
+export type User$studioPresetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudioPreset
+   */
+  select?: Prisma.StudioPresetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudioPreset
+   */
+  omit?: Prisma.StudioPresetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudioPresetInclude<ExtArgs> | null
+  where?: Prisma.StudioPresetWhereInput
+  orderBy?: Prisma.StudioPresetOrderByWithRelationInput | Prisma.StudioPresetOrderByWithRelationInput[]
+  cursor?: Prisma.StudioPresetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudioPresetScalarFieldEnum | Prisma.StudioPresetScalarFieldEnum[]
 }
 
 /**

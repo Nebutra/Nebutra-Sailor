@@ -483,7 +483,8 @@ export const ModelName = {
   AgentRolloutLine: 'AgentRolloutLine',
   PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
   PebbleFeedback: 'PebbleFeedback',
-  PlatformStaff: 'PlatformStaff'
+  PlatformStaff: 'PlatformStaff',
+  StudioPreset: 'StudioPreset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -499,7 +500,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff" | "studioPreset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -7887,6 +7888,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StudioPreset: {
+      payload: Prisma.$StudioPresetPayload<ExtArgs>
+      fields: Prisma.StudioPresetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StudioPresetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StudioPresetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>
+        }
+        findFirst: {
+          args: Prisma.StudioPresetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StudioPresetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>
+        }
+        findMany: {
+          args: Prisma.StudioPresetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>[]
+        }
+        create: {
+          args: Prisma.StudioPresetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>
+        }
+        createMany: {
+          args: Prisma.StudioPresetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StudioPresetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>[]
+        }
+        delete: {
+          args: Prisma.StudioPresetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>
+        }
+        update: {
+          args: Prisma.StudioPresetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>
+        }
+        deleteMany: {
+          args: Prisma.StudioPresetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StudioPresetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StudioPresetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>[]
+        }
+        upsert: {
+          args: Prisma.StudioPresetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudioPresetPayload>
+        }
+        aggregate: {
+          args: Prisma.StudioPresetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStudioPreset>
+        }
+        groupBy: {
+          args: Prisma.StudioPresetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudioPresetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StudioPresetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudioPresetCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -9635,6 +9710,19 @@ export const PlatformStaffScalarFieldEnum = {
 export type PlatformStaffScalarFieldEnum = (typeof PlatformStaffScalarFieldEnum)[keyof typeof PlatformStaffScalarFieldEnum]
 
 
+export const StudioPresetScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  code: 'code',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudioPresetScalarFieldEnum = (typeof StudioPresetScalarFieldEnum)[keyof typeof StudioPresetScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -10688,6 +10776,7 @@ export type GlobalOmitConfig = {
   pebbleDiagnosticTicket?: Prisma.PebbleDiagnosticTicketOmit
   pebbleFeedback?: Prisma.PebbleFeedbackOmit
   platformStaff?: Prisma.PlatformStaffOmit
+  studioPreset?: Prisma.StudioPresetOmit
 }
 
 /* Types for Logging */
