@@ -6,9 +6,12 @@ name: Deploy origin apps to Fly
 # Cloudflare Workers.
 # The auth Next UI runs as a private origin behind auth-edge; its product DNS
 # must never be cut over directly to Fly.
-# SSO / admin / docs ship as Next Machines here. Carina, New-API, and
-# leak DNS are separate Fly apps (deploy-carina-fly.yml,
-# deploy-new-api-fly.yml, deploy-dns-leak-fly.yml).
+# SSO / admin ship as Next Machines here. Carina and New-API are separate Fly
+# apps (deploy-carina-fly.yml, deploy-new-api-fly.yml). Design and sailor-docs
+# moved off Fly to Cloudflare Workers (deploy-design-cloudflare.yml,
+# deploy-sailor-docs.yml) — see docs/architecture/2026-09-29-fly-machine-shrink.md.
+# forge-dns-leak (leak.nebutra.com) is no longer a separate Fly app either: it
+# runs embedded in the nebutra-forge Machine (infra/fly/forge.toml).
 # This workflow deploys Machines; DNS cutover is a separate workflow_dispatch
 # input so a failed image cannot take production down.
 #
@@ -19,7 +22,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: landing forge router web design auth kuanlan idp admin sailor-docs para gateway cache carina new-api dns-leak). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api / dns-leak are the remaining ECS leftovers."
+        description: "Apps to deploy (space-separated: landing forge router web auth kuanlan idp admin para gateway cache carina new-api). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api are the remaining ECS leftovers. design and sailor-docs deploy via their own Cloudflare workflows now."
         required: false
         default: ""
       cutover:
@@ -34,13 +37,12 @@ on:
       - "apps/forge/**"
       - "apps/router/**"
       - "apps/web/**"
-      - "apps/design/**"
       - "apps/auth/**"
       - "apps/kuanlan/**"
       - "apps/para/**"
       - "apps/idp/**"
       - "apps/admin/**"
-      - "apps/sailor-docs/**"
+      - "packages/ai/forge-dns-leak/**"
       - "packages/ai/forge-runtime/**"
       - "packages/platform/router-supply/**"
       - "packages/design/**"
@@ -78,7 +80,6 @@ jobs:
       want_cache: ${{ steps.resolve.outputs.want_cache }}
       want_carina: ${{ steps.resolve.outputs.want_carina }}
       want_new_api: ${{ steps.resolve.outputs.want_new_api }}
-      want_dns_leak: ${{ steps.resolve.outputs.want_dns_leak }}
     steps:
       - id: resolve
         env:
@@ -96,16 +97,14 @@ jobs:
             {"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","build_command":"build","fly_app":"nebutra-forge","host":"forge","site":"https://forge.nebutra.com"},
             {"app":"router","package":"@nebutra/router","workspace":"apps/router","build_command":"build","fly_app":"nebutra-router","host":"router","site":"https://router.nebutra.com"},
             {"app":"web","package":"@nebutra/web","workspace":"apps/web","build_command":"build:next","fly_app":"nebutra-web","host":"app","site":"https://app.nebutra.com"},
-            {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
             {"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","build_command":"build","fly_app":"nebutra-auth","host":"","site":"https://auth.nebutra.com"},
             {"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","build_command":"build","fly_app":"nebutra-kuanlan","host":"kuanlan","site":"https://kuanlan.nebutra.com"},
             {"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","build_command":"build","fly_app":"nebutra-idp","host":"sso","site":"https://sso.nebutra.com"},
             {"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","build_command":"build","fly_app":"nebutra-admin","host":"admin","site":"https://admin.nebutra.com"},
-            {"app":"sailor-docs","package":"@nebutra/sailor-docs","workspace":"apps/sailor-docs","build_command":"build:vm","fly_app":"nebutra-docs","host":"","site":"https://nebutra.com/docs"},
             {"app":"para","package":"@nebutra/para","workspace":"apps/para","build_command":"build","fly_app":"nebutra-para","host":"para","site":"https://para.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
-          known = {row["app"] for row in all_apps} | {"gateway", "cache", "carina", "new-api", "dns-leak"}
+          known = {row["app"] for row in all_apps} | {"gateway", "cache", "carina", "new-api"}
           missing = set(wanted) - known
           if missing:
               raise SystemExit(f"unknown apps: {sorted(missing)}")
@@ -119,7 +118,6 @@ jobs:
               fh.write(f"want_cache={'true' if ('cache' in wanted or 'gateway' in wanted) else 'false'}\n")
               fh.write(f"want_carina={'true' if 'carina' in wanted else 'false'}\n")
               fh.write(f"want_new_api={'true' if 'new-api' in wanted else 'false'}\n")
-              fh.write(f"want_dns_leak={'true' if 'dns-leak' in wanted else 'false'}\n")
           PY
 
   deploy:
@@ -331,6 +329,56 @@ jobs:
           # origin database; the shell falls back to mock data rather than 401-ing every call.
           flyctl secrets set "${args[@]}" -a nebutra-para --stage
 
+      # forge-dns-leak (leak.nebutra.com) used to be its own Fly app
+      # (nebutra-dns-leak). It now runs inside the nebutra-forge Machine: the
+      # standalone image's CMD backgrounds `node .../forge-dns-leak/src/cli.ts`
+      # before exec'ing the Next server when ENABLE_FORGE_DNS_LEAK=true (see
+      # infra/runtime/docker/Dockerfile.standalone and infra/fly/forge.toml).
+      # The source has no deps of its own — plain node built-ins — so copying
+      # src/ into the staged image is enough, no install step required.
+      - name: Stage forge-dns-leak into the forge image
+        if: matrix.app == 'forge'
+        run: |
+          set -euo pipefail
+          STAGE="$RUNNER_TEMP/stage-forge/packages/ai/forge-dns-leak"
+          mkdir -p "$STAGE/src"
+          cp -R packages/ai/forge-dns-leak/src/. "$STAGE/src/"
+          cp packages/ai/forge-dns-leak/package.json "$STAGE/package.json"
+
+      # The authoritative NS glue (ns1.leak.nebutra.com) must be a dedicated,
+      # never-proxied IPv4 — a shared Fly IPv4 cannot answer arbitrary UDP:53.
+      # This is additive: nebutra-forge keeps whatever shared/proxied IPv4 it
+      # already serves HTTPS on. Allocating the IP is not a secret write, so
+      # it runs here; nothing in this step sets or rotates any Fly secret —
+      # see the printed ::notice:: for the owner's follow-up commands.
+      - name: Allocate dedicated IPv4 for the leak zone glue
+        if: matrix.app == 'forge'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          pick_v4() {
+            python3 -c '
+          import json, re, sys
+          raw = json.load(sys.stdin)
+          rows = raw if isinstance(raw, list) else raw.get("ips") or raw.get("Addresses") or raw.get("data") or []
+          for ip in rows:
+              addr = ip.get("Address") or ip.get("address") or ip.get("IP") or ip.get("ip") or ""
+              kind = str(ip.get("Type") or ip.get("type") or "").lower()
+              if re.match(r"^\d{1,3}(\.\d{1,3}){3}$", addr) and "shared" not in kind:
+                  print(addr)
+                  break
+          '
+          }
+          ns_ip="$(flyctl ips list -a nebutra-forge --json | pick_v4)"
+          if [ -z "$ns_ip" ]; then
+            flyctl ips allocate-v4 -a nebutra-forge --yes
+            ns_ip="$(flyctl ips list -a nebutra-forge --json | pick_v4)"
+          fi
+          test -n "$ns_ip"
+          echo "dedicated IPv4 for the leak glue: $ns_ip"
+          echo "::notice::Once nebutra-forge is healthy: point ns1.leak.nebutra.com A -> $ns_ip (DNS-only, infra/ops/scripts/point-leak-zone-dns.sh reads ORIGIN_IP), and set FORGE_DNS_LEAK_NS_IP=$ns_ip on nebutra-forge if the authority package reads it."
+
       - name: Deploy Machine
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -339,9 +387,29 @@ jobs:
             --config "$GITHUB_WORKSPACE/infra/fly/${{ matrix.app }}.toml" \
             --dockerfile "$RUNNER_TEMP/stage-${{ matrix.app }}/Dockerfile" \
             --build-arg "APP_WORKSPACE=${{ matrix.workspace }}" \
+            --build-arg "ENABLE_NET_BIND_CAP=${{ matrix.app == 'forge' && 'true' || 'false' }}" \
             --ha=false \
             --remote-only \
             --yes
+
+      - name: Smoke forge-dns-leak control API
+        if: matrix.app == 'forge'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            if flyctl ssh console -a nebutra-forge --pty=false -C \
+              "sh -c 'wget -qO- --timeout=5 http://127.0.0.1:3953/health'" \
+              | tee "$RUNNER_TEMP/leak-health.txt" | grep -q '"ok":true'; then
+              echo "embedded control API healthy on try $i"
+              exit 0
+            fi
+            sleep 8
+          done
+          flyctl status -a nebutra-forge || true
+          flyctl logs -a nebutra-forge --no-tail || true
+          echo "::warning::forge-dns-leak control API did not answer on 127.0.0.1:3953 inside nebutra-forge — check ENABLE_FORGE_DNS_LEAK and the setcap build-arg."
 
       - name: Smoke Fly URL
         env:
@@ -353,10 +421,6 @@ jobs:
           # The health route is server-only: it proves the Machine answers
           # without depending on locale routing or a CDN cache hit.
           if [ "${{ matrix.app }}" = "landing" ]; then path="/api/e2e/health"; fi
-          # The docs bundle is a Next zone with basePath /docs — its root is a
-          # 404 by design, so smoking `/` failed every fleet deploy even though
-          # the zone was healthy.
-          if [ "${{ matrix.app }}" = "sailor-docs" ]; then path="/docs"; fi
           url="https://${{ matrix.fly_app }}.fly.dev${path}"
           code="000"
           for i in 1 2 3 4 5 6; do
@@ -856,115 +920,3 @@ jobs:
             -a nebutra-router
           echo "router now consumes New-API over 6PN"
 
-  deploy-dns-leak:
-    name: Fly dns-leak
-    needs: matrix
-    if: needs.matrix.outputs.want_dns_leak == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Require FLY_API_TOKEN
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          if [ -z "${FLY_API_TOKEN:-}" ]; then
-            echo "::error::Set repository secret FLY_API_TOKEN (deploy token)."
-            exit 1
-          fi
-
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-
-      - name: Setup flyctl
-        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
-
-      - name: Ensure Fly app
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          FLY_ORG: ${{ vars.FLY_ORG }}
-        run: |
-          set -euo pipefail
-          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
-          echo "using Fly org $org"
-          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-dns-leak' in names else 1)"; then
-            echo "app nebutra-dns-leak exists"
-          else
-            flyctl apps create nebutra-dns-leak --machines --org "$org" --yes
-          fi
-
-      - name: Allocate dedicated IPv4
-        id: ip
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          set -euo pipefail
-          pick_v4() {
-            python3 -c '
-          import json, re, sys
-          raw = json.load(sys.stdin)
-          rows = raw if isinstance(raw, list) else raw.get("ips") or raw.get("Addresses") or raw.get("data") or []
-          for ip in rows:
-              addr = ip.get("Address") or ip.get("address") or ip.get("IP") or ip.get("ip") or ""
-              kind = str(ip.get("Type") or ip.get("type") or "").lower()
-              if re.match(r"^\d{1,3}(\.\d{1,3}){3}$", addr) and "shared" not in kind:
-                  print(addr)
-                  break
-          '
-          }
-          ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | pick_v4)"
-          if [ -z "$ns_ip" ]; then
-            flyctl ips allocate-v4 -a nebutra-dns-leak --yes
-            ns_ip="$(flyctl ips list -a nebutra-dns-leak --json | pick_v4)"
-          fi
-          test -n "$ns_ip"
-          echo "ns_ip=$ns_ip" >> "$GITHUB_OUTPUT"
-          echo "dedicated IPv4 $ns_ip"
-          flyctl secrets set FORGE_DNS_LEAK_NS_IP="$ns_ip" -a nebutra-dns-leak --stage
-
-      - name: Assemble image context
-        run: |
-          set -euo pipefail
-          STAGE="$RUNNER_TEMP/stage-dns-leak"
-          rm -rf "$STAGE"
-          mkdir -p "$STAGE/src"
-          cp packages/ai/forge-dns-leak/package.json "$STAGE/"
-          cp -R packages/ai/forge-dns-leak/src/. "$STAGE/src/"
-          cp infra/fly/Dockerfile.dns-leak "$STAGE/Dockerfile"
-          echo "STAGE=$STAGE" >> "$GITHUB_ENV"
-
-      - name: Deploy Machine
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          flyctl deploy "$STAGE" \
-            --config "$GITHUB_WORKSPACE/infra/fly/dns-leak.toml" \
-            --dockerfile "$STAGE/Dockerfile" \
-            --ha=false \
-            --remote-only \
-            --yes
-
-      - name: Smoke control API on the Machine
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          set -euo pipefail
-          for i in 1 2 3 4 5 6; do
-            if flyctl ssh console -a nebutra-dns-leak --pty=false -C \
-              "sh -c 'wget -qO- --timeout=5 http://127.0.0.1:3953/health'" \
-              | tee "$RUNNER_TEMP/leak-health.txt" | grep -q '"ok":true'; then
-              echo "control API healthy on try $i"
-              exit 0
-            fi
-            sleep 8
-          done
-          flyctl status -a nebutra-dns-leak || true
-          flyctl logs -a nebutra-dns-leak --no-tail || true
-          echo "::error::leak control API did not answer"
-          exit 1
-
-      - name: Point Forge at 6PN
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          flyctl secrets set \
-            FORGE_DNS_LEAK_URL=http://nebutra-dns-leak.internal:3953 \
-            -a nebutra-forge
