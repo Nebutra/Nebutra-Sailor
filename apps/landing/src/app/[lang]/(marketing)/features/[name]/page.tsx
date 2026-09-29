@@ -141,7 +141,7 @@ function DomainPage({ entry, locale }: PageProps) {
     <main id="main-content">
       <section className="relative isolate overflow-hidden px-8 pt-28 pb-20 xl:px-16">
         <div aria-hidden className="site-hero-glow" />
-        <div className="relative z-10">
+        <div className="relative z-10 mx-auto w-full max-w-content">
           <BackLink href={`/features`} label={COPY.allPackages[locale]} />
           <Intro
             level={1}
@@ -160,19 +160,23 @@ function DomainPage({ entry, locale }: PageProps) {
 
       {folder ? (
         <Band id="topology">
-          <Intro title={folder.topology.title[locale]} lead={folder.topology.caption[locale]} />
-          <div className="mt-12 max-w-4xl">
-            <TopologyList nodes={folder.topology.nodes} locale={locale} />
+          <div className="mx-auto w-full max-w-content">
+            <Intro title={folder.topology.title[locale]} lead={folder.topology.caption[locale]} />
+            <div className="mt-12">
+              <TopologyList nodes={folder.topology.nodes} locale={locale} />
+            </div>
           </div>
         </Band>
       ) : null}
 
       {folder ? (
         <Band>
-          <div className="grid max-w-6xl grid-cols-1 gap-12 md:grid-cols-3">
-            <Principles heading={COPY.owns[locale]} items={folder.owns} locale={locale} />
-            <Principles heading={COPY.stops[locale]} items={folder.boundaries} locale={locale} />
-            <Principles heading={COPY.proof[locale]} items={folder.proof} locale={locale} />
+          <div className="mx-auto w-full max-w-content">
+            <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+              <Principles heading={COPY.owns[locale]} items={folder.owns} locale={locale} />
+              <Principles heading={COPY.stops[locale]} items={folder.boundaries} locale={locale} />
+              <Principles heading={COPY.proof[locale]} items={folder.proof} locale={locale} />
+            </div>
           </div>
         </Band>
       ) : null}
@@ -181,26 +185,28 @@ function DomainPage({ entry, locale }: PageProps) {
 
       {packages.length > 0 ? (
         <Band id="packages">
-          <Intro
-            title={COPY.packages[locale]}
-            lead={
-              locale === "zh"
-                ? `${entry.path} 下的 ${packages.length} 个包。`
-                : `${packages.length} packages in ${entry.path}.`
-            }
-          />
-          {withGlyph.length > 0 ? (
-            <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {withGlyph.map((p) => (
-                <PackageCard key={p.slug} entry={p} href={hrefFor(p)} locale={locale} />
-              ))}
-            </div>
-          ) : null}
-          {withoutGlyph.length > 0 ? (
-            <div className="mt-12 max-w-4xl">
-              <PackageRows entries={withoutGlyph} hrefFor={hrefFor} locale={locale} />
-            </div>
-          ) : null}
+          <div className="mx-auto w-full max-w-content">
+            <Intro
+              title={COPY.packages[locale]}
+              lead={
+                locale === "zh"
+                  ? `${entry.path} 下的 ${packages.length} 个包。`
+                  : `${packages.length} packages in ${entry.path}.`
+              }
+            />
+            {withGlyph.length > 0 ? (
+              <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {withGlyph.map((p) => (
+                  <PackageCard key={p.slug} entry={p} href={hrefFor(p)} locale={locale} />
+                ))}
+              </div>
+            ) : null}
+            {withoutGlyph.length > 0 ? (
+              <div className="mt-12">
+                <PackageRows entries={withoutGlyph} hrefFor={hrefFor} locale={locale} />
+              </div>
+            ) : null}
+          </div>
         </Band>
       ) : null}
     </main>
@@ -225,7 +231,7 @@ function PackagePage({ entry, locale }: PageProps) {
     <main id="main-content">
       <section className="relative isolate overflow-hidden px-8 pt-28 pb-20 xl:px-16">
         <div aria-hidden className="site-hero-glow" />
-        <div className="relative z-10">
+        <div className="relative z-10 mx-auto w-full max-w-content">
           <BackLink
             href={`/features/${domain?.slug ?? ""}`}
             label={domain ? domainTitle : COPY.allPackages[locale]}
@@ -242,12 +248,16 @@ function PackagePage({ entry, locale }: PageProps) {
 
       {Showcase ? (
         <Band id="showcase">
-          <Showcase entry={serializable} locale={locale} />
+          <div className="mx-auto w-full max-w-content">
+            <Showcase entry={serializable} locale={locale} />
+          </div>
         </Band>
       ) : Glyph ? (
         <Band id="showcase">
-          <div className="max-w-2xl rounded-[var(--radius-card)] border border-border bg-card p-6">
-            <Glyph entry={serializable} locale={locale} />
+          <div className="mx-auto w-full max-w-content">
+            <div className="mx-auto max-w-2xl rounded-[var(--radius-card)] border border-border bg-card p-6">
+              <Glyph entry={serializable} locale={locale} />
+            </div>
           </div>
         </Band>
       ) : null}
@@ -256,23 +266,27 @@ function PackagePage({ entry, locale }: PageProps) {
 
       {siblings.length > 0 && domain ? (
         <Band>
-          <Intro title={locale === "zh" ? `${domainTitle}里的其他包` : `More in ${domainTitle}`} />
-          <div className="mt-12 max-w-4xl">
-            <PackageRows
-              entries={siblings}
-              hrefFor={(p) => `/features/${p.slug}`}
-              locale={locale}
+          <div className="mx-auto w-full max-w-content">
+            <Intro
+              title={locale === "zh" ? `${domainTitle}里的其他包` : `More in ${domainTitle}`}
             />
+            <div className="mt-12">
+              <PackageRows
+                entries={siblings}
+                hrefFor={(p) => `/features/${p.slug}`}
+                locale={locale}
+              />
+            </div>
+            <Link
+              href={`/features/${domain.slug}`}
+              className="mt-10 inline-flex items-center gap-2 text-sm text-secondary-foreground transition-colors duration-micro hover:text-foreground"
+            >
+              {locale === "zh"
+                ? `全部 ${domain.children.length} 个包`
+                : `All ${domain.children.length} packages`}
+              <span aria-hidden>→</span>
+            </Link>
           </div>
-          <Link
-            href={`/features/${domain.slug}`}
-            className="mt-10 inline-flex items-center gap-2 text-sm text-secondary-foreground transition-colors duration-micro hover:text-foreground"
-          >
-            {locale === "zh"
-              ? `全部 ${domain.children.length} 个包`
-              : `All ${domain.children.length} packages`}
-            <span aria-hidden>→</span>
-          </Link>
         </Band>
       ) : null}
     </main>
@@ -358,17 +372,19 @@ function CodeBand({
 }) {
   return (
     <Band id="usage">
-      <Intro title={COPY.inCode[locale]} />
-      <div className="mt-12 max-w-4xl">
-        <CodeBlock
-          filename={sample.filename}
-          language={sample.language}
-          highlightedLines={sample.highlightedLines}
-          maxHeight="540px"
-          aria-label={`${label} usage example`}
-        >
-          {sample.code}
-        </CodeBlock>
+      <div className="mx-auto w-full max-w-content">
+        <Intro title={COPY.inCode[locale]} />
+        <div className="mt-12">
+          <CodeBlock
+            filename={sample.filename}
+            language={sample.language}
+            highlightedLines={sample.highlightedLines}
+            maxHeight="540px"
+            aria-label={`${label} usage example`}
+          >
+            {sample.code}
+          </CodeBlock>
+        </div>
       </div>
     </Band>
   );
