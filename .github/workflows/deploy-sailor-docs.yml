@@ -127,6 +127,21 @@ jobs:
           NEXT_PUBLIC_DOCS_ORIGIN_URL: https://nebutra.com/docs
         run: pnpm exec opennextjs-cloudflare build
 
+      # `open-next.config.ts` selects the static-assets incremental cache, which
+      # reads prerendered pages back out of the `ASSETS` binding — but `build`
+      # only writes them to `.open-next/cache`, a directory nothing deploys.
+      # This copies that output into `.open-next/assets/cdn-cgi/_next_cache`,
+      # where the cache override actually looks for it. Skip it and the cache
+      # override is permanently empty: every request falls through to a full
+      # fresh render, which is what produced the intermittent HTTP 503
+      # (Cloudflare error 1102, "Worker exceeded resource limits") the smoke
+      # step below now fails the build on. `local` mode is a plain
+      # `fs.cpSync` — no Cloudflare API calls, no credentials needed, works
+      # for this workers_dev-only deploy.
+      - name: Populate static-assets incremental cache
+        working-directory: apps/sailor-docs
+        run: pnpm exec opennextjs-cloudflare populateCache local
+
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
@@ -139,26 +154,48 @@ jobs:
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
 
-      - name: Smoke docs
+      # Hard gate on the Worker itself (workers_dev, no route bound — see
+      # wrangler.jsonc), not on nebutra.com/docs: landing's proxy still points
+      # DOCS_UPSTREAM_ORIGIN at the Fly app until the cutover, so nebutra.com/docs
+      # passing here would prove nothing about this deploy. Every prior version
+      # of this step only `::warning::`'d on a non-200 and always exited 0 — the
+      # Worker deploy step "succeeding" is just an upload ack, not evidence the
+      # thing it uploaded serves traffic. That gap is exactly how the missing
+      # incremental-cache wiring (see open-next.config.ts) shipped and sat
+      # 503'ing in production while every run of this workflow stayed green.
+      # Both routes below MUST return 200 or the job fails: the zone root
+      # (through the [lang] layout + fallback) and one real content page (through
+      # MDX compile + the docs component tree) are the two request shapes that
+      # were flaking between 200/404/503 per-request under the "dummy" cache.
+      - name: Smoke docs (hard gate)
         run: |
           set -euo pipefail
-          for url in \
-            "https://nebutra.com/docs" \
-            "https://pebble.nebutra.com/docs" \
-            "https://nebutra-sailor-docs.nebutra.workers.dev/en" \
-            ; do
-            code=$(curl -sS -o /tmp/docs-smoke.html -w '%{http_code}' --max-time 30 -L "$url" || echo 000)
+          worker_base="https://nebutra-sailor-docs.omichiliriku.workers.dev"
+          fail=0
+          for path in "/docs" "/docs/getting-started/installation"; do
+            url="${worker_base}${path}"
+            code=$(curl -sS -o /tmp/docs-smoke.html -w '%{http_code}' --max-time 30 "$url" || echo 000)
             echo "$url → $code"
-            if [ "$code" = "200" ]; then
-              if grep -qE '535\.71|LogoEn|currentColor|text-brand-mark|viewBox="0 0 535' /tmp/docs-smoke.html; then
-                echo "logo: inline SVG markers present"
-              elif grep -qi 'logo-horizontal-en' /tmp/docs-smoke.html; then
-                echo "::warning::still serving public/logo img path"
-              else
-                echo "logo markup: (no known marker — check HTML manually)"
-              fi
-              head -c 180 /tmp/docs-smoke.html; echo
-              exit 0
+            if [ "$code" != "200" ]; then
+              echo "::error::Worker smoke failed: $url returned $code (expected 200). Body:"
+              head -c 500 /tmp/docs-smoke.html; echo
+              fail=1
+              continue
+            fi
+            if grep -qE '535\.71|LogoEn|currentColor|text-brand-mark|viewBox="0 0 535' /tmp/docs-smoke.html; then
+              echo "logo: inline SVG markers present"
+            elif grep -qi 'logo-horizontal-en' /tmp/docs-smoke.html; then
+              echo "::warning::still serving public/logo img path"
             fi
           done
-          echo "::warning::Smoke did not get HTTP 200 yet (DNS/propagation). Worker deploy step already succeeded."
+          if [ "$fail" -ne 0 ]; then
+            echo "::error::One or more Worker routes did not return 200 — failing the build. See docs/ops/nebutra/2026-09-29-fly-machine-shrink.md and open-next.config.ts for the incremental-cache wiring this depends on."
+            exit 1
+          fi
+
+          # Informational only, against the CURRENT public path (still Fly until
+          # DOCS_UPSTREAM_ORIGIN is switched to this Worker) — never gates the job.
+          for url in "https://nebutra.com/docs" "https://pebble.nebutra.com/docs"; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 -L "$url" || echo 000)
+            echo "$url → $code (informational, current public origin)"
+          done
