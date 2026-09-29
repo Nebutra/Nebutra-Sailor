@@ -40,7 +40,8 @@ interface FooterMinimalProps {
 }
 
 /**
- * The site footer. Rendered once by the layout (`SiteChrome`), never by a page.
+ * A site footer, exported from the landing barrel. No frame renders it: the
+ * Nebutra site uses SiteFooter, the template StarterFooter.
  */
 export function FooterMinimal({ variant = "default" }: FooterMinimalProps = {}) {
   if (variant === "legal") {
