@@ -139,20 +139,23 @@ function DomainPage({ entry, locale }: PageProps) {
 
   return (
     <main id="main-content">
-      <section className="px-8 pt-28 pb-20 xl:px-16">
-        <BackLink href={`/features`} label={COPY.allPackages[locale]} />
-        <Intro
-          level={1}
-          className="mt-8"
-          title={titleOf(entry, locale)}
-          lead={folder ? folder.summary[locale] : getFeatureSummary(entry, locale)}
-          cn={locale === "en" ? folder?.title.zh : undefined}
-        />
-        <SourceLine
-          entry={entry}
-          locale={locale}
-          sentence={folder ? sourceSentence(folder, locale) : undefined}
-        />
+      <section className="relative isolate overflow-hidden px-8 pt-28 pb-20 xl:px-16">
+        <div aria-hidden className="site-hero-glow" />
+        <div className="relative z-10">
+          <BackLink href={`/features`} label={COPY.allPackages[locale]} />
+          <Intro
+            level={1}
+            className="mt-8"
+            title={titleOf(entry, locale)}
+            lead={folder ? folder.summary[locale] : getFeatureSummary(entry, locale)}
+            cn={locale === "en" ? folder?.title.zh : undefined}
+          />
+          <SourceLine
+            entry={entry}
+            locale={locale}
+            sentence={folder ? sourceSentence(folder, locale) : undefined}
+          />
+        </div>
       </section>
 
       {folder ? (
@@ -220,18 +223,21 @@ function PackagePage({ entry, locale }: PageProps) {
 
   return (
     <main id="main-content">
-      <section className="px-8 pt-28 pb-20 xl:px-16">
-        <BackLink
-          href={`/features/${domain?.slug ?? ""}`}
-          label={domain ? domainTitle : COPY.allPackages[locale]}
-        />
-        <Intro
-          level={1}
-          className="mt-8"
-          title={<span translate="no">{entry.label}</span>}
-          lead={getFeatureSummary(entry, locale)}
-        />
-        <SourceLine entry={entry} locale={locale} />
+      <section className="relative isolate overflow-hidden px-8 pt-28 pb-20 xl:px-16">
+        <div aria-hidden className="site-hero-glow" />
+        <div className="relative z-10">
+          <BackLink
+            href={`/features/${domain?.slug ?? ""}`}
+            label={domain ? domainTitle : COPY.allPackages[locale]}
+          />
+          <Intro
+            level={1}
+            className="mt-8"
+            title={<span translate="no">{entry.label}</span>}
+            lead={getFeatureSummary(entry, locale)}
+          />
+          <SourceLine entry={entry} locale={locale} />
+        </div>
       </section>
 
       {Showcase ? (
