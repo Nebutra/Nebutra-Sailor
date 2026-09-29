@@ -200,7 +200,7 @@ async function sendReleaseEmail({
       <p class="summary">${summary}</p>
       <a href="${url}" class="cta">View Release Notes</a>
       <div class="footer">
-        <p>You're receiving this email because you're subscribed to Nebutra release notifications.</p>
+        <p>You're receiving this email because you're subscribed to ${brand.name} release notifications.</p>
       </div>
     </div>
   </body>

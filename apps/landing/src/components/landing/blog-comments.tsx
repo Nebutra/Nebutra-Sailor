@@ -239,7 +239,7 @@ export function BlogComments({
             ...current.comments,
             {
               ...data.comment,
-              authorName: current.viewer.name || current.viewer.email || "Nebutra reader",
+              authorName: current.viewer.name || current.viewer.email || "Reader",
               authorImageUrl: current.viewer.avatarUrl ?? null,
               status: "pending",
             },
