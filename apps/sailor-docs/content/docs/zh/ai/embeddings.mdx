@@ -20,10 +20,9 @@ Nebutra 使用 **pgvector** 扩展将嵌入向量存储在 PostgreSQL 中，使�
   <Step title="设置环境变量">
     ```bash
     OPENAI_API_KEY=""
-
-    # 可选：覆盖默认嵌入模型
-    AI_EMBEDDING_MODEL="text-embedding-3-small"
     ```
+
+    没有 `AI_EMBEDDING_MODEL` 环境变量——按调用传入 `model`，或依赖 `"embedding"` 预设别名的默认值。
   </Step>
 
   <Step title="运行 pgvector 迁移">
@@ -79,14 +78,12 @@ curl -X POST https://api.yourdomain.com/api/v1/ai/embeddings \
 
 ### 通过 `@nebutra/agents`（服务端）
 
+`embed` 的第一个参数是文本值，第二个参数（包含 `model`）是选项对象：
+
 ```typescript
 import { embed } from "@nebutra/agents";
 
-const { embedding } = await embed({
-  model: "text-embedding-3-small",
-  value: "如何重置我的密码？",
-  tenantId,
-});
+const { embedding } = await embed("如何重置我的密码？", { model: "text-embedding-3-small" });
 
 // embedding 是 Float32Array / number[]
 console.log(embedding.length); // 1536
@@ -101,11 +98,7 @@ import { embed } from "@nebutra/agents";
 import { prisma } from "@/lib/db";
 
 async function indexDocument(content: string, tenantId: string) {
-  const { embedding } = await embed({
-    model: "text-embedding-3-small",
-    value: content,
-    tenantId,
-  });
+  const { embedding } = await embed(content, { model: "text-embedding-3-small" });
 
   await prisma.embedding.create({
     data: {
@@ -132,11 +125,7 @@ import { prisma } from "@/lib/db";
 
 async function semanticSearch(query: string, tenantId: string, topK = 5) {
   // 1. 对查询进行嵌入
-  const { embedding } = await embed({
-    model: "text-embedding-3-small",
-    value: query,
-    tenantId,
-  });
+  const { embedding } = await embed(query, { model: "text-embedding-3-small" });
 
   // 2. 使用余弦相似度搜索（pgvector 的 <=> 运算符）
   const results = await prisma.$queryRaw<Array<{ id: string; content: string; similarity: number }>>`
@@ -174,11 +163,7 @@ const texts = [
   "如何邀请团队成员？",
 ];
 
-const { embeddings } = await embedMany({
-  model: "text-embedding-3-small",
-  values: texts,
-  tenantId,
-});
+const { embeddings } = await embedMany(texts, { model: "text-embedding-3-small" });
 
 // embeddings 是一个数组，每个输入文本对应一个向量
 for (let i = 0; i < texts.length; i++) {
@@ -201,11 +186,7 @@ import { embed, generateText } from "@nebutra/agents";
 
 async function ragQuery(userQuestion: string, tenantId: string) {
   // 1. 检索相关文档
-  const { embedding } = await embed({
-    model: "text-embedding-3-small",
-    value: userQuestion,
-    tenantId,
-  });
+  const { embedding } = await embed(userQuestion, { model: "text-embedding-3-small" });
 
   const docs = await prisma.$queryRaw<Array<{ content: string }>>`
     SELECT content
@@ -219,16 +200,20 @@ async function ragQuery(userQuestion: string, tenantId: string) {
   const context = docs.map((d) => d.content).join("\n\n---\n\n");
 
   // 3. 注入上下文后生成答案
-  const { text } = await generateText({
-    model: "gpt-5.4-mini",
-    prompt: `仅使用以下上下文回答问题。
+  const { text } = await generateText(
+    [
+      {
+        role: "user",
+        content: `仅使用以下上下文回答问题。
 
 上下文：
 ${context}
 
 问题：${userQuestion}`,
-    tenantId,
-  });
+      },
+    ],
+    { model: "gpt-5.4-mini" },
+  );
 
   return text;
 }
