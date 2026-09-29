@@ -1,31 +1,8 @@
 import { useAuthContext } from "@nebutra/auth/react/context";
-import { BrandMark, BrandWordmark } from "@nebutra/brand";
-import {
-  Analytics,
-  ArrowRight,
-  ArrowUpRight,
-  Bell,
-  Cache,
-  Check,
-  CloudUpload,
-  Copy,
-  CreditCard,
-  Database,
-  Envelope,
-  Fingerprint,
-  Hook,
-  type Icon,
-  Key,
-  Layers,
-  Message,
-  Monitoring,
-  PencilEdit,
-  Puzzle,
-  ShieldCheck,
-  Sparkles,
-} from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Button, Card } from "@nebutra/ui/primitives";
+import { BrandMark } from "@nebutra/brand";
+import { brand } from "@nebutra/brand/metadata";
+import { ArrowRight, ArrowUpRight, Check, Copy } from "@nebutra/icons";
+import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { createRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -39,6 +16,9 @@ import { rootRoute } from "./__root";
  * preview database's demo account in one click, shows what each capability
  * runs on right now (the rows `nebutra status` prints, handed over by
  * `pnpm dev` in VITE_SAILOR_CAPABILITIES) and the three things to do next.
+ *
+ * One column, one weight of emphasis per block: a sentence, a table, a list.
+ * The capability table reads like `nebutra status` because that is what it is.
  */
 
 type CapabilityState = "live" | "local-fallback" | "missing-key";
@@ -62,21 +42,21 @@ function readCapabilities(): CapabilityRow[] | null {
   }
 }
 
-const CAPABILITY_META: Record<string, { label: string; icon: Icon }> = {
-  auth: { label: "Authentication", icon: Fingerprint },
-  billing: { label: "Billing", icon: CreditCard },
-  email: { label: "Email", icon: Envelope },
-  sms: { label: "SMS", icon: Message },
-  storage: { label: "File storage", icon: CloudUpload },
-  queue: { label: "Background jobs", icon: Layers },
-  cache: { label: "Cache", icon: Cache },
-  notifications: { label: "Notifications", icon: Bell },
-  webhooks: { label: "Webhooks", icon: Hook },
-  ai: { label: "AI", icon: Sparkles },
-  mcp: { label: "MCP server", icon: Puzzle },
-  monitoring: { label: "Error monitoring", icon: Monitoring },
-  analytics: { label: "Product analytics", icon: Analytics },
-  captcha: { label: "Bot protection", icon: ShieldCheck },
+const CAPABILITY_LABEL: Record<string, string> = {
+  auth: "Authentication",
+  billing: "Billing",
+  email: "Email",
+  sms: "SMS",
+  storage: "File storage",
+  queue: "Background jobs",
+  cache: "Cache",
+  notifications: "Notifications",
+  webhooks: "Webhooks",
+  ai: "AI",
+  mcp: "MCP server",
+  monitoring: "Error monitoring",
+  analytics: "Product analytics",
+  captcha: "Bot protection",
 };
 
 const PROVIDER_LABEL: Record<string, string> = {
@@ -97,37 +77,22 @@ const PROVIDER_LABEL: Record<string, string> = {
   turnstile: "Turnstile",
   "twilio-verify": "Twilio Verify",
   aliyun: "Aliyun SMS",
-  direct: "built-in delivery",
-  custom: "built-in signing",
-  "built-in": "the built-in server",
-  memory: "in memory",
-  console: "to the console",
-  local: "on local disk",
-  dev: "the dev provider",
+  direct: "Built-in delivery",
+  custom: "Built-in signing",
+  "built-in": "Built-in server",
+  memory: "In memory",
+  console: "Printed to the console",
+  local: "Local disk",
+  dev: "Dev provider",
 };
 
 const providerList = (ids: string[]) => ids.map((id) => PROVIDER_LABEL[id] ?? id).join(", ");
 
-function describeRow(row: CapabilityRow): string {
-  if (row.state === "live") return `Running on ${providerList(row.provider)}`;
-  if (row.state === "local-fallback") return `Running locally, ${providerList(row.provider)}`;
-  return "Switches on when its key is set";
-}
-
 const STATE_STYLE: Record<CapabilityState, { dot: string; label: string }> = {
   live: { dot: "bg-success", label: "Live" },
-  "local-fallback": { dot: "bg-neutral-9", label: "Running locally" },
+  "local-fallback": { dot: "bg-neutral-8", label: "Local" },
   "missing-key": { dot: "bg-warning", label: "Needs a key" },
 };
-
-function StateDot({ state, className }: { state: CapabilityState; className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn("inline-block size-2 shrink-0 rounded-full", STATE_STYLE[state].dot, className)}
-    />
-  );
-}
 
 /** Copy to the clipboard; `copied` is the value last copied, for a moment. */
 function useCopy() {
@@ -147,7 +112,8 @@ function useCopy() {
   return { copied, copy };
 }
 
-function EnvChip({ name }: { name: string }) {
+/** A value to paste somewhere else: an env name or a command. */
+function CopyChip({ value, prompt = false }: { value: string; prompt?: boolean }) {
   const { copied, copy } = useCopy();
   return (
     <Button
@@ -155,83 +121,24 @@ function EnvChip({ name }: { name: string }) {
       variant="outline"
       size="tiny"
       className="font-mono"
-      aria-label={`Copy ${name}`}
-      onClick={() => void copy(name)}
+      aria-label={`Copy ${value}`}
+      onClick={() => void copy(value)}
       suffix={copied ? <Check className="text-success-strong" /> : <Copy />}
     >
-      {name}
+      {prompt ? <span className="text-neutral-10">$</span> : null}
+      {value}
     </Button>
   );
 }
 
-function CapabilityCard({ row }: { row: CapabilityRow }) {
-  const meta = CAPABILITY_META[row.name] ?? { label: row.name, icon: Puzzle };
-  const IconComponent = meta.icon;
+function SectionHead({ title, aside }: { title: string; aside?: React.ReactNode }) {
   return (
-    <Card padding="md" className="flex h-full flex-col gap-4">
-      <div className="flex items-start justify-between gap-3">
-        <span className="grid size-9 place-items-center rounded-[var(--radius-md)] bg-neutral-3 text-neutral-12">
-          <IconComponent size={16} />
-        </span>
-        <span className="inline-flex items-center gap-1.5 text-xs text-neutral-11">
-          <StateDot state={row.state} />
-          {STATE_STYLE[row.state].label}
-        </span>
-      </div>
-      <div className="space-y-1">
-        <h3 className="font-medium text-neutral-12">{meta.label}</h3>
-        <p className="text-sm text-neutral-11">{describeRow(row)}</p>
-      </div>
-      {row.state === "missing-key" && row.missing.length > 0 ? (
-        <div className="mt-auto flex flex-wrap gap-1.5">
-          {row.missing.map((name) => (
-            <EnvChip key={name} name={name} />
-          ))}
-        </div>
-      ) : null}
-    </Card>
+    <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pb-4">
+      <h2 className="text-base font-medium text-neutral-12">{title}</h2>
+      {aside ? <div className="text-sm text-neutral-10">{aside}</div> : null}
+    </div>
   );
 }
-
-function CommandSnippet({ command }: { command: string }) {
-  const { copied, copy } = useCopy();
-  return (
-    <Button
-      type="button"
-      variant="outline"
-      className="w-full justify-between bg-neutral-2 font-mono text-sm"
-      aria-label={`Copy ${command}`}
-      onClick={() => void copy(command)}
-      suffix={copied ? <Check className="text-success-strong" /> : <Copy />}
-    >
-      <span className="min-w-0 truncate text-left">
-        <span className="text-neutral-10">$ </span>
-        {command}
-      </span>
-    </Button>
-  );
-}
-
-const NEXT_STEPS: ReadonlyArray<{ icon: Icon; title: string; body: string; command: string }> = [
-  {
-    icon: PencilEdit,
-    title: "Make it yours",
-    body: "brand.config.ts already carries the project's name. Change the name, colours or logo there, then apply it everywhere.",
-    command: "pnpm brand:apply",
-  },
-  {
-    icon: Key,
-    title: "Take a capability live",
-    body: "Add the keys a capability needs to .env.local, restart the preview, and check what went live.",
-    command: "nebutra status",
-  },
-  {
-    icon: Database,
-    title: "Bring your own Postgres",
-    body: "The preview keeps its data in a local PGlite database. Point DATABASE_URL at Postgres to switch.",
-    command: "pnpm db:migrate",
-  },
-];
 
 function Hero({ keysNeeded }: { keysNeeded: number }) {
   const { isSignedIn, user } = useAuthContext();
@@ -250,183 +157,186 @@ function Hero({ keysNeeded }: { keysNeeded: number }) {
     else window.location.assign("/welcome");
   };
 
+  const siteUrl = import.meta.env.VITE_SAILOR_SITE_URL;
+  const apiUrl = import.meta.env.VITE_SAILOR_API_URL;
+  const link =
+    "inline-flex items-center gap-1 text-neutral-11 transition-colors hover:text-neutral-12";
+
   return (
-    <AnimateIn preset="emerge">
-      <section className="space-y-8">
-        <div className="flex flex-wrap items-center gap-3">
-          <BrandMark size={36} />
-          <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-neutral-6 bg-neutral-2 px-3 py-1 text-xs text-neutral-11">
-            <span className="relative flex size-2">
-              <span className="absolute -inset-1 rounded-full bg-success opacity-25" />
-              <span className="relative size-2 rounded-full bg-success" />
-            </span>
-            <span>Preview on {host}</span>
-            <span aria-hidden="true">·</span>
-            <span>{demo ? "local database" : "your database"}</span>
-            <span aria-hidden="true">·</span>
-            <span>
-              {keysNeeded === 0
-                ? "no keys needed"
-                : `${keysNeeded} ${keysNeeded === 1 ? "capability needs" : "capabilities need"} a key`}
-            </span>
-          </span>
-        </div>
+    <section>
+      <BrandMark size={28} />
+      <h1 className="mt-10 text-4xl font-semibold tracking-tight text-neutral-12 md:text-5xl">
+        {brand.name} is running.
+      </h1>
+      <p className="mt-5 max-w-2xl text-lg text-neutral-11">
+        The product app, the site and the API are up on {host}, on{" "}
+        {demo ? "a local database" : "your database"}.{" "}
+        {keysNeeded === 0
+          ? "Every capability is live."
+          : "Everything works without keys; add one when you want the real provider."}
+      </p>
 
-        <div className="space-y-4">
-          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-neutral-12 md:text-6xl">
-            <BrandWordmark inline className="mr-[0.25em]" />
-            <span className="text-neutral-10">is running locally</span>
-          </h1>
-          <p className="max-w-2xl text-lg text-neutral-11">
-            The product app, the site and the API are up on this machine. Every capability runs
-            without a key; add one when you want the real provider.
-          </p>
-        </div>
+      <div className="mt-10 flex flex-wrap items-center gap-3">
+        {isSignedIn ? (
+          <Button asChild size="lg">
+            <Link to="/settings" search={{ tab: "profile" }}>
+              Open your workspace
+              <ArrowRight />
+            </Link>
+          </Button>
+        ) : demo ? (
+          <Button
+            type="button"
+            size="lg"
+            disabled={pending}
+            onClick={() => void demoSignIn()}
+            suffix={<ArrowRight />}
+          >
+            Sign in with the demo account
+          </Button>
+        ) : (
+          <Button asChild size="lg">
+            <a href="/sign-in">
+              Sign in
+              <ArrowRight />
+            </a>
+          </Button>
+        )}
+        {isSignedIn ? null : (
+          <Button asChild size="lg" variant="ghost">
+            <a href="/sign-in?mode=sign-up">Create an account</a>
+          </Button>
+        )}
+      </div>
 
-        <div className="space-y-3">
-          <div className="flex flex-wrap gap-3">
-            {isSignedIn ? (
-              <Button asChild size="lg">
-                <Link to="/settings" search={{ tab: "profile" }}>
-                  Open your workspace
-                  <ArrowRight />
-                </Link>
-              </Button>
-            ) : demo ? (
-              <Button
-                type="button"
-                size="lg"
-                disabled={pending}
-                onClick={() => void demoSignIn()}
-                suffix={<ArrowRight />}
-              >
-                Sign in with the demo account
-              </Button>
-            ) : (
-              <Button asChild size="lg">
-                <a href="/sign-in">
-                  Sign in
-                  <ArrowRight />
-                </a>
-              </Button>
-            )}
-            {isSignedIn ? null : (
-              <Button asChild size="lg" variant="outline">
-                <a href="/sign-in?mode=sign-up">Create an account</a>
-              </Button>
-            )}
-          </div>
-          {error ? (
-            <p role="alert" className="text-sm text-destructive-strong">
-              {error}
-            </p>
+      {error ? (
+        <p role="alert" className="mt-4 text-sm text-destructive-strong">
+          {error}
+        </p>
+      ) : (
+        <p className="mt-4 text-sm text-neutral-10">
+          {isSignedIn ? (
+            `Signed in as ${user?.email ?? user?.name ?? "you"}.`
+          ) : demo ? (
+            <span className="font-mono">
+              {DEMO_ACCOUNT.email} · {DEMO_ACCOUNT.password}
+            </span>
           ) : (
-            <p className="text-sm text-neutral-10">
-              {isSignedIn
-                ? `Signed in as ${user?.email ?? user?.name ?? "you"}.`
-                : demo
-                  ? `Demo account ${DEMO_ACCOUNT.email} · ${DEMO_ACCOUNT.password}`
-                  : "Accounts live in this project's own database."}
-            </p>
+            "Accounts live in this project's own database."
           )}
-        </div>
+        </p>
+      )}
 
-        <div className="flex flex-wrap gap-2">
-          {import.meta.env.VITE_SAILOR_SITE_URL ? (
-            <Button asChild variant="ghost" size="sm">
-              <a href={import.meta.env.VITE_SAILOR_SITE_URL}>
-                Marketing site
-                <ArrowUpRight />
-              </a>
-            </Button>
+      {siteUrl || apiUrl ? (
+        <p className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {siteUrl ? (
+            <a href={siteUrl} className={link}>
+              Marketing site
+              <ArrowUpRight className="size-3.5" />
+            </a>
           ) : null}
-          {import.meta.env.VITE_SAILOR_API_URL ? (
-            <Button asChild variant="ghost" size="sm">
-              <a href={`${import.meta.env.VITE_SAILOR_API_URL}/docs`}>
-                API reference
-                <ArrowUpRight />
-              </a>
-            </Button>
+          {apiUrl ? (
+            <a href={`${apiUrl}/docs`} className={link}>
+              API reference
+              <ArrowUpRight className="size-3.5" />
+            </a>
           ) : null}
-        </div>
-      </section>
-    </AnimateIn>
+        </p>
+      ) : null}
+    </section>
+  );
+}
+
+function CapabilityTableRow({ row }: { row: CapabilityRow }) {
+  const style = STATE_STYLE[row.state];
+  return (
+    <li className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-6 gap-y-2 py-3.5 sm:grid-cols-[11rem_minmax(0,1fr)_7rem] sm:items-center">
+      <span className="text-sm text-neutral-12">{CAPABILITY_LABEL[row.name] ?? row.name}</span>
+      <span className="col-span-2 row-start-2 min-w-0 sm:col-span-1 sm:row-start-auto">
+        {row.state === "missing-key" && row.missing.length > 0 ? (
+          <span className="flex flex-wrap gap-1.5">
+            {row.missing.map((name) => (
+              <CopyChip key={name} value={name} />
+            ))}
+          </span>
+        ) : (
+          <span className="text-sm text-neutral-11">{providerList(row.provider)}</span>
+        )}
+      </span>
+      <span className="col-start-2 row-start-1 inline-flex items-center justify-end gap-2 text-xs text-neutral-11 sm:col-start-auto sm:row-start-auto">
+        <span aria-hidden="true" className={cn("size-1.5 rounded-full", style.dot)} />
+        {style.label}
+      </span>
+    </li>
   );
 }
 
 function Capabilities({ rows }: { rows: CapabilityRow[] | null }) {
-  const running = rows?.filter((row) => row.state !== "missing-key").length ?? 0;
-  const needKey = (rows?.length ?? 0) - running;
+  const live = rows?.filter((row) => row.state === "live").length ?? 0;
+  const local = rows?.filter((row) => row.state === "local-fallback").length ?? 0;
+  const needKey = rows?.filter((row) => row.state === "missing-key").length ?? 0;
 
   return (
-    <section className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight text-neutral-12">Capabilities</h2>
-          <p className="text-sm text-neutral-11">What each one runs on right now.</p>
-        </div>
-        {rows ? (
-          <p className="flex items-center gap-4 text-sm text-neutral-11">
-            <span className="inline-flex items-center gap-1.5">
-              <StateDot state="live" />
-              {running} running
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <StateDot state="missing-key" />
-              {needKey} {needKey === 1 ? "needs a key" : "need a key"}
-            </span>
-          </p>
-        ) : null}
-      </div>
+    <section>
+      <SectionHead
+        title="Capabilities"
+        aside={rows ? `${live} live · ${local} local · ${needKey} need a key` : undefined}
+      />
       {rows ? (
-        <AnimateInGroup stagger="fast" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="divide-y divide-neutral-5 border-y border-neutral-5">
           {rows.map((row) => (
-            <AnimateIn key={row.name} preset="fadeUp" className="h-full">
-              <CapabilityCard row={row} />
-            </AnimateIn>
+            <CapabilityTableRow key={row.name} row={row} />
           ))}
-        </AnimateInGroup>
+        </ul>
       ) : (
-        <Card padding="md" className="text-sm text-neutral-11">
+        <p className="border-y border-neutral-5 py-4 text-sm text-neutral-11">
           Start the preview with <code className="font-mono">pnpm dev</code> from the project root
           to see each capability here, or run <code className="font-mono">nebutra status</code>.
-        </Card>
+        </p>
       )}
     </section>
   );
 }
 
+const NEXT_STEPS: ReadonlyArray<{ title: string; body: string; command: string }> = [
+  {
+    title: "Make it yours",
+    body: "brand.config.ts already carries the project's name. Change the name, colours or logo there, then apply it everywhere.",
+    command: "pnpm brand:apply",
+  },
+  {
+    title: "Take a capability live",
+    body: "Add the keys a capability needs to .env.local, restart the preview, and check what went live.",
+    command: "nebutra status",
+  },
+  {
+    title: "Bring your own Postgres",
+    body: "The preview keeps its data in a local PGlite database. Point DATABASE_URL at Postgres to switch.",
+    command: "pnpm db:migrate",
+  },
+];
+
 function NextSteps() {
   return (
-    <section className="space-y-6">
-      <div className="space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight text-neutral-12">Next steps</h2>
-        <p className="text-sm text-neutral-11">From this preview to your own product.</p>
-      </div>
-      <AnimateInGroup stagger="normal" className="grid gap-4 md:grid-cols-3">
-        {NEXT_STEPS.map((step, index) => {
-          const IconComponent = step.icon;
-          return (
-            <AnimateIn key={step.title} preset="fadeUp" className="h-full">
-              <Card padding="lg" className="flex h-full flex-col gap-5">
-                <div className="flex items-center justify-between">
-                  <span className="grid size-10 place-items-center rounded-[var(--radius-md)] bg-neutral-3 text-neutral-12">
-                    <IconComponent size={18} />
-                  </span>
-                  <span className="font-mono text-xs text-neutral-10">0{index + 1}</span>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-lg font-medium text-neutral-12">{step.title}</h3>
-                  <p className="text-sm text-neutral-11">{step.body}</p>
-                </div>
-                <div className="mt-auto">
-                  <CommandSnippet command={step.command} />
-                </div>
-              </Card>
-            </AnimateIn>
-          );
-        })}
-      </AnimateInGroup>
+    <section>
+      <SectionHead title="Next steps" />
+      <ol className="divide-y divide-neutral-5 border-y border-neutral-5">
+        {NEXT_STEPS.map((step, index) => (
+          <li
+            key={step.title}
+            className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-x-4 py-5 sm:grid-cols-[1.5rem_minmax(0,1fr)_auto] sm:items-start"
+          >
+            <span className="font-mono text-sm text-neutral-10">{index + 1}</span>
+            <div>
+              <h3 className="text-sm font-medium text-neutral-12">{step.title}</h3>
+              <p className="mt-1 max-w-xl text-sm text-neutral-11">{step.body}</p>
+            </div>
+            <div className="col-start-2 mt-3 sm:col-start-auto sm:mt-0">
+              <CopyChip value={step.command} prompt />
+            </div>
+          </li>
+        ))}
+      </ol>
     </section>
   );
 }
@@ -435,11 +345,11 @@ function WelcomeRoute() {
   const capabilities = readCapabilities();
   const keysNeeded = capabilities?.filter((row) => row.state === "missing-key").length ?? 0;
   return (
-    <div className="mx-auto w-full max-w-content space-y-20 px-4 py-12 md:px-6 md:py-20">
+    <div className="mx-auto w-full max-w-text space-y-20 px-4 py-16 md:px-6 md:py-24">
       <Hero keysNeeded={keysNeeded} />
       <Capabilities rows={capabilities} />
       <NextSteps />
-      <p className="text-center text-xs text-neutral-10">
+      <p className="text-xs text-neutral-10">
         This page is <code className="font-mono">apps/web/src/vite-app/routes/welcome.tsx</code>.
         Delete it once you have a home page of your own.
       </p>
