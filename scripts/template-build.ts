@@ -469,6 +469,7 @@ function stripNebutraOnlyWorkspaceConfig(targetDir: string): number {
 const LANDING_ROUTES = [
   "apps/landing/src/app/[lang]/(marketing)",
   "apps/landing/src/app/[lang]/(legal)",
+  "apps/landing/src/app/[lang]/(status)",
 ];
 
 /**
