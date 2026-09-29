@@ -38,7 +38,7 @@ export const agentPrompt = (preset: Preset) =>
   [
     `Use this Sailor Studio look: ${presetArgument(preset)}.`,
     `In this Sailor project run \`${pullCommand(preset)}\` (new project: \`${createCommand(preset)}\`).`,
-    `To change it, write a preset against ${PRESET_SCHEMA_ID}, run \`nebutra studio preview '<json>' --from claude-code\`, and send me the link to review before pulling.`,
+    `To change it, write a preset against ${PRESET_SCHEMA_ID}, run \`nebutra studio preview '<json>'\`, and send me the link to review before pulling.`,
   ].join("\n");
 
 /** New project. */

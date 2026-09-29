@@ -207,7 +207,6 @@ export const STUDIO_TOOLS = [
       type: "object",
       properties: {
         ...PRESET_ARG,
-        from: { type: "string", description: "Who proposed it, shown on the Studio banner" },
       },
       required: ["preset"],
     },
@@ -232,11 +231,10 @@ export function callStudioTool(projectRoot: string, name: string, args: Record<s
     const preset = readPresetInput(args.preset);
     const code = presetArgument(preset);
     if (name === "studio_preview") {
-      const from = typeof args.from === "string" ? args.from : "agent";
       return text({
         code,
         preset,
-        reviewUrl: studioReviewUrl(preset, from),
+        reviewUrl: studioReviewUrl(preset),
         apply: `nebutra studio pull ${code}`,
         create: `npx create-sailor@latest my-app --preset ${code}`,
       });

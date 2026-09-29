@@ -16,15 +16,15 @@ describe("nebutra studio", () => {
     expect(readPresetArgument(file)).toEqual({ base: "linear", radius: "lg" });
     rmSync(dir, { recursive: true, force: true });
 
-    const preview = previewOf({ base: "linear", radius: "lg" }, "claude-code");
+    const preview = previewOf({ base: "linear", radius: "lg" });
     expect(readPresetArgument(preview.code)).toEqual({ base: "linear", radius: "lg" });
     expect(readPresetArgument(preview.reviewUrl)).toEqual({ base: "linear", radius: "lg" });
   });
 
   it("hands back the review link and both ways to apply", () => {
-    const preview = previewOf({ base: "vercel" }, "claude-code");
+    const preview = previewOf({ base: "vercel" });
     expect(preview.code).toBe("vercel");
-    expect(preview.reviewUrl).toBe(`${STUDIO_URL}?preset=vercel&from=claude-code`);
+    expect(preview.reviewUrl).toBe(`${STUDIO_URL}?preset=vercel&proposed=1`);
     expect(preview.apply).toBe("nebutra studio pull vercel");
     expect(preview.create).toBe("npx create-sailor@latest my-app --preset vercel");
   });

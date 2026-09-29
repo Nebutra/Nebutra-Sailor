@@ -19,7 +19,8 @@ import { logger } from "../utils/logger";
  *
  *   1. the agent writes a preset (JSON, see `nebutra studio schema`)
  *   2. `nebutra studio preview` validates it and prints the Studio link;
- *      the agent asks the person to look
+ *      the agent asks the person to look. Only the person saves a look to
+ *      their account, from Studio; an agent reads saved looks, never writes them
  *   3. once they are happy, `nebutra studio pull` puts it on this project
  *      (or `npx create-sailor@latest my-app --preset <code>` starts one)
  *
@@ -78,22 +79,6 @@ async function accountFetch(path: string, token: string, init: RequestInit = {})
   });
 }
 
-/** Save to the account so Studio lists it; null when logged out or the save failed. */
-export async function saveToAccount(code: string, source: string): Promise<SavedPreset | null> {
-  const token = await accountToken();
-  if (!token) return null;
-  try {
-    const res = await accountFetch("/presets", token, {
-      method: "POST",
-      body: JSON.stringify({ code, source }),
-    });
-    if (!res.ok) return null;
-    return ((await res.json()) as { preset: SavedPreset }).preset;
-  } catch {
-    return null;
-  }
-}
-
 export async function listAccountPresets(): Promise<SavedPreset[] | null> {
   const token = await accountToken();
   if (!token) return null;
@@ -110,12 +95,12 @@ export interface StudioPreview {
   create: string;
 }
 
-export function previewOf(preset: Preset, from = "agent"): StudioPreview {
+export function previewOf(preset: Preset): StudioPreview {
   const code = presetArgument(preset);
   return {
     code,
     preset,
-    reviewUrl: studioReviewUrl(preset, from),
+    reviewUrl: studioReviewUrl(preset),
     apply: `nebutra studio pull ${code}`,
     create: `npx create-sailor@latest my-app --preset ${code}`,
   };
@@ -137,39 +122,28 @@ export function registerStudioCommand(program: Command): void {
     .command("preview <preset>")
     .description("Validate a preset and print the Sailor Studio link to review it")
     .option("--open", "Open the link in the browser")
-    .option("--from <agent>", "Who proposed it, shown on the Studio banner", "agent")
-    .option("--no-save", "Do not save it to your account (saved by default when logged in)")
     .option("--json", "Machine-readable output")
-    .action(
-      async (
-        input: string,
-        options: { open?: boolean; from: string; json?: boolean; save?: boolean },
-      ) => {
-        let preview: StudioPreview;
-        try {
-          preview = previewOf(readPresetArgument(input), options.from);
-        } catch (error) {
-          fail(error);
-        }
-        const saved =
-          options.save === false ? null : await saveToAccount(preview.code, options.from);
-        if (options.open) openInBrowser(preview.reviewUrl);
-        if (options.json) {
-          console.log(JSON.stringify({ ...preview, savedToAccount: saved !== null }, null, 2));
-          return;
-        }
-        logger.success(`Preset ${preview.code} is valid.`);
-        if (saved)
-          console.log("  Saved to your account: it is waiting under Your presets in Studio.");
-        console.log(`\n  Review it:   ${preview.reviewUrl}`);
-        console.log(`  Apply here:  ${preview.apply}`);
-        console.log(`  New project: ${preview.create}\n`);
-      },
-    );
+    .action((input: string, options: { open?: boolean; json?: boolean }) => {
+      let preview: StudioPreview;
+      try {
+        preview = previewOf(readPresetArgument(input));
+      } catch (error) {
+        fail(error);
+      }
+      if (options.open) openInBrowser(preview.reviewUrl);
+      if (options.json) {
+        console.log(JSON.stringify(preview, null, 2));
+        return;
+      }
+      logger.success(`Preset ${preview.code} is valid.`);
+      console.log(`\n  Review it:   ${preview.reviewUrl}`);
+      console.log(`  Apply here:  ${preview.apply}`);
+      console.log(`  New project: ${preview.create}\n`);
+    });
 
   studio
     .command("list")
-    .description("Your presets saved to your account (nebutra login), newest first")
+    .description("The looks you saved in Studio (nebutra login), newest first")
     .option("--json", "Machine-readable output")
     .action(async (options: { json?: boolean }) => {
       let presets: SavedPreset[] | null;
@@ -188,11 +162,11 @@ export function registerStudioCommand(program: Command): void {
         return;
       }
       if (presets.length === 0) {
-        console.log("No saved presets yet. Save one in Studio or with `nebutra studio preview`.");
+        console.log("No saved looks yet. Save one in Sailor Studio.");
         return;
       }
       for (const p of presets) {
-        console.log(`  ${p.code.padEnd(12)} ${p.name}  (${p.source}, ${p.updatedAt.slice(0, 10)})`);
+        console.log(`  ${p.code.padEnd(12)} ${p.name}`);
       }
     });
 

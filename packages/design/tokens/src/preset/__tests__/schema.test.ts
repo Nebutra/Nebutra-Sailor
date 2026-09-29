@@ -43,8 +43,8 @@ describe("preset schema", () => {
 
   it("accepts JSON text, a code, a base id or a Studio URL", () => {
     const preset = { base: "vercel", radius: "none" } as const;
-    const url = studioReviewUrl(preset, "claude-code");
-    assert.ok(url.startsWith(`${STUDIO_URL}?preset=`) && url.endsWith("&from=claude-code"), url);
+    const url = studioReviewUrl(preset);
+    assert.ok(url.startsWith(`${STUDIO_URL}?preset=`) && url.endsWith("&proposed=1"), url);
     assert.deepEqual(readPresetInput(url), preset);
     assert.deepEqual(readPresetInput(JSON.stringify(preset)), preset);
     assert.deepEqual(readPresetInput("stripe"), { base: "stripe" });

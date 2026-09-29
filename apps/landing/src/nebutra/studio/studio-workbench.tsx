@@ -836,11 +836,11 @@ function MiniChart({
   );
 }
 
-/** Who proposed the look in the URL (`?from=claude-code`), set by `nebutra studio preview`. */
-function proposerFromLocation(): string | null {
-  if (typeof window === "undefined") return null;
-  const from = new URLSearchParams(window.location.search).get("from")?.trim();
-  return from ? from.slice(0, 40) : null;
+/** Whether the URL marks the look as an agent's proposal (`?proposed=1`, set by `nebutra studio preview`). */
+function isProposal(): boolean {
+  if (typeof window === "undefined") return false;
+  const params = new URLSearchParams(window.location.search);
+  return params.has("proposed") || params.has("from");
 }
 
 /**
@@ -849,12 +849,10 @@ function proposerFromLocation(): string | null {
  * they adjusted here, since the command always carries the current look.
  */
 function ProposalBanner({
-  from,
   proposed,
   preset,
   onDismiss,
 }: {
-  from: string;
   proposed: string;
   preset: Preset;
   onDismiss: () => void;
@@ -866,7 +864,7 @@ function ProposalBanner({
       className="flex flex-wrap items-center gap-x-3 gap-y-2 border-border/70 border-b bg-muted/40 px-4 py-2.5 text-xs"
     >
       <span className="min-w-0 flex-1 text-muted-foreground">
-        <span className="font-medium text-foreground">{from}</span> proposed this look.{" "}
+        <span className="font-medium text-foreground">Your agent</span> proposed this look.{" "}
         {changed
           ? "You have changed it — hand back the new command."
           : "Look it over; approve by handing the command back."}
@@ -931,11 +929,10 @@ export function StudioWorkbench() {
   // then keep the URL following it — but only once it has been read: writing
   // first would drop the `?preset=` the page was opened with.
   const [ready, setReady] = useState(false);
-  const [proposal, setProposal] = useState<{ from: string; code: string } | null>(null);
+  const [proposal, setProposal] = useState<{ code: string } | null>(null);
   useEffect(() => {
     const initial = presetFromLocation();
-    const from = proposerFromLocation();
-    if (initial && from) setProposal({ from, code: presetArgument(initial) });
+    if (initial && isProposal()) setProposal({ code: presetArgument(initial) });
     if (initial) {
       setPreset(initial);
       // A shared look opens where it can be adjusted, not back at the start.
@@ -993,7 +990,6 @@ export function StudioWorkbench() {
     <div className="studio-frame flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-background text-foreground">
       {proposal ? (
         <ProposalBanner
-          from={proposal.from}
           proposed={proposal.code}
           preset={preset}
           onDismiss={() => setProposal(null)}

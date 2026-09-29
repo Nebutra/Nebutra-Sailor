@@ -157,10 +157,10 @@ export function presetArgument(preset: Preset): string {
   return Object.keys(preset).length === 1 ? preset.base : encodePreset(preset);
 }
 
-/** The Studio link that opens this preset for review; `from` marks who proposed it. */
-export function studioReviewUrl(preset: Preset, from?: string): string {
+/** The Studio link that opens this preset for review, marked as an agent's proposal. */
+export function studioReviewUrl(preset: Preset): string {
   const url = new URL(STUDIO_URL);
   url.searchParams.set("preset", presetArgument(preset));
-  if (from) url.searchParams.set("from", from);
+  url.searchParams.set("proposed", "1");
   return url.toString();
 }

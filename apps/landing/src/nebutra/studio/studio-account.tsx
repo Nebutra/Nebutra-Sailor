@@ -6,9 +6,9 @@ import { useCallback, useEffect, useState } from "react";
 import { presetArgument } from "./studio-output";
 
 /**
- * Presets saved to the person's account (gateway /api/v1/studio/presets): what
- * their agent proposed with `nebutra studio preview` while logged in, and what
- * they saved here. The sync half of the agent loop — no link to copy either way.
+ * Looks the person saved to their account (gateway /api/v1/studio/presets).
+ * Only they save, here; their agent reads the list with `nebutra studio list`
+ * and `nebutra studio pull --latest` — no link to copy back.
  * Signed out, it says how to turn sync on and nothing else.
  */
 
@@ -75,7 +75,7 @@ export function YourPresets({
         method: "POST",
         credentials: "include",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ code: presetArgument(preset), source: "web" }),
+        body: JSON.stringify({ code: presetArgument(preset) }),
       });
       await load();
     } finally {
@@ -88,8 +88,8 @@ export function YourPresets({
   if (state.kind === "signed-out") {
     return (
       <p className="rounded-[var(--radius-md)] border border-border border-dashed px-3 py-2.5 text-2xs text-muted-foreground leading-relaxed">
-        Sign in, and <span className="font-mono text-foreground">nebutra login</span> in your
-        terminal, to see what your agent proposes here without copying links.
+        Sign in to save looks. Your agent can then pull them with{" "}
+        <span className="font-mono text-foreground">nebutra studio pull --latest</span>.
       </p>
     );
   }
@@ -105,7 +105,7 @@ export function YourPresets({
       </div>
       {state.presets.length === 0 ? (
         <p className="text-2xs text-muted-foreground">
-          Nothing saved yet. Your agent's proposals land here too.
+          Nothing saved yet. Your agent can pull what you save here.
         </p>
       ) : (
         <ul className="grid gap-1">
@@ -126,10 +126,7 @@ export function YourPresets({
                 }}
               >
                 <span className="min-w-0 truncate text-foreground text-xs">{p.name}</span>
-                <span className="shrink-0 text-2xs text-muted-foreground">
-                  {p.source === "web" ? "" : `${p.source} · `}
-                  {ago(p.updatedAt)}
-                </span>
+                <span className="shrink-0 text-2xs text-muted-foreground">{ago(p.updatedAt)}</span>
               </Button>
             </li>
           ))}
