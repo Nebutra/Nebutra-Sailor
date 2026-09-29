@@ -171,7 +171,7 @@ const packageGroups = [
   },
   {
     id: "ops",
-    description: "- CLI, create-sailor, presets, Sanity, Supabase, compliance",
+    description: "- The nebutra CLI, create-sailor, presets, Sanity helpers and China compliance",
     icon: React.createElement(Settings, { className: "h-4 w-4 text-muted-foreground" }),
     children: ["china-compliance", "cli", "create-sailor", "preset", "sanity"],
   },

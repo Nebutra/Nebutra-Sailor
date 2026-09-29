@@ -40,7 +40,7 @@ export function GenerationContextGlyph(_props: SubpackageGlyphProps) {
           <span className="font-mono text-[11px] text-neutral-10">· 24.7%</span>
         </div>
         <Badge variant="gray-subtle" className="font-mono text-[10px]">
-          claude-sonnet-4-6
+          claude-sonnet-5
         </Badge>
       </div>
 

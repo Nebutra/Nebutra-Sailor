@@ -6,10 +6,6 @@ const featuresPageSource = readFileSync(
   path.join(process.cwd(), "src/app/[lang]/(marketing)/features/page.tsx"),
   "utf8",
 );
-const capabilityFolderShowcaseSource = readFileSync(
-  path.join(process.cwd(), "src/components/landing/features/CapabilityFolderShowcase.tsx"),
-  "utf8",
-);
 const capabilityCardSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/capability-cards/CapabilityCard.tsx"),
   "utf8",
@@ -95,24 +91,12 @@ const blogMotionShowcaseSource = readFileSync(
 const EXTERNAL_TASTE_PREFIX = ["cu", "lt-"].join("");
 
 describe("landing UI governance", () => {
-  it("keeps feature exploration CTAs semantic and localized", () => {
-    expect(featuresPageSource).toContain("<CapabilityFolderShowcase");
-    expect(capabilityFolderShowcaseSource).toContain("SECTION_COPY");
-    expect(capabilityFolderShowcaseSource).toContain(
-      'detail: { en: "View artifact", zh: "查看能力" }',
-    );
-    expect(capabilityFolderShowcaseSource).toContain("{SECTION_COPY.detail[localeKey]}");
-  });
-
-  it("consumes the design-system artifact shift pattern for capability cards", () => {
-    expect(capabilityFolderShowcaseSource).toContain('from "@nebutra/ui/patterns"');
-    expect(capabilityFolderShowcaseSource).toContain('from "./feature-group-code-samples"');
-    expect(capabilityFolderShowcaseSource).not.toContain('from "./feature-code-samples"');
-    expect(capabilityFolderShowcaseSource).toContain("<ArtifactShiftCard");
-    expect(capabilityFolderShowcaseSource).toContain("<ArtifactShiftCardPreview");
-    expect(capabilityFolderShowcaseSource).toContain("<ArtifactShiftCardFooter>");
-    expect(capabilityFolderShowcaseSource).not.toContain("function CapabilityArtifactPreview");
-    expect(capabilityFolderShowcaseSource).not.toContain(EXTERNAL_TASTE_PREFIX);
+  it("opens the package index the way every Nebutra site page opens", () => {
+    // src/nebutra/DESIGN.md: Intro + Band rhythm, no two-tone headline template.
+    expect(featuresPageSource).toContain('from "@/nebutra/ui/page"');
+    expect(featuresPageSource).toContain("<Intro");
+    expect(featuresPageSource).not.toContain("AuroraText");
+    expect(featuresPageSource).not.toContain(EXTERNAL_TASTE_PREFIX);
   });
 
   it("consumes design-system kinetic patterns for the live home capability and design-system surfaces", () => {

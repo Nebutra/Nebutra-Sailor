@@ -23,7 +23,7 @@ const ROWS: ReadonlyArray<ConfigRow> = [
   {
     key: "config.ai.defaultModel",
     type: "string",
-    detail: 'default "claude-sonnet-4-6"',
+    detail: 'default "claude-sonnet-5"',
   },
   { key: "config.ai.maxTokens", type: "number", detail: "default 4096" },
   { key: "config.cache.ttl", type: "number", detail: "default 60" },

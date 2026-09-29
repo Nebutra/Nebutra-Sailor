@@ -1,26 +1,34 @@
-import { ArrowRight, ArrowUpRight, Box, GitBranch, Shield } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Badge, CodeBlock, MagicCard } from "@nebutra/ui/primitives";
+import { CodeBlock } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { FeatureHero } from "@/components/landing/features/FeatureHero";
-import { getCodeSampleForEntry } from "@/components/landing/features/feature-code-samples";
+import {
+  CAPABILITY_FOLDERS,
+  type CapabilityFolder,
+} from "@/components/landing/features/capability-folder-data";
+import {
+  type FeatureCodeSample,
+  getCodeSampleForEntry,
+} from "@/components/landing/features/feature-code-samples";
 import { getGroupTokens } from "@/components/landing/features/feature-group-tokens";
 import { getSubpackageGlyph } from "@/components/landing/features/glyphs";
 import {
   getFeatureSummary,
-  getFeatureTitle,
   getGroupLabel,
   getPackageFeatureEntry,
-  getRelatedEntries,
   PACKAGE_FEATURE_ENTRIES,
+  type PackageFeatureEntry,
   toSerializablePackageFeatureEntry,
 } from "@/components/landing/features/package-feature-data";
-import { resolveShowcase } from "@/components/landing/features/showcases";
-import { ShowcaseFrame } from "@/components/landing/features/showcases/showcase-frame";
+import {
+  PackageCard,
+  PackageRows,
+  sourceSentence,
+  TopologyList,
+} from "@/components/landing/features/package-parts";
+import { getPackageShowcase } from "@/components/landing/features/showcases";
+import { Link } from "@/i18n/navigation";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { createPublicDocsUrl } from "@/lib/docs-links";
@@ -28,52 +36,25 @@ import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { isHighSignalFeatureEntry } from "@/lib/seo/route-registry";
 import { defaultPublicationSet, unpublishedSet } from "@/lib/seo/site-routes";
+import { REPO_URL } from "@/nebutra/data/repo";
+import { Band, Intro } from "@/nebutra/ui/page";
 
 type FeatureDetailPageProps = {
   params: Promise<{ lang: string; name: string }>;
 };
 
-const localeForCopy = (lang: string): "en" | "zh" => (isZhUiLocale(lang) ? "zh" : "en");
+type Lang = "en" | "zh";
 
 const COPY = {
-  back: { en: "All features", zh: "全部能力" },
-  package: { en: "package", zh: "能力包" },
-  surface: { en: "surface", zh: "能力面" },
-  openDocs: { en: "Open docs", zh: "打开文档" },
-  related: { en: "More in domain", zh: "同能力域" },
-  explore: { en: "Explore", zh: "查看" },
-  kindPackage: { en: "Package", zh: "能力包" },
-  kindGroup: { en: "Group", zh: "能力组" },
-  kindCapability: { en: "Capability", zh: "能力面" },
-  // Governance strip
-  govStability: { en: "Stability", zh: "稳定性" },
-  govStable: { en: "Stable", zh: "稳定" },
-  govBoundary: { en: "Boundary", zh: "边界" },
-  govOwners: { en: "Owners", zh: "归属" },
-  govScope: { en: "Scope", zh: "作用域" },
-  govScopeTenant: { en: "Tenant-scoped", zh: "按租户隔离" },
-  govScopeRequest: { en: "Request-scoped", zh: "按请求隔离" },
-  govScopeGlobal: { en: "Global", zh: "全局" },
-  // Code section
-  codeUsage: { en: "Usage", zh: "使用方式" },
+  allPackages: { en: "Packages", zh: "全部功能包" },
+  docs: { en: "Docs", zh: "文档" },
+  source: { en: "Source", zh: "源码" },
+  inCode: { en: "In code", zh: "代码里" },
+  owns: { en: "What it owns", zh: "它负责什么" },
+  stops: { en: "Where it stops", zh: "它的边界" },
+  proof: { en: "How we know it works", zh: "怎么证明它能用" },
+  packages: { en: "Packages", zh: "功能包" },
 } as const;
-
-function kindLabel(kind: "package" | "group" | "capability", locale: "en" | "zh") {
-  if (kind === "package") return COPY.kindPackage[locale];
-  if (kind === "group") return COPY.kindGroup[locale];
-  return COPY.kindCapability[locale];
-}
-
-/**
- * Derive the runtime scope label from the capability group. iam runs per
- * tenant, gateway runs per request, everything else is treated as global.
- * Returning a single tag avoids inventing per-package metadata we don't have.
- */
-function scopeLabel(group: string, locale: "en" | "zh") {
-  if (group === "iam" || group === "commerce") return COPY.govScopeTenant[locale];
-  if (group === "gateway") return COPY.govScopeRequest[locale];
-  return COPY.govScopeGlobal[locale];
-}
 
 /**
  * Params outside generateStaticParams render on demand as a blocking route
@@ -89,6 +70,19 @@ export function generateStaticParams() {
   return prerenderDefaultLocale(highSignalEntries, (entry) => ({ name: entry.slug }));
 }
 
+function folderFor(entry: PackageFeatureEntry): CapabilityFolder | undefined {
+  return CAPABILITY_FOLDERS.find((f) => f.id === entry.group);
+}
+
+function domainOf(entry: PackageFeatureEntry): PackageFeatureEntry | undefined {
+  return PACKAGE_FEATURE_ENTRIES.find((e) => e.kind !== "package" && e.group === entry.group);
+}
+
+function titleOf(entry: PackageFeatureEntry, locale: Lang): string {
+  if (entry.kind === "package") return entry.label;
+  return folderFor(entry)?.title[locale] ?? getGroupLabel(entry.group, locale);
+}
+
 export async function generateMetadata({ params }: FeatureDetailPageProps): Promise<Metadata> {
   const { lang, name } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
@@ -96,14 +90,14 @@ export async function generateMetadata({ params }: FeatureDetailPageProps): Prom
   const entry = getPackageFeatureEntry(name);
   if (!entry) return {};
 
-  const locale = localeForCopy(lang);
+  const locale: Lang = isZhUiLocale(lang) ? "zh" : "en";
   const path = `/features/${entry.slug}`;
   // A `package` entry is auto-flattened from the file tree: served (and reachable
-  // via getRelatedEntries) but never a canonical document, so it is published in
+  // from its domain page) but never a canonical document, so it is published in
   // zero locales rather than being an indexable near-duplicate orphan that no
   // sitemap lists.
   return buildPageMetadata({
-    title: `${getFeatureTitle(entry, locale)} | Nebutra`,
+    title: `${titleOf(entry, locale)} — Nebutra`,
     description: getFeatureSummary(entry, locale),
     path,
     locale: lang as Locale,
@@ -120,288 +114,256 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   const entry = getPackageFeatureEntry(name);
   if (!entry) notFound();
 
-  const locale = localeForCopy(lang);
   setRequestLocale(lang as Locale);
+  const locale: Lang = isZhUiLocale(lang) ? "zh" : "en";
 
-  const summary = getFeatureSummary(entry, locale);
-  const groupLabel = getGroupLabel(entry.group, locale);
-  const meta = getGroupTokens(entry.group);
+  return entry.kind === "package" ? (
+    <PackagePage entry={entry} locale={locale} />
+  ) : (
+    <DomainPage entry={entry} locale={locale} />
+  );
+}
+
+type PageProps = { entry: PackageFeatureEntry; locale: Lang };
+
+/** A domain: how it fits together, what it owns, its code, and every package in it. */
+function DomainPage({ entry, locale }: PageProps) {
+  const folder = folderFor(entry);
   const sample = getCodeSampleForEntry(entry);
-  const Showcase = resolveShowcase(entry.slug, entry.group);
-  const related = getRelatedEntries(entry, 4);
-  const docsHref = createPublicDocsUrl(meta.docsPath);
-  const serializableEntry = toSerializablePackageFeatureEntry(entry);
-
-  const suffix = entry.kind === "package" ? COPY.package[locale] : COPY.surface[locale];
+  const packages = entry.children
+    .map((slug) => getPackageFeatureEntry(slug))
+    .filter((e): e is PackageFeatureEntry => e?.kind === "package");
+  const withGlyph = packages.filter((p) => getSubpackageGlyph(p.slug));
+  const withoutGlyph = packages.filter((p) => !getSubpackageGlyph(p.slug));
+  const hrefFor = (p: PackageFeatureEntry) => `/features/${p.slug}`;
 
   return (
-    <main
-      className="relative flex-1 overflow-hidden bg-background text-foreground"
-      id="main-content"
-    >
-      {/* HERO */}
-      <FeatureHero
-        backHref={`/${lang}/features`}
-        backLabel={COPY.back[locale]}
-        tokens={meta}
-        eyebrow={groupLabel}
-        path={entry.path}
-        titlePrefix={entry.label}
-        titleSuffix={suffix}
-        summary={summary}
-        primaryCtaHref={docsHref}
-        primaryCtaLabel={COPY.openDocs[locale]}
-      />
-
-      {/* GOVERNANCE — small below-hero strip giving the package's
- stability, scope, and boundary at a glance. */}
-      <section className="relative z-10 mx-auto -mt-6 max-w-wide px-4 pb-10 sm:px-6 lg:px-8">
-        <AnimateIn preset="fade" inView delay={0.05}>
-          <dl className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border/40 pt-5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.22em]">
-            <div className="flex items-center gap-2">
-              <Shield aria-hidden="true" className="size-3 text-foreground/60" />
-              <dt className="sr-only">{COPY.govStability[locale]}</dt>
-              <dd className="flex items-center gap-1.5">
-                <span
-                  className="inline-block size-1.5 rounded-full bg-success"
-                  aria-hidden="true"
-                />
-                <span className="text-foreground/85">{COPY.govStable[locale]}</span>
-              </dd>
-            </div>
-            <div className="flex items-center gap-2">
-              <Box aria-hidden="true" className="size-3 text-foreground/60" />
-              <dt className="sr-only">{COPY.govScope[locale]}</dt>
-              <dd className="text-foreground/85">{scopeLabel(entry.group, locale)}</dd>
-            </div>
-            <div className="flex items-center gap-2">
-              <GitBranch aria-hidden="true" className="size-3 text-foreground/60" />
-              <dt className="sr-only">{COPY.govBoundary[locale]}</dt>
-              <dd
-                className="font-mono normal-case tracking-normal text-foreground/85"
-                translate="no"
-              >
-                {entry.path}
-              </dd>
-            </div>
-            <div className="ml-auto hidden items-center gap-2 md:flex">
-              <dt className="sr-only">{COPY.govOwners[locale]}</dt>
-              <dd
-                className="font-mono normal-case tracking-normal text-foreground/85"
-                translate="no"
-              >
-                @nebutra/{entry.group}
-              </dd>
-            </div>
-          </dl>
-        </AnimateIn>
+    <main id="main-content">
+      <section className="px-8 pt-28 pb-20 xl:px-16">
+        <BackLink href={`/features`} label={COPY.allPackages[locale]} />
+        <Intro
+          level={1}
+          className="mt-8"
+          title={titleOf(entry, locale)}
+          lead={folder ? folder.summary[locale] : getFeatureSummary(entry, locale)}
+          cn={locale === "en" ? folder?.title.zh : undefined}
+        />
+        <SourceLine
+          entry={entry}
+          locale={locale}
+          sentence={folder ? sourceSentence(folder, locale) : undefined}
+        />
       </section>
 
-      {/* SHOWCASE */}
-      {Showcase ? (
-        <section
-          id="showcase"
-          className="relative z-10 mx-auto max-w-wide scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
-        >
-          <AnimateIn preset="fadeUp" inView>
-            <Showcase entry={serializableEntry} locale={locale} />
-          </AnimateIn>
-        </section>
+      {folder ? (
+        <Band>
+          <Intro title={folder.topology.title[locale]} lead={folder.topology.caption[locale]} />
+          <div className="mt-12 max-w-4xl">
+            <TopologyList nodes={folder.topology.nodes} locale={locale} />
+          </div>
+        </Band>
       ) : null}
 
-      {/* CODE — wrapped in ShowcaseFrame so it shares panel chrome with the Showcase above */}
-      <section
-        id="usage"
-        className="relative z-10 mx-auto max-w-wide scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
-      >
-        <AnimateIn preset="fadeUp" inView>
-          <div className="mb-4 flex items-end justify-between gap-4 border-b border-border/40 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em]">
-                {COPY.codeUsage[locale]}
-              </span>
-              <Badge
-                variant="secondary"
-                size="sm"
-                className="font-mono normal-case tracking-normal"
-                translate="no"
-              >
-                {sample.filename}
-              </Badge>
+      {folder ? (
+        <Band>
+          <div className="grid max-w-6xl grid-cols-1 gap-12 md:grid-cols-3">
+            <Principles heading={COPY.owns[locale]} items={folder.owns} locale={locale} />
+            <Principles heading={COPY.stops[locale]} items={folder.boundaries} locale={locale} />
+            <Principles heading={COPY.proof[locale]} items={folder.proof} locale={locale} />
+          </div>
+        </Band>
+      ) : null}
+
+      {sample ? <CodeBand sample={sample} label={titleOf(entry, locale)} locale={locale} /> : null}
+
+      {packages.length > 0 ? (
+        <Band>
+          <Intro
+            title={COPY.packages[locale]}
+            lead={
+              locale === "zh"
+                ? `${entry.path} 下的 ${packages.length} 个包。`
+                : `${packages.length} packages in ${entry.path}.`
+            }
+          />
+          {withGlyph.length > 0 ? (
+            <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {withGlyph.map((p) => (
+                <PackageCard key={p.slug} entry={p} href={hrefFor(p)} locale={locale} />
+              ))}
             </div>
-            <Badge
-              variant="outline"
-              size="sm"
-              className="font-mono uppercase tracking-[0.18em]"
-              translate="no"
-            >
-              {sample.language}
-            </Badge>
-          </div>
-          <ShowcaseFrame className="border-0 p-0! md:p-0! overflow-hidden">
-            <CodeBlock
-              filename={sample.filename}
-              language={sample.language}
-              highlightedLines={sample.highlightedLines}
-              maxHeight="540px"
-              aria-label={`${entry.label} usage example`}
-            >
-              {sample.code}
-            </CodeBlock>
-          </ShowcaseFrame>
-        </AnimateIn>
-      </section>
-
-      {/* SUB-PACKAGES */}
-      {entry.children.length > 0 ? (
-        <section
-          id="sub-packages"
-          className="relative z-10 mx-auto max-w-wide scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
-        >
-          <AnimateInGroup
-            stagger="fast"
-            className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
-          >
-            {entry.children.map((child) => {
-              const childEntry = getPackageFeatureEntry(child);
-              // Strip the trailing " package" / "能力包" so we don't repeat the
-              // Kind badge next to it.
-              const childTitle = childEntry?.label ?? child;
-              const childDesc = childEntry
-                ? getFeatureSummary(childEntry, locale)
-                : isZhUiLocale(locale)
-                  ? `${child} — ${entry.label} 能力域中的子 package。`
-                  : `${child} — sub-package inside ${entry.label}.`;
-              const childKind = childEntry?.kind ?? "package";
-              const Glyph = getSubpackageGlyph(child);
-              const serializableChildEntry = childEntry
-                ? toSerializablePackageFeatureEntry(childEntry)
-                : null;
-              return (
-                <Link
-                  key={child}
-                  href={`/${lang}/features/${child}`}
-                  className="group/sub block rounded-[var(--radius-card)]"
-                >
-                  <MagicCard
-                    className="h-full rounded-[var(--radius-card)] overflow-hidden"
-                    gradientSize={220}
-                    gradientFrom={meta.auroraColors[0]}
-                    gradientTo={meta.auroraColors[1]}
-                  >
-                    {/* Bespoke glyph hero (if a designer landed one) */}
-                    {Glyph && serializableChildEntry ? (
-                      <div className="border-b border-border/40 bg-background/40 p-4">
-                        <Glyph entry={serializableChildEntry} locale={locale} />
-                      </div>
-                    ) : null}
-
-                    <div className="flex flex-col p-6">
-                      <div className="mb-3 flex items-center justify-between gap-2">
-                        <span className="font-mono text-foreground/85 text-xs" translate="no">
-                          {child}
-                        </span>
-                        <Badge
-                          variant="outline"
-                          size="sm"
-                          className="font-mono uppercase tracking-[0.18em]"
-                        >
-                          {kindLabel(childKind, locale)}
-                        </Badge>
-                      </div>
-                      <h3
-                        className="font-semibold text-foreground text-lg leading-snug"
-                        translate="no"
-                      >
-                        {childTitle}
-                      </h3>
-                      <p className="mt-2 line-clamp-3 text-muted-foreground text-sm leading-relaxed">
-                        {childDesc}
-                      </p>
-                      <span className="mt-4 inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.18em] transition-colors group-hover/sub:text-foreground">
-                        {COPY.explore[locale]}
-                        <ArrowUpRight aria-hidden="true" className="size-3" />
-                      </span>
-                    </div>
-                  </MagicCard>
-                </Link>
-              );
-            })}
-          </AnimateInGroup>
-        </section>
-      ) : null}
-
-      {/* RELATED */}
-      {related.length > 0 ? (
-        <section
-          id="related"
-          className="relative z-10 mx-auto max-w-wide scroll-mt-24 px-4 pt-12 pb-[var(--section-gap-lg)] sm:px-6 lg:px-8"
-        >
-          <div className="mb-6 flex items-center justify-between border-t border-border/40 pt-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em]">
-            <span>
-              {COPY.related[locale]} · {groupLabel}
-            </span>
-            <Link
-              className="hidden items-center gap-1.5 transition-colors hover:text-foreground sm:inline-flex"
-              href={`/${lang}/features#capability-${entry.group}`}
-            >
-              {isZhUiLocale(locale) ? "查看能力域" : "View domain"}
-              <ArrowRight aria-hidden="true" className="size-3" />
-            </Link>
-          </div>
-
-          <AnimateInGroup
-            stagger="fast"
-            className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
-          >
-            {related.map((sibling) => {
-              const siblingDesc = getFeatureSummary(sibling, locale);
-              return (
-                <Link
-                  key={sibling.slug}
-                  href={`/${lang}/features/${sibling.slug}`}
-                  className="group/sib block rounded-[var(--radius-card)]"
-                >
-                  <MagicCard
-                    className="h-full rounded-[var(--radius-card)] p-5"
-                    gradientSize={180}
-                    gradientFrom={meta.auroraColors[0]}
-                    gradientTo={meta.auroraColors[2]}
-                  >
-                    <div className="flex h-full flex-col">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="font-mono text-foreground/85 text-xs" translate="no">
-                          {sibling.label}
-                        </span>
-                        <Badge
-                          variant="outline"
-                          size="sm"
-                          className="font-mono uppercase tracking-[0.18em]"
-                        >
-                          {kindLabel(sibling.kind, locale)}
-                        </Badge>
-                      </div>
-                      <span
-                        className="mt-3 font-mono text-[10px] text-muted-foreground/80 normal-case tracking-normal"
-                        translate="no"
-                      >
-                        {sibling.path}
-                      </span>
-                      <p className="mt-3 line-clamp-3 text-muted-foreground text-sm leading-relaxed">
-                        {siblingDesc}
-                      </p>
-                      <span className="mt-auto inline-flex items-center gap-1 pt-5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.18em] transition-colors group-hover/sib:text-foreground">
-                        {COPY.explore[locale]}
-                        <ArrowUpRight aria-hidden="true" className="size-3" />
-                      </span>
-                    </div>
-                  </MagicCard>
-                </Link>
-              );
-            })}
-          </AnimateInGroup>
-        </section>
+          ) : null}
+          {withoutGlyph.length > 0 ? (
+            <div className="mt-12 max-w-4xl">
+              <PackageRows entries={withoutGlyph} hrefFor={hrefFor} locale={locale} />
+            </div>
+          ) : null}
+        </Band>
       ) : null}
     </main>
+  );
+}
+
+/** One package: what it is, what it looks like at work, its code, its neighbours. */
+function PackagePage({ entry, locale }: PageProps) {
+  const domain = domainOf(entry);
+  const Showcase = getPackageShowcase(entry.slug);
+  const Glyph = Showcase ? null : getSubpackageGlyph(entry.slug);
+  const sample = getCodeSampleForEntry(entry);
+  const serializable = toSerializablePackageFeatureEntry(entry);
+  const siblings = (domain?.children ?? [])
+    .filter((slug) => slug !== entry.slug)
+    .map((slug) => getPackageFeatureEntry(slug))
+    .filter((e): e is PackageFeatureEntry => e?.kind === "package")
+    .slice(0, 6);
+  const domainTitle = domain ? titleOf(domain, locale) : entry.group;
+
+  return (
+    <main id="main-content">
+      <section className="px-8 pt-28 pb-20 xl:px-16">
+        <BackLink
+          href={`/features/${domain?.slug ?? ""}`}
+          label={domain ? domainTitle : COPY.allPackages[locale]}
+        />
+        <Intro
+          level={1}
+          className="mt-8"
+          title={<span translate="no">{entry.label}</span>}
+          lead={getFeatureSummary(entry, locale)}
+        />
+        <SourceLine entry={entry} locale={locale} />
+      </section>
+
+      {Showcase ? (
+        <Band>
+          <Showcase entry={serializable} locale={locale} />
+        </Band>
+      ) : Glyph ? (
+        <Band>
+          <div className="max-w-2xl rounded-[var(--radius-card)] border border-border bg-card p-6">
+            <Glyph entry={serializable} locale={locale} />
+          </div>
+        </Band>
+      ) : null}
+
+      {sample ? <CodeBand sample={sample} label={entry.label} locale={locale} /> : null}
+
+      {siblings.length > 0 && domain ? (
+        <Band>
+          <Intro title={locale === "zh" ? `${domainTitle}里的其他包` : `More in ${domainTitle}`} />
+          <div className="mt-12 max-w-4xl">
+            <PackageRows
+              entries={siblings}
+              hrefFor={(p) => `/features/${p.slug}`}
+              locale={locale}
+            />
+          </div>
+          <Link
+            href={`/features/${domain.slug}`}
+            className="mt-10 inline-flex items-center gap-2 text-sm text-secondary-foreground transition-colors duration-micro hover:text-foreground"
+          >
+            {locale === "zh"
+              ? `全部 ${domain.children.length} 个包`
+              : `All ${domain.children.length} packages`}
+            <span aria-hidden>→</span>
+          </Link>
+        </Band>
+      ) : null}
+    </main>
+  );
+}
+
+function BackLink({ href, label }: { href: string; label: string }) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex items-center gap-2 text-sm text-secondary-foreground transition-colors duration-micro hover:text-foreground"
+    >
+      <span aria-hidden>←</span>
+      {label}
+    </Link>
+  );
+}
+
+/** Where the code lives, and the two ways to read more: the docs and the source. */
+function SourceLine({
+  entry,
+  locale,
+  sentence,
+}: {
+  entry: PackageFeatureEntry;
+  locale: Lang;
+  sentence?: string;
+}) {
+  const link =
+    "text-secondary-foreground underline-offset-4 transition-colors duration-micro hover:text-foreground hover:underline";
+  return (
+    <p className="mt-8 text-sm text-muted-foreground">
+      {sentence ? (
+        sentence
+      ) : (
+        <code className="font-mono" translate="no">
+          {entry.path}
+        </code>
+      )}{" "}
+      ·{" "}
+      <a href={`${REPO_URL}/tree/main/${entry.path}`} className={link}>
+        {COPY.source[locale]} ↗
+      </a>{" "}
+      ·{" "}
+      <a href={createPublicDocsUrl(getGroupTokens(entry.group).docsPath)} className={link}>
+        {COPY.docs[locale]} ↗
+      </a>
+    </p>
+  );
+}
+
+function Principles({
+  heading,
+  items,
+  locale,
+}: {
+  heading: string;
+  items: CapabilityFolder["owns"];
+  locale: Lang;
+}) {
+  return (
+    <div>
+      <h2 className="font-heading text-lg text-foreground">{heading}</h2>
+      <ul className="mt-4 space-y-3">
+        {items.map((item) => (
+          <li key={item.en} className="text-sm text-muted-foreground">
+            {item[locale]}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function CodeBand({
+  sample,
+  label,
+  locale,
+}: {
+  sample: FeatureCodeSample;
+  label: string;
+  locale: Lang;
+}) {
+  return (
+    <Band>
+      <Intro title={COPY.inCode[locale]} />
+      <div className="mt-12 max-w-4xl">
+        <CodeBlock
+          filename={sample.filename}
+          language={sample.language}
+          highlightedLines={sample.highlightedLines}
+          maxHeight="540px"
+          aria-label={`${label} usage example`}
+        >
+          {sample.code}
+        </CodeBlock>
+      </div>
+    </Band>
   );
 }
