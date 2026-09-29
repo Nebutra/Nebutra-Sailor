@@ -1,5 +1,13 @@
 # @nebutra/integration-vault
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/errors@4.0.1
+  - @nebutra/vault@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes

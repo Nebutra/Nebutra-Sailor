@@ -25,41 +25,41 @@
 
 export const NEBUTRA_PACKAGE_VERSIONS: Record<string, string> = {
   // Design layer (consumed by every scaffolded app)
-  "@nebutra/ui": "^4.0.0",
-  "@nebutra/tokens": "^4.0.0",
-  "@nebutra/icons": "^4.0.0",
-  "@nebutra/brand": "^4.0.0",
-  "@nebutra/design-tokens": "^4.0.0",
-  "@nebutra/design-sync": "^4.0.0",
+  "@nebutra/ui": "^4.0.1",
+  "@nebutra/tokens": "^4.0.1",
+  "@nebutra/icons": "^4.0.1",
+  "@nebutra/brand": "^4.0.1",
+  "@nebutra/design-tokens": "^4.0.1",
+  "@nebutra/design-sync": "^4.0.1",
 
   // IAM
-  "@nebutra/identity": "^4.0.0",
-  "@nebutra/tenant": "^4.0.0",
-  "@nebutra/permissions": "^4.0.0",
-  "@nebutra/vault": "^4.0.0",
-  "@nebutra/audit": "^4.0.0",
+  "@nebutra/identity": "^4.0.1",
+  "@nebutra/tenant": "^4.0.1",
+  "@nebutra/permissions": "^4.0.1",
+  "@nebutra/vault": "^4.0.1",
+  "@nebutra/audit": "^4.0.1",
 
   // Commerce
-  "@nebutra/billing": "^4.0.0",
-  "@nebutra/contracts": "^4.0.0",
-  "@nebutra/license": "^4.0.0",
-  "@nebutra/metering": "^4.0.0",
+  "@nebutra/billing": "^4.0.1",
+  "@nebutra/contracts": "^4.0.1",
+  "@nebutra/license": "^4.0.1",
+  "@nebutra/metering": "^4.0.1",
 
   // Integrations
-  "@nebutra/queue": "^4.0.0",
-  "@nebutra/search": "^4.0.0",
-  "@nebutra/cache": "^4.0.0",
-  "@nebutra/notifications": "^4.0.0",
-  "@nebutra/webhooks": "^4.0.0",
-  "@nebutra/uploads": "^4.0.0",
-  "@nebutra/email": "^4.0.0",
+  "@nebutra/queue": "^4.0.1",
+  "@nebutra/search": "^4.0.1",
+  "@nebutra/cache": "^4.0.1",
+  "@nebutra/notifications": "^4.0.1",
+  "@nebutra/webhooks": "^4.0.1",
+  "@nebutra/uploads": "^4.0.1",
+  "@nebutra/email": "^4.0.1",
 
   // AI
-  "@nebutra/agents": "^4.0.0",
-  "@nebutra/mcp": "^4.0.0",
+  "@nebutra/agents": "^4.0.1",
+  "@nebutra/mcp": "^4.0.1",
 
   // Platform
-  "@nebutra/logger": "^4.0.0",
+  "@nebutra/logger": "^4.0.1",
 };
 
 /**

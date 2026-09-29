@@ -1,5 +1,14 @@
 # @nebutra/i18n
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/ui@4.0.1
+  - @nebutra/brand@4.0.1
+  - @nebutra/icons@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes

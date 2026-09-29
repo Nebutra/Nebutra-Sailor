@@ -1,5 +1,13 @@
 # @nebutra/workflow-runtime
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agent-runtime@4.0.1
+  - @nebutra/logger@4.0.1
+
 ## 0.1.4
 
 ### Patch Changes

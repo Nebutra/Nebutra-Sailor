@@ -1,5 +1,30 @@
 # @nebutra/landing
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [[`076251c`](https://github.com/Nebutra/Nebutra-Sailor/commit/076251c6f5a1d74bf98192727d0b1895d88fe607)]:
+  - @nebutra/fonts@4.0.1
+  - @nebutra/tokens@4.0.1
+  - @nebutra/design-sync@4.0.1
+  - @nebutra/theme@4.0.1
+  - @nebutra/ui@4.0.1
+  - @nebutra/status@0.1.2
+  - @nebutra/marketing@0.1.7
+  - @nebutra/auth@3.0.1
+  - @nebutra/i18n@4.0.1
+  - @nebutra/ai-providers@4.0.1
+  - @nebutra/billing@4.0.1
+  - @nebutra/brand@4.0.1
+  - @nebutra/design-tokens@4.0.1
+  - @nebutra/email@4.0.1
+  - @nebutra/icons@4.0.1
+  - @nebutra/license@4.0.1
+  - @nebutra/logger@4.0.1
+  - @nebutra/blog@0.1.4
+  - @nebutra/db@0.1.6
+
 ## 0.1.6
 
 ### Patch Changes

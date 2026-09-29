@@ -1,5 +1,12 @@
 # @nebutra/email
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/brand@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @nebutra/admin-tooling
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/audit@4.0.1
+  - @nebutra/logger@4.0.1
+
 ## 3.0.0
 
 ### Patch Changes

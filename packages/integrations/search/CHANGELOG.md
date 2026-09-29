@@ -1,5 +1,12 @@
 # @nebutra/search
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/logger@4.0.1
+
 ## 4.0.0
 
 ### Minor Changes

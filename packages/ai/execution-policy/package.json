@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/execution-policy",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Shared command permission and approval policy primitives for runtime and execution packages",
   "private": false,
   "license": "MIT",

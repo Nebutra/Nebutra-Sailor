@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/tokens",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Unified theme tokens and theme-provider entry for Nebutra apps",
   "private": false,
   "nebutra": {
