@@ -12,7 +12,7 @@ import {
   type PackageFeatureEntry,
 } from "@/components/landing/features/package-feature-data";
 import {
-  PackageRows,
+  GlyphBento,
   sourceSentence,
   TopologyList,
 } from "@/components/landing/features/package-parts";
@@ -65,13 +65,30 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
 
   return (
     <main id="main-content">
-      <section className="px-8 pt-28 pb-20 xl:px-16">
-        <Intro
-          level={1}
-          title="Packages"
-          lead={`${PACKAGE_COUNT} packages in ${DOMAINS.length} domains: every layer a SaaS needs, already written and tested, in one repository. Each domain is below, with how it fits together and every package it holds.`}
-          cn="一个仓库，每一层都已经写好。"
-        />
+      <section className="relative isolate overflow-hidden px-8 pt-28 pb-24 xl:px-16">
+        <div aria-hidden className="site-hero-glow" />
+        <div className="relative z-10">
+          <Intro
+            level={1}
+            title={
+              locale === "zh" ? (
+                <>
+                  每一层，都已经<span className="signature">写好。</span>
+                </>
+              ) : (
+                <>
+                  Every layer, already <span className="signature">written.</span>
+                </>
+              )
+            }
+            cn={locale === "zh" ? undefined : "每一层，都已经写好。"}
+            lead={
+              locale === "zh"
+                ? `${PACKAGE_COUNT} 个包，${DOMAINS.length} 个能力域：一个 SaaS 需要的每一层都写好、测好，放在同一个仓库里。下面逐个能力域展开：它怎么组织，里面有哪些包。`
+                : `${PACKAGE_COUNT} packages in ${DOMAINS.length} domains: every layer a SaaS needs, written, tested and in one repository. Each domain is below, with how it fits together and every package it holds.`
+            }
+          />
+        </div>
       </section>
 
       {orderedDomains().map((domain) => (
@@ -101,6 +118,14 @@ function DomainBand({ domain, locale }: { domain: PackageFeatureEntry; locale: "
     .map((slug) => getPackageFeatureEntry(slug))
     .filter((e): e is PackageFeatureEntry => e?.kind === "package");
 
+  // The domain's load-bearing packages lead the bento; a domain without a
+  // capability folder (ops) leads with its first packages.
+  const focus = (folder?.focusPackages ?? [])
+    .map((name) => getPackageFeatureEntry(name.replace(/^@nebutra\//, "")))
+    .filter((e): e is PackageFeatureEntry => e?.kind === "package");
+  const lead =
+    focus.length >= 3 ? focus : [...focus, ...packages.filter((p) => !focus.includes(p))];
+
   return (
     <Band id={`capability-${domain.slug}`}>
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
@@ -112,6 +137,11 @@ function DomainBand({ domain, locale }: { domain: PackageFeatureEntry; locale: "
           {folder ? (
             <p className="mt-6 text-sm text-muted-foreground">{sourceSentence(folder, locale)}</p>
           ) : null}
+          {folder ? (
+            <div className="mt-10">
+              <TopologyList nodes={folder.topology.nodes} locale={locale} compact />
+            </div>
+          ) : null}
           <Link
             href={`/features/${domain.slug}`}
             className="mt-8 inline-flex items-center gap-2 text-base text-secondary-foreground transition-colors duration-micro hover:text-foreground"
@@ -121,16 +151,12 @@ function DomainBand({ domain, locale }: { domain: PackageFeatureEntry; locale: "
           </Link>
         </div>
 
-        {folder ? (
-          <div className="self-start">
-            <TopologyList nodes={folder.topology.nodes} locale={locale} />
-          </div>
-        ) : (
-          <PackageRows entries={packages} hrefFor={(p) => `/features/${p.slug}`} locale={locale} />
-        )}
+        <div className="self-start lg:sticky lg:top-24">
+          <GlyphBento entries={lead} locale={locale} />
+        </div>
       </div>
 
-      {folder && packages.length > 0 ? (
+      {packages.length > 0 ? (
         <p className="mt-12 flex flex-wrap gap-x-5 gap-y-2 text-sm">
           {packages.map((p) => (
             <Link
