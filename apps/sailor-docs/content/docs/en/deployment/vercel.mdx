@@ -1,93 +1,53 @@
 ---
-title: Vercel Deployment
-description: Deploy Nebutra frontends on Vercel — marketing and docs today; optional web/auth cutover; monorepo link paths.
+title: Vercel
+description: Deploying the scaffolded Next.js apps on Vercel — nothing platform-specific required.
 ---
 
-## Overview
+The template doesn't pick Vercel, or rule it out. `apps/web`, `apps/landing`, and `apps/auth` are
+plain Next.js 16 apps; Vercel builds a Next.js app directly (it doesn't need the `standalone`
+output the Docker path uses — that's specifically for self-hosting outside a platform that already
+knows how to run Next).
 
-Nebutra uses **separate Vercel projects** per public surface. That isolates env,
-domains, and deploy quotas.
+<Note>
+  This is a general "the code doesn't block it" guide, not a maintained runbook — Nebutra's own
+  instance doesn't run on Vercel. There's no `nebutra`-specific Vercel integration, project preset,
+  or CLI wrapper; you configure it the same way you would for any Next.js app.
+</Note>
 
-| Vercel project (examples) | App path | Domain (nebutra.com) | Steady state |
-|---------------------------|----------|----------------------|--------------|
-| `nebutra-sailor-landing` / landing | `apps/landing` | `nebutra.com` | **Production on Vercel** |
-| `docs` | `apps/sailor-docs` | `nebutra.com/docs` | **Production on Vercel** |
-| `nebutra-web` | `apps/web` | `app.nebutra.com` | Optional; **ECS is production today** |
-| `nebutra-auth` | `apps/auth` | `auth.nebutra.com` | Optional; **ECS is production today** |
+## What works out of the box
 
-**Do not** treat `backends/gateway` as a default Vercel Functions deploy for
-nebutra.com production — API stays on ECS (or Cloudflare Workers gateway target).
+- **The embedded gateway.** `app/api/[[...route]]/route.ts` (`GATEWAY_MODE=embedded`, the default)
+  is a normal Next.js route handler with `export const runtime = "nodejs"` — Vercel runs it as a
+  serverless function like any other route. No separate API deployment needed.
+- **Environment variables.** Set them in the Vercel project's Environment Variables settings the
+  same way you'd set `.env.production` anywhere else — see
+  [Environment Variables](/configuration/environment-variables).
 
-Web must build with **Next**, not the package default Vite script:
+## What to check before you deploy
 
-```bash
-# apps/web vercel.json / project buildCommand
-cd ../.. && pnpm turbo run build:next --filter=@nebutra/web
-```
-
-## Prerequisites
-
-- [Vercel](https://vercel.com) account + CLI (`pnpm dlx vercel login`)
-- Monorepo linked with correct **Root Directory** (`apps/web`, `apps/auth`, …)
-- Production secrets: `BETTER_AUTH_*`, `DATABASE_URL`, OAuth clients, etc.
-
-## Step-by-step: first link
-
-<Steps>
-  <Step title="Install / login CLI">
-    ```bash
-    pnpm dlx vercel login
-    ```
-  </Step>
-  <Step title="Link each frontend app">
-    From the monorepo root, or from each app directory:
-
-    ```bash
-    cd apps/landing && vercel link
-    cd ../sailor-docs && vercel link
-    # optional cutover targets:
-    cd ../web && vercel link
-    cd ../auth && vercel link
-    ```
-
-    Paths are under `apps/*` or `backends/gateway` — there is **no**
-    `apps/api-gateway` directory.
-  </Step>
-  <Step title="Configure environment variables">
-    Prefer Better Auth for production parity:
-
-    ```bash
-    vercel env add BETTER_AUTH_SECRET production
-    vercel env add BETTER_AUTH_URL production   # https://auth.nebutra.com
-    vercel env add AUTH_COOKIE_DOMAIN production  # .nebutra.com
-    ```
-
-    Use the [environment variables reference](/configuration/environment-variables).
-  </Step>
-  <Step title="Deploy">
-    ```bash
-    cd apps/landing && vercel --prod
-    cd ../sailor-docs && vercel --prod
-    ```
-
-    Or rely on Git integration on `main` (watch **Hobby daily deploy quotas** on
-    monorepos — disable auto-deploy on non-critical projects if you hit limits).
-  </Step>
-</Steps>
-
-## Optional web / auth cutover
-
-Production traffic for `app` / `auth` remains on ECS until DNS is flipped.
-Checklist + preflight (no DNS mutation):
-
-```bash
-node scripts/preflight-web-auth-vercel.mjs
-node scripts/redeploy-web-auth-vercel.mjs   # after green buildCommand + quota
-```
-
-See monorepo `docs/ops/nebutra/web-auth-vercel-cutover.md`.
+- **The build command.** Confirm your project's `apps/web` (and any other app you deploy) actually
+  produces a Next.js build with its `build` script. If your project has customized `apps/web` to
+  build with something other than `next build` by default, set the Vercel project's Build Command
+  to the Next-producing script explicitly (e.g. `pnpm --filter @nebutra/web run build:next` if
+  that's what your project defines) rather than relying on the default.
+- **Root Directory.** In a Turborepo monorepo, point Vercel's Root Directory at the app
+  (`apps/web`, `apps/landing`, …) and let it detect the workspace.
+- **`pnpm db:deploy` still runs separately.** Vercel doesn't run your database migrations for you —
+  run `pnpm db:deploy` against production `DATABASE_URL` as its own step (a GitHub Action, a
+  release step, or by hand) before traffic hits the new deployment. See
+  [Deployment Overview](/deployment/overview).
+- **`GATEWAY_MODE=external`, if you use it, needs its own host.** Vercel serverless functions are
+  not a place to run the gateway standalone (no long-lived process, no background queue workers) —
+  keep `GATEWAY_MODE=embedded` for a Vercel deploy, or host `backends/gateway` somewhere else
+  entirely.
 
 ## Related
 
-- [Deployment Overview](/deployment/overview) — full production split  
-- [Authentication](/guides/authentication) — Better Auth default  
+<CardGroup cols={2}>
+  <Card title="Deployment Overview" icon="rocket" href="/deployment/overview">
+    What create-sailor generates and the embedded/external gateway choice.
+  </Card>
+  <Card title="Environment Variables" icon="key" href="/configuration/environment-variables">
+    Full reference for every variable.
+  </Card>
+</CardGroup>

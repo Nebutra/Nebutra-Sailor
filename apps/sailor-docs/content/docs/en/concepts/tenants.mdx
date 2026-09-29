@@ -1,114 +1,99 @@
 ---
 title: Multi-Tenancy
-description: How Nebutra implements tenant isolation — data, auth, and context across every layer of the stack.
+description: How a Nebutra-Sailor project isolates tenants — data, auth, and context across the stack.
 ---
 
 ## What is a tenant?
 
-In Nebutra, a **tenant** is an organization — a company, team, or workspace that uses your product. Each tenant has its own:
-
-- Members (users with roles)
-- Data (isolated by tenant ID)
-- Billing plan (FREE / PRO / ENTERPRISE)
-- API keys and settings
-
-A single user can belong to multiple tenants and switch between them without logging out.
-
-## Tenant lifecycle
-
-```
-1. User signs up → personal account created
-2. User creates an organization → tenant provisioned
-3. Tenant gets a unique org_id (e.g. org_2a8bXXXXXXXXX)
-4. Tenant owner can invite members (email invitations)
-5. Members receive roles: OWNER / ADMIN / MEMBER / VIEWER
-6. Billing plan attached: FREE by default
-7. API keys generated per tenant (not per user)
-```
+A **tenant** is an organization — a company, team, or workspace using your product. Each tenant
+has its own members (with roles), data (isolated at the database level via RLS), and billing plan.
+A single user can belong to multiple organizations.
 
 ## The tenant context
 
-Nebutra uses `@nebutra/tenant` to propagate tenant context through the entire call stack via Node.js `AsyncLocalStorage`. This means any code that runs in the context of a request can access the current tenant without passing it as a parameter.
+`@nebutra/tenant` propagates tenant context through the call stack via Node.js
+`AsyncLocalStorage`, so any code running in a request's context can read the current tenant
+without it being passed as a parameter.
 
 ```typescript
 import { getCurrentTenant } from "@nebutra/tenant";
 
-// Available anywhere in the request lifecycle
 const tenant = getCurrentTenant();
-// → {
-//     tenantId: "org_2a8bXXX",
-//     plan: "pro",
-//     features: ["ai_workflows", "custom_domain"],
-//     rateLimits: { apiCalls: 100000, aiTokens: 5000000 }
-//   }
+// → { id: "org_...", slug?: "acme-corp", plan?: "pro", features?: [...], limits?: {...}, metadata?: {...} }
 ```
+
+Note the field is `id`, not `tenantId` — `getCurrentTenantId()` is a convenience that just returns
+`getCurrentTenant().id`.
+
+`plan` is `"free" | "pro" | "enterprise"` (`PlanTier`), matching the tiers in
+[Billing Model](/concepts/billing-model).
 
 ## Database isolation
 
-By default, Nebutra uses **shared schema with row-level security (RLS)**.
-
-Every table that stores tenant-specific data has a `tenant_id` column. The Prisma client is automatically scoped to the current tenant using PostgreSQL RLS:
+The type system in `@nebutra/tenant` names three strategies (`IsolationStrategy`:
+`shared_schema` | `schema_per_tenant` | `database_per_tenant`), but **shared schema with
+row-level security is what the template actually wires up** — every table's access rule lives as
+an `/// @rls` comment in `packages/platform/db/prisma/schema.prisma`, generated into real Postgres
+policies. See [Row-Level Security](/database/rls) for how that's built and
+[Database Overview](/database/overview) for the deploy flow.
 
 ```typescript
-import { withRls } from "@nebutra/tenant";
-import { prisma } from "@/lib/db";
+import { getTenantDb } from "@nebutra/db";
+import { getCurrentTenant } from "@nebutra/tenant";
 
-// All queries on this client are automatically filtered to the current tenant
-const db = withRls(prisma, tenant.tenantId);
+const tenant = getCurrentTenant();
+const db = getTenantDb(tenant.id); // RLS-scoped — only this tenant's rows
 
-const projects = await db.project.findMany(); // only this tenant's projects
+const projects = await db.project.findMany();
 ```
 
-You cannot accidentally query another tenant's data — RLS enforces the boundary at the database level.
+You cannot accidentally query another tenant's data through this client — RLS enforces the
+boundary at the database engine, not in application code.
 
-## Tenant resolution
+## Tenant resolution in the gateway
 
-The API gateway resolves the current tenant from the incoming request using this priority order:
+The gateway's `tenantContextMiddleware` (`backends/gateway/src/middlewares/tenantContext.ts`)
+resolves tenant context in this order:
 
-| Priority | Source | Header / Cookie |
-|----------|--------|-----------------|
-| 1 | Explicit header | `x-tenant-id` |
-| 2 | JWT claim | `org_id` in the Better Auth token |
-| 3 | Subdomain | `acme.app.nebutra.com` → tenant `acme` |
-| 4 | API key prefix | `nbk_live_acme_xxx` → tenant `acme` |
+1. **Service-to-service call**: `x-service-token` (a signed HS256 JWT — see
+   [Authentication](/api-reference/authentication)), together with `x-organization-id`,
+   `x-user-id`, `x-role`, `x-plan` headers. These headers are **only trusted when a valid service
+   token accompanies them** — there's no way to spoof tenant context by sending headers alone.
+2. **Bearer / session token**: the auth provider (Better Auth) verifies and decodes it.
+3. **Neither present**: the request is unauthenticated; the tenant has no `userId`.
 
-## Tenant switching
+There is no subdomain-based or API-key-prefix tenant resolution — the legacy `x-tenant-id` header
+alias was removed (2026-04) specifically because it could be spoofed without JWT verification; any
+client still sending it without `x-service-token` gets a warning logged and the header ignored.
 
-Users with access to multiple organizations can switch tenants from the dashboard. The active tenant is stored in a secure, HttpOnly session cookie. No re-authentication required.
+## Tenant middleware in your own app
+
+```typescript
+import { tenantMiddleware } from "@nebutra/tenant/middleware";
+
+app.use("*", tenantMiddleware({ headerName: "x-tenant-id" })); // your own resolver config
+```
+
+`fromHeader`, and other resolvers in `@nebutra/tenant`, are building blocks for your app's own
+routes — the gateway's own `tenantContextMiddleware` (above) is a separate, stricter
+implementation already wired in for you.
 
 ## Member roles
 
-Each tenant member has exactly one role:
-
-| Role | Description | Inherits |
-|------|-------------|---------|
-| `OWNER` | Full control, billing, can delete org | All scopes |
-| `ADMIN` | Manage members, settings, API keys | Member + Viewer scopes |
-| `MEMBER` | Core product access | Viewer scopes |
-| `VIEWER` | Read-only access | — |
-
-See [Permissions](/concepts/permissions) for the full scope matrix.
-
-## Org-level settings
-
-Each tenant has an organization settings page with:
-
-- **General** — Name, slug, logo
-- **Team** — Invite, remove, change roles
-- **API Keys** — Create, rotate, revoke API keys (SHA-256 hashed, soft-delete)
-- **Billing** — Plan, usage, invoices
-- **Security** — MFA requirements, session duration, IP allowlist
+Each tenant member has a role from `@nebutra/permissions`'s default set — see
+[Permissions](/concepts/permissions) for the full model (6 roles, CASL action/resource rules, not
+a 4-tier scope hierarchy).
 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Multi-Tenancy Guide" icon="building" href="/guides/multi-tenancy">
-    Step-by-step guide to tenant operations.
-  </Card>
   <Card title="Permissions" icon="lock" href="/concepts/permissions">
-    Full RBAC model and scope reference.
+    Roles, CASL rules, and how to enforce them.
   </Card>
   <Card title="Billing Model" icon="credit-card" href="/concepts/billing-model">
     Plans, quotas, and metering.
+  </Card>
+  <Card title="Row-Level Security" icon="shield" href="/database/rls">
+    How tenant isolation is enforced at the database level.
   </Card>
 </CardGroup>

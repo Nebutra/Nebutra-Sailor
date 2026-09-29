@@ -28,7 +28,7 @@ import { db } from "@nebutra/db";
 import { getCurrentTenant, withRls } from "@nebutra/tenant";
 
 const tenant = getCurrentTenant();
-const tenantDb = withRls(db, tenant.tenantId);
+const tenantDb = withRls(db, tenant.id);
 
 // PostgreSQL 强制执行：只返回 WHERE tenant_id = 'org_abc123' 的行
 const projects = await tenantDb.project.findMany();

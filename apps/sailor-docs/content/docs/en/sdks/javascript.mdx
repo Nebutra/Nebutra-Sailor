@@ -28,7 +28,7 @@ import { getCurrentTenant } from "@nebutra/tenant";
 import { checkEntitlement } from "@nebutra/billing";
 
 const tenant = getCurrentTenant();
-const db = getTenantDb(tenant.tenantId);
+const db = getTenantDb(tenant.id);
 ```
 
 ## Calling the gateway from outside the monorepo

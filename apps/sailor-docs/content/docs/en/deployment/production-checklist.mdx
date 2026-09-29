@@ -13,15 +13,20 @@ Work through each section before your first production launch and before every m
 
 **All environment variables configured and validated**
 
-Every required environment variable must be set in your deployment target (Vercel dashboard, Docker Compose env file, or secrets manager). `@nebutra/config` validates them at startup and crashes with a descriptive error if any are missing.
+Every required environment variable must be set wherever you're deploying (your platform's
+dashboard, a Docker Compose env file, or a secrets manager). `@nebutra/config` validates them at
+startup and crashes with a descriptive error if any are missing.
 
-**Database migrations run against the production database**
-
-Run `pnpm db:migrate` (or `DATABASE_URL=<prod> pnpm db:migrate`) before deploying the new app version.
+**`pnpm db:deploy` run against the production database, before the new app version starts serving**
 
 ```bash
-DATABASE_URL=<your-production-db-url> pnpm db:migrate
+DATABASE_URL=<your-production-db-url> pnpm db:deploy
 ```
+
+This applies pending migrations, then `platform.sql` + the generated RLS policies, then verifies
+the database matches `schema.prisma` — it exits non-zero on any drift. See
+[Row-Level Security](/database/rls). `db:migrate` (`prisma migrate dev`) is for local development
+only; never run it against production.
 
 **PostgreSQL backup strategy configured**
 
@@ -39,11 +44,11 @@ queue, so there are no in-flight queue jobs to lose on a Redis restart.
 
 **Creem webhook configured and verified**
 
-In the Creem dashboard, create a webhook pointing to `https://api.yourdomain.com/api/webhooks/creem`. Add the signing secret as `CREEM_WEBHOOK_SECRET`, and set `CREEM_API_KEY` / `CREEM_PRODUCT_ID`. Verify delivery in staging with `CREEM_TEST_MODE=true` before flipping to live keys. See the [Creem integration guide](/integrations/creem).
+In the Creem dashboard, create a webhook pointing to `https://yourdomain.com/api/webhooks/creem` (or your standalone gateway's host, if `GATEWAY_MODE=external`). Add the signing secret as `CREEM_WEBHOOK_SECRET`, and set `CREEM_API_KEY` / `CREEM_PRODUCT_ID`. Verify delivery in staging with `CREEM_TEST_MODE=true` before flipping to live keys. See the [Creem integration guide](/integrations/creem).
 
 **Stripe webhooks configured and verified (legacy — subscriptions)**
 
-Stripe is retired from new work, but subscriptions, the billing portal, and pre-switch checkouts still depend on it. In the Stripe dashboard, create a webhook endpoint pointing to `https://api.yourdomain.com/api/v1/webhooks/stripe`. Add the webhook signing secret as `STRIPE_WEBHOOK_SECRET`. Use `stripe listen --forward-to` to verify delivery in staging.
+Stripe is retired from new work, but subscriptions, the billing portal, and pre-switch checkouts still depend on it. In the Stripe dashboard, create a webhook endpoint pointing to `https://yourdomain.com/api/webhooks/stripe`. Add the webhook signing secret as `STRIPE_WEBHOOK_SECRET`. Use `stripe listen --forward-to` to verify delivery in staging.
 
 **Required Stripe events enabled (legacy)**
 
@@ -76,13 +81,15 @@ per the Sailor Convergence ADR (2026-09-24). There is no Clerk webhook path to w
 
 **Custom domain configured**
 
-Map each public host to the correct origin (see [Deployment Overview](/deployment/overview)):
-marketing/docs → Vercel; `app` / `auth` / `api` → ECS (or your self-host) unless
-you have completed an explicit Vercel cutover.
+Point your domain at wherever you deployed to — a platform like Vercel handles this in its
+dashboard; a self-hosted Docker deploy needs your own DNS + reverse proxy setup. See
+[Deployment Overview](/deployment/overview).
 
 **SSL/TLS active**
 
-Confirm HTTPS is enforced on all domains. On Vercel this is automatic. On Docker self-hosted, verify your reverse proxy (Caddy / nginx + certbot) is terminating TLS correctly.
+Confirm HTTPS is enforced on all domains. Platforms like Vercel handle this automatically. On
+Docker self-hosted, verify your reverse proxy (Caddy / nginx + certbot) is terminating TLS
+correctly.
 
 **HTTPS redirect configured**
 
@@ -128,8 +135,8 @@ Set `NEXT_PUBLIC_SENTRY_DSN` and `SENTRY_AUTH_TOKEN` in all app environments. Ve
 
 Set up uptime monitoring (e.g. Better Uptime, Checkly) for:
 - `https://yourdomain.com` (landing page)
-- `https://app.yourdomain.com` (web app)
-- `https://api.yourdomain.com/health` (API gateway)
+- wherever you host the web app (`GATEWAY_MODE=embedded`: same domain; `external`: your gateway host)
+- `/api/misc/health` on the gateway — see [Docker Deployment](/deployment/docker) for the response shape
 
 Alert on HTTP 5xx rates exceeding 1% or P95 response time above 2 seconds.
 
@@ -151,7 +158,7 @@ Confirm `@nebutra/logger` output is flowing to your log aggregator (Axiom, Datad
 | `DUB_WORKSPACE_ID` | Recommended | Your Dub.co workspace ID (avoids per-request lookups) |
 | `DUB_DEFAULT_DOMAIN` | No | Default short-link domain, defaults to `dub.sh` |
 
-Verify by running `nebutra analytics status` (once CLI analytics command is available) or by calling `analytics.getWorkspaceStats()` from a test script.
+Verify by calling `analytics.getWorkspaceStats()` from a test script.
 
 **GDPR / privacy policy live**
 
@@ -196,10 +203,10 @@ Verify in Google Search Console or Vercel Analytics that LCP, FID, and CLS are i
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Vercel Deployment" icon="triangle" href="/deployment/vercel">
-    Deploy to Vercel step by step.
+  <Card title="Vercel" icon="triangle" href="/deployment/vercel">
+    Deploying the Next.js apps on Vercel.
   </Card>
   <Card title="Docker Deployment" icon="docker" href="/deployment/docker">
-    Self-hosted Docker Compose deployment.
+    The generated Dockerfiles and docker-compose.yml.
   </Card>
 </CardGroup>

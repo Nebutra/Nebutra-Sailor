@@ -1,86 +1,85 @@
 ---
 title: 计费模型
-description: Nebutra 的三层套餐结构、使用量计量以及配额如何被强制执行。
+description: "@nebutra/billing 默认配置里的三层套餐结构、使用量计量以及配额如何被强制执行。"
 ---
 
 ## 套餐
 
-Nebutra 提供三个预构建的计费层级。无需修改代码即可重命名、重新定价和添加功能。
+`@nebutra/billing` 自带 `DEFAULT_PLAN_LIMITS` 和 `DEFAULT_PRICING`（三层，定义在
+`packages/commerce/billing/src/types.ts`）——这是一个默认起点，不是固定不变的产品；改配置即可
+重命名、重新定价、增删功能。
 
 <CardGroup cols={3}>
   <Card title="FREE" icon="gift">
     **$0/月**
 
-    - 1 个组织
-    - 最多 3 名成员
+    - 1 名团队成员
+    - 1 个项目
     - 每月 1,000 次 API 调用
-    - 每月 100 个 AI Token
-    - 社区支持
+    - 每月 10,000 个 AI Token
+    - 100MB 存储
   </Card>
   <Card title="PRO" icon="zap">
     **$29/月**
 
-    - 无限组织
-    - 最多 25 名成员
-    - 每月 100,000 次 API 调用
+    - 最多 10 名团队成员
+    - 10 个项目
+    - 每月 50,000 次 API 调用
     - 每月 500,000 个 AI Token
-    - 邮件支持
+    - 10GB 存储
   </Card>
   <Card title="ENTERPRISE" icon="building">
-    **定制定价**
+    **联系销售**
 
-    - 无限制
-    - SSO / SAML / SCIM
-    - 自定义数据驻留
-    - SLA 保证
-    - 专属支持
+    - 成员、项目、API 调用、AI Token、存储均无限制
+    - `sso`、`audit_logs`、`priority_support`、`custom_models`、`web3` 功能
   </Card>
 </CardGroup>
 
 ## 计量工作原理
 
-使用量通过 `@nebutra/metering` 实时追踪，并通过 ClickHouse 聚合事件。每次 API 调用和 AI Token 使用都记录有：
+使用量通过 `@nebutra/metering` 追踪，与具体存储无关——生产环境用 ClickHouse，开发/测试用内存
+实现。标准计量项预先定义好了（`API_CALLS`、`AI_TOKENS`、`STORAGE_BYTES`、`BANDWIDTH`，以及
+`ALL_STANDARD_METERS` 里的其他项）；标准集合覆盖不到的指标可以自己定义。
 
-- `tenant_id`——哪个组织消耗了资源
-- `metric_id`——消耗了什么（`api_calls`、`ai_tokens`）
-- `quantity`——消耗了多少
-- `timestamp`——何时发生
+```typescript
+import { getMetering, API_CALLS } from "@nebutra/metering";
+
+const metering = await getMetering(); // 自动识别 provider
+await metering.defineMeter(API_CALLS);
+
+await metering.ingest({
+  meterId: "api_calls",
+  tenantId: "org_123",
+  value: 1,
+  properties: { endpoint: "/api/v1/ai/chat", method: "POST" },
+});
+```
 
 ## 配额强制执行
 
-配额在 API 网关层强制执行，在任何业务逻辑运行之前。当租户超出配额时，API 返回：
+`evaluateUsageLimit`（来自 `@nebutra/metering`）检查租户用量是否超出套餐限制——接入网关中间件，
+在业务逻辑运行之前完成检查。`QUOTA_EXCEEDED` / `FEATURE_DISABLED` 错误码和错误封装来自
+`@nebutra/errors`——具体形状见[错误参考](/zh/api-reference/errors)：
 
 ```json
-HTTP 429 Too Many Requests
-
 {
-  "success": false,
   "error": {
     "code": "QUOTA_EXCEEDED",
-    "message": "月度 API 调用配额已超出。升级到 PRO 可获得 100 倍更多调用次数。",
-    "details": {
-      "metric": "api_calls",
-      "limit": 1000,
-      "used": 1001,
-      "reset_at": "2026-04-01T00:00:00Z"
-    }
-  }
+    "message": "月度 API 调用配额已超出。",
+    "details": { "limit": 1000, "used": 1001 }
+  },
+  "requestId": "req_..."
 }
 ```
-
-用户在达到配额 80% 和 100% 时会收到事务性邮件警告。
 
 ## 查询配额
 
 ```typescript
-const quota = await metering.getQuota("org_123", "api_calls");
-// → {
-//     limit: 1000,
-//     used: 847,
-//     remaining: 153,
-//     percentage: 0.847,
-//     reset_at: "2026-04-01T00:00:00Z"
-//   }
+const metering = await getMetering();
+
+const quota = await metering.getQuota("org_123", "api_calls", "monthly");
+// → { meterId, tenantId, limit, used, remaining, percentage, period, periodStart, periodEnd }
 ```
 
 ## 支付服务商

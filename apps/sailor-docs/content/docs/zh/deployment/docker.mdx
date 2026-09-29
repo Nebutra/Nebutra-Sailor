@@ -1,195 +1,167 @@
 ---
 title: Docker 部署
-description: 使用 Docker 和 Docker Compose 对 Nebutra-Sailor 进行自托管部署 — 适合有数据本地化需求或自定义基础设施要求的团队。
+description: create-sailor 生成的两个 Dockerfile，以及怎么跑它们。
 ---
 
-## 概览
+## 生成了什么
 
-Docker 部署将所有服务 — 应用、数据库和支撑服务 — 运行在您自己的基础设施上。以下场景推荐采用此方式：
+`create-sailor` 只为 Docker 写了两样东西：
 
-- 需要在特定区域或数据中心实现数据本地化
-- 需要完全掌控基础设施和运行时
-- 本地部署（On-premise）
-- 自定义网络或安全策略
+| 文件 | 构建 | 用途 |
+|------|------|------|
+| `Dockerfile.web`（仓库根目录） | `apps/web`（Next `output: "standalone"`，网关进程内挂载） | 默认部署单元——一个镜像，一个进程 |
+| `docker-compose.yml`（仓库根目录） | `web` + 本地 `postgres` + `redis` | 一条命令跑起本地或单机栈 |
 
-<Warning>
-  **Docker 构建不支持 Turbopack。** 生产 Dockerfile 使用 webpack（Next.js 默认值）进行构建。Turbopack 仅用于本地开发（`pnpm dev`）。这是预期行为 — 不要在 Docker 内部的 `build` 脚本中启用 `--turbopack`。
-</Warning>
+如果你把网关独立跑（`GATEWAY_MODE=external`），`backends/gateway/Dockerfile` 会单独构建那个
+镜像——它没有接进生成的 `docker-compose.yml`，后者假定的是内嵌的默认模式。
 
-## Docker Compose 服务
+```yaml docker-compose.yml
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports: ["3000:3000"]
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/nebutra
+      - REDIS_URL=redis://redis:6379
+    depends_on: [db, redis]
 
-仓库根目录的 `docker-compose.yml` 定义了完整的生产技术栈：
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=nebutra
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
 
-| 服务 | 镜像 | 端口 | 用途 |
-|------|------|------|------|
-| `web` | `nebutra/web` | 3000 | SaaS 控制台（Next.js） |
-| `api-gateway` | `nebutra/api-gateway` | 3001 | REST API（Hono） |
-| `landing` | `nebutra/landing` | 3002 | 营销网站（Next.js） |
-| `postgres` | `postgres:16-alpine` | 5432 | 主数据库 |
-| `redis` | `redis:7-alpine` | 6379 | 缓存和队列 |
-| `clickhouse` | `clickhouse/clickhouse-server:24` | 8123 | 使用量计量 |
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    volumes: [redisdata:/data]
 
-仅含基础设施的技术栈（`docker-compose.infra.yml`）只包含 `postgres`、`redis` 和 `clickhouse` — 这是本地开发时 `pnpm infra:up` 使用的内容。
+volumes:
+  pgdata:
+  redisdata:
+```
 
-## 分步部署指南
+## 步骤
 
 <Steps>
-  <Step title="创建环境变量文件">
-    复制生产环境示例文件并填写所有必填值：
+  <Step title="填好生产环境的密钥">
+    把 `.env.example` 复制成 `.env.production`（或者按你的主机注入环境变量的方式），填入真实值
+    ——见[环境变量](/zh/configuration/environment-variables)。
+  </Step>
+  <Step title="构建">
     ```bash
-    cp .env.production.example .env.production
+    docker compose build
+    # 或者，单独构建：
+    docker build -f Dockerfile.web -t my-app-web .
     ```
-    编辑 `.env.production`，填入您的实际密钥。请参阅[环境变量参考](/zh/development/local-dev#环境变量)。
+    构建上下文是仓库根目录，这样 Turborepo 才能访问共享的 `packages/`。
   </Step>
-  <Step title="构建所有 Docker 镜像">
-    <Tabs>
-      <Tab title="一次性构建所有应用">
-        ```bash
-        docker compose build
-        ```
-      </Tab>
-      <Tab title="单独构建某个应用">
-        ```bash
-        docker build -f apps/web/Dockerfile -t nebutra/web .
-        docker build -f backends/gateway/Dockerfile -t nebutra/api-gateway .
-        docker build -f apps/landing/Dockerfile -t nebutra/landing .
-        ```
-        构建上下文必须是仓库根目录（`.`），以便 Turborepo 能访问共享包。
-      </Tab>
-    </Tabs>
-  </Step>
-  <Step title="先启动基础设施服务">
+  <Step title="先启动数据库">
     ```bash
-    docker compose up -d postgres redis clickhouse
-    ```
-    在运行迁移之前，等待数据库变为健康状态。
-  </Step>
-  <Step title="执行数据库迁移">
-    ```bash
-    docker compose run --rm api-gateway pnpm db:migrate
+    docker compose up -d db redis
     ```
   </Step>
-  <Step title="启动所有应用服务">
+  <Step title="应用数据库，再启动应用">
     ```bash
+    pnpm db:deploy    # 迁移 + platform.sql + 生成式 RLS，并校验
     docker compose up -d
     ```
+    `pnpm db:deploy` 需要 `DATABASE_URL` 指向正在运行的 `db` 容器——可以在宿主机上跑，或者用
+    `docker compose run --rm web pnpm --filter @nebutra/db db:deploy` 在容器网络内跑。
   </Step>
-  <Step title="验证部署">
+  <Step title="校验">
     ```bash
-    docker compose ps        # 所有服务应显示 "healthy" 或 "running"
-    docker compose logs web  # 查看特定服务的日志
+    docker compose ps
+    docker compose logs web
+    curl http://localhost:3000/api/misc/health
     ```
   </Step>
 </Steps>
 
-## 多阶段 Dockerfile
+## web 的 Dockerfile
 
-每个应用使用多阶段 Dockerfile 以最小化镜像体积：
+多阶段构建，最终产出一个 standalone 的 Next 服务：
 
-```dockerfile
-# 第 1 阶段：依赖安装
+```dockerfile Dockerfile.web
 FROM node:22-alpine AS deps
-WORKDIR /app
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN corepack enable && pnpm install --frozen-lockfile
+# ... pnpm install --frozen-lockfile
 
-# 第 2 阶段：构建
 FROM node:22-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-RUN pnpm turbo run build --filter=apps/web
+# ... pnpm run build
 
-# 第 3 阶段：生产运行
 FROM node:22-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV=production
+ENV NODE_ENV production
 COPY --from=builder /app/apps/web/.next/standalone ./
-COPY --from=builder /app/apps/web/.next/static ./.next/static
-COPY --from=builder /app/apps/web/public ./public
+COPY --from=builder /app/apps/web/.next/static ./apps/web/.next/static
+COPY --from=builder /app/apps/web/public ./apps/web/public
+USER nextjs
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", "apps/web/server.js"]
 ```
 
-<Note>
-  Next.js 的 `output: 'standalone'` 在每个应用的 `next.config.ts` 中配置。这会在 `.next/standalone/` 中生成一个自包含的 Node.js 服务器，运行时无需 `node_modules`。
-</Note>
+`.next/standalone/` 是自包含的——运行时不需要 `node_modules`。网关默认（`GATEWAY_MODE=embedded`）
+就打包在这同一个镜像里，所以通常情况下 API 不需要额外构建或运行任何东西。
 
 ## 健康检查
 
-每个服务都包含 Docker 健康检查。`api-gateway` 暴露了一个专用的健康检查端点：
+网关自带一个真实的健康检查端点（同时挂载在 `/misc/health` 和 `/api/misc/health`）：
 
 ```
-GET /health
+GET /api/misc/health
 ```
-
-响应示例：
 
 ```json
 {
-  "status": "ok",
-  "timestamp": "2026-03-31T12:00:00Z",
-  "services": {
-    "database": "ok",
-    "redis": "ok",
-    "clickhouse": "ok"
+  "status": "healthy",
+  "version": "0.1.0",
+  "uptime": 1234.5,
+  "timestamp": "2026-09-29T00:00:00.000Z",
+  "dependencies": {
+    "database": { "status": "up", "latencyMs": 4 },
+    "cache": { "status": "up", "latencyMs": 1 }
   }
 }
 ```
 
-请配置您的负载均衡器或反向代理来轮询此端点。
+`healthy` / `degraded` 返回 `200`，`unhealthy` 返回 `503`。把负载均衡器或容器编排系统的健康检查
+指向这个路径。
 
 ## 反向代理
 
-通过单一反向代理（nginx 或 Caddy）提供所有三个应用的服务。示例 Caddy 配置：
+如果你自己在容器前面挂反向代理（nginx、Caddy 等），一个上游就够了——网关默认是同一个进程的
+一部分：
 
 ```
 yourdomain.com {
   reverse_proxy web:3000
 }
-
-app.yourdomain.com {
-  reverse_proxy web:3000
-}
-
-api.yourdomain.com {
-  reverse_proxy api-gateway:3001
-}
 ```
 
-## 更新运行中的部署
+只有切到 `GATEWAY_MODE=external`、把 `backends/gateway` 的镜像单独跑起来时，才需要第二个上游。
 
-<Steps>
-  <Step title="拉取最新代码">
-    ```bash
-    git pull origin main
-    ```
-  </Step>
-  <Step title="重新构建受影响的镜像">
-    ```bash
-    docker compose build web api-gateway landing
-    ```
-  </Step>
-  <Step title="在发布前执行迁移">
-    ```bash
-    docker compose run --rm api-gateway pnpm db:migrate
-    ```
-  </Step>
-  <Step title="滚动重启">
-    ```bash
-    docker compose up -d --no-deps web api-gateway landing
-    ```
-    `--no-deps` 标志可防止 Docker Compose 重启数据库服务。
-  </Step>
-</Steps>
+## 更新一个正在运行的部署
 
-## 相关内容
+```bash
+git pull origin main
+docker compose build web
+pnpm db:deploy
+docker compose up -d --no-deps web
+```
+
+`--no-deps` 避免在只重建 web 时把 `db`/`redis` 也重启。
+
+## 相关
 
 <CardGroup cols={2}>
-  <Card title="Vercel 部署" icon="triangle" href="/zh/deployment/vercel">
-    无需管理基础设施的托管部署方案。
+  <Card title="部署概览" icon="rocket" href="/zh/deployment/overview">
+    内嵌/独立网关的选择，以及 create-sailor 生成了什么。
   </Card>
-  <Card title="生产检查清单" icon="circle-check" href="/zh/deployment/production-checklist">
-    上线前验证所有内容。
+  <Card title="生产环境检查清单" icon="circle-check" href="/zh/deployment/production-checklist">
+    上线前的检查项。
   </Card>
 </CardGroup>

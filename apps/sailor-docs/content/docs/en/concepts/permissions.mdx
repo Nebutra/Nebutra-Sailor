@@ -1,49 +1,49 @@
 ---
 title: Permissions & RBAC
-description: Nebutra's role-based access control model — 4 roles, 17 typed scopes, and how to enforce them.
+description: The @nebutra/permissions model — 6 default roles, CASL action/resource rules, and how to enforce them.
 ---
 
 ## Overview
 
-Nebutra ships a production-ready RBAC (Role-Based Access Control) system out of the box. It includes:
+`@nebutra/permissions` wraps [CASL](https://casl.js.org) for in-process RBAC/ABAC. It ships:
 
-- **4 built-in roles**: `OWNER`, `ADMIN`, `MEMBER`, `VIEWER`
-- **17 typed permission scopes** across resources
-- **In-process enforcement** via CASL (sub-millisecond)
-- **React UI gates** via the `<Can>` component
+- **6 default roles**: `owner`, `admin`, `member`, `viewer`, `billing_admin`, `guest`
+- **Action/resource rules**, not a fixed scope-string list — `{ action: "delete", resource: "Project" }`, with optional conditions (e.g. `createdBy: "${user.userId}"`)
+- **In-process enforcement** via CASL (no network round-trip)
+- **React UI gates** via `<Can>` / `<Cannot>`
 
-## Roles
+CASL is the only permissions backend — per
+[ADR 2026-09-24 Sailor convergence](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md),
+the OpenFGA (Zanzibar-style) adapter that used to be offered for graph-based authorization was
+deleted, and nothing replaces it. If you need cross-tenant sharing or graph-based access beyond
+what CASL's in-process rules express, write your own adapter against the `@nebutra/permissions`
+interface.
+
+## Default roles (`packages/iam/permissions/src/roles.ts`)
 
 | Role | Description |
 |------|-------------|
-| `OWNER` | Full control — billing, deletion, all scopes |
-| `ADMIN` | Manage team, settings, API keys — all scopes except org deletion |
-| `MEMBER` | Core product access — create, read, update |
-| `VIEWER` | Read-only access |
+| `owner` | Full control — create/read/update/delete/manage/invite/publish/export/share across every default resource |
+| `admin` | Inherits `owner`'s rules, minus deleting the workspace; `Billing` is read/update only, read-scoped |
+| `member` | CRUD on resources it created (`conditions: { createdBy: "${user.userId}" }`); read/update on resources shared with it; can invite |
+| `viewer` | Read-only, and only on resources marked public or explicitly shared with it |
+| `billing_admin` | Inherits `viewer`; can create/read/update `Billing`, read `Workspace` |
+| `guest` | Read-only on resources explicitly shared with it AND flagged `guestAccess: true` |
 
-Each tenant member has **exactly one role**. Roles cannot be combined.
+Roles can `inherit` from another role (`admin` inherits `owner`'s rule set minus one override;
+`member` and `billing_admin` inherit `viewer`). This is a rule set per role, not a linear
+hierarchy of 4 tiers.
 
-## Scope reference
+## Default resources and actions
 
-| Scope | Description | OWNER | ADMIN | MEMBER | VIEWER |
-|-------|-------------|-------|-------|--------|--------|
-| `org:read` | Read org details | ✓ | ✓ | ✓ | ✓ |
-| `org:update` | Update org settings | ✓ | ✓ | — | — |
-| `org:delete` | Delete the organization | ✓ | — | — | — |
-| `member:read` | List org members | ✓ | ✓ | ✓ | ✓ |
-| `member:invite` | Invite new members | ✓ | ✓ | — | — |
-| `member:remove` | Remove a member | ✓ | ✓ | — | — |
-| `member:update_role` | Change a member's role | ✓ | ✓ | — | — |
-| `api_key:create` | Create API keys | ✓ | ✓ | — | — |
-| `api_key:read` | List API keys (masked) | ✓ | ✓ | ✓ | — |
-| `api_key:delete` | Revoke API keys | ✓ | ✓ | — | — |
-| `project:create` | Create new projects | ✓ | ✓ | ✓ | — |
-| `project:read` | Read project data | ✓ | ✓ | ✓ | ✓ |
-| `project:update` | Update project settings | ✓ | ✓ | ✓ | — |
-| `project:delete` | Delete a project | ✓ | ✓ | — | — |
-| `billing:read` | View billing info | ✓ | ✓ | — | — |
-| `billing:update` | Change plan / payment | ✓ | — | — | — |
-| `audit_log:read` | View audit log | ✓ | ✓ | — | — |
+Actions: `create`, `read`, `update`, `delete`, `manage`, `invite`, `publish`, `export`, `share`
+(the `Action` type also accepts any string, so you can add your own).
+
+Resources: `Document`, `Project`, `Workspace`, `User`, `Billing`, `ApiKey`, `Team`, `Invite`,
+`Integration`, `AiProviderKey`, `Automation`, `Workflow` (also extensible via string).
+
+There is no fixed `resource:action` scope-string catalog (`project:delete`, `api_key:create`, …)
+— permission checks always take an `(action, resource, subject?)` triple.
 
 ## Enforcing permissions
 
@@ -52,18 +52,28 @@ Each tenant member has **exactly one role**. Roles cannot be combined.
 ```typescript
 import { requirePermission } from "@nebutra/permissions";
 
-// Protects the route — returns 403 if the scope is missing
-app.delete("/api/projects/:id", requirePermission("project:delete"), handler);
+// Returns 401 with no user context, 403 if the action/resource pair is denied
+app.delete("/api/projects/:id", requirePermission("delete", "Project"), handler);
 ```
 
-### Server Actions (Next.js)
+`requirePermission(action, resource, options?)` returns Hono middleware. `options.extractSubject`
+lets you pass the specific record (for `conditions` like `createdBy`) instead of just the resource
+type; `options.onDenied` lets you customize the 403 response.
+
+### Server Actions / manual checks
+
+`requirePermission` is Hono middleware, not a standalone assertion — call the permissions manager
+directly outside a Hono context:
 
 ```typescript
 "use server";
-import { requirePermission } from "@nebutra/permissions";
+import { getPermissions } from "@nebutra/permissions";
 
-export async function deleteProject(projectId: string) {
-  await requirePermission("project:delete"); // throws if unauthorized
+export async function deleteProject(projectId: string, user: PermissionContext) {
+  const permissions = getPermissions();
+  if (!permissions.can(user, "delete", "Project", { id: projectId })) {
+    throw new Error("Forbidden");
+  }
   // ...
 }
 ```
@@ -71,59 +81,40 @@ export async function deleteProject(projectId: string) {
 ### React UI gates
 
 ```tsx
-import { Can } from "@nebutra/permissions/react";
+import { Can, Cannot } from "@nebutra/permissions/react";
 
-// Only renders children if the user has the scope
-<Can action="delete" resource="Project">
+// Only renders children if the user can perform the action on the resource
+<Can action="delete" resource="Project" subject={project}>
   <DeleteButton />
 </Can>
 
-// Inverse — show a fallback for users without the scope
-<Can action="billing:update" fallback={<UpgradePrompt />}>
+// fallback renders instead, when denied
+<Can action="update" resource="Billing" fallback={<UpgradePrompt />}>
   <BillingSettings />
 </Can>
+
+// Cannot is the inverse — renders when the check fails
+<Cannot action="create" resource="Project">
+  <ReadOnlyBanner />
+</Cannot>
 ```
 
-### Manual check
+Both read from a `<PermissionProvider>` (exported as `PermissionProviderComponent` from
+`@nebutra/permissions`) wrapping your app, or use the `usePermission(action, resource, subject?)`
+hook directly for an imperative boolean.
 
-```typescript
-import { can } from "@nebutra/permissions";
+## Custom roles and resources
 
-const allowed = await can(userId, "project:create", { orgId });
-
-if (!allowed) {
-  return new Response("Forbidden", { status: 403 });
-}
-```
-
-## Custom scopes
-
-You can extend the scope list for your own resources:
-
-```typescript
-// packages/iam/permissions/src/scopes.ts
-export const SCOPES = [
-  // built-in scopes...
-  "report:generate",  // custom scope
-  "widget:embed",     // custom scope
-] as const;
-```
-
-Then add them to the role matrix in the same file.
-
-## CASL only
-
-CASL is the only permissions backend. The Sailor Convergence ADR (2026-09-24) deleted the
-OpenFGA (Zanzibar-style) adapter that used to be offered as a drop-in replacement for complex,
-graph-based authorization — no `PERMISSIONS_PROVIDER` env var or store-based backend exists to
-switch to. If your product needs cross-tenant sharing or graph-based access beyond what CASL's
-in-process rules express, write your own adapter against the `@nebutra/permissions` interface.
+`DEFAULT_ROLES` in `packages/iam/permissions/src/roles.ts` is a plain object of
+`RoleDefinition`s (`role`, optional `inherits`, `description`, `rules: PermissionRule[]`). Add a
+role by adding an entry; add a resource or action by using any string — both types accept
+arbitrary strings alongside their named constants.
 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Authentication Guide" icon="shield-check" href="/guides/authentication">
-    How auth tokens carry scope information.
+  <Card title="Authentication" icon="shield-check" href="/api-reference/authentication">
+    Session cookies and service-to-service tokens.
   </Card>
   <Card title="Multi-Tenancy" icon="building" href="/concepts/tenants">
     How tenant membership maps to roles.

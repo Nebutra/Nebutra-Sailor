@@ -1,65 +1,116 @@
 ---
 title: 架构概览
-description: Nebutra 的构建方式——monorepo 结构、请求流程和平台核心层次。
+description: Nebutra-Sailor 项目的构建方式——monorepo 结构、请求流程和核心层次。
 ---
 
-## 概述
+## 概览
 
-Nebutra 是 **Turborepo monorepo**：多应用 + 共享 packages（设计系统、类型安全 API、运行时 token）。组件可独立部署。
+脚手架出来的项目是一个 **Turborepo monorepo**：Next.js 16 应用、Hono API 网关，以及共享的
+`@nebutra/*` 包（设计系统、权限、计费、认证……）。根据
+[ADR 2026-09-24 Sailor 收敛](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md)，
+`backends/gateway` 是**唯一**应该放业务端点的地方——`apps/web` 的路由处理器被限制在 Next 本身
+需要的范围内（认证回调、OG 路由、框架钩子）。
 
 ```
-浏览器 / 移动客户端
-        │
-        ▼
-┌─────────────────────────────┐
-│  Cloudflare DNS + CDN/WAF   │
-└─────────────┬───────────────┘
-              │
-   ┌──────────┼──────────┬──────────────┐
-   ▼          ▼          ▼              ▼
-营销站      文档      web + auth      API 网关
-(Vercel)   (Vercel)   (ECS Next)      (ECS Hono)
+浏览器
+   │
+   ▼
+apps/web（Next.js 16）
+   ├─ 页面 / Server Components
+   └─ app/api/[[...route]]  ──▶  backends/gateway（Hono），进程内挂载
+                                   （GATEWAY_MODE=embedded，默认）
+                                        │
+                           ┌────────────┼────────────┐
+                           ▼            ▼             ▼
+                      PostgreSQL      Redis        AI 服务商
+                     （Prisma，RLS）  （缓存/队列）   （网关）
 ```
 
-## 应用一览
+模板不选部署平台——`create-sailor` 实际生成了什么（`Dockerfile.web`、`docker-compose.yml`）以及
+内嵌/独立网关的选择，见[部署概览](/zh/deployment/overview)。
 
-| 应用 | URL | 框架 | 稳态源站 |
-|-----|-----|------|----------|
-| `landing` | `nebutra.com` | Next.js 16 | Vercel |
-| `sailor-docs` | `nebutra.com/docs` | Fumadocs | Vercel |
-| `web` | `app.nebutra.com` | Next.js 16 | ECS |
-| `auth` | `auth.nebutra.com` | Next.js 16 | ECS 登录中心 |
-| `backends/gateway` | `api.nebutra.com` | Hono | ECS（`@nebutra/gateway`） |
-| `idp` | `sso.nebutra.com` | Next.js | ECS OIDC |
-| `studio` / `design-docs` / `storybook` | 视部署而定 | — | 可选 |
+## 默认脚手架里的应用
 
-## 核心 Packages
+| 应用 | 框架 | 角色 |
+|-----|------|------|
+| `web` | Next.js 16 | 已认证的产品应用；默认托管网关 |
+| `landing` | Next.js 16 | 公开营销站 |
+| `auth` | Next.js 16 | Better Auth 登录中心 |
+| `mail-preview` | — | 事务性邮件模板的本地预览服务 |
+| `backends/gateway` | Hono | 唯一的业务 API |
+
+Nebutra 自己的实例还额外跑着 `studio`（Sanity CMS）和 `storybook`——默认脚手架不包含这两个。
+
+## 核心 packages
 
 | Package | 描述 |
 |---------|------|
-| `@nebutra/ui` | 组件库 |
-| `@nebutra/auth` | 认证适配 + **JWT S2S** |
-| `@nebutra/permissions` | RBAC/ABAC——CASL |
-| `@nebutra/db` | Prisma / 多租户 |
+| `@nebutra/ui` | 组件库——Radix + Nebutra primitives |
+| `@nebutra/tokens` | 运行时 CSS 设计 token |
+| `@nebutra/auth` | Better Auth 服务端实例 + 服务间 JWT（`signServiceToken` / `verifyServiceToken`） |
+| `@nebutra/permissions` | RBAC/ABAC——CASL，进程内 |
+| `@nebutra/db` | Prisma 客户端（`getSystemDb`、`getTenantDb`） |
+| `@nebutra/tenant` | 租户上下文（`getCurrentTenant`）+ RLS 助手（`withRls`） |
+| `@nebutra/billing` | 结账、权益、用量计量 |
+| `@nebutra/queue` | QStash，开发环境内存降级 |
 | `@nebutra/metering` | 用量计量 → ClickHouse |
-| `@nebutra/webhooks` | 出站 Webhook（投递签名 HMAC，≠ S2S） |
+| `@nebutra/webhooks` | 内置的出站 Webhook 分发 |
 
-## 请求流程
+## 请求流程（内嵌网关，默认模式）
 
 ```
-请求 → Cloudflare → 源站（Vercel 或 ECS）
-  → Gateway 中间件：CORS / 会话或 S2S JWT / 租户 / RBAC / 限流
-  → 业务路由 → { success, data, error }
+请求
+  │
+  ├─ 1. apps/web 接收。更具体的 Next 路由总是优先于 catch-all；
+  │     catch-all 只会收到其他路由没匹配上的请求。
+  │
+  ├─ 2. app/api/[[...route]] 把请求交给进程内构建的 Hono 应用
+  │     （backends/gateway，没有后台队列 worker——那部分不管哪种模式
+  │     都走 QStash 的 webhook 投递路由）。
+  │
+  ├─ 3. 网关中间件
+  │     ├─ 认证       （Better Auth 会话 Cookie，或服务间调用的 x-service-token）
+  │     ├─ 租户        （组织上下文）
+  │     ├─ 权限        （CASL）
+  │     └─ 限流
+  │
+  └─ 4. 路由处理器——响应形状由该路由自己的 Zod schema 决定。
+        错误统一走 `@nebutra/errors` 的一个封装：
+        { error: { code, message, details? }, requestId? }。
 ```
 
-服务间令牌为短时 **HS256 JWT**，不再接受遗留 hex-HMAC。
+服务间调用用短期有效的 **HS256 JWT**，放在 `x-service-token` 里，不是老式的 hex-HMAC 方案。
+见 [API 认证](/zh/api-reference/authentication)。
+
+## 数据库与行级安全
+
+每张表的访问规则只在一处声明：`packages/platform/db/prisma/schema.prisma` 里的 `/// @rls`
+注释——常见情况下从 `tenantId` / `organizationId` 列自动推断。一个 generator 在每次
+`prisma generate` 时把它转换成 Postgres RLS 策略；`pnpm db:deploy` 负责应用。见
+[数据库概览](/zh/database/overview) 和 [行级安全](/zh/database/rls)——这是模板实际提供的唯一
+隔离策略，不是"共享 schema / 每租户一个 schema / 每租户一个数据库"之间的菜单选择。
+
+## AI 层
+
+网关的 AI 路由（经过认证、按租户限定），运行时通过 `nebutra ai` 治理（脚手架阶段不做任何
+服务商选择——见 [AI 服务商](/zh/architecture/ai-providers)）：
+
+- `POST /api/v1/ai/chat`
+- `POST /api/v1/ai/embeddings`
+- `GET /api/v1/ai/models`
+- `POST /api/v1/ai/chat/completions`
+
+用量会汇入计量管道，用于配额和计费。
 
 ## 认证配置
 
 ```bash
-AUTH_PROVIDER=better-auth          # 唯一的认证服务商
+# Better Auth 是唯一的认证服务商——没有 Clerk/NextAuth/Supabase 适配器
+AUTH_PROVIDER=better-auth
 NEXT_PUBLIC_AUTH_PROVIDER=better-auth
-# 未配置(缺少 BETTER_AUTH_SECRET)时降级为开发环境兜底——见 `nebutra status`
+
+# 未配置（没有 BETTER_AUTH_SECRET）时会降级到开发环境的 fallback——见 `nebutra status`
 ```
 
-auth 中心、web、落地页的 provider 配置必须一致。
+在所有共享会话的应用（登录中心、web、landing）之间，保持 `AUTH_PROVIDER` 和
+`NEXT_PUBLIC_AUTH_PROVIDER` 一致。

@@ -1,52 +1,47 @@
 ---
 title: Architecture
-description: How Nebutra is built — monorepo structure, request flow, and the key layers of the platform.
+description: How a Nebutra-Sailor project is built — monorepo structure, request flow, and the key layers.
 ---
 
 ## Overview
 
-Nebutra is a **Turborepo monorepo** with multiple apps and shared packages: design system, type-safe API contract, and runtime tokens. Components are independently deployable.
+A scaffolded project is a **Turborepo monorepo**: Next.js 16 apps, a Hono API gateway, and shared
+`@nebutra/*` packages (design system, permissions, billing, auth, …). Per
+[ADR 2026-09-24 Sailor convergence](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md),
+`backends/gateway` is the **only** place business endpoints live — `apps/web` route handlers are
+limited to what's intrinsically Next (auth callbacks, OG routes, framework hooks).
 
 ```
-Browser / Mobile Client
-        │
-        ▼
-┌─────────────────────────────┐
-│  Cloudflare DNS + CDN/WAF   │
-└─────────────┬───────────────┘
-              │
-   ┌──────────┼──────────┬──────────────┐
-   ▼          ▼          ▼              ▼
-landing    docs      web + auth      API gateway
-(Vercel)  (Vercel)   (ECS Next)      (ECS Hono)
-nebutra.com docs.     app. + auth.   api.nebutra.com
-                     nebutra.com
-                          │
-                          │ REST / cookies (.nebutra.com)
-                          ▼
-                 ┌──────────────────┐
-                 │ backends/gateway │  @nebutra/gateway
-                 │ auth, RBAC, S2S  │
-                 └────────┬─────────┘
-                          │
-             ┌────────────┼────────────┐
-             ▼            ▼            ▼
-        PostgreSQL      Redis/KV    AI / workers
+Browser
+   │
+   ▼
+apps/web (Next.js 16)
+   ├─ pages / Server Components
+   └─ app/api/[[...route]]  ──▶  backends/gateway (Hono), mounted in-process
+                                   (GATEWAY_MODE=embedded, the default)
+                                        │
+                           ┌────────────┼────────────┐
+                           ▼            ▼             ▼
+                      PostgreSQL      Redis      AI providers
+                     (Prisma, RLS)  (cache/queue)  (gateway)
 ```
 
-## Apps
+The template makes no deployment-platform choice — see
+[Deployment Overview](/deployment/overview) for what `create-sailor` actually generates
+(`Dockerfile.web`, `docker-compose.yml`) and the embedded/external gateway split.
 
-| App | URL | Framework | Steady-state host |
-|-----|-----|-----------|-------------------|
-| `landing` | `nebutra.com` | Next.js 16 | Vercel |
-| `sailor-docs` | `nebutra.com/docs` | Next.js + Fumadocs | Vercel |
-| `web` | `app.nebutra.com` | Next.js 16 | ECS (Next standalone) |
-| `auth` | `auth.nebutra.com` | Next.js 16 | ECS login center |
-| `backends/gateway` | `api.nebutra.com` | Hono + Node | ECS (`@nebutra/gateway`) |
-| `idp` | `sso.nebutra.com` | Next.js | ECS OIDC issuer |
-| `studio` | `studio.nebutra.com` | Sanity | Vercel / optional |
-| `design-docs` | internal | Fumadocs | optional |
-| `storybook` | internal | Storybook | optional |
+## Apps in a default scaffold
+
+| App | Framework | Role |
+|-----|-----------|------|
+| `web` | Next.js 16 | The authenticated product app; hosts the gateway by default |
+| `landing` | Next.js 16 | Public marketing site |
+| `auth` | Next.js 16 | Better Auth login center |
+| `mail-preview` | — | Local preview server for transactional email templates |
+| `backends/gateway` | Hono | The sole business API |
+
+Nebutra's own instance additionally runs `studio` (Sanity CMS) and `storybook` — neither ships in
+the default scaffold.
 
 ## Core packages
 
@@ -54,64 +49,71 @@ nebutra.com docs.     app. + auth.   api.nebutra.com
 |---------|-------------|
 | `@nebutra/ui` | Component library — Radix + Nebutra primitives |
 | `@nebutra/tokens` | Runtime CSS design tokens |
-| `@nebutra/auth` | Provider adapters + **JWT S2S** (`signServiceToken`) |
-| `@nebutra/permissions` | RBAC/ABAC — CASL |
-| `@nebutra/db` | Prisma client + multi-tenant helpers |
-| `@nebutra/queue` | QStash |
+| `@nebutra/auth` | Better Auth server instance + service-to-service JWTs (`signServiceToken` / `verifyServiceToken`) |
+| `@nebutra/permissions` | RBAC/ABAC — CASL, in-process |
+| `@nebutra/db` | Prisma client (`getSystemDb`, `getTenantDb`) |
+| `@nebutra/tenant` | Tenant context (`getCurrentTenant`) + RLS helper (`withRls`) |
+| `@nebutra/billing` | Checkout, entitlements, usage metering |
+| `@nebutra/queue` | QStash, in-memory fallback in dev |
 | `@nebutra/metering` | Usage metering → ClickHouse |
-| `@nebutra/webhooks` | Outbound webhooks (HMAC signing for delivery, not S2S) |
-| `@nebutra/tenant` | Tenant context + RLS helpers |
+| `@nebutra/webhooks` | Outbound webhook delivery, built in |
 
-## Request flow
+## Request flow (embedded gateway, the default)
 
 ```
 Request
   │
-  ├─ 1. Cloudflare        (DNS, CDN, WAF)
+  ├─ 1. apps/web receives it. A more specific Next route always wins over
+  │     the catch-all; the catch-all only ever gets what nothing else matched.
   │
-  ├─ 2. App origin
-  │     ├─ Marketing/docs → Vercel
-  │     └─ app / auth / api → ECS PM2
+  ├─ 2. app/api/[[...route]] hands off to the Hono app (backends/gateway),
+  │     built in-process (no background queue workers — those run via the
+  │     QStash webhook delivery route either way).
   │
-  ├─ 3. Gateway middleware (api.*)
-  │     ├─ CORS
-  │     ├─ Auth           (session / Better Auth JWT, or S2S service JWT)
-  │     ├─ Tenant         (org context)
-  │     ├─ RBAC
+  ├─ 3. Gateway middleware
+  │     ├─ Auth        (Better Auth session cookie, or x-service-token for S2S)
+  │     ├─ Tenant       (org context)
+  │     ├─ Permissions  (CASL)
   │     └─ Rate limit
   │
-  └─ 4. Route handler → JSON envelope { success, data, error }
+  └─ 4. Route handler — response shape is whatever that route's Zod schema
+        declares. Errors use one shared envelope from `@nebutra/errors`:
+        { error: { code, message, details? }, requestId? }.
 ```
 
-Service-to-service calls use short-lived **HS256 JWTs** in `x-service-token`
-(not legacy hex-HMAC).
+Service-to-service calls use short-lived **HS256 JWTs** in `x-service-token`, not a legacy
+hex-HMAC scheme. See [API Authentication](/api-reference/authentication).
 
-## Database isolation
+## Database and row-level security
 
-| Strategy | Isolation | Recommended for |
-|----------|-----------|-----------------|
-| **Shared schema** | RLS via `tenant_id` | Most SaaS (default) |
-| **Separate schema** | Schema per tenant | Mid-market residency |
-| **Separate database** | DB per tenant | Strict compliance |
+Every table's access rule is declared once, in `packages/platform/db/prisma/schema.prisma`, as an
+`/// @rls` comment — inferred automatically from a `tenantId` / `organizationId` column in the
+common case. A generator turns that into Postgres RLS policies on every `prisma generate`; `pnpm
+db:deploy` applies them. See [Database Overview](/database/overview) and
+[Row-Level Security](/database/rls) — this is the one isolation strategy the template ships, not a
+menu of shared-schema / schema-per-tenant / database-per-tenant options.
 
 ## AI layer
 
-Gateway AI surfaces (authenticated, tenant-scoped), for example:
+Gateway AI routes (authenticated, tenant-scoped), governed at runtime via `nebutra ai` (no
+scaffold-time provider choice — see [AI Providers](/architecture/ai-providers)):
 
 - `POST /api/v1/ai/chat`
 - `POST /api/v1/ai/embeddings`
 - `GET /api/v1/ai/models`
+- `POST /api/v1/ai/chat/completions`
 
 Usage feeds the metering pipeline for quotas and billing.
 
 ## Auth configuration
 
 ```bash
-# Auth — Better Auth is the only provider
+# Better Auth is the only auth provider — no Clerk/NextAuth/Supabase adapters
 AUTH_PROVIDER=better-auth
 NEXT_PUBLIC_AUTH_PROVIDER=better-auth
 
 # Unconfigured (no BETTER_AUTH_SECRET) degrades to a dev fallback — see `nebutra status`
 ```
 
-Align `AUTH_PROVIDER` and `NEXT_PUBLIC_AUTH_PROVIDER` across auth center, web, and landing.
+Keep `AUTH_PROVIDER` and `NEXT_PUBLIC_AUTH_PROVIDER` aligned across every app that shares a session
+(auth center, web, landing).

@@ -28,7 +28,7 @@ import { db } from "@nebutra/db";
 import { getCurrentTenant, withRls } from "@nebutra/tenant";
 
 const tenant = getCurrentTenant();
-const tenantDb = withRls(db, tenant.tenantId);
+const tenantDb = withRls(db, tenant.id);
 
 // PostgreSQL enforces: only rows WHERE tenant_id = 'org_abc123'
 const projects = await tenantDb.project.findMany();

@@ -1,81 +1,94 @@
 ---
 title: 多租户
-description: Nebutra 如何实现租户隔离——跨栈每个层次的数据、认证和上下文。
+description: Nebutra-Sailor 项目如何做租户隔离——跨技术栈每一层的数据、认证和上下文。
 ---
 
 ## 什么是租户？
 
-在 Nebutra 中，**租户**是一个组织——使用你的产品的公司、团队或工作空间。每个租户拥有独立的：
-
-- 成员（具有角色的用户）
-- 数据（通过租户 ID 隔离）
-- 计费套餐（FREE / PRO / ENTERPRISE）
-- API 密钥和设置
-
-一个用户可以属于多个租户，无需重新登录即可切换。
-
-## 租户生命周期
-
-```
-1. 用户注册 → 创建个人账户
-2. 用户创建组织 → 提供租户
-3. 租户获得唯一 org_id（如 org_2a8bXXXXXXXXX）
-4. 租户所有者可以邀请成员（邮件邀请）
-5. 成员获得角色：OWNER / ADMIN / MEMBER / VIEWER
-6. 附加计费套餐：默认为 FREE
-7. 每个租户生成 API 密钥（非每个用户）
-```
+**租户**就是一个组织——使用你产品的一家公司、一个团队或一个 workspace。每个租户都有自己的
+成员（带角色）、数据（通过 RLS 在数据库层隔离）和计费套餐。一个用户可以属于多个组织。
 
 ## 租户上下文
 
-Nebutra 使用 `@nebutra/tenant` 通过 Node.js `AsyncLocalStorage` 在整个调用栈中传播租户上下文。这意味着在请求上下文中运行的任何代码都可以访问当前租户，无需将其作为参数传递。
+`@nebutra/tenant` 通过 Node.js 的 `AsyncLocalStorage` 把租户上下文贯穿整个调用栈，所以任何在
+某个请求上下文里运行的代码都能读到当前租户，不需要把它当参数一路传下去。
 
 ```typescript
 import { getCurrentTenant } from "@nebutra/tenant";
 
 const tenant = getCurrentTenant();
-// → {
-//     tenantId: "org_2a8bXXX",
-//     plan: "pro",
-//     features: ["ai_workflows"],
-//     rateLimits: { apiCalls: 100000 }
-//   }
+// → { id: "org_...", slug?: "acme-corp", plan?: "pro", features?: [...], limits?: {...}, metadata?: {...} }
 ```
+
+注意字段是 `id`，不是 `tenantId`——`getCurrentTenantId()` 只是一个便捷方法，内部就是返回
+`getCurrentTenant().id`。
+
+`plan` 是 `"free" | "pro" | "enterprise"`（`PlanTier`），跟[计费模型](/zh/concepts/billing-model)
+里的套餐一致。
 
 ## 数据库隔离
 
-默认情况下，Nebutra 使用**带行级安全（RLS）的共享 Schema**。
-
-每个存储租户特定数据的表都有 `tenant_id` 列。Prisma 客户端通过 PostgreSQL RLS 自动限定到当前租户：
+`@nebutra/tenant` 的类型系统里定义了三种策略（`IsolationStrategy`：`shared_schema` |
+`schema_per_tenant` | `database_per_tenant`），但**模板实际接好的是共享 schema + 行级安全**——
+每张表的访问规则都写在 `packages/platform/db/prisma/schema.prisma` 里的一条 `/// @rls` 注释里，
+生成为真正的 Postgres 策略。这套东西是怎么构建的见[行级安全](/zh/database/rls)，部署流程见
+[数据库概览](/zh/database/overview)。
 
 ```typescript
-import { withRls } from "@nebutra/tenant";
-import { prisma } from "@/lib/db";
+import { getTenantDb } from "@nebutra/db";
+import { getCurrentTenant } from "@nebutra/tenant";
 
-const db = withRls(prisma, tenant.tenantId);
-const projects = await db.project.findMany(); // 仅返回此租户的项目
+const tenant = getCurrentTenant();
+const db = getTenantDb(tenant.id); // 限定了 RLS——只能看到这个租户的行
+
+const projects = await db.project.findMany();
 ```
+
+通过这个客户端，你不可能意外查到别的租户的数据——RLS 在数据库引擎层强制这个边界，不是在应用
+代码里。
+
+## 网关里的租户解析
+
+网关的 `tenantContextMiddleware`（`backends/gateway/src/middlewares/tenantContext.ts`）按这个
+顺序解析租户上下文：
+
+1. **服务间调用**：`x-service-token`（一个签名的 HS256 JWT——见
+   [认证](/zh/api-reference/authentication)），配合 `x-organization-id`、`x-user-id`、
+   `x-role`、`x-plan` 请求头。这些请求头**只有在带着有效的服务 token 时才会被信任**——单靠
+   发送请求头本身是没法伪造租户上下文的。
+2. **Bearer / 会话 token**：由认证服务商（Better Auth）验证并解码。
+3. **两者都没有**：请求视为未认证；租户没有 `userId`。
+
+这里没有基于子域名或 API key 前缀的租户解析——老的 `x-tenant-id` 请求头别名已经被移除
+（2026-04），原因正是它可以在不经过 JWT 校验的情况下被伪造；如果客户端还在不带
+`x-service-token` 的情况下发这个头，只会记一条警告日志然后忽略它。
+
+## 在你自己的应用里用租户中间件
+
+```typescript
+import { tenantMiddleware } from "@nebutra/tenant/middleware";
+
+app.use("*", tenantMiddleware({ headerName: "x-tenant-id" })); // 你自己的解析器配置
+```
+
+`@nebutra/tenant` 里的 `fromHeader` 和其他 resolver 是给你自己的路由用的构建块——网关自己的
+`tenantContextMiddleware`（如上）是另一套更严格的实现，已经帮你接好了。
 
 ## 成员角色
 
-每个租户成员拥有且仅拥有一个角色：
+每个租户成员的角色来自 `@nebutra/permissions` 的默认角色集——完整模型（6 个角色、CASL 的
+action/resource 规则，不是 4 级权限范围层级）见[权限](/zh/concepts/permissions)。
 
-| 角色 | 描述 |
-|------|------|
-| `OWNER` | 完全控制、计费、可删除组织 |
-| `ADMIN` | 管理成员、设置、API 密钥 |
-| `MEMBER` | 核心产品访问权限 |
-| `VIEWER` | 只读访问权限 |
-
-详见[权限](/zh/concepts/permissions)获取完整的权限范围矩阵。
-
-## 相关文档
+## 相关
 
 <CardGroup cols={2}>
-  <Card title="多租户指南" icon="building" href="/zh/guides/multi-tenancy">
-    租户操作的分步指南。
-  </Card>
   <Card title="权限" icon="lock" href="/zh/concepts/permissions">
-    完整的 RBAC 模型和权限范围参考。
+    角色、CASL 规则以及如何强制执行。
+  </Card>
+  <Card title="计费模型" icon="credit-card" href="/zh/concepts/billing-model">
+    套餐、配额和计量。
+  </Card>
+  <Card title="行级安全" icon="shield" href="/zh/database/rls">
+    租户隔离如何在数据库层强制执行。
   </Card>
 </CardGroup>

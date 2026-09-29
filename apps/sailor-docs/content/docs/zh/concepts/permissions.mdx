@@ -1,98 +1,120 @@
 ---
 title: 权限与 RBAC
-description: Nebutra 的基于角色的访问控制模型——4 个角色、17 个类型化权限范围及如何强制执行。
+description: "@nebutra/permissions 的模型——6 个默认角色、CASL 的 action/resource 规则，以及如何强制执行。"
 ---
 
-## 概述
+## 概览
 
-Nebutra 开箱即用地提供生产就绪的 RBAC（基于角色的访问控制）系统，包括：
+`@nebutra/permissions` 在进程内包了一层 [CASL](https://casl.js.org)，做 RBAC/ABAC。它自带：
 
-- **4 个内置角色**：`OWNER`、`ADMIN`、`MEMBER`、`VIEWER`
-- **跨资源的 17 个类型化权限范围**
-- **通过 CASL 在进程内强制执行**（亚毫秒级）
-- **通过 `<Can>` 组件进行 React UI 门控**
+- **6 个默认角色**：`owner`、`admin`、`member`、`viewer`、`billing_admin`、`guest`
+- **action/resource 规则**，不是一份固定的权限范围字符串清单——`{ action: "delete", resource: "Project" }`，可以带 `conditions`（比如 `createdBy: "${user.userId}"`）
+- **进程内强制执行**，走 CASL（没有网络往返）
+- **React UI 门控**，用 `<Can>` / `<Cannot>`
 
-<Note>
-  CASL 是唯一的权限后端。Sailor Convergence ADR（2026-09-24）移除了此前作为
-  复杂图状授权场景「即插即用替代方案」提供的 OpenFGA（Zanzibar 风格）适配器——
-  不再存在可切换的 `PERMISSIONS_PROVIDER` 环境变量或基于存储的后端。如果产品
-  需要跨租户共享或超出 CASL 进程内规则表达能力的图状访问控制，需针对
-  `@nebutra/permissions` 接口自行编写适配器。
-</Note>
+CASL 是唯一的权限后端——根据
+[ADR 2026-09-24 Sailor 收敛](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md)，
+曾经作为图关系授权（Zanzibar 风格）替代方案提供的 OpenFGA 适配器已经删除，没有东西替代它。如果
+你需要跨租户共享或超出 CASL 进程内规则表达能力的图关系访问控制，需要自己针对
+`@nebutra/permissions` 的接口写一个适配器。
 
-## 角色
+## 默认角色（`packages/iam/permissions/src/roles.ts`）
 
 | 角色 | 描述 |
 |------|------|
-| `OWNER` | 完全控制——计费、删除、所有权限范围 |
-| `ADMIN` | 管理团队、设置、API 密钥——除组织删除外的所有权限 |
-| `MEMBER` | 核心产品访问——创建、读取、更新 |
-| `VIEWER` | 只读访问 |
+| `owner` | 完全控制——对所有默认资源都有 create/read/update/delete/manage/invite/publish/export/share |
+| `admin` | 继承 `owner` 的规则，唯独不能删除 workspace；`Billing` 只能只读式地 read/update |
+| `member` | 对自己创建的资源做 CRUD（`conditions: { createdBy: "${user.userId}" }`）；对分享给自己的资源可以 read/update；可以邀请成员 |
+| `viewer` | 只读，而且只能看标记为公开、或者明确分享给自己的资源 |
+| `billing_admin` | 继承 `viewer`；可以 create/read/update `Billing`，可以 read `Workspace` |
+| `guest` | 只能读取明确分享给自己**且**标记了 `guestAccess: true` 的资源 |
 
-## 权限范围参考
+角色可以 `inherit` 另一个角色（`admin` 继承 `owner` 的规则集，减掉一条覆盖；`member` 和
+`billing_admin` 继承 `viewer`）。这是"每个角色一套规则"，不是一条从上到下的 4 级线性层级。
 
-| 权限范围 | 描述 | OWNER | ADMIN | MEMBER | VIEWER |
-|---------|------|-------|-------|--------|--------|
-| `org:read` | 读取组织详情 | ✓ | ✓ | ✓ | ✓ |
-| `org:update` | 更新组织设置 | ✓ | ✓ | — | — |
-| `org:delete` | 删除组织 | ✓ | — | — | — |
-| `member:read` | 列出组织成员 | ✓ | ✓ | ✓ | ✓ |
-| `member:invite` | 邀请新成员 | ✓ | ✓ | — | — |
-| `member:remove` | 移除成员 | ✓ | ✓ | — | — |
-| `member:update_role` | 更改成员角色 | ✓ | ✓ | — | — |
-| `api_key:create` | 创建 API 密钥 | ✓ | ✓ | — | — |
-| `api_key:read` | 列出 API 密钥（脱敏） | ✓ | ✓ | ✓ | — |
-| `api_key:delete` | 撤销 API 密钥 | ✓ | ✓ | — | — |
-| `project:create` | 创建新项目 | ✓ | ✓ | ✓ | — |
-| `project:read` | 读取项目数据 | ✓ | ✓ | ✓ | ✓ |
-| `project:update` | 更新项目设置 | ✓ | ✓ | ✓ | — |
-| `project:delete` | 删除项目 | ✓ | ✓ | — | — |
-| `billing:read` | 查看计费信息 | ✓ | ✓ | — | — |
-| `billing:update` | 更改套餐/付款方式 | ✓ | — | — | — |
-| `audit_log:read` | 查看审计日志 | ✓ | ✓ | — | — |
+## 默认资源与动作
 
-## 强制执行权限
+动作（Action）：`create`、`read`、`update`、`delete`、`manage`、`invite`、`publish`、`export`、
+`share`（`Action` 类型也接受任意字符串，所以可以加自己的）。
+
+资源（Resource）：`Document`、`Project`、`Workspace`、`User`、`Billing`、`ApiKey`、`Team`、
+`Invite`、`Integration`、`AiProviderKey`、`Automation`、`Workflow`（同样可以用字符串扩展）。
+
+这里没有一份固定的 `resource:action` 权限范围字符串目录（`project:delete`、`api_key:create` 之
+类）——权限检查始终是一个 `(action, resource, subject?)` 三元组。
+
+## 强制执行
 
 ### API 网关（Hono 中间件）
 
 ```typescript
 import { requirePermission } from "@nebutra/permissions";
 
-app.delete("/api/projects/:id", requirePermission("project:delete"), handler);
+// 没有用户上下文返回 401，action/resource 组合被拒绝返回 403
+app.delete("/api/projects/:id", requirePermission("delete", "Project"), handler);
 ```
 
-### Server Actions（Next.js）
+`requirePermission(action, resource, options?)` 返回 Hono 中间件。`options.extractSubject`
+可以传入具体的记录（配合 `createdBy` 这类 `conditions`），而不只是资源类型；
+`options.onDenied` 可以自定义 403 响应。
+
+### Server Actions / 手动检查
+
+`requirePermission` 是 Hono 中间件，不是一个独立的断言函数——在 Hono 上下文之外，直接调用
+permissions manager：
 
 ```typescript
 "use server";
-import { requirePermission } from "@nebutra/permissions";
+import { getPermissions } from "@nebutra/permissions";
 
-export async function deleteProject(projectId: string) {
-  await requirePermission("project:delete"); // 未授权时抛出异常
+export async function deleteProject(projectId: string, user: PermissionContext) {
+  const permissions = getPermissions();
+  if (!permissions.can(user, "delete", "Project", { id: projectId })) {
+    throw new Error("Forbidden");
+  }
+  // ...
 }
 ```
 
 ### React UI 门控
 
 ```tsx
-import { Can } from "@nebutra/permissions/react";
+import { Can, Cannot } from "@nebutra/permissions/react";
 
-<Can action="delete" resource="Project">
+// 只有当前用户能对该资源执行该动作时才渲染 children
+<Can action="delete" resource="Project" subject={project}>
   <DeleteButton />
 </Can>
 
-<Can action="billing:update" fallback={<UpgradePrompt />}>
+// 被拒绝时渲染 fallback
+<Can action="update" resource="Billing" fallback={<UpgradePrompt />}>
   <BillingSettings />
 </Can>
+
+// Cannot 是反过来的——检查失败时渲染
+<Cannot action="create" resource="Project">
+  <ReadOnlyBanner />
+</Cannot>
 ```
 
-## 相关文档
+两者都从包裹应用的 `<PermissionProvider>`（`@nebutra/permissions` 导出为
+`PermissionProviderComponent`）读取上下文，也可以直接用 `usePermission(action, resource, subject?)`
+这个 hook 做命令式的布尔检查。
+
+## 自定义角色与资源
+
+`packages/iam/permissions/src/roles.ts` 里的 `DEFAULT_ROLES` 是一个普通对象，值是
+`RoleDefinition`（`role`、可选的 `inherits`、`description`、`rules: PermissionRule[]`）。加一个
+角色就是加一条记录；加一个资源或动作，直接用字符串就行——两种类型都在命名常量之外接受任意
+字符串。
+
+## 相关
 
 <CardGroup cols={2}>
-  <Card title="认证指南" icon="shield-check" href="/zh/guides/authentication">
-    Auth 令牌如何携带权限范围信息。
+  <Card title="认证" icon="shield-check" href="/zh/api-reference/authentication">
+    会话 Cookie 和服务间 token。
   </Card>
   <Card title="多租户" icon="building" href="/zh/concepts/tenants">
-    租户成员关系如何映射到角色。
+    租户成员如何映射到角色。
   </Card>
 </CardGroup>

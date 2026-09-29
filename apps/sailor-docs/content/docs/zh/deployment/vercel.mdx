@@ -1,59 +1,48 @@
 ---
-title: Vercel 部署
-description: 在 Vercel 上部署 Nebutra 前端——营销站与文档为生产路径；web/auth 为可选 cutover。
+title: Vercel
+description: 在 Vercel 上部署脚手架生成的 Next.js 应用——不需要任何平台专属改动。
 ---
 
-## 概览
+模板不选 Vercel，也不排斥 Vercel。`apps/web`、`apps/landing`、`apps/auth` 都是普通的 Next.js 16
+应用；Vercel 直接构建 Next.js 应用（不需要 Docker 路径用的 `standalone` 产物——那个专门是给自托管、
+平台本身不懂怎么跑 Next 的场景准备的）。
 
-每个公网表面使用**独立 Vercel 项目**，隔离环境变量、域名与部署配额。
+<Note>
+  这是一份"代码没有拦着你这么做"的通用指南，不是一份长期维护的运维手册——Nebutra 自己的实例并
+  不跑在 Vercel 上。这里没有 `nebutra` 专属的 Vercel 集成、项目预设或 CLI 封装；配置方式跟部署
+  任何 Next.js 应用一样。
+</Note>
 
-| 项目示例 | 应用路径 | 域名 | 稳态 |
-|----------|----------|------|------|
-| landing | `apps/landing` | `nebutra.com` | **Vercel 生产** |
-| `docs` | `apps/sailor-docs` | `nebutra.com/docs` | **Vercel 生产** |
-| `nebutra-web` | `apps/web` | `app.nebutra.com` | 可选；**现为 ECS** |
-| `nebutra-auth` | `apps/auth` | `auth.nebutra.com` | 可选；**现为 ECS** |
+## 开箱即用的部分
 
-生产 API **不要**默认部署为 Vercel Functions——`api.nebutra.com` 在 ECS。
+- **内嵌网关。** `app/api/[[...route]]/route.ts`（`GATEWAY_MODE=embedded`，默认）是一个普通的
+  Next.js 路由处理器，带 `export const runtime = "nodejs"`——Vercel 会像跑其他路由一样把它当成
+  Serverless Function 跑起来，不需要单独部署 API。
+- **环境变量。** 在 Vercel 项目的 Environment Variables 设置里配置，跟在任何地方设置
+  `.env.production` 一样——见[环境变量](/zh/configuration/environment-variables)。
 
-Web 必须使用 Next 构建（不是默认 Vite）：
+## 部署前要确认的事
 
-```bash
-cd ../.. && pnpm turbo run build:next --filter=@nebutra/web
-```
-
-## 链接项目
-
-```bash
-cd apps/landing && vercel link
-cd ../sailor-docs && vercel link
-# 可选：
-cd ../web && vercel link
-cd ../auth && vercel link
-```
-
-仓库中**没有** `apps/api-gateway` 目录；网关路径为 `backends/gateway`。
-
-生产认证变量示例：
-
-```bash
-BETTER_AUTH_URL=https://auth.nebutra.com
-AUTH_COOKIE_DOMAIN=.nebutra.com
-# BETTER_AUTH_SECRET 在 auth 与 web 保持一致
-```
-
-## 可选 web/auth cutover
-
-在 DNS 切换前保持 ECS 承载流量：
-
-```bash
-node scripts/preflight-web-auth-vercel.mjs
-node scripts/redeploy-web-auth-vercel.mjs
-```
-
-详见 monorepo `docs/ops/nebutra/web-auth-vercel-cutover.md`。
+- **构建命令。** 确认你项目里的 `apps/web`（以及要部署的其他应用）的 `build` 脚本默认真的会产出
+  一个 Next.js 构建。如果你的项目把 `apps/web` 默认构建改成了别的东西，就在 Vercel 项目的 Build
+  Command 里显式指定能产出 Next 构建的那个脚本（比如项目里定义的
+  `pnpm --filter @nebutra/web run build:next`），不要依赖默认值。
+- **Root Directory。** 在 Turborepo monorepo 里，把 Vercel 的 Root Directory 指到对应应用
+  （`apps/web`、`apps/landing` 等），让它自动识别 workspace。
+- **`pnpm db:deploy` 仍然要单独跑。** Vercel 不会替你跑数据库迁移——把 `pnpm db:deploy` 对着生产
+  `DATABASE_URL` 当成独立的一步（GitHub Action、发布步骤，或手动执行），在新部署开始接流量之前
+  跑完。见[部署概览](/zh/deployment/overview)。
+- **如果用 `GATEWAY_MODE=external`，网关需要自己找地方跑。** Vercel 的 Serverless Function 不适合
+  独立跑网关（没有长驻进程，没有后台队列 worker）——部署在 Vercel 上就保持
+  `GATEWAY_MODE=embedded`，否则把 `backends/gateway` 部署到别处。
 
 ## 相关
 
-- [部署概览](/zh/deployment/overview)
-- [认证指南](/zh/guides/authentication)
+<CardGroup cols={2}>
+  <Card title="部署概览" icon="rocket" href="/zh/deployment/overview">
+    create-sailor 生成了什么，以及内嵌/独立网关的选择。
+  </Card>
+  <Card title="环境变量" icon="key" href="/zh/configuration/environment-variables">
+    每个变量的完整参考。
+  </Card>
+</CardGroup>

@@ -26,7 +26,7 @@ import { getCurrentTenant } from "@nebutra/tenant";
 import { checkEntitlement } from "@nebutra/billing";
 
 const tenant = getCurrentTenant();
-const db = getTenantDb(tenant.tenantId);
+const db = getTenantDb(tenant.id);
 ```
 
 ## 从 monorepo 之外调用网关

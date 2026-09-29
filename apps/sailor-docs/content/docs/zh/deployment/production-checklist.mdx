@@ -13,15 +13,17 @@ description: Nebutra-Sailor 正式上线前需要验证的所有内容 — 基�
 
 **所有环境变量已配置并通过验证**
 
-所有必填环境变量必须在您的部署目标中设置（Vercel 控制台、Docker Compose 环境变量文件或密钥管理器）。`@nebutra/config` 在启动时验证它们，如果有任何变量缺失，会以描述性错误崩溃。
+所有必填环境变量必须在你部署的地方设置好（对应平台的控制台、Docker Compose 环境变量文件，或密钥管理器）。`@nebutra/config` 在启动时验证它们，如果有任何变量缺失，会以描述性错误崩溃。
 
-**已对生产数据库执行数据库迁移**
-
-在部署新版本应用之前，运行 `pnpm db:migrate`（或 `DATABASE_URL=<prod> pnpm db:migrate`）。
+**`pnpm db:deploy` 已对生产数据库执行，且在新版本应用开始对外服务之前**
 
 ```bash
-DATABASE_URL=<your-production-db-url> pnpm db:migrate
+DATABASE_URL=<your-production-db-url> pnpm db:deploy
 ```
+
+这会应用未执行的迁移，再应用 `platform.sql` + 生成式 RLS 策略，最后校验数据库跟
+`schema.prisma` 是否一致——出现漂移就非零退出。见[行级安全](/zh/database/rls)。`db:migrate`
+（`prisma migrate dev`）只用于本地开发，永远不要在生产环境跑它。
 
 **已配置 PostgreSQL 备份策略**
 
@@ -37,11 +39,11 @@ DATABASE_URL=<your-production-db-url> pnpm db:migrate
 
 **Creem Webhook 已配置并验证**
 
-在 Creem 控制台中，创建指向 `https://api.yourdomain.com/api/webhooks/creem` 的 Webhook。设置签名密钥 `CREEM_WEBHOOK_SECRET`，以及 `CREEM_API_KEY` / `CREEM_PRODUCT_ID`。切换到正式密钥之前，先用 `CREEM_TEST_MODE=true` 在测试环境中验证分发。参见 [Creem 集成指南](/zh/integrations/creem)。
+在 Creem 控制台中，创建指向 `https://yourdomain.com/api/webhooks/creem`（如果 `GATEWAY_MODE=external`，就指向你独立部署的网关主机）的 Webhook。设置签名密钥 `CREEM_WEBHOOK_SECRET`，以及 `CREEM_API_KEY` / `CREEM_PRODUCT_ID`。切换到正式密钥之前，先用 `CREEM_TEST_MODE=true` 在测试环境中验证分发。参见 [Creem 集成指南](/zh/integrations/creem)。
 
 **Stripe Webhook 已配置并验证（历史遗留——订阅）**
 
-Stripe 已不再承接新工作，但订阅、计费门户以及切换前的历史结账仍依赖它。在 Stripe 控制台中，创建指向 `https://api.yourdomain.com/api/v1/webhooks/stripe` 的 Webhook 端点。将 Webhook 签名密钥设置为 `STRIPE_WEBHOOK_SECRET`。使用 `stripe listen --forward-to` 在测试环境中验证分发。
+Stripe 已不再承接新工作，但订阅、计费门户以及切换前的历史结账仍依赖它。在 Stripe 控制台中，创建指向 `https://yourdomain.com/api/webhooks/stripe` 的 Webhook 端点。将 Webhook 签名密钥设置为 `STRIPE_WEBHOOK_SECRET`。使用 `stripe listen --forward-to` 在测试环境中验证分发。
 
 **已启用必要的 Stripe 事件（历史遗留）**
 
@@ -73,11 +75,11 @@ Better Auth 是唯一的认证服务商——Clerk、NextAuth 和 Supabase 适�
 
 **自定义域名已配置**
 
-每个应用（`web`、`landing`、`api-gateway`）都必须在 Vercel 项目（或反向代理）中添加自定义域名，并且 DNS 记录应指向正确的源站。
+把你的域名指向你实际部署的地方——像 Vercel 这样的平台在自己的控制台里处理；自托管 Docker 部署需要你自己搭 DNS + 反向代理。见[部署概览](/zh/deployment/overview)。
 
 **SSL/TLS 已激活**
 
-确认所有域名强制使用 HTTPS。在 Vercel 上这是自动的。在 Docker 自托管环境中，验证您的反向代理（Caddy / nginx + certbot）是否正确终止 TLS。
+确认所有域名强制使用 HTTPS。像 Vercel 这样的平台会自动处理。在 Docker 自托管环境中，验证你的反向代理（Caddy / nginx + certbot）是否正确终止 TLS。
 
 **已配置 HTTPS 重定向**
 
@@ -123,8 +125,8 @@ git log --all --diff-filter=A -- '*.env*'   # 检查是否有已提交的 .env �
 
 为以下地址设置正常运行时间监控（例如 Better Uptime、Checkly）：
 - `https://yourdomain.com`（营销网站）
-- `https://app.yourdomain.com`（Web 应用）
-- `https://api.yourdomain.com/health`（API 网关）
+- Web 应用部署的地方（`GATEWAY_MODE=embedded`：同一个域名；`external`：你的网关主机）
+- 网关上的 `/api/misc/health`——响应格式见 [Docker 部署](/zh/deployment/docker)
 
 当 HTTP 5xx 错误率超过 1% 或 P95 响应时间超过 2 秒时发出告警。
 
@@ -191,10 +193,10 @@ npx lighthouse https://yourdomain.com --view
 ## 相关内容
 
 <CardGroup cols={2}>
-  <Card title="Vercel 部署" icon="triangle" href="/zh/deployment/vercel">
-    分步骤部署到 Vercel。
+  <Card title="Vercel" icon="triangle" href="/zh/deployment/vercel">
+    在 Vercel 上部署 Next.js 应用。
   </Card>
   <Card title="Docker 部署" icon="docker" href="/zh/deployment/docker">
-    使用 Docker Compose 的自托管部署。
+    生成的 Dockerfile 和 docker-compose.yml。
   </Card>
 </CardGroup>

@@ -1,115 +1,77 @@
 ---
 title: Deployment Overview
-description: How Nebutra ships in production — Cloudflare edge, Vercel for marketing/docs, ECS for app/auth/API — plus Docker self-host options.
+description: The template chooses no platform — portable Next standalone builds and Dockerfiles, run wherever you want.
 ---
 
-## Deployment options
+## The template makes no platform choice
 
-| Option | Best for | Complexity | Cost |
-|--------|---------|-----------|------|
-| **Split (recommended for Nebutra.com)** | Marketing on Vercel + app/API on a Cloud VM | Medium | Infrastructure + optional Vercel |
-| **Vercel (frontends only)** | Docs, landing, optional web/auth cutover | Low | Hobby/Pro usage limits |
-| **Docker / PM2 self-hosted** | Data residency, full control | Medium | Your VMs |
-| **Cloudflare Workers (gateway)** | Edge API entry (see monorepo target config) | Medium | Workers free tier + paid overages |
+Per [ADR 2026-06-04, production runtime closure](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-06-04-production-runtime-closure.md)
+and [ADR 2026-09-24, Sailor convergence](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md)
+§5: the template ships Next `standalone` builds and Dockerfiles, and `create-sailor` asks nothing
+about where they run. There is no `--deploy vercel|railway|cloudflare` flag, no `DEPLOY_TARGET_*`
+selector in a scaffolded project, and no platform-specific config baked in. What follows is what
+the code actually gives you to deploy — not any particular company's production setup.
 
-## Production architecture (nebutra.com today)
+## What create-sailor generates
 
-Public DNS sits on **Cloudflare** (CDN / WAF). Origins are split:
+| File | Purpose |
+|------|---------|
+| `Dockerfile.web` | Multi-stage build for `apps/web` (Next `output: "standalone"`) — the default deploy unit, since the gateway is mounted inside it |
+| `docker-compose.yml` | `web` + local `postgres` + `redis`, for a one-command local or single-VM stack |
+| `backends/gateway/Dockerfile` | A separate image for the gateway, for when you run it standalone (see below) |
 
-```
-User
-  │
-  ▼
-Cloudflare DNS + proxy
-  │
-  ├─── apps/landing     nebutra.com           → Vercel
-  ├─── apps/sailor-docs      nebutra.com/docs      → Vercel
-  │
-  ├─── apps/web              app.nebutra.com       → ECS (PM2 Next standalone)
-  ├─── apps/auth             auth.nebutra.com      → ECS (PM2 auth-center)
-  ├─── backends/gateway      api.nebutra.com       → ECS (PM2 Hono / Node)
-  └─── apps/idp              sso.nebutra.com       → ECS (OIDC issuer; keep stable)
-              │
-              ├─── PostgreSQL (Supabase / Neon / RDS)
-              ├─── Redis / KV (Upstash or Cloudflare KV)
-              └─── ClickHouse (metering / analytics)
-```
+Any host that can run a Docker image or a `node server.js` process works: a VM, Fly, Railway,
+Render, ECS, a Kubernetes cluster, or a platform like Vercel that builds Next.js directly (see
+[Vercel](/deployment/vercel)).
 
-| Hostname | App | Steady-state host |
-|----------|-----|-------------------|
-| `nebutra.com` | `apps/landing` | Vercel |
-| `nebutra.com/docs` | `apps/sailor-docs` | Vercel |
-| `app.nebutra.com` | `apps/web` | **ECS** (Next standalone). Vercel project `nebutra-web` is optional cutover |
-| `auth.nebutra.com` | `apps/auth` | **ECS**. Vercel project `nebutra-auth` is optional cutover |
-| `api.nebutra.com` | `backends/gateway` | **ECS** (not Vercel Functions in production) |
-| `sso.nebutra.com` | `apps/idp` | **ECS** (permanent issuer — move carefully) |
+## The gateway: embedded or external
 
-See also monorepo ops: `docs/DOMAINS.md` and `docs/ops/nebutra/web-auth-vercel-cutover.md`.
-
-### Web build note
-
-`apps/web` default `pnpm build` is **Vite**. Production ECS (and Vercel if you cut over) must use **`pnpm --filter @nebutra/web run build:next`** so `.next` / standalone is produced. Official workflow: `.github/workflows/deploy-ecs.yml`.
-
-### Service-to-service auth
-
-Internal `x-service-token` is a short-lived **HS256 JWT** (`@nebutra/auth` `signServiceToken` / `verifyServiceToken`). Legacy hex-HMAC tokens are **rejected**. Same contract on Python and Go helpers.
-
-## Before you deploy
-
-### Run database migrations
-
-Always run migrations **before** shipping a schema-dependent app version:
+`backends/gateway` (Hono) is the sole business API. By default it's mounted in-process inside
+`apps/web` at `app/api/[[...route]]/route.ts`:
 
 ```bash
-pnpm db:migrate
+GATEWAY_MODE=embedded   # default — one process, one origin, one deploy
+GATEWAY_MODE=external   # apps/web 404s every unmatched /api/* path and mounts nothing;
+                         # you build and run backends/gateway (its own Dockerfile) standalone
 ```
 
-### Validate environment variables
+Pick `external` only if you actually need to scale or deploy the gateway independently from the
+frontend. Nothing in the template requires it.
 
-Required env vars are validated at startup. Missing secrets should fail fast. At minimum for auth + app:
+## Before you deploy: `pnpm db:deploy`
 
-| Variable | Notes |
-|----------|--------|
-| `AUTH_PROVIDER` / `NEXT_PUBLIC_AUTH_PROVIDER` | Production: `better-auth` |
-| `BETTER_AUTH_SECRET` | Same value on auth + web |
-| `BETTER_AUTH_URL` / `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` |
-| `AUTH_COOKIE_DOMAIN` | `.nebutra.com` |
-| `DATABASE_URL` | Shared Postgres |
-| `SERVICE_SECRET` | S2S JWT signing |
+Run this before the new app version starts serving traffic — it applies pending migrations, then
+`platform.sql` + the generated RLS policies, then verifies the database matches `schema.prisma`,
+failing loud on any drift:
 
-## CI/CD with GitHub Actions
+```bash
+pnpm db:deploy
+```
 
-| Workflow | Role |
-|----------|------|
-| `ci.yml` | lint → typecheck → build → test on PR/push |
-| `deploy-ecs.yml` | **Manual** fallback: Next standalone + gateway tarball → VM PM2 |
-| Vercel Git integration | Auto-deploy **landing** + **docs** (and optional web/auth projects) |
-| `deploy-gateway.yml` / `deploy-origin-ecs.yml` | Per-service adapters, gated by `DEPLOY_TARGET_GATEWAY` / `DEPLOY_TARGET_PYTHON_AI`; no workflow deploys to Kubernetes |
+See [Database Overview](/database/overview) and [Row-Level Security](/database/rls) for what this
+command actually does. However you wire your deploy pipeline, this step belongs before the app
+starts, not after — `db:migrate` (`prisma migrate dev`) is for local development only.
 
-Hobby Vercel has a **daily deployment quota** (~100 deployments/day; canceled/skipped can still count). Each linked project may open a deployment slot per push, so:
+## Environment variables
 
-- `scripts/vercel-ignore-build.sh` only **builds** when that app’s scope changed (app dir + its workspace deps), not the whole monorepo.
-- **ECS-primary** surfaces (`web` / `auth` / `gateway`) **skip** Vercel auto-deploy unless you set `VERCEL_ALLOW_ECS_OPTIONAL=1` or commit with `[vercel:apps/web]` (etc.).
-- On Hobby, prefer Git-connected only for **landing + docs**; keep optional cutover projects disconnected or optional.
-
-## Zero-downtime
-
-- **Vercel** frontends: promote after green build; rollback via previous deployment.
-- **ECS PM2**: release directories + `current` symlink (`ecs-deploy-remote.sh`); keep previous release for one-step rollback.
+Every required variable is validated at startup and fails fast with a descriptive error — see
+[Environment Variables](/configuration/environment-variables) for the full reference. At minimum,
+a production deploy needs `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL` /
+`NEXT_PUBLIC_AUTH_URL`, and `SERVICE_SECRET`.
 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Vercel Deployment" icon="triangle" href="/deployment/vercel">
-    Frontends and optional web/auth projects on Vercel.
-  </Card>
   <Card title="Docker Deployment" icon="docker" href="/deployment/docker">
-    Self-hosted Compose-style layout.
+    Build and run the generated Dockerfiles yourself.
+  </Card>
+  <Card title="Vercel" icon="triangle" href="/deployment/vercel">
+    Deploying the Next.js apps on Vercel.
   </Card>
   <Card title="Production Checklist" icon="circle-check" href="/deployment/production-checklist">
     Pre-go-live checks.
   </Card>
-  <Card title="Development Overview" icon="laptop" href="/development/overview">
-    Local monorepo setup.
+  <Card title="Database Overview" icon="database" href="/database/overview">
+    `pnpm db:deploy` and the generated-RLS model.
   </Card>
 </CardGroup>
