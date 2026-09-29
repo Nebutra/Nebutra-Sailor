@@ -6,10 +6,14 @@ name: Deploy origin apps to Fly
 # Cloudflare Workers.
 # The auth Next UI runs as a private origin behind auth-edge; its product DNS
 # must never be cut over directly to Fly.
-# SSO / admin ship as Next Machines here. Carina and New-API are separate Fly
-# apps (deploy-carina-fly.yml, deploy-new-api-fly.yml). Design and sailor-docs
-# moved off Fly to Cloudflare Workers (deploy-design-cloudflare.yml,
-# deploy-sailor-docs.yml) — see docs/architecture/2026-09-29-fly-machine-shrink.md.
+# SSO / admin / design ship as Next Machines here. Carina and New-API are
+# separate Fly apps (deploy-carina-fly.yml, deploy-new-api-fly.yml).
+# sailor-docs moved off Fly to Cloudflare Workers (deploy-sailor-docs.yml) —
+# see docs/architecture/2026-09-29-fly-machine-shrink.md. (design was
+# evaluated for the same move and stays on Fly: apps/design reads the
+# monorepo source tree — packages/design/design-tokens/tokens/*.json,
+# packages/design/ui/src — over node:fs at request time by design, which the
+# Workers sandbox cannot provide even with nodejs_compat.)
 # forge-dns-leak (leak.nebutra.com) is no longer a separate Fly app either: it
 # runs embedded in the nebutra-forge Machine (infra/fly/forge.toml).
 # This workflow deploys Machines; DNS cutover is a separate workflow_dispatch
@@ -22,7 +26,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: landing forge router web auth kuanlan idp admin para gateway cache carina new-api). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api are the remaining ECS leftovers. design and sailor-docs deploy via their own Cloudflare workflows now."
+        description: "Apps to deploy (space-separated: landing forge router web design auth kuanlan idp admin para gateway cache carina new-api). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api are the remaining ECS leftovers. sailor-docs deploys via deploy-sailor-docs.yml (Cloudflare) now."
         required: false
         default: ""
       cutover:
@@ -37,6 +41,7 @@ on:
       - "apps/forge/**"
       - "apps/router/**"
       - "apps/web/**"
+      - "apps/design/**"
       - "apps/auth/**"
       - "apps/kuanlan/**"
       - "apps/para/**"
@@ -97,6 +102,7 @@ jobs:
             {"app":"forge","package":"@nebutra/forge","workspace":"apps/forge","build_command":"build","fly_app":"nebutra-forge","host":"forge","site":"https://forge.nebutra.com"},
             {"app":"router","package":"@nebutra/router","workspace":"apps/router","build_command":"build","fly_app":"nebutra-router","host":"router","site":"https://router.nebutra.com"},
             {"app":"web","package":"@nebutra/web","workspace":"apps/web","build_command":"build:next","fly_app":"nebutra-web","host":"app","site":"https://app.nebutra.com"},
+            {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
             {"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","build_command":"build","fly_app":"nebutra-auth","host":"","site":"https://auth.nebutra.com"},
             {"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","build_command":"build","fly_app":"nebutra-kuanlan","host":"kuanlan","site":"https://kuanlan.nebutra.com"},
             {"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","build_command":"build","fly_app":"nebutra-idp","host":"sso","site":"https://sso.nebutra.com"},
