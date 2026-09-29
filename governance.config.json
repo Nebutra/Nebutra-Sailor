@@ -89,9 +89,7 @@
       "apps/landing/src/app/[lang]/(marketing)/solutions/china-vc/[id]/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/solutions/global-vc/[id]/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/solutions/page.tsx",
-      "apps/landing/src/app/api/changelog/webhook/route.ts",
       "apps/landing/src/app/api/og/route.ts",
-      "apps/landing/src/components/landing/blog-comments.tsx",
       "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/sms-glyph.tsx",
@@ -173,7 +171,9 @@
     ]
   },
   "brandHex": {
-    "allowlist": ["apps/forge/src/components/sota-runners.tsx"]
+    "allowlist": [
+      "apps/forge/src/components/sota-runners.tsx"
+    ]
   },
   "repositorySeam": {
     "coreDomains": [
@@ -188,8 +188,14 @@
       "^apps/web/src/app/\\[locale\\]/\\(app\\)/organization-invitation/",
       "^apps/web/src/lib/invitations\\.ts$"
     ],
-    "seamPaths": ["^packages/platform/repositories/", "^packages/platform/db/"],
-    "dbAccessors": ["getTenantDb", "getSystemDb"],
+    "seamPaths": [
+      "^packages/platform/repositories/",
+      "^packages/platform/db/"
+    ],
+    "dbAccessors": [
+      "getTenantDb",
+      "getSystemDb"
+    ],
     "allowlist": [
       "apps/web/src/app/api/invitations/[invitationId]/accept/route.ts",
       "apps/web/src/app/api/onboarding/invite-members/route.ts",
@@ -218,7 +224,9 @@
     ]
   },
   "microcopyRules": {
-    "scanRoots": ["apps/web/src"],
+    "scanRoots": [
+      "apps/web/src"
+    ],
     "excludePaths": [
       "/api/",
       "\\.test\\.tsx?$",
@@ -2342,7 +2350,10 @@
     "allowlist": {}
   },
   "siteClaims": {
-    "scanRoots": ["apps/landing/src", "apps/landing/messages"],
+    "scanRoots": [
+      "apps/landing/src",
+      "apps/landing/messages"
+    ],
     "excludePaths": [
       "\\.test\\.tsx?$",
       "/__tests__/",
