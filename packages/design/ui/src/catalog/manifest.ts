@@ -1412,7 +1412,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     id: "artifact-shift-card",
     title: "Artifact Shift Card",
     category: "marketing",
-    status: "stable",
+    status: "experimental",
     import: "@nebutra/ui/patterns",
     files: ["patterns/artifact-shift-card.tsx"],
     demos: ["artifact-shift-card-demo"],

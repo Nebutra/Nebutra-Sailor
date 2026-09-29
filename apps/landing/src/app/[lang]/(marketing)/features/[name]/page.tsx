@@ -156,7 +156,7 @@ function DomainPage({ entry, locale }: PageProps) {
       </section>
 
       {folder ? (
-        <Band>
+        <Band id="topology">
           <Intro title={folder.topology.title[locale]} lead={folder.topology.caption[locale]} />
           <div className="mt-12 max-w-4xl">
             <TopologyList nodes={folder.topology.nodes} locale={locale} />
@@ -177,7 +177,7 @@ function DomainPage({ entry, locale }: PageProps) {
       {sample ? <CodeBand sample={sample} label={titleOf(entry, locale)} locale={locale} /> : null}
 
       {packages.length > 0 ? (
-        <Band>
+        <Band id="packages">
           <Intro
             title={COPY.packages[locale]}
             lead={
@@ -235,11 +235,11 @@ function PackagePage({ entry, locale }: PageProps) {
       </section>
 
       {Showcase ? (
-        <Band>
+        <Band id="showcase">
           <Showcase entry={serializable} locale={locale} />
         </Band>
       ) : Glyph ? (
-        <Band>
+        <Band id="showcase">
           <div className="max-w-2xl rounded-[var(--radius-card)] border border-border bg-card p-6">
             <Glyph entry={serializable} locale={locale} />
           </div>
@@ -351,7 +351,7 @@ function CodeBand({
   locale: Lang;
 }) {
   return (
-    <Band>
+    <Band id="usage">
       <Intro title={COPY.inCode[locale]} />
       <div className="mt-12 max-w-4xl">
         <CodeBlock
