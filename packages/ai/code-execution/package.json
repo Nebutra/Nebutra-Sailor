@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/code-execution",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Action and observation execution layer backed by sandbox-runtime",
   "private": false,
   "license": "MIT",

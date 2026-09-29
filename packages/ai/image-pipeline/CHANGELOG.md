@@ -1,5 +1,14 @@
 # @nebutra/image-pipeline
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.1
+  - @nebutra/errors@4.0.1
+  - @nebutra/generation-context@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes

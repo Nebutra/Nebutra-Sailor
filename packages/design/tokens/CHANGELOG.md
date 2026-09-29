@@ -1,5 +1,13 @@
 # @nebutra/tokens
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`076251c`](https://github.com/Nebutra/Nebutra-Sailor/commit/076251c6f5a1d74bf98192727d0b1895d88fe607)]:
+  - @nebutra/fonts@4.0.1
+  - @nebutra/design-tokens@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes

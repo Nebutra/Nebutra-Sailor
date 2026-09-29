@@ -1,5 +1,14 @@
 # @nebutra/event-log
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.1
+  - @nebutra/errors@4.0.1
+  - @nebutra/content-store@0.1.8
+
 ## 4.0.0
 
 ### Patch Changes

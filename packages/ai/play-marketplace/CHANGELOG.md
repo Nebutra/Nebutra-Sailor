@@ -1,5 +1,17 @@
 # @nebutra/play-marketplace
 
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.1
+  - @nebutra/errors@4.0.1
+  - @nebutra/event-log@4.0.1
+  - @nebutra/content-store@0.1.8
+  - @nebutra/play-loader@0.1.7
+  - @nebutra/generation-context@0.1.7
+
 ## 0.1.7
 
 ### Patch Changes

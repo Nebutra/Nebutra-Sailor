@@ -1,5 +1,14 @@
 # @nebutra/agents
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/billing@4.0.1
+  - @nebutra/cache@4.0.1
+  - @nebutra/logger@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes

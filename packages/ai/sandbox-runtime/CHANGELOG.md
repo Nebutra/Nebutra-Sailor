@@ -1,5 +1,13 @@
 # @nebutra/sandbox-runtime
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.1
+  - @nebutra/errors@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes

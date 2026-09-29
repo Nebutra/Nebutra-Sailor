@@ -1,5 +1,16 @@
 # @nebutra/mcp
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/ui@4.0.1
+  - @nebutra/capability-kit@4.0.1
+  - @nebutra/errors@4.0.1
+  - @nebutra/event-log@4.0.1
+  - @nebutra/trace-store@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes

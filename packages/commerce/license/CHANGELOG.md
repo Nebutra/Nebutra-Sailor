@@ -1,5 +1,14 @@
 # @nebutra/license
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/email@4.0.1
+  - @nebutra/logger@4.0.1
+  - @nebutra/queue@4.0.1
+
 ## 4.0.0
 
 ### Patch Changes

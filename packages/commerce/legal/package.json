@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/legal",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": true,
   "description": "Legal & Compliance infrastructure for Nebutra SaaS",
   "type": "module",

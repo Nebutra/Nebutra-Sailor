@@ -1,5 +1,13 @@
 # @nebutra/sms
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/cache@4.0.1
+  - @nebutra/logger@4.0.1
+
 ## 0.1.5
 
 ### Patch Changes

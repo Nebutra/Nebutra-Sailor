@@ -1,5 +1,18 @@
 # @nebutra/auth
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/ui@4.0.1
+  - @nebutra/audit@4.0.1
+  - @nebutra/email@4.0.1
+  - @nebutra/logger@4.0.1
+  - @nebutra/feature-flags@0.1.7
+  - @nebutra/db@0.1.6
+  - @nebutra/repositories@0.0.7
+
 ## 3.0.0
 
 ### Patch Changes
