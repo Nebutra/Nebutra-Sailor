@@ -43,17 +43,36 @@ apps/landing/src/__tests__/ui-governance.test.ts
 # ---------------------------------------------------------------------------
 # Nebutra dashboard (apps/web) business surfaces
 # Keep the locale shell + layout; strip Nebutra-specific feature pages.
+#
+# NOTE 2026-09-29: these ten entries used to read
+# `apps/web/src/app/\[locale\]/(app)/<x>/` — there is no `[locale]` segment
+# under apps/web/src/app (i18n here doesn't route through one), so every one
+# of them matched nothing and these pages have been shipping in the template
+# uncaught. Fixed to the real path while adding the platform-admin entries
+# below for the same reason (docs/architecture/2026-09-29-admin-into-web.md).
 # ---------------------------------------------------------------------------
-apps/web/src/app/\[locale\]/(app)/admin/
-apps/web/src/app/\[locale\]/(app)/billing/
-apps/web/src/app/\[locale\]/(app)/analytics/
-apps/web/src/app/\[locale\]/(app)/audit/
-apps/web/src/app/\[locale\]/(app)/chat/
-apps/web/src/app/\[locale\]/(app)/integrations/
-apps/web/src/app/\[locale\]/(app)/tenants/
-apps/web/src/app/\[locale\]/(app)/usage/
-apps/web/src/app/\[locale\]/(app)/feature-flags/
-apps/web/src/app/\[locale\]/demo/
+apps/web/src/app/(app)/admin/
+apps/web/src/app/(app)/billing/
+apps/web/src/app/(app)/analytics/
+apps/web/src/app/(app)/audit/
+apps/web/src/app/(app)/chat/
+apps/web/src/app/(app)/integrations/
+apps/web/src/app/(app)/tenants/
+apps/web/src/app/(app)/usage/
+apps/web/src/app/(app)/feature-flags/
+apps/web/src/app/demo/
+# Platform control plane, folded in from apps/admin (see below) — same
+# Nebutra-instance-only status as the standalone app it replaces: a
+# hand-maintained Fleet of Nebutra's own products, a Supply domain wired to
+# Nebutra's own CLIProxyAPI/router, PlatformStaff roles for Nebutra's own
+# staff. Not stripped down to a reusable stub in this pass, matching how
+# apps/admin/ itself is fully excluded rather than partially retained.
+apps/web/src/app/(app)/admin/platform/
+apps/web/src/lib/admin-platform/
+apps/web/src/components/admin-platform/
+backends/gateway/src/routes/admin/platform-guard.ts
+backends/gateway/src/routes/admin/platform-supply.ts
+backends/gateway/src/routes/admin/platform-supply.test.ts
 # The product app's Startup OS route (Nebutra's product); product-routes.for-template.ts
 # mounts none, so the route file would only be dead code in a scaffold.
 apps/web/src/vite-app/routes/startup-os.tsx

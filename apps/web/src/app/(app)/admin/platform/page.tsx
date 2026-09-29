@@ -1,46 +1,177 @@
 import "server-only";
-import { Table } from "@nebutra/ui/primitives";
-import { FLEET } from "@/lib/admin-platform/fleet";
+import { roleAtLeast } from "@nebutra/contracts/admin";
+import Link from "next/link";
+import { ActionButton } from "@/components/admin-platform/action-button";
+import { FleetStrip } from "@/components/admin-platform/fleet-strip";
+import { PageTitle, Panel } from "@/components/admin-platform/panel";
+import { StatusDot } from "@/components/admin-platform/status-dot";
+import { cachedFleet, cachedInbox } from "@/lib/admin-platform/console-data";
+import { environmentLabel, relativeTime, type StatusTone } from "@/lib/admin-platform/format";
+import type { InboxItem } from "@/lib/admin-platform/inbox";
+import { requireStaff } from "@/lib/admin-platform/staff";
+
+export const dynamic = "force-dynamic";
+export const metadata = { title: "Inbox · Platform" };
 
 /**
- * Fleet — Phase 1 of the folded-in platform control plane.
- *
- * Renders CONFIGURATION state (what the ecosystem is supposed to be), not
- * observed state — see @/lib/admin-platform/fleet. Live health probing,
- * Supply, Inbox, and Staff panels are the rest of the old @nebutra/admin
- * surface and have not moved yet; this page is the first rendered domain,
- * ported so the standalone app can be undeployed. See
- * docs/architecture/2026-09-29-admin-into-web.md for the remaining scope.
+ * Inbox — ported from apps/admin's `app/page.tsx`, unchanged except for
+ * import paths (and the Fleet link now points at the nested
+ * /admin/platform/fleet route). This replaces the placeholder Fleet-only
+ * page this file held during the first landed slice of this migration; that
+ * content moved to ./fleet/page.tsx, now the live-probe Fleet table the
+ * original had. The first page answers "is anything wrong?" An item exists
+ * only while a product's signal is raised; nothing here is filler. Empty is
+ * the good state.
  */
-export default function PlatformFleetPage() {
+const SEVERITY_TONE: Record<InboxItem["reading"]["severity"], StatusTone> = {
+  critical: "bad",
+  warn: "warn",
+  info: "ok",
+};
+
+function serviceIdFor(item: InboxItem): string {
+  return item.manifest.product === "router"
+    ? "@nebutra/router"
+    : `@nebutra/${item.manifest.product}`;
+}
+
+function InboxRow({ item, role, now }: { item: InboxItem; role: string; now: number }) {
+  const unknown = item.reading.status === "unknown";
+  const action =
+    item.action &&
+    !unknown &&
+    roleAtLeast(role as Parameters<typeof roleAtLeast>[0], item.action.role)
+      ? item.action
+      : null;
   return (
-    <section>
-      <h2 className="text-lg font-semibold text-neutral-12">Fleet</h2>
-      <p className="mt-1 text-sm text-muted-foreground">
-        {FLEET.length} services, from <code>brand.domains</code> and the deploy-target resolver.
-      </p>
-      <div className="mt-4">
-        <Table>
-          <thead>
-            <tr>
-              <th className="text-left">Service</th>
-              <th className="text-left">Runtime</th>
-              <th className="text-left">Host</th>
-              <th className="text-left">Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            {FLEET.map((service) => (
-              <tr key={service.id}>
-                <td>{service.label}</td>
-                <td>{service.runtime}</td>
-                <td>{service.domainKey ?? service.baseUrl ?? "—"}</td>
-                <td className="text-sm text-muted-foreground">{service.note ?? "—"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+    <li className="flex items-center gap-3.5 border-border border-b px-4 py-3.5 last:border-b-0">
+      <StatusDot tone={unknown ? "unknown" : SEVERITY_TONE[item.reading.severity]} />
+      <div className="min-w-0 flex-1">
+        <div className="font-medium text-sm leading-5">
+          {item.reading.title ?? item.signal.label}
+        </div>
+        <div className="text-muted-foreground text-xs leading-[18px]">
+          {item.reading.detail ?? (unknown ? "probe failed" : item.signal.label)}
+        </div>
       </div>
-    </section>
+      <span className="rounded-full bg-muted px-2 text-[11px] text-muted-foreground leading-4">
+        {item.productLabel}
+      </span>
+      <span className="whitespace-nowrap text-muted-foreground text-xs">
+        {relativeTime(item.reading.probedAt, now)}
+      </span>
+      {action ? (
+        <ActionButton
+          serviceId={serviceIdFor(item)}
+          actionId={action.id}
+          verb={action.verb}
+          description={action.description}
+          destructive={action.destructive}
+          variant="ink"
+        />
+      ) : null}
+    </li>
+  );
+}
+
+export default async function PlatformInboxPage() {
+  const staff = await requireStaff();
+  const caller = { userId: staff.userId, role: staff.role };
+  const [inbox, fleet] = await Promise.all([cachedInbox(caller), cachedFleet()]);
+  const now = Date.now();
+  const strip = [...fleet]
+    .sort((a, b) => Number(b.health !== null) - Number(a.health !== null))
+    .slice(0, 8);
+  const drift = fleet.filter((r) => r.targetMatchesRuntime === false).length;
+  const latestProbe = fleet
+    .map((r) => r.probedAt)
+    .filter((p): p is string => !!p)
+    .sort()
+    .at(-1);
+  const today = new Date(now).toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "short",
+  });
+
+  return (
+    <>
+      <PageTitle title="Inbox" subtitle={`${today} · ${environmentLabel()}`} />
+
+      <Panel
+        title="Needs attention"
+        count={inbox.items.length}
+        aside={
+          <span className="text-muted-foreground text-xs">
+            probed {relativeTime(inbox.probedAt, now)}
+          </span>
+        }
+      >
+        {inbox.items.length === 0 ? (
+          <p className="px-4 py-6 text-muted-foreground text-sm">
+            Nothing needs you. Next probe in 30 s.
+          </p>
+        ) : (
+          <ul>
+            {inbox.items.map((item) => (
+              <InboxRow key={item.key} item={item} role={staff.role} now={now} />
+            ))}
+          </ul>
+        )}
+      </Panel>
+
+      {inbox.unknown.length > 0 ? (
+        <Panel
+          title="Unknown"
+          count={inbox.unknown.length}
+          description="Signals whose probe failed. Not green, not red — not known."
+        >
+          <ul>
+            {inbox.unknown.map((item) => (
+              <InboxRow key={item.key} item={item} role={staff.role} now={now} />
+            ))}
+          </ul>
+        </Panel>
+      ) : null}
+
+      {inbox.failures.length > 0 ? (
+        <Panel title="Unreachable products" count={inbox.failures.length}>
+          <ul>
+            {inbox.failures.map((f) => (
+              <li
+                key={f.serviceId}
+                className="flex items-center gap-3.5 border-border border-b px-4 py-3 last:border-b-0"
+              >
+                <StatusDot tone="bad" />
+                <span className="font-mono text-sm">{f.serviceId}</span>
+                <span className="min-w-0 flex-1 truncate text-muted-foreground text-xs">
+                  {f.error}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      ) : null}
+
+      <Panel
+        title="Fleet"
+        count={`${fleet.length}${drift ? ` · ${drift} drift` : ""}`}
+        aside={
+          <>
+            <span className="text-muted-foreground text-xs">
+              {latestProbe ? `probed ${relativeTime(latestProbe, now)}` : "not probed"}
+            </span>
+            <Link
+              href="/admin/platform/fleet"
+              className="text-muted-foreground text-xs hover:text-foreground"
+            >
+              All {fleet.length} services →
+            </Link>
+          </>
+        }
+      >
+        <FleetStrip rows={strip} />
+      </Panel>
+    </>
   );
 }

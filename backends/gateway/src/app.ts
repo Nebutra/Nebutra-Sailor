@@ -62,6 +62,7 @@ import { shouldSkipGlobalRateLimit } from "./middlewares/rateLimitSkip.js";
 import { tenantContextMiddleware } from "./middlewares/tenantContext.js";
 import { usageMeteringMiddleware } from "./middlewares/usageMetering.js";
 import { adminRoutes } from "./routes/admin/index.js";
+import { platformSupplyRoutes } from "./routes/admin/platform-supply.js";
 import { agentRoutes } from "./routes/agents/index.js";
 import { apiKeysRoutes } from "./routes/ai/api-keys.js";
 import { createByokResolveUpstreams } from "./routes/ai/byok-upstreams.js";
@@ -410,6 +411,13 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
 
   // Admin routes — protected by X-Admin-Key, not exposed through public ingress
   app.route("/api/v1/admin", adminRoutes);
+
+  // Platform control-plane's browser-facing CLIProxyAPI proxy — protected by
+  // Cloudflare Access + PlatformStaff, not X-Admin-Key (a browser tab cannot
+  // hold that). Mounted separately from adminRoutes above precisely so it
+  // does not inherit that router's X-Admin-Key-for-everything guard. See
+  // docs/architecture/2026-09-29-admin-into-web.md.
+  app.route("/api/v1/admin/platform/supply", platformSupplyRoutes);
 
   // Webhook routes (raw body — bypass rate limiting)
   app.route("/api/webhooks", stripeWebhookRoutes);

@@ -39,6 +39,7 @@
     "@nebutra/billing": "workspace:*",
     "@nebutra/china-compliance": "workspace:*",
     "@nebutra/cinema": "workspace:*",
+    "@nebutra/contracts": "workspace:*",
     "@nebutra/db": "workspace:*",
     "@nebutra/design-sync": "workspace:*",
     "@nebutra/design-tokens": "workspace:*",

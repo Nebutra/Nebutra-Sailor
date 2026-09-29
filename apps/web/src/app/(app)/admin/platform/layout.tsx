@@ -1,8 +1,11 @@
 import "server-only";
-import { PageHeader } from "@nebutra/ui/layout";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
-import { getStaffContext } from "@/lib/admin-platform/staff";
+import { ConsoleShell } from "@/components/admin-platform/console-shell";
+import type { ConsoleTab } from "@/components/admin-platform/console-tabs";
+import { cachedInbox, fleetSize } from "@/lib/admin-platform/console-data";
+import { environmentLabel } from "@/lib/admin-platform/format";
+import { getStaffContext, type StaffContext } from "@/lib/admin-platform/staff";
 
 /**
  * Platform control-plane surface, folded into @nebutra/web (was the standalone
@@ -23,7 +26,28 @@ import { getStaffContext } from "@/lib/admin-platform/staff";
  * `getStaffContext()` never throws for "not staff" — it returns null for every
  * reason (no Access assertion, unknown email, revoked grant, bad role string)
  * so this redirect never discloses which one applied.
+ *
+ * ConsoleShell/ConsoleTabs/CommandPalette below are ported from apps/admin's
+ * root layout, unmodified except for the tab hrefs (nested under
+ * /admin/platform instead of being the app root).
  */
+async function tabsFor(staff: StaffContext): Promise<ConsoleTab[]> {
+  let inboxCount: number | undefined;
+  try {
+    inboxCount = (await cachedInbox({ userId: staff.userId, role: staff.role })).items.length;
+  } catch {
+    inboxCount = undefined;
+  }
+  return [
+    { href: "/admin/platform", label: "Inbox", count: inboxCount },
+    { href: "/admin/platform/fleet", label: "Fleet", count: fleetSize },
+    { href: "/admin/platform/supply", label: "Supply" },
+    { href: "/admin/platform/tenants", label: "Customers", disabled: true },
+    { href: "/admin/platform/staff", label: "Staff", disabled: true },
+    { href: "/admin/platform/trust", label: "Trust", disabled: true },
+  ];
+}
+
 export default async function PlatformAdminLayout({ children }: { children: ReactNode }) {
   const staff = await getStaffContext();
   if (!staff) {
@@ -31,12 +55,8 @@ export default async function PlatformAdminLayout({ children }: { children: Reac
   }
 
   return (
-    <div className="mx-auto max-w-wide px-4 py-8">
-      <PageHeader
-        title="Platform"
-        description="Cross-product control plane — fleet, supply, staff. Staff-only."
-      />
-      <div className="mt-6">{children}</div>
-    </div>
+    <ConsoleShell staff={staff} environment={environmentLabel()} tabs={await tabsFor(staff)}>
+      {children}
+    </ConsoleShell>
   );
 }
