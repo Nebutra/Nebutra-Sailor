@@ -30,6 +30,8 @@ async function callerId(c: Context<StudioEnv>): Promise<string | null> {
   const fromBearer = c.get("tenant")?.userId;
   if (fromBearer) return fromBearer;
   try {
+    const authorization = c.req.header("authorization");
+    if (authorization?.startsWith("Bearer ")) return await bearerUserId(authorization);
     const center = await fetchAuthCenterSession(c.req.raw, DOMAINS.auth);
     const id = center?.user.id;
     return typeof id === "string" ? id : null;
@@ -37,6 +39,21 @@ async function callerId(c: Context<StudioEnv>): Promise<string | null> {
     log.warn("auth center unavailable for studio presets", { error: String(error) });
     return null;
   }
+}
+
+/**
+ * A CLI device-login token is a session on the auth center, which the gateway's
+ * own session lookup does not hold: ask the auth center, as `nebutra whoami` does.
+ */
+async function bearerUserId(authorization: string): Promise<string | null> {
+  const res = await fetch(`${DOMAINS.auth.replace(/\/$/, "")}/api/auth/get-session`, {
+    headers: { authorization },
+    cache: "no-store",
+    signal: AbortSignal.timeout(8_000),
+  });
+  if (!res.ok) return null;
+  const body = (await res.json().catch(() => null)) as { user?: { id?: unknown } } | null;
+  return typeof body?.user?.id === "string" ? body.user.id : null;
 }
 
 const presetSchema = z
