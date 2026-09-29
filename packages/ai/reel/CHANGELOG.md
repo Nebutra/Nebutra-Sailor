@@ -1,5 +1,17 @@
 # @nebutra/reel
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/agents@4.0.0
+  - @nebutra/graph-model@4.0.0
+  - @nebutra/icons@4.0.0
+  - @nebutra/logger@4.0.0
+  - @nebutra/tenant-store@4.0.0
+  - @nebutra/ui@4.0.0
+
 ## 3.0.0
 
 ### Patch Changes

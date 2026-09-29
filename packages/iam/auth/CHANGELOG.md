@@ -1,5 +1,20 @@
 # @nebutra/auth
 
+## 3.0.0
+
+### Patch Changes
+
+- [#663](https://github.com/Nebutra/Nebutra-Sailor/pull/663) [`8d858d0`](https://github.com/Nebutra/Nebutra-Sailor/commit/8d858d02344d55fb78053f6e52a904d4b3c8f609) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - A relying party (a product app pointing `BETTER_AUTH_URL` at another host) resolves sessions at the auth center without `BETTER_AUTH_SECRET`. The secret is now checked only where a local Better Auth instance is built.
+
+- Updated dependencies []:
+  - @nebutra/audit@4.0.0
+  - @nebutra/email@4.0.0
+  - @nebutra/logger@4.0.0
+  - @nebutra/ui@4.0.0
+  - @nebutra/feature-flags@0.1.6
+  - @nebutra/db@0.1.5
+  - @nebutra/repositories@0.0.6
+
 ## 2.0.0
 
 ### Patch Changes

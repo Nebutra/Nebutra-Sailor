@@ -1,5 +1,12 @@
 # @nebutra/permissions
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/logger@4.0.0
+
 ## 3.0.0
 
 ### Major Changes

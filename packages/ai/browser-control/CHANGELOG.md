@@ -1,5 +1,14 @@
 # @nebutra/browser-control
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.0
+  - @nebutra/errors@4.0.0
+  - @nebutra/sandbox-runtime@4.0.0
+
 ## 0.1.5
 
 ### Patch Changes

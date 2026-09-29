@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/fonts",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "type": "module",
   "description": "Self-hosted OSS font registry — build-time next/font faces + a name→CSS-var resolver so theme / DESIGN.md fonts render with zero runtime external requests",
   "private": false,

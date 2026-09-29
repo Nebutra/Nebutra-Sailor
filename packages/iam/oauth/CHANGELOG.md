@@ -1,5 +1,15 @@
 # @nebutra/oauth-server
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/contracts@4.0.0
+  - @nebutra/identity@4.0.0
+  - @nebutra/vault@4.0.0
+  - @nebutra/db@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

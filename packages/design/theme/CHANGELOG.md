@@ -1,5 +1,12 @@
 # @nebutra/theme
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/tokens@4.0.0
+
 ## 3.0.0
 
 ### Patch Changes

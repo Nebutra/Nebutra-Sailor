@@ -1,5 +1,12 @@
 # @nebutra/preset
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/theme@4.0.0
+
 ## 0.1.4
 
 ### Patch Changes

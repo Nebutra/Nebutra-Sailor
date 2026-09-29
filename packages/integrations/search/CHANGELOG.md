@@ -1,5 +1,18 @@
 # @nebutra/search
 
+## 4.0.0
+
+### Minor Changes
+
+- [`d57958c`](https://github.com/Nebutra/Nebutra-Sailor/commit/d57958ce7314dfb0e69a120a5171797c135b7cb8) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - The pgvector provider now accepts an optional `db` adapter (`config.db`, or `createSearch({ db })`) — a `PgvectorDbAdapter` (`getSystemDb`/`getTenantDb`) the host injects so search reaches Postgres through the host's own connection pool, tenant RLS session, and any preview/Hyperdrive routing, instead of a private connection this package opens itself. Tenant-scoped operations route through `db.getTenantDb(tenantId)`.
+
+  Omitting `db` keeps the previous behavior unchanged: the provider opens and owns its own `pg.Pool` from `connectionString` or `DATABASE_URL`. That path now logs a one-time deprecation warning and will be removed in a future major version — pass `db` instead.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/logger@4.0.0
+
 ## 3.0.0
 
 ### Major Changes

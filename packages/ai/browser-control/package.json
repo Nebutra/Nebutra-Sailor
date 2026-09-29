@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/browser-control",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Browser task execution, recording, and deterministic replay ports",
   "private": false,
   "license": "MIT",

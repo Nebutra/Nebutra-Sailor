@@ -1,5 +1,13 @@
 # @nebutra/trace-store
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/errors@4.0.0
+  - @nebutra/logger@4.0.0
+
 ## 3.0.0
 
 ### Patch Changes

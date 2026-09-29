@@ -1,5 +1,16 @@
 # @nebutra/code-execution
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @nebutra/capability-kit@4.0.0
+  - @nebutra/errors@4.0.0
+  - @nebutra/event-log@4.0.0
+  - @nebutra/execution-policy@4.0.0
+  - @nebutra/sandbox-runtime@4.0.0
+
 ## 0.1.5
 
 ### Patch Changes

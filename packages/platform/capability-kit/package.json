@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/capability-kit",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Neutral capability primitives shared by every Nebutra capability package: CapabilityError, DoctorReport, doctor/debug CLI runner, and debug JSONL storage.",
   "private": false,
   "license": "MIT",

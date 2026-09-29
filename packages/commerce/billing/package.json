@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/billing",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Billing & Monetization infrastructure for Nebutra - Stripe integration, subscriptions, usage, credits",
   "private": false,
   "license": "MIT",

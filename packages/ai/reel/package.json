@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/reel",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Typed node-graph dataflow for generative-media production: versioned IO envelope, multi-transport execution, storyboard pipeline",
   "private": false,
   "license": "MIT",

@@ -1,5 +1,16 @@
 # @nebutra/saga
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`8d858d0`](https://github.com/Nebutra/Nebutra-Sailor/commit/8d858d02344d55fb78053f6e52a904d4b3c8f609)]:
+  - @nebutra/auth@3.0.0
+  - @nebutra/billing@4.0.0
+  - @nebutra/email@4.0.0
+  - @nebutra/logger@4.0.0
+  - @nebutra/event-bus@0.1.5
+
 ## 0.1.5
 
 ### Patch Changes
