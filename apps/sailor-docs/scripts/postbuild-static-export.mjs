@@ -28,13 +28,20 @@
 // `basePath` only rewrites the URLs the app itself emits, not where its own
 // output lands on disk.
 //
-// Known gaps, intentionally out of scope for this pass (see the PR/commit
-// this shipped in): the `<slug>.mdx` content-negotiation shortcut and the
-// taxonomy-rename redirect table (both used Next `rewrites()`/`redirects()`,
-// which `output: "export"` cannot run) are not reproduced as static files
-// here. The canonical, non-shortcut paths both features aliased still work:
-// `/llms.mdx/docs/<lang>/<slug>` for raw Markdown, and the renamed page
-// itself for anyone who lands on the new URL directly.
+// The taxonomy-rename redirect table (previously Next `redirects()`, which
+// `output: "export"` cannot run at all) is reproduced below as a real
+// Cloudflare Workers static-assets `_redirects` file — see `writeRedirects`.
+//
+// The `<slug>.mdx` content-negotiation shortcut (previously Next
+// `rewrites()`) is NOT reproduced: Workers static-assets `_redirects` follows
+// the Netlify `_redirects` spec, whose `*` splat may only appear as a whole
+// trailing path segment (`/old/*  /new/:splat`) — it cannot strip a `.mdx`
+// suffix off the middle of a segment (`installation.mdx` is one segment, not
+// `installation` plus a separately-matchable tail), so a rule like
+// `/*.mdx  /llms.mdx/docs/:splat` is not expressible here, and a
+// plausible-looking-but-wrong rule that silently no-ops on every request is
+// worse than an honest gap. The canonical, non-shortcut path still works:
+// `/llms.mdx/docs/<lang>/<slug>` for raw Markdown.
 
 import {
   cpSync,
@@ -47,6 +54,7 @@ import {
 } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { TAXONOMY_REDIRECTS } from "./taxonomy-redirects.mjs";
 
 const appRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = join(appRoot, "out");
@@ -67,6 +75,32 @@ function assertExists(path, what) {
     );
     process.exit(1);
   }
+}
+
+/**
+ * `TAXONOMY_REDIRECTS` entries are in the zone's PUBLIC shape (no `/docs`
+ * prefix — see taxonomy-redirects.mjs's own header comment). Workers static
+ * assets serve this deploy AS the `/docs` zone (this Worker has no route of
+ * its own; landing forwards `/docs/*` here byte for byte — see
+ * wrangler.jsonc), so every source and destination here needs that prefix
+ * added back for the rule to match what a real request's path looks like.
+ *
+ * `_redirects` follows the Netlify spec: one rule per line,
+ * `<source> <destination> <status>`, checked top to bottom, first match
+ * wins. 301 (not the framework-default 308) matches what this table's
+ * former Next `redirects({ permanent: true })` actually sent.
+ */
+export function redirectsFileContents() {
+  const lines = TAXONOMY_REDIRECTS.map(
+    ({ source, destination }) => `/docs${source}  /docs${destination}  301`,
+  );
+  return `${lines.join("\n")}\n`;
+}
+
+function writeRedirects(dir) {
+  const contents = redirectsFileContents();
+  writeFileSync(join(dir, "_redirects"), contents);
+  return TAXONOMY_REDIRECTS.length;
 }
 
 function main() {
@@ -117,8 +151,21 @@ function main() {
     writeFileSync(join(distDir, "404.html"), readFileSync(notFoundHtml));
   }
 
+  // 4. `_redirects` lives at the assets root (`wrangler.jsonc`'s
+  // `assets.directory`), not nested under `docs/` — Workers static assets
+  // reads it from the root of the directory it serves, and it must contain
+  // the full public path (`/docs/...`) on both sides since nothing else adds
+  // that prefix at request time in this deploy.
+  const redirectCount = writeRedirects(distDir);
+
   // biome-ignore lint/suspicious/noConsole: build script - stdout is expected.
-  console.log(`postbuild-static-export: wrote ${distDocsDir} (assets root: ${distDir})`);
+  console.log(
+    `postbuild-static-export: wrote ${distDocsDir} (assets root: ${distDir}), ${redirectCount} redirect rule(s) in _redirects`,
+  );
 }
 
-main();
+// Only run when executed directly (`node scripts/postbuild-static-export.mjs`),
+// not when imported by a test for `redirectsFileContents()`.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main();
+}
