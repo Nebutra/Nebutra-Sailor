@@ -773,15 +773,14 @@ describe("governed docs — banned recommendations", () => {
  * existed, not a specifier typo with a correct target to swap in. They are
  * blocked on a PRODUCT DECISION that a drift test cannot make:
  *
- *   DECISION REQUIRED — `@nebutra/sdk` / `@nebutra/react` (13 entries).
- *     Introduced by commit 966f9e4e ("docs(mintlify): scaffold complete
- *     bilingual documentation framework", 2026-03-31) as an aspirational
- *     SDK-doc template. `createClient`, `verifyToken`, `NebutraError`,
- *     `useNebutraUser`, `useNebutraOrg`, `useNebutraToken`, `NebutraProvider`
- *     have zero matches anywhere in the repo outside apps/sailor-docs. No
- *     rename or removal in history — they were never implemented.
- *     Decide: ship a customer-facing SDK matching these ~7 pages, or rewrite
- *     the pages around the gateway's real REST API.
+ *   RESOLVED (2026-09-29) — `@nebutra/sdk` / `@nebutra/react` on quickstart/{nextjs,node,react}.mdx,
+ *     sdks/javascript.mdx, and api-reference/authentication.mdx (en + zh): rewritten around the
+ *     real surface — there is no hosted API or SDK, only the `@nebutra/*` packages already in a
+ *     scaffolded project and the gateway's own REST API. guides/error-handling.mdx (en + zh) is
+ *     out of this batch's scope and keeps its entries below pending the same decision Introduced
+ *     by commit 966f9e4e ("docs(mintlify): scaffold complete bilingual documentation framework",
+ *     2026-03-31) as an aspirational SDK-doc template — `createClient`, `verifyToken`,
+ *     `NebutraError` have zero matches anywhere in the repo outside apps/sailor-docs.
  *
  *   DECISION REQUIRED — `@nebutra/integrations` / `defineIntegration` (1 entry).
  *     `packages/integrations/` is a category directory, not a package, and
@@ -810,19 +809,8 @@ describe("governed docs — banned recommendations", () => {
  */
 const MISSING_PACKAGE_ALLOWLIST: readonly string[] = [
   "@nebutra/integrations @ apps/sailor-docs/content/docs/en/integrations/overview.mdx",
-  "@nebutra/react @ apps/sailor-docs/content/docs/en/quickstart/react.mdx",
-  "@nebutra/react @ apps/sailor-docs/content/docs/en/sdks/javascript.mdx",
-  "@nebutra/react @ apps/sailor-docs/content/docs/zh/quickstart/react.mdx",
-  "@nebutra/react @ apps/sailor-docs/content/docs/zh/sdks/javascript.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/en/api-reference/authentication.mdx",
   "@nebutra/sdk @ apps/sailor-docs/content/docs/en/guides/error-handling.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/en/quickstart/nextjs.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/en/quickstart/node.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/en/sdks/javascript.mdx",
   "@nebutra/sdk @ apps/sailor-docs/content/docs/zh/guides/error-handling.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/zh/quickstart/nextjs.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/zh/quickstart/node.mdx",
-  "@nebutra/sdk @ apps/sailor-docs/content/docs/zh/sdks/javascript.mdx",
 ];
 
 const UNRESOLVED_SUBPATH_ALLOWLIST: readonly string[] = [

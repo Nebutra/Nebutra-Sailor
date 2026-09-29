@@ -1,78 +1,62 @@
 ---
 title: API 认证
-description: 如何使用 API 密钥或 Bearer Token 对 Nebutra REST API 请求进行认证。
+description: 请求怎么认证——会话 Cookie、服务间 token，以及 AI 服务商 key。
 ---
 
-## 认证方式
+没有那种能认证任意网关请求的 `nbk_live_` 风格 API key，也没有 `@nebutra/sdk` 去校验它。真实
+存在的是三种互相独立的机制，各自对应不同的调用方：
 
-Nebutra API 支持两种认证方式：
+| 调用方 | 机制 |
+|--------|-----------|
+| 你自己的前端（已登录用户） | Better Auth 会话 Cookie |
+| 另一个内部服务 | `x-service-token`——用 `SERVICE_SECRET` 签的短期 HS256 JWT |
+| 按组织划分的 AI 凭据 | `/api/v1/ai/api-keys` 资源 |
 
-| 方式 | 使用场景 |
-|------|---------|
-| **API 密钥** | 服务器间通信、CLI 工具、CI/CD 管道 |
-| **Bearer Token（JWT）** | 来自前端或移动应用的面向用户的请求 |
+## 会话 Cookie（终端用户）
 
-## API 密钥认证
+大多数网关路由跑着 `requireAuth` 中间件，读取用户登录时 Better Auth 设置的会话 Cookie。从你自
+己的前端发起请求时不需要单独附加 bearer token——网关默认挂载在 `apps/web` 的
+`/api/[[...route]]`，同源请求时浏览器会自动带上 Cookie。
 
-API 密钥是绑定到组织（非用户）的长期凭证。生产环境以 `nbk_live_` 为前缀，测试模式以 `nbk_test_` 为前缀。
+## 服务间 token（内部调用方）
 
-在 `Authorization` 头中传递 API 密钥：
-
-```http
-GET /api/v1/projects HTTP/1.1
-Authorization: Bearer nbk_live_xxxxxxxxxxxxxxxxxxxx
-```
-
-### 创建 API 密钥
-
-在仪表板中：**设置 → API 密钥 → 创建密钥**
-
-或通过 API：
+对于不是已登录用户的调用方——后台 worker、另一个内部服务——用共享的 `SERVICE_SECRET` 签一个
+HS256 JWT，作为 `x-service-token` 发送：
 
 ```typescript
-const key = await nebutra.apiKeys.create({
-  orgId: "org_123",
-  name: "生产 CI",
-  scopes: ["project:read"],
-  expiresAt: new Date("2027-01-01"),
-});
-// key.secret 只显示一次，请安全存储
+import { signServiceToken, verifyServiceToken } from "@nebutra/auth";
+
+const token = signServiceToken({ service: "my-worker" });
 ```
 
-### 撤销 API 密钥
+从 monorepo 之外调用见 [Node.js 快速开始](/zh/quickstart/node) 和
+[Python 快速开始](/zh/quickstart/python)。
 
-```typescript
-await nebutra.apiKeys.delete("key_123");
-```
+## AI 服务商 key（按组织）
 
-已撤销的密钥立即返回 `401 Unauthorized`。
+`/api/v1/ai/api-keys` 让已认证的组织成员签发、列出、修改、吊销该组织 AI 用量对应的凭据——这
+是 `ai` 能力下的一个资源，不是通用的 REST API key。管理它仍然需要有效会话
+（`requireAuth` + `requireOrganization`）。
 
-## Bearer Token（JWT）认证
-
-JWT 由 Better Auth 在用户登录后签发。它们短期有效（通常 1 小时），客户端侧自动刷新。
-
-```http
-GET /api/v1/projects HTTP/1.1
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+```bash
+nebutra ai provider list      # 从 CLI 侧查看哪些服务商已启用
 ```
 
 ## 安全最佳实践
 
 <Warning>
-  - 切勿在客户端代码、浏览器 URL 或版本控制中暴露 API 密钥
-  - 所有密钥使用环境变量
-  - 定期轮换 API 密钥（至少每年一次）
-  - 使用范围限制的密钥——除非必要，永远不要给密钥 `OWNER` 级别的访问权限
-  - 为自动化工作流中使用的 API 密钥设置过期日期
+  - 永远不要把 `SERVICE_SECRET`、`BETTER_AUTH_SECRET` 或任何服务商 key 提交进源码仓库
+  - 所有密钥都用环境变量管理
+  - 如果某个部署目标被攻破，轮换 `SERVICE_SECRET`——所有用到它的调用方都需要同步更新
 </Warning>
 
-## 相关文档
+## 相关
 
 <CardGroup cols={2}>
   <Card title="权限" icon="lock" href="/zh/concepts/permissions">
     权限范围参考和 RBAC 模型。
   </Card>
-  <Card title="认证指南" icon="shield-check" href="/zh/guides/authentication">
-    完整的认证提供商配置指南。
+  <Card title="网关 API" icon="code" href="/zh/api-reference/overview">
+    网关跑在哪里，以及如何自我记录路由。
   </Card>
 </CardGroup>

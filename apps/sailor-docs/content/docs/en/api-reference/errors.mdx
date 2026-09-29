@@ -1,99 +1,72 @@
 ---
 title: Error Reference
-description: Complete reference for all Nebutra API error codes, HTTP statuses, and their meanings.
+description: How backends/gateway reports errors — the real envelope and error codes from @nebutra/errors.
 ---
 
 ## Error envelope
 
-All errors follow this JSON structure:
+The gateway's `app.onError` handler (`backends/gateway/src/app.ts`) converts every thrown error
+with `toApiError()` from `@nebutra/errors`:
 
 ```json
 {
-  "success": false,
   "error": {
-    "code": "RESOURCE_NOT_FOUND",
+    "code": "NOT_FOUND",
     "message": "Human-readable description of what went wrong.",
-    "details": { ... },
-    "request_id": "req_2a8bXXXXXXXXX"
-  }
+    "details": { "suggestion": "..." }
+  },
+  "requestId": "req_..."
 }
 ```
 
-Always include the `request_id` when contacting support.
+`requestId` is only present when the caller sent an `x-request-id` header. `details` is only
+present when the underlying `AppError` carried metadata or a suggestion. There is no `success`
+field — a 2xx status means success, a non-2xx status with this envelope means failure.
+
+A 404 with no matching route (rather than a thrown `NOT_FOUND` error) returns a simpler shape from
+Hono's `notFound` handler: `{ "error": "Not Found", "path": "..." }`.
 
 ## Error codes
 
+From `ERROR_CODES` in `@nebutra/errors` (`packages/platform/errors/src/index.ts`):
+
 ### 4xx — Client errors
 
-| Code | HTTP | Description | How to fix |
-|------|------|-------------|------------|
-| `INVALID_REQUEST` | 400 | Request body or query params are malformed | Check the request format against the API reference |
-| `VALIDATION_ERROR` | 422 | One or more fields failed validation | See `details.fields` for field-level errors |
-| `UNAUTHORIZED` | 401 | No valid authentication token | Add `Authorization: Bearer <token>` header |
-| `TOKEN_EXPIRED` | 401 | JWT has expired | Refresh the token and retry |
-| `INVALID_API_KEY` | 401 | API key is invalid or revoked | Check your API key in Settings → API Keys |
-| `FORBIDDEN` | 403 | Valid token, but insufficient scope | Check the required scope in the API reference |
-| `RESOURCE_NOT_FOUND` | 404 | Resource does not exist | Verify the resource ID |
-| `DUPLICATE_RESOURCE` | 409 | A resource with this unique key already exists | Use the existing resource or change the key |
-| `IDEMPOTENCY_CONFLICT` | 409 | Same idempotency key, different request body | Use a new idempotency key for different requests |
-| `PRECONDITION_FAILED` | 412 | Resource is in an incompatible state | Check the resource status before retrying |
-| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests in the time window | Retry after `retry-after` seconds |
-| `QUOTA_EXCEEDED` | 429 | Monthly usage quota exhausted | Upgrade your plan or wait for the monthly reset |
+| Code | Typical status |
+|------|------|
+| `BAD_REQUEST` | 400 |
+| `VALIDATION_ERROR` | 400/422 (per throw site) |
+| `UNAUTHORIZED` | 401 |
+| `FORBIDDEN` | 403 |
+| `NOT_FOUND` | 404 |
+| `CONFLICT` | 409 |
+| `RATE_LIMITED` | 429 |
+| `QUOTA_EXCEEDED` | 429 |
 
 ### 5xx — Server errors
 
-| Code | HTTP | Description | How to fix |
-|------|------|-------------|------------|
-| `INTERNAL_ERROR` | 500 | Unexpected server error | Retry with exponential backoff; contact support if persistent |
-| `SERVICE_UNAVAILABLE` | 503 | Dependency temporarily unavailable | Check [status.nebutra.com](https://status.nebutra.com); retry after a short wait |
-| `UPSTREAM_ERROR` | 502 | An upstream service returned an error | Retry; file a report if persistent |
+| Code | Typical status |
+|------|------|
+| `INTERNAL_ERROR` | 500 |
+| `DATABASE_ERROR` | 500 |
+| `SERVICE_UNAVAILABLE` | 503 |
+| `EXTERNAL_SERVICE_ERROR` | 502 |
+| `TIMEOUT` | 504 |
 
-## Validation error format
+### Business errors
 
-When `code` is `VALIDATION_ERROR`, the `details` object contains field-level errors:
+| Code | Meaning |
+|------|---------|
+| `PAYMENT_REQUIRED` | Billing action needed before the request can proceed |
+| `SUBSCRIPTION_EXPIRED` | The tenant's subscription lapsed |
+| `FEATURE_DISABLED` | The plan doesn't include this entitlement (see `checkEntitlement` in `@nebutra/billing`) |
+| `TENANT_SUSPENDED` | The tenant is suspended |
 
-```json
-{
-  "success": false,
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Validation failed for 2 fields.",
-    "details": {
-      "fields": [
-        {
-          "field": "email",
-          "message": "Must be a valid email address",
-          "received": "not-an-email"
-        },
-        {
-          "field": "name",
-          "message": "Required, minimum 2 characters",
-          "received": ""
-        }
-      ]
-    }
-  }
-}
-```
-
-## Retry guidance
-
-| HTTP Status | Retry? | Strategy |
-|-------------|--------|----------|
-| 400, 422 | No | Fix the request |
-| 401 | Yes (once) | Refresh the token |
-| 403 | No | Check permissions |
-| 404 | No | Verify the resource ID |
-| 409 | No | Handle the conflict |
-| 429 | Yes | Wait for `retry-after`, then exponential backoff |
-| 500 | Yes | Exponential backoff (1s, 2s, 4s, 8s) |
-| 503 | Yes | Exponential backoff, check status page |
+Every thrown error's actual HTTP status comes from `getStatusCode(error)`, which reads the
+`AppError`'s own `statusCode` — the table above is typical, not guaranteed, for a given code.
 
 ## Support
 
-If you encounter an error you can't resolve:
-
-1. Copy the `request_id` from the error response
-2. Check [status.nebutra.com](https://status.nebutra.com) for known incidents
-3. Open an issue on [GitHub](https://github.com/nebutra) with the request ID and context
-4. Email [founders@nebutra.com](mailto:founders@nebutra.com) for enterprise support
+Open an issue on [GitHub](https://github.com/nebutra/nebutra-sailor/issues) with the `requestId`
+and the request path/method. There is no separate Nebutra support desk for a self-hosted template
+— you own the deployed service.

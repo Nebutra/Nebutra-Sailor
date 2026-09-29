@@ -18,26 +18,27 @@ pnpm --filter apps/web dev
 
 | Script | Description |
 |--------|-------------|
-| `pnpm dev` | Start all apps simultaneously |
-| `pnpm dev:dashboard` | Web (3000) + Admin (3002) + API gateway (3001) |
-| `pnpm dev:marketing` | Landing page (3002) + Sanity Studio (3333) |
-| `pnpm dev:ai-saas` | All 6 AI SaaS apps |
-| `pnpm dev:overseas` | International locale apps (4 apps) |
-| `pnpm dev:growth` | Growth-focused apps (3 apps) |
-| `pnpm dev:creative` | Creative suite apps (2 apps) |
-| `pnpm dev:blog` | Blog apps (2 apps) |
-| `pnpm dev:community` | Community platform apps (3 apps) |
-| `pnpm dev:solo` | Solo developer bundle (4 apps) |
-| `pnpm dev:design` | Design tools (2 apps) |
+| `pnpm dev` | Zero-key preview (`scripts/dev/preview.ts`): local PGlite database, demo sign-in `admin@example.com` / `preview-demo`, site on `:3000`, product app on `:3001` (falls back a thousand ports on conflict) |
+| `pnpm dev:all` | `turbo run dev` across every app — the "start everything" version |
+| `pnpm dev:web` | Just the product app (`@nebutra/web`) |
+| `pnpm dev:landing` | Just the marketing site |
+| `pnpm dev:api` | Just the gateway, standalone |
+| `pnpm dev:auth` | Just the Better Auth login center |
+| `pnpm dev:storybook` / `pnpm dev:docs` | Component playground / this docs site |
+
+<Note>
+  `dev:dashboard`, `dev:ai-saas`, `dev:marketing`, and similar preset filters exist in this
+  monorepo's own `package.json` (they target apps like `@nebutra/admin` and `@nebutra/blog`), but
+  those apps are Nebutra's own product and aren't part of the default `create-sailor` scaffold —
+  don't expect them in a fresh project.
+</Note>
 
 ## Build
 
 | Script | Description |
 |--------|-------------|
-| `pnpm build` | Production build for all apps |
-| `pnpm build:ai-saas` | Build AI SaaS preset (6 apps) |
-| `pnpm build:marketing` | Build marketing preset (3 apps) |
-| `pnpm build:dashboard` | Build dashboard preset (3 apps) |
+| `pnpm build` | Production build for all apps (`turbo run build`, after syncing brand tokens) |
+| `pnpm build:strict` | Build with full UI governance + brand-token verification |
 
 ## Code quality
 
@@ -62,9 +63,11 @@ pnpm --filter apps/web dev
 
 | Script | Description |
 |--------|-------------|
-| `pnpm db:generate` | Regenerate Prisma client |
-| `pnpm db:migrate` | Run pending migrations |
-| `pnpm db:push` | Push schema without migration |
+| `pnpm db:deploy` | **The deploy command.** Migrations, then `platform.sql` + generated RLS, then verifies. |
+| `pnpm db:check` | Read-only drift check — the other half of `db:deploy` |
+| `pnpm db:generate` | Regenerate Prisma client (and `generated/rls.sql`) |
+| `pnpm db:migrate` | Create and apply a migration (local development) |
+| `pnpm db:push` | Push schema without a migration file (local prototyping only) |
 | `pnpm db:studio` | Launch Prisma Studio GUI |
 
 ## Infrastructure

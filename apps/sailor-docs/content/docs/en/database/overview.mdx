@@ -3,7 +3,10 @@ title: Database Overview
 description: Prisma v7 + PostgreSQL — the data layer powering every Nebutra application.
 ---
 
-Nebutra uses **Prisma v7** as the ORM and **PostgreSQL** as the database engine. The stack is designed for multi-tenant SaaS: shared schemas, row-level security, pgvector for AI embeddings, and provider flexibility (Neon or Supabase).
+Nebutra-Sailor uses **Prisma** as the ORM and **PostgreSQL** as the database engine — one source,
+generated, deployed first. See
+[ADR 2026-09-25 database convergence](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-25-database-convergence.md) for the full
+decision; this page covers day-to-day use.
 
 ## Architecture
 
@@ -14,79 +17,62 @@ Nebutra uses **Prisma v7** as the ORM and **PostgreSQL** as the database engine.
 └────────────────┬────────────────────┘
                  │ import { db } from "@nebutra/db"
 ┌────────────────▼────────────────────┐
-│           Prisma v7 Client          │
+│            Prisma Client            │
 │     (type-safe query builder)       │
 └────────────────┬────────────────────┘
                  │ PostgreSQL wire protocol
 ┌────────────────▼────────────────────┐
-│       Connection Pooler             │
-│  PgBouncer (Neon) / Supavisor       │
-│  (Supabase) — prevents conn. exhaust│
-└────────────────┬────────────────────┘
-                 │
-┌────────────────▼────────────────────┐
 │         PostgreSQL Database         │
-│  pgvector · RLS · multi-schema      │
+│  pgvector · generated RLS           │
 └─────────────────────────────────────┘
 ```
 
-All application code imports the pre-configured `db` singleton from `@nebutra/db`. Direct Prisma imports are not used in application code.
+`packages/platform/db/prisma/schema.prisma` is the **single source**: tables, and each table's
+access rule as an `/// @rls` comment. Everything else — `generated/rls.sql`, the baseline
+migration — is generated from it or re-applied to it on every deploy (`pnpm db:deploy`). There is
+no scaffold-time database choice; `create-sailor` writes this schema every time.
 
 ## Schema layout
 
-The Prisma schema is split across four PostgreSQL schemas, each representing a product domain:
+There are two Postgres schemas — see [Prisma Postgres Schemas](/architecture/multi-schema) for
+why:
 
-| PostgreSQL schema | Purpose | Key models |
-|-------------------|---------|------------|
-| `public` | Core SaaS platform | `Organization`, `User`, `Subscription`, `AuditLog`, `ApiKey` |
-| `ecommerce` | E-commerce features | `Product`, `Order`, `Cart`, `Payment`, `Fulfillment` |
-| `recsys` | Recommendation system | `Embedding`, `Interaction`, `Recommendation`, `FeatureVector` |
-| `web3` | Blockchain / wallet features | `Wallet`, `Token`, `Transaction`, `SmartContract` |
+| PostgreSQL schema | Purpose |
+|-------------------|---------|
+| `public` | Every application table |
+| `better_auth` | Tables Better Auth's own plugins (`organization`, `passkey`, …) manage |
 
-The full schema lives at `packages/platform/db/prisma/schema.prisma` (~1,400 lines).
-
-## Key models
-
-| Model | Schema | Description |
-|-------|--------|-------------|
-| `Organization` | `public` | A tenant — the top-level billing and access boundary |
-| `User` | `public` | An authenticated identity; belongs to one or more organizations |
-| `Subscription` | `public` | Stripe subscription attached to an organization |
-| `AuditLog` | `public` | Immutable event log for compliance and debugging |
-| `ApiKey` | `public` | Scoped API credentials issued per organization |
-| `Content` | `public` | CMS content items (pages, posts, blocks) |
-| `Integration` | `public` | Third-party integration configs per organization |
-| `Project` | `public` | A workspace inside an organization |
+This is not a "one schema per product domain" split — there is no `ecommerce`, `recsys`, or `web3`
+schema, and no scaffold flag that would prune one.
 
 ## pgvector
 
-PostgreSQL's `pgvector` extension is enabled on every Nebutra database. It powers:
-
-- **Semantic search** — cosine similarity over `Embedding` vectors in the `recsys` schema
-- **RAG pipelines** — chunked document embeddings stored alongside content
-- **Recommendation engine** — collaborative filtering via ANN (approximate nearest-neighbour) queries
-
-<Note>
-pgvector must be enabled on your PostgreSQL instance before running migrations. Both Neon and Supabase enable it by default. Self-hosted PostgreSQL requires `CREATE EXTENSION vector;`.
-</Note>
+PostgreSQL's `pgvector` extension powers AI embedding search (`@nebutra/search`, pgvector plus
+full-text search — there is no separate search engine). Self-hosted PostgreSQL requires
+`CREATE EXTENSION vector;` before running migrations; the `postgres:15-alpine`-based image
+`create-sailor` wires up already has it.
 
 ## Command reference
 
 | Command | When to use |
 |---------|-------------|
-| `pnpm db:generate` | After editing `schema.prisma` — regenerates the Prisma client |
-| `pnpm db:migrate` | Create and apply a new migration (development and CI/CD) |
+| `pnpm db:deploy` | **The deploy command.** Runs pending migrations, then `platform.sql` + `generated/rls.sql`, then verifies. Exits non-zero on drift. |
+| `pnpm db:check` | Read-only half of `db:deploy` — reports drift without applying anything |
+| `pnpm db:generate` | After editing `schema.prisma` — regenerates the Prisma client and `generated/rls.sql` |
+| `pnpm db:migrate` | Create and apply a new migration (local development) |
 | `pnpm db:push` | Push schema changes without a migration file (local prototyping only) |
-| `pnpm db:studio` | Open Prisma Studio at `http://localhost:5555` |
+| `pnpm db:studio` | Open Prisma Studio |
 | `pnpm db:seed` | Populate the database with development seed data |
 
 <Warning>
-Never run `pnpm db:push` against a production or staging database. It applies schema changes without a migration history, which can cause irreversible data loss.
+Never run `pnpm db:push` against a production or staging database. It applies schema changes without a migration history, which can cause irreversible data loss. Production deploys use `pnpm db:deploy`.
 </Warning>
 
 ## Multi-tenancy
 
-Every table in the `public` schema that stores tenant-specific data has a `tenantId` column. Queries are automatically scoped using PostgreSQL Row-Level Security (RLS) via the `withRls` helper from `@nebutra/tenant`. See the [RLS guide](/database/rls) for details.
+A table's access rule is inferred from its `tenantId` / `organizationId` column (or declared
+explicitly). Queries are scoped using PostgreSQL Row-Level Security (RLS) via the `withRls` helper
+from `@nebutra/tenant`. See the [RLS guide](/database/rls) for details.
 
 <CardGroup cols={2}>
   <Card title="Using the DB Client" icon="code" href="/database/use-client">
@@ -99,6 +85,6 @@ Every table in the `public` schema that stores tenant-specific data has a `tenan
     How RLS enforces tenant isolation at the database level
   </Card>
   <Card title="Providers" icon="server" href="/database/providers">
-    Neon vs Supabase — connection strings, pooling, and setup
+    Local Postgres and other PostgreSQL-compatible hosts.
   </Card>
 </CardGroup>

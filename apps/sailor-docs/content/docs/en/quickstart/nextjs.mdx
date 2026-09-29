@@ -1,152 +1,92 @@
 ---
 title: Next.js Quickstart
-description: Integrate Nebutra with your Next.js 16 App Router project in under 5 minutes.
+description: Auth, permissions, and the gateway in your scaffolded Next.js 16 app.
 ---
 
-## Prerequisites
+There is no separate Nebutra product to integrate with — `create-sailor` generates `apps/web`, a
+Next.js 16 App Router project, as **your** app. This page shows the pieces already wired into it.
 
-- Node.js 22+
-- A Nebutra account with an [OPC license](https://nebutra.com/en/get-license) (free)
-- An existing Next.js 16 project, or create one:
+## Scaffold the project
 
 ```bash
-npx create-next-app@latest my-app --typescript --tailwind --app
+npx create-sailor my-app
 cd my-app
+pnpm install
+pnpm dev
 ```
 
-## Step 1: Install the SDK
+`pnpm dev` starts a zero-key preview (local PGlite database, demo sign-in
+`admin@example.com` / `preview-demo`) at `localhost:3001`, with the marketing site at
+`localhost:3000`. See [Installation](/getting-started/installation).
 
-<CodeGroup>
+## Read the current session in a Server Component
 
-```bash npm
-npm install @nebutra/sdk
-```
-
-```bash pnpm
-pnpm add @nebutra/sdk
-```
-
-```bash yarn
-yarn add @nebutra/sdk
-```
-
-</CodeGroup>
-
-## Step 2: Configure environment variables
-
-Create a `.env.local` file at your project root:
-
-```bash .env.local
-# From your Nebutra dashboard → Settings → API Keys
-NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
-NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
-
-# Public key — safe to expose to the browser
-NEXT_PUBLIC_NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
-```
-
-<Warning>
-  Never commit `.env.local` to source control. Add it to `.gitignore`.
-</Warning>
-
-## Step 3: Initialize the client
-
-Create a shared Nebutra client:
-
-```typescript lib/nebutra.ts
-import { createClient } from "@nebutra/sdk";
-
-export const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
-});
-```
-
-## Step 4: Protect a route with authentication
-
-Add auth to a Server Component using the Nebutra proxy (Next.js 16+ uses `proxy.ts` instead of `middleware.ts`):
-
-```typescript proxy.ts
-import { withNebutraAuth } from "@nebutra/sdk/next";
-
-export default withNebutraAuth({
-  publicRoutes: ["/", "/sign-in", "/sign-up"],
-});
-
-export const config = {
-  matcher: ["/((?!_next|favicon.ico).*)"],
-};
-```
-
-## Step 5: Read the current user in a Server Component
+Better Auth is the only auth provider (no Clerk/NextAuth/Supabase adapters —
+[ADR 2026-09-24](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md)). Server Components read the session
+directly:
 
 ```typescript app/dashboard/page.tsx
-import { getAuth } from "@nebutra/sdk/next/server";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth"; // your project's Better Auth instance
+import { headers } from "next/headers";
 
 export default async function DashboardPage() {
-  const { user, org } = await getAuth();
+  const session = await auth.api.getSession({ headers: await headers() });
 
-  if (!user) {
+  if (!session) {
     redirect("/sign-in");
   }
 
-  return (
-    <div>
-      <h1>Welcome, {user.firstName}</h1>
-      <p>Organization: {org.name}</p>
-      <p>Plan: {org.plan}</p>
-    </div>
-  );
+  return <h1>Welcome, {session.user.name}</h1>;
 }
 ```
 
-## Step 6: Make your first API call
+## Gate UI and actions with permissions
 
-```typescript app/api/projects/route.ts
-import { NextResponse } from "next/server";
-import { nebutra } from "@/lib/nebutra";
-import { getAuth } from "@nebutra/sdk/next/server";
+`@nebutra/permissions` wraps CASL for in-process RBAC/ABAC checks:
 
-export async function GET() {
-  const { org } = await getAuth();
+```tsx
+import { Can } from "@nebutra/permissions/react";
 
-  const projects = await nebutra.projects.list({
-    orgId: org.id,
-    limit: 20,
-  });
-
-  return NextResponse.json(projects);
-}
+<Can action="delete" resource="Project" subject={project}>
+  <DeleteButton />
+</Can>
 ```
-
-## Step 7: Check permissions before an action
 
 ```typescript app/actions/delete-project.ts
 "use server";
-import { requirePermission } from "@nebutra/sdk/next/server";
-import { nebutra } from "@/lib/nebutra";
+import { requirePermission } from "@nebutra/permissions";
 
 export async function deleteProject(projectId: string) {
-  // Throws 403 if user lacks the `project:delete` scope
-  await requirePermission("project:delete");
-
-  await nebutra.projects.delete(projectId);
+  await requirePermission("delete", "Project"); // throws 403 if the caller lacks the scope
+  // ...
 }
 ```
 
-## You're ready
+## Call the gateway
+
+Business endpoints live in `backends/gateway` (Hono), mounted in-process at
+`app/api/[[...route]]` by default (`GATEWAY_MODE=embedded`). Call it like any same-origin API
+route:
+
+```typescript
+const res = await fetch("/api/v1/ai/models");
+```
+
+Add a new endpoint with the CLI rather than a Next route handler — `apps/web` route handlers are
+frozen to what's intrinsically Next (auth callbacks, OG routes):
+
+```bash
+nebutra generate route projects
+```
+
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="Core Concepts" icon="layers" href="/concepts/architecture">
     Understand multi-tenancy and the permission model.
   </Card>
-  <Card title="Authentication Guide" icon="shield-check" href="/guides/authentication">
-    Deep dive into auth flows and session management.
-  </Card>
-  <Card title="Webhooks" icon="webhook" href="/guides/webhooks">
-    Listen to real-time events from your Nebutra tenant.
-  </Card>
-  <Card title="API Reference" icon="code" href="/api-reference/overview">
-    Full REST API documentation.
+  <Card title="Gateway API" icon="code" href="/api-reference/overview">
+    The REST endpoints your project ships with.
   </Card>
 </CardGroup>

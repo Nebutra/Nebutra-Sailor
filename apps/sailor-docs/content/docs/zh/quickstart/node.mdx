@@ -1,69 +1,43 @@
 ---
 title: Node.js 快速开始
-description: 在 Node.js 后端或 Serverless 函数中使用 Nebutra SDK，5 分钟内完成集成。
+description: 从外部 Node.js 服务调用你项目的网关 API。
 ---
 
-## 前提条件
+没有托管的 Nebutra API，也没有 `@nebutra/sdk` 包。如果你有一个 `apps/web` 之外的 Node.js 服务
+需要跟脚手架项目的网关通信，像调用任何其他内部服务一样直接走 HTTP。
 
-- Node.js 22+
-- 拥有 [OPC 许可证](https://nebutra.com/en/get-license) 的 Nebutra 账户（免费）
+## 服务间认证
 
-## 安装与初始化
+内部调用用一个短期有效的 HS256 JWT（`x-service-token`），由 `@nebutra/auth` 的
+`signServiceToken` / `verifyServiceToken` 签发和校验，背后是共享的 `SERVICE_SECRET`。这不是终端
+用户的会话 token——它认证的是一个受信任的内部调用方。
 
-```bash
-npm install @nebutra/sdk
-```
+```typescript
+import { signServiceToken } from "@nebutra/auth";
 
-```bash .env
-NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
-NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
-```
+const token = signServiceToken({ service: "my-node-worker" });
 
-```typescript src/lib/nebutra.ts
-import { createClient } from "@nebutra/sdk";
-
-export const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
+const res = await fetch("https://your-gateway-host/api/v1/ai/models", {
+  headers: { "x-service-token": token },
 });
 ```
 
-## 验证请求令牌
+如果你的 Node 服务在 monorepo 之外，没法直接导入 `@nebutra/auth`，就用同样的
+`SERVICE_SECRET` 和 claim 结构手动签一个 HS256 JWT——网关的 `verifyServiceToken` 只要签名正确
+就认，不要求 token 必须由这个包签发。
 
-```typescript
-import { verifyToken } from "@nebutra/sdk/server";
+## 代表终端用户调用网关
 
-export async function authMiddleware(req: Request) {
-  const token = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (!token) throw new Error("未授权");
+如果请求是代表某个已登录用户发起的（而不是受信任的内部服务），转发 Better Auth 的会话
+Cookie 或 bearer token，跟 `apps/web` 的做法一样——这里没有单独的 API key 方案。
 
-  const { userId, orgId, scopes } = await verifyToken(token, {
-    apiKey: process.env.NEBUTRA_API_KEY!,
-  });
-
-  return { userId, orgId, scopes };
-}
-```
-
-## 检查权限
-
-```typescript
-const allowed = await nebutra.permissions.check({
-  userId,
-  action: "delete",
-  resource: "Project",
-});
-
-if (!allowed) throw new Error("权限不足");
-```
-
-## 相关文档
+## 相关
 
 <CardGroup cols={2}>
-  <Card title="JavaScript SDK 参考" icon="js" href="/zh/sdks/javascript">
-    完整的 SDK 方法参考。
+  <Card title="网关 API" icon="code" href="/zh/api-reference/overview">
+    项目自带的 REST 端点。
   </Card>
-  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
-    完整的 REST API 文档。
+  <Card title="认证" icon="shield-check" href="/zh/api-reference/authentication">
+    会话 Cookie 与服务间 token 的区别。
   </Card>
 </CardGroup>

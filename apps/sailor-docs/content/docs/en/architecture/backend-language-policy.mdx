@@ -72,24 +72,18 @@ The Three-Tier Lifecycle is now **structurally enforced**, not just documented.
 
 ## How to start a justified Python service
 
-```bash
-# Interactive: prompts for service name
-nebutra backend init py
-
-# Non-interactive
-nebutra backend init py --name translator
-nebutra backend init py --name translator --dry-run
-```
-
-The generated `backends/python/<name>/README.md` ships with a **placeholder line** that you must replace with the concrete justification (cite 1, 2, or 3 from the rule above). PR review will reject services whose README still contains the placeholder.
+There is no `nebutra` scaffold command for a new Python service today. Add a
+`backends/python/<name>/` directory by hand, following the shape of the existing `_shared/` and
+`ai/` services, and write a `README.md` that cites the concrete justification (1, 2, or 3 from the
+rule above) — PR review checks for it.
 
 ## Related
 
 <CardGroup cols={2}>
   <Card title="Python Quickstart" icon="python" href="/docs/quickstart/python">
-    SDK consumer guide — for existing Python services that need to call Nebutra.
+    Calling the gateway's REST API from an external Python service.
   </Card>
-  <Card title="nebutra backend" icon="terminal" href="/docs/cli/nebutra-cli">
-    CLI reference for `nebutra backend init`.
+  <Card title="nebutra CLI" icon="terminal" href="/docs/cli/nebutra-cli">
+    Full command reference.
   </Card>
 </CardGroup>

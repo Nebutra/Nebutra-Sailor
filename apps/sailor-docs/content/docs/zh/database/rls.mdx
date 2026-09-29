@@ -41,67 +41,59 @@ SET LOCAL app.current_tenant_id = 'org_abc123';
 SELECT * FROM projects;  -- RLS 策略自动过滤
 ```
 
-## RLS 策略示例
+## 策略是生成出来的，从不手写
 
-这些是应用于租户作用域表的 SQL 策略。`packages/platform/db/prisma/migrations/` 中的迁移会自动应用它们。
+根据 [ADR 2026-09-25 数据库收敛](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-25-database-convergence.md)，
+`packages/platform/db/prisma/schema.prisma` 是**唯一**由人编辑的文件。每张表的访问规则写成模型
+上方的 `/// @rls` 注释——从 `tenantId` / `organizationId` 列或某个单一的租户作用域父关系自动
+推断，或者显式声明为以下之一：`global | deny | off | self | via(field) | using(sql) | read(sql) write(sql)`。
 
-### SELECT 策略（读取隔离）
+一个自定义 Prisma generator（`prisma/generators/rls.mjs`）在每次 `prisma generate` 时，把这些
+注释转换成 `generated/rls.sql`——每张表一条策略（`<table>_rls`，或者 `<table>_read` /
+`<table>_write` 一对），不带 `TO` 子句：一条策略约束所有既不是表所有者、也没有 `BYPASSRLS` 的
+角色。
 
-```sql
-ALTER TABLE public.projects ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "tenant_isolation_select"
-  ON public.projects
-  FOR SELECT
-  USING (
-    tenant_id = current_setting('app.current_tenant_id', TRUE)
-  );
+```prisma packages/platform/db/prisma/schema.prisma
+/// @rls off
+model Session {
+  id       String @id @default(cuid())
+  userId   String
+  // ...
+}
 ```
 
-### INSERT 策略（写入隔离）
+`scripts/lint-database.mjs`（接入 `pnpm lint`）会在 `generated/rls.sql` 之外任何地方出现
+`CREATE POLICY`，或迁移文件触碰了策略、RLS 开关、函数、grant、role 时让构建失败——迁移文件
+只能是结构性变更。
 
-```sql
-CREATE POLICY "tenant_isolation_insert"
-  ON public.projects
-  FOR INSERT
-  WITH CHECK (
-    tenant_id = current_setting('app.current_tenant_id', TRUE)
-  );
+## 应用它：`pnpm db:deploy`
+
+一条命令，适用于任何主机——依次跑 `prisma migrate deploy`，再在一个锁定事务里应用
+`platform.sql` + `generated/rls.sql`，最后校验。只要有未应用的迁移、schema.prisma 结构漂移，
+或者策略跟 `generated/rls.sql` 不一致，就非零退出。
+
+```bash
+pnpm db:deploy    # 迁移，再应用 platform.sql + generated/rls.sql，最后校验
+pnpm db:check     # 只读版本——只报告漂移，不实际应用
 ```
 
-### UPDATE 和 DELETE 策略
-
-```sql
-CREATE POLICY "tenant_isolation_update"
-  ON public.projects
-  FOR UPDATE
-  USING (tenant_id = current_setting('app.current_tenant_id', TRUE))
-  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', TRUE));
-
-CREATE POLICY "tenant_isolation_delete"
-  ON public.projects
-  FOR DELETE
-  USING (tenant_id = current_setting('app.current_tenant_id', TRUE));
-```
-
-<Note>
-`current_setting('app.current_tenant_id', TRUE)` — 第二个参数 `TRUE` 使函数在变量未设置时返回 `NULL` 而不是报错。这意味着在租户上下文之外运行的查询返回零行而不是抛出异常。
-</Note>
+每个部署工作流都把 `db:deploy` 作为第一个 job，跑在应用部署之前——漂移的数据库会直接拦下部署，
+而不是让代码跑在跟它不匹配的 schema 上。
 
 ## `tenantId` 列约定
 
-存储租户特定数据的每个表都必须包含 `tenantId` 列。Prisma 架构约定：
+存储租户特定数据的每个表都应该包含 `tenantId`（或 `organizationId`）列，这样它的访问规则就能
+被自动推断：
 
 ```prisma packages/platform/db/prisma/schema.prisma
 model Project {
   id          String   @id @default(cuid())
   name        String
-  tenantId    String                         // ← 每个租户作用域模型必须有
+  tenantId    String                         // ← 推断出的访问规则；不需要 /// @rls
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([tenantId])                        // ← 性能要求必须有索引
-  @@map("projects")
 }
 ```
 

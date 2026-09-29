@@ -1,21 +1,38 @@
 ---
 title: Installation
-description: Quick start with Nebutra Sailor
+description: Scaffold a Nebutra-Sailor project with create-sailor.
 ---
 
 # Scaffolding your SaaS
 
-The fastest way to start building a robust SaaS product is through our CLI.
+The fastest way to start building is `create-sailor`. Per
+[ADR 2026-09-24 Sailor convergence](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md), it is a **zero-question
+scaffold** — it asks for nothing but a project directory.
 
 ```bash
-npm create sailor@latest
+npx create-sailor my-app
 ```
 
-This single command guides you through configuring your monolithic framework.
+There is no configuration wizard: every project gets the same converged stack (Next.js 16 +
+Tailwind v4, the Hono gateway mounted in-process, Postgres + Prisma, Better Auth, Creem +
+WeChat Pay/Alipay for payments, Resend, S3-compatible storage, QStash, Redis). Every capability
+degrades to a local implementation with no keys set, so `pnpm dev` works immediately against an
+empty `.env`. See [create-sailor](/docs/cli/create-sailor) for the full flag reference and what
+gets generated, and [nebutra status](/docs/cli/nebutra-cli) for checking which capabilities are
+live vs. running on a local fallback.
 
-## Available Configuration Prompts
+## Next steps
 
-1. **AI Provider Category**: Installs the Vercel AI SDK integration tailored to `Domestic`, `OpenAI Compatible`, or `Direct Labs`.
-2. **Database Architecture**: `Prisma` via `PostgreSQL` or `MySQL`.
-3. **Payments**: Select Creem or Lemon Squeezy templates.
-4. **Target Deployment**: Pre-configure `Vercel`, `Railway`, `Cloudflare`, or `Docker`.
+```bash
+cd my-app
+pnpm install
+pnpm dev
+```
+
+`pnpm dev` starts a zero-key preview: a local PGlite database (no Postgres server needed), a demo
+sign-in (`admin@example.com` / `preview-demo`), the site on `localhost:3000` and the product app on
+`localhost:3001` (each falls back to the next free port in the next thousand — `4001`, `5001`, …
+— if taken). It prints a `/welcome` link on the product app once everything is ready.
+
+Add provider keys to `.env.local` later to take a capability live — nothing needs to be decided
+up front.

@@ -41,67 +41,60 @@ SET LOCAL app.current_tenant_id = 'org_abc123';
 SELECT * FROM projects;  -- RLS policy filters automatically
 ```
 
-## RLS policy examples
+## Policies are generated, never hand-written
 
-These are the SQL policies applied to tenant-scoped tables. Migrations in `packages/platform/db/prisma/migrations/` apply them automatically.
+Per [ADR 2026-09-25 database convergence](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-25-database-convergence.md),
+`packages/platform/db/prisma/schema.prisma` is the **only** file people edit. Every table's access
+rule is an `/// @rls` comment above the model — inferred automatically from a `tenantId` /
+`organizationId` column or a single tenant-scoped parent, or declared explicitly with one of:
+`global | deny | off | self | via(field) | using(sql) | read(sql) write(sql)`.
 
-### SELECT policy (read isolation)
+A custom Prisma generator (`prisma/generators/rls.mjs`) turns those annotations into
+`generated/rls.sql` on every `prisma generate` — one policy per table, `<table>_rls` (or the pair
+`<table>_read` / `<table>_write`), with no `TO` clause: a policy binds every role that is neither
+the table owner nor `BYPASSRLS`.
 
-```sql
-ALTER TABLE public.projects ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "tenant_isolation_select"
-  ON public.projects
-  FOR SELECT
-  USING (
-    tenant_id = current_setting('app.current_tenant_id', TRUE)
-  );
+```prisma packages/platform/db/prisma/schema.prisma
+/// @rls off
+model Session {
+  id       String @id @default(cuid())
+  userId   String
+  // ...
+}
 ```
 
-### INSERT policy (write isolation)
+`scripts/lint-database.mjs` (wired into `pnpm lint`) fails the build if `CREATE POLICY` shows up
+anywhere outside `generated/rls.sql`, or if a migration touches a policy, RLS switch, function,
+grant, or role — migrations are structure-only.
 
-```sql
-CREATE POLICY "tenant_isolation_insert"
-  ON public.projects
-  FOR INSERT
-  WITH CHECK (
-    tenant_id = current_setting('app.current_tenant_id', TRUE)
-  );
+## Applying it: `pnpm db:deploy`
+
+One command, any host — runs `prisma migrate deploy`, then `platform.sql` + `generated/rls.sql` in
+a single locked transaction, then verifies. It exits non-zero on any pending migration, structural
+drift from `schema.prisma`, or a policy that differs from `generated/rls.sql`.
+
+```bash
+pnpm db:deploy    # migrate, then apply platform.sql + generated/rls.sql, then verify
+pnpm db:check     # the read-only half — reports drift without applying anything
 ```
 
-### UPDATE and DELETE policies
-
-```sql
-CREATE POLICY "tenant_isolation_update"
-  ON public.projects
-  FOR UPDATE
-  USING (tenant_id = current_setting('app.current_tenant_id', TRUE))
-  WITH CHECK (tenant_id = current_setting('app.current_tenant_id', TRUE));
-
-CREATE POLICY "tenant_isolation_delete"
-  ON public.projects
-  FOR DELETE
-  USING (tenant_id = current_setting('app.current_tenant_id', TRUE));
-```
-
-<Note>
-`current_setting('app.current_tenant_id', TRUE)` — the second argument `TRUE` makes the function return `NULL` instead of raising an error when the variable is not set. This means queries run outside a tenant context return zero rows rather than throwing.
-</Note>
+Every deploy workflow runs `db:deploy` as its first job, before the app deploys — a drifted
+database stops the deploy rather than shipping code against a schema it doesn't match.
 
 ## The `tenantId` column convention
 
-Every table that stores tenant-specific data must include a `tenantId` column. The Prisma schema convention:
+Every table that stores tenant-specific data should include a `tenantId` (or `organizationId`)
+column so its access rule is inferred automatically:
 
 ```prisma packages/platform/db/prisma/schema.prisma
 model Project {
   id          String   @id @default(cuid())
   name        String
-  tenantId    String                         // ← required on every tenant-scoped model
+  tenantId    String                         // ← inferred access rule; no /// @rls needed
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([tenantId])                        // ← index required for performance
-  @@map("projects")
 }
 ```
 

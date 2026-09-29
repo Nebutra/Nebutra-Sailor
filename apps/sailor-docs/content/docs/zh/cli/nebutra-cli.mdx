@@ -217,6 +217,24 @@ nebutra i18n add <locale>
 nebutra i18n status
 ```
 
+## Sailor Studio（一条码，定项目的外观）
+
+根据 [ADR 2026-09-27 Sailor Studio](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-27-sailor-studio.md)，一个项目的外观——基础设计语言加一小组旋钮式覆盖项——被压缩成一段短短的预设码，用下面两个命令中的一个应用。`init` 之后没人应该手改设计系统。
+
+```bash
+nebutra apply --preset <code>                 # 把预设应用到当前项目
+nebutra apply --preset <code> --only theme    # 只改主题这一组
+nebutra apply --preset <code> --only fonts    # 只改字体这一组
+nebutra apply --preset <code> --no-build      # 只写入预设，不重新构建 tokens
+
+nebutra studio schema                          # 打印预设的 JSON Schema
+nebutra studio preview <preset>                 # 校验预设，打印 Studio 审阅链接
+nebutra studio preview <preset> --open          # 同时在浏览器里打开
+nebutra studio pull <preset>                    # 把一个预设（码、JSON、文件或 Studio 链接）应用到当前项目
+```
+
+`create-sailor <dir> --preset <code>` 在脚手架阶段接受同样的码；不传就是出厂默认外观——脚手架依然什么都不问。
+
 ## AI
 
 ```bash

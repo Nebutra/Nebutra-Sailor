@@ -1,0 +1,47 @@
+---
+title: AI 服务商
+description: Nebutra-Sailor 项目如何治理和调用 AI 模型服务商。
+---
+
+# AI 服务商治理
+
+脚手架阶段 `create-sailor` 不问任何 AI 服务商相关的问题——根据
+[ADR 2026-09-24 Sailor 收敛](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md)，所有选服务商的 flag 都从脚手架
+里删掉了。每个项目自带同一个 AI 网关（`backends/gateway` 的 `/api/v1/ai` 路由）；哪个模型服务商
+真正生效是一个运行时决定，脚手架之后用 `nebutra ai` CLI 治理。
+
+## 管理服务商
+
+```bash
+nebutra ai provider list                  # 支持和当前启用的服务商
+nebutra ai provider enable openai anthropic
+nebutra ai provider disable openai
+
+nebutra ai gateway init                   # 初始化本地 AI 网关治理配置
+nebutra ai gateway status
+
+nebutra ai route set <name> ...           # 路由策略（哪条路由走哪个服务商）
+nebutra ai route list
+
+nebutra ai models                         # 列出已配置的模型
+nebutra ai test "hello world"             # 通过网关测试当前服务商
+```
+
+`nebutra status` 会把 `ai` 这项能力报告为 `live`、`local-fallback` 或 `missing-key`，取决于
+服务商的 key 有没有配置。
+
+## 添加一个服务商适配器
+
+网关的 AI 路由不绑定单一厂商 SDK。在 `backends/gateway/src/routes/ai/` 里接入新服务商的客户端，
+再用 `nebutra ai provider enable <name>` 启用——没有脚手架阶段需要编辑的服务商清单。
+
+## 相关
+
+<CardGroup cols={2}>
+  <Card title="nebutra CLI" icon="terminal" href="/zh/cli/nebutra-cli">
+    完整的 `nebutra ai` 命令参考。
+  </Card>
+  <Card title="后端语言策略" icon="code" href="/zh/architecture/backend-language-policy">
+    为什么 AI 编排工作默认放在 `backends/gateway` 的 TypeScript 里。
+  </Card>
+</CardGroup>

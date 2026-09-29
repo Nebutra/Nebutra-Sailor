@@ -1,107 +1,47 @@
 ---
-title: JavaScript / TypeScript SDK
-description: 官方 @nebutra/sdk 参考——安装、初始化和完整方法参考。
+title: JavaScript / TypeScript Packages
+description: 没有发布过 @nebutra/sdk——你导入的就是脚手架项目里已经有的那些包。
 ---
 
-## 安装
+## 没有 `@nebutra/sdk` 这回事
 
-```bash
-npm install @nebutra/sdk
-# 或
-pnpm add @nebutra/sdk
-```
+Nebutra-Sailor 不是一个带客户端 SDK 的托管 API——`create-sailor` 把整个后端作为代码交到你自己
+的仓库里。没有什么额外要安装的东西，也没有 API key 去初始化一个客户端。
 
-## 初始化客户端
+你实际要导入的是脚手架自带的 `@nebutra/*` workspace 包，直接在你自己的应用代码里用：
 
-```typescript
-import { createClient } from "@nebutra/sdk";
-
-const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
-  retry: { maxAttempts: 3, backoff: "exponential" },
-});
-```
-
-## 认证
+| 包 | 用途 |
+|---|---|
+| `@nebutra/auth` | Better Auth 服务端实例、给内部调用用的 `signServiceToken` / `verifyServiceToken` |
+| `better-auth/react`（`createAuthClient`） | 客户端会话状态——见 [React 快速开始](/zh/quickstart/react) |
+| `@nebutra/permissions` / `@nebutra/permissions/react` | `Can`、`usePermission`、`requirePermission`——RBAC/ABAC |
+| `@nebutra/tenant` | `getCurrentTenant`、`withRls`——租户上下文与行级安全 |
+| `@nebutra/billing` | 结账、权益检查（`checkEntitlement`、`FEATURES`）、用量计量 |
+| `@nebutra/db` | `getSystemDb()` / `getTenantDb(tenantId)`——Prisma 客户端 |
+| `@nebutra/logger` | 结构化日志 |
 
 ```typescript
-import { verifyToken } from "@nebutra/sdk/server";
+import { getTenantDb } from "@nebutra/db";
+import { getCurrentTenant } from "@nebutra/tenant";
+import { checkEntitlement } from "@nebutra/billing";
 
-// 验证 JWT 令牌
-const payload = await verifyToken(bearerToken, {
-  apiKey: process.env.NEBUTRA_API_KEY!,
-});
-// payload.userId, payload.orgId, payload.scopes, payload.plan
+const tenant = getCurrentTenant();
+const db = getTenantDb(tenant.tenantId);
 ```
 
-## 组织
+## 从 monorepo 之外调用网关
 
-```typescript
-const org = await nebutra.orgs.get(orgId);
-await nebutra.orgs.update(orgId, { name: "新名称" });
+如果一个独立服务需要通过 HTTP 调用你项目的 `backends/gateway` REST API，同样没有对应的客户端
+库——直接调用，用共享的 `SERVICE_SECRET` 认证（见 [Node.js 快速开始](/zh/quickstart/node)），
+或者转发调用方的 Better Auth 会话。网关通过 OpenAPI 在 `/docs` 和 `/openapi.json` 自我记录。
 
-const members = await nebutra.members.list({ orgId });
-await nebutra.members.invite({ orgId, email: "alice@example.com", role: "MEMBER" });
-await nebutra.members.remove({ orgId, userId });
-```
+## 相关
 
-## 项目
-
-```typescript
-const { data, meta } = await nebutra.projects.list({ limit: 20 });
-const project = await nebutra.projects.get("proj_123");
-const project = await nebutra.projects.create({ name: "我的项目" });
-await nebutra.projects.update("proj_123", { name: "新名称" });
-await nebutra.projects.delete("proj_123");
-```
-
-## 权限
-
-```typescript
-import { can, requirePermission } from "@nebutra/sdk/permissions";
-
-const allowed = await can(userId, "project:delete", { orgId });
-await requirePermission("project:delete"); // 权限不足时抛出 403
-```
-
-## 计量与配额
-
-```typescript
-const quota = await nebutra.metering.getQuota("api_calls");
-// { limit, used, remaining, percentage, reset_at }
-
-await nebutra.metering.ingest({ metricId: "api_calls", tenantId: orgId, quantity: 1 });
-```
-
-## 错误处理
-
-```typescript
-import { NebutraError, NotFoundError, ValidationError, RateLimitError } from "@nebutra/sdk";
-
-try {
-  await nebutra.projects.get("proj_123");
-} catch (error) {
-  if (error instanceof NotFoundError) { return notFound(); }
-  if (error instanceof ValidationError) { return { errors: error.fields }; }
-  if (error instanceof RateLimitError) { await sleep(error.retryAfter * 1000); }
-  if (error instanceof NebutraError) {
-    console.error(`[${error.code}] ${error.requestId}`);
-    throw error;
-  }
-}
-```
-
-## React Hooks
-
-安装 `@nebutra/react`：
-
-```bash
-npm install @nebutra/react
-```
-
-```typescript
-import { useNebutraUser, useNebutraOrg, Can, NebutraProvider } from "@nebutra/react";
-```
-
-详见 [React 快速开始](/zh/quickstart/react)。
+<CardGroup cols={2}>
+  <Card title="网关 API" icon="code" href="/zh/api-reference/overview">
+    项目自带的 REST 端点。
+  </Card>
+  <Card title="概念：架构" icon="layers" href="/zh/concepts/architecture">
+    网关处在哪个位置，各部分分别跑在哪里。
+  </Card>
+</CardGroup>

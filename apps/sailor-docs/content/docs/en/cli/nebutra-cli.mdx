@@ -234,6 +234,27 @@ nebutra i18n add <locale>
 nebutra i18n status
 ```
 
+## Sailor Studio (a project's look, in one code)
+
+Per [ADR 2026-09-27 Sailor Studio](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-27-sailor-studio.md), a project's look — base
+design language plus a small set of knob overrides — is a short preset code, applied with exactly
+one of two commands. Nobody hand-edits the design system after `init`.
+
+```bash
+nebutra apply --preset <code>                 # put a preset on this project
+nebutra apply --preset <code> --only theme    # change only the theme group
+nebutra apply --preset <code> --only fonts    # change only the fonts group
+nebutra apply --preset <code> --no-build      # write the preset without rebuilding tokens
+
+nebutra studio schema                          # print the preset JSON Schema
+nebutra studio preview <preset>                 # validate a preset, print the Studio review link
+nebutra studio preview <preset> --open          # also open it in the browser
+nebutra studio pull <preset>                    # put a preset (code, JSON, file, or Studio link) on this project
+```
+
+`create-sailor <dir> --preset <code>` accepts the same code at scaffold time; omit it and the look
+is the factory default — the scaffold still asks nothing.
+
 ## AI
 
 ```bash

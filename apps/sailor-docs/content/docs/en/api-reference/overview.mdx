@@ -1,134 +1,53 @@
 ---
 title: API Overview
-description: Base URL, versioning, request format, and response envelope for the Nebutra REST API.
+description: The gateway REST API your scaffolded project ships with.
 ---
 
-## Base URL
+## There is no hosted Nebutra API
+
+`backends/gateway` — the sole business API per
+[ADR 2026-09-24](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md) — ships inside **your** scaffolded
+project. There is no `api.nebutra.com` for third-party customers to call, no `nbk_live_` API key
+issuance, and no fixed request/response envelope defined by Nebutra: the shape of each endpoint is
+whatever your Hono route handler (built on `@hono/zod-openapi`) declares.
+
+## Where it runs
+
+By default the gateway is mounted in-process inside `apps/web` at `app/api/[[...route]]`
+(`GATEWAY_MODE=embedded`) — same origin as your frontend, one process, one deploy. Set
+`GATEWAY_MODE=external` to run it standalone instead; unmatched `/api/*` paths then 404 in
+`apps/web`.
+
+## Source of truth: OpenAPI
+
+The gateway self-documents. Run it locally and open:
 
 ```
-https://api.nebutra.com
+GET /docs           # Swagger UI
+GET /openapi.json    # the machine-readable spec
 ```
 
-All API requests are made over HTTPS. HTTP requests are redirected to HTTPS.
+Every route your project defines — its request shape, response shape, and auth requirement — is
+generated from the Zod schemas in `backends/gateway/src/routes/`, not hand-maintained documentation
+that can drift from the code.
 
-## Versioning
+## Adding an endpoint
 
-The API is versioned via URL path prefix:
-
-```
-https://api.nebutra.com/api/v1/...
-```
-
-The current stable version is `v1`. Breaking changes are introduced in new major versions with at minimum 6 months of deprecation notice.
-
-## Request format
-
-All `POST`, `PUT`, and `PATCH` requests accept JSON bodies:
-
-```http
-POST /api/v1/projects HTTP/1.1
-Host: api.nebutra.com
-Authorization: Bearer nbk_live_xxxxxxxxxxxxxxxxxxxx
-Content-Type: application/json
-
-{
-  "name": "My Project",
-  "description": "A new project"
-}
+```bash
+nebutra generate route projects
 ```
 
-## Response envelope
-
-All responses follow this envelope:
-
-```json
-{
-  "success": true,
-  "data": { ... },
-  "meta": {
-    "total": 142,
-    "page": 1,
-    "limit": 20
-  }
-}
-```
-
-Error responses use the same envelope with `success: false`:
-
-```json
-{
-  "success": false,
-  "error": {
-    "code": "RESOURCE_NOT_FOUND",
-    "message": "Project proj_123 not found.",
-    "request_id": "req_2a8bXXXXXXXXX"
-  }
-}
-```
-
-## Pagination
-
-List endpoints support cursor-based pagination via `limit` and `cursor` parameters:
-
-```http
-GET /api/v1/projects?limit=20&cursor=crs_xxxx
-```
-
-Response:
-
-```json
-{
-  "success": true,
-  "data": [...],
-  "meta": {
-    "total": 142,
-    "limit": 20,
-    "next_cursor": "crs_yyyy",
-    "has_more": true
-  }
-}
-```
-
-## Filtering & sorting
-
-List endpoints accept `filter` and `sort` query parameters:
-
-```http
-GET /api/v1/projects?filter[status]=active&sort=-createdAt&limit=10
-```
-
-- Prefix field names with `-` for descending sort
-- Nested filters use bracket notation: `filter[field]=value`
-
-## Idempotency
-
-Pass `Idempotency-Key` for mutation requests to prevent duplicate operations:
-
-```http
-POST /api/v1/invoices
-Idempotency-Key: inv-2026-03-31-01
-Content-Type: application/json
-```
-
-The same key within 24 hours returns the cached response.
-
-## Rate limit headers
-
-```
-x-ratelimit-limit: 1000
-x-ratelimit-remaining: 847
-x-ratelimit-reset: 1743430800
-```
-
-See [Rate Limits](/guides/rate-limits) for full details.
+Scaffolds a new route file in `backends/gateway/src/routes/`. Business endpoints belong here, not
+as `apps/web` route handlers — a shrink-only ratchet
+(`scripts/lint-route-handlers.mjs`) fails CI on a new one outside the frozen allowlist.
 
 ## Related
 
 <CardGroup cols={2}>
   <Card title="Authentication" icon="shield-check" href="/api-reference/authentication">
-    API key and Bearer token authentication.
+    Session cookies and service-to-service tokens.
   </Card>
   <Card title="Error Codes" icon="triangle-alert" href="/api-reference/errors">
-    Full error code reference.
+    How the gateway reports errors.
   </Card>
 </CardGroup>

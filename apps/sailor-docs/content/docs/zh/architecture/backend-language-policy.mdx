@@ -72,24 +72,17 @@ rg "<SERVICE_NAME>_SERVICE_URL" --type ts \
 
 ## 如何启动一个合规的 Python 服务
 
-```bash
-# 交互模式：提示输入服务名
-nebutra backend init py
-
-# 非交互模式
-nebutra backend init py --name translator
-nebutra backend init py --name translator --dry-run
-```
-
-生成的 `backends/python/<name>/README.md` 中带有一条**占位行**，必须替换为具体的例外理由（引用上文规则中的 1、2 或 3）。PR Review 会拒绝仍保留占位行的服务。
+目前没有 `nebutra` 脚手架命令来新建 Python 服务。参照现有 `_shared/` 和 `ai/` 服务的形状，手动
+建一个 `backends/python/<name>/` 目录，写一份 `README.md` 引用具体的例外理由（上文规则的
+1、2 或 3）——PR review 会检查这一点。
 
 ## 相关内容
 
 <CardGroup cols={2}>
   <Card title="Python 快速开始" icon="python" href="/zh/docs/quickstart/python">
-    SDK 消费者指南 —— 面向已存在的、需要调用 Nebutra 的 Python 服务。
+    从外部 Python 服务调用网关 REST API。
   </Card>
-  <Card title="nebutra backend" icon="terminal" href="/zh/docs/cli/nebutra-cli">
-    `nebutra backend init` 的 CLI 参考。
+  <Card title="nebutra CLI" icon="terminal" href="/zh/docs/cli/nebutra-cli">
+    完整命令参考。
   </Card>
 </CardGroup>

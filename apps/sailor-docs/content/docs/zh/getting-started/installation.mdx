@@ -1,0 +1,36 @@
+---
+title: 安装
+description: 用 create-sailor 生成一个 Nebutra-Sailor 项目。
+---
+
+# 搭建你的 SaaS 脚手架
+
+最快的起步方式是 `create-sailor`。根据
+[ADR 2026-09-24 Sailor 收敛](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md)，它是一个**零提问脚手架**——
+除了项目目录之外什么都不问。
+
+```bash
+npx create-sailor my-app
+```
+
+没有配置向导：每个项目拿到的都是同一套收敛后的技术栈（Next.js 16 + Tailwind v4、进程内挂载的
+Hono 网关、Postgres + Prisma、Better Auth、Creem + 微信支付/支付宝的支付组合、Resend、
+兼容 S3 的存储、QStash、Redis）。没有配置任何 key 时，每项能力都会降级到本地实现，所以空的
+`.env` 也能直接 `pnpm dev` 跑起来。完整的 flag 参考和生成内容见
+[create-sailor](/zh/cli/create-sailor)；查看哪些能力已经 live、哪些还在本地降级见
+[nebutra status](/zh/cli/nebutra-cli)。
+
+## 下一步
+
+```bash
+cd my-app
+pnpm install
+pnpm dev
+```
+
+`pnpm dev` 会启动一个零 key 的预览环境：本地 PGlite 数据库（不需要 Postgres 服务）、演示登录
+（`admin@example.com` / `preview-demo`）、站点跑在 `localhost:3000`、产品应用跑在
+`localhost:3001`（端口被占用时各自往后跳到下一千位——`4001`、`5001`……）。准备就绪后会打印一条
+`/welcome` 链接。
+
+之后往 `.env.local` 里加 provider key 即可让某项能力上线——脚手架阶段不需要提前决定任何事。

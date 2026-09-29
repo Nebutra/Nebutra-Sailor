@@ -94,8 +94,9 @@ Migration files in `prisma/migrations/` are the authoritative record of every sc
     `db:push` does not create a migration file. Changes applied this way cannot be replayed on other environments. Never use it on a shared, staging, or production database.
     </Warning>
   </Tab>
-  <Tab title="db:migrate (standard)">
-    `pnpm db:migrate` creates a versioned migration file and applies it. This is the correct workflow for all environments beyond a throwaway local database.
+  <Tab title="db:migrate (development)">
+    `pnpm db:migrate` (`prisma migrate dev`) creates a versioned migration file and applies it — the
+    workflow for local development.
 
     ```bash
     pnpm db:migrate
@@ -103,20 +104,23 @@ Migration files in `prisma/migrations/` are the authoritative record of every sc
 
     **When to use:**
     - Adding or removing models in development
-    - Any change that needs to reach staging or production
-    - All changes in a team environment
+    - Any change you're about to commit for staging or production
 
-    The migration name is embedded in the directory name and used in audit logs.
+    Staging and production don't run `db:migrate` directly — they run `pnpm db:deploy`, which
+    applies the migrations this command generated, then re-applies `platform.sql` and the
+    generated RLS policies, then verifies. See [Row-Level Security](/database/rls).
   </Tab>
 </Tabs>
 
 ## CI/CD: running migrations before deploy
 
-Migrations must be applied to the database before the new application code is deployed. Add this step to your pipeline:
+Migrations, `platform.sql`, and generated RLS must all be applied to the database before the new
+application code is deployed — `pnpm db:deploy` does all three in one locked transaction and fails
+loud on drift:
 
 ```yaml .github/workflows/your-deploy.yml
 - name: Run database migrations
-  run: pnpm db:migrate
+  run: pnpm db:deploy
   env:
     DATABASE_URL: ${{ secrets.DATABASE_URL }}
     DIRECT_URL: ${{ secrets.DIRECT_URL }}
@@ -194,7 +198,7 @@ Prisma does not provide automatic rollback. To revert a migration:
 
 ## pgvector setup
 
-The `recsys` schema uses the `pgvector` extension. Your database must have it enabled before the initial migration runs.
+`@nebutra/search` uses the `pgvector` extension for embedding search. Your database must have it enabled before the initial migration runs.
 
 <Tabs>
   <Tab title="Neon">

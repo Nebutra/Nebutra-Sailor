@@ -3,7 +3,7 @@ title: 数据库提供商
 description: 将 Nebutra 连接到 Neon、Supabase 或 PlanetScale Postgres — 每个提供商的环境变量、连接池和迁移设置。
 ---
 
-Nebutra 开箱即用支持三个托管 PostgreSQL 提供商：Neon、Supabase 和 PlanetScale Postgres。应用程序代码在这些提供商之间保持一致；差异主要是连接字符串、连接池行为，以及如何启用提供商托管的 PostgreSQL 扩展。
+`create-sailor` 默认脚手架连的是**本地 Postgres**（`docker-compose.yml`，用 `nebutra infra up` 启动）——脚手架阶段不需要选托管提供商。生产环境可以指向任意兼容 PostgreSQL 的主机：不管 `DATABASE_URL` 指向 Neon、Supabase、PlanetScale Postgres 还是自建实例，应用代码都一样。差异主要是连接字符串、连接池行为，以及如何启用提供商托管的 PostgreSQL 扩展。
 
 <Note>
 此页面列出的受支持提供商都是 PostgreSQL。Prisma 中继续保留 `provider = "postgresql"`，提交生成的迁移文件，并通过 `DIRECT_URL` 运行迁移。
@@ -14,8 +14,8 @@ PlanetScale Vitess/MySQL 与 PlanetScale Postgres 不是同一条支持路径。
 </Warning>
 
 <Tabs>
-  <Tab title="Neon（默认）">
-    Neon 是默认提供商。它是一个无服务器 PostgreSQL 平台，具有分支、自动暂停和慷慨的免费套餐。内置 PgBouncer 连接池。
+  <Tab title="Neon">
+    Neon 是一个无服务器 PostgreSQL 平台，具有分支、自动暂停和慷慨的免费套餐。内置 PgBouncer 连接池。
 
     ### 为什么选择 Neon
 

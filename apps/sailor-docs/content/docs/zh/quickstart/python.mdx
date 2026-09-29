@@ -1,72 +1,59 @@
 ---
 title: Python 快速开始
-description: 在 FastAPI、Django 或任意 Python 后端中使用 Nebutra Python SDK。
+description: 从 Python 服务调用网关 API，以及什么时候真的需要一个 Python 后端。
 ---
 
 <Warning>
-  **Python 仅保留用于批处理 / ML / 专用库场景**（参考 ADR 2026-05-10，[TS-by-Default 后端语言策略](/zh/docs/architecture/backend-language-policy)）。
+  **Python 只保留给批处理 / ML / 特殊依赖库场景**（见 [ADR 2026-05-10，TS-by-Default 后端语言策略](/zh/architecture/backend-language-policy)）。
 
-  CRUD、Webhook、计费、内容管理、第三方 API 代理 —— 一律使用 **`backends/gateway/`**（TypeScript + Hono）。新建 Python 服务的前提是至少满足以下一条：
+  CRUD、Webhooks、计费、内容管理、第三方 API 代理——都应该放进 **`backends/gateway/`**（TypeScript + Hono）。只有满足以下至少一条，新建 Python 服务才成立：
 
-  1. 批处理 / 队列任务，时长超过 Edge Runtime 容忍范围（>5s）
-  2. 依赖 Python 生态（transformers、vLLM 等）的 ML / 科学计算
-  3. 没有可比拟 TS 端口的专用库
+  1. 边缘运行时跑不动的批处理 / 队列任务（通常 >5 秒）
+  2. 依赖 Python 生态的 ML / 科学计算（transformers、vLLM 等）
+  3. 没有对应 TS 版本的特殊依赖库
 
-  本页面面向**已有 Python 服务（FastAPI / Django）中调用 `nebutra-sdk` 的消费者**，不是鼓励为通用业务启动 Python 服务。
+  目前没有发布过 `nebutra-sdk` 这个 Python 包。这页讲的是从一个已经站得住脚的 Python 服务
+  （FastAPI / Django）调用网关的 REST API——不是鼓励你随便起一个 Python 服务做通用业务。
 </Warning>
 
-## 安装
+## 调用网关
 
-```bash
-pip install nebutra-sdk
-```
-
-## 初始化客户端
+每一个网关端点都是普通的 REST，在网关主机的 `/docs` 和 `/openapi.json` 上有 OpenAPI 文档——用
+`httpx` 或 `requests` 像调用任何 HTTP API 一样调用它：
 
 ```python
-import os
-from nebutra import Client
+import httpx
 
-nebutra = Client(
-    api_key=os.environ["NEBUTRA_API_KEY"],
-    org_id=os.environ["NEBUTRA_ORG_ID"],
+resp = httpx.get(
+    "https://your-gateway-host/api/v1/ai/models",
+    headers={"x-service-token": service_token},
 )
 ```
 
-## 验证 JWT 令牌（FastAPI）
+## 服务间认证
+
+内部调用用一个由共享 `SERVICE_SECRET` 签名的短期 HS256 JWT（`x-service-token`），TypeScript
+那一侧用 `@nebutra/auth` 的 `verifyServiceToken` 校验。用任意标准 JWT 库（比如 `pyjwt`）签同样
+结构的 claim——这里没有 Python SDK，只有一个共享密钥和一份 JWT 约定。
 
 ```python
-from fastapi import HTTPException, Header
-from nebutra import verify_token
-import os
+import jwt
+import time
 
-async def require_auth(authorization: str = Header(...)):
-    token = authorization.removeprefix("Bearer ")
-    try:
-        return await verify_token(token, api_key=os.environ["NEBUTRA_API_KEY"])
-    except Exception:
-        raise HTTPException(status_code=401, detail="无效令牌")
-```
-
-## 检查权限
-
-```python
-allowed = await nebutra.permissions.check(
-    user_id=user_id,
-    action="delete",
-    resource="Project",
+token = jwt.encode(
+    {"service": "my-python-worker", "iat": int(time.time())},
+    SERVICE_SECRET,
+    algorithm="HS256",
 )
-if not allowed:
-    raise HTTPException(status_code=403, detail="权限不足")
 ```
 
-## 相关文档
+## 相关
 
 <CardGroup cols={2}>
-  <Card title="Python SDK 参考" icon="python" href="/zh/sdks/python">
-    完整的 SDK 方法参考。
+  <Card title="后端语言策略" icon="code" href="/zh/architecture/backend-language-policy">
+    什么时候一个 Python 服务才站得住脚。
   </Card>
-  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
-    REST API 文档。
+  <Card title="网关 API" icon="terminal" href="/zh/api-reference/overview">
+    直接 HTTP 调用的 REST API 文档。
   </Card>
 </CardGroup>

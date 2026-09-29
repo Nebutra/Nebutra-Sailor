@@ -1,36 +1,60 @@
 ---
-title: "Prisma Multi-Schema"
-description: "Isolate your data like an Enterprise"
+title: "Prisma Postgres Schemas"
+description: "Why the database uses two Postgres schemas, not one giant public schema"
 ---
 
-Most SaaS boilerplates give you a single `schema.prisma` file. This works fine for a todo-list app, but breaks down when you're building a multi-tenant enterprise system with independent microservices (like Stripe does).
+Per [ADR 2026-09-25 database convergence](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-25-database-convergence.md),
+`packages/platform/db/prisma/schema.prisma` is the **single source** for the database: every
+table, and every table's access rule as an `/// @rls` comment. There is no scaffold-time choice
+about database structure — `create-sailor` writes the same schema every time.
 
-## The Sailor Approach
+## Two Postgres schemas, not one per domain
 
-Nebutra Sailor utilizes Prisma 7's `multiSchema` preview feature extensively. 
-
-In `packages/platform/db/prisma/schema.prisma`, you will see something like this:
-
-```prisma
-generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
-}
-
+```prisma packages/platform/db/prisma/schema.prisma
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  schemas  = ["public", "auth", "stripe", "ai"]
+  provider   = "postgresql"
+  extensions = [vector, uuid_ossp(map: "uuid-ossp")]
+  schemas    = ["public", "better_auth"]
 }
-
-// ... Models spread across different schemas ...
 ```
 
-## Why schemas?
+- **`public`** — every application table, each carrying its own `@@schema("public")` and an
+  `/// @rls` access-rule annotation.
+- **`better_auth`** — the tables Better Auth's own plugins (`organization`, `passkey`, …) manage.
+  Kept separate because the device-authorization flow's own table
+  (`public.auth_device_codes`) has to live in `public` instead, where a Kysely-based edge runtime
+  (no Prisma) can address it by literal name — see ADR 2026-09-24 §8.
 
-By physically isolating your tables into schemas (e.g., `auth.Users`, `stripe.Subscriptions`, `ai.Embeddings`), you achieve:
-1. **Security boundaries**: A bug in the AI service cannot accidentally drop the `stripe` billing schema.
-2. **Microservice portability**: If your AI service gets huge, it's trivial to move the `ai` schema to a completely different physical database later.
-3. **Cleaner Cognitive Load**: You aren't scrolling through 200 models in one giant block.
+This is **not** a "microservice-per-schema" pattern, and there is no `stripe` or `ai` schema to
+prune based on a scaffold choice — the old provider-choice flags that implied one don't exist.
 
-When using `create-sailor`, if you opt-out of "Stripe integration", the CLI handles automatically pruning the `stripe` schema entirely before your first boot!
+## Row-level security is generated, not hand-written
+
+A model's access rule is **inferred automatically** from a `tenantId` / `organizationId` column,
+or from its single tenant-scoped parent relation — no annotation needed for the common case. Any
+other model must declare one explicitly, or `prisma generate` fails:
+
+```prisma
+/// @rls self
+model Session {
+  // ... only the owning user's row is visible
+  @@schema("public")
+}
+```
+
+The full vocabulary: `global | deny | off | self | via(field) | using(sql) | read(sql) write(sql)`.
+
+`prisma generate` runs a custom generator (`prisma/generators/rls.mjs`) that turns every `/// @rls`
+comment into a policy in `generated/rls.sql`. See [Row-Level Security](/database/rls) for the full
+annotation vocabulary and the `pnpm db:deploy` flow that applies it.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Database Overview" icon="database" href="/database/overview">
+    Schema, generated client, and the deploy flow.
+  </Card>
+  <Card title="Row-Level Security" icon="shield" href="/database/rls">
+    The `/// @rls` annotation vocabulary and the generated policy model.
+  </Card>
+</CardGroup>

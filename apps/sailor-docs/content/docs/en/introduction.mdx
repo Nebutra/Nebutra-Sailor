@@ -10,30 +10,39 @@ description: Nebutra is the AI-native SaaS infrastructure layer — ship product
   [Get your free license →](https://nebutra.com/en/get-license)
 </Info>
 
-Nebutra is a production-ready SaaS scaffold for AI-native products. It ships everything a modern B2B SaaS needs — multi-tenant auth, role-based access control, billing, transactional email, AI service proxies, and observability — wired together in a single monorepo.
+Nebutra-Sailor is a self-hosted SaaS **monorepo template** for AI-native products, scaffolded with
+one command (`npx create-sailor`) and run on your own infrastructure. It ships everything a modern
+B2B SaaS needs — multi-tenant auth, role-based access control, billing, transactional email, an AI
+gateway, and observability — wired together and ready to `pnpm dev` with an empty `.env`.
 
-Stop spending your first 6 months building infrastructure. Start on day one with what matters: your product.
+There is no hosted Nebutra API, no per-customer API key, and no `@nebutra/sdk` package: the code you
+get from `create-sailor` **is** your product's backend. You call it the way you'd call any code in
+your own repo — through the `backends/gateway` Hono REST API it ships, or directly from the
+`@nebutra/*` packages in your app.
+
+Stop spending your first 6 months building infrastructure. Start on day one with what matters: your
+product.
 
 ## What's inside
 
 <CardGroup cols={2}>
-  <Card title="5-Minute Quickstart" icon="bolt" href="/quickstart/nextjs">
-    Your first integration up and running in under 5 minutes with Next.js, Node.js, React, or Python.
+  <Card title="Quickstart" icon="bolt" href="/quickstart/nextjs">
+    Scaffold a project and wire up auth, permissions, and billing in your own app.
   </Card>
   <Card title="Core Concepts" icon="layers" href="/concepts/architecture">
     Understand the architecture — multi-tenancy, RBAC, billing model, and the AI layer.
   </Card>
-  <Card title="Guides" icon="book-open" href="/guides/authentication">
-    Step-by-step guides for authentication, webhooks, rate limits, and error handling.
+  <Card title="CLI" icon="terminal" href="/cli/overview">
+    `create-sailor` to scaffold, `nebutra` for day-to-day project commands.
   </Card>
-  <Card title="API Reference" icon="code" href="/api-reference/overview">
-    Complete REST API documentation with request/response examples.
+  <Card title="Gateway API" icon="code" href="/api-reference/overview">
+    The `backends/gateway` REST API your scaffolded project ships with, documented via OpenAPI.
   </Card>
-  <Card title="SDKs" icon="cube" href="/sdks/javascript">
-    Official client libraries for JavaScript / TypeScript and Python.
+  <Card title="Packages" icon="cube" href="/sdks/javascript">
+    The `@nebutra/*` TypeScript packages you import directly — auth, permissions, billing, AI.
   </Card>
-  <Card title="Integrations" icon="plug" href="/integrations/overview">
-    First-class integrations with Vercel, Creem, Slack, GitHub, and Linear.
+  <Card title="Database" icon="database" href="/database/overview">
+    Prisma + PostgreSQL, generated row-level security, one deploy command.
   </Card>
 </CardGroup>
 
@@ -49,8 +58,8 @@ Stop spending your first 6 months building infrastructure. Start on day one with
   <Accordion title="Billing & Subscriptions" icon="credit-card">
     Creem-powered card payments (worldwide, merchant of record) plus WeChat Pay/Alipay for mainland China, with FREE, PRO, and ENTERPRISE tiers pre-wired. Consumption-based metering via ClickHouse aggregation. Usage quotas enforced at the API gateway layer — no application code required.
   </Accordion>
-  <Accordion title="AI Service Proxy" icon="brain">
-    Pre-built routes for `/api/v1/ai/chat`, `/embeddings`, and `/models`. Authenticated, rate-limited, and tenant-scoped. Drop in any model provider without touching your frontend.
+  <Accordion title="AI Gateway" icon="brain">
+    The `backends/gateway` `/api/v1/ai` routes proxy your chosen model provider — authenticated, rate-limited, and tenant-scoped. Governed by `nebutra ai provider` / `nebutra ai gateway`.
   </Accordion>
   <Accordion title="Transactional Email" icon="envelope">
     Resend-powered email with ready-made templates for welcome, API key creation, quota warnings, and team invitations. React Email components you can customize in minutes.
@@ -62,25 +71,27 @@ Stop spending your first 6 months building infrastructure. Start on day one with
 
 ## Platform
 
-Nebutra is a [Turborepo](https://turbo.build) monorepo with 33 packages and 7 apps. The API gateway runs on [Hono](https://hono.dev) with OpenAPI. The frontend apps run on Next.js 16 with Tailwind v4.
+Nebutra-Sailor is a [Turborepo](https://turbo.build) monorepo. `backends/gateway` — the sole
+business API; see [Architecture](/concepts/architecture) — runs on
+[Hono](https://hono.dev) with OpenAPI, mounted in-process inside `apps/web` at
+`app/api/[[...route]]` by default (`GATEWAY_MODE=embedded`) or standalone
+(`GATEWAY_MODE=external`). The frontend apps run on Next.js 16 with Tailwind v4.
+
+A default scaffold includes:
 
 | App | Description |
 |-----|-------------|
-| `landing` | Public marketing site at `nebutra.com` (Vercel) |
-| `web` | Authenticated dashboard at `app.nebutra.com` (ECS Next; Vercel optional) |
-| `auth` | Login center at `auth.nebutra.com` (Better Auth; ECS; Vercel optional) |
-| `backends/gateway` | Hono REST API at `api.nebutra.com` (package `@nebutra/gateway`, ECS / Workers) |
-| `studio` | Sanity CMS at `studio.nebutra.com` |
-| `sailor-docs` | Public product documentation at `nebutra.com/docs` (Vercel) |
-| `design-docs` | Internal design system docs |
-| `storybook` | Component library playground |
+| `web` | The authenticated dashboard (Next.js 16), with the gateway mounted at `/api/[[...route]]` |
+| `landing` | The public marketing site |
+| `auth` | The Better Auth login center |
+| `mail-preview` | Local preview server for transactional email templates |
+| `backends/gateway` | The Hono REST API — the only place business endpoints belong |
+| `sailor-docs` | This documentation site (Fumadocs) |
 
-## Versions
-
-Nebutra follows [Semantic Versioning](https://semver.org). The current stable release is `v1.0` (Launch phase). See the [Changelog](/changelog) for release history and the [Roadmap](https://nebutra.com/en/roadmap) for upcoming versions.
+Nebutra's own instance additionally runs `studio` (Sanity CMS) and `storybook` (component
+playground) — neither ships in the default scaffold.
 
 ## Get support
 
-- **Community**: [Sleptons on Discord](https://discord.gg/nebutra) — real-time help from OPC members
-- **Issues**: [GitHub Issues](https://github.com/nebutra/nebutra-sailor/issues) — bug reports and feature requests
-- **Email**: [founders@nebutra.com](mailto:founders@nebutra.com) — for enterprise and partnership inquiries
+- **GitHub Issues**: [github.com/nebutra/nebutra-sailor](https://github.com/nebutra/nebutra-sailor/issues) — bug reports and feature requests
+- **Email**: [tseka@nebutra.com](mailto:tseka@nebutra.com) — for licensing and partnership inquiries

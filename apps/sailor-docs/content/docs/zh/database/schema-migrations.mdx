@@ -94,8 +94,8 @@ packages/platform/db/
     `db:push` 不创建迁移文件。通过此方式应用的更改无法在其他环境中重放。永远不要在共享、预发布或生产数据库上使用它。
     </Warning>
   </Tab>
-  <Tab title="db:migrate（标准）">
-    `pnpm db:migrate` 创建版本化迁移文件并应用它。这是除一次性本地数据库之外所有环境的正确工作流。
+  <Tab title="db:migrate（开发环境）">
+    `pnpm db:migrate`（即 `prisma migrate dev`）创建版本化迁移文件并应用它——这是本地开发时的工作流。
 
     ```bash
     pnpm db:migrate
@@ -103,20 +103,22 @@ packages/platform/db/
 
     **使用时机：**
     - 在开发中添加或删除模型
-    - 需要到达预发布或生产环境的任何更改
-    - 团队环境中的所有更改
+    - 即将提交、准备进入预发布或生产环境的更改
 
-    迁移名称嵌入在目录名称中，并用于审计日志。
+    预发布和生产环境不会直接跑 `db:migrate`，而是跑 `pnpm db:deploy`：它会应用这里生成的迁移，
+    再重新应用 `platform.sql` 和生成的 RLS 策略，最后校验一致性。详见
+    [行级安全](/database/rls)。
   </Tab>
 </Tabs>
 
 ## CI/CD：在部署前运行迁移
 
-迁移必须在部署新应用程序代码之前应用到数据库。在流水线中添加此步骤：
+迁移、`platform.sql` 和生成的 RLS 都必须在部署新应用程序代码之前应用到数据库——`pnpm db:deploy`
+在一个锁定事务里做完这三件事，一旦有漂移就立刻失败：
 
 ```yaml .github/workflows/your-deploy.yml
 - name: 运行数据库迁移
-  run: pnpm db:migrate
+  run: pnpm db:deploy
   env:
     DATABASE_URL: ${{ secrets.DATABASE_URL }}
     DIRECT_URL: ${{ secrets.DIRECT_URL }}
@@ -194,7 +196,7 @@ Prisma 不提供自动回滚。要回滚迁移：
 
 ## pgvector 设置
 
-`recsys` 架构使用 `pgvector` 扩展。在初始迁移运行之前，数据库必须启用该扩展。
+`@nebutra/search` 用 `pgvector` 扩展做向量检索。在初始迁移运行之前，数据库必须启用该扩展。
 
 <Tabs>
   <Tab title="Neon">

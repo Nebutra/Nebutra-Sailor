@@ -3,7 +3,11 @@ title: Database Providers
 description: Connecting Nebutra to Neon, Supabase, or PlanetScale Postgres — environment variables, connection pooling, and migration setup for each provider.
 ---
 
-Nebutra supports three managed PostgreSQL providers out of the box: Neon, Supabase, and PlanetScale Postgres. The application code is identical across these providers. The differences are connection strings, pooler behavior, and how you enable provider-managed PostgreSQL extensions.
+`create-sailor` scaffolds a project against **local Postgres** (`docker-compose.yml`, started with
+`nebutra infra up`) — there is no managed-provider choice at scaffold time. In production, any
+PostgreSQL-compatible host works; the application code is identical whether you point `DATABASE_URL`
+at Neon, Supabase, PlanetScale Postgres, or a self-managed instance. The differences are connection
+strings, pooler behavior, and how you enable provider-managed PostgreSQL extensions.
 
 <Note>
 All supported providers on this page are PostgreSQL. Keep `provider = "postgresql"` in Prisma, commit generated migrations, and run migrations through `DIRECT_URL`.
@@ -14,8 +18,8 @@ PlanetScale Vitess/MySQL is not the same support path as PlanetScale Postgres. I
 </Warning>
 
 <Tabs>
-  <Tab title="Neon (default)">
-    Neon is the default provider. It is a serverless PostgreSQL platform with branching, auto-suspend, and a generous free tier. PgBouncer connection pooling is built in.
+  <Tab title="Neon">
+    Neon is a serverless PostgreSQL platform with branching, auto-suspend, and a generous free tier. PgBouncer connection pooling is built in.
 
     ### Why Neon
 

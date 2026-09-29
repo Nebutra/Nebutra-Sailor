@@ -1,30 +1,49 @@
 ---
 title: AI Providers
-description: The Nebutra-Sailor multi-tenant AI routing strategy.
+description: How a Nebutra-Sailor project governs and calls AI model providers.
 ---
 
-# Unified AI Orchestration
+# AI provider governance
 
-Nebutra deeply integrates with the `Vercel AI SDK` to provide a normalized API layer across 60+ global AI providers.
+`create-sailor` asks nothing about AI providers at scaffold time — per
+[ADR 2026-09-24 Sailor convergence](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-24-sailor-convergence.md), every provider-choice
+flag was removed from the scaffold. Every project ships the same AI gateway
+(`backends/gateway`'s `/api/v1/ai` routes); which model provider is actually live is a runtime
+decision, governed after scaffolding with the `nebutra ai` CLI.
 
-## Available Provider Classifications
+## Managing providers
 
-Instead of manually wrapping models, `create-sailor` categorizes models across 6 categories for optimized terminal prompting:
-1. **Direct Labs**: `OpenAI`, `Anthropic`, `Google Vertex/Gemini`, `Mistral`, `Cohere`.
-2. **CN-Compatible (Domestic)**: `SiliconFlow`, `Volcengine (Doubao)`, `Alibaba Bailian`, `Zhipu`, `Baichuan`, `Minimax`, `Tencent Hunyuan`.
-3. **Gateway Proxies**: `OpenRouter`, `Portkey`.
-4. **Hardware Inference**: `Groq`, `Cerebras`.
-5. **Local Deployment**: `Ollama`, `LM Studio`.
+```bash
+nebutra ai provider list                  # supported and currently enabled providers
+nebutra ai provider enable openai anthropic
+nebutra ai provider disable openai
 
-## Registering Custom Providers
+nebutra ai gateway init                   # initialize the local AI gateway governance block
+nebutra ai gateway status
 
-To force a custom OpenAI proxy mapping:
-```typescript
-import { createOpenAI } from "@ai-sdk/openai-compatible"
+nebutra ai route set <name> ...           # routing policy (which provider serves which route)
+nebutra ai route list
 
-export const customLLM = createOpenAI({
-  name: "Internal Custom AI",
-  baseURL: process.env.CUSTOM_URL,
-  apiKey: process.env.CUSTOM_API_KEY
-});
+nebutra ai models                         # list configured models
+nebutra ai test "hello world"             # test the current provider through the gateway
 ```
+
+`nebutra status` reports the `ai` capability as `live`, `local-fallback`, or `missing-key`
+depending on whether a provider's env keys are set.
+
+## Adding a provider adapter
+
+The gateway's AI routes are not locked to a single vendor SDK. Add a new provider by wiring its
+client into the AI route handlers in `backends/gateway/src/routes/ai/` and enabling it with
+`nebutra ai provider enable <name>` — there is no scaffold-time provider list to edit.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="nebutra CLI" icon="terminal" href="/cli/nebutra-cli">
+    Full `nebutra ai` command reference.
+  </Card>
+  <Card title="Backend Language Policy" icon="code" href="/architecture/backend-language-policy">
+    Why AI orchestration work defaults to TypeScript in `backends/gateway`.
+  </Card>
+</CardGroup>

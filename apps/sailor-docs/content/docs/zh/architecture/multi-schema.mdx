@@ -1,0 +1,56 @@
+---
+title: "Prisma Postgres Schema"
+description: "为什么数据库用了两个 Postgres schema，而不是一个大大的 public schema"
+---
+
+根据 [ADR 2026-09-25 数据库收敛](https://github.com/nebutra/nebutra-sailor/blob/main/docs/architecture/2026-09-25-database-convergence.md)，
+`packages/platform/db/prisma/schema.prisma` 是数据库的**唯一来源**：所有表，以及每张表的访问
+规则（写成 `/// @rls` 注释）。脚手架阶段没有数据库结构上的选择——`create-sailor` 每次都写出
+同一份 schema。
+
+## 两个 Postgres schema，不是每个域一个
+
+```prisma packages/platform/db/prisma/schema.prisma
+datasource db {
+  provider   = "postgresql"
+  extensions = [vector, uuid_ossp(map: "uuid-ossp")]
+  schemas    = ["public", "better_auth"]
+}
+```
+
+- **`public`**——所有应用表，每个都带着自己的 `@@schema("public")` 和一条 `/// @rls` 访问规则
+  注释。
+- **`better_auth`**——Better Auth 自己的插件（`organization`、`passkey` 等）管理的表。之所以
+  单独拆出来，是因为设备授权流程自己的表（`public.auth_device_codes`）必须留在 `public`
+  里——那里一个基于 Kysely、不用 Prisma 的边缘运行时才能按字面表名寻址到它。见
+  ADR 2026-09-24 §8。
+
+这**不是**"每个微服务一个 schema"的模式，也没有 `stripe` 或 `ai` schema 可以根据脚手架选项
+裁剪掉——那种暗示这种模式存在的老 flag 已经不存在了。
+
+## 行级安全是生成出来的，不是手写的
+
+schema.prisma 里的每个模型都声明自己的访问规则：
+
+```prisma
+/// @rls self
+model Session {
+  // ... 只有所有者自己能看到这一行
+  @@schema("public")
+}
+```
+
+`prisma generate` 会跑一个自定义 generator（`prisma/generators/rls.mjs`），把每一条 `/// @rls`
+注释转换成 `generated/rls.sql` 里的策略。完整的注释词汇表和 `pnpm db:deploy` 应用流程见
+[行级安全](/zh/database/rls)。
+
+## 相关
+
+<CardGroup cols={2}>
+  <Card title="数据库概览" icon="database" href="/zh/database/overview">
+    Schema、生成式客户端和部署流程。
+  </Card>
+  <Card title="行级安全" icon="shield" href="/zh/database/rls">
+    `/// @rls` 注释词汇表和生成式策略模型。
+  </Card>
+</CardGroup>

@@ -1,108 +1,55 @@
 ---
 title: API Authentication
-description: How to authenticate requests to the Nebutra REST API using API keys or Bearer tokens.
+description: How requests to your gateway are authenticated — session cookies, service-to-service tokens, and AI provider keys.
 ---
 
-## Authentication methods
+There is no single `nbk_live_`-style API key that authenticates arbitrary gateway requests, and no
+`@nebutra/sdk` to verify one with. Three real, separate mechanisms exist, each for a different
+caller:
 
-The Nebutra API supports two authentication methods:
+| Caller | Mechanism |
+|--------|-----------|
+| Your own frontend (a signed-in user) | Better Auth session cookie |
+| Another internal service | `x-service-token` — a short-lived HS256 JWT signed with `SERVICE_SECRET` |
+| A per-organization AI credential | The `/api/v1/ai/api-keys` resource |
 
-| Method | Use case |
-|--------|----------|
-| **API Key** | Server-to-server, CLI tools, CI/CD pipelines |
-| **Bearer Token (JWT)** | User-facing requests from your frontend or mobile app |
+## Session cookies (end users)
 
-## API Key authentication
+Most gateway routes run `requireAuth` middleware, which reads the Better Auth session cookie set
+when a user signs in. There's no separate bearer token to attach from your own frontend — the
+browser sends the cookie automatically on same-origin requests (the default when the gateway is
+mounted at `/api/[[...route]]` inside `apps/web`).
 
-API keys are long-lived credentials tied to an organization (not a user). They are prefixed with `nbk_live_` in production and `nbk_test_` in test mode.
+## Service-to-service tokens (internal callers)
 
-Pass the API key in the `Authorization` header:
-
-```http
-GET /api/v1/projects HTTP/1.1
-Authorization: Bearer nbk_live_xxxxxxxxxxxxxxxxxxxx
-```
-
-### Create an API key
-
-In the dashboard: **Settings → API Keys → Create Key**
-
-Or via the API:
+For a caller that isn't a signed-in user — a background worker, another internal service — sign an
+HS256 JWT with the shared `SERVICE_SECRET` and send it as `x-service-token`:
 
 ```typescript
-const key = await nebutra.apiKeys.create({
-  orgId: "org_123",
-  name: "Production CI",
-  scopes: ["project:read"],
-  expiresAt: new Date("2027-01-01"),
-});
-// key.secret → shown ONCE, store securely
+import { signServiceToken, verifyServiceToken } from "@nebutra/auth";
+
+const token = signServiceToken({ service: "my-worker" });
 ```
 
-### API key scopes
+See [Node.js Quickstart](/quickstart/node) and [Python Quickstart](/quickstart/python) for calling
+this from outside the monorepo.
 
-API keys can be scoped to a subset of your organization's permissions. Always use the minimum scopes required (principle of least privilege).
+## AI provider keys (per-organization)
 
-See [Permissions](/concepts/permissions) for the full scope reference.
+`/api/v1/ai/api-keys` lets an authenticated org member issue, list, patch, and revoke credentials
+scoped to that org's AI usage — a resource under the `ai` capability, not a general-purpose REST
+API key. It still requires a valid session (`requireAuth` + `requireOrganization`) to manage.
 
-### Rotate an API key
-
-```typescript
-const newKey = await nebutra.apiKeys.rotate("key_123");
-// Old key is immediately invalidated
-```
-
-### Revoke an API key
-
-```typescript
-await nebutra.apiKeys.delete("key_123");
-```
-
-Revoked keys return `401 Unauthorized` immediately.
-
-## Bearer token (JWT) authentication
-
-JWTs are issued by Better Auth after a user signs in. They are short-lived (typically 1 hour) and automatically refreshed client-side.
-
-```http
-GET /api/v1/projects HTTP/1.1
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-
-### Token contents
-
-```json
-{
-  "sub": "user_2a8bXXXXXXXXX",
-  "org_id": "org_2a8bXXXXXXXXX",
-  "org_role": "org:member",
-  "scopes": ["project:read", "project:create"],
-  "plan": "pro",
-  "iat": 1743427200,
-  "exp": 1743430800
-}
-```
-
-### Verify a token in your backend
-
-```typescript
-import { verifyToken } from "@nebutra/sdk/server";
-
-const payload = await verifyToken(token, {
-  apiKey: process.env.NEBUTRA_API_KEY!,
-});
-
-// payload.userId, payload.orgId, payload.scopes
+```bash
+nebutra ai provider list      # which providers are enabled, from the CLI side
 ```
 
 ## Security best practices
 
 <Warning>
-  - Never expose API keys in client-side code, browser URLs, or version control
+  - Never commit `SERVICE_SECRET`, `BETTER_AUTH_SECRET`, or any provider key to source control
   - Use environment variables for all secrets
-  - Rotate API keys regularly (at least annually)
-  - Use scoped keys — never give a key `OWNER`-level access unless necessary
-  - Set expiration dates on API keys used in automated workflows
+  - Rotate `SERVICE_SECRET` if a deployment target is compromised — every caller using it needs the new value
 </Warning>
 
 ## Related
@@ -111,7 +58,7 @@ const payload = await verifyToken(token, {
   <Card title="Permissions" icon="lock" href="/concepts/permissions">
     Scope reference and RBAC model.
   </Card>
-  <Card title="Authentication Guide" icon="shield-check" href="/guides/authentication">
-    Full auth provider setup guide.
+  <Card title="Gateway API" icon="code" href="/api-reference/overview">
+    Where the gateway runs and how it documents its own routes.
   </Card>
 </CardGroup>

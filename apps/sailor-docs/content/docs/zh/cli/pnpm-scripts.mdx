@@ -18,26 +18,26 @@ pnpm --filter apps/web dev
 
 | 脚本 | 说明 |
 |------|------|
-| `pnpm dev` | 同时启动所有应用 |
-| `pnpm dev:dashboard` | Web（3000）+ Admin（3002）+ API 网关（3001） |
-| `pnpm dev:marketing` | 落地页（3002 端口）+ Sanity Studio（3333 端口） |
-| `pnpm dev:ai-saas` | 全部 6 个 AI SaaS 应用 |
-| `pnpm dev:overseas` | 国际化语言应用（4 个应用） |
-| `pnpm dev:growth` | 增长类应用（3 个应用） |
-| `pnpm dev:creative` | 创意套件应用（2 个应用） |
-| `pnpm dev:blog` | 博客应用（2 个应用） |
-| `pnpm dev:community` | 社区平台应用（3 个应用） |
-| `pnpm dev:solo` | 独立开发者套件（4 个应用） |
-| `pnpm dev:design` | 设计工具（2 个应用） |
+| `pnpm dev` | 零 key 预览环境（`scripts/dev/preview.ts`）：本地 PGlite 数据库，演示登录 `admin@example.com` / `preview-demo`，站点在 `:3000`，产品应用在 `:3001`（端口冲突时各自往后跳一千位） |
+| `pnpm dev:all` | `turbo run dev`，跑所有应用——"全部启动"版本 |
+| `pnpm dev:web` | 只启动产品应用（`@nebutra/web`） |
+| `pnpm dev:landing` | 只启动营销站 |
+| `pnpm dev:api` | 只独立启动网关 |
+| `pnpm dev:auth` | 只启动 Better Auth 登录中心 |
+| `pnpm dev:storybook` / `pnpm dev:docs` | 组件库 playground / 本文档站 |
+
+<Note>
+  `dev:dashboard`、`dev:ai-saas`、`dev:marketing` 这类预设过滤脚本存在于这个 monorepo 自己的
+  `package.json` 里（它们指向 `@nebutra/admin`、`@nebutra/blog` 这类应用），但这些应用是
+  Nebutra 自己的产品，不属于 `create-sailor` 默认脚手架——新项目里不要指望它们存在。
+</Note>
 
 ## 构建
 
 | 脚本 | 说明 |
 |------|------|
-| `pnpm build` | 所有应用的生产构建 |
-| `pnpm build:ai-saas` | 构建 AI SaaS 预设（6 个应用） |
-| `pnpm build:marketing` | 构建营销预设（3 个应用） |
-| `pnpm build:dashboard` | 构建仪表板预设（3 个应用） |
+| `pnpm build` | 所有应用的生产构建（`turbo run build`，先同步品牌 token） |
+| `pnpm build:strict` | 带完整 UI 治理 + 品牌 token 校验的构建 |
 
 ## 代码质量
 
@@ -62,9 +62,11 @@ pnpm --filter apps/web dev
 
 | 脚本 | 说明 |
 |------|------|
-| `pnpm db:generate` | 重新生成 Prisma 客户端 |
-| `pnpm db:migrate` | 运行待执行迁移 |
-| `pnpm db:push` | 直接推送 schema（不生成迁移） |
+| `pnpm db:deploy` | **部署命令。** 依次跑迁移、`platform.sql` + 生成式 RLS，最后校验。 |
+| `pnpm db:check` | 只读的漂移检查——`db:deploy` 的另一半 |
+| `pnpm db:generate` | 重新生成 Prisma 客户端（以及 `generated/rls.sql`） |
+| `pnpm db:migrate` | 创建并应用一个迁移（本地开发） |
+| `pnpm db:push` | 直接推送 schema（不生成迁移，仅限本地原型开发） |
 | `pnpm db:studio` | 启动 Prisma Studio GUI |
 
 ## 基础设施
