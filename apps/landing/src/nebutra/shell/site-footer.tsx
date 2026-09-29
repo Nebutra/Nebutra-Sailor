@@ -1,38 +1,46 @@
 import { brand } from "@nebutra/brand/metadata";
-import Link from "next/link";
+import { getLocale } from "next-intl/server";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { Link } from "@/i18n/navigation";
 import { REPO_URL } from "@/nebutra/data/repo";
+import { pick, siteLang } from "@/nebutra/i18n";
 import { ROUTES } from "@/nebutra/routes";
+import { LanguageSwitch } from "@/nebutra/shell/language-switch";
 import { ThemedLogo } from "@/nebutra/shell/themed-logo";
 
 /** Nebutra's own footer — the company, its products, its writing, the legal line. */
-export function SiteFooter() {
+export async function SiteFooter() {
+  const l = siteLang(await getLocale());
+  const t = (en: string, zh: string) => pick(l, { en, zh });
   const cols = [
     {
-      k: "Read",
+      k: t("Read", "阅读"),
       links: [
-        { label: "Journal", href: ROUTES.journal },
-        { label: "Changelog", href: "/changelog" },
+        { label: t("Journal", "日志"), href: ROUTES.journal },
+        { label: t("Changelog", "更新日志"), href: "/changelog" },
       ],
     },
     {
-      k: "Build",
+      k: t("Build", "构建"),
       links: [
         { label: "Sailor", href: ROUTES.sailor },
         { label: "GitHub", href: REPO_URL },
-        { label: "What we're building", href: ROUTES.building },
-        { label: "Status", href: `https://status.${brand.domains.landing}` },
+        { label: t("What we're building", "我们正在造的"), href: ROUTES.building },
+        { label: t("Status", "服务状态"), href: `https://status.${brand.domains.landing}` },
       ],
     },
     {
-      k: "Company",
+      k: t("Company", "公司"),
       links: [
-        { label: "About", href: ROUTES.company },
-        { label: "Write to the founder", href: `mailto:tseka@${brand.domains.landing}` },
-        { label: "Privacy", href: "/privacy" },
-        { label: "Terms", href: "/terms" },
+        { label: t("About", "关于我们"), href: ROUTES.company },
+        {
+          label: t("Write to the founder", "写信给创始人"),
+          href: `mailto:tseka@${brand.domains.landing}`,
+        },
+        { label: t("Privacy", "隐私"), href: "/privacy" },
+        { label: t("Terms", "条款"), href: "/terms" },
         // MiSans licence: the product states it uses MiSans — on /credits.
-        { label: "Credits", href: "/credits" },
+        { label: t("Credits", "致谢"), href: "/credits" },
       ],
     },
   ];
@@ -42,7 +50,10 @@ export function SiteFooter() {
         <div className="col-span-2 md:col-span-1">
           <ThemedLogo size={112} />
           <p className="mt-2 max-w-xs text-sm text-muted-foreground">
-            An AI-native company builder. No company should be hard to start.
+            {t(
+              "An AI-native company builder. No company should be hard to start.",
+              "AI 原生的公司建造者。让世界上没有难创的业。",
+            )}
           </p>
         </div>
         <nav
@@ -95,6 +106,7 @@ export function SiteFooter() {
               {process.env.NEXT_PUBLIC_ICP_NUMBER}
             </a>
           ) : null}
+          <LanguageSwitch />
           <ThemeSwitcher />
         </span>
       </div>

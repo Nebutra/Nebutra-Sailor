@@ -2,7 +2,7 @@ import { resolveBlogCover } from "@nebutra/blog";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { type BlogPostWithSource, getAllPosts } from "@/lib/blog";
 
 /**

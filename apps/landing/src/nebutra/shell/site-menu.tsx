@@ -3,9 +3,11 @@
 import { ArrowLeft, ArrowRight, ChevronRight, Cross, LogoGithub } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import Link from "next/link";
+import { useLocale } from "next-intl";
 import { type CSSProperties, useEffect, useState } from "react";
+import { Link } from "@/i18n/navigation";
 import { REPO_URL } from "@/nebutra/data/repo";
+import { pick, siteLang } from "@/nebutra/i18n";
 import { SECTION_PATH } from "@/nebutra/routes";
 import { pageAt, SECTIONS, SERVED_PAGES, type SectionId } from "@/site-map";
 
@@ -41,6 +43,8 @@ export function SiteMenu({
   onClose: () => void;
 }) {
   const here = pageAt(pathname)?.section;
+  const l = siteLang(useLocale());
+  const zh = l === "zh";
   const [panel, setPanel] = useState<SectionId | null>(null);
 
   // Each opening starts on the first level.
@@ -66,7 +70,7 @@ export function SiteMenu({
             variant="ghost"
             shape="square"
             iconSize="md"
-            aria-label="Close navigation"
+            aria-label={pick(l, { en: "Close navigation", zh: "关闭导航" })}
             onClick={onClose}
           >
             <Cross />
@@ -84,8 +88,10 @@ export function SiteMenu({
             );
             const label = (
               <span className="flex items-baseline gap-3">
-                <span>{s.title.en}</span>
-                <span className="font-sans text-sm text-muted-foreground">{s.title.zh}</span>
+                <span>{zh ? s.title.zh : s.title.en}</span>
+                {zh ? null : (
+                  <span className="font-sans text-sm text-muted-foreground">{s.title.zh}</span>
+                )}
               </span>
             );
             return (
@@ -140,7 +146,7 @@ export function SiteMenu({
           style={rise(NAV_SECTIONS.length)}
         >
           <a href={mailto} className="transition-colors hover:text-foreground">
-            Write to the founder
+            {pick(l, { en: "Write to the founder", zh: "写信给创始人" })}
           </a>
           <a
             href={REPO_URL}
@@ -149,7 +155,7 @@ export function SiteMenu({
             className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
           >
             <LogoGithub className="size-4" />
-            Sailor on GitHub
+            {pick(l, { en: "Sailor on GitHub", zh: "GitHub 上的 Sailor" })}
           </a>
         </div>
       </div>
@@ -163,7 +169,7 @@ export function SiteMenu({
           <div className="flex h-10 items-center sm:invisible">
             <Button type="button" variant="ghost" size="sm" onClick={() => setPanel(null)}>
               <ArrowLeft />
-              Back
+              {pick(l, { en: "Back", zh: "返回" })}
             </Button>
           </div>
 
@@ -173,10 +179,10 @@ export function SiteMenu({
               onClick={onNavigate}
               className="group inline-flex items-center gap-2 font-heading text-xl tracking-tight text-foreground"
             >
-              {shown.title.en}
+              {zh ? shown.title.zh : shown.title.en}
               <ArrowRight className="size-4 transition-transform duration-flow ease-brand group-hover:translate-x-1" />
             </Link>
-            <p className="max-w-xs text-sm text-muted-foreground">{shown.is}</p>
+            <p className="max-w-xs text-sm text-muted-foreground">{zh ? shown.isZh : shown.is}</p>
           </div>
 
           <ul className="mt-8 flex flex-col gap-1">
@@ -201,7 +207,7 @@ export function SiteMenu({
                         current ? "opacity-100" : "opacity-0",
                       )}
                     />
-                    {p.title.en}
+                    {zh ? p.title.zh : p.title.en}
                   </Link>
                 </li>
               );

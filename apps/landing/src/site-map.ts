@@ -25,6 +25,8 @@ export interface Section {
   title: { en: string; zh: string };
   /** One line: what this section is, in the owner's terms. */
   is: string;
+  /** `is` in Simplified Chinese. */
+  isZh: string;
   /** Where the section's index lives. */
   path: string;
   /** Shown in the site navigation. */
@@ -36,6 +38,7 @@ export const SECTIONS: readonly Section[] = [
     id: "home",
     title: { en: "Home", zh: "首页" },
     is: "The manifesto, led by the Journal.",
+    isZh: "宣言，由日志领衔。",
     path: "/",
     nav: false,
   },
@@ -43,6 +46,7 @@ export const SECTIONS: readonly Section[] = [
     id: "journal",
     title: { en: "Journal", zh: "日志" },
     is: "The founder's essays: what we believe about building now.",
+    isZh: "创始人的文章：我们对如今怎么造东西的看法。",
     path: "/blog",
     nav: true,
   },
@@ -50,6 +54,7 @@ export const SECTIONS: readonly Section[] = [
     id: "sailor",
     title: { en: "Sailor", zh: "开源平台" },
     is: "The open-source platform everything is built on, usable today.",
+    isZh: "一切都建在它上面的开源平台，今天就能用。",
     path: "/sailor",
     nav: true,
   },
@@ -57,6 +62,7 @@ export const SECTIONS: readonly Section[] = [
     id: "sleptons",
     title: { en: "Sleptons", zh: "生态" },
     is: "Where people, ideas, needs and capital find each other — including Ideas, the UGC of ideas and needs.",
+    isZh: "人、想法、需求与资本彼此找到的地方——包括创意与需求墙。",
     path: "/sleptons",
     nav: true,
   },
@@ -64,6 +70,7 @@ export const SECTIONS: readonly Section[] = [
     id: "building",
     title: { en: "Building", zh: "正在造的" },
     is: "The founder OS, and the products grown on the platform along the way.",
+    isZh: "创始人操作系统，以及一路在平台上长出来的产品。",
     path: "/building",
     nav: true,
   },
@@ -71,6 +78,7 @@ export const SECTIONS: readonly Section[] = [
     id: "company",
     title: { en: "Company", zh: "公司" },
     is: "Who we are, how we work, how to reach us, and the legal pages.",
+    isZh: "我们是谁、怎么工作、怎么联系我们，以及法律页面。",
     path: "/about",
     nav: true,
   },
