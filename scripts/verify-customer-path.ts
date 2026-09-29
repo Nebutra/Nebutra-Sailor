@@ -898,7 +898,10 @@ async function main(): Promise<void> {
       logFile: path.join(logs, "template-build.log"),
     });
 
-    await runStep("create-sailor build", "pnpm", ["--filter", "create-sailor", "build"], {
+    // `create-sailor...` builds the workspace packages it bundles first (brand,
+    // tokens, preset): on a clean CI checkout they have no dist yet, and tsup
+    // cannot resolve their subpath exports without it.
+    await runStep("create-sailor build", "pnpm", ["--filter", "create-sailor...", "build"], {
       cwd: ROOT,
       logFile: path.join(logs, "create-sailor-build.log"),
     });
