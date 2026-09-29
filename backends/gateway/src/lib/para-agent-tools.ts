@@ -10,21 +10,22 @@
  */
 
 import { type RuleDecision, RuntimeToolRegistry } from "@nebutra/agent-runtime";
-import { getParaWorkspaceRepository } from "@nebutra/repositories";
+import { getParaAssetRepository, getParaWorkspaceRepository } from "@nebutra/repositories";
 import { z } from "zod";
 import type { AuthenticatedAiOriginHeaderInput } from "../routes/ai/origin-headers.js";
+import { isParaAssetUrl } from "./para-assets.js";
+import { creditsPerUnit } from "./para-credits.js";
 import { submitParaGenerateJob } from "./para-origin.js";
 
 /** Tools that spend credits. The autonomy switch only ever gates these. */
 export const SPENDING_TOOLS = new Set(["generate_image"]);
 
-const IMAGE_COST = 1;
-const VIDEO_COST = 7;
-
+/** What the approval card quotes is what `submitParaGenerateJob` charges — one price table. */
 export function estimateToolCost(toolName: string, args: unknown): number {
   if (!SPENDING_TOOLS.has(toolName)) return 0;
   const a = (args ?? {}) as { count?: number; mode?: string };
-  const unit = a.mode === "video" ? VIDEO_COST : IMAGE_COST;
+  // Video's unit is one default clip of the default model (para-credits.ts `creditsPerUnit`).
+  const unit = creditsPerUnit(a.mode === "video" ? "video" : "image");
   return unit * Math.max(1, Math.min(4, a.count ?? 1));
 }
 
@@ -58,6 +59,8 @@ interface DocumentNode {
   width: number;
   height: number;
   text?: string;
+  /** The node's current output, once it has one (apps/para MediaNode.assetId). */
+  assetId?: string;
   generator?: { prompt?: string; model?: string };
 }
 
@@ -112,6 +115,22 @@ async function mutateDocument(
     }
   }
   throw new Error("document changed while the agent was writing");
+}
+
+/**
+ * The URL of a node's current output, when it has one on PARA's own asset hosts — what the origin
+ * needs to edit from it. A node with no output yet (or an asset elsewhere) yields undefined, and
+ * the job runs from the prompt alone.
+ */
+async function nodeAssetUrl(
+  tenantId: string,
+  doc: WorkspaceDocumentShape,
+  nodeId: string,
+): Promise<string | undefined> {
+  const assetId = doc.nodes[nodeId]?.assetId;
+  if (!assetId) return undefined;
+  const asset = await getParaAssetRepository(tenantId).find(assetId);
+  return asset?.url && isParaAssetUrl(asset.url) ? asset.url : undefined;
 }
 
 /** Place a derived child to the right of its source, or in open space when there is none. */
@@ -195,7 +214,8 @@ export function createParaToolRegistry(ctx: ParaToolContext): RuntimeToolRegistr
       const sourceId = sourceNodeId || ctx.contextNodeIds[0];
 
       const nodeId = newNodeId();
-      await mutateDocument(ctx.tenantId, ctx.workspaceId, (doc) => {
+      let sourceUrl: string | undefined;
+      const saved = await mutateDocument(ctx.tenantId, ctx.workspaceId, (doc) => {
         const at = placeChild(doc, sourceId);
         doc.nodes[nodeId] = {
           id: nodeId,
@@ -213,6 +233,8 @@ export function createParaToolRegistry(ctx: ParaToolContext): RuntimeToolRegistr
         }
       });
 
+      if (sourceId) sourceUrl = await nodeAssetUrl(ctx.tenantId, saved, sourceId);
+
       const envelope = await submitParaGenerateJob(ctx.origin, {
         workspaceId: ctx.workspaceId,
         nodeId,
@@ -221,7 +243,13 @@ export function createParaToolRegistry(ctx: ParaToolContext): RuntimeToolRegistr
           prompt,
           params: { aspect },
           count,
-          ...(sourceId ? { references: [{ kind: "node" as const, id: sourceId }] } : {}),
+          ...(sourceId
+            ? {
+                references: [
+                  { kind: "node" as const, id: sourceId, ...(sourceUrl ? { url: sourceUrl } : {}) },
+                ],
+              }
+            : {}),
         },
       });
       return { nodeId, jobId: String(envelope.id ?? ""), sourceNodeId: sourceId ?? null };

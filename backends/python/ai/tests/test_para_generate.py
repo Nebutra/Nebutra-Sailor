@@ -149,15 +149,15 @@ async def test_para_generate_image_persists_output_and_succeeds(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_para_generate_unsupported_mode_fails_closed(monkeypatch):
+async def test_para_generate_unknown_mode_fails_closed(monkeypatch):
     monkeypatch.setenv("TASK_STORE_PROVIDER", "memory")
     task = await _create(
         {
             "workspaceId": "ws1",
             "nodeId": "n1",
-            "generator": {"mode": "video", "prompt": "x"},
+            "generator": {"mode": "hologram", "prompt": "x"},
         },
-        key="para-video",
+        key="para-hologram",
     )
     result = await _process_task(task.id, tenant_id="tenant_para")
     stored = await resolve_task_store().get(task.id, "tenant_para")

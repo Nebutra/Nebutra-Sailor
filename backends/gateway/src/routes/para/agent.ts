@@ -19,6 +19,7 @@ import {
   createPrismaRolloutPersistence,
   type PrismaRolloutDelegate,
 } from "@nebutra/agent-runtime/adapters/prisma-rollout";
+import { BillingError } from "@nebutra/billing";
 import { getTenantDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
 import { getQueue } from "@nebutra/queue";
@@ -427,6 +428,12 @@ paraAgentRoutes.openapi(
         description: "Already decided",
         content: { "application/json": { schema: ErrorSchema } },
       },
+      402: {
+        description: "The para wallet cannot pay for the approved generation",
+        content: {
+          "application/json": { schema: ErrorSchema.extend({ code: z.string() }) },
+        },
+      },
       502: {
         description: "Origin rejected",
         content: { "application/json": { schema: ErrorSchema } },
@@ -487,6 +494,13 @@ paraAgentRoutes.openapi(
       if (err instanceof OriginRejectedError) {
         await repo.finishRun(run.id, "FAILED", { code: "origin_rejected", message: err.message });
         return c.json(errorBody(err), 502);
+      }
+      if (err instanceof BillingError && err.code === "INSUFFICIENT_CREDITS") {
+        await repo.finishRun(run.id, "FAILED", {
+          code: "insufficient_credits",
+          message: "Not enough credits",
+        });
+        return c.json({ error: "Not enough credits", code: err.code }, 402);
       }
       await repo.finishRun(run.id, "FAILED", {
         code: "approved_call_failed",

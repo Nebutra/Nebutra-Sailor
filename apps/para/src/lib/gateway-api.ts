@@ -70,6 +70,8 @@ export const gatewayApi: typeof mockApi & {
     call<Project>(`/projects/${id}`).catch((e) =>
       e instanceof GatewayError && e.status === 404 ? null : Promise.reject(e),
     ),
+  createProject: (name = "Untitled project") =>
+    call<Project>("/projects", { method: "POST", body: JSON.stringify({ name }) }),
   listWorkspaces: async (projectId) =>
     (await call<{ items: WsRow[] }>(`/projects/${projectId}/workspaces`)).items.map(toWorkspace),
   getWorkspace: (_projectId, workspaceId) =>

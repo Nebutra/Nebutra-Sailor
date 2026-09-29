@@ -73,3 +73,10 @@ export function Chip({ className, tone, size, pressed, type, ...props }: ChipPro
     />
   );
 }
+
+/**
+ * Chip renders a native <button>. Base UI triggers (Popover, Tooltip, Dropdown) given a Chip through
+ * `asChild` read this mark to keep native button semantics instead of warning and re-adding them —
+ * the same mark @nebutra/ui's own Button carries (utils/native-button).
+ */
+(Chip as unknown as Record<symbol, boolean>)[Symbol.for("nebutra.ui.rendersNativeButton")] = true;

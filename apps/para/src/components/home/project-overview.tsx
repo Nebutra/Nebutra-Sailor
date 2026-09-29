@@ -18,12 +18,10 @@ export function ProjectOverview({ projectId }: { projectId: string }) {
   // A failed request is not a missing project. Saying "does not exist" on a network error sends
   // the user to look for something that is actually still there.
   if (isError) {
-    return <ErrorState title="This project could not be loaded" onRetry={() => void refetch()} />;
+    return <ErrorState title="这个项目没有加载出来" onRetry={() => void refetch()} />;
   }
   if (!isLoading && !project) {
-    return (
-      <EmptyState title="This project does not exist" description="It may have been deleted." />
-    );
+    return <EmptyState title="找不到这个项目" description="它可能已被删除。" />;
   }
 
   return (
@@ -31,7 +29,7 @@ export function ProjectOverview({ projectId }: { projectId: string }) {
       <div className="mb-10 flex items-end justify-between">
         <div>
           <Link href="/projects" className="text-muted-foreground text-label hover:text-foreground">
-            Projects
+            项目
           </Link>
           <h1 className="mt-1 font-medium text-display text-foreground tracking-tight">
             {project?.name ?? " "}
@@ -43,10 +41,10 @@ export function ProjectOverview({ projectId }: { projectId: string }) {
           prefix={<Plus className="size-4" />}
           onClick={() => router.push(`/p/${projectId}/w/new`)}
         >
-          New workspace
+          新建画布
         </Button>
       </div>
-      <h2 className="mb-4 text-muted-foreground text-label">Recent workspaces</h2>
+      <h2 className="mb-4 text-muted-foreground text-label">最近画布</h2>
       <AsyncSurface
         query={{
           isLoading: workspaces.isLoading,
@@ -55,9 +53,9 @@ export function ProjectOverview({ projectId }: { projectId: string }) {
         }}
         isEmpty={!list?.length}
         skeleton={<WorkspaceGridSkeleton />}
-        emptyTitle="No workspaces yet"
-        emptyDescription="A workspace is where the canvas lives."
-        errorTitle="Workspaces could not be loaded"
+        emptyTitle="这个项目里还没有画布"
+        emptyDescription="新建一个画布，就可以开始创作。"
+        errorTitle="画布列表没有加载出来"
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {list?.map((w) => (

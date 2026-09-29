@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { reconcileModel } from "@/domain/models";
+import { NODE_SIZE, wouldCycle } from "@/domain/nodes";
 import type {
   Edge,
   GeneratorMode,
@@ -31,12 +32,48 @@ interface DeriveInput {
   size?: { width: number; height: number };
 }
 
+/**
+ * Where the document stands against the server — LibTV's 待同步 / 同步中 / 已同步 pill.
+ * `pending` = changed locally, not sent yet; `saving` = a PUT is in flight; `error` = the last PUT failed.
+ */
+export type SyncState = "saved" | "pending" | "saving" | "error";
+
+export const SYNC_LABEL: Record<SyncState, string> = {
+  saved: "已同步",
+  pending: "待同步",
+  saving: "同步中",
+  error: "同步失败",
+};
+
+/**
+ * What the autosave resolved to. A save only counts as 已同步 when nothing changed while it was in
+ * flight; otherwise the document is still ahead of the server and the pill has to say so.
+ */
+export function syncAfterSave(ok: boolean, dirtyAtStart: number, dirtyNow: number): SyncState {
+  if (!ok) return "error";
+  return dirtyNow === dirtyAtStart ? "saved" : "pending";
+}
+
+interface CreateInput {
+  mode: GeneratorMode;
+  at: { x: number; y: number };
+  /** Wire the new node downstream of this one. */
+  sourceId?: string;
+  title?: string;
+}
+
 interface EditorState {
   documentId: string | null;
+  /** The project the loaded workspace belongs to, so generated assets can point back at it. */
+  projectId: string | null;
   document: WorkspaceDocument | null;
   selection: string[];
   dirty: number;
-  load: (documentId: string, document: WorkspaceDocument) => void;
+  sync: SyncState;
+  /** Autosave began; returns the change counter it is saving. */
+  beginSave: () => number;
+  endSave: (ok: boolean, dirtyAtStart: number) => void;
+  load: (documentId: string, document: WorkspaceDocument, projectId?: string) => void;
   setViewport: (viewport: Partial<Viewport>) => void;
   panBy: (dx: number, dy: number) => void;
   zoomAt: (factor: number, cx: number, cy: number) => void;
@@ -53,6 +90,15 @@ interface EditorState {
   setNodePosition: (id: string, x: number, y: number) => void;
   addNode: (node: WorkspaceNode) => void;
   addEdge: (edge: Edge) => void;
+  /** Several nodes and edges as one change (templates). */
+  addGraph: (nodes: WorkspaceNode[], edges: Edge[]) => void;
+  /** An empty generator node of `mode`, optionally wired from `sourceId`. Selects it; returns its id. */
+  createNode: (input: CreateInput) => string | null;
+  /** A hand-drawn wire. Refuses self-loops, duplicates and cycles. */
+  connect: (source: string, target: string) => boolean;
+  deleteEdges: (ids: string[]) => void;
+  setNodeSize: (id: string, width: number, height: number) => void;
+  renameNode: (id: string, title: string) => void;
   updateGenerator: (id: string, patch: Partial<GeneratorState>) => void;
   setNodeStatus: (id: string, status: NodeStatus, extra?: Partial<WorkspaceNode>) => void;
   completeNode: (id: string, assetId: string, jobId: string) => void;
@@ -69,18 +115,13 @@ let seq = 0;
 export const nextId = (prefix = "n") =>
   `${prefix}-${Date.now().toString(36)}-${(seq++).toString(36)}`;
 
-const SIZE: Record<GeneratorMode, { width: number; height: number }> = {
-  image: { width: 288, height: 162 },
-  video: { width: 288, height: 162 },
-  text: { width: 260, height: 72 },
-  audio: { width: 240, height: 64 },
-};
+const SIZE = NODE_SIZE;
 
 export const useEditorStore = create<EditorState>((set, get) => {
   const patchDoc = (fn: (doc: WorkspaceDocument) => WorkspaceDocument) => {
     const doc = get().document;
     if (!doc) return;
-    set({ document: fn(doc), dirty: get().dirty + 1 });
+    set({ document: fn(doc), dirty: get().dirty + 1, sync: "pending" });
   };
   const patchNode = (id: string, fn: (n: WorkspaceNode) => WorkspaceNode) =>
     patchDoc((doc) => {
@@ -90,11 +131,27 @@ export const useEditorStore = create<EditorState>((set, get) => {
 
   return {
     documentId: null,
+    projectId: null,
     document: null,
     selection: [],
     dirty: 0,
+    sync: "saved",
 
-    load: (documentId, document) => set({ documentId, document, selection: [], dirty: 0 }),
+    beginSave: () => {
+      set({ sync: "saving" });
+      return get().dirty;
+    },
+    endSave: (ok, dirtyAtStart) => set({ sync: syncAfterSave(ok, dirtyAtStart, get().dirty) }),
+
+    load: (documentId, document, projectId) =>
+      set({
+        documentId,
+        document,
+        projectId: projectId ?? null,
+        selection: [],
+        dirty: 0,
+        sync: "saved",
+      }),
 
     setViewport: (viewport) => {
       const doc = get().document;
@@ -142,6 +199,85 @@ export const useEditorStore = create<EditorState>((set, get) => {
 
     addNode: (node) => patchDoc((doc) => ({ ...doc, nodes: { ...doc.nodes, [node.id]: node } })),
     addEdge: (edge) => patchDoc((doc) => ({ ...doc, edges: { ...doc.edges, [edge.id]: edge } })),
+
+    addGraph: (nodes, edges) =>
+      patchDoc((doc) => ({
+        ...doc,
+        nodes: { ...doc.nodes, ...Object.fromEntries(nodes.map((n) => [n.id, n])) },
+        edges: { ...doc.edges, ...Object.fromEntries(edges.map((e) => [e.id, e])) },
+      })),
+
+    createNode: ({ mode, at, sourceId, title }) => {
+      const doc = get().document;
+      if (!doc) return null;
+      const id = nextId();
+      const size = SIZE[mode];
+      const source = sourceId ? doc.nodes[sourceId] : undefined;
+      const base = {
+        id,
+        x: Math.round(at.x),
+        y: Math.round(at.y),
+        ...size,
+        status: "empty" as const,
+        createdBy: "user" as const,
+        ...(title ? { title } : {}),
+        ...(source ? { sourceNodeIds: [source.id] } : {}),
+        generator: {
+          mode,
+          model: "Auto",
+          count: 1 as const,
+          ...(mode === "video" ? { params: { duration: 5 } } : {}),
+          ...(source ? { references: [{ kind: "node" as const, id: source.id }] } : {}),
+        },
+      };
+      const node: WorkspaceNode =
+        mode === "text" ? { ...base, type: "text", text: "" } : { ...base, type: mode };
+      patchDoc((d) => {
+        const edgeId = nextId("e");
+        const edges = source
+          ? {
+              ...d.edges,
+              [edgeId]: { id: edgeId, source: source.id, target: id, kind: "reference" as const },
+            }
+          : d.edges;
+        return { ...d, nodes: { ...d.nodes, [id]: node }, edges };
+      });
+      set({ selection: [id] });
+      return id;
+    },
+
+    connect: (source, target) => {
+      const doc = get().document;
+      if (!doc || !doc.nodes[source] || !doc.nodes[target]) return false;
+      const exists = Object.values(doc.edges).some(
+        (e) => e.source === source && e.target === target,
+      );
+      if (exists || wouldCycle(doc, source, target)) return false;
+      const id = nextId("e");
+      patchDoc((d) => ({
+        ...d,
+        edges: { ...d.edges, [id]: { id, source, target, kind: "reference" } },
+      }));
+      return true;
+    },
+
+    deleteEdges: (ids) =>
+      patchDoc((doc) => ({
+        ...doc,
+        edges: Object.fromEntries(Object.entries(doc.edges).filter(([id]) => !ids.includes(id))),
+      })),
+
+    setNodeSize: (id, width, height) =>
+      patchNode(id, (n) =>
+        n.width === width && n.height === height ? n : { ...n, width, height },
+      ),
+
+    renameNode: (id, title) =>
+      patchNode(id, (n) => {
+        const { title: _old, ...rest } = n;
+        const next = title.trim();
+        return (next ? { ...rest, title: next } : rest) as WorkspaceNode;
+      }),
 
     updateGenerator: (id, patch) =>
       patchNode(id, (n) => {
@@ -212,20 +348,15 @@ export const useEditorStore = create<EditorState>((set, get) => {
           ...(prompt ? { prompt } : {}),
           ...(source ? { references: [{ kind: "node" as const, id: source.id }] } : {}),
         },
-        cost: { estimated: mode === "video" ? 7 : 1, currency: "credits" as const },
       };
       const node: WorkspaceNode =
         mode === "text" ? { ...base, type: "text", text: prompt ?? "" } : { ...base, type: mode };
       patchDoc((d) => {
+        const edgeId = nextId("e");
         const edges = source
           ? {
               ...d.edges,
-              [nextId("e")]: {
-                id: nextId("e"),
-                source: source.id,
-                target: id,
-                kind: "derived" as const,
-              },
+              [edgeId]: { id: edgeId, source: source.id, target: id, kind: "derived" as const },
             }
           : d.edges;
         return { ...d, nodes: { ...d.nodes, [id]: node }, edges };
@@ -263,6 +394,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
         document: { ...doc, nodes, edges },
         selection: get().selection.filter((s) => !ids.includes(s)),
         dirty: get().dirty + 1,
+        sync: "pending",
       });
     },
   };

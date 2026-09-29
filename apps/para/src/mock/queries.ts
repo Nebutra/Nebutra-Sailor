@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Asset } from "@/domain/types";
 import { api } from "@/lib/api";
-import { assets } from "./data";
+import { getQueryClient } from "@/lib/query-client";
 
 /** Query hooks over the selected `api` (mock or gateway). Components keep importing `api` from here. */
 export { api };
@@ -32,6 +32,21 @@ export const useDocument = (documentId: string | undefined) =>
 export const useAssets = () => useQuery({ queryKey: ["assets"], queryFn: api.listAssets });
 export const useSubjects = () => useQuery({ queryKey: ["subjects"], queryFn: api.listSubjects });
 
-export function findAsset(id: string): Asset | undefined {
-  return assets.find((a) => a.id === id);
+/**
+ * An asset by id, from the same query the gallery reads. Generated assets are written into that
+ * cache the moment they are recorded (lib/job-stream), so a node that just finished renders
+ * without waiting for a refetch. This used to look ids up in the mock fixtures, which in gateway
+ * mode meant a generated image was recorded, attached to its node, and never shown.
+ */
+export function useAsset(id: string | undefined): Asset | undefined {
+  const { data } = useAssets();
+  return id ? data?.find((a) => a.id === id) : undefined;
+}
+
+/** Put a just-recorded asset at the front of the cached list. */
+export function rememberAsset(asset: Asset): void {
+  getQueryClient().setQueryData<Asset[]>(["assets"], (old) => [
+    asset,
+    ...(old ?? []).filter((a) => a.id !== asset.id),
+  ]);
 }

@@ -1,7 +1,23 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const workspaceRepo = { findWorkspace: vi.fn(), putDocument: vi.fn() };
-vi.mock("@nebutra/repositories", () => ({ getParaWorkspaceRepository: () => workspaceRepo }));
+const assetRepo = { find: vi.fn() };
+vi.mock("@nebutra/billing", () => ({
+  deductCredits: vi.fn(),
+  refundCredits: vi.fn(),
+  BillingError: class BillingError extends Error {
+    constructor(
+      message: string,
+      public code: string,
+    ) {
+      super(message);
+    }
+  },
+}));
+vi.mock("@nebutra/repositories", () => ({
+  getParaWorkspaceRepository: () => workspaceRepo,
+  getParaAssetRepository: () => assetRepo,
+}));
 
 const origin = { tenantId: "org_1", userId: "user_1", role: "org:admin", plan: "PRO" };
 
@@ -34,6 +50,7 @@ describe("para agent tools", () => {
     vi.stubEnv("SERVICE_SECRET", "service-secret");
     workspaceRepo.findWorkspace.mockReset();
     workspaceRepo.putDocument.mockReset();
+    assetRepo.find.mockReset();
     workspaceRepo.putDocument.mockImplementation(async (_id, _v, d) => ({
       workspace: { document: d },
     }));
@@ -62,9 +79,11 @@ describe("para agent tools", () => {
     const { estimateToolCost } = await load();
     expect(estimateToolCost("canvas_read", {})).toBe(0);
     expect(estimateToolCost("create_text_node", { count: 4 })).toBe(0);
-    expect(estimateToolCost("generate_image", { count: 4 })).toBe(4);
-    expect(estimateToolCost("generate_image", { mode: "video", count: 2 })).toBe(14);
-    expect(estimateToolCost("generate_image", { count: 99 })).toBe(4);
+    // Same table submitParaGenerateJob charges from (para-credits.ts): image 10, video one
+    // default clip of the default model (Wan 2.7, 720P, 5 s × 13).
+    expect(estimateToolCost("generate_image", { count: 4 })).toBe(40);
+    expect(estimateToolCost("generate_image", { mode: "video", count: 2 })).toBe(130);
+    expect(estimateToolCost("generate_image", { count: 99 })).toBe(40);
   });
 
   it("generate_image derives a queued child with a derived edge and never touches the source", async () => {
@@ -116,6 +135,76 @@ describe("para agent tools", () => {
     expect(body.type).toBe("para.generate");
     expect(body.payload.nodeId).toBe(result.nodeId);
     expect(body.payload.generator.references[0]?.id).toBe("n1");
+  });
+
+  it("generate_image sends the source node's asset URL when it is on PARA's asset host", async () => {
+    vi.stubEnv("UPLOAD_PUBLIC_BASE_URL", "https://cdn.para.test");
+    const { createParaToolRegistry } = await load();
+    workspaceRepo.findWorkspace.mockResolvedValue({
+      id: "w1",
+      documentVersion: 3,
+      document: doc({ n1: { ...source, assetId: "a1" } }),
+    });
+    assetRepo.find.mockResolvedValue({ id: "a1", url: "https://cdn.para.test/para/x.png" });
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(JSON.stringify({ id: "task_1" }), {
+        status: 202,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+    const tools = createParaToolRegistry({
+      tenantId: "org_1",
+      workspaceId: "w1",
+      origin,
+      contextNodeIds: ["n1"],
+    });
+    await tools.dispatch(
+      "generate_image",
+      { prompt: "night" },
+      { tenantId: "org_1", threadId: "t" },
+    );
+
+    expect(assetRepo.find).toHaveBeenCalledWith("a1");
+    const body = JSON.parse(String((fetchSpy.mock.calls[0]?.[1] as RequestInit).body)) as {
+      payload: { generator: { references: { id: string; url?: string }[] } };
+    };
+    expect(body.payload.generator.references[0]).toEqual({
+      kind: "node",
+      id: "n1",
+      url: "https://cdn.para.test/para/x.png",
+    });
+  });
+
+  it("generate_image leaves the URL off when the asset is not on PARA's host", async () => {
+    vi.stubEnv("UPLOAD_PUBLIC_BASE_URL", "https://cdn.para.test");
+    const { createParaToolRegistry } = await load();
+    workspaceRepo.findWorkspace.mockResolvedValue({
+      id: "w1",
+      documentVersion: 3,
+      document: doc({ n1: { ...source, assetId: "a1" } }),
+    });
+    assetRepo.find.mockResolvedValue({ id: "a1", url: "https://elsewhere.example/x.png" });
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(JSON.stringify({ id: "task_1" }), {
+        status: 202,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+    const tools = createParaToolRegistry({
+      tenantId: "org_1",
+      workspaceId: "w1",
+      origin,
+      contextNodeIds: ["n1"],
+    });
+    await tools.dispatch(
+      "generate_image",
+      { prompt: "night" },
+      { tenantId: "org_1", threadId: "t" },
+    );
+    const body = JSON.parse(String((fetchSpy.mock.calls[0]?.[1] as RequestInit).body)) as {
+      payload: { generator: { references: { url?: string }[] } };
+    };
+    expect(body.payload.generator.references[0]?.url).toBeUndefined();
   });
 
   it("a document conflict is retried once against the fresh version", async () => {
