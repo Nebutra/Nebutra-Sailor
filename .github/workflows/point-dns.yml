@@ -49,6 +49,10 @@ on:
           - fly
           - apex
           - authoritative
+      origin_ip:
+        description: "leak only — IPv4 for ns1.leak glue (default: vars.ECS_HOST). forge's dedicated IPv4 since dns-leak moved into nebutra-forge."
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -117,7 +121,7 @@ jobs:
           # leak only — point-leak-zone-dns.sh reads these two; every other script
           # assigns its own ZONE_NAME / ORIGIN_IP and ignores them.
           ZONE_NAME: nebutra.com
-          ORIGIN_IP: ${{ vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
+          ORIGIN_IP: ${{ inputs.origin_ip || vars.ECS_HOST || vars.VM_HOST || '106.15.4.31' }}
           SCRIPT: ${{ steps.resolve.outputs.script }}
           # point-fly-dns.sh and point-landing-dns-fly.sh read DNS_HOST /
           # FLY_APP; every per-host script hardcodes its own and ignores them.
