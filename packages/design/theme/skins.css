@@ -656,81 +656,81 @@ html.dark[data-brand="linear"] {
 
 /**
  * Brand carrier skin: Nebutra Site (nebutra-site) v0.3.0
- * darkDefault=true dualMode=false button=solid
+ * darkDefault=true dualMode=true button=solid
  * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
 
 html[data-brand="nebutra-site"] {
   /* ── Color roles (carrier) ── */
-  --role-canvas: 210 11.1% 3.5%;
-  --role-canvas-fg: 180 6.7% 97.1%;
-  --role-surface: 210 6.2% 6.3%;
-  --role-surface-fg: 180 6.7% 97.1%;
-  --role-action: 180 6.7% 97.1%;
-  --role-action-fg: 210 11.1% 3.5%;
-  --role-quiet: 210 4.3% 9%;
-  --role-quiet-fg: 218 20.5% 84.7%;
-  --role-muted: 210 4.3% 9%;
-  --role-muted-fg: 219 6.4% 56.9%;
-  --role-border: 210 3.4% 11.4%;
-  --role-input: 210 3.4% 11.4%;
-  --role-ring: 223 87.3% 69%;
+  --role-canvas: 0 0% 100%;
+  --role-canvas-fg: 210 11% 4%;
+  --role-surface: 0 0% 98%;
+  --role-surface-fg: 210 11% 4%;
+  --role-action: 225 7.7% 10.2%;
+  --role-action-fg: 0 0% 100%;
+  --role-quiet: 220 14% 96%;
+  --role-quiet-fg: 210 11% 4%;
+  --role-muted: 220 14% 96%;
+  --role-muted-fg: 218 5% 41%;
+  --role-border: 220 13% 91%;
+  --role-input: 220 13% 91%;
+  --role-ring: 222.8 85% 55.7%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
-  --background: 210 11.1% 3.5%;
-  --foreground: 180 6.7% 97.1%;
-  --card: 210 6.2% 6.3%;
-  --card-foreground: 180 6.7% 97.1%;
-  --popover: 210 6.2% 6.3%;
-  --popover-foreground: 180 6.7% 97.1%;
-  --primary: 180 6.7% 97.1%;
-  --primary-foreground: 210 11.1% 3.5%;
-  --secondary: 210 4.3% 9%;
-  --secondary-foreground: 218 20.5% 84.7%;
-  --muted: 210 4.3% 9%;
-  --muted-foreground: 219 6.4% 56.9%;
-  --accent: 210 4.3% 9%;
-  --accent-foreground: 218 20.5% 84.7%;
+  --background: 0 0% 100%;
+  --foreground: 210 11% 4%;
+  --card: 0 0% 98%;
+  --card-foreground: 210 11% 4%;
+  --popover: 0 0% 98%;
+  --popover-foreground: 210 11% 4%;
+  --primary: 225 7.7% 10.2%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 210 11% 4%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 218 5% 41%;
+  --accent: 220 14% 96%;
+  --accent-foreground: 210 11% 4%;
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
-  --border: 210 3.4% 11.4%;
-  --input: 210 3.4% 11.4%;
-  --ring: 223 87.3% 69%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 222.8 85% 55.7%;
   --success: 134 62% 40%;
   --success-foreground: 0 0% 100%;
-  --info: 223 87.3% 69%;
-  --info-foreground: 210 11.1% 3.5%;
-  --sidebar: 210 6.2% 6.3%;
-  --sidebar-foreground: 180 6.7% 97.1%;
-  --sidebar-primary: 180 6.7% 97.1%;
-  --sidebar-primary-foreground: 210 11.1% 3.5%;
-  --sidebar-accent: 210 4.3% 9%;
-  --sidebar-accent-foreground: 218 20.5% 84.7%;
-  --sidebar-border: 210 3.4% 11.4%;
-  --sidebar-ring: 223 87.3% 69%;
-  --brand-primary: hsl(180 6.7% 97.1%);
-  --brand-accent: hsl(180 6.7% 97.1%);
-  --brand-accent-foreground: hsl(210 11.1% 3.5%);
-  --brand-tertiary: hsl(180 6.7% 97.1%);
+  --info: 222.8 85% 55.7%;
+  --info-foreground: 0 0% 100%;
+  --sidebar: 0 0% 98%;
+  --sidebar-foreground: 210 11% 4%;
+  --sidebar-primary: 225 7.7% 10.2%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 220 14% 96%;
+  --sidebar-accent-foreground: 210 11% 4%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 222.8 85% 55.7%;
+  --brand-primary: hsl(225 7.7% 10.2%);
+  --brand-accent: hsl(225 7.7% 10.2%);
+  --brand-accent-foreground: hsl(0 0% 100%);
+  --brand-tertiary: hsl(225 7.7% 10.2%);
   --brand-gradient: hsl(var(--primary));
   --brand-gradient-reverse: hsl(var(--primary));
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
   /* ── Neutral ramp, anchored on this language's roles ── */
-  --neutral-1: hsl(210 11.1% 3.5%);
-  --neutral-2: hsl(210 6.2% 6.3%);
-  --neutral-3: color-mix(in oklab, hsl(210 3.4% 11.4%) 20%, hsl(210 6.2% 6.3%));
-  --neutral-4: color-mix(in oklab, hsl(210 3.4% 11.4%) 40%, hsl(210 6.2% 6.3%));
-  --neutral-5: color-mix(in oklab, hsl(210 3.4% 11.4%) 60%, hsl(210 6.2% 6.3%));
-  --neutral-6: color-mix(in oklab, hsl(210 3.4% 11.4%) 80%, hsl(210 6.2% 6.3%));
-  --neutral-7: hsl(210 3.4% 11.4%);
-  --neutral-8: color-mix(in oklab, hsl(219 6.4% 56.9%) 25%, hsl(210 3.4% 11.4%));
-  --neutral-9: color-mix(in oklab, hsl(219 6.4% 56.9%) 50%, hsl(210 3.4% 11.4%));
-  --neutral-10: color-mix(in oklab, hsl(219 6.4% 56.9%) 75%, hsl(210 3.4% 11.4%));
-  --neutral-11: hsl(219 6.4% 56.9%);
-  --neutral-12: hsl(180 6.7% 97.1%);
+  --neutral-1: hsl(0 0% 100%);
+  --neutral-2: hsl(0 0% 98%);
+  --neutral-3: color-mix(in oklab, hsl(220 13% 91%) 20%, hsl(0 0% 98%));
+  --neutral-4: color-mix(in oklab, hsl(220 13% 91%) 40%, hsl(0 0% 98%));
+  --neutral-5: color-mix(in oklab, hsl(220 13% 91%) 60%, hsl(0 0% 98%));
+  --neutral-6: color-mix(in oklab, hsl(220 13% 91%) 80%, hsl(0 0% 98%));
+  --neutral-7: hsl(220 13% 91%);
+  --neutral-8: color-mix(in oklab, hsl(218 5% 41%) 25%, hsl(220 13% 91%));
+  --neutral-9: color-mix(in oklab, hsl(218 5% 41%) 50%, hsl(220 13% 91%));
+  --neutral-10: color-mix(in oklab, hsl(218 5% 41%) 75%, hsl(220 13% 91%));
+  --neutral-11: hsl(218 5% 41%);
+  --neutral-12: hsl(210 11% 4%);
 
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
@@ -802,6 +802,79 @@ html[data-brand="nebutra-site"] {
     hsl(223 87.3% 69%) 0%,
     hsl(168 91.3% 49.4%) 100%
   );
+}
+
+.dark,
+html.dark[data-brand="nebutra-site"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 210 11.1% 3.5%;
+  --role-canvas-fg: 180 6.7% 97.1%;
+  --role-surface: 210 6.2% 6.3%;
+  --role-surface-fg: 180 6.7% 97.1%;
+  --role-action: 180 6.7% 97.1%;
+  --role-action-fg: 210 11.1% 3.5%;
+  --role-quiet: 210 4.3% 9%;
+  --role-quiet-fg: 218 20.5% 84.7%;
+  --role-muted: 210 4.3% 9%;
+  --role-muted-fg: 219 6.4% 56.9%;
+  --role-border: 210 3.4% 11.4%;
+  --role-input: 210 3.4% 11.4%;
+  --role-ring: 223 87.3% 69%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 210 11.1% 3.5%;
+  --foreground: 180 6.7% 97.1%;
+  --card: 210 6.2% 6.3%;
+  --card-foreground: 180 6.7% 97.1%;
+  --popover: 210 6.2% 6.3%;
+  --popover-foreground: 180 6.7% 97.1%;
+  --primary: 180 6.7% 97.1%;
+  --primary-foreground: 210 11.1% 3.5%;
+  --secondary: 210 4.3% 9%;
+  --secondary-foreground: 218 20.5% 84.7%;
+  --muted: 210 4.3% 9%;
+  --muted-foreground: 219 6.4% 56.9%;
+  --accent: 210 4.3% 9%;
+  --accent-foreground: 218 20.5% 84.7%;
+  --destructive: 0 79% 63%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 3.4% 11.4%;
+  --input: 210 3.4% 11.4%;
+  --ring: 223 87.3% 69%;
+  --success: 134 62% 40%;
+  --success-foreground: 0 0% 100%;
+  --info: 223 87.3% 69%;
+  --info-foreground: 210 11.1% 3.5%;
+  --sidebar: 210 6.2% 6.3%;
+  --sidebar-foreground: 180 6.7% 97.1%;
+  --sidebar-primary: 180 6.7% 97.1%;
+  --sidebar-primary-foreground: 210 11.1% 3.5%;
+  --sidebar-accent: 210 4.3% 9%;
+  --sidebar-accent-foreground: 218 20.5% 84.7%;
+  --sidebar-border: 210 3.4% 11.4%;
+  --sidebar-ring: 223 87.3% 69%;
+  --brand-primary: hsl(180 6.7% 97.1%);
+  --brand-accent: hsl(180 6.7% 97.1%);
+  --brand-accent-foreground: hsl(210 11.1% 3.5%);
+  --brand-tertiary: hsl(180 6.7% 97.1%);
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(210 11.1% 3.5%);
+  --neutral-2: hsl(210 6.2% 6.3%);
+  --neutral-3: color-mix(in oklab, hsl(210 3.4% 11.4%) 20%, hsl(210 6.2% 6.3%));
+  --neutral-4: color-mix(in oklab, hsl(210 3.4% 11.4%) 40%, hsl(210 6.2% 6.3%));
+  --neutral-5: color-mix(in oklab, hsl(210 3.4% 11.4%) 60%, hsl(210 6.2% 6.3%));
+  --neutral-6: color-mix(in oklab, hsl(210 3.4% 11.4%) 80%, hsl(210 6.2% 6.3%));
+  --neutral-7: hsl(210 3.4% 11.4%);
+  --neutral-8: color-mix(in oklab, hsl(219 6.4% 56.9%) 25%, hsl(210 3.4% 11.4%));
+  --neutral-9: color-mix(in oklab, hsl(219 6.4% 56.9%) 50%, hsl(210 3.4% 11.4%));
+  --neutral-10: color-mix(in oklab, hsl(219 6.4% 56.9%) 75%, hsl(210 3.4% 11.4%));
+  --neutral-11: hsl(219 6.4% 56.9%);
+  --neutral-12: hsl(180 6.7% 97.1%);
 }
 
 /**

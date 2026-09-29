@@ -3,6 +3,7 @@
 import { ThemeProvider } from "@nebutra/tokens";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import { SITE_ID } from "@/site.config";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -26,7 +27,13 @@ export function Providers({ children }: ProvidersProps) {
   );
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <ThemeProvider
+      attribute="class"
+      // The Nebutra site is designed on the void; light is the reader's choice.
+      defaultTheme={SITE_ID === "nebutra" ? "dark" : "system"}
+      enableSystem
+      disableTransitionOnChange
+    >
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </ThemeProvider>
   );

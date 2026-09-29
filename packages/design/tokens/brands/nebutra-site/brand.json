@@ -94,10 +94,65 @@
       "Action is monochrome (Ink 1 fill, Void ink), as Linear's own primary button.",
       "Typography is the House decision of 2026-09-25 (DM Sans 500 headings, Geist body, MiSans CJK); this package does not change type.",
       "Scoped to the Nebutra site's own shell (html[data-brand]). The template carries it in the catalog, but nothing there applies it; never applied to product apps.",
-      "No `brand` role: the emit pipeline maps roles.brand to shadcn `accent` (the hover/selected surface), which painted SidebarNav's current page and FilterPills' active pill in #0033FE. The mark carries its own colour (Logomark), so the role is not needed here."
+      "No `brand` role: the emit pipeline maps roles.brand to shadcn `accent` (the hover/selected surface), which painted SidebarNav's current page and FilterPills' active pill in #0033FE. The mark carries its own colour (Logomark), so the role is not needed here.",
+      "Light mode 2026-09-29: Linear's measured light surfaces, House ink primary and House blue ring; dark stays the measured void. The site defaults to dark."
     ],
     "decorative": {
       "signature": "linear-gradient(120deg, hsl(223 87.3% 69%) 0%, hsl(168 91.3% 49.4%) 100%)"
+    }
+  },
+  "modes": {
+    "light": {
+      "semantic": {
+        "background": "0 0% 100%",
+        "foreground": "210 11% 4%",
+        "card": "0 0% 98%",
+        "cardForeground": "210 11% 4%",
+        "popover": "0 0% 100%",
+        "popoverForeground": "210 11% 4%",
+        "primary": "225 7.7% 10.2%",
+        "primaryForeground": "0 0% 100%",
+        "secondary": "220 14% 96%",
+        "secondaryForeground": "210 11% 4%",
+        "muted": "220 14% 96%",
+        "mutedForeground": "218 5% 41%",
+        "accent": "220 14% 96%",
+        "accentForeground": "210 11% 4%",
+        "destructive": "0 79% 63%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "220 13% 91%",
+        "ring": "222.8 85% 55.7%",
+        "success": "134 62% 40%",
+        "successForeground": "0 0% 100%",
+        "info": "222.8 85% 55.7%",
+        "infoForeground": "0 0% 100%"
+      }
+    },
+    "dark": {
+      "semantic": {
+        "background": "210 11.1% 3.5%",
+        "foreground": "180 6.7% 97.1%",
+        "card": "210 6.2% 6.3%",
+        "cardForeground": "180 6.7% 97.1%",
+        "popover": "210 6.2% 6.3%",
+        "popoverForeground": "180 6.7% 97.1%",
+        "primary": "180 6.7% 97.1%",
+        "primaryForeground": "210 11.1% 3.5%",
+        "secondary": "210 4.3% 9%",
+        "secondaryForeground": "218 20.5% 84.7%",
+        "muted": "210 4.3% 9%",
+        "mutedForeground": "219 6.4% 56.9%",
+        "accent": "210 4.3% 9%",
+        "accentForeground": "180 6.7% 97.1%",
+        "destructive": "0 79% 63%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "210 3.4% 11.4%",
+        "ring": "223 87.3% 69%",
+        "success": "134 62% 40%",
+        "successForeground": "0 0% 100%",
+        "info": "223 87.3% 69%",
+        "infoForeground": "210 11.1% 3.5%"
+      }
     }
   }
 }
