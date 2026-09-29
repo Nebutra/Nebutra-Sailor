@@ -17,6 +17,8 @@ primary_region = "sin"
   ENABLE_FORGE_DNS_LEAK = "true"
   FORGE_DNS_LEAK_ZONE = "leak.nebutra.com"
   FORGE_DNS_LEAK_NS = "ns1.leak.nebutra.com"
+  # forge's dedicated IPv4 (allocated by deploy-fly.yml); ns1.leak glue points here.
+  FORGE_DNS_LEAK_NS_IP = "169.155.49.208"
   FORGE_DNS_LEAK_ANSWER_IP = "127.0.0.1"
   FORGE_DNS_LEAK_DNS_HOST = "0.0.0.0"
   FORGE_DNS_LEAK_DNS_PORT = "53"
