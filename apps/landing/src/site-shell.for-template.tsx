@@ -10,7 +10,7 @@ export function SiteShell({
   footer = "default",
 }: {
   children: ReactNode;
-  footer?: "default" | "legal";
+  footer?: "default" | "legal" | "none";
   /** The route locale; the Nebutra frame's footer reads it. */
   lang?: string;
 }) {

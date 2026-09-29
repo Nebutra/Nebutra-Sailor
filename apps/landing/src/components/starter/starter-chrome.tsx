@@ -9,14 +9,15 @@ import { StarterNav } from "./starter-nav";
 /**
  * The frame around every page of the starter site: the top bar, the page, the
  * footer. Pages render content only; a page site-map.ts marks `chrome: "bare"`
- * draws its own frame; one marked `chrome: "no-footer"` ends without the footer.
+ * draws its own frame. A layout passing footer="none" (the status pages) ends
+ * on the page itself.
  */
 export function StarterChrome({
   children,
   footer = "default",
 }: {
   children: ReactNode;
-  footer?: "default" | "legal";
+  footer?: "default" | "legal" | "none";
 }) {
   const chrome = pageAt(usePathname())?.chrome;
   if (chrome === "bare") return children;
@@ -26,7 +27,7 @@ export function StarterChrome({
     <div className="flex min-h-dvh flex-col bg-background [--frame-overlay-top:4rem]">
       <StarterNav />
       {children}
-      {chrome === "no-footer" ? null : <StarterFooter variant={footer} />}
+      {footer === "none" ? null : <StarterFooter variant={footer} />}
     </div>
   );
 }

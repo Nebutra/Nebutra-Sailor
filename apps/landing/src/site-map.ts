@@ -107,10 +107,8 @@ export interface SitePage {
    * "bare": the page draws its own frame (the Studio canvas frame).
    * "tool": a full-viewport tool (Sailor Studio): a compact top bar, no footer,
    * and the page fills the rest of the screen instead of scrolling it.
-   * "no-footer": the site navigation and the page, nothing after it. A trust
-   * surface (the status pages) ends on its own content, not on marketing links.
    */
-  chrome?: "over-dark" | "bare" | "tool" | "no-footer";
+  chrome?: "over-dark" | "bare" | "tool";
   /**
    * Listed under its section in the rail. The rail shows sections; a page
    * without this is reached from its section's own pages, the footer, or not
@@ -279,7 +277,6 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Status", zh: "服务状态" },
     status: "live",
     template: true,
-    chrome: "no-footer",
   },
   {
     path: "/status/history",
@@ -287,7 +284,6 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Incident history", zh: "事件历史" },
     status: "live",
     template: true,
-    chrome: "no-footer",
   },
   {
     path: "/status/subscription",
@@ -295,7 +291,6 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Status subscription", zh: "状态订阅" },
     status: "live",
     template: true,
-    chrome: "no-footer",
   },
   {
     path: "/status/incidents/[id]",
@@ -303,7 +298,6 @@ export const SITE_MAP: readonly SitePage[] = [
     title: { en: "Incident", zh: "事件" },
     status: "live",
     template: true,
-    chrome: "no-footer",
   },
   {
     path: "/security",

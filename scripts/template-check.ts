@@ -140,6 +140,7 @@ const MUST_STRIP = [
 const LANDING_ROUTE_GROUPS = [
   "apps/landing/src/app/[lang]/(marketing)",
   "apps/landing/src/app/[lang]/(legal)",
+  "apps/landing/src/app/[lang]/(status)",
 ];
 
 /**

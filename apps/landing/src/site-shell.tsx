@@ -14,11 +14,12 @@ import { SiteHeader } from "@/nebutra/shell/site-nav";
  */
 export function SiteShell({
   children,
+  footer,
   lang,
 }: {
   children: ReactNode;
-  /** Only the template's frame has a separate legal footer. */
-  footer?: "default" | "legal";
+  /** "none" ends the page on its own content (the status pages); "legal" is the template's. */
+  footer?: "default" | "legal" | "none";
   /** The route locale, from the layout's params. Absent (not-found) reads English. */
   lang?: string;
 }) {
@@ -26,7 +27,7 @@ export function SiteShell({
   return (
     <RailFrame
       header={<SiteHeader brandName={brand.name} mailto={mailto} />}
-      footer={<SiteFooter lang={lang} />}
+      footer={footer === "none" ? null : <SiteFooter lang={lang} />}
     >
       {children}
     </RailFrame>

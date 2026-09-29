@@ -9,7 +9,7 @@ import { SECTIONS, SITE_MAP } from "../site-map";
  * directory and the map must agree, both ways.
  */
 const LANG = join(__dirname, "..", "app", "[lang]");
-const GROUPS = ["(marketing)", "(legal)"];
+const GROUPS = ["(marketing)", "(legal)", "(status)"];
 
 function routes(): string[] {
   const out: string[] = [];
@@ -82,9 +82,8 @@ describe("pageAt", () => {
     expect(pageAt("/sailor/studio/frame")?.chrome).toBe("bare");
     // Studio is a tool: top bar, no footer, the rest of the viewport.
     expect(pageAt("/sailor/studio")?.chrome).toBe("tool");
-    // The status pages sit under the site navigation and end without the footer.
-    expect(pageAt("/status")?.chrome).toBe("no-footer");
-    expect(pageAt("/status/incidents/abc")?.chrome).toBe("no-footer");
+    // The status pages keep the site frame; their own layout drops the footer.
+    expect(pageAt("/status")?.chrome).toBeUndefined();
     expect(pageAt("/nowhere")).toBeUndefined();
   });
 });
