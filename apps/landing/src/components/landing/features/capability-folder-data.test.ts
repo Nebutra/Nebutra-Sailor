@@ -45,9 +45,9 @@ describe("capability folder showcase data", () => {
     for (const folder of CAPABILITY_FOLDERS) {
       expect(folder.anchorId).toMatch(/^capability-[a-z-]+$/);
       expect(existsSync(path.join(repoRoot, folder.sourcePath)), folder.sourcePath).toBe(true);
-      expect(folder.owns.length, folder.id).toBeGreaterThanOrEqual(3);
-      expect(folder.boundaries.length, folder.id).toBeGreaterThanOrEqual(2);
-      expect(folder.proof.length, folder.id).toBeGreaterThanOrEqual(2);
+      expect(folder.ownsCount, folder.id).toBeGreaterThanOrEqual(3);
+      expect(folder.boundariesCount, folder.id).toBeGreaterThanOrEqual(2);
+      expect(folder.proofCount, folder.id).toBeGreaterThanOrEqual(2);
     }
   });
 

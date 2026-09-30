@@ -14,7 +14,6 @@ import {
   TableRow,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
@@ -22,40 +21,23 @@ import type { PackageShowcaseProps } from "./types";
 // Copy
 // =============================================================================
 
-const COPY = {
-  en: {
-    headerLabel: "Query · packages/platform/db",
-    rlsLeft: "RLS",
-    rlsRight: "enforced",
-    resultsTitle: "Query results",
-    resultsSubtitle: "tenant-scoped via row-level security",
-    visibleLabel: "Visible rows",
-    hiddenLabel: "Hidden by RLS",
-    visibleHint: "in tenant_a",
-    hiddenHint: "other tenants",
-    colId: "id",
-    colTitle: "title",
-    colTenant: "tenant_id",
-    colPublished: "published_at",
-    hiddenNote: "RLS hides rows belonging to other tenants — they never leave the database.",
-  },
-  zh: {
-    headerLabel: "查询 · packages/platform/db",
-    rlsLeft: "RLS",
-    rlsRight: "已启用",
-    resultsTitle: "查询结果",
-    resultsSubtitle: "通过行级安全按租户隔离",
-    visibleLabel: "可见行",
-    hiddenLabel: "RLS 隐藏",
-    visibleHint: "tenant_a 内",
-    hiddenHint: "其他租户",
-    colId: "id",
-    colTitle: "title",
-    colTenant: "tenant_id",
-    colPublished: "published_at",
-    hiddenNote: "RLS 在数据库层屏蔽其他租户的行，应用永远看不到它们。",
-  },
-} as const;
+type DbCopy = {
+  headerLabel: string;
+  rlsEnforced: string;
+  resultsTitle: string;
+  resultsSubtitle: string;
+  visibleLabel: string;
+  hiddenLabel: string;
+  visibleHint: string;
+  hiddenHint: string;
+  hiddenNote: string;
+};
+
+// Column headers are the literal Postgres column names — same on every locale.
+const COL_ID = "id";
+const COL_TITLE = "title";
+const COL_TENANT = "tenant_id";
+const COL_PUBLISHED = "published_at";
 
 // =============================================================================
 // Demo data
@@ -127,7 +109,7 @@ const posts = await prisma.post.findMany({
 // =============================================================================
 
 function formatNumber(value: number, locale: "en" | "zh") {
-  return value.toLocaleString(isZhUiLocale(locale) ? "zh-CN" : "en-US");
+  return value.toLocaleString(locale === "zh" ? "zh-CN" : "en-US");
 }
 
 function tenantBadgeVariant(tenantId: Row["tenantId"]): "blue-subtle" | "gray-subtle" {
@@ -140,7 +122,7 @@ function tenantBadgeVariant(tenantId: Row["tenantId"]): "blue-subtle" | "gray-su
 
 export function DbShowcase(_props: PackageShowcaseProps) {
   const locale = _props.locale;
-  const t = COPY[locale];
+  const t = _props.copy as DbCopy;
 
   const visibleCount = 847;
   const hiddenCount = 12401;
@@ -156,9 +138,9 @@ export function DbShowcase(_props: PackageShowcaseProps) {
         <StatusBadge
           status="success"
           leftIcon={Shield}
-          leftLabel={t.rlsLeft}
+          leftLabel="RLS"
           rightIcon={Check}
-          rightLabel={t.rlsRight}
+          rightLabel={t.rlsEnforced}
         />
       </div>
 
@@ -192,10 +174,10 @@ export function DbShowcase(_props: PackageShowcaseProps) {
           <Table className="text-[12px]" wrapperClassName="border-0 bg-transparent p-0">
             <TableHeader>
               <TableRow>
-                <TableHead className="font-mono text-[11px]">{t.colId}</TableHead>
-                <TableHead className="font-mono text-[11px]">{t.colTitle}</TableHead>
-                <TableHead className="font-mono text-[11px]">{t.colTenant}</TableHead>
-                <TableHead className="font-mono text-[11px]">{t.colPublished}</TableHead>
+                <TableHead className="font-mono text-[11px]">{COL_ID}</TableHead>
+                <TableHead className="font-mono text-[11px]">{COL_TITLE}</TableHead>
+                <TableHead className="font-mono text-[11px]">{COL_TENANT}</TableHead>
+                <TableHead className="font-mono text-[11px]">{COL_PUBLISHED}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

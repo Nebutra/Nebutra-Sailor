@@ -17,6 +17,14 @@ export type SubpackageGlyphProps = {
   entry: SerializablePackageFeatureEntry;
   /** UI locale. */
   locale: "en" | "zh";
+  /**
+   * Pre-resolved copy for the handful of glyphs that render text beyond the
+   * entry summary (e.g. a mock chat bubble, a pipeline step label). Built
+   * server-side from `packageCatalog.glyphs.<slug>.*` via `getGlyphCopy()` —
+   * glyphs are Client Components, so they read strings from this prop
+   * instead of calling next-intl themselves.
+   */
+  copy?: Record<string, unknown>;
 };
 
 export type SubpackageGlyph = ComponentType<SubpackageGlyphProps>;

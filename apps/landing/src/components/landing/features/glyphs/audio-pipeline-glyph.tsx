@@ -1,6 +1,5 @@
 import { ArrowRight, Check, Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
 
 const BAR_COUNT = 32;
@@ -11,11 +10,11 @@ const BAR_HEIGHTS: ReadonlyArray<number> = [
   14, 24, 8, 16, 12, 20,
 ];
 
-const PIPELINE_STEPS_EN = ["transcribe", "denoise", "master"] as const;
-const PIPELINE_STEPS_ZH = ["转写", "降噪", "母带"] as const;
+type AudioPipelineCopy = { steps: Record<string, string> };
 
-export function AudioPipelineGlyph({ locale }: SubpackageGlyphProps) {
-  const steps = isZhUiLocale(locale) ? PIPELINE_STEPS_ZH : PIPELINE_STEPS_EN;
+export function AudioPipelineGlyph({ copy }: SubpackageGlyphProps) {
+  const stepLabels = (copy as AudioPipelineCopy).steps;
+  const steps = [stepLabels["0"], stepLabels["1"], stepLabels["2"]];
 
   return (
     <div

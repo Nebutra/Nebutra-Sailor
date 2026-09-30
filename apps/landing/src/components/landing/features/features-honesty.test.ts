@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { getCodeSampleForEntry, PACKAGE_CODE_SAMPLES } from "./feature-code-samples";
 import { GROUP_CODE_SAMPLES } from "./feature-group-code-samples";
 import { SUBPACKAGE_GLYPHS } from "./glyphs";
-import { PACKAGE_DESCRIPTIONS, PACKAGE_FEATURE_ENTRIES } from "./package-feature-data";
+import { PACKAGE_FEATURE_ENTRIES } from "./package-feature-data";
 
 /**
  * /features shows real things or nothing (src/nebutra/DESIGN.md, "No mocks").
@@ -74,11 +74,18 @@ function exportedNames(dir: string): Set<string> {
 
 describe("feature pages show real things or nothing", () => {
   it("gives every package authored copy, so no boilerplate sentence exists", () => {
-    const missing = packages.filter((e) => !PACKAGE_DESCRIPTIONS[e.slug]).map((e) => e.slug);
+    // Copy moved from an inline PACKAGE_DESCRIPTIONS map to the packageCatalog
+    // i18n namespace (apps/landing/messages/en.json) — English is the
+    // canonical set every package must appear in.
+    const enMessagesPath = path.join(repoRoot, "apps/landing/messages/en.json");
+    const en = JSON.parse(readFileSync(enMessagesPath, "utf8"));
+    const descriptions: Record<string, unknown> = en.packageCatalog?.descriptions ?? {};
+
+    const missing = packages.filter((e) => !descriptions[e.slug]).map((e) => e.slug);
     expect(missing).toEqual([]);
 
     const slugs = new Set(packages.map((e) => e.slug));
-    const orphans = Object.keys(PACKAGE_DESCRIPTIONS).filter((slug) => !slugs.has(slug));
+    const orphans = Object.keys(descriptions).filter((slug) => !slugs.has(slug));
     expect(orphans, "copy for a package the tree does not list").toEqual([]);
   });
 

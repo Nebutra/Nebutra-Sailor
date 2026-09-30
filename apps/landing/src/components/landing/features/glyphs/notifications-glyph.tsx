@@ -13,39 +13,25 @@ import type { SubpackageGlyphProps } from "./types";
  *  the multi-channel inbox affordance reads at a glance.
 \* -------------------------------------------------------------------------- */
 
-type FeedRow = {
+type FeedRowBase = {
   badgeStatus: "info" | "success" | "warning";
   eventType: string;
   icon: typeof Bell;
   time: string;
-  title: { en: string; zh: string };
 };
 
-const FEED_ROWS: readonly FeedRow[] = [
-  {
-    badgeStatus: "success",
-    eventType: "invoice.paid",
-    icon: Check,
-    time: "2m ago",
-    title: { en: "payment received", zh: "已收到付款" },
-  },
-  {
-    badgeStatus: "info",
-    eventType: "user.joined",
-    icon: User,
-    time: "18m ago",
-    title: { en: "new teammate", zh: "新队友加入" },
-  },
-  {
-    badgeStatus: "warning",
-    eventType: "alert.triggered",
-    icon: Lightning,
-    time: "1h ago",
-    title: { en: "rate limit hit", zh: "触发限流" },
-  },
+const FEED_ROWS_BASE: readonly FeedRowBase[] = [
+  { badgeStatus: "success", eventType: "invoice.paid", icon: Check, time: "2m ago" },
+  { badgeStatus: "info", eventType: "user.joined", icon: User, time: "18m ago" },
+  { badgeStatus: "warning", eventType: "alert.triggered", icon: Lightning, time: "1h ago" },
 ];
 
-export function NotificationsGlyph({ locale }: SubpackageGlyphProps) {
+type NotificationsCopy = { rows: Record<string, { title: string }> };
+
+export function NotificationsGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as NotificationsCopy;
+  const FEED_ROWS = FEED_ROWS_BASE.map((row, i) => ({ ...row, title: t.rows[String(i)].title }));
+
   return (
     <div
       className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
@@ -68,7 +54,7 @@ export function NotificationsGlyph({ locale }: SubpackageGlyphProps) {
               className="h-7 py-0 text-[10px]"
               leftIcon={row.icon}
               leftLabel={row.eventType}
-              rightLabel={row.title[locale]}
+              rightLabel={row.title}
               status={row.badgeStatus}
             />
             <span className="inline-flex shrink-0 items-center gap-1 font-mono text-[10px] text-muted-foreground">

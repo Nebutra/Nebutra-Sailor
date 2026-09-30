@@ -2,7 +2,6 @@
 
 import { Bug, Check, Clock, Connection, RefreshClockwise } from "@nebutra/icons";
 import { Badge, Card, CardHeader, StatusBadge, StatusDot, Table } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
@@ -15,7 +14,6 @@ type Delivery = {
   id: string;
   latency: number;
   status: DeliveryStatus;
-  timestamp: { en: string; zh: string };
 };
 
 const DELIVERIES: Delivery[] = [
@@ -26,7 +24,6 @@ const DELIVERIES: Delivery[] = [
     id: "evt_1f9c",
     latency: 184,
     status: "success",
-    timestamp: { en: "2m ago", zh: "2 分钟前" },
   },
   {
     attempts: "1/5",
@@ -35,7 +32,6 @@ const DELIVERIES: Delivery[] = [
     id: "evt_8a3b",
     latency: 142,
     status: "success",
-    timestamp: { en: "5m ago", zh: "5 分钟前" },
   },
   {
     attempts: "3/5",
@@ -44,7 +40,6 @@ const DELIVERIES: Delivery[] = [
     id: "evt_b021",
     latency: 4821,
     status: "retrying",
-    timestamp: { en: "just now", zh: "刚刚" },
   },
   {
     attempts: "2/5",
@@ -53,7 +48,6 @@ const DELIVERIES: Delivery[] = [
     id: "evt_44d2",
     latency: 312,
     status: "warning",
-    timestamp: { en: "12m ago", zh: "12 分钟前" },
   },
   {
     attempts: "5/5",
@@ -62,46 +56,29 @@ const DELIVERIES: Delivery[] = [
     id: "evt_77e1",
     latency: 1204,
     status: "destructive",
-    timestamp: { en: "1h ago", zh: "1 小时前" },
   },
 ];
 
-const COPY = {
-  en: {
-    active: "Active",
-    attempts: "Attempts",
-    code: "Code",
-    delivered: "last delivered 2m ago",
-    endpoint: "Endpoint",
-    event: "Event",
-    footer: "99.2% success · p95 248ms · signed HMAC",
-    latency: "Latency",
-    retry: "retrying",
-    status: "Status",
-    title: "Recent deliveries",
-    when: "When",
-  },
-  zh: {
-    active: "活跃",
-    attempts: "尝试次数",
-    code: "状态码",
-    delivered: "上次投递 2 分钟前",
-    endpoint: "端点",
-    event: "事件",
-    footer: "99.2% 成功 · p95 248ms · HMAC 签名",
-    latency: "延迟",
-    retry: "重试中",
-    status: "状态",
-    title: "最近投递",
-    when: "时间",
-  },
-} as const;
+type WebhooksCopy = {
+  deliveries: Record<string, { timestamp: string }>;
+  active: string;
+  attempts: string;
+  code: string;
+  delivered: string;
+  event: string;
+  footer: string;
+  latency: string;
+  retry: string;
+  status: string;
+  title: string;
+  when: string;
+};
 
 const ENDPOINT_URL = "https://api.example.com/v1/hooks";
 
-function StatusCell({ status, locale }: { status: DeliveryStatus; locale: "en" | "zh" }) {
+function StatusCell({ status, retryLabel }: { status: DeliveryStatus; retryLabel: string }) {
   if (status === "retrying") {
-    return <StatusDot state="BUILDING" decorative titlePrefix={COPY[locale].retry} />;
+    return <StatusDot state="BUILDING" decorative titlePrefix={retryLabel} />;
   }
   if (status === "success") {
     return (
@@ -124,8 +101,8 @@ function StatusCell({ status, locale }: { status: DeliveryStatus; locale: "en" |
   );
 }
 
-export function WebhooksShowcase({ locale }: PackageShowcaseProps) {
-  const t = COPY[locale];
+export function WebhooksShowcase({ locale, copy }: PackageShowcaseProps) {
+  const t = copy as WebhooksCopy;
 
   return (
     <ShowcaseFrame className="flex flex-col gap-4">
@@ -172,10 +149,10 @@ export function WebhooksShowcase({ locale }: PackageShowcaseProps) {
           </Table.Row>
         </Table.Header>
         <Table.Body bordered>
-          {DELIVERIES.map((d) => (
+          {DELIVERIES.map((d, index) => (
             <Table.Row key={d.id}>
               <Table.Cell>
-                <StatusCell status={d.status} locale={locale} />
+                <StatusCell status={d.status} retryLabel={t.retry} />
               </Table.Cell>
               <Table.Cell>
                 <Badge variant="gray-subtle" size="sm" className="font-mono">
@@ -200,10 +177,10 @@ export function WebhooksShowcase({ locale }: PackageShowcaseProps) {
                 </span>
               </Table.Cell>
               <Table.Cell numeric className="font-mono text-xs">
-                {d.latency.toLocaleString(isZhUiLocale(locale) ? "zh-CN" : "en-US")}ms
+                {d.latency.toLocaleString(locale === "zh" ? "zh-CN" : "en-US")}ms
               </Table.Cell>
               <Table.Cell className="font-mono text-xs text-muted-foreground">
-                {d.timestamp[locale]}
+                {t.deliveries[String(index)].timestamp}
               </Table.Cell>
             </Table.Row>
           ))}

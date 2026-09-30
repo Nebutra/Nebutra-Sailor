@@ -2,8 +2,9 @@
 
 import { ArrowRight, Check, Code, Shield } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
+
+type CodeExecutionCopy = { footer: string; executed: string };
 
 /**
  * CodeExecutionGlyph — Sandboxed code execution visual.
@@ -14,11 +15,10 @@ import type { SubpackageGlyphProps } from "./types";
  * Top-right: outline runtime/isolation badge.
  * Footer: provider attribution.
  */
-export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
-  const footerLabel = isZhUiLocale(locale)
-    ? "Vercel Sandbox · 安全执行不可信代码"
-    : "Vercel Sandbox · safe untrusted";
-  const executedLabel = isZhUiLocale(locale) ? "47ms 内执行完成" : "executed in 47ms";
+export const CodeExecutionGlyph = ({ copy }: SubpackageGlyphProps) => {
+  const t = copy as CodeExecutionCopy;
+  const footerLabel = t.footer;
+  const executedLabel = t.executed;
 
   return (
     <div

@@ -2,45 +2,19 @@ import { Check, Eye, LockClosed, Shield } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-type Layer = {
-  icon: typeof Shield;
-  label: { en: string; zh: string };
-  stat: { en: string; zh: string };
+const LAYER_ICONS: ReadonlyArray<typeof Shield> = [Shield, LockClosed, Eye, Shield];
+
+type EcosystemSafetyCopy = {
+  title: string;
+  layersCount: string;
+  layers: Record<string, { label: string; stat: string }>;
+  footer: string;
 };
 
-const LAYERS: Layer[] = [
-  {
-    icon: Shield,
-    label: { en: "Content moderation", zh: "内容审核" },
-    stat: { en: "0 blocked today", zh: "今日 0 拦截" },
-  },
-  {
-    icon: LockClosed,
-    label: { en: "PII redaction", zh: "PII 脱敏" },
-    stat: { en: "12 redacted today", zh: "今日脱敏 12" },
-  },
-  {
-    icon: Eye,
-    label: { en: "Prompt injection detect", zh: "注入检测" },
-    stat: { en: "2 caught today", zh: "今日捕获 2" },
-  },
-  {
-    icon: Shield,
-    label: { en: "Rate limit per actor", zh: "按主体限流" },
-    stat: { en: "normal", zh: "正常" },
-  },
-];
+export function EcosystemSafetyGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as EcosystemSafetyCopy;
+  const layers = LAYER_ICONS.map((icon, i) => ({ icon, ...t.layers[String(i)] }));
 
-const COPY = {
-  title: { en: "Guardrails active", zh: "防护已开启" },
-  layers: { en: "4 layers", zh: "4 层" },
-  footer: {
-    en: "OpenAI Moderation · regex + LLM gate",
-    zh: "OpenAI Moderation · 正则 + LLM 网关",
-  },
-};
-
-export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-muted px-3 py-2.5"
@@ -49,27 +23,25 @@ export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
           <Shield className="h-3.5 w-3.5 text-primary" />
-          <span className="font-mono text-[10px] text-foreground">{COPY.title[locale]}</span>
+          <span className="font-mono text-[10px] text-foreground">{t.title}</span>
         </div>
-        <span className="font-mono text-[10px] text-muted-foreground">{COPY.layers[locale]}</span>
+        <span className="font-mono text-[10px] text-muted-foreground">{t.layersCount}</span>
       </div>
 
       <div className="flex flex-1 flex-col gap-1">
-        {LAYERS.map((layer) => {
+        {layers.map((layer) => {
           const LayerIcon = layer.icon;
           return (
             <div
-              key={layer.label.en}
+              key={layer.label}
               className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] bg-background px-1.5 py-1"
             >
               <div className="flex min-w-0 items-center gap-1.5">
                 <LayerIcon className="h-3 w-3 shrink-0 text-muted-foreground" />
-                <span className="truncate text-[10px] text-foreground">{layer.label[locale]}</span>
+                <span className="truncate text-[10px] text-foreground">{layer.label}</span>
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
-                <span className="font-mono text-[9px] text-muted-foreground">
-                  {layer.stat[locale]}
-                </span>
+                <span className="font-mono text-[9px] text-muted-foreground">{layer.stat}</span>
                 <Badge
                   variant="outline"
                   className="h-3.5 gap-0.5 border-success/30 bg-success/10 px-1 text-success-strong"
@@ -82,7 +54,7 @@ export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
         })}
       </div>
 
-      <div className="font-mono text-[9px] text-muted-foreground">{COPY.footer[locale]}</div>
+      <div className="font-mono text-[9px] text-muted-foreground">{t.footer}</div>
     </div>
   );
 }

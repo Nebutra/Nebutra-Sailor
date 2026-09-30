@@ -5,60 +5,17 @@ import { Badge, Input, Kbd, Progress } from "@nebutra/ui/primitives";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
-type Locale = "en" | "zh";
-
 type ResultRow = {
   id: string;
-  title: Record<Locale, string>;
-  excerpt: Record<Locale, string>;
   path: string;
   score: number;
 };
 
 const RESULTS: ReadonlyArray<ResultRow> = [
-  {
-    id: "r1",
-    title: { en: "Billing v2 migration playbook", zh: "Billing v2 迁移手册" },
-    excerpt: {
-      en: "Step-by-step migration from legacy invoices to the new metering pipeline.",
-      zh: "从旧版发票迁移到新计量管道的逐步流程。",
-    },
-    path: "posts/2024/billing-v2.md",
-    score: 0.94,
-  },
-  {
-    id: "r2",
-    title: { en: "Migration checklist for billing tenants", zh: "针对 billing 租户的迁移清单" },
-    excerpt: {
-      en: "Verify RLS, secrets rotation, and webhook backfill before cutover.",
-      zh: "切换前请确认 RLS、密钥轮换和 webhook 回填。",
-    },
-    path: "docs/billing/migration.mdx",
-    score: 0.89,
-  },
-  {
-    id: "r3",
-    title: {
-      en: "Creem + WeChat Pay billing adapter notes",
-      zh: "Creem + 微信支付 billing 适配器笔记",
-    },
-    excerpt: {
-      en: "One billing contract keeps customer code stable across both rails.",
-      zh: "同一套计费契约让客户代码在两条支付通道上保持稳定。",
-    },
-    path: "changelog/2026/adapters.md",
-    score: 0.81,
-  },
-  {
-    id: "r4",
-    title: { en: "Zero-downtime migration patterns", zh: "零停机 migration 模式" },
-    excerpt: {
-      en: "Dual-write, shadow-read, then flip — applies to billing data too.",
-      zh: "双写、影子读取、最后切换——同样适用于 billing 数据。",
-    },
-    path: "docs/patterns/migration.mdx",
-    score: 0.76,
-  },
+  { id: "r1", path: "posts/2024/billing-v2.md", score: 0.94 },
+  { id: "r2", path: "docs/billing/migration.mdx", score: 0.89 },
+  { id: "r3", path: "changelog/2026/adapters.md", score: 0.81 },
+  { id: "r4", path: "docs/patterns/migration.mdx", score: 0.76 },
 ];
 
 const TOKEN_RX = /(billing|migration)/gi;
@@ -94,27 +51,20 @@ const TAGS = [
   { label: "migration", count: 4 },
 ] as const;
 
-const COPY = {
-  en: {
-    placeholder: "Search docs, posts, changelog…",
-    indexLabel: "Index",
-    tagsLabel: "Tags",
-    footer: (n: string, ms: string) => `Searched ${n} docs in ${ms} · Postgres backend`,
-    relevance: "score",
-  },
-  zh: {
-    placeholder: "搜索文档、帖子、更新日志……",
-    indexLabel: "索引",
-    tagsLabel: "标签",
-    footer: (n: string, ms: string) => `检索 ${n} 篇文档 用时 ${ms} · Postgres 后端`,
-    relevance: "得分",
-  },
-} as const;
+type SearchCopy = {
+  results: Record<string, { title: string; excerpt: string }>;
+  placeholder: string;
+  indexLabel: string;
+  tagsLabel: string;
+  /** Already interpolated with STATS server-side, in getShowcaseCopy(). */
+  footer: string;
+  relevance: string;
+};
 
 const STATS = { count: "12,401", ms: "38ms" };
 
-export function SearchShowcase({ locale }: PackageShowcaseProps) {
-  const copy = COPY[locale];
+export function SearchShowcase({ copy: rawCopy }: PackageShowcaseProps) {
+  const copy = rawCopy as SearchCopy;
 
   return (
     <ShowcaseFrame>
@@ -135,21 +85,21 @@ export function SearchShowcase({ locale }: PackageShowcaseProps) {
 
         <div className="grid gap-4 md:grid-cols-3">
           <ul className="space-y-2 md:col-span-2">
-            {RESULTS.map((r) => (
+            {RESULTS.map((r, index) => (
               <li
                 key={r.id}
                 className="rounded-[var(--radius-md)] border border-border/60 bg-card p-3 transition-colors hover:bg-muted/40"
               >
                 <div className="flex items-start justify-between gap-3">
                   <p className="min-w-0 text-sm font-semibold text-foreground">
-                    <HighlightedText text={r.title[locale]} />
+                    <HighlightedText text={copy.results[String(index)].title} />
                   </p>
                   <span className="shrink-0 font-mono text-[11px] tabular-nums text-muted-foreground">
                     {r.score.toFixed(2)}
                   </span>
                 </div>
                 <p className="mt-1 line-clamp-1 text-xs text-muted-foreground">
-                  <HighlightedText text={r.excerpt[locale]} />
+                  <HighlightedText text={copy.results[String(index)].excerpt} />
                 </p>
                 <div className="mt-2 flex items-center gap-2">
                   <Badge variant="outline" size="sm" className="font-mono text-[10px]">
@@ -208,7 +158,7 @@ export function SearchShowcase({ locale }: PackageShowcaseProps) {
         <div className="flex items-center justify-between gap-2 border-t border-border/60 pt-3 text-[11px] text-muted-foreground">
           <span className="inline-flex items-center gap-1.5">
             <Lightning className="h-3 w-3" aria-hidden="true" />
-            <span className="tabular-nums">{copy.footer(STATS.count, STATS.ms)}</span>
+            <span className="tabular-nums">{copy.footer}</span>
           </span>
           <span className="inline-flex items-center gap-1 font-mono">
             <Clock className="h-3 w-3" aria-hidden="true" />

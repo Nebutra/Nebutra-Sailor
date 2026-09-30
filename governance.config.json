@@ -87,11 +87,8 @@
       "apps/landing/src/app/api/og/route.ts",
       "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
-      "apps/landing/src/components/landing/features/glyphs/sms-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/status-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/tts-glyph.tsx",
-      "apps/landing/src/components/landing/features/package-feature-data.ts",
-      "apps/landing/src/components/landing/features/showcases/auth-showcase.tsx",
       "apps/landing/src/lib/constants/playbook-data.ts",
       "apps/landing/src/lib/constants/resources-data.ts",
       "apps/landing/src/lib/constants/solutions-data.ts",
@@ -2417,14 +2414,6 @@
         "count": 2
       },
       {
-        "file": "apps/landing/src/app/[lang]/(marketing)/features/[name]/page.tsx",
-        "count": 10
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/features/page.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/landing/src/app/[lang]/(marketing)/news/page.tsx",
         "count": 2
       },
@@ -2435,74 +2424,6 @@
       {
         "file": "apps/landing/src/components/landing/blog-portable-text.tsx",
         "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/audio-pipeline-glyph.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/code-execution-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/document-pipeline-glyph.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/ecosystem-safety-glyph.tsx",
-        "count": 11
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/notifications-glyph.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/onboarding-glyph.tsx",
-        "count": 6
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/outreach-engine-glyph.tsx",
-        "count": 9
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/sandbox-runtime-glyph.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/sms-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/package-feature-data.ts",
-        "count": 120
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/auth-showcase.tsx",
-        "count": 10
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/db-showcase.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/gateway-core-showcase.tsx",
-        "count": 7
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/metering-showcase.tsx",
-        "count": 10
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/queue-showcase.tsx",
-        "count": 7
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/search-showcase.tsx",
-        "count": 8
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/webhooks-showcase.tsx",
-        "count": 6
       },
       {
         "file": "apps/landing/src/components/landing/solutions/china-vc/ChinaVcSolution.tsx",
