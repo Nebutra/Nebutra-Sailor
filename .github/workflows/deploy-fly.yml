@@ -926,3 +926,16 @@ jobs:
             -a nebutra-router
           echo "router now consumes New-API over 6PN"
 
+  service-secret-parity:
+    # gateway <-> router/admin/web all speak SERVICE_SECRET to each other
+    # (packages/iam/auth/src/s2s.ts); `deploy` covers web/router/admin,
+    # `deploy-gateway` covers gateway. Gated on success, not `always()` — a
+    # deploy that didn't touch these apps (or failed) has nothing new to
+    # check, and the daily schedule in ops-service-secret-parity.yml still
+    # catches drift either way.
+    name: Service secret parity
+    needs: [deploy, deploy-gateway]
+    if: success()
+    uses: ./.github/workflows/ops-service-secret-parity.yml
+    secrets: inherit
+

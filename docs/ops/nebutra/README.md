@@ -19,6 +19,7 @@ its own values — and do ship.
 | [nebutra-owned-sso.md](./nebutra-owned-sso.md) | `sso.nebutra.com` — Nebutra acting as an OIDC issuer |
 | [pebble-support-intake.md](./pebble-support-intake.md) | Pebble desktop diagnostics bucket and intake |
 | [invitation-dual-table-status.md](./invitation-dual-table-status.md) | Status of the invitation dual-table migration on the Nebutra database |
+| [2026-09-30-service-secret-parity.md](./2026-09-30-service-secret-parity.md) | Guard against `SERVICE_SECRET` drift across Fly apps (401s between gateway/router/admin/web) |
 
 Adding a runbook: if it would be wrong in someone else's deployment, it goes
 here. If it explains a mechanism, it goes in `docs/ops/` and must not carry a
