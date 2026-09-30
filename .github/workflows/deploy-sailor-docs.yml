@@ -233,7 +233,13 @@ jobs:
           # prove the FINAL page is reachable, which the paths above already
           # cover; it says nothing about whether the redirect itself fired.
           old_url="${worker_base}/docs/billing"
-          redirect_code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "$old_url" || echo 000)
+          # _redirects takes effect after the assets themselves, so a fresh
+          # deploy can 404 here for a few seconds: poll up to ~60s first.
+          for _ in $(seq 1 12); do
+            redirect_code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "$old_url" || echo 000)
+            [ "$redirect_code" = "301" ] && break
+            sleep 5
+          done
           location=$(curl -sS -o /dev/null -D - --max-time 30 "$old_url" | tr -d '\r' | awk -F': ' 'tolower($1)=="location"{print $2}')
           echo "$old_url → $redirect_code, Location: ${location:-<none>}"
           if [ "$redirect_code" != "301" ]; then
