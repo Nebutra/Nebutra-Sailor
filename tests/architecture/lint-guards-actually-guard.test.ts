@@ -77,6 +77,11 @@ const CASES: Case[] = [
     path: "apps/landing/src/__lint_guard_probe.tsx",
   },
   {
+    guard: "lint-landing-inline-i18n",
+    violation: 'export const copy = { en: "Hello", zh: "你好" };\n',
+    path: "apps/landing/src/__lint_guard_probe.tsx",
+  },
+  {
     guard: "lint-no-raw-inputs",
     violation: 'export const C = () => <input type="text" />;\n',
   },
