@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = await getTranslations({ locale: lang, namespace: "sitePages.home" });
   return buildPageMetadata(
-    sitePageMeta(lang, "/", {
+    await sitePageMeta(lang, "/", {
       description: t("metaDescription"),
     }),
   );

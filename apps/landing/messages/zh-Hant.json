@@ -1953,5 +1953,202 @@
         "buildingLink": "我們正在打造的"
       }
     }
+  },
+  "siteMap": {
+    "sections": {
+      "home": {
+        "title": "首頁",
+        "is": "宣言，由日誌領銜。"
+      },
+      "journal": {
+        "title": "日誌",
+        "is": "創辦人的文章：我們對如今怎麼造東西的看法。"
+      },
+      "sailor": {
+        "title": "開源平台",
+        "is": "一切都建在它上面的開源平台，今天就能用。"
+      },
+      "sleptons": {
+        "title": "生態",
+        "is": "人、想法、需求與資本彼此找到的地方——包括創意與需求牆。"
+      },
+      "building": {
+        "title": "正在造的",
+        "is": "創辦人作業系統，以及一路在平台上長出來的產品。"
+      },
+      "company": {
+        "title": "公司",
+        "is": "我們是誰、怎麼工作、怎麼聯絡我們，以及法律頁面。"
+      }
+    },
+    "pages": {
+      "home": {
+        "title": "首頁"
+      },
+      "blog": {
+        "title": "日誌",
+        "slug": {
+          "title": "文章"
+        },
+        "author": {
+          "author": {
+            "title": "作者"
+          }
+        },
+        "tag": {
+          "tag": {
+            "title": "主題"
+          }
+        }
+      },
+      "news": {
+        "title": "新聞"
+      },
+      "sailor": {
+        "title": "開源平台",
+        "studio": {
+          "title": "Sailor Studio",
+          "frame": {
+            "title": "Sailor Studio 畫框"
+          }
+        }
+      },
+      "features": {
+        "title": "功能包",
+        "name": {
+          "title": "功能包"
+        }
+      },
+      "pricing": {
+        "title": "定價"
+      },
+      "licensing": {
+        "title": "授權"
+      },
+      "getLicense": {
+        "title": "取得授權"
+      },
+      "ai": {
+        "models": {
+          "title": "AI 模型"
+        }
+      },
+      "open": {
+        "title": "開放平台"
+      },
+      "changelog": {
+        "title": "更新日誌",
+        "version": {
+          "title": "版本"
+        }
+      },
+      "showcase": {
+        "title": "作品展示"
+      },
+      "status": {
+        "title": "服務狀態",
+        "history": {
+          "title": "事件歷史"
+        },
+        "subscription": {
+          "title": "狀態訂閱"
+        },
+        "incidents": {
+          "id": {
+            "title": "事件"
+          }
+        }
+      },
+      "security": {
+        "title": "安全"
+      },
+      "refer": {
+        "title": "推薦"
+      },
+      "sleptons": {
+        "title": "生態"
+      },
+      "ideas": {
+        "title": "創意與需求"
+      },
+      "solutions": {
+        "title": "資本",
+        "slug": {
+          "title": "方案"
+        },
+        "chinaVc": {
+          "id": {
+            "title": "投資機構"
+          }
+        },
+        "globalVc": {
+          "id": {
+            "title": "投資機構"
+          }
+        }
+      },
+      "building": {
+        "title": "正在造的"
+      },
+      "roadmap": {
+        "title": "路線圖"
+      },
+      "playbook": {
+        "title": "演示合輯"
+      },
+      "opc": {
+        "title": "OPC"
+      },
+      "about": {
+        "title": "關於",
+        "whitepaper": {
+          "title": "白皮書"
+        },
+        "products": {
+          "title": "創辦人作業系統"
+        },
+        "businessPortfolio": {
+          "title": "業務版圖"
+        },
+        "global": {
+          "title": "全球"
+        },
+        "innovation": {
+          "title": "創新"
+        }
+      },
+      "careers": {
+        "title": "加入我們"
+      },
+      "contact": {
+        "title": "聯絡"
+      },
+      "faq": {
+        "title": "常見問題"
+      },
+      "privacy": {
+        "title": "隱私政策"
+      },
+      "terms": {
+        "title": "服務條款"
+      },
+      "cookies": {
+        "title": "Cookie 政策"
+      },
+      "credits": {
+        "title": "致謝"
+      },
+      "dpa": {
+        "title": "資料處理協議"
+      },
+      "refund": {
+        "title": "退款政策"
+      },
+      "legal": {
+        "slug": {
+          "title": "法律文件"
+        }
+      }
+    }
   }
 }

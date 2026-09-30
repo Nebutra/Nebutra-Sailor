@@ -1953,5 +1953,202 @@
         "buildingLink": "我们正在造的"
       }
     }
+  },
+  "siteMap": {
+    "sections": {
+      "home": {
+        "title": "首页",
+        "is": "宣言，由日志领衔。"
+      },
+      "journal": {
+        "title": "日志",
+        "is": "创始人的文章：我们对如今怎么造东西的看法。"
+      },
+      "sailor": {
+        "title": "开源平台",
+        "is": "一切都建在它上面的开源平台，今天就能用。"
+      },
+      "sleptons": {
+        "title": "生态",
+        "is": "人、想法、需求与资本彼此找到的地方——包括创意与需求墙。"
+      },
+      "building": {
+        "title": "正在造的",
+        "is": "创始人操作系统，以及一路在平台上长出来的产品。"
+      },
+      "company": {
+        "title": "公司",
+        "is": "我们是谁、怎么工作、怎么联系我们，以及法律页面。"
+      }
+    },
+    "pages": {
+      "home": {
+        "title": "首页"
+      },
+      "blog": {
+        "title": "日志",
+        "slug": {
+          "title": "文章"
+        },
+        "author": {
+          "author": {
+            "title": "作者"
+          }
+        },
+        "tag": {
+          "tag": {
+            "title": "主题"
+          }
+        }
+      },
+      "news": {
+        "title": "新闻"
+      },
+      "sailor": {
+        "title": "开源平台",
+        "studio": {
+          "title": "Sailor Studio",
+          "frame": {
+            "title": "Sailor Studio 画框"
+          }
+        }
+      },
+      "features": {
+        "title": "功能包",
+        "name": {
+          "title": "功能包"
+        }
+      },
+      "pricing": {
+        "title": "定价"
+      },
+      "licensing": {
+        "title": "授权"
+      },
+      "getLicense": {
+        "title": "获取授权"
+      },
+      "ai": {
+        "models": {
+          "title": "AI 模型"
+        }
+      },
+      "open": {
+        "title": "开放平台"
+      },
+      "changelog": {
+        "title": "更新日志",
+        "version": {
+          "title": "版本"
+        }
+      },
+      "showcase": {
+        "title": "作品展示"
+      },
+      "status": {
+        "title": "服务状态",
+        "history": {
+          "title": "事件历史"
+        },
+        "subscription": {
+          "title": "状态订阅"
+        },
+        "incidents": {
+          "id": {
+            "title": "事件"
+          }
+        }
+      },
+      "security": {
+        "title": "安全"
+      },
+      "refer": {
+        "title": "推荐"
+      },
+      "sleptons": {
+        "title": "生态"
+      },
+      "ideas": {
+        "title": "创意与需求"
+      },
+      "solutions": {
+        "title": "资本",
+        "slug": {
+          "title": "方案"
+        },
+        "chinaVc": {
+          "id": {
+            "title": "投资机构"
+          }
+        },
+        "globalVc": {
+          "id": {
+            "title": "投资机构"
+          }
+        }
+      },
+      "building": {
+        "title": "正在造的"
+      },
+      "roadmap": {
+        "title": "路线图"
+      },
+      "playbook": {
+        "title": "演示合集"
+      },
+      "opc": {
+        "title": "OPC"
+      },
+      "about": {
+        "title": "关于",
+        "whitepaper": {
+          "title": "白皮书"
+        },
+        "products": {
+          "title": "创始人操作系统"
+        },
+        "businessPortfolio": {
+          "title": "业务版图"
+        },
+        "global": {
+          "title": "全球"
+        },
+        "innovation": {
+          "title": "创新"
+        }
+      },
+      "careers": {
+        "title": "加入我们"
+      },
+      "contact": {
+        "title": "联系"
+      },
+      "faq": {
+        "title": "常见问题"
+      },
+      "privacy": {
+        "title": "隐私政策"
+      },
+      "terms": {
+        "title": "服务条款"
+      },
+      "cookies": {
+        "title": "Cookie 政策"
+      },
+      "credits": {
+        "title": "致谢"
+      },
+      "dpa": {
+        "title": "数据处理协议"
+      },
+      "refund": {
+        "title": "退款政策"
+      },
+      "legal": {
+        "slug": {
+          "title": "法律文件"
+        }
+      }
+    }
   }
 }

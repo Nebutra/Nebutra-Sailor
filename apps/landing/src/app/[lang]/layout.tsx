@@ -158,6 +158,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
   // to keep the JS bundle lean (~979 keys → client-relevant subset).
   const CLIENT_NAMESPACES = [
     "siteShell",
+    "siteMap",
     "nav",
     "licenseWizard",
     "legalPages",

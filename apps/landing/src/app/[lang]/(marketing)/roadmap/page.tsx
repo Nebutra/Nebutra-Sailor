@@ -20,7 +20,7 @@ import { Band, Intro } from "@/nebutra/ui/page";
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   return buildPageMetadata(
-    sitePageMeta(lang, "/roadmap", {
+    await sitePageMeta(lang, "/roadmap", {
       description:
         "Nebutra's roadmap in the founder's nine layers: why we exist, where we are going, and what ships next.",
     }),

@@ -2608,10 +2608,6 @@
       {
         "file": "apps/landing/src/nebutra/data/roadmap.ts",
         "count": 8
-      },
-      {
-        "file": "apps/landing/src/site-map.ts",
-        "count": 57
       }
     ]
   }

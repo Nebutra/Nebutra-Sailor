@@ -1,23 +1,23 @@
 /**
- * The Nebutra site speaks English and Simplified Chinese. Copy lives beside
- * the page that shows it, as { en, zh } pairs; this picks one. A locale the
- * site has not been written in reads English — never a half-translated key.
+ * A handful of pages still branch their own copy on "is this a Chinese
+ * reader" rather than reading a translated string per route locale. `siteLang`
+ * gives them that one bit. The site itself speaks the full product locale
+ * wheel (apps/landing/messages/*.json, next-intl) — this is not a second i18n
+ * system, just the en/zh split those pages still hand-roll.
  */
 export type SiteLang = "en" | "zh";
-
-export interface Bi<T = string> {
-  en: T;
-  zh: T;
-}
 
 /** Every zh-* route locale reads Chinese; everything else reads English. */
 export function siteLang(locale: string | undefined): SiteLang {
   return locale?.toLowerCase().startsWith("zh") ? "zh" : "en";
 }
 
-export function pick<T>(lang: SiteLang, copy: Bi<T>): T {
-  return copy[lang];
-}
-
-/** The route locale each site language is served under. */
-export const SITE_LOCALE: Record<SiteLang, string> = { en: "en", zh: "zh-Hans" };
+/**
+ * `siteMap.pages.<key>.title` / `siteMap.sections.<id>.title` / `.is` keys are
+ * built at runtime from site-map.ts data (`SitePage.key`, `SectionId`) —
+ * src/types/next-intl.d.ts gives every `useTranslations`/`getTranslations`
+ * call a per-literal key union, which a computed dotted path can never satisfy.
+ * Callers that read the `siteMap` namespace with a dynamic key narrow their
+ * translator to this shape once, at the call site: `t as SiteMapTranslator`.
+ */
+export type SiteMapTranslator = (key: string) => string;
