@@ -33,7 +33,6 @@ const CLOSE_DELAY_MS = 240;
 
 export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: string }) {
   const pathname = usePathname() ?? "";
-  const l = siteLang(useLocale());
   const t = useTranslations("siteShell");
   // A full-viewport tool keeps the bar but gives the screen back to the tool.
   const compact = pageAt(pathname)?.chrome === "tool";

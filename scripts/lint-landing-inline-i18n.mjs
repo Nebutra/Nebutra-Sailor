@@ -45,7 +45,6 @@ function count(file) {
   let n = 0;
   for (const re of PATTERNS) {
     re.lastIndex = 0;
-    // biome-ignore lint/suspicious/noAssignInExpressions: iterator idiom
     while (re.exec(src)) n++;
   }
   return n;
