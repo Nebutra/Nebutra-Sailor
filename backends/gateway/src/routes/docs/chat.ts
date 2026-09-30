@@ -15,6 +15,7 @@
  */
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { runWithFallback } from "@nebutra/agents";
+import { brand } from "@nebutra/brand/metadata";
 import { logger } from "@nebutra/logger";
 import { streamText as aiStreamText } from "ai";
 import { createEndpointRateLimit } from "../../middlewares/rateLimit.js";
@@ -84,7 +85,7 @@ const chatRoute = createRoute({
 });
 
 const SYSTEM_PROMPT = [
-  "You are the Nebutra Sailor documentation assistant.",
+  `You are the ${brand.name} Sailor documentation assistant.`,
   "Answer only from the provided documentation context. If the context does not contain the answer, say you don't know and suggest which docs section to check.",
   "Be concise. Prefer short paragraphs and code fences over long prose.",
 ].join(" ");

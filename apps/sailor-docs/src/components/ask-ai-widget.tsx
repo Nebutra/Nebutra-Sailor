@@ -12,7 +12,9 @@
  * and falls back to a "not configured" notice if the gateway answers that
  * way (no LLM provider key set) — see `isGatewayConfigured()`.
  */
+import { brand } from "@nebutra/brand/metadata";
 import { Cross, Message, PaperAirplane } from "@nebutra/icons";
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useEffect, useRef, useState } from "react";
 import { askDocsAssistant, type ChatMessage, isGatewayConfigured } from "@/lib/gateway-client";
 
@@ -59,19 +61,21 @@ export function AskAiWidget() {
         <div className="flex h-[28rem] w-80 flex-col rounded-xl border bg-fd-card text-fd-card-foreground shadow-lg">
           <div className="flex items-center justify-between border-b px-3 py-2">
             <p className="text-sm font-medium">Ask the docs</p>
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              shape="square"
+              iconSize="sm"
               aria-label="Close docs assistant"
-              className="rounded-md p-1 text-fd-muted-foreground hover:bg-fd-accent"
               onClick={() => setOpen(false)}
             >
               <Cross className="size-4" />
-            </button>
+            </Button>
           </div>
           <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto p-3 text-sm">
             {messages.length === 0 && (
               <p className="text-fd-muted-foreground">
-                Ask a question about Nebutra Sailor — answered from the docs.
+                Ask a question about {brand.name} Sailor — answered from the docs.
               </p>
             )}
             {messages.map((m, i) => (
@@ -94,32 +98,36 @@ export function AskAiWidget() {
               send();
             }}
           >
-            <input
+            <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a question…"
-              className="flex-1 rounded-md border bg-fd-secondary px-2 py-1.5 text-sm text-fd-secondary-foreground placeholder:text-fd-muted-foreground"
+              className="flex-1"
               disabled={pending}
             />
-            <button
+            <Button
               type="submit"
+              variant="ghost"
+              shape="square"
+              iconSize="sm"
               aria-label="Send"
               disabled={pending || !input.trim()}
-              className="rounded-md p-1.5 text-fd-muted-foreground hover:bg-fd-accent disabled:opacity-50"
             >
               <PaperAirplane className="size-4" />
-            </button>
+            </Button>
           </form>
         </div>
       ) : (
-        <button
+        <Button
           type="button"
+          variant="secondary"
+          shape="circle"
+          shadow="md"
           onClick={() => setOpen(true)}
-          className="flex items-center gap-2 rounded-full border bg-fd-card px-4 py-2 text-sm font-medium text-fd-card-foreground shadow-lg hover:bg-fd-accent"
+          prefix={<Message className="size-4" />}
         >
-          <Message className="size-4" />
           Ask AI
-        </button>
+        </Button>
       )}
     </div>
   );
