@@ -34,6 +34,7 @@
     "@nebutra/router-supply": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
+    "@nebutra/vault": "workspace:*",
     "geist": "catalog:",
     "next": "catalog:",
     "next-intl": "^4.12.0",

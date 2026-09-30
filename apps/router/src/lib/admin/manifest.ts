@@ -71,6 +71,34 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
           ],
           actions: ["channel.sync", "price.publish", "price.unpublish_drifted"],
         },
+        {
+          id: "source",
+          label: "Supply sources",
+          list: `${V1}/sources`,
+          columns: [
+            { key: "label", label: "Source" },
+            { key: "kind", label: "Kind", kind: "badge" },
+            { key: "protocol", label: "Protocol", kind: "mono" },
+            { key: "enabled", label: "Enabled", kind: "badge" },
+            { key: "lastDiscoveredAt", label: "Last discovered", kind: "time" },
+          ],
+          actions: ["source.add", "source.probe"],
+        },
+        {
+          id: "capability",
+          label: "Model capability",
+          list: `${V1}/capabilities`,
+          search: true,
+          columns: [
+            { key: "publicModel", label: "Public model", kind: "mono" },
+            { key: "source", label: "Source" },
+            { key: "upstreamModel", label: "Upstream model", kind: "mono" },
+            { key: "state", label: "State", kind: "badge" },
+            { key: "stateReason", label: "Reason", kind: "mono" },
+            { key: "lastProbeAt", label: "Last probe", kind: "time" },
+            { key: "nextProbeAt", label: "Next retry", kind: "time" },
+          ],
+        },
       ],
       actions: [
         {
@@ -144,6 +172,83 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
           description:
             "Unpublish every model that now costs more upstream than we charge. Prices are never raised automatically — a silent increase ambushes the customer on their next invoice.",
         },
+        {
+          id: "source.add",
+          verb: "Add source",
+          resource: "source",
+          role: "platform_operator",
+          url: `${V1}/actions/source.add`,
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["key", "label", "baseUrl", "kind"],
+            properties: {
+              key: { type: "string" },
+              label: { type: "string" },
+              baseUrl: { type: "string" },
+              kind: {
+                type: "string",
+                enum: ["OPENAI_COMPATIBLE", "FAL_AI", "NEWAPI_CHANNEL", "CLIPROXYAPI"],
+              },
+              apiKey: { type: "string" },
+              managementKey: { type: "string" },
+              rootPassword: { type: "string" },
+              channelName: { type: "string" },
+              knownModelIds: { type: "array", items: { type: "string" } },
+            },
+          },
+          description:
+            "Register a supply source (base URL + credential), auto-detect its protocol, discover its models and probe them immediately.",
+        },
+        {
+          id: "source.probe",
+          verb: "Probe now",
+          resource: "source",
+          role: "platform_operator",
+          url: `${V1}/actions/source.probe`,
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["key"],
+            properties: { key: { type: "string" } },
+          },
+          description: "Re-run discovery and an active probe for every model this source has.",
+        },
+        {
+          id: "discovery.run",
+          verb: "Run discovery",
+          resource: "source",
+          role: "platform_operator",
+          url: `${V1}/actions/discovery.run`,
+          plan: false,
+          destructive: false,
+          description:
+            "Discovery diff for every enabled source — new / vanished models. Called on the daily schedule (backends/gateway Inngest); available here for an on-demand run.",
+        },
+        {
+          id: "probe.idle",
+          verb: "Probe idle models",
+          resource: "capability",
+          role: "platform_operator",
+          url: `${V1}/actions/probe.idle`,
+          plan: false,
+          destructive: false,
+          description:
+            "Active-probe every AVAILABLE/DEGRADED model nobody has probed in 24h. Called on the daily schedule.",
+        },
+        {
+          id: "probe.suspended",
+          verb: "Retry suspended models",
+          resource: "capability",
+          role: "platform_operator",
+          url: `${V1}/actions/probe.suspended`,
+          plan: false,
+          destructive: false,
+          description:
+            "Retry every SUSPENDED model whose backoff has elapsed. Called on the hourly schedule.",
+        },
       ],
       signals: [
         {
@@ -175,6 +280,13 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
           severity: "warn",
           probe: `${V1}/signals/account.expired`,
           resource: "account",
+        },
+        {
+          id: "supply.suspended",
+          label: "A sold model's supply is suspended",
+          severity: "critical",
+          probe: `${V1}/signals/supply.suspended`,
+          resource: "capability",
         },
       ],
       policies: [

@@ -75,15 +75,28 @@ describe("router admin manifest", () => {
       "channel.sync",
       "price.publish",
       "price.unpublish_drifted",
+      "source.add",
+      "source.probe",
+      "discovery.run",
+      "probe.idle",
+      "probe.suspended",
     ]);
     expect(supply?.signals.map((s) => s.id)).toEqual([
       "engine.down",
       "price.drift",
       "channel.drift",
       "account.expired",
+      "supply.suspended",
     ]);
     expect(supply?.actions.every((a) => a.role === "platform_operator")).toBe(true);
-    expect(supply?.resources.map((r) => r.id)).toEqual(["engine", "account", "login", "shelf"]);
+    expect(supply?.resources.map((r) => r.id)).toEqual([
+      "engine",
+      "account",
+      "login",
+      "shelf",
+      "source",
+      "capability",
+    ]);
   });
 });
 

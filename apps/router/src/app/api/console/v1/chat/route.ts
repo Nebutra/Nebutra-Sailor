@@ -6,6 +6,7 @@ import { requireConsoleTenant } from "@/lib/console-tenant";
 import type { EdgeIdentity } from "@/lib/openai-edge";
 import { proxyOpenAiCompatible, RouterSupplyUnavailableError, refuse } from "@/lib/openai-edge";
 import { getApiKeyRepository } from "@/lib/router-keys";
+import { availabilityFor } from "@/lib/supply/capability";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -52,7 +53,7 @@ const ChatBody = z.object({
   maxTokens: z.number().int().positive().max(8192).optional(),
 });
 
-const guard = createRouterGuard();
+const guard = createRouterGuard(undefined, undefined, { availabilityFor });
 const rateLimit = createRouterRateLimiter();
 
 export async function POST(request: Request) {

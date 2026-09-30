@@ -9,6 +9,7 @@ import type {
   SignalReading,
 } from "@nebutra/contracts/admin";
 import type { StaffCaller } from "../admin/service-token";
+import { suspendedPublicModels } from "./capability";
 import {
   CLIPROXY_CHANNEL_NAME,
   CLIPROXY_INTERNAL_URL,
@@ -337,6 +338,34 @@ export async function readSignal(
         detail: down.map((e) => `${e.id}: ${e.detail}`).join("; ") || undefined,
         resource: "engine",
       };
+    }
+    case "supply.suspended": {
+      try {
+        const suspended = await suspendedPublicModels();
+        return {
+          id,
+          status: suspended.length ? "raised" : "ok",
+          severity: "critical",
+          probedAt,
+          title: suspended.length
+            ? `${suspended.length} model(s) suspended — automatically off the public shelf`
+            : "No sold model currently has a suspended supply",
+          detail:
+            suspended
+              .map((s) => `${s.publicModel}${s.reason ? ` (${s.reason})` : ""}`)
+              .join(", ") || undefined,
+          resource: "capability",
+          data: { models: suspended },
+        };
+      } catch (error) {
+        return {
+          id,
+          status: "unknown",
+          severity: "critical",
+          probedAt,
+          detail: error instanceof Error ? error.message : "probe failed",
+        };
+      }
     }
     default:
       return null;

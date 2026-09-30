@@ -8,6 +8,7 @@ import {
   getRelatedListings,
   type ListingModel,
 } from "./listing-catalog";
+import { availabilityFor } from "./supply/capability";
 
 /**
  * The rates the /v1 edge will actually charge, for every surface that quotes a
@@ -45,16 +46,30 @@ export async function publishedPriceMap(): Promise<Map<string, RouterPriceRow>> 
  * Restate a listing's rates as the ones we charge. A model with no published
  * price keeps zeros, which the shelf already renders as "—" — honest, because
  * a model we cannot price is one the edge refuses.
+ *
+ * `sellable` is additionally gated on supply capability probing (ADR
+ * 2026-09-30): `inventoryHas` (in `listing-catalog.ts`) only proves a model is
+ * *listed* by an upstream — that is exactly what let a New-API channel that
+ * advertised `gpt-image-2.5-flare` while every backing account was broken
+ * stay on the public shelf. A model absent from the availability map (not yet
+ * discovered, or backed by a source outside the new registry) is left
+ * unchanged — the gate only ever *removes* sellability it can prove is false,
+ * it never invents sellability the existing inventory check did not already
+ * grant.
  */
 export function applyPublishedPrices(
   models: readonly ListingModel[],
   prices: ReadonlyMap<string, RouterPriceRow>,
+  availability?: ReadonlyMap<string, { sellable: boolean }>,
 ): ListingModel[] {
   return models.map((model) => {
     const row = prices.get(model.publicModel);
-    if (!row) return { ...model, inputPerMTok: 0, outputPerMTok: 0 };
+    const gate = availability?.get(model.publicModel);
+    const sellable = model.sellable && (gate ? gate.sellable : true);
+    if (!row) return { ...model, sellable, inputPerMTok: 0, outputPerMTok: 0 };
     return {
       ...model,
+      sellable,
       inputPerMTok: num(row.inputPerMTok),
       outputPerMTok: num(row.outputPerMTok),
     };
@@ -77,16 +92,23 @@ export function applyPublishedPrices(
 export async function getPricedListingCatalog(): Promise<
   Awaited<ReturnType<typeof getListingCatalog>>
 > {
-  const [catalog, prices] = await Promise.all([getListingCatalog(), publishedPriceMap()]);
-  return { ...catalog, models: applyPublishedPrices(catalog.models, prices) };
+  const catalog = await getListingCatalog();
+  const [prices, availability] = await Promise.all([
+    publishedPriceMap(),
+    availabilityFor(catalog.models.map((m) => m.publicModel)),
+  ]);
+  return { ...catalog, models: applyPublishedPrices(catalog.models, prices, availability) };
 }
 
 /** One model by slug, priced. */
 export async function getPricedModelBySlug(slug: string): Promise<ListingModel | null> {
   const model = await getListedModelBySlug(slug);
   if (!model) return null;
-  const prices = await publishedPriceMap();
-  return applyPublishedPrices([model], prices)[0] ?? null;
+  const [prices, availability] = await Promise.all([
+    publishedPriceMap(),
+    availabilityFor([model.publicModel]),
+  ]);
+  return applyPublishedPrices([model], prices, availability)[0] ?? null;
 }
 
 /** Related models for the detail page, priced. */
@@ -98,5 +120,6 @@ export async function getPricedRelatedListings(
     getRelatedListings(seed, limit),
     publishedPriceMap(),
   ]);
-  return applyPublishedPrices(related, prices);
+  const availability = await availabilityFor(related.map((m) => m.publicModel));
+  return applyPublishedPrices(related, prices, availability);
 }

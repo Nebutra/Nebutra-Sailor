@@ -107,6 +107,17 @@ export {
   startOfUtcDay,
 } from "./router-billing.repository";
 export type {
+  DiscoveredModelInput,
+  DiscoveryDiff,
+  ModelAvailability,
+  RecordProbeInput,
+  SupplyCapabilityRow,
+  SupplySourceRow,
+  UpsertSourceInput,
+} from "./router-supply.repository";
+// Router supply capability probing (ADR 2026-09-30) — discovery/verification state
+export { RouterSupplyRepository } from "./router-supply.repository";
+export type {
   RouterUsageBucket,
   RouterUsageByKey,
   RouterUsageByModel,

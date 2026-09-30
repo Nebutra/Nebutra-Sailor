@@ -1,4 +1,5 @@
-import { openaiCompatibleUrl, proxyChatCompletions } from "@nebutra/router-supply";
+import { classifyFailure, openaiCompatibleUrl, proxyChatCompletions } from "@nebutra/router-supply";
+import { recordPassiveSignal } from "./supply/capability";
 
 export class RouterSupplyUnavailableError extends Error {
   constructor(message = "router_unconfigured") {
@@ -59,6 +60,7 @@ export type EdgeRefusalCode =
   | "rate_limit_exceeded"
   | "unknown_model"
   | "model_not_published"
+  | "model_unavailable"
   | "insufficient_balance"
   | "key_quota_exceeded"
   | "payload_too_large"
@@ -730,6 +732,22 @@ export async function proxyOpenAiCompatible(
       if (parsed.model === "unknown") {
         const uploaded = read.multipartModel?.();
         if (uploaded) parsed.model = uploaded;
+      }
+      // Passive supply signal (ADR 2026-09-30): free health data from the real
+      // relay, no extra request. `supplyPath` is the upstream channel New-API
+      // reports serving it — for the CLIProxyAPI channel this happens to equal
+      // the source key the capability registry uses (`cliproxyapi`), so no
+      // extra mapping table is needed for the one wired-up source. Unresolved
+      // pairings (an unknown channel, or none reported) are a silent no-op.
+      if (supplyPath && parsed.model !== "unknown") {
+        const ok =
+          upstreamResponse.status >= 200 && upstreamResponse.status < 300 && !parsed.errored;
+        void recordPassiveSignal({
+          sourceKey: supplyPath,
+          upstreamModel: parsed.model,
+          ok,
+          reason: ok ? null : classifyFailure(upstreamResponse.status, ""),
+        });
       }
       if (opts.onUsage) {
         void Promise.resolve(

@@ -113,6 +113,28 @@ export type RouterBilling = Pick<
 /** The log seam, narrowed the same way, so the guard stays testable. */
 export type RouterRequestLog = Pick<RequestLogRepository, "record">;
 
+/**
+ * The supply capability gate (ADR 2026-09-30), narrowed to what `admit` reads.
+ * Unlike `RouterBilling`/`RouterRequestLog`, the *default* here is a no-op
+ * (every model reads as sellable) rather than the real, DB-backed
+ * implementation — the availability gate is additive on top of the existing
+ * published-price gate, so "no data" must fail open. Production route
+ * handlers wire the real one explicitly (see `api/v1/[...path]/route.ts`);
+ * this keeps every existing `admit` test hermetic without needing to know
+ * this gate exists.
+ */
+export interface RouterSupplyAvailability {
+  availabilityFor(
+    models: readonly string[],
+  ): Promise<Map<string, { sellable: boolean; reason: string | null }>>;
+}
+
+const NO_SUPPLY_GATE: RouterSupplyAvailability = {
+  async availabilityFor() {
+    return new Map();
+  },
+};
+
 function repo(): RouterBilling {
   return new RouterBillingRepository(getSystemDb());
 }
@@ -158,9 +180,11 @@ function overKeyLimit(spend: RouterKeySpend, amount: number): "daily" | "total" 
 export function createRouterGuard(
   injected?: RouterBilling,
   injectedLog?: RouterRequestLog,
+  injectedSupply?: RouterSupplyAvailability,
 ): EdgeGuard {
   const db = () => injected ?? repo();
   const logs = () => injectedLog ?? logRepo();
+  const supply = () => injectedSupply ?? NO_SUPPLY_GATE;
   return {
     async admit(input: EdgeAdmitInput): Promise<EdgeAdmitDecision> {
       const billing = db();
@@ -182,17 +206,31 @@ export function createRouterGuard(
         };
       }
 
+      // Supply capability gate (ADR 2026-09-30): one query for the whole
+      // candidate list, checked alongside published/active. A model whose
+      // only backing source is currently SUSPENDED is refused here rather
+      // than relayed into the same upstream failure the incident this system
+      // exists to catch — `auth_not_found` bubbling to the customer as a raw
+      // 503 instead of a clear, typed refusal.
+      const availability = await supply().availabilityFor(input.models);
+
       // Price every candidate; drop the ones we cannot price. The reservation is
       // the most expensive survivor, because failover may land on any of them.
       const priced: Array<{ model: string; price: PriceResult }> = [];
       let sawRow = false;
       let sawUnpublished = false;
+      let suspendedReason: string | null = null;
       for (const model of input.models) {
         const row = await billing.findPrice(model);
         if (!row) continue;
         sawRow = true;
         if (!row.published || !row.isActive) {
           sawUnpublished = true;
+          continue;
+        }
+        const gate = availability.get(model);
+        if (gate && !gate.sellable) {
+          suspendedReason = gate.reason ?? suspendedReason;
           continue;
         }
         const price = reserveWorstCase(
@@ -204,6 +242,14 @@ export function createRouterGuard(
       }
 
       if (priced.length === 0) {
+        if (suspendedReason !== null) {
+          return {
+            ok: false,
+            status: 503,
+            code: "model_unavailable",
+            message: `Model \`${input.models[0]}\` is temporarily unavailable (its supply is suspended). Try again shortly or use another model.`,
+          };
+        }
         return sawUnpublished || sawRow
           ? {
               ok: false,

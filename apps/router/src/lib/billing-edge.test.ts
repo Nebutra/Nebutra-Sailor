@@ -147,6 +147,30 @@ describe("router money guard — admit", () => {
     expect(decision).toMatchObject({ ok: false, status: 403, code: "model_not_published" });
   });
 
+  it("with no supply gate injected, a published model is admitted regardless (fail open)", async () => {
+    // The default guard (no third argument) never consults supply capability
+    // — every existing caller of createRouterGuard() that has not opted in
+    // stays exactly as before.
+    const decision = await createRouterGuard(billing()).admit(admitInput());
+    expect(decision.ok).toBe(true);
+  });
+
+  it("refuses with 503 model_unavailable when the injected supply gate says the model is suspended (ADR 2026-09-30)", async () => {
+    const decision = await createRouterGuard(billing(), undefined, {
+      availabilityFor: vi.fn(
+        async () => new Map([["gpt-5", { sellable: false, reason: "auth_not_found" }]]),
+      ),
+    }).admit(admitInput());
+    expect(decision).toMatchObject({ ok: false, status: 503, code: "model_unavailable" });
+  });
+
+  it("admits a published, priced model the supply gate confirms is sellable", async () => {
+    const decision = await createRouterGuard(billing(), undefined, {
+      availabilityFor: vi.fn(async () => new Map([["gpt-5", { sellable: true, reason: null }]])),
+    }).admit(admitInput());
+    expect(decision.ok).toBe(true);
+  });
+
   it("turns a failed hold into 402 insufficient_balance", async () => {
     const decision = await createRouterGuard(billing({ reserve: vi.fn(async () => false) })).admit(
       admitInput(),

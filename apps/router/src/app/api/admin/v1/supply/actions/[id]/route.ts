@@ -5,10 +5,32 @@ import {
 } from "@nebutra/contracts/admin";
 import { ROUTER_ADMIN_MANIFEST } from "@/lib/admin/manifest";
 import { err, gateStaff, json } from "@/lib/admin/service-token";
+import {
+  type AddSourceInput,
+  addSource,
+  probeSourceNow,
+  runActiveProbes,
+  runDiscovery,
+  runSuspendedRetry,
+} from "@/lib/supply/capability";
 import { SupplyConfigError } from "@/lib/supply/clients";
 import { applyChannelSync, planChannelSync } from "@/lib/supply/domain";
 import { completeLogin, isLoginProvider, startLogin } from "@/lib/supply/login";
 import { applyPricePublish, planPricePublish, unpublishDrifted } from "@/lib/supply/pricing";
+
+const SOURCE_KINDS = new Set(["OPENAI_COMPATIBLE", "FAL_AI", "NEWAPI_CHANNEL", "CLIPROXYAPI"]);
+
+function isAddSourceInput(
+  input: Record<string, unknown>,
+): input is AddSourceInput & Record<string, unknown> {
+  return (
+    typeof input.key === "string" &&
+    typeof input.label === "string" &&
+    typeof input.baseUrl === "string" &&
+    typeof input.kind === "string" &&
+    SOURCE_KINDS.has(input.kind)
+  );
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -64,6 +86,32 @@ export async function POST(request: Request, context: RouteContext) {
       if (typeof redirectUrl !== "string" || !redirectUrl)
         return json(err("invalid_input", "input.redirectUrl is required."), 400);
       return json(await completeLogin(redirectUrl, gate.caller, request));
+    }
+    if (id === "source.add") {
+      if (!isAddSourceInput(parsed.data.input))
+        return json(
+          err(
+            "invalid_input",
+            "input.{key,label,baseUrl,kind} are required; kind must be a known source kind.",
+          ),
+          400,
+        );
+      return json(await addSource(parsed.data.input, gate.caller, request));
+    }
+    if (id === "source.probe") {
+      const key = parsed.data.input.key;
+      if (typeof key !== "string" || !key)
+        return json(err("invalid_input", "input.key is required."), 400);
+      return json(await probeSourceNow(key, gate.caller, request));
+    }
+    if (id === "discovery.run") {
+      return json({ results: await runDiscovery() });
+    }
+    if (id === "probe.idle") {
+      return json({ results: await runActiveProbes() });
+    }
+    if (id === "probe.suspended") {
+      return json({ results: await runSuspendedRetry() });
     }
     return json(err("not_found", `Action ${id} has no handler.`), 404);
   } catch (error) {
