@@ -20,6 +20,15 @@ describe("verifyInternalServiceCaller", () => {
     expect(await verifyInternalServiceCaller(requestWithToken(token))).toBe(true);
   });
 
+  it("accepts the token as a Bearer credential, which is how the gateway's upstream loop sends it", async () => {
+    process.env.SERVICE_SECRET = "test-secret";
+    const token = await signServiceToken({});
+    const request = new Request("https://router.internal/api/internal/v1/chat/completions", {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    expect(await verifyInternalServiceCaller(request)).toBe(true);
+  });
+
   it("rejects a request with no token", async () => {
     process.env.SERVICE_SECRET = "test-secret";
     expect(await verifyInternalServiceCaller(requestWithToken())).toBe(false);

@@ -20,7 +20,10 @@ import { parseAliasTableJson, resolveAliases } from "@nebutra/router-supply";
  * a different, narrower caller shape with none of that.
  */
 export async function verifyInternalServiceCaller(request: Request): Promise<boolean> {
-  const token = request.headers.get("x-service-token") ?? undefined;
+  // The gateway's upstream loop sends every upstream key as a Bearer token, so
+  // accept it there as well as on the dedicated header.
+  const bearer = request.headers.get("authorization")?.match(/^Bearer\s+(.+)$/i)?.[1];
+  const token = request.headers.get("x-service-token") ?? bearer ?? undefined;
   return verifyServiceToken(token);
 }
 
