@@ -143,6 +143,7 @@ jobs:
         env:
           CI: "true"
           NEXT_PUBLIC_DOCS_ORIGIN_URL: https://nebutra.com/docs
+          NEXT_PUBLIC_GATEWAY_URL: https://api.nebutra.com
         run: pnpm run build:static
 
       # Assets-only deploy: wrangler.jsonc has no `main`, so this uploads
