@@ -12,7 +12,7 @@ import { Band, Intro } from "@/nebutra/ui/page";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  return buildPageMetadata(sitePageMeta(lang, "/sailor"));
+  return buildPageMetadata(await sitePageMeta(lang, "/sailor"));
 }
 
 export default async function SailorPage({ params }: { params: Promise<{ lang: string }> }) {

@@ -1953,5 +1953,202 @@
         "buildingLink": "What we're building"
       }
     }
+  },
+  "siteMap": {
+    "sections": {
+      "home": {
+        "title": "Home",
+        "is": "The manifesto, led by the Journal."
+      },
+      "journal": {
+        "title": "Journal",
+        "is": "The founder's essays: what we believe about building now."
+      },
+      "sailor": {
+        "title": "Sailor",
+        "is": "The open-source platform everything is built on, usable today."
+      },
+      "sleptons": {
+        "title": "Sleptons",
+        "is": "Where people, ideas, needs and capital find each other — including Ideas, the UGC of ideas and needs."
+      },
+      "building": {
+        "title": "Building",
+        "is": "The founder OS, and the products grown on the platform along the way."
+      },
+      "company": {
+        "title": "Company",
+        "is": "Who we are, how we work, how to reach us, and the legal pages."
+      }
+    },
+    "pages": {
+      "home": {
+        "title": "Home"
+      },
+      "blog": {
+        "title": "Journal",
+        "slug": {
+          "title": "Essay"
+        },
+        "author": {
+          "author": {
+            "title": "Author"
+          }
+        },
+        "tag": {
+          "tag": {
+            "title": "Topic"
+          }
+        }
+      },
+      "news": {
+        "title": "News"
+      },
+      "sailor": {
+        "title": "Sailor",
+        "studio": {
+          "title": "Sailor Studio",
+          "frame": {
+            "title": "Sailor Studio frame"
+          }
+        }
+      },
+      "features": {
+        "title": "Packages",
+        "name": {
+          "title": "Package"
+        }
+      },
+      "pricing": {
+        "title": "Pricing"
+      },
+      "licensing": {
+        "title": "Licensing"
+      },
+      "getLicense": {
+        "title": "Get a license"
+      },
+      "ai": {
+        "models": {
+          "title": "AI models"
+        }
+      },
+      "open": {
+        "title": "Open platform"
+      },
+      "changelog": {
+        "title": "Changelog",
+        "version": {
+          "title": "Release"
+        }
+      },
+      "showcase": {
+        "title": "Built with Sailor"
+      },
+      "status": {
+        "title": "Status",
+        "history": {
+          "title": "Incident history"
+        },
+        "subscription": {
+          "title": "Status subscription"
+        },
+        "incidents": {
+          "id": {
+            "title": "Incident"
+          }
+        }
+      },
+      "security": {
+        "title": "Security"
+      },
+      "refer": {
+        "title": "Refer"
+      },
+      "sleptons": {
+        "title": "Sleptons"
+      },
+      "ideas": {
+        "title": "Ideas"
+      },
+      "solutions": {
+        "title": "Capital",
+        "slug": {
+          "title": "Solution"
+        },
+        "chinaVc": {
+          "id": {
+            "title": "Investor"
+          }
+        },
+        "globalVc": {
+          "id": {
+            "title": "Investor"
+          }
+        }
+      },
+      "building": {
+        "title": "Building"
+      },
+      "roadmap": {
+        "title": "Roadmap"
+      },
+      "playbook": {
+        "title": "Playbook"
+      },
+      "opc": {
+        "title": "OPC"
+      },
+      "about": {
+        "title": "About",
+        "whitepaper": {
+          "title": "Whitepaper"
+        },
+        "products": {
+          "title": "Founder OS"
+        },
+        "businessPortfolio": {
+          "title": "Business"
+        },
+        "global": {
+          "title": "Global"
+        },
+        "innovation": {
+          "title": "Innovation"
+        }
+      },
+      "careers": {
+        "title": "Careers"
+      },
+      "contact": {
+        "title": "Contact"
+      },
+      "faq": {
+        "title": "FAQ"
+      },
+      "privacy": {
+        "title": "Privacy"
+      },
+      "terms": {
+        "title": "Terms"
+      },
+      "cookies": {
+        "title": "Cookies"
+      },
+      "credits": {
+        "title": "Credits"
+      },
+      "dpa": {
+        "title": "DPA"
+      },
+      "refund": {
+        "title": "Refunds"
+      },
+      "legal": {
+        "slug": {
+          "title": "Legal"
+        }
+      }
+    }
   }
 }

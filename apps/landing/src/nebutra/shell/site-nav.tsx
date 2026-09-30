@@ -11,10 +11,10 @@ import {
   CommandList,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { siteLang } from "@/nebutra/i18n";
+import type { SiteMapTranslator } from "@/nebutra/i18n";
 import { ROUTES } from "@/nebutra/routes";
 import { SiteMenu } from "@/nebutra/shell/site-menu";
 import { ThemedLogo, ThemedLogomark } from "@/nebutra/shell/themed-logo";
@@ -171,8 +171,8 @@ function SiteSearch({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const l = siteLang(useLocale());
   const t = useTranslations("siteShell");
+  const tMap = useTranslations("siteMap") as unknown as SiteMapTranslator;
   const router = useRouter();
   const pages = SITE_MAP.filter((p) => p.status === "live" && !p.path.includes("["));
   return (
@@ -184,23 +184,23 @@ function SiteSearch({
           const inSection = pages.filter((p) => p.section === section.id);
           if (inSection.length === 0) return null;
           return (
-            <CommandGroup
-              key={section.id}
-              heading={l === "zh" ? section.title.zh : section.title.en}
-            >
-              {inSection.map((page) => (
-                <CommandItem
-                  key={page.path}
-                  value={`${page.title.en} ${page.title.zh} ${page.path}`}
-                  onSelect={() => {
-                    onOpenChange(false);
-                    router.push(page.path);
-                  }}
-                >
-                  {l === "zh" ? page.title.zh : page.title.en}
-                  <span className="ml-auto text-xs text-muted-foreground">{page.path}</span>
-                </CommandItem>
-              ))}
+            <CommandGroup key={section.id} heading={tMap(`sections.${section.id}.title`)}>
+              {inSection.map((page) => {
+                const title = tMap(`pages.${page.key}.title`);
+                return (
+                  <CommandItem
+                    key={page.path}
+                    value={`${title} ${page.path}`}
+                    onSelect={() => {
+                      onOpenChange(false);
+                      router.push(page.path);
+                    }}
+                  >
+                    {title}
+                    <span className="ml-auto text-xs text-muted-foreground">{page.path}</span>
+                  </CommandItem>
+                );
+              })}
             </CommandGroup>
           );
         })}

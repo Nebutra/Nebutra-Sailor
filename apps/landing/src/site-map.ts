@@ -11,6 +11,15 @@
  *
  * Agreed with the owner 2026-09-27. Change a name or a section here, nowhere
  * else.
+ *
+ * Display strings (section titles, section `is` lines, page titles) live in
+ * apps/landing/messages/*.json under the `siteMap` namespace, not here — this
+ * file only carries the structure and the message key each entry reads.
+ * `key` is the dot-path under `siteMap.pages`; a page's title is always at
+ * `siteMap.pages.<key>.title` (never a bare string — a node with children,
+ * e.g. "about", also carries its own `.title` alongside its children so the
+ * two never collide). A section's title/description are at
+ * `siteMap.sections.<id>.title` / `.is`, `id` being the key.
  */
 
 import { SITE_ID } from "./site.config";
@@ -22,11 +31,6 @@ export type SectionId = "home" | "journal" | "sailor" | "sleptons" | "building" 
 
 export interface Section {
   id: SectionId;
-  title: { en: string; zh: string };
-  /** One line: what this section is, in the owner's terms. */
-  is: string;
-  /** `is` in Simplified Chinese. */
-  isZh: string;
   /** Where the section's index lives. */
   path: string;
   /** Shown in the site navigation. */
@@ -36,49 +40,31 @@ export interface Section {
 export const SECTIONS: readonly Section[] = [
   {
     id: "home",
-    title: { en: "Home", zh: "首页" },
-    is: "The manifesto, led by the Journal.",
-    isZh: "宣言，由日志领衔。",
     path: "/",
     nav: false,
   },
   {
     id: "journal",
-    title: { en: "Journal", zh: "日志" },
-    is: "The founder's essays: what we believe about building now.",
-    isZh: "创始人的文章：我们对如今怎么造东西的看法。",
     path: "/blog",
     nav: true,
   },
   {
     id: "sailor",
-    title: { en: "Sailor", zh: "开源平台" },
-    is: "The open-source platform everything is built on, usable today.",
-    isZh: "一切都建在它上面的开源平台，今天就能用。",
     path: "/sailor",
     nav: true,
   },
   {
     id: "sleptons",
-    title: { en: "Sleptons", zh: "生态" },
-    is: "Where people, ideas, needs and capital find each other — including Ideas, the UGC of ideas and needs.",
-    isZh: "人、想法、需求与资本彼此找到的地方——包括创意与需求墙。",
     path: "/sleptons",
     nav: true,
   },
   {
     id: "building",
-    title: { en: "Building", zh: "正在造的" },
-    is: "The founder OS, and the products grown on the platform along the way.",
-    isZh: "创始人操作系统，以及一路在平台上长出来的产品。",
     path: "/building",
     nav: true,
   },
   {
     id: "company",
-    title: { en: "Company", zh: "公司" },
-    is: "Who we are, how we work, how to reach us, and the legal pages.",
-    isZh: "我们是谁、怎么工作、怎么联系我们，以及法律页面。",
     path: "/about",
     nav: true,
   },
@@ -93,7 +79,8 @@ export interface SitePage {
   /** Route under /[lang], as written in the app directory. */
   path: string;
   section: SectionId;
-  title: { en: string; zh: string };
+  /** Dot-path under `siteMap.pages` in the messages; title is at `<key>.title`. */
+  key: string;
   status: PageStatus;
   redirectTo?: string;
   /**
@@ -122,34 +109,34 @@ export const SITE_MAP: readonly SitePage[] = [
   // Home — the template's is a starter site for the customer's own product (src/content/site.ts);
   // the Nebutra site leads with the Journal. The template serves: home, pricing, FAQ, contact,
   // the blog and the legal pages — Sailor's own pages (packages, changelog, roadmap…) stay here.
-  { path: "/", section: "home", title: { en: "Home", zh: "首页" }, status: "live", template: true },
+  { path: "/", section: "home", key: "home", status: "live", template: true },
 
   // Journal
   {
     path: "/blog",
     section: "journal",
-    title: { en: "Journal", zh: "日志" },
+    key: "blog",
     status: "live",
     template: true,
   },
   {
     path: "/blog/[slug]",
     section: "journal",
-    title: { en: "Essay", zh: "文章" },
+    key: "blog.slug",
     status: "live",
     template: true,
   },
   {
     path: "/blog/author/[author]",
     section: "journal",
-    title: { en: "Author", zh: "作者" },
+    key: "blog.author.author",
     status: "live",
     template: true,
   },
   {
     path: "/blog/tag/[tag]",
     section: "journal",
-    title: { en: "Topic", zh: "主题" },
+    key: "blog.tag.tag",
     status: "live",
     template: true,
   },
@@ -157,14 +144,14 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/news",
     rail: true,
     section: "journal",
-    title: { en: "News", zh: "新闻" },
+    key: "news",
     status: "live",
     template: false,
   },
   {
     path: "/about/whitepaper",
     section: "journal",
-    title: { en: "Whitepaper", zh: "白皮书" },
+    key: "about.whitepaper",
     status: "live",
     template: false,
   },
@@ -173,7 +160,7 @@ export const SITE_MAP: readonly SitePage[] = [
   {
     path: "/sailor",
     section: "sailor",
-    title: { en: "Sailor", zh: "开源平台" },
+    key: "sailor",
     status: "live",
     template: false,
   },
@@ -181,7 +168,7 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/sailor/studio",
     rail: true,
     section: "sailor",
-    title: { en: "Sailor Studio", zh: "Sailor Studio" },
+    key: "sailor.studio",
     status: "live",
     template: false,
     chrome: "tool",
@@ -190,7 +177,7 @@ export const SITE_MAP: readonly SitePage[] = [
     // The document Studio's Components view renders in; part of the Studio page.
     path: "/sailor/studio/frame",
     section: "sailor",
-    title: { en: "Sailor Studio frame", zh: "Sailor Studio 画框" },
+    key: "sailor.studio.frame",
     status: "live",
     template: false,
     chrome: "bare",
@@ -199,14 +186,14 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/features",
     rail: true,
     section: "sailor",
-    title: { en: "Packages", zh: "功能包" },
+    key: "features",
     status: "live",
     template: false,
   },
   {
     path: "/features/[name]",
     section: "sailor",
-    title: { en: "Package", zh: "功能包" },
+    key: "features.name",
     status: "live",
     template: false,
   },
@@ -214,7 +201,7 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/pricing",
     rail: true,
     section: "sailor",
-    title: { en: "Pricing", zh: "定价" },
+    key: "pricing",
     status: "live",
     template: true,
   },
@@ -222,28 +209,28 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/licensing",
     rail: true,
     section: "sailor",
-    title: { en: "Licensing", zh: "授权" },
+    key: "licensing",
     status: "live",
     template: false,
   },
   {
     path: "/get-license",
     section: "sailor",
-    title: { en: "Get a license", zh: "获取授权" },
+    key: "getLicense",
     status: "live",
     template: false,
   },
   {
     path: "/ai/models",
     section: "sailor",
-    title: { en: "AI models", zh: "AI 模型" },
+    key: "ai.models",
     status: "live",
     template: false,
   },
   {
     path: "/open",
     section: "sailor",
-    title: { en: "Open platform", zh: "开放平台" },
+    key: "open",
     status: "live",
     template: false,
   },
@@ -251,7 +238,7 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/changelog",
     rail: true,
     section: "sailor",
-    title: { en: "Changelog", zh: "更新日志" },
+    key: "changelog",
     status: "live",
     template: false,
     chrome: "over-dark",
@@ -259,7 +246,7 @@ export const SITE_MAP: readonly SitePage[] = [
   {
     path: "/changelog/[version]",
     section: "sailor",
-    title: { en: "Release", zh: "版本" },
+    key: "changelog.version",
     status: "live",
     template: false,
   },
@@ -267,49 +254,49 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/showcase",
     rail: true,
     section: "sailor",
-    title: { en: "Built with Sailor", zh: "作品展示" },
+    key: "showcase",
     status: "live",
     template: false,
   },
   {
     path: "/status",
     section: "sailor",
-    title: { en: "Status", zh: "服务状态" },
+    key: "status",
     status: "live",
     template: true,
   },
   {
     path: "/status/history",
     section: "sailor",
-    title: { en: "Incident history", zh: "事件历史" },
+    key: "status.history",
     status: "live",
     template: true,
   },
   {
     path: "/status/subscription",
     section: "sailor",
-    title: { en: "Status subscription", zh: "状态订阅" },
+    key: "status.subscription",
     status: "live",
     template: true,
   },
   {
     path: "/status/incidents/[id]",
     section: "sailor",
-    title: { en: "Incident", zh: "事件" },
+    key: "status.incidents.id",
     status: "live",
     template: true,
   },
   {
     path: "/security",
     section: "sailor",
-    title: { en: "Security", zh: "安全" },
+    key: "security",
     status: "live",
     template: false,
   },
   {
     path: "/refer",
     section: "sailor",
-    title: { en: "Refer", zh: "推荐" },
+    key: "refer",
     status: "live",
     template: false,
   },
@@ -318,7 +305,7 @@ export const SITE_MAP: readonly SitePage[] = [
   {
     path: "/sleptons",
     section: "sleptons",
-    title: { en: "Sleptons", zh: "生态" },
+    key: "sleptons",
     status: "live",
     template: false,
   },
@@ -326,7 +313,7 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/ideas",
     rail: true,
     section: "sleptons",
-    title: { en: "Ideas", zh: "创意与需求" },
+    key: "ideas",
     status: "live",
     template: false,
   },
@@ -334,28 +321,28 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/solutions",
     rail: true,
     section: "sleptons",
-    title: { en: "Capital", zh: "资本" },
+    key: "solutions",
     status: "live",
     template: false,
   },
   {
     path: "/solutions/[slug]",
     section: "sleptons",
-    title: { en: "Solution", zh: "方案" },
+    key: "solutions.slug",
     status: "live",
     template: false,
   },
   {
     path: "/solutions/china-vc/[id]",
     section: "sleptons",
-    title: { en: "Investor", zh: "投资机构" },
+    key: "solutions.chinaVc.id",
     status: "live",
     template: false,
   },
   {
     path: "/solutions/global-vc/[id]",
     section: "sleptons",
-    title: { en: "Investor", zh: "投资机构" },
+    key: "solutions.globalVc.id",
     status: "live",
     template: false,
   },
@@ -364,7 +351,7 @@ export const SITE_MAP: readonly SitePage[] = [
   {
     path: "/building",
     section: "building",
-    title: { en: "Building", zh: "正在造的" },
+    key: "building",
     status: "live",
     template: false,
   },
@@ -372,7 +359,7 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/about/products",
     rail: true,
     section: "building",
-    title: { en: "Founder OS", zh: "创始人操作系统" },
+    key: "about.products",
     status: "live",
     template: false,
   },
@@ -380,7 +367,7 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/roadmap",
     rail: true,
     section: "building",
-    title: { en: "Roadmap", zh: "路线图" },
+    key: "roadmap",
     status: "live",
     template: false,
   },
@@ -388,14 +375,14 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/playbook",
     rail: true,
     section: "building",
-    title: { en: "Playbook", zh: "演示合集" },
+    key: "playbook",
     status: "live",
     template: false,
   },
   {
     path: "/opc",
     section: "building",
-    title: { en: "OPC", zh: "OPC" },
+    key: "opc",
     status: "redirect",
     redirectTo: "/building",
     template: false,
@@ -405,28 +392,28 @@ export const SITE_MAP: readonly SitePage[] = [
   {
     path: "/about",
     section: "company",
-    title: { en: "About", zh: "关于" },
+    key: "about",
     status: "live",
     template: false,
   },
   {
     path: "/about/business-portfolio",
     section: "company",
-    title: { en: "Business", zh: "业务版图" },
+    key: "about.businessPortfolio",
     status: "live",
     template: false,
   },
   {
     path: "/about/global",
     section: "company",
-    title: { en: "Global", zh: "全球" },
+    key: "about.global",
     status: "live",
     template: false,
   },
   {
     path: "/about/innovation",
     section: "company",
-    title: { en: "Innovation", zh: "创新" },
+    key: "about.innovation",
     status: "live",
     template: false,
   },
@@ -434,7 +421,7 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/careers",
     rail: true,
     section: "company",
-    title: { en: "Careers", zh: "加入我们" },
+    key: "careers",
     status: "live",
     template: false,
   },
@@ -442,7 +429,7 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/contact",
     rail: true,
     section: "company",
-    title: { en: "Contact", zh: "联系" },
+    key: "contact",
     status: "live",
     template: true,
   },
@@ -450,28 +437,28 @@ export const SITE_MAP: readonly SitePage[] = [
     path: "/faq",
     rail: true,
     section: "company",
-    title: { en: "FAQ", zh: "常见问题" },
+    key: "faq",
     status: "live",
     template: true,
   },
   {
     path: "/privacy",
     section: "company",
-    title: { en: "Privacy", zh: "隐私政策" },
+    key: "privacy",
     status: "live",
     template: true,
   },
   {
     path: "/terms",
     section: "company",
-    title: { en: "Terms", zh: "服务条款" },
+    key: "terms",
     status: "live",
     template: true,
   },
   {
     path: "/cookies",
     section: "company",
-    title: { en: "Cookies", zh: "Cookie 政策" },
+    key: "cookies",
     status: "live",
     template: true,
   },
@@ -479,28 +466,28 @@ export const SITE_MAP: readonly SitePage[] = [
     // The typeface credits. MiSans's licence asks the product to state it uses MiSans.
     path: "/credits",
     section: "company",
-    title: { en: "Credits", zh: "致谢" },
+    key: "credits",
     status: "live",
     template: true,
   },
   {
     path: "/dpa",
     section: "company",
-    title: { en: "DPA", zh: "数据处理协议" },
+    key: "dpa",
     status: "live",
     template: true,
   },
   {
     path: "/refund",
     section: "company",
-    title: { en: "Refunds", zh: "退款政策" },
+    key: "refund",
     status: "live",
     template: true,
   },
   {
     path: "/legal/[slug]",
     section: "company",
-    title: { en: "Legal", zh: "法律文件" },
+    key: "legal.slug",
     status: "live",
     template: true,
   },

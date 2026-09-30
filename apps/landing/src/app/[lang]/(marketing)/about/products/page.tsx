@@ -16,7 +16,7 @@ import { Band, Intro, More } from "@/nebutra/ui/page";
  */
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  return buildPageMetadata(sitePageMeta(lang, "/about/products"));
+  return buildPageMetadata(await sitePageMeta(lang, "/about/products"));
 }
 
 const LAYER_KEYS = ["sailor", "sleptons", "os"] as const;

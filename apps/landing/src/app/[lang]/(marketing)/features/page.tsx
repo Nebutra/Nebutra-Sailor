@@ -52,7 +52,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   return buildPageMetadata(
-    sitePageMeta(lang, "/features", {
+    await sitePageMeta(lang, "/features", {
       description: `${PACKAGE_COUNT} packages in ${DOMAINS.length} domains — auth, billing, tenancy, AI, integrations and the design system, written, tested and in one repository.`,
     }),
   );

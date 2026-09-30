@@ -7,7 +7,7 @@ import "@/nebutra/studio/studio.css";
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   return buildPageMetadata(
-    sitePageMeta(lang, "/sailor/studio", {
+    await sitePageMeta(lang, "/sailor/studio", {
       description:
         "Choose how a Sailor project looks, preview it on real pages, and apply it with one command.",
     }),

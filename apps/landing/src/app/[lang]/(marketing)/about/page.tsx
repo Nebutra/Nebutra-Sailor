@@ -8,7 +8,7 @@ import { Band, Intro } from "@/nebutra/ui/page";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  return buildPageMetadata(sitePageMeta(lang, "/about"));
+  return buildPageMetadata(await sitePageMeta(lang, "/about"));
 }
 
 const NAME = [

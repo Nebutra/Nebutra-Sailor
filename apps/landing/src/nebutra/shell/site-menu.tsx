@@ -3,11 +3,11 @@
 import { ArrowLeft, ArrowRight, ChevronRight, Cross, LogoGithub } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { type CSSProperties, useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { REPO_URL } from "@/nebutra/data/repo";
-import { siteLang } from "@/nebutra/i18n";
+import type { SiteMapTranslator } from "@/nebutra/i18n";
 import { SECTION_PATH } from "@/nebutra/routes";
 import { pageAt, SECTIONS, SERVED_PAGES, type SectionId } from "@/site-map";
 
@@ -43,9 +43,8 @@ export function SiteMenu({
   onClose: () => void;
 }) {
   const here = pageAt(pathname)?.section;
-  const l = siteLang(useLocale());
   const t = useTranslations("siteShell");
-  const zh = l === "zh";
+  const tMap = useTranslations("siteMap") as unknown as SiteMapTranslator;
   const [panel, setPanel] = useState<SectionId | null>(null);
 
   // Each opening starts on the first level.
@@ -87,14 +86,7 @@ export function SiteMenu({
               lit ? "text-foreground" : "text-muted-foreground hover:text-foreground",
               open && "site-menu-in",
             );
-            const label = (
-              <span className="flex items-baseline gap-3">
-                <span>{zh ? s.title.zh : s.title.en}</span>
-                {zh ? null : (
-                  <span className="font-sans text-sm text-muted-foreground">{s.title.zh}</span>
-                )}
-              </span>
-            );
+            const label = <span>{tMap(`sections.${s.id}.title`)}</span>;
             return (
               <li key={s.id}>
                 {hasPages ? (
@@ -180,10 +172,12 @@ export function SiteMenu({
               onClick={onNavigate}
               className="group inline-flex items-center gap-2 font-heading text-xl tracking-tight text-foreground"
             >
-              {zh ? shown.title.zh : shown.title.en}
+              {tMap(`sections.${shown.id}.title`)}
               <ArrowRight className="size-4 transition-transform duration-flow ease-brand group-hover:translate-x-1" />
             </Link>
-            <p className="max-w-xs text-sm text-muted-foreground">{zh ? shown.isZh : shown.is}</p>
+            <p className="max-w-xs text-sm text-muted-foreground">
+              {tMap(`sections.${shown.id}.is`)}
+            </p>
           </div>
 
           <ul className="mt-8 flex flex-col gap-1">
@@ -208,7 +202,7 @@ export function SiteMenu({
                         current ? "opacity-100" : "opacity-0",
                       )}
                     />
-                    {zh ? p.title.zh : p.title.en}
+                    {tMap(`pages.${p.key}.title`)}
                   </Link>
                 </li>
               );
