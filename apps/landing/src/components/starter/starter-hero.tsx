@@ -2,16 +2,17 @@ import { brand } from "@nebutra/brand/metadata";
 import { ArrowRight } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
+import { getTranslations } from "next-intl/server";
 import { SITE } from "@/content/site";
-import { say } from "./starter-copy";
 import { StarterLink } from "./starter-link";
 
 /**
  * The first screen: your brand's name, the one-line pitch from
- * src/content/site.ts, two calls to action and a quiet product frame.
+ * messages/en.json → site.hero, two calls to action and a quiet product frame.
  */
-export function StarterHero({ locale }: { locale: string }) {
+export async function StarterHero({ locale }: { locale: string }) {
   const { hero } = SITE;
+  const t = await getTranslations({ locale, namespace: "site.hero" });
   return (
     <section
       aria-labelledby="hero-title"
@@ -25,7 +26,7 @@ export function StarterHero({ locale }: { locale: string }) {
         <AnimateIn preset="emerge">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground shadow-ambient-sm">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-success" />
-            {say(hero.eyebrow, locale)}
+            {t("eyebrow")}
           </span>
         </AnimateIn>
         <AnimateIn preset="emerge">
@@ -38,24 +39,22 @@ export function StarterHero({ locale }: { locale: string }) {
         </AnimateIn>
         <AnimateIn preset="emerge">
           <p className="mt-5 max-w-2xl text-balance text-xl text-foreground/80 md:text-2xl">
-            {say(hero.pitch, locale)}
+            {t("pitch")}
           </p>
           <p className="mx-auto mt-4 max-w-xl text-pretty text-base text-muted-foreground">
-            {say(hero.body, locale)}
+            {t("body")}
           </p>
         </AnimateIn>
         <AnimateIn preset="fadeUp">
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Button asChild size="lg" variant="ink">
               <StarterLink href={hero.primary.href}>
-                {say(hero.primary.label, locale)}
+                {t("primaryLabel")}
                 <ArrowRight aria-hidden="true" />
               </StarterLink>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <StarterLink href={hero.secondary.href}>
-                {say(hero.secondary.label, locale)}
-              </StarterLink>
+              <StarterLink href={hero.secondary.href}>{t("secondaryLabel")}</StarterLink>
             </Button>
           </div>
         </AnimateIn>

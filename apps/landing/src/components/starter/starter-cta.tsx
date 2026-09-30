@@ -1,12 +1,13 @@
 import { ArrowRight } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
+import { getTranslations } from "next-intl/server";
 import { SITE } from "@/content/site";
-import { say } from "./starter-copy";
 import { StarterLink } from "./starter-link";
 
-export function StarterCta({ locale }: { locale: string }) {
+export async function StarterCta({ locale }: { locale: string }) {
   const { cta } = SITE;
+  const t = await getTranslations({ locale, namespace: "site.cta" });
   return (
     <section aria-labelledby="cta-title" className="px-4 pt-8 pb-24 md:px-6 md:pb-32">
       <AnimateIn preset="fadeUp">
@@ -19,22 +20,18 @@ export function StarterCta({ locale }: { locale: string }) {
             id="cta-title"
             className="text-balance text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
           >
-            {say(cta.title, locale)}
+            {t("title")}
           </h2>
-          <p className="mx-auto mt-4 max-w-lg text-pretty text-muted-foreground">
-            {say(cta.body, locale)}
-          </p>
+          <p className="mx-auto mt-4 max-w-lg text-pretty text-muted-foreground">{t("body")}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg" variant="ink">
               <StarterLink href={cta.primary.href}>
-                {say(cta.primary.label, locale)}
+                {t("primaryLabel")}
                 <ArrowRight aria-hidden="true" />
               </StarterLink>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <StarterLink href={cta.secondary.href}>
-                {say(cta.secondary.label, locale)}
-              </StarterLink>
+              <StarterLink href={cta.secondary.href}>{t("secondaryLabel")}</StarterLink>
             </Button>
           </div>
         </div>

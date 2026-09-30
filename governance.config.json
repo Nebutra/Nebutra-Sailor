@@ -2438,18 +2438,6 @@
         "count": 1
       },
       {
-        "file": "apps/landing/src/components/starter/starter-copy.ts",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/starter/starter-pricing.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/content/site.ts",
-        "count": 98
-      },
-      {
         "file": "apps/landing/src/lib/blog-page-cache.ts",
         "count": 1
       },

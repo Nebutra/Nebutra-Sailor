@@ -16,6 +16,10 @@ expect.extend(matchers);
 
 vi.mock("next-intl", () => ({
   useLocale: () => "en",
+  // The footer reads its copy with useTranslations("site.footer"); the key
+  // itself is enough for these tests, which only assert the Date-safety
+  // behaviour and the brand name in the copyright line.
+  useTranslations: () => (key: string) => key,
 }));
 vi.mock("@nebutra/brand", () => ({
   BrandMark: () => <svg aria-label="brand-mark" />,

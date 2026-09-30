@@ -2,18 +2,17 @@
 
 import { BrandMark, BrandWordmark } from "@nebutra/brand";
 import { brand } from "@nebutra/brand/metadata";
-import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
-import { SITE } from "@/content/site";
+import { SITE, type SiteTranslator } from "@/content/site";
 import { useMount } from "@/hooks/useMount";
 import { Link } from "@/i18n/navigation";
 import { hereOnly } from "@/site-map";
-import { say } from "./starter-copy";
 import { StarterLink } from "./starter-link";
 
 /** Brand, tagline, the link columns from SITE.footer (served pages only), theme and copyright. */
 export function StarterFooter({ variant = "default" }: { variant?: "default" | "legal" }) {
-  const locale = useLocale();
+  const t = useTranslations("site.footer") as unknown as SiteTranslator;
   const { footer } = SITE;
   // `new Date()` is an "unstable value" under Next 16 cacheComponents when read
   // during a Client Component's render — it makes the prerendered shell
@@ -41,11 +40,13 @@ export function StarterFooter({ variant = "default" }: { variant?: "default" | "
               <BrandMark size={24} />
               <BrandWordmark height={18} />
             </Link>
-            <p className="mt-4 text-sm text-muted-foreground">{say(footer.tagline, locale)}</p>
+            <p className="mt-4 text-sm text-muted-foreground">{t("tagline")}</p>
           </div>
           {columns.map((column) => (
-            <nav key={column.title.en} aria-label={say(column.title, locale)}>
-              <p className="text-sm font-medium text-foreground">{say(column.title, locale)}</p>
+            <nav key={column.id} aria-label={t(`columns.${column.id}.title`)}>
+              <p className="text-sm font-medium text-foreground">
+                {t(`columns.${column.id}.title`)}
+              </p>
               <ul className="mt-4 space-y-2.5">
                 {column.links.map((link) => (
                   <li key={link.href}>
@@ -53,7 +54,7 @@ export function StarterFooter({ variant = "default" }: { variant?: "default" | "
                       href={link.href}
                       className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      {say(link.label, locale)}
+                      {t(`columns.${column.id}.links.${link.id}`)}
                     </StarterLink>
                   </li>
                 ))}
@@ -64,7 +65,7 @@ export function StarterFooter({ variant = "default" }: { variant?: "default" | "
       ) : null}
       <div className="mx-auto flex max-w-wide flex-wrap items-center justify-between gap-4 border-t border-border py-6 first:border-t-0">
         <p className="text-sm text-muted-foreground">
-          © {year ?? ""} {brand.nameFull || brand.name}. {say(footer.rights, locale)}
+          © {year ?? ""} {brand.nameFull || brand.name}. {t("rights")}
         </p>
         <ThemeSwitcher />
       </div>

@@ -20,7 +20,9 @@ function renderWhatYouCanDoNext(): string {
 ## What you can do next
 
 - See which capabilities are live and which keys they need: \`nebutra status\`
-- Write your marketing site's words in \`apps/landing/src/content/site.ts\`
+- Write your marketing site's words in \`apps/landing/messages/en.json\` -> \`site\`
+  (plus \`zh-Hans.json\` / \`zh-Hant.json\` for Chinese); its structure and config
+  — plan ids, prices, links — stay in \`apps/landing/src/content/site.ts\`
 - Your account, workspace and sessions: \`/settings\` in the product app
 - For China deployments, set \`NEBUTRA_LOCALE=cn\` and see \`packages/ops/china-compliance/README.md\`
 `;

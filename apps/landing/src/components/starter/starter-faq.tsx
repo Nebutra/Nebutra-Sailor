@@ -1,11 +1,12 @@
 import { Plus } from "@nebutra/icons";
-import { SITE } from "@/content/site";
+import { getTranslations } from "next-intl/server";
+import { SITE, type SiteTranslator } from "@/content/site";
 import { SectionHeading } from "./section-heading";
-import { say } from "./starter-copy";
 
-/** The questions from src/content/site.ts, as native disclosures (no script needed). */
-export function StarterFaq({ locale, level = 2 }: { locale: string; level?: 1 | 2 }) {
+/** The questions from messages/en.json → site.faq, as native disclosures (no script needed). */
+export async function StarterFaq({ locale, level = 2 }: { locale: string; level?: 1 | 2 }) {
   const { faq } = SITE;
+  const t = (await getTranslations({ locale, namespace: "site.faq" })) as unknown as SiteTranslator;
   return (
     <section
       id="faq"
@@ -17,15 +18,15 @@ export function StarterFaq({ locale, level = 2 }: { locale: string; level?: 1 | 
           id="faq-title"
           level={level}
           align="start"
-          eyebrow={say(faq.eyebrow, locale)}
-          title={say(faq.title, locale)}
-          lead={say(faq.lead, locale)}
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          lead={t("lead")}
         />
         <div className="divide-y divide-border border-y border-border">
           {faq.items.map((item) => (
-            <details key={item.q.en} className="group">
+            <details key={item.id} className="group">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-left font-medium text-foreground [&::-webkit-details-marker]:hidden">
-                {say(item.q, locale)}
+                {t(`items.${item.id}.q`)}
                 <Plus
                   size={16}
                   aria-hidden="true"
@@ -33,7 +34,7 @@ export function StarterFaq({ locale, level = 2 }: { locale: string; level?: 1 | 
                 />
               </summary>
               <p className="pb-5 text-pretty text-sm leading-relaxed text-muted-foreground">
-                {say(item.a, locale)}
+                {t(`items.${item.id}.a`)}
               </p>
             </details>
           ))}

@@ -1,16 +1,15 @@
 import { brand } from "@nebutra/brand/metadata";
-import { setRequestLocale } from "next-intl/server";
-import { say } from "@/components/starter/starter-copy";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { StarterFaq } from "@/components/starter/starter-faq";
-import { SITE } from "@/content/site";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "site.faq" });
   return buildPageMetadata({
-    title: `${say(SITE.faq.title, lang)} — ${brand.name}`,
-    description: say(SITE.faq.lead, lang),
+    title: `${t("title")} — ${brand.name}`,
+    description: t("lead"),
     path: "/faq",
     locale: lang as Locale,
   });

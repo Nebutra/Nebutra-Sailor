@@ -3663,5 +3663,175 @@
         "when": "When"
       }
     }
+  },
+  "site": {
+    "meta": {
+      "title": "{brandName} — plan, ship and grow in one place",
+      "description": "{brandName} brings your team's work, customers and numbers into one workspace, so you spend the week building instead of stitching tools together."
+    },
+    "hero": {
+      "eyebrow": "Now open to every team",
+      "pitch": "The workspace where your team plans the work, ships it, and sees what it moved.",
+      "body": "Sign in with your team, invite the people you work with, and pick up where you left off on any device. Free to start, no card needed.",
+      "primaryLabel": "Start for free",
+      "secondaryLabel": "See pricing"
+    },
+    "features": {
+      "eyebrow": "Features",
+      "title": "Everything a team needs from day one",
+      "lead": "The essentials are built in and work together, so there is nothing to wire up before you start.",
+      "items": {
+        "fingerprint": {
+          "title": "Sign in your way",
+          "body": "Email and password, passkeys or your existing accounts, with two-step verification for anyone who wants it."
+        },
+        "users": {
+          "title": "Built for teams",
+          "body": "Shared workspaces with roles, so everyone sees what they need and nothing they shouldn't."
+        },
+        "card": {
+          "title": "Simple billing",
+          "body": "Upgrade, downgrade or cancel in a few clicks. Invoices land in your inbox, and you only pay for what you use."
+        },
+        "globe": {
+          "title": "Works in your language",
+          "body": "The interface, emails and dates follow each person's language and region."
+        },
+        "shield": {
+          "title": "Secure by default",
+          "body": "Encrypted secrets, isolated workspace data and an audit log of every sensitive change."
+        },
+        "plug": {
+          "title": "Connects to your stack",
+          "body": "A documented API and signed webhooks keep your other tools in sync without manual exports."
+        }
+      }
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "Start free, upgrade when you grow",
+      "lead": "Every plan includes the full product. Pay yearly and get two months free.",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "onRequest": "Let's talk",
+      "plans": {
+        "free": {
+          "name": "Free",
+          "blurb": "For individuals and small teams trying it out.",
+          "unit": "forever",
+          "features": ["Up to 3 members", "1 workspace", "Community support"],
+          "ctaLabel": "Start for free"
+        },
+        "pro": {
+          "name": "Pro",
+          "blurb": "For growing teams that run their week on it.",
+          "unit": "per member / month",
+          "features": [
+            "Unlimited members",
+            "Unlimited workspaces",
+            "Roles and permissions",
+            "API access and webhooks",
+            "Email support"
+          ],
+          "ctaLabel": "Start a free trial",
+          "highlightLabel": "Most popular"
+        },
+        "business": {
+          "name": "Business",
+          "blurb": "For organizations with security and compliance needs.",
+          "unit": "tailored to your team",
+          "features": [
+            "Everything in Pro",
+            "Single sign-on (SSO)",
+            "Audit log export",
+            "Data processing agreement",
+            "Priority support"
+          ],
+          "ctaLabel": "Contact sales"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Questions, answered",
+      "lead": "Can't find what you're looking for? Get in touch and we'll reply within one business day.",
+      "items": {
+        "free-plan": {
+          "q": "Is there a free plan?",
+          "a": "Yes. The Free plan has no time limit and needs no card. Upgrade whenever your team outgrows it."
+        },
+        "change-plans": {
+          "q": "Can I change plans later?",
+          "a": "Any time. Upgrades apply straight away; downgrades take effect at the end of your billing period, and we credit the difference."
+        },
+        "cancel": {
+          "q": "How do I cancel?",
+          "a": "From the billing page in the app, in two clicks. You keep access until the period you paid for ends."
+        },
+        "data-location": {
+          "q": "Where is my data stored, and who can see it?",
+          "a": "Each workspace's data is kept separate and encrypted in transit and at rest. Only the members you invite can see it."
+        },
+        "payment-methods": {
+          "q": "Which payment methods do you accept?",
+          "a": "All major credit and debit cards, plus WeChat Pay and Alipay in mainland China. Business customers can also pay by invoice."
+        },
+        "export-data": {
+          "q": "Can I export my data?",
+          "a": "Yes. You can export everything in your workspace at any time, on every plan."
+        }
+      }
+    },
+    "cta": {
+      "title": "Bring your team over this week",
+      "body": "Set up takes minutes, and the Free plan is yours for as long as you like.",
+      "primaryLabel": "Start for free",
+      "secondaryLabel": "Talk to us"
+    },
+    "nav": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "account": {
+      "signIn": "Sign in",
+      "getStarted": "Get started",
+      "open": "Open the app",
+      "menu": "Menu"
+    },
+    "footer": {
+      "tagline": "The workspace where your team plans, ships and grows.",
+      "columns": {
+        "product": {
+          "title": "Product",
+          "links": {
+            "features": "Features",
+            "pricing": "Pricing",
+            "faq": "FAQ",
+            "signIn": "Sign in"
+          }
+        },
+        "company": {
+          "title": "Company",
+          "links": {
+            "blog": "Blog",
+            "contact": "Contact"
+          }
+        },
+        "legal": {
+          "title": "Legal",
+          "links": {
+            "privacy": "Privacy",
+            "terms": "Terms",
+            "cookies": "Cookies",
+            "refunds": "Refunds",
+            "dpa": "DPA"
+          }
+        }
+      },
+      "rights": "All rights reserved."
+    }
   }
 }

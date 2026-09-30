@@ -1,14 +1,14 @@
 "use client";
 
+import { isChineseProductLanguage } from "@nebutra/i18n/languages";
 import { Check } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Button, ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { type Currency, type Plan, SITE } from "@/content/site";
-import { isZhUiLocale } from "@/lib/i18n/localized";
+import { type Currency, type Plan, SITE, type SiteTranslator } from "@/content/site";
 import { SectionHeading } from "./section-heading";
-import { say } from "./starter-copy";
 import { StarterLink } from "./starter-link";
 
 type Period = "monthly" | "yearly";
@@ -20,12 +20,12 @@ function formatPrice(amount: number, currency: Currency, locale: string): string
     maximumFractionDigits: 0,
   })
     .format(amount)
-    .replace(/^CN¥/, isZhUiLocale(locale) ? "¥" : "CN¥");
+    .replace(/^CN¥/, isChineseProductLanguage(locale) ? "¥" : "CN¥");
 }
 
 /**
- * Plans from src/content/site.ts, with a monthly / yearly switch. Chinese pages
- * show CNY, every other language USD.
+ * Plans from src/content/site.ts + messages/en.json → site.pricing, with a
+ * monthly / yearly switch. Chinese pages show CNY, every other language USD.
  */
 export function StarterPricing({
   locale,
@@ -36,8 +36,9 @@ export function StarterPricing({
   level?: 1 | 2;
 }) {
   const { pricing } = SITE;
+  const t = useTranslations("site.pricing") as unknown as SiteTranslator;
   const [period, setPeriod] = useState<Period>("monthly");
-  const currency: Currency = isZhUiLocale(locale) ? "CNY" : "USD";
+  const currency: Currency = isChineseProductLanguage(locale) ? "CNY" : "USD";
 
   return (
     <section
@@ -49,9 +50,9 @@ export function StarterPricing({
         <SectionHeading
           id="pricing-title"
           level={level}
-          eyebrow={say(pricing.eyebrow, locale)}
-          title={say(pricing.title, locale)}
-          lead={say(pricing.lead, locale)}
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          lead={t("lead")}
         />
 
         <div className="mt-10 flex justify-center">
@@ -62,11 +63,11 @@ export function StarterPricing({
             onValueChange={(value) => {
               if (value === "monthly" || value === "yearly") setPeriod(value);
             }}
-            aria-label={`${say(pricing.monthly, locale)} / ${say(pricing.yearly, locale)}`}
+            aria-label={`${t("monthly")} / ${t("yearly")}`}
           >
             {(["monthly", "yearly"] as const).map((value) => (
               <ToggleGroupItem key={value} value={value} className="rounded-full px-4">
-                {say(pricing[value], locale)}
+                {t(value)}
               </ToggleGroupItem>
             ))}
           </ToggleGroup>
@@ -75,7 +76,7 @@ export function StarterPricing({
         <AnimateInGroup stagger="fast" className="mt-10 grid gap-4 lg:grid-cols-3">
           {pricing.plans.map((plan) => (
             <AnimateIn key={plan.id} preset="fadeUp" className="h-full">
-              <PlanCard plan={plan} period={period} currency={currency} locale={locale} />
+              <PlanCard plan={plan} period={period} currency={currency} locale={locale} t={t} />
             </AnimateIn>
           ))}
         </AnimateInGroup>
@@ -89,14 +90,17 @@ function PlanCard({
   period,
   currency,
   locale,
+  t,
 }: {
   plan: Plan;
   period: Period;
   currency: Currency;
   locale: string;
+  t: SiteTranslator;
 }) {
   const price = plan.price[period];
   const highlighted = Boolean(plan.highlight);
+  const features = t.raw(`plans.${plan.id}.features`) as string[];
   return (
     <article
       aria-labelledby={`plan-${plan.id}`}
@@ -110,31 +114,29 @@ function PlanCard({
     >
       <div className="flex items-center justify-between gap-3">
         <h3 id={`plan-${plan.id}`} className="text-base font-semibold text-foreground">
-          {say(plan.name, locale)}
+          {t(`plans.${plan.id}.name`)}
         </h3>
         {plan.highlight ? (
           <span className="rounded-full bg-foreground px-2.5 py-0.5 text-xs font-medium text-background">
-            {say(plan.highlight, locale)}
+            {t(`plans.${plan.id}.highlightLabel`)}
           </span>
         ) : null}
       </div>
-      <p className="mt-2 text-sm text-muted-foreground">{say(plan.blurb, locale)}</p>
+      <p className="mt-2 text-sm text-muted-foreground">{t(`plans.${plan.id}.blurb`)}</p>
       <p className="mt-6 flex items-baseline gap-2">
         <span className="text-4xl font-semibold tracking-tight text-foreground tabular-nums">
-          {price
-            ? formatPrice(price[currency], currency, locale)
-            : say(SITE.pricing.onRequest, locale)}
+          {price ? formatPrice(price[currency], currency, locale) : t("onRequest")}
         </span>
-        <span className="text-sm text-muted-foreground">{say(plan.unit, locale)}</span>
+        <span className="text-sm text-muted-foreground">{t(`plans.${plan.id}.unit`)}</span>
       </p>
       <Button asChild className="mt-6 w-full" variant={highlighted ? "ink" : "outline"}>
-        <StarterLink href={plan.cta.href}>{say(plan.cta.label, locale)}</StarterLink>
+        <StarterLink href={plan.cta.href}>{t(`plans.${plan.id}.ctaLabel`)}</StarterLink>
       </Button>
       <ul className="mt-8 space-y-3 border-t border-border pt-6 text-sm">
-        {plan.features.map((feature) => (
-          <li key={feature.en} className="flex items-start gap-2.5 text-foreground/85">
+        {features.map((feature, i) => (
+          <li key={i} className="flex items-start gap-2.5 text-foreground/85">
             <Check size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-muted-foreground" />
-            {say(feature, locale)}
+            {feature}
           </li>
         ))}
       </ul>
