@@ -7,6 +7,21 @@ export {
   resolveAliases,
 } from "./alias";
 export {
+  type DiscoveredModel,
+  type DiscoveryResult,
+  detectProtocol,
+  discoverCliProxyApi,
+  discoverFalAi,
+  discoverNewApiChannel,
+  discoverOpenAiCompatible,
+  guessModality,
+  type NewApiSessionClient,
+  type ProtocolProbeResult,
+  type SourceCredential,
+  type SupplyModality,
+  type SupplyProtocol,
+} from "./discovery";
+export {
   chatCompletionsUrl,
   kindLabel,
   loadEnginesFromEnv,
@@ -36,3 +51,25 @@ export {
   SupplyResolveError,
   toOpenAiModelList,
 } from "./resolve";
+export {
+  applyOutcome,
+  BACKOFF_LADDER_SECONDS,
+  type CapabilityCounters,
+  DEGRADE_AFTER_FAILURES,
+  effectiveState,
+  isSellableState,
+  nextBackoffSeconds,
+  type ProbeOutcome,
+  RESTORE_AFTER_SUCCESSES,
+  type StateTransition,
+  SUSPEND_AFTER_FAILURES,
+  type SupplyModelState,
+} from "./state";
+export {
+  classifyFailure,
+  isNeutralOutcome,
+  type ProbeFailureReason,
+  type ProbeInput,
+  type ProbeResult,
+  probeModel,
+} from "./verify";
