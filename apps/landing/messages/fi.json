@@ -1807,5 +1807,151 @@
       "terms": "Terms",
       "credits": "Credits"
     }
+  },
+  "sitePages": {
+    "home": {
+      "metaDescription": "No company should be hard to start. {brandName} builds the platform, the products and the network that make it so.",
+      "hero": {
+        "title": "No company should be hard to <signature>start.</signature>",
+        "titleCn": "让世界上没有难创的业。",
+        "lead": "Founders rarely die of bad ideas. They die of the Founder Tax — a dozen brilliant tools, each seeing one slice, none knowing you are building a company. {brandName} is building the system that does, and writing down what we learn on the way."
+      },
+      "latest": {
+        "title": "Latest",
+        "titleCn": "最新文章",
+        "viewAll": "All essays"
+      },
+      "newsletter": {
+        "title": "Read it as it's written.",
+        "lead": "New essays on agents, the layer after them, and the founder's craft — when they are ready, not on a schedule."
+      },
+      "sailor": {
+        "lead": "The open-source platform we build everything on. Usable today: npx create-sailor.",
+        "cta": "The platform"
+      },
+      "building": {
+        "title": "What we're building",
+        "lead": "{brandName} OS, the Sleptons network, and the early products growing on the platform.",
+        "cta": "In progress"
+      }
+    },
+    "sailor": {
+      "hero": {
+        "lead": "The open-source platform we build everything on: auth, billing, tenancy, AI routing and the guards that keep a fast-moving codebase honest. Start a company on it with one command.",
+        "cn": "我们自己在用的开源地基，今天就能用。"
+      },
+      "install": {
+        "copyLabel": "Copy",
+        "copiedLabel": "Copied"
+      },
+      "links": {
+        "source": "Source on GitHub",
+        "seeSite": "See the site you get",
+        "licensing": "Licensing for teams"
+      }
+    },
+    "sleptons": {
+      "hero": {
+        "lead": "Where people, ideas, needs and capital find each other — earlier than they would have alone.",
+        "cn": "让潜能流动起来。"
+      },
+      "parts": {
+        "ideas": {
+          "title": "Ideas",
+          "titleCn": "创意与需求",
+          "body": "Write down what you wish existed, or what you need. The ideas and needs people post are where the network starts.",
+          "cta": "Post an idea"
+        },
+        "capital": {
+          "title": "Capital",
+          "titleCn": "资本",
+          "body": "The investor directory we keep today — Chinese and global funds, each with what they back.",
+          "cta": "Browse investors"
+        },
+        "network": {
+          "title": "The network",
+          "titleCn": "网络",
+          "body": "Describe the person you wish existed; an AI-native network finds them. In development.",
+          "cta": "Read the plan"
+        }
+      }
+    },
+    "building": {
+      "hero": {
+        "title": "What we're building",
+        "lead": "{brandName} OS, and the products we built on the platform along the way.",
+        "cn": "我们正在造的东西。"
+      },
+      "os": {
+        "lead": "One sentence, a whole company: brand, product, code and launch from one context, on your Mac. In development — the essay below is what it is for; there is nothing to show until there is something real.",
+        "cta": "Why we are building it"
+      },
+      "platform": {
+        "title": "On the platform",
+        "lead": "Products we have built on Sailor along the way, each open to use."
+      }
+    },
+    "about": {
+      "hero": {
+        "title": "Where chaos becomes a company.",
+        "lead": "{brandName} is an AI-native company builder. We exist because founders rarely die of bad ideas — they die of the Founder Tax: a dozen brilliant tools, each seeing one slice, none knowing you are building a company.",
+        "cn": "让世界上没有难创的业。",
+        "cta": "Why we are building {brandName}"
+      },
+      "name": {
+        "title": "The name",
+        "lead": "Four words, compressed into one: nurture the nebula into an ultra future.",
+        "nebula": "every idea before it has a shape",
+        "nurture": "we grow it with you, not for you",
+        "ultra": "a fifty-person agency's output from one person",
+        "future": "the company form being rewritten now"
+      },
+      "how": {
+        "title": "How we work",
+        "lead": "We don't hire a company. We orchestrate one. The founder sets direction and makes the calls that are hard to reverse; agents write, review and ship; the architecture decides what is allowed to merge — so speed never buys drift.",
+        "cn": "人定方向，agent 执行，架构把关。",
+        "architectureNote": "好的架构，意味着你能走很远。"
+      },
+      "contact": {
+        "founderTitle": "Write to the founder",
+        "companyTitle": "The company"
+      }
+    },
+    "aboutProducts": {
+      "hero": {
+        "title": "The founder OS",
+        "lead": "Everything {brandName} makes is one system for starting a company: a production layer to build on, a network to find people and needs, and an OS that runs the company from one context.",
+        "cn": "创始人操作系统：一套从想法走到公司的系统。"
+      },
+      "layers": {
+        "sailor": {
+          "line": "Skip to production.",
+          "body": "The production layer for agent-built software: auth, billing for global and China rails, multi-tenancy and an AI gateway in one command, running locally with zero keys. You own the code.",
+          "cn": "给 AI 写出来的产品铺好上线的路。",
+          "status": "Usable today",
+          "cta": "Sailor"
+        },
+        "sleptons": {
+          "line": "Where people, ideas, needs and capital find each other.",
+          "body": "The network around the platform: Ideas, the open board of ideas and needs, and the people and resources that pick them up.",
+          "cn": "人、想法、需求与资本彼此找到的地方。",
+          "status": "Open",
+          "cta": "Sleptons"
+        },
+        "os": {
+          "line": "One sentence, a whole company.",
+          "body": "Brand, product, code and launch from one context, on your Mac. In development — there is nothing to show until there is something real.",
+          "cn": "一句话，一整家公司。",
+          "status": "In development",
+          "cta": "Why we are building it"
+        }
+      },
+      "platform": {
+        "title": "Built on the platform",
+        "lead": "Products we have built on Sailor along the way, each open to use.",
+        "cn": "在平台上长出来的产品。",
+        "buildingLink": "What we're building"
+      }
+    }
   }
 }

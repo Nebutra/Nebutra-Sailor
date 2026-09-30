@@ -2378,10 +2378,6 @@
     "description": "Shrink-only. Inline two-language copy in apps/landing (pick(), isZhUiLocale(), { en: ... } pairs). Copy belongs in apps/landing/messages/en.json; see scripts/lint-landing-inline-i18n.mjs.",
     "allowlist": [
       {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/_about-data.ts",
-        "count": 1
-      },
-      {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/business-portfolio/page.tsx",
         "count": 10
       },
@@ -2392,14 +2388,6 @@
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
         "count": 19
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/page.tsx",
-        "count": 23
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/products/page.tsx",
-        "count": 26
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/whitepaper/page.tsx",
@@ -2430,10 +2418,6 @@
         "count": 1
       },
       {
-        "file": "apps/landing/src/app/[lang]/(marketing)/building/page.tsx",
-        "count": 12
-      },
-      {
         "file": "apps/landing/src/app/[lang]/(marketing)/changelog/[version]/page.tsx",
         "count": 2
       },
@@ -2454,20 +2438,8 @@
         "count": 12
       },
       {
-        "file": "apps/landing/src/app/[lang]/(marketing)/page.tsx",
-        "count": 21
-      },
-      {
         "file": "apps/landing/src/app/[lang]/(marketing)/playbook/page.tsx",
         "count": 9
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/sailor/page.tsx",
-        "count": 12
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/sleptons/page.tsx",
-        "count": 10
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/solutions/[slug]/page.tsx",
