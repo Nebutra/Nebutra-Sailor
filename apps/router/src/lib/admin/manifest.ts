@@ -79,6 +79,7 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
             { key: "label", label: "Source" },
             { key: "kind", label: "Kind", kind: "badge" },
             { key: "protocol", label: "Protocol", kind: "mono" },
+            { key: "visibility", label: "Visibility", kind: "badge" },
             { key: "enabled", label: "Enabled", kind: "badge" },
             { key: "lastDiscoveredAt", label: "Last discovered", kind: "time" },
           ],
@@ -196,6 +197,12 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
               rootPassword: { type: "string" },
               channelName: { type: "string" },
               knownModelIds: { type: "array", items: { type: "string" } },
+              visibility: {
+                type: "string",
+                enum: ["PUBLIC", "INTERNAL"],
+                description:
+                  "PUBLIC (default): sellable on the shelf, reachable by the customer relay. INTERNAL: Nebutra team use only — never on the public shelf, never used for the customer relay; only the internal service-token relay routes to it.",
+              },
             },
           },
           description:

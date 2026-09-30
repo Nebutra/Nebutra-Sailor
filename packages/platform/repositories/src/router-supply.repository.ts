@@ -23,6 +23,14 @@ export interface SupplySourceRow {
   readonly baseUrl: string;
   readonly credentialRef: string | null;
   readonly enabled: boolean;
+  /**
+   * `PUBLIC` (default) is sellable on the shelf and reachable by the customer
+   * relay, same as every source before this field existed. `INTERNAL` is
+   * never counted toward public shelf availability (`availabilityFor`
+   * excludes it) and never used for the customer relay path — only the
+   * internal service-token relay (`findInternalRoute`) reads it.
+   */
+  readonly visibility: string;
   readonly lastDiscoveredAt: Date | null;
   readonly lastDiscoverySummary: unknown;
 }
@@ -35,6 +43,8 @@ export interface UpsertSourceInput {
   readonly baseUrl: string;
   readonly credentialRef?: string | null;
   readonly enabled?: boolean;
+  /** Defaults to `PUBLIC` — every source before this field existed behaves unchanged. */
+  readonly visibility?: string;
 }
 
 export interface DiscoveredModelInput {
@@ -84,6 +94,13 @@ export interface ModelAvailability {
   readonly sources: string[];
 }
 
+export interface InternalRouteRow {
+  readonly source: SupplySourceRow;
+  readonly upstreamModel: string;
+  /** Adapter-shaped, as discovery reported it — e.g. `{ context_length, supported_endpoints, name }`. */
+  readonly capabilities: unknown;
+}
+
 function bareModelId(id: string): string {
   const i = id.lastIndexOf("/");
   return i >= 0 ? id.slice(i + 1) : id;
@@ -116,6 +133,7 @@ export class RouterSupplyRepository {
         baseUrl: input.baseUrl,
         credentialRef: input.credentialRef ?? null,
         enabled: input.enabled ?? true,
+        visibility: (input.visibility ?? "PUBLIC") as never,
       },
       update: {
         label: input.label,
@@ -123,6 +141,7 @@ export class RouterSupplyRepository {
         ...(input.protocol ? { protocol: input.protocol as never } : {}),
         ...(input.credentialRef !== undefined ? { credentialRef: input.credentialRef } : {}),
         ...(input.enabled !== undefined ? { enabled: input.enabled } : {}),
+        ...(input.visibility !== undefined ? { visibility: input.visibility as never } : {}),
       },
     });
     return toSourceRow(row);
@@ -417,11 +436,24 @@ export class RouterSupplyRepository {
    * repository ships no opinion on "unknown", because the right default
    * differs between the shelf, which should fail open during rollout, and a
    * signal, which should flag it).
+   *
+   * `INTERNAL` sources are excluded from this query entirely — this is the one
+   * method both the shelf (`shelf-prices.ts`) and the customer relay
+   * (`billing-edge.ts` `admit`) call, so an internal-only source (e.g. a
+   * team-use-only plan key whose terms forbid resale) can never make a model
+   * read as sellable to a customer, or as available inventory on the public
+   * shelf, no matter how healthy its probes are. The internal service-token
+   * relay reads `findInternalRoute` instead, which is the mirror image: only
+   * `INTERNAL` sources.
    */
   async availabilityFor(publicModels: readonly string[]): Promise<Map<string, ModelAvailability>> {
     if (publicModels.length === 0) return new Map();
     const rows = await this.prisma.supplySourceModel.findMany({
-      where: { publicModel: { in: [...publicModels] }, vanishedAt: null },
+      where: {
+        publicModel: { in: [...publicModels] },
+        vanishedAt: null,
+        source: { visibility: "PUBLIC" },
+      },
       include: { source: true },
     });
     const byModel = new Map<string, typeof rows>();
@@ -448,6 +480,41 @@ export class RouterSupplyRepository {
     }
     return result;
   }
+
+  /**
+   * The internal service-token relay's routing decision (ADR 2026-09-30 +
+   * internal-source follow-up): the one AVAILABLE/DEGRADED capability row,
+   * backed by an `INTERNAL`-visibility source, for `model` — matched against
+   * either the resolved public id or the raw upstream id, since an internal
+   * caller may send either. `null` when no `INTERNAL` source currently serves
+   * it (not discovered, not yet probed, or suspended) — the caller falls back
+   * to the existing New-API relay.
+   *
+   * Mirror image of `availabilityFor`: that one reads only `PUBLIC` sources,
+   * this one reads only `INTERNAL` ones. A model can be backed by both without
+   * either query ever mixing the two.
+   */
+  async findInternalRoute(model: string): Promise<InternalRouteRow | null> {
+    const rows = await this.prisma.supplySourceModel.findMany({
+      where: {
+        vanishedAt: null,
+        OR: [{ publicModel: model }, { upstreamModel: model }],
+        source: { visibility: "INTERNAL", enabled: true },
+      },
+      include: { source: true },
+    });
+    for (const row of rows) {
+      const state = effective(row.state, row.pinned, row.banned);
+      if (isSellable(state)) {
+        return {
+          source: toSourceRow(row.source),
+          upstreamModel: row.upstreamModel,
+          capabilities: row.capabilities,
+        };
+      }
+    }
+    return null;
+  }
 }
 
 function toSourceRow(row: {
@@ -459,6 +526,7 @@ function toSourceRow(row: {
   baseUrl: string;
   credentialRef: string | null;
   enabled: boolean;
+  visibility: string;
   lastDiscoveredAt: Date | null;
   lastDiscoverySummary: unknown;
 }): SupplySourceRow {
@@ -471,6 +539,7 @@ function toSourceRow(row: {
     baseUrl: row.baseUrl,
     credentialRef: row.credentialRef,
     enabled: row.enabled,
+    visibility: row.visibility,
     lastDiscoveredAt: row.lastDiscoveredAt,
     lastDiscoverySummary: row.lastDiscoverySummary,
   };

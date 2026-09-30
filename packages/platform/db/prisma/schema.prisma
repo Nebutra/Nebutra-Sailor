@@ -202,6 +202,19 @@ enum SupplyProbeOutcome {
   @@schema("public")
 }
 
+/// A source's visibility to the public shelf and customer relay. `INTERNAL`
+/// sources exist for Nebutra's own team use only — a plan whose terms forbid
+/// resale or third-party benefit (e.g. a Command Code GOAT plan key) is
+/// onboarded this way: never counted toward public shelf availability, never
+/// used for the customer relay path, but still routed to by the internal
+/// service-token relay (`/api/internal/v1/chat/completions`).
+enum SupplyVisibility {
+  PUBLIC
+  INTERNAL
+
+  @@schema("public")
+}
+
 // ============================================
 // Multi-Tenant Core
 // ============================================
@@ -1857,6 +1870,13 @@ model SupplySource {
   /// probed like any other but has nothing here to rotate.
   credentialRef String? @map("credential_ref")
   enabled       Boolean @default(true)
+
+  /// PUBLIC (default): sellable on the shelf and reachable by the customer
+  /// relay, same as every source before this field existed. INTERNAL: never
+  /// counted toward public shelf availability, never used for the customer
+  /// relay path (billing-edge / openai-edge) — only the internal
+  /// service-token relay routes to it.
+  visibility SupplyVisibility @default(PUBLIC)
 
   lastDiscoveredAt     DateTime? @map("last_discovered_at")
   lastDiscoverySummary Json?     @map("last_discovery_summary")

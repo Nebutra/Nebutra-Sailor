@@ -352,6 +352,7 @@ export async function listSourcesForAdmin(): Promise<Array<Record<string, unknow
     label: s.label,
     baseUrl: s.baseUrl,
     enabled: s.enabled,
+    visibility: s.visibility,
     lastDiscoveredAt: s.lastDiscoveredAt?.toISOString() ?? null,
     lastDiscoverySummary: s.lastDiscoverySummary,
   }));
@@ -400,6 +401,15 @@ export interface AddSourceInput {
   readonly rootPassword?: string;
   readonly channelName?: string;
   readonly knownModelIds?: readonly string[];
+  /**
+   * `PUBLIC` (default): sellable on the shelf, reachable by the customer
+   * relay — unchanged from every source added before this field existed.
+   * `INTERNAL`: for Nebutra's own team use only (a plan whose terms forbid
+   * resale or third-party benefit) — never counted toward public shelf
+   * availability, never used for the customer relay path; only the internal
+   * service-token relay routes to it (`resolveInternalRoute`).
+   */
+  readonly visibility?: "PUBLIC" | "INTERNAL";
 }
 
 /**
@@ -448,6 +458,7 @@ export async function addSource(
     baseUrl: input.baseUrl,
     credentialRef,
     enabled: true,
+    visibility: input.visibility ?? "PUBLIC",
   });
 
   const discovery = await discoverSource(source, fetchImpl);
@@ -469,6 +480,7 @@ export async function addSource(
       auditId,
       role: caller.role,
       kind: input.kind,
+      visibility: source.visibility,
       protocolDetected: detected.protocol,
       protocolMatched: detected.matched,
       discovered,
@@ -535,4 +547,70 @@ export async function suspendedPublicModels(): Promise<
     }
   }
   return [...seen.entries()].map(([publicModel, reason]) => ({ publicModel, reason }));
+}
+
+// ---------------------------------------------------------------- internal service-token relay
+
+/** Endpoint hints that mean "this model answers the OpenAI chat/completions shape". */
+const CHAT_COMPLETIONS_HINTS = ["chat/completions", "/completions"];
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Whether a model's discovered `supported_endpoints` (if any) covers an
+ * OpenAI-compatible chat/completions call.
+ *
+ * Stated choice, not faked: a model whose discovery reports
+ * `supported_endpoints` as only `['/messages']` (Anthropic's Messages format)
+ * is **not translated** to OpenAI chat/completions here — that is a real
+ * request/response reshape (system prompt placement, content blocks, stop
+ * reasons) that deserves its own reviewed implementation, not one folded into
+ * this routing decision. It is instead marked unsupported *for this
+ * OpenAI-compatible path only*, and the caller falls back to the existing
+ * New-API relay. A model with no `supported_endpoints` metadata at all is
+ * assumed compatible — it was discovered via the OpenAI-compatible `/v1/models`
+ * adapter, which is the shape this path already speaks.
+ */
+export function supportsInternalChatCompletions(capabilities: unknown): boolean {
+  if (!isRecord(capabilities)) return true;
+  const endpoints = capabilities.supported_endpoints;
+  if (!Array.isArray(endpoints) || endpoints.length === 0) return true;
+  return endpoints.some(
+    (e) => typeof e === "string" && CHAT_COMPLETIONS_HINTS.some((hint) => e.includes(hint)),
+  );
+}
+
+export interface InternalRoute {
+  readonly sourceKey: string;
+  readonly baseUrl: string;
+  readonly apiKey?: string;
+  readonly upstreamModel: string;
+  /** False for a model whose discovery says it only answers `/messages` (Anthropic format) — see {@link supportsInternalChatCompletions}. */
+  readonly supported: boolean;
+}
+
+/**
+ * The internal service-token relay's (`/api/internal/v1/chat/completions`)
+ * routing decision: an `INTERNAL`-visibility source currently AVAILABLE (or
+ * DEGRADED) for `model`, or `null` when none exists — the caller falls back to
+ * the existing New-API relay in either case (no source, or `supported: false`).
+ *
+ * This never reads a `PUBLIC` source's rows (`findInternalRoute` only queries
+ * `INTERNAL`-visibility ones) and is never consulted by the shelf or the
+ * customer relay — both of those call `availabilityFor`, which is the mirror
+ * restriction (`PUBLIC` only).
+ */
+export async function resolveInternalRoute(model: string): Promise<InternalRoute | null> {
+  const found = await repository().findInternalRoute(model);
+  if (!found) return null;
+  const credential = await credentialFor(found.source);
+  return {
+    sourceKey: found.source.key,
+    baseUrl: found.source.baseUrl,
+    ...(credential.apiKey ? { apiKey: credential.apiKey } : {}),
+    upstreamModel: found.upstreamModel,
+    supported: supportsInternalChatCompletions(found.capabilities),
+  };
 }

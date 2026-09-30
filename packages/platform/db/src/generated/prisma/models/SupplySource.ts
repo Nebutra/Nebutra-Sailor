@@ -39,6 +39,7 @@ export type SupplySourceMinAggregateOutputType = {
   baseUrl: string | null
   credentialRef: string | null
   enabled: boolean | null
+  visibility: $Enums.SupplyVisibility | null
   lastDiscoveredAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -53,6 +54,7 @@ export type SupplySourceMaxAggregateOutputType = {
   baseUrl: string | null
   credentialRef: string | null
   enabled: boolean | null
+  visibility: $Enums.SupplyVisibility | null
   lastDiscoveredAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -67,6 +69,7 @@ export type SupplySourceCountAggregateOutputType = {
   baseUrl: number
   credentialRef: number
   enabled: number
+  visibility: number
   lastDiscoveredAt: number
   lastDiscoverySummary: number
   createdAt: number
@@ -84,6 +87,7 @@ export type SupplySourceMinAggregateInputType = {
   baseUrl?: true
   credentialRef?: true
   enabled?: true
+  visibility?: true
   lastDiscoveredAt?: true
   createdAt?: true
   updatedAt?: true
@@ -98,6 +102,7 @@ export type SupplySourceMaxAggregateInputType = {
   baseUrl?: true
   credentialRef?: true
   enabled?: true
+  visibility?: true
   lastDiscoveredAt?: true
   createdAt?: true
   updatedAt?: true
@@ -112,6 +117,7 @@ export type SupplySourceCountAggregateInputType = {
   baseUrl?: true
   credentialRef?: true
   enabled?: true
+  visibility?: true
   lastDiscoveredAt?: true
   lastDiscoverySummary?: true
   createdAt?: true
@@ -200,6 +206,7 @@ export type SupplySourceGroupByOutputType = {
   baseUrl: string
   credentialRef: string | null
   enabled: boolean
+  visibility: $Enums.SupplyVisibility
   lastDiscoveredAt: Date | null
   lastDiscoverySummary: runtime.JsonValue | null
   createdAt: Date
@@ -236,6 +243,7 @@ export type SupplySourceWhereInput = {
   baseUrl?: Prisma.StringFilter<"SupplySource"> | string
   credentialRef?: Prisma.StringNullableFilter<"SupplySource"> | string | null
   enabled?: Prisma.BoolFilter<"SupplySource"> | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFilter<"SupplySource"> | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.DateTimeNullableFilter<"SupplySource"> | Date | string | null
   lastDiscoverySummary?: Prisma.JsonNullableFilter<"SupplySource">
   createdAt?: Prisma.DateTimeFilter<"SupplySource"> | Date | string
@@ -252,6 +260,7 @@ export type SupplySourceOrderByWithRelationInput = {
   baseUrl?: Prisma.SortOrder
   credentialRef?: Prisma.SortOrderInput | Prisma.SortOrder
   enabled?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   lastDiscoveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastDiscoverySummary?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -271,6 +280,7 @@ export type SupplySourceWhereUniqueInput = Prisma.AtLeast<{
   baseUrl?: Prisma.StringFilter<"SupplySource"> | string
   credentialRef?: Prisma.StringNullableFilter<"SupplySource"> | string | null
   enabled?: Prisma.BoolFilter<"SupplySource"> | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFilter<"SupplySource"> | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.DateTimeNullableFilter<"SupplySource"> | Date | string | null
   lastDiscoverySummary?: Prisma.JsonNullableFilter<"SupplySource">
   createdAt?: Prisma.DateTimeFilter<"SupplySource"> | Date | string
@@ -287,6 +297,7 @@ export type SupplySourceOrderByWithAggregationInput = {
   baseUrl?: Prisma.SortOrder
   credentialRef?: Prisma.SortOrderInput | Prisma.SortOrder
   enabled?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   lastDiscoveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastDiscoverySummary?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -308,6 +319,7 @@ export type SupplySourceScalarWhereWithAggregatesInput = {
   baseUrl?: Prisma.StringWithAggregatesFilter<"SupplySource"> | string
   credentialRef?: Prisma.StringNullableWithAggregatesFilter<"SupplySource"> | string | null
   enabled?: Prisma.BoolWithAggregatesFilter<"SupplySource"> | boolean
+  visibility?: Prisma.EnumSupplyVisibilityWithAggregatesFilter<"SupplySource"> | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SupplySource"> | Date | string | null
   lastDiscoverySummary?: Prisma.JsonNullableWithAggregatesFilter<"SupplySource">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SupplySource"> | Date | string
@@ -323,6 +335,7 @@ export type SupplySourceCreateInput = {
   baseUrl: string
   credentialRef?: string | null
   enabled?: boolean
+  visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -339,6 +352,7 @@ export type SupplySourceUncheckedCreateInput = {
   baseUrl: string
   credentialRef?: string | null
   enabled?: boolean
+  visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -355,6 +369,7 @@ export type SupplySourceUpdateInput = {
   baseUrl?: Prisma.StringFieldUpdateOperationsInput | string
   credentialRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -371,6 +386,7 @@ export type SupplySourceUncheckedUpdateInput = {
   baseUrl?: Prisma.StringFieldUpdateOperationsInput | string
   credentialRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -387,6 +403,7 @@ export type SupplySourceCreateManyInput = {
   baseUrl: string
   credentialRef?: string | null
   enabled?: boolean
+  visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -402,6 +419,7 @@ export type SupplySourceUpdateManyMutationInput = {
   baseUrl?: Prisma.StringFieldUpdateOperationsInput | string
   credentialRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -417,6 +435,7 @@ export type SupplySourceUncheckedUpdateManyInput = {
   baseUrl?: Prisma.StringFieldUpdateOperationsInput | string
   credentialRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,6 +451,7 @@ export type SupplySourceCountOrderByAggregateInput = {
   baseUrl?: Prisma.SortOrder
   credentialRef?: Prisma.SortOrder
   enabled?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   lastDiscoveredAt?: Prisma.SortOrder
   lastDiscoverySummary?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -447,6 +467,7 @@ export type SupplySourceMaxOrderByAggregateInput = {
   baseUrl?: Prisma.SortOrder
   credentialRef?: Prisma.SortOrder
   enabled?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   lastDiscoveredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -461,6 +482,7 @@ export type SupplySourceMinOrderByAggregateInput = {
   baseUrl?: Prisma.SortOrder
   credentialRef?: Prisma.SortOrder
   enabled?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   lastDiscoveredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -477,6 +499,10 @@ export type EnumSupplySourceKindFieldUpdateOperationsInput = {
 
 export type EnumSupplyProtocolFieldUpdateOperationsInput = {
   set?: $Enums.SupplyProtocol
+}
+
+export type EnumSupplyVisibilityFieldUpdateOperationsInput = {
+  set?: $Enums.SupplyVisibility
 }
 
 export type SupplySourceCreateNestedOneWithoutModelsInput = {
@@ -502,6 +528,7 @@ export type SupplySourceCreateWithoutModelsInput = {
   baseUrl: string
   credentialRef?: string | null
   enabled?: boolean
+  visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -517,6 +544,7 @@ export type SupplySourceUncheckedCreateWithoutModelsInput = {
   baseUrl: string
   credentialRef?: string | null
   enabled?: boolean
+  visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -548,6 +576,7 @@ export type SupplySourceUpdateWithoutModelsInput = {
   baseUrl?: Prisma.StringFieldUpdateOperationsInput | string
   credentialRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -563,6 +592,7 @@ export type SupplySourceUncheckedUpdateWithoutModelsInput = {
   baseUrl?: Prisma.StringFieldUpdateOperationsInput | string
   credentialRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -609,6 +639,7 @@ export type SupplySourceSelect<ExtArgs extends runtime.Types.Extensions.Internal
   baseUrl?: boolean
   credentialRef?: boolean
   enabled?: boolean
+  visibility?: boolean
   lastDiscoveredAt?: boolean
   lastDiscoverySummary?: boolean
   createdAt?: boolean
@@ -626,6 +657,7 @@ export type SupplySourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   baseUrl?: boolean
   credentialRef?: boolean
   enabled?: boolean
+  visibility?: boolean
   lastDiscoveredAt?: boolean
   lastDiscoverySummary?: boolean
   createdAt?: boolean
@@ -641,6 +673,7 @@ export type SupplySourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   baseUrl?: boolean
   credentialRef?: boolean
   enabled?: boolean
+  visibility?: boolean
   lastDiscoveredAt?: boolean
   lastDiscoverySummary?: boolean
   createdAt?: boolean
@@ -656,13 +689,14 @@ export type SupplySourceSelectScalar = {
   baseUrl?: boolean
   credentialRef?: boolean
   enabled?: boolean
+  visibility?: boolean
   lastDiscoveredAt?: boolean
   lastDiscoverySummary?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SupplySourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "kind" | "protocol" | "label" | "baseUrl" | "credentialRef" | "enabled" | "lastDiscoveredAt" | "lastDiscoverySummary" | "createdAt" | "updatedAt", ExtArgs["result"]["supplySource"]>
+export type SupplySourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "kind" | "protocol" | "label" | "baseUrl" | "credentialRef" | "enabled" | "visibility" | "lastDiscoveredAt" | "lastDiscoverySummary" | "createdAt" | "updatedAt", ExtArgs["result"]["supplySource"]>
 export type SupplySourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   models?: boolean | Prisma.SupplySource$modelsArgs<ExtArgs>
   _count?: boolean | Prisma.SupplySourceCountOutputTypeDefaultArgs<ExtArgs>
@@ -690,6 +724,14 @@ export type $SupplySourcePayload<ExtArgs extends runtime.Types.Extensions.Intern
      */
     credentialRef: string | null
     enabled: boolean
+    /**
+     * PUBLIC (default): sellable on the shelf and reachable by the customer
+     * relay, same as every source before this field existed. INTERNAL: never
+     * counted toward public shelf availability, never used for the customer
+     * relay path (billing-edge / openai-edge) — only the internal
+     * service-token relay routes to it.
+     */
+    visibility: $Enums.SupplyVisibility
     lastDiscoveredAt: Date | null
     lastDiscoverySummary: runtime.JsonValue | null
     createdAt: Date
@@ -1126,6 +1168,7 @@ export interface SupplySourceFieldRefs {
   readonly baseUrl: Prisma.FieldRef<"SupplySource", 'String'>
   readonly credentialRef: Prisma.FieldRef<"SupplySource", 'String'>
   readonly enabled: Prisma.FieldRef<"SupplySource", 'Boolean'>
+  readonly visibility: Prisma.FieldRef<"SupplySource", 'SupplyVisibility'>
   readonly lastDiscoveredAt: Prisma.FieldRef<"SupplySource", 'DateTime'>
   readonly lastDiscoverySummary: Prisma.FieldRef<"SupplySource", 'Json'>
   readonly createdAt: Prisma.FieldRef<"SupplySource", 'DateTime'>

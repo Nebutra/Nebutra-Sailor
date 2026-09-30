@@ -11,6 +11,7 @@ export const SUPPLY_ENUMS = `
   CREATE TYPE "SupplyModelState" AS ENUM ('PENDING','AVAILABLE','DEGRADED','SUSPENDED');
   CREATE TYPE "SupplyProbeKind" AS ENUM ('DISCOVERY','ACTIVE_PROBE','PASSIVE_SIGNAL','STATE_TRANSITION','MANUAL_OVERRIDE');
   CREATE TYPE "SupplyProbeOutcome" AS ENUM ('SUCCESS','FAILURE','ERROR');
+  CREATE TYPE "SupplyVisibility" AS ENUM ('PUBLIC','INTERNAL');
 `;
 
 export const SUPPLY_TABLES = `
@@ -23,6 +24,7 @@ export const SUPPLY_TABLES = `
     base_url                text NOT NULL,
     credential_ref          text,
     enabled                 boolean NOT NULL DEFAULT true,
+    visibility              "SupplyVisibility" NOT NULL DEFAULT 'PUBLIC',
     last_discovered_at      timestamp(3),
     last_discovery_summary  jsonb,
     created_at              timestamp(3) NOT NULL DEFAULT now(),

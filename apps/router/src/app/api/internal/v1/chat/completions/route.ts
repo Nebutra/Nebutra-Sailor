@@ -1,6 +1,11 @@
 import { z } from "zod";
-import { resolveNewApiModel, verifyInternalServiceCaller } from "@/lib/internal-service";
+import {
+  relayToInternalSource,
+  resolveNewApiModel,
+  verifyInternalServiceCaller,
+} from "@/lib/internal-service";
 import { proxyOpenAiCompatible, RouterSupplyUnavailableError } from "@/lib/openai-edge";
+import { resolveInternalRoute } from "@/lib/supply/capability";
 
 export const runtime = "nodejs";
 export const maxDuration = 180;
@@ -23,6 +28,19 @@ export const maxDuration = 180;
  * every current caller is a chat-completions request, and narrowing the
  * surface here rather than opening the whole OpenAI-compatible path keeps
  * this endpoint's blast radius to exactly what is used.
+ *
+ * **Internal-source routing (follow-up to ADR 2026-09-30)**: before falling
+ * to New-API, this checks whether the requested model is currently served by
+ * an `INTERNAL`-visibility supply source (`resolveInternalRoute`) — a source
+ * onboarded for Nebutra's own team use only (its terms forbid resale or
+ * third-party benefit), never counted toward public shelf availability and
+ * never reachable by the customer relay. When one is AVAILABLE/DEGRADED and
+ * supports the OpenAI chat/completions shape, the call goes straight there
+ * instead of through New-API. A model whose discovery says it only answers
+ * `/messages` (Anthropic format) is marked unsupported for this path rather
+ * than translated (stated gap, see `supportsInternalChatCompletions`'s doc
+ * comment) and falls through to New-API like any other model with no
+ * INTERNAL route.
  */
 
 const InternalChatBodySchema = z
@@ -75,12 +93,31 @@ export async function POST(request: Request): Promise<Response> {
     return badRequest(parsed.error.issues[0]?.message ?? "Malformed request body.");
   }
 
+  const { model, ...rest } = parsed.data;
+
+  const internalRoute = await resolveInternalRoute(model).catch(() => null);
+  if (internalRoute && internalRoute.supported) {
+    try {
+      return await relayToInternalSource(internalRoute, rest);
+    } catch (error) {
+      return Response.json(
+        {
+          error: {
+            message: error instanceof Error ? error.message : "upstream_failed",
+            type: "server_error",
+            code: "upstream_failed",
+          },
+        },
+        { status: 503 },
+      );
+    }
+  }
+
   const upstreamToken = process.env.NEW_API_ACCESS_TOKEN || process.env.NEBUTRA_NEW_API_TOKEN;
   if (!upstreamToken) {
     return unavailable("Router supply is not configured.");
   }
 
-  const { model, ...rest } = parsed.data;
   const upstreamRequest = new Request("https://router.internal/api/internal/v1/chat/completions", {
     method: "POST",
     headers: {

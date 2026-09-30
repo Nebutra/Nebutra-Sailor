@@ -1032,6 +1032,7 @@ export const SupplySourceScalarFieldEnum = {
   baseUrl: 'baseUrl',
   credentialRef: 'credentialRef',
   enabled: 'enabled',
+  visibility: 'visibility',
   lastDiscoveredAt: 'lastDiscoveredAt',
   lastDiscoverySummary: 'lastDiscoverySummary',
   createdAt: 'createdAt',

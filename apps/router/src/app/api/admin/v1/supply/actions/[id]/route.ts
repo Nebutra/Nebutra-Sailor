@@ -19,6 +19,7 @@ import { completeLogin, isLoginProvider, startLogin } from "@/lib/supply/login";
 import { applyPricePublish, planPricePublish, unpublishDrifted } from "@/lib/supply/pricing";
 
 const SOURCE_KINDS = new Set(["OPENAI_COMPATIBLE", "FAL_AI", "NEWAPI_CHANNEL", "CLIPROXYAPI"]);
+const SOURCE_VISIBILITIES = new Set(["PUBLIC", "INTERNAL"]);
 
 function isAddSourceInput(
   input: Record<string, unknown>,
@@ -28,7 +29,9 @@ function isAddSourceInput(
     typeof input.label === "string" &&
     typeof input.baseUrl === "string" &&
     typeof input.kind === "string" &&
-    SOURCE_KINDS.has(input.kind)
+    SOURCE_KINDS.has(input.kind) &&
+    (input.visibility === undefined ||
+      (typeof input.visibility === "string" && SOURCE_VISIBILITIES.has(input.visibility)))
   );
 }
 

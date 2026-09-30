@@ -9159,6 +9159,7 @@ export const SupplySourceScalarFieldEnum = {
   baseUrl: 'baseUrl',
   credentialRef: 'credentialRef',
   enabled: 'enabled',
+  visibility: 'visibility',
   lastDiscoveredAt: 'lastDiscoveredAt',
   lastDiscoverySummary: 'lastDiscoverySummary',
   createdAt: 'createdAt',
@@ -10725,6 +10726,20 @@ export type EnumSupplyProtocolFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'SupplyProtocol[]'
  */
 export type ListEnumSupplyProtocolFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyProtocol[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyVisibility'
+ */
+export type EnumSupplyVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyVisibility'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyVisibility[]'
+ */
+export type ListEnumSupplyVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyVisibility[]'>
     
 
 

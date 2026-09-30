@@ -52,6 +52,57 @@ describe("discoverOpenAiCompatible", () => {
     expect(result.ok).toBe(false);
     expect(result.note).toContain("401");
   });
+
+  it("keeps per-model metadata the upstream returns (Command Code's /v1/models shape)", async () => {
+    const fetchImpl = vi.fn(async () =>
+      jsonResponse({
+        data: [
+          {
+            id: "gpt-5-codex",
+            object: "model",
+            name: "GPT-5 Codex",
+            context_length: 400_000,
+            supported_endpoints: ["/chat/completions"],
+          },
+          {
+            id: "claude-opus-4-anthropic-only",
+            name: "Claude Opus 4",
+            context_length: 200_000,
+            supported_endpoints: ["/messages"],
+          },
+          // No metadata at all — most OpenAI-compatible upstreams only send `id`.
+          { id: "bare-model" },
+        ],
+      }),
+    );
+    const result = await discoverOpenAiCompatible(
+      { baseUrl: "https://api.commandcode.ai/provider/v1", apiKey: "sk-test" },
+      fetchImpl as unknown as typeof fetch,
+    );
+    expect(result.ok).toBe(true);
+    const codex = result.models.find((m) => m.id === "gpt-5-codex");
+    expect(codex?.capabilities).toEqual({
+      name: "GPT-5 Codex",
+      context_length: 400_000,
+      supported_endpoints: ["/chat/completions"],
+    });
+    const anthropicOnly = result.models.find((m) => m.id === "claude-opus-4-anthropic-only");
+    expect(anthropicOnly?.capabilities?.supported_endpoints).toEqual(["/messages"]);
+    const bare = result.models.find((m) => m.id === "bare-model");
+    expect(bare?.capabilities).toBeUndefined();
+  });
+
+  it("works with a non-root /v1 base URL (Command Code: https://api.commandcode.ai/provider/v1)", async () => {
+    const fetchImpl = vi.fn(async () => jsonResponse({ data: [{ id: "gpt-5-codex" }] }));
+    const result = await discoverOpenAiCompatible(
+      { baseUrl: "https://api.commandcode.ai/provider/v1", apiKey: "sk-test" },
+      fetchImpl as unknown as typeof fetch,
+    );
+    expect(result.ok).toBe(true);
+    const [url] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit];
+    // Not .../provider/v1/v1/models — the base already ends in /v1.
+    expect(url).toBe("https://api.commandcode.ai/provider/v1/models");
+  });
 });
 
 describe("discoverCliProxyApi", () => {

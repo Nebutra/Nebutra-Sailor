@@ -943,6 +943,13 @@ export type EnumSupplyProtocolFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumSupplyProtocolFilter<$PrismaModel> | $Enums.SupplyProtocol
 }
 
+export type EnumSupplyVisibilityFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyVisibility | Prisma.EnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyVisibility[] | Prisma.ListEnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyVisibility[] | Prisma.ListEnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyVisibilityFilter<$PrismaModel> | $Enums.SupplyVisibility
+}
+
 export type EnumSupplySourceKindWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.SupplySourceKind | Prisma.EnumSupplySourceKindFieldRefInput<$PrismaModel>
   in?: $Enums.SupplySourceKind[] | Prisma.ListEnumSupplySourceKindFieldRefInput<$PrismaModel>
@@ -961,6 +968,16 @@ export type EnumSupplyProtocolWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSupplyProtocolFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSupplyProtocolFilter<$PrismaModel>
+}
+
+export type EnumSupplyVisibilityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyVisibility | Prisma.EnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyVisibility[] | Prisma.ListEnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyVisibility[] | Prisma.ListEnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyVisibilityWithAggregatesFilter<$PrismaModel> | $Enums.SupplyVisibility
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyVisibilityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyVisibilityFilter<$PrismaModel>
 }
 
 export type EnumSupplyModalityFilter<$PrismaModel = never> = {
@@ -2269,6 +2286,13 @@ export type NestedEnumSupplyProtocolFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumSupplyProtocolFilter<$PrismaModel> | $Enums.SupplyProtocol
 }
 
+export type NestedEnumSupplyVisibilityFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyVisibility | Prisma.EnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyVisibility[] | Prisma.ListEnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyVisibility[] | Prisma.ListEnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyVisibilityFilter<$PrismaModel> | $Enums.SupplyVisibility
+}
+
 export type NestedEnumSupplySourceKindWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.SupplySourceKind | Prisma.EnumSupplySourceKindFieldRefInput<$PrismaModel>
   in?: $Enums.SupplySourceKind[] | Prisma.ListEnumSupplySourceKindFieldRefInput<$PrismaModel>
@@ -2287,6 +2311,16 @@ export type NestedEnumSupplyProtocolWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSupplyProtocolFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSupplyProtocolFilter<$PrismaModel>
+}
+
+export type NestedEnumSupplyVisibilityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyVisibility | Prisma.EnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyVisibility[] | Prisma.ListEnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyVisibility[] | Prisma.ListEnumSupplyVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyVisibilityWithAggregatesFilter<$PrismaModel> | $Enums.SupplyVisibility
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyVisibilityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyVisibilityFilter<$PrismaModel>
 }
 
 export type NestedEnumSupplyModalityFilter<$PrismaModel = never> = {

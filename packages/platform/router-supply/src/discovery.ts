@@ -86,13 +86,47 @@ async function fetchJson<T>(
 // ---------------------------------------------------------------- OpenAI-compatible
 
 interface OpenAiModelsResponse {
-  data?: Array<{ id?: string; object?: string; owned_by?: string; [key: string]: unknown }>;
+  data?: Array<{
+    id?: string;
+    object?: string;
+    owned_by?: string;
+    context_length?: number;
+    supported_endpoints?: unknown;
+    name?: string;
+    [key: string]: unknown;
+  }>;
+}
+
+/**
+ * Provider-declared per-model metadata worth keeping, when the upstream's
+ * `/v1/models` row carries it — Command Code's `/v1/models` (a source onboarded
+ * as `INTERNAL`, see ADR follow-up) returns exactly this shape:
+ * `context_length`, `supported_endpoints` (e.g. `['/chat/completions']` or, for
+ * an Anthropic-only model, `['/messages']`), `name`. `undefined` when the row
+ * carries none of these — most OpenAI-compatible upstreams only return `id`.
+ */
+function modelCapabilities(m: Record<string, unknown>): Record<string, unknown> | undefined {
+  const out: Record<string, unknown> = {};
+  if (typeof m.context_length === "number") out.context_length = m.context_length;
+  if (Array.isArray(m.supported_endpoints)) {
+    const endpoints = m.supported_endpoints.filter(
+      (e): e is string => typeof e === "string" && e.length > 0,
+    );
+    if (endpoints.length > 0) out.supported_endpoints = endpoints;
+  }
+  if (typeof m.name === "string" && m.name.length > 0) out.name = m.name;
+  return Object.keys(out).length > 0 ? out : undefined;
 }
 
 /**
  * `GET {baseUrl}/v1/models` — the one shape every relay/中转站, CLIProxyAPI and
  * New-API's own customer-facing surface all speak. This is also the adapter
  * `detectProtocol` tries first, because it is the cheapest, most common shape.
+ *
+ * `baseUrl` may itself carry a path before its `/v1` (e.g.
+ * `https://api.commandcode.ai/provider/v1`) — the `endsWith("/v1")` check
+ * below only cares about the suffix, so a base that already ends in `/v1`
+ * never gets a second one appended regardless of what precedes it.
  */
 export async function discoverOpenAiCompatible(
   input: SourceCredential,
@@ -110,7 +144,14 @@ export async function discoverOpenAiCompatible(
     const rows = body.data ?? [];
     const models: DiscoveredModel[] = rows
       .filter((m): m is { id: string } => typeof m.id === "string" && m.id.length > 0)
-      .map((m) => ({ id: m.id, modality: guessModality(m.id) }));
+      .map((m) => {
+        const capabilities = modelCapabilities(m);
+        return {
+          id: m.id,
+          modality: guessModality(m.id),
+          ...(capabilities ? { capabilities } : {}),
+        };
+      });
     return {
       ok: true,
       protocol: "OPENAI_COMPATIBLE",

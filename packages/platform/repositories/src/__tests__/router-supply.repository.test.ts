@@ -223,6 +223,115 @@ describe("RouterSupplyRepository (real Prisma over PGlite)", () => {
     expect(await repository.findBySourceKeyAndUpstreamModel("cliproxyapi", "nope")).toBeNull();
   });
 
+  it("upsertSource defaults visibility to PUBLIC, and honours an explicit INTERNAL", async () => {
+    const publicSource = await repository.upsertSource({
+      key: "cliproxyapi",
+      kind: "CLIPROXYAPI",
+      label: "Account pool",
+      baseUrl: "http://x",
+    });
+    expect(publicSource.visibility).toBe("PUBLIC");
+
+    const internalSource = await repository.upsertSource({
+      key: "commandcode",
+      kind: "OPENAI_COMPATIBLE",
+      label: "Command Code (internal, team use only)",
+      baseUrl: "https://api.commandcode.ai/provider/v1",
+      visibility: "INTERNAL",
+    });
+    expect(internalSource.visibility).toBe("INTERNAL");
+  });
+
+  it(
+    "availabilityFor (the shelf gate and the customer relay's admit() both read this) " +
+      "never counts an INTERNAL source toward a model's public availability",
+    async () => {
+      const internal = await repository.upsertSource({
+        key: "commandcode",
+        kind: "OPENAI_COMPATIBLE",
+        label: "Command Code (internal)",
+        baseUrl: "https://api.commandcode.ai/provider/v1",
+        visibility: "INTERNAL",
+      });
+      await repository.applyDiscovery(internal.id, [{ id: "gpt-5-codex", modality: "TEXT" }]);
+      const [row] = await repository.listCapabilities({ sourceId: internal.id });
+      // Even a healthy, pinned-available INTERNAL row must not surface here.
+      await repository.setManualOverride(row.id, { pinned: true });
+
+      const availability = await repository.availabilityFor(["gpt-5-codex"]);
+      expect(availability.get("gpt-5-codex")).toBeUndefined();
+
+      // A PUBLIC source backing the same public model still counts normally —
+      // the exclusion is per-source, not a blanket "unknown model" behaviour.
+      const publicSource = await repository.upsertSource({
+        key: "cliproxyapi",
+        kind: "CLIPROXYAPI",
+        label: "Account pool",
+        baseUrl: "http://x",
+      });
+      await repository.applyDiscovery(publicSource.id, [{ id: "gpt-5-codex", modality: "TEXT" }]);
+      const [publicRow] = await repository.listCapabilities({ sourceId: publicSource.id });
+      await repository.setManualOverride(publicRow.id, { pinned: true });
+
+      const mixed = await repository.availabilityFor(["gpt-5-codex"]);
+      expect(mixed.get("gpt-5-codex")?.sellable).toBe(true);
+      expect(mixed.get("gpt-5-codex")?.sources).toEqual(["cliproxyapi"]);
+    },
+  );
+
+  it("findInternalRoute prefers an AVAILABLE INTERNAL source and never returns a PUBLIC one", async () => {
+    const internal = await repository.upsertSource({
+      key: "commandcode",
+      kind: "OPENAI_COMPATIBLE",
+      label: "Command Code (internal)",
+      baseUrl: "https://api.commandcode.ai/provider/v1",
+      visibility: "INTERNAL",
+    });
+    await repository.applyDiscovery(internal.id, [
+      {
+        id: "gpt-5-codex",
+        modality: "TEXT",
+        capabilities: { supported_endpoints: ["/chat/completions"] },
+      },
+    ]);
+    const [row] = await repository.listCapabilities({ sourceId: internal.id });
+
+    // Not yet probed (PENDING) — not sellable, so no route yet.
+    expect(await repository.findInternalRoute("gpt-5-codex")).toBeNull();
+
+    await repository.recordProbe(
+      { sourceModelId: row.id, kind: "ACTIVE_PROBE", outcome: "success", latencyMs: 10 },
+      applyOutcome,
+    );
+    const route = await repository.findInternalRoute("gpt-5-codex");
+    expect(route?.source.key).toBe("commandcode");
+    expect(route?.source.visibility).toBe("INTERNAL");
+    expect(route?.upstreamModel).toBe("gpt-5-codex");
+    expect(route?.capabilities).toEqual({ supported_endpoints: ["/chat/completions"] });
+
+    // A PUBLIC source's identically-named model is never returned here.
+    const publicSource = await repository.upsertSource({
+      key: "cliproxyapi",
+      kind: "CLIPROXYAPI",
+      label: "Account pool",
+      baseUrl: "http://x",
+    });
+    await repository.applyDiscovery(publicSource.id, [{ id: "gpt-5-codex", modality: "TEXT" }]);
+    const [publicRow] = await repository.listCapabilities({ sourceId: publicSource.id });
+    await repository.setManualOverride(publicRow.id, { pinned: true });
+    const stillInternal = await repository.findInternalRoute("gpt-5-codex");
+    expect(stillInternal?.source.key).toBe("commandcode");
+
+    // A suspended INTERNAL source is not routed to.
+    for (let i = 0; i < 3; i += 1) {
+      await repository.recordProbe(
+        { sourceModelId: row.id, kind: "ACTIVE_PROBE", outcome: "failure", reason: "unauthorized" },
+        applyOutcome,
+      );
+    }
+    expect(await repository.findInternalRoute("gpt-5-codex")).toBeNull();
+  });
+
   it("listSuspendedDueForRetry only returns rows whose backoff has elapsed", async () => {
     const source = await repository.upsertSource({
       key: "cliproxyapi",

@@ -189,6 +189,14 @@ export const SupplyProbeOutcome = {
 export type SupplyProbeOutcome = (typeof SupplyProbeOutcome)[keyof typeof SupplyProbeOutcome]
 
 
+export const SupplyVisibility = {
+  PUBLIC: 'PUBLIC',
+  INTERNAL: 'INTERNAL'
+} as const
+
+export type SupplyVisibility = (typeof SupplyVisibility)[keyof typeof SupplyVisibility]
+
+
 export const TenantKind = {
   ORGANIZATION: 'ORGANIZATION',
   INDIVIDUAL: 'INDIVIDUAL'

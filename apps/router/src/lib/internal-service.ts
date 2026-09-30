@@ -1,7 +1,8 @@
 import "server-only";
 
 import { verifyServiceToken } from "@nebutra/auth";
-import { parseAliasTableJson, resolveAliases } from "@nebutra/router-supply";
+import { openaiCompatibleUrl, parseAliasTableJson, resolveAliases } from "@nebutra/router-supply";
+import type { InternalRoute } from "./supply/capability";
 
 /**
  * Gate for `POST /api/internal/v1/chat/completions` — Router's own
@@ -47,4 +48,41 @@ export function resolveNewApiModel(publicModel: string): string {
   const row = resolveAliases(table, publicModel).find((entry) => entry.engineId === "newapi");
   if (!row) return publicModel;
   return row.upstreamModel === "*" ? publicModel : row.upstreamModel;
+}
+
+/**
+ * Forward a chat-completions call straight to an `INTERNAL`-visibility supply
+ * source (`resolveInternalRoute` in `./supply/capability`), bypassing New-API
+ * entirely. This is deliberately a plain, unbilled relay — no guard, no rate
+ * limit, no usage teeing — the same "relay-only mode" posture the New-API leg
+ * of this same route already has: this is Nebutra's own infrastructure cost,
+ * not customer usage. Kept separate from `proxyOpenAiCompatible`
+ * (`openai-edge.ts`) rather than reusing it, because that function always
+ * targets `newApiBaseUrl()` — its URL-building is coupled to the one upstream,
+ * not parameterized by source, and reworking that for one more caller was a
+ * larger, riskier change than a small, dedicated forwarder.
+ */
+export async function relayToInternalSource(
+  route: InternalRoute,
+  body: Record<string, unknown>,
+  fetchImpl: typeof fetch = fetch,
+): Promise<Response> {
+  const url = openaiCompatibleUrl(route.baseUrl, ["chat", "completions"]);
+  const upstreamResponse = await fetchImpl(url, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      ...(route.apiKey ? { Authorization: `Bearer ${route.apiKey}` } : {}),
+    },
+    body: JSON.stringify({ ...body, model: route.upstreamModel }),
+    signal: AbortSignal.timeout(180_000),
+  });
+  const headers = new Headers(upstreamResponse.headers);
+  headers.delete("content-encoding");
+  headers.delete("transfer-encoding");
+  return new Response(upstreamResponse.body, {
+    status: upstreamResponse.status,
+    statusText: upstreamResponse.statusText,
+    headers,
+  });
 }
