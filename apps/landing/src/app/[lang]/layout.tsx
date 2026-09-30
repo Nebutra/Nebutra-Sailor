@@ -183,6 +183,9 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     // Navbar mega-menu / mobile drawer (template chrome) — client-only, small
     "solutionsNav",
     "resourcesCatalog",
+    // The template's own starter site — StarterFooter/StarterNav/StarterPricing
+    // ("use client") read messages/en.json -> site.* via useTranslations().
+    "site",
   ] as const;
 
   type Messages = typeof messages;

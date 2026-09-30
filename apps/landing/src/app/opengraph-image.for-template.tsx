@@ -1,16 +1,18 @@
 import { brand, colors } from "@nebutra/brand/metadata";
 import { ImageResponse } from "next/og";
-import { say } from "@/components/starter/starter-copy";
-import { SITE } from "@/content/site";
+import { getTranslations } from "next-intl/server";
+import enMessages from "../../messages/en.json";
 
-// The link-preview card: your brand's name and pitch (src/content/site.ts).
-// Satori does not resolve CSS var(), so colours are explicit.
+// The link-preview card: your brand's name and pitch (messages/en.json ->
+// site.meta / site.hero). Satori does not resolve CSS var(), so colours are
+// explicit.
 
-export const alt = say(SITE.meta.title, "en");
+export const alt = enMessages.site.meta.title.replaceAll("{brandName}", brand.name);
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
+  const t = await getTranslations({ locale: "en", namespace: "site.hero" });
   return new ImageResponse(
     <div
       style={{
@@ -46,7 +48,7 @@ export default async function Image() {
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         <span style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.1, maxWidth: 1000 }}>
-          {say(SITE.hero.pitch, "en")}
+          {t("pitch")}
         </span>
         <span style={{ fontSize: 28, color: "rgba(255,255,255,0.6)" }}>
           {brand.domains.landing}

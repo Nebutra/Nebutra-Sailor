@@ -1,21 +1,32 @@
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { CSSProperties, ReactNode } from "react";
-import { SITE } from "@/content/site";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { SITE_ID } from "@/site.config";
 
 /**
- * The specimen lines. A site set up from the template shows its own pitch
- * (content/site.ts), so the page speaks in the owner's words from the first
- * build; Nebutra's own site keeps its founder's lines.
+ * The specimen lines, in both scripts always — this page shows the Chinese
+ * sample AND the English sample side by side, regardless of the visited
+ * locale. A site set up from the template speaks its own pitch
+ * (messages/en.json / zh-Hans.json -> site.hero.pitch), so the page speaks in
+ * the owner's words from the first build; Nebutra's own site keeps its
+ * founder's lines.
  */
-const SPECIMEN =
-  SITE_ID === "nebutra"
-    ? { zh: "好的架构，意味着你能走很远。", en: "Build the company, not the platform under it." }
-    : SITE.hero.pitch;
+async function getSpecimen(): Promise<{ zh: string; en: string }> {
+  if (SITE_ID === "nebutra") {
+    return {
+      zh: "好的架构，意味着你能走很远。",
+      en: "Build the company, not the platform under it.",
+    };
+  }
+  const [tEn, tZh] = await Promise.all([
+    getTranslations({ locale: "en", namespace: "site.hero" }),
+    getTranslations({ locale: "zh-Hans", namespace: "site.hero" }),
+  ]);
+  return { en: tEn("pitch"), zh: tZh("pitch") };
+}
 
 export async function generateMetadata({
   params,
@@ -106,6 +117,7 @@ function Face({
 export default async function CreditsPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+  const SPECIMEN = await getSpecimen();
 
   return (
     <article className="flex flex-col">

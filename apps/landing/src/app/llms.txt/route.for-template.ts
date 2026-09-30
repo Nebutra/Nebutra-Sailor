@@ -1,23 +1,34 @@
 import { brand } from "@nebutra/brand/metadata";
-import { say } from "@/components/starter/starter-copy";
-import { SITE } from "@/content/site";
+import { getTranslations } from "next-intl/server";
+import { SITE, type SiteTranslator } from "@/content/site";
 import { getSiteUrl } from "@/lib/seo/site-routes";
 
 /**
  * LLM-readable summary of the site (https://llmstxt.org/), from the words in
- * src/content/site.ts.
+ * messages/en.json -> site.* (English only — this file is always "en").
  */
-export function GET() {
+export async function GET() {
   const base = getSiteUrl();
+  const [tHero, tMeta, tFeatures] = await Promise.all([
+    getTranslations({ locale: "en", namespace: "site.hero" }),
+    getTranslations({ locale: "en", namespace: "site.meta" }),
+    getTranslations({
+      locale: "en",
+      namespace: "site.features",
+    }) as unknown as Promise<SiteTranslator>,
+  ]);
   const features = SITE.features.items
-    .map((item) => `- ${say(item.title, "en")}: ${say(item.body, "en")}`)
+    .map(
+      (item) =>
+        `- ${tFeatures(`items.${item.icon}.title`)}: ${tFeatures(`items.${item.icon}.body`)}`,
+    )
     .join("\n");
 
   const body = `# ${brand.name}
 
-> ${say(SITE.hero.pitch, "en")}
+> ${tHero("pitch")}
 
-${say(SITE.meta.description, "en")}
+${tMeta("description")}
 
 ## Features
 

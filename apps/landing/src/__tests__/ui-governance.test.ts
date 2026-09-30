@@ -162,8 +162,10 @@ describe("landing UI governance", () => {
     expect(mobileDrawerSource).not.toContain('className="md:hidden flex items-center"');
   });
 
-  it("renders the template home from the content file, not the Sailor sections", () => {
-    expect(marketingHomePageSource).toContain('from "@/content/site"');
+  it("renders the template home from the starter sections, not the Sailor ones", () => {
+    // Copy moved to messages/en.json -> site.* (2026-09); the starter
+    // sections themselves still read src/content/site.ts for structure/config.
+    expect(marketingHomePageSource).toContain('from "@/components/starter/starter-hero"');
     expect(marketingHomePageSource).not.toContain("@/components/landing");
   });
 

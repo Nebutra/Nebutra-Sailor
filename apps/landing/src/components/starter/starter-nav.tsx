@@ -5,14 +5,13 @@ import { brand } from "@nebutra/brand/metadata";
 import { Cross, Menu } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
-import { SITE } from "@/content/site";
+import { SITE, type SiteTranslator } from "@/content/site";
 import { Link, usePathname } from "@/i18n/navigation";
 import { usePublicMe } from "@/lib/use-public-me";
 import { hereOnly } from "@/site-map";
-import { say } from "./starter-copy";
 import { StarterLink } from "./starter-link";
 
 /**
@@ -21,13 +20,13 @@ import { StarterLink } from "./starter-link";
  * in" and "Get started", or "Open the app" once the visitor has a session.
  */
 export function StarterNav() {
-  const locale = useLocale();
+  const t = useTranslations("site.nav") as unknown as SiteTranslator;
+  const tAccount = useTranslations("site.account");
   const pathname = usePathname();
   const me = usePublicMe();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const links = hereOnly(SITE.nav);
-  const { account } = SITE;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -42,17 +41,15 @@ export function StarterNav() {
 
   const accountLinks = me ? (
     <Button asChild size="sm" variant="ink">
-      <StarterLink href="app:/welcome">{say(account.open, locale)}</StarterLink>
+      <StarterLink href="app:/welcome">{tAccount("open")}</StarterLink>
     </Button>
   ) : (
     <>
       <Button asChild size="sm" variant="ghost">
-        <StarterLink href="app:/sign-in">{say(account.signIn, locale)}</StarterLink>
+        <StarterLink href="app:/sign-in">{tAccount("signIn")}</StarterLink>
       </Button>
       <Button asChild size="sm" variant="ink">
-        <StarterLink href="app:/sign-in?mode=sign-up">
-          {say(account.getStarted, locale)}
-        </StarterLink>
+        <StarterLink href="app:/sign-in?mode=sign-up">{tAccount("getStarted")}</StarterLink>
       </Button>
     </>
   );
@@ -79,7 +76,7 @@ export function StarterNav() {
               href={link.href}
               className="rounded-[var(--radius-sm)] px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              {say(link.label, locale)}
+              {t(link.id)}
             </StarterLink>
           ))}
         </nav>
@@ -95,7 +92,7 @@ export function StarterNav() {
             type="button"
             variant="ghost"
             size="icon"
-            aria-label={say(account.menu, locale)}
+            aria-label={tAccount("menu")}
             aria-expanded={open}
             aria-controls="starter-mobile-menu"
             onClick={() => setOpen((value) => !value)}
@@ -114,7 +111,7 @@ export function StarterNav() {
                 href={link.href}
                 className="border-b border-border py-3 text-base text-foreground"
               >
-                {say(link.label, locale)}
+                {t(link.id)}
               </StarterLink>
             ))}
           </nav>

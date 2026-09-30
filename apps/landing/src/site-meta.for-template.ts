@@ -1,15 +1,23 @@
 import { brand } from "@nebutra/brand/metadata";
-import { say } from "@/components/starter/starter-copy";
-import { SITE } from "@/content/site";
+import { getTranslations } from "next-intl/server";
+import enMessages from "../messages/en.json";
 
 /**
  * What search engines and link previews say about the whole site. The words
- * are in src/content/site.ts (SITE.meta). See site-meta.ts.
+ * are in messages/en.json -> site.meta (see src/content/site.ts for the
+ * structure/config that stays there). See site-meta.ts.
  */
+const enSiteMeta = enMessages.site.meta;
+
+/** English only, read synchronously at module scope — SITE_SEO is a plain const, not a request. */
+function sayEn(value: string): string {
+  return value.replaceAll("{brandName}", brand.name);
+}
+
 export const SITE_SEO = {
   siteName: brand.name,
-  description: say(SITE.meta.description, "en"),
-  softwareDescription: say(SITE.meta.description, "en"),
+  description: sayEn(enSiteMeta.description),
+  softwareDescription: sayEn(enSiteMeta.description),
   /** The product is the customer's own application, served from this site's domain. */
   software: {
     name: brand.name,
@@ -22,5 +30,6 @@ export const SITE_SEO = {
 export async function siteMetadata(
   locale: string,
 ): Promise<{ title: string; description: string }> {
-  return { title: say(SITE.meta.title, locale), description: say(SITE.meta.description, locale) };
+  const t = await getTranslations({ locale, namespace: "site.meta" });
+  return { title: t("title"), description: t("description") };
 }
