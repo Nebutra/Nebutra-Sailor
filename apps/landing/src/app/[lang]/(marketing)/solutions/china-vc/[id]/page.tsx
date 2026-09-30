@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FinalCTA } from "@/components/landing";
 import { VcProfile } from "@/components/landing/solutions/vc/VcProfile";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { CHINA_VC_ORGS, chinaVcLogoFor, getChinaVc } from "@/lib/constants/china-vc";
 import { similarVcs } from "@/lib/constants/vc";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ lang: string; id: string }> };
@@ -31,14 +30,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!hasLocale(routing.locales, lang)) return {};
   const org = getChinaVc(Number(id));
   if (!org) return {};
-  const zh = isZhUiLocale(lang);
+  const t = await getTranslations({ locale: lang, namespace: "solutionsCatalog.meta" });
   return buildPageMetadata({
-    title: zh ? `${org.name} — 投资机构画像 | Nebutra` : `${org.name} — Investor Profile | Nebutra`,
-    description:
-      org.summary ||
-      (zh
-        ? `${org.name} 的投资主线、赛道、阶段与代表案例。`
-        : `${org.name}: investment focus, sectors, stages and notable portfolio.`),
+    title: t("chinaVcProfileTitle", { name: org.name }),
+    description: org.summary || t("chinaVcProfileDescriptionFallback", { name: org.name }),
     path: `/solutions/china-vc/${org.id}`,
     locale: lang as Locale,
   });
@@ -54,6 +49,7 @@ export default async function ChinaVcProfilePage({ params }: Props) {
 
   const org = { ...raw, logo: chinaVcLogoFor(raw) };
   const similar = similarVcs(raw, CHINA_VC_ORGS).map((o) => ({ ...o, logo: chinaVcLogoFor(o) }));
+  const t = await getTranslations({ locale: lang, namespace: "solutionsCatalog.chinaVc" });
 
   return (
     <main id="main-content" className="relative flex-1 overflow-hidden bg-background">
@@ -61,7 +57,7 @@ export default async function ChinaVcProfilePage({ params }: Props) {
         org={org}
         similar={similar}
         locale={lang as Locale}
-        directoryLabel={isZhUiLocale(lang) ? "中国 VC" : "China VC"}
+        directoryLabel={t("directoryLabel")}
         hrefBase="/solutions/china-vc"
         variant="deals"
       />

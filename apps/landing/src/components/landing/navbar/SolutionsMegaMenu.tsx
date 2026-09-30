@@ -1,18 +1,24 @@
 "use client";
 
 import { ChevronDown } from "@nebutra/icons";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { getGroupSolutions, pick, SOLUTION_GROUPS } from "@/lib/constants/solutions-data";
+import { getGroupSolutions, SOLUTION_GROUPS } from "@/lib/constants/solutions-data";
+
+/** Reads a dynamic dotted path out of a namespace — the group/slug ids are data, not literal keys. */
+type DynamicTranslator = (key: string) => string;
 
 /**
  * Desktop Solutions trigger + grouped mega-menu panel. Routes are flat
  * (`/solutions/[slug]`); the panel presents them in one column per group.
  * Pure CSS hover, matching the existing `resources` dropdown behavior.
+ * Structure from `solutions-data`; copy from the small client-only
+ * `solutionsNav` message namespace (the full `solutionsCatalog` — hero,
+ * use cases, FAQ — stays server-only and never ships to the client).
  */
 export function SolutionsMegaMenu() {
   const t = useTranslations("nav");
-  const locale = useLocale();
+  const tNav = useTranslations("solutionsNav") as unknown as DynamicTranslator;
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
 
   return (
@@ -32,7 +38,7 @@ export function SolutionsMegaMenu() {
             {SOLUTION_GROUPS.map((group) => (
               <div key={group.id} className="flex flex-col gap-2">
                 <span className="px-2 text-[0.7rem] font-bold uppercase tracking-widest text-muted-foreground/60">
-                  {pick(group.label, locale)}
+                  {tNav(`groups.${group.id}`)}
                 </span>
                 <div className="flex flex-col gap-0.5">
                   {getGroupSolutions(group).map((s) => {
@@ -46,10 +52,10 @@ export function SolutionsMegaMenu() {
                         <Icon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/60 transition-colors group-hover/child:text-foreground" />
                         <span className="flex flex-col">
                           <span className="text-sm font-medium text-neutral-12">
-                            {pick(s.label, locale)}
+                            {tNav(`items.${s.slug}.label`)}
                           </span>
                           <span className="text-xs text-muted-foreground/80">
-                            {pick(s.tagline, locale)}
+                            {tNav(`items.${s.slug}.tagline`)}
                           </span>
                         </span>
                       </Link>

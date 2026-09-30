@@ -1,18 +1,22 @@
 "use client";
 
 import { ArrowUpRight, ChevronDown } from "@nebutra/icons";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { getGroupResources, pick, RESOURCE_GROUPS_HERE } from "@/lib/constants/resources-data";
+import { getGroupResources, RESOURCE_GROUPS_HERE } from "@/lib/constants/resources-data";
+
+/** Reads a dynamic dotted path out of a namespace — the group/item ids are data, not literal keys. */
+type DynamicTranslator = (key: string) => string;
 
 /**
  * Desktop Resources trigger + two-column mega-menu (DEVELOPERS / COMPANY).
  * Each item is an icon tile + title + description. Pure CSS hover/focus reveal,
- * matching SolutionsMegaMenu. Content is sourced from `resources-data`.
+ * matching SolutionsMegaMenu. Structure from `resources-data`; copy from the
+ * small client-only `resourcesCatalog` message namespace.
  */
 export function ResourcesMegaMenu() {
   const t = useTranslations("nav");
-  const locale = useLocale();
+  const tCatalog = useTranslations("resourcesCatalog") as unknown as DynamicTranslator;
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
 
   const itemClass =
@@ -42,7 +46,7 @@ export function ResourcesMegaMenu() {
                 className={`flex flex-col gap-2 ${index === 0 ? "pr-1" : "border-l border-border/50 pl-8"}`}
               >
                 <span className="px-2.5 text-[0.7rem] font-bold uppercase tracking-widest text-muted-foreground/60">
-                  {pick(group.label, locale)}
+                  {tCatalog(`groups.${group.id}`)}
                 </span>
                 <div className="flex flex-col gap-0.5">
                   {getGroupResources(group).map((item) => {
@@ -52,7 +56,7 @@ export function ResourcesMegaMenu() {
                         <Icon className="mt-0.5 size-[18px] shrink-0 text-muted-foreground/60 transition-colors group-hover/child:text-foreground" />
                         <span className="flex flex-col">
                           <span className="inline-flex items-center gap-1 text-sm font-semibold text-neutral-12">
-                            {pick(item.label, locale)}
+                            {tCatalog(`items.${item.id}.label`)}
                             {item.external && (
                               <ArrowUpRight
                                 className="size-3 text-muted-foreground/60"
@@ -61,7 +65,7 @@ export function ResourcesMegaMenu() {
                             )}
                           </span>
                           <span className="text-xs text-muted-foreground/80">
-                            {pick(item.tagline, locale)}
+                            {tCatalog(`items.${item.id}.tagline`)}
                           </span>
                         </span>
                       </>

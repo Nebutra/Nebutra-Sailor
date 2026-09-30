@@ -24,7 +24,8 @@
       "billing": "Fakturace",
       "docs": "Dokumentace",
       "signOut": "Odhlásit se"
-    }
+    },
+    "theme": "Theme"
   },
   "refer": {
     "metadataTitle": "Přidejte se k referenčnímu okruhu zakladatelů {brandName}",
@@ -2149,6 +2150,685 @@
           "title": "Legal"
         }
       }
+    }
+  },
+  "solutionsCatalog": {
+    "groups": {
+      "go-to-market": {
+        "label": "Go-to-Market"
+      },
+      "build-govern": {
+        "label": "Build & Govern"
+      },
+      "ai-data": {
+        "label": "AI & Data"
+      },
+      "founder": {
+        "label": "Founder"
+      }
+    },
+    "solutions": {
+      "go-global": {
+        "label": "Ship Globally",
+        "tagline": "Launch a compliant, localized SaaS for global markets.",
+        "hero": {
+          "eyebrow": "Go Global",
+          "title": "Take your SaaS",
+          "titleAccent": "global",
+          "summary": "Multi-region infra, i18n, payments and compliance — the harness ships the cross-border plumbing so you ship product."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Localization at the core",
+            "body": "7-locale routing, RTL-ready tokens and per-market content without forking the codebase."
+          },
+          "uc2": {
+            "title": "Payments without rewrites",
+            "body": "Creem (cards, merchant of record) plus WeChat Pay / Alipay behind one billing contract — both live the moment you add their keys."
+          },
+          "uc3": {
+            "title": "Compliance baked in",
+            "body": "Tenant isolation, audit logging and data-residency primitives ready on day one."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Do I need separate apps per region?",
+            "a": "No — one codebase. Both adapters of a China pair (payments, SMS, storage) ship in every build; whichever keys are present at deploy time decide which run, and both can run at once."
+          }
+        }
+      },
+      "growth": {
+        "label": "Growth Hacking",
+        "tagline": "Acquisition, activation and retention loops that compound.",
+        "hero": {
+          "eyebrow": "Growth",
+          "title": "Build loops that",
+          "titleAccent": "compound",
+          "summary": "Instrument funnels, run experiments and wire referral and lifecycle loops on a metering + notifications backbone."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Funnel instrumentation",
+            "body": "Usage metering + analytics give you the events to measure activation, not guesses."
+          },
+          "uc2": {
+            "title": "Lifecycle messaging",
+            "body": "Multi-channel notifications (in-app / email / push) driven by product events."
+          },
+          "uc3": {
+            "title": "Experiment fast",
+            "body": "Feature flags ship variants without redeploys; metering reads the result."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Is an analytics warehouse included?",
+            "a": "Metering aggregates to ClickHouse for real-time funnel and cohort reads."
+          }
+        }
+      },
+      "architecture": {
+        "label": "Architecture Governance",
+        "tagline": "Keep a large codebase coherent as it scales.",
+        "hero": {
+          "eyebrow": "Architecture",
+          "title": "Govern your",
+          "titleAccent": "architecture",
+          "summary": "Architecture tests, ratchets and capability boundaries enforce structure mechanically — not in a wiki nobody reads."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Ratcheted invariants",
+            "body": "Property tests fail the build when hardcoded values or cross-layer imports creep in."
+          },
+          "uc2": {
+            "title": "Capability boundaries",
+            "body": "Domain-grouped packages with declared owners and scopes keep coupling low."
+          },
+          "uc3": {
+            "title": "Three-tier lifecycle",
+            "body": "active / stub / incubator keeps dead concepts out of CI without losing the idea."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Does governance slow teams down?",
+            "a": "It moves review from humans to tests, so most checks are instant and automatic."
+          }
+        }
+      },
+      "tech-stack": {
+        "label": "Tech Selection",
+        "tagline": "One opinionated stack per domain — a second adapter only where China requires it.",
+        "hero": {
+          "eyebrow": "Tech Stack",
+          "title": "One stack,",
+          "titleAccent": "zero decisions",
+          "summary": "Queue, search, auth, billing and storage each have one answer — Better Auth, QStash, Postgres, Creem — behind an interface, not a picklist."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "One answer per domain",
+            "body": "Better Auth for identity, QStash for queues, Postgres (pgvector + full-text) for search, Creem for billing — the interface stayed, the alternatives didn't."
+          },
+          "uc2": {
+            "title": "TS-by-default backend",
+            "body": "A documented policy for when Python is justified keeps the stack from sprawling."
+          },
+          "uc3": {
+            "title": "China pairs, not a matrix",
+            "body": "Payments (Creem + WeChat Pay/Alipay), SMS (Twilio Verify + Aliyun) and storage (R2/OSS on one S3-compatible client) keep a second adapter only where mainland law or network access makes the default unusable — both live as soon as their keys are set."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "What if I need a provider that isn't kept?",
+            "a": "Each domain still ships behind an interface — add an adapter without touching call sites. The ones that remain were kept because production runs on them, not because the interface only fits them."
+          }
+        }
+      },
+      "dx": {
+        "label": "DX Tooling",
+        "tagline": "A developer experience that keeps velocity high.",
+        "hero": {
+          "eyebrow": "DX",
+          "title": "Tooling that gets",
+          "titleAccent": "out of the way",
+          "summary": "One scaffold CLI, one formatter, one pipeline. Generate, lint, test and ship without yak-shaving the toolchain."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Scaffold in seconds",
+            "body": "`npx create-sailor my-app` asks nothing and ships the full converged stack, wired and ready to run."
+          },
+          "uc2": {
+            "title": "One linter, one config",
+            "body": "Biome formats and lints the whole monorepo — no ESLint/Prettier split-brain."
+          },
+          "uc3": {
+            "title": "Green pipeline by default",
+            "body": "lint → build → test → scan → deploy runs the same locally and in CI."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Can I bring my own tools?",
+            "a": "Yes — presets are opt-in; the defaults are opinionated, not locked."
+          }
+        }
+      },
+      "ai": {
+        "label": "AI Integration",
+        "tagline": "Ship AI features on a provider-agnostic agent runtime.",
+        "hero": {
+          "eyebrow": "AI",
+          "title": "Make your product",
+          "titleAccent": "AI-native",
+          "summary": "Agents, RAG, tools and an LLM gateway — multi-model, observable, and safe to put in front of users."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Model-agnostic gateway",
+            "body": "Route, fail over and track cost across providers behind one API."
+          },
+          "uc2": {
+            "title": "RAG that ships",
+            "body": "Knowledge base, embeddings and retrieval primitives wired for multi-tenant use."
+          },
+          "uc3": {
+            "title": "Tool-using agents",
+            "body": "An agent runtime with tool registry and execution policy for safe autonomy."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Am I locked to one model vendor?",
+            "a": "No — the gateway abstracts vendors; switching is configuration."
+          }
+        }
+      },
+      "ai-data-ops": {
+        "label": "AI Data Operations",
+        "tagline": "Managed data labeling, RLHF and eval pipelines — as a service.",
+        "hero": {
+          "eyebrow": "AI Data Ops",
+          "title": "Fuel your models with",
+          "titleAccent": "quality data",
+          "summary": "A managed data operation — annotation, RLHF preference data and evaluation sets — run by our team against your spec."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Annotation at scale",
+            "body": "Vetted workforce + tooling for text, image, audio and 3D labeling."
+          },
+          "uc2": {
+            "title": "RLHF preference data",
+            "body": "Pairwise comparisons and rubric scoring to align your model to intent."
+          },
+          "uc3": {
+            "title": "Evaluation sets",
+            "body": "Held-out, audited eval suites so you measure quality, not vibes."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "How do we start?",
+            "a": "Book a scoping call — we turn your spec into a pilot batch within days."
+          }
+        }
+      },
+      "frontier": {
+        "label": "Frontier",
+        "tagline": "Field notes from the edge of what's shipping.",
+        "hero": {
+          "eyebrow": "Frontier",
+          "title": "Stay on the",
+          "titleAccent": "frontier",
+          "summary": "What we're testing before it's obvious — new models, runtimes and patterns, with the trade-offs spelled out."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Early signal",
+            "body": "Honest write-ups of what worked and what didn't, not hype."
+          },
+          "uc2": {
+            "title": "Reference implementations",
+            "body": "Runnable spikes you can lift instead of starting from a blog post."
+          },
+          "uc3": {
+            "title": "Trade-offs first",
+            "body": "Every frontier note leads with cost, risk and when not to adopt."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Is this production advice?",
+            "a": "Treat frontier notes as scouting — production guidance is flagged explicitly."
+          }
+        }
+      },
+      "china-vc": {
+        "label": "China VC Directory",
+        "tagline": "China's direct-investment institutions, searchable by sector, type and deal activity.",
+        "hero": {
+          "eyebrow": "China VC",
+          "title": "Find the right",
+          "titleAccent": "China investors",
+          "summary": "A searchable directory of China's direct-investment institutions — filter by sector, type and deal volume."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Filter by sector",
+            "body": "Normalized sectors — narrow to investors active in your space."
+          },
+          "uc2": {
+            "title": "Read the activity signal",
+            "body": "Cumulative deal volume shows who deploys most."
+          },
+          "uc3": {
+            "title": "Go straight to source",
+            "body": "Each institution links straight to its official site."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Which institutions are included?",
+            "a": "China's mainstream direct-investment institutions across stages and sectors."
+          }
+        }
+      },
+      "global-vc": {
+        "label": "Global VC Directory",
+        "tagline": "Well-known global investors — from Y Combinator to multi-stage funds.",
+        "hero": {
+          "eyebrow": "Global VC",
+          "title": "Reach",
+          "titleAccent": "global investors",
+          "summary": "A curated directory of leading global investors — accelerators, seed, multi-stage and growth funds — filterable by sector, type and region."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "From accelerator to growth",
+            "body": "Y Combinator, a16z, Sequoia, Accel and more — across every stage."
+          },
+          "uc2": {
+            "title": "Filter by focus",
+            "body": "Narrow by sector (AI, fintech, crypto, bio…), type and region."
+          },
+          "uc3": {
+            "title": "Go straight to source",
+            "body": "Each fund links straight to its official site."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "How is this list chosen?",
+            "a": "A hand-curated set of widely recognized global investors, compiled from public information."
+          }
+        }
+      },
+      "fundraising": {
+        "label": "Fundraising",
+        "tagline": "Playbooks for raising from the right investors.",
+        "hero": {
+          "eyebrow": "Fundraising",
+          "title": "Raise with a",
+          "titleAccent": "clear story",
+          "summary": "Metrics, narrative and process — how to package what you've built into a round that closes."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Metrics that matter",
+            "body": "Which numbers investors actually underwrite at each stage."
+          },
+          "uc2": {
+            "title": "Narrative craft",
+            "body": "Turn a feature list into a market story without overclaiming."
+          },
+          "uc3": {
+            "title": "Process discipline",
+            "body": "Run a tight, time-boxed raise instead of an open-ended drift."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Is this region-specific?",
+            "a": "Patterns are general; we flag where US, EU and China rounds differ."
+          }
+        }
+      },
+      "product-insights": {
+        "label": "Product Insights",
+        "tagline": "Teardowns and patterns from products worth studying.",
+        "hero": {
+          "eyebrow": "Product",
+          "title": "Learn from",
+          "titleAccent": "products that work",
+          "summary": "Structured teardowns — what a product gets right, why it works, and what's transferable to yours."
+        },
+        "useCases": {
+          "uc1": {
+            "title": "Pattern, not copy",
+            "body": "We extract the reusable principle behind a UX or GTM move."
+          },
+          "uc2": {
+            "title": "Decision context",
+            "body": "Why a choice made sense for them — and when it wouldn't for you."
+          },
+          "uc3": {
+            "title": "Actionable takeaways",
+            "body": "Each teardown ends with what to try this week."
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "Do you cover B2B and B2C?",
+            "a": "Both, with a bias toward SaaS and developer-facing products."
+          }
+        }
+      }
+    },
+    "index": {
+      "eyebrow": "Solutions",
+      "title": "Best practices for shipping global SaaS",
+      "summary": "Scenario playbooks for outbound founders — from going global and growth to architecture, AI and fundraising."
+    },
+    "page": {
+      "back": "All solutions",
+      "useCasesHeading": "How it helps",
+      "capabilities": "Powered by",
+      "bestPractices": "Best practices",
+      "faqHeading": "FAQ",
+      "ctaContent": "Get Sailed",
+      "ctaOffering": "Book a scoping call"
+    },
+    "vcProfile": {
+      "home": "Home",
+      "thesis": "Investment focus",
+      "facts": "At a glance",
+      "founded": "Founded",
+      "hq": "HQ",
+      "stages": "Stages",
+      "checkSize": "Check size",
+      "totalDeals": "Total deals",
+      "region": "Region",
+      "sectors": "Sectors",
+      "notable": "Notable portfolio",
+      "recent": "Recent activity (2025–26)",
+      "similar": "Similar institutions",
+      "visit": "Visit website"
+    },
+    "chinaVc": {
+      "back": "All solutions",
+      "statInstitutions": "Institutions",
+      "statSectors": "Sectors",
+      "statDeals": "Deals tracked",
+      "source": "Compiled from public information on China's direct-investment institutions.",
+      "directoryLabel": "China VC"
+    },
+    "globalVc": {
+      "back": "All solutions",
+      "statFunds": "Funds",
+      "statSectors": "Sectors",
+      "statRegions": "Regions",
+      "source": "A curated set of well-known global investors. Profiles compiled from public information.",
+      "directoryLabel": "Global VC"
+    },
+    "meta": {
+      "indexTitle": "Solutions | {brandName}",
+      "indexDescription": "Scenario playbooks for outbound founders — go global, growth, architecture, AI and fundraising best practices.",
+      "detailTitleSuffix": "{brandName} Solutions",
+      "chinaVcProfileTitle": "{name} — Investor Profile | {brandName}",
+      "chinaVcProfileDescriptionFallback": "{name}: investment focus, sectors, stages and notable portfolio.",
+      "globalVcProfileTitle": "{name} — Investor Profile | {brandName}",
+      "globalVcProfileDescriptionFallback": "{name}: focus sectors, stage and region."
+    }
+  },
+  "solutionsNav": {
+    "groups": {
+      "go-to-market": "Go-to-Market",
+      "build-govern": "Build & Govern",
+      "ai-data": "AI & Data",
+      "founder": "Founder"
+    },
+    "items": {
+      "go-global": {
+        "label": "Ship Globally",
+        "tagline": "Launch a compliant, localized SaaS for global markets."
+      },
+      "growth": {
+        "label": "Growth Hacking",
+        "tagline": "Acquisition, activation and retention loops that compound."
+      },
+      "architecture": {
+        "label": "Architecture Governance",
+        "tagline": "Keep a large codebase coherent as it scales."
+      },
+      "tech-stack": {
+        "label": "Tech Selection",
+        "tagline": "One opinionated stack per domain — a second adapter only where China requires it."
+      },
+      "dx": {
+        "label": "DX Tooling",
+        "tagline": "A developer experience that keeps velocity high."
+      },
+      "ai": {
+        "label": "AI Integration",
+        "tagline": "Ship AI features on a provider-agnostic agent runtime."
+      },
+      "ai-data-ops": {
+        "label": "AI Data Operations",
+        "tagline": "Managed data labeling, RLHF and eval pipelines — as a service."
+      },
+      "frontier": {
+        "label": "Frontier",
+        "tagline": "Field notes from the edge of what's shipping."
+      },
+      "china-vc": {
+        "label": "China VC Directory",
+        "tagline": "China's direct-investment institutions, searchable by sector, type and deal activity."
+      },
+      "global-vc": {
+        "label": "Global VC Directory",
+        "tagline": "Well-known global investors — from Y Combinator to multi-stage funds."
+      },
+      "fundraising": {
+        "label": "Fundraising",
+        "tagline": "Playbooks for raising from the right investors."
+      },
+      "product-insights": {
+        "label": "Product Insights",
+        "tagline": "Teardowns and patterns from products worth studying."
+      }
+    }
+  },
+  "resourcesCatalog": {
+    "groups": {
+      "developers": "Developers",
+      "company": "Company"
+    },
+    "items": {
+      "open-platform": {
+        "label": "Open Platform",
+        "tagline": "APIs, docs, and the developer console"
+      },
+      "docs": {
+        "label": "Docs",
+        "tagline": "API docs and guides"
+      },
+      "forge": {
+        "label": "Forge",
+        "tagline": "Online codecs, text, hashing, and document tools"
+      },
+      "blog": {
+        "label": "Blog",
+        "tagline": "Engineering notes and updates"
+      },
+      "changelog": {
+        "label": "Changelog",
+        "tagline": "What's new in {brandName}"
+      },
+      "roadmap": {
+        "label": "Roadmap",
+        "tagline": "See what we're building next"
+      },
+      "design-system": {
+        "label": "Design System",
+        "tagline": "Tokens, components, and brand"
+      },
+      "status": {
+        "label": "Status",
+        "tagline": "Service status and uptime"
+      },
+      "about": {
+        "label": "About",
+        "tagline": "Our mission and team"
+      },
+      "careers": {
+        "label": "Careers",
+        "tagline": "Join the team"
+      },
+      "newsroom": {
+        "label": "Newsroom",
+        "tagline": "Announcements and press"
+      },
+      "playbook": {
+        "label": "Playbook",
+        "tagline": "How we build"
+      },
+      "showcase": {
+        "label": "Showcase",
+        "tagline": "Built with {brandName}"
+      },
+      "security": {
+        "label": "Security",
+        "tagline": "Security and compliance"
+      }
+    }
+  },
+  "openPlatform": {
+    "eyebrow": "Open Platform",
+    "title": "{brandName} Open Platform",
+    "lead": "Docs, public APIs, and the signed-in developer console — one catalog, no second origin.",
+    "consoleCta": "Open the console",
+    "consoleHint": "API keys, webhooks, and provider keys stay on the app. Sign in if you are asked.",
+    "groups": {
+      "catalog": {
+        "label": "Public surfaces",
+        "description": "Hosts that already exist. This page does not proxy them."
+      },
+      "console": {
+        "label": "Developer console",
+        "description": "Signed-in settings on the app. Create and revoke credentials there."
+      }
+    },
+    "items": {
+      "docs": {
+        "title": "Docs",
+        "description": "Guides, API reference, and webhook contracts."
+      },
+      "api": {
+        "title": "API",
+        "description": "Shared gateway. Product namespaces stay under /<product>/v1/*."
+      },
+      "router": {
+        "title": "Router",
+        "description": "OpenAI-compatible model edge."
+      },
+      "forge": {
+        "title": "Forge",
+        "description": "Tool station and agent invoke API."
+      },
+      "sso": {
+        "title": "Sign in with {brandName}",
+        "description": "OIDC issuer on sso. Client registration is not self-serve yet.",
+        "badge": "IdP"
+      },
+      "status": {
+        "title": "Status",
+        "description": "Live operational status for public hosts."
+      },
+      "api-keys": {
+        "title": "API keys",
+        "description": "Create and revoke programmatic keys for the gateway."
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Subscribe to workspace events. Payloads are signed."
+      },
+      "provider-keys": {
+        "title": "Provider keys",
+        "description": "Bring your own AI provider credentials."
+      }
+    }
+  },
+  "playbookCatalog": {
+    "categories": {
+      "ai": {
+        "label": "AI & Agents",
+        "description": "Agentic runtimes and multi-step pipelines you can watch run end-to-end."
+      },
+      "design": {
+        "label": "Design & Theming",
+        "description": "Shape the brand system — palette, type, motion — and preview it live."
+      },
+      "compose": {
+        "label": "Embedding & Composition",
+        "description": "Compose workflows visually and embed Sailor surfaces anywhere."
+      },
+      "os": {
+        "label": "The OS",
+        "description": "Opinionated operating surfaces built on top of the platform."
+      }
+    },
+    "items": {
+      "layer0": {
+        "title": "Layer 0 Capability Loop",
+        "description": "Watch a capability request travel the full perceive → plan → act → verify loop."
+      },
+      "agent-runtime": {
+        "title": "Agent Runtime Grammar",
+        "description": "The multi-step agent runtime — tool registry, streaming UI, MCP integration."
+      },
+      "cinema": {
+        "title": "Cinema — Film-Director Pipeline",
+        "description": "A multi-agent pipeline that storyboards, shoots and cuts a short film."
+      },
+      "sailor-studio": {
+        "title": "Sailor Studio",
+        "description": "Choose a project's look, preview it on real pages, apply it with one command."
+      },
+      "color-tokens": {
+        "title": "Color & Tokens",
+        "description": "Browse the 12-step brand color scales and the live design-token reference."
+      },
+      "icon-library": {
+        "title": "Icon Library",
+        "description": "Browse all 541 Geist icons as tree-shakable, single-weight TSX components."
+      },
+      "canvas": {
+        "title": "Canvas — Node-Graph Editor",
+        "description": "An infinite node-graph canvas for composing agent workflows visually."
+      },
+      "embed": {
+        "title": "Embed Demo",
+        "description": "Drop a Sailor surface into any page with a single embed snippet."
+      },
+      "startup-os": {
+        "title": "Startup OS",
+        "description": "An opinionated operating surface for running a startup on Sailor.",
+        "badge": "Alpha"
+      }
+    },
+    "page": {
+      "eyebrow": "Playbook",
+      "title": "See the infrastructure run",
+      "lead": "The infrastructure demos, utilities, integrations and experiments that ship inside Sailor — pick one and dive in."
+    },
+    "meta": {
+      "title": "Playbook — {productName}",
+      "description": "A curated directory of the infrastructure demos, utilities, integrations and experimental features that ship inside Sailor."
     }
   }
 }

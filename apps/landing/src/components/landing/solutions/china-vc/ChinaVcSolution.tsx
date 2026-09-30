@@ -1,5 +1,6 @@
 import { Analytics } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
+import { getTranslations } from "next-intl/server";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import {
   DEFAULT_GROUP_TOKENS,
@@ -15,30 +16,25 @@ import {
   CHINA_VC_TYPES,
   chinaVcLogoFor,
 } from "@/lib/constants/china-vc";
-import { getSolution, getSolutionGroup, pick } from "@/lib/constants/solutions-data";
+import { getSolution, getSolutionGroup } from "@/lib/constants/solutions-data";
 import { isZhUiLocale } from "@/lib/i18n/localized";
 
-const COPY = {
-  back: { en: "All solutions", zh: "全部解决方案" },
-  statInstitutions: { en: "Institutions", zh: "家机构" },
-  statSectors: { en: "Sectors", zh: "个赛道" },
-  statDeals: { en: "Deals tracked", zh: "笔投资" },
-  source: {
-    en: "Compiled from public information on China's direct-investment institutions.",
-    zh: "整理自中国主流直投机构的公开信息。",
-  },
-} as const;
+/** Reads a dynamic dotted path out of `solutionsCatalog` — the slug is data, not a literal key. */
+type CatalogTranslator = (key: string) => string;
 
 export interface ChinaVcSolutionProps {
   locale: Locale;
 }
 
 /** Custom `/solutions/china-vc` page — a searchable directory of China VCs. */
-export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
+export async function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
   const solution = getSolution("china-vc");
   const group = solution ? getSolutionGroup(solution.groupId) : undefined;
   const copyLocale: "en" | "zh" = isZhUiLocale(locale) ? "zh" : "en";
-  const text = (key: keyof typeof COPY) => (isZhUiLocale(locale) ? COPY[key].zh : COPY[key].en);
+  const t = (await getTranslations({
+    locale,
+    namespace: "solutionsCatalog",
+  })) as unknown as CatalogTranslator;
 
   const tokens: FeatureGroupTokens = {
     auroraColors: group?.auroraColors ?? DEFAULT_GROUP_TOKENS.auroraColors,
@@ -48,9 +44,9 @@ export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
   };
 
   const stats = [
-    { value: CHINA_VC_COUNT, label: text("statInstitutions") },
-    { value: CHINA_VC_SECTORS.length, label: text("statSectors") },
-    { value: CHINA_VC_TOTAL_DEALS.toLocaleString("en-US"), label: text("statDeals") },
+    { value: CHINA_VC_COUNT, label: t("chinaVc.statInstitutions") },
+    { value: CHINA_VC_SECTORS.length, label: t("chinaVc.statSectors") },
+    { value: CHINA_VC_TOTAL_DEALS.toLocaleString("en-US"), label: t("chinaVc.statDeals") },
   ];
 
   return (
@@ -60,11 +56,11 @@ export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
           align="left"
           tokens={tokens}
           backHref="/solutions"
-          backLabel={text("back")}
-          eyebrow={pick(solution.hero.eyebrow, locale)}
-          titlePrefix={pick(solution.hero.title, locale)}
-          titleSuffix={pick(solution.hero.titleAccent, locale)}
-          summary={pick(solution.hero.summary, locale)}
+          backLabel={t("chinaVc.back")}
+          eyebrow={t(`solutions.${solution.slug}.hero.eyebrow`)}
+          titlePrefix={t(`solutions.${solution.slug}.hero.title`)}
+          titleSuffix={t(`solutions.${solution.slug}.hero.titleAccent`)}
+          summary={t(`solutions.${solution.slug}.hero.summary`)}
         >
           <div className="mt-8 flex gap-8">
             {stats.map((s) => (
@@ -90,7 +86,7 @@ export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
         </AnimateIn>
 
         <p className="mx-auto mt-12 max-w-wide px-4 text-xs leading-relaxed text-muted-foreground/60 md:px-6">
-          {text("source")}
+          {t("chinaVc.source")}
         </p>
       </section>
     </>

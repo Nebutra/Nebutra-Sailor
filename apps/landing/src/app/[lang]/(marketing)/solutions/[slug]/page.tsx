@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FinalCTA } from "@/components/landing";
 import { ChinaVcSolution } from "@/components/landing/solutions/china-vc/ChinaVcSolution";
 import { GlobalVcSolution } from "@/components/landing/solutions/global-vc/GlobalVcSolution";
 import { SolutionPage } from "@/components/landing/solutions/SolutionPage";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
-import { getAllSolutionSlugs, getSolution, pick } from "@/lib/constants/solutions-data";
+import { getAllSolutionSlugs, getSolution } from "@/lib/constants/solutions-data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type SolutionDetailPageProps = {
@@ -33,9 +33,13 @@ export async function generateMetadata({ params }: SolutionDetailPageProps): Pro
   const solution = getSolution(slug);
   if (!solution) return {};
 
+  const t = (await getTranslations({ locale: lang, namespace: "solutionsCatalog" })) as unknown as (
+    key: string,
+  ) => string;
+
   return buildPageMetadata({
-    title: `${pick(solution.label, lang)} | Nebutra Solutions`,
-    description: pick(solution.tagline, lang),
+    title: `${t(`solutions.${solution.slug}.label`)} | ${t("meta.detailTitleSuffix")}`,
+    description: t(`solutions.${solution.slug}.tagline`),
     path: `/solutions/${solution.slug}`,
     locale: lang as Locale,
   });

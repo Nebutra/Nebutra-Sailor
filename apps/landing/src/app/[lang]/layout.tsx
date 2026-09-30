@@ -156,6 +156,11 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
   // featuresPage, comingSoon, roadmapMeta, blogMeta, getLicenseMeta,
   // changelogMeta, licensing, notFound, ui, logoStrip, icpFooter) are stripped
   // to keep the JS bundle lean (~979 keys → client-relevant subset).
+  //
+  // solutionsCatalog (hero/useCases/FAQ for the solution detail pages) is
+  // deliberately NOT listed here — it is read server-side only. The client-only
+  // mega-menu / mobile drawer read the small `solutionsNav` / `resourcesCatalog`
+  // namespaces instead (group + item label/tagline only).
   const CLIENT_NAMESPACES = [
     "siteShell",
     "siteMap",
@@ -175,6 +180,9 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     "compliance",
     // Market × language picker (Navbar chrome) — client-only
     "MarketLocalePicker",
+    // Navbar mega-menu / mobile drawer (template chrome) — client-only, small
+    "solutionsNav",
+    "resourcesCatalog",
   ] as const;
 
   type Messages = typeof messages;

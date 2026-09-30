@@ -15,13 +15,11 @@ export const MENUS: Partial<Record<MenuId, Menu>> = {
     groups: () =>
       RESOURCE_GROUPS_HERE.map((group) => ({
         id: group.id,
-        label: group.label,
         items: getGroupResources(group).map((resource) => ({
-          key: resource.href,
+          key: resource.id,
           href: resource.href,
           external: resource.external ?? false,
           icon: resource.icon,
-          label: resource.label,
         })),
       })),
   },
@@ -30,13 +28,11 @@ export const MENUS: Partial<Record<MenuId, Menu>> = {
     groups: () =>
       SOLUTION_GROUPS.map((group) => ({
         id: group.id,
-        label: group.label,
         items: getGroupSolutions(group).map((s) => ({
           key: s.slug,
           href: `/solutions/${s.slug}`,
           external: false,
           icon: s.icon,
-          label: s.label,
         })),
       })),
   },
