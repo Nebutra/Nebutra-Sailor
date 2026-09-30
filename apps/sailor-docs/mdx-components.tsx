@@ -8,6 +8,7 @@ import defaultComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { FeedbackBlock } from "@/components/feedback/client";
 import {
   AccordionGroup,
   Check,
@@ -30,6 +31,7 @@ import {
   TabsTrigger as FumadocsTabsTrigger,
   Tab,
 } from "@/components/mdx-tabs";
+import { onBlockFeedbackAction } from "@/lib/feedback-client";
 
 // Code-split from the server side: APIPage is a server component built from the
 // OpenAPI instance, so it must not cross a client boundary. See mdx-lazy.tsx.
@@ -65,6 +67,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Steps,
     Accordion: FumadocsAccordion,
     Accordions: FumadocsAccordions,
+    FeedbackBlock: (props: React.ComponentPropsWithoutRef<typeof FeedbackBlock>) => (
+      <FeedbackBlock {...props} onSendAction={onBlockFeedbackAction} />
+    ),
 
     // ─── MDX Compat Layer (Mintlify/Fumadocs) ─────────────────────────────────
     Tip,

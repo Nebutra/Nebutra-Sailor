@@ -14,7 +14,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { BASE_PATH } from "@/lib/base-path";
+import { AskAiWidget } from "@/components/ask-ai-widget";
+import { CjkSearchDialog } from "@/components/cjk-search-dialog";
 import { htmlLangForLanguage, i18n } from "@/lib/i18n";
 
 /**
@@ -112,13 +113,18 @@ export default async function RootLayout({
 
         <RootProvider
           search={{
-            options: {
-              // Static export, no server: the client fetches the exported
-              // Orama index once (route.ts below) and searches it in-browser
-              // — see src/app/api/search/route.ts.
-              type: "static",
-              api: `${BASE_PATH}/api/search`,
-            },
+            // fumadocs-ui's DefaultSearchDialog hardcodes
+            // `useDocsSearch({ type: "static", from: api, locale, tag })`,
+            // which reconstructs the client with `oramaStaticClient`'s
+            // default `initOrama` — `create({ language: locale })`. Orama's
+            // built-in tokenizer has no "zh" entry, and `create()` THROWS
+            // for an unsupported language (verified locally: the search
+            // dialog was entirely broken on /zh/* pages, not just lower
+            // quality). CjkSearchDialog reconstructs the same custom
+            // tokenizer the server used to export the index
+            // (src/app/api/search/route.ts's `localeMap`) — see its own doc
+            // comment.
+            SearchDialog: CjkSearchDialog,
           }}
         >
           <I18nProvider
@@ -218,6 +224,7 @@ export default async function RootLayout({
             </DocsLayout>
           </I18nProvider>
         </RootProvider>
+        <AskAiWidget />
       </body>
     </html>
   );

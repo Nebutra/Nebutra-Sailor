@@ -30,7 +30,8 @@ describe("createCjkTokenizer — tokenize()", () => {
   });
 
   it("returns non-string input unchanged (Orama internal contract)", () => {
-    expect(tokenize(42 as unknown)).toEqual([42]);
+    // biome-ignore lint/suspicious/noExplicitAny: exercising Orama's actual runtime contract (non-string input can reach the tokenizer), not representable in its typed signature.
+    expect(tokenize(42 as any)).toEqual([42]);
   });
 });
 
@@ -59,11 +60,11 @@ describe("createCjkTokenizer — end-to-end Orama index (fixture built the same 
     ["支付", "支付"],
   ])("finds the relevant doc for the query %s", async (query, expectedTitle) => {
     const db = await buildFixtureIndex();
-    const results = search(db, { term: query, properties: ["title", "content"] });
+    const results = await search(db, { term: query, properties: ["title", "content"] });
 
     expect(results.count).toBeGreaterThan(0);
-    expect(results.hits.map((h) => (h.document as { title: string }).title)).toContain(
-      expectedTitle,
-    );
+    expect(
+      results.hits.map((h: { document: unknown }) => (h.document as { title: string }).title),
+    ).toContain(expectedTitle);
   });
 });

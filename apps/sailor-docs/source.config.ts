@@ -1,3 +1,4 @@
+import { remarkFeedbackBlock } from "fumadocs-core/mdx-plugins/remark-feedback-block";
 import { defineConfig, defineDocs, frontmatterSchema } from "fumadocs-mdx/config";
 import lastModified from "fumadocs-mdx/plugins/last-modified";
 import { remarkMdxMermaid } from "fumadocs-mermaid";
@@ -47,14 +48,13 @@ export const docs = defineDocs({
 export default defineConfig({
   plugins: [lastModified()],
   mdxOptions: {
-    // remarkFeedbackBlock (auto-injects a <FeedbackBlock> at the end of every
-    // page) removed with the GitHub-App feedback feature: it posted through a
-    // "use server" action, which output: "export" cannot build at all, and
-    // which needed GITHUB_APP_ID/GITHUB_APP_PRIVATE_KEY this static deploy
-    // has no server to hold. See src/lib/github.ts (deleted) and
-    // docs/architecture — the feature can come back as a client-side link to
-    // a GitHub Discussion "new" URL, which needs no server, if it's missed.
-    remarkPlugins: [remarkComponent, remarkMdxMermaid, ...typeTablePlugins],
+    // remarkFeedbackBlock auto-injects a <FeedbackBlock> at the end of every
+    // page. It used to post through a "use server" action
+    // (src/lib/github.ts, deleted with the static-export migration), which
+    // output: "export" cannot build. It now posts client-side to the gateway
+    // (backends/gateway/src/routes/docs/feedback.ts) instead — see
+    // src/lib/feedback-client.ts and mdx-components.tsx.
+    remarkPlugins: [remarkComponent, remarkMdxMermaid, remarkFeedbackBlock, ...typeTablePlugins],
     rehypePlugins: [],
   },
 });

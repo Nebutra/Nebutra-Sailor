@@ -54,8 +54,17 @@ const nextConfig: NextConfig = {
   // Handed to `src/lib/base-path.ts` for the raw-string fetch URLs
   // (`next/link` and friends already get basePath rewritten for free and
   // don't need this).
+  //
+  // NEXT_PUBLIC_GATEWAY_URL: base URL of the gateway that serves
+  // /api/v1/docs/chat and /api/v1/docs/feedback (backends/gateway/src/routes/
+  // docs/). Production is api.nebutra.com; the template embeds the gateway
+  // inside apps/web, so a template deployment sets this to that app's origin.
+  // Baked in at build time (this is a static export — there is no request
+  // time to read it from). Unset: src/lib/gateway-client.ts's
+  // isGatewayConfigured() returns false and both UIs degrade gracefully.
   env: {
     NEXT_PUBLIC_DOCS_BASE_PATH: basePath,
+    NEXT_PUBLIC_GATEWAY_URL: process.env.NEXT_PUBLIC_GATEWAY_URL ?? "",
   },
   // output: "export" has no Image Optimization API to call (no server), so
   // every next/image use must skip it. Applying this unconditionally rather

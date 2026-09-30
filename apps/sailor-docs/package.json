@@ -21,8 +21,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@ai-sdk/openai-compatible": "^2.0.35",
-    "@ai-sdk/react": "^3.0.118",
     "@fumadocs/mdx-remote": "^1.4.6",
     "@fumadocs/story": "^0.0.11",
     "@nebutra/brand": "workspace:*",
@@ -31,8 +29,8 @@
     "@nebutra/icons": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
+    "@orama/orama": "^3.1.18",
     "@takumi-rs/image-response": "^0.71.4",
-    "ai": "^6.0.116",
     "class-variance-authority": "^0.7.1",
     "framer-motion": "^12.35.0",
     "fumadocs-core": "catalog:",
@@ -47,7 +45,6 @@
     "hast-util-to-jsx-runtime": "^2.3.6",
     "mermaid": "^11.15.0",
     "next": "^16.2.11",
-    "octokit": "^5.0.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-error-boundary": "^6.1.1",
@@ -64,7 +61,6 @@
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "1.20.1",
-    "@orama/orama": "^3.1.18",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22.19.15",

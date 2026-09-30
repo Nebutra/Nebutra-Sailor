@@ -1,11 +1,13 @@
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import type { MDXComponents } from "mdx/types";
 import { notFound } from "next/navigation";
+import { Feedback } from "@/components/feedback/client";
 import { FigmaLink } from "@/components/figma-link";
 import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
 import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
 import { BASE_PATH } from "@/lib/base-path";
 import { fallbackPageFor } from "@/lib/docs-fallback";
+import { onPageFeedbackAction } from "@/lib/feedback-client";
 import { i18n } from "@/lib/i18n";
 import { getPageImage, source } from "@/lib/source";
 import { useMDXComponents } from "../../../../mdx-components";
@@ -87,6 +89,7 @@ export default async function Page({ params }: PageProps) {
       <DocsBody>
         <MDX components={components} />
       </DocsBody>
+      <Feedback onSendAction={onPageFeedbackAction} />
     </DocsPage>
   );
 }
