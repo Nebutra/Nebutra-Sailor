@@ -390,6 +390,84 @@ function isRetryableUpstreamStatus(status: number): boolean {
   return RETRYABLE_UPSTREAM_STATUSES.has(status);
 }
 
+// ── Shared upstream fallback loop ───────────────────────────────────────────
+//
+// Both this route (API-key authenticated, billed) and the docs assistant
+// (`routes/docs/chat.ts`, public/unauthenticated, no billing) need the exact
+// same "try each configured upstream in order, in an OpenAI-compatible
+// `/chat/completions` POST, retry on a retryable status" behaviour. This is
+// that one code path — extracted so the docs assistant reuses it instead of
+// re-implementing upstream selection/retry.
+
+export interface UpstreamFallbackLogEvent {
+  upstream: AiGatewayUpstream;
+  /** Present for an HTTP failure; absent for a network-level fetch throw. */
+  status?: number;
+  error: string;
+}
+
+export type UpstreamFallbackOutcome =
+  | { ok: true; response: Response; upstream: AiGatewayUpstream }
+  | { ok: false; kind: "unreachable"; status: 502; message: string }
+  | { ok: false; kind: "status"; status: number; message: string };
+
+/**
+ * Try each upstream in order with an identical OpenAI-compatible
+ * `/chat/completions` POST, retrying on a retryable status (429/5xx-ish —
+ * see `RETRYABLE_UPSTREAM_STATUSES`) until one succeeds or the list is
+ * exhausted. Non-retryable failures return immediately without trying the
+ * rest of the list.
+ */
+export async function fetchUpstreamWithFallback(
+  upstreams: readonly AiGatewayUpstream[],
+  buildRequestInit: (upstream: AiGatewayUpstream) => RequestInit,
+  options: {
+    fetch?: typeof fetch;
+    onFetchFailed?: (event: UpstreamFallbackLogEvent) => void;
+    onUpstreamError?: (event: UpstreamFallbackLogEvent) => void;
+  } = {},
+): Promise<UpstreamFallbackOutcome> {
+  const fetchImpl = options.fetch ?? fetch;
+  let lastStatus = 502;
+  let lastMessage = "upstream_unreachable";
+
+  for (const [index, upstream] of upstreams.entries()) {
+    const isLast = index === upstreams.length - 1;
+    let response: Response;
+
+    try {
+      response = await fetchImpl(chatCompletionsUrl(upstream), buildRequestInit(upstream));
+    } catch (err) {
+      lastStatus = 502;
+      lastMessage = "upstream_unreachable";
+      options.onFetchFailed?.({
+        upstream,
+        error: err instanceof Error ? err.message : String(err),
+      });
+      if (!isLast) continue;
+      return { ok: false, kind: "unreachable", status: 502, message: lastMessage };
+    }
+
+    if (response.ok) return { ok: true, response, upstream };
+
+    lastStatus = response.status;
+    lastMessage = `upstream_${response.status}`;
+    const errorText = await response.text().catch(() => "");
+    options.onUpstreamError?.({
+      upstream,
+      status: response.status,
+      error: errorText.slice(0, 500),
+    });
+
+    if (isRetryableUpstreamStatus(response.status) && !isLast) continue;
+    return { ok: false, kind: "status", status: lastStatus, message: lastMessage };
+  }
+
+  // Unreachable in practice (the loop above always returns for a non-empty
+  // list), but keeps the function total for an empty `upstreams` array.
+  return { ok: false, kind: "unreachable", status: 502, message: lastMessage };
+}
+
 function buildUpstreamBody(body: UpstreamRequestBody, apiKey: ResolvedApiKey): UpstreamRequestBody {
   return {
     ...withIncludeUsage(body),
@@ -554,83 +632,51 @@ export function createAiGatewayRoutes(deps: GatewayDeps, options: AiGatewayRoute
       return c.json({ error: "Gateway misconfigured" }, 500);
     }
 
-    let upstreamResponse: Response | null = null;
-    let selectedUpstream: AiGatewayUpstream | null = null;
-    let lastFailureStatus: number | null = null;
-    let lastFailureMessage = "upstream_unreachable";
+    const outcome = await fetchUpstreamWithFallback(
+      upstreams,
+      (upstream) => ({
+        method: "POST",
+        headers: buildUpstreamHeaders(upstream, apiKey, requestId),
+        body: JSON.stringify(upstreamBody),
+      }),
+      {
+        fetch: fetchImpl,
+        onFetchFailed: (event) => {
+          log.error("Upstream fetch failed", {
+            requestId,
+            provider: event.upstream.id,
+            error: event.error,
+          });
+        },
+        onUpstreamError: (event) => {
+          log.error("Upstream error", {
+            status: event.status,
+            error: event.error,
+            requestId,
+            provider: event.upstream.id,
+          });
+        },
+      },
+    );
 
-    for (const [index, upstream] of upstreams.entries()) {
-      selectedUpstream = upstream;
-
-      try {
-        upstreamResponse = await fetchImpl(chatCompletionsUrl(upstream), {
-          method: "POST",
-          headers: buildUpstreamHeaders(upstream, apiKey, requestId),
-          body: JSON.stringify(upstreamBody),
-        });
-      } catch (err) {
-        lastFailureStatus = 502;
-        lastFailureMessage = "upstream_unreachable";
-        log.error("Upstream fetch failed", {
-          requestId,
-          provider: upstream.id,
-          error: err instanceof Error ? err.message : String(err),
-        });
-
-        if (index < upstreams.length - 1) continue;
-        void enqueueErrorCompletion(deps, {
-          requestId,
-          apiKey,
-          body,
-          startTime,
-          errorMessage: lastFailureMessage,
-        }).catch(() => {
-          /* swallowed: queue failures must not affect the response */
-        });
+    if (!outcome.ok) {
+      void enqueueErrorCompletion(deps, {
+        requestId,
+        apiKey,
+        body,
+        startTime,
+        errorMessage: outcome.message,
+      }).catch(() => {
+        /* swallowed: queue failures must not affect the response */
+      });
+      if (outcome.kind === "unreachable") {
         return c.json({ error: "Upstream unreachable" }, 502);
       }
-
-      if (upstreamResponse.ok) break;
-
-      lastFailureStatus = upstreamResponse.status;
-      lastFailureMessage = `upstream_${upstreamResponse.status}`;
-      const errorText = await upstreamResponse.text().catch(() => "");
-      log.error("Upstream error", {
-        status: upstreamResponse.status,
-        error: errorText.slice(0, 500),
-        requestId,
-        provider: upstream.id,
-      });
-
-      if (isRetryableUpstreamStatus(upstreamResponse.status) && index < upstreams.length - 1) {
-        continue;
-      }
-
-      void enqueueErrorCompletion(deps, {
-        requestId,
-        apiKey,
-        body,
-        startTime,
-        errorMessage: lastFailureMessage,
-      }).catch(() => {
-        /* swallowed: queue failures must not affect the response */
-      });
-
-      return c.json({ error: "Upstream API error" }, upstreamResponse.status as 500);
+      return c.json({ error: "Upstream API error" }, outcome.status as 500);
     }
 
-    if (!upstreamResponse || !selectedUpstream) {
-      void enqueueErrorCompletion(deps, {
-        requestId,
-        apiKey,
-        body,
-        startTime,
-        errorMessage: lastFailureMessage,
-      }).catch(() => {
-        /* swallowed: queue failures must not affect the response */
-      });
-      return c.json({ error: "Upstream API error" }, (lastFailureStatus ?? 502) as 500);
-    }
+    const upstreamResponse = outcome.response;
+    const selectedUpstream = outcome.upstream;
 
     c.header("X-Nebutra-AI-Provider", selectedUpstream.id);
     c.header("X-Nebutra-AI-Provider-Type", selectedUpstream.provider);

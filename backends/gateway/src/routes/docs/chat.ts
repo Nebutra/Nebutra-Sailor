@@ -8,17 +8,27 @@
  * scripts/lint-route-handlers.mjs), so this replaces it there instead of
  * bringing back a docs server.
  *
+ * Model provider: Nebutra Router (New-API, fronting upstream supplier keys
+ * and reverse-proxied accounts) — the same upstream set the gateway's own
+ * `/api/v1/ai/gateway` route already uses (`defaultEnvUpstreams()` in
+ * ../ai/gateway.ts: `newapi` preferred, then sub2api, openai-env, ...).
+ * This intentionally does NOT go through `@nebutra/agents`' `runWithFallback`
+ * with third-party keys (OPENROUTER_API_KEY etc.) — that path bypasses the
+ * Router and bills provider keys directly, which is what ADR
+ * 2026-09-24 (Sailor convergence) removed. `fetchUpstreamWithFallback` is the
+ * exact upstream-selection/retry code path `createAiGatewayRoutes` uses,
+ * shared rather than duplicated.
+ *
  * Answers with `{ configured: false }` (200, not an error status — this is
- * an expected, documented state, not a failure) when no LLM provider key is
- * present, so the docs UI can hide/disable the chat entry point instead of
- * showing a broken control.
+ * an expected, documented state, not a failure) when no Router upstream is
+ * configured, so the docs UI can hide/disable the chat entry point instead
+ * of showing a broken control.
  */
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { runWithFallback } from "@nebutra/agents";
 import { brand } from "@nebutra/brand/metadata";
 import { logger } from "@nebutra/logger";
-import { streamText as aiStreamText } from "ai";
 import { createEndpointRateLimit } from "../../middlewares/rateLimit.js";
+import { defaultEnvUpstreams, fetchUpstreamWithFallback } from "../ai/gateway.js";
 import { retrieveContext } from "./context.js";
 import { docsCors } from "./cors.js";
 
@@ -31,15 +41,30 @@ docsChatRoutes.use("/chat", docsCors());
 // (tenantContextMiddleware runs globally in app.ts before route mounting).
 docsChatRoutes.use("/chat", createEndpointRateLimit(20));
 
-const ENV_KEY_BY_PROVIDER = [
-  "OPENROUTER_API_KEY",
-  "ANTHROPIC_API_KEY",
-  "OPENAI_API_KEY",
-  "AI302_API_KEY",
-] as const;
+/**
+ * The model id sent verbatim in the `model` field of the OpenAI-compatible
+ * `/chat/completions` request to whichever Router upstream
+ * `defaultEnvUpstreams()` selects. Override per-deployment if the configured
+ * New-API instance's channels use a different id — `nebutra status` / the
+ * New-API admin console lists what a given deployment's channels actually
+ * expose.
+ *
+ * Default is `gpt-4o-mini` — not one of this gateway's own outward public
+ * aliases (`packages/platform/router-supply/src/frontier-defaults.ts`'s
+ * `gpt-5.6-luna` etc. are a *different* naming layer: public alias ids that
+ * only resolve to a real upstream model through `router-supply`'s alias
+ * table, which this direct-to-New-API call bypasses and would not
+ * understand). `gpt-4o-mini` is what `infra/nebutra-router/scripts/
+ * smoke-chat.sh` — this repo's own smoke test for this exact call shape,
+ * a direct OpenAI-compatible request straight to New-API with no alias
+ * resolution — already defaults to, and it's a small/cheap model, which
+ * keeps a public, unauthenticated, rate-limited endpoint like this one
+ * cheap by default.
+ */
+const DEFAULT_DOCS_ASSISTANT_MODEL = "gpt-4o-mini";
 
-function hasAnyLlmProviderKey(): boolean {
-  return ENV_KEY_BY_PROVIDER.some((key) => Boolean(process.env[key]));
+function docsAssistantModel(): string {
+  return process.env.DOCS_ASSISTANT_MODEL?.trim() || DEFAULT_DOCS_ASSISTANT_MODEL;
 }
 
 const ChatMessageSchema = z.object({
@@ -68,7 +93,8 @@ const chatRoute = createRoute({
   summary: "Ask the docs assistant a question",
   description:
     "Public, rate-limited (20/min/IP), unauthenticated. Answers from the live docs corpus " +
-    "(llms-full.txt). Returns { configured: false } when no LLM provider key is set.",
+    "(llms-full.txt) via the configured Router upstream. Returns { configured: false } " +
+    "when no Router upstream is configured.",
   request: {
     body: { content: { "application/json": { schema: ChatRequestSchema } } },
   },
@@ -80,7 +106,7 @@ const chatRoute = createRoute({
       },
     },
     429: { description: "Rate limit exceeded" },
-    502: { description: "Every configured LLM provider failed" },
+    502: { description: "Every configured Router upstream failed" },
   },
 });
 
@@ -90,8 +116,14 @@ const SYSTEM_PROMPT = [
   "Be concise. Prefer short paragraphs and code fences over long prose.",
 ].join(" ");
 
+interface UpstreamChatCompletion {
+  choices?: Array<{ message?: { content?: string | null } }>;
+}
+
 docsChatRoutes.openapi(chatRoute, async (c) => {
-  if (!hasAnyLlmProviderKey()) {
+  const upstreams = defaultEnvUpstreams();
+
+  if (upstreams.length === 0) {
     return c.json(
       {
         configured: false as const,
@@ -109,24 +141,53 @@ docsChatRoutes.openapi(chatRoute, async (c) => {
     ? `${SYSTEM_PROMPT}\n\n--- Documentation context ---\n${context}`
     : SYSTEM_PROMPT;
 
-  try {
-    const { result, provider } = await runWithFallback(
-      (model) =>
-        Promise.resolve(
-          aiStreamText({
-            model,
-            system,
-            messages: messages.map((m) => ({ role: m.role, content: m.content })),
-          }),
-        ),
-      { model: "fast" },
-    );
+  const model = docsAssistantModel();
+  const upstreamBody = JSON.stringify({
+    model,
+    messages: [{ role: "system", content: system }, ...messages],
+    stream: false,
+  });
 
-    const reply = await result.text;
-    logger.info("docs assistant reply", { provider, replyLength: reply.length });
-    return c.json({ configured: true as const, reply }, 200);
-  } catch (error) {
-    logger.error("docs assistant: all providers failed", { error });
+  const outcome = await fetchUpstreamWithFallback(
+    upstreams,
+    (upstream) => ({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${upstream.apiKey}`,
+        ...(upstream.headers ?? {}),
+      },
+      body: upstreamBody,
+    }),
+    {
+      onFetchFailed: (event) => {
+        logger.error("docs assistant: upstream fetch failed", {
+          provider: event.upstream.id,
+          error: event.error,
+        });
+      },
+      onUpstreamError: (event) => {
+        logger.error("docs assistant: upstream error", {
+          provider: event.upstream.id,
+          status: event.status,
+          error: event.error,
+        });
+      },
+    },
+  );
+
+  if (!outcome.ok) {
+    logger.error("docs assistant: all providers failed", { message: outcome.message });
     return c.json({ error: "The docs assistant is temporarily unavailable." }, 502) as never;
   }
+
+  const json = (await outcome.response.json().catch(() => null)) as UpstreamChatCompletion | null;
+  const reply = json?.choices?.[0]?.message?.content ?? "";
+
+  logger.info("docs assistant reply", {
+    provider: outcome.upstream.id,
+    model,
+    replyLength: reply.length,
+  });
+  return c.json({ configured: true as const, reply }, 200);
 });
