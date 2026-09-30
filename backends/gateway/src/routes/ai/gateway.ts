@@ -522,7 +522,12 @@ export async function fetchUpstreamWithFallback(
       error: errorText.slice(0, 500),
     });
 
-    if (isRetryableUpstreamStatus(response.status) && !isLast) continue;
+    // Our own Router answering 401/404 means it is not reachable for this
+    // caller yet (older deploy, mismatched service secret) — not that the
+    // request is bad — so fall through to the next upstream instead of failing.
+    const routerNotReady =
+      upstream.id === "nebutra-router" && (response.status === 401 || response.status === 404);
+    if ((isRetryableUpstreamStatus(response.status) || routerNotReady) && !isLast) continue;
     return { ok: false, kind: "status", status: lastStatus, message: lastMessage };
   }
 
