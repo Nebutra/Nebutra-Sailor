@@ -339,7 +339,7 @@ export class RouterSupplyRepository {
     });
   }
 
-  /** AVAILABLE/DEGRADED models with no probe in the last `idleMs` — the daily idle-verification sweep. */
+  /** PENDING models, plus AVAILABLE/DEGRADED ones with no probe in the last `idleMs` — the idle-verification sweep. */
   async listDueForActiveProbe(
     now: Date = new Date(),
     idleMs = 24 * 60 * 60 * 1000,
@@ -348,9 +348,15 @@ export class RouterSupplyRepository {
     const cutoff = new Date(now.getTime() - idleMs);
     const rows = await this.prisma.supplySourceModel.findMany({
       where: {
-        state: { in: ["AVAILABLE", "DEGRADED"] },
         vanishedAt: null,
-        OR: [{ lastProbeAt: null }, { lastProbeAt: { lt: cutoff } }],
+        OR: [
+          // Never verified yet: probe on the next sweep, whatever its age.
+          { state: "PENDING" },
+          {
+            state: { in: ["AVAILABLE", "DEGRADED"] },
+            OR: [{ lastProbeAt: null }, { lastProbeAt: { lt: cutoff } }],
+          },
+        ],
       },
       include: { source: true },
       orderBy: { lastProbeAt: "asc" },

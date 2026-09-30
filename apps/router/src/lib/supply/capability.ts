@@ -130,6 +130,10 @@ async function credentialFor(source: SupplySourceRow): Promise<SourceCredential>
       ...(process.env.NEW_API_ROOT_PASSWORD
         ? { rootPassword: process.env.NEW_API_ROOT_PASSWORD }
         : {}),
+      // Discovery reads the channel through the admin session; a probe is a
+      // real relay call, which New-API only accepts with a relay (sk-) token.
+      // Without it every probe came back 401 and read as the models failing.
+      ...(process.env.NEW_API_ACCESS_TOKEN ? { apiKey: process.env.NEW_API_ACCESS_TOKEN } : {}),
       channelName: CLIPROXY_CHANNEL_NAME,
     };
   }
@@ -193,6 +197,16 @@ export async function runDiscovery(
     }
     const diff = await repo.applyDiscovery(source.id, discovered.models);
     results.push({ source: source.key, ok: true, note: discovered.note, ...diff });
+    // Event-driven verification: a model that just appeared (or came back) is
+    // probed now, not at the next daily sweep, so the shelf reflects it within
+    // the same run.
+    const fresh = new Set([...(diff.added ?? []), ...(diff.reappeared ?? [])]);
+    if (fresh.size > 0) {
+      const rows = (await repo.listCapabilities({ sourceId: source.id })).filter((r) =>
+        fresh.has(r.upstreamModel),
+      );
+      await probeRows(rows, repo, "ACTIVE_PROBE", fetchImpl);
+    }
   }
   return results;
 }
