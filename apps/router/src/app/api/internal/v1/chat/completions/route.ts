@@ -96,7 +96,7 @@ export async function POST(request: Request): Promise<Response> {
   const { model, ...rest } = parsed.data;
 
   const internalRoute = await resolveInternalRoute(model).catch(() => null);
-  if (internalRoute && internalRoute.supported) {
+  if (internalRoute?.supported) {
     try {
       return await relayToInternalSource(internalRoute, rest);
     } catch (error) {
