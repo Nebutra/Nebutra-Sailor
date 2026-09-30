@@ -1777,5 +1777,35 @@
     "plannedHint": "該語言上線前,介面回退為英文",
     "noResults": "沒有符合的地區",
     "menuAria": "地區和語言"
+  },
+  "siteShell": {
+    "nav": {
+      "openNavigation": "開啟導覽",
+      "closeNavigation": "關閉導覽",
+      "searchSite": "搜尋本站",
+      "siteNavigation": "網站導覽",
+      "searchPages": "搜尋頁面",
+      "noMatch": "沒有符合的頁面。"
+    },
+    "menu": {
+      "writeToFounder": "寫信給創辦人",
+      "sailorOnGithub": "GitHub 上的 Sailor",
+      "back": "返回"
+    },
+    "footer": {
+      "tagline": "AI 原生的公司建造者。讓世界上沒有難創的業。",
+      "read": "閱讀",
+      "journal": "日誌",
+      "changelog": "更新日誌",
+      "build": "構建",
+      "whatWeAreBuilding": "我們正在打造的",
+      "status": "服務狀態",
+      "company": "公司",
+      "about": "關於我們",
+      "writeToFounder": "寫信給創辦人",
+      "privacy": "隱私",
+      "terms": "條款",
+      "credits": "致謝"
+    }
   }
 }

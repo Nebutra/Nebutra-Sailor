@@ -1777,5 +1777,35 @@
     "plannedHint": "इस भाषा के लॉन्च होने तक इंटरफ़ेस अंग्रेज़ी पर वापस आ जाता है",
     "noResults": "कोई क्षेत्र मेल नहीं खाता",
     "menuAria": "क्षेत्र और भाषाएँ"
+  },
+  "siteShell": {
+    "nav": {
+      "openNavigation": "Open navigation",
+      "closeNavigation": "Close navigation",
+      "searchSite": "Search the site",
+      "siteNavigation": "Site navigation",
+      "searchPages": "Search pages",
+      "noMatch": "Nothing matches that."
+    },
+    "menu": {
+      "writeToFounder": "Write to the founder",
+      "sailorOnGithub": "Sailor on GitHub",
+      "back": "Back"
+    },
+    "footer": {
+      "tagline": "An AI-native company builder. No company should be hard to start.",
+      "read": "Read",
+      "journal": "Journal",
+      "changelog": "Changelog",
+      "build": "Build",
+      "whatWeAreBuilding": "What we're building",
+      "status": "Status",
+      "company": "Company",
+      "about": "About",
+      "writeToFounder": "Write to the founder",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "credits": "Credits"
+    }
   }
 }

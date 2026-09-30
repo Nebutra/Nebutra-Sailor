@@ -2373,5 +2373,274 @@
       "changelog-releases.ts": "a record of what a past release said.",
       "sailor-cli.tsx": "a verbatim recording of the published CLI; re-record after create-sailor ships its new banner."
     }
+  },
+  "landingInlineI18n": {
+    "description": "Shrink-only. Inline two-language copy in apps/landing (pick(), isZhUiLocale(), { en: ... } pairs). Copy belongs in apps/landing/messages/en.json; see scripts/lint-landing-inline-i18n.mjs.",
+    "allowlist": [
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/_about-data.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/business-portfolio/page.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/global/page.tsx",
+        "count": 29
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
+        "count": 19
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/page.tsx",
+        "count": 23
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/products/page.tsx",
+        "count": 26
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/whitepaper/page.tsx",
+        "count": 17
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/ai/models/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/blog/[slug]/opengraph-image.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/blog/[slug]/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/blog/author/[author]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/blog/page.for-template.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/blog/tag/[tag]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/building/page.tsx",
+        "count": 12
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/changelog/[version]/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/features/[name]/page.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/features/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/news/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/open/page.tsx",
+        "count": 12
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/page.tsx",
+        "count": 21
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/playbook/page.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/sailor/page.tsx",
+        "count": 12
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/sleptons/page.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/solutions/[slug]/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/solutions/china-vc/[id]/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/solutions/global-vc/[id]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/solutions/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-comments.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-portable-text.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/audio-pipeline-glyph.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/code-execution-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/document-pipeline-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/ecosystem-safety-glyph.tsx",
+        "count": 11
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/notifications-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/onboarding-glyph.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/outreach-engine-glyph.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/sandbox-runtime-glyph.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/sms-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/package-feature-data.ts",
+        "count": 120
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/auth-showcase.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/db-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/gateway-core-showcase.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/metering-showcase.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/queue-showcase.tsx",
+        "count": 7
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/search-showcase.tsx",
+        "count": 8
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/webhooks-showcase.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/MobileDrawer.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/ResourcesMegaMenu.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/SolutionsMegaMenu.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/china-vc/ChinaVcSolution.tsx",
+        "count": 11
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/global-vc/GlobalVcSolution.tsx",
+        "count": 10
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/SolutionPage.tsx",
+        "count": 17
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/SolutionsIndex.tsx",
+        "count": 9
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/vc/VcProfile.tsx",
+        "count": 15
+      },
+      {
+        "file": "apps/landing/src/components/starter/starter-copy.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/starter/starter-pricing.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/content/site.ts",
+        "count": 98
+      },
+      {
+        "file": "apps/landing/src/lib/blog-page-cache.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/lib/blog.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/lib/constants/open-platform.ts",
+        "count": 28
+      },
+      {
+        "file": "apps/landing/src/lib/constants/playbook-data.ts",
+        "count": 27
+      },
+      {
+        "file": "apps/landing/src/lib/constants/resources-data.ts",
+        "count": 30
+      },
+      {
+        "file": "apps/landing/src/lib/constants/solutions-data.ts",
+        "count": 172
+      },
+      {
+        "file": "apps/landing/src/lib/i18n/localized.ts",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/nebutra/data/roadmap.ts",
+        "count": 8
+      },
+      {
+        "file": "apps/landing/src/site-map.ts",
+        "count": 57
+      }
+    ]
   }
 }

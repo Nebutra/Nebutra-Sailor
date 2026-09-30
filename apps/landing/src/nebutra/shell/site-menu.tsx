@@ -3,11 +3,11 @@
 import { ArrowLeft, ArrowRight, ChevronRight, Cross, LogoGithub } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { type CSSProperties, useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { REPO_URL } from "@/nebutra/data/repo";
-import { pick, siteLang } from "@/nebutra/i18n";
+import { siteLang } from "@/nebutra/i18n";
 import { SECTION_PATH } from "@/nebutra/routes";
 import { pageAt, SECTIONS, SERVED_PAGES, type SectionId } from "@/site-map";
 
@@ -44,6 +44,7 @@ export function SiteMenu({
 }) {
   const here = pageAt(pathname)?.section;
   const l = siteLang(useLocale());
+  const t = useTranslations("siteShell");
   const zh = l === "zh";
   const [panel, setPanel] = useState<SectionId | null>(null);
 
@@ -70,7 +71,7 @@ export function SiteMenu({
             variant="ghost"
             shape="square"
             iconSize="md"
-            aria-label={pick(l, { en: "Close navigation", zh: "关闭导航" })}
+            aria-label={t("nav.closeNavigation")}
             onClick={onClose}
           >
             <Cross />
@@ -146,7 +147,7 @@ export function SiteMenu({
           style={rise(NAV_SECTIONS.length)}
         >
           <a href={mailto} className="transition-colors hover:text-foreground">
-            {pick(l, { en: "Write to the founder", zh: "写信给创始人" })}
+            {t("menu.writeToFounder")}
           </a>
           <a
             href={REPO_URL}
@@ -155,7 +156,7 @@ export function SiteMenu({
             className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
           >
             <LogoGithub className="size-4" />
-            {pick(l, { en: "Sailor on GitHub", zh: "GitHub 上的 Sailor" })}
+            {t("menu.sailorOnGithub")}
           </a>
         </div>
       </div>
@@ -169,7 +170,7 @@ export function SiteMenu({
           <div className="flex h-10 items-center sm:invisible">
             <Button type="button" variant="ghost" size="sm" onClick={() => setPanel(null)}>
               <ArrowLeft />
-              {pick(l, { en: "Back", zh: "返回" })}
+              {t("menu.back")}
             </Button>
           </div>
 

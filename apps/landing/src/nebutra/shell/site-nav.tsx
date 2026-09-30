@@ -11,10 +11,10 @@ import {
   CommandList,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { pick, siteLang } from "@/nebutra/i18n";
+import { siteLang } from "@/nebutra/i18n";
 import { ROUTES } from "@/nebutra/routes";
 import { SiteMenu } from "@/nebutra/shell/site-menu";
 import { ThemedLogo, ThemedLogomark } from "@/nebutra/shell/themed-logo";
@@ -33,7 +33,7 @@ const CLOSE_DELAY_MS = 240;
 
 export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: string }) {
   const pathname = usePathname() ?? "";
-  const l = siteLang(useLocale());
+  const t = useTranslations("siteShell");
   // A full-viewport tool keeps the bar but gives the screen back to the tool.
   const compact = pageAt(pathname)?.chrome === "tool";
   // "hover" closes when the pointer leaves; "pinned" stays until dismissed.
@@ -92,11 +92,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
             variant="ghost"
             shape="square"
             iconSize="lg"
-            aria-label={
-              open
-                ? pick(l, { en: "Close navigation", zh: "关闭导航" })
-                : pick(l, { en: "Open navigation", zh: "打开导航" })
-            }
+            aria-label={open ? t("nav.closeNavigation") : t("nav.openNavigation")}
             aria-expanded={Boolean(open)}
             aria-controls="site-drawer"
             onClick={() => {
@@ -123,7 +119,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
             variant="ghost"
             shape="square"
             iconSize="md"
-            aria-label={pick(l, { en: "Search the site", zh: "搜索本站" })}
+            aria-label={t("nav.searchSite")}
             onClick={() => setSearching(true)}
           >
             <MagnifyingGlass />
@@ -142,7 +138,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
       />
       <aside
         id="site-drawer"
-        aria-label={pick(l, { en: "Site navigation", zh: "站点导航" })}
+        aria-label={t("nav.siteNavigation")}
         inert={!open}
         onMouseEnter={() => open === "hover" && clear()}
         onMouseLeave={hoverClose}
@@ -176,15 +172,14 @@ function SiteSearch({
   onOpenChange: (open: boolean) => void;
 }) {
   const l = siteLang(useLocale());
+  const t = useTranslations("siteShell");
   const router = useRouter();
   const pages = SITE_MAP.filter((p) => p.status === "live" && !p.path.includes("["));
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder={pick(l, { en: "Search pages", zh: "搜索页面" })} />
+      <CommandInput placeholder={t("nav.searchPages")} />
       <CommandList>
-        <CommandEmpty>
-          {pick(l, { en: "Nothing matches that.", zh: "没有匹配的页面。" })}
-        </CommandEmpty>
+        <CommandEmpty>{t("nav.noMatch")}</CommandEmpty>
         {SECTIONS.map((section) => {
           const inSection = pages.filter((p) => p.section === section.id);
           if (inSection.length === 0) return null;
