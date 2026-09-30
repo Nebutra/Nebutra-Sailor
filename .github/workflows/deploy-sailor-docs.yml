@@ -224,6 +224,28 @@ jobs:
             exit 1
           fi
 
+          # Old-URL taxonomy redirect (scripts/postbuild-static-export.mjs's
+          # generated _redirects, restored after it was dropped when this
+          # deploy moved to output: "export"): one renamed path must 301,
+          # and the 301's own target must then resolve 200. Two separate
+          # requests, not `curl -L` on the old path alone — that would only
+          # prove the FINAL page is reachable, which the paths above already
+          # cover; it says nothing about whether the redirect itself fired.
+          old_url="${worker_base}/docs/billing"
+          redirect_code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "$old_url" || echo 000)
+          location=$(curl -sS -o /dev/null -D - --max-time 30 "$old_url" | tr -d '\r' | awk -F': ' 'tolower($1)=="location"{print $2}')
+          echo "$old_url → $redirect_code, Location: ${location:-<none>}"
+          if [ "$redirect_code" != "301" ]; then
+            echo "::error::Old-URL redirect smoke failed: $old_url returned $redirect_code (expected 301). See apps/sailor-docs/scripts/taxonomy-redirects.mjs / postbuild-static-export.mjs."
+            exit 1
+          fi
+          target_code=$(curl -sS -L -o /dev/null -w '%{http_code}' --max-time 30 "$old_url" || echo 000)
+          echo "$old_url (followed) → $target_code"
+          if [ "$target_code" != "200" ]; then
+            echo "::error::Old-URL redirect target failed: $old_url followed to a non-200 ($target_code)."
+            exit 1
+          fi
+
           # Informational only, against the CURRENT public path (still Fly until
           # DOCS_UPSTREAM_ORIGIN is switched to this deploy) — never gates the job.
           for url in "https://nebutra.com/docs" "https://pebble.nebutra.com/docs"; do

@@ -56,6 +56,43 @@ mode is now guarded by. Chat and the GitHub-App feedback widget were dropped
 (both needed a server: an AI SDK route and a `"use server"` action); search
 moved to a client-side static Orama index (`src/app/api/search/route.ts`).
 
+**Update, 2026-09-30:** the four features the static-export migration
+dropped (old-URL taxonomy redirects, chat, feedback, real CJK search) are
+back, without reintroducing a docs server — the static-assets deploy above
+is unchanged:
+
+- **Redirects**: `scripts/postbuild-static-export.mjs` now generates a
+  Workers static-assets `_redirects` file from the existing
+  `taxonomy-redirects.mjs` table (Netlify-spec, evaluated by the assets
+  layer itself — no Worker script needed). The `<slug>.mdx`
+  content-negotiation shortcut stays dropped: `_redirects`' splat can't
+  strip a suffix off the middle of a path segment, so it isn't expressible.
+- **Chat and feedback**: moved to `backends/gateway/src/routes/docs/`
+  (`chat.ts`, `feedback.ts`) — public, unauthenticated, rate-limited
+  endpoints, per CLAUDE.md's "business endpoints live in the gateway," not
+  a docs server. The static bundle calls them cross-origin via
+  `NEXT_PUBLIC_GATEWAY_URL`, baked in at build time. Both degrade to a
+  clear "not configured" response (not an error) when their respective
+  provider keys aren't set.
+- **CJK search**: `src/lib/cjk-tokenizer.ts` now uses
+  `Intl.Segmenter('zh', { granularity: 'word' })` for real word
+  segmentation instead of unigram+bigram, so a multi-character phrase like
+  快速开始 resolves as itself, not only as bigram fragments. Fixing this
+  end-to-end also surfaced a separate, pre-existing bug: the search
+  dialog's default client-side index rebuild
+  (`oramaStaticClient`'s `initOrama`) throws for the "zh" locale — Orama's
+  built-in tokenizer has no Chinese entry — so search on `/zh/*` pages was
+  completely broken, not just lower quality. `src/components/
+  cjk-search-dialog.tsx` replaces the default search dialog with one that
+  reconstructs the same custom tokenizer client-side that the server used
+  to export the index.
+
+The env vars an environment needs to actually turn chat and feedback on:
+`GITHUB_APP_ID` / `GITHUB_APP_PRIVATE_KEY` and an LLM provider key
+(`OPENROUTER_API_KEY` / `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` /
+`AI302_API_KEY`) on the gateway, and `NEXT_PUBLIC_GATEWAY_URL` baked into
+the sailor-docs build.
+
 ### forge-dns-leak → embedded in `nebutra-forge`
 
 `apps/forge`'s own route handlers already defaulted `FORGE_DNS_LEAK_URL` to
