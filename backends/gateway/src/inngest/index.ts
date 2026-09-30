@@ -9,6 +9,9 @@ import { paymentOrderReconcile } from "./functions/paymentOrderReconcile.js";
 import { pebbleDiagnosticsRetention } from "./functions/pebbleDiagnosticsRetention.js";
 import { requestLogRetention } from "./functions/requestLogRetention.js";
 import { routerReservationSweep } from "./functions/routerReservationSweep.js";
+import { supplyDiscovery } from "./functions/supplyDiscovery.js";
+import { supplySuspendedRetry } from "./functions/supplySuspendedRetry.js";
+import { supplyIdleVerification } from "./functions/supplyVerification.js";
 import { walletUpkeep } from "./functions/walletUpkeep.js";
 import { workflowRunner } from "./functions/workflowRunner.js";
 
@@ -23,6 +26,9 @@ export const inngestFunctions: InngestFunction.Any[] = [
   requestLogRetention,
   paymentOrderReconcile,
   walletUpkeep,
+  supplyDiscovery,
+  supplyIdleVerification,
+  supplySuspendedRetry,
 ];
 export { inngest };
 
