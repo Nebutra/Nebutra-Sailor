@@ -28,8 +28,8 @@ import {
 } from "@/components/landing/blog-motion-showcase";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { siteLang } from "@/nebutra/i18n";
 
 // The motion rail surfaces the RAIL_POST_COUNT most recent posts. When the
 // library is at or below that size, "latest" is just a copy of the grid below —
@@ -49,7 +49,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  const isZh = isZhUiLocale(lang);
+  const isZh = siteLang(lang) === "zh";
   const metadata = buildPageMetadata({
     title: isZh ? `博客 — ${brand.name}` : `Blog — ${brand.name}`,
     description: isZh
@@ -198,7 +198,7 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
   if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
-  const isZh = isZhUiLocale(lang);
+  const isZh = siteLang(lang) === "zh";
   const blogLanguage = toBlogLanguage(lang);
   const posts = await getCachedAllPosts(blogLanguage);
   const topTags = getTopTags(posts);

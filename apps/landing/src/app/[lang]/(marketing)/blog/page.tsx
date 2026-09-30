@@ -1,7 +1,8 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { EssayFeature, essays, FEATURED, toCard } from "@/nebutra/home/essay-feature";
 import { EssayGrid } from "@/nebutra/home/essay-grid";
+import { siteLang } from "@/nebutra/i18n";
 import { sitePageMeta } from "@/nebutra/seo";
 import { Band, Intro } from "@/nebutra/ui/page";
 
@@ -18,15 +19,12 @@ async function All() {
 export default async function JournalPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang);
+  const zh = siteLang(lang) === "zh";
+  const t = await getTranslations({ locale: lang, namespace: "sitePages.journalPage" });
   return (
     <main id="main-content">
       <section className="px-8 pt-28 pb-16 xl:px-16">
-        <Intro
-          level={1}
-          title="Journal"
-          lead="What we believe about building now — agents, the layer after them, and the founder's craft."
-          cn="我们对这个时代的判断。"
-        />
+        <Intro level={1} title={t("title")} lead={t("lead")} cn={zh ? undefined : t("cn")} />
       </section>
       <Band>
         <EssayFeature />

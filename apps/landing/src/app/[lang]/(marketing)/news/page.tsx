@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { NewsArchive, type NewsArchiveItem } from "@/components/landing/news-archive";
 import {
   NewsFeatured,
@@ -23,8 +23,8 @@ import { NewsroomHero } from "@/components/landing/news-hero";
 import type { NewsRailSlide } from "@/components/landing/news-rail-carousel";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { siteLang } from "@/nebutra/i18n";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -41,12 +41,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  const isZh = isZhUiLocale(lang);
+  const t = await getTranslations({ locale: lang, namespace: "newsPage" });
   return buildPageMetadata({
-    title: isZh ? "新闻中心 — Nebutra" : "Newsroom — Nebutra",
-    description: isZh
-      ? "Nebutra 的产品发布、公告与平台动态。"
-      : "Product launches, announcements, and platform updates from Nebutra.",
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/news",
     locale: lang as Locale,
   });
@@ -150,7 +148,8 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
   if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
-  const isZh = isZhUiLocale(lang);
+  const isZh = siteLang(lang) === "zh";
+  const t = await getTranslations({ locale: lang, namespace: "newsPage" });
   const posts = await getCachedAllPosts(toBlogLanguage(lang));
 
   const contactHref = `${localePrefix(lang)}/contact`;
@@ -189,12 +188,8 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
         ) : (
           <AnimateIn preset="fadeUp" inView>
             <div className="mt-16 flex flex-col items-center gap-3 border-t border-border py-24 text-center">
-              <p className="text-lg font-medium text-foreground">
-                {isZh ? "暂时还没有新闻。" : "No news yet — announcements are on the way."}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {isZh ? "敬请关注后续更新。" : "Check back soon for updates."}
-              </p>
+              <p className="text-lg font-medium text-foreground">{t("empty.title")}</p>
+              <p className="text-sm text-muted-foreground">{t("empty.subtitle")}</p>
             </div>
           </AnimateIn>
         )}

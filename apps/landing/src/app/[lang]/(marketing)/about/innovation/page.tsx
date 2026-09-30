@@ -14,103 +14,30 @@ import {
 } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   type Bilingual,
+  bi,
   HARNESS_TIMELINE,
   INNOVATION_PILLARS,
   ORGANIZATION_PRINCIPLES,
-  pick,
 } from "../_about-data";
-
-// ─── Metadata (bilingual) ─────────────────────────────────────────────────────
-
-const META: Bilingual<{ title: string; description: string }> = {
-  zh: {
-    title: "研发与创新 — 云毓智能",
-    description:
-      "工程品味即护城河。云毓极客驱动，对标硅谷最佳实践：AI 原生架构（Harness 工程）、开源基础设施、工程卓越。",
-  },
-  en: {
-    title: "R&D & Innovation — Nebutra",
-    description:
-      "Engineering taste is our moat. Geek-driven Nebutra, benchmarked against Silicon Valley: AI-native architecture (Harness engineering), open-source infrastructure, engineering excellence.",
-  },
-};
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
-  const meta = pick(lang, META);
+  const t = await getTranslations({ locale: lang, namespace: "aboutPages.innovation" });
   return buildPageMetadata({
-    title: meta.title,
-    description: meta.description,
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/about/innovation",
     locale: lang as Locale,
   });
 }
-
-// ─── Copy Deck (bilingual, heavy extension of INNOVATION_PILLARS) ────────────
-
-const HERO_COPY: Bilingual<{
-  eyebrow: string;
-  heading: string;
-  manifesto: string;
-  battlefield: string;
-}> = {
-  zh: {
-    eyebrow: "R&D / 研发与创新",
-    heading: "工程品味即护城河",
-    manifesto:
-      "我们是一支极客驱动的小型团队。在 AI 加速度时代，工具几乎被所有人平等拥有，真正的稀缺资源是品味 — 对架构的审美、对细节的偏执、对长期主义的坚持。云毓对标硅谷一线研发组织，从第一行代码就写给 AI 时代：类型安全、可观测、Edge-first、多租户、开源。这不是口号，这是我们每天的工作纪律。",
-    battlefield:
-      "在 AI stack 三层演化中，我们选择 Harness 层作战 — MCP/SKILL、工具生态、Agent 编排、A2A 协同。这里是 2025–2026 年工程化的真正前线。",
-  },
-  en: {
-    eyebrow: "R&D / Innovation",
-    heading: "Engineering Taste as Moat",
-    manifesto:
-      "We are a small, geek-driven team. In an era when AI makes tools universally available, the only remaining scarcity is taste — aesthetic judgment about architecture, obsession over detail, commitment to the long game. Nebutra benchmarks against top Silicon Valley R&D orgs: type-safe, observable, Edge-first, multi-tenant, open-source from line one. Not a slogan — this is our daily engineering discipline.",
-    battlefield:
-      "Across the three-layer evolution of the AI stack, our battlefield is the Harness layer — MCP/Skill, tool ecosystems, agent orchestration, A2A. This is where real engineering lives in 2025–2026.",
-  },
-};
-
-// Harness Timeline — section copy
-const HARNESS_COPY: Bilingual<{
-  eyebrow: string;
-  heading: string;
-  intro: string;
-  outro: string;
-  battlefieldTag: string;
-  currentTag: string;
-}> = {
-  zh: {
-    eyebrow: "AI Stack 三层演化",
-    heading: "从权重，到上下文，到 Harness",
-    intro:
-      "大模型的创新面每两年就会向外扩展一层。2022 年在权重（Weights）层卷 scaling law；2023–2024 年在上下文（Context）层卷 RAG 与长窗口；2025–2026 年，真正的增量产出已经转移到 Harness 层 — 工具、协议、工作流图与 Agent 基础设施。",
-    outro:
-      "Nebutra Sailor 把 Harness 工程当作一等公民。我们不在权重层造模型，也不只在上下文层做 Prompt — 我们交付可工程化的 Harness：MCP/SKILL 驱动的智能体、A2A 协同协议、可观测的工作流图、安全可控的工具生态。这是 AI 原生 SaaS 的下一代架构坐标。",
-    battlefieldTag: "← Nebutra 的战场",
-    currentTag: "正在发生",
-  },
-  en: {
-    eyebrow: "Three-Layer Evolution of the AI Stack",
-    heading: "From Weights, to Context, to Harness",
-    intro:
-      "The innovation frontier of large models expands outward every two years. 2022 was scaling weights; 2023–2024 was RAG and long-context engineering; 2025–2026, the real marginal value has shifted to the Harness layer — tools, protocols, workflow graphs, and agent infrastructure.",
-    outro:
-      "Nebutra Sailor treats Harness engineering as a first-class concern. We don't train foundation models, and we don't just do prompting — we ship production-grade Harness: MCP/Skill-driven agents, A2A protocols, observable workflow graphs, and a secure tool ecosystem. This is the next architectural coordinate of AI-native SaaS.",
-    battlefieldTag: "← Nebutra's battlefield",
-    currentTag: "In progress",
-  },
-};
 
 // Pillar 2A — AI-Native Architecture (Harness layer sub-items)
 const AI_NATIVE_ITEMS: ReadonlyArray<
@@ -161,12 +88,6 @@ const AI_NATIVE_ITEMS: ReadonlyArray<
     },
   },
 ];
-
-// Pillar 2B — Open Source supplement copy + stats
-const OSS_SUPPLEMENT: Bilingual<string> = {
-  zh: "为什么开源？因为我们相信：在加速度时代，闭源的专有优势在 6 个月内会被追平，而开源的复利会持续十年。开源让客户免于 vendor lock-in，让社区共同加固我们的基础设施，也让每一次 commit 接受全世界的审阅。这是我们最有信心的一场长期赌注。",
-  en: "Why open-source? Because we believe: in an accelerated era, proprietary edge evaporates in 6 months, while open-source compounds over a decade. It frees customers from vendor lock-in, lets the community harden our infrastructure, and subjects every commit to worldwide review. This is our most confident long-term bet.",
-};
 
 const OSS_STATS: ReadonlyArray<Bilingual<{ value: string; label: string }>> = [
   {
@@ -312,41 +233,16 @@ const MILESTONES: ReadonlyArray<Bilingual<{ date: string; title: string; desc: s
   },
 ];
 
-// CTA
-const CTA_COPY: Bilingual<{ eyebrow: string; heading: string; button: string }> = {
-  zh: {
-    eyebrow: "加入我们的研发之旅",
-    heading: "与极客并肩,打造下一代 AI 基础设施",
-    button: "探索职业机会",
-  },
-  en: {
-    eyebrow: "Join our R&D journey",
-    heading: "Build the next generation of AI infrastructure with fellow geeks",
-    button: "Explore careers",
-  },
-};
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function InnovationPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+  const t = await getTranslations({ locale: lang, namespace: "aboutPages.innovation" });
 
-  const hero = pick(lang, HERO_COPY);
-  const harnessCopy = pick(lang, HARNESS_COPY);
-  const oss = pick(lang, OSS_SUPPLEMENT);
-  const cta = pick(lang, CTA_COPY);
   const [aiNativePillar, ossPillar, bestPracticesPillar] = INNOVATION_PILLARS.map((p) =>
-    pick(lang, p),
+    bi(lang, p),
   );
-
-  const orgPrinciplesCopy = {
-    eyebrow: isZhUiLocale(lang) ? "组织演进准则" : "ORGANIZATIONAL PRINCIPLES",
-    heading: isZhUiLocale(lang) ? "AI 杠杆对抗人治腐化" : "AI Leverage vs. Administrative Decay",
-    intro: isZhUiLocale(lang)
-      ? "伟大的组织不应在业务扩张过程中走向平庸与官僚化。当 Nebutra 生态及其孵化公司面临规模激增时，以下三条是唯一不可妥协的组织演进准则——每一条都直接约束 hiring、治理与资源配置决策。"
-      : "Great organizations should not drift into mediocrity and bureaucracy as they scale. When the Nebutra ecosystem and its incubated companies face rapid growth, the following three are the only non-negotiable principles of organizational evolution — each directly constraining hiring, governance, and resource allocation decisions.",
-  };
 
   return (
     <main id="main-content" className="flex flex-col flex-1 bg-background">
@@ -355,7 +251,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <AuroraBackground variant="vivid" position="top" intensity={0.6} />
         <div className="relative container mx-auto px-4 max-w-wide">
           <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
-            {hero.eyebrow}
+            {t("hero.eyebrow")}
           </span>
           <AnimateIn preset="fadeUp">
             <h1
@@ -365,14 +261,14 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 lineHeight: "var(--leading-display)",
               }}
             >
-              {hero.heading}
+              {t("hero.heading")}
             </h1>
           </AnimateIn>
           <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-8">
-            {hero.manifesto}
+            {t("hero.manifesto")}
           </p>
           <p className="text-base md:text-lg text-foreground/90 leading-relaxed max-w-3xl border-l-2 border-foreground pl-4 font-medium">
-            {hero.battlefield}
+            {t("hero.battlefield")}
           </p>
         </div>
       </section>
@@ -383,7 +279,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="relative container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-              {harnessCopy.eyebrow}
+              {t("harness.eyebrow")}
             </span>
             <AnimateIn preset="fadeUp">
               <h2
@@ -393,20 +289,20 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {harnessCopy.heading}
+                {t("harness.heading")}
               </h2>
             </AnimateIn>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              {harnessCopy.intro}
+              {t("harness.intro")}
             </p>
           </div>
 
           {/* Nested "Russian doll" — Harness wraps Context wraps Weights.
               HARNESS_TIMELINE is ordered [Weights, Context, Harness] → we render from outside in. */}
           {(() => {
-            const weightsLayer = pick(lang, HARNESS_TIMELINE[0]);
-            const contextLayer = pick(lang, HARNESS_TIMELINE[1]);
-            const harnessLayer = pick(lang, HARNESS_TIMELINE[2]);
+            const weightsLayer = bi(lang, HARNESS_TIMELINE[0]);
+            const contextLayer = bi(lang, HARNESS_TIMELINE[1]);
+            const harnessLayer = bi(lang, HARNESS_TIMELINE[2]);
 
             return (
               <div
@@ -420,11 +316,11 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                       Layer 03 · {harnessLayer.year}
                     </span>
                     <span className="text-[10px] font-mono tracking-widest uppercase rounded-full border border-foreground bg-foreground text-background px-2.5 py-1">
-                      {harnessCopy.currentTag}
+                      {t("harness.currentTag")}
                     </span>
                   </div>
                   <span className="text-xs md:text-sm font-semibold tracking-tight text-foreground">
-                    {harnessCopy.battlefieldTag}
+                    {t("harness.battlefieldTag")}
                   </span>
                 </div>
                 <h3
@@ -504,7 +400,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           })()}
 
           <p className="mt-10 md:mt-12 text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
-            {harnessCopy.outro}
+            {t("harness.outro")}
           </p>
         </div>
       </section>
@@ -536,7 +432,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             <div className="lg:col-span-7">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {AI_NATIVE_ITEMS.map((itemBi, i) => {
-                  const item = pick(lang, itemBi);
+                  const item = bi(lang, itemBi);
                   const Icon = itemBi.icon;
                   return (
                     <div
@@ -589,14 +485,14 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 {ossPillar.description}
               </p>
               <p className="text-base text-muted-foreground/90 leading-relaxed border-l-2 border-border pl-4">
-                {oss}
+                {t("pillars.ossSupplement")}
               </p>
             </div>
 
             <div className="lg:col-span-7 lg:order-1">
               <div className="grid grid-cols-2 gap-4 md:gap-6">
                 {OSS_STATS.map((statBi) => {
-                  const stat = pick(lang, statBi);
+                  const stat = bi(lang, statBi);
                   return (
                     <div
                       key={stat.label}
@@ -646,7 +542,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {ENGINEERING_PRINCIPLES.map((principleBi, i) => {
-              const principle = pick(lang, principleBi);
+              const principle = bi(lang, principleBi);
               const Icon = principleBi.icon;
               return (
                 <div
@@ -679,7 +575,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-              {orgPrinciplesCopy.eyebrow}
+              {t("orgPrinciples.eyebrow")}
             </span>
             <AnimateIn preset="fadeUp">
               <h2
@@ -689,17 +585,17 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {orgPrinciplesCopy.heading}
+                {t("orgPrinciples.heading")}
               </h2>
             </AnimateIn>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              {orgPrinciplesCopy.intro}
+              {t("orgPrinciples.intro")}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {ORGANIZATION_PRINCIPLES.map((principleBi) => {
-              const principle = pick(lang, principleBi);
+              const principle = bi(lang, principleBi);
               return (
                 <article
                   key={principle.number}
@@ -738,7 +634,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-              {isZhUiLocale(lang) ? "创新时间线" : "Innovation Timeline"}
+              {t("timeline.eyebrow")}
             </span>
             <AnimateIn preset="fadeUp">
               <h2
@@ -748,9 +644,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {isZhUiLocale(lang)
-                  ? "我们走过的路与即将抵达的站台"
-                  : "The road walked and stations ahead"}
+                {t("timeline.heading")}
               </h2>
             </AnimateIn>
           </div>
@@ -764,7 +658,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
             <div className="flex flex-col gap-10 md:gap-14">
               {MILESTONES.map((msBi) => {
-                const ms = pick(lang, msBi);
+                const ms = bi(lang, msBi);
                 return (
                   <div
                     key={ms.date}
@@ -803,7 +697,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="relative container mx-auto px-4 text-center max-w-4xl">
           <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
             <span className="text-sm font-semibold tracking-widest uppercase text-primary">
-              {cta.eyebrow}
+              {t("cta.eyebrow")}
             </span>
           </div>
           <AnimateIn preset="fadeUp">
@@ -814,12 +708,12 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 lineHeight: "var(--leading-display)",
               }}
             >
-              {cta.heading}
+              {t("cta.heading")}
             </h2>
           </AnimateIn>
           <Button asChild variant="ink" size="lg">
             <Link href="mailto:careers@nebutra.com">
-              {cta.button} <ArrowRight className="ml-2 h-5 w-5" />
+              {t("cta.button")} <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>

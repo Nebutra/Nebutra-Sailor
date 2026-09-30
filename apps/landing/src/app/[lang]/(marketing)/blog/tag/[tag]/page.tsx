@@ -17,12 +17,12 @@ import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { siteLang } from "@/nebutra/i18n";
 
 /**
  * Params outside generateStaticParams render on demand as a blocking route
@@ -128,7 +128,8 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
   if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
-  const isZh = isZhUiLocale(lang);
+  const isZh = siteLang(lang) === "zh";
+  const t = await getTranslations({ locale: lang, namespace: "journal.tag" });
   const posts = (await getCachedAllPosts(toBlogLanguage(lang))).filter((post) =>
     post.tags.some((postTag) => matchesSegment(postTag, tag)),
   );
@@ -141,11 +142,11 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
           <div className="border-y border-border py-10 sm:py-14">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
               <BookOpen className="size-3.5" aria-hidden />
-              {isZh ? "专题" : "Topic"}
+              {t("label")}
             </div>
             <h1 className="text-4xl font-semibold text-foreground sm:text-5xl">{tagLabel}</h1>
             <p className="mt-4 text-sm text-muted-foreground">
-              {isZh ? `${posts.length} 篇文章` : `${posts.length} posts`}
+              {t("postCount", { count: posts.length })}
             </p>
           </div>
         </AnimateIn>

@@ -17,7 +17,7 @@ import {
   globalVcLogoFor,
 } from "@/lib/constants/global-vc";
 import { getSolution, getSolutionGroup } from "@/lib/constants/solutions-data";
-import { isZhUiLocale } from "@/lib/i18n/localized";
+import { siteLang } from "@/nebutra/i18n";
 
 /** Reads a dynamic dotted path out of `solutionsCatalog` — the slug is data, not a literal key. */
 type CatalogTranslator = (key: string) => string;
@@ -30,8 +30,7 @@ export interface GlobalVcSolutionProps {
 export async function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
   const solution = getSolution("global-vc");
   const group = solution ? getSolutionGroup(solution.groupId) : undefined;
-  const isZh = isZhUiLocale(locale) || locale.startsWith("zh-") || locale.startsWith("zh_");
-  const copyLocale: "en" | "zh" = isZh ? "zh" : "en";
+  const copyLocale: "en" | "zh" = siteLang(locale);
   const t = (await getTranslations({
     locale,
     namespace: "solutionsCatalog",

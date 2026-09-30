@@ -17,8 +17,8 @@ import {
   findStaticChangelogRelease,
   STATIC_CHANGELOG_RELEASES as STATIC_RELEASES,
 } from "@/lib/changelog-releases";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { siteLang } from "@/nebutra/i18n";
 
 const CHANGELOG_CMS_TIMEOUT_MS = 1500;
 
@@ -275,7 +275,7 @@ export default async function ChangelogVersionPage({
 
   if (cmsEntry) {
     const date = new Date(cmsEntry.publishedAt);
-    const isZh = isZhUiLocale(lang);
+    const isZh = siteLang(lang) === "zh";
     const formattedDate = Number.isNaN(date.getTime())
       ? cmsEntry.publishedAt
       : dateFnsFormat(
@@ -388,7 +388,7 @@ export default async function ChangelogVersionPage({
   }
 
   const date = new Date(staticRelease.date);
-  const isZhStatic = isZhUiLocale(lang);
+  const isZhStatic = siteLang(lang) === "zh";
   const formattedDate = Number.isNaN(date.getTime())
     ? staticRelease.date
     : dateFnsFormat(

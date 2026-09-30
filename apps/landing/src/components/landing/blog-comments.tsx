@@ -5,7 +5,6 @@ import { Textarea } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ComponentType, SVGProps } from "react";
 import { useEffect, useMemo, useState } from "react";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { queryKeys } from "@/lib/query-keys";
 
 interface BlogComment {
@@ -136,7 +135,7 @@ function initialsFor(name: string): string {
 
 function formatDate(value: string | null, language: "en" | "zh"): string | null {
   if (!value) return null;
-  return new Intl.DateTimeFormat(isZhUiLocale(language) ? "zh-CN" : "en-US", {
+  return new Intl.DateTimeFormat(language === "zh" ? "zh-CN" : "en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",

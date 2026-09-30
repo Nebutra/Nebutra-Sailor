@@ -17,7 +17,7 @@ import {
   chinaVcLogoFor,
 } from "@/lib/constants/china-vc";
 import { getSolution, getSolutionGroup } from "@/lib/constants/solutions-data";
-import { isZhUiLocale } from "@/lib/i18n/localized";
+import { siteLang } from "@/nebutra/i18n";
 
 /** Reads a dynamic dotted path out of `solutionsCatalog` — the slug is data, not a literal key. */
 type CatalogTranslator = (key: string) => string;
@@ -30,7 +30,7 @@ export interface ChinaVcSolutionProps {
 export async function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
   const solution = getSolution("china-vc");
   const group = solution ? getSolutionGroup(solution.groupId) : undefined;
-  const copyLocale: "en" | "zh" = isZhUiLocale(locale) ? "zh" : "en";
+  const copyLocale: "en" | "zh" = siteLang(locale);
   const t = (await getTranslations({
     locale,
     namespace: "solutionsCatalog",

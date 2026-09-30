@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { sitePageMeta } from "@/nebutra/seo";
 import { StudioWorkbench } from "@/nebutra/studio/studio-workbench";
@@ -6,10 +6,10 @@ import "@/nebutra/studio/studio.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "studioPage" });
   return buildPageMetadata(
     await sitePageMeta(lang, "/sailor/studio", {
-      description:
-        "Choose how a Sailor project looks, preview it on real pages, and apply it with one command.",
+      description: t("meta.description"),
     }),
   );
 }

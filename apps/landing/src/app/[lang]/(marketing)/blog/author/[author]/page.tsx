@@ -18,12 +18,12 @@ import { cacheLife, cacheTag } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { siteLang } from "@/nebutra/i18n";
 
 /**
  * Params outside generateStaticParams render on demand as a blocking route
@@ -134,7 +134,8 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
   if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
-  const isZh = isZhUiLocale(lang);
+  const isZh = siteLang(lang) === "zh";
+  const t = await getTranslations({ locale: lang, namespace: "journal.author" });
   const allPosts = await getCachedAllPosts(toBlogLanguage(lang));
   const posts = allPosts.filter((post) => {
     const name = getAuthorName(post.author);
@@ -166,13 +167,13 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
               </div>
               <div>
                 <p className="text-xs font-semibold uppercase text-muted-foreground">
-                  {isZh ? "作者" : "Author"}
+                  {t("label")}
                 </p>
                 <h1 className="mt-2 text-4xl font-semibold text-foreground sm:text-5xl">
                   {authorName}
                 </h1>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  {bio || (isZh ? `${posts.length} 篇文章` : `${posts.length} posts`)}
+                  {bio || t("postCount", { count: posts.length })}
                 </p>
               </div>
             </div>

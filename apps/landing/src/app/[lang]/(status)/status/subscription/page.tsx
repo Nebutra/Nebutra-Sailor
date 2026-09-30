@@ -1,16 +1,24 @@
 import { confirmSubscription, unsubscribe } from "@nebutra/status";
 import type { Metadata } from "next";
 import { connection } from "next/server";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { StatusPageSkeleton, StatusShell } from "@/components/status/status-page-view";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 
-export const metadata: Metadata = {
-  title: "Subscription",
-  robots: { index: false },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "statusPages.subscription" });
+  return {
+    title: t("meta.title"),
+    robots: { index: false },
+  };
+}
 
 type Search = Promise<{ action?: string; token?: string }>;
 
@@ -25,27 +33,28 @@ export default async function SubscriptionPage({
   setRequestLocale(lang as Locale);
   return (
     <Suspense fallback={<StatusPageSkeleton />}>
-      <SubscriptionResult searchParams={searchParams} />
+      <SubscriptionResult lang={lang} searchParams={searchParams} />
     </Suspense>
   );
 }
 
-async function SubscriptionResult({ searchParams }: { searchParams: Search }) {
+async function SubscriptionResult({ lang, searchParams }: { lang: string; searchParams: Search }) {
   await connection();
   const { action, token } = await searchParams;
-  let title = "This link is not valid";
-  let body = "It may have expired or already been used. Subscribe again from the status page.";
+  const t = await getTranslations({ locale: lang, namespace: "statusPages.subscription" });
+  let title = t("invalid.title");
+  let body = t("invalid.body");
 
   if (token && action === "confirm") {
     const subscriber = await confirmSubscription(token);
     if (subscriber) {
-      title = "You're subscribed";
-      body = `${subscriber.email} will get an email when there is an incident or scheduled maintenance.`;
+      title = t("confirmed.title");
+      body = t("confirmed.body", { email: subscriber.email });
     }
   } else if (token && action === "unsubscribe") {
     if (await unsubscribe(token)) {
-      title = "You're unsubscribed";
-      body = "You will not get any more status emails.";
+      title = t("unsubscribed.title");
+      body = t("unsubscribed.body");
     }
   }
 
@@ -58,7 +67,7 @@ async function SubscriptionResult({ searchParams }: { searchParams: Search }) {
           href="/status"
           className="mt-6 inline-block text-sm font-medium text-foreground underline-offset-4 hover:underline"
         >
-          Back to status
+          {t("backToStatus")}
         </Link>
       </div>
     </StatusShell>

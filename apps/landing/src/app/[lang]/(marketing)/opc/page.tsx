@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -9,9 +9,10 @@ export async function generateMetadata(props: { params: Promise<{ lang: string }
 
   // `none` scope: this is a redirect stub to /building, so the registry
   // publishes it in zero locales and buildPageMetadata emits noindex,follow.
+  const t = await getTranslations({ locale: lang, namespace: "opcPage" });
   return buildPageMetadata({
-    title: "Platform — Nebutra",
-    description: "Nebutra platform overview.",
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/opc",
     locale: lang as Locale,
   });

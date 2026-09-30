@@ -1134,6 +1134,39 @@
         "supportLabel": "支持"
       },
       "acknowledgement": "使用 {brandName} 即表示您确认已阅读、理解并同意受本服务条款约束。"
+    },
+    "dpa": {
+      "meta": {
+        "title": "数据处理附录（DPA）— {brandNameCn}",
+        "description": "如果您的客户涉及个人数据处理，可按需向 {brandNameCn} 索取数据处理附录（DPA）。"
+      },
+      "title": "数据处理附录（DPA）",
+      "lastUpdated": "最后更新：2026-05-13",
+      "availability": {
+        "heading": "适用范围",
+        "p1": "如果您在使用我们的服务时会处理欧盟、英国、瑞士或加州居民（或其他具有类似数据保护法律的司法辖区）的个人数据，{brandNameCn}（“我们”）将为您提供数据处理附录。",
+        "p2": "我们的 DPA 符合 GDPR 第 28 条，在需要时包含标准合同条款（EU 2021/914），并体现了分处理者义务。"
+      },
+      "howToRequest": {
+        "heading": "如何申请",
+        "emailIntro": "发邮件至 <email>地址</email>，并附上：",
+        "items": {
+          "0": "您的法律实体名称与签署授权人",
+          "1": "您希望使用我们的标准 DPA，还是提供您自己的草案",
+          "2": "所需的地区附录（如 UK IDTA、瑞士 FADP 等）"
+        },
+        "response": "我们会在一个工作日内回复。"
+      },
+      "related": {
+        "heading": "相关链接",
+        "security": "安全概览",
+        "privacy": "隐私政策",
+        "terms": "服务条款",
+        "cookies": "Cookie 政策"
+      }
+    },
+    "document": {
+      "versionLabel": "版本 {version} · 生效日期 {date}"
     }
   },
   "metadata": {
@@ -1953,6 +1986,11 @@
         "cn": "在平台上长出来的产品。",
         "buildingLink": "我们正在造的"
       }
+    },
+    "journalPage": {
+      "title": "日志",
+      "lead": "我们对这个时代的判断——关于 agent、agent 之后的那一层，以及创始人这门手艺。",
+      "cn": "我们对这个时代的判断。"
     }
   },
   "siteMap": {
@@ -3826,6 +3864,437 @@
         }
       },
       "rights": "保留所有权利。"
+    }
+  },
+  "journal": {
+    "og": {
+      "tagline": "面向 AI SaaS 的工程笔记"
+    },
+    "article": {
+      "allPosts": "全部文章",
+      "journalBadge": "{brandName} 技术博客",
+      "copyOriginal": "复制原文",
+      "copyBlock": "复制此段",
+      "copied": "已复制",
+      "tableOfContentsAria": "目录",
+      "contents": "目录",
+      "footer": {
+        "continueReading": "继续阅读",
+        "relatedNotes": "同主题文章",
+        "allPosts": "全部文章",
+        "subscribeTitle": "订阅 {brandName} Originals",
+        "subscribeBody": "低频、认真，只发产品工程和 AI SaaS 交付笔记。",
+        "discuss": "去评论",
+        "share": "分享"
+      }
+    },
+    "comments": {
+      "title": "讨论",
+      "subtitle": "使用 {brandName} 账号参与评论。评论会先进入审核队列。",
+      "empty": "还没有评论。来写下第一条。",
+      "signIn": "登录后评论",
+      "placeholder": "写下你的想法...",
+      "submit": "发布评论",
+      "submitting": "发布中",
+      "pending": "待审核",
+      "error": "评论暂时不可用，请稍后再试。",
+      "like": "点赞",
+      "liked": "已点赞",
+      "save": "收藏",
+      "saved": "已收藏",
+      "signInToLike": "登录后点赞",
+      "signInToSave": "登录后收藏"
+    },
+    "author": {
+      "label": "作者",
+      "postCount": "{count} 篇文章"
+    },
+    "tag": {
+      "label": "专题",
+      "postCount": "{count} 篇文章"
+    }
+  },
+  "changelogPage": {
+    "meta": {
+      "title": "更新日志 — {brandNameCn}",
+      "description": "每一次发布，都追求极致的细节。"
+    },
+    "subscribe": "通过 <rss>RSS</rss> 或 <atom>Atom</atom> 订阅更新，或关注 <handle>@nebutra_ai</handle>。"
+  },
+  "newsPage": {
+    "meta": {
+      "title": "新闻中心 — {brandNameCn}",
+      "description": "{brandNameCn} 的产品发布、公告与平台动态。"
+    },
+    "empty": {
+      "title": "暂时还没有新闻。",
+      "subtitle": "敬请关注后续更新。"
+    }
+  },
+  "modelsPage": {
+    "meta": {
+      "title": "支持的 AI 提供商与模型 — {brandNameCn}",
+      "description": "覆盖各大 LLM 实验室、国内平台、网关与本地运行时的 AI 提供商元数据 — 通过 Vercel AI SDK 接入，改一个环境变量即可切换提供商。"
+    },
+    "eyebrow": "AI 提供商",
+    "title": "{count} 个 AI 提供商，一套适配层。",
+    "lead": "Sailor 内置覆盖各大 LLM 实验室、国内平台、网关与本地运行时的提供商元数据 — 通过 Vercel AI SDK 接入，改一个环境变量即可切换提供商。",
+    "providerCount": "{count} 个提供商",
+    "status": {
+      "opencode": "生产环境",
+      "ai-sdk": "AI SDK",
+      "cn-compatible": "兼容",
+      "pending": "待接入"
+    },
+    "categories": {
+      "directLabs": "直接实验室",
+      "chinaPlatforms": "国内平台",
+      "cloudPlatforms": "云平台",
+      "inferenceAccelerators": "推理加速",
+      "unifiedGateways": "统一网关",
+      "multimodal": "多模态",
+      "localDeployment": "本地部署",
+      "developerEcosystem": "开发者生态"
+    }
+  },
+  "roadmapPage": {
+    "meta": {
+      "description": "{brandNameCn} 在创始人九层结构里的路线图：我们为什么存在、要去哪里，以及接下来要做什么。"
+    },
+    "hero": {
+      "title": "从为什么，到下一步要做的事。",
+      "lead": "九层，从上到下。前八层说明 {brandNameCn} 为什么存在、必须成为什么样子——它们基本不变。第九层是我们正在做的事，每周都在变。",
+      "cn": "从为什么，到下一步。",
+      "essayLink": "九层结构，以及我们为什么把它写下来 →"
+    },
+    "direction": {
+      "title": "方向",
+      "lead": "每一行都是创始人的原话，照 Journal 里写的样子摘录。",
+      "cn": "方向，L1 到 L8。"
+    },
+    "execution": {
+      "title": "执行",
+      "lead": "L9。每一个 bet 都标明它服务于哪一层；不服务任何一层的 bet 不会出现在列表里。",
+      "cn": "执行：现在、接下来、更远。"
+    },
+    "landed": {
+      "title": "已落地",
+      "lead": "从「正在做」移出的部分，附带它花费的工作量。其余内容见更新日志。",
+      "cn": "已经落地的。",
+      "releaseNotes": "更新日志 →"
+    }
+  },
+  "aboutPages": {
+    "businessPortfolio": {
+      "meta": {
+        "title": "核心能力布局 — {brandNameCn}",
+        "description": "19 项核心能力覆盖模态维度、技术能力、平台基础设施与数据治理四大层面，构筑 AI 原生数据智能全栈底座。"
+      },
+      "hero": {
+        "kicker": "核心能力布局",
+        "heading": "19 项核心能力，四重能力维度",
+        "lead": "从模态覆盖到技术底座、从平台基础设施到数据治理 — 我们以四组共 19 项能力，构建 AI 原生数据智能的全链路工程体系。",
+        "totalLabel": "总计 {count} 项核心能力 · 四大维度"
+      },
+      "groupItemsLabel": "{count} 项",
+      "matrix": {
+        "kicker": "能力矩阵",
+        "heading": "一图概览 19 项核心能力",
+        "lead": "四组能力并列呈现，便于对照、编排与组合落地。"
+      },
+      "cta": {
+        "kicker": "需要深入了解？",
+        "heading": "想针对某一项能力洽谈落地？",
+        "lead": "告诉我们您的场景，我们会匹配专属架构师与工程团队为您做技术对齐。",
+        "button": "联系我们"
+      }
+    },
+    "global": {
+      "meta": {
+        "title": "全球化布局 — 关于我们 · {productName}",
+        "description": "{productName} 生而全球化 — 7 大主干语种、跨境数据合规、多地区支付、全球 Edge 网络，Day 1 即可出海。"
+      },
+      "hero": {
+        "eyebrow": "全球化布局",
+        "title": "生而全球化",
+        "lead": "{productName} 从第一行代码起就是国际化原生架构，而不是后期补丁。对标 Stripe、Vercel、Linear 等全球化基因产品，我们为您铺好从 Day 1 走向全球市场的基础设施底座。"
+      },
+      "pillars": {
+        "title": "全球化四大支柱",
+        "lead": "语种、合规、支付、边缘网络 — 构成出海业务的四个基础维度。"
+      },
+      "languages": {
+        "title": "7 大主干语种",
+        "lead": "原生国际化（i18n）+ 动态本地化（l10n），覆盖全球约 40 亿人口。"
+      },
+      "compliance": {
+        "title": "合规矩阵",
+        "lead": "主流监管框架 Day 1 支持，企业级认证按 Roadmap 推进。",
+        "columns": {
+          "region": "地区",
+          "framework": "合规框架",
+          "status": "状态"
+        }
+      },
+      "payments": {
+        "title": "支付：全球 + 中国",
+        "lead": "Creem 作为交易商户（merchant of record）覆盖全球主流卡组织，代收代缴各地销售税/增值税；微信支付与支付宝原生覆盖中国大陆——都在同一套计费契约背后，配好密钥即可上线。"
+      },
+      "cta": {
+        "eyebrow": "Ready to Sail",
+        "title": "准备在全球启航？",
+        "lead": "从本地验证到全球扩张，Sailor 是您最可靠的技术合伙人。",
+        "button": "联系我们"
+      }
+    },
+    "innovation": {
+      "meta": {
+        "title": "研发与创新 — {brandNameCn}",
+        "description": "工程品味即护城河。{brandNameCn}极客驱动，对标硅谷最佳实践：AI 原生架构（Harness 工程）、开源基础设施、工程卓越。"
+      },
+      "hero": {
+        "eyebrow": "R&D / 研发与创新",
+        "heading": "工程品味即护城河",
+        "manifesto": "我们是一支极客驱动的小型团队。在 AI 加速度时代，工具几乎被所有人平等拥有，真正的稀缺资源是品味 — 对架构的审美、对细节的偏执、对长期主义的坚持。{brandNameCn}对标硅谷一线研发组织，从第一行代码就写给 AI 时代：类型安全、可观测、Edge-first、多租户、开源。这不是口号，这是我们每天的工作纪律。",
+        "battlefield": "在 AI stack 三层演化中，我们选择 Harness 层作战 — MCP/SKILL、工具生态、Agent 编排、A2A 协同。这里是 2025–2026 年工程化的真正前线。"
+      },
+      "harness": {
+        "eyebrow": "AI Stack 三层演化",
+        "heading": "从权重，到上下文，到 Harness",
+        "intro": "大模型的创新面每两年就会向外扩展一层。2022 年在权重（Weights）层卷 scaling law；2023–2024 年在上下文（Context）层卷 RAG 与长窗口；2025–2026 年，真正的增量产出已经转移到 Harness 层 — 工具、协议、工作流图与 Agent 基础设施。",
+        "outro": "{productName} 把 Harness 工程当作一等公民。我们不在权重层造模型，也不只在上下文层做 Prompt — 我们交付可工程化的 Harness：MCP/SKILL 驱动的智能体、A2A 协同协议、可观测的工作流图、安全可控的工具生态。这是 AI 原生 SaaS 的下一代架构坐标。",
+        "battlefieldTag": "← {productName} 的战场",
+        "currentTag": "正在发生"
+      },
+      "pillars": {
+        "ossSupplement": "为什么开源？因为我们相信：在加速度时代，闭源的专有优势在 6 个月内会被追平，而开源的复利会持续十年。开源让客户免于 vendor lock-in，让社区共同加固我们的基础设施，也让每一次 commit 接受全世界的审阅。这是我们最有信心的一场长期赌注。"
+      },
+      "orgPrinciples": {
+        "eyebrow": "组织演进准则",
+        "heading": "AI 杠杆对抗人治腐化",
+        "intro": "伟大的组织不应在业务扩张过程中走向平庸与官僚化。当 {brandNameCn} 生态及其孵化公司面临规模激增时，以下三条是唯一不可妥协的组织演进准则——每一条都直接约束 hiring、治理与资源配置决策。"
+      },
+      "timeline": {
+        "eyebrow": "创新时间线",
+        "heading": "我们走过的路与即将抵达的站台"
+      },
+      "cta": {
+        "eyebrow": "加入我们的研发之旅",
+        "heading": "与极客并肩,打造下一代 AI 基础设施",
+        "button": "探索职业机会"
+      }
+    },
+    "whitepaper": {
+      "meta": {
+        "title": "商业白皮书 — {productName}",
+        "description": "{productName} 受治理 AI 平台白皮书 · 四章工程与商业文档"
+      },
+      "hero": {
+        "eyebrow": "{brandNameUpper} BUSINESS WHITEPAPER / 商业白皮书",
+        "title": "{productName} 平台白皮书与工程原则",
+        "readTime": "全文约 15 分钟阅读",
+        "tocKicker": "目录",
+        "updated": "最后更新:2026-04-21",
+        "back": "返回 About"
+      },
+      "chapters": {
+        "chapter": "第",
+        "iTitle": "战略定位:平台基线与工程杠杆",
+        "iiTitle": "升级路径与协作契约",
+        "iiiTitle": "全链路 AI 原生平台层",
+        "ivTitle": "组织演进准则:治理与自动化"
+      },
+      "goalsKicker": "核心目标",
+      "sectionII": {
+        "heading": "超级要素路由协议",
+        "intro": "现代软件团队的主要摩擦,不在于没有工具,而在于平台层反复重建、升级路径模糊和协作契约失真。{brandNameCn}关注的是如何用更稳定的平台契约和更清晰的演进路径,让系统持续产出而不是持续返工。"
+      },
+      "sectionIII": {
+        "heading": "全链路 AI 原生基建",
+        "intro": "{brandNameCn}不是零散工具的拼贴。它把脚手架、运行时集成、治理机制和交付路径收敛进一套可验证的平台层,让团队能围绕同一基线持续演进。",
+        "builderEyebrow": "L0 · 工程底座",
+        "sleptonsEyebrow": "L1 · 信任与撮合",
+        "highlightsKicker": "核心能力"
+      },
+      "sectionIV": {
+        "heading": "组织演进准则 · AI 杠杆对抗人治腐化",
+        "intro": "伟大的组织不应在扩张过程中走向平庸与官僚化。当 {brandNameCn}生态及其孵化公司面临规模激增时,以下三条准则不可妥协——它们决定组织是继续复利,还是走向内耗。"
+      }
+    }
+  },
+  "showcasePage": {
+    "meta": {
+      "title": "案例展示 — {productName}",
+      "description": "看看开发者和团队正在用 {productName} 构建什么。"
+    },
+    "title": "案例展示",
+    "lead": "看看开发者和团队正在用 {productName} 构建什么。",
+    "comingSoon": {
+      "title": "即将上线",
+      "body": "用 {productName} 构建的项目将在这里展示。"
+    },
+    "featured": "精选",
+    "categories": {
+      "saas": "SaaS",
+      "ecommerce": "电商",
+      "ai": "AI / 机器学习",
+      "devtools": "开发者工具",
+      "marketing": "营销",
+      "other": "其他"
+    }
+  },
+  "securityPage": {
+    "meta": {
+      "title": "安全 — {brandNameCn}",
+      "description": "租户隔离、应用层加密、RBAC/ABAC、结构化审计日志 — 作为可安装的软件包内置于 Sailor 骨架中。"
+    },
+    "hero": {
+      "eyebrow": "安全",
+      "title": "安全是代码，不是口号。",
+      "lead": "Sailor 骨架自带审计日志、租户隔离、加密与权限原语，都是可安装的软件包 — 不是 PPT 里的承诺。"
+    },
+    "capabilitiesSection": {
+      "title": "内置能力",
+      "lead": "以下每一项都是本仓库中的一个软件包，欢迎在 GitHub 上审阅我们的源代码。"
+    },
+    "capabilities": {
+      "tenantIsolation": {
+        "title": "租户隔离",
+        "summary": "请求级租户上下文（AsyncLocalStorage）加上 Postgres 行级安全策略，在数据库层实现严格的租户隔离。"
+      },
+      "encryption": {
+        "title": "应用层加密",
+        "summary": "使用 AWS KMS 对客户密钥做信封加密。明文永不离开应用边界；数据加密密钥支持轮换。"
+      },
+      "rbacAbac": {
+        "title": "RBAC 与 ABAC",
+        "summary": "使用 CASL 进行进程内角色/属性校验。"
+      },
+      "auditLogging": {
+        "title": "结构化审计日志",
+        "summary": "统一的 AuditEvent 格式，记录操作者 / 动作 / 资源 / 结果。架构已就位，生产环境集成正在进行中。"
+      },
+      "auth": {
+        "title": "基于 Postgres 的 Better Auth",
+        "summary": "由 Better Auth 支撑的会话/Cookie 认证，内置组织成员与设备码登录 — 您的用户与数据库之间没有第三方身份供应商。"
+      },
+      "secrets": {
+        "title": "边界处的密钥管理",
+        "summary": "必需的环境变量在进程启动时校验（Zod schema）。应用密钥按需解密，绝不写入日志。"
+      }
+    },
+    "integrationWip": "集成进行中",
+    "complianceSection": {
+      "title": "合规姿态",
+      "lead": "我们如实列出当前状态 — 哪些已经就绪，哪些还在路线图上。不挂我们尚未赢得的徽章。"
+    },
+    "compliance": {
+      "gdpr": {
+        "label": "GDPR / 英国 GDPR 数据处理",
+        "state": "已对齐",
+        "detail": "可按需提供 DPA。应用内已支持数据主体访问与删除流程。"
+      },
+      "soc2": {
+        "label": "SOC 2 Type II",
+        "state": "路线图中",
+        "detail": "目前尚未认证。架构设计已支持 SOC 2 控制项；计划进行正式审计。"
+      },
+      "iso27001": {
+        "label": "ISO 27001",
+        "state": "路线图中",
+        "detail": "目前尚未认证。ISMS 范围与 SOC 2 一并跟踪推进。"
+      },
+      "hipaa": {
+        "label": "HIPAA 就绪架构",
+        "state": "需签署 BAA",
+        "detail": "审计日志、RBAC 与加密原语均已就位；受管辖实体需签署业务合作协议（BAA）。"
+      },
+      "pipl": {
+        "label": "个人信息保护法（PIPL）",
+        "state": "已支持",
+        "detail": "支持中国境内合规服务商（百炼、火山引擎、SiliconFlow），满足数据境内留存需求。"
+      }
+    },
+    "cta": {
+      "title": "需要我们的 DPA、安全问卷，或想聊聊？",
+      "lead": "我们会在一个工作日内回复安全相关咨询。如需 DPA，可附上您的草案，或直接使用我们的模板。",
+      "readDpa": "查看我们的 DPA 说明",
+      "requestDpa": "申请 DPA"
+    }
+  },
+  "opcPage": {
+    "meta": {
+      "title": "平台 — {brandNameCn}",
+      "description": "{brandNameCn} 平台概览。"
+    }
+  },
+  "studioPage": {
+    "meta": {
+      "description": "选择一个 Sailor 项目的外观，在真实页面上预览，然后用一条命令应用它。"
+    }
+  },
+  "statusPages": {
+    "index": {
+      "meta": {
+        "title": "{brandNameCn} 状态",
+        "description": "{brandNameCn} 公开服务的实时运行状态。"
+      }
+    },
+    "history": {
+      "meta": {
+        "title": "事件历史"
+      },
+      "backToStatus": "返回状态页",
+      "calendar": "日历",
+      "previousMonth": "上个月",
+      "nextMonth": "下个月",
+      "weekdays": {
+        "mon": "一",
+        "tue": "二",
+        "wed": "三",
+        "thu": "四",
+        "fri": "五",
+        "sat": "六",
+        "sun": "日"
+      },
+      "nothingToReport": "本月没有可报告的事项。"
+    },
+    "incident": {
+      "seoTitle": "事件",
+      "phase": {
+        "scheduled": "已计划",
+        "inProgress": "进行中",
+        "completed": "已完成"
+      },
+      "backToStatus": "返回状态页",
+      "fields": {
+        "status": "状态",
+        "type": "类型",
+        "impact": "影响",
+        "started": "开始时间",
+        "duration": "持续时间"
+      },
+      "maintenance": "维护",
+      "affected": "受影响：{services}",
+      "updates": "更新"
+    },
+    "subscription": {
+      "meta": {
+        "title": "订阅"
+      },
+      "invalid": {
+        "title": "此链接无效",
+        "body": "该链接可能已过期或已被使用。请从状态页重新订阅。"
+      },
+      "confirmed": {
+        "title": "订阅成功",
+        "body": "发生事件或计划维护时，{email} 将收到邮件通知。"
+      },
+      "unsubscribed": {
+        "title": "已取消订阅",
+        "body": "您将不再收到状态邮件。"
+      },
+      "backToStatus": "返回状态页"
     }
   }
 }

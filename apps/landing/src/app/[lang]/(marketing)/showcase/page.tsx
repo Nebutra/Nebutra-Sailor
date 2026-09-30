@@ -1,4 +1,3 @@
-import { brand } from "@nebutra/brand/metadata";
 import { External as ExternalLink } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { getShowcaseProjects } from "@nebutra/sanity/queries";
@@ -7,7 +6,7 @@ import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -22,9 +21,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang, namespace: "showcasePage" });
   return buildPageMetadata({
-    title: `Showcase — ${brand.name} Sailor`,
-    description: `Discover what developers and teams are building with ${brand.name} Sailor.`,
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/showcase",
     locale: lang as Locale,
   });
@@ -42,13 +42,14 @@ interface ShowcaseProject {
   featured?: boolean;
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  saas: "SaaS",
-  ecommerce: "E-Commerce",
-  ai: "AI / ML",
-  devtools: "Developer Tools",
-  marketing: "Marketing",
-  other: "Other",
+/** `messages.showcasePage.categories` key for each CMS category slug. */
+const CATEGORY_KEYS: Record<string, string> = {
+  saas: "saas",
+  ecommerce: "ecommerce",
+  ai: "ai",
+  devtools: "devtools",
+  marketing: "marketing",
+  other: "other",
 };
 
 async function getShowcaseProjectsSafe(): Promise<ShowcaseProject[]> {
@@ -65,6 +66,10 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
   if (!hasLocale(routing.locales, lang)) return null;
   setRequestLocale(lang as Locale);
 
+  const t = (await getTranslations({
+    locale: lang,
+    namespace: "showcasePage",
+  })) as unknown as (key: string) => string;
   const projects = await getShowcaseProjectsSafe();
 
   return (
@@ -72,21 +77,17 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
       <AnimateIn preset="fadeUp">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-neutral-12 sm:text-5xl">
-            Showcase
+            {t("title")}
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-11">
-            See what developers and teams are building with {brand.name} Sailor.
-          </p>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-11">{t("lead")}</p>
         </div>
       </AnimateIn>
 
       {projects.length === 0 ? (
         <AnimateIn preset="fadeUp">
           <div className="mt-16 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 p-12 text-center">
-            <p className="text-lg font-medium text-neutral-12">Coming soon</p>
-            <p className="mt-2 text-sm text-neutral-11">
-              Projects built with {brand.name} Sailor will be featured here.
-            </p>
+            <p className="text-lg font-medium text-neutral-12">{t("comingSoon.title")}</p>
+            <p className="mt-2 text-sm text-neutral-11">{t("comingSoon.body")}</p>
           </div>
         </AnimateIn>
       ) : (
@@ -140,12 +141,14 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                   <div className="mt-3 flex items-center gap-2">
                     {project.category && (
                       <span className="rounded-full bg-neutral-3 px-2 py-0.5 text-xs font-medium text-neutral-11">
-                        {CATEGORY_LABELS[project.category] ?? project.category}
+                        {CATEGORY_KEYS[project.category]
+                          ? t(`categories.${CATEGORY_KEYS[project.category]}`)
+                          : project.category}
                       </span>
                     )}
                     {project.featured && (
                       <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-primary/15 dark:text-primary">
-                        Featured
+                        {t("featured")}
                       </span>
                     )}
                   </div>

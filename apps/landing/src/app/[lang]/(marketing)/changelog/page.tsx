@@ -5,7 +5,7 @@ import { cacheLife } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { InteractiveChangelog, type Release } from "@/components/landing/InteractiveChangelog";
 import { type Locale, routing } from "@/i18n/routing";
 import { STATIC_CHANGELOG_RELEASES } from "@/lib/changelog-releases";
@@ -23,9 +23,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang, namespace: "changelogPage" });
   const metadata = buildPageMetadata({
-    title: "Changelog — Nebutra",
-    description: "Every release, shipped with obsessive attention to detail.",
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/changelog",
     locale: lang as Locale,
   });
@@ -144,6 +145,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
 
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+  const t = await getTranslations({ locale: lang, namespace: "changelogPage" });
 
   // Try CMS first, fall back to static data. E2E smoke runs should not depend on
   // live Sanity latency; they verify the rendered marketing surface contract.
@@ -208,30 +210,34 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
       <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <AnimateIn preset="fade" inView>
           <p className="text-center text-sm text-muted-foreground">
-            Subscribe to release notes via{" "}
-            <Link
-              href="/api/changelog/rss"
-              className="font-medium text-primary underline-offset-4 hover:underline"
-            >
-              RSS
-            </Link>{" "}
-            or{" "}
-            <Link
-              href="/api/changelog/atom"
-              className="font-medium text-primary underline-offset-4 hover:underline"
-            >
-              Atom
-            </Link>{" "}
-            or follow{" "}
-            <a
-              href="https://x.com/nebutra_ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-primary underline-offset-4 hover:underline"
-            >
-              @nebutra_ai
-            </a>
-            .
+            {t.rich("subscribe", {
+              rss: (chunks) => (
+                <Link
+                  href="/api/changelog/rss"
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  {chunks}
+                </Link>
+              ),
+              atom: (chunks) => (
+                <Link
+                  href="/api/changelog/atom"
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  {chunks}
+                </Link>
+              ),
+              handle: (chunks) => (
+                <a
+                  href="https://x.com/nebutra_ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  {chunks}
+                </a>
+              ),
+            })}
           </p>
         </AnimateIn>
       </section>

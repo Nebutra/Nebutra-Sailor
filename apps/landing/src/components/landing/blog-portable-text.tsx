@@ -48,7 +48,6 @@ import katex from "katex";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { prepareBlogPortableTextBlocks } from "@/lib/blog-code-highlighting";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { BlogCodeBlock } from "./blog-code-block";
 import { BlogCopyButton } from "./blog-copy-button";
 import { BlogCtaBlock, type BlogCtaBlockItem } from "./blog-cta-block";
@@ -84,7 +83,7 @@ const UI_LABELS = {
 } as const;
 
 function labelsFor(language: BlogLanguage) {
-  return isZhUiLocale(language) ? UI_LABELS.zh : UI_LABELS.en;
+  return language === "zh" ? UI_LABELS.zh : UI_LABELS.en;
 }
 
 function trimmed(value: string | null | undefined): string | undefined {
@@ -1163,9 +1162,7 @@ export async function BlogPortableText({
   if (!visibleBody.length) return null;
 
   return (
-    <div
-      className={`max-w-none text-muted-foreground ${isZhUiLocale(language) ? "cjk-prose" : ""}`}
-    >
+    <div className={`max-w-none text-muted-foreground ${language === "zh" ? "cjk-prose" : ""}`}>
       <style>{`
         .blog-code-html .shiki {
           margin: 0;

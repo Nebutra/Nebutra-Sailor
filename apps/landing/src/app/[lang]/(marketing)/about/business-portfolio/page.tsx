@@ -2,66 +2,11 @@ import { ArrowRight, Box as Boxes, Cpu, Database, Shield } from "@nebutra/icons"
 import { AnimateIn } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { CAPABILITY_GROUPS, pick } from "../_about-data";
-
-// ─── Static metadata (bilingual) ─────────────────────────────────────────────
-const PAGE_META = {
-  zh: {
-    title: "核心能力布局 — 云毓智能",
-    description:
-      "19 项核心能力覆盖模态维度、技术能力、平台基础设施与数据治理四大层面，构筑 AI 原生数据智能全栈底座。",
-  },
-  en: {
-    title: "Business Portfolio — Nebutra",
-    description:
-      "19 core capabilities spanning modality, technology, platform infrastructure, and data governance — the full-stack foundation for AI-native data intelligence.",
-  },
-} as const;
-
-// ─── Page-level copy (bilingual) ─────────────────────────────────────────────
-const HERO_COPY = {
-  zh: {
-    kicker: "核心能力布局",
-    heading: "19 项核心能力，四重能力维度",
-    lead: "从模态覆盖到技术底座、从平台基础设施到数据治理 — 我们以四组共 19 项能力，构建 AI 原生数据智能的全链路工程体系。",
-  },
-  en: {
-    kicker: "Business Portfolio",
-    heading: "19 core capabilities across 4 dimensions",
-    lead: "From modality coverage to technology foundations, platform infrastructure, and data governance — 19 capabilities forming an end-to-end AI-native data intelligence stack.",
-  },
-} as const;
-
-const SECTION_HEADINGS = {
-  zh: {
-    groupsKicker: "能力图谱",
-    groupsHeading: "按层分解",
-    matrixKicker: "能力矩阵",
-    matrixHeading: "一图概览 19 项核心能力",
-    matrixLead: "四组能力并列呈现，便于对照、编排与组合落地。",
-    ctaKicker: "需要深入了解？",
-    ctaHeading: "想针对某一项能力洽谈落地？",
-    ctaLead: "告诉我们您的场景，我们会匹配专属架构师与工程团队为您做技术对齐。",
-    ctaButton: "联系我们",
-  },
-  en: {
-    groupsKicker: "Capability Map",
-    groupsHeading: "Breakdown by layer",
-    matrixKicker: "Capability Matrix",
-    matrixHeading: "19 capabilities at a glance",
-    matrixLead: "Four groups side by side — easy to compare, orchestrate, and compose.",
-    ctaKicker: "Dive Deeper?",
-    ctaHeading: "Want to go deeper on any capability?",
-    ctaLead:
-      "Tell us your scenario — we'll pair you with a dedicated architect and engineering team for technical alignment.",
-    ctaButton: "Contact us",
-  },
-} as const;
+import { bi, CAPABILITY_GROUPS } from "../_about-data";
 
 // Map group keys to icons for a consistent visual anchor.
 const GROUP_ICONS: Record<string, typeof Boxes> = {
@@ -79,10 +24,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
-  const meta = isZhUiLocale(lang) ? PAGE_META.zh : PAGE_META.en;
+  const t = await getTranslations({ locale: lang, namespace: "aboutPages.businessPortfolio" });
   return buildPageMetadata({
-    title: meta.title,
-    description: meta.description,
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/about/business-portfolio",
     locale: lang as Locale,
   });
@@ -96,13 +41,11 @@ export default async function BusinessPortfolioPage({
 }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
-
-  const hero = isZhUiLocale(lang) ? HERO_COPY.zh : HERO_COPY.en;
-  const copy = isZhUiLocale(lang) ? SECTION_HEADINGS.zh : SECTION_HEADINGS.en;
+  const t = await getTranslations({ locale: lang, namespace: "aboutPages.businessPortfolio" });
 
   // Stats pulled directly from CAPABILITY_GROUPS — kept in-sync with source data.
   const stats = CAPABILITY_GROUPS.map((g) => {
-    const meta = pick(lang, g.meta);
+    const meta = bi(lang, g.meta);
     return {
       key: g.key,
       count: g.items.length,
@@ -117,7 +60,7 @@ export default async function BusinessPortfolioPage({
       <section className="pt-32 md:pt-48 pb-20 md:pb-24 border-b border-border/50">
         <div className="container mx-auto px-4 max-w-wide">
           <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
-            {hero.kicker}
+            {t("hero.kicker")}
           </span>
 
           <AnimateIn preset="fadeUp">
@@ -128,12 +71,12 @@ export default async function BusinessPortfolioPage({
                 lineHeight: "var(--leading-display)",
               }}
             >
-              {hero.heading}
+              {t("hero.heading")}
             </h1>
           </AnimateIn>
 
           <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-16">
-            {hero.lead}
+            {t("hero.lead")}
           </p>
 
           {/* Stats row — capability counts per group */}
@@ -154,16 +97,14 @@ export default async function BusinessPortfolioPage({
           </div>
 
           <p className="mt-10 text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
-            {isZhUiLocale(lang)
-              ? `总计 ${totalCount} 项核心能力 · 四大维度`
-              : `Total ${totalCount} capabilities · 4 dimensions`}
+            {t("hero.totalLabel", { count: totalCount })}
           </p>
         </div>
       </section>
 
       {/* ─── Section 2 · Group breakdown (one section per group) ──────────── */}
       {CAPABILITY_GROUPS.map((group, groupIdx) => {
-        const meta = pick(lang, group.meta);
+        const meta = bi(lang, group.meta);
         const Icon = GROUP_ICONS[group.key] ?? Boxes;
         // Alternating bg for visual rhythm without introducing new tokens.
         const altBg = groupIdx % 2 === 1 ? "bg-muted/30" : "bg-background";
@@ -184,7 +125,8 @@ export default async function BusinessPortfolioPage({
                   <div className="inline-flex items-center gap-3 mb-6 px-3 py-1.5 rounded-full border border-border bg-background">
                     <Icon className="h-4 w-4 text-foreground" aria-hidden="true" />
                     <span className="text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
-                      {`Group ${String.fromCharCode(65 + groupIdx)} · ${group.items.length} ${isZhUiLocale(lang) ? "项" : "items"}`}
+                      {`Group ${String.fromCharCode(65 + groupIdx)} · `}
+                      {t("groupItemsLabel", { count: group.items.length })}
                     </span>
                   </div>
 
@@ -213,7 +155,7 @@ export default async function BusinessPortfolioPage({
 
               <div className={`grid grid-cols-1 ${gridCols} gap-5 md:gap-6`}>
                 {group.items.map((item, idx) => {
-                  const cap = pick(lang, item);
+                  const cap = bi(lang, item);
                   return (
                     <article
                       key={`${group.key}-${idx}`}
@@ -250,7 +192,7 @@ export default async function BusinessPortfolioPage({
         <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-16 md:mb-20 max-w-3xl">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-              {copy.matrixKicker}
+              {t("matrix.kicker")}
             </span>
             <AnimateIn preset="fadeUp">
               <h2
@@ -260,17 +202,17 @@ export default async function BusinessPortfolioPage({
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {copy.matrixHeading}
+                {t("matrix.heading")}
               </h2>
             </AnimateIn>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              {copy.matrixLead}
+              {t("matrix.lead")}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
             {CAPABILITY_GROUPS.map((group, groupIdx) => {
-              const meta = pick(lang, group.meta);
+              const meta = bi(lang, group.meta);
               const Icon = GROUP_ICONS[group.key] ?? Boxes;
               return (
                 <div
@@ -288,7 +230,7 @@ export default async function BusinessPortfolioPage({
                   </h3>
                   <ul className="flex flex-col gap-2.5 mt-1">
                     {group.items.map((item, idx) => {
-                      const cap = pick(lang, item);
+                      const cap = bi(lang, item);
                       return (
                         <li
                           key={`${group.key}-sum-${idx}`}
@@ -315,7 +257,7 @@ export default async function BusinessPortfolioPage({
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <div className="inline-block mb-8 px-4 py-1.5 rounded-full border border-border bg-muted/30">
             <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">
-              {copy.ctaKicker}
+              {t("cta.kicker")}
             </span>
           </div>
 
@@ -327,17 +269,17 @@ export default async function BusinessPortfolioPage({
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              {copy.ctaHeading}
+              {t("cta.heading")}
             </h2>
           </AnimateIn>
 
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-12">
-            {copy.ctaLead}
+            {t("cta.lead")}
           </p>
 
           <Button asChild variant="ink" size="lg">
             <Link href="/contact">
-              {copy.ctaButton}
+              {t("cta.button")}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

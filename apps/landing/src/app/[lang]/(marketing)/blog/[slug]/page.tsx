@@ -15,7 +15,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { connection } from "next/server";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { NewsletterForm } from "@/components/landing";
 import { BlogAuthorAvatar } from "@/components/landing/blog-author-avatar";
 import { BlogComments } from "@/components/landing/blog-comments";
@@ -34,9 +34,11 @@ import {
   localizedPostHref,
 } from "@/lib/blog-page-cache";
 import { env } from "@/lib/env";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { unpublishedSet } from "@/lib/seo/site-routes";
+
+/** Reads a dotted path out of `journal.article` — passed down to BlogArticleFooter. */
+type ArticleTranslator = (key: string) => string;
 
 type Params = { lang: string; slug: string };
 
@@ -91,13 +93,13 @@ function postCover(post: BlogPostWithSource) {
 }
 
 function BlogArticleFooter({
-  isZh,
   lang,
   posts,
+  t,
 }: {
-  isZh: boolean;
   lang: string;
   posts: BlogPostWithSource[];
+  t: ArticleTranslator;
 }) {
   return (
     <section className="mx-auto mt-16 max-w-4xl border-y border-border py-10">
@@ -109,17 +111,17 @@ function BlogArticleFooter({
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase text-muted-foreground">
-                {isZh ? "继续阅读" : "Continue reading"}
+                {t("footer.continueReading")}
               </p>
               <h2 className="mt-2 text-2xl font-semibold text-foreground">
-                {isZh ? "同主题文章" : "Related notes"}
+                {t("footer.relatedNotes")}
               </h2>
             </div>
             <Link
               href={localizedPostHref(lang)}
               className="hidden items-center gap-1.5 text-sm font-medium text-primary sm:inline-flex"
             >
-              {isZh ? "全部文章" : "All posts"}
+              {t("footer.allPosts")}
               <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
@@ -162,13 +164,9 @@ function BlogArticleFooter({
           </div>
         </div>
         <aside className="min-w-0 overflow-hidden rounded-[var(--radius-lg)] bg-muted p-5">
-          <p className="text-sm font-semibold text-foreground">
-            {isZh ? `订阅 ${brand.name} Originals` : `Subscribe to ${brand.name} Originals`}
-          </p>
+          <p className="text-sm font-semibold text-foreground">{t("footer.subscribeTitle")}</p>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {isZh
-              ? "低频、认真，只发产品工程和 AI SaaS 交付笔记。"
-              : "Low-frequency notes on product engineering and AI SaaS delivery."}
+            {t("footer.subscribeBody")}
           </p>
           <div className="mt-4">
             <NewsletterForm />
@@ -179,13 +177,13 @@ function BlogArticleFooter({
               className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
             >
               <Message className="size-4" aria-hidden />
-              {isZh ? "去评论" : "Discuss"}
+              {t("footer.discuss")}
             </a>
             <a
               href="#article-share"
               className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
             >
-              {isZh ? "分享" : "Share"}
+              {t("footer.share")}
             </a>
           </div>
         </aside>
@@ -217,6 +215,11 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   if (article.kind === "not-found") notFound();
   if (article.kind === "redirect") redirect(article.href);
   await connection();
+  const t = (await getTranslations({
+    locale: lang,
+    namespace: "journal.article",
+  })) as unknown as ArticleTranslator;
+  const tComments = await getTranslations({ locale: lang, namespace: "journal.comments" });
 
   const {
     post,
@@ -252,7 +255,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
               className="mb-8 inline-flex items-center gap-1.5 rounded text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               <ArrowLeft className="size-4" aria-hidden />
-              {isZh ? "全部文章" : "All posts"}
+              {t("allPosts")}
             </Link>
           </AnimateIn>
 
@@ -278,7 +281,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                 <div>
                   <div className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     <BookOpen className="size-3.5" aria-hidden />
-                    {isZh ? `${brand.name} 技术博客` : `${brand.name} Journal`}
+                    {t("journalBadge")}
                   </div>
                   <h1 className="max-w-4xl text-4xl font-semibold text-foreground sm:text-5xl lg:text-6xl">
                     {post.title}
@@ -315,17 +318,20 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                   <div className="flex flex-wrap gap-2">
                     <BlogCopyButton
                       value={articleCopyText}
-                      label={isZh ? "复制原文" : "Copy original"}
-                      copiedLabel={isZh ? "已复制" : "Copied"}
+                      label={t("copyOriginal")}
+                      copiedLabel={t("copied")}
                     />
                     {translation && (
                       <a
                         href={languageSwitchPostHref(translationLocale, translation.slug)}
-                        hrefLang={isZhUiLocale(targetLanguage) ? "zh-Hans-CN" : "en-US"}
+                        hrefLang={targetLanguage === "zh" ? "zh-Hans-CN" : "en-US"}
                         className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
                       >
                         <Globe className="size-4" aria-hidden />
-                        {isZhUiLocale(targetLanguage) ? "阅读中文版" : "Read in English"}
+                        {/* The label previews the target language, not the
+                            viewer's own locale — always literally "阅读中文版" /
+                            "Read in English", regardless of viewer locale. */}
+                        {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
                       </a>
                     )}
                   </div>
@@ -373,8 +379,8 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
           <div data-blog-content className="mx-auto mt-12 min-w-0 max-w-3xl">
             <BlogPortableText
               body={post.body}
-              copyLabel={isZh ? "复制此段" : "Copy block"}
-              copiedLabel={isZh ? "已复制" : "Copied"}
+              copyLabel={t("copyBlock")}
+              copiedLabel={t("copied")}
               headingIds={tableOfContents.headingIds}
               language={blogLanguage}
               resolveCtaHref={(href) =>
@@ -389,15 +395,15 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
         {tableOfContents.items.length >= 2 && (
           <DynamicIslandTOC
             selector="[data-blog-content] h2, [data-blog-content] h3, [data-blog-content] h4"
-            ariaLabel={isZh ? "目录" : "Table of contents"}
-            menuHeading={isZh ? "目录" : "Contents"}
-            emptyLabel={isZh ? "目录" : "Contents"}
+            ariaLabel={t("tableOfContentsAria")}
+            menuHeading={t("contents")}
+            emptyLabel={t("contents")}
           />
         )}
 
         {footerPosts.length > 0 && (
           <AnimateIn preset="fadeUp" inView>
-            <BlogArticleFooter isZh={isZh} lang={lang} posts={footerPosts} />
+            <BlogArticleFooter lang={lang} posts={footerPosts} t={t} />
           </AnimateIn>
         )}
 
@@ -409,25 +415,21 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
               slug={post.slug}
               language={blogLanguage}
               labels={{
-                title: isZh ? "讨论" : "Discussion",
-                subtitle: isZh
-                  ? `使用 ${brand.name} 账号参与评论。评论会先进入审核队列。`
-                  : `Join with your ${brand.name} account. New comments enter moderation first.`,
-                empty: isZh ? "还没有评论。来写下第一条。" : "No comments yet. Start the thread.",
-                signIn: isZh ? "登录后评论" : "Sign in to comment",
-                placeholder: isZh ? "写下你的想法..." : "Share your thought...",
-                submit: isZh ? "发布评论" : "Post comment",
-                submitting: isZh ? "发布中" : "Posting",
-                pending: isZh ? "待审核" : "Pending",
-                error: isZh
-                  ? "评论暂时不可用，请稍后再试。"
-                  : "Comments are unavailable. Try again later.",
-                like: isZh ? "点赞" : "Like",
-                liked: isZh ? "已点赞" : "Liked",
-                save: isZh ? "收藏" : "Save",
-                saved: isZh ? "已收藏" : "Saved",
-                signInToLike: isZh ? "登录后点赞" : "Sign in to like",
-                signInToSave: isZh ? "登录后收藏" : "Sign in to save",
+                title: tComments("title"),
+                subtitle: tComments("subtitle"),
+                empty: tComments("empty"),
+                signIn: tComments("signIn"),
+                placeholder: tComments("placeholder"),
+                submit: tComments("submit"),
+                submitting: tComments("submitting"),
+                pending: tComments("pending"),
+                error: tComments("error"),
+                like: tComments("like"),
+                liked: tComments("liked"),
+                save: tComments("save"),
+                saved: tComments("saved"),
+                signInToLike: tComments("signInToLike"),
+                signInToSave: tComments("signInToSave"),
               }}
             />
           </div>
