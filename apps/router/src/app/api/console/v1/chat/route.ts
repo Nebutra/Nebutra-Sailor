@@ -7,6 +7,7 @@ import type { EdgeIdentity } from "@/lib/openai-edge";
 import { proxyOpenAiCompatible, RouterSupplyUnavailableError, refuse } from "@/lib/openai-edge";
 import { getApiKeyRepository } from "@/lib/router-keys";
 import { availabilityFor } from "@/lib/supply/capability";
+import { runSelfMeteredTick } from "@/lib/supply/quota";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -53,7 +54,15 @@ const ChatBody = z.object({
   maxTokens: z.number().int().positive().max(8192).optional(),
 });
 
-const guard = createRouterGuard(undefined, undefined, { availabilityFor });
+const guard = createRouterGuard(
+  undefined,
+  undefined,
+  { availabilityFor },
+  {
+    recordUsage: ({ sourceKey, costUsd, totalTokens, at }) =>
+      runSelfMeteredTick(sourceKey, { costUsd, totalTokens }, at),
+  },
+);
 const rateLimit = createRouterRateLimiter();
 
 export async function POST(request: Request) {

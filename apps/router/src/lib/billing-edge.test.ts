@@ -210,6 +210,56 @@ describe("router money guard — admit", () => {
     expect(decision.admission.candidates).toEqual(["cheap", "gpt-5"]);
     expect(decision.admission.reserved).toBeCloseTo(0.011, 6);
   });
+
+  it("headroom-aware routing (ADR 2026-09-30 addendum): a throttled-but-sellable candidate sorts after one with headroom", async () => {
+    const db = billing({
+      findPrice: vi.fn(async (model: string) => price({ modelName: model })),
+    });
+    const decision = await createRouterGuard(db, undefined, {
+      availabilityFor: vi.fn(
+        async () =>
+          new Map([
+            ["throttled-model", { sellable: true, reason: null, headroom: "throttled" as const }],
+            ["ok-model", { sellable: true, reason: null, headroom: "ok" as const }],
+          ]),
+      ),
+    }).admit(admitInput({ models: ["throttled-model", "ok-model"] }));
+    expect(decision.ok).toBe(true);
+    if (!decision.ok) return;
+    // The customer listed the throttled one first; headroom still wins.
+    expect(decision.admission.candidates).toEqual(["ok-model", "throttled-model"]);
+  });
+
+  it("never drops a throttled-but-sellable candidate — headroom only reorders, it does not delist", async () => {
+    const db = billing({
+      findPrice: vi.fn(async (model: string) => price({ modelName: model })),
+    });
+    const decision = await createRouterGuard(db, undefined, {
+      availabilityFor: vi.fn(
+        async () =>
+          new Map([["gpt-5", { sellable: true, reason: null, headroom: "throttled" as const }]]),
+      ),
+    }).admit(admitInput());
+    expect(decision.ok).toBe(true);
+    if (!decision.ok) return;
+    expect(decision.admission.candidates).toEqual(["gpt-5"]);
+  });
+
+  it("treats a model absent from the availability map as headroom=ok (fails open, same posture as sellable)", async () => {
+    const db = billing({
+      findPrice: vi.fn(async (model: string) => price({ modelName: model })),
+    });
+    const decision = await createRouterGuard(db, undefined, {
+      availabilityFor: vi.fn(
+        async () => new Map([["gpt-5", { sellable: true, reason: null, headroom: "ok" as const }]]),
+      ),
+    }).admit(admitInput({ models: ["untracked-model", "gpt-5"] }));
+    expect(decision.ok).toBe(true);
+    if (!decision.ok) return;
+    // Both read as headroom "ok" (untracked defaults open), so the
+    // customer's own order is preserved — no reordering happened.
+    expect(decision.admission.candidates).toEqual(["untracked-model", "gpt-5"]);
+  });
 });
 
 describe("router money guard — the per-request floor", () => {
@@ -442,6 +492,108 @@ describe("router money guard — settle", () => {
       requestId: "req_6",
       amount: 0.011,
     });
+  });
+});
+
+describe("router money guard — quota self-metering (ADR 2026-09-30 addendum)", () => {
+  it("meters the real settled cost/tokens against the source, keyed by supplyPath", async () => {
+    const recordUsage = vi.fn(
+      async (_input: { sourceKey: string; costUsd: number; totalTokens: number; at: Date }) => {},
+    );
+    await createRouterGuard(billing(), undefined, undefined, { recordUsage }).settle({
+      requestId: "req_meter_1",
+      identity,
+      path: "chat/completions",
+      admission: { reserved: 0.011, currency: "USD", candidates: ["gpt-5"] },
+      usage: usage(),
+      status: 200,
+      latencyMs: 42,
+      ttfbMs: null,
+      clientIp: null,
+      supplyPath: "goat",
+      billable: true,
+    });
+    expect(recordUsage).toHaveBeenCalledTimes(1);
+    const call = recordUsage.mock.calls[0]?.[0];
+    expect(call?.sourceKey).toBe("goat");
+    expect(call?.totalTokens).toBe(1500);
+    expect(call?.costUsd).toBeCloseTo(0.006, 6);
+    expect(call?.at).toBeInstanceOf(Date);
+  });
+
+  it("meters even a refunded (non-billable) request — the upstream call still happened and still cost something", async () => {
+    const recordUsage = vi.fn(async () => {});
+    await createRouterGuard(billing(), undefined, undefined, { recordUsage }).settle({
+      requestId: "req_meter_2",
+      identity,
+      path: "chat/completions",
+      admission: { reserved: 0.011, currency: "USD", candidates: ["gpt-5"] },
+      usage: usage({ completionTokens: 0, finishReason: "error", errored: true }),
+      status: 200,
+      latencyMs: 42,
+      ttfbMs: null,
+      clientIp: null,
+      supplyPath: "goat",
+      billable: false,
+    });
+    expect(recordUsage).toHaveBeenCalledTimes(1);
+  });
+
+  it("is a silent no-op with no supplyPath", async () => {
+    const recordUsage = vi.fn(async () => {});
+    await createRouterGuard(billing(), undefined, undefined, { recordUsage }).settle({
+      requestId: "req_meter_3",
+      identity,
+      path: "chat/completions",
+      admission: { reserved: 0.011, currency: "USD", candidates: ["gpt-5"] },
+      usage: usage(),
+      status: 200,
+      latencyMs: 42,
+      ttfbMs: null,
+      clientIp: null,
+      supplyPath: null,
+      billable: true,
+    });
+    expect(recordUsage).not.toHaveBeenCalled();
+  });
+
+  it("with no metering injected, settle never throws (default no-op, existing callers stay hermetic)", async () => {
+    await expect(
+      createRouterGuard(billing()).settle({
+        requestId: "req_meter_4",
+        identity,
+        path: "chat/completions",
+        admission: { reserved: 0.011, currency: "USD", candidates: ["gpt-5"] },
+        usage: usage(),
+        status: 200,
+        latencyMs: 42,
+        ttfbMs: null,
+        clientIp: null,
+        supplyPath: "goat",
+        billable: true,
+      }),
+    ).resolves.toBeUndefined();
+  });
+
+  it("a metering failure is swallowed — losing one quota sample must never surface as a settle failure", async () => {
+    const recordUsage = vi.fn(async () => {
+      throw new Error("meter down");
+    });
+    await expect(
+      createRouterGuard(billing(), undefined, undefined, { recordUsage }).settle({
+        requestId: "req_meter_5",
+        identity,
+        path: "chat/completions",
+        admission: { reserved: 0.011, currency: "USD", candidates: ["gpt-5"] },
+        usage: usage(),
+        status: 200,
+        latencyMs: 42,
+        ttfbMs: null,
+        clientIp: null,
+        supplyPath: "goat",
+        billable: true,
+      }),
+    ).resolves.toBeUndefined();
   });
 });
 

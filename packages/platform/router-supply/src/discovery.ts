@@ -56,6 +56,17 @@ export interface SourceCredential {
    * operator supplies the model ids it wants tracked when adding the source.
    */
   readonly knownModelIds?: readonly string[];
+  /**
+   * Quota layer (ADR 2026-09-30 addendum), `quota-adapters.ts`. New-API's own
+   * quota-per-dollar ratio (an install-time setting, not one this codebase has
+   * had to read before now) — without it a channel's `used_quota` is reported
+   * as raw units only, never mislabeled as a currency.
+   */
+  readonly quotaPerUnitUsd?: number;
+  /** An operator-declared balance/credit endpoint path, relative to `baseUrl` — no standard exists across OpenAI-compatible providers. */
+  readonly balanceEndpoint?: string;
+  /** Which of the two observed balance-response shapes `balanceEndpoint` answers with. */
+  readonly balanceShape?: "openai_credit_grants" | "generic_available_used";
 }
 
 function stripTrailingSlash(url: string): string {
@@ -252,7 +263,7 @@ export interface NewApiSessionClient {
     fetchImpl: typeof fetch,
     session: { cookie: string; userId: string },
     name: string,
-  ): Promise<{ id: number; models?: string } | null>;
+  ): Promise<{ id: number; models?: string; used_quota?: number } | null>;
 }
 
 /**

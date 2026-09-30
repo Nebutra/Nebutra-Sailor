@@ -10,6 +10,7 @@ import { pebbleDiagnosticsRetention } from "./functions/pebbleDiagnosticsRetenti
 import { requestLogRetention } from "./functions/requestLogRetention.js";
 import { routerReservationSweep } from "./functions/routerReservationSweep.js";
 import { supplyDiscovery } from "./functions/supplyDiscovery.js";
+import { supplyQuotaPull } from "./functions/supplyQuotaPull.js";
 import { supplySuspendedRetry } from "./functions/supplySuspendedRetry.js";
 import { supplyIdleVerification } from "./functions/supplyVerification.js";
 import { walletUpkeep } from "./functions/walletUpkeep.js";
@@ -29,6 +30,7 @@ export const inngestFunctions: InngestFunction.Any[] = [
   supplyDiscovery,
   supplyIdleVerification,
   supplySuspendedRetry,
+  supplyQuotaPull,
 ];
 export { inngest };
 

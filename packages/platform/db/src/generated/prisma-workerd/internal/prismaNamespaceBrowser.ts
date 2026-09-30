@@ -103,6 +103,8 @@ export const ModelName = {
   SupplySource: 'SupplySource',
   SupplySourceModel: 'SupplySourceModel',
   SupplyProbeEvent: 'SupplyProbeEvent',
+  SupplyQuotaWindow: 'SupplyQuotaWindow',
+  SupplyQuotaSample: 'SupplyQuotaSample',
   StripeCustomer: 'StripeCustomer',
   RetentionPolicy: 'RetentionPolicy',
   WebhookEvent: 'WebhookEvent',
@@ -1035,6 +1037,7 @@ export const SupplySourceScalarFieldEnum = {
   visibility: 'visibility',
   lastDiscoveredAt: 'lastDiscoveredAt',
   lastDiscoverySummary: 'lastDiscoverySummary',
+  planConfig: 'planConfig',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1084,6 +1087,46 @@ export const SupplyProbeEventScalarFieldEnum = {
 } as const
 
 export type SupplyProbeEventScalarFieldEnum = (typeof SupplyProbeEventScalarFieldEnum)[keyof typeof SupplyProbeEventScalarFieldEnum]
+
+
+export const SupplyQuotaWindowScalarFieldEnum = {
+  id: 'id',
+  sourceId: 'sourceId',
+  name: 'name',
+  unit: 'unit',
+  limitAmount: 'limitAmount',
+  usedAmount: 'usedAmount',
+  resetsAt: 'resetsAt',
+  windowSeconds: 'windowSeconds',
+  sourceOfTruth: 'sourceOfTruth',
+  state: 'state',
+  burnRatePerHour: 'burnRatePerHour',
+  forecastExhaustAt: 'forecastExhaustAt',
+  lastAlertLevel: 'lastAlertLevel',
+  lastAlertAt: 'lastAlertAt',
+  lastForecastAlertAt: 'lastForecastAlertAt',
+  lastSampleAt: 'lastSampleAt',
+  nextPullAt: 'nextPullAt',
+  pullIntervalSeconds: 'pullIntervalSeconds',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplyQuotaWindowScalarFieldEnum = (typeof SupplyQuotaWindowScalarFieldEnum)[keyof typeof SupplyQuotaWindowScalarFieldEnum]
+
+
+export const SupplyQuotaSampleScalarFieldEnum = {
+  id: 'id',
+  quotaWindowId: 'quotaWindowId',
+  at: 'at',
+  usedAmount: 'usedAmount',
+  limitAmount: 'limitAmount',
+  deltaAmount: 'deltaAmount',
+  sourceOfTruth: 'sourceOfTruth',
+  metadata: 'metadata'
+} as const
+
+export type SupplyQuotaSampleScalarFieldEnum = (typeof SupplyQuotaSampleScalarFieldEnum)[keyof typeof SupplyQuotaSampleScalarFieldEnum]
 
 
 export const StripeCustomerScalarFieldEnum = {

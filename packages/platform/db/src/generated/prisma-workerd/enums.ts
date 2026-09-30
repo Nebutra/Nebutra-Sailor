@@ -197,6 +197,43 @@ export const SupplyVisibility = {
 export type SupplyVisibility = (typeof SupplyVisibility)[keyof typeof SupplyVisibility]
 
 
+export const SupplyQuotaUnit = {
+  USD: 'USD',
+  TOKENS: 'TOKENS',
+  REQUESTS: 'REQUESTS'
+} as const
+
+export type SupplyQuotaUnit = (typeof SupplyQuotaUnit)[keyof typeof SupplyQuotaUnit]
+
+
+export const SupplyQuotaSourceOfTruth = {
+  HEADER: 'HEADER',
+  ENDPOINT: 'ENDPOINT',
+  SELF_METERED: 'SELF_METERED'
+} as const
+
+export type SupplyQuotaSourceOfTruth = (typeof SupplyQuotaSourceOfTruth)[keyof typeof SupplyQuotaSourceOfTruth]
+
+
+export const SupplyQuotaState = {
+  NOMINAL: 'NOMINAL',
+  THROTTLED: 'THROTTLED',
+  EXHAUSTED: 'EXHAUSTED'
+} as const
+
+export type SupplyQuotaState = (typeof SupplyQuotaState)[keyof typeof SupplyQuotaState]
+
+
+export const SupplyQuotaAlertLevel = {
+  NONE: 'NONE',
+  WARN_80: 'WARN_80',
+  WARN_95: 'WARN_95',
+  EXHAUSTED: 'EXHAUSTED'
+} as const
+
+export type SupplyQuotaAlertLevel = (typeof SupplyQuotaAlertLevel)[keyof typeof SupplyQuotaAlertLevel]
+
+
 export const TenantKind = {
   ORGANIZATION: 'ORGANIZATION',
   INDIVIDUAL: 'INDIVIDUAL'

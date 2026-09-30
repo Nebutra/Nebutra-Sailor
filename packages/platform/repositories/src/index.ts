@@ -107,15 +107,23 @@ export {
   startOfUtcDay,
 } from "./router-billing.repository";
 export type {
+  ApplyQuotaObservationFn,
   DiscoveredModelInput,
   DiscoveryDiff,
   ModelAvailability,
+  PlanWindowConfig,
+  QuotaAlertDecisionFns,
+  QuotaObservationInput,
+  QuotaObservationResult,
+  QuotaSnapshotInput,
+  QuotaWindowRow,
   RecordProbeInput,
   SupplyCapabilityRow,
   SupplySourceRow,
   UpsertSourceInput,
 } from "./router-supply.repository";
 // Router supply capability probing (ADR 2026-09-30) — discovery/verification state
+// + quota layer (ADR 2026-09-30 addendum) — headroom, self-metering, active pulls
 export { RouterSupplyRepository } from "./router-supply.repository";
 export type {
   RouterUsageBucket,

@@ -33,6 +33,8 @@ export interface SupplySourceRow {
   readonly visibility: string;
   readonly lastDiscoveredAt: Date | null;
   readonly lastDiscoverySummary: unknown;
+  /** Declared plan windows (ADR 2026-09-30 addendum, quota layer §1c) — see `PlanWindowConfig`. */
+  readonly planConfig: unknown;
 }
 
 export interface UpsertSourceInput {
@@ -45,6 +47,7 @@ export interface UpsertSourceInput {
   readonly enabled?: boolean;
   /** Defaults to `PUBLIC` — every source before this field existed behaves unchanged. */
   readonly visibility?: string;
+  readonly planConfig?: unknown;
 }
 
 export interface DiscoveredModelInput {
@@ -92,6 +95,116 @@ export interface ModelAvailability {
   readonly sellable: boolean;
   readonly reason: string | null;
   readonly sources: string[];
+  /**
+   * Quota headroom (ADR 2026-09-30 addendum), distinct from `sellable`:
+   * `"throttled"` when every sellable backing source has at least one quota
+   * window in THROTTLED/EXHAUSTED, `"ok"` when at least one does not. Never
+   * downgrades `sellable` — headroom only biases routing preference among
+   * the customer's own candidate models, it never delists one.
+   */
+  readonly headroom: "ok" | "throttled";
+}
+
+// ---------------------------------------------------------------- quota layer (ADR 2026-09-30 addendum)
+
+export interface PlanWindowConfig {
+  readonly name: string;
+  readonly unit: string;
+  readonly limitAmount: number | null;
+  readonly windowSeconds: number | null;
+}
+
+export interface QuotaWindowRow {
+  readonly id: string;
+  readonly sourceId: string;
+  readonly sourceKey: string;
+  readonly name: string;
+  readonly unit: string;
+  readonly limitAmount: number | null;
+  readonly usedAmount: number;
+  readonly resetsAt: Date | null;
+  readonly windowSeconds: number | null;
+  readonly sourceOfTruth: string;
+  readonly state: string;
+  readonly burnRatePerHour: number | null;
+  readonly forecastExhaustAt: Date | null;
+  readonly lastAlertLevel: string;
+  readonly lastAlertAt: Date | null;
+  readonly lastForecastAlertAt: Date | null;
+  readonly lastSampleAt: Date | null;
+  readonly nextPullAt: Date | null;
+  readonly pullIntervalSeconds: number | null;
+}
+
+/** The narrow window shape `@nebutra/router-supply`'s pure `quota.ts` functions read and return. */
+export interface QuotaSnapshotInput {
+  readonly unit: string;
+  readonly limit: number | null;
+  readonly used: number;
+  readonly resetsAt: Date | null;
+  readonly windowSeconds: number | null;
+  readonly sourceOfTruth: string;
+  readonly state: string;
+  readonly burnRatePerHour: number | null;
+  readonly forecastExhaustAt: Date | null;
+  readonly lastAlertLevel: string;
+  readonly lastForecastAlertAt: Date | null;
+  readonly lastSampleAt: Date | null;
+}
+
+export interface QuotaObservationInput {
+  readonly used?: number | null;
+  readonly remaining?: number | null;
+  readonly deltaUsed?: number | null;
+  readonly limit?: number | null;
+  readonly resetsAt?: Date | null;
+  readonly sourceOfTruth: "HEADER" | "ENDPOINT" | "SELF_METERED";
+  readonly forceExhaustedUntil?: Date | null;
+  /** Only read when the named window does not exist yet. */
+  readonly unit?: string;
+  readonly windowSeconds?: number | null;
+}
+
+/**
+ * `@nebutra/router-supply` `applyQuotaObservation`, injected so this package
+ * stays a devDependency-only consumer of that package (same posture as
+ * `recordProbe`'s injected `applyOutcome`).
+ */
+export type ApplyQuotaObservationFn = (
+  window: QuotaSnapshotInput,
+  observation: {
+    used?: number | null;
+    remaining?: number | null;
+    deltaUsed?: number | null;
+    limit?: number | null;
+    resetsAt?: Date | null;
+    sourceOfTruth: string;
+    forceExhaustedUntil?: Date | null;
+  },
+  now: Date,
+) => {
+  snapshot: QuotaSnapshotInput;
+  sample: { usedAmount: number; deltaAmount: number | null };
+};
+
+/** `@nebutra/router-supply` `ratioAlertLevel` / `shouldAlertRatio`, injected the same way. */
+export type QuotaAlertDecisionFns = {
+  ratioAlertLevel: (used: number, limit: number | null) => string;
+  shouldAlertRatio: (prior: string, next: string) => boolean;
+  forecastWithinHours: (forecastExhaustAt: Date | null, now: Date, hours: number) => boolean;
+  shouldAlertForecast: (
+    forecastSoon: boolean,
+    lastForecastAlertAt: Date | null,
+    now: Date,
+    cooldownMs: number,
+  ) => boolean;
+  nextPullDelaySeconds: (state: string, forecastSoon: boolean) => number;
+};
+
+export interface QuotaObservationResult {
+  readonly window: QuotaWindowRow;
+  readonly ratioAlert: { fired: boolean; level: string };
+  readonly forecastAlert: { fired: boolean };
 }
 
 export interface InternalRouteRow {
@@ -134,6 +247,9 @@ export class RouterSupplyRepository {
         credentialRef: input.credentialRef ?? null,
         enabled: input.enabled ?? true,
         visibility: (input.visibility ?? "PUBLIC") as never,
+        ...(input.planConfig !== undefined
+          ? { planConfig: input.planConfig as Prisma.InputJsonValue }
+          : {}),
       },
       update: {
         label: input.label,
@@ -142,7 +258,22 @@ export class RouterSupplyRepository {
         ...(input.credentialRef !== undefined ? { credentialRef: input.credentialRef } : {}),
         ...(input.enabled !== undefined ? { enabled: input.enabled } : {}),
         ...(input.visibility !== undefined ? { visibility: input.visibility as never } : {}),
+        ...(input.planConfig !== undefined
+          ? { planConfig: input.planConfig as Prisma.InputJsonValue }
+          : {}),
       },
+    });
+    return toSourceRow(row);
+  }
+
+  /** Admin `source.plan.update` (§5): edit a source's declared plan windows without touching anything else. */
+  async updatePlanConfig(
+    key: string,
+    planConfig: readonly PlanWindowConfig[],
+  ): Promise<SupplySourceRow> {
+    const row = await this.prisma.supplySource.update({
+      where: { key },
+      data: { planConfig: planConfig as unknown as Prisma.InputJsonValue },
     });
     return toSourceRow(row);
   }
@@ -454,7 +585,7 @@ export class RouterSupplyRepository {
         vanishedAt: null,
         source: { visibility: "PUBLIC" },
       },
-      include: { source: true },
+      include: { source: { include: { quotaWindows: true } } },
     });
     const byModel = new Map<string, typeof rows>();
     for (const row of rows) {
@@ -466,17 +597,25 @@ export class RouterSupplyRepository {
     for (const [publicModel, group] of byModel) {
       let sellable = false;
       let reason: string | null = null;
+      let headroom: "ok" | "throttled" = "throttled";
       const sources: string[] = [];
       for (const row of group) {
         const state = effective(row.state, row.pinned, row.banned);
         if (isSellable(state)) {
           sellable = true;
           sources.push(row.source.key);
+          // Quota headroom (ADR 2026-09-30 addendum): a source with no
+          // THROTTLED/EXHAUSTED window has headroom — one such source among
+          // several sellable ones is enough to call the model "ok".
+          const throttledHere = row.source.quotaWindows.some(
+            (w) => w.state === "THROTTLED" || w.state === "EXHAUSTED",
+          );
+          if (!throttledHere) headroom = "ok";
         } else if (!reason) {
           reason = row.stateReason;
         }
       }
-      result.set(publicModel, { sellable, reason: sellable ? null : reason, sources });
+      result.set(publicModel, { sellable, reason: sellable ? null : reason, sources, headroom });
     }
     return result;
   }
@@ -515,6 +654,204 @@ export class RouterSupplyRepository {
     }
     return null;
   }
+
+  // -------------------------------------------------------------- quota layer (ADR 2026-09-30 addendum)
+
+  /**
+   * Upsert one `SupplyQuotaWindow` row per declared plan entry — self-metering's
+   * input (§1c). Creating fills in the declared shape; an existing row keeps
+   * its live counters (`usedAmount`/`state`/…) and only adopts the edited
+   * `unit`/`limitAmount`/`windowSeconds` — an admin edit changes the target, not
+   * the window's current progress.
+   */
+  async ensureQuotaWindowsFromPlan(
+    sourceId: string,
+    planConfig: readonly PlanWindowConfig[],
+    now: Date = new Date(),
+  ): Promise<void> {
+    for (const plan of planConfig) {
+      const resetsAt = plan.windowSeconds
+        ? new Date(now.getTime() + plan.windowSeconds * 1000)
+        : null;
+      await this.prisma.supplyQuotaWindow.upsert({
+        where: { sourceId_name: { sourceId, name: plan.name } },
+        create: {
+          id: `supqw_${randomUUID()}`,
+          sourceId,
+          name: plan.name,
+          unit: plan.unit as never,
+          limitAmount: plan.limitAmount,
+          windowSeconds: plan.windowSeconds,
+          sourceOfTruth: "SELF_METERED" as never,
+          resetsAt,
+        },
+        update: {
+          unit: plan.unit as never,
+          limitAmount: plan.limitAmount,
+          windowSeconds: plan.windowSeconds,
+        },
+      });
+    }
+  }
+
+  async listQuotaWindows(filter?: { sourceId?: string }): Promise<QuotaWindowRow[]> {
+    const rows = await this.prisma.supplyQuotaWindow.findMany({
+      where: { ...(filter?.sourceId ? { sourceId: filter.sourceId } : {}) },
+      include: { source: true },
+      orderBy: [{ state: "desc" }, { name: "asc" }],
+    });
+    return rows.map(toQuotaWindowRow);
+  }
+
+  async listSelfMeteredWindowsForSource(sourceId: string): Promise<QuotaWindowRow[]> {
+    const rows = await this.prisma.supplyQuotaWindow.findMany({
+      where: { sourceId, sourceOfTruth: "SELF_METERED" as never },
+      include: { source: true },
+    });
+    return rows.map(toQuotaWindowRow);
+  }
+
+  /** Adaptive active-pull scheduling (§6): windows whose next pull is due. */
+  async listQuotaWindowsDueForPull(now: Date = new Date(), limit = 200): Promise<QuotaWindowRow[]> {
+    const rows = await this.prisma.supplyQuotaWindow.findMany({
+      where: {
+        sourceOfTruth: { in: ["ENDPOINT", "SELF_METERED"] as never },
+        OR: [{ nextPullAt: null }, { nextPullAt: { lte: now } }],
+      },
+      include: { source: true },
+      orderBy: { nextPullAt: "asc" },
+      take: limit,
+    });
+    return rows.map(toQuotaWindowRow);
+  }
+
+  /**
+   * Load-or-create the named window, run the pure reducer
+   * (`@nebutra/router-supply` `applyQuotaObservation`, injected), persist the
+   * new snapshot plus one append-only sample, decide (via the injected pure
+   * dedupe functions) whether this apply crossed a new ratio-alert rung or a
+   * fresh forecast-soon window, and record that decision in the same write —
+   * all in one transaction. Returns `null` when the source key is unknown.
+   */
+  async applyQuotaObservation(
+    sourceKey: string,
+    windowName: string,
+    observation: QuotaObservationInput,
+    applyFn: ApplyQuotaObservationFn,
+    decide: QuotaAlertDecisionFns,
+    now: Date = new Date(),
+    forecastAlertHours = 6,
+    forecastAlertCooldownMs = 12 * 60 * 60 * 1000,
+  ): Promise<QuotaObservationResult | null> {
+    const source = await this.prisma.supplySource.findUnique({ where: { key: sourceKey } });
+    if (!source) return null;
+
+    return this.prisma.$transaction(async (tx) => {
+      let row = await tx.supplyQuotaWindow.findUnique({
+        where: { sourceId_name: { sourceId: source.id, name: windowName } },
+      });
+      if (!row) {
+        const windowSeconds = observation.windowSeconds ?? null;
+        row = await tx.supplyQuotaWindow.create({
+          data: {
+            id: `supqw_${randomUUID()}`,
+            sourceId: source.id,
+            name: windowName,
+            unit: (observation.unit ?? "REQUESTS") as never,
+            limitAmount: observation.limit ?? null,
+            windowSeconds,
+            sourceOfTruth: observation.sourceOfTruth as never,
+            resetsAt:
+              observation.resetsAt ??
+              (windowSeconds ? new Date(now.getTime() + windowSeconds * 1000) : null),
+          },
+        });
+      }
+
+      const before: QuotaSnapshotInput = {
+        unit: row.unit,
+        limit: row.limitAmount,
+        used: row.usedAmount,
+        resetsAt: row.resetsAt,
+        windowSeconds: row.windowSeconds,
+        sourceOfTruth: row.sourceOfTruth,
+        state: row.state,
+        burnRatePerHour: row.burnRatePerHour,
+        forecastExhaustAt: row.forecastExhaustAt,
+        lastAlertLevel: row.lastAlertLevel,
+        lastForecastAlertAt: row.lastForecastAlertAt,
+        lastSampleAt: row.lastSampleAt,
+      };
+
+      const transition = applyFn(before, observation, now);
+      const next = transition.snapshot;
+
+      // `next.lastAlertLevel` is the reducer's own rollover-aware carry-over
+      // (reset to NONE when this apply just rolled the window over, else the
+      // same value the row had) — the right "prior" to escalate from. Using
+      // the raw row value instead would compare a fresh cycle's ratio against
+      // the previous cycle's last-fired level, which can only ever suppress
+      // an alert that should fire (e.g. a rollover followed immediately by a
+      // burst straight to 90% must still alert).
+      const priorRatioLevel = next.lastAlertLevel;
+      const nextRatioLevel = decide.ratioAlertLevel(next.used, next.limit);
+      const ratioFired = decide.shouldAlertRatio(priorRatioLevel, nextRatioLevel);
+
+      const forecastSoon = decide.forecastWithinHours(
+        next.forecastExhaustAt,
+        now,
+        forecastAlertHours,
+      );
+      const forecastFired = decide.shouldAlertForecast(
+        forecastSoon,
+        next.lastForecastAlertAt,
+        now,
+        forecastAlertCooldownMs,
+      );
+
+      const nextPullAt = new Date(
+        now.getTime() + decide.nextPullDelaySeconds(next.state, forecastSoon) * 1000,
+      );
+
+      const updated = await tx.supplyQuotaWindow.update({
+        where: { id: row.id },
+        data: {
+          unit: next.unit as never,
+          limitAmount: next.limit,
+          usedAmount: next.used,
+          resetsAt: next.resetsAt,
+          sourceOfTruth: next.sourceOfTruth as never,
+          state: next.state as never,
+          burnRatePerHour: next.burnRatePerHour,
+          forecastExhaustAt: next.forecastExhaustAt,
+          lastAlertLevel: (ratioFired ? nextRatioLevel : next.lastAlertLevel) as never,
+          lastAlertAt: ratioFired ? now : row.lastAlertAt,
+          lastForecastAlertAt: forecastFired ? now : next.lastForecastAlertAt,
+          lastSampleAt: now,
+          nextPullAt,
+        },
+        include: { source: true },
+      });
+
+      await tx.supplyQuotaSample.create({
+        data: {
+          id: `supqs_${randomUUID()}`,
+          quotaWindowId: row.id,
+          at: now,
+          usedAmount: transition.sample.usedAmount,
+          limitAmount: next.limit,
+          deltaAmount: transition.sample.deltaAmount,
+          sourceOfTruth: observation.sourceOfTruth as never,
+        },
+      });
+
+      return {
+        window: toQuotaWindowRow(updated),
+        ratioAlert: { fired: ratioFired, level: nextRatioLevel },
+        forecastAlert: { fired: forecastFired },
+      };
+    });
+  }
 }
 
 function toSourceRow(row: {
@@ -529,6 +866,7 @@ function toSourceRow(row: {
   visibility: string;
   lastDiscoveredAt: Date | null;
   lastDiscoverySummary: unknown;
+  planConfig?: unknown;
 }): SupplySourceRow {
   return {
     id: row.id,
@@ -542,6 +880,7 @@ function toSourceRow(row: {
     visibility: row.visibility,
     lastDiscoveredAt: row.lastDiscoveredAt,
     lastDiscoverySummary: row.lastDiscoverySummary,
+    planConfig: row.planConfig ?? null,
   };
 }
 
@@ -578,5 +917,49 @@ function toCapabilityRow(row: {
     lastFailureAt: row.lastFailureAt,
     nextProbeAt: row.nextProbeAt,
     vanishedAt: row.vanishedAt,
+  };
+}
+
+function toQuotaWindowRow(row: {
+  id: string;
+  sourceId: string;
+  source: { key: string };
+  name: string;
+  unit: string;
+  limitAmount: number | null;
+  usedAmount: number;
+  resetsAt: Date | null;
+  windowSeconds: number | null;
+  sourceOfTruth: string;
+  state: string;
+  burnRatePerHour: number | null;
+  forecastExhaustAt: Date | null;
+  lastAlertLevel: string;
+  lastAlertAt: Date | null;
+  lastForecastAlertAt: Date | null;
+  lastSampleAt: Date | null;
+  nextPullAt: Date | null;
+  pullIntervalSeconds: number | null;
+}): QuotaWindowRow {
+  return {
+    id: row.id,
+    sourceId: row.sourceId,
+    sourceKey: row.source.key,
+    name: row.name,
+    unit: row.unit,
+    limitAmount: row.limitAmount,
+    usedAmount: row.usedAmount,
+    resetsAt: row.resetsAt,
+    windowSeconds: row.windowSeconds,
+    sourceOfTruth: row.sourceOfTruth,
+    state: row.state,
+    burnRatePerHour: row.burnRatePerHour,
+    forecastExhaustAt: row.forecastExhaustAt,
+    lastAlertLevel: row.lastAlertLevel,
+    lastAlertAt: row.lastAlertAt,
+    lastForecastAlertAt: row.lastForecastAlertAt,
+    lastSampleAt: row.lastSampleAt,
+    nextPullAt: row.nextPullAt,
+    pullIntervalSeconds: row.pullIntervalSeconds,
   };
 }

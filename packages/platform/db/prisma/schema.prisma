@@ -215,6 +215,50 @@ enum SupplyVisibility {
   @@schema("public")
 }
 
+/// Quota layer (ADR 2026-09-30 addendum). A window's declared/observed unit —
+/// dollars for a plan budget (GOAT, OpenCode Go), tokens or requests for a
+/// per-key rate limit.
+enum SupplyQuotaUnit {
+  USD
+  TOKENS
+  REQUESTS
+
+  @@schema("public")
+}
+
+/// Where a window's `usedAmount` comes from — a passive response header, an
+/// active usage/balance endpoint, or Router's own accumulation against a
+/// declared plan when neither exists.
+enum SupplyQuotaSourceOfTruth {
+  HEADER
+  ENDPOINT
+  SELF_METERED
+
+  @@schema("public")
+}
+
+/// Headroom, not capability — distinct from SupplyModelState. THROTTLED/
+/// EXHAUSTED never suspend a model; they only bias routing preference and
+/// drive an alert.
+enum SupplyQuotaState {
+  NOMINAL
+  THROTTLED
+  EXHAUSTED
+
+  @@schema("public")
+}
+
+/// Alert-dedupe ladder: monotonic within one window cycle, reset to NONE on
+/// rollover. See router-supply/quota.ts `shouldAlertRatio`.
+enum SupplyQuotaAlertLevel {
+  NONE
+  WARN_80
+  WARN_95
+  EXHAUSTED
+
+  @@schema("public")
+}
+
 // ============================================
 // Multi-Tenant Core
 // ============================================
@@ -1881,10 +1925,19 @@ model SupplySource {
   lastDiscoveredAt     DateTime? @map("last_discovered_at")
   lastDiscoverySummary Json?     @map("last_discovery_summary")
 
+  /// Quota layer (ADR 2026-09-30 addendum): declared plan windows for a
+  /// source with no usage/balance endpoint — an array of { name, unit,
+  /// limitAmount, windowSeconds }, e.g. GOAT's $14/5h · $35/7d · $70/month.
+  /// Editable in the admin desk (`source.plan.update`). Self-metering
+  /// (billing-edge settle()) accumulates against these; a source with a real
+  /// usage endpoint ignores this for the windows that endpoint reports.
+  planConfig Json? @map("plan_config")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  models SupplySourceModel[]
+  models       SupplySourceModel[]
+  quotaWindows SupplyQuotaWindow[]
 
   @@map("supply_sources")
   @@schema("public")
@@ -1974,6 +2027,87 @@ model SupplyProbeEvent {
 
   @@index([sourceModelId, at])
   @@map("supply_probe_events")
+  @@schema("public")
+}
+
+/// One named quota window for a supply source (ADR 2026-09-30 addendum —
+/// quota layer): a rolling 5h/weekly/monthly plan cap, a per-key RPM/TPM
+/// limit, or a balance. One row per (sourceId, name); never deleted — a
+/// window rolls over, it does not lose its identity. `state` is a headroom
+/// signal distinct from SupplySourceModel.state: crossing 80% throttles
+/// routing preference, it never suspends capability.
+/// @rls deny
+model SupplyQuotaWindow {
+  id       String @id @default(cuid())
+  sourceId String @map("source_id")
+
+  /// e.g. "5h", "7d", "monthly", "requests", "tokens", "balance",
+  /// or a CLIProxyAPI auth provider name ("codex") — adapter- or
+  /// operator-declared, unique per source.
+  name String @db.VarChar(64)
+
+  unit          SupplyQuotaUnit          @default(REQUESTS)
+  limitAmount   Float?                   @map("limit_amount")
+  usedAmount    Float                    @default(0) @map("used_amount")
+  resetsAt      DateTime?                @map("resets_at")
+  /// Set only when Router owns the reset clock (self-metered); null for a
+  /// header/endpoint-driven window, whose provider names its own reset.
+  windowSeconds Int?                     @map("window_seconds")
+  sourceOfTruth SupplyQuotaSourceOfTruth @default(SELF_METERED) @map("source_of_truth")
+
+  state             SupplyQuotaState @default(NOMINAL)
+  burnRatePerHour   Float?           @map("burn_rate_per_hour")
+  forecastExhaustAt DateTime?        @map("forecast_exhaust_at")
+
+  /// Alert dedupe (router-supply/quota.ts `shouldAlertRatio` /
+  /// `shouldAlertForecast`) — the ratio ladder and the independent forecast
+  /// axis, each with its own last-fired marker.
+  lastAlertLevel      SupplyQuotaAlertLevel @default(NONE) @map("last_alert_level")
+  lastAlertAt         DateTime?             @map("last_alert_at")
+  lastForecastAlertAt DateTime?             @map("last_forecast_alert_at")
+
+  lastSampleAt DateTime? @map("last_sample_at")
+
+  /// Adaptive active-pull scheduling (§6): closer to a limit pulls sooner,
+  /// idle pulls rarely. Null means "no active pull configured for this
+  /// window" (a pure passive/self-metered window).
+  nextPullAt          DateTime? @map("next_pull_at")
+  pullIntervalSeconds Int?      @map("pull_interval_seconds")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  source  SupplySource        @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  samples SupplyQuotaSample[]
+
+  @@unique([sourceId, name])
+  @@index([state])
+  @@index([nextPullAt])
+  @@map("supply_quota_windows")
+  @@schema("public")
+}
+
+/// Append-only history of quota window observations (ADR 2026-09-30
+/// addendum) — trend data for the admin desk's burn-rate/forecast view. The
+/// current-state fields on SupplyQuotaWindow are a materialized view of "the
+/// latest sample plus the pure reducer," not a separate source of truth.
+/// @rls deny
+model SupplyQuotaSample {
+  id            String                   @id @default(cuid())
+  quotaWindowId String                   @map("quota_window_id")
+  at            DateTime                 @default(now())
+  usedAmount    Float                    @map("used_amount")
+  limitAmount   Float?                   @map("limit_amount")
+  /// The increment this observation applied — null across a rollover, where
+  /// "used went down" does not mean usage was refunded.
+  deltaAmount   Float?                   @map("delta_amount")
+  sourceOfTruth SupplyQuotaSourceOfTruth @map("source_of_truth")
+  metadata      Json?
+
+  quotaWindow SupplyQuotaWindow @relation(fields: [quotaWindowId], references: [id], onDelete: Cascade)
+
+  @@index([quotaWindowId, at])
+  @@map("supply_quota_samples")
   @@schema("public")
 }
 

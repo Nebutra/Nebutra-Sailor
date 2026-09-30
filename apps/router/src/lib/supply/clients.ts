@@ -118,6 +118,12 @@ export interface NewApiChannel {
   name: string;
   models?: string;
   status?: number;
+  /**
+   * Cumulative usage, in New-API's own dimensionless quota unit (its
+   * `QuotaPerUnit` install setting is the $-per-unit ratio — see
+   * `quota-adapters.ts` `fetchNewApiChannelUsage`, ADR 2026-09-30 addendum).
+   */
+  used_quota?: number;
 }
 
 export async function newApiFindChannel(

@@ -80,6 +80,8 @@ describe("router admin manifest", () => {
       "discovery.run",
       "probe.idle",
       "probe.suspended",
+      "source.plan.update",
+      "quota.pull",
     ]);
     expect(supply?.signals.map((s) => s.id)).toEqual([
       "engine.down",
@@ -87,6 +89,7 @@ describe("router admin manifest", () => {
       "channel.drift",
       "account.expired",
       "supply.suspended",
+      "supply.quota_alert",
     ]);
     expect(supply?.actions.every((a) => a.role === "platform_operator")).toBe(true);
     expect(supply?.resources.map((r) => r.id)).toEqual([
@@ -96,6 +99,7 @@ describe("router admin manifest", () => {
       "shelf",
       "source",
       "capability",
+      "quota",
     ]);
   });
 });

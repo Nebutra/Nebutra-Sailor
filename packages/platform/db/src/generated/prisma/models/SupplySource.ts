@@ -72,6 +72,7 @@ export type SupplySourceCountAggregateOutputType = {
   visibility: number
   lastDiscoveredAt: number
   lastDiscoverySummary: number
+  planConfig: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -120,6 +121,7 @@ export type SupplySourceCountAggregateInputType = {
   visibility?: true
   lastDiscoveredAt?: true
   lastDiscoverySummary?: true
+  planConfig?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -209,6 +211,7 @@ export type SupplySourceGroupByOutputType = {
   visibility: $Enums.SupplyVisibility
   lastDiscoveredAt: Date | null
   lastDiscoverySummary: runtime.JsonValue | null
+  planConfig: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
   _count: SupplySourceCountAggregateOutputType | null
@@ -246,9 +249,11 @@ export type SupplySourceWhereInput = {
   visibility?: Prisma.EnumSupplyVisibilityFilter<"SupplySource"> | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.DateTimeNullableFilter<"SupplySource"> | Date | string | null
   lastDiscoverySummary?: Prisma.JsonNullableFilter<"SupplySource">
+  planConfig?: Prisma.JsonNullableFilter<"SupplySource">
   createdAt?: Prisma.DateTimeFilter<"SupplySource"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SupplySource"> | Date | string
   models?: Prisma.SupplySourceModelListRelationFilter
+  quotaWindows?: Prisma.SupplyQuotaWindowListRelationFilter
 }
 
 export type SupplySourceOrderByWithRelationInput = {
@@ -263,9 +268,11 @@ export type SupplySourceOrderByWithRelationInput = {
   visibility?: Prisma.SortOrder
   lastDiscoveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastDiscoverySummary?: Prisma.SortOrderInput | Prisma.SortOrder
+  planConfig?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   models?: Prisma.SupplySourceModelOrderByRelationAggregateInput
+  quotaWindows?: Prisma.SupplyQuotaWindowOrderByRelationAggregateInput
 }
 
 export type SupplySourceWhereUniqueInput = Prisma.AtLeast<{
@@ -283,9 +290,11 @@ export type SupplySourceWhereUniqueInput = Prisma.AtLeast<{
   visibility?: Prisma.EnumSupplyVisibilityFilter<"SupplySource"> | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.DateTimeNullableFilter<"SupplySource"> | Date | string | null
   lastDiscoverySummary?: Prisma.JsonNullableFilter<"SupplySource">
+  planConfig?: Prisma.JsonNullableFilter<"SupplySource">
   createdAt?: Prisma.DateTimeFilter<"SupplySource"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SupplySource"> | Date | string
   models?: Prisma.SupplySourceModelListRelationFilter
+  quotaWindows?: Prisma.SupplyQuotaWindowListRelationFilter
 }, "id" | "key">
 
 export type SupplySourceOrderByWithAggregationInput = {
@@ -300,6 +309,7 @@ export type SupplySourceOrderByWithAggregationInput = {
   visibility?: Prisma.SortOrder
   lastDiscoveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastDiscoverySummary?: Prisma.SortOrderInput | Prisma.SortOrder
+  planConfig?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SupplySourceCountOrderByAggregateInput
@@ -322,6 +332,7 @@ export type SupplySourceScalarWhereWithAggregatesInput = {
   visibility?: Prisma.EnumSupplyVisibilityWithAggregatesFilter<"SupplySource"> | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SupplySource"> | Date | string | null
   lastDiscoverySummary?: Prisma.JsonNullableWithAggregatesFilter<"SupplySource">
+  planConfig?: Prisma.JsonNullableWithAggregatesFilter<"SupplySource">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SupplySource"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SupplySource"> | Date | string
 }
@@ -338,9 +349,11 @@ export type SupplySourceCreateInput = {
   visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   models?: Prisma.SupplySourceModelCreateNestedManyWithoutSourceInput
+  quotaWindows?: Prisma.SupplyQuotaWindowCreateNestedManyWithoutSourceInput
 }
 
 export type SupplySourceUncheckedCreateInput = {
@@ -355,9 +368,11 @@ export type SupplySourceUncheckedCreateInput = {
   visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   models?: Prisma.SupplySourceModelUncheckedCreateNestedManyWithoutSourceInput
+  quotaWindows?: Prisma.SupplyQuotaWindowUncheckedCreateNestedManyWithoutSourceInput
 }
 
 export type SupplySourceUpdateInput = {
@@ -372,9 +387,11 @@ export type SupplySourceUpdateInput = {
   visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   models?: Prisma.SupplySourceModelUpdateManyWithoutSourceNestedInput
+  quotaWindows?: Prisma.SupplyQuotaWindowUpdateManyWithoutSourceNestedInput
 }
 
 export type SupplySourceUncheckedUpdateInput = {
@@ -389,9 +406,11 @@ export type SupplySourceUncheckedUpdateInput = {
   visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   models?: Prisma.SupplySourceModelUncheckedUpdateManyWithoutSourceNestedInput
+  quotaWindows?: Prisma.SupplyQuotaWindowUncheckedUpdateManyWithoutSourceNestedInput
 }
 
 export type SupplySourceCreateManyInput = {
@@ -406,6 +425,7 @@ export type SupplySourceCreateManyInput = {
   visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -422,6 +442,7 @@ export type SupplySourceUpdateManyMutationInput = {
   visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -438,6 +459,7 @@ export type SupplySourceUncheckedUpdateManyInput = {
   visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -454,6 +476,7 @@ export type SupplySourceCountOrderByAggregateInput = {
   visibility?: Prisma.SortOrder
   lastDiscoveredAt?: Prisma.SortOrder
   lastDiscoverySummary?: Prisma.SortOrder
+  planConfig?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -519,6 +542,20 @@ export type SupplySourceUpdateOneRequiredWithoutModelsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SupplySourceUpdateToOneWithWhereWithoutModelsInput, Prisma.SupplySourceUpdateWithoutModelsInput>, Prisma.SupplySourceUncheckedUpdateWithoutModelsInput>
 }
 
+export type SupplySourceCreateNestedOneWithoutQuotaWindowsInput = {
+  create?: Prisma.XOR<Prisma.SupplySourceCreateWithoutQuotaWindowsInput, Prisma.SupplySourceUncheckedCreateWithoutQuotaWindowsInput>
+  connectOrCreate?: Prisma.SupplySourceCreateOrConnectWithoutQuotaWindowsInput
+  connect?: Prisma.SupplySourceWhereUniqueInput
+}
+
+export type SupplySourceUpdateOneRequiredWithoutQuotaWindowsNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplySourceCreateWithoutQuotaWindowsInput, Prisma.SupplySourceUncheckedCreateWithoutQuotaWindowsInput>
+  connectOrCreate?: Prisma.SupplySourceCreateOrConnectWithoutQuotaWindowsInput
+  upsert?: Prisma.SupplySourceUpsertWithoutQuotaWindowsInput
+  connect?: Prisma.SupplySourceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplySourceUpdateToOneWithWhereWithoutQuotaWindowsInput, Prisma.SupplySourceUpdateWithoutQuotaWindowsInput>, Prisma.SupplySourceUncheckedUpdateWithoutQuotaWindowsInput>
+}
+
 export type SupplySourceCreateWithoutModelsInput = {
   id?: string
   key: string
@@ -531,8 +568,10 @@ export type SupplySourceCreateWithoutModelsInput = {
   visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  quotaWindows?: Prisma.SupplyQuotaWindowCreateNestedManyWithoutSourceInput
 }
 
 export type SupplySourceUncheckedCreateWithoutModelsInput = {
@@ -547,8 +586,10 @@ export type SupplySourceUncheckedCreateWithoutModelsInput = {
   visibility?: $Enums.SupplyVisibility
   lastDiscoveredAt?: Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  quotaWindows?: Prisma.SupplyQuotaWindowUncheckedCreateNestedManyWithoutSourceInput
 }
 
 export type SupplySourceCreateOrConnectWithoutModelsInput = {
@@ -579,8 +620,10 @@ export type SupplySourceUpdateWithoutModelsInput = {
   visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quotaWindows?: Prisma.SupplyQuotaWindowUpdateManyWithoutSourceNestedInput
 }
 
 export type SupplySourceUncheckedUpdateWithoutModelsInput = {
@@ -595,8 +638,98 @@ export type SupplySourceUncheckedUpdateWithoutModelsInput = {
   visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
   lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quotaWindows?: Prisma.SupplyQuotaWindowUncheckedUpdateManyWithoutSourceNestedInput
+}
+
+export type SupplySourceCreateWithoutQuotaWindowsInput = {
+  id?: string
+  key: string
+  kind: $Enums.SupplySourceKind
+  protocol?: $Enums.SupplyProtocol
+  label: string
+  baseUrl: string
+  credentialRef?: string | null
+  enabled?: boolean
+  visibility?: $Enums.SupplyVisibility
+  lastDiscoveredAt?: Date | string | null
+  lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  models?: Prisma.SupplySourceModelCreateNestedManyWithoutSourceInput
+}
+
+export type SupplySourceUncheckedCreateWithoutQuotaWindowsInput = {
+  id?: string
+  key: string
+  kind: $Enums.SupplySourceKind
+  protocol?: $Enums.SupplyProtocol
+  label: string
+  baseUrl: string
+  credentialRef?: string | null
+  enabled?: boolean
+  visibility?: $Enums.SupplyVisibility
+  lastDiscoveredAt?: Date | string | null
+  lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  models?: Prisma.SupplySourceModelUncheckedCreateNestedManyWithoutSourceInput
+}
+
+export type SupplySourceCreateOrConnectWithoutQuotaWindowsInput = {
+  where: Prisma.SupplySourceWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplySourceCreateWithoutQuotaWindowsInput, Prisma.SupplySourceUncheckedCreateWithoutQuotaWindowsInput>
+}
+
+export type SupplySourceUpsertWithoutQuotaWindowsInput = {
+  update: Prisma.XOR<Prisma.SupplySourceUpdateWithoutQuotaWindowsInput, Prisma.SupplySourceUncheckedUpdateWithoutQuotaWindowsInput>
+  create: Prisma.XOR<Prisma.SupplySourceCreateWithoutQuotaWindowsInput, Prisma.SupplySourceUncheckedCreateWithoutQuotaWindowsInput>
+  where?: Prisma.SupplySourceWhereInput
+}
+
+export type SupplySourceUpdateToOneWithWhereWithoutQuotaWindowsInput = {
+  where?: Prisma.SupplySourceWhereInput
+  data: Prisma.XOR<Prisma.SupplySourceUpdateWithoutQuotaWindowsInput, Prisma.SupplySourceUncheckedUpdateWithoutQuotaWindowsInput>
+}
+
+export type SupplySourceUpdateWithoutQuotaWindowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  key?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumSupplySourceKindFieldUpdateOperationsInput | $Enums.SupplySourceKind
+  protocol?: Prisma.EnumSupplyProtocolFieldUpdateOperationsInput | $Enums.SupplyProtocol
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  baseUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  credentialRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
+  lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  models?: Prisma.SupplySourceModelUpdateManyWithoutSourceNestedInput
+}
+
+export type SupplySourceUncheckedUpdateWithoutQuotaWindowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  key?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumSupplySourceKindFieldUpdateOperationsInput | $Enums.SupplySourceKind
+  protocol?: Prisma.EnumSupplyProtocolFieldUpdateOperationsInput | $Enums.SupplyProtocol
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  baseUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  credentialRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visibility?: Prisma.EnumSupplyVisibilityFieldUpdateOperationsInput | $Enums.SupplyVisibility
+  lastDiscoveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastDiscoverySummary?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  planConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  models?: Prisma.SupplySourceModelUncheckedUpdateManyWithoutSourceNestedInput
 }
 
 
@@ -606,10 +739,12 @@ export type SupplySourceUncheckedUpdateWithoutModelsInput = {
 
 export type SupplySourceCountOutputType = {
   models: number
+  quotaWindows: number
 }
 
 export type SupplySourceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   models?: boolean | SupplySourceCountOutputTypeCountModelsArgs
+  quotaWindows?: boolean | SupplySourceCountOutputTypeCountQuotaWindowsArgs
 }
 
 /**
@@ -629,6 +764,13 @@ export type SupplySourceCountOutputTypeCountModelsArgs<ExtArgs extends runtime.T
   where?: Prisma.SupplySourceModelWhereInput
 }
 
+/**
+ * SupplySourceCountOutputType without action
+ */
+export type SupplySourceCountOutputTypeCountQuotaWindowsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplyQuotaWindowWhereInput
+}
+
 
 export type SupplySourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -642,9 +784,11 @@ export type SupplySourceSelect<ExtArgs extends runtime.Types.Extensions.Internal
   visibility?: boolean
   lastDiscoveredAt?: boolean
   lastDiscoverySummary?: boolean
+  planConfig?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   models?: boolean | Prisma.SupplySource$modelsArgs<ExtArgs>
+  quotaWindows?: boolean | Prisma.SupplySource$quotaWindowsArgs<ExtArgs>
   _count?: boolean | Prisma.SupplySourceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["supplySource"]>
 
@@ -660,6 +804,7 @@ export type SupplySourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   visibility?: boolean
   lastDiscoveredAt?: boolean
   lastDiscoverySummary?: boolean
+  planConfig?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["supplySource"]>
@@ -676,6 +821,7 @@ export type SupplySourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   visibility?: boolean
   lastDiscoveredAt?: boolean
   lastDiscoverySummary?: boolean
+  planConfig?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["supplySource"]>
@@ -692,13 +838,15 @@ export type SupplySourceSelectScalar = {
   visibility?: boolean
   lastDiscoveredAt?: boolean
   lastDiscoverySummary?: boolean
+  planConfig?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SupplySourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "kind" | "protocol" | "label" | "baseUrl" | "credentialRef" | "enabled" | "visibility" | "lastDiscoveredAt" | "lastDiscoverySummary" | "createdAt" | "updatedAt", ExtArgs["result"]["supplySource"]>
+export type SupplySourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "kind" | "protocol" | "label" | "baseUrl" | "credentialRef" | "enabled" | "visibility" | "lastDiscoveredAt" | "lastDiscoverySummary" | "planConfig" | "createdAt" | "updatedAt", ExtArgs["result"]["supplySource"]>
 export type SupplySourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   models?: boolean | Prisma.SupplySource$modelsArgs<ExtArgs>
+  quotaWindows?: boolean | Prisma.SupplySource$quotaWindowsArgs<ExtArgs>
   _count?: boolean | Prisma.SupplySourceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SupplySourceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -708,6 +856,7 @@ export type $SupplySourcePayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "SupplySource"
   objects: {
     models: Prisma.$SupplySourceModelPayload<ExtArgs>[]
+    quotaWindows: Prisma.$SupplyQuotaWindowPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -734,6 +883,15 @@ export type $SupplySourcePayload<ExtArgs extends runtime.Types.Extensions.Intern
     visibility: $Enums.SupplyVisibility
     lastDiscoveredAt: Date | null
     lastDiscoverySummary: runtime.JsonValue | null
+    /**
+     * Quota layer (ADR 2026-09-30 addendum): declared plan windows for a
+     * source with no usage/balance endpoint — an array of { name, unit,
+     * limitAmount, windowSeconds }, e.g. GOAT's $14/5h · $35/7d · $70/month.
+     * Editable in the admin desk (`source.plan.update`). Self-metering
+     * (billing-edge settle()) accumulates against these; a source with a real
+     * usage endpoint ignores this for the windows that endpoint reports.
+     */
+    planConfig: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["supplySource"]>
@@ -1131,6 +1289,7 @@ readonly fields: SupplySourceFieldRefs;
 export interface Prisma__SupplySourceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   models<T extends Prisma.SupplySource$modelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SupplySource$modelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplySourceModelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  quotaWindows<T extends Prisma.SupplySource$quotaWindowsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SupplySource$quotaWindowsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplyQuotaWindowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1171,6 +1330,7 @@ export interface SupplySourceFieldRefs {
   readonly visibility: Prisma.FieldRef<"SupplySource", 'SupplyVisibility'>
   readonly lastDiscoveredAt: Prisma.FieldRef<"SupplySource", 'DateTime'>
   readonly lastDiscoverySummary: Prisma.FieldRef<"SupplySource", 'Json'>
+  readonly planConfig: Prisma.FieldRef<"SupplySource", 'Json'>
   readonly createdAt: Prisma.FieldRef<"SupplySource", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SupplySource", 'DateTime'>
 }
@@ -1582,6 +1742,30 @@ export type SupplySource$modelsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.SupplySourceModelScalarFieldEnum | Prisma.SupplySourceModelScalarFieldEnum[]
+}
+
+/**
+ * SupplySource.quotaWindows
+ */
+export type SupplySource$quotaWindowsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplyQuotaWindow
+   */
+  select?: Prisma.SupplyQuotaWindowSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplyQuotaWindow
+   */
+  omit?: Prisma.SupplyQuotaWindowOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplyQuotaWindowInclude<ExtArgs> | null
+  where?: Prisma.SupplyQuotaWindowWhereInput
+  orderBy?: Prisma.SupplyQuotaWindowOrderByWithRelationInput | Prisma.SupplyQuotaWindowOrderByWithRelationInput[]
+  cursor?: Prisma.SupplyQuotaWindowWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplyQuotaWindowScalarFieldEnum | Prisma.SupplyQuotaWindowScalarFieldEnum[]
 }
 
 /**

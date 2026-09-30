@@ -113,8 +113,12 @@ export async function ensureDefaultSources(): Promise<void> {
  * (and any non-secret adapter config that rides along with it — a New-API
  * channel name, Fal's declared model ids) as one `encryptJSON` envelope in
  * `credentialRef`; nothing is ever written to the row in the clear.
+ *
+ * Exported for `./quota.ts` (ADR 2026-09-30 addendum) — the quota layer's
+ * active usage pulls need the exact same credential resolution discovery and
+ * verification already use; there is exactly one implementation.
  */
-async function credentialFor(source: SupplySourceRow): Promise<SourceCredential> {
+export async function credentialFor(source: SupplySourceRow): Promise<SourceCredential> {
   if (source.key === CLIPROXY_SOURCE_KEY) {
     return {
       baseUrl: source.baseUrl,

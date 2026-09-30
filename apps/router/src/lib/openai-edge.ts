@@ -1,5 +1,6 @@
 import { classifyFailure, openaiCompatibleUrl, proxyChatCompletions } from "@nebutra/router-supply";
 import { recordPassiveSignal } from "./supply/capability";
+import { recordQuotaHeaderSignal } from "./supply/quota";
 
 export class RouterSupplyUnavailableError extends Error {
   constructor(message = "router_unconfigured") {
@@ -747,6 +748,17 @@ export async function proxyOpenAiCompatible(
           upstreamModel: parsed.model,
           ok,
           reason: ok ? null : classifyFailure(upstreamResponse.status, ""),
+        });
+      }
+      // Quota layer (ADR 2026-09-30 addendum): passive rate-limit/usage
+      // header parsing off the exact same real response, same fire-and-forget
+      // posture. Keyed by `supplyPath` alone (not the model) — a rate-limit
+      // window is a property of the source/account, not of one model.
+      if (supplyPath) {
+        void recordQuotaHeaderSignal({
+          sourceKey: supplyPath,
+          status: upstreamResponse.status,
+          headers: upstreamResponse.headers,
         });
       }
       if (opts.onUsage) {

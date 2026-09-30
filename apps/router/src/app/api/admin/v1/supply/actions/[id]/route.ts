@@ -17,6 +17,27 @@ import { SupplyConfigError } from "@/lib/supply/clients";
 import { applyChannelSync, planChannelSync } from "@/lib/supply/domain";
 import { completeLogin, isLoginProvider, startLogin } from "@/lib/supply/login";
 import { applyPricePublish, planPricePublish, unpublishDrifted } from "@/lib/supply/pricing";
+import { runQuotaPull, updateSourcePlanConfig } from "@/lib/supply/quota";
+
+interface PlanWindowInputRow {
+  readonly name: string;
+  readonly unit: string;
+  readonly limitAmount?: number;
+  readonly windowSeconds?: number;
+}
+
+function isPlanWindows(value: unknown): value is PlanWindowInputRow[] {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (row) =>
+        row &&
+        typeof row === "object" &&
+        typeof (row as Record<string, unknown>).name === "string" &&
+        typeof (row as Record<string, unknown>).unit === "string",
+    )
+  );
+}
 
 const SOURCE_KINDS = new Set(["OPENAI_COMPATIBLE", "FAL_AI", "NEWAPI_CHANNEL", "CLIPROXYAPI"]);
 const SOURCE_VISIBILITIES = new Set(["PUBLIC", "INTERNAL"]);
@@ -115,6 +136,33 @@ export async function POST(request: Request, context: RouteContext) {
     }
     if (id === "probe.suspended") {
       return json({ results: await runSuspendedRetry() });
+    }
+    if (id === "source.plan.update") {
+      const key = parsed.data.input.key;
+      const windows = parsed.data.input.windows;
+      if (typeof key !== "string" || !key || !isPlanWindows(windows)) {
+        return json(
+          err(
+            "invalid_input",
+            "input.key (string) and input.windows (array of {name, unit, limitAmount?, windowSeconds?}) are required.",
+          ),
+          400,
+        );
+      }
+      return json(
+        await updateSourcePlanConfig(
+          key,
+          windows.map((w) => ({
+            name: w.name,
+            unit: w.unit,
+            limitAmount: w.limitAmount ?? null,
+            windowSeconds: w.windowSeconds ?? null,
+          })),
+        ),
+      );
+    }
+    if (id === "quota.pull") {
+      return json({ results: await runQuotaPull() });
     }
     return json(err("not_found", `Action ${id} has no handler.`), 404);
   } catch (error) {

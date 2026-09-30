@@ -201,6 +201,190 @@ into one and that reconciliation deserves its own review rather than a rushed me
 | New-API channel auto-*creation* via its admin API | **Not implemented** — stated gap above |
 | Router-Machine-only credential access from the gateway process | **Deploy step required** — see report |
 
+## Addendum (2026-09-30) — quota layer
+
+Capability probing (above) answers "does this source work at all." It says nothing about
+"how much of it is left" — an OpenCode Go account throttles at its 5h/weekly/monthly dollar
+caps, a Command Code GOAT account at $14/5h · $35/7d · $70/month, a CLIProxyAPI-fronted
+Codex/ChatGPT account has its own 5h/weekly usage windows, a New-API channel has a balance,
+and a plain API key has per-key RPM/TPM. None of that is capacity failure — every one of
+these sources answers real calls right up to the cap — so it needs its own state, separate
+from `SupplyModelState`, and its own signal.
+
+### 1. Signals — cheapest first
+
+**(a) Passive header parsing** — `packages/platform/router-supply/src/quota-headers.ts`, pure,
+no I/O. `parseOpenAiRateLimitHeaders` reads `x-ratelimit-{limit,remaining}-{requests,tokens}`
+and OpenAI's own duration-string reset format (`6m0s`, `1s`, `250ms` — `parseOpenAiResetDuration`);
+`parseAnthropicRateLimitHeaders` reads `anthropic-ratelimit-{requests,input-tokens,output-tokens,
+tokens}-{limit,remaining,reset}` (RFC3339 timestamps, no duration parsing needed);
+`parseRetryAfter` reads `retry-after` in both its delta-seconds and HTTP-date forms. A 429 with
+*no* ratelimit headers at all (many plain relay APIs only ever send `retry-after`) still yields
+a signal — `forceExhaustedUntil` — because "blocked until a timestamp" needs no limit/used ratio
+to be actionable. Wired into the existing passive-signal hook: `apps/router/src/lib/openai-edge.ts`
+now calls `recordQuotaHeaderSignal` (`apps/router/src/lib/supply/quota.ts`) from the same `finish`
+closure that already calls `recordPassiveSignal`, same fire-and-forget posture, same `supplyPath`
+key.
+
+**(b) Active `usage(source)` per adapter** — `packages/platform/router-supply/src/quota-adapters.ts`:
+
+| Adapter | Reads | Reports |
+|---|---|---|
+| `fetchCliProxyUsage` | `/v0/management/auth-files` (the same endpoint `discoverCliProxyApi` already reads) | Per-provider (codex/anthropic/antigravity) aggregate: `recentRequests` summed across that provider's accounts, and `resetsAt` taken from the soonest `next_retry_after` among them. **Stated gap**: the `quota` field CLIProxyAPI returns per account has no documented schema in this codebase (typed `unknown` in `clients.ts` today); the adapter duck-types a handful of common shapes (`{used,limit,resetAt}`, `{limit,remaining}`) and falls through to reporting only `recentRequests`/`resetsAt` (no ratio) when none match — real, not invented, but it cannot promise a 5h/weekly *ratio* until CLIProxyAPI's management API is confirmed to expose one. |
+| `fetchNewApiChannelUsage` | `GET /api/channel/:id` over the existing `NewApiSessionClient` session (same `newApiLogin`/session plumbing `discoverNewApiChannel` already uses) | `used_quota`, converted to USD only when the operator has configured `quotaPerUnitUsd` (New-API's own quota-per-dollar ratio is an install-time setting this codebase has never had to read before now). **Stated gap**: no limit is reported — New-API channels do not carry one; a limit comes from the source's own declared `planConfig`, merged in at the repository layer, same as self-metering. |
+| `fetchOpenAiCompatibleBalance` | An operator-declared `balanceEndpoint` + `balanceShape` (`openai_credit_grants` \| `generic_available_used`) | The two balance/credit shapes actually observed across OpenAI-compatible relays (`/dashboard/billing/credit_grants`-style, and the generic `{total_available, total_used}` shape several 中转站 clones use). **Stated gap**: there is no standard for this across providers, unlike `/v1/models`; a source with neither shape gets no active balance signal and falls back to (c). |
+
+**(c) Self-metering** — for a source with no usable endpoint (GOAT, OpenCode Go, and any
+CLIProxyAPI/New-API source without (b)'s specific fields populated): `SupplySource.planConfig`
+(JSON, editable in admin) declares one or more named windows — `{ name, unit, limitAmount,
+windowSeconds }`, e.g. GOAT's `[{name:"5h",unit:"USD",limitAmount:14,windowSeconds:18000},
+{name:"7d",...,limitAmount:35,windowSeconds:604800},{name:"30d",...,limitAmount:70,
+windowSeconds:2592000}]`. Every relayed request settled through that source
+(`apps/router/src/lib/billing-edge.ts` `settle()`, keyed by the same `supplyPath` passive
+signals already use) increments the `usedAmount` of every self-metered window on that source by
+the request's real settled cost/tokens — no endpoint required, because we are the one paying the
+bill.
+
+### 2. Model — `SupplyQuotaWindow` + `SupplyQuotaSample`
+
+Two new tables, both `/// @rls deny` (same posture as `SupplySourceModel`/`SupplyProbeEvent` —
+platform inventory, not tenant data):
+
+- **`SupplyQuotaWindow`** — one row per `(sourceId, name)`: `unit` (`USD|TOKENS|REQUESTS`),
+  `limitAmount` (nullable — a source with no declared/observed limit still gets a row, it just
+  never throttles), `usedAmount`, `resetsAt`, `windowSeconds`, `sourceOfTruth`
+  (`HEADER|ENDPOINT|SELF_METERED`), `state` (`NOMINAL|THROTTLED|EXHAUSTED` — see §3),
+  `burnRatePerHour`, `forecastExhaustAt`, `lastAlertLevel` (`NONE|WARN_80|WARN_95|EXHAUSTED`,
+  monotonic within a window cycle, for dedupe), `lastAlertAt`, `lastForecastAlertAt`,
+  `nextPullAt`/`pullIntervalSeconds` (adaptive scheduling, §6). Never deleted — a window rolls
+  over, it does not reset its identity.
+- **`SupplyQuotaSample`** — append-only, one row per observation applied to a window: `usedAmount`,
+  `limitAmount`, `deltaAmount`, `sourceOfTruth`, `at`. History for the admin desk's burn-rate
+  trend; the current-state fields on `SupplyQuotaWindow` are a materialized view of "the latest
+  sample plus the pure reducer," not a separate source of truth.
+
+`SupplySource.planConfig Json?` is the third schema change — the declared-plan input to (c),
+editable through a new admin action (§5).
+
+The pure reducer, `packages/platform/router-supply/src/quota.ts`:
+
+- `stateFor(used, limit)` — `NOMINAL` below 80%, `THROTTLED` from 80% up to (not including) 100%,
+  `EXHAUSTED` at or above 100%. A `null`/`≤0` limit is always `NOMINAL` — a window with no known
+  cap cannot be said to be low on it.
+- `applyQuotaObservation(window, observation, now)` — one pure transition. `sourceOfTruth:
+  "self_metered"` **accumulates** (`used += deltaUsed`, we own the clock, so it also rolls the
+  window over itself once `now >= resetsAt`, fast-forwarding through any number of missed cycles
+  for a window nobody ticked in a while). `sourceOfTruth: "header"|"endpoint"` **replaces** `used`
+  with the provider's own absolute reading (or `limit - remaining`) — the provider is authoritative
+  about its own counters, we never accumulate on top of a number it already gave us in full,
+  and adopts the provider's own `resetsAt` when it names one. A `forceExhaustedUntil` (the
+  header-less-429 case from §1a) short-circuits straight to `EXHAUSTED` until that instant, with
+  no ratio math at all. **Recovery is automatic and needs no special case**: whenever a computed
+  `used` is *lower* than the window's previous `used`, that is a rollover by definition, and the
+  reducer clears `lastAlertLevel` back to `NONE` and `burnRatePerHour` to unset right there — the
+  next observation starts a fresh baseline, the same way `RESTORE_AFTER_SUCCESSES` in `state.ts`
+  needed no separate "un-suspend" code path.
+- Burn rate is a simple exponentially-smoothed rate (70/30) between consecutive samples, in
+  amount/hour; `forecastExhaustAt = now + (limit - used) / burnRatePerHour`, `null` whenever there
+  is no limit or no positive burn rate to extrapolate from.
+- `ratioAlertLevel(used, limit)` → `NONE|WARN_80|WARN_95|EXHAUSTED`, and `shouldAlertRatio(prior,
+  next)` fires only on **escalation** (`RANK[next] > RANK[prior]`) — flat or improving never
+  re-fires, matching the dedupe requirement without a separate dedupe table.
+  `shouldAlertForecast(forecastSoon, lastForecastAlertAt, now, cooldownMs)` is the independent
+  second alert axis (§4): a forecast can fire even below 80% if burn rate spikes, on its own
+  cooldown rather than the ratio ladder.
+
+### 3. Behaviour — headroom-aware routing, never full delisting
+
+`RouterSupplyRepository.availabilityFor` (extended) now reports, per public model, not just
+`sellable` but `headroom: "ok" | "throttled"` — `"throttled"` when every *sellable* backing
+source for that model has at least one quota window in `THROTTLED`/`EXHAUSTED` state, `"ok"` when
+at least one sellable source has no such window. `apps/router/src/lib/billing-edge.ts`'s `admit()`
+uses this only to **reorder** the priced candidate list (headroom-`ok` candidates sort before
+`throttled` ones — this only changes *failover order* among the customer's own `models[]` list),
+never to drop a candidate: a throttled source is still sellable, `model_unavailable` (503) is
+still reserved for `SUSPENDED` capability only, exactly the ADR's original "fails open, only ever
+removes what it can prove" posture, extended rather than narrowed.
+
+**Stated scope limit, not faked**: Router's actual upstream fan-out for one public model is the
+2-engine alias chain in `resolve.ts` (`newapi`, `sub2api`), not one chain per `SupplySource` —
+New-API's own channel weighting picks which physical channel serves a `newapi`-engine call, and
+Router does not control that per-request. So "prefer another source with headroom" is real and
+enforced at the granularity Router actually routes at — across the customer's explicit `models[]`
+candidates — and is a signal (via the `capability` admin resource + `supply.quota_alert`) at finer
+granularity than that; it is not a per-channel override inside New-API's own balancer. Closing that
+gap means teaching Router to pick channels directly instead of deferring to New-API, which is a
+larger change than this addendum's scope.
+
+At 100%/429 (`EXHAUSTED`) or `THROTTLED`, the window's own `resetsAt` is when it is retried, not a
+backoff ladder — a quota window's reset time is provider fact, not a guess the way capability's
+backoff-after-failure is.
+
+### 4. Alerting — Feishu/Slack, deduped per window
+
+The repo's existing chat-notification path is `packages/platform/status`'s
+`STATUS_FEISHU_WEBHOOK_URL` / `STATUS_SLACK_WEBHOOK_URL` posting (`notify.ts`) — used today for
+status-page incidents. `@nebutra/notifications` was considered and rejected: it is the
+tenant/customer-facing multi-channel product (`recipientId`, per-user channel preferences), the
+wrong shape for an ops alert nobody in particular subscribes to. Router admin `signals` (existing
+`supply.suspended`) were also considered: they are pull-based (the admin UI polls them), which is
+right for visibility (§5) but is not itself a push. So `notify.ts` gains two small, generic
+functions — `feishuOpsAlertPayload` / `slackOpsAlertPayload` / `notifyOpsAlert` — that build a
+plain `{title, detail, severity, url}` card instead of a `StatusIncident`, reusing the same env
+vars, the same `post()`/`feishuSign()` transport, with no dependency on the incident model. Supply
+quota alerts call `notifyOpsAlert` directly; the status page's own incidents keep using
+`notifyIncident` unchanged.
+
+Dedupe is the reducer's job, not the alert path's: `shouldAlertRatio`/`shouldAlertForecast` (§2)
+decide per window, per apply, whether this is a new escalation; the orchestration layer
+(`apps/router/src/lib/supply/quota.ts`) only ever calls `notifyOpsAlert` when one of those returns
+true, and persists the new `lastAlertLevel`/`lastForecastAlertAt` in the same write as the window
+update — so a crash between "decided to alert" and "persisted that it alerted" is the only way to
+double-fire, the same window every other best-effort write in this codebase accepts.
+
+### 5. Admin — a `quota` resource on the existing supply desk
+
+`apps/router/src/lib/admin/manifest.ts`: one resource, `quota` (`GET .../quota-windows`,
+searchable, columns `source`, `name`, `unit`, `used`, `limit`, `state`, `burnRatePerHour`,
+`forecastExhaustAt`, `resetsAt`, `sourceOfTruth`); one action, `source.plan.update` (edit a
+source's `planConfig` — the declared windows self-metering tracks); one new signal,
+`supply.quota_alert` (raised whenever any window is `THROTTLED`/`EXHAUSTED` or forecasting
+exhaustion soon), read the same pull-based way `supply.suspended` already is. `probe.idle`'s
+existing admin action is joined by `quota.pull` — an on-demand active-usage pull, the same handler
+the adaptive schedule (§6) calls.
+
+### 6. Scheduling — adaptive, Inngest
+
+A fourth Inngest function, `supplyQuotaPull` (`backends/gateway/src/inngest/functions/
+supplyQuotaPull.ts`), cron `*/15 * * * *` (every 15 minutes — the ceiling frequency), calling a new
+`quota.pull` admin action over the same `callSupplyAction` relay the other three schedules use.
+Unlike discovery/verification's fixed cadence, this one is adaptive **inside** the action, not in
+the cron expression: `RouterSupplyRepository.listQuotaWindowsDueForPull(now)` filters to
+`nextPullAt <= now`, and after every apply the orchestration sets the next `nextPullAt` from the
+window's own headroom — close to a limit or actively burning pulls again in the next tick (as soon
+as 15 minutes later, the cron's own floor), an idle or comfortably-under-80% window is pushed
+30–60 minutes out, so most 15-minute ticks find few windows due, the same "row-level schedule, not
+cron interval, is the real rate limiter" posture `listSuspendedDueForRetry` already established.
+Self-metered windows are ticked on every pull too (with a zero-delta observation when nothing
+new happened since the last real settle) purely so a self-metered window with no active traffic
+still rolls over at `resetsAt` instead of staying artificially `EXHAUSTED` forever.
+
+### What is live-ready vs. gapped (quota layer)
+
+| Piece | State |
+|---|---|
+| Header parsing (OpenAI, Anthropic, Retry-After, header-less 429) | Real, unit-tested |
+| Window math (rollover, burn rate, forecast, alert dedupe) | Real, pure, unit-tested |
+| Self-metering from real settled traffic | Real, wired into `billing-edge.ts` `settle()` |
+| CLIProxyAPI active usage | Real for `recentRequests`/`next_retry_after`; ratio data is a stated gap (undocumented `quota` field shape) |
+| New-API channel active usage | Real for `used_quota`; requires an operator-set `quotaPerUnitUsd`, no limit (comes from `planConfig`) |
+| Generic OpenAI-compatible balance | Real for the two shapes observed in the wild; no universal endpoint exists, stated gap for anything else |
+| Persistence + repository | Real, migrated, RLS-correct, tested against real Prisma/PGlite |
+| Headroom-aware candidate ordering | Real, wired, scoped to Router's actual 2-engine fan-out (stated limit, not per-channel) |
+| Alerting (Feishu/Slack, deduped) | Real, reuses `packages/platform/status`'s existing webhook transport |
+| Admin (`quota` resource, `source.plan.update`, `supply.quota_alert`) | Real, wired into the existing manifest |
+| Scheduling (adaptive pull via Inngest) | Real, via the gateway's existing Inngest scheduler |
+
 ## Deploy / ops
 
 No owner-issued token is required for the schedule itself (`SERVICE_SECRET` is already shared).

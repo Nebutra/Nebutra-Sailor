@@ -365,6 +365,12 @@ ALTER TABLE "public"."supply_source_models" ENABLE ROW LEVEL SECURITY;
 -- SupplyProbeEvent
 ALTER TABLE "public"."supply_probe_events" ENABLE ROW LEVEL SECURITY;
 
+-- SupplyQuotaWindow
+ALTER TABLE "public"."supply_quota_windows" ENABLE ROW LEVEL SECURITY;
+
+-- SupplyQuotaSample
+ALTER TABLE "public"."supply_quota_samples" ENABLE ROW LEVEL SECURITY;
+
 -- StripeCustomer
 ALTER TABLE "public"."stripe_customers" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "stripe_customers_rls" ON "public"."stripe_customers";

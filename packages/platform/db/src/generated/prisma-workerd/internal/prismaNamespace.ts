@@ -436,6 +436,8 @@ export const ModelName = {
   SupplySource: 'SupplySource',
   SupplySourceModel: 'SupplySourceModel',
   SupplyProbeEvent: 'SupplyProbeEvent',
+  SupplyQuotaWindow: 'SupplyQuotaWindow',
+  SupplyQuotaSample: 'SupplyQuotaSample',
   StripeCustomer: 'StripeCustomer',
   RetentionPolicy: 'RetentionPolicy',
   WebhookEvent: 'WebhookEvent',
@@ -504,7 +506,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "supplySource" | "supplySourceModel" | "supplyProbeEvent" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "studioPreset"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "supplySource" | "supplySourceModel" | "supplyProbeEvent" | "supplyQuotaWindow" | "supplyQuotaSample" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "studioPreset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4337,6 +4339,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SupplyProbeEventCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SupplyProbeEventCountAggregateOutputType> | number
+        }
+      }
+    }
+    SupplyQuotaWindow: {
+      payload: Prisma.$SupplyQuotaWindowPayload<ExtArgs>
+      fields: Prisma.SupplyQuotaWindowFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SupplyQuotaWindowFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SupplyQuotaWindowFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>
+        }
+        findFirst: {
+          args: Prisma.SupplyQuotaWindowFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SupplyQuotaWindowFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>
+        }
+        findMany: {
+          args: Prisma.SupplyQuotaWindowFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>[]
+        }
+        create: {
+          args: Prisma.SupplyQuotaWindowCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>
+        }
+        createMany: {
+          args: Prisma.SupplyQuotaWindowCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SupplyQuotaWindowCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>[]
+        }
+        delete: {
+          args: Prisma.SupplyQuotaWindowDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>
+        }
+        update: {
+          args: Prisma.SupplyQuotaWindowUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>
+        }
+        deleteMany: {
+          args: Prisma.SupplyQuotaWindowDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SupplyQuotaWindowUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SupplyQuotaWindowUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>[]
+        }
+        upsert: {
+          args: Prisma.SupplyQuotaWindowUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaWindowPayload>
+        }
+        aggregate: {
+          args: Prisma.SupplyQuotaWindowAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSupplyQuotaWindow>
+        }
+        groupBy: {
+          args: Prisma.SupplyQuotaWindowGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplyQuotaWindowGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SupplyQuotaWindowCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplyQuotaWindowCountAggregateOutputType> | number
+        }
+      }
+    }
+    SupplyQuotaSample: {
+      payload: Prisma.$SupplyQuotaSamplePayload<ExtArgs>
+      fields: Prisma.SupplyQuotaSampleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SupplyQuotaSampleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SupplyQuotaSampleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>
+        }
+        findFirst: {
+          args: Prisma.SupplyQuotaSampleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SupplyQuotaSampleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>
+        }
+        findMany: {
+          args: Prisma.SupplyQuotaSampleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>[]
+        }
+        create: {
+          args: Prisma.SupplyQuotaSampleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>
+        }
+        createMany: {
+          args: Prisma.SupplyQuotaSampleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SupplyQuotaSampleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>[]
+        }
+        delete: {
+          args: Prisma.SupplyQuotaSampleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>
+        }
+        update: {
+          args: Prisma.SupplyQuotaSampleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>
+        }
+        deleteMany: {
+          args: Prisma.SupplyQuotaSampleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SupplyQuotaSampleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SupplyQuotaSampleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>[]
+        }
+        upsert: {
+          args: Prisma.SupplyQuotaSampleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyQuotaSamplePayload>
+        }
+        aggregate: {
+          args: Prisma.SupplyQuotaSampleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSupplyQuotaSample>
+        }
+        groupBy: {
+          args: Prisma.SupplyQuotaSampleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplyQuotaSampleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SupplyQuotaSampleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplyQuotaSampleCountAggregateOutputType> | number
         }
       }
     }
@@ -9162,6 +9312,7 @@ export const SupplySourceScalarFieldEnum = {
   visibility: 'visibility',
   lastDiscoveredAt: 'lastDiscoveredAt',
   lastDiscoverySummary: 'lastDiscoverySummary',
+  planConfig: 'planConfig',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -9211,6 +9362,46 @@ export const SupplyProbeEventScalarFieldEnum = {
 } as const
 
 export type SupplyProbeEventScalarFieldEnum = (typeof SupplyProbeEventScalarFieldEnum)[keyof typeof SupplyProbeEventScalarFieldEnum]
+
+
+export const SupplyQuotaWindowScalarFieldEnum = {
+  id: 'id',
+  sourceId: 'sourceId',
+  name: 'name',
+  unit: 'unit',
+  limitAmount: 'limitAmount',
+  usedAmount: 'usedAmount',
+  resetsAt: 'resetsAt',
+  windowSeconds: 'windowSeconds',
+  sourceOfTruth: 'sourceOfTruth',
+  state: 'state',
+  burnRatePerHour: 'burnRatePerHour',
+  forecastExhaustAt: 'forecastExhaustAt',
+  lastAlertLevel: 'lastAlertLevel',
+  lastAlertAt: 'lastAlertAt',
+  lastForecastAlertAt: 'lastForecastAlertAt',
+  lastSampleAt: 'lastSampleAt',
+  nextPullAt: 'nextPullAt',
+  pullIntervalSeconds: 'pullIntervalSeconds',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplyQuotaWindowScalarFieldEnum = (typeof SupplyQuotaWindowScalarFieldEnum)[keyof typeof SupplyQuotaWindowScalarFieldEnum]
+
+
+export const SupplyQuotaSampleScalarFieldEnum = {
+  id: 'id',
+  quotaWindowId: 'quotaWindowId',
+  at: 'at',
+  usedAmount: 'usedAmount',
+  limitAmount: 'limitAmount',
+  deltaAmount: 'deltaAmount',
+  sourceOfTruth: 'sourceOfTruth',
+  metadata: 'metadata'
+} as const
+
+export type SupplyQuotaSampleScalarFieldEnum = (typeof SupplyQuotaSampleScalarFieldEnum)[keyof typeof SupplyQuotaSampleScalarFieldEnum]
 
 
 export const StripeCustomerScalarFieldEnum = {
@@ -10800,6 +10991,76 @@ export type ListEnumSupplyProbeOutcomeFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'SupplyQuotaUnit'
+ */
+export type EnumSupplyQuotaUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyQuotaUnit'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyQuotaUnit[]'
+ */
+export type ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyQuotaUnit[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyQuotaSourceOfTruth'
+ */
+export type EnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyQuotaSourceOfTruth'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyQuotaSourceOfTruth[]'
+ */
+export type ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyQuotaSourceOfTruth[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyQuotaState'
+ */
+export type EnumSupplyQuotaStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyQuotaState'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyQuotaState[]'
+ */
+export type ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyQuotaState[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyQuotaAlertLevel'
+ */
+export type EnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyQuotaAlertLevel'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyQuotaAlertLevel[]'
+ */
+export type ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyQuotaAlertLevel[]'>
+    
+
+
+/**
  * Reference to a field of type 'LegalDocumentType'
  */
 export type EnumLegalDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LegalDocumentType'>
@@ -11038,20 +11299,6 @@ export type ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
  * Reference to a field of type 'PlatformStaffRole'
  */
 export type EnumPlatformStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformStaffRole'>
@@ -11211,6 +11458,8 @@ export type GlobalOmitConfig = {
   supplySource?: Prisma.SupplySourceOmit
   supplySourceModel?: Prisma.SupplySourceModelOmit
   supplyProbeEvent?: Prisma.SupplyProbeEventOmit
+  supplyQuotaWindow?: Prisma.SupplyQuotaWindowOmit
+  supplyQuotaSample?: Prisma.SupplyQuotaSampleOmit
   stripeCustomer?: Prisma.StripeCustomerOmit
   retentionPolicy?: Prisma.RetentionPolicyOmit
   webhookEvent?: Prisma.WebhookEventOmit

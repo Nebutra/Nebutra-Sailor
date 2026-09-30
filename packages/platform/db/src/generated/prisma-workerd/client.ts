@@ -368,6 +368,26 @@ export type SupplySourceModel = Prisma.SupplySourceModelModel
  */
 export type SupplyProbeEvent = Prisma.SupplyProbeEventModel
 /**
+ * Model SupplyQuotaWindow
+ * One named quota window for a supply source (ADR 2026-09-30 addendum —
+ * quota layer): a rolling 5h/weekly/monthly plan cap, a per-key RPM/TPM
+ * limit, or a balance. One row per (sourceId, name); never deleted — a
+ * window rolls over, it does not lose its identity. `state` is a headroom
+ * signal distinct from SupplySourceModel.state: crossing 80% throttles
+ * routing preference, it never suspends capability.
+ * @rls deny
+ */
+export type SupplyQuotaWindow = Prisma.SupplyQuotaWindowModel
+/**
+ * Model SupplyQuotaSample
+ * Append-only history of quota window observations (ADR 2026-09-30
+ * addendum) — trend data for the admin desk's burn-rate/forecast view. The
+ * current-state fields on SupplyQuotaWindow are a materialized view of "the
+ * latest sample plus the pure reducer," not a separate source of truth.
+ * @rls deny
+ */
+export type SupplyQuotaSample = Prisma.SupplyQuotaSampleModel
+/**
  * Model StripeCustomer
  * 
  */

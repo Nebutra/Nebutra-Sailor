@@ -12,6 +12,10 @@ export const SUPPLY_ENUMS = `
   CREATE TYPE "SupplyProbeKind" AS ENUM ('DISCOVERY','ACTIVE_PROBE','PASSIVE_SIGNAL','STATE_TRANSITION','MANUAL_OVERRIDE');
   CREATE TYPE "SupplyProbeOutcome" AS ENUM ('SUCCESS','FAILURE','ERROR');
   CREATE TYPE "SupplyVisibility" AS ENUM ('PUBLIC','INTERNAL');
+  CREATE TYPE "SupplyQuotaUnit" AS ENUM ('USD','TOKENS','REQUESTS');
+  CREATE TYPE "SupplyQuotaSourceOfTruth" AS ENUM ('HEADER','ENDPOINT','SELF_METERED');
+  CREATE TYPE "SupplyQuotaState" AS ENUM ('NOMINAL','THROTTLED','EXHAUSTED');
+  CREATE TYPE "SupplyQuotaAlertLevel" AS ENUM ('NONE','WARN_80','WARN_95','EXHAUSTED');
 `;
 
 export const SUPPLY_TABLES = `
@@ -27,6 +31,7 @@ export const SUPPLY_TABLES = `
     visibility              "SupplyVisibility" NOT NULL DEFAULT 'PUBLIC',
     last_discovered_at      timestamp(3),
     last_discovery_summary  jsonb,
+    plan_config             jsonb,
     created_at              timestamp(3) NOT NULL DEFAULT now(),
     updated_at              timestamp(3) NOT NULL DEFAULT now()
   );
@@ -68,6 +73,41 @@ export const SUPPLY_TABLES = `
     to_state         "SupplyModelState",
     latency_ms       integer,
     metadata         jsonb
+  );
+
+  CREATE TABLE supply_quota_windows (
+    id                       text PRIMARY KEY,
+    source_id                text NOT NULL REFERENCES supply_sources(id) ON DELETE CASCADE,
+    name                     varchar(64) NOT NULL,
+    unit                     "SupplyQuotaUnit" NOT NULL DEFAULT 'REQUESTS',
+    limit_amount             double precision,
+    used_amount              double precision NOT NULL DEFAULT 0,
+    resets_at                timestamp(3),
+    window_seconds           integer,
+    source_of_truth          "SupplyQuotaSourceOfTruth" NOT NULL DEFAULT 'SELF_METERED',
+    state                    "SupplyQuotaState" NOT NULL DEFAULT 'NOMINAL',
+    burn_rate_per_hour       double precision,
+    forecast_exhaust_at      timestamp(3),
+    last_alert_level         "SupplyQuotaAlertLevel" NOT NULL DEFAULT 'NONE',
+    last_alert_at            timestamp(3),
+    last_forecast_alert_at   timestamp(3),
+    last_sample_at           timestamp(3),
+    next_pull_at             timestamp(3),
+    pull_interval_seconds    integer,
+    created_at               timestamp(3) NOT NULL DEFAULT now(),
+    updated_at               timestamp(3) NOT NULL DEFAULT now(),
+    UNIQUE (source_id, name)
+  );
+
+  CREATE TABLE supply_quota_samples (
+    id                text PRIMARY KEY,
+    quota_window_id   text NOT NULL REFERENCES supply_quota_windows(id) ON DELETE CASCADE,
+    at                timestamp(3) NOT NULL DEFAULT now(),
+    used_amount       double precision NOT NULL,
+    limit_amount      double precision,
+    delta_amount      double precision,
+    source_of_truth   "SupplyQuotaSourceOfTruth" NOT NULL,
+    metadata          jsonb
   );
 `;
 

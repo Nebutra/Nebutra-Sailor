@@ -22,6 +22,7 @@ import {
   newApiShelf,
 } from "./clients";
 import { findPriceDrift } from "./pricing";
+import { quotaAlertSignalData } from "./quota";
 
 const now = () => new Date().toISOString();
 
@@ -362,6 +363,31 @@ export async function readSignal(
           id,
           status: "unknown",
           severity: "critical",
+          probedAt,
+          detail: error instanceof Error ? error.message : "probe failed",
+        };
+      }
+    }
+    case "supply.quota_alert": {
+      try {
+        const alerts = await quotaAlertSignalData();
+        return {
+          id,
+          status: alerts.length ? "raised" : "ok",
+          severity: "warn",
+          probedAt,
+          title: alerts.length
+            ? `${alerts.length} quota window(s) throttled, exhausted, or forecasting exhaustion soon`
+            : "Every quota window has headroom",
+          detail: alerts.map((a) => `${a.source}·${a.window} (${a.state})`).join(", ") || undefined,
+          resource: "quota",
+          data: { windows: alerts },
+        };
+      } catch (error) {
+        return {
+          id,
+          status: "unknown",
+          severity: "warn",
           probedAt,
           detail: error instanceof Error ? error.message : "probe failed",
         };

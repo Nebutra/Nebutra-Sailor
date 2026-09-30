@@ -126,13 +126,34 @@ export type RouterRequestLog = Pick<RequestLogRepository, "record">;
 export interface RouterSupplyAvailability {
   availabilityFor(
     models: readonly string[],
-  ): Promise<Map<string, { sellable: boolean; reason: string | null }>>;
+  ): Promise<
+    Map<string, { sellable: boolean; reason: string | null; headroom?: "ok" | "throttled" }>
+  >;
 }
 
 const NO_SUPPLY_GATE: RouterSupplyAvailability = {
   async availabilityFor() {
     return new Map();
   },
+};
+
+/**
+ * Quota self-metering (ADR 2026-09-30 addendum §1c), narrowed the same way as
+ * `RouterSupplyAvailability` — the default is a no-op so every existing
+ * `settle` test stays hermetic without knowing this exists. Production route
+ * handlers wire the real one (`runSelfMeteredTick`) explicitly.
+ */
+export interface RouterSupplyMetering {
+  recordUsage(input: {
+    sourceKey: string;
+    costUsd: number;
+    totalTokens: number;
+    at: Date;
+  }): Promise<void>;
+}
+
+const NO_METERING: RouterSupplyMetering = {
+  async recordUsage() {},
 };
 
 function repo(): RouterBilling {
@@ -181,10 +202,12 @@ export function createRouterGuard(
   injected?: RouterBilling,
   injectedLog?: RouterRequestLog,
   injectedSupply?: RouterSupplyAvailability,
+  injectedMetering?: RouterSupplyMetering,
 ): EdgeGuard {
   const db = () => injected ?? repo();
   const logs = () => injectedLog ?? logRepo();
   const supply = () => injectedSupply ?? NO_SUPPLY_GATE;
+  const metering = () => injectedMetering ?? NO_METERING;
   return {
     async admit(input: EdgeAdmitInput): Promise<EdgeAdmitDecision> {
       const billing = db();
@@ -240,6 +263,20 @@ export function createRouterGuard(
         );
         if (price.ok) priced.push({ model, price });
       }
+
+      // Headroom-aware routing (ADR 2026-09-30 addendum): among the
+      // customer's own candidate list, prefer a model whose backing source
+      // still has quota headroom — this only reorders failover preference
+      // (`Array.prototype.sort` is stable, so each headroom group keeps the
+      // customer's own relative order). It never drops a throttled-but-still
+      // -sellable candidate; that would repeat the capability gate's mistake
+      // this system exists to avoid, just for a softer signal.
+      priced.sort((a, b) => {
+        const ha = availability.get(a.model)?.headroom ?? "ok";
+        const hb = availability.get(b.model)?.headroom ?? "ok";
+        if (ha === hb) return 0;
+        return ha === "ok" ? -1 : 1;
+      });
 
       if (priced.length === 0) {
         if (suspendedReason !== null) {
@@ -486,6 +523,27 @@ export function createRouterGuard(
       } finally {
         invalidateCreditCache(input.identity.tenantId, ROUTER_WALLET_PRODUCT);
         await writeRequestLog(logs(), input, model, floored, spend?.saveLogs ?? false);
+        // Quota self-metering (ADR 2026-09-30 addendum §1c): the real upstream
+        // call happened — and so did its cost to us — whether or not this
+        // particular request was billable to the customer, so it is metered
+        // unconditionally against the source's declared plan windows. Never
+        // throws: a source with no declared plan, or an unresolvable
+        // `supplyPath`, is a silent no-op (see `NO_METERING`).
+        if (input.supplyPath) {
+          await metering()
+            .recordUsage({
+              sourceKey: input.supplyPath,
+              costUsd: floored.totalCost,
+              totalTokens: input.usage.totalTokens,
+              at: new Date(),
+            })
+            .catch((error) => {
+              logger.error("[router] quota self-metering failed", {
+                sourceKey: input.supplyPath,
+                error: error instanceof Error ? error.message : "unknown",
+              });
+            });
+        }
       }
     },
 

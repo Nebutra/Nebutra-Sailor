@@ -2,13 +2,22 @@ import { createRouterGuard, createRouterRateLimiter } from "@/lib/billing-edge";
 import { proxyOpenAiCompatible, RouterSupplyUnavailableError, refuse } from "@/lib/openai-edge";
 import { getKeyResolver } from "@/lib/router-keys";
 import { availabilityFor } from "@/lib/supply/capability";
+import { runSelfMeteredTick } from "@/lib/supply/quota";
 
 export const runtime = "nodejs";
 export const maxDuration = 180;
 
 type RouteContext = { params: Promise<{ path: string[] }> };
 
-const guard = createRouterGuard(undefined, undefined, { availabilityFor });
+const guard = createRouterGuard(
+  undefined,
+  undefined,
+  { availabilityFor },
+  {
+    recordUsage: ({ sourceKey, costUsd, totalTokens, at }) =>
+      runSelfMeteredTick(sourceKey, { costUsd, totalTokens }, at),
+  },
+);
 const rateLimit = createRouterRateLimiter();
 
 async function handle(request: Request, context: RouteContext): Promise<Response> {

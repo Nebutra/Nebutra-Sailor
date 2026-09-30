@@ -1065,6 +1065,128 @@ export type EnumSupplyModelStateNullableWithAggregatesFilter<$PrismaModel = neve
   _max?: Prisma.NestedEnumSupplyModelStateNullableFilter<$PrismaModel>
 }
 
+export type EnumSupplyQuotaUnitFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaUnit | Prisma.EnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaUnit[] | Prisma.ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaUnit[] | Prisma.ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaUnitFilter<$PrismaModel> | $Enums.SupplyQuotaUnit
+}
+
+export type FloatNullableFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
+}
+
+export type FloatFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel>
+  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel>
+  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedFloatFilter<$PrismaModel> | number
+}
+
+export type EnumSupplyQuotaSourceOfTruthFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaSourceOfTruth | Prisma.EnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaSourceOfTruth[] | Prisma.ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaSourceOfTruth[] | Prisma.ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaSourceOfTruthFilter<$PrismaModel> | $Enums.SupplyQuotaSourceOfTruth
+}
+
+export type EnumSupplyQuotaStateFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaState | Prisma.EnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaState[] | Prisma.ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaState[] | Prisma.ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaStateFilter<$PrismaModel> | $Enums.SupplyQuotaState
+}
+
+export type EnumSupplyQuotaAlertLevelFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaAlertLevel | Prisma.EnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaAlertLevel[] | Prisma.ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaAlertLevel[] | Prisma.ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaAlertLevelFilter<$PrismaModel> | $Enums.SupplyQuotaAlertLevel
+}
+
+export type EnumSupplyQuotaUnitWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaUnit | Prisma.EnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaUnit[] | Prisma.ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaUnit[] | Prisma.ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaUnitWithAggregatesFilter<$PrismaModel> | $Enums.SupplyQuotaUnit
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyQuotaUnitFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyQuotaUnitFilter<$PrismaModel>
+}
+
+export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+}
+
+export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel>
+  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel>
+  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatFilter<$PrismaModel>
+  _sum?: Prisma.NestedFloatFilter<$PrismaModel>
+  _min?: Prisma.NestedFloatFilter<$PrismaModel>
+  _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type EnumSupplyQuotaSourceOfTruthWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaSourceOfTruth | Prisma.EnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaSourceOfTruth[] | Prisma.ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaSourceOfTruth[] | Prisma.ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaSourceOfTruthWithAggregatesFilter<$PrismaModel> | $Enums.SupplyQuotaSourceOfTruth
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyQuotaSourceOfTruthFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyQuotaSourceOfTruthFilter<$PrismaModel>
+}
+
+export type EnumSupplyQuotaStateWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaState | Prisma.EnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaState[] | Prisma.ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaState[] | Prisma.ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaStateWithAggregatesFilter<$PrismaModel> | $Enums.SupplyQuotaState
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyQuotaStateFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyQuotaStateFilter<$PrismaModel>
+}
+
+export type EnumSupplyQuotaAlertLevelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaAlertLevel | Prisma.EnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaAlertLevel[] | Prisma.ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaAlertLevel[] | Prisma.ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaAlertLevelWithAggregatesFilter<$PrismaModel> | $Enums.SupplyQuotaAlertLevel
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyQuotaAlertLevelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyQuotaAlertLevelFilter<$PrismaModel>
+}
+
 export type EnumLegalDocumentTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.LegalDocumentType | Prisma.EnumLegalDocumentTypeFieldRefInput<$PrismaModel>
   in?: $Enums.LegalDocumentType[] | Prisma.ListEnumLegalDocumentTypeFieldRefInput<$PrismaModel>
@@ -1352,33 +1474,6 @@ export type EnumPebbleFeedbackKindWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel>
-}
-
-export type FloatNullableFilter<$PrismaModel = never> = {
-  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
-  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
-  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
-  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
-}
-
-export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
-  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
-  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
-  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
-  _sum?: Prisma.NestedFloatNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedFloatNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedFloatNullableFilter<$PrismaModel>
 }
 
 export type EnumPlatformStaffRoleFilter<$PrismaModel = never> = {
@@ -2408,6 +2503,106 @@ export type NestedEnumSupplyModelStateNullableWithAggregatesFilter<$PrismaModel 
   _max?: Prisma.NestedEnumSupplyModelStateNullableFilter<$PrismaModel>
 }
 
+export type NestedEnumSupplyQuotaUnitFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaUnit | Prisma.EnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaUnit[] | Prisma.ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaUnit[] | Prisma.ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaUnitFilter<$PrismaModel> | $Enums.SupplyQuotaUnit
+}
+
+export type NestedEnumSupplyQuotaSourceOfTruthFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaSourceOfTruth | Prisma.EnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaSourceOfTruth[] | Prisma.ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaSourceOfTruth[] | Prisma.ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaSourceOfTruthFilter<$PrismaModel> | $Enums.SupplyQuotaSourceOfTruth
+}
+
+export type NestedEnumSupplyQuotaStateFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaState | Prisma.EnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaState[] | Prisma.ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaState[] | Prisma.ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaStateFilter<$PrismaModel> | $Enums.SupplyQuotaState
+}
+
+export type NestedEnumSupplyQuotaAlertLevelFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaAlertLevel | Prisma.EnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaAlertLevel[] | Prisma.ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaAlertLevel[] | Prisma.ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaAlertLevelFilter<$PrismaModel> | $Enums.SupplyQuotaAlertLevel
+}
+
+export type NestedEnumSupplyQuotaUnitWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaUnit | Prisma.EnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaUnit[] | Prisma.ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaUnit[] | Prisma.ListEnumSupplyQuotaUnitFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaUnitWithAggregatesFilter<$PrismaModel> | $Enums.SupplyQuotaUnit
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyQuotaUnitFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyQuotaUnitFilter<$PrismaModel>
+}
+
+export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+}
+
+export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel>
+  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel>
+  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatFilter<$PrismaModel>
+  _sum?: Prisma.NestedFloatFilter<$PrismaModel>
+  _min?: Prisma.NestedFloatFilter<$PrismaModel>
+  _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type NestedEnumSupplyQuotaSourceOfTruthWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaSourceOfTruth | Prisma.EnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaSourceOfTruth[] | Prisma.ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaSourceOfTruth[] | Prisma.ListEnumSupplyQuotaSourceOfTruthFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaSourceOfTruthWithAggregatesFilter<$PrismaModel> | $Enums.SupplyQuotaSourceOfTruth
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyQuotaSourceOfTruthFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyQuotaSourceOfTruthFilter<$PrismaModel>
+}
+
+export type NestedEnumSupplyQuotaStateWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaState | Prisma.EnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaState[] | Prisma.ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaState[] | Prisma.ListEnumSupplyQuotaStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaStateWithAggregatesFilter<$PrismaModel> | $Enums.SupplyQuotaState
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyQuotaStateFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyQuotaStateFilter<$PrismaModel>
+}
+
+export type NestedEnumSupplyQuotaAlertLevelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplyQuotaAlertLevel | Prisma.EnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplyQuotaAlertLevel[] | Prisma.ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplyQuotaAlertLevel[] | Prisma.ListEnumSupplyQuotaAlertLevelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplyQuotaAlertLevelWithAggregatesFilter<$PrismaModel> | $Enums.SupplyQuotaAlertLevel
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplyQuotaAlertLevelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplyQuotaAlertLevelFilter<$PrismaModel>
+}
+
 export type NestedEnumLegalDocumentTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.LegalDocumentType | Prisma.EnumLegalDocumentTypeFieldRefInput<$PrismaModel>
   in?: $Enums.LegalDocumentType[] | Prisma.ListEnumLegalDocumentTypeFieldRefInput<$PrismaModel>
@@ -2695,22 +2890,6 @@ export type NestedEnumPebbleFeedbackKindWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPebbleFeedbackKindFilter<$PrismaModel>
-}
-
-export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
-  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
-  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
-  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
-  _sum?: Prisma.NestedFloatNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedFloatNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedFloatNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumPlatformStaffRoleFilter<$PrismaModel = never> = {

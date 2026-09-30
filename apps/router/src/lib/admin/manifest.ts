@@ -100,6 +100,25 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
             { key: "nextProbeAt", label: "Next retry", kind: "time" },
           ],
         },
+        {
+          id: "quota",
+          label: "Quota",
+          list: `${V1}/quota-windows`,
+          search: true,
+          columns: [
+            { key: "source", label: "Source" },
+            { key: "name", label: "Window", kind: "mono" },
+            { key: "unit", label: "Unit", kind: "badge" },
+            { key: "usedAmount", label: "Used", kind: "number", align: "end" },
+            { key: "limitAmount", label: "Limit", kind: "number", align: "end" },
+            { key: "state", label: "State", kind: "badge" },
+            { key: "sourceOfTruth", label: "Source of truth", kind: "mono" },
+            { key: "burnRatePerHour", label: "Burn/hr", kind: "number", align: "end" },
+            { key: "forecastExhaustAt", label: "Forecast exhaust", kind: "time" },
+            { key: "resetsAt", label: "Resets", kind: "time" },
+          ],
+          actions: ["source.plan.update"],
+        },
       ],
       actions: [
         {
@@ -256,6 +275,48 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
           description:
             "Retry every SUSPENDED model whose backoff has elapsed. Called on the hourly schedule.",
         },
+        {
+          id: "source.plan.update",
+          verb: "Edit plan windows",
+          resource: "quota",
+          role: "platform_operator",
+          url: `${V1}/actions/source.plan.update`,
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["key", "windows"],
+            properties: {
+              key: { type: "string", description: "Source key" },
+              windows: {
+                type: "array",
+                items: {
+                  type: "object",
+                  required: ["name", "unit"],
+                  properties: {
+                    name: { type: "string" },
+                    unit: { type: "string", enum: ["USD", "TOKENS", "REQUESTS"] },
+                    limitAmount: { type: "number" },
+                    windowSeconds: { type: "number" },
+                  },
+                },
+              },
+            },
+          },
+          description:
+            "Declare (or edit) a source's plan windows for self-metering — e.g. GOAT's $14/5h · $35/7d · $70/month, or OpenCode Go's 5h/weekly/monthly caps.",
+        },
+        {
+          id: "quota.pull",
+          verb: "Pull usage now",
+          resource: "quota",
+          role: "platform_operator",
+          url: `${V1}/actions/quota.pull`,
+          plan: false,
+          destructive: false,
+          description:
+            "Active-usage pull for every quota window currently due (adaptive schedule). Called on the gateway's Inngest cron; available here for an on-demand run.",
+        },
       ],
       signals: [
         {
@@ -294,6 +355,13 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
           severity: "critical",
           probe: `${V1}/signals/supply.suspended`,
           resource: "capability",
+        },
+        {
+          id: "supply.quota_alert",
+          label: "A quota window is throttled, exhausted, or forecasting exhaustion soon",
+          severity: "warn",
+          probe: `${V1}/signals/supply.quota_alert`,
+          resource: "quota",
         },
       ],
       policies: [

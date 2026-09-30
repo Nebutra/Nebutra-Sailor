@@ -32,6 +32,7 @@
     "@nebutra/rate-limit": "workspace:*",
     "@nebutra/repositories": "workspace:*",
     "@nebutra/router-supply": "workspace:*",
+    "@nebutra/status": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
     "@nebutra/vault": "workspace:*",

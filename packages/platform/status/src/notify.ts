@@ -138,6 +138,107 @@ async function post(url: string, body: unknown): Promise<void> {
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
 }
 
+/**
+ * A generic ops alert — same webhook transport as `notifyIncident`, no
+ * `StatusIncident` required. Used by Router's supply quota layer (ADR
+ * 2026-09-30 addendum): a threshold crossing or an exhaustion forecast is a
+ * fact about upstream supply, not a customer-visible incident, so it gets no
+ * status-page entry, only the same Feishu/Slack ping. `@nebutra/notifications`
+ * was considered and rejected for this: it is the tenant/customer-facing
+ * multi-channel product (per-recipient preferences), the wrong shape for an
+ * ops ping nobody in particular subscribes to.
+ */
+export interface OpsAlertPayload {
+  readonly title: string;
+  readonly detail?: string;
+  readonly severity: "info" | "warn" | "critical";
+  readonly url?: string;
+}
+
+const OPS_ALERT_COLOR: Record<OpsAlertPayload["severity"], string> = {
+  info: "blue",
+  warn: "yellow",
+  critical: "red",
+};
+
+export function feishuOpsAlertPayload(alert: OpsAlertPayload) {
+  return {
+    msg_type: "interactive",
+    card: {
+      config: { wide_screen_mode: true },
+      header: {
+        template: OPS_ALERT_COLOR[alert.severity],
+        title: { tag: "plain_text", content: alert.title },
+      },
+      elements: [
+        ...(alert.detail ? [{ tag: "div", text: { tag: "lark_md", content: alert.detail } }] : []),
+        ...(alert.url
+          ? [
+              {
+                tag: "action",
+                actions: [
+                  {
+                    tag: "button",
+                    text: { tag: "plain_text", content: "Open" },
+                    type: "default",
+                    url: alert.url,
+                  },
+                ],
+              },
+            ]
+          : []),
+      ],
+    },
+  };
+}
+
+export function slackOpsAlertPayload(alert: OpsAlertPayload) {
+  return {
+    text: alert.title,
+    blocks: [
+      { type: "header", text: { type: "plain_text", text: alert.title } },
+      ...(alert.detail ? [{ type: "section", text: { type: "mrkdwn", text: alert.detail } }] : []),
+      ...(alert.url
+        ? [
+            {
+              type: "actions",
+              elements: [
+                { type: "button", text: { type: "plain_text", text: "Open" }, url: alert.url },
+              ],
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
+/** Fans one ops alert out to whichever chat webhooks are configured — same env vars, same posture as `notifyIncident`: best-effort, never throws. */
+export async function notifyOpsAlert(alert: OpsAlertPayload): Promise<void> {
+  const jobs: Array<Promise<void>> = [];
+
+  const feishu = process.env.STATUS_FEISHU_WEBHOOK_URL;
+  if (feishu) {
+    const body: Record<string, unknown> = feishuOpsAlertPayload(alert);
+    const secret = process.env.STATUS_FEISHU_WEBHOOK_SECRET;
+    if (secret) {
+      const timestamp = Math.floor(Date.now() / 1000);
+      body.timestamp = String(timestamp);
+      body.sign = feishuSign(timestamp, secret);
+    }
+    jobs.push(post(feishu, body));
+  }
+
+  const slack = process.env.STATUS_SLACK_WEBHOOK_URL;
+  if (slack) jobs.push(post(slack, slackOpsAlertPayload(alert)));
+
+  const results = await Promise.allSettled(jobs);
+  for (const result of results) {
+    if (result.status === "rejected") {
+      logger.warn("ops alert notification failed", { error: String(result.reason) });
+    }
+  }
+}
+
 export async function notifyIncident(
   incident: StatusIncident,
   event: IncidentEvent,
