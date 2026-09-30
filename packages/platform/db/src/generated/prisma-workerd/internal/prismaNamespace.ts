@@ -483,6 +483,7 @@ export const ModelName = {
   AgentRolloutLine: 'AgentRolloutLine',
   PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
   PebbleFeedback: 'PebbleFeedback',
+  DocsFeedback: 'DocsFeedback',
   PlatformStaff: 'PlatformStaff',
   StudioPreset: 'StudioPreset'
 } as const
@@ -500,7 +501,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "platformStaff" | "studioPreset"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "studioPreset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -7814,6 +7815,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DocsFeedback: {
+      payload: Prisma.$DocsFeedbackPayload<ExtArgs>
+      fields: Prisma.DocsFeedbackFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DocsFeedbackFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DocsFeedbackFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>
+        }
+        findFirst: {
+          args: Prisma.DocsFeedbackFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DocsFeedbackFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>
+        }
+        findMany: {
+          args: Prisma.DocsFeedbackFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>[]
+        }
+        create: {
+          args: Prisma.DocsFeedbackCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>
+        }
+        createMany: {
+          args: Prisma.DocsFeedbackCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DocsFeedbackCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>[]
+        }
+        delete: {
+          args: Prisma.DocsFeedbackDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>
+        }
+        update: {
+          args: Prisma.DocsFeedbackUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>
+        }
+        deleteMany: {
+          args: Prisma.DocsFeedbackDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DocsFeedbackUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DocsFeedbackUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>[]
+        }
+        upsert: {
+          args: Prisma.DocsFeedbackUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocsFeedbackPayload>
+        }
+        aggregate: {
+          args: Prisma.DocsFeedbackAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDocsFeedback>
+        }
+        groupBy: {
+          args: Prisma.DocsFeedbackGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocsFeedbackGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DocsFeedbackCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocsFeedbackCountAggregateOutputType> | number
+        }
+      }
+    }
     PlatformStaff: {
       payload: Prisma.$PlatformStaffPayload<ExtArgs>
       fields: Prisma.PlatformStaffFieldRefs
@@ -9698,6 +9773,28 @@ export const PebbleFeedbackScalarFieldEnum = {
 export type PebbleFeedbackScalarFieldEnum = (typeof PebbleFeedbackScalarFieldEnum)[keyof typeof PebbleFeedbackScalarFieldEnum]
 
 
+export const DocsFeedbackScalarFieldEnum = {
+  id: 'id',
+  kind: 'kind',
+  url: 'url',
+  opinion: 'opinion',
+  blockId: 'blockId',
+  blockBody: 'blockBody',
+  message: 'message',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  githubUrl: 'githubUrl',
+  sentimentLabel: 'sentimentLabel',
+  sentimentScore: 'sentimentScore',
+  category: 'category',
+  summary: 'summary',
+  triagedAt: 'triagedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type DocsFeedbackScalarFieldEnum = (typeof DocsFeedbackScalarFieldEnum)[keyof typeof DocsFeedbackScalarFieldEnum]
+
+
 export const PlatformStaffScalarFieldEnum = {
   userId: 'userId',
   role: 'role',
@@ -10555,20 +10652,6 @@ export type ListEnumPebbleFeedbackKindFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
- * Reference to a field of type 'PlatformStaffRole'
- */
-export type EnumPlatformStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformStaffRole'>
-    
-
-
-/**
- * Reference to a field of type 'PlatformStaffRole[]'
- */
-export type ListEnumPlatformStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformStaffRole[]'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -10579,6 +10662,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlatformStaffRole'
+ */
+export type EnumPlatformStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformStaffRole'>
+    
+
+
+/**
+ * Reference to a field of type 'PlatformStaffRole[]'
+ */
+export type ListEnumPlatformStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformStaffRole[]'>
     
 
 /**
@@ -10775,6 +10872,7 @@ export type GlobalOmitConfig = {
   agentRolloutLine?: Prisma.AgentRolloutLineOmit
   pebbleDiagnosticTicket?: Prisma.PebbleDiagnosticTicketOmit
   pebbleFeedback?: Prisma.PebbleFeedbackOmit
+  docsFeedback?: Prisma.DocsFeedbackOmit
   platformStaff?: Prisma.PlatformStaffOmit
   studioPreset?: Prisma.StudioPresetOmit
 }

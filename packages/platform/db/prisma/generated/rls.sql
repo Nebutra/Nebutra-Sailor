@@ -588,6 +588,9 @@ ALTER TABLE "public"."pebble_diagnostic_tickets" DISABLE ROW LEVEL SECURITY;
 -- PebbleFeedback
 ALTER TABLE "public"."pebble_feedback" DISABLE ROW LEVEL SECURITY;
 
+-- DocsFeedback
+ALTER TABLE "public"."docs_feedback" ENABLE ROW LEVEL SECURITY;
+
 -- PlatformStaff
 ALTER TABLE "public"."platform_staff" ENABLE ROW LEVEL SECURITY;
 

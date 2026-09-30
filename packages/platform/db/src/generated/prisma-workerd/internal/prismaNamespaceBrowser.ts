@@ -150,6 +150,7 @@ export const ModelName = {
   AgentRolloutLine: 'AgentRolloutLine',
   PebbleDiagnosticTicket: 'PebbleDiagnosticTicket',
   PebbleFeedback: 'PebbleFeedback',
+  DocsFeedback: 'DocsFeedback',
   PlatformStaff: 'PlatformStaff',
   StudioPreset: 'StudioPreset'
 } as const
@@ -1865,6 +1866,28 @@ export const PebbleFeedbackScalarFieldEnum = {
 } as const
 
 export type PebbleFeedbackScalarFieldEnum = (typeof PebbleFeedbackScalarFieldEnum)[keyof typeof PebbleFeedbackScalarFieldEnum]
+
+
+export const DocsFeedbackScalarFieldEnum = {
+  id: 'id',
+  kind: 'kind',
+  url: 'url',
+  opinion: 'opinion',
+  blockId: 'blockId',
+  blockBody: 'blockBody',
+  message: 'message',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  githubUrl: 'githubUrl',
+  sentimentLabel: 'sentimentLabel',
+  sentimentScore: 'sentimentScore',
+  category: 'category',
+  summary: 'summary',
+  triagedAt: 'triagedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type DocsFeedbackScalarFieldEnum = (typeof DocsFeedbackScalarFieldEnum)[keyof typeof DocsFeedbackScalarFieldEnum]
 
 
 export const PlatformStaffScalarFieldEnum = {

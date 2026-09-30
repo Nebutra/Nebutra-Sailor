@@ -608,6 +608,11 @@ export type PebbleDiagnosticTicket = Prisma.PebbleDiagnosticTicketModel
  */
 export type PebbleFeedback = Prisma.PebbleFeedbackModel
 /**
+ * Model DocsFeedback
+ * @rls deny
+ */
+export type DocsFeedback = Prisma.DocsFeedbackModel
+/**
  * Model PlatformStaff
  * @rls deny
  */

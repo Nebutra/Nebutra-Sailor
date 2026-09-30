@@ -3211,6 +3211,52 @@ model PebbleFeedback {
   @@schema("public")
 }
 
+// apps/sailor-docs page/block feedback widget
+// (backends/gateway/src/routes/docs/feedback.ts). Public, unauthenticated
+// intake — no tenant, no relation, written only by the gateway's system
+// client. Sentiment/category/summary are filled in best-effort, after the
+// insert, by an async call to the same Router upstream the docs assistant
+// uses (../ai/gateway.ts's `defaultEnvUpstreams()`) — null until that call
+// lands, which it may never do for a deployment with no Router upstream
+// configured at all.
+/// @rls deny
+model DocsFeedback {
+  id String @id @default(cuid())
+
+  /// "page" (thumbs up/down on a whole page) or "block" (feedback on one
+  /// content block) — mirrors apps/sailor-docs/src/components/feedback/schema.ts.
+  kind      String  @db.VarChar(10)
+  url       String  @db.VarChar(500)
+  /// "page" kind only: "good" | "bad".
+  opinion   String? @db.VarChar(10)
+  /// "block" kind only.
+  blockId   String? @map("block_id") @db.VarChar(191)
+  blockBody String? @map("block_body") @db.Text
+  message   String  @db.Text
+
+  ipAddress String? @map("ip_address") @db.VarChar(45)
+  userAgent String? @map("user_agent") @db.VarChar(500)
+
+  // Optional extra sink: set only when GITHUB_APP_ID/GITHUB_APP_PRIVATE_KEY
+  // are configured and the GitHub Discussion post succeeded.
+  githubUrl String? @map("github_url")
+
+  // AI triage (best-effort, async, never blocks the response — see
+  // feedback.ts's `triageFeedback`).
+  sentimentLabel String?   @map("sentiment_label") @db.VarChar(20)
+  sentimentScore Float?    @map("sentiment_score")
+  category       String?   @db.VarChar(40)
+  summary        String?   @db.Text
+  triagedAt      DateTime? @map("triaged_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([kind, createdAt(sort: Desc)])
+  @@index([url])
+  @@map("docs_feedback")
+  @@schema("public")
+}
+
 // ============================================
 // Platform staff (ecosystem control plane)
 // ============================================
