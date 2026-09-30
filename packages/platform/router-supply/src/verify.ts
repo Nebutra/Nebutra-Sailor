@@ -13,6 +13,7 @@ export type ProbeFailureReason =
   | "auth_not_found"
   | "unauthorized"
   | "model_not_found"
+  | "not_in_plan"
   | "rate_limited"
   | "timeout"
   | "server_error"
@@ -73,9 +74,10 @@ function bodyFor(modality: SupplyModality, model: string): Record<string, unknow
     default:
       // TEXT, AUDIO, VIDEO, OTHER — no cheaper documented probe shape exists
       // for audio/video specifically (a narrower, stated gap; see the ADR).
-      // max_tokens: 1 is the cheapest possible text completion; still a real
-      // round trip through auth, routing and the model itself.
-      return { model, messages: [{ role: "user", content: "ping" }], max_tokens: 1 };
+      // 16 output tokens: some upstreams reject anything smaller (OpenAI's
+      // Responses-backed models demand max_output_tokens >= 16), and a probe
+      // that the upstream refuses on shape reads as the model failing.
+      return { model, messages: [{ role: "user", content: "ping" }], max_tokens: 16 };
   }
 }
 
@@ -88,6 +90,10 @@ export function classifyFailure(status: number | null, bodyText: string): ProbeF
   if (lower.includes("auth_not_found") || lower.includes("no auth available")) {
     return "auth_not_found";
   }
+  // A plan tier that excludes the model (e.g. Command Code
+  // `MODEL_NOT_IN_PLAN: … available in Pro and above plans`) is a real,
+  // stable "this source cannot serve it" — not a credential problem.
+  if (lower.includes("model_not_in_plan") || lower.includes("not in plan")) return "not_in_plan";
   if (status === 401 || status === 403) return "unauthorized";
   if (status === 404 || lower.includes("model_not_found") || lower.includes("does not exist")) {
     return "model_not_found";

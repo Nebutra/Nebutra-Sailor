@@ -69,7 +69,7 @@ describe("probeModel", () => {
     const [url, init] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit];
     expect(url).toBe("https://relay.example.com/v1/chat/completions");
     const body = JSON.parse(init.body as string);
-    expect(body.max_tokens).toBe(1);
+    expect(body.max_tokens).toBe(16);
   });
 
   it("sends the smallest/lowest-quality image request for IMAGE", async () => {
@@ -130,5 +130,16 @@ describe("probeModel", () => {
     );
     expect(result.outcome).toBe("failure");
     expect(result.outcome === "failure" && result.reason).toBe("timeout");
+  });
+});
+
+describe("classifyFailure — plan tiers", () => {
+  it("reads a plan that excludes the model as not_in_plan, not unauthorized", () => {
+    expect(
+      classifyFailure(
+        403,
+        '{"error":{"message":"MODEL_NOT_IN_PLAN: Claude Haiku 4.5 available in Pro and above plans"}}',
+      ),
+    ).toBe("not_in_plan");
   });
 });
