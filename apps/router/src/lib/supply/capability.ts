@@ -162,8 +162,8 @@ async function discoverSource(source: SupplySourceRow, fetchImpl: typeof fetch =
       );
     case "FAL_AI":
       return discoverFalAi(credential, fetchImpl);
-    case "OPENAI_COMPATIBLE":
     default:
+      // OPENAI_COMPATIBLE, and the fallback shape for any future kind.
       return discoverOpenAiCompatible(credential, fetchImpl);
   }
 }
