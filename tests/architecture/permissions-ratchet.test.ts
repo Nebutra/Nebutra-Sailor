@@ -457,6 +457,21 @@ const STRUCTURAL_EXEMPTIONS: readonly Exemption[] = [
       /create\(\{\s*data:\s*\{\s*userId,/.test(f.text),
     why: "a person's own rows — every write is scoped to the caller's user id",
   },
+  {
+    id: "docs-public-intake",
+    // routes/docs/{chat,feedback}.ts: public docs-support endpoints reached
+    // cross-origin from the statically-exported docs bundle, which has no
+    // account system of its own — there is no session to require. Abuse is
+    // bounded by createEndpointRateLimit (per-IP), a narrow CORS allowlist
+    // (routes/docs/cors.ts) scoped to the docs origins only, and body-size
+    // limits (zod .max() on every field). Neither route persists anything
+    // this gateway owns: /chat calls an LLM and returns text; /feedback
+    // forwards to a GitHub Discussion via the docs repo's own GitHub App.
+    applies: (r, _f, chain) =>
+      (r.file === "docs/chat.ts" || r.file === "docs/feedback.ts") &&
+      /\bcreateEndpointRateLimit\s*\(/.test(chain),
+    why: "public docs-support intake — no account exists to authorize; per-IP rate-limited, CORS-scoped to the docs origins",
+  },
   // Internal cron with a service-token check: no such HTTP route exists under
   // routes/ today (retention runs as a Cloudflare Cron Trigger in
   // worker-retention.ts). Add a rule here — with the verification it relies on
