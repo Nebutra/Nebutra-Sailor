@@ -1,8 +1,9 @@
 import { Link } from "@/i18n/navigation";
 import type { CapabilityFolder } from "./capability-folder-data";
-import { getSubpackageGlyph } from "./glyphs";
+import { getGlyphCopy, getSubpackageGlyph } from "./glyphs";
 import {
   getFeatureSummary,
+  type PackageCatalogTranslator,
   type PackageFeatureEntry,
   toSerializablePackageFeatureEntry,
 } from "./package-feature-data";
@@ -11,33 +12,43 @@ import {
  * The pieces /features and /features/[name] share. They follow the site's
  * rules (src/nebutra/DESIGN.md): real things only, numbers in sentences,
  * no label that carries no information.
+ *
+ * Copy lives in the `packageCatalog` i18n namespace
+ * (apps/landing/messages/*.json), looked up here via the `t` function the
+ * caller passes in (`getTranslations({ namespace: "packageCatalog" })` on
+ * the server) — these helpers never call next-intl themselves.
  */
 
 type Lang = "en" | "zh";
 
 /** "42 packages, 318 source files and 161 test files in packages/ai." — from the generated, test-checked stats. */
-export function sourceSentence(folder: CapabilityFolder, locale: Lang): string {
-  const { unitCount, unitLabel, sourceFiles, testFiles } = folder.sourceStats;
-  if (locale === "zh") {
-    return `${folder.sourcePath} 下有 ${unitCount} 个${unitLabel.zh}、${sourceFiles} 个源码文件、${testFiles} 个测试文件。`;
-  }
-  return `${unitCount} ${unitLabel.en}, ${sourceFiles} source files and ${testFiles} test files in ${folder.sourcePath}.`;
+export function sourceSentence(folder: CapabilityFolder, t: PackageCatalogTranslator): string {
+  const { unitCount, sourceFiles, testFiles } = folder.sourceStats;
+  return t("page.sourceSentence", {
+    count: unitCount,
+    unit: t(`folders.${folder.id}.sourceStats.unitLabel`),
+    sourceFiles,
+    testFiles,
+    path: folder.sourcePath,
+  });
 }
 
 /** How a domain fits together: its load-bearing packages, each with what it carries. */
 export function TopologyList({
+  folderId,
   nodes,
-  locale,
+  t,
   compact = false,
 }: {
+  folderId: string;
   nodes: CapabilityFolder["topology"]["nodes"];
-  locale: Lang;
+  t: PackageCatalogTranslator;
   /** Stacked name over detail, for a narrow column. */
   compact?: boolean;
 }) {
   return (
     <ul className="divide-y divide-border border-y border-border">
-      {nodes.map((node) => (
+      {nodes.map((node, index) => (
         <li
           key={node.label}
           className={
@@ -49,7 +60,9 @@ export function TopologyList({
           <span className="font-mono text-sm text-foreground" translate="no">
             {node.label}
           </span>
-          <span className="text-sm text-muted-foreground">{node.detail[locale]}</span>
+          <span className="text-sm text-muted-foreground">
+            {t(`folders.${folderId}.topology.nodes.${index}`)}
+          </span>
         </li>
       ))}
     </ul>
@@ -61,10 +74,12 @@ export function PackageCard({
   entry,
   href,
   locale,
+  t,
 }: {
   entry: PackageFeatureEntry;
   href: string;
   locale: Lang;
+  t: PackageCatalogTranslator;
 }) {
   const Glyph = getSubpackageGlyph(entry.slug);
   return (
@@ -74,7 +89,11 @@ export function PackageCard({
     >
       {Glyph ? (
         <div className="border-b border-border bg-background/40 p-4">
-          <Glyph entry={toSerializablePackageFeatureEntry(entry)} locale={locale} />
+          <Glyph
+            entry={toSerializablePackageFeatureEntry(entry)}
+            locale={locale}
+            copy={getGlyphCopy(entry.slug, t)}
+          />
         </div>
       ) : null}
       <div className="flex flex-1 flex-col p-5">
@@ -82,7 +101,7 @@ export function PackageCard({
           {entry.label}
         </span>
         <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
-          {getFeatureSummary(entry, locale)}
+          {getFeatureSummary(entry, t)}
         </p>
       </div>
     </Link>
@@ -93,11 +112,11 @@ export function PackageCard({
 export function PackageRows({
   entries,
   hrefFor,
-  locale,
+  t,
 }: {
   entries: PackageFeatureEntry[];
   hrefFor: (entry: PackageFeatureEntry) => string;
-  locale: Lang;
+  t: PackageCatalogTranslator;
 }) {
   return (
     <ul className="divide-y divide-border border-y border-border">
@@ -114,7 +133,7 @@ export function PackageRows({
               {entry.label}
             </span>
             <span className="line-clamp-2 text-sm text-muted-foreground">
-              {getFeatureSummary(entry, locale)}
+              {getFeatureSummary(entry, t)}
             </span>
           </Link>
         </li>
@@ -128,7 +147,15 @@ export function PackageRows({
  * tile spans the row, the next two share it. The glyphs are the real,
  * per-package drawings, so a domain shows what it does before it says it.
  */
-export function GlyphBento({ entries, locale }: { entries: PackageFeatureEntry[]; locale: Lang }) {
+export function GlyphBento({
+  entries,
+  locale,
+  t,
+}: {
+  entries: PackageFeatureEntry[];
+  locale: Lang;
+  t: PackageCatalogTranslator;
+}) {
   const tiles = entries.filter((e) => getSubpackageGlyph(e.slug)).slice(0, 3);
   if (tiles.length === 0) return null;
   return (
@@ -144,7 +171,11 @@ export function GlyphBento({ entries, locale }: { entries: PackageFeatureEntry[]
           >
             <div className="flex flex-1 items-center justify-center bg-background/40 p-5">
               <div className="w-full">
-                <Glyph entry={toSerializablePackageFeatureEntry(entry)} locale={locale} />
+                <Glyph
+                  entry={toSerializablePackageFeatureEntry(entry)}
+                  locale={locale}
+                  copy={getGlyphCopy(entry.slug, t)}
+                />
               </div>
             </div>
             <div className="flex items-center justify-between gap-3 border-t border-border px-4 py-3">

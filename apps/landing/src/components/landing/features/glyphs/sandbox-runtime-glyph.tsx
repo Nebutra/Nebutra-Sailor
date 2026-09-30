@@ -2,8 +2,9 @@
 
 import { Box, Check, LockClosed, Play, Shield } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
+
+type SandboxRuntimeCopy = { footer: string; run: string; lastExec: string };
 
 /**
  * SandboxRuntimeGlyph — Isolated container for untrusted code execution.
@@ -13,12 +14,11 @@ import type { SubpackageGlyphProps } from "./types";
  * Right column: "Run" button mockup + last-exec result cell (time + exit code).
  * Footer: Vercel Sandbox attribution.
  */
-export const SandboxRuntimeGlyph = ({ locale }: SubpackageGlyphProps) => {
-  const footerLabel = isZhUiLocale(locale)
-    ? "Vercel Sandbox · 安全执行不可信代码"
-    : "Vercel Sandbox · safe untrusted";
-  const runLabel = isZhUiLocale(locale) ? "运行" : "Run";
-  const lastExecLabel = isZhUiLocale(locale) ? "上次执行" : "Last exec";
+export const SandboxRuntimeGlyph = ({ copy }: SubpackageGlyphProps) => {
+  const t = copy as SandboxRuntimeCopy;
+  const footerLabel = t.footer;
+  const runLabel = t.run;
+  const lastExecLabel = t.lastExec;
 
   return (
     <div

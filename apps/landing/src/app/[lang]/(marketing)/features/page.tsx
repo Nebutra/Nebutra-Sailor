@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CommandInstallBox } from "@/components/landing/CommandInstallBox";
 import {
   CAPABILITY_FOLDERS,
@@ -9,6 +9,7 @@ import {
   getGroupLabel,
   getPackageFeatureEntry,
   PACKAGE_FEATURE_ENTRIES,
+  type PackageCatalogTranslator,
   type PackageFeatureEntry,
 } from "@/components/landing/features/package-feature-data";
 import {
@@ -18,8 +19,8 @@ import {
 } from "@/components/landing/features/package-parts";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { siteLang } from "@/nebutra/i18n";
 import { sitePageMeta } from "@/nebutra/seo";
 import { Band, Intro } from "@/nebutra/ui/page";
 
@@ -27,6 +28,8 @@ import { Band, Intro } from "@/nebutra/ui/page";
  * The package index: one band per domain, in CAPABILITY_FOLDERS order, each
  * with how it fits together and every package it holds. Every figure is from
  * the generated stats capability-folder-data.test.ts holds to the repository.
+ * Copy lives in the `packageCatalog` i18n namespace
+ * (apps/landing/messages/*.json), read here via getTranslations().
  */
 
 const DOMAINS = PACKAGE_FEATURE_ENTRIES.filter((e) => e.kind !== "package");
@@ -45,15 +48,26 @@ function orderedDomains(): PackageFeatureEntry[] {
   return [...DOMAINS].sort((a, b) => rank(a) - rank(b));
 }
 
+async function packageCatalogT(lang: string): Promise<PackageCatalogTranslator> {
+  return (await getTranslations({
+    locale: lang,
+    namespace: "packageCatalog",
+  })) as unknown as PackageCatalogTranslator;
+}
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
+  const t = await packageCatalogT(lang);
   return buildPageMetadata(
     await sitePageMeta(lang, "/features", {
-      description: `${PACKAGE_COUNT} packages in ${DOMAINS.length} domains — auth, billing, tenancy, AI, integrations and the design system, written, tested and in one repository.`,
+      description: t("page.metaDescription", {
+        packageCount: PACKAGE_COUNT,
+        domainCount: DOMAINS.length,
+      }),
     }),
   );
 }
@@ -61,7 +75,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function FeaturesPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang);
-  const locale = isZhUiLocale(lang) ? "zh" : "en";
+  const locale = siteLang(lang);
+  const t = await packageCatalogT(lang);
 
   return (
     <main id="main-content">
@@ -70,41 +85,28 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
         <div className="relative z-10">
           <Intro
             level={1}
-            title={
-              locale === "zh" ? (
-                <>
-                  每一层，都已经<span className="signature">写好。</span>
-                </>
-              ) : (
-                <>
-                  Every layer, already <span className="signature">written.</span>
-                </>
-              )
-            }
-            cn={locale === "zh" ? undefined : "每一层，都已经写好。"}
-            lead={
-              locale === "zh"
-                ? `${PACKAGE_COUNT} 个包，${DOMAINS.length} 个能力域：一个 SaaS 需要的每一层都写好、测好，放在同一个仓库里。下面逐个能力域展开：它怎么组织，里面有哪些包。`
-                : `${PACKAGE_COUNT} packages in ${DOMAINS.length} domains: every layer a SaaS needs, written, tested and in one repository. Each domain is below, with how it fits together and every package it holds.`
-            }
+            title={t.rich("page.heroTitle", {
+              signature: (chunks) => <span className="signature">{chunks}</span>,
+            })}
+            lead={t("page.heroLead", {
+              packageCount: PACKAGE_COUNT,
+              domainCount: DOMAINS.length,
+            })}
           />
         </div>
       </section>
 
       {orderedDomains().map((domain) => (
-        <DomainBand key={domain.slug} domain={domain} locale={locale} />
+        <DomainBand key={domain.slug} domain={domain} locale={locale} t={t} />
       ))}
 
       <Band>
-        <Intro
-          title="Start from all of it"
-          lead="One command gives you the repository, with every package on this page already wired together."
-        />
+        <Intro title={t("page.startTitle")} lead={t("page.startLead")} />
         <div className="mt-10">
           <CommandInstallBox
             command="npx create-sailor@latest"
-            copyLabel="Copy"
-            copiedLabel="Copied"
+            copyLabel={t("page.install.copyLabel")}
+            copiedLabel={t("page.install.copiedLabel")}
           />
         </div>
       </Band>
@@ -112,7 +114,15 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
   );
 }
 
-function DomainBand({ domain, locale }: { domain: PackageFeatureEntry; locale: "en" | "zh" }) {
+function DomainBand({
+  domain,
+  locale,
+  t,
+}: {
+  domain: PackageFeatureEntry;
+  locale: "en" | "zh";
+  t: PackageCatalogTranslator;
+}) {
   const folder = folderFor(domain);
   const packages = domain.children
     .map((slug) => getPackageFeatureEntry(slug))
@@ -131,28 +141,28 @@ function DomainBand({ domain, locale }: { domain: PackageFeatureEntry; locale: "
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div>
           <Intro
-            title={folder ? folder.title[locale] : getGroupLabel(domain.group, locale)}
-            lead={folder ? folder.summary[locale] : getFeatureSummary(domain, locale)}
+            title={folder ? t(`folders.${folder.id}.title`) : getGroupLabel(domain.group, t)}
+            lead={folder ? t(`folders.${folder.id}.summary`) : getFeatureSummary(domain, t)}
           />
           {folder ? (
-            <p className="mt-6 text-sm text-muted-foreground">{sourceSentence(folder, locale)}</p>
+            <p className="mt-6 text-sm text-muted-foreground">{sourceSentence(folder, t)}</p>
           ) : null}
           {folder ? (
             <div className="mt-10">
-              <TopologyList nodes={folder.topology.nodes} locale={locale} compact />
+              <TopologyList folderId={folder.id} nodes={folder.topology.nodes} t={t} compact />
             </div>
           ) : null}
           <Link
             href={`/features/${domain.slug}`}
             className="mt-8 inline-flex items-center gap-2 text-base text-secondary-foreground transition-colors duration-micro hover:text-foreground"
           >
-            {locale === "zh" ? "进入这个能力域" : "Explore the domain"}
+            {t("page.exploreDomain")}
             <span aria-hidden>→</span>
           </Link>
         </div>
 
         <div className="self-start lg:sticky lg:top-24">
-          <GlyphBento entries={lead} locale={locale} />
+          <GlyphBento entries={lead} locale={locale} t={t} />
         </div>
       </div>
 

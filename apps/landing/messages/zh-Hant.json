@@ -2830,5 +2830,838 @@
       "title": "Playbook — {productName}",
       "description": "Sailor 內建的基礎設施 Demo、實用工具、整合能力與實驗性功能的精選目錄。"
     }
+  },
+  "packageCatalog": {
+    "descriptions": {
+      "audit": "面向 actor/tenant 行動的 hash-chain SHA-256 僅追加審計日誌，SOC 2 級防篡改，支援流式匯出與可回放查詢。",
+      "auth": "基於 Postgres 的 Better Auth — 組織成員關係、裝置碼登入、強制 MFA、session HMAC 簽名。統一身份層，不經第三方廠商。",
+      "captcha": "一個 verify() 後端介面適配 Cloudflare Turnstile / hCaptcha / reCAPTCHA；分路啟用，得分服務端判定，前端無第三方追蹤。",
+      "identity": "統一 actor 原語 — usr_/svc_/api_ ID 空間，角色/成員關係，租戶繫結；所有 iam 子包都從同一個 identity 物件讀取上下文。",
+      "oauth": "自建 OIDC 身份提供方 — 讓第三方應用「用 {brandName} 登入」；授權碼 + PKCE、refresh token 輪換、授權同意，client 存於 Postgres。",
+      "permissions": "RBAC + ABAC 引擎 — CASL 處理程序內 check；服務端 defineAbility()，React 用 <Can /> 包裹。",
+      "tenant": "基於 AsyncLocalStorage 的請求級租戶上下文 + Prisma RLS 橋接；中介軟體解析一次 tenantId，整條呼叫棧自動透傳。",
+      "vault": "客戶金鑰應用層信封加密 — AES-256-GCM、按租戶 DEK、KMS 包裝；解密帶審計記錄,落盤零明文。",
+      "billing": "計費基於 Creem（全球卡組織，交易商戶），另有微信支付 / 支付寶覆蓋中國大陸（或手動開票）；Subscription / Invoice / Customer 介面對所有後端保持一致。",
+      "blog": "各內容面共用的部落格領域規則，與框架無關：PortableText 型別、閱讀時長、相關文章排序、目錄提取。",
+      "contracts": "事件 / 身份 / 計費 / 通知的跨包型別契約；commerce 與 iam、queue、webhooks 之間通訊的共享 TypeScript 邊界。",
+      "license": "License key 生成、校驗、吊銷;Ed25519 簽名、可離線驗證、內建席位與有效期約束。",
+      "marketing": "營銷站點共用原語 — Hero、Pricing、FAQ — landing 與產品營銷面複用，brand tokens 已接入。",
+      "metering": "基於 ClickHouse 的用量計量 — 秒級寫入、按租戶查 quota，可直接接計量計費或產品內額度。",
+      "waitlist": "面向 foundation tier 的預啟動 waitlist — 邀請碼、排隊位置、推薦計數、運營 dashboard。",
+      "cache": "基於 tag 的快取 — Redis / Upstash / 記憶體 三種 backend；serverless 與自託管複用同一 get/set/invalidate(tags) 介面。",
+      "queue": "訊息佇列 — Upstash QStash（serverless），本地開發與測試使用記憶體回退。",
+      "search": "全文 + 向量搜尋 — pgvector（Postgres）；BM25 關鍵詞搜尋與向量餘弦搜尋直接跑在自有資料庫上，無需外部搜尋基礎設施。",
+      "notifications": "多通道通知 — in_app / email / push / sms / chat — 自託管直發通道,按收件人偏好路由。",
+      "webhooks": "出站 webhook 投遞 — 自實現分發,負載簽名、指數退避重試、使用者自助訂閱 portal。",
+      "uploads": "大檔案上傳 — S3 / R2 多段、Tus 斷點續傳、Presigned URL；按檔案大小自動選擇策略。",
+      "storage": "下層物件儲存輔助 — list / copy / ACL / signed read;不需要多段邏輯時替代 @nebutra/uploads。",
+      "email": "渲染 React Email 模板,經 Resend / SES / SMTP 投遞;所有交易郵件統一 sendEmail(template, props, recipient)。",
+      "saga": "分散式事務原語 — 補償動作、重試/回滾 hook、冪等 key;開發中,預設 flag 關閉。",
+      "event-bus": "程序內 pub/sub + 跨應用 fanout;audit / billing / notifications 藉此響應 commerce 事件,避免迴圈依賴。",
+      "sms": "事務 SMS + OTP 校驗 — 全球用 Twilio Verify,中國大陸用阿里雲;統一 send(to, template),按本地號段自動選 provider。",
+      "tts": "TTS 三 provider — OpenAI / ElevenLabs / Azure;流式音訊、voice preset、按租戶限速。",
+      "video-compose": "基於 Remotion 的程式化影片合成 — 由 JSON spec 渲染短片、社媒卡片、品牌 GIF。",
+      "collab": "即時協同原語 — Yjs CRDT、WebSocket 傳輸、presence 游標;多人應用最終都會用上。",
+      "onboarding": "可持久化的多步 onboarding — 每使用者進度、分支流、可做 A/B 步驟門控。",
+      "admin-tooling": "自助式運營 dashboard — 租戶、計費覆寫、feature flag 切換 — 由 @nebutra/permissions 統一鑑權。",
+      "integration-vault": "按租戶的憑證庫，覆蓋 OAuth 整合與 API key — Creem、Gmail OAuth、Notion API;KMS 包裝,自動 refresh 輪換。",
+      "db": "型別化 Prisma client 包裝 — extension 友好、RLS 相容、讀寫分離時按租戶繫結連線。",
+      "prepaid-wallet": "{brandName} Router 與 Forge 的預付餘額與 API key：錢包埠、以 SHA-256 指紋儲存的 sk-sailor- key，以及同時記錄收費與供給成本的用量信封。",
+      "router-supply": "{brandName} Router 的供給路由：模型別名、從環境變數發現引擎，以及在上游失敗時自動回退的供給鏈。",
+      "browser-utils": "每個應用都需要的瀏覽器小工具：在隱私模式和停用站點資料時也不出錯的儲存，以及帶超時的 fetch。",
+      "config": "型別化環境與執行時配置 — boot 時 Zod 校驗,杜絕散落的 process.env 引用,缺 key 立刻失敗。",
+      "logger": "結構化日誌 — pino + Sentry transport;每請求一個 log 物件、breadcrumb 自動聯動、PII 自動剝離。",
+      "health": "所有後端服務的存活 + 就緒探針;把 db / queue / search 等下游聚合進同一份 /healthz 響應。",
+      "errors": "應用錯誤型別分類 — UserError / AuthError / RateLimitError;到 HTTP、日誌、Sentry、產品內 toast 各層對映一致。",
+      "gateway-core": "BFF 原語 — backends/gateway 與 edge handler 共用;中介軟體鏈、路由匹配、header 規整、request-id 透傳。",
+      "rate-limit": "令牌桶限速器 — Upstash Redis / 記憶體;按路由 + 按租戶配置,返回 429 + retry-after,決策可審計。",
+      "repositories": "倉儲模式原語 — findAll / findById / create / update / delete 統一 Repository<T>;換 backend 不動呼叫方。",
+      "tenant-store": "按租戶的 KV 快取 — 快取資料庫查詢太熱的 lookup;租戶設定變更自動失效。",
+      "trace-store": "OpenTelemetry 相容的 span 儲存與查詢層;讓 agent 能跨 iam / billing / webhooks 追蹤一個 tool 呼叫。",
+      "status": "公開狀態頁原語 — incident 時間線、元件圖、訂閱郵件;支援完整狀態頁與可嵌入 widget。",
+      "alerting": "基於 @nebutra/metering 的告警規則與投遞 — 閾值/異常檢測,路由到 PagerDuty / Discord / 產品內 banner。",
+      "analytics": "基於 ClickHouse 的一方產品分析 — 事件寫入、漏斗查詢;營銷站點不載入任何三方指令碼。",
+      "feature-flags": "服務端 + 客戶端 flag 求值器 — GrowthBook / Statsig / 自建;按租戶覆寫、sticky 分桶、暴露為 React hook。",
+      "i18n": "next-intl 橋接 — 執行時 locale、ICU 複數、貨幣/日期 formatter、按路由分包;構建期防止 key 漂移。",
+      "graph-model": "屬性圖模型層 — 用於知識 / 組織 / 資產圖;邊與點用 Zod 定型,可走 Prisma 或 Neo4j adapter。",
+      "provider-factory": "自動探測的 provider 工廠模式 — 由環境變數決定 queue / search / notifications backend,一個 getX() 即可。",
+      "capability-kit": "可組合 capability 原語 — pricing tier ↔ feature flag ↔ quota ↔ UI gating,以單一宣告式 manifest 串聯。",
+      "typelens-catalog": "TypeLens 的資料層：字型作品、搭配與供設計師和設計 agent 使用的提取包。仍在開發中，目錄模型已就緒，種子內容尚未完成。",
+      "fonts": "自託管開源字型：每個應用載入的中文正文字型，以及主題與 DESIGN.md 可引用的 19 款字型登錄檔；不向任何字型 CDN 發請求。",
+      "brand": "品牌原語 — 顏色定義、漸變 token、動效語言;為源資料,不被 app 執行時直接引用。",
+      "tokens": "執行時 CSS 變數 + ThemeProvider — 所有 app 顏色 / 間距 / radius 的單一資料來源;在 globals.css 中 @import。",
+      "design-tokens": "W3C DTCG $value/$type 規範的 token 檔案 + Style Dictionary 4 流水線;輸出 CSS 變數與 JS module，純 Git 編輯，不經設計工具同步往返。",
+      "icons": "541 個 Geist icon,以 tree-shakable TSX 元件分發;單字重 + 光學尺寸,與 Vercel / v0 視覺對齊。",
+      "theme": "純 CSS 多 theme 引擎 — 六套 oklch preset,通過 data-theme 切換;關鍵路徑無 JS。",
+      "ui": "主元件庫 — {brandName} 元件、自研原語、layout、主題橋接與共享 Motion 門面；產品 UI 的 import 邊界。",
+      "design-sync": "純 Git 的設計 token 同步 — token 以倉庫為唯一資料來源,無需再和設計工具做雙向同步。",
+      "forge-dns-leak": "用於真實 DNS 洩漏檢測的權威 DNS 區：訪客遞迴解析器查詢的探針域名按來源 IP 記錄。仍在開發中，需要委派的 DNS 區。",
+      "forge-runtime": "{brandName} Forge 背後的能力登錄檔與呼叫流水線：純函式工具，頁面與 API 同一條呼叫路徑，按積分賬本計費。",
+      "startup-os": "Startup OS 的型別化契約：公司上下文、創始人對話流、執行狀態、生成檔案與釋出閘門。仍在開發中，尚未接入生產應用。",
+      "workflow-runtime": "租戶編寫的工作流（agent()、parallel()、phase()）只在失敗即關閉的沙箱中執行；不可信指令碼永遠不經過 eval、new Function 或 node:vm。",
+      "agents": "多步驟 agent 執行時 — Vercel AI SDK 為底、tool registry、流式 UI、MCP 接入;所有 Sailor agentic 能力的腳手架。",
+      "agent-runtime": "更底層的 agent 執行 — message reducer、tool 呼叫、流式狀態機;@nebutra/agents 在其之上封裝。",
+      "ai-primitives": "所有 AI 包共享的輔助 — token 計數、prompt 模板、stream 解析、退避重試;不依賴具體 provider。",
+      "ai-providers": "Provider 後設資料 — 每百萬 token 單價、context window、模態;驅動模型選擇與成本估算。",
+      "mcp": "Model Context Protocol server 原語 — 註冊 tool、暴露 resource、流式訂閱;可作為 Sailor 內嵌或獨立部署。",
+      "knowledge-rag": "檢索增強生成流水線 — chunk → embed → store → retrieve → rerank;vector store 可插拔。",
+      "knowledge-base": "面向 RAG 的文件庫 + indexer;監聽 S3 / Notion / GitHub 源、排程重嵌入、把新鮮度暴露給 agent。",
+      "knowledge-graph": "基於 @nebutra/graph-model 的實體 + 關係儲存;agent 可直接走 \"客戶 → 發票 → 產品\",無需繞 SQL。",
+      "tool-registry": "執行時 tool catalog — schema、描述、安全等級;在 agent 之間熱插拔,無需重新部署。",
+      "code-execution": "面向 agent 的沙箱程式碼執行 — JS / Python / shell;短生命週期容器、網路隔離、由 @nebutra/permissions 限權。",
+      "sandbox-runtime": "Vercel Sandbox + Lambda + 本地 runner 介面卡;execute() 統一入口,按策略規則選擇。",
+      "browser-control": "面向 agent 的無頭瀏覽器驅動 — Vercel Agent Browser 優先,Playwright 兜底;截圖 / 點選 / 輸入 / 求值。",
+      "generation-context": "Token 預算的上下文視窗管理 — 系統 prompt、RAG、使用者歷史、scratchpad;視窗爆掉時決定淘汰策略。",
+      "local-embedding": "基於 ONNX / WebGPU 的端側 embedding;短文本、隱私敏感、provider 限流時省去往返。",
+      "execution-policy": "決定 agent 任務路由到何處的策略規則 — render → Vercel Sandbox / 長任務 → Lambda / 內部 → local-runner。",
+      "code-index": "面向 agent 的程式碼倉索引 — symbol graph、embedding、檔案 watcher;agent 無需 grep 即可回答 \"X 在哪定義\"。",
+      "voice-realtime": "即時語音迴環 — 輸入 ASR、模型流式、輸出 TTS — 端到端 < 300ms;橋接 OpenAI Realtime + Deepgram + ElevenLabs。",
+      "image-pipeline": "影像生成 + 變換流水線 — provider 路由、水印 + 安全過濾、輸出快取、按租戶 quota。",
+      "audio-pipeline": "音訊處理鏈 — voice clone、降噪、轉寫、摘要;每段以 async iterator 串流。",
+      "video-pipeline": "長影片流水線 — 切片、字幕、b-roll、渲染;長階段通過 queue 轉給 backends/python。",
+      "document-pipeline": "PDF / docx / markdown 攝入 — chunk、表格感知抽取、embed、入 @nebutra/knowledge-base;純圖頁用 OCR 回落。",
+      "3d-pipeline": "3D 資產生成 + 渲染 — 文生 mesh + USD 匯出 + Three.js 預覽;backend 走 GPU pool 路由。",
+      "cli": "`nebutra` CLI — 腳手架功能、遷移、租戶檢視、部署 preset;CI 用的是同一份二進位制。",
+      "create-sailor": "`create-sailor` 腳手架 — 一條命令,跑得起來的多租戶 SaaS,自帶 auth + billing + dashboard。",
+      "preset": "基於 feature 的 SaaS 配置系統;在單個配置檔案中直接開關 apps 與 features,組裝你的 stack。",
+      "sanity": "Sanity Studio v4 輔助 — schema 生成器、內容驅動的 page builder、與影像流水線整合。",
+      "china-compliance": "中國區運營支援 — ICP 備案輔助、工信部登記、實名認證、資料境記憶體儲。",
+      "content-store": "Headless CMS 介面卡 — Sanity / Strapi / Notion 統一為一個 ContentEntry<T> 讀 API;驅動營銷頁面與產品文案。",
+      "play-loader": "Atelier play 的熱過載 loader — 沙箱 iframe、訊息橋、儲存即持久化。",
+      "play-marketplace": "可分享 atelier play 的市場殼 — 發現、評分、安裝、署名。",
+      "access-gate": "上線前訪問閘門 — 邀請碼核銷、排隊位置、分批放量;在 @nebutra/waitlist 之上疊加。",
+      "atelier-canvas": "無限設計畫布 — 多人游標、圖層面板、frame 匯出;所有 atelier play 的繪製載體。",
+      "brand-genesis": "品牌生成流 — 選調色盤 / 字組合 / 動效 preset,產出同步的 @nebutra/brand 覆寫與 Figma 預覽連結。",
+      "cinema": "Atelier 電影模式 — 全屏沉浸 + 計時場景播放;最適合 demo play 或排練 pitch。",
+      "cofounder-match": "按技能 + 階段匹配 cofounder — 短表單後輸出排序候選,標註共同興趣與可信引薦路徑。",
+      "ecosystem-safety": "上線前安全自檢 — license 掃描、依賴漏洞審計、違禁內容檢測;在 play 進市場前暴露阻塞項。",
+      "event-log": "通用事件日誌原語 — append、查詢、時間窗聚合;為 audit / analytics / trace-store 提供底層記錄。",
+      "founder-cemetery": "失敗創業紀念館 — 匿名化復盤 + 失敗原因 tag;只讀目錄,作為高頻失敗模式 dashboard 的資料來源。",
+      "idea-plaza": "公開 idea 廣場 — 提交、點贊、評論;atelier play 在創始人問 \"做什麼\" 時的種子池。",
+      "landing-builder": "積木式落地頁生成器 — 拖動預設 section、原位改文案、一鍵發到子域名。",
+      "legal": "法律實體原語 — 公司註冊、代理人、按管轄區生成 ToS/Privacy;為 @nebutra/preset 的法律部分供給。",
+      "outreach-engine": "Cold-outreach 排程器 — 名單去重、按 persona 撰寫、SES/Resend 投遞、自動識別回覆;熱回覆回灌 @nebutra/agents。",
+      "reel": "豎屏短影片原語 — 抓取 atelier 高光、走 TTS 流水線自動加字幕、發到社媒通道。",
+      "support-deflector": "內嵌 AI 客服層 — 從文件與歷史工單回答,先省一輪人工;無法解決時攜完整記錄轉人工。",
+      "time-machine": "專案歷史回看器 — 每次儲存打 snapshot、可從任一歷史幀拉新 play、雙 snapshot 對比 diff。"
+    },
+    "groups": {
+      "ai": {
+        "label": "AI 執行時",
+        "summary": "把智慧體迴圈、RAG、工具協議、沙箱執行和多模態流水線收束到應用外部。"
+      },
+      "commerce": {
+        "label": "商業化",
+        "summary": "把訪問、計費、合同、license、營銷和用量計量放在同一商業邊界內。"
+      },
+      "design": {
+        "label": "設計系統",
+        "summary": "把品牌、tokens、icons、theme、UI primitive 和設計同步組織成一條供應鏈。"
+      },
+      "gateway": {
+        "label": "閘道器",
+        "summary": "把 BFF、鑑權、租戶、限流、OpenAPI 和路由契約放在請求入口處。"
+      },
+      "iam": {
+        "label": "身份與信任",
+        "summary": "把認證、身份、許可權、租戶、審計和金鑰行為收束到同一個信任邊界。"
+      },
+      "integrations": {
+        "label": "整合",
+        "summary": "把快取、佇列、搜尋、訊息、儲存、上傳和 webhook 作為可替換連線層。"
+      },
+      "ops": {
+        "label": "運維",
+        "summary": "把 CLI、預設、CMS、Supabase 和合規支援放在釋出與運維邊界。"
+      },
+      "platform": {
+        "label": "平臺",
+        "summary": "把資料庫、配置、健康檢查、倉儲、trace、限流和租戶鎖放在最低共享層。"
+      }
+    },
+    "folders": {
+      "ai": {
+        "title": "AI 執行時與智慧體底座",
+        "titleCn": "AI 執行時與智慧體底座",
+        "summary": "這是一個生產級 AI 域：智慧體迴圈、工具協議、RAG、本地執行、供應商後設資料與多模態流水線都被收束在應用之外。",
+        "signature": {
+          "label": "AI 包",
+          "detail": "220 個執行時原始碼檔案與 117 個測試，重心落在 agent-runtime、knowledge-rag、reel、graph 與 execution policy。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "智慧體工作臺拓撲",
+          "caption": "一個核心迴圈協調模型呼叫、上下文、工具、記憶、執行與媒體生產。",
+          "nodes": {
+            "0": "durable turns、工具、命令、hooks、subagents",
+            "1": "檢索、切塊、本地 embedding、content-store",
+            "2": "工具目錄與協議橋接",
+            "3": "型別化媒體圖與 storyboard 執行",
+            "4": "一個 router 後的執行供應商",
+            "5": "只放後設資料；執行時留在 agents"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "agent-runtime 測試",
+            "detail": "dispatcher、hooks、durable turn、命令、rollout store"
+          },
+          "1": {
+            "label": "RAG 測試",
+            "detail": "檢索契約與 ingestion 行為"
+          },
+          "2": {
+            "label": "README 面",
+            "detail": "多數 AI 能力有包級文件"
+          }
+        },
+        "owns": {
+          "0": "@nebutra/agents 作為統一模型執行面",
+          "1": "RAG、程式碼索引、知識圖譜、內容庫與工具註冊中心",
+          "2": "影像、影片、音訊、語音、沙箱與瀏覽器自動化流水線"
+        },
+        "boundaries": {
+          "0": "應用只消費穩定包 API，不擁有供應商路由。",
+          "1": "多媒體工作流依賴注入介面卡，而不是硬編碼廠商。"
+        },
+        "proof": {
+          "0": "agents、knowledge-rag、reel、agent-runtime 的包級測試",
+          "1": "AI primitive ownership 與 runtime dependency 架構測試"
+        }
+      },
+      "platform": {
+        "title": "平臺控制平面",
+        "titleCn": "平臺控制平面",
+        "summary": "最低層共享能力：資料庫、配置、供應商選擇、租戶鎖、gateway-core 契約、健康檢查、限流、trace 與倉儲邊界。",
+        "signature": {
+          "label": "基礎包",
+          "detail": "166 個執行時原始碼檔案覆蓋 db、gateway-core、provider-factory、tenant-store、trace-store、config、errors 與可觀測性。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "只能向下依賴的平臺棧",
+          "caption": "功能包站在這層之上；平臺包不把產品邏輯拉進來。",
+          "nodes": {
+            "0": "Prisma v7、schema 策略、生成指令碼",
+            "1": "按租戶序列化與 scoped stores",
+            "2": "explicit/env/detect/fallback 供應商解析",
+            "3": "Hono backend 之下的共享 gateway 契約",
+            "4": "agent、tool、LLM span 的非同步 trace"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "db 原始碼檔案",
+            "detail": "schema、client、seed、生成邊界"
+          },
+          "1": {
+            "label": "本地 AGENTS 契約",
+            "detail": "包級所有權規則"
+          },
+          "2": {
+            "label": "gateway-core 測試",
+            "detail": "後端路由之下的共享 gateway 行為"
+          }
+        },
+        "owns": {
+          "0": "Prisma schema、資料庫客戶端、遷移與多 schema 策略",
+          "1": "租戶鎖、trace store、健康檢查、配置、錯誤與限流",
+          "2": "上層包複用的 provider factory 與 repository 邊界"
+        },
+        "boundaries": {
+          "0": "平臺包不承載應用專屬 UI 或產品文案。",
+          "1": "功能包向下依賴平臺，平臺不反向匯入功能域。"
+        },
+        "proof": {
+          "0": "schema drift audit、db generate 與架構依賴測試",
+          "1": "tenant-store 與 trace-store 的包級 doctor/debug 命令"
+        }
+      },
+      "iam": {
+        "title": "身份、訪問與租戶信任",
+        "titleCn": "身份、訪問與租戶信任",
+        "summary": "基於 Better Auth 的認證、租戶上下文、許可權門禁、審計、驗證碼、OAuth 與加密 vault 行為被放在同一個信任邊界裡。",
+        "signature": {
+          "label": "信任測試",
+          "detail": "供應商抽象、審計、租戶、許可權、OAuth 與 vault 測試防止 auth 行為漂移進應用。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "信任走廊",
+          "caption": "每個產品動作都應按身份、租戶、許可權、審計、金鑰邊界的順序通過。",
+          "nodes": {
+            "0": "基於 Postgres 的 Better Auth，session 鑑權",
+            "1": "租戶上下文與組織作用域",
+            "2": "RBAC 與 resource-action scopes",
+            "3": "敏感操作軌跡",
+            "4": "本地與 KMS-backed 金鑰儲存"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "auth 測試",
+            "detail": "供應商契約行為"
+          },
+          "1": {
+            "label": "本地 AGENTS 檔案",
+            "detail": "每個 IAM 包都有所有權說明"
+          },
+          "2": {
+            "label": "tenant 測試",
+            "detail": "組織上下文與租戶策略"
+          }
+        },
+        "owns": {
+          "0": "Better Auth 的 session/身份介面，內建裝置碼登入與組織成員關係",
+          "1": "許可權門禁、租戶上下文、審計事件與 vault 儲存",
+          "2": "外部身份流的 OAuth server 與 captcha 邊界"
+        },
+        "boundaries": {
+          "0": "UI 檢查呼叫 IAM 契約，不重新實現授權邏輯。",
+          "1": "金鑰與審計行為不洩漏到應用本地 helper。"
+        },
+        "proof": {
+          "0": "認證供應商抽象測試與許可權概念文件",
+          "1": "AGENTS.md 契約中的 audit 與 tenant 包邊界"
+        }
+      },
+      "design": {
+        "title": "設計系統供應鏈",
+        "titleCn": "設計系統供應鏈",
+        "summary": "品牌資產、DTCG tokens、Tailwind v4 theme 匯出、Geist icons、UI primitives、registry build 與 git-only/design-md sync 構成一條流水線。",
+        "signature": {
+          "label": "已封裝 Geist 圖示",
+          "detail": "@nebutra/icons 自身就有 543 個原始碼檔案；設計系統天然是原始碼密集型。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "Token 到應用的供應鏈",
+          "caption": "一個事實，一個 owner：顏色、圖示、元件與 registry 經由受控包邊界流動。",
+          "nodes": {
+            "0": "W3C DTCG 單一事實源",
+            "1": "CSS 變數與 ThemeProvider 入口",
+            "2": "Tailwind v4 @theme 與 data-theme selectors",
+            "3": "Geist 圖示 React 包",
+            "4": "primitives、layouts、registry、治理測試"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "UI 原始碼檔案",
+            "detail": "primitives、layout shells、registry scripts"
+          },
+          "1": {
+            "label": "design-sync 測試",
+            "detail": "git-only、design-md、IO、detect"
+          },
+          "2": {
+            "label": "AGENTS 契約",
+            "detail": "token、theme、brand、icons、UI、sync 所有權"
+          }
+        },
+        "owns": {
+          "0": "CSS 變數令牌、oklch 主題、品牌原語與生成資產",
+          "1": "可複用 primitives、佈局殼、registry manifest 與 Storybook 表面",
+          "2": "設計同步指令碼與 UI 治理策略測試"
+        },
+        "boundaries": {
+          "0": "落地頁組合設計包，不 fork primitives。",
+          "1": "令牌變更通過 brand sync 流動，而不是一次性 hex 覆蓋。"
+        },
+        "proof": {
+          "0": "React Doctor、Storybook registry 生成與 token sync 檢查",
+          "1": "design-docs 元件頁與治理測試"
+        }
+      },
+      "integrations": {
+        "title": "整合執行時層",
+        "titleCn": "整合執行時層",
+        "summary": "佇列、快取、事件匯流排、郵件、上傳、儲存、搜尋、簡訊、通知、Webhook、協作與供應商 vault 共享同一條介面卡線路。",
+        "signature": {
+          "label": "介面卡包",
+          "detail": "最偏執行時的一條線：queue 有 10 個測試，notifications 5 個，email/uploads/webhooks 各 3 個。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "埠與介面卡匯流排",
+          "caption": "傳輸細節集中在這裡，使 AI、commerce 與 app 包呼叫穩定 port，而不是直接碰 vendor SDK。",
+          "nodes": {
+            "0": "持久投遞與 worker 契約",
+            "1": "快取供應商邊界",
+            "2": "Resend、Console 傳輸",
+            "3": "上傳校驗與 storage handoff",
+            "4": "簽名校驗與投遞",
+            "5": "按租戶分割槽的 CRDT rooms"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "queue 測試",
+            "detail": "投遞、重試與 worker 行為"
+          },
+          "1": {
+            "label": "README 面",
+            "detail": "介面卡用法保留在包級文件"
+          },
+          "2": {
+            "label": "AGENTS 契約",
+            "detail": "每個 integration 的執行邊界"
+          }
+        },
+        "owns": {
+          "0": "快取、佇列、事件匯流排、saga、通知、onboarding 與 webhooks",
+          "1": "搜尋、儲存、上傳、簡訊、TTS、影片合成與 integration vault",
+          "2": "面向供應商的介面卡，避免應用直接依賴 vendor SDK"
+        },
+        "boundaries": {
+          "0": "業務工作流呼叫 integration port，供應商細節留在這裡。",
+          "1": "AI 與 commerce 包複用介面卡，但不擁有傳輸程式碼。"
+        },
+        "proof": {
+          "0": "queue、cache、webhook、search 包級測試",
+          "1": "後臺任務文件與執行時 smoke checks"
+        }
+      },
+      "commerce": {
+        "title": "商業系統記錄源",
+        "titleCn": "商業系統記錄源",
+        "summary": "訪問門禁、計費供應商、訂閱、用量、credits、metering、license、contracts、legal 內容、marketing 與 waitlist 構成商業域。",
+        "signature": {
+          "label": "商業包",
+          "detail": "billing 最大，但 access-gate、blog、license、legal、metering 與 waitlist 保持相鄰商業事實分離。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "商業賬本分道",
+          "caption": "每條 lane 擁有不同事實：訪問、發票、用量、許可證、法務或獲客。",
+          "nodes": {
+            "0": "受控 SaaS 訪問的邀請生命週期",
+            "1": "Creem、ChinaPay、credits、manual",
+            "2": "用量記錄與 billing handoff",
+            "3": "簽發、校驗、生命週期事件",
+            "4": "政策內容與合規表面"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "billing 測試",
+            "detail": "checkout factory、readiness、credit webhook、metering"
+          },
+          "1": {
+            "label": "metering 測試",
+            "detail": "用量記賬邊界"
+          },
+          "2": {
+            "label": "license 測試",
+            "detail": "簽發與校驗生命週期"
+          }
+        },
+        "owns": {
+          "0": "計費供應商介面卡、訂閱生命週期與計量契約",
+          "1": "訪問門禁邀請、許可證、法務內容、營銷原語與 waitlist",
+          "2": "應用可暴露但不可重新定義的商業邊界"
+        },
+        "boundaries": {
+          "0": "落地頁文案可連結商業契約，但不擁有計價行為。",
+          "1": "認證與計費通過租戶標識連線，而不是共享 UI 狀態。"
+        },
+        "proof": {
+          "0": "access-gate 生命週期測試與 package status 文件",
+          "1": "billing model 文件與 release-surface 校驗"
+        }
+      },
+      "gateway": {
+        "title": "型別化 API 閘道器邊界",
+        "titleCn": "型別化 API 閘道器邊界",
+        "summary": "Hono 後端負責 request context、安全中介軟體、租戶提取、冪等、用量計量、路由組、OpenAPI 生成與非同步 Inngest jobs。",
+        "signature": {
+          "label": "gateway 測試",
+          "detail": "覆蓋 billing 冪等、RBAC、middleware、queue delivery、events、health、notifications 與 AI gateway routes。"
+        },
+        "sourceStats": {
+          "unitLabel": "後端"
+        },
+        "topology": {
+          "title": "請求到契約路徑",
+          "caption": "route code 只是可見部分；真正的邊界是路由前後按序執行的策略鏈。",
+          "nodes": {
+            "0": "trace ID、關聯、依賴注入",
+            "1": "安全頭、動態 CORS、token bucket",
+            "2": "租戶提取、mutation 去重",
+            "3": "admin、ai、billing、events、legal、webhooks",
+            "4": "型別客戶端與後臺同步 jobs"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "原始碼檔案",
+            "detail": "routes、middleware、services、clients、adapters"
+          },
+          "1": {
+            "label": "非同步 jobs",
+            "detail": "billing sync、GDPR deletion、tenant provisioning、user sync"
+          },
+          "2": {
+            "label": "契約輸出",
+            "detail": "generate:spec 與 typed API clients"
+          }
+        },
+        "owns": {
+          "0": "BFF 路由、OpenAPI 生成、中介軟體順序與租戶提取",
+          "1": "閘道器級限流、冪等、審計日誌與版本化",
+          "2": "web 與生成客戶端消費的型別化 API 契約"
+        },
+        "boundaries": {
+          "0": "後端策略位於 middleware，不在每條 route 中重複。",
+          "1": "應用不繞過 gateway 執行租戶敏感操作。"
+        },
+        "proof": {
+          "0": "OpenAPI 生成、gateway route 測試與 release 驗證指令碼",
+          "1": "api-reference 文件與 dashboard typed-client 整合"
+        }
+      }
+    },
+    "page": {
+      "heroTitle": "每一層，都已經<signature>寫好。</signature>",
+      "heroLead": "{packageCount} 個包，{domainCount} 個能力域：一個 SaaS 需要的每一層都寫好、測好，放在同一個倉庫裡。下面逐個能力域展開：它怎麼組織，裡面有哪些包。",
+      "metaDescription": "{packageCount} 個包，{domainCount} 個能力域 — 認證、計費、租戶、AI、整合與設計系統，寫好、測好，放在同一個倉庫裡。",
+      "exploreDomain": "進入這個能力域",
+      "startTitle": "從這一切開始",
+      "startLead": "一條命令給你整個倉庫，這個頁面上的每個包都已經接好線。",
+      "install": {
+        "copyLabel": "複製",
+        "copiedLabel": "已複製"
+      },
+      "allPackages": "全部功能包",
+      "docs": "文件",
+      "source": "原始碼",
+      "inCode": "程式碼裡",
+      "owns": "它負責什麼",
+      "stops": "它的邊界",
+      "proof": "怎麼證明它能用",
+      "packages": "功能包",
+      "packagesCount": "{path} 下的 {count} 個包。",
+      "moreInDomain": "{domain}裡的其他包",
+      "allPackagesInDomain": "全部 {count} 個包",
+      "sourceSentence": "{path} 下有 {count} 個{unit}、{sourceFiles} 個原始碼檔案、{testFiles} 個測試檔案。"
+    },
+    "glyphs": {
+      "sms": {
+        "message": "您的 {brandName} 驗證碼是 8472，5 分鐘後過期。",
+        "delivered": "已送達"
+      },
+      "audio-pipeline": {
+        "steps": {
+          "0": "轉寫",
+          "1": "降噪",
+          "2": "母帶"
+        }
+      },
+      "code-execution": {
+        "footer": "Vercel Sandbox · 安全執行不可信程式碼",
+        "executed": "47ms 內執行完成"
+      },
+      "document-pipeline": {
+        "steps": {
+          "0": {
+            "label": "PDF",
+            "meta": "上傳"
+          },
+          "1": {
+            "label": "OCR",
+            "meta": "47頁"
+          },
+          "2": {
+            "label": "切塊",
+            "meta": "248"
+          },
+          "3": {
+            "label": "向量化",
+            "meta": ""
+          }
+        },
+        "docs": {
+          "0": {
+            "age": "2分鐘前",
+            "pages": "47頁",
+            "chunks": "248塊"
+          },
+          "1": {
+            "age": "12分鐘前",
+            "pages": "12頁",
+            "chunks": "84塊"
+          }
+        },
+        "processed": "已處理"
+      },
+      "ecosystem-safety": {
+        "title": "防護已開啟",
+        "layersCount": "4 層",
+        "layers": {
+          "0": {
+            "label": "內容稽核",
+            "stat": "今日 0 攔截"
+          },
+          "1": {
+            "label": "PII 脫敏",
+            "stat": "今日脫敏 12"
+          },
+          "2": {
+            "label": "注入檢測",
+            "stat": "今日捕獲 2"
+          },
+          "3": {
+            "label": "按主體限流",
+            "stat": "正常"
+          }
+        },
+        "footer": "OpenAI Moderation · 正則 + LLM 閘道器"
+      },
+      "notifications": {
+        "rows": {
+          "0": {
+            "title": "已收到付款"
+          },
+          "1": {
+            "title": "新隊友加入"
+          },
+          "2": {
+            "title": "觸發限流"
+          }
+        }
+      },
+      "onboarding": {
+        "steps": {
+          "0": "賬戶",
+          "1": "工作區",
+          "2": "邀請",
+          "3": "首次操作"
+        },
+        "footnote": "即將完成",
+        "count": "3 / 4"
+      },
+      "outreach-engine": {
+        "campaign": "Q4 企業級外聯",
+        "status": "執行中 · 47 位潛在客戶",
+        "sent": "已發",
+        "open": "開啟",
+        "reply": "回覆",
+        "steps": {
+          "0": "第 1 天 · 自我介紹",
+          "1": "第 3 天 · 案例",
+          "2": "第 7 天 · 邀約 Demo",
+          "3": "第 14 天 · 跟進"
+        }
+      },
+      "sandbox-runtime": {
+        "footer": "Vercel Sandbox · 安全執行不可信程式碼",
+        "run": "執行",
+        "lastExec": "上次執行"
+      }
+    },
+    "showcases": {
+      "auth": {
+        "active": "已啟用",
+        "providers": {
+          "0": {
+            "label": "使用 Passkey 登入"
+          },
+          "1": {
+            "label": "使用 Google 登入"
+          },
+          "2": {
+            "label": "使用 GitHub 登入"
+          },
+          "3": {
+            "label": "使用裝置碼登入"
+          },
+          "4": {
+            "label": "使用魔法連結登入"
+          }
+        },
+        "cta": "登入",
+        "description": "一個認證提供方，覆蓋所有需要的登入方式 — Better Auth，不經第三方廠商。",
+        "email": "郵箱",
+        "or": "或使用郵箱登入",
+        "password": "密碼",
+        "stats": "Better Auth · 支援 SSO · 強制 MFA",
+        "title": "登入 {brandName}"
+      },
+      "db": {
+        "headerLabel": "查詢 · packages/platform/db",
+        "rlsEnforced": "已啟用",
+        "resultsTitle": "查詢結果",
+        "resultsSubtitle": "通過行級安全按租戶隔離",
+        "visibleLabel": "可見行",
+        "hiddenLabel": "RLS 隱藏",
+        "visibleHint": "tenant_a 內",
+        "hiddenHint": "其他租戶",
+        "hiddenNote": "RLS 在資料庫層遮蔽其他租戶的行，應用永遠看不到它們。"
+      },
+      "gateway-core": {
+        "stops": {
+          "0": "租戶解析",
+          "1": "限流檢查",
+          "2": "冪等性",
+          "3": "認證",
+          "4": "路由處理",
+          "5": "響應封裝"
+        },
+        "totalLabel": "總延遲",
+        "lifecycle": "中介軟體生命週期",
+        "okLabel": "已通過",
+        "rps": "每秒請求",
+        "p50": "p50 延遲",
+        "p95": "p95 延遲",
+        "gaugeLabel": "成功率",
+        "success": "成功"
+      },
+      "metering": {
+        "kpis": {
+          "0": {
+            "label": "API 呼叫"
+          },
+          "1": {
+            "label": "AI tokens"
+          },
+          "2": {
+            "label": "儲存"
+          },
+          "3": {
+            "label": "活躍使用者"
+          }
+        },
+        "meterRows": {
+          "0": {
+            "tier": "Pro · $0.001/次"
+          },
+          "1": {
+            "tier": "Pro · 按量"
+          },
+          "2": {
+            "tier": "Pro · 含 50 GB"
+          },
+          "3": {
+            "tier": "Pro · 席位"
+          }
+        },
+        "capLabel": "上限",
+        "footer": "ClickHouse 即時聚合 · ≤ 800ms p99",
+        "meterLabel": "計量項",
+        "of": "/",
+        "pctLabel": "使用率",
+        "realtime": "即時",
+        "tierLabel": "計費檔位",
+        "title": "用量計量",
+        "usedLabel": "本期用量"
+      },
+      "queue": {
+        "jobs": {
+          "0": {
+            "relative": "剛剛"
+          },
+          "1": {
+            "relative": "12 秒前"
+          },
+          "2": {
+            "relative": "48 秒前"
+          },
+          "3": {
+            "relative": "1 分鐘前"
+          },
+          "4": {
+            "relative": "2 分鐘前"
+          },
+          "5": {
+            "relative": "3 分鐘前"
+          }
+        },
+        "statusMeta": {
+          "failed": "失敗",
+          "pending": "等待中",
+          "processing": "執行中",
+          "success": "成功"
+        },
+        "attempts": "重試",
+        "duration": "耗時",
+        "queue": "佇列",
+        "status": "狀態",
+        "throughput": "吞吐量",
+        "success": "成功率",
+        "when": "時間",
+        "rate": "條/分鐘",
+        "latency": "平均延遲",
+        "healthy": "執行正常",
+        "last60": "過去 60 分鐘",
+        "live": "即時重新整理 · QStash"
+      },
+      "search": {
+        "results": {
+          "0": {
+            "title": "Billing v2 遷移手冊",
+            "excerpt": "從舊版發票遷移到新計量管道的逐步流程。"
+          },
+          "1": {
+            "title": "針對 billing 租戶的遷移清單",
+            "excerpt": "切換前請確認 RLS、金鑰輪換和 webhook 回填。"
+          },
+          "2": {
+            "title": "Creem + 微信支付 billing 介面卡筆記",
+            "excerpt": "同一套計費契約讓客戶程式碼在兩條支付通道上保持穩定。"
+          },
+          "3": {
+            "title": "零停機 migration 模式",
+            "excerpt": "雙寫、影子讀取、最後切換——同樣適用於 billing 資料。"
+          }
+        },
+        "placeholder": "搜尋文件、帖子、更新日誌……",
+        "indexLabel": "索引",
+        "tagsLabel": "標籤",
+        "footer": "檢索 {count} 篇文件 用時 {ms} · Postgres 後端",
+        "relevance": "得分"
+      },
+      "webhooks": {
+        "deliveries": {
+          "0": {
+            "timestamp": "2 分鐘前"
+          },
+          "1": {
+            "timestamp": "5 分鐘前"
+          },
+          "2": {
+            "timestamp": "剛剛"
+          },
+          "3": {
+            "timestamp": "12 分鐘前"
+          },
+          "4": {
+            "timestamp": "1 小時前"
+          }
+        },
+        "active": "活躍",
+        "attempts": "嘗試次數",
+        "code": "狀態碼",
+        "delivered": "上次投遞 2 分鐘前",
+        "event": "事件",
+        "footer": "99.2% 成功 · p95 248ms · HMAC 簽名",
+        "latency": "延遲",
+        "retry": "重試中",
+        "status": "狀態",
+        "title": "最近投遞",
+        "when": "時間"
+      }
+    }
   }
 }

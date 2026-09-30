@@ -12,6 +12,13 @@ import type { SerializablePackageFeatureEntry } from "../package-feature-data";
 export type PackageShowcaseProps = {
   entry: SerializablePackageFeatureEntry;
   locale: "en" | "zh";
+  /**
+   * Pre-resolved copy for the showcase's own labels/rows, built server-side
+   * from `packageCatalog.showcases.<slug>.*` via `getShowcaseCopy()` —
+   * showcases are Client Components, so they read strings from this prop
+   * instead of calling next-intl themselves.
+   */
+  copy?: Record<string, unknown>;
 };
 
 export type PackageShowcase = (props: PackageShowcaseProps) => ReactElement;

@@ -12,11 +12,9 @@ import {
   TableHeader,
   TableRow,
 } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
-type Bilingual = { en: string; zh: string };
 type ProgressTone = "warning" | "success" | undefined;
 type TierVariant = "blue-subtle" | "purple-subtle" | "teal-subtle" | "gray-subtle";
 
@@ -25,108 +23,43 @@ type Kpi = {
   format: "compact" | "raw";
   icon: typeof BarChart;
   id: string;
-  label: Bilingual;
-  unit?: Bilingual;
+  unit?: string;
   used: number;
 };
 
-type MeterRow = { cap: number; meter: string; tier: Bilingual; tone: TierVariant; used: number };
+type MeterRow = { cap: number; meter: string; tone: TierVariant; used: number };
 
 const KPIS: Kpi[] = [
-  {
-    cap: 10_000,
-    format: "raw",
-    icon: BarChart,
-    id: "api_calls",
-    label: { en: "API calls", zh: "API 调用" },
-    used: 4521,
-  },
-  {
-    cap: 2_000_000,
-    format: "compact",
-    icon: Lightning,
-    id: "ai_tokens",
-    label: { en: "AI tokens", zh: "AI tokens" },
-    used: 847_000,
-  },
-  {
-    cap: 50,
-    format: "raw",
-    icon: Database,
-    id: "storage",
-    label: { en: "Storage", zh: "存储" },
-    unit: { en: "GB", zh: "GB" },
-    used: 12,
-  },
-  {
-    cap: 100,
-    format: "raw",
-    icon: Users,
-    id: "active_users",
-    label: { en: "Active users", zh: "活跃用户" },
-    used: 38,
-  },
+  { cap: 10_000, format: "raw", icon: BarChart, id: "api_calls", used: 4521 },
+  { cap: 2_000_000, format: "compact", icon: Lightning, id: "ai_tokens", used: 847_000 },
+  { cap: 50, format: "raw", icon: Database, id: "storage", unit: "GB", used: 12 },
+  { cap: 100, format: "raw", icon: Users, id: "active_users", used: 38 },
 ];
 
 const METER_ROWS: MeterRow[] = [
-  {
-    cap: 10_000,
-    meter: "api_calls",
-    tier: { en: "Pro · $0.001/call", zh: "Pro · $0.001/次" },
-    tone: "blue-subtle",
-    used: 4521,
-  },
-  {
-    cap: 2_000_000,
-    meter: "ai_tokens",
-    tier: { en: "Pro · metered", zh: "Pro · 按量" },
-    tone: "purple-subtle",
-    used: 847_000,
-  },
-  {
-    cap: 50_000_000_000,
-    meter: "storage_bytes",
-    tier: { en: "Pro · 50 GB incl.", zh: "Pro · 含 50 GB" },
-    tone: "teal-subtle",
-    used: 12_000_000_000,
-  },
-  {
-    cap: 100,
-    meter: "active_seats",
-    tier: { en: "Pro · seat-based", zh: "Pro · 席位" },
-    tone: "gray-subtle",
-    used: 38,
-  },
+  { cap: 10_000, meter: "api_calls", tone: "blue-subtle", used: 4521 },
+  { cap: 2_000_000, meter: "ai_tokens", tone: "purple-subtle", used: 847_000 },
+  { cap: 50_000_000_000, meter: "storage_bytes", tone: "teal-subtle", used: 12_000_000_000 },
+  { cap: 100, meter: "active_seats", tone: "gray-subtle", used: 38 },
 ];
 
-const COPY = {
-  en: {
-    capLabel: "Cap",
-    footer: "Aggregated in ClickHouse · realtime · ≤ 800ms p99",
-    meterLabel: "Meter",
-    of: "of",
-    package: "@nebutra/metering",
-    pctLabel: "% used",
-    planPro: "Pro",
-    realtime: "live",
-    tierLabel: "Pricing tier",
-    title: "Usage metering",
-    usedLabel: "Period usage",
-  },
-  zh: {
-    capLabel: "上限",
-    footer: "ClickHouse 实时聚合 · ≤ 800ms p99",
-    meterLabel: "计量项",
-    of: "/",
-    package: "@nebutra/metering",
-    pctLabel: "使用率",
-    planPro: "Pro",
-    realtime: "实时",
-    tierLabel: "计费档位",
-    title: "用量计量",
-    usedLabel: "本期用量",
-  },
-} as const;
+type MeteringCopy = {
+  kpis: Record<string, { label: string }>;
+  meterRows: Record<string, { tier: string }>;
+  capLabel: string;
+  footer: string;
+  meterLabel: string;
+  of: string;
+  pctLabel: string;
+  realtime: string;
+  tierLabel: string;
+  title: string;
+  usedLabel: string;
+};
+
+// Same on every locale — package name and plan name are not translatable copy.
+const PACKAGE_NAME = "@nebutra/metering";
+const PLAN_PRO = "Pro";
 
 function tone(pct: number): ProgressTone {
   if (pct >= 80) return "warning";
@@ -135,7 +68,7 @@ function tone(pct: number): ProgressTone {
 }
 
 function formatNumber(value: number, locale: "en" | "zh", compact = false): string {
-  return new Intl.NumberFormat(isZhUiLocale(locale) ? "zh-CN" : "en-US", {
+  return new Intl.NumberFormat(locale === "zh" ? "zh-CN" : "en-US", {
     notation: compact ? "compact" : "standard",
     maximumFractionDigits: 1,
   }).format(value);
@@ -145,8 +78,8 @@ function pct(used: number, cap: number): number {
   return Math.round((used / cap) * 100);
 }
 
-export function MeteringShowcase({ locale }: PackageShowcaseProps) {
-  const t = COPY[locale];
+export function MeteringShowcase({ locale, copy }: PackageShowcaseProps) {
+  const t = copy as MeteringCopy;
   const fmt = (n: number, compact = false) => formatNumber(n, locale, compact);
 
   return (
@@ -154,14 +87,14 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
       <header className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
           <BarChart className="size-4" aria-hidden="true" />
-          <span>{t.package}</span>
+          <span>{PACKAGE_NAME}</span>
         </div>
         <div className="flex items-center gap-2">
           <Badge size="sm" variant="gray-subtle">
             <span className="font-mono">tenant_org_abc123</span>
           </Badge>
           <Badge size="sm" variant="blue-subtle">
-            {t.planPro}
+            {PLAN_PRO}
           </Badge>
           <Badge size="sm" variant="green-subtle">
             <Clock aria-hidden="true" />
@@ -171,11 +104,12 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
       </header>
 
       <ul className="grid grid-cols-2 gap-3 md:grid-cols-4" aria-label={t.title}>
-        {KPIS.map((kpi) => {
+        {KPIS.map((kpi, index) => {
           const Icon = kpi.icon;
           const usedPct = pct(kpi.used, kpi.cap);
           const compact = kpi.format === "compact";
-          const unit = kpi.unit ? ` ${kpi.unit[locale]}` : "";
+          const unit = kpi.unit ? ` ${kpi.unit}` : "";
+          const label = t.kpis[String(index)].label;
           return (
             <li
               key={kpi.id}
@@ -184,7 +118,7 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
               <MetricCard
                 size="sm"
                 icon={<Icon aria-hidden="true" />}
-                label={kpi.label[locale]}
+                label={label}
                 value={`${fmt(kpi.used, compact)}${unit}`}
                 description={`${t.of} ${fmt(kpi.cap, compact)}${unit}`}
               />
@@ -194,7 +128,7 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
                   max={100}
                   type={tone(usedPct)}
                   size="sm"
-                  aria-label={`${kpi.label[locale]} ${usedPct}%`}
+                  aria-label={`${label} ${usedPct}%`}
                 />
               </div>
             </li>
@@ -213,7 +147,7 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
           </TableRow>
         </TableHeader>
         <TableBody bordered>
-          {METER_ROWS.map((row) => {
+          {METER_ROWS.map((row, index) => {
             const usedPct = pct(row.used, row.cap);
             return (
               <TableRow key={row.meter}>
@@ -235,7 +169,7 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
                 </TableCell>
                 <TableCell>
                   <Badge size="sm" variant={row.tone}>
-                    {row.tier[locale]}
+                    {t.meterRows[String(index)].tier}
                   </Badge>
                 </TableCell>
               </TableRow>

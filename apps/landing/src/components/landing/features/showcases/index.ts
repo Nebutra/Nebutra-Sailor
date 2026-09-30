@@ -6,6 +6,7 @@
  * presented invented latencies and eval scores as that package's own.
  */
 
+import type { PackageCatalogTranslator } from "../package-feature-data";
 import { AgentRuntimeShowcase } from "./agent-runtime-showcase";
 import { AuditShowcase } from "./audit-showcase";
 import { AuthShowcase } from "./auth-showcase";
@@ -46,4 +47,36 @@ export const PACKAGE_SHOWCASES: Record<string, PackageShowcase> = {
 
 export function getPackageShowcase(slug: string): PackageShowcase | null {
   return PACKAGE_SHOWCASES[slug] ?? null;
+}
+
+const SHOWCASE_SLUGS_WITH_COPY = new Set([
+  "auth",
+  "db",
+  "gateway-core",
+  "metering",
+  "queue",
+  "search",
+  "webhooks",
+]);
+
+/**
+ * Pre-resolved copy for the showcases' own labels/rows —
+ * `packageCatalog.showcases.<slug>.*` in apps/landing/messages/*.json.
+ * Showcases are Client Components, so the page builds this plain object
+ * server-side (via `t.raw()` for the nested shapes) and passes it down as a
+ * prop instead of putting the whole `packageCatalog` namespace on the client.
+ */
+export function getShowcaseCopy(
+  slug: string,
+  t: PackageCatalogTranslator,
+): Record<string, unknown> | undefined {
+  if (!SHOWCASE_SLUGS_WITH_COPY.has(slug)) return undefined;
+  const copy = t.raw(`showcases.${slug}`) as Record<string, unknown>;
+  if (slug === "search") {
+    // STATS is a fixed demo figure baked into search-showcase.tsx; the
+    // footer sentence needs those values interpolated server-side since the
+    // showcase itself never calls next-intl.
+    return { ...copy, footer: t("showcases.search.footer", { count: "12,401", ms: "38ms" }) };
+  }
+  return copy;
 }

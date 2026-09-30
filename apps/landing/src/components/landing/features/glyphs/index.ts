@@ -9,6 +9,7 @@
  * Lookup: `getSubpackageGlyph(slug)` → component or null.
  */
 
+import type { PackageCatalogTranslator } from "../package-feature-data";
 import { ThreeDPipelineGlyph } from "./3d-pipeline-glyph";
 import { AccessGateGlyph } from "./access-gate-glyph";
 import { AdminToolingGlyph } from "./admin-tooling-glyph";
@@ -220,4 +221,31 @@ export const SUBPACKAGE_GLYPHS: Record<string, SubpackageGlyph> = {
 
 export function getSubpackageGlyph(slug: string): SubpackageGlyph | null {
   return SUBPACKAGE_GLYPHS[slug] ?? null;
+}
+
+/**
+ * Pre-resolved copy for the glyphs that render text beyond the shared entry
+ * summary — `packageCatalog.glyphs.<slug>.*` in apps/landing/messages/*.json.
+ * Glyphs are Client Components, so the page builds this plain object
+ * server-side (via `t.raw()` for the nested shapes) and passes it down as a
+ * prop instead of putting the whole `packageCatalog` namespace on the client.
+ */
+export function getGlyphCopy(
+  slug: string,
+  t: PackageCatalogTranslator,
+): Record<string, unknown> | undefined {
+  switch (slug) {
+    case "sms":
+    case "audio-pipeline":
+    case "code-execution":
+    case "document-pipeline":
+    case "ecosystem-safety":
+    case "notifications":
+    case "onboarding":
+    case "outreach-engine":
+    case "sandbox-runtime":
+      return t.raw(`glyphs.${slug}`) as Record<string, unknown>;
+    default:
+      return undefined;
+  }
 }

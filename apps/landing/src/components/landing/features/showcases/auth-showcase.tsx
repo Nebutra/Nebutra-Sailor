@@ -24,76 +24,34 @@ import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type Provider = {
-  badge: { label: { en: string; zh: string }; tone: "success" | "info" };
   icon: typeof LogoGoogle;
   id: string;
-  label: { en: string; zh: string };
   variant: "default" | "outline" | "secondary";
 };
 
 const PROVIDERS: Provider[] = [
-  {
-    badge: { label: { en: "active", zh: "已启用" }, tone: "success" },
-    icon: LockClosed,
-    id: "passkey",
-    label: { en: "Continue with passkey", zh: "使用 Passkey 登录" },
-    variant: "default",
-  },
-  {
-    badge: { label: { en: "active", zh: "已启用" }, tone: "success" },
-    icon: LogoGoogle,
-    id: "google",
-    label: { en: "Continue with Google", zh: "使用 Google 登录" },
-    variant: "outline",
-  },
-  {
-    badge: { label: { en: "active", zh: "已启用" }, tone: "success" },
-    icon: LogoGithub,
-    id: "github",
-    label: { en: "Continue with GitHub", zh: "使用 GitHub 登录" },
-    variant: "outline",
-  },
-  {
-    badge: { label: { en: "active", zh: "已启用" }, tone: "success" },
-    icon: Key,
-    id: "device",
-    label: { en: "Continue with device code", zh: "使用设备码登录" },
-    variant: "outline",
-  },
-  {
-    badge: { label: { en: "active", zh: "已启用" }, tone: "success" },
-    icon: Mail,
-    id: "email",
-    label: { en: "Continue with magic link", zh: "使用魔法链接登录" },
-    variant: "secondary",
-  },
+  { icon: LockClosed, id: "passkey", variant: "default" },
+  { icon: LogoGoogle, id: "google", variant: "outline" },
+  { icon: LogoGithub, id: "github", variant: "outline" },
+  { icon: Key, id: "device", variant: "outline" },
+  { icon: Mail, id: "email", variant: "secondary" },
 ];
 
-const COPY = {
-  en: {
-    cta: "Sign in",
-    description:
-      "One auth provider, every sign-in method it needs — Better Auth, no vendor in the loop.",
-    email: "Email",
-    emailPlaceholder: "you@example.com",
-    or: "or sign in with email",
-    password: "Password",
-    passwordPlaceholder: "••••••••••••",
-    stats: "Better Auth · SSO ready · MFA enforced",
-    title: "Sign in to Nebutra",
-  },
-  zh: {
-    cta: "登录",
-    description: "一个认证提供方，覆盖所有需要的登录方式 — Better Auth，不经第三方厂商。",
-    email: "邮箱",
-    emailPlaceholder: "you@example.com",
-    or: "或使用邮箱登录",
-    password: "密码",
-    passwordPlaceholder: "••••••••••••",
-    stats: "Better Auth · 支持 SSO · 强制 MFA",
-    title: "登录 Nebutra",
-  },
-} as const;
+type AuthCopy = {
+  active: string;
+  providers: Record<string, { label: string }>;
+  cta: string;
+  description: string;
+  email: string;
+  or: string;
+  password: string;
+  stats: string;
+  title: string;
+};
+
+// Same in every locale — an example email/password, not translatable copy.
+const EMAIL_PLACEHOLDER = "you@example.com";
+const PASSWORD_PLACEHOLDER = "••••••••••••";
 
 function ProviderBadge({ tone, children }: { tone: "success" | "info"; children: string }) {
   return (
@@ -104,8 +62,8 @@ function ProviderBadge({ tone, children }: { tone: "success" | "info"; children:
   );
 }
 
-export function AuthShowcase({ locale }: PackageShowcaseProps) {
-  const t = COPY[locale];
+export function AuthShowcase({ copy }: PackageShowcaseProps) {
+  const t = copy as AuthCopy;
 
   return (
     <ShowcaseFrame className="flex items-stretch justify-center">
@@ -121,7 +79,7 @@ export function AuthShowcase({ locale }: PackageShowcaseProps) {
 
         <CardContent className="flex flex-col gap-3 pt-0">
           <ul className="flex flex-col gap-2" aria-label={t.title}>
-            {PROVIDERS.map((provider) => {
+            {PROVIDERS.map((provider, index) => {
               const Icon = provider.icon;
               return (
                 <li key={provider.id}>
@@ -131,13 +89,9 @@ export function AuthShowcase({ locale }: PackageShowcaseProps) {
                     size="lg"
                     className="w-full justify-between gap-3 px-4 text-sm font-medium"
                     prefix={<Icon aria-hidden="true" />}
-                    suffix={
-                      <ProviderBadge tone={provider.badge.tone}>
-                        {provider.badge.label[locale]}
-                      </ProviderBadge>
-                    }
+                    suffix={<ProviderBadge tone="success">{t.active}</ProviderBadge>}
                   >
-                    <span className="flex-1 text-left">{provider.label[locale]}</span>
+                    <span className="flex-1 text-left">{t.providers[String(index)].label}</span>
                   </Button>
                 </li>
               );
@@ -157,7 +111,7 @@ export function AuthShowcase({ locale }: PackageShowcaseProps) {
               <Input
                 id="auth-showcase-email"
                 type="email"
-                placeholder={t.emailPlaceholder}
+                placeholder={EMAIL_PLACEHOLDER}
                 prefix={<Mail aria-hidden="true" />}
                 readOnly
                 tabIndex={-1}
@@ -167,7 +121,7 @@ export function AuthShowcase({ locale }: PackageShowcaseProps) {
               <Input
                 id="auth-showcase-password"
                 type="password"
-                placeholder={t.passwordPlaceholder}
+                placeholder={PASSWORD_PLACEHOLDER}
                 prefix={<LockClosed aria-hidden="true" />}
                 readOnly
                 tabIndex={-1}

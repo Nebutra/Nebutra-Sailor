@@ -2830,5 +2830,838 @@
       "title": "Playbook — {productName}",
       "description": "A curated directory of the infrastructure demos, utilities, integrations and experimental features that ship inside Sailor."
     }
+  },
+  "packageCatalog": {
+    "descriptions": {
+      "audit": "Hash-chained, SHA-256 append-only audit log for actor/tenant actions. SOC 2-grade tamper detection, streaming export, and replay-safe queries.",
+      "auth": "Better Auth on Postgres — organization membership, device-flow login, MFA-enforced, session HMAC-signed. One identity layer, no vendor in the loop.",
+      "captcha": "Bot challenge with Cloudflare Turnstile / hCaptcha / reCAPTCHA behind one verify() call. Server-side scoring, per-route enable, no third-party tracker on the client.",
+      "identity": "Shared actor primitive — usr_/svc_/api_ ID space, role/membership lookup, tenant attachment. The single identity object every iam package reads.",
+      "oauth": "Your own OIDC identity provider — \"Sign in with {brandName}\" for third-party apps. Authorization code + PKCE, refresh-token rotation, consent, clients stored in Postgres.",
+      "permissions": "RBAC + ABAC engine — CASL for in-process checks. defineAbility() server, <Can /> in React.",
+      "tenant": "Request-scoped tenant context via AsyncLocalStorage, with Prisma RLS bridge. One tenantId resolves through middleware and propagates the whole stack.",
+      "vault": "Application-layer envelope encryption for customer secrets — AES-256-GCM, per-tenant DEK, KMS-wrapped. Audit-logged read/decrypt, zero plaintext at rest.",
+      "billing": "Billing on Creem (cards worldwide, merchant of record), plus WeChat Pay / Alipay for mainland China (or manual, for offline invoicing). Same Subscription / Invoice / Customer surface for every backend.",
+      "blog": "Framework-agnostic blog rules shared by every content surface: PortableText types, reading time, related-post ranking, table-of-contents extraction.",
+      "contracts": "Cross-package event, identity, billing, and notification type contracts. The shared TypeScript boundary that lets commerce talk to iam, queue, webhooks.",
+      "license": "License key generation, validation, and revocation. Ed25519-signed, offline-verifiable, with seat-count and expiry enforcement.",
+      "marketing": "Shared marketing-site primitives — hero blocks, pricing tables, FAQ accordions — reused by landing and product marketing surfaces with the brand tokens already wired.",
+      "metering": "Usage metering on ClickHouse — sub-second ingestion, per-tenant quota lookup, ready to feed metered billing or in-product limits.",
+      "waitlist": "Pre-launch waitlist for the foundation tier — invite codes, position queues, referral counts, and operator dashboards.",
+      "cache": "Tag-based cache with Redis, Upstash, or in-memory backend. Same get/set/invalidate(tags) for serverless and self-hosted.",
+      "queue": "Message queue — Upstash QStash (serverless), with an in-memory fallback for local dev and tests.",
+      "search": "Full-text + vector search — pgvector (Postgres). BM25 keyword search and vector cosine search over your own database, no external search infra.",
+      "notifications": "Multi-channel notifications — in-app, email, push, SMS, chat — with self-hosted direct dispatchers and recipient-preference resolution.",
+      "webhooks": "Outbound webhook delivery — self-hosted custom dispatcher, signed payloads, retry with exponential backoff, subscriber portal for self-serve.",
+      "uploads": "Large-file uploads — S3 / R2 multipart, Tus resumable, presigned URLs. Picks the right strategy by file size automatically.",
+      "storage": "Lower-tier object storage helpers — list, copy, ACL, signed reads. Sits below @nebutra/uploads when you don't need multipart logic.",
+      "email": "Render React Email templates, dispatch through Resend / SES / SMTP. One sendEmail(template, props, recipient) for every transactional flow.",
+      "saga": "Distributed-transaction primitives — compensating actions, retry/rollback hooks, idempotency keys. WIP; ships behind a flag.",
+      "event-bus": "In-process pub/sub with cross-app fanout. Used by audit, billing, and notifications to react to commerce events without circular imports.",
+      "sms": "Transactional SMS + OTP verify — Twilio Verify globally, Aliyun for mainland China — same send(to, template) surface, automatic local-prefix routing.",
+      "tts": "Text-to-speech with OpenAI / ElevenLabs / Azure backends. Streamed audio, voice presets, per-tenant rate-limit budgets.",
+      "video-compose": "Programmatic video composition via Remotion. Render reels, social cards, and on-brand product GIFs from a JSON spec.",
+      "collab": "Realtime co-editing primitives — Yjs CRDT, WebSocket transport, presence cursors. The piece every multi-user app eventually needs.",
+      "onboarding": "Multi-step product onboarding with persistence — checklist state per user, branching flows, A/B-friendly step gating.",
+      "admin-tooling": "Self-serve operator dashboards — tenants, billing overrides, feature-flag flips — all gated by @nebutra/permissions.",
+      "integration-vault": "Per-tenant credential store for OAuth integrations and API keys — Creem, Gmail OAuth, Notion API. KMS-wrapped, refresh-rotated.",
+      "db": "Typed Prisma client wrapper — extension-aware, RLS-friendly, with per-tenant connection pinning when the deployment splits writes from reads.",
+      "prepaid-wallet": "Prepaid balances and API keys for {brandName} Router and Forge: a wallet port, sk-sailor- keys stored as SHA-256 fingerprints, and a usage envelope that records the charge and the supply cost.",
+      "router-supply": "Supply routing for {brandName} Router: model aliases, engine discovery from the environment, and an upstream chain that falls back when a provider fails.",
+      "browser-utils": "Small browser helpers every app needs: storage that survives private mode and blocked site data, and fetch with a timeout.",
+      "config": "Typed environment + runtime config — Zod schemas at boot, no scattered process.env reads, fail-fast on missing keys.",
+      "logger": "Structured logging with pino + Sentry transport. One log object per request, breadcrumbs forwarded, PII-stripper plugged into the standard sink.",
+      "health": "Liveness + readiness probes for every backend service. Aggregates downstream deps (db, queue, search) into one /healthz response.",
+      "errors": "Typed application error taxonomy — UserError, AuthError, RateLimitError. Maps cleanly to HTTP, to logs, to Sentry, to the in-product toast.",
+      "gateway-core": "BFF primitives shared by backends/gateway and edge handlers — middleware chains, route matchers, header normalization, request-id propagation.",
+      "rate-limit": "Token-bucket rate limiter — Upstash Redis or in-memory. Per-route + per-tenant policy, 429 with retry-after, decision logged for audit.",
+      "repositories": "Repository-pattern primitives — findAll, findById, create, update, delete behind one Repository<T>. Swap Prisma for any backend without changing callers.",
+      "tenant-store": "Tenant-bound key/value cache for lookups too hot for the database. Auto-invalidates on tenant settings change.",
+      "trace-store": "OpenTelemetry-compatible span store and query layer. Lets agents trace a tool call across iam, billing, and webhooks.",
+      "status": "Public status page primitives — incident timeline, component graph, subscriber emails. Renders both /status pages and embeddable widgets.",
+      "alerting": "Alert rules + delivery on top of @nebutra/metering. Threshold/anomaly detection, route to PagerDuty, Discord, or in-product banners.",
+      "analytics": "First-party product analytics on ClickHouse — event ingest, funnel queries, no third-party loader on the marketing site.",
+      "feature-flags": "Server + client flag evaluator with GrowthBook / Statsig / custom. Per-tenant overrides, sticky bucketing, exported as React hooks.",
+      "i18n": "next-intl bridge — runtime locale, ICU plural, currency/date formatters, sided JSON bundles per route. Build-time guarantees on key drift.",
+      "graph-model": "Property-graph model layer for knowledge / org / asset graphs. Edges/nodes typed by Zod, persisted via Prisma or Neo4j adapter.",
+      "provider-factory": "Auto-detecting provider factory pattern — env vars choose between queue / search / notifications backends with a single getX() call.",
+      "capability-kit": "Composable capability primitives — pricing tier ↔ feature flag ↔ quota ↔ UI gating wired into one declarative manifest.",
+      "typelens-catalog": "The data layer for TypeLens: typographic works, pairings and extract packs for designers and design agents. Work in progress — the catalog model exists, the seed content does not yet.",
+      "fonts": "Self-hosted open-source fonts: the Chinese body face every app loads, plus a registry of 19 faces that themes and DESIGN.md files can name — no request leaves for a font CDN.",
+      "brand": "Brand primitives — color definitions, gradient tokens, motion language. Source data; not imported at runtime by apps.",
+      "tokens": "Runtime CSS variables + ThemeProvider — single source of truth for colors, spacing, radii in every app. @import in your globals.css.",
+      "design-tokens": "W3C DTCG $value/$type token files + Style Dictionary 4 pipeline. Output CSS variables and JS modules, edited git-only — no design-tool sync round-trip.",
+      "icons": "541 Geist icons as tree-shakable TSX components. Single-weight, optical-sized, drop-in for Vercel / v0 visual parity.",
+      "theme": "CSS-only multi-theme engine — six oklch presets toggled by data-theme attribute. No JavaScript on the critical path.",
+      "ui": "Primary component library — {brandName} components, custom primitives, layout, theme bridge, and the shared Motion facade. The product UI import boundary.",
+      "design-sync": "Git-only design-token sync — tokens live in the repo as the source of truth, no design-tool round-trip to keep in lock-step.",
+      "forge-dns-leak": "An authoritative DNS zone for real leak tests: probe names resolved by the visitor's recursive resolver are logged by source IP. Work in progress — needs a delegated zone.",
+      "forge-runtime": "The capability registry and invoke pipeline behind {brandName} Forge: pure tools, one invoke path for the page and the API, charged against the credit ledger.",
+      "startup-os": "Typed contracts for Startup OS: company context, founder conversation streaming, run state, generated files and rollout gates. Work in progress — no production app uses it yet.",
+      "workflow-runtime": "Tenant-written workflows — agent(), parallel(), phase() — run only inside a fail-closed sandbox. Untrusted script source never reaches eval, new Function or node:vm.",
+      "agents": "Multi-step agent runtime — Vercel AI SDK foundation, tool registry, streaming UI, MCP integration. The skeleton for every Sailor agentic feature.",
+      "agent-runtime": "Lower-level agent execution — message reducer, tool invocation, streaming state machine. The kernel @nebutra/agents wraps.",
+      "ai-primitives": "Shared helpers used across all AI packages — token counting, prompt templating, stream-parser, retry-with-backoff. No provider dependency.",
+      "ai-providers": "Provider metadata — pricing per million tokens, context windows, modalities. Drives model selection and cost estimates.",
+      "mcp": "Model Context Protocol server primitives — register tools, expose resources, stream subscriptions. Run inside Sailor or stand-alone.",
+      "knowledge-rag": "Retrieval-augmented generation pipeline — chunk, embed, store, retrieve, rerank — pluggable per vector store.",
+      "knowledge-base": "Document store + indexer for RAG. Watches sources (S3, Notion, GitHub), schedules re-embed, surfaces freshness in the agent answer.",
+      "knowledge-graph": "Entity + relationship store on top of @nebutra/graph-model. Lets agents traverse \"customer → invoice → product\" without a SQL detour.",
+      "tool-registry": "Runtime tool catalog — schemas, descriptions, safety levels. Hot-swap tools between agents without re-deploying.",
+      "code-execution": "Sandboxed code execution for agents — JS / Python / shell — short-lived containers, network-isolated, capability-gated by @nebutra/permissions.",
+      "sandbox-runtime": "Vercel Sandbox + Lambda + local runner adapter under one execute() call. Picks the runner from a policy rule list.",
+      "browser-control": "Headless browser drive for agents — Vercel Agent Browser primary, Playwright fallback. Screenshot, click, type, evaluate.",
+      "generation-context": "Token-budgeted context window manager — system prompt, RAG, user history, scratchpad. Picks what to drop when the window fills.",
+      "local-embedding": "On-device embedding via ONNX / WebGPU. Avoids the round-trip when the embed is short, private, or rate-limited at the provider.",
+      "execution-policy": "Policy rules that route agent tasks to compute backends — render → Vercel Sandbox, long → Lambda, internal → local-runner.",
+      "code-index": "Repository code index for agents — symbol graph, embedding, file watcher. Lets the agent answer \"where is X defined\" without grep'ing.",
+      "voice-realtime": "Realtime voice loop — input ASR, model stream, output TTS — sub-300ms end-to-end. Bridges OpenAI Realtime + Deepgram + ElevenLabs.",
+      "image-pipeline": "Image generation + transform pipeline — provider-routed, watermark + safety filter, cached output, per-tenant quota.",
+      "audio-pipeline": "Audio processing chain — voice clone, denoise, transcribe, summarize. Streams through one async iterator per stage.",
+      "video-pipeline": "Long-form video pipeline — split, caption, b-roll, render. Distributes the long stages to backends/python via queue.",
+      "document-pipeline": "Ingestion for PDF / docx / markdown — chunk, table-aware extract, embed, route to @nebutra/knowledge-base. OCR fallback for image-only pages.",
+      "3d-pipeline": "3D asset generation + render — text-to-mesh + USD export + Three.js preview, with GPU-pool routing on the backend.",
+      "cli": "`nebutra` CLI — scaffold features, run migrations, inspect tenants, deploy presets. Same binary your CI uses.",
+      "create-sailor": "`create-sailor` scaffold — one command, working multi-tenant SaaS with auth + billing + dashboard wired in.",
+      "preset": "Feature-based SaaS config system. Toggle apps and features directly in one config file to shape your stack.",
+      "sanity": "Sanity Studio v4 helpers — schema generators, content-driven page builder, image pipeline integration.",
+      "china-compliance": "China-region operations — ICP filing helpers, MIIT registration, real-name verification, in-country DB residency.",
+      "content-store": "Headless CMS adapter — Sanity / Strapi / Notion behind one ContentEntry<T> read API. Drives marketing pages and product copy.",
+      "play-loader": "Hot-reload loader for atelier plays — sandboxed iframe, message bridge, persistence on save.",
+      "play-marketplace": "Marketplace shell for shareable atelier plays — discovery, ratings, install, attribution.",
+      "access-gate": "Pre-launch access gate — invite-code redemption, position queue, drip-release windows. Layers on top of @nebutra/waitlist.",
+      "atelier-canvas": "Infinite design canvas — multiplayer cursors, layer panel, frame export. The drawing surface every atelier play renders into.",
+      "brand-genesis": "Brand creation flow — pick palette, type pair, motion preset; ships a synced @nebutra/brand override and a Figma preview link.",
+      "cinema": "Atelier cinema mode — distraction-free fullscreen with timed scene playback, perfect for demoing a play or rehearsing a pitch.",
+      "cofounder-match": "Skill-and-stage cofounder matching — answers a small intake, surfaces ranked candidates with shared interest and warm intros.",
+      "ecosystem-safety": "Pre-flight safety check — license sweep, dep-vuln audit, prohibited-content scan. Surfaces blockers before a play ships to marketplace.",
+      "event-log": "General-purpose event log primitive — append, query, time-window aggregate. Sits below audit, analytics, and trace-store as their record.",
+      "founder-cemetery": "Failed-startup memorial — anonymized post-mortems with cause tags. Read-only catalog, source of the recurring failure pattern dashboard.",
+      "idea-plaza": "Public idea board — submit, upvote, comment; the seed pool atelier plays draw from when a founder asks \"what should I build\".",
+      "landing-builder": "Block-based landing page builder — drag pre-styled sections, edit copy in place, publish to a subdomain with one click.",
+      "legal": "Legal entity primitives — corp filings, registered agents, jurisdiction-aware ToS/Privacy generation. Feeds the legal section of @nebutra/preset.",
+      "outreach-engine": "Cold-outreach orchestrator — list dedupe, persona-aware drafting, send via SES/Resend, reply detection. Routes hot replies back into @nebutra/agents.",
+      "reel": "Short-form vertical video primitive — captures atelier moments, auto-captions via TTS pipeline, publishes to social channels.",
+      "support-deflector": "Inline AI support layer — answers from your docs + past tickets before a human is needed. Hands off cleanly with full transcript.",
+      "time-machine": "Project history scrubber — snapshot every save, branch a play from any past frame, diff two snapshots side by side."
+    },
+    "groups": {
+      "ai": {
+        "label": "AI runtime",
+        "summary": "Agent runtimes, RAG, media pipelines, and provider tooling"
+      },
+      "commerce": {
+        "label": "Commerce",
+        "summary": "Access, billing, license, marketing, and metering contracts"
+      },
+      "design": {
+        "label": "Design system",
+        "summary": "Brand, tokens, icons, theme, and UI system packages"
+      },
+      "gateway": {
+        "label": "Gateway",
+        "summary": "TypeScript / Hono BFF, auth, tenancy, OpenAPI"
+      },
+      "iam": {
+        "label": "Identity and trust",
+        "summary": "Auth, identity, permissions, tenancy, audit, and secrets"
+      },
+      "integrations": {
+        "label": "Integrations",
+        "summary": "Cache, queues, search, messaging, storage, and webhooks"
+      },
+      "ops": {
+        "label": "Operations",
+        "summary": "The nebutra CLI, create-sailor, presets, Sanity helpers and China compliance"
+      },
+      "platform": {
+        "label": "Platform",
+        "summary": "Core platform services, data, config, health, and tenancy"
+      }
+    },
+    "folders": {
+      "ai": {
+        "title": "AI Runtime & Agent Substrate",
+        "titleCn": "AI 运行时与智能体底座",
+        "summary": "A production AI domain with agent loops, tool protocols, RAG, local execution, provider metadata, and multimodal pipelines kept out of app code.",
+        "signature": {
+          "label": "AI packages",
+          "detail": "220 runtime source files and 117 tests, with the heaviest coverage in agent-runtime, knowledge-rag, reel, graph, and execution policies."
+        },
+        "sourceStats": {
+          "unitLabel": "packages"
+        },
+        "topology": {
+          "title": "Agent workbench topology",
+          "caption": "One core loop coordinates model calls, context, tools, memory, execution, and media production.",
+          "nodes": {
+            "0": "durable turns, tools, commands, hooks, subagents",
+            "1": "retrieval, chunking, local embeddings, content-store",
+            "2": "tool catalog and protocol bridge",
+            "3": "typed media graph and storyboard execution",
+            "4": "execution providers behind one router",
+            "5": "metadata only; runtime remains in agents"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "agent-runtime tests",
+            "detail": "dispatcher, hooks, durable turns, commands, rollout store"
+          },
+          "1": {
+            "label": "RAG tests",
+            "detail": "retrieval contracts and ingestion behavior"
+          },
+          "2": {
+            "label": "README surfaces",
+            "detail": "package-level docs for most AI capabilities"
+          }
+        },
+        "owns": {
+          "0": "@nebutra/agents as the canonical model execution surface",
+          "1": "RAG, code indexing, knowledge graph, content store, and tool registry",
+          "2": "Image, video, audio, voice, sandbox, and browser automation pipelines"
+        },
+        "boundaries": {
+          "0": "Apps consume stable package APIs; they do not own provider routing.",
+          "1": "Media workflows depend on injected adapters instead of hardcoded vendors."
+        },
+        "proof": {
+          "0": "package-local tests for agents, knowledge-rag, reel, and agent-runtime",
+          "1": "architecture tests for AI primitive ownership and runtime dependencies"
+        }
+      },
+      "platform": {
+        "title": "Platform Control Plane",
+        "titleCn": "平台控制平面",
+        "summary": "The lowest shared layer: database, config, provider selection, tenant locks, gateway-core contracts, health, rate limits, traces, and repository boundaries.",
+        "signature": {
+          "label": "foundation packages",
+          "detail": "166 runtime source files spanning db, gateway-core, provider-factory, tenant-store, trace-store, config, errors, and observability."
+        },
+        "sourceStats": {
+          "unitLabel": "packages"
+        },
+        "topology": {
+          "title": "Downward-only platform stack",
+          "caption": "Feature packages stand above this stack; platform packages must not pull product logic upward.",
+          "nodes": {
+            "0": "Prisma v7, schema policy, generation scripts",
+            "1": "per-tenant serialization and scoped stores",
+            "2": "explicit/env/detect/fallback provider resolution",
+            "3": "shared gateway contracts below the Hono backend",
+            "4": "async traces for agents, tools, and LLM spans"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "db source files",
+            "detail": "schema, client, seed, generated boundaries"
+          },
+          "1": {
+            "label": "local AGENTS contracts",
+            "detail": "package-level ownership rules"
+          },
+          "2": {
+            "label": "gateway-core tests",
+            "detail": "shared gateway behavior below backend routes"
+          }
+        },
+        "owns": {
+          "0": "Prisma schema, database client, migrations, and multi-schema policy",
+          "1": "Tenant locks, trace store, health checks, config, errors, and rate limiting",
+          "2": "Provider factory and repository boundaries used by higher-level packages"
+        },
+        "boundaries": {
+          "0": "No app-specific UI or product copy belongs in platform packages.",
+          "1": "Feature packages depend downward; platform does not import feature domains."
+        },
+        "proof": {
+          "0": "schema drift audits, db generation, and architecture dependency tests",
+          "1": "tenant-store and trace-store package-local doctor/debug commands"
+        }
+      },
+      "iam": {
+        "title": "Identity, Access & Tenant Trust",
+        "titleCn": "身份、访问与租户信任",
+        "summary": "Authentication on Better Auth, tenant context, permission gates, audit, captcha, OAuth, and encrypted vault behavior live in one trust boundary.",
+        "signature": {
+          "label": "trust tests",
+          "detail": "Provider abstraction, audit, tenant, permission, OAuth, and vault tests keep auth behavior from drifting into apps."
+        },
+        "sourceStats": {
+          "unitLabel": "packages"
+        },
+        "topology": {
+          "title": "Trust corridor",
+          "caption": "Every product action should pass through identity, tenant, permission, audit, and secret boundaries in that order.",
+          "nodes": {
+            "0": "Better Auth on Postgres, session-based",
+            "1": "tenant context and organization scoping",
+            "2": "RBAC and resource-action scopes",
+            "3": "sensitive operation trail",
+            "4": "local and KMS-backed secret storage"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "auth tests",
+            "detail": "provider contract behavior"
+          },
+          "1": {
+            "label": "local AGENTS files",
+            "detail": "every IAM package declares ownership"
+          },
+          "2": {
+            "label": "tenant tests",
+            "detail": "organization context and tenant policies"
+          }
+        },
+        "owns": {
+          "0": "Better Auth session/identity surface, with device-flow login and organization membership",
+          "1": "Permission gates, tenant context, audit events, and vault storage",
+          "2": "OAuth server and captcha boundaries for external identity flows"
+        },
+        "boundaries": {
+          "0": "UI checks call IAM contracts; they do not reimplement authorization.",
+          "1": "Secrets and audit behavior do not leak into app-local helpers."
+        },
+        "proof": {
+          "0": "auth provider abstraction tests and permission concept docs",
+          "1": "audit and tenant package boundaries in AGENTS.md contracts"
+        }
+      },
+      "design": {
+        "title": "Design System Supply Chain",
+        "titleCn": "设计系统供应链",
+        "summary": "Brand assets, DTCG tokens, Tailwind v4 theme exports, Geist icons, UI primitives, registry builds, and git-only/design-md sync operate as a pipeline.",
+        "signature": {
+          "label": "packaged Geist icons",
+          "detail": "@nebutra/icons alone has 543 source files; the design lane is source-heavy by nature."
+        },
+        "sourceStats": {
+          "unitLabel": "packages"
+        },
+        "topology": {
+          "title": "Token-to-app supply chain",
+          "caption": "One fact, one owner: colors, icons, components, and registries flow through governed package boundaries.",
+          "nodes": {
+            "0": "W3C DTCG source of truth",
+            "1": "CSS variables and ThemeProvider entry",
+            "2": "Tailwind v4 @theme and data-theme selectors",
+            "3": "Geist icon React package",
+            "4": "primitives, layouts, registry, governance tests"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "UI source files",
+            "detail": "primitives, layout shells, registry scripts"
+          },
+          "1": {
+            "label": "design-sync tests",
+            "detail": "git-only, design-md, IO, detection"
+          },
+          "2": {
+            "label": "AGENTS contracts",
+            "detail": "token, theme, brand, icons, UI, sync ownership"
+          }
+        },
+        "owns": {
+          "0": "CSS variable tokens, oklch themes, brand primitives, and generated assets",
+          "1": "Reusable primitives, layout shells, registry manifests, and Storybook surfaces",
+          "2": "Design sync scripts and policy tests for UI governance"
+        },
+        "boundaries": {
+          "0": "Landing pages compose design packages; they do not fork primitives.",
+          "1": "Token changes flow through brand sync, not one-off hex overrides."
+        },
+        "proof": {
+          "0": "React Doctor, Storybook registry generation, and token sync checks",
+          "1": "design-docs component pages and governance tests"
+        }
+      },
+      "integrations": {
+        "title": "Integration Runtime Layer",
+        "titleCn": "集成运行时层",
+        "summary": "Queues, cache, event bus, email, uploads, storage, search, SMS, notifications, webhooks, collaboration, and provider vaults share one adapter lane.",
+        "signature": {
+          "label": "adapter packages",
+          "detail": "The most operational lane: queue has 10 tests, notifications 5, email/uploads/webhooks 3 each."
+        },
+        "sourceStats": {
+          "unitLabel": "packages"
+        },
+        "topology": {
+          "title": "Port-and-adapter bus",
+          "caption": "Transport details collect here so AI, commerce, and app packages call stable ports instead of vendor SDKs.",
+          "nodes": {
+            "0": "durable delivery and worker contracts",
+            "1": "cache provider boundary",
+            "2": "Resend, Console transports",
+            "3": "upload validation and storage handoff",
+            "4": "signature verification and delivery",
+            "5": "tenant-partitioned CRDT rooms"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "queue tests",
+            "detail": "delivery, retry, and worker behavior"
+          },
+          "1": {
+            "label": "README surfaces",
+            "detail": "adapter usage stays package-local"
+          },
+          "2": {
+            "label": "AGENTS contracts",
+            "detail": "operational boundaries per integration"
+          }
+        },
+        "owns": {
+          "0": "Cache, queue, event-bus, saga, notifications, onboarding, and webhooks",
+          "1": "Search, storage, uploads, SMS, TTS, video compose, and integration vault",
+          "2": "Provider-facing adapters that keep apps from depending on vendor SDKs directly"
+        },
+        "boundaries": {
+          "0": "Business workflows call integration ports; provider details stay here.",
+          "1": "AI and commerce packages reuse adapters without owning transport code."
+        },
+        "proof": {
+          "0": "queue, cache, webhook, and search package tests",
+          "1": "background job docs and operational smoke checks"
+        }
+      },
+      "commerce": {
+        "title": "Commercial System of Record",
+        "titleCn": "商业系统记录源",
+        "summary": "Access gates, billing providers, subscriptions, usage, credits, metering, licenses, contracts, legal content, marketing, and waitlists form the commercial domain.",
+        "signature": {
+          "label": "commercial packages",
+          "detail": "Billing is the largest package, but access-gate, blog, license, legal, metering, and waitlist keep adjacent commercial facts separate."
+        },
+        "sourceStats": {
+          "unitLabel": "packages"
+        },
+        "topology": {
+          "title": "Commercial ledger lanes",
+          "caption": "Each lane owns a different fact: access, invoice, usage, license, legal, or acquisition.",
+          "nodes": {
+            "0": "invite lifecycle for controlled SaaS access",
+            "1": "Creem, ChinaPay, credits, manual",
+            "2": "usage records and billing handoff",
+            "3": "issuance, validation, lifecycle events",
+            "4": "policy content and compliance surfaces"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "billing tests",
+            "detail": "checkout factory, readiness, credit webhook, metering"
+          },
+          "1": {
+            "label": "metering tests",
+            "detail": "usage accounting boundary"
+          },
+          "2": {
+            "label": "license tests",
+            "detail": "issuance and validation lifecycle"
+          }
+        },
+        "owns": {
+          "0": "Billing provider adapters, subscription lifecycle, and metering contracts",
+          "1": "Access-gate invites, licensing, legal content, marketing primitives, and waitlist",
+          "2": "Commercial boundaries that apps expose but do not redefine"
+        },
+        "boundaries": {
+          "0": "Landing copy can link to commerce contracts; it does not own pricing behavior.",
+          "1": "Auth and billing connect through tenant identifiers, not shared UI state."
+        },
+        "proof": {
+          "0": "access-gate lifecycle tests and package status docs",
+          "1": "billing model docs and release-surface verification"
+        }
+      },
+      "gateway": {
+        "title": "Typed API Gateway Boundary",
+        "titleCn": "类型化 API 网关边界",
+        "summary": "The Hono backend owns request context, security middleware, tenant extraction, idempotency, usage metering, route groups, OpenAPI generation, and async Inngest jobs.",
+        "signature": {
+          "label": "gateway tests",
+          "detail": "Billing idempotency, RBAC, middleware, queue delivery, events, health, notifications, and AI gateway routes are covered."
+        },
+        "sourceStats": {
+          "unitLabel": "backend"
+        },
+        "topology": {
+          "title": "Request-to-contract path",
+          "caption": "Route code is the visible part; the hard boundary is the ordered policy chain before and around it.",
+          "nodes": {
+            "0": "trace IDs, correlation, dependency injection",
+            "1": "headers, dynamic CORS, token buckets",
+            "2": "tenant extraction, mutation dedupe",
+            "3": "admin, ai, billing, events, legal, webhooks",
+            "4": "typed clients and background sync jobs"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "source files",
+            "detail": "routes, middleware, services, clients, adapters"
+          },
+          "1": {
+            "label": "async jobs",
+            "detail": "billing sync, GDPR deletion, tenant provisioning, user sync"
+          },
+          "2": {
+            "label": "contract output",
+            "detail": "generate:spec and typed API clients"
+          }
+        },
+        "owns": {
+          "0": "BFF routing, OpenAPI generation, middleware order, and tenancy extraction",
+          "1": "Gateway-level rate limiting, idempotency, audit logging, and versioning",
+          "2": "Typed API contracts consumed by web and generated clients"
+        },
+        "boundaries": {
+          "0": "Backend policy lives in middleware, not duplicated in each route.",
+          "1": "Apps do not bypass the gateway for tenant-sensitive operations."
+        },
+        "proof": {
+          "0": "OpenAPI generation, gateway route tests, and release verification scripts",
+          "1": "api-reference docs and dashboard typed-client integration"
+        }
+      }
+    },
+    "page": {
+      "heroTitle": "Every layer, already <signature>written.</signature>",
+      "heroLead": "{packageCount} packages in {domainCount} domains: every layer a SaaS needs, written, tested and in one repository. Each domain is below, with how it fits together and every package it holds.",
+      "metaDescription": "{packageCount} packages in {domainCount} domains — auth, billing, tenancy, AI, integrations and the design system, written, tested and in one repository.",
+      "exploreDomain": "Explore the domain",
+      "startTitle": "Start from all of it",
+      "startLead": "One command gives you the repository, with every package on this page already wired together.",
+      "install": {
+        "copyLabel": "Copy",
+        "copiedLabel": "Copied"
+      },
+      "allPackages": "Packages",
+      "docs": "Docs",
+      "source": "Source",
+      "inCode": "In code",
+      "owns": "What it owns",
+      "stops": "Where it stops",
+      "proof": "How we know it works",
+      "packages": "Packages",
+      "packagesCount": "{count} packages in {path}.",
+      "moreInDomain": "More in {domain}",
+      "allPackagesInDomain": "All {count} packages",
+      "sourceSentence": "{count} {unit}, {sourceFiles} source files and {testFiles} test files in {path}."
+    },
+    "glyphs": {
+      "sms": {
+        "message": "Your {brandName} OTP is 8472. Expires in 5 minutes.",
+        "delivered": "delivered"
+      },
+      "audio-pipeline": {
+        "steps": {
+          "0": "transcribe",
+          "1": "denoise",
+          "2": "master"
+        }
+      },
+      "code-execution": {
+        "footer": "Vercel Sandbox · safe untrusted",
+        "executed": "executed in 47ms"
+      },
+      "document-pipeline": {
+        "steps": {
+          "0": {
+            "label": "PDF",
+            "meta": "upload"
+          },
+          "1": {
+            "label": "OCR",
+            "meta": "47p"
+          },
+          "2": {
+            "label": "chunk",
+            "meta": "248"
+          },
+          "3": {
+            "label": "embed",
+            "meta": ""
+          }
+        },
+        "docs": {
+          "0": {
+            "age": "2m ago",
+            "pages": "47 pages",
+            "chunks": "248 chunks"
+          },
+          "1": {
+            "age": "12m ago",
+            "pages": "12 pages",
+            "chunks": "84 chunks"
+          }
+        },
+        "processed": "processed"
+      },
+      "ecosystem-safety": {
+        "title": "Guardrails active",
+        "layersCount": "4 layers",
+        "layers": {
+          "0": {
+            "label": "Content moderation",
+            "stat": "0 blocked today"
+          },
+          "1": {
+            "label": "PII redaction",
+            "stat": "12 redacted today"
+          },
+          "2": {
+            "label": "Prompt injection detect",
+            "stat": "2 caught today"
+          },
+          "3": {
+            "label": "Rate limit per actor",
+            "stat": "normal"
+          }
+        },
+        "footer": "OpenAI Moderation · regex + LLM gate"
+      },
+      "notifications": {
+        "rows": {
+          "0": {
+            "title": "payment received"
+          },
+          "1": {
+            "title": "new teammate"
+          },
+          "2": {
+            "title": "rate limit hit"
+          }
+        }
+      },
+      "onboarding": {
+        "steps": {
+          "0": "Account",
+          "1": "Workspace",
+          "2": "Invite",
+          "3": "First action"
+        },
+        "footnote": "Almost there",
+        "count": "3 of 4"
+      },
+      "outreach-engine": {
+        "campaign": "Q4 enterprise outbound",
+        "status": "Active · 47 prospects",
+        "sent": "Sent",
+        "open": "Opens",
+        "reply": "Replies",
+        "steps": {
+          "0": "Day 1: intro",
+          "1": "Day 3: case study",
+          "2": "Day 7: demo offer",
+          "3": "Day 14: bump"
+        }
+      },
+      "sandbox-runtime": {
+        "footer": "Vercel Sandbox · safe untrusted",
+        "run": "Run",
+        "lastExec": "Last exec"
+      }
+    },
+    "showcases": {
+      "auth": {
+        "active": "active",
+        "providers": {
+          "0": {
+            "label": "Continue with passkey"
+          },
+          "1": {
+            "label": "Continue with Google"
+          },
+          "2": {
+            "label": "Continue with GitHub"
+          },
+          "3": {
+            "label": "Continue with device code"
+          },
+          "4": {
+            "label": "Continue with magic link"
+          }
+        },
+        "cta": "Sign in",
+        "description": "One auth provider, every sign-in method it needs — Better Auth, no vendor in the loop.",
+        "email": "Email",
+        "or": "or sign in with email",
+        "password": "Password",
+        "stats": "Better Auth · SSO ready · MFA enforced",
+        "title": "Sign in to {brandName}"
+      },
+      "db": {
+        "headerLabel": "Query · packages/platform/db",
+        "rlsEnforced": "enforced",
+        "resultsTitle": "Query results",
+        "resultsSubtitle": "tenant-scoped via row-level security",
+        "visibleLabel": "Visible rows",
+        "hiddenLabel": "Hidden by RLS",
+        "visibleHint": "in tenant_a",
+        "hiddenHint": "other tenants",
+        "hiddenNote": "RLS hides rows belonging to other tenants — they never leave the database."
+      },
+      "gateway-core": {
+        "stops": {
+          "0": "Tenant resolution",
+          "1": "Rate-limit check",
+          "2": "Idempotency",
+          "3": "Auth",
+          "4": "Route handler",
+          "5": "Response shape"
+        },
+        "totalLabel": "Total latency",
+        "lifecycle": "Middleware lifecycle",
+        "okLabel": "OK",
+        "rps": "Requests / sec",
+        "p50": "p50 latency",
+        "p95": "p95 latency",
+        "gaugeLabel": "Success rate",
+        "success": "success"
+      },
+      "metering": {
+        "kpis": {
+          "0": {
+            "label": "API calls"
+          },
+          "1": {
+            "label": "AI tokens"
+          },
+          "2": {
+            "label": "Storage"
+          },
+          "3": {
+            "label": "Active users"
+          }
+        },
+        "meterRows": {
+          "0": {
+            "tier": "Pro · $0.001/call"
+          },
+          "1": {
+            "tier": "Pro · metered"
+          },
+          "2": {
+            "tier": "Pro · 50 GB incl."
+          },
+          "3": {
+            "tier": "Pro · seat-based"
+          }
+        },
+        "capLabel": "Cap",
+        "footer": "Aggregated in ClickHouse · realtime · ≤ 800ms p99",
+        "meterLabel": "Meter",
+        "of": "of",
+        "pctLabel": "% used",
+        "realtime": "live",
+        "tierLabel": "Pricing tier",
+        "title": "Usage metering",
+        "usedLabel": "Period usage"
+      },
+      "queue": {
+        "jobs": {
+          "0": {
+            "relative": "now"
+          },
+          "1": {
+            "relative": "12s ago"
+          },
+          "2": {
+            "relative": "48s ago"
+          },
+          "3": {
+            "relative": "1m ago"
+          },
+          "4": {
+            "relative": "2m ago"
+          },
+          "5": {
+            "relative": "3m ago"
+          }
+        },
+        "statusMeta": {
+          "failed": "Failed",
+          "pending": "Pending",
+          "processing": "Processing",
+          "success": "Success"
+        },
+        "attempts": "Attempts",
+        "duration": "Duration",
+        "queue": "Queue",
+        "status": "Status",
+        "throughput": "Throughput",
+        "success": "Success rate",
+        "when": "When",
+        "rate": "jobs/min",
+        "latency": "Avg latency",
+        "healthy": "Healthy",
+        "last60": "Last 60 min",
+        "live": "Live · QStash"
+      },
+      "search": {
+        "results": {
+          "0": {
+            "title": "Billing v2 migration playbook",
+            "excerpt": "Step-by-step migration from legacy invoices to the new metering pipeline."
+          },
+          "1": {
+            "title": "Migration checklist for billing tenants",
+            "excerpt": "Verify RLS, secrets rotation, and webhook backfill before cutover."
+          },
+          "2": {
+            "title": "Creem + WeChat Pay billing adapter notes",
+            "excerpt": "One billing contract keeps customer code stable across both rails."
+          },
+          "3": {
+            "title": "Zero-downtime migration patterns",
+            "excerpt": "Dual-write, shadow-read, then flip — applies to billing data too."
+          }
+        },
+        "placeholder": "Search docs, posts, changelog…",
+        "indexLabel": "Index",
+        "tagsLabel": "Tags",
+        "footer": "Searched {count} docs in {ms} · Postgres backend",
+        "relevance": "score"
+      },
+      "webhooks": {
+        "deliveries": {
+          "0": {
+            "timestamp": "2m ago"
+          },
+          "1": {
+            "timestamp": "5m ago"
+          },
+          "2": {
+            "timestamp": "just now"
+          },
+          "3": {
+            "timestamp": "12m ago"
+          },
+          "4": {
+            "timestamp": "1h ago"
+          }
+        },
+        "active": "Active",
+        "attempts": "Attempts",
+        "code": "Code",
+        "delivered": "last delivered 2m ago",
+        "event": "Event",
+        "footer": "99.2% success · p95 248ms · signed HMAC",
+        "latency": "Latency",
+        "retry": "retrying",
+        "status": "Status",
+        "title": "Recent deliveries",
+        "when": "When"
+      }
+    }
   }
 }

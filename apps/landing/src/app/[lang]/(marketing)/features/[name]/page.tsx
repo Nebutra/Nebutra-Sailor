@@ -2,7 +2,7 @@ import { CodeBlock } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   CAPABILITY_FOLDERS,
   type CapabilityFolder,
@@ -12,12 +12,13 @@ import {
   getCodeSampleForEntry,
 } from "@/components/landing/features/feature-code-samples";
 import { getGroupTokens } from "@/components/landing/features/feature-group-tokens";
-import { getSubpackageGlyph } from "@/components/landing/features/glyphs";
+import { getGlyphCopy, getSubpackageGlyph } from "@/components/landing/features/glyphs";
 import {
   getFeatureSummary,
   getGroupLabel,
   getPackageFeatureEntry,
   PACKAGE_FEATURE_ENTRIES,
+  type PackageCatalogTranslator,
   type PackageFeatureEntry,
   toSerializablePackageFeatureEntry,
 } from "@/components/landing/features/package-feature-data";
@@ -27,16 +28,16 @@ import {
   sourceSentence,
   TopologyList,
 } from "@/components/landing/features/package-parts";
-import { getPackageShowcase } from "@/components/landing/features/showcases";
+import { getPackageShowcase, getShowcaseCopy } from "@/components/landing/features/showcases";
 import { Link } from "@/i18n/navigation";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { createPublicDocsUrl } from "@/lib/docs-links";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { isHighSignalFeatureEntry } from "@/lib/seo/route-registry";
 import { defaultPublicationSet, unpublishedSet } from "@/lib/seo/site-routes";
 import { REPO_URL } from "@/nebutra/data/repo";
+import { siteLang } from "@/nebutra/i18n";
 import { Band, Intro } from "@/nebutra/ui/page";
 
 type FeatureDetailPageProps = {
@@ -44,17 +45,6 @@ type FeatureDetailPageProps = {
 };
 
 type Lang = "en" | "zh";
-
-const COPY = {
-  allPackages: { en: "Packages", zh: "全部功能包" },
-  docs: { en: "Docs", zh: "文档" },
-  source: { en: "Source", zh: "源码" },
-  inCode: { en: "In code", zh: "代码里" },
-  owns: { en: "What it owns", zh: "它负责什么" },
-  stops: { en: "Where it stops", zh: "它的边界" },
-  proof: { en: "How we know it works", zh: "怎么证明它能用" },
-  packages: { en: "Packages", zh: "功能包" },
-} as const;
 
 /**
  * Params outside generateStaticParams render on demand as a blocking route
@@ -78,9 +68,17 @@ function domainOf(entry: PackageFeatureEntry): PackageFeatureEntry | undefined {
   return PACKAGE_FEATURE_ENTRIES.find((e) => e.kind !== "package" && e.group === entry.group);
 }
 
-function titleOf(entry: PackageFeatureEntry, locale: Lang): string {
+function titleOf(entry: PackageFeatureEntry, t: PackageCatalogTranslator): string {
   if (entry.kind === "package") return entry.label;
-  return folderFor(entry)?.title[locale] ?? getGroupLabel(entry.group, locale);
+  const folder = folderFor(entry);
+  return folder ? t(`folders.${folder.id}.title`) : getGroupLabel(entry.group, t);
+}
+
+async function packageCatalogT(lang: string): Promise<PackageCatalogTranslator> {
+  return (await getTranslations({
+    locale: lang,
+    namespace: "packageCatalog",
+  })) as unknown as PackageCatalogTranslator;
 }
 
 export async function generateMetadata({ params }: FeatureDetailPageProps): Promise<Metadata> {
@@ -90,15 +88,15 @@ export async function generateMetadata({ params }: FeatureDetailPageProps): Prom
   const entry = getPackageFeatureEntry(name);
   if (!entry) return {};
 
-  const locale: Lang = isZhUiLocale(lang) ? "zh" : "en";
+  const t = await packageCatalogT(lang);
   const path = `/features/${entry.slug}`;
   // A `package` entry is auto-flattened from the file tree: served (and reachable
   // from its domain page) but never a canonical document, so it is published in
   // zero locales rather than being an indexable near-duplicate orphan that no
   // sitemap lists.
   return buildPageMetadata({
-    title: `${titleOf(entry, locale)} — Nebutra`,
-    description: getFeatureSummary(entry, locale),
+    title: `${titleOf(entry, t)} — Nebutra`,
+    description: getFeatureSummary(entry, t),
     path,
     locale: lang as Locale,
     publishedIn: isHighSignalFeatureEntry(entry)
@@ -115,19 +113,20 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   if (!entry) notFound();
 
   setRequestLocale(lang as Locale);
-  const locale: Lang = isZhUiLocale(lang) ? "zh" : "en";
+  const locale: Lang = siteLang(lang);
+  const t = await packageCatalogT(lang);
 
   return entry.kind === "package" ? (
-    <PackagePage entry={entry} locale={locale} />
+    <PackagePage entry={entry} locale={locale} t={t} />
   ) : (
-    <DomainPage entry={entry} locale={locale} />
+    <DomainPage entry={entry} locale={locale} t={t} />
   );
 }
 
-type PageProps = { entry: PackageFeatureEntry; locale: Lang };
+type PageProps = { entry: PackageFeatureEntry; locale: Lang; t: PackageCatalogTranslator };
 
 /** A domain: how it fits together, what it owns, its code, and every package in it. */
-function DomainPage({ entry, locale }: PageProps) {
+function DomainPage({ entry, locale, t }: PageProps) {
   const folder = folderFor(entry);
   const sample = getCodeSampleForEntry(entry);
   const packages = entry.children
@@ -142,18 +141,18 @@ function DomainPage({ entry, locale }: PageProps) {
       <section className="relative isolate overflow-hidden px-8 pt-28 pb-20 xl:px-16">
         <div aria-hidden className="site-hero-glow" />
         <div className="relative z-10 mx-auto w-full max-w-content">
-          <BackLink href={`/features`} label={COPY.allPackages[locale]} />
+          <BackLink href={`/features`} label={t("page.allPackages")} />
           <Intro
             level={1}
             className="mt-8"
-            title={titleOf(entry, locale)}
-            lead={folder ? folder.summary[locale] : getFeatureSummary(entry, locale)}
-            cn={locale === "en" ? folder?.title.zh : undefined}
+            title={titleOf(entry, t)}
+            lead={folder ? t(`folders.${folder.id}.summary`) : getFeatureSummary(entry, t)}
+            cn={locale === "en" && folder ? t(`folders.${folder.id}.titleCn`) : undefined}
           />
           <SourceLine
             entry={entry}
-            locale={locale}
-            sentence={folder ? sourceSentence(folder, locale) : undefined}
+            t={t}
+            sentence={folder ? sourceSentence(folder, t) : undefined}
           />
         </div>
       </section>
@@ -161,9 +160,12 @@ function DomainPage({ entry, locale }: PageProps) {
       {folder ? (
         <Band id="topology">
           <div className="mx-auto w-full max-w-content">
-            <Intro title={folder.topology.title[locale]} lead={folder.topology.caption[locale]} />
+            <Intro
+              title={t(`folders.${folder.id}.topology.title`)}
+              lead={t(`folders.${folder.id}.topology.caption`)}
+            />
             <div className="mt-12">
-              <TopologyList nodes={folder.topology.nodes} locale={locale} />
+              <TopologyList folderId={folder.id} nodes={folder.topology.nodes} t={t} />
             </div>
           </div>
         </Band>
@@ -173,37 +175,51 @@ function DomainPage({ entry, locale }: PageProps) {
         <Band>
           <div className="mx-auto w-full max-w-content">
             <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
-              <Principles heading={COPY.owns[locale]} items={folder.owns} locale={locale} />
-              <Principles heading={COPY.stops[locale]} items={folder.boundaries} locale={locale} />
-              <Principles heading={COPY.proof[locale]} items={folder.proof} locale={locale} />
+              <Principles
+                heading={t("page.owns")}
+                folderId={folder.id}
+                field="owns"
+                count={folder.ownsCount}
+                t={t}
+              />
+              <Principles
+                heading={t("page.stops")}
+                folderId={folder.id}
+                field="boundaries"
+                count={folder.boundariesCount}
+                t={t}
+              />
+              <Principles
+                heading={t("page.proof")}
+                folderId={folder.id}
+                field="proof"
+                count={folder.proofCount}
+                t={t}
+              />
             </div>
           </div>
         </Band>
       ) : null}
 
-      {sample ? <CodeBand sample={sample} label={titleOf(entry, locale)} locale={locale} /> : null}
+      {sample ? <CodeBand sample={sample} label={titleOf(entry, t)} t={t} /> : null}
 
       {packages.length > 0 ? (
         <Band id="packages">
           <div className="mx-auto w-full max-w-content">
             <Intro
-              title={COPY.packages[locale]}
-              lead={
-                locale === "zh"
-                  ? `${entry.path} 下的 ${packages.length} 个包。`
-                  : `${packages.length} packages in ${entry.path}.`
-              }
+              title={t("page.packages")}
+              lead={t("page.packagesCount", { count: packages.length, path: entry.path })}
             />
             {withGlyph.length > 0 ? (
               <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {withGlyph.map((p) => (
-                  <PackageCard key={p.slug} entry={p} href={hrefFor(p)} locale={locale} />
+                  <PackageCard key={p.slug} entry={p} href={hrefFor(p)} locale={locale} t={t} />
                 ))}
               </div>
             ) : null}
             {withoutGlyph.length > 0 ? (
               <div className="mt-12">
-                <PackageRows entries={withoutGlyph} hrefFor={hrefFor} locale={locale} />
+                <PackageRows entries={withoutGlyph} hrefFor={hrefFor} t={t} />
               </div>
             ) : null}
           </div>
@@ -214,7 +230,7 @@ function DomainPage({ entry, locale }: PageProps) {
 }
 
 /** One package: what it is, what it looks like at work, its code, its neighbours. */
-function PackagePage({ entry, locale }: PageProps) {
+function PackagePage({ entry, locale, t }: PageProps) {
   const domain = domainOf(entry);
   const Showcase = getPackageShowcase(entry.slug);
   const Glyph = Showcase ? null : getSubpackageGlyph(entry.slug);
@@ -225,7 +241,7 @@ function PackagePage({ entry, locale }: PageProps) {
     .map((slug) => getPackageFeatureEntry(slug))
     .filter((e): e is PackageFeatureEntry => e?.kind === "package")
     .slice(0, 6);
-  const domainTitle = domain ? titleOf(domain, locale) : entry.group;
+  const domainTitle = domain ? titleOf(domain, t) : entry.group;
 
   return (
     <main id="main-content">
@@ -234,56 +250,48 @@ function PackagePage({ entry, locale }: PageProps) {
         <div className="relative z-10 mx-auto w-full max-w-content">
           <BackLink
             href={`/features/${domain?.slug ?? ""}`}
-            label={domain ? domainTitle : COPY.allPackages[locale]}
+            label={domain ? domainTitle : t("page.allPackages")}
           />
           <Intro
             level={1}
             className="mt-8"
             title={<span translate="no">{entry.label}</span>}
-            lead={getFeatureSummary(entry, locale)}
+            lead={getFeatureSummary(entry, t)}
           />
-          <SourceLine entry={entry} locale={locale} />
+          <SourceLine entry={entry} t={t} />
         </div>
       </section>
 
       {Showcase ? (
         <Band id="showcase">
           <div className="mx-auto w-full max-w-content">
-            <Showcase entry={serializable} locale={locale} />
+            <Showcase entry={serializable} locale={locale} copy={getShowcaseCopy(entry.slug, t)} />
           </div>
         </Band>
       ) : Glyph ? (
         <Band id="showcase">
           <div className="mx-auto w-full max-w-content">
             <div className="mx-auto max-w-2xl rounded-[var(--radius-card)] border border-border bg-card p-6">
-              <Glyph entry={serializable} locale={locale} />
+              <Glyph entry={serializable} locale={locale} copy={getGlyphCopy(entry.slug, t)} />
             </div>
           </div>
         </Band>
       ) : null}
 
-      {sample ? <CodeBand sample={sample} label={entry.label} locale={locale} /> : null}
+      {sample ? <CodeBand sample={sample} label={entry.label} t={t} /> : null}
 
       {siblings.length > 0 && domain ? (
         <Band>
           <div className="mx-auto w-full max-w-content">
-            <Intro
-              title={locale === "zh" ? `${domainTitle}里的其他包` : `More in ${domainTitle}`}
-            />
+            <Intro title={t("page.moreInDomain", { domain: domainTitle })} />
             <div className="mt-12">
-              <PackageRows
-                entries={siblings}
-                hrefFor={(p) => `/features/${p.slug}`}
-                locale={locale}
-              />
+              <PackageRows entries={siblings} hrefFor={(p) => `/features/${p.slug}`} t={t} />
             </div>
             <Link
               href={`/features/${domain.slug}`}
               className="mt-10 inline-flex items-center gap-2 text-sm text-secondary-foreground transition-colors duration-micro hover:text-foreground"
             >
-              {locale === "zh"
-                ? `全部 ${domain.children.length} 个包`
-                : `All ${domain.children.length} packages`}
+              {t("page.allPackagesInDomain", { count: domain.children.length })}
               <span aria-hidden>→</span>
             </Link>
           </div>
@@ -308,11 +316,11 @@ function BackLink({ href, label }: { href: string; label: string }) {
 /** Where the code lives, and the two ways to read more: the docs and the source. */
 function SourceLine({
   entry,
-  locale,
+  t,
   sentence,
 }: {
   entry: PackageFeatureEntry;
-  locale: Lang;
+  t: PackageCatalogTranslator;
   sentence?: string;
 }) {
   const link =
@@ -328,11 +336,11 @@ function SourceLine({
       )}{" "}
       ·{" "}
       <a href={`${REPO_URL}/tree/main/${entry.path}`} className={link}>
-        {COPY.source[locale]} ↗
+        {t("page.source")} ↗
       </a>{" "}
       ·{" "}
       <a href={createPublicDocsUrl(getGroupTokens(entry.group).docsPath)} className={link}>
-        {COPY.docs[locale]} ↗
+        {t("page.docs")} ↗
       </a>
     </p>
   );
@@ -340,20 +348,25 @@ function SourceLine({
 
 function Principles({
   heading,
-  items,
-  locale,
+  folderId,
+  field,
+  count,
+  t,
 }: {
   heading: string;
-  items: CapabilityFolder["owns"];
-  locale: Lang;
+  folderId: string;
+  field: "owns" | "boundaries" | "proof";
+  count: number;
+  t: PackageCatalogTranslator;
 }) {
+  const items = Array.from({ length: count }, (_, i) => t(`folders.${folderId}.${field}.${i}`));
   return (
     <div>
       <h2 className="font-heading text-lg text-foreground">{heading}</h2>
       <ul className="mt-4 space-y-3">
         {items.map((item) => (
-          <li key={item.en} className="text-sm text-muted-foreground">
-            {item[locale]}
+          <li key={item} className="text-sm text-muted-foreground">
+            {item}
           </li>
         ))}
       </ul>
@@ -364,16 +377,16 @@ function Principles({
 function CodeBand({
   sample,
   label,
-  locale,
+  t,
 }: {
   sample: FeatureCodeSample;
   label: string;
-  locale: Lang;
+  t: PackageCatalogTranslator;
 }) {
   return (
     <Band id="usage">
       <div className="mx-auto w-full max-w-content">
-        <Intro title={COPY.inCode[locale]} />
+        <Intro title={t("page.inCode")} />
         <div className="mt-12">
           <CodeBlock
             filename={sample.filename}

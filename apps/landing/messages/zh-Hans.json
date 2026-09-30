@@ -2830,5 +2830,838 @@
       "title": "Playbook — {productName}",
       "description": "Sailor 内置的基础设施 Demo、实用工具、集成能力与实验性功能的精选目录。"
     }
+  },
+  "packageCatalog": {
+    "descriptions": {
+      "audit": "面向 actor/tenant 行动的 hash-chain SHA-256 仅追加审计日志，SOC 2 级防篡改，支持流式导出与可回放查询。",
+      "auth": "基于 Postgres 的 Better Auth — 组织成员关系、设备码登录、强制 MFA、session HMAC 签名。统一身份层，不经第三方厂商。",
+      "captcha": "一个 verify() 后端接口适配 Cloudflare Turnstile / hCaptcha / reCAPTCHA；分路启用，得分服务端判定，前端无第三方追踪。",
+      "identity": "统一 actor 原语 — usr_/svc_/api_ ID 空间，角色/成员关系，租户绑定；所有 iam 子包都从同一个 identity 对象读取上下文。",
+      "oauth": "自建 OIDC 身份提供方 — 让第三方应用「用 {brandName} 登录」；授权码 + PKCE、refresh token 轮换、授权同意，client 存于 Postgres。",
+      "permissions": "RBAC + ABAC 引擎 — CASL 处理进程内 check；服务端 defineAbility()，React 用 <Can /> 包裹。",
+      "tenant": "基于 AsyncLocalStorage 的请求级租户上下文 + Prisma RLS 桥接；中间件解析一次 tenantId，整条调用栈自动透传。",
+      "vault": "客户密钥应用层信封加密 — AES-256-GCM、按租户 DEK、KMS 包装；解密带审计记录,落盘零明文。",
+      "billing": "计费基于 Creem（全球卡组织，交易商户），另有微信支付 / 支付宝覆盖中国大陆（或手动开票）；Subscription / Invoice / Customer 接口对所有后端保持一致。",
+      "blog": "各内容面共用的博客领域规则，与框架无关：PortableText 类型、阅读时长、相关文章排序、目录提取。",
+      "contracts": "事件 / 身份 / 计费 / 通知的跨包类型契约；commerce 与 iam、queue、webhooks 之间通信的共享 TypeScript 边界。",
+      "license": "License key 生成、校验、吊销;Ed25519 签名、可离线验证、内建席位与有效期约束。",
+      "marketing": "营销站点共用原语 — Hero、Pricing、FAQ — landing 与产品营销面复用，brand tokens 已接入。",
+      "metering": "基于 ClickHouse 的用量计量 — 秒级写入、按租户查 quota，可直接接计量计费或产品内额度。",
+      "waitlist": "面向 foundation tier 的预启动 waitlist — 邀请码、排队位置、推荐计数、运营 dashboard。",
+      "cache": "基于 tag 的缓存 — Redis / Upstash / 内存 三种 backend；serverless 与自托管复用同一 get/set/invalidate(tags) 接口。",
+      "queue": "消息队列 — Upstash QStash（serverless），本地开发与测试使用内存回退。",
+      "search": "全文 + 向量搜索 — pgvector（Postgres）；BM25 关键词搜索与向量余弦搜索直接跑在自有数据库上，无需外部搜索基础设施。",
+      "notifications": "多通道通知 — in_app / email / push / sms / chat — 自托管直发通道,按收件人偏好路由。",
+      "webhooks": "出站 webhook 投递 — 自实现分发,负载签名、指数退避重试、用户自助订阅 portal。",
+      "uploads": "大文件上传 — S3 / R2 多段、Tus 断点续传、Presigned URL；按文件大小自动选择策略。",
+      "storage": "下层对象存储辅助 — list / copy / ACL / signed read;不需要多段逻辑时替代 @nebutra/uploads。",
+      "email": "渲染 React Email 模板,经 Resend / SES / SMTP 投递;所有交易邮件统一 sendEmail(template, props, recipient)。",
+      "saga": "分布式事务原语 — 补偿动作、重试/回滚 hook、幂等 key;开发中,默认 flag 关闭。",
+      "event-bus": "进程内 pub/sub + 跨应用 fanout;audit / billing / notifications 借此响应 commerce 事件,避免循环依赖。",
+      "sms": "事务 SMS + OTP 校验 — 全球用 Twilio Verify,中国大陆用阿里云;统一 send(to, template),按本地号段自动选 provider。",
+      "tts": "TTS 三 provider — OpenAI / ElevenLabs / Azure;流式音频、voice preset、按租户限速。",
+      "video-compose": "基于 Remotion 的程序化视频合成 — 由 JSON spec 渲染短片、社媒卡片、品牌 GIF。",
+      "collab": "实时协同原语 — Yjs CRDT、WebSocket 传输、presence 光标;多人应用最终都会用上。",
+      "onboarding": "可持久化的多步 onboarding — 每用户进度、分支流、可做 A/B 步骤门控。",
+      "admin-tooling": "自助式运营 dashboard — 租户、计费覆写、feature flag 切换 — 由 @nebutra/permissions 统一鉴权。",
+      "integration-vault": "按租户的凭证库，覆盖 OAuth 集成与 API key — Creem、Gmail OAuth、Notion API;KMS 包装,自动 refresh 轮换。",
+      "db": "类型化 Prisma client 包装 — extension 友好、RLS 兼容、读写分离时按租户绑定连接。",
+      "prepaid-wallet": "{brandName} Router 与 Forge 的预付余额与 API key：钱包端口、以 SHA-256 指纹存储的 sk-sailor- key，以及同时记录收费与供给成本的用量信封。",
+      "router-supply": "{brandName} Router 的供给路由：模型别名、从环境变量发现引擎，以及在上游失败时自动回退的供给链。",
+      "browser-utils": "每个应用都需要的浏览器小工具：在隐私模式和禁用站点数据时也不出错的存储，以及带超时的 fetch。",
+      "config": "类型化环境与运行时配置 — boot 时 Zod 校验,杜绝散落的 process.env 引用,缺 key 立刻失败。",
+      "logger": "结构化日志 — pino + Sentry transport;每请求一个 log 对象、breadcrumb 自动联动、PII 自动剥离。",
+      "health": "所有后端服务的存活 + 就绪探针;把 db / queue / search 等下游聚合进同一份 /healthz 响应。",
+      "errors": "应用错误类型分类 — UserError / AuthError / RateLimitError;到 HTTP、日志、Sentry、产品内 toast 各层映射一致。",
+      "gateway-core": "BFF 原语 — backends/gateway 与 edge handler 共用;中间件链、路由匹配、header 规整、request-id 透传。",
+      "rate-limit": "令牌桶限速器 — Upstash Redis / 内存;按路由 + 按租户配置,返回 429 + retry-after,决策可审计。",
+      "repositories": "仓储模式原语 — findAll / findById / create / update / delete 统一 Repository<T>;换 backend 不动调用方。",
+      "tenant-store": "按租户的 KV 缓存 — 缓存数据库查询太热的 lookup;租户设置变更自动失效。",
+      "trace-store": "OpenTelemetry 兼容的 span 存储与查询层;让 agent 能跨 iam / billing / webhooks 追踪一个 tool 调用。",
+      "status": "公开状态页原语 — incident 时间线、组件图、订阅邮件;支持完整状态页与可嵌入 widget。",
+      "alerting": "基于 @nebutra/metering 的告警规则与投递 — 阈值/异常检测,路由到 PagerDuty / Discord / 产品内 banner。",
+      "analytics": "基于 ClickHouse 的一方产品分析 — 事件写入、漏斗查询;营销站点不加载任何三方脚本。",
+      "feature-flags": "服务端 + 客户端 flag 求值器 — GrowthBook / Statsig / 自建;按租户覆写、sticky 分桶、暴露为 React hook。",
+      "i18n": "next-intl 桥接 — 运行时 locale、ICU 复数、货币/日期 formatter、按路由分包;构建期防止 key 漂移。",
+      "graph-model": "属性图模型层 — 用于知识 / 组织 / 资产图;边与点用 Zod 定型,可走 Prisma 或 Neo4j adapter。",
+      "provider-factory": "自动探测的 provider 工厂模式 — 由环境变量决定 queue / search / notifications backend,一个 getX() 即可。",
+      "capability-kit": "可组合 capability 原语 — pricing tier ↔ feature flag ↔ quota ↔ UI gating,以单一声明式 manifest 串联。",
+      "typelens-catalog": "TypeLens 的数据层：字体作品、搭配与供设计师和设计 agent 使用的提取包。仍在开发中，目录模型已就绪，种子内容尚未完成。",
+      "fonts": "自托管开源字体：每个应用加载的中文正文字体，以及主题与 DESIGN.md 可引用的 19 款字体注册表；不向任何字体 CDN 发请求。",
+      "brand": "品牌原语 — 颜色定义、渐变 token、动效语言;为源数据,不被 app 运行时直接引用。",
+      "tokens": "运行时 CSS 变量 + ThemeProvider — 所有 app 颜色 / 间距 / radius 的单一数据源;在 globals.css 中 @import。",
+      "design-tokens": "W3C DTCG $value/$type 规范的 token 文件 + Style Dictionary 4 流水线;输出 CSS 变量与 JS module，纯 Git 编辑，不经设计工具同步往返。",
+      "icons": "541 个 Geist icon,以 tree-shakable TSX 组件分发;单字重 + 光学尺寸,与 Vercel / v0 视觉对齐。",
+      "theme": "纯 CSS 多 theme 引擎 — 六套 oklch preset,通过 data-theme 切换;关键路径无 JS。",
+      "ui": "主组件库 — {brandName} 组件、自研原语、layout、主题桥接与共享 Motion 门面；产品 UI 的 import 边界。",
+      "design-sync": "纯 Git 的设计 token 同步 — token 以仓库为唯一数据源,无需再和设计工具做双向同步。",
+      "forge-dns-leak": "用于真实 DNS 泄漏检测的权威 DNS 区：访客递归解析器查询的探针域名按来源 IP 记录。仍在开发中，需要委派的 DNS 区。",
+      "forge-runtime": "{brandName} Forge 背后的能力注册表与调用流水线：纯函数工具，页面与 API 同一条调用路径，按积分账本计费。",
+      "startup-os": "Startup OS 的类型化契约：公司上下文、创始人对话流、运行状态、生成文件与发布闸门。仍在开发中，尚未接入生产应用。",
+      "workflow-runtime": "租户编写的工作流（agent()、parallel()、phase()）只在失败即关闭的沙箱中运行；不可信脚本永远不经过 eval、new Function 或 node:vm。",
+      "agents": "多步骤 agent 运行时 — Vercel AI SDK 为底、tool registry、流式 UI、MCP 接入;所有 Sailor agentic 能力的脚手架。",
+      "agent-runtime": "更底层的 agent 执行 — message reducer、tool 调用、流式状态机;@nebutra/agents 在其之上封装。",
+      "ai-primitives": "所有 AI 包共享的辅助 — token 计数、prompt 模板、stream 解析、退避重试;不依赖具体 provider。",
+      "ai-providers": "Provider 元数据 — 每百万 token 单价、context window、模态;驱动模型选择与成本估算。",
+      "mcp": "Model Context Protocol server 原语 — 注册 tool、暴露 resource、流式订阅;可作为 Sailor 内嵌或独立部署。",
+      "knowledge-rag": "检索增强生成流水线 — chunk → embed → store → retrieve → rerank;vector store 可插拔。",
+      "knowledge-base": "面向 RAG 的文档库 + indexer;监听 S3 / Notion / GitHub 源、调度重嵌入、把新鲜度暴露给 agent。",
+      "knowledge-graph": "基于 @nebutra/graph-model 的实体 + 关系存储;agent 可直接走 \"客户 → 发票 → 产品\",无需绕 SQL。",
+      "tool-registry": "运行时 tool catalog — schema、描述、安全等级;在 agent 之间热插拔,无需重新部署。",
+      "code-execution": "面向 agent 的沙箱代码执行 — JS / Python / shell;短生命周期容器、网络隔离、由 @nebutra/permissions 限权。",
+      "sandbox-runtime": "Vercel Sandbox + Lambda + 本地 runner 适配器;execute() 统一入口,按策略规则选择。",
+      "browser-control": "面向 agent 的无头浏览器驱动 — Vercel Agent Browser 优先,Playwright 兜底;截图 / 点击 / 输入 / 求值。",
+      "generation-context": "Token 预算的上下文窗口管理 — 系统 prompt、RAG、用户历史、scratchpad;窗口爆掉时决定淘汰策略。",
+      "local-embedding": "基于 ONNX / WebGPU 的端侧 embedding;短文本、隐私敏感、provider 限流时省去往返。",
+      "execution-policy": "决定 agent 任务路由到何处的策略规则 — render → Vercel Sandbox / 长任务 → Lambda / 内部 → local-runner。",
+      "code-index": "面向 agent 的代码仓索引 — symbol graph、embedding、文件 watcher;agent 无需 grep 即可回答 \"X 在哪定义\"。",
+      "voice-realtime": "实时语音回环 — 输入 ASR、模型流式、输出 TTS — 端到端 < 300ms;桥接 OpenAI Realtime + Deepgram + ElevenLabs。",
+      "image-pipeline": "图像生成 + 变换流水线 — provider 路由、水印 + 安全过滤、输出缓存、按租户 quota。",
+      "audio-pipeline": "音频处理链 — voice clone、降噪、转写、摘要;每段以 async iterator 串流。",
+      "video-pipeline": "长视频流水线 — 切片、字幕、b-roll、渲染;长阶段通过 queue 转给 backends/python。",
+      "document-pipeline": "PDF / docx / markdown 摄入 — chunk、表格感知抽取、embed、入 @nebutra/knowledge-base;纯图页用 OCR 回落。",
+      "3d-pipeline": "3D 资产生成 + 渲染 — 文生 mesh + USD 导出 + Three.js 预览;backend 走 GPU pool 路由。",
+      "cli": "`nebutra` CLI — 脚手架功能、迁移、租户检视、部署 preset;CI 用的是同一份二进制。",
+      "create-sailor": "`create-sailor` 脚手架 — 一条命令,跑得起来的多租户 SaaS,自带 auth + billing + dashboard。",
+      "preset": "基于 feature 的 SaaS 配置系统;在单个配置文件中直接开关 apps 与 features,组装你的 stack。",
+      "sanity": "Sanity Studio v4 辅助 — schema 生成器、内容驱动的 page builder、与图像流水线集成。",
+      "china-compliance": "中国区运营支持 — ICP 备案辅助、工信部登记、实名认证、数据境内存储。",
+      "content-store": "Headless CMS 适配器 — Sanity / Strapi / Notion 统一为一个 ContentEntry<T> 读 API;驱动营销页面与产品文案。",
+      "play-loader": "Atelier play 的热重载 loader — 沙箱 iframe、消息桥、保存即持久化。",
+      "play-marketplace": "可分享 atelier play 的市场壳 — 发现、评分、安装、署名。",
+      "access-gate": "上线前访问闸门 — 邀请码核销、排队位置、分批放量;在 @nebutra/waitlist 之上叠加。",
+      "atelier-canvas": "无限设计画布 — 多人光标、图层面板、frame 导出;所有 atelier play 的绘制载体。",
+      "brand-genesis": "品牌生成流 — 选调色板 / 字组合 / 动效 preset,产出同步的 @nebutra/brand 覆写与 Figma 预览链接。",
+      "cinema": "Atelier 电影模式 — 全屏沉浸 + 计时场景播放;最适合 demo play 或排练 pitch。",
+      "cofounder-match": "按技能 + 阶段匹配 cofounder — 短表单后输出排序候选,标注共同兴趣与可信引荐路径。",
+      "ecosystem-safety": "上线前安全自检 — license 扫描、依赖漏洞审计、违禁内容检测;在 play 进市场前暴露阻塞项。",
+      "event-log": "通用事件日志原语 — append、查询、时间窗聚合;为 audit / analytics / trace-store 提供底层记录。",
+      "founder-cemetery": "失败创业纪念馆 — 匿名化复盘 + 失败原因 tag;只读目录,作为高频失败模式 dashboard 的数据源。",
+      "idea-plaza": "公开 idea 广场 — 提交、点赞、评论;atelier play 在创始人问 \"做什么\" 时的种子池。",
+      "landing-builder": "积木式落地页生成器 — 拖动预设 section、原位改文案、一键发到子域名。",
+      "legal": "法律实体原语 — 公司注册、代理人、按管辖区生成 ToS/Privacy;为 @nebutra/preset 的法律部分供给。",
+      "outreach-engine": "Cold-outreach 调度器 — 名单去重、按 persona 撰写、SES/Resend 投递、自动识别回复;热回复回灌 @nebutra/agents。",
+      "reel": "竖屏短视频原语 — 抓取 atelier 高光、走 TTS 流水线自动加字幕、发到社媒通道。",
+      "support-deflector": "内嵌 AI 客服层 — 从文档与历史工单回答,先省一轮人工;无法解决时携完整记录转人工。",
+      "time-machine": "项目历史回看器 — 每次保存打 snapshot、可从任一历史帧拉新 play、双 snapshot 对比 diff。"
+    },
+    "groups": {
+      "ai": {
+        "label": "AI 运行时",
+        "summary": "把智能体循环、RAG、工具协议、沙箱执行和多模态流水线收束到应用外部。"
+      },
+      "commerce": {
+        "label": "商业化",
+        "summary": "把访问、计费、合同、license、营销和用量计量放在同一商业边界内。"
+      },
+      "design": {
+        "label": "设计系统",
+        "summary": "把品牌、tokens、icons、theme、UI primitive 和设计同步组织成一条供应链。"
+      },
+      "gateway": {
+        "label": "网关",
+        "summary": "把 BFF、鉴权、租户、限流、OpenAPI 和路由契约放在请求入口处。"
+      },
+      "iam": {
+        "label": "身份与信任",
+        "summary": "把认证、身份、权限、租户、审计和密钥行为收束到同一个信任边界。"
+      },
+      "integrations": {
+        "label": "集成",
+        "summary": "把缓存、队列、搜索、消息、存储、上传和 webhook 作为可替换连接层。"
+      },
+      "ops": {
+        "label": "运维",
+        "summary": "把 CLI、预设、CMS、Supabase 和合规支持放在发布与运维边界。"
+      },
+      "platform": {
+        "label": "平台",
+        "summary": "把数据库、配置、健康检查、仓储、trace、限流和租户锁放在最低共享层。"
+      }
+    },
+    "folders": {
+      "ai": {
+        "title": "AI 运行时与智能体底座",
+        "titleCn": "AI 运行时与智能体底座",
+        "summary": "这是一个生产级 AI 域：智能体循环、工具协议、RAG、本地执行、供应商元数据与多模态流水线都被收束在应用之外。",
+        "signature": {
+          "label": "AI 包",
+          "detail": "220 个运行时源码文件与 117 个测试，重心落在 agent-runtime、knowledge-rag、reel、graph 与 execution policy。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "智能体工作台拓扑",
+          "caption": "一个核心循环协调模型调用、上下文、工具、记忆、执行与媒体生产。",
+          "nodes": {
+            "0": "durable turns、工具、命令、hooks、subagents",
+            "1": "检索、切块、本地 embedding、content-store",
+            "2": "工具目录与协议桥接",
+            "3": "类型化媒体图与 storyboard 执行",
+            "4": "一个 router 后的执行供应商",
+            "5": "只放元数据；运行时留在 agents"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "agent-runtime 测试",
+            "detail": "dispatcher、hooks、durable turn、命令、rollout store"
+          },
+          "1": {
+            "label": "RAG 测试",
+            "detail": "检索契约与 ingestion 行为"
+          },
+          "2": {
+            "label": "README 面",
+            "detail": "多数 AI 能力有包级文档"
+          }
+        },
+        "owns": {
+          "0": "@nebutra/agents 作为统一模型执行面",
+          "1": "RAG、代码索引、知识图谱、内容库与工具注册中心",
+          "2": "图像、视频、音频、语音、沙箱与浏览器自动化流水线"
+        },
+        "boundaries": {
+          "0": "应用只消费稳定包 API，不拥有供应商路由。",
+          "1": "多媒体工作流依赖注入适配器，而不是硬编码厂商。"
+        },
+        "proof": {
+          "0": "agents、knowledge-rag、reel、agent-runtime 的包级测试",
+          "1": "AI primitive ownership 与 runtime dependency 架构测试"
+        }
+      },
+      "platform": {
+        "title": "平台控制平面",
+        "titleCn": "平台控制平面",
+        "summary": "最低层共享能力：数据库、配置、供应商选择、租户锁、gateway-core 契约、健康检查、限流、trace 与仓储边界。",
+        "signature": {
+          "label": "基础包",
+          "detail": "166 个运行时源码文件覆盖 db、gateway-core、provider-factory、tenant-store、trace-store、config、errors 与可观测性。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "只能向下依赖的平台栈",
+          "caption": "功能包站在这层之上；平台包不把产品逻辑拉进来。",
+          "nodes": {
+            "0": "Prisma v7、schema 策略、生成脚本",
+            "1": "按租户串行化与 scoped stores",
+            "2": "explicit/env/detect/fallback 供应商解析",
+            "3": "Hono backend 之下的共享 gateway 契约",
+            "4": "agent、tool、LLM span 的异步 trace"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "db 源码文件",
+            "detail": "schema、client、seed、生成边界"
+          },
+          "1": {
+            "label": "本地 AGENTS 契约",
+            "detail": "包级所有权规则"
+          },
+          "2": {
+            "label": "gateway-core 测试",
+            "detail": "后端路由之下的共享 gateway 行为"
+          }
+        },
+        "owns": {
+          "0": "Prisma schema、数据库客户端、迁移与多 schema 策略",
+          "1": "租户锁、trace store、健康检查、配置、错误与限流",
+          "2": "上层包复用的 provider factory 与 repository 边界"
+        },
+        "boundaries": {
+          "0": "平台包不承载应用专属 UI 或产品文案。",
+          "1": "功能包向下依赖平台，平台不反向导入功能域。"
+        },
+        "proof": {
+          "0": "schema drift audit、db generate 与架构依赖测试",
+          "1": "tenant-store 与 trace-store 的包级 doctor/debug 命令"
+        }
+      },
+      "iam": {
+        "title": "身份、访问与租户信任",
+        "titleCn": "身份、访问与租户信任",
+        "summary": "基于 Better Auth 的认证、租户上下文、权限门禁、审计、验证码、OAuth 与加密 vault 行为被放在同一个信任边界里。",
+        "signature": {
+          "label": "信任测试",
+          "detail": "供应商抽象、审计、租户、权限、OAuth 与 vault 测试防止 auth 行为漂移进应用。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "信任走廊",
+          "caption": "每个产品动作都应按身份、租户、权限、审计、密钥边界的顺序通过。",
+          "nodes": {
+            "0": "基于 Postgres 的 Better Auth，session 鉴权",
+            "1": "租户上下文与组织作用域",
+            "2": "RBAC 与 resource-action scopes",
+            "3": "敏感操作轨迹",
+            "4": "本地与 KMS-backed 密钥存储"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "auth 测试",
+            "detail": "供应商契约行为"
+          },
+          "1": {
+            "label": "本地 AGENTS 文件",
+            "detail": "每个 IAM 包都有所有权说明"
+          },
+          "2": {
+            "label": "tenant 测试",
+            "detail": "组织上下文与租户策略"
+          }
+        },
+        "owns": {
+          "0": "Better Auth 的 session/身份接口，内建设备码登录与组织成员关系",
+          "1": "权限门禁、租户上下文、审计事件与 vault 存储",
+          "2": "外部身份流的 OAuth server 与 captcha 边界"
+        },
+        "boundaries": {
+          "0": "UI 检查调用 IAM 契约，不重新实现授权逻辑。",
+          "1": "密钥与审计行为不泄漏到应用本地 helper。"
+        },
+        "proof": {
+          "0": "认证供应商抽象测试与权限概念文档",
+          "1": "AGENTS.md 契约中的 audit 与 tenant 包边界"
+        }
+      },
+      "design": {
+        "title": "设计系统供应链",
+        "titleCn": "设计系统供应链",
+        "summary": "品牌资产、DTCG tokens、Tailwind v4 theme 导出、Geist icons、UI primitives、registry build 与 git-only/design-md sync 构成一条流水线。",
+        "signature": {
+          "label": "已封装 Geist 图标",
+          "detail": "@nebutra/icons 自身就有 543 个源码文件；设计系统天然是源码密集型。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "Token 到应用的供应链",
+          "caption": "一个事实，一个 owner：颜色、图标、组件与 registry 经由受控包边界流动。",
+          "nodes": {
+            "0": "W3C DTCG 单一事实源",
+            "1": "CSS 变量与 ThemeProvider 入口",
+            "2": "Tailwind v4 @theme 与 data-theme selectors",
+            "3": "Geist 图标 React 包",
+            "4": "primitives、layouts、registry、治理测试"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "UI 源码文件",
+            "detail": "primitives、layout shells、registry scripts"
+          },
+          "1": {
+            "label": "design-sync 测试",
+            "detail": "git-only、design-md、IO、detect"
+          },
+          "2": {
+            "label": "AGENTS 契约",
+            "detail": "token、theme、brand、icons、UI、sync 所有权"
+          }
+        },
+        "owns": {
+          "0": "CSS 变量令牌、oklch 主题、品牌原语与生成资产",
+          "1": "可复用 primitives、布局壳、registry manifest 与 Storybook 表面",
+          "2": "设计同步脚本与 UI 治理策略测试"
+        },
+        "boundaries": {
+          "0": "落地页组合设计包，不 fork primitives。",
+          "1": "令牌变更通过 brand sync 流动，而不是一次性 hex 覆盖。"
+        },
+        "proof": {
+          "0": "React Doctor、Storybook registry 生成与 token sync 检查",
+          "1": "design-docs 组件页与治理测试"
+        }
+      },
+      "integrations": {
+        "title": "集成运行时层",
+        "titleCn": "集成运行时层",
+        "summary": "队列、缓存、事件总线、邮件、上传、存储、搜索、短信、通知、Webhook、协作与供应商 vault 共享同一条适配器线路。",
+        "signature": {
+          "label": "适配器包",
+          "detail": "最偏运行时的一条线：queue 有 10 个测试，notifications 5 个，email/uploads/webhooks 各 3 个。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "端口与适配器总线",
+          "caption": "传输细节集中在这里，使 AI、commerce 与 app 包调用稳定 port，而不是直接碰 vendor SDK。",
+          "nodes": {
+            "0": "持久投递与 worker 契约",
+            "1": "缓存供应商边界",
+            "2": "Resend、Console 传输",
+            "3": "上传校验与 storage handoff",
+            "4": "签名校验与投递",
+            "5": "按租户分区的 CRDT rooms"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "queue 测试",
+            "detail": "投递、重试与 worker 行为"
+          },
+          "1": {
+            "label": "README 面",
+            "detail": "适配器用法保留在包级文档"
+          },
+          "2": {
+            "label": "AGENTS 契约",
+            "detail": "每个 integration 的运行边界"
+          }
+        },
+        "owns": {
+          "0": "缓存、队列、事件总线、saga、通知、onboarding 与 webhooks",
+          "1": "搜索、存储、上传、短信、TTS、视频合成与 integration vault",
+          "2": "面向供应商的适配器，避免应用直接依赖 vendor SDK"
+        },
+        "boundaries": {
+          "0": "业务工作流调用 integration port，供应商细节留在这里。",
+          "1": "AI 与 commerce 包复用适配器，但不拥有传输代码。"
+        },
+        "proof": {
+          "0": "queue、cache、webhook、search 包级测试",
+          "1": "后台任务文档与运行时 smoke checks"
+        }
+      },
+      "commerce": {
+        "title": "商业系统记录源",
+        "titleCn": "商业系统记录源",
+        "summary": "访问门禁、计费供应商、订阅、用量、credits、metering、license、contracts、legal 内容、marketing 与 waitlist 构成商业域。",
+        "signature": {
+          "label": "商业包",
+          "detail": "billing 最大，但 access-gate、blog、license、legal、metering 与 waitlist 保持相邻商业事实分离。"
+        },
+        "sourceStats": {
+          "unitLabel": "包"
+        },
+        "topology": {
+          "title": "商业账本分道",
+          "caption": "每条 lane 拥有不同事实：访问、发票、用量、许可证、法务或获客。",
+          "nodes": {
+            "0": "受控 SaaS 访问的邀请生命周期",
+            "1": "Creem、ChinaPay、credits、manual",
+            "2": "用量记录与 billing handoff",
+            "3": "签发、校验、生命周期事件",
+            "4": "政策内容与合规表面"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "billing 测试",
+            "detail": "checkout factory、readiness、credit webhook、metering"
+          },
+          "1": {
+            "label": "metering 测试",
+            "detail": "用量记账边界"
+          },
+          "2": {
+            "label": "license 测试",
+            "detail": "签发与校验生命周期"
+          }
+        },
+        "owns": {
+          "0": "计费供应商适配器、订阅生命周期与计量契约",
+          "1": "访问门禁邀请、许可证、法务内容、营销原语与 waitlist",
+          "2": "应用可暴露但不可重新定义的商业边界"
+        },
+        "boundaries": {
+          "0": "落地页文案可链接商业契约，但不拥有计价行为。",
+          "1": "认证与计费通过租户标识连接，而不是共享 UI 状态。"
+        },
+        "proof": {
+          "0": "access-gate 生命周期测试与 package status 文档",
+          "1": "billing model 文档与 release-surface 校验"
+        }
+      },
+      "gateway": {
+        "title": "类型化 API 网关边界",
+        "titleCn": "类型化 API 网关边界",
+        "summary": "Hono 后端负责 request context、安全中间件、租户提取、幂等、用量计量、路由组、OpenAPI 生成与异步 Inngest jobs。",
+        "signature": {
+          "label": "gateway 测试",
+          "detail": "覆盖 billing 幂等、RBAC、middleware、queue delivery、events、health、notifications 与 AI gateway routes。"
+        },
+        "sourceStats": {
+          "unitLabel": "后端"
+        },
+        "topology": {
+          "title": "请求到契约路径",
+          "caption": "route code 只是可见部分；真正的边界是路由前后按序执行的策略链。",
+          "nodes": {
+            "0": "trace ID、关联、依赖注入",
+            "1": "安全头、动态 CORS、token bucket",
+            "2": "租户提取、mutation 去重",
+            "3": "admin、ai、billing、events、legal、webhooks",
+            "4": "类型客户端与后台同步 jobs"
+          }
+        },
+        "evidence": {
+          "0": {
+            "label": "源码文件",
+            "detail": "routes、middleware、services、clients、adapters"
+          },
+          "1": {
+            "label": "异步 jobs",
+            "detail": "billing sync、GDPR deletion、tenant provisioning、user sync"
+          },
+          "2": {
+            "label": "契约输出",
+            "detail": "generate:spec 与 typed API clients"
+          }
+        },
+        "owns": {
+          "0": "BFF 路由、OpenAPI 生成、中间件顺序与租户提取",
+          "1": "网关级限流、幂等、审计日志与版本化",
+          "2": "web 与生成客户端消费的类型化 API 契约"
+        },
+        "boundaries": {
+          "0": "后端策略位于 middleware，不在每条 route 中重复。",
+          "1": "应用不绕过 gateway 执行租户敏感操作。"
+        },
+        "proof": {
+          "0": "OpenAPI 生成、gateway route 测试与 release 验证脚本",
+          "1": "api-reference 文档与 dashboard typed-client 集成"
+        }
+      }
+    },
+    "page": {
+      "heroTitle": "每一层，都已经<signature>写好。</signature>",
+      "heroLead": "{packageCount} 个包，{domainCount} 个能力域：一个 SaaS 需要的每一层都写好、测好，放在同一个仓库里。下面逐个能力域展开：它怎么组织，里面有哪些包。",
+      "metaDescription": "{packageCount} 个包，{domainCount} 个能力域 — 认证、计费、租户、AI、集成与设计系统，写好、测好，放在同一个仓库里。",
+      "exploreDomain": "进入这个能力域",
+      "startTitle": "从这一切开始",
+      "startLead": "一条命令给你整个仓库，这个页面上的每个包都已经接好线。",
+      "install": {
+        "copyLabel": "复制",
+        "copiedLabel": "已复制"
+      },
+      "allPackages": "全部功能包",
+      "docs": "文档",
+      "source": "源码",
+      "inCode": "代码里",
+      "owns": "它负责什么",
+      "stops": "它的边界",
+      "proof": "怎么证明它能用",
+      "packages": "功能包",
+      "packagesCount": "{path} 下的 {count} 个包。",
+      "moreInDomain": "{domain}里的其他包",
+      "allPackagesInDomain": "全部 {count} 个包",
+      "sourceSentence": "{path} 下有 {count} 个{unit}、{sourceFiles} 个源码文件、{testFiles} 个测试文件。"
+    },
+    "glyphs": {
+      "sms": {
+        "message": "您的 {brandName} 验证码是 8472，5 分钟后过期。",
+        "delivered": "已送达"
+      },
+      "audio-pipeline": {
+        "steps": {
+          "0": "转写",
+          "1": "降噪",
+          "2": "母带"
+        }
+      },
+      "code-execution": {
+        "footer": "Vercel Sandbox · 安全执行不可信代码",
+        "executed": "47ms 内执行完成"
+      },
+      "document-pipeline": {
+        "steps": {
+          "0": {
+            "label": "PDF",
+            "meta": "上传"
+          },
+          "1": {
+            "label": "OCR",
+            "meta": "47页"
+          },
+          "2": {
+            "label": "切块",
+            "meta": "248"
+          },
+          "3": {
+            "label": "向量化",
+            "meta": ""
+          }
+        },
+        "docs": {
+          "0": {
+            "age": "2分钟前",
+            "pages": "47页",
+            "chunks": "248块"
+          },
+          "1": {
+            "age": "12分钟前",
+            "pages": "12页",
+            "chunks": "84块"
+          }
+        },
+        "processed": "已处理"
+      },
+      "ecosystem-safety": {
+        "title": "防护已开启",
+        "layersCount": "4 层",
+        "layers": {
+          "0": {
+            "label": "内容审核",
+            "stat": "今日 0 拦截"
+          },
+          "1": {
+            "label": "PII 脱敏",
+            "stat": "今日脱敏 12"
+          },
+          "2": {
+            "label": "注入检测",
+            "stat": "今日捕获 2"
+          },
+          "3": {
+            "label": "按主体限流",
+            "stat": "正常"
+          }
+        },
+        "footer": "OpenAI Moderation · 正则 + LLM 网关"
+      },
+      "notifications": {
+        "rows": {
+          "0": {
+            "title": "已收到付款"
+          },
+          "1": {
+            "title": "新队友加入"
+          },
+          "2": {
+            "title": "触发限流"
+          }
+        }
+      },
+      "onboarding": {
+        "steps": {
+          "0": "账户",
+          "1": "工作区",
+          "2": "邀请",
+          "3": "首次操作"
+        },
+        "footnote": "即将完成",
+        "count": "3 / 4"
+      },
+      "outreach-engine": {
+        "campaign": "Q4 企业级外联",
+        "status": "运行中 · 47 位潜在客户",
+        "sent": "已发",
+        "open": "打开",
+        "reply": "回复",
+        "steps": {
+          "0": "第 1 天 · 自我介绍",
+          "1": "第 3 天 · 案例",
+          "2": "第 7 天 · 邀约 Demo",
+          "3": "第 14 天 · 跟进"
+        }
+      },
+      "sandbox-runtime": {
+        "footer": "Vercel Sandbox · 安全执行不可信代码",
+        "run": "运行",
+        "lastExec": "上次执行"
+      }
+    },
+    "showcases": {
+      "auth": {
+        "active": "已启用",
+        "providers": {
+          "0": {
+            "label": "使用 Passkey 登录"
+          },
+          "1": {
+            "label": "使用 Google 登录"
+          },
+          "2": {
+            "label": "使用 GitHub 登录"
+          },
+          "3": {
+            "label": "使用设备码登录"
+          },
+          "4": {
+            "label": "使用魔法链接登录"
+          }
+        },
+        "cta": "登录",
+        "description": "一个认证提供方，覆盖所有需要的登录方式 — Better Auth，不经第三方厂商。",
+        "email": "邮箱",
+        "or": "或使用邮箱登录",
+        "password": "密码",
+        "stats": "Better Auth · 支持 SSO · 强制 MFA",
+        "title": "登录 {brandName}"
+      },
+      "db": {
+        "headerLabel": "查询 · packages/platform/db",
+        "rlsEnforced": "已启用",
+        "resultsTitle": "查询结果",
+        "resultsSubtitle": "通过行级安全按租户隔离",
+        "visibleLabel": "可见行",
+        "hiddenLabel": "RLS 隐藏",
+        "visibleHint": "tenant_a 内",
+        "hiddenHint": "其他租户",
+        "hiddenNote": "RLS 在数据库层屏蔽其他租户的行，应用永远看不到它们。"
+      },
+      "gateway-core": {
+        "stops": {
+          "0": "租户解析",
+          "1": "限流检查",
+          "2": "幂等性",
+          "3": "认证",
+          "4": "路由处理",
+          "5": "响应封装"
+        },
+        "totalLabel": "总延迟",
+        "lifecycle": "中间件生命周期",
+        "okLabel": "已通过",
+        "rps": "每秒请求",
+        "p50": "p50 延迟",
+        "p95": "p95 延迟",
+        "gaugeLabel": "成功率",
+        "success": "成功"
+      },
+      "metering": {
+        "kpis": {
+          "0": {
+            "label": "API 调用"
+          },
+          "1": {
+            "label": "AI tokens"
+          },
+          "2": {
+            "label": "存储"
+          },
+          "3": {
+            "label": "活跃用户"
+          }
+        },
+        "meterRows": {
+          "0": {
+            "tier": "Pro · $0.001/次"
+          },
+          "1": {
+            "tier": "Pro · 按量"
+          },
+          "2": {
+            "tier": "Pro · 含 50 GB"
+          },
+          "3": {
+            "tier": "Pro · 席位"
+          }
+        },
+        "capLabel": "上限",
+        "footer": "ClickHouse 实时聚合 · ≤ 800ms p99",
+        "meterLabel": "计量项",
+        "of": "/",
+        "pctLabel": "使用率",
+        "realtime": "实时",
+        "tierLabel": "计费档位",
+        "title": "用量计量",
+        "usedLabel": "本期用量"
+      },
+      "queue": {
+        "jobs": {
+          "0": {
+            "relative": "刚刚"
+          },
+          "1": {
+            "relative": "12 秒前"
+          },
+          "2": {
+            "relative": "48 秒前"
+          },
+          "3": {
+            "relative": "1 分钟前"
+          },
+          "4": {
+            "relative": "2 分钟前"
+          },
+          "5": {
+            "relative": "3 分钟前"
+          }
+        },
+        "statusMeta": {
+          "failed": "失败",
+          "pending": "等待中",
+          "processing": "执行中",
+          "success": "成功"
+        },
+        "attempts": "重试",
+        "duration": "耗时",
+        "queue": "队列",
+        "status": "状态",
+        "throughput": "吞吐量",
+        "success": "成功率",
+        "when": "时间",
+        "rate": "条/分钟",
+        "latency": "平均延迟",
+        "healthy": "运行正常",
+        "last60": "过去 60 分钟",
+        "live": "实时刷新 · QStash"
+      },
+      "search": {
+        "results": {
+          "0": {
+            "title": "Billing v2 迁移手册",
+            "excerpt": "从旧版发票迁移到新计量管道的逐步流程。"
+          },
+          "1": {
+            "title": "针对 billing 租户的迁移清单",
+            "excerpt": "切换前请确认 RLS、密钥轮换和 webhook 回填。"
+          },
+          "2": {
+            "title": "Creem + 微信支付 billing 适配器笔记",
+            "excerpt": "同一套计费契约让客户代码在两条支付通道上保持稳定。"
+          },
+          "3": {
+            "title": "零停机 migration 模式",
+            "excerpt": "双写、影子读取、最后切换——同样适用于 billing 数据。"
+          }
+        },
+        "placeholder": "搜索文档、帖子、更新日志……",
+        "indexLabel": "索引",
+        "tagsLabel": "标签",
+        "footer": "检索 {count} 篇文档 用时 {ms} · Postgres 后端",
+        "relevance": "得分"
+      },
+      "webhooks": {
+        "deliveries": {
+          "0": {
+            "timestamp": "2 分钟前"
+          },
+          "1": {
+            "timestamp": "5 分钟前"
+          },
+          "2": {
+            "timestamp": "刚刚"
+          },
+          "3": {
+            "timestamp": "12 分钟前"
+          },
+          "4": {
+            "timestamp": "1 小时前"
+          }
+        },
+        "active": "活跃",
+        "attempts": "尝试次数",
+        "code": "状态码",
+        "delivered": "上次投递 2 分钟前",
+        "event": "事件",
+        "footer": "99.2% 成功 · p95 248ms · HMAC 签名",
+        "latency": "延迟",
+        "retry": "重试中",
+        "status": "状态",
+        "title": "最近投递",
+        "when": "时间"
+      }
+    }
   }
 }

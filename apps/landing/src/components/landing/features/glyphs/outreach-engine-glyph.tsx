@@ -1,21 +1,24 @@
 import { Check, Clock, Envelope, Users } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
 
 type StepState = "done" | "current" | "pending";
 
 type Step = {
-  label: { en: string; zh: string };
+  label: string;
   state: StepState;
 };
 
-const STEPS: Step[] = [
-  { label: { en: "Day 1: intro", zh: "第 1 天 · 自我介绍" }, state: "done" },
-  { label: { en: "Day 3: case study", zh: "第 3 天 · 案例" }, state: "done" },
-  { label: { en: "Day 7: demo offer", zh: "第 7 天 · 邀约 Demo" }, state: "current" },
-  { label: { en: "Day 14: bump", zh: "第 14 天 · 跟进" }, state: "pending" },
-];
+const STEP_STATES: readonly StepState[] = ["done", "done", "current", "pending"];
+
+type OutreachEngineCopy = {
+  campaign: string;
+  status: string;
+  sent: string;
+  open: string;
+  reply: string;
+  steps: Record<string, string>;
+};
 
 const STEP_STYLES: Record<StepState, string> = {
   done: "border-success/30 bg-success/10 text-success-strong",
@@ -29,12 +32,14 @@ function StepIcon({ state }: { state: StepState }) {
   return <span className="block h-1.5 w-1.5 rounded-full border border-current" aria-hidden />;
 }
 
-export function OutreachEngineGlyph({ locale }: SubpackageGlyphProps) {
-  const campaignName = isZhUiLocale(locale) ? "Q4 企业级外联" : "Q4 enterprise outbound";
-  const statusText = isZhUiLocale(locale) ? "运行中 · 47 位潜在客户" : "Active · 47 prospects";
-  const sentLabel = isZhUiLocale(locale) ? "已发" : "Sent";
-  const openLabel = isZhUiLocale(locale) ? "打开" : "Opens";
-  const replyLabel = isZhUiLocale(locale) ? "回复" : "Replies";
+export function OutreachEngineGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as OutreachEngineCopy;
+  const campaignName = t.campaign;
+  const statusText = t.status;
+  const sentLabel = t.sent;
+  const openLabel = t.open;
+  const replyLabel = t.reply;
+  const steps: Step[] = STEP_STATES.map((state, i) => ({ state, label: t.steps[String(i)] }));
 
   return (
     <div
@@ -57,13 +62,13 @@ export function OutreachEngineGlyph({ locale }: SubpackageGlyphProps) {
       </div>
 
       <div className="flex flex-wrap gap-1.5">
-        {STEPS.map((step) => (
+        {steps.map((step) => (
           <div
-            key={step.label.en}
+            key={step.label}
             className={`flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] ${STEP_STYLES[step.state]}`}
           >
             <StepIcon state={step.state} />
-            <span className="font-mono">{step.label[locale]}</span>
+            <span className="font-mono">{step.label}</span>
           </div>
         ))}
       </div>

@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
@@ -24,7 +23,6 @@ type JobRow = {
   durationMs: number;
   id: string;
   queue: QueueKey;
-  relative: { en: string; zh: string };
   status: JobStatus;
 };
 
@@ -36,90 +34,52 @@ const QUEUE_PILLS: ReadonlyArray<{ count: number; key: QueueKey; label: string }
 ];
 
 const JOB_ROWS: ReadonlyArray<JobRow> = [
-  {
-    attempts: "1/3",
-    durationMs: 412,
-    id: "job_9f3a2c",
-    queue: "ai-tasks",
-    relative: { en: "now", zh: "刚刚" },
-    status: "processing",
-  },
-  {
-    attempts: "1/3",
-    durationMs: 184,
-    id: "job_8c41be",
-    queue: "email",
-    relative: { en: "12s ago", zh: "12 秒前" },
-    status: "success",
-  },
-  {
-    attempts: "1/3",
-    durationMs: 76,
-    id: "job_77d019",
-    queue: "billing",
-    relative: { en: "48s ago", zh: "48 秒前" },
-    status: "success",
-  },
-  {
-    attempts: "3/3",
-    durationMs: 5012,
-    id: "job_6b22f4",
-    queue: "webhooks",
-    relative: { en: "1m ago", zh: "1 分钟前" },
-    status: "failed",
-  },
-  {
-    attempts: "2/3",
-    durationMs: 0,
-    id: "job_5a18ee",
-    queue: "email",
-    relative: { en: "2m ago", zh: "2 分钟前" },
-    status: "pending",
-  },
-  {
-    attempts: "1/3",
-    durationMs: 221,
-    id: "job_4e0b7c",
-    queue: "billing",
-    relative: { en: "3m ago", zh: "3 分钟前" },
-    status: "success",
-  },
+  { attempts: "1/3", durationMs: 412, id: "job_9f3a2c", queue: "ai-tasks", status: "processing" },
+  { attempts: "1/3", durationMs: 184, id: "job_8c41be", queue: "email", status: "success" },
+  { attempts: "1/3", durationMs: 76, id: "job_77d019", queue: "billing", status: "success" },
+  { attempts: "3/3", durationMs: 5012, id: "job_6b22f4", queue: "webhooks", status: "failed" },
+  { attempts: "2/3", durationMs: 0, id: "job_5a18ee", queue: "email", status: "pending" },
+  { attempts: "1/3", durationMs: 221, id: "job_4e0b7c", queue: "billing", status: "success" },
 ];
 
-const STATUS_META: Record<
+const STATUS_DECOR: Record<
   JobStatus,
   {
     badge: "green-subtle" | "red-subtle" | "amber-subtle" | "blue-subtle";
     dot: "QUEUED" | "BUILDING" | "READY" | "ERROR";
-    en: string;
-    zh: string;
   }
 > = {
-  failed: { badge: "red-subtle", dot: "ERROR", en: "Failed", zh: "失败" },
-  pending: { badge: "amber-subtle", dot: "QUEUED", en: "Pending", zh: "等待中" },
-  processing: { badge: "blue-subtle", dot: "BUILDING", en: "Processing", zh: "执行中" },
-  success: { badge: "green-subtle", dot: "READY", en: "Success", zh: "成功" },
+  failed: { badge: "red-subtle", dot: "ERROR" },
+  pending: { badge: "amber-subtle", dot: "QUEUED" },
+  processing: { badge: "blue-subtle", dot: "BUILDING" },
+  success: { badge: "green-subtle", dot: "READY" },
 };
 
+type QueueCopy = {
+  jobs: Record<string, { relative: string }>;
+  statusMeta: Record<JobStatus, string>;
+  attempts: string;
+  duration: string;
+  queue: string;
+  status: string;
+  throughput: string;
+  success: string;
+  when: string;
+  rate: string;
+  latency: string;
+  healthy: string;
+  last60: string;
+  live: string;
+};
+
+// "Job" is the literal table-header abbreviation for a job id — same on every locale.
+const JOB_LABEL = "Job";
+
 export function QueueShowcase(props: PackageShowcaseProps) {
-  const { locale } = props;
-  const isZh = isZhUiLocale(locale);
+  const { locale, copy } = props;
+  const isZh = locale === "zh";
   const numLocale = isZh ? "zh-CN" : "en-US";
-  const t = {
-    attempts: isZh ? "重试" : "Attempts",
-    duration: isZh ? "耗时" : "Duration",
-    job: "Job",
-    queue: isZh ? "队列" : "Queue",
-    status: isZh ? "状态" : "Status",
-    throughput: isZh ? "吞吐量" : "Throughput",
-    success: isZh ? "成功率" : "Success rate",
-    when: isZh ? "时间" : "When",
-    rate: isZh ? "条/分钟" : "jobs/min",
-    latency: isZh ? "平均延迟" : "Avg latency",
-    healthy: isZh ? "运行正常" : "Healthy",
-    last60: isZh ? "过去 60 分钟" : "Last 60 min",
-    live: isZh ? "实时刷新 · QStash" : "Live · QStash",
-  };
+  const t = copy as QueueCopy;
 
   return (
     <ShowcaseFrame className="flex flex-col gap-5">
@@ -150,7 +110,7 @@ export function QueueShowcase(props: PackageShowcaseProps) {
         <TableHeader>
           <TableRow>
             <TableHead>{t.status}</TableHead>
-            <TableHead>{t.job}</TableHead>
+            <TableHead>{JOB_LABEL}</TableHead>
             <TableHead>{t.queue}</TableHead>
             <TableHead numeric>{t.attempts}</TableHead>
             <TableHead numeric>{t.duration}</TableHead>
@@ -158,16 +118,16 @@ export function QueueShowcase(props: PackageShowcaseProps) {
           </TableRow>
         </TableHeader>
         <TableBody bordered>
-          {JOB_ROWS.map((row) => {
-            const meta = STATUS_META[row.status];
+          {JOB_ROWS.map((row, index) => {
+            const decor = STATUS_DECOR[row.status];
             const isActive = row.status === "processing";
             return (
               <TableRow key={row.id} className={isActive ? "bg-muted/50" : undefined}>
                 <TableCell>
                   <span className="inline-flex items-center gap-2">
-                    <StatusDot state={meta.dot} decorative />
-                    <Badge variant={meta.badge} size="sm">
-                      {isZh ? meta.zh : meta.en}
+                    <StatusDot state={decor.dot} decorative />
+                    <Badge variant={decor.badge} size="sm">
+                      {t.statusMeta[row.status]}
                     </Badge>
                   </span>
                 </TableCell>
@@ -184,7 +144,7 @@ export function QueueShowcase(props: PackageShowcaseProps) {
                   {row.durationMs === 0 ? "—" : `${row.durationMs.toLocaleString(numLocale)} ms`}
                 </TableCell>
                 <TableCell numeric className="text-xs text-muted-foreground">
-                  {isZh ? row.relative.zh : row.relative.en}
+                  {t.jobs[String(index)].relative}
                 </TableCell>
               </TableRow>
             );

@@ -1,6 +1,5 @@
 import { ArrowRight, Check, FileText, Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
 
 type PipelineStep = {
@@ -8,41 +7,23 @@ type PipelineStep = {
   readonly meta?: string;
 };
 
-const PIPELINE_STEPS_EN: ReadonlyArray<PipelineStep> = [
-  { label: "PDF", meta: "upload" },
-  { label: "OCR", meta: "47p" },
-  { label: "chunk", meta: "248" },
-  { label: "embed" },
-];
+// File names are treated as data, not copy — same on every locale.
+const DOC_NAMES: readonly [string, string] = ["q4-report.pdf", "eu-policy.docx"];
 
-const PIPELINE_STEPS_ZH: ReadonlyArray<PipelineStep> = [
-  { label: "PDF", meta: "上传" },
-  { label: "OCR", meta: "47页" },
-  { label: "切块", meta: "248" },
-  { label: "向量化" },
-];
-
-type DocRow = {
-  readonly name: string;
-  readonly age: string;
-  readonly pages: string;
-  readonly chunks: string;
+type DocumentPipelineCopy = {
+  steps: Record<string, { label: string; meta: string }>;
+  docs: Record<string, { age: string; pages: string; chunks: string }>;
+  processed: string;
 };
 
-const DOCS_EN: ReadonlyArray<DocRow> = [
-  { name: "q4-report.pdf", age: "2m ago", pages: "47 pages", chunks: "248 chunks" },
-  { name: "eu-policy.docx", age: "12m ago", pages: "12 pages", chunks: "84 chunks" },
-];
-
-const DOCS_ZH: ReadonlyArray<DocRow> = [
-  { name: "q4-report.pdf", age: "2分钟前", pages: "47页", chunks: "248块" },
-  { name: "eu-policy.docx", age: "12分钟前", pages: "12页", chunks: "84块" },
-];
-
-export function DocumentPipelineGlyph({ locale }: SubpackageGlyphProps) {
-  const steps = isZhUiLocale(locale) ? PIPELINE_STEPS_ZH : PIPELINE_STEPS_EN;
-  const docs = isZhUiLocale(locale) ? DOCS_ZH : DOCS_EN;
-  const processedLabel = isZhUiLocale(locale) ? "已处理" : "processed";
+export function DocumentPipelineGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as DocumentPipelineCopy;
+  const steps: PipelineStep[] = ["0", "1", "2", "3"].map((i) => ({
+    label: t.steps[i].label,
+    meta: t.steps[i].meta || undefined,
+  }));
+  const docs = DOC_NAMES.map((name, i) => ({ name, ...t.docs[String(i)] }));
+  const processedLabel = t.processed;
 
   return (
     <div

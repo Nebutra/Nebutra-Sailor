@@ -13,7 +13,6 @@ import {
   StatusDot,
 } from "@nebutra/ui/primitives";
 import type { ComponentType, SVGProps } from "react";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
@@ -22,59 +21,45 @@ type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 type Stop = {
   id: string;
   icon: IconComponent;
-  label: { en: string; zh: string };
   ms: number;
 };
 
 const STOPS: Stop[] = [
-  { id: "tenant", icon: Shield, label: { en: "Tenant resolution", zh: "租户解析" }, ms: 2 },
-  { id: "ratelimit", icon: Lightning, label: { en: "Rate-limit check", zh: "限流检查" }, ms: 1 },
-  { id: "idempotency", icon: Check, label: { en: "Idempotency", zh: "幂等性" }, ms: 1 },
-  { id: "auth", icon: LockClosed, label: { en: "Auth", zh: "认证" }, ms: 3 },
-  { id: "handler", icon: Api, label: { en: "Route handler", zh: "路由处理" }, ms: 18 },
-  { id: "shape", icon: ArrowRight, label: { en: "Response shape", zh: "响应封装" }, ms: 1 },
+  { id: "tenant", icon: Shield, ms: 2 },
+  { id: "ratelimit", icon: Lightning, ms: 1 },
+  { id: "idempotency", icon: Check, ms: 1 },
+  { id: "auth", icon: LockClosed, ms: 3 },
+  { id: "handler", icon: Api, ms: 18 },
+  { id: "shape", icon: ArrowRight, ms: 1 },
 ];
 
-const COPY = {
-  en: {
-    method: "GET",
-    path: "/api/v1/posts",
-    origin: "edge-iad1",
-    status: "200 OK",
-    totalLabel: "Total latency",
-    lifecycle: "Middleware lifecycle",
-    okLabel: "OK",
-    rps: "Requests / sec",
-    p50: "p50 latency",
-    p95: "p95 latency",
-    gaugeLabel: "Success rate",
-    success: "success",
-  },
-  zh: {
-    method: "GET",
-    path: "/api/v1/posts",
-    origin: "edge-iad1",
-    status: "200 OK",
-    totalLabel: "总延迟",
-    lifecycle: "中间件生命周期",
-    okLabel: "已通过",
-    rps: "每秒请求",
-    p50: "p50 延迟",
-    p95: "p95 延迟",
-    gaugeLabel: "成功率",
-    success: "成功",
-  },
-} as const;
+type GatewayCoreCopy = {
+  stops: Record<string, string>;
+  totalLabel: string;
+  lifecycle: string;
+  okLabel: string;
+  rps: string;
+  p50: string;
+  p95: string;
+  gaugeLabel: string;
+  success: string;
+};
+
+// The demo request line — same on every locale.
+const METHOD = "GET";
+const PATH = "/api/v1/posts";
+const ORIGIN = "edge-iad1";
+const STATUS = "200 OK";
 
 function formatMs(ms: number, locale: "en" | "zh"): string {
-  return `${new Intl.NumberFormat(isZhUiLocale(locale) ? "zh-CN" : "en-US").format(ms)} ms`;
+  return `${new Intl.NumberFormat(locale === "zh" ? "zh-CN" : "en-US").format(ms)} ms`;
 }
 
 const TOTAL_MS = STOPS.reduce((acc, stop) => acc + stop.ms, 0);
 const MAX_MS = Math.max(...STOPS.map((stop) => stop.ms));
 
-export function GatewayCoreShowcase({ locale }: PackageShowcaseProps) {
-  const t = COPY[locale];
+export function GatewayCoreShowcase({ locale, copy }: PackageShowcaseProps) {
+  const t = copy as GatewayCoreCopy;
 
   return (
     <ShowcaseFrame className="flex flex-col gap-5">
@@ -82,15 +67,10 @@ export function GatewayCoreShowcase({ locale }: PackageShowcaseProps) {
       <Card className="shadow-sm">
         <CardHeader className="flex flex-row flex-wrap items-center gap-3 space-y-0 pb-4">
           <Badge size="sm" variant="blue-subtle" className="font-mono">
-            {t.method}
+            {METHOD}
           </Badge>
-          <code className="flex-1 truncate font-mono text-sm text-foreground">{t.path}</code>
-          <StatusBadge
-            status="success"
-            leftIcon={Check}
-            leftLabel={t.status}
-            rightLabel={t.origin}
-          />
+          <code className="flex-1 truncate font-mono text-sm text-foreground">{PATH}</code>
+          <StatusBadge status="success" leftIcon={Check} leftLabel={STATUS} rightLabel={ORIGIN} />
         </CardHeader>
         <CardContent className="grid grid-cols-2 gap-4 pt-0 sm:grid-cols-4">
           <MetricCard size="sm" label={t.totalLabel} value={formatMs(TOTAL_MS, locale)} />
@@ -123,7 +103,7 @@ export function GatewayCoreShowcase({ locale }: PackageShowcaseProps) {
                       {index + 1}
                     </span>
                     <span className="flex-1 truncate text-sm font-medium text-foreground">
-                      {stop.label[locale]}
+                      {t.stops[String(index)]}
                     </span>
                     <span
                       aria-hidden="true"

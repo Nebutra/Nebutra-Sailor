@@ -2,8 +2,9 @@
 
 import { Check, Clock, Message } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import type { SubpackageGlyphProps } from "./types";
+
+type SmsCopy = { message: string; delivered: string };
 
 /**
  * SmsGlyph — mini conversation card for the `sms` sub-package.
@@ -12,12 +13,10 @@ import type { SubpackageGlyphProps } from "./types";
  * and a Twilio provider chip. Composed entirely from @nebutra/ui
  * primitives + @nebutra/icons — no hand-rolled SVG geometry.
  */
-export function SmsGlyph({ locale }: SubpackageGlyphProps) {
-  const message = isZhUiLocale(locale)
-    ? "您的 Nebutra 验证码是 8472，5 分钟后过期。"
-    : "Your Nebutra OTP is 8472. Expires in 5 minutes.";
-
-  const deliveredLabel = isZhUiLocale(locale) ? "已送达" : "delivered";
+export function SmsGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as SmsCopy;
+  const message = t.message;
+  const deliveredLabel = t.delivered;
 
   return (
     <div
