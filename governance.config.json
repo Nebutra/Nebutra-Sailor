@@ -83,12 +83,7 @@
       "apps/landing/src/app/[lang]/(marketing)/ideas/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/news/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/opc/page.tsx",
-      "apps/landing/src/app/[lang]/(marketing)/playbook/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/security/page.tsx",
-      "apps/landing/src/app/[lang]/(marketing)/solutions/[slug]/page.tsx",
-      "apps/landing/src/app/[lang]/(marketing)/solutions/china-vc/[id]/page.tsx",
-      "apps/landing/src/app/[lang]/(marketing)/solutions/global-vc/[id]/page.tsx",
-      "apps/landing/src/app/[lang]/(marketing)/solutions/page.tsx",
       "apps/landing/src/app/api/og/route.ts",
       "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
@@ -2434,30 +2429,6 @@
         "count": 2
       },
       {
-        "file": "apps/landing/src/app/[lang]/(marketing)/open/page.tsx",
-        "count": 12
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/playbook/page.tsx",
-        "count": 9
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/solutions/[slug]/page.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/solutions/china-vc/[id]/page.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/solutions/global-vc/[id]/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/solutions/page.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/landing/src/components/landing/blog-comments.tsx",
         "count": 1
       },
@@ -2534,36 +2505,16 @@
         "count": 6
       },
       {
-        "file": "apps/landing/src/components/landing/navbar/MobileDrawer.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/landing/src/components/landing/navbar/ResourcesMegaMenu.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/landing/src/components/landing/navbar/SolutionsMegaMenu.tsx",
-        "count": 3
-      },
-      {
         "file": "apps/landing/src/components/landing/solutions/china-vc/ChinaVcSolution.tsx",
-        "count": 11
+        "count": 1
       },
       {
         "file": "apps/landing/src/components/landing/solutions/global-vc/GlobalVcSolution.tsx",
-        "count": 10
-      },
-      {
-        "file": "apps/landing/src/components/landing/solutions/SolutionPage.tsx",
-        "count": 17
-      },
-      {
-        "file": "apps/landing/src/components/landing/solutions/SolutionsIndex.tsx",
-        "count": 9
+        "count": 1
       },
       {
         "file": "apps/landing/src/components/landing/solutions/vc/VcProfile.tsx",
-        "count": 15
+        "count": 1
       },
       {
         "file": "apps/landing/src/components/starter/starter-copy.ts",
@@ -2584,22 +2535,6 @@
       {
         "file": "apps/landing/src/lib/blog.ts",
         "count": 1
-      },
-      {
-        "file": "apps/landing/src/lib/constants/open-platform.ts",
-        "count": 28
-      },
-      {
-        "file": "apps/landing/src/lib/constants/playbook-data.ts",
-        "count": 27
-      },
-      {
-        "file": "apps/landing/src/lib/constants/resources-data.ts",
-        "count": 30
-      },
-      {
-        "file": "apps/landing/src/lib/constants/solutions-data.ts",
-        "count": 172
       },
       {
         "file": "apps/landing/src/lib/i18n/localized.ts",

@@ -24,7 +24,8 @@
       "billing": "账单",
       "docs": "文档",
       "signOut": "退出登录"
-    }
+    },
+    "theme": "外觀"
   },
   "refer": {
     "metadataTitle": "加入 {brandName} 创始人推荐闭环",
@@ -2149,6 +2150,685 @@
           "title": "法律文件"
         }
       }
+    }
+  },
+  "solutionsCatalog": {
+    "groups": {
+      "go-to-market": {
+        "label": "出海與增長"
+      },
+      "build-govern": {
+        "label": "工程與治理"
+      },
+      "ai-data": {
+        "label": "AI 與資料"
+      },
+      "founder": {
+        "label": "創業"
+      }
+    },
+    "solutions": {
+      "go-global": {
+        "label": "軟體出海",
+        "tagline": "合規、本地化地把 SaaS 推向全球市場。",
+        "hero": {
+          "eyebrow": "軟體出海",
+          "title": "把你的 SaaS",
+          "titleAccent": "推向全球",
+          "summary": "多區域基建、國際化、支付與合規——Harness 把跨境的底層管道做好，你只管做產品。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "國際化是地基",
+            "body": "7 語言路由、可適配 RTL 的 token、按市場分發內容，而不必 fork 程式碼庫。"
+          },
+          "uc2": {
+            "title": "支付無需重寫",
+            "body": "Creem（全球卡組織，交易商戶）與微信支付 / 支付寶收斂到同一套計費契約後面——配好金鑰即可同時上線。"
+          },
+          "uc3": {
+            "title": "合規內建",
+            "body": "租戶隔離、審計日誌、資料駐留原語，第一天就緒。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "每個地區要分開建應用嗎？",
+            "a": "不用——一套程式碼庫。中國雙軌(支付、簡訊、儲存)的兩個配接器都會打進每次構建；部署時哪些金鑰存在就決定哪些生效，兩邊也可以同時執行。"
+          }
+        }
+      },
+      "growth": {
+        "label": "駭客增長",
+        "tagline": "可複利的獲客、啟用與留存增長閉環。",
+        "hero": {
+          "eyebrow": "駭客增長",
+          "title": "搭建可以",
+          "titleAccent": "複利的增長閉環",
+          "summary": "在計量 + 通知骨幹之上做漏斗埋點、跑實驗，並接入推薦與生命週期閉環。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "漏斗埋點",
+            "body": "用量計量 + 分析提供衡量啟用所需的事件，而不是靠猜。"
+          },
+          "uc2": {
+            "title": "生命週期觸達",
+            "body": "由產品事件驅動的多渠道通知(站內 / 郵件 / 推送)。"
+          },
+          "uc3": {
+            "title": "快速實驗",
+            "body": "特性開關無需重新部署即可投放變體，計量回讀結果。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "自帶資料倉儲嗎？",
+            "a": "計量管道聚合到 ClickHouse，做即時漏斗與同期群分析。"
+          }
+        }
+      },
+      "architecture": {
+        "label": "架構治理",
+        "tagline": "在規模擴張時保持大型程式碼庫的一致性。",
+        "hero": {
+          "eyebrow": "架構治理",
+          "title": "治理你的",
+          "titleAccent": "系統架構",
+          "summary": "用架構測試、ratchet 與能力邊界從機制上強制結構，而不是寫在沒人看的 wiki 裡。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "棘輪式不變數",
+            "body": "當硬編碼值或跨層匯入出現時，屬性測試讓構建失敗。"
+          },
+          "uc2": {
+            "title": "能力邊界",
+            "body": "按域分組、宣告歸屬與作用域的包，把耦合壓到最低。"
+          },
+          "uc3": {
+            "title": "三級生命週期",
+            "body": "active / stub / incubator 讓死概念離開 CI，又不丟失思路。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "治理會拖慢團隊嗎？",
+            "a": "它把評審從人轉移到測試，大多數檢查即時且自動。"
+          }
+        }
+      },
+      "tech-stack": {
+        "label": "技術選型",
+        "tagline": "每個領域一套定見技術棧——只有中國市場的法律或網路要求時才保留第二套。",
+        "hero": {
+          "eyebrow": "技術選型",
+          "title": "一套技術棧，",
+          "titleAccent": "零決策",
+          "summary": "佇列、搜尋、鑑權、計費、儲存各自只有一個答案——Better Auth、QStash、Postgres、Creem——都在介面後面，而不是一份選型清單。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "每個領域一個答案",
+            "body": "身份用 Better Auth，佇列用 QStash，搜尋用 Postgres(pgvector + 全文檢索)，計費用 Creem——介面留下了，備選項沒有。"
+          },
+          "uc2": {
+            "title": "後端預設 TS",
+            "body": "對何時該用 Python 有成文政策，防止技術棧蔓延。"
+          },
+          "uc3": {
+            "title": "中國雙軌，而非矩陣",
+            "body": "支付(Creem + 微信支付/支付寶)、簡訊(Twilio Verify + 阿里雲)、儲存(同一套 S3 相容客戶端接入 R2/OSS)——只有在中國大陸的法律或網路因素讓預設方案走不通時，才保留第二套配接器；配好金鑰兩邊都能同時上線。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "如果我需要一個已被移除的 provider 怎麼辦？",
+            "a": "每個域仍然收斂在一個介面後面——加一個配接器即可，無需改呼叫點。保留下來的這些是因為生產環境真的在用，不是因為介面只認它們。"
+          }
+        }
+      },
+      "dx": {
+        "label": "DX 工具鏈",
+        "tagline": "讓研發速度保持在高位的開發者體驗。",
+        "hero": {
+          "eyebrow": "DX 工具鏈",
+          "title": "讓你",
+          "titleAccent": "心無旁騖的工具鏈",
+          "summary": "一個腳手架 CLI、一個格式化器、一條流水線。生成、檢查、測試、釋出，無需在工具鏈上反覆折騰。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "秒級腳手架",
+            "body": "`npx create-sailor my-app` 不問任何問題，直接生成完整的收斂技術棧，開箱即可執行。"
+          },
+          "uc2": {
+            "title": "一個 linter，一份配置",
+            "body": "Biome 統一格式化與檢查整個 monorepo——沒有 ESLint/Prettier 的分裂。"
+          },
+          "uc3": {
+            "title": "預設綠色流水線",
+            "body": "lint → build → test → scan → deploy 本地與 CI 完全一致。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "可以用我自己的工具嗎？",
+            "a": "可以——preset 是可選的；預設值是有主張的，但不鎖死。"
+          }
+        }
+      },
+      "ai": {
+        "label": "人工智慧",
+        "tagline": "在 provider 無關的智慧體執行時上交付 AI 功能。",
+        "hero": {
+          "eyebrow": "人工智慧",
+          "title": "讓你的產品",
+          "titleAccent": "AI 原生",
+          "summary": "智慧體、RAG、工具與 LLM 閘道器——多模型、可觀測，放心交到使用者面前。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "模型無關閘道器",
+            "body": "在一套 API 後面跨 provider 做路由、故障轉移與成本追蹤。"
+          },
+          "uc2": {
+            "title": "可落地的 RAG",
+            "body": "知識庫、嵌入與檢索原語，已為多租戶場景接好。"
+          },
+          "uc3": {
+            "title": "會用工具的智慧體",
+            "body": "帶工具登錄檔與執行策略的智慧體執行時，實現安全的自主性。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "會被綁死在一家模型廠商嗎？",
+            "a": "不會——閘道器抽象了廠商，切換隻是配置。"
+          }
+        }
+      },
+      "ai-data-ops": {
+        "label": "AI 資料運營",
+        "tagline": "託管式的資料標註、RLHF 與評測流水線——以服務交付。",
+        "hero": {
+          "eyebrow": "AI 資料運營",
+          "title": "用高質量資料",
+          "titleAccent": "餵養你的模型",
+          "summary": "一套託管的資料運營——標註、RLHF 偏好資料與評測集——由我們的團隊按你的規範執行。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "規模化標註",
+            "body": "經過稽核的人力 + 工具，覆蓋文本、影像、音訊與 3D 標註。"
+          },
+          "uc2": {
+            "title": "RLHF 偏好資料",
+            "body": "成對比較與量表打分，讓你的模型對齊意圖。"
+          },
+          "uc3": {
+            "title": "評測集",
+            "body": "留出、經審計的評測套件，用以衡量質量而非感覺。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "如何開始？",
+            "a": "預約一次範圍溝通——我們在數天內把你的規範變成試點批次。"
+          }
+        }
+      },
+      "frontier": {
+        "label": "未來前沿",
+        "tagline": "來自落地最前沿的一線觀察。",
+        "hero": {
+          "eyebrow": "未來前沿",
+          "title": "站在",
+          "titleAccent": "技術前沿",
+          "summary": "在事情變得顯而易見之前我們在測什麼——新模型、新執行時、新範式，並講清權衡。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "早期訊號",
+            "body": "對什麼有效、什麼無效的誠實記錄，而非炒作。"
+          },
+          "uc2": {
+            "title": "參考實現",
+            "body": "可執行的探針，直接拿來用，而不是從一篇部落格開始。"
+          },
+          "uc3": {
+            "title": "先講權衡",
+            "body": "每篇前沿記錄都先講成本、風險與何時不該採用。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "這是生產級建議嗎？",
+            "a": "把前沿記錄當作偵察——生產級建議會被明確標註。"
+          }
+        }
+      },
+      "china-vc": {
+        "label": "中國 VC 解決方案",
+        "tagline": "中國主流直投機構，按賽道、型別、投資體量可搜可篩。",
+        "hero": {
+          "eyebrow": "中國 VC",
+          "title": "找到對的",
+          "titleAccent": "中國投資人",
+          "summary": "覆蓋中國主流直投機構的可搜尋資料庫——按賽道、型別、投資體量篩選。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "按賽道篩選",
+            "body": "標準化賽道——快速鎖定你所在領域的投資人。"
+          },
+          "uc2": {
+            "title": "看活躍度訊號",
+            "body": "累計投資體量反映誰出手最多。"
+          },
+          "uc3": {
+            "title": "直達官方入口",
+            "body": "每家機構一鍵直達官網。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "收錄了哪些機構？",
+            "a": "覆蓋中國主流直投機構，跨階段與賽道。"
+          }
+        }
+      },
+      "global-vc": {
+        "label": "全球 VC 解決方案",
+        "tagline": "全球知名投資機構——從 Y Combinator 到多階段基金。",
+        "hero": {
+          "eyebrow": "全球 VC",
+          "title": "對接",
+          "titleAccent": "全球投資人",
+          "summary": "精選的全球頭部投資機構目錄——加速器、種子、多階段與成長基金——按領域、型別、地區篩選。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "從加速器到成長期",
+            "body": "Y Combinator、a16z、紅杉、Accel 等——覆蓋各個階段。"
+          },
+          "uc2": {
+            "title": "按方向篩選",
+            "body": "按領域(AI、金融科技、加密、生物…)、型別與地區收窄。"
+          },
+          "uc3": {
+            "title": "直達官方入口",
+            "body": "每家基金一鍵直達官網。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "名單怎麼選的？",
+            "a": "人工精選的全球公認投資機構，資料整理自公開資訊。"
+          }
+        }
+      },
+      "fundraising": {
+        "label": "創業融資",
+        "tagline": "向對的投資人融資的實操手冊。",
+        "hero": {
+          "eyebrow": "創業融資",
+          "title": "用",
+          "titleAccent": "清晰的故事去融資",
+          "summary": "指標、敘事與流程——把你做出來的東西，打包成一輪能 close 的融資。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "真正重要的指標",
+            "body": "在每個階段，投資人真正會據以決策的數字。"
+          },
+          "uc2": {
+            "title": "敘事打磨",
+            "body": "把功能清單變成市場故事，又不過度承諾。"
+          },
+          "uc3": {
+            "title": "流程紀律",
+            "body": "跑一輪緊湊、限時的融資，而不是無止境地拖。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "分地區嗎？",
+            "a": "範式是通用的；我們會標註美、歐、中三地融資的差異處。"
+          }
+        }
+      },
+      "product-insights": {
+        "label": "產品觀察",
+        "tagline": "對值得研究的產品的拆解與範式提煉。",
+        "hero": {
+          "eyebrow": "產品觀察",
+          "title": "從",
+          "titleAccent": "好產品中學習",
+          "summary": "結構化拆解——一個產品做對了什麼、為何有效、哪些可遷移到你這裡。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "提煉範式，而非照抄",
+            "body": "我們提煉一個 UX 或 GTM 動作背後可複用的原則。"
+          },
+          "uc2": {
+            "title": "決策語境",
+            "body": "為什麼這個選擇對他們成立——以及何時對你並不成立。"
+          },
+          "uc3": {
+            "title": "可執行結論",
+            "body": "每篇拆解都以「本週可以試什麼」收尾。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "覆蓋 B2B 和 B2C 嗎？",
+            "a": "都有，偏向 SaaS 與面向開發者的產品。"
+          }
+        }
+      }
+    },
+    "index": {
+      "eyebrow": "解決方案",
+      "title": "把 SaaS 推向全球的最佳實踐",
+      "summary": "為出海創業者準備的場景手冊——從出海、增長到架構、AI 與融資。"
+    },
+    "page": {
+      "back": "全部解決方案",
+      "useCasesHeading": "它如何幫你",
+      "capabilities": "由這些能力驅動",
+      "bestPractices": "最佳實踐",
+      "faqHeading": "常見問題",
+      "ctaContent": "開始使用",
+      "ctaOffering": "預約範圍溝通"
+    },
+    "vcProfile": {
+      "home": "首頁",
+      "thesis": "投資主線",
+      "facts": "速覽",
+      "founded": "成立",
+      "hq": "總部",
+      "stages": "階段",
+      "checkSize": "單筆",
+      "totalDeals": "總投資",
+      "region": "地域",
+      "sectors": "賽道",
+      "notable": "代表案例",
+      "recent": "近期出手(2025–26)",
+      "similar": "同賽道機構",
+      "visit": "訪問官網"
+    },
+    "chinaVc": {
+      "back": "全部解決方案",
+      "statInstitutions": "家機構",
+      "statSectors": "個賽道",
+      "statDeals": "筆投資",
+      "source": "整理自中國主流直投機構的公開資訊。",
+      "directoryLabel": "中國 VC"
+    },
+    "globalVc": {
+      "back": "全部解決方案",
+      "statFunds": "家基金",
+      "statSectors": "個領域",
+      "statRegions": "個地區",
+      "source": "精選的全球知名投資機構，資料整理自公開資訊。",
+      "directoryLabel": "全球 VC"
+    },
+    "meta": {
+      "indexTitle": "解決方案 | {brandName}",
+      "indexDescription": "為出海創業者準備的場景手冊——出海、增長、架構治理、AI 與融資的最佳實踐。",
+      "detailTitleSuffix": "{brandName} Solutions",
+      "chinaVcProfileTitle": "{name} — 投資機構畫像 | {brandName}",
+      "chinaVcProfileDescriptionFallback": "{name} 的投資主線、賽道、階段與代表案例。",
+      "globalVcProfileTitle": "{name} — Investor Profile | {brandName}",
+      "globalVcProfileDescriptionFallback": "{name}: focus sectors, stage and region."
+    }
+  },
+  "solutionsNav": {
+    "groups": {
+      "go-to-market": "出海與增長",
+      "build-govern": "工程與治理",
+      "ai-data": "AI 與資料",
+      "founder": "創業"
+    },
+    "items": {
+      "go-global": {
+        "label": "軟體出海",
+        "tagline": "合規、本地化地把 SaaS 推向全球市場。"
+      },
+      "growth": {
+        "label": "駭客增長",
+        "tagline": "可複利的獲客、啟用與留存增長閉環。"
+      },
+      "architecture": {
+        "label": "架構治理",
+        "tagline": "在規模擴張時保持大型程式碼庫的一致性。"
+      },
+      "tech-stack": {
+        "label": "技術選型",
+        "tagline": "每個領域一套定見技術棧——只有中國市場的法律或網路要求時才保留第二套。"
+      },
+      "dx": {
+        "label": "DX 工具鏈",
+        "tagline": "讓研發速度保持在高位的開發者體驗。"
+      },
+      "ai": {
+        "label": "人工智慧",
+        "tagline": "在 provider 無關的智慧體執行時上交付 AI 功能。"
+      },
+      "ai-data-ops": {
+        "label": "AI 資料運營",
+        "tagline": "託管式的資料標註、RLHF 與評測流水線——以服務交付。"
+      },
+      "frontier": {
+        "label": "未來前沿",
+        "tagline": "來自落地最前沿的一線觀察。"
+      },
+      "china-vc": {
+        "label": "中國 VC 解決方案",
+        "tagline": "中國主流直投機構，按賽道、型別、投資體量可搜可篩。"
+      },
+      "global-vc": {
+        "label": "全球 VC 解決方案",
+        "tagline": "全球知名投資機構——從 Y Combinator 到多階段基金。"
+      },
+      "fundraising": {
+        "label": "創業融資",
+        "tagline": "向對的投資人融資的實操手冊。"
+      },
+      "product-insights": {
+        "label": "產品觀察",
+        "tagline": "對值得研究的產品的拆解與範式提煉。"
+      }
+    }
+  },
+  "resourcesCatalog": {
+    "groups": {
+      "developers": "開發者",
+      "company": "公司"
+    },
+    "items": {
+      "open-platform": {
+        "label": "開放平臺",
+        "tagline": "API、文件與開發者控制台"
+      },
+      "docs": {
+        "label": "文件",
+        "tagline": "API 文件與指南"
+      },
+      "forge": {
+        "label": "Forge 工具站",
+        "tagline": "線上編解碼、文本、雜湊與文件工具"
+      },
+      "blog": {
+        "label": "部落格",
+        "tagline": "工程筆記與產品更新"
+      },
+      "changelog": {
+        "label": "更新日誌",
+        "tagline": "{brandName} 的最新更新"
+      },
+      "roadmap": {
+        "label": "路線圖",
+        "tagline": "下一步在建什麼"
+      },
+      "design-system": {
+        "label": "設計系統",
+        "tagline": "令牌、元件與品牌"
+      },
+      "status": {
+        "label": "服務狀態",
+        "tagline": "服務狀態與可用性"
+      },
+      "about": {
+        "label": "關於我們",
+        "tagline": "我們的使命與團隊"
+      },
+      "careers": {
+        "label": "加入我們",
+        "tagline": "招聘職位"
+      },
+      "newsroom": {
+        "label": "新聞中心",
+        "tagline": "公告與新聞稿"
+      },
+      "playbook": {
+        "label": "實戰手冊",
+        "tagline": "我們如何構建"
+      },
+      "showcase": {
+        "label": "案例展示",
+        "tagline": "用 {brandName} 構建的作品"
+      },
+      "security": {
+        "label": "安全合規",
+        "tagline": "安全與合規"
+      }
+    }
+  },
+  "openPlatform": {
+    "eyebrow": "開放平臺",
+    "title": "{brandNameCn}開放平臺",
+    "lead": "文件、公開 API 與登入後的開發者控制台，集中在這一處，不另開源站。",
+    "consoleCta": "開啟控制台",
+    "consoleHint": "金鑰、Webhook 與供應商金鑰仍在應用裡。未登入時會先走到登入。",
+    "groups": {
+      "catalog": {
+        "label": "公開面",
+        "description": "已經在跑的主機。本頁只做索引，不代發請求。"
+      },
+      "console": {
+        "label": "開發者控制台",
+        "description": "登入後在應用設定裡建立、吊銷憑證。"
+      }
+    },
+    "items": {
+      "docs": {
+        "title": "文件",
+        "description": "指南、API 參考與 Webhook 契約。"
+      },
+      "api": {
+        "title": "API",
+        "description": "共享閘道器。產品名稱空間落在 /<product>/v1/*。"
+      },
+      "router": {
+        "title": "Router",
+        "description": "相容 OpenAI 的模型邊。"
+      },
+      "forge": {
+        "title": "Forge",
+        "description": "工具站與 Agent 呼叫 API。"
+      },
+      "sso": {
+        "title": "使用{brandNameCn}登入",
+        "description": "OIDC 簽發在 sso。第三方應用註冊尚未自助開通。",
+        "badge": "IdP"
+      },
+      "status": {
+        "title": "服務狀態",
+        "description": "公開主機的執行狀態。"
+      },
+      "api-keys": {
+        "title": "API 金鑰",
+        "description": "建立、吊銷閘道器的程式化金鑰。"
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "訂閱工作區事件。載荷帶簽名。"
+      },
+      "provider-keys": {
+        "title": "供應商金鑰",
+        "description": "接入自有 AI 供應商憑證。"
+      }
+    }
+  },
+  "playbookCatalog": {
+    "categories": {
+      "ai": {
+        "label": "AI 與 Agent",
+        "description": "可觀察其端到端執行的 agent 執行時與多步流水線。"
+      },
+      "design": {
+        "label": "設計與主題",
+        "description": "塑造品牌系統——調色盤、字型、動效——並即時預覽。"
+      },
+      "compose": {
+        "label": "嵌入與編排",
+        "description": "視覺化編排工作流，並把 Sailor 介面嵌入任意位置。"
+      },
+      "os": {
+        "label": "作業系統",
+        "description": "構建在平臺之上的一體化操作面板。"
+      }
+    },
+    "items": {
+      "layer0": {
+        "title": "Layer 0 能力迴環",
+        "description": "觀察一次能力請求走完 感知 → 規劃 → 執行 → 校驗 的完整迴環。"
+      },
+      "agent-runtime": {
+        "title": "Agent Runtime 語法",
+        "description": "多步驟 agent 執行時——tool registry、流式 UI、MCP 接入。"
+      },
+      "cinema": {
+        "title": "Cinema 電影導演流水線",
+        "description": "把分鏡、拍攝、剪輯串成一條多 agent 流水線的短片生成。"
+      },
+      "sailor-studio": {
+        "title": "Sailor Studio",
+        "description": "選定專案的外觀，在真實頁面上預覽，一條命令落地。"
+      },
+      "color-tokens": {
+        "title": "色彩與 Token",
+        "description": "瀏覽 12 階品牌色階與即時設計 token 參考。"
+      },
+      "icon-library": {
+        "title": "圖示庫",
+        "description": "瀏覽全部 541 個 Geist 圖示——tree-shakable、單字重 TSX 元件。"
+      },
+      "canvas": {
+        "title": "Canvas 節點圖編輯器",
+        "description": "用於視覺化編排 agent 工作流的無限節點圖畫布。"
+      },
+      "embed": {
+        "title": "嵌入 Demo",
+        "description": "用一段嵌入程式碼把 Sailor 介面塞進任意頁面。"
+      },
+      "startup-os": {
+        "title": "Startup OS",
+        "description": "在 Sailor 上經營一家創業公司的一體化操作面板。",
+        "badge": "Alpha"
+      }
+    },
+    "page": {
+      "eyebrow": "實戰手冊",
+      "title": "把基礎設施跑給你看",
+      "lead": "Sailor 內建的基礎設施 Demo、實用工具、整合能力與實驗性功能——挑一個直接上手。"
+    },
+    "meta": {
+      "title": "Playbook — {productName}",
+      "description": "Sailor 內建的基礎設施 Demo、實用工具、整合能力與實驗性功能的精選目錄。"
     }
   }
 }

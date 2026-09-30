@@ -3,19 +3,20 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   isOpenPlatformExternal,
-  OPEN_PLATFORM_COPY,
   OPEN_PLATFORM_GROUPS,
   OPEN_PLATFORM_ITEMS,
   type OpenPlatformItem,
   resolveOpenPlatformConsoleHref,
   resolveOpenPlatformHref,
 } from "@/lib/constants/open-platform";
-import { pick } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+
+/** Reads a dynamic dotted path out of `openPlatform` — the group/item id is data, not a literal key. */
+type CatalogTranslator = (key: string) => string;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -28,15 +29,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang, namespace: "openPlatform" });
   return buildPageMetadata({
-    title: pick(OPEN_PLATFORM_COPY.title, lang),
-    description: pick(OPEN_PLATFORM_COPY.lead, lang),
+    title: t("title"),
+    description: t("lead"),
     path: "/open",
     locale: lang as Locale,
   });
 }
 
-function CatalogCard({ item, locale }: { item: OpenPlatformItem; locale: string }) {
+function CatalogCard({ item, t }: { item: OpenPlatformItem; t: CatalogTranslator }) {
   const Icon = item.icon;
   const href = resolveOpenPlatformHref(item);
   const external = isOpenPlatformExternal(item);
@@ -55,15 +57,17 @@ function CatalogCard({ item, locale }: { item: OpenPlatformItem; locale: string 
       </div>
       <div className="mt-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-[15px] font-semibold text-neutral-12">{pick(item.title, locale)}</h3>
+          <h3 className="text-[15px] font-semibold text-neutral-12">
+            {t(`items.${item.id}.title`)}
+          </h3>
           {item.badge ? (
             <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary dark:bg-primary/15 dark:text-primary">
-              {pick(item.badge, locale)}
+              {t(`items.${item.id}.badge`)}
             </span>
           ) : null}
         </div>
         <p className="mt-1.5 text-[13px] leading-relaxed text-neutral-11">
-          {pick(item.description, locale)}
+          {t(`items.${item.id}.description`)}
         </p>
       </div>
     </>
@@ -89,29 +93,30 @@ export default async function OpenPlatformPage({ params }: { params: Promise<{ l
   if (!hasLocale(routing.locales, lang)) return null;
   setRequestLocale(lang as Locale);
 
+  const t = (await getTranslations({
+    locale: lang,
+    namespace: "openPlatform",
+  })) as unknown as CatalogTranslator;
+
   return (
     <main id="main-content" className="mx-auto w-full max-w-wide px-4 pb-24 pt-32 sm:px-6 flex-1">
       <AnimateIn preset="fadeUp">
         <div className="text-center">
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.12em] text-neutral-11">
-            {pick(OPEN_PLATFORM_COPY.eyebrow, lang)}
+            {t("eyebrow")}
           </p>
           <h1 className="text-4xl font-bold tracking-tight text-neutral-12 sm:text-5xl">
-            {pick(OPEN_PLATFORM_COPY.title, lang)}
+            {t("title")}
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-11">
-            {pick(OPEN_PLATFORM_COPY.lead, lang)}
-          </p>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-11">{t("lead")}</p>
           <div className="mt-8 flex flex-col items-center gap-3">
             <Button asChild size="lg">
               <a href={resolveOpenPlatformConsoleHref()}>
-                {pick(OPEN_PLATFORM_COPY.consoleCta, lang)}
+                {t("consoleCta")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </a>
             </Button>
-            <p className="max-w-xl text-sm text-neutral-11">
-              {pick(OPEN_PLATFORM_COPY.consoleHint, lang)}
-            </p>
+            <p className="max-w-xl text-sm text-neutral-11">{t("consoleHint")}</p>
           </div>
         </div>
       </AnimateIn>
@@ -125,15 +130,17 @@ export default async function OpenPlatformPage({ params }: { params: Promise<{ l
               <AnimateIn preset="fadeUp">
                 <div className="mb-6">
                   <h2 id={`open-${group.id}`} className="text-xl font-semibold text-neutral-12">
-                    {pick(group.label, lang)}
+                    {t(`groups.${group.id}.label`)}
                   </h2>
-                  <p className="mt-1 text-sm text-neutral-11">{pick(group.description, lang)}</p>
+                  <p className="mt-1 text-sm text-neutral-11">
+                    {t(`groups.${group.id}.description`)}
+                  </p>
                 </div>
               </AnimateIn>
               <AnimateInGroup stagger="fast" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {items.map((item) => (
                   <AnimateIn key={item.id} preset="fadeUp">
-                    <CatalogCard item={item} locale={lang} />
+                    <CatalogCard item={item} t={t} />
                   </AnimateIn>
                 ))}
               </AnimateInGroup>

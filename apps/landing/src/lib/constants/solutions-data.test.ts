@@ -1,15 +1,23 @@
 import { describe, expect, it } from "vitest";
+import en from "../../../messages/en.json";
+import zhHans from "../../../messages/zh-Hans.json";
+import zhHant from "../../../messages/zh-Hant.json";
 import {
   getAllSolutionSlugs,
   getGroupSolutions,
   getSolution,
-  pick,
   SOLUTION_GROUPS,
   SOLUTIONS,
 } from "./solutions-data";
 
 const SLUG_RE = /^[a-z][a-z0-9-]*$/;
 const GROUP_IDS = new Set(SOLUTION_GROUPS.map((g) => g.id));
+
+const CATALOGS = [
+  ["en", en],
+  ["zh-Hans", zhHans],
+  ["zh-Hant", zhHant],
+] as const;
 
 describe("solutions taxonomy integrity", () => {
   it("has unique, well-formed slugs", () => {
@@ -21,26 +29,6 @@ describe("solutions taxonomy integrity", () => {
   it("declares a valid type for every solution", () => {
     for (const s of SOLUTIONS) {
       expect(["content", "offering"]).toContain(s.type);
-    }
-  });
-
-  it("has non-empty en + zh label and tagline for every solution", () => {
-    for (const s of SOLUTIONS) {
-      expect(s.label.en.trim()).not.toBe("");
-      expect(s.label.zh.trim()).not.toBe("");
-      expect(s.tagline.en.trim()).not.toBe("");
-      expect(s.tagline.zh.trim()).not.toBe("");
-    }
-  });
-
-  it("has complete bilingual hero copy for every solution", () => {
-    for (const s of SOLUTIONS) {
-      for (const field of [s.hero.eyebrow, s.hero.title, s.hero.titleAccent, s.hero.summary]) {
-        expect(field.en.trim()).not.toBe("");
-        expect(field.zh.trim()).not.toBe("");
-      }
-      expect(s.useCases.length).toBeGreaterThan(0);
-      expect(s.faq.length).toBeGreaterThan(0);
     }
   });
 
@@ -69,11 +57,53 @@ describe("solution lookup helpers", () => {
     }
     expect(getSolution("does-not-exist")).toBeUndefined();
   });
+});
 
-  it("pick falls back to English for non-zh locales", () => {
-    const copy = { en: "Hello", zh: "你好" };
-    expect(pick(copy, "zh")).toBe("你好");
-    expect(pick(copy, "en")).toBe("Hello");
-    expect(pick(copy, "ja")).toBe("Hello");
+describe("solutions catalog copy (messages/*.json)", () => {
+  it("has non-empty label and tagline for every solution, in every shipped catalog", () => {
+    for (const [locale, messages] of CATALOGS) {
+      for (const slug of getAllSolutionSlugs()) {
+        const entry =
+          messages.solutionsCatalog.solutions[slug as keyof typeof en.solutionsCatalog.solutions];
+        expect(entry, `${locale}: solutions.${slug}`).toBeTruthy();
+        expect(entry.label.trim(), `${locale}: solutions.${slug}.label`).not.toBe("");
+        expect(entry.tagline.trim(), `${locale}: solutions.${slug}.tagline`).not.toBe("");
+      }
+    }
+  });
+
+  it("has complete hero copy and at least one use case + FAQ entry, in every shipped catalog", () => {
+    for (const [locale, messages] of CATALOGS) {
+      for (const slug of getAllSolutionSlugs()) {
+        const entry =
+          messages.solutionsCatalog.solutions[slug as keyof typeof en.solutionsCatalog.solutions];
+        for (const field of [
+          entry.hero.eyebrow,
+          entry.hero.title,
+          entry.hero.titleAccent,
+          entry.hero.summary,
+        ]) {
+          expect(field.trim(), `${locale}: solutions.${slug}.hero`).not.toBe("");
+        }
+        expect(
+          Object.keys(entry.useCases).length,
+          `${locale}: solutions.${slug}.useCases`,
+        ).toBeGreaterThan(0);
+        expect(Object.keys(entry.faq).length, `${locale}: solutions.${slug}.faq`).toBeGreaterThan(
+          0,
+        );
+      }
+    }
+  });
+
+  it("has a label for every solution group, in every shipped catalog", () => {
+    for (const [locale, messages] of CATALOGS) {
+      for (const group of SOLUTION_GROUPS) {
+        const entry =
+          messages.solutionsCatalog.groups[group.id as keyof typeof en.solutionsCatalog.groups];
+        expect(entry, `${locale}: groups.${group.id}`).toBeTruthy();
+        expect(entry.label.trim(), `${locale}: groups.${group.id}.label`).not.toBe("");
+      }
+    }
   });
 });

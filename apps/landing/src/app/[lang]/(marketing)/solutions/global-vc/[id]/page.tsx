@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FinalCTA } from "@/components/landing";
 import { VcProfile } from "@/components/landing/solutions/vc/VcProfile";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { GLOBAL_VC_ORGS, getGlobalVc, globalVcLogoFor } from "@/lib/constants/global-vc";
 import { similarVcs } from "@/lib/constants/vc";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ lang: string; id: string }> };
@@ -29,9 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!hasLocale(routing.locales, lang)) return {};
   const org = getGlobalVc(Number(id));
   if (!org) return {};
+  const t = await getTranslations({ locale: lang, namespace: "solutionsCatalog.meta" });
   return buildPageMetadata({
-    title: `${org.name} — Investor Profile | Nebutra`,
-    description: org.summary || `${org.name}: focus sectors, stage and region.`,
+    title: t("globalVcProfileTitle", { name: org.name }),
+    description: org.summary || t("globalVcProfileDescriptionFallback", { name: org.name }),
     path: `/solutions/global-vc/${org.id}`,
     locale: lang as Locale,
   });
@@ -47,6 +47,7 @@ export default async function GlobalVcProfilePage({ params }: Props) {
 
   const org = { ...raw, logo: globalVcLogoFor(raw) };
   const similar = similarVcs(raw, GLOBAL_VC_ORGS).map((o) => ({ ...o, logo: globalVcLogoFor(o) }));
+  const t = await getTranslations({ locale: lang, namespace: "solutionsCatalog.globalVc" });
 
   return (
     <main id="main-content" className="relative flex-1 overflow-hidden bg-background">
@@ -54,7 +55,7 @@ export default async function GlobalVcProfilePage({ params }: Props) {
         org={org}
         similar={similar}
         locale={lang as Locale}
-        directoryLabel={isZhUiLocale(lang) ? "全球 VC" : "Global VC"}
+        directoryLabel={t("directoryLabel")}
         hrefBase="/solutions/global-vc"
         variant="global"
       />

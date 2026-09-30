@@ -1,13 +1,12 @@
 "use client";
 
 import { Cross, Menu } from "@nebutra/icons";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
 import { env } from "@/lib/env";
-import { isZhUiLocale, pick } from "@/lib/i18n/localized";
 import { usePublicMe } from "@/lib/use-public-me";
 import { hereOnly } from "@/site-map";
 import { Presence } from "../Presence";
@@ -16,14 +15,18 @@ import { MENUS } from "./menus";
 
 const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
+/** Reads a dynamic dotted path out of a namespace — the group/item ids are data, not literal keys. */
+type DynamicTranslator = (key: string) => string;
+
 export function MobileDrawer() {
   const t = useTranslations("nav");
+  const tResourcesCatalog = useTranslations("resourcesCatalog") as unknown as DynamicTranslator;
+  const tSolutionsNav = useTranslations("solutionsNav") as unknown as DynamicTranslator;
   const me = usePublicMe();
-  const locale = useLocale();
   type NavTranslationKey = Parameters<typeof t>[0];
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
   const [open, setOpen] = useState(false);
-  const themeLabel = isZhUiLocale(locale) ? "外观" : "Theme";
+  const themeLabel = t("theme");
 
   return (
     <div className="lg:hidden flex items-center">
@@ -52,6 +55,7 @@ export function MobileDrawer() {
                 if ("mega" in link) {
                   const groups = MENUS[link.labelKey as MenuId]?.groups() ?? [];
                   if (groups.length === 0) return null;
+                  const tMenu = link.labelKey === "solutions" ? tSolutionsNav : tResourcesCatalog;
 
                   return (
                     <div key={link.labelKey} className="flex flex-col gap-3 py-1">
@@ -62,14 +66,14 @@ export function MobileDrawer() {
                         {groups.map((group) => (
                           <div key={group.id} className="flex flex-col gap-2.5">
                             <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground/50">
-                              {pick(group.label, locale)}
+                              {tMenu(`groups.${group.id}`)}
                             </span>
                             {group.items.map((item) => {
                               const Icon = item.icon;
                               const content = (
                                 <>
                                   <Icon className="size-4 opacity-70" />
-                                  {pick(item.label, locale)}
+                                  {tMenu(`items.${item.key}.label`)}
                                 </>
                               );
                               const className =

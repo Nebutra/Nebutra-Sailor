@@ -1,28 +1,12 @@
 import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { Badge } from "@nebutra/ui/primitives";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import type { VcOrg } from "@/lib/constants/vc";
 import { isZhUiLocale } from "@/lib/i18n/localized";
 import { VcLogo } from "./VcLogo";
-
-const COPY = {
-  home: { en: "Home", zh: "首页" },
-  thesis: { en: "Investment focus", zh: "投资主线" },
-  facts: { en: "At a glance", zh: "速览" },
-  founded: { en: "Founded", zh: "成立" },
-  hq: { en: "HQ", zh: "总部" },
-  stages: { en: "Stages", zh: "阶段" },
-  checkSize: { en: "Check size", zh: "单笔" },
-  totalDeals: { en: "Total deals", zh: "总投资" },
-  region: { en: "Region", zh: "地域" },
-  sectors: { en: "Sectors", zh: "赛道" },
-  notable: { en: "Notable portfolio", zh: "代表案例" },
-  recent: { en: "Recent activity (2025–26)", zh: "近期出手(2025–26)" },
-  similar: { en: "Similar institutions", zh: "同赛道机构" },
-  visit: { en: "Visit website", zh: "访问官网" },
-} as const;
 
 export interface VcProfileProps {
   org: VcOrg;
@@ -35,7 +19,7 @@ export interface VcProfileProps {
   variant: "deals" | "global";
 }
 
-export function VcProfile({
+export async function VcProfile({
   org,
   similar,
   locale,
@@ -44,7 +28,7 @@ export function VcProfile({
   variant,
 }: VcProfileProps) {
   const zh = isZhUiLocale(locale) || locale.startsWith("zh-") || locale.startsWith("zh_");
-  const t = (k: keyof typeof COPY) => (zh ? COPY[k].zh : COPY[k].en);
+  const t = await getTranslations({ locale, namespace: "solutionsCatalog.vcProfile" });
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
 
   const thesis = org.thesis ? (zh ? org.thesis.zh : org.thesis.en) || org.summary : org.summary;

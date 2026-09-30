@@ -24,7 +24,8 @@
       "billing": "账单",
       "docs": "文档",
       "signOut": "退出登录"
-    }
+    },
+    "theme": "外观"
   },
   "refer": {
     "metadataTitle": "加入 {brandName} 创始人推荐闭环",
@@ -2149,6 +2150,685 @@
           "title": "法律文件"
         }
       }
+    }
+  },
+  "solutionsCatalog": {
+    "groups": {
+      "go-to-market": {
+        "label": "出海与增长"
+      },
+      "build-govern": {
+        "label": "工程与治理"
+      },
+      "ai-data": {
+        "label": "AI 与数据"
+      },
+      "founder": {
+        "label": "创业"
+      }
+    },
+    "solutions": {
+      "go-global": {
+        "label": "软件出海",
+        "tagline": "合规、本地化地把 SaaS 推向全球市场。",
+        "hero": {
+          "eyebrow": "软件出海",
+          "title": "把你的 SaaS",
+          "titleAccent": "推向全球",
+          "summary": "多区域基建、国际化、支付与合规——Harness 把跨境的底层管道做好，你只管做产品。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "国际化是地基",
+            "body": "7 语言路由、可适配 RTL 的 token、按市场分发内容，而不必 fork 代码库。"
+          },
+          "uc2": {
+            "title": "支付无需重写",
+            "body": "Creem（全球卡组织，交易商户）与微信支付 / 支付宝收敛到同一套计费契约后面——配好密钥即可同时上线。"
+          },
+          "uc3": {
+            "title": "合规内建",
+            "body": "租户隔离、审计日志、数据驻留原语，第一天就绪。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "每个地区要分开建应用吗？",
+            "a": "不用——一套代码库。中国双轨(支付、短信、存储)的两个适配器都会打进每次构建；部署时哪些密钥存在就决定哪些生效，两边也可以同时运行。"
+          }
+        }
+      },
+      "growth": {
+        "label": "黑客增长",
+        "tagline": "可复利的获客、激活与留存增长闭环。",
+        "hero": {
+          "eyebrow": "黑客增长",
+          "title": "搭建可以",
+          "titleAccent": "复利的增长闭环",
+          "summary": "在计量 + 通知骨干之上做漏斗埋点、跑实验，并接入推荐与生命周期闭环。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "漏斗埋点",
+            "body": "用量计量 + 分析提供衡量激活所需的事件，而不是靠猜。"
+          },
+          "uc2": {
+            "title": "生命周期触达",
+            "body": "由产品事件驱动的多渠道通知(站内 / 邮件 / 推送)。"
+          },
+          "uc3": {
+            "title": "快速实验",
+            "body": "特性开关无需重新部署即可投放变体，计量回读结果。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "自带数据仓库吗？",
+            "a": "计量管道聚合到 ClickHouse，做实时漏斗与同期群分析。"
+          }
+        }
+      },
+      "architecture": {
+        "label": "架构治理",
+        "tagline": "在规模扩张时保持大型代码库的一致性。",
+        "hero": {
+          "eyebrow": "架构治理",
+          "title": "治理你的",
+          "titleAccent": "系统架构",
+          "summary": "用架构测试、ratchet 与能力边界从机制上强制结构，而不是写在没人看的 wiki 里。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "棘轮式不变量",
+            "body": "当硬编码值或跨层导入出现时，属性测试让构建失败。"
+          },
+          "uc2": {
+            "title": "能力边界",
+            "body": "按域分组、声明归属与作用域的包，把耦合压到最低。"
+          },
+          "uc3": {
+            "title": "三级生命周期",
+            "body": "active / stub / incubator 让死概念离开 CI，又不丢失思路。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "治理会拖慢团队吗？",
+            "a": "它把评审从人转移到测试，大多数检查即时且自动。"
+          }
+        }
+      },
+      "tech-stack": {
+        "label": "技术选型",
+        "tagline": "每个领域一套定见技术栈——只有中国市场的法律或网络要求时才保留第二套。",
+        "hero": {
+          "eyebrow": "技术选型",
+          "title": "一套技术栈，",
+          "titleAccent": "零决策",
+          "summary": "队列、搜索、鉴权、计费、存储各自只有一个答案——Better Auth、QStash、Postgres、Creem——都在接口后面，而不是一份选型清单。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "每个领域一个答案",
+            "body": "身份用 Better Auth，队列用 QStash，搜索用 Postgres(pgvector + 全文检索)，计费用 Creem——接口留下了，备选项没有。"
+          },
+          "uc2": {
+            "title": "后端默认 TS",
+            "body": "对何时该用 Python 有成文政策，防止技术栈蔓延。"
+          },
+          "uc3": {
+            "title": "中国双轨，而非矩阵",
+            "body": "支付(Creem + 微信支付/支付宝)、短信(Twilio Verify + 阿里云)、存储(同一套 S3 兼容客户端接入 R2/OSS)——只有在中国大陆的法律或网络因素让默认方案走不通时，才保留第二套适配器；配好密钥两边都能同时上线。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "如果我需要一个已被移除的 provider 怎么办？",
+            "a": "每个域仍然收敛在一个接口后面——加一个适配器即可，无需改调用点。保留下来的这些是因为生产环境真的在用，不是因为接口只认它们。"
+          }
+        }
+      },
+      "dx": {
+        "label": "DX 工具链",
+        "tagline": "让研发速度保持在高位的开发者体验。",
+        "hero": {
+          "eyebrow": "DX 工具链",
+          "title": "让你",
+          "titleAccent": "心无旁骛的工具链",
+          "summary": "一个脚手架 CLI、一个格式化器、一条流水线。生成、检查、测试、发布，无需在工具链上反复折腾。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "秒级脚手架",
+            "body": "`npx create-sailor my-app` 不问任何问题，直接生成完整的收敛技术栈，开箱即可运行。"
+          },
+          "uc2": {
+            "title": "一个 linter，一份配置",
+            "body": "Biome 统一格式化与检查整个 monorepo——没有 ESLint/Prettier 的分裂。"
+          },
+          "uc3": {
+            "title": "默认绿色流水线",
+            "body": "lint → build → test → scan → deploy 本地与 CI 完全一致。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "可以用我自己的工具吗？",
+            "a": "可以——preset 是可选的；默认值是有主张的，但不锁死。"
+          }
+        }
+      },
+      "ai": {
+        "label": "人工智能",
+        "tagline": "在 provider 无关的智能体运行时上交付 AI 功能。",
+        "hero": {
+          "eyebrow": "人工智能",
+          "title": "让你的产品",
+          "titleAccent": "AI 原生",
+          "summary": "智能体、RAG、工具与 LLM 网关——多模型、可观测，放心交到用户面前。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "模型无关网关",
+            "body": "在一套 API 后面跨 provider 做路由、故障转移与成本追踪。"
+          },
+          "uc2": {
+            "title": "可落地的 RAG",
+            "body": "知识库、嵌入与检索原语，已为多租户场景接好。"
+          },
+          "uc3": {
+            "title": "会用工具的智能体",
+            "body": "带工具注册表与执行策略的智能体运行时，实现安全的自主性。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "会被绑死在一家模型厂商吗？",
+            "a": "不会——网关抽象了厂商，切换只是配置。"
+          }
+        }
+      },
+      "ai-data-ops": {
+        "label": "AI 数据运营",
+        "tagline": "托管式的数据标注、RLHF 与评测流水线——以服务交付。",
+        "hero": {
+          "eyebrow": "AI 数据运营",
+          "title": "用高质量数据",
+          "titleAccent": "喂养你的模型",
+          "summary": "一套托管的数据运营——标注、RLHF 偏好数据与评测集——由我们的团队按你的规范执行。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "规模化标注",
+            "body": "经过审核的人力 + 工具，覆盖文本、图像、音频与 3D 标注。"
+          },
+          "uc2": {
+            "title": "RLHF 偏好数据",
+            "body": "成对比较与量表打分，让你的模型对齐意图。"
+          },
+          "uc3": {
+            "title": "评测集",
+            "body": "留出、经审计的评测套件，用以衡量质量而非感觉。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "如何开始？",
+            "a": "预约一次范围沟通——我们在数天内把你的规范变成试点批次。"
+          }
+        }
+      },
+      "frontier": {
+        "label": "未来前沿",
+        "tagline": "来自落地最前沿的一线观察。",
+        "hero": {
+          "eyebrow": "未来前沿",
+          "title": "站在",
+          "titleAccent": "技术前沿",
+          "summary": "在事情变得显而易见之前我们在测什么——新模型、新运行时、新范式，并讲清权衡。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "早期信号",
+            "body": "对什么有效、什么无效的诚实记录，而非炒作。"
+          },
+          "uc2": {
+            "title": "参考实现",
+            "body": "可运行的探针，直接拿来用，而不是从一篇博客开始。"
+          },
+          "uc3": {
+            "title": "先讲权衡",
+            "body": "每篇前沿记录都先讲成本、风险与何时不该采用。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "这是生产级建议吗？",
+            "a": "把前沿记录当作侦察——生产级建议会被明确标注。"
+          }
+        }
+      },
+      "china-vc": {
+        "label": "中国 VC 解决方案",
+        "tagline": "中国主流直投机构，按赛道、类型、投资体量可搜可筛。",
+        "hero": {
+          "eyebrow": "中国 VC",
+          "title": "找到对的",
+          "titleAccent": "中国投资人",
+          "summary": "覆盖中国主流直投机构的可搜索数据库——按赛道、类型、投资体量筛选。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "按赛道筛选",
+            "body": "标准化赛道——快速锁定你所在领域的投资人。"
+          },
+          "uc2": {
+            "title": "看活跃度信号",
+            "body": "累计投资体量反映谁出手最多。"
+          },
+          "uc3": {
+            "title": "直达官方入口",
+            "body": "每家机构一键直达官网。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "收录了哪些机构？",
+            "a": "覆盖中国主流直投机构，跨阶段与赛道。"
+          }
+        }
+      },
+      "global-vc": {
+        "label": "全球 VC 解决方案",
+        "tagline": "全球知名投资机构——从 Y Combinator 到多阶段基金。",
+        "hero": {
+          "eyebrow": "全球 VC",
+          "title": "对接",
+          "titleAccent": "全球投资人",
+          "summary": "精选的全球头部投资机构目录——加速器、种子、多阶段与成长基金——按领域、类型、地区筛选。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "从加速器到成长期",
+            "body": "Y Combinator、a16z、红杉、Accel 等——覆盖各个阶段。"
+          },
+          "uc2": {
+            "title": "按方向筛选",
+            "body": "按领域(AI、金融科技、加密、生物…)、类型与地区收窄。"
+          },
+          "uc3": {
+            "title": "直达官方入口",
+            "body": "每家基金一键直达官网。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "名单怎么选的？",
+            "a": "人工精选的全球公认投资机构，资料整理自公开信息。"
+          }
+        }
+      },
+      "fundraising": {
+        "label": "创业融资",
+        "tagline": "向对的投资人融资的实操手册。",
+        "hero": {
+          "eyebrow": "创业融资",
+          "title": "用",
+          "titleAccent": "清晰的故事去融资",
+          "summary": "指标、叙事与流程——把你做出来的东西，打包成一轮能 close 的融资。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "真正重要的指标",
+            "body": "在每个阶段，投资人真正会据以决策的数字。"
+          },
+          "uc2": {
+            "title": "叙事打磨",
+            "body": "把功能清单变成市场故事，又不过度承诺。"
+          },
+          "uc3": {
+            "title": "流程纪律",
+            "body": "跑一轮紧凑、限时的融资，而不是无止境地拖。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "分地区吗？",
+            "a": "范式是通用的；我们会标注美、欧、中三地融资的差异处。"
+          }
+        }
+      },
+      "product-insights": {
+        "label": "产品观察",
+        "tagline": "对值得研究的产品的拆解与范式提炼。",
+        "hero": {
+          "eyebrow": "产品观察",
+          "title": "从",
+          "titleAccent": "好产品中学习",
+          "summary": "结构化拆解——一个产品做对了什么、为何有效、哪些可迁移到你这里。"
+        },
+        "useCases": {
+          "uc1": {
+            "title": "提炼范式，而非照抄",
+            "body": "我们提炼一个 UX 或 GTM 动作背后可复用的原则。"
+          },
+          "uc2": {
+            "title": "决策语境",
+            "body": "为什么这个选择对他们成立——以及何时对你并不成立。"
+          },
+          "uc3": {
+            "title": "可执行结论",
+            "body": "每篇拆解都以「本周可以试什么」收尾。"
+          }
+        },
+        "faq": {
+          "faq1": {
+            "q": "覆盖 B2B 和 B2C 吗？",
+            "a": "都有，偏向 SaaS 与面向开发者的产品。"
+          }
+        }
+      }
+    },
+    "index": {
+      "eyebrow": "解决方案",
+      "title": "把 SaaS 推向全球的最佳实践",
+      "summary": "为出海创业者准备的场景手册——从出海、增长到架构、AI 与融资。"
+    },
+    "page": {
+      "back": "全部解决方案",
+      "useCasesHeading": "它如何帮你",
+      "capabilities": "由这些能力驱动",
+      "bestPractices": "最佳实践",
+      "faqHeading": "常见问题",
+      "ctaContent": "开始使用",
+      "ctaOffering": "预约范围沟通"
+    },
+    "vcProfile": {
+      "home": "首页",
+      "thesis": "投资主线",
+      "facts": "速览",
+      "founded": "成立",
+      "hq": "总部",
+      "stages": "阶段",
+      "checkSize": "单笔",
+      "totalDeals": "总投资",
+      "region": "地域",
+      "sectors": "赛道",
+      "notable": "代表案例",
+      "recent": "近期出手(2025–26)",
+      "similar": "同赛道机构",
+      "visit": "访问官网"
+    },
+    "chinaVc": {
+      "back": "全部解决方案",
+      "statInstitutions": "家机构",
+      "statSectors": "个赛道",
+      "statDeals": "笔投资",
+      "source": "整理自中国主流直投机构的公开信息。",
+      "directoryLabel": "中国 VC"
+    },
+    "globalVc": {
+      "back": "全部解决方案",
+      "statFunds": "家基金",
+      "statSectors": "个领域",
+      "statRegions": "个地区",
+      "source": "精选的全球知名投资机构，资料整理自公开信息。",
+      "directoryLabel": "全球 VC"
+    },
+    "meta": {
+      "indexTitle": "解决方案 | {brandName}",
+      "indexDescription": "为出海创业者准备的场景手册——出海、增长、架构治理、AI 与融资的最佳实践。",
+      "detailTitleSuffix": "{brandName} Solutions",
+      "chinaVcProfileTitle": "{name} — 投资机构画像 | {brandName}",
+      "chinaVcProfileDescriptionFallback": "{name} 的投资主线、赛道、阶段与代表案例。",
+      "globalVcProfileTitle": "{name} — Investor Profile | {brandName}",
+      "globalVcProfileDescriptionFallback": "{name}: focus sectors, stage and region."
+    }
+  },
+  "solutionsNav": {
+    "groups": {
+      "go-to-market": "出海与增长",
+      "build-govern": "工程与治理",
+      "ai-data": "AI 与数据",
+      "founder": "创业"
+    },
+    "items": {
+      "go-global": {
+        "label": "软件出海",
+        "tagline": "合规、本地化地把 SaaS 推向全球市场。"
+      },
+      "growth": {
+        "label": "黑客增长",
+        "tagline": "可复利的获客、激活与留存增长闭环。"
+      },
+      "architecture": {
+        "label": "架构治理",
+        "tagline": "在规模扩张时保持大型代码库的一致性。"
+      },
+      "tech-stack": {
+        "label": "技术选型",
+        "tagline": "每个领域一套定见技术栈——只有中国市场的法律或网络要求时才保留第二套。"
+      },
+      "dx": {
+        "label": "DX 工具链",
+        "tagline": "让研发速度保持在高位的开发者体验。"
+      },
+      "ai": {
+        "label": "人工智能",
+        "tagline": "在 provider 无关的智能体运行时上交付 AI 功能。"
+      },
+      "ai-data-ops": {
+        "label": "AI 数据运营",
+        "tagline": "托管式的数据标注、RLHF 与评测流水线——以服务交付。"
+      },
+      "frontier": {
+        "label": "未来前沿",
+        "tagline": "来自落地最前沿的一线观察。"
+      },
+      "china-vc": {
+        "label": "中国 VC 解决方案",
+        "tagline": "中国主流直投机构，按赛道、类型、投资体量可搜可筛。"
+      },
+      "global-vc": {
+        "label": "全球 VC 解决方案",
+        "tagline": "全球知名投资机构——从 Y Combinator 到多阶段基金。"
+      },
+      "fundraising": {
+        "label": "创业融资",
+        "tagline": "向对的投资人融资的实操手册。"
+      },
+      "product-insights": {
+        "label": "产品观察",
+        "tagline": "对值得研究的产品的拆解与范式提炼。"
+      }
+    }
+  },
+  "resourcesCatalog": {
+    "groups": {
+      "developers": "开发者",
+      "company": "公司"
+    },
+    "items": {
+      "open-platform": {
+        "label": "开放平台",
+        "tagline": "API、文档与开发者控制台"
+      },
+      "docs": {
+        "label": "文档",
+        "tagline": "API 文档与指南"
+      },
+      "forge": {
+        "label": "Forge 工具站",
+        "tagline": "在线编解码、文本、哈希与文档工具"
+      },
+      "blog": {
+        "label": "博客",
+        "tagline": "工程笔记与产品更新"
+      },
+      "changelog": {
+        "label": "更新日志",
+        "tagline": "{brandName} 的最新更新"
+      },
+      "roadmap": {
+        "label": "路线图",
+        "tagline": "下一步在建什么"
+      },
+      "design-system": {
+        "label": "设计系统",
+        "tagline": "令牌、组件与品牌"
+      },
+      "status": {
+        "label": "服务状态",
+        "tagline": "服务状态与可用性"
+      },
+      "about": {
+        "label": "关于我们",
+        "tagline": "我们的使命与团队"
+      },
+      "careers": {
+        "label": "加入我们",
+        "tagline": "招聘职位"
+      },
+      "newsroom": {
+        "label": "新闻中心",
+        "tagline": "公告与新闻稿"
+      },
+      "playbook": {
+        "label": "实战手册",
+        "tagline": "我们如何构建"
+      },
+      "showcase": {
+        "label": "案例展示",
+        "tagline": "用 {brandName} 构建的作品"
+      },
+      "security": {
+        "label": "安全合规",
+        "tagline": "安全与合规"
+      }
+    }
+  },
+  "openPlatform": {
+    "eyebrow": "开放平台",
+    "title": "{brandNameCn}开放平台",
+    "lead": "文档、公开 API 与登录后的开发者控制台，集中在这一处，不另开源站。",
+    "consoleCta": "打开控制台",
+    "consoleHint": "密钥、Webhook 与供应商密钥仍在应用里。未登录时会先走到登录。",
+    "groups": {
+      "catalog": {
+        "label": "公开面",
+        "description": "已经在跑的主机。本页只做索引，不代发请求。"
+      },
+      "console": {
+        "label": "开发者控制台",
+        "description": "登录后在应用设置里创建、吊销凭证。"
+      }
+    },
+    "items": {
+      "docs": {
+        "title": "文档",
+        "description": "指南、API 参考与 Webhook 契约。"
+      },
+      "api": {
+        "title": "API",
+        "description": "共享网关。产品命名空间落在 /<product>/v1/*。"
+      },
+      "router": {
+        "title": "Router",
+        "description": "兼容 OpenAI 的模型边。"
+      },
+      "forge": {
+        "title": "Forge",
+        "description": "工具站与 Agent 调用 API。"
+      },
+      "sso": {
+        "title": "使用{brandNameCn}登录",
+        "description": "OIDC 签发在 sso。第三方应用注册尚未自助开通。",
+        "badge": "IdP"
+      },
+      "status": {
+        "title": "服务状态",
+        "description": "公开主机的运行状态。"
+      },
+      "api-keys": {
+        "title": "API 密钥",
+        "description": "创建、吊销网关的程序化密钥。"
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "订阅工作区事件。载荷带签名。"
+      },
+      "provider-keys": {
+        "title": "供应商密钥",
+        "description": "接入自有 AI 供应商凭证。"
+      }
+    }
+  },
+  "playbookCatalog": {
+    "categories": {
+      "ai": {
+        "label": "AI 与 Agent",
+        "description": "可观察其端到端运行的 agent 运行时与多步流水线。"
+      },
+      "design": {
+        "label": "设计与主题",
+        "description": "塑造品牌系统——调色板、字体、动效——并实时预览。"
+      },
+      "compose": {
+        "label": "嵌入与编排",
+        "description": "可视化编排工作流，并把 Sailor 界面嵌入任意位置。"
+      },
+      "os": {
+        "label": "操作系统",
+        "description": "构建在平台之上的一体化操作面板。"
+      }
+    },
+    "items": {
+      "layer0": {
+        "title": "Layer 0 能力回环",
+        "description": "观察一次能力请求走完 感知 → 规划 → 执行 → 校验 的完整回环。"
+      },
+      "agent-runtime": {
+        "title": "Agent Runtime 语法",
+        "description": "多步骤 agent 运行时——tool registry、流式 UI、MCP 接入。"
+      },
+      "cinema": {
+        "title": "Cinema 电影导演流水线",
+        "description": "把分镜、拍摄、剪辑串成一条多 agent 流水线的短片生成。"
+      },
+      "sailor-studio": {
+        "title": "Sailor Studio",
+        "description": "选定项目的外观，在真实页面上预览，一条命令落地。"
+      },
+      "color-tokens": {
+        "title": "色彩与 Token",
+        "description": "浏览 12 阶品牌色阶与实时设计 token 参考。"
+      },
+      "icon-library": {
+        "title": "图标库",
+        "description": "浏览全部 541 个 Geist 图标——tree-shakable、单字重 TSX 组件。"
+      },
+      "canvas": {
+        "title": "Canvas 节点图编辑器",
+        "description": "用于可视化编排 agent 工作流的无限节点图画布。"
+      },
+      "embed": {
+        "title": "嵌入 Demo",
+        "description": "用一段嵌入代码把 Sailor 界面塞进任意页面。"
+      },
+      "startup-os": {
+        "title": "Startup OS",
+        "description": "在 Sailor 上经营一家创业公司的一体化操作面板。",
+        "badge": "Alpha"
+      }
+    },
+    "page": {
+      "eyebrow": "实战手册",
+      "title": "把基础设施跑给你看",
+      "lead": "Sailor 内置的基础设施 Demo、实用工具、集成能力与实验性功能——挑一个直接上手。"
+    },
+    "meta": {
+      "title": "Playbook — {productName}",
+      "description": "Sailor 内置的基础设施 Demo、实用工具、集成能力与实验性功能的精选目录。"
     }
   }
 }

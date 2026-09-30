@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Badge, MagicCard } from "@nebutra/ui/primitives";
+import { getTranslations } from "next-intl/server";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import {
   DEFAULT_GROUP_TOKENS,
@@ -9,23 +10,23 @@ import {
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { createAppSignUpUrl } from "@/lib/app-url";
-import { getSolutionGroup, pick, type Solution } from "@/lib/constants/solutions-data";
-import { isZhUiLocale } from "@/lib/i18n/localized";
+import { getSolutionGroup, type Solution } from "@/lib/constants/solutions-data";
 import { getSolutionContentSource } from "@/lib/solutions/content-source";
 
-const COPY = {
-  back: { en: "All solutions", zh: "全部解决方案" },
-  useCases: { en: "How it helps", zh: "它如何帮你" },
-  capabilities: { en: "Powered by", zh: "由这些能力驱动" },
-  bestPractices: { en: "Best practices", zh: "最佳实践" },
-  faq: { en: "FAQ", zh: "常见问题" },
-  ctaContent: { en: "Get Sailed", zh: "开始使用" },
-  ctaOffering: { en: "Book a scoping call", zh: "预约范围沟通" },
-  exploreCapability: { en: "Explore", zh: "查看" },
-} as const;
+/** Reads a dynamic dotted path / raw value out of `solutionsCatalog` — the slug is data, not a literal key. */
+interface CatalogTranslator {
+  (key: string): string;
+  raw: (key: string) => unknown;
+}
 
-function copy(key: keyof typeof COPY, locale: string): string {
-  return isZhUiLocale(locale) ? COPY[key].zh : COPY[key].en;
+interface SolutionUseCase {
+  title: string;
+  body: string;
+}
+
+interface SolutionFaq {
+  q: string;
+  a: string;
 }
 
 export interface SolutionPageProps {
@@ -55,8 +56,22 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
     ? await getSolutionContentSource().getRelatedPosts(solution.contentCategory, locale, 3)
     : [];
 
+  const t = (await getTranslations({
+    locale,
+    namespace: "solutionsCatalog",
+  })) as unknown as CatalogTranslator;
+
+  const heroEyebrow = t(`solutions.${solution.slug}.hero.eyebrow`);
+  const heroTitle = t(`solutions.${solution.slug}.hero.title`);
+  const heroTitleAccent = t(`solutions.${solution.slug}.hero.titleAccent`);
+  const heroSummary = t(`solutions.${solution.slug}.hero.summary`);
+  const useCases = Object.values(
+    t.raw(`solutions.${solution.slug}.useCases`) as Record<string, SolutionUseCase>,
+  );
+  const faq = Object.values(t.raw(`solutions.${solution.slug}.faq`) as Record<string, SolutionFaq>);
+
   const ctaHref = isOffering ? "/contact" : createAppSignUpUrl();
-  const ctaLabel = isOffering ? copy("ctaOffering", locale) : copy("ctaContent", locale);
+  const ctaLabel = isOffering ? t("page.ctaOffering") : t("page.ctaContent");
 
   return (
     <>
@@ -64,11 +79,11 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
         align="left"
         tokens={tokens}
         backHref="/solutions"
-        backLabel={copy("back", locale)}
-        eyebrow={pick(solution.hero.eyebrow, locale)}
-        titlePrefix={pick(solution.hero.title, locale)}
-        titleSuffix={pick(solution.hero.titleAccent, locale)}
-        summary={pick(solution.hero.summary, locale)}
+        backLabel={t("page.back")}
+        eyebrow={heroEyebrow}
+        titlePrefix={heroTitle}
+        titleSuffix={heroTitleAccent}
+        summary={heroSummary}
         {...(isOffering ? {} : { primaryCtaHref: ctaHref, primaryCtaLabel: ctaLabel })}
       >
         {isOffering ? (
@@ -86,17 +101,15 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
       <section className="mx-auto max-w-wide px-4 py-16 md:px-6 md:py-24">
         <AnimateIn preset="fadeUp" inView>
           <h2 className="mb-10 text-2xl font-bold text-neutral-12 md:text-3xl">
-            {copy("useCases", locale)}
+            {t("page.useCasesHeading")}
           </h2>
         </AnimateIn>
         <AnimateInGroup stagger="normal" className="grid gap-6 md:grid-cols-3">
-          {solution.useCases.map((uc) => (
-            <AnimateIn key={uc.title.en} preset="fadeUp">
+          {useCases.map((uc) => (
+            <AnimateIn key={uc.title} preset="fadeUp">
               <MagicCard className="h-full rounded-[var(--radius-2xl)] border border-border/60 p-6">
-                <h3 className="mb-2 text-lg font-semibold text-neutral-12">
-                  {pick(uc.title, locale)}
-                </h3>
-                <p className="text-sm leading-relaxed text-neutral-11">{pick(uc.body, locale)}</p>
+                <h3 className="mb-2 text-lg font-semibold text-neutral-12">{uc.title}</h3>
+                <p className="text-sm leading-relaxed text-neutral-11">{uc.body}</p>
               </MagicCard>
             </AnimateIn>
           ))}
@@ -108,7 +121,7 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
         <section className="mx-auto max-w-wide px-4 pb-16 md:px-6 md:pb-24">
           <AnimateIn preset="fadeUp" inView>
             <h2 className="mb-6 text-xl font-bold text-neutral-12 md:text-2xl">
-              {copy("capabilities", locale)}
+              {t("page.capabilities")}
             </h2>
             <div className="flex flex-wrap gap-3">
               {solution.capabilityAnchors.map((anchor) => (
@@ -136,7 +149,7 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
         <section className="mx-auto max-w-wide px-4 pb-16 md:px-6 md:pb-24">
           <AnimateIn preset="fadeUp" inView>
             <h2 className="mb-8 text-2xl font-bold text-neutral-12 md:text-3xl">
-              {copy("bestPractices", locale)}
+              {t("page.bestPractices")}
             </h2>
           </AnimateIn>
           <AnimateInGroup stagger="normal" className="grid gap-6 md:grid-cols-3">
@@ -155,21 +168,17 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
       ) : null}
 
       {/* FAQ */}
-      {solution.faq.length > 0 ? (
+      {faq.length > 0 ? (
         <section className="mx-auto max-w-4xl px-4 pb-20 md:px-6 md:pb-28">
           <AnimateIn preset="fadeUp" inView>
             <h2 className="mb-8 text-2xl font-bold text-neutral-12 md:text-3xl">
-              {copy("faq", locale)}
+              {t("page.faqHeading")}
             </h2>
             <dl className="flex flex-col divide-y divide-border/60">
-              {solution.faq.map((item) => (
-                <div key={item.q.en} className="py-5">
-                  <dt className="mb-2 text-base font-semibold text-neutral-12">
-                    {pick(item.q, locale)}
-                  </dt>
-                  <dd className="text-sm leading-relaxed text-neutral-11">
-                    {pick(item.a, locale)}
-                  </dd>
+              {faq.map((item) => (
+                <div key={item.q} className="py-5">
+                  <dt className="mb-2 text-base font-semibold text-neutral-12">{item.q}</dt>
+                  <dd className="text-sm leading-relaxed text-neutral-11">{item.a}</dd>
                 </div>
               ))}
             </dl>

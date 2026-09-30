@@ -1,5 +1,6 @@
 import { Globe } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
+import { getTranslations } from "next-intl/server";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import {
   DEFAULT_GROUP_TOKENS,
@@ -15,31 +16,26 @@ import {
   GLOBAL_VC_TYPES,
   globalVcLogoFor,
 } from "@/lib/constants/global-vc";
-import { getSolution, getSolutionGroup, pick } from "@/lib/constants/solutions-data";
+import { getSolution, getSolutionGroup } from "@/lib/constants/solutions-data";
 import { isZhUiLocale } from "@/lib/i18n/localized";
 
-const COPY = {
-  back: { en: "All solutions", zh: "全部解决方案" },
-  statFunds: { en: "Funds", zh: "家基金" },
-  statSectors: { en: "Sectors", zh: "个领域" },
-  statRegions: { en: "Regions", zh: "个地区" },
-  source: {
-    en: "A curated set of well-known global investors. Profiles compiled from public information.",
-    zh: "精选的全球知名投资机构,资料整理自公开信息。",
-  },
-} as const;
+/** Reads a dynamic dotted path out of `solutionsCatalog` — the slug is data, not a literal key. */
+type CatalogTranslator = (key: string) => string;
 
 export interface GlobalVcSolutionProps {
   locale: Locale;
 }
 
 /** Custom `/solutions/global-vc` page — a curated directory of global VCs. */
-export function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
+export async function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
   const solution = getSolution("global-vc");
   const group = solution ? getSolutionGroup(solution.groupId) : undefined;
   const isZh = isZhUiLocale(locale) || locale.startsWith("zh-") || locale.startsWith("zh_");
   const copyLocale: "en" | "zh" = isZh ? "zh" : "en";
-  const text = (key: keyof typeof COPY) => (isZh ? COPY[key].zh : COPY[key].en);
+  const t = (await getTranslations({
+    locale,
+    namespace: "solutionsCatalog",
+  })) as unknown as CatalogTranslator;
 
   const tokens: FeatureGroupTokens = {
     auroraColors: group?.auroraColors ?? DEFAULT_GROUP_TOKENS.auroraColors,
@@ -49,9 +45,9 @@ export function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
   };
 
   const stats = [
-    { value: GLOBAL_VC_COUNT, label: text("statFunds") },
-    { value: GLOBAL_VC_SECTORS.length, label: text("statSectors") },
-    { value: GLOBAL_VC_REGIONS.length, label: text("statRegions") },
+    { value: GLOBAL_VC_COUNT, label: t("globalVc.statFunds") },
+    { value: GLOBAL_VC_SECTORS.length, label: t("globalVc.statSectors") },
+    { value: GLOBAL_VC_REGIONS.length, label: t("globalVc.statRegions") },
   ];
 
   return (
@@ -61,11 +57,11 @@ export function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
           align="left"
           tokens={tokens}
           backHref="/solutions"
-          backLabel={text("back")}
-          eyebrow={pick(solution.hero.eyebrow, locale)}
-          titlePrefix={pick(solution.hero.title, locale)}
-          titleSuffix={pick(solution.hero.titleAccent, locale)}
-          summary={pick(solution.hero.summary, locale)}
+          backLabel={t("globalVc.back")}
+          eyebrow={t(`solutions.${solution.slug}.hero.eyebrow`)}
+          titlePrefix={t(`solutions.${solution.slug}.hero.title`)}
+          titleSuffix={t(`solutions.${solution.slug}.hero.titleAccent`)}
+          summary={t(`solutions.${solution.slug}.hero.summary`)}
         >
           <div className="mt-8 flex gap-8">
             {stats.map((s) => (
@@ -91,7 +87,7 @@ export function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
         </AnimateIn>
 
         <p className="mx-auto mt-12 max-w-wide px-4 text-xs leading-relaxed text-muted-foreground/60 md:px-6">
-          {text("source")}
+          {t("globalVc.source")}
         </p>
       </section>
     </>

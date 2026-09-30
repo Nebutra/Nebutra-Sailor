@@ -1,9 +1,9 @@
-import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
 import { describe, expect, it } from "vitest";
+import en from "../../../messages/en.json";
+import zhHans from "../../../messages/zh-Hans.json";
 import {
   OPEN_PLATFORM_CONSOLE_HREF,
-  OPEN_PLATFORM_COPY,
   OPEN_PLATFORM_ITEMS,
   resolveOpenPlatformConsoleHref,
   resolveOpenPlatformHref,
@@ -39,10 +39,15 @@ describe("open platform catalog", () => {
   });
 
   it("names the catalog from brand metadata, not hardcoded identity", () => {
-    expect(OPEN_PLATFORM_COPY.title.en).toBe(`${brand.name} Open Platform`);
-    expect(OPEN_PLATFORM_COPY.title.zh).toBe(`${brand.nameCn}开放平台`);
+    // Copy lives in messages/*.json (openPlatform namespace); the {brandName} /
+    // {brandNameCn} tokens are resolved at request time by injectBrandVars, so
+    // the raw message text carries the placeholder, not the literal brand name.
+    expect(en.openPlatform.title).toBe("{brandName} Open Platform");
+    expect(zhHans.openPlatform.title).toBe("{brandNameCn}开放平台");
+    expect(en.openPlatform.items.sso.title).toBe("Sign in with {brandName}");
+    expect(zhHans.openPlatform.items.sso.title).toBe("使用{brandNameCn}登录");
+
     const sso = OPEN_PLATFORM_ITEMS.find((item) => item.id === "sso");
-    expect(sso?.title.en).toBe(`Sign in with ${brand.name}`);
-    expect(sso?.title.zh).toBe(`使用${brand.nameCn}登录`);
+    expect(sso?.badge).toBe(true);
   });
 });

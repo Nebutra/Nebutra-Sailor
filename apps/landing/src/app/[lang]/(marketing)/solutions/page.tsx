@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FinalCTA } from "@/components/landing";
 import { SolutionsIndex } from "@/components/landing/solutions/SolutionsIndex";
 import { type Locale, routing } from "@/i18n/routing";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
@@ -18,12 +17,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
-  const isZh = isZhUiLocale(lang);
+  const t = await getTranslations({ locale: lang, namespace: "solutionsCatalog.meta" });
   return buildPageMetadata({
-    title: isZh ? "解决方案 | Nebutra" : "Solutions | Nebutra",
-    description: isZh
-      ? "为出海创业者准备的场景手册——出海、增长、架构治理、AI 与融资的最佳实践。"
-      : "Scenario playbooks for outbound founders — go global, growth, architecture, AI and fundraising best practices.",
+    title: t("indexTitle"),
+    description: t("indexDescription"),
     path: "/solutions",
     locale: lang as Locale,
   });
