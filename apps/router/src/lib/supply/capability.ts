@@ -18,6 +18,7 @@ import {
   discoverFalAi,
   discoverNewApiChannel,
   discoverOpenAiCompatible,
+  isNeutralFailureReason,
   isNeutralOutcome,
   probeModel,
   type SourceCredential,
@@ -246,6 +247,10 @@ async function probeRows(
         ...(credential.apiKey ? { apiKey: credential.apiKey } : {}),
         upstreamModel: row.upstreamModel,
         modality: row.modality as SupplyModality,
+        // Discovery's per-model metadata (e.g. `supported_endpoints`), threaded
+        // through so the probe calls a Claude/GPT-shaped model over its real
+        // endpoint shape instead of always assuming chat/completions.
+        ...(isRecord(row.capabilities) ? { capabilities: row.capabilities } : {}),
       },
       fetchImpl,
     );
@@ -313,7 +318,7 @@ export async function recordPassiveSignal(input: {
   readonly reason?: string | null;
 }): Promise<void> {
   try {
-    if (!input.ok && input.reason === "rate_limited") return;
+    if (!input.ok && isNeutralFailureReason(input.reason)) return;
     const repo = repository();
     const row = await repo.findBySourceKeyAndUpstreamModel(input.sourceKey, input.upstreamModel);
     if (!row) return;

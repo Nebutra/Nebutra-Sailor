@@ -39,8 +39,14 @@ const repo = vi.hoisted(() => ({
     vanished: [],
     unchanged: [],
   })),
-  listSources: vi.fn(async () => []),
+  listSources: vi.fn(async (): Promise<Array<Record<string, unknown>>> => []),
   listCapabilities: vi.fn(async () => []),
+  listDueForActiveProbe: vi.fn(async (): Promise<Array<Record<string, unknown>>> => []),
+  recordProbe: vi.fn(async () => ({
+    toState: "AVAILABLE",
+    stateReason: null,
+    transitioned: false,
+  })),
 }));
 vi.mock("@nebutra/repositories", () => ({
   RouterSupplyRepository: class {
@@ -48,10 +54,12 @@ vi.mock("@nebutra/repositories", () => ({
     applyDiscovery = repo.applyDiscovery;
     listSources = repo.listSources;
     listCapabilities = repo.listCapabilities;
+    listDueForActiveProbe = repo.listDueForActiveProbe;
+    recordProbe = repo.recordProbe;
   },
 }));
 
-const { addSource } = await import("./capability");
+const { addSource, runActiveProbes } = await import("./capability");
 
 function jsonResponse(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -151,6 +159,98 @@ describe("addSource — visibility (INTERNAL sources, team-use-only onboarding)"
       );
       expect(result.discovered).toBe(1);
       expect(result.summary).toContain("discovered 1 model(s)");
+    },
+  );
+});
+
+describe("runActiveProbes — capability metadata threaded into probeModel (ADR follow-up)", () => {
+  afterEach(() => {
+    repo.listDueForActiveProbe.mockReset();
+    repo.listSources.mockReset();
+    repo.recordProbe.mockClear();
+  });
+
+  function sourceRow() {
+    return {
+      id: "supsrc_cc",
+      key: "commandcode",
+      kind: "OPENAI_COMPATIBLE",
+      protocol: "OPENAI_COMPATIBLE",
+      label: "Command Code",
+      baseUrl: "https://api.commandcode.ai/provider/v1",
+      credentialRef: null,
+      enabled: true,
+      visibility: "INTERNAL",
+      lastDiscoveredAt: null,
+      lastDiscoverySummary: null,
+    };
+  }
+
+  function capabilityRow(overrides: Record<string, unknown>) {
+    return {
+      id: "supmod_1",
+      sourceId: "supsrc_cc",
+      sourceKey: "commandcode",
+      upstreamModel: "claude-haiku-4-5-20251001",
+      modality: "TEXT",
+      publicModel: "claude-haiku-4-5-20251001",
+      state: "AVAILABLE",
+      stateReason: null,
+      pinned: false,
+      banned: false,
+      lastProbeAt: null,
+      lastSuccessAt: null,
+      lastFailureAt: null,
+      nextProbeAt: null,
+      vanishedAt: null,
+      capabilities: null,
+      ...overrides,
+    };
+  }
+
+  it("routes the active probe for a /messages-only model through /messages, from the stored capability row", async () => {
+    repo.listSources.mockResolvedValue([sourceRow()]);
+    repo.listDueForActiveProbe.mockResolvedValue([
+      capabilityRow({ capabilities: { supported_endpoints: ["/messages"] } }),
+    ]);
+    const fetchImpl = vi.fn(async () => jsonResponse({ id: "msg_1" }));
+
+    const results = await runActiveProbes(50, fetchImpl as unknown as typeof fetch);
+
+    const [url] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toBe("https://api.commandcode.ai/provider/v1/messages");
+    expect(results[0]?.outcome).toBe("success");
+    expect(repo.recordProbe).toHaveBeenCalledWith(
+      expect.objectContaining({ sourceModelId: "supmod_1", outcome: "success" }),
+      expect.any(Function),
+    );
+  });
+
+  it(
+    "a wrong-endpoint refusal (probe-shape bug, not the model failing) is neutral: reported as " +
+      "'neutral', and recordProbe is never called — it can never suspend the model",
+    async () => {
+      repo.listSources.mockResolvedValue([sourceRow()]);
+      // No supported_endpoints on the stored row — the probe falls back to the
+      // default chat/completions shape and the upstream refuses on shape.
+      repo.listDueForActiveProbe.mockResolvedValue([capabilityRow({ capabilities: null })]);
+      const fetchImpl = vi.fn(async () =>
+        jsonResponse(
+          {
+            error: {
+              message:
+                'Model "claude-haiku-4-5-20251001" must be called via /provider/v1/messages (Anthropic Messages shape).',
+              code: "unsupported_model",
+            },
+          },
+          400,
+        ),
+      );
+
+      const results = await runActiveProbes(50, fetchImpl as unknown as typeof fetch);
+
+      expect(results[0]?.outcome).toBe("neutral");
+      expect(repo.recordProbe).not.toHaveBeenCalled();
     },
   );
 });

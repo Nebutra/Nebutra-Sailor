@@ -80,6 +80,8 @@ export interface SupplyCapabilityRow {
   readonly lastFailureAt: Date | null;
   readonly nextProbeAt: Date | null;
   readonly vanishedAt: Date | null;
+  /** Adapter-shaped, as discovery reported it — e.g. `{ context_length, supported_endpoints, name }`. Threaded into `probeModel` so verification can pick the right call shape (see `verify.ts`). */
+  readonly capabilities: unknown;
 }
 
 export interface RecordProbeInput {
@@ -900,6 +902,7 @@ function toCapabilityRow(row: {
   lastFailureAt: Date | null;
   nextProbeAt: Date | null;
   vanishedAt: Date | null;
+  capabilities: unknown;
 }): SupplyCapabilityRow {
   return {
     id: row.id,
@@ -917,6 +920,7 @@ function toCapabilityRow(row: {
     lastFailureAt: row.lastFailureAt,
     nextProbeAt: row.nextProbeAt,
     vanishedAt: row.vanishedAt,
+    capabilities: row.capabilities,
   };
 }
 

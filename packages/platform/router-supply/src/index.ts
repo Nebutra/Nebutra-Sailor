@@ -104,6 +104,7 @@ export {
 } from "./state";
 export {
   classifyFailure,
+  isNeutralFailureReason,
   isNeutralOutcome,
   type ProbeFailureReason,
   type ProbeInput,
