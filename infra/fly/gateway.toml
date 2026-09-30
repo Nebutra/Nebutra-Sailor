@@ -7,7 +7,7 @@ primary_region = "sin"
   # Router listens on IPv4 only (its HOSTNAME secret is 0.0.0.0) and
   # nebutra-router.internal resolves to IPv6, so the private address refuses the
   # connection. Reach it over its public host; every call carries a service token.
-  NEBUTRA_ROUTER_INTERNAL_URL = "https://router.nebutra.com/api/internal/v1"
+  NEBUTRA_ROUTER_INTERNAL_URL = "https://router.nebutra.com"
 
 [http_service]
   internal_port = 8080
