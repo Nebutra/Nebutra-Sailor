@@ -24,7 +24,7 @@ import {
 
 export function createByokResolveUpstreams() {
   return async (input: AiGatewayResolveInput): Promise<readonly AiGatewayUpstream[]> => {
-    const fallback = defaultEnvUpstreams();
+    const fallback = await defaultEnvUpstreams();
     const orgId = input.apiKey.organizationId;
     // Model→provider comes from the models.dev-backed catalog (single source),
     // not a hand-maintained regex. null = unknown → platform default.

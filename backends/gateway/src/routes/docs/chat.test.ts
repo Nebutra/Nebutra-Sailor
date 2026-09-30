@@ -47,6 +47,11 @@ const UPSTREAM_ENV_KEYS = [
   "AI_CUSTOM_API_KEY",
   "AI_CUSTOM_PROVIDER",
   "DOCS_ASSISTANT_MODEL",
+  // The nebutra-router upstream (see ../ai/gateway.ts's `routerUpstream()`):
+  // enabled by SERVICE_SECRET alone, so it must be cleared too or every test
+  // below would pick it up as a bonus first upstream.
+  "SERVICE_SECRET",
+  "NEBUTRA_ROUTER_INTERNAL_URL",
   // Legacy provider keys the old third-party-key implementation read —
   // kept cleared so a leftover from that design can't reintroduce it.
   "ANTHROPIC_API_KEY",
@@ -173,6 +178,79 @@ describe("POST /chat — docs assistant", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock.mock.calls[0]?.[0]).toBe("https://router.example/v1/chat/completions");
     expect(fetchMock.mock.calls[1]?.[0]).toBe("https://api.openai.com/v1/chat/completions");
+  });
+
+  it("uses the nebutra-router upstream first, minting a verifiable service token, when SERVICE_SECRET is set", async () => {
+    const { verifyServiceToken } = await import("@nebutra/auth");
+    process.env.SERVICE_SECRET = "test-secret";
+
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(JSON.stringify({ choices: [{ message: { content: "from router" } }] }), {
+        headers: { "content-type": "application/json" },
+        status: 200,
+      }),
+    );
+
+    const app = await freshApp();
+    const res = await postChat(app);
+
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ configured: true, reply: "from router" });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe("http://nebutra-router.internal:8080/api/internal/v1/chat/completions");
+    const auth = (init.headers as Record<string, string>).Authorization;
+    expect(auth).toMatch(/^Bearer /);
+    await expect(verifyServiceToken(auth.slice("Bearer ".length))).resolves.toBe(true);
+    // No env upstream is configured (NEW_API_BASE_URL etc. are cleared in
+    // beforeEach) — going through nebutra-router at all is what makes the
+    // model a Router public alias rather than the direct-to-New-API default.
+    expect(JSON.parse(String(init.body)).model).toBe("gpt-5.6-luna");
+  });
+
+  it("falls back to newapi when nebutra-router is unreachable", async () => {
+    process.env.SERVICE_SECRET = "test-secret";
+    process.env.NEW_API_BASE_URL = "https://router.example/v1";
+    process.env.NEW_API_ACCESS_TOKEN = "router-token";
+
+    const fetchMock = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValueOnce(new Response(JSON.stringify({ error: "down" }), { status: 503 }))
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ choices: [{ message: { content: "from newapi" } }] }), {
+          headers: { "content-type": "application/json" },
+          status: 200,
+        }),
+      );
+
+    const app = await freshApp();
+    const res = await postChat(app);
+
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ configured: true, reply: "from newapi" });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock.mock.calls[0]?.[0]).toBe(
+      "http://nebutra-router.internal:8080/api/internal/v1/chat/completions",
+    );
+    expect(fetchMock.mock.calls[1]?.[0]).toBe("https://router.example/v1/chat/completions");
+  });
+
+  it("does not add nebutra-router when SERVICE_SECRET is unset (unchanged behaviour)", async () => {
+    process.env.NEW_API_BASE_URL = "https://router.example/v1";
+    process.env.NEW_API_ACCESS_TOKEN = "router-token";
+
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(JSON.stringify({ choices: [{ message: { content: "ok" } }] }), {
+        headers: { "content-type": "application/json" },
+        status: 200,
+      }),
+    );
+
+    const app = await freshApp();
+    await postChat(app);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock.mock.calls[0]?.[0]).toBe("https://router.example/v1/chat/completions");
   });
 
   it("returns 502 when every configured upstream fails", async () => {

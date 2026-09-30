@@ -11,7 +11,9 @@
  * Model provider: Nebutra Router (New-API, fronting upstream supplier keys
  * and reverse-proxied accounts) — the same upstream set the gateway's own
  * `/api/v1/ai/gateway` route already uses (`defaultEnvUpstreams()` in
- * ../ai/gateway.ts: `newapi` preferred, then sub2api, openai-env, ...).
+ * ../ai/gateway.ts: `nebutra-router` first when `SERVICE_SECRET` is set —
+ * Router's own internal endpoint, zero new secrets — then the hand-configured
+ * env upstreams as fallbacks: `newapi`, sub2api, openai-env, ...).
  * This intentionally does NOT go through `@nebutra/agents`' `runWithFallback`
  * with third-party keys (OPENROUTER_API_KEY etc.) — that path bypasses the
  * Router and bills provider keys directly, which is what ADR
@@ -27,6 +29,7 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { brand } from "@nebutra/brand/metadata";
 import { logger } from "@nebutra/logger";
+import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
 import { createEndpointRateLimit } from "../../middlewares/rateLimit.js";
 import { defaultEnvUpstreams, fetchUpstreamWithFallback } from "../ai/gateway.js";
 import { retrieveContext } from "./context.js";
@@ -49,22 +52,35 @@ docsChatRoutes.use("/chat", createEndpointRateLimit(20));
  * New-API admin console lists what a given deployment's channels actually
  * expose.
  *
- * Default is `gpt-4o-mini` — not one of this gateway's own outward public
- * aliases (`packages/platform/router-supply/src/frontier-defaults.ts`'s
+ * `gpt-4o-mini` is the direct-to-New-API fallback default — not one of this
+ * gateway's own outward public aliases
+ * (`packages/platform/router-supply/src/frontier-defaults.ts`'s
  * `gpt-5.6-luna` etc. are a *different* naming layer: public alias ids that
  * only resolve to a real upstream model through `router-supply`'s alias
- * table, which this direct-to-New-API call bypasses and would not
- * understand). `gpt-4o-mini` is what `infra/nebutra-router/scripts/
- * smoke-chat.sh` — this repo's own smoke test for this exact call shape,
- * a direct OpenAI-compatible request straight to New-API with no alias
- * resolution — already defaults to, and it's a small/cheap model, which
- * keeps a public, unauthenticated, rate-limited endpoint like this one
- * cheap by default.
+ * table). A direct-to-New-API upstream (`newapi`, `sub2api`, ...) bypasses
+ * that table and would not understand a public alias, so it stays this small,
+ * cheap, always-New-API-recognized id — what `infra/nebutra-router/scripts/
+ * smoke-chat.sh` (this repo's own smoke test for this exact call shape)
+ * already defaults to.
+ *
+ * `usingRouterAliasPath` is true exactly when `nebutra-router` — Router's own
+ * internal endpoint, which *does* resolve the alias table
+ * (`apps/router/src/lib/internal-service.ts`'s `resolveNewApiModel`) before
+ * forwarding to New-API — is the upstream `fetchUpstreamWithFallback` will
+ * try first. Only then is `DEFAULT_PUBLIC_MODEL` (`gpt-5.6-luna`) safe to use
+ * as the fallback default: it is understood on that path and, on the common
+ * "only `SERVICE_SECRET` is set" deployment, `nebutra-router` is the only
+ * upstream in the list at all. A deployment that layers a hand-configured
+ * `newapi` fallback behind `nebutra-router` should set `DOCS_ASSISTANT_MODEL`
+ * explicitly to a plain New-API id, since that fallback still gets this same
+ * request body verbatim if `nebutra-router` itself fails mid-request.
  */
 const DEFAULT_DOCS_ASSISTANT_MODEL = "gpt-4o-mini";
 
-function docsAssistantModel(): string {
-  return process.env.DOCS_ASSISTANT_MODEL?.trim() || DEFAULT_DOCS_ASSISTANT_MODEL;
+function docsAssistantModel(usingRouterAliasPath: boolean): string {
+  const override = process.env.DOCS_ASSISTANT_MODEL?.trim();
+  if (override) return override;
+  return usingRouterAliasPath ? DEFAULT_PUBLIC_MODEL : DEFAULT_DOCS_ASSISTANT_MODEL;
 }
 
 const ChatMessageSchema = z.object({
@@ -121,7 +137,7 @@ interface UpstreamChatCompletion {
 }
 
 docsChatRoutes.openapi(chatRoute, async (c) => {
-  const upstreams = defaultEnvUpstreams();
+  const upstreams = await defaultEnvUpstreams();
 
   if (upstreams.length === 0) {
     return c.json(
@@ -141,7 +157,7 @@ docsChatRoutes.openapi(chatRoute, async (c) => {
     ? `${SYSTEM_PROMPT}\n\n--- Documentation context ---\n${context}`
     : SYSTEM_PROMPT;
 
-  const model = docsAssistantModel();
+  const model = docsAssistantModel(upstreams[0]?.id === "nebutra-router");
   const upstreamBody = JSON.stringify({
     model,
     messages: [{ role: "system", content: system }, ...messages],

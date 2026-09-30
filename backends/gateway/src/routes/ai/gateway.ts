@@ -11,6 +11,7 @@
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { findOversizedPropertyName, OPENAI_MAX_PROPERTY_NAME_LENGTH } from "@nebutra/agents";
+import { signServiceToken } from "@nebutra/auth";
 import {
   admitSpend,
   calculateCost,
@@ -267,11 +268,73 @@ function parseConfiguredUpstreams(): readonly AiGatewayUpstream[] {
   }
 }
 
-export function defaultEnvUpstreams(): readonly AiGatewayUpstream[] {
+/**
+ * Default internal address of the Router Fly app (`nebutra-router`,
+ * `infra/fly/router.toml`: `app = "nebutra-router"`, `internal_port = 8080`).
+ * Fly's 6PN private network resolves `<app>.internal` from any app in the
+ * same organization, so this needs no configuration in the common case —
+ * override with `NEBUTRA_ROUTER_INTERNAL_URL` for a non-Fly deployment or a
+ * local smoke test.
+ */
+const DEFAULT_ROUTER_INTERNAL_URL = "http://nebutra-router.internal:8080";
+
+function routerInternalUrl(): string {
+  return (process.env.NEBUTRA_ROUTER_INTERNAL_URL ?? DEFAULT_ROUTER_INTERNAL_URL).replace(
+    /\/+$/,
+    "",
+  );
+}
+
+/**
+ * The `nebutra-router` upstream: Router's own internal, service-token
+ * authenticated `/api/internal/v1/chat/completions`
+ * (`apps/router/src/app/api/internal/v1/chat/completions/route.ts`), which
+ * forwards to New-API with Router's own stored credentials. Router already
+ * verifies `SERVICE_SECRET`-signed tokens for its staff surface
+ * (`apps/router/src/lib/admin/service-token.ts`) and the gateway already
+ * mints them for other origin calls (`routes/ai/origin-headers.ts`) — this
+ * gateway app and the Router app already hold the same `SERVICE_SECRET`, so
+ * this needs zero new secrets: enabled automatically
+ * whenever `SERVICE_SECRET` is present, with no `NEW_API_BASE_URL` /
+ * `NEW_API_ACCESS_TOKEN` required on the gateway at all.
+ *
+ * Authenticates by minting a fresh, short-lived (5 minute default) empty-context
+ * service token per call to `defaultEnvUpstreams()` — i.e. per request — never a
+ * static key, following `packages/integrations/saga/src/workflows/orderSaga.ts`'s
+ * "no tenant context → sign an empty-context token" convention, which is what
+ * Router's `verifyInternalServiceCaller` (`apps/router/src/lib/
+ * internal-service.ts`) expects: `verifyServiceToken(token)` with no expected
+ * claims.
+ */
+async function routerUpstream(): Promise<AiGatewayUpstream | null> {
+  const secret = process.env.SERVICE_SECRET;
+  if (!secret) return null;
+
+  try {
+    const token = await signServiceToken({}, secret);
+    return {
+      id: "nebutra-router",
+      provider: "nebutra-router",
+      baseUrl: `${routerInternalUrl()}/api/internal/v1`,
+      apiKey: token,
+    };
+  } catch (error) {
+    log.warn("Failed to mint a service token for the nebutra-router upstream", {
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return null;
+  }
+}
+
+export async function defaultEnvUpstreams(): Promise<readonly AiGatewayUpstream[]> {
   const explicit = parseConfiguredUpstreams();
   if (explicit.length > 0) return orderUpstreams(explicit);
 
   const envUpstreams = [
+    // The AI-native, zero-new-secrets path (ADR 2026-09-24 Sailor
+    // convergence): Router mints its own way to New-API, so this is placed
+    // first and is the only upstream a fresh deployment needs.
+    await routerUpstream(),
     // Nebutra Router sidecars (infra/nebutra-router) — preferred when configured
     normalizeEnvUpstream(
       {
