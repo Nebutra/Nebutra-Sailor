@@ -319,6 +319,34 @@ export type CreditTransaction = Prisma.CreditTransactionModel
  */
 export type RouterReservation = Prisma.RouterReservationModel
 /**
+ * Model SupplySource
+ * A discovered or registered supply source — a CLIProxyAPI account pool, a
+ * New-API channel, a relay/中转站 OpenAI-compatible API, Fal.ai, or any other
+ * upstream the Router could sell through (ADR 2026-09-30 supply capability
+ * probing). System/admin-only: the product reaches this through the system
+ * client, never a tenant one — a supply source is platform inventory, not
+ * tenant data.
+ * @rls deny
+ */
+export type SupplySource = Prisma.SupplySourceModel
+/**
+ * Model SupplySourceModel
+ * One (source, upstream model) capability + state row. Never hard-deleted —
+ * delisting is `state = SUSPENDED`, and `vanishedAt` marks a model discovery
+ * stopped listing without erasing its history. This is the row the shelf and
+ * the relay path both consult before selling or routing to a model.
+ * @rls deny
+ */
+export type SupplySourceModel = Prisma.SupplySourceModelModel
+/**
+ * Model SupplyProbeEvent
+ * Append-only event log: every discovery diff, active probe, passive signal
+ * and state transition. Never trimmed by the app — the honest record of "why
+ * is this suspended" that a signal or an operator needs without having to ask.
+ * @rls deny
+ */
+export type SupplyProbeEvent = Prisma.SupplyProbeEventModel
+/**
  * Model StripeCustomer
  * 
  */

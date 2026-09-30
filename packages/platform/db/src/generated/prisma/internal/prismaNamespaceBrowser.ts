@@ -100,6 +100,9 @@ export const ModelName = {
   Membership: 'Membership',
   CreditTransaction: 'CreditTransaction',
   RouterReservation: 'RouterReservation',
+  SupplySource: 'SupplySource',
+  SupplySourceModel: 'SupplySourceModel',
+  SupplyProbeEvent: 'SupplyProbeEvent',
   StripeCustomer: 'StripeCustomer',
   RetentionPolicy: 'RetentionPolicy',
   WebhookEvent: 'WebhookEvent',
@@ -1018,6 +1021,68 @@ export const RouterReservationScalarFieldEnum = {
 } as const
 
 export type RouterReservationScalarFieldEnum = (typeof RouterReservationScalarFieldEnum)[keyof typeof RouterReservationScalarFieldEnum]
+
+
+export const SupplySourceScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  kind: 'kind',
+  protocol: 'protocol',
+  label: 'label',
+  baseUrl: 'baseUrl',
+  credentialRef: 'credentialRef',
+  enabled: 'enabled',
+  lastDiscoveredAt: 'lastDiscoveredAt',
+  lastDiscoverySummary: 'lastDiscoverySummary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplySourceScalarFieldEnum = (typeof SupplySourceScalarFieldEnum)[keyof typeof SupplySourceScalarFieldEnum]
+
+
+export const SupplySourceModelScalarFieldEnum = {
+  id: 'id',
+  sourceId: 'sourceId',
+  upstreamModel: 'upstreamModel',
+  modality: 'modality',
+  capabilities: 'capabilities',
+  upstreamPrice: 'upstreamPrice',
+  publicModel: 'publicModel',
+  state: 'state',
+  stateReason: 'stateReason',
+  consecutiveFailures: 'consecutiveFailures',
+  consecutiveSuccesses: 'consecutiveSuccesses',
+  lastProbeAt: 'lastProbeAt',
+  lastSuccessAt: 'lastSuccessAt',
+  lastFailureAt: 'lastFailureAt',
+  nextProbeAt: 'nextProbeAt',
+  backoffSeconds: 'backoffSeconds',
+  pinned: 'pinned',
+  banned: 'banned',
+  discoveredAt: 'discoveredAt',
+  vanishedAt: 'vanishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplySourceModelScalarFieldEnum = (typeof SupplySourceModelScalarFieldEnum)[keyof typeof SupplySourceModelScalarFieldEnum]
+
+
+export const SupplyProbeEventScalarFieldEnum = {
+  id: 'id',
+  sourceModelId: 'sourceModelId',
+  at: 'at',
+  kind: 'kind',
+  outcome: 'outcome',
+  reason: 'reason',
+  fromState: 'fromState',
+  toState: 'toState',
+  latencyMs: 'latencyMs',
+  metadata: 'metadata'
+} as const
+
+export type SupplyProbeEventScalarFieldEnum = (typeof SupplyProbeEventScalarFieldEnum)[keyof typeof SupplyProbeEventScalarFieldEnum]
 
 
 export const StripeCustomerScalarFieldEnum = {

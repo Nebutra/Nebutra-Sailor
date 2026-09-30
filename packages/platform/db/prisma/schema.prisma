@@ -143,6 +143,65 @@ enum UploadStatus {
   @@schema("public")
 }
 
+// Supply capability probing (ADR 2026-09-30) ---------------------------------
+
+enum SupplySourceKind {
+  OPENAI_COMPATIBLE
+  NEWAPI_CHANNEL
+  CLIPROXYAPI
+  FAL_AI
+
+  @@schema("public")
+}
+
+enum SupplyProtocol {
+  OPENAI_COMPATIBLE
+  NEWAPI_ADMIN
+  CLIPROXY_MANAGEMENT
+  FAL_REST
+  UNKNOWN
+
+  @@schema("public")
+}
+
+enum SupplyModality {
+  TEXT
+  IMAGE
+  EMBEDDING
+  AUDIO
+  VIDEO
+  OTHER
+
+  @@schema("public")
+}
+
+enum SupplyModelState {
+  PENDING
+  AVAILABLE
+  DEGRADED
+  SUSPENDED
+
+  @@schema("public")
+}
+
+enum SupplyProbeKind {
+  DISCOVERY
+  ACTIVE_PROBE
+  PASSIVE_SIGNAL
+  STATE_TRANSITION
+  MANUAL_OVERRIDE
+
+  @@schema("public")
+}
+
+enum SupplyProbeOutcome {
+  SUCCESS
+  FAILURE
+  ERROR
+
+  @@schema("public")
+}
+
 // ============================================
 // Multi-Tenant Core
 // ============================================
@@ -1774,6 +1833,127 @@ model RouterReservation {
   @@index([expiresAt])
   @@index([tenantId, expiresAt])
   @@map("router_reservations")
+  @@schema("public")
+}
+
+/// A discovered or registered supply source — a CLIProxyAPI account pool, a
+/// New-API channel, a relay/中转站 OpenAI-compatible API, Fal.ai, or any other
+/// upstream the Router could sell through (ADR 2026-09-30 supply capability
+/// probing). System/admin-only: the product reaches this through the system
+/// client, never a tenant one — a supply source is platform inventory, not
+/// tenant data.
+/// @rls deny
+model SupplySource {
+  id       String           @id @default(cuid())
+  key      String           @unique @db.VarChar(64)
+  kind     SupplySourceKind
+  protocol SupplyProtocol   @default(UNKNOWN)
+  label    String
+  baseUrl  String           @map("base_url")
+
+  /// Reference into @nebutra/vault (an EncryptedSecret id) — never the
+  /// plaintext key. Null for a source whose credential is still env-held (the
+  /// pre-existing loadEnginesFromEnv() path); such a source is discovered and
+  /// probed like any other but has nothing here to rotate.
+  credentialRef String? @map("credential_ref")
+  enabled       Boolean @default(true)
+
+  lastDiscoveredAt     DateTime? @map("last_discovered_at")
+  lastDiscoverySummary Json?     @map("last_discovery_summary")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  models SupplySourceModel[]
+
+  @@map("supply_sources")
+  @@schema("public")
+}
+
+/// One (source, upstream model) capability + state row. Never hard-deleted —
+/// delisting is `state = SUSPENDED`, and `vanishedAt` marks a model discovery
+/// stopped listing without erasing its history. This is the row the shelf and
+/// the relay path both consult before selling or routing to a model.
+/// @rls deny
+model SupplySourceModel {
+  id            String         @id @default(cuid())
+  sourceId      String         @map("source_id")
+  upstreamModel String         @map("upstream_model") @db.VarChar(160)
+  modality      SupplyModality @default(TEXT)
+
+  /// Provider-declared parameters/capabilities (context length, supported
+  /// modalities, tool support, sizes/qualities for image models, …), as
+  /// returned by discovery. Shape varies by adapter — see router-supply/discovery.ts.
+  capabilities Json? @map("capabilities")
+
+  /// Upstream's own list price, when discovery could read one. Not a charge —
+  /// model_configs / pricing.ts remains the one place a charge is derived
+  /// from; this is an input to that process, never a substitute for it.
+  upstreamPrice Json? @map("upstream_price")
+
+  /// The public model id this backs, once resolved through the alias table.
+  /// Null means discovered-but-unmapped: known and probable, but never on the
+  /// public shelf (§3 "hold for pricing").
+  publicModel String? @map("public_model")
+
+  state                SupplyModelState @default(PENDING)
+  stateReason          String?          @map("state_reason")
+  consecutiveFailures  Int              @default(0) @map("consecutive_failures")
+  consecutiveSuccesses Int              @default(0) @map("consecutive_successes")
+  lastProbeAt          DateTime?        @map("last_probe_at")
+  lastSuccessAt        DateTime?        @map("last_success_at")
+  lastFailureAt        DateTime?        @map("last_failure_at")
+
+  /// Backoff scheduling for a SUSPENDED model: 1h → 6h → 24h, capped — see
+  /// router-supply/state.ts `nextBackoffSeconds`.
+  nextProbeAt     DateTime? @map("next_probe_at")
+  backoffSeconds  Int       @default(0) @map("backoff_seconds")
+
+  /// Manual override — the escape hatch, not the mechanism. `pinned` forces
+  /// AVAILABLE regardless of probe outcome; `banned` forces SUSPENDED. Automatic
+  /// discovery/verification remains the only way a model is normally listed or
+  /// delisted.
+  pinned Boolean @default(false)
+  banned Boolean @default(false)
+
+  discoveredAt DateTime  @default(now()) @map("discovered_at")
+  /// Set when a discovery run no longer lists this model at this source. A
+  /// later discovery that lists it again clears this without losing history.
+  vanishedAt   DateTime? @map("vanished_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  source SupplySource        @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  events SupplyProbeEvent[]
+
+  @@unique([sourceId, upstreamModel])
+  @@index([publicModel, state])
+  @@index([state, nextProbeAt])
+  @@map("supply_source_models")
+  @@schema("public")
+}
+
+/// Append-only event log: every discovery diff, active probe, passive signal
+/// and state transition. Never trimmed by the app — the honest record of "why
+/// is this suspended" that a signal or an operator needs without having to ask.
+/// @rls deny
+model SupplyProbeEvent {
+  id            String             @id @default(cuid())
+  sourceModelId String             @map("source_model_id")
+  at            DateTime           @default(now())
+  kind          SupplyProbeKind
+  outcome       SupplyProbeOutcome
+  reason        String?
+  fromState     SupplyModelState?  @map("from_state")
+  toState       SupplyModelState?  @map("to_state")
+  latencyMs     Int?               @map("latency_ms")
+  metadata      Json?
+
+  sourceModel SupplySourceModel @relation(fields: [sourceModelId], references: [id], onDelete: Cascade)
+
+  @@index([sourceModelId, at])
+  @@map("supply_probe_events")
   @@schema("public")
 }
 

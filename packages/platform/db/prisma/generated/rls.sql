@@ -356,6 +356,15 @@ CREATE POLICY "credit_transactions_rls" ON "public"."credit_transactions" FOR AL
 -- RouterReservation
 ALTER TABLE "public"."router_reservations" DISABLE ROW LEVEL SECURITY;
 
+-- SupplySource
+ALTER TABLE "public"."supply_sources" ENABLE ROW LEVEL SECURITY;
+
+-- SupplySourceModel
+ALTER TABLE "public"."supply_source_models" ENABLE ROW LEVEL SECURITY;
+
+-- SupplyProbeEvent
+ALTER TABLE "public"."supply_probe_events" ENABLE ROW LEVEL SECURITY;
+
 -- StripeCustomer
 ALTER TABLE "public"."stripe_customers" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "stripe_customers_rls" ON "public"."stripe_customers";

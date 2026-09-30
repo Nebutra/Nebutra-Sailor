@@ -433,6 +433,9 @@ export const ModelName = {
   Membership: 'Membership',
   CreditTransaction: 'CreditTransaction',
   RouterReservation: 'RouterReservation',
+  SupplySource: 'SupplySource',
+  SupplySourceModel: 'SupplySourceModel',
+  SupplyProbeEvent: 'SupplyProbeEvent',
   StripeCustomer: 'StripeCustomer',
   RetentionPolicy: 'RetentionPolicy',
   WebhookEvent: 'WebhookEvent',
@@ -501,7 +504,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "studioPreset"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "supplySource" | "supplySourceModel" | "supplyProbeEvent" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "studioPreset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4112,6 +4115,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.RouterReservationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.RouterReservationCountAggregateOutputType> | number
+        }
+      }
+    }
+    SupplySource: {
+      payload: Prisma.$SupplySourcePayload<ExtArgs>
+      fields: Prisma.SupplySourceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SupplySourceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SupplySourceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>
+        }
+        findFirst: {
+          args: Prisma.SupplySourceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SupplySourceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>
+        }
+        findMany: {
+          args: Prisma.SupplySourceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>[]
+        }
+        create: {
+          args: Prisma.SupplySourceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>
+        }
+        createMany: {
+          args: Prisma.SupplySourceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SupplySourceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>[]
+        }
+        delete: {
+          args: Prisma.SupplySourceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>
+        }
+        update: {
+          args: Prisma.SupplySourceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>
+        }
+        deleteMany: {
+          args: Prisma.SupplySourceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SupplySourceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SupplySourceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>[]
+        }
+        upsert: {
+          args: Prisma.SupplySourceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourcePayload>
+        }
+        aggregate: {
+          args: Prisma.SupplySourceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSupplySource>
+        }
+        groupBy: {
+          args: Prisma.SupplySourceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplySourceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SupplySourceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplySourceCountAggregateOutputType> | number
+        }
+      }
+    }
+    SupplySourceModel: {
+      payload: Prisma.$SupplySourceModelPayload<ExtArgs>
+      fields: Prisma.SupplySourceModelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SupplySourceModelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SupplySourceModelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>
+        }
+        findFirst: {
+          args: Prisma.SupplySourceModelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SupplySourceModelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>
+        }
+        findMany: {
+          args: Prisma.SupplySourceModelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>[]
+        }
+        create: {
+          args: Prisma.SupplySourceModelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>
+        }
+        createMany: {
+          args: Prisma.SupplySourceModelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SupplySourceModelCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>[]
+        }
+        delete: {
+          args: Prisma.SupplySourceModelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>
+        }
+        update: {
+          args: Prisma.SupplySourceModelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>
+        }
+        deleteMany: {
+          args: Prisma.SupplySourceModelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SupplySourceModelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SupplySourceModelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>[]
+        }
+        upsert: {
+          args: Prisma.SupplySourceModelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplySourceModelPayload>
+        }
+        aggregate: {
+          args: Prisma.SupplySourceModelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSupplySourceModel>
+        }
+        groupBy: {
+          args: Prisma.SupplySourceModelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplySourceModelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SupplySourceModelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplySourceModelCountAggregateOutputType> | number
+        }
+      }
+    }
+    SupplyProbeEvent: {
+      payload: Prisma.$SupplyProbeEventPayload<ExtArgs>
+      fields: Prisma.SupplyProbeEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SupplyProbeEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SupplyProbeEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>
+        }
+        findFirst: {
+          args: Prisma.SupplyProbeEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SupplyProbeEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>
+        }
+        findMany: {
+          args: Prisma.SupplyProbeEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>[]
+        }
+        create: {
+          args: Prisma.SupplyProbeEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>
+        }
+        createMany: {
+          args: Prisma.SupplyProbeEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SupplyProbeEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>[]
+        }
+        delete: {
+          args: Prisma.SupplyProbeEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>
+        }
+        update: {
+          args: Prisma.SupplyProbeEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.SupplyProbeEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SupplyProbeEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SupplyProbeEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.SupplyProbeEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplyProbeEventPayload>
+        }
+        aggregate: {
+          args: Prisma.SupplyProbeEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSupplyProbeEvent>
+        }
+        groupBy: {
+          args: Prisma.SupplyProbeEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplyProbeEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SupplyProbeEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupplyProbeEventCountAggregateOutputType> | number
         }
       }
     }
@@ -8925,6 +9150,68 @@ export const RouterReservationScalarFieldEnum = {
 export type RouterReservationScalarFieldEnum = (typeof RouterReservationScalarFieldEnum)[keyof typeof RouterReservationScalarFieldEnum]
 
 
+export const SupplySourceScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  kind: 'kind',
+  protocol: 'protocol',
+  label: 'label',
+  baseUrl: 'baseUrl',
+  credentialRef: 'credentialRef',
+  enabled: 'enabled',
+  lastDiscoveredAt: 'lastDiscoveredAt',
+  lastDiscoverySummary: 'lastDiscoverySummary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplySourceScalarFieldEnum = (typeof SupplySourceScalarFieldEnum)[keyof typeof SupplySourceScalarFieldEnum]
+
+
+export const SupplySourceModelScalarFieldEnum = {
+  id: 'id',
+  sourceId: 'sourceId',
+  upstreamModel: 'upstreamModel',
+  modality: 'modality',
+  capabilities: 'capabilities',
+  upstreamPrice: 'upstreamPrice',
+  publicModel: 'publicModel',
+  state: 'state',
+  stateReason: 'stateReason',
+  consecutiveFailures: 'consecutiveFailures',
+  consecutiveSuccesses: 'consecutiveSuccesses',
+  lastProbeAt: 'lastProbeAt',
+  lastSuccessAt: 'lastSuccessAt',
+  lastFailureAt: 'lastFailureAt',
+  nextProbeAt: 'nextProbeAt',
+  backoffSeconds: 'backoffSeconds',
+  pinned: 'pinned',
+  banned: 'banned',
+  discoveredAt: 'discoveredAt',
+  vanishedAt: 'vanishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplySourceModelScalarFieldEnum = (typeof SupplySourceModelScalarFieldEnum)[keyof typeof SupplySourceModelScalarFieldEnum]
+
+
+export const SupplyProbeEventScalarFieldEnum = {
+  id: 'id',
+  sourceModelId: 'sourceModelId',
+  at: 'at',
+  kind: 'kind',
+  outcome: 'outcome',
+  reason: 'reason',
+  fromState: 'fromState',
+  toState: 'toState',
+  latencyMs: 'latencyMs',
+  metadata: 'metadata'
+} as const
+
+export type SupplyProbeEventScalarFieldEnum = (typeof SupplyProbeEventScalarFieldEnum)[keyof typeof SupplyProbeEventScalarFieldEnum]
+
+
 export const StripeCustomerScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
@@ -10414,6 +10701,90 @@ export type ListEnumCreditTransactionTypeFieldRefInput<$PrismaModel> = FieldRefI
 
 
 /**
+ * Reference to a field of type 'SupplySourceKind'
+ */
+export type EnumSupplySourceKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplySourceKind'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplySourceKind[]'
+ */
+export type ListEnumSupplySourceKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplySourceKind[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyProtocol'
+ */
+export type EnumSupplyProtocolFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyProtocol'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyProtocol[]'
+ */
+export type ListEnumSupplyProtocolFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyProtocol[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyModality'
+ */
+export type EnumSupplyModalityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyModality'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyModality[]'
+ */
+export type ListEnumSupplyModalityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyModality[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyModelState'
+ */
+export type EnumSupplyModelStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyModelState'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyModelState[]'
+ */
+export type ListEnumSupplyModelStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyModelState[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyProbeKind'
+ */
+export type EnumSupplyProbeKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyProbeKind'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyProbeKind[]'
+ */
+export type ListEnumSupplyProbeKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyProbeKind[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyProbeOutcome'
+ */
+export type EnumSupplyProbeOutcomeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyProbeOutcome'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplyProbeOutcome[]'
+ */
+export type ListEnumSupplyProbeOutcomeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyProbeOutcome[]'>
+    
+
+
+/**
  * Reference to a field of type 'LegalDocumentType'
  */
 export type EnumLegalDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LegalDocumentType'>
@@ -10822,6 +11193,9 @@ export type GlobalOmitConfig = {
   membership?: Prisma.MembershipOmit
   creditTransaction?: Prisma.CreditTransactionOmit
   routerReservation?: Prisma.RouterReservationOmit
+  supplySource?: Prisma.SupplySourceOmit
+  supplySourceModel?: Prisma.SupplySourceModelOmit
+  supplyProbeEvent?: Prisma.SupplyProbeEventOmit
   stripeCustomer?: Prisma.StripeCustomerOmit
   retentionPolicy?: Prisma.RetentionPolicyOmit
   webhookEvent?: Prisma.WebhookEventOmit

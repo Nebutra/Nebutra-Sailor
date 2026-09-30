@@ -126,6 +126,69 @@ export const UploadStatus = {
 export type UploadStatus = (typeof UploadStatus)[keyof typeof UploadStatus]
 
 
+export const SupplySourceKind = {
+  OPENAI_COMPATIBLE: 'OPENAI_COMPATIBLE',
+  NEWAPI_CHANNEL: 'NEWAPI_CHANNEL',
+  CLIPROXYAPI: 'CLIPROXYAPI',
+  FAL_AI: 'FAL_AI'
+} as const
+
+export type SupplySourceKind = (typeof SupplySourceKind)[keyof typeof SupplySourceKind]
+
+
+export const SupplyProtocol = {
+  OPENAI_COMPATIBLE: 'OPENAI_COMPATIBLE',
+  NEWAPI_ADMIN: 'NEWAPI_ADMIN',
+  CLIPROXY_MANAGEMENT: 'CLIPROXY_MANAGEMENT',
+  FAL_REST: 'FAL_REST',
+  UNKNOWN: 'UNKNOWN'
+} as const
+
+export type SupplyProtocol = (typeof SupplyProtocol)[keyof typeof SupplyProtocol]
+
+
+export const SupplyModality = {
+  TEXT: 'TEXT',
+  IMAGE: 'IMAGE',
+  EMBEDDING: 'EMBEDDING',
+  AUDIO: 'AUDIO',
+  VIDEO: 'VIDEO',
+  OTHER: 'OTHER'
+} as const
+
+export type SupplyModality = (typeof SupplyModality)[keyof typeof SupplyModality]
+
+
+export const SupplyModelState = {
+  PENDING: 'PENDING',
+  AVAILABLE: 'AVAILABLE',
+  DEGRADED: 'DEGRADED',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type SupplyModelState = (typeof SupplyModelState)[keyof typeof SupplyModelState]
+
+
+export const SupplyProbeKind = {
+  DISCOVERY: 'DISCOVERY',
+  ACTIVE_PROBE: 'ACTIVE_PROBE',
+  PASSIVE_SIGNAL: 'PASSIVE_SIGNAL',
+  STATE_TRANSITION: 'STATE_TRANSITION',
+  MANUAL_OVERRIDE: 'MANUAL_OVERRIDE'
+} as const
+
+export type SupplyProbeKind = (typeof SupplyProbeKind)[keyof typeof SupplyProbeKind]
+
+
+export const SupplyProbeOutcome = {
+  SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE',
+  ERROR: 'ERROR'
+} as const
+
+export type SupplyProbeOutcome = (typeof SupplyProbeOutcome)[keyof typeof SupplyProbeOutcome]
+
+
 export const TenantKind = {
   ORGANIZATION: 'ORGANIZATION',
   INDIVIDUAL: 'INDIVIDUAL'
