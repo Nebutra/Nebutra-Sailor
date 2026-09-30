@@ -1777,5 +1777,35 @@
     "plannedHint": "该语言尚未上线，界面暂以英文显示",
     "noResults": "No regions match",
     "menuAria": "Regions and languages"
+  },
+  "siteShell": {
+    "nav": {
+      "openNavigation": "打开导航",
+      "closeNavigation": "关闭导航",
+      "searchSite": "搜索本站",
+      "siteNavigation": "站点导航",
+      "searchPages": "搜索页面",
+      "noMatch": "没有匹配的页面。"
+    },
+    "menu": {
+      "writeToFounder": "写信给创始人",
+      "sailorOnGithub": "GitHub 上的 Sailor",
+      "back": "返回"
+    },
+    "footer": {
+      "tagline": "AI 原生的公司建造者。让世界上没有难创的业。",
+      "read": "阅读",
+      "journal": "日志",
+      "changelog": "更新日志",
+      "build": "构建",
+      "whatWeAreBuilding": "我们正在造的",
+      "status": "服务状态",
+      "company": "公司",
+      "about": "关于我们",
+      "writeToFounder": "写信给创始人",
+      "privacy": "隐私",
+      "terms": "条款",
+      "credits": "致谢"
+    }
   }
 }

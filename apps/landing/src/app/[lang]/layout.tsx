@@ -157,6 +157,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
   // changelogMeta, licensing, notFound, ui, logoStrip, icpFooter) are stripped
   // to keep the JS bundle lean (~979 keys → client-relevant subset).
   const CLIENT_NAMESPACES = [
+    "siteShell",
     "nav",
     "licenseWizard",
     "legalPages",
