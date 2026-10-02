@@ -83,13 +83,14 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
             { key: "enabled", label: "Enabled", kind: "badge" },
             { key: "lastDiscoveredAt", label: "Last discovered", kind: "time" },
           ],
-          actions: ["source.add", "source.probe"],
+          actions: ["source.add", "source.probe", "source.discover"],
         },
         {
           id: "capability",
           label: "Model capability",
           list: `${V1}/capabilities`,
           search: true,
+          actions: ["probe.one", "probe.status"],
           columns: [
             { key: "publicModel", label: "Public model", kind: "mono" },
             { key: "source", label: "Source" },
@@ -240,7 +241,62 @@ export const ROUTER_ADMIN_MANIFEST: AdminManifest = AdminManifestSchema.parse({
             required: ["key"],
             properties: { key: { type: "string" } },
           },
-          description: "Re-run discovery and an active probe for every model this source has.",
+          description:
+            "Queue a full discovery + active probe run for every model this source has. Returns immediately (202) with a runId — the run itself fans out over Inngest, one probe per model, so it never ties up this request waiting on an upstream with many models.",
+        },
+        {
+          id: "source.discover",
+          verb: "Discover (one source)",
+          resource: "source",
+          role: "platform_operator",
+          url: `${V1}/actions/source.discover`,
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["key"],
+            properties: { key: { type: "string" } },
+          },
+          description:
+            "Discovery diff for exactly one source — new/vanished/reappeared models, no probing. The primitive the event-driven discovery pipeline calls per source; exposed here for a direct check.",
+        },
+        {
+          id: "probe.one",
+          verb: "Probe one model",
+          resource: "capability",
+          role: "platform_operator",
+          url: `${V1}/actions/probe.one`,
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["key", "upstreamModel"],
+            properties: { key: { type: "string" }, upstreamModel: { type: "string" } },
+          },
+          description:
+            "Active-probe exactly one (source, model) pair. The primitive every event-driven fan-out step calls; exposed here for a direct check on a single model.",
+        },
+        {
+          id: "probe.status",
+          verb: "Run status",
+          resource: "capability",
+          role: "platform_readonly",
+          url: `${V1}/actions/probe.status`,
+          plan: false,
+          destructive: false,
+          input: {
+            type: "object",
+            required: ["key", "since"],
+            properties: {
+              key: { type: "string" },
+              since: {
+                type: "string",
+                description: "ISO date — normally the queueing call's own timestamp.",
+              },
+            },
+          },
+          description:
+            "How a queued 'probe now' run is progressing: queued / running / done, by comparing each of the source's current models' last-probed time against `since`.",
         },
         {
           id: "discovery.run",

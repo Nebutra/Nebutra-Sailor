@@ -77,6 +77,9 @@ describe("router admin manifest", () => {
       "price.unpublish_drifted",
       "source.add",
       "source.probe",
+      "source.discover",
+      "probe.one",
+      "probe.status",
       "discovery.run",
       "probe.idle",
       "probe.suspended",
@@ -91,7 +94,15 @@ describe("router admin manifest", () => {
       "supply.suspended",
       "supply.quota_alert",
     ]);
-    expect(supply?.actions.every((a) => a.role === "platform_operator")).toBe(true);
+    // Every supply action requires at least platform_operator except
+    // probe.status, a read-only run-status check (ADR 2026-09-30
+    // "Event-driven execution").
+    expect(
+      supply?.actions
+        .filter((a) => a.id !== "probe.status")
+        .every((a) => a.role === "platform_operator"),
+    ).toBe(true);
+    expect(supply?.actions.find((a) => a.id === "probe.status")?.role).toBe("platform_readonly");
     expect(supply?.resources.map((r) => r.id)).toEqual([
       "engine",
       "account",

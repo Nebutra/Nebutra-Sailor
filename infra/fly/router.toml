@@ -4,6 +4,13 @@ primary_region = "sin"
 [env]
   HOSTNAME = "0.0.0.0"
   PORT = "8080"
+  # Supply event emission (ADR 2026-09-30 "Event-driven execution"): Router
+  # has no Inngest event key of its own, so it posts supply/* events to the
+  # gateway's internal relay instead (apps/router/src/lib/supply/events.ts).
+  # The gateway's own Fly config reaches Router over its public host for the
+  # mirror-image reason (NEBUTRA_ROUTER_INTERNAL_URL in infra/fly/gateway.toml)
+  # — follow the same pattern here rather than the unreachable `.internal` DNS.
+  NEBUTRA_GATEWAY_INTERNAL_URL = "https://api.nebutra.com"
 
 [http_service]
   internal_port = 8080

@@ -23,4 +23,20 @@ export async function register() {
       }\n`,
     );
   }
+
+  // Supply bootstrap (ADR 2026-09-30 "Event-driven execution" §4): a freshly
+  // deployed environment whose supply registry has never been seeded gets its
+  // built-in sources discovered without waiting for the next 03:00 cron or an
+  // operator ssh-ing in to probe by hand. Not awaited — a slow or unreachable
+  // gateway must never delay Router's own process boot; `maybeEmitBootstrap`
+  // is itself try/catch-guarded and a no-op after its first check per process.
+  void import("./lib/supply/capability")
+    .then(({ maybeEmitBootstrap }) => maybeEmitBootstrap())
+    .catch((err) => {
+      process.stderr.write(
+        `[router] Supply bootstrap check failed: ${
+          err instanceof Error ? err.message : String(err)
+        }\n`,
+      );
+    });
 }

@@ -8,10 +8,13 @@ import { err, gateStaff, json } from "@/lib/admin/service-token";
 import {
   type AddSourceInput,
   addSource,
+  discoverSourceByKey,
+  probeOneModel,
+  probeRunStatus,
   probeSourceNow,
   runActiveProbes,
-  runDiscovery,
   runSuspendedRetry,
+  triggerDiscoveryForAllSources,
 } from "@/lib/supply/capability";
 import { SupplyConfigError } from "@/lib/supply/clients";
 import { applyChannelSync, planChannelSync } from "@/lib/supply/domain";
@@ -120,22 +123,69 @@ export async function POST(request: Request, context: RouteContext) {
           ),
           400,
         );
-      return json(await addSource(parsed.data.input, gate.caller, request));
+      // 202: the response carries a runId, but the actual fan-out probing of
+      // any freshly discovered model happens asynchronously via Inngest, not
+      // inside this request (ADR 2026-09-30 "Event-driven execution").
+      return json(await addSource(parsed.data.input, gate.caller, request), 202);
     }
     if (id === "source.probe") {
       const key = parsed.data.input.key;
       if (typeof key !== "string" || !key)
         return json(err("invalid_input", "input.key is required."), 400);
-      return json(await probeSourceNow(key, gate.caller, request));
+      const result = await probeSourceNow(key, gate.caller, request);
+      // 503 (not 502): Cloudflare rewrites a 502/504 origin response with its
+      // own branded HTML before the client ever sees it, discarding this
+      // body — see ADMIN_ERROR_STATUS's own doc comment. A failed event send
+      // is an upstream-unavailable condition, not a gateway fault.
+      return json(
+        result,
+        result.status === "queued" ? 202 : ADMIN_ERROR_STATUS.upstream_unavailable,
+      );
+    }
+    if (id === "source.discover") {
+      // The `discover(source) → diff` primitive: one bounded source, no
+      // probing. Called by `supplySourceChanged` (gateway Inngest), and
+      // available here for a direct, synchronous check — unlike `probe.one`,
+      // listing a source's models is already a single HTTP call, so there is
+      // no "many models in one request" hazard to avoid.
+      const key = parsed.data.input.key;
+      if (typeof key !== "string" || !key)
+        return json(err("invalid_input", "input.key is required."), 400);
+      return json(await discoverSourceByKey(key));
+    }
+    if (id === "probe.one") {
+      // The `probe(source, model) → one call` primitive. Called once per
+      // model, per Inngest step, by `supplyModelFanout` — never looped over
+      // many models from inside a single request.
+      const key = parsed.data.input.key;
+      const upstreamModel = parsed.data.input.upstreamModel;
+      if (typeof key !== "string" || !key || typeof upstreamModel !== "string" || !upstreamModel)
+        return json(err("invalid_input", "input.{key,upstreamModel} are required."), 400);
+      return json(await probeOneModel(key, upstreamModel));
+    }
+    if (id === "probe.status") {
+      const key = parsed.data.input.key;
+      const since = parsed.data.input.since;
+      if (typeof key !== "string" || !key || typeof since !== "string" || !since)
+        return json(err("invalid_input", "input.{key,since} are required (since: ISO date)."), 400);
+      const sinceDate = new Date(since);
+      if (Number.isNaN(sinceDate.getTime()))
+        return json(err("invalid_input", "input.since must be a valid ISO date."), 400);
+      return json(await probeRunStatus(key, sinceDate));
     }
     if (id === "discovery.run") {
-      return json({ results: await runDiscovery() });
+      // Bounded by source count, not model count: lists enabled sources and
+      // emits one supply/source.changed per source (ADR 2026-09-30
+      // "Event-driven execution") — no upstream discovery call happens here.
+      return json(await triggerDiscoveryForAllSources());
     }
     if (id === "probe.idle") {
-      return json({ results: await runActiveProbes() });
+      // Bounded: one capped DB read, grouped and emitted as events — no
+      // upstream probe call happens inside this request.
+      return json(await runActiveProbes());
     }
     if (id === "probe.suspended") {
-      return json({ results: await runSuspendedRetry() });
+      return json(await runSuspendedRetry());
     }
     if (id === "source.plan.update") {
       const key = parsed.data.input.key;

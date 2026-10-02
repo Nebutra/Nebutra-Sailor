@@ -26,6 +26,7 @@ import {
 import { notifyOpsAlert } from "@nebutra/status";
 import { credentialFor } from "./capability";
 import { newApiFindChannel, newApiLogin } from "./clients";
+import { emitSupplyEvent } from "./events";
 
 /**
  * Quota layer orchestration (ADR 2026-09-30 addendum). Wires
@@ -99,6 +100,16 @@ async function fireAlerts(outcome: QuotaObservationResult | null): Promise<void>
         ...windowUrl(),
       }),
     );
+    // ADR 2026-09-30 "Event-driven execution": also feed the generic
+    // supply/* event stream, source-level (no upstreamModel — a quota window
+    // belongs to the source/account, not one model). `supplyModelSignal`
+    // deliberately treats this kind as informational only (no re-probe); this
+    // alert path is still the one that pages the operator.
+    void emitSupplyEvent("supply/model.signal", {
+      sourceKey: window.sourceKey,
+      kind: "quota_threshold",
+      reason: ratioAlert.level,
+    });
   }
   if (forecastAlert.fired) {
     const rate = window.burnRatePerHour === null ? "?" : `${window.burnRatePerHour.toFixed(2)}/hr`;
