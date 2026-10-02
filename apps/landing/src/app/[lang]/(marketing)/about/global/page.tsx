@@ -1,35 +1,13 @@
 import { ArrowRight } from "@nebutra/icons";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AnimateIn, AnimateInGroup } from "@/components/landing/AnimateIn";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { GLOBAL_POINTS, pick } from "../_about-data";
+import { bi, GLOBAL_POINTS } from "../_about-data";
 
-// ─── Page-local content (bilingual) ──────────────────────────────────────────
-
-const EYEBROW = { zh: "全球化布局", en: "Global Presence" } as const;
-
-const HERO_TITLE = { zh: "生而全球化", en: "Day 1 Global" } as const;
-
-const HERO_SUB = {
-  zh: "Nebutra Sailor 从第一行代码起就是国际化原生架构，而不是后期补丁。对标 Stripe、Vercel、Linear 等全球化基因产品，我们为您铺好从 Day 1 走向全球市场的基础设施底座。",
-  en: "Nebutra Sailor has been internationally-native since line one — not an afterthought patch. Benchmarked against globally-born products like Stripe, Vercel, and Linear, we lay the infrastructure groundwork for you to ship to global markets from day one.",
-} as const;
-
-const PILLARS_TITLE = { zh: "全球化四大支柱", en: "Four Pillars of Global Readiness" } as const;
-const PILLARS_SUB = {
-  zh: "语种、合规、支付、边缘网络 — 构成出海业务的四个基础维度。",
-  en: "Languages, compliance, payments, and edge network — the four foundational dimensions of going global.",
-} as const;
-
-// Languages coverage
-const LANG_TITLE = { zh: "7 大主干语种", en: "7 Primary Languages" } as const;
-const LANG_SUB = {
-  zh: "原生国际化（i18n）+ 动态本地化（l10n），覆盖全球约 40 亿人口。",
-  en: "Native i18n + dynamic l10n, covering ~4 billion people globally.",
-} as const;
+// ─── Page-local content (data rows — still dual-authored per row) ────────────
 
 const LANGUAGES: ReadonlyArray<{
   code: string;
@@ -81,13 +59,6 @@ const LANGUAGES: ReadonlyArray<{
   },
 ];
 
-// Compliance matrix
-const COMPLIANCE_TITLE = { zh: "合规矩阵", en: "Compliance Matrix" } as const;
-const COMPLIANCE_SUB = {
-  zh: "主流监管框架 Day 1 支持，企业级认证按 Roadmap 推进。",
-  en: "Major regulatory frameworks supported on Day 1; enterprise certifications on the roadmap.",
-} as const;
-
 type ComplianceStatus = "day1" | "roadmap";
 
 const COMPLIANCE_ROWS: ReadonlyArray<{
@@ -128,13 +99,6 @@ const COMPLIANCE_ROWS: ReadonlyArray<{
   },
 ];
 
-// Payment gateways
-const PAYMENTS_TITLE = { zh: "支付：全球 + 中国", en: "Payments: Global + China" } as const;
-const PAYMENTS_SUB = {
-  zh: "Creem 作为交易商户（merchant of record）覆盖全球主流卡组织，代收代缴各地销售税/增值税；微信支付与支付宝原生覆盖中国大陆——都在同一套计费契约背后，配好密钥即可上线。",
-  en: "Creem covers global cards as merchant of record — it collects and remits sales tax/VAT so you don't register in every country; WeChat Pay and Alipay cover mainland China natively — both behind one billing contract, live as soon as you add the keys.",
-} as const;
-
 const PAYMENT_GATEWAYS: ReadonlyArray<{
   name: string;
   region: { zh: string; en: string };
@@ -144,33 +108,16 @@ const PAYMENT_GATEWAYS: ReadonlyArray<{
   { name: "Alipay", region: { zh: "中国大陆", en: "Mainland China" } },
 ];
 
-// CTA
-const CTA_EYEBROW = { zh: "Ready to Sail", en: "Ready to Sail" } as const;
-const CTA_TITLE = { zh: "准备在全球启航？", en: "Ready to set sail globally?" } as const;
-const CTA_SUB = {
-  zh: "从本地验证到全球扩张，Sailor 是您最可靠的技术合伙人。",
-  en: "From local validation to global expansion, Sailor is your most reliable technical co-founder.",
-} as const;
-const CTA_BUTTON = { zh: "联系我们", en: "Contact Us" } as const;
-
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
-
-  const title = pick(lang, {
-    zh: "全球化布局 — 关于我们 · Nebutra Sailor",
-    en: "Global Presence — About · Nebutra Sailor",
-  });
-  const description = pick(lang, {
-    zh: "Nebutra Sailor 生而全球化 — 7 大主干语种、跨境数据合规、多地区支付、全球 Edge 网络，Day 1 即可出海。",
-    en: "Nebutra Sailor is Day-1 global — 7 primary languages, cross-border compliance, multi-region payments, and a global edge network, ready on day one.",
-  });
+  const t = await getTranslations({ locale: lang, namespace: "aboutPages.global" });
 
   return buildPageMetadata({
-    title,
-    description,
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/about/global",
     locale: lang as Locale,
   });
@@ -181,6 +128,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function GlobalPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+  const t = await getTranslations({ locale: lang, namespace: "aboutPages.global" });
 
   return (
     <main id="main-content" className="flex flex-col flex-1 bg-background">
@@ -190,7 +138,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
         <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="emerge" className="max-w-4xl mx-auto text-center">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
-              {pick(lang, EYEBROW)}
+              {t("hero.eyebrow")}
             </span>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10"
@@ -199,10 +147,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 lineHeight: "var(--leading-display)",
               }}
             >
-              {pick(lang, HERO_TITLE)}
+              {t("hero.title")}
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed text-balance">
-              {pick(lang, HERO_SUB)}
+              {t("hero.lead")}
             </p>
           </AnimateIn>
         </div>
@@ -219,10 +167,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              {pick(lang, PILLARS_TITLE)}
+              {t("pillars.title")}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              {pick(lang, PILLARS_SUB)}
+              {t("pillars.lead")}
             </p>
           </AnimateIn>
 
@@ -231,7 +179,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {GLOBAL_POINTS.map((point, i) => {
-              const p = pick(lang, point);
+              const p = bi(lang, point);
               return (
                 <AnimateIn key={`pillar-${i}`} preset="fadeUp">
                   <div
@@ -267,10 +215,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              {pick(lang, LANG_TITLE)}
+              {t("languages.title")}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              {pick(lang, LANG_SUB)}
+              {t("languages.lead")}
             </p>
           </AnimateIn>
 
@@ -290,10 +238,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                     </span>
                   </div>
                   <h3 className="text-lg font-bold tracking-tight mb-1 text-foreground">
-                    {pick(lang, lng.name)}
+                    {bi(lang, lng.name)}
                   </h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    {pick(lang, lng.region)}
+                    {bi(lang, lng.region)}
                   </p>
                 </div>
               </AnimateIn>
@@ -316,10 +264,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              {pick(lang, COMPLIANCE_TITLE)}
+              {t("compliance.title")}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              {pick(lang, COMPLIANCE_SUB)}
+              {t("compliance.lead")}
             </p>
           </AnimateIn>
 
@@ -328,13 +276,13 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
               {/* Header row — hidden on mobile */}
               <div className="hidden md:grid md:grid-cols-[1.2fr_1.5fr_1fr] gap-6 px-8 py-5 bg-muted/40 border-b border-border/50">
                 <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
-                  {pick(lang, { zh: "地区", en: "Region" })}
+                  {t("compliance.columns.region")}
                 </span>
                 <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
-                  {pick(lang, { zh: "合规框架", en: "Framework" })}
+                  {t("compliance.columns.framework")}
                 </span>
                 <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground text-right">
-                  {pick(lang, { zh: "状态", en: "Status" })}
+                  {t("compliance.columns.status")}
                 </span>
               </div>
 
@@ -345,18 +293,18 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 >
                   <div className="flex flex-col md:block">
                     <span className="md:hidden text-[10px] font-bold tracking-widest uppercase text-muted-foreground mb-1">
-                      {pick(lang, { zh: "地区", en: "Region" })}
+                      {t("compliance.columns.region")}
                     </span>
                     <span className="text-base font-semibold text-foreground">
-                      {pick(lang, row.region)}
+                      {bi(lang, row.region)}
                     </span>
                   </div>
                   <div className="flex flex-col md:block">
                     <span className="md:hidden text-[10px] font-bold tracking-widest uppercase text-muted-foreground mb-1">
-                      {pick(lang, { zh: "合规框架", en: "Framework" })}
+                      {t("compliance.columns.framework")}
                     </span>
                     <span className="text-base text-muted-foreground font-mono">
-                      {pick(lang, row.framework)}
+                      {bi(lang, row.framework)}
                     </span>
                   </div>
                   <div className="flex md:justify-end items-center">
@@ -375,7 +323,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                         }
                         aria-hidden="true"
                       />
-                      {pick(lang, row.note)}
+                      {bi(lang, row.note)}
                     </span>
                   </div>
                 </div>
@@ -399,10 +347,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              {pick(lang, PAYMENTS_TITLE)}
+              {t("payments.title")}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              {pick(lang, PAYMENTS_SUB)}
+              {t("payments.lead")}
             </p>
           </AnimateIn>
 
@@ -417,7 +365,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                     {gw.name}
                   </span>
                   <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">
-                    {pick(lang, gw.region)}
+                    {bi(lang, gw.region)}
                   </span>
                 </div>
               </AnimateIn>
@@ -432,7 +380,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
           <AnimateIn preset="emerge">
             <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
               <span className="text-sm font-bold tracking-widest uppercase text-primary">
-                {pick(lang, CTA_EYEBROW)}
+                {t("cta.eyebrow")}
               </span>
             </div>
             <h2
@@ -442,14 +390,14 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              {pick(lang, CTA_TITLE)}
+              {t("cta.title")}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-balance mb-12 max-w-2xl mx-auto">
-              {pick(lang, CTA_SUB)}
+              {t("cta.lead")}
             </p>
             <Button asChild variant="ink" size="lg">
               <Link href="/contact">
-                {pick(lang, CTA_BUTTON)} <ArrowRight className="ml-2 h-5 w-5" />
+                {t("cta.button")} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </AnimateIn>

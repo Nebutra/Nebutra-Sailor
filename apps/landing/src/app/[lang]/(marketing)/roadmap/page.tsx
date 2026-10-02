@@ -1,8 +1,5 @@
-// @brand-exempt: page copy quotes the founder's own words about the company by
-// name (SEO description + section lead) — narrative prose, not a config value
-// a rebrand could substitute programmatically. Same pattern as _about-data.ts.
 import Link from "next/link";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   BETS,
@@ -14,15 +11,16 @@ import {
   NINE_LAYERS_ESSAY,
   prUrl,
 } from "@/nebutra/data/roadmap";
+import { siteLang } from "@/nebutra/i18n";
 import { sitePageMeta } from "@/nebutra/seo";
 import { Band, Intro } from "@/nebutra/ui/page";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "roadmapPage" });
   return buildPageMetadata(
     await sitePageMeta(lang, "/roadmap", {
-      description:
-        "Nebutra's roadmap in the founder's nine layers: why we exist, where we are going, and what ships next.",
+      description: t("meta.description"),
     }),
   );
 }
@@ -52,6 +50,8 @@ const monthLabel = (ym: string) =>
 export default async function RoadmapPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang);
+  const zh = siteLang(lang) === "zh";
+  const t = await getTranslations({ locale: lang, namespace: "roadmapPage" });
   const months = [...new Set(LANDED.map((l) => l.month))];
 
   return (
@@ -59,23 +59,23 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
       <section className="px-8 pt-28 pb-20 xl:px-16">
         <Intro
           level={1}
-          title="From why, to what ships next."
-          lead="Nine layers, top to bottom. The first eight say why Nebutra exists and what it has to become; they hold still. The ninth is what we are doing about it, and it moves every week."
-          cn="从为什么，到下一步。"
+          title={t("hero.title")}
+          lead={t("hero.lead")}
+          cn={zh ? undefined : t("hero.cn")}
         />
         <Link
           href={NINE_LAYERS_ESSAY}
           className="mt-10 inline-flex text-sm text-secondary-foreground hover:text-foreground"
         >
-          The nine layers, and why we write them down →
+          {t("hero.essayLink")}
         </Link>
       </section>
 
       <Band>
         <Intro
-          title="Direction"
-          lead="Each line is the founder's, taken as written from the Journal."
-          cn="方向，L1 到 L8。"
+          title={t("direction.title")}
+          lead={t("direction.lead")}
+          cn={zh ? undefined : t("direction.cn")}
         />
         <ol className="mt-12 max-w-content divide-y divide-border border-y border-border">
           {LAYERS.map((layer) => (
@@ -110,9 +110,9 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
 
       <Band>
         <Intro
-          title="Execution"
-          lead="L9. Every bet names the layer it answers to; a bet that serves none does not go on the list."
-          cn="执行：现在、接下来、更远。"
+          title={t("execution.title")}
+          lead={t("execution.lead")}
+          cn={zh ? undefined : t("execution.cn")}
         />
         <div className="mt-12 grid max-w-wide grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-10">
           {HORIZONS.map((h) => (
@@ -154,9 +154,9 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
 
       <Band>
         <Intro
-          title="Landed"
-          lead="What moved out of Now, with the work it took. The release notes have the rest."
-          cn="已经落地的。"
+          title={t("landed.title")}
+          lead={t("landed.lead")}
+          cn={zh ? undefined : t("landed.cn")}
         />
         <div className="mt-12 flex max-w-content flex-col gap-12">
           {months.map((month) => (
@@ -193,7 +193,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
           href="/changelog"
           className="mt-10 inline-flex text-sm text-secondary-foreground hover:text-foreground"
         >
-          Release notes →
+          {t("landed.releaseNotes")}
         </Link>
       </Band>
     </main>

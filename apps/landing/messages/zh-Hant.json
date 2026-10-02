@@ -1134,6 +1134,39 @@
         "supportLabel": "支持"
       },
       "acknowledgement": "使用 {brandName} 即表示您确认已阅读、理解并同意受本服务条款约束。"
+    },
+    "dpa": {
+      "meta": {
+        "title": "資料處理附錄（DPA）— {brandNameCn}",
+        "description": "如果您的客戶涉及個人資料處理，可按需向 {brandNameCn} 索取資料處理附錄（DPA）。"
+      },
+      "title": "資料處理附錄（DPA）",
+      "lastUpdated": "最後更新：2026-05-13",
+      "availability": {
+        "heading": "適用範圍",
+        "p1": "如果您在使用我們的服務時會處理歐盟、英國、瑞士或加州居民（或其他具有類似資料保護法律的司法轄區）的個人資料，{brandNameCn}（“我們”）將為您提供資料處理附錄。",
+        "p2": "我們的 DPA 符合 GDPR 第 28 條，在需要時包含標準合同條款（EU 2021/914），並體現了分處理者義務。"
+      },
+      "howToRequest": {
+        "heading": "如何申請",
+        "emailIntro": "發郵件至 <email>地址</email>，並附上：",
+        "items": {
+          "0": "您的法律實體名稱與簽署授權人",
+          "1": "您希望使用我們的標準 DPA，還是提供您自己的草案",
+          "2": "所需的地區附錄（如 UK IDTA、瑞士 FADP 等）"
+        },
+        "response": "我們會在一個工作日內回覆。"
+      },
+      "related": {
+        "heading": "相關連結",
+        "security": "安全概覽",
+        "privacy": "隱私政策",
+        "terms": "服務條款",
+        "cookies": "Cookie 政策"
+      }
+    },
+    "document": {
+      "versionLabel": "版本 {version} · 生效日期 {date}"
     }
   },
   "metadata": {
@@ -1953,6 +1986,11 @@
         "cn": "在平台上長出來的產品。",
         "buildingLink": "我們正在打造的"
       }
+    },
+    "journalPage": {
+      "title": "日誌",
+      "lead": "我們對這個時代的判斷——關於 agent、agent 之後的那一層，以及創始人這門手藝。",
+      "cn": "我們對這個時代的判斷。"
     }
   },
   "siteMap": {
@@ -3826,6 +3864,437 @@
         }
       },
       "rights": "保留所有權利。"
+    }
+  },
+  "journal": {
+    "og": {
+      "tagline": "面向 AI SaaS 的工程筆記"
+    },
+    "article": {
+      "allPosts": "全部文章",
+      "journalBadge": "{brandName} 技術部落格",
+      "copyOriginal": "複製原文",
+      "copyBlock": "複製此段",
+      "copied": "已複製",
+      "tableOfContentsAria": "目錄",
+      "contents": "目錄",
+      "footer": {
+        "continueReading": "繼續閱讀",
+        "relatedNotes": "同主題文章",
+        "allPosts": "全部文章",
+        "subscribeTitle": "訂閱 {brandName} Originals",
+        "subscribeBody": "低頻、認真，只發產品工程和 AI SaaS 交付筆記。",
+        "discuss": "去評論",
+        "share": "分享"
+      }
+    },
+    "comments": {
+      "title": "討論",
+      "subtitle": "使用 {brandName} 賬號參與評論。評論會先進入稽核佇列。",
+      "empty": "還沒有評論。來寫下第一條。",
+      "signIn": "登入後評論",
+      "placeholder": "寫下你的想法...",
+      "submit": "釋出評論",
+      "submitting": "釋出中",
+      "pending": "待稽核",
+      "error": "評論暫時不可用，請稍後再試。",
+      "like": "點贊",
+      "liked": "已點贊",
+      "save": "收藏",
+      "saved": "已收藏",
+      "signInToLike": "登入後點贊",
+      "signInToSave": "登入後收藏"
+    },
+    "author": {
+      "label": "作者",
+      "postCount": "{count} 篇文章"
+    },
+    "tag": {
+      "label": "專題",
+      "postCount": "{count} 篇文章"
+    }
+  },
+  "changelogPage": {
+    "meta": {
+      "title": "更新日誌 — {brandNameCn}",
+      "description": "每一次釋出，都追求極致的細節。"
+    },
+    "subscribe": "通過 <rss>RSS</rss> 或 <atom>Atom</atom> 訂閱更新，或關注 <handle>@nebutra_ai</handle>。"
+  },
+  "newsPage": {
+    "meta": {
+      "title": "新聞中心 — {brandNameCn}",
+      "description": "{brandNameCn} 的產品釋出、公告與平臺動態。"
+    },
+    "empty": {
+      "title": "暫時還沒有新聞。",
+      "subtitle": "敬請關注後續更新。"
+    }
+  },
+  "modelsPage": {
+    "meta": {
+      "title": "支援的 AI 提供商與模型 — {brandNameCn}",
+      "description": "覆蓋各大 LLM 實驗室、國內平臺、閘道器與本地執行時的 AI 提供商後設資料 — 通過 Vercel AI SDK 接入，改一個環境變數即可切換提供商。"
+    },
+    "eyebrow": "AI 提供商",
+    "title": "{count} 個 AI 提供商，一套適配層。",
+    "lead": "Sailor 內建覆蓋各大 LLM 實驗室、國內平臺、閘道器與本地執行時的提供商後設資料 — 通過 Vercel AI SDK 接入，改一個環境變數即可切換提供商。",
+    "providerCount": "{count} 個提供商",
+    "status": {
+      "opencode": "生產環境",
+      "ai-sdk": "AI SDK",
+      "cn-compatible": "相容",
+      "pending": "待接入"
+    },
+    "categories": {
+      "directLabs": "直接實驗室",
+      "chinaPlatforms": "國內平臺",
+      "cloudPlatforms": "雲平臺",
+      "inferenceAccelerators": "推理加速",
+      "unifiedGateways": "統一閘道器",
+      "multimodal": "多模態",
+      "localDeployment": "本地部署",
+      "developerEcosystem": "開發者生態"
+    }
+  },
+  "roadmapPage": {
+    "meta": {
+      "description": "{brandNameCn} 在創始人九層結構裡的路線圖：我們為什麼存在、要去哪裡，以及接下來要做什麼。"
+    },
+    "hero": {
+      "title": "從為什麼，到下一步要做的事。",
+      "lead": "九層，從上到下。前八層說明 {brandNameCn} 為什麼存在、必須成為什麼樣子——它們基本不變。第九層是我們正在做的事，每週都在變。",
+      "cn": "從為什麼，到下一步。",
+      "essayLink": "九層結構，以及我們為什麼把它寫下來 →"
+    },
+    "direction": {
+      "title": "方向",
+      "lead": "每一行都是創始人的原話，照 Journal 裡寫的樣子摘錄。",
+      "cn": "方向，L1 到 L8。"
+    },
+    "execution": {
+      "title": "執行",
+      "lead": "L9。每一個 bet 都標明它服務於哪一層；不服務任何一層的 bet 不會出現在列表裡。",
+      "cn": "執行：現在、接下來、更遠。"
+    },
+    "landed": {
+      "title": "已落地",
+      "lead": "從「正在做」移出的部分，附帶它花費的工作量。其餘內容見更新日誌。",
+      "cn": "已經落地的。",
+      "releaseNotes": "更新日誌 →"
+    }
+  },
+  "aboutPages": {
+    "businessPortfolio": {
+      "meta": {
+        "title": "核心能力佈局 — {brandNameCn}",
+        "description": "19 項核心能力覆蓋模態維度、技術能力、平臺基礎設施與資料治理四大層面，構築 AI 原生資料智慧全棧底座。"
+      },
+      "hero": {
+        "kicker": "核心能力佈局",
+        "heading": "19 項核心能力，四重能力維度",
+        "lead": "從模態覆蓋到技術底座、從平臺基礎設施到資料治理 — 我們以四組共 19 項能力，構建 AI 原生資料智慧的全鏈路工程體系。",
+        "totalLabel": "總計 {count} 項核心能力 · 四大維度"
+      },
+      "groupItemsLabel": "{count} 項",
+      "matrix": {
+        "kicker": "能力矩陣",
+        "heading": "一圖概覽 19 項核心能力",
+        "lead": "四組能力並列呈現，便於對照、編排與組合落地。"
+      },
+      "cta": {
+        "kicker": "需要深入瞭解？",
+        "heading": "想針對某一項能力洽談落地？",
+        "lead": "告訴我們您的場景，我們會匹配專屬架構師與工程團隊為您做技術對齊。",
+        "button": "聯絡我們"
+      }
+    },
+    "global": {
+      "meta": {
+        "title": "全球化佈局 — 關於我們 · {productName}",
+        "description": "{productName} 生而全球化 — 7 大主幹語種、跨境資料合規、多地區支付、全球 Edge 網路，Day 1 即可出海。"
+      },
+      "hero": {
+        "eyebrow": "全球化佈局",
+        "title": "生而全球化",
+        "lead": "{productName} 從第一行程式碼起就是國際化原生架構，而不是後期補丁。對標 Stripe、Vercel、Linear 等全球化基因產品，我們為您鋪好從 Day 1 走向全球市場的基礎設施底座。"
+      },
+      "pillars": {
+        "title": "全球化四大支柱",
+        "lead": "語種、合規、支付、邊緣網路 — 構成出海業務的四個基礎維度。"
+      },
+      "languages": {
+        "title": "7 大主幹語種",
+        "lead": "原生國際化（i18n）+ 動態本地化（l10n），覆蓋全球約 40 億人口。"
+      },
+      "compliance": {
+        "title": "合規矩陣",
+        "lead": "主流監管框架 Day 1 支援，企業級認證按 Roadmap 推進。",
+        "columns": {
+          "region": "地區",
+          "framework": "合規框架",
+          "status": "狀態"
+        }
+      },
+      "payments": {
+        "title": "支付：全球 + 中國",
+        "lead": "Creem 作為交易商戶（merchant of record）覆蓋全球主流卡組織，代收代繳各地銷售稅/增值稅；微信支付與支付寶原生覆蓋中國大陸——都在同一套計費契約背後，配好金鑰即可上線。"
+      },
+      "cta": {
+        "eyebrow": "Ready to Sail",
+        "title": "準備在全球啟航？",
+        "lead": "從本地驗證到全球擴張，Sailor 是您最可靠的技術合夥人。",
+        "button": "聯絡我們"
+      }
+    },
+    "innovation": {
+      "meta": {
+        "title": "研發與創新 — {brandNameCn}",
+        "description": "工程品味即護城河。{brandNameCn}極客驅動，對標矽谷最佳實踐：AI 原生架構（Harness 工程）、開源基礎設施、工程卓越。"
+      },
+      "hero": {
+        "eyebrow": "R&D / 研發與創新",
+        "heading": "工程品味即護城河",
+        "manifesto": "我們是一支極客驅動的小型團隊。在 AI 加速度時代，工具幾乎被所有人平等擁有，真正的稀缺資源是品味 — 對架構的審美、對細節的偏執、對長期主義的堅持。{brandNameCn}對標矽谷一線研發組織，從第一行程式碼就寫給 AI 時代：型別安全、可觀測、Edge-first、多租戶、開源。這不是口號，這是我們每天的工作紀律。",
+        "battlefield": "在 AI stack 三層演化中，我們選擇 Harness 層作戰 — MCP/SKILL、工具生態、Agent 編排、A2A 協同。這裡是 2025–2026 年工程化的真正前線。"
+      },
+      "harness": {
+        "eyebrow": "AI Stack 三層演化",
+        "heading": "從權重，到上下文，到 Harness",
+        "intro": "大模型的創新面每兩年就會向外擴充套件一層。2022 年在權重（Weights）層卷 scaling law；2023–2024 年在上下文（Context）層卷 RAG 與長視窗；2025–2026 年，真正的增量產出已經轉移到 Harness 層 — 工具、協議、工作流圖與 Agent 基礎設施。",
+        "outro": "{productName} 把 Harness 工程當作一等公民。我們不在權重層造模型，也不只在上下文層做 Prompt — 我們交付可工程化的 Harness：MCP/SKILL 驅動的智慧體、A2A 協同協議、可觀測的工作流圖、安全可控的工具生態。這是 AI 原生 SaaS 的下一代架構座標。",
+        "battlefieldTag": "← {productName} 的戰場",
+        "currentTag": "正在發生"
+      },
+      "pillars": {
+        "ossSupplement": "為什麼開源？因為我們相信：在加速度時代，閉源的專有優勢在 6 個月內會被追平，而開源的複利會持續十年。開源讓客戶免於 vendor lock-in，讓社群共同加固我們的基礎設施，也讓每一次 commit 接受全世界的審閱。這是我們最有信心的一場長期賭注。"
+      },
+      "orgPrinciples": {
+        "eyebrow": "組織演進準則",
+        "heading": "AI 槓桿對抗人治腐化",
+        "intro": "偉大的組織不應在業務擴張過程中走向平庸與官僚化。當 {brandNameCn} 生態及其孵化公司面臨規模激增時，以下三條是唯一不可妥協的組織演進準則——每一條都直接約束 hiring、治理與資源配置決策。"
+      },
+      "timeline": {
+        "eyebrow": "創新時間線",
+        "heading": "我們走過的路與即將抵達的站臺"
+      },
+      "cta": {
+        "eyebrow": "加入我們的研發之旅",
+        "heading": "與極客並肩,打造下一代 AI 基礎設施",
+        "button": "探索職業機會"
+      }
+    },
+    "whitepaper": {
+      "meta": {
+        "title": "商業白皮書 — {productName}",
+        "description": "{productName} 受治理 AI 平臺白皮書 · 四章工程與商業文件"
+      },
+      "hero": {
+        "eyebrow": "{brandNameUpper} BUSINESS WHITEPAPER / 商業白皮書",
+        "title": "{productName} 平臺白皮書與工程原則",
+        "readTime": "全文約 15 分鐘閱讀",
+        "tocKicker": "目錄",
+        "updated": "最後更新:2026-04-21",
+        "back": "返回 About"
+      },
+      "chapters": {
+        "chapter": "第",
+        "iTitle": "戰略定位:平臺基線與工程槓桿",
+        "iiTitle": "升級路徑與協作契約",
+        "iiiTitle": "全鏈路 AI 原生平臺層",
+        "ivTitle": "組織演進準則:治理與自動化"
+      },
+      "goalsKicker": "核心目標",
+      "sectionII": {
+        "heading": "超級要素路由協議",
+        "intro": "現代軟體團隊的主要摩擦,不在於沒有工具,而在於平臺層反覆重建、升級路徑模糊和協作契約失真。{brandNameCn}關注的是如何用更穩定的平臺契約和更清晰的演進路徑,讓系統持續產出而不是持續返工。"
+      },
+      "sectionIII": {
+        "heading": "全鏈路 AI 原生基建",
+        "intro": "{brandNameCn}不是零散工具的拼貼。它把腳手架、執行時整合、治理機制和交付路徑收斂進一套可驗證的平臺層,讓團隊能圍繞同一基線持續演進。",
+        "builderEyebrow": "L0 · 工程底座",
+        "sleptonsEyebrow": "L1 · 信任與撮合",
+        "highlightsKicker": "核心能力"
+      },
+      "sectionIV": {
+        "heading": "組織演進準則 · AI 槓桿對抗人治腐化",
+        "intro": "偉大的組織不應在擴張過程中走向平庸與官僚化。當 {brandNameCn}生態及其孵化公司面臨規模激增時,以下三條準則不可妥協——它們決定組織是繼續複利,還是走向內耗。"
+      }
+    }
+  },
+  "showcasePage": {
+    "meta": {
+      "title": "案例展示 — {productName}",
+      "description": "看看開發者和團隊正在用 {productName} 構建什麼。"
+    },
+    "title": "案例展示",
+    "lead": "看看開發者和團隊正在用 {productName} 構建什麼。",
+    "comingSoon": {
+      "title": "即將上線",
+      "body": "用 {productName} 構建的專案將在這裡展示。"
+    },
+    "featured": "精選",
+    "categories": {
+      "saas": "SaaS",
+      "ecommerce": "電商",
+      "ai": "AI / 機器學習",
+      "devtools": "開發者工具",
+      "marketing": "營銷",
+      "other": "其他"
+    }
+  },
+  "securityPage": {
+    "meta": {
+      "title": "安全 — {brandNameCn}",
+      "description": "租戶隔離、應用層加密、RBAC/ABAC、結構化審計日誌 — 作為可安裝的軟體包內置於 Sailor 骨架中。"
+    },
+    "hero": {
+      "eyebrow": "安全",
+      "title": "安全是程式碼，不是口號。",
+      "lead": "Sailor 骨架自帶審計日誌、租戶隔離、加密與許可權原語，都是可安裝的軟體包 — 不是 PPT 裡的承諾。"
+    },
+    "capabilitiesSection": {
+      "title": "內建能力",
+      "lead": "以下每一項都是本倉庫中的一個軟體包，歡迎在 GitHub 上審閱我們的原始碼。"
+    },
+    "capabilities": {
+      "tenantIsolation": {
+        "title": "租戶隔離",
+        "summary": "請求級租戶上下文（AsyncLocalStorage）加上 Postgres 行級安全策略，在資料庫層實現嚴格的租戶隔離。"
+      },
+      "encryption": {
+        "title": "應用層加密",
+        "summary": "使用 AWS KMS 對客戶金鑰做信封加密。明文永不離開應用邊界；資料加密金鑰支援輪換。"
+      },
+      "rbacAbac": {
+        "title": "RBAC 與 ABAC",
+        "summary": "使用 CASL 進行程序內角色/屬性校驗。"
+      },
+      "auditLogging": {
+        "title": "結構化審計日誌",
+        "summary": "統一的 AuditEvent 格式，記錄操作者 / 動作 / 資源 / 結果。架構已就位，生產環境整合正在進行中。"
+      },
+      "auth": {
+        "title": "基於 Postgres 的 Better Auth",
+        "summary": "由 Better Auth 支撐的會話/Cookie 認證，內建組織成員與裝置碼登入 — 您的使用者與資料庫之間沒有第三方身份供應商。"
+      },
+      "secrets": {
+        "title": "邊界處的金鑰管理",
+        "summary": "必需的環境變數在程序啟動時校驗（Zod schema）。應用金鑰按需解密，絕不寫入日誌。"
+      }
+    },
+    "integrationWip": "整合進行中",
+    "complianceSection": {
+      "title": "合規姿態",
+      "lead": "我們如實列出當前狀態 — 哪些已經就緒，哪些還在路線圖上。不掛我們尚未贏得的徽章。"
+    },
+    "compliance": {
+      "gdpr": {
+        "label": "GDPR / 英國 GDPR 資料處理",
+        "state": "已對齊",
+        "detail": "可按需提供 DPA。應用內已支援資料主體訪問與刪除流程。"
+      },
+      "soc2": {
+        "label": "SOC 2 Type II",
+        "state": "路線圖中",
+        "detail": "目前尚未認證。架構設計已支援 SOC 2 控制項；計劃進行正式審計。"
+      },
+      "iso27001": {
+        "label": "ISO 27001",
+        "state": "路線圖中",
+        "detail": "目前尚未認證。ISMS 範圍與 SOC 2 一併跟蹤推進。"
+      },
+      "hipaa": {
+        "label": "HIPAA 就緒架構",
+        "state": "需簽署 BAA",
+        "detail": "審計日誌、RBAC 與加密原語均已就位；受管轄實體需簽署業務合作協議（BAA）。"
+      },
+      "pipl": {
+        "label": "個人資訊保護法（PIPL）",
+        "state": "已支援",
+        "detail": "支援中國境內合規服務商（百鍊、火山引擎、SiliconFlow），滿足資料境內留存需求。"
+      }
+    },
+    "cta": {
+      "title": "需要我們的 DPA、安全問卷，或想聊聊？",
+      "lead": "我們會在一個工作日內回覆安全相關諮詢。如需 DPA，可附上您的草案，或直接使用我們的模板。",
+      "readDpa": "檢視我們的 DPA 說明",
+      "requestDpa": "申請 DPA"
+    }
+  },
+  "opcPage": {
+    "meta": {
+      "title": "平臺 — {brandNameCn}",
+      "description": "{brandNameCn} 平臺概覽。"
+    }
+  },
+  "studioPage": {
+    "meta": {
+      "description": "選擇一個 Sailor 專案的外觀，在真實頁面上預覽，然後用一條命令應用它。"
+    }
+  },
+  "statusPages": {
+    "index": {
+      "meta": {
+        "title": "{brandNameCn} 狀態",
+        "description": "{brandNameCn} 公開服務的即時執行狀態。"
+      }
+    },
+    "history": {
+      "meta": {
+        "title": "事件歷史"
+      },
+      "backToStatus": "返回狀態頁",
+      "calendar": "日曆",
+      "previousMonth": "上個月",
+      "nextMonth": "下個月",
+      "weekdays": {
+        "mon": "一",
+        "tue": "二",
+        "wed": "三",
+        "thu": "四",
+        "fri": "五",
+        "sat": "六",
+        "sun": "日"
+      },
+      "nothingToReport": "本月沒有可報告的事項。"
+    },
+    "incident": {
+      "seoTitle": "事件",
+      "phase": {
+        "scheduled": "已計劃",
+        "inProgress": "進行中",
+        "completed": "已完成"
+      },
+      "backToStatus": "返回狀態頁",
+      "fields": {
+        "status": "狀態",
+        "type": "型別",
+        "impact": "影響",
+        "started": "開始時間",
+        "duration": "持續時間"
+      },
+      "maintenance": "維護",
+      "affected": "受影響：{services}",
+      "updates": "更新"
+    },
+    "subscription": {
+      "meta": {
+        "title": "訂閱"
+      },
+      "invalid": {
+        "title": "此連結無效",
+        "body": "該連結可能已過期或已被使用。請從狀態頁重新訂閱。"
+      },
+      "confirmed": {
+        "title": "訂閱成功",
+        "body": "發生事件或計劃維護時，{email} 將收到郵件通知。"
+      },
+      "unsubscribed": {
+        "title": "已取消訂閱",
+        "body": "您將不再收到狀態郵件。"
+      },
+      "backToStatus": "返回狀態頁"
     }
   }
 }

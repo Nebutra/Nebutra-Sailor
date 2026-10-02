@@ -19,6 +19,12 @@ export type LayerId = "l1" | "l2" | "l3" | "l4" | "l5" | "l6" | "l7" | "l8";
 
 export interface Layer {
   id: LayerId;
+  /**
+   * Shown together, always: both names render side by side on the roadmap
+   * page whatever the viewer's locale (a bilingual label, not a translation
+   * choice), so the pair stays here. The inline-i18n ratchet counts it and
+   * lists this file in its allowlist on purpose.
+   */
   name: { en: string; zh: string };
   /** The line, verbatim from the essay. */
   line: string;
@@ -37,47 +43,47 @@ export const NINE_LAYERS_ESSAY = "/blog/founder-top-design-nine-layers";
 export const LAYERS: readonly Layer[] = [
   {
     id: "l1",
-    name: { en: "Purpose", zh: "本质" },
+    name: { zh: "本质", en: "Purpose" },
     line: "We are building a place where creating a company no longer has to be impossibly hard.",
   },
   {
     id: "l2",
-    name: { en: "Future", zh: "未来" },
+    name: { zh: "未来", en: "Future" },
     line: "The deeper shift is that the threshold for founding a company is being reset.",
     also: "Nebutra wants to lower that threshold to the point where an ordinary person with an idea and execution energy can build.",
   },
   {
     id: "l3",
-    name: { en: "Principles", zh: "原则" },
+    name: { zh: "原则", en: "Principles" },
     line: "Good architecture means you can go far.",
     also: "We are not challenging existing SaaS products. We are not challenging existing startup workflows.",
   },
   {
     id: "l4",
-    name: { en: "Strategy", zh: "战略" },
+    name: { zh: "战略", en: "Strategy" },
     line: "Nebutra is the central nervous system that makes all of those organs act toward the same purpose.",
     also: "The orchestration layer says: we make your tools get used more often.",
   },
   {
     id: "l5",
-    name: { en: "Product", zh: "产品" },
+    name: { zh: "产品", en: "Product" },
     line: "We build Nebutra around Plays, tactical workflows that cover complete sub-processes in the startup lifecycle, with clear inputs and outputs.",
     also: "Build that foundation once, and each Play becomes a module growing from the same skeleton.",
   },
   {
     id: "l6",
-    name: { en: "Users", zh: "用户" },
+    name: { zh: "用户", en: "Users" },
     line: "They have real domain knowledge, market instinct, and execution energy. But they are not staff-level engineers, ten-year product leaders, or senior growth operators.",
   },
   {
     id: "l7",
-    name: { en: "Narrative", zh: "表达" },
+    name: { zh: "表达", en: "Narrative" },
     line: "Nebutra: where chaos becomes a company.",
     also: "We call what Nebutra is building the Generative Company: a company whose media-ready artifacts are coherently generated from one agent and one context.",
   },
   {
     id: "l8",
-    name: { en: "Identity", zh: "身份" },
+    name: { zh: "身份", en: "Identity" },
     line: "Nurture the nebula into an ultra future.",
   },
 ];

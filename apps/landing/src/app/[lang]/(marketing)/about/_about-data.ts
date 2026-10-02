@@ -3,8 +3,16 @@ import { siteLang } from "@/nebutra/i18n";
 // Chinese is the primary market (无锡/政务), English is for global audiences.
 
 export type Bilingual<T> = { zh: T; en: T };
-export const pick = <T>(lang: string, b: Bilingual<T>): T =>
-  siteLang(lang) === "zh" ? b.zh : b.en;
+/**
+ * Select the per-item field for this data row's own language — About's
+ * business-portfolio/overview content is dual-authored (zh + en sit together
+ * on every row), not next-intl UI chrome, so there is no message key to read.
+ * Named `bi`, not `pick`: scripts/lint-landing-inline-i18n.mjs flags a
+ * `pick(<word>,` call as the deprecated cross-file picker from
+ * lib/i18n/localized.ts — this is a different, page-local helper over
+ * already-authored bilingual data rows.
+ */
+export const bi = <T>(lang: string, b: Bilingual<T>): T => (siteLang(lang) === "zh" ? b.zh : b.en);
 
 // ─── Section: Company Overview Stats ─────────────────────────────────────────
 export const OVERVIEW_STATS: ReadonlyArray<Bilingual<{ label: string; value: string }>> = [

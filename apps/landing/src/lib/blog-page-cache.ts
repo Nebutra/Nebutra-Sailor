@@ -21,12 +21,12 @@ import {
   getPostBySlug,
   getPostTranslation,
 } from "@/lib/blog";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { contentTimestamp } from "@/lib/seo/lastmod";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { localesForPath } from "@/lib/seo/route-registry";
 import { getSiteUrl, type PublicationSet, unpublishedSet } from "@/lib/seo/site-routes";
 import { buildArticleSchema, buildBreadcrumbListSchema } from "@/lib/seo/structured-data";
+import { siteLang } from "@/nebutra/i18n";
 
 export const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";
 
@@ -212,7 +212,7 @@ export async function loadCachedBlogArticle(
     return { kind: "not-found" };
   }
 
-  const isZh = isZhUiLocale(lang);
+  const isZh = siteLang(lang) === "zh";
   const blogLanguage = toBlogLanguage(lang);
   let post = await getCachedBlogPost(slug, blogLanguage);
   if (!post) {

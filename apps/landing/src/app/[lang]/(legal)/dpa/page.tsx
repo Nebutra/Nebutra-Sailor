@@ -1,8 +1,7 @@
-import { brand } from "@nebutra/brand/metadata";
 import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -18,9 +17,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang, namespace: "legalPages.dpa" });
   return buildPageMetadata({
-    title: `Data Processing Addendum (DPA) — ${brand.name}`,
-    description: `${brand.name}'s Data Processing Addendum is available on request for customers handling personal data.`,
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/dpa",
     locale: lang as Locale,
   });
@@ -29,58 +29,52 @@ export async function generateMetadata({
 export default async function DpaPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+  const t = await getTranslations({ locale: lang, namespace: "legalPages.dpa" });
 
   return (
     <div className="space-y-10">
       <header>
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">
-          Data Processing Addendum (DPA)
-        </h1>
-        <p className="mt-3 text-sm text-muted-foreground">Last updated: 2026-05-13</p>
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">{t("title")}</h1>
+        <p className="mt-3 text-sm text-muted-foreground">{t("lastUpdated")}</p>
       </header>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">Availability</h2>
-        <p className="leading-relaxed text-muted-foreground">
-          {brand.name} (“we”) provides a Data Processing Addendum to customers whose use of our
-          services involves processing personal data of EU, UK, Swiss, or California residents, or
-          any other jurisdiction with comparable data protection laws.
-        </p>
-        <p className="leading-relaxed text-muted-foreground">
-          Our DPA aligns with Article 28 GDPR, includes standard contractual clauses (EU 2021/914)
-          where required, and reflects sub-processor obligations.
-        </p>
+        <h2 className="text-xl font-bold text-foreground">{t("availability.heading")}</h2>
+        <p className="leading-relaxed text-muted-foreground">{t("availability.p1")}</p>
+        <p className="leading-relaxed text-muted-foreground">{t("availability.p2")}</p>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">How to request</h2>
+        <h2 className="text-xl font-bold text-foreground">{t("howToRequest.heading")}</h2>
         <p className="leading-relaxed text-muted-foreground">
-          Email{" "}
-          <a
-            href={`mailto:${getBrandEmail("legal")}?subject=DPA%20Request`}
-            className="font-medium text-primary underline-offset-4 hover:underline"
-          >
-            {getBrandEmail("legal")}
-          </a>{" "}
-          with:
+          {t.rich("howToRequest.emailIntro", {
+            email: () => (
+              <a
+                href={`mailto:${getBrandEmail("legal")}?subject=DPA%20Request`}
+                className="font-medium text-primary underline-offset-4 hover:underline"
+              >
+                {getBrandEmail("legal")}
+              </a>
+            ),
+          })}
         </p>
         <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
-          <li>Your legal entity name and signing authority</li>
-          <li>Whether you would like to use our standard DPA or send your own draft</li>
-          <li>Any required regional addenda (UK IDTA, Swiss FADP, etc.)</li>
+          <li>{t("howToRequest.items.0")}</li>
+          <li>{t("howToRequest.items.1")}</li>
+          <li>{t("howToRequest.items.2")}</li>
         </ul>
-        <p className="leading-relaxed text-muted-foreground">We respond within one business day.</p>
+        <p className="leading-relaxed text-muted-foreground">{t("howToRequest.response")}</p>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">Related</h2>
+        <h2 className="text-xl font-bold text-foreground">{t("related.heading")}</h2>
         <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
           <li>
             <Link
               href="/security"
               className="font-medium text-primary underline-offset-4 hover:underline"
             >
-              Security overview
+              {t("related.security")}
             </Link>
           </li>
           <li>
@@ -88,7 +82,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
               href="/privacy"
               className="font-medium text-primary underline-offset-4 hover:underline"
             >
-              Privacy Policy
+              {t("related.privacy")}
             </Link>
           </li>
           <li>
@@ -96,7 +90,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
               href="/terms"
               className="font-medium text-primary underline-offset-4 hover:underline"
             >
-              Terms of Service
+              {t("related.terms")}
             </Link>
           </li>
           <li>
@@ -104,7 +98,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
               href="/cookies"
               className="font-medium text-primary underline-offset-4 hover:underline"
             >
-              Cookie Policy
+              {t("related.cookies")}
             </Link>
           </li>
         </ul>

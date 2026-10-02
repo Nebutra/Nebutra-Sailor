@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getLegalDocument } from "@/lib/legal-documents";
 
 /**
@@ -22,12 +23,13 @@ export async function LegalDocumentContent({ slug, lang }: { slug: string; lang:
   }
 
   const effectiveDate = formatDate(doc.effectiveAt);
+  const t = await getTranslations({ locale: lang, namespace: "legalPages.document" });
 
   return (
     <article className="prose max-w-none">
       <h1>{doc.title}</h1>
       <p className="text-sm text-muted-foreground">
-        Version {doc.version} · Effective {effectiveDate}
+        {t("versionLabel", { version: doc.version, date: effectiveDate })}
       </p>
       {doc.summary ? <p className="lead">{doc.summary}</p> : null}
       <hr />

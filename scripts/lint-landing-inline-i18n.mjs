@@ -16,9 +16,11 @@
 //   • a STALE entry (allowlisted count above what is left) → FAIL
 //
 // What counts:
-//   1. `pick(<lang>, …)`            nebutra/i18n's two-language picker
-//   2. `isZhUiLocale(…)`             a branch on "is this Chinese"
-//   3. `{ en: "…"` / `{ en: '…'` / `{ en: \`…`   an inline copy pair
+//   1. `pick(<lang>, …)` / `bi(<lang>, …)`   a two-language picker, by any of its names
+//   2. `isZhUiLocale(…)`                      a branch on "is this Chinese"
+//   3. `{ en: "…"` / `{ zh: "…"`              an inline copy pair, in either field order
+// Reordering fields or renaming the picker is not a migration; the pattern
+// follows the shape, not the spelling.
 // Comments do not count. Tests and stories are exempt.
 //
 // Run: node scripts/lint-landing-inline-i18n.mjs            (check)
@@ -30,7 +32,13 @@ import { stripComments } from "./lib/strip-comments.mjs";
 
 const SCAN_ROOT = "apps/landing/src";
 
-const PATTERNS = [/\bpick\(\s*[\w.]+\s*,/g, /\bisZhUiLocale\(/g, /\{\s*en:\s*["'`]/g];
+const PATTERNS = [
+  // Any two-language picker called with a locale, whatever it is named.
+  /\b(?:pick|bi)\(\s*[\w.]+\s*,/g,
+  /\bisZhUiLocale\(/g,
+  // An inline pair, in either field order.
+  /\{\s*(?:en|zh):\s*["'`]/g,
+];
 
 function sh(cmd) {
   try {

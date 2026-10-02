@@ -3,7 +3,7 @@ import { type IncidentImpact, listIncidents, type StatusIncident } from "@nebutr
 import { cn } from "@nebutra/ui/utils";
 import type { Metadata } from "next";
 import { connection } from "next/server";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import {
   IncidentList,
@@ -13,10 +13,18 @@ import {
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 
-export const metadata: Metadata = {
-  title: "Incident history",
-  robots: { index: false },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "statusPages.history" });
+  return {
+    title: t("meta.title"),
+    robots: { index: false },
+  };
+}
 
 type Search = Promise<{ month?: string }>;
 
@@ -29,9 +37,13 @@ export default async function HistoryPage({
 }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+  const t = (await getTranslations({
+    locale: lang,
+    namespace: "statusPages.history",
+  })) as unknown as (key: string) => string;
   return (
     <Suspense fallback={<StatusPageSkeleton />}>
-      <HistoryContent searchParams={searchParams} />
+      <HistoryContent searchParams={searchParams} t={t} />
     </Suspense>
   );
 }
@@ -80,7 +92,13 @@ function worstByDay(incidents: StatusIncident[]): Map<string, IncidentImpact | "
   return out;
 }
 
-async function HistoryContent({ searchParams }: { searchParams: Search }) {
+async function HistoryContent({
+  searchParams,
+  t,
+}: {
+  searchParams: Search;
+  t: (key: string) => string;
+}) {
   await connection();
   const now = new Date();
   const { month: raw } = await searchParams;
@@ -116,19 +134,19 @@ async function HistoryContent({ searchParams }: { searchParams: Search }) {
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ChevronLeft aria-hidden className="h-4 w-4" />
-        Back to status
+        {t("backToStatus")}
       </Link>
 
       <section
         className="mt-6 overflow-hidden rounded-xl border border-border"
-        aria-label="Calendar"
+        aria-label={t("calendar")}
       >
         <div className="flex items-center gap-3 border-b border-border px-5 py-4">
-          <h1 className="text-lg font-medium tracking-tight">Calendar</h1>
+          <h1 className="text-lg font-medium tracking-tight">{t("calendar")}</h1>
           <nav className="flex items-center gap-1 text-sm tabular-nums text-muted-foreground">
             <Link
               href={`/status/history?month=${prev}`}
-              aria-label="Previous month"
+              aria-label={t("previousMonth")}
               className="rounded p-0.5 hover:text-foreground"
             >
               <ChevronLeft aria-hidden className="h-4 w-4" />
@@ -137,7 +155,7 @@ async function HistoryContent({ searchParams }: { searchParams: Search }) {
             {hasNext ? (
               <Link
                 href={`/status/history?month=${next}`}
-                aria-label="Next month"
+                aria-label={t("nextMonth")}
                 className="rounded p-0.5 hover:text-foreground"
               >
                 <ChevronRight aria-hidden className="h-4 w-4" />
@@ -150,7 +168,15 @@ async function HistoryContent({ searchParams }: { searchParams: Search }) {
           </nav>
         </div>
         <div className="grid grid-cols-7 text-center text-sm">
-          {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+          {[
+            t("weekdays.mon"),
+            t("weekdays.tue"),
+            t("weekdays.wed"),
+            t("weekdays.thu"),
+            t("weekdays.fri"),
+            t("weekdays.sat"),
+            t("weekdays.sun"),
+          ].map((d, i) => (
             <div
               key={`${d}-${i}`}
               className="border-b border-border py-3 text-xs text-muted-foreground"
@@ -198,7 +224,7 @@ async function HistoryContent({ searchParams }: { searchParams: Search }) {
         </h2>
         {inMonth.length === 0 ? (
           <p className="rounded-xl border border-border px-5 py-6 text-sm text-muted-foreground">
-            Nothing to report this month.
+            {t("nothingToReport")}
           </p>
         ) : (
           <IncidentList incidents={inMonth} />

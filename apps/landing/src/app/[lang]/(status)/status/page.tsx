@@ -1,7 +1,6 @@
-import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 import { connection } from "next/server";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { StatusPageSkeleton, StatusPageView } from "@/components/status/status-page-view";
 import type { Locale } from "@/i18n/routing";
@@ -30,9 +29,10 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "statusPages.index" });
   return buildPageMetadata({
-    title: `${brand.name} Status`,
-    description: `Live operational status for ${brand.name} public services.`,
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/status",
     locale: lang as Locale,
   });

@@ -14,7 +14,7 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -30,10 +30,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) return {};
+  const t = await getTranslations({ locale: lang, namespace: "securityPage" });
   return buildPageMetadata({
-    title: "Security — Nebutra",
-    description:
-      "Tenant isolation, application-layer encryption, RBAC/ABAC, structured audit logging — built into the Sailor skeleton as installable packages.",
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/security",
     locale: lang as Locale,
   });
@@ -41,100 +41,33 @@ export async function generateMetadata({
 
 interface Capability {
   icon: typeof ShieldCheck;
-  title: string;
+  key: string;
   pkg: string;
-  summary: string;
   wip?: boolean;
 }
 
 const CAPABILITIES: Capability[] = [
-  {
-    icon: Users,
-    title: "Tenant isolation",
-    pkg: "@nebutra/tenant",
-    summary:
-      "Request-scoped tenant context (AsyncLocalStorage) plus Postgres Row-Level Security policies for hard tenant isolation at the database layer.",
-  },
-  {
-    icon: Lock,
-    title: "Application-layer encryption",
-    pkg: "@nebutra/vault",
-    summary:
-      "Envelope encryption with AWS KMS for customer secrets. Plaintext never leaves the application boundary; rotation-aware data encryption keys.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "RBAC & ABAC",
-    pkg: "@nebutra/permissions",
-    summary: "CASL for in-process role/attribute checks.",
-  },
-  {
-    icon: FileText,
-    title: "Structured audit logging",
-    pkg: "@nebutra/audit",
-    summary:
-      "Consistent AuditEvent format with actor / action / resource / outcome attribution. Architecture in place; production integration in progress.",
-    wip: true,
-  },
-  {
-    icon: Key,
-    title: "Better Auth on Postgres",
-    pkg: "@nebutra/auth",
-    summary:
-      "Session/cookie auth backed by Better Auth, with organization membership and device-flow login wired in — no third-party identity vendor sits between your users and your database.",
-  },
-  {
-    icon: Database,
-    title: "Secrets at the boundary",
-    pkg: "env validation + @nebutra/vault",
-    summary:
-      "Required env vars validated at process start (Zod schema). Application secrets are decrypted on demand, never persisted to logs.",
-  },
+  { icon: Users, key: "tenantIsolation", pkg: "@nebutra/tenant" },
+  { icon: Lock, key: "encryption", pkg: "@nebutra/vault" },
+  { icon: ShieldCheck, key: "rbacAbac", pkg: "@nebutra/permissions" },
+  { icon: FileText, key: "auditLogging", pkg: "@nebutra/audit", wip: true },
+  { icon: Key, key: "auth", pkg: "@nebutra/auth" },
+  { icon: Database, key: "secrets", pkg: "env validation + @nebutra/vault" },
 ];
 
 type ComplianceTone = "ready" | "planned";
 
 interface ComplianceRow {
-  label: string;
-  state: string;
+  key: string;
   tone: ComplianceTone;
-  detail: string;
 }
 
 const COMPLIANCE: ComplianceRow[] = [
-  {
-    label: "GDPR / UK GDPR data handling",
-    state: "Aligned",
-    tone: "ready",
-    detail: "DPA available on request. Data subject access and deletion workflows in app.",
-  },
-  {
-    label: "SOC 2 Type II",
-    state: "On roadmap",
-    tone: "planned",
-    detail:
-      "Not currently certified. Architecture designed to support SOC 2 controls; formal audit planned.",
-  },
-  {
-    label: "ISO 27001",
-    state: "On roadmap",
-    tone: "planned",
-    detail: "Not currently certified. Tracking ISMS scope alongside SOC 2.",
-  },
-  {
-    label: "HIPAA-ready architecture",
-    state: "Subject to BAA",
-    tone: "ready",
-    detail:
-      "Audit logging, RBAC, and encryption primitives in place; a Business Associate Agreement is required for covered entities.",
-  },
-  {
-    label: "PIPL (China)",
-    state: "Supported",
-    tone: "ready",
-    detail:
-      "China-compatible providers (Bailian, Volcengine, SiliconFlow) supported for in-China data residency.",
-  },
+  { key: "gdpr", tone: "ready" },
+  { key: "soc2", tone: "planned" },
+  { key: "iso27001", tone: "planned" },
+  { key: "hipaa", tone: "ready" },
+  { key: "pipl", tone: "ready" },
 ];
 
 const TONE_CLASS: Record<ComplianceTone, string> = {
@@ -145,6 +78,10 @@ const TONE_CLASS: Record<ComplianceTone, string> = {
 export default async function SecurityPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+  const t = (await getTranslations({
+    locale: lang,
+    namespace: "securityPage",
+  })) as unknown as (key: string) => string;
 
   return (
     <main id="main-content" className="flex flex-col flex-1 bg-background relative overflow-hidden">
@@ -152,7 +89,9 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
       <section className="container mx-auto max-w-[1100px] px-4 py-32 relative">
         {/* Hero */}
         <AnimateIn preset="emerge" className="mb-20 max-w-3xl">
-          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">Security</p>
+          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
+            {t("hero.eyebrow")}
+          </p>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
             style={{
@@ -160,12 +99,9 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
               lineHeight: "var(--leading-display)",
             }}
           >
-            Security as code, not as claims.
+            {t("hero.title")}
           </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            The Sailor skeleton ships with audit logging, tenant isolation, encryption, and
-            permission primitives as installable packages — not slideware.
-          </p>
+          <p className="text-xl text-muted-foreground leading-relaxed">{t("hero.lead")}</p>
         </AnimateIn>
 
         {/* Capabilities */}
@@ -177,14 +113,12 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
               lineHeight: "var(--leading-heading)",
             }}
           >
-            Built-in capabilities
+            {t("capabilitiesSection.title")}
           </h2>
-          <p className="text-muted-foreground mb-10 max-w-2xl">
-            Each item below is a package in this repository. Audit our source on GitHub.
-          </p>
+          <p className="text-muted-foreground mb-10 max-w-2xl">{t("capabilitiesSection.lead")}</p>
           <AnimateInGroup stagger="fast" className="grid gap-4 md:grid-cols-2">
             {CAPABILITIES.map((cap) => (
-              <AnimateIn key={cap.title} preset="fadeUp">
+              <AnimateIn key={cap.key} preset="fadeUp">
                 <article
                   className="rounded-[var(--radius-card)] bg-card/30 p-7 h-full transition-colors"
                   style={{ boxShadow: "var(--ring-hairline)" }}
@@ -195,17 +129,21 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                     </div>
                     <div className="flex-1">
                       <div className="flex items-baseline gap-2 flex-wrap">
-                        <h3 className="text-lg font-bold text-foreground">{cap.title}</h3>
+                        <h3 className="text-lg font-bold text-foreground">
+                          {t(`capabilities.${cap.key}.title`)}
+                        </h3>
                         {cap.wip && (
                           <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                            Integration WIP
+                            {t("integrationWip")}
                           </span>
                         )}
                       </div>
                       <code className="text-xs text-muted-foreground/80 font-mono">{cap.pkg}</code>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{cap.summary}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {t(`capabilities.${cap.key}.summary`)}
+                  </p>
                 </article>
               </AnimateIn>
             ))}
@@ -221,28 +159,27 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
               lineHeight: "var(--leading-heading)",
             }}
           >
-            Compliance posture
+            {t("complianceSection.title")}
           </h2>
-          <p className="text-muted-foreground mb-10 max-w-2xl">
-            We list current state plainly — what is in place today versus what is on the roadmap. No
-            badges we have not earned.
-          </p>
+          <p className="text-muted-foreground mb-10 max-w-2xl">{t("complianceSection.lead")}</p>
           <div
             className="rounded-[var(--radius-card)] bg-card/20 divide-y divide-border overflow-hidden"
             style={{ boxShadow: "var(--ring-hairline)" }}
           >
             {COMPLIANCE.map((row) => (
               <div
-                key={row.label}
+                key={row.key}
                 className="grid grid-cols-1 md:grid-cols-[1fr_auto_2fr] items-start gap-3 md:gap-6 p-6"
               >
-                <div className="font-bold text-foreground">{row.label}</div>
+                <div className="font-bold text-foreground">{t(`compliance.${row.key}.label`)}</div>
                 <span
                   className={`rounded-full px-3 py-1 text-xs font-bold ${TONE_CLASS[row.tone]} shrink-0 self-start`}
                 >
-                  {row.state}
+                  {t(`compliance.${row.key}.state`)}
                 </span>
-                <p className="text-sm text-muted-foreground leading-relaxed">{row.detail}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {t(`compliance.${row.key}.detail`)}
+                </p>
               </div>
             ))}
           </div>
@@ -262,16 +199,13 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                 lineHeight: "var(--leading-heading)",
               }}
             >
-              Need our DPA, a security questionnaire, or a chat?
+              {t("cta.title")}
             </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              We respond to security inquiries within one business day. For DPA requests, attach
-              your draft or use ours.
-            </p>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">{t("cta.lead")}</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
               <Button asChild variant="ink" size="lg">
                 <Link href="/dpa">
-                  <FileText className="mr-2 h-4 w-4" /> Read our DPA stance
+                  <FileText className="mr-2 h-4 w-4" /> {t("cta.readDpa")}
                 </Link>
               </Button>
               <Button
@@ -291,7 +225,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                 className="rounded-[var(--radius-button)]"
               >
                 <a href={`mailto:legal@${brand.domains.landing}?subject=DPA%20Request`}>
-                  Request DPA <ArrowRight className="ml-2 h-4 w-4" />
+                  {t("cta.requestDpa")} <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </div>

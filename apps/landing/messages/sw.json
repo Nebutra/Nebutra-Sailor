@@ -1134,6 +1134,39 @@
         "supportLabel": "Msaada"
       },
       "acknowledgement": "Kwa kutumia {brandName}, unathibitisha kuwa umesoma, kuelewa, na kukubali kuwa dhamiriwa na Masharti haya ya Huduma."
+    },
+    "dpa": {
+      "meta": {
+        "title": "Data Processing Addendum (DPA) — {brandName}",
+        "description": "{brandName}'s Data Processing Addendum is available on request for customers handling personal data."
+      },
+      "title": "Data Processing Addendum (DPA)",
+      "lastUpdated": "Last updated: 2026-05-13",
+      "availability": {
+        "heading": "Availability",
+        "p1": "{brandName} (“we”) provides a Data Processing Addendum to customers whose use of our services involves processing personal data of EU, UK, Swiss, or California residents, or any other jurisdiction with comparable data protection laws.",
+        "p2": "Our DPA aligns with Article 28 GDPR, includes standard contractual clauses (EU 2021/914) where required, and reflects sub-processor obligations."
+      },
+      "howToRequest": {
+        "heading": "How to request",
+        "emailIntro": "Email <email>address</email> with:",
+        "items": {
+          "0": "Your legal entity name and signing authority",
+          "1": "Whether you would like to use our standard DPA or send your own draft",
+          "2": "Any required regional addenda (UK IDTA, Swiss FADP, etc.)"
+        },
+        "response": "We respond within one business day."
+      },
+      "related": {
+        "heading": "Related",
+        "security": "Security overview",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "cookies": "Cookie Policy"
+      }
+    },
+    "document": {
+      "versionLabel": "Version {version} · Effective {date}"
     }
   },
   "metadata": {
@@ -1953,6 +1986,11 @@
         "cn": "在平台上长出来的产品。",
         "buildingLink": "What we're building"
       }
+    },
+    "journalPage": {
+      "title": "Journal",
+      "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
+      "cn": "我们对这个时代的判断。"
     }
   },
   "siteMap": {
@@ -3832,6 +3870,437 @@
         }
       },
       "rights": "All rights reserved."
+    }
+  },
+  "journal": {
+    "og": {
+      "tagline": "Engineering notes for AI SaaS"
+    },
+    "article": {
+      "allPosts": "All posts",
+      "journalBadge": "{brandName} Journal",
+      "copyOriginal": "Copy original",
+      "copyBlock": "Copy block",
+      "copied": "Copied",
+      "tableOfContentsAria": "Table of contents",
+      "contents": "Contents",
+      "footer": {
+        "continueReading": "Continue reading",
+        "relatedNotes": "Related notes",
+        "allPosts": "All posts",
+        "subscribeTitle": "Subscribe to {brandName} Originals",
+        "subscribeBody": "Low-frequency notes on product engineering and AI SaaS delivery.",
+        "discuss": "Discuss",
+        "share": "Share"
+      }
+    },
+    "comments": {
+      "title": "Discussion",
+      "subtitle": "Join with your {brandName} account. New comments enter moderation first.",
+      "empty": "No comments yet. Start the thread.",
+      "signIn": "Sign in to comment",
+      "placeholder": "Share your thought...",
+      "submit": "Post comment",
+      "submitting": "Posting",
+      "pending": "Pending",
+      "error": "Comments are unavailable. Try again later.",
+      "like": "Like",
+      "liked": "Liked",
+      "save": "Save",
+      "saved": "Saved",
+      "signInToLike": "Sign in to like",
+      "signInToSave": "Sign in to save"
+    },
+    "author": {
+      "label": "Author",
+      "postCount": "{count} posts"
+    },
+    "tag": {
+      "label": "Topic",
+      "postCount": "{count} posts"
+    }
+  },
+  "changelogPage": {
+    "meta": {
+      "title": "Changelog — {brandName}",
+      "description": "Every release, shipped with obsessive attention to detail."
+    },
+    "subscribe": "Subscribe to release notes via <rss>RSS</rss> or <atom>Atom</atom> or follow <handle>@nebutra_ai</handle>."
+  },
+  "newsPage": {
+    "meta": {
+      "title": "Newsroom — {brandName}",
+      "description": "Product launches, announcements, and platform updates from {brandName}."
+    },
+    "empty": {
+      "title": "No news yet — announcements are on the way.",
+      "subtitle": "Check back soon for updates."
+    }
+  },
+  "modelsPage": {
+    "meta": {
+      "title": "Supported AI Providers & Models — {brandName}",
+      "description": "AI provider metadata for every major LLM lab, China platform, gateway, and local runtime — wired through Vercel AI SDK. Swap providers with one env var."
+    },
+    "eyebrow": "AI Providers",
+    "title": "{count} AI providers. One adapter.",
+    "lead": "Sailor ships with provider metadata for every major LLM lab, China platform, gateway, and local runtime — wired through Vercel AI SDK. Swap providers with one env var.",
+    "providerCount": "{count, plural, one {# provider} other {# providers}}",
+    "status": {
+      "opencode": "Production",
+      "ai-sdk": "AI SDK",
+      "cn-compatible": "Compatible",
+      "pending": "Pending"
+    },
+    "categories": {
+      "directLabs": "Direct Labs",
+      "chinaPlatforms": "China Platforms",
+      "cloudPlatforms": "Cloud Platforms",
+      "inferenceAccelerators": "Inference Accelerators",
+      "unifiedGateways": "Unified Gateways",
+      "multimodal": "Multimodal",
+      "localDeployment": "Local Deployment",
+      "developerEcosystem": "Developer Ecosystem"
+    }
+  },
+  "roadmapPage": {
+    "meta": {
+      "description": "{brandName}'s roadmap in the founder's nine layers: why we exist, where we are going, and what ships next."
+    },
+    "hero": {
+      "title": "From why, to what ships next.",
+      "lead": "Nine layers, top to bottom. The first eight say why {brandName} exists and what it has to become; they hold still. The ninth is what we are doing about it, and it moves every week.",
+      "cn": "从为什么，到下一步。",
+      "essayLink": "The nine layers, and why we write them down →"
+    },
+    "direction": {
+      "title": "Direction",
+      "lead": "Each line is the founder's, taken as written from the Journal.",
+      "cn": "方向，L1 到 L8。"
+    },
+    "execution": {
+      "title": "Execution",
+      "lead": "L9. Every bet names the layer it answers to; a bet that serves none does not go on the list.",
+      "cn": "执行：现在、接下来、更远。"
+    },
+    "landed": {
+      "title": "Landed",
+      "lead": "What moved out of Now, with the work it took. The release notes have the rest.",
+      "cn": "已经落地的。",
+      "releaseNotes": "Release notes →"
+    }
+  },
+  "aboutPages": {
+    "businessPortfolio": {
+      "meta": {
+        "title": "Business Portfolio — {brandName}",
+        "description": "19 core capabilities spanning modality, technology, platform infrastructure, and data governance — the full-stack foundation for AI-native data intelligence."
+      },
+      "hero": {
+        "kicker": "Business Portfolio",
+        "heading": "19 core capabilities across 4 dimensions",
+        "lead": "From modality coverage to technology foundations, platform infrastructure, and data governance — 19 capabilities forming an end-to-end AI-native data intelligence stack.",
+        "totalLabel": "Total {count} capabilities · 4 dimensions"
+      },
+      "groupItemsLabel": "{count} items",
+      "matrix": {
+        "kicker": "Capability Matrix",
+        "heading": "19 capabilities at a glance",
+        "lead": "Four groups side by side — easy to compare, orchestrate, and compose."
+      },
+      "cta": {
+        "kicker": "Dive Deeper?",
+        "heading": "Want to go deeper on any capability?",
+        "lead": "Tell us your scenario — we'll pair you with a dedicated architect and engineering team for technical alignment.",
+        "button": "Contact us"
+      }
+    },
+    "global": {
+      "meta": {
+        "title": "Global Presence — About · {productName}",
+        "description": "{productName} is Day-1 global — 7 primary languages, cross-border compliance, multi-region payments, and a global edge network, ready on day one."
+      },
+      "hero": {
+        "eyebrow": "Global Presence",
+        "title": "Day 1 Global",
+        "lead": "{productName} has been internationally-native since line one — not an afterthought patch. Benchmarked against globally-born products like Stripe, Vercel, and Linear, we lay the infrastructure groundwork for you to ship to global markets from day one."
+      },
+      "pillars": {
+        "title": "Four Pillars of Global Readiness",
+        "lead": "Languages, compliance, payments, and edge network — the four foundational dimensions of going global."
+      },
+      "languages": {
+        "title": "7 Primary Languages",
+        "lead": "Native i18n + dynamic l10n, covering ~4 billion people globally."
+      },
+      "compliance": {
+        "title": "Compliance Matrix",
+        "lead": "Major regulatory frameworks supported on Day 1; enterprise certifications on the roadmap.",
+        "columns": {
+          "region": "Region",
+          "framework": "Framework",
+          "status": "Status"
+        }
+      },
+      "payments": {
+        "title": "Payments: Global + China",
+        "lead": "Creem covers global cards as merchant of record — it collects and remits sales tax/VAT so you don't register in every country; WeChat Pay and Alipay cover mainland China natively — both behind one billing contract, live as soon as you add the keys."
+      },
+      "cta": {
+        "eyebrow": "Ready to Sail",
+        "title": "Ready to set sail globally?",
+        "lead": "From local validation to global expansion, Sailor is your most reliable technical co-founder.",
+        "button": "Contact Us"
+      }
+    },
+    "innovation": {
+      "meta": {
+        "title": "R&D & Innovation — {productName}",
+        "description": "Engineering taste is our moat. Geek-driven {brandName}, benchmarked against Silicon Valley: AI-native architecture (Harness engineering), open-source infrastructure, engineering excellence."
+      },
+      "hero": {
+        "eyebrow": "R&D / Innovation",
+        "heading": "Engineering Taste as Moat",
+        "manifesto": "We are a small, geek-driven team. In an era when AI makes tools universally available, the only remaining scarcity is taste — aesthetic judgment about architecture, obsession over detail, commitment to the long game. {brandName} benchmarks against top Silicon Valley R&D orgs: type-safe, observable, Edge-first, multi-tenant, open-source from line one. Not a slogan — this is our daily engineering discipline.",
+        "battlefield": "Across the three-layer evolution of the AI stack, our battlefield is the Harness layer — MCP/Skill, tool ecosystems, agent orchestration, A2A. This is where real engineering lives in 2025–2026."
+      },
+      "harness": {
+        "eyebrow": "Three-Layer Evolution of the AI Stack",
+        "heading": "From Weights, to Context, to Harness",
+        "intro": "The innovation frontier of large models expands outward every two years. 2022 was scaling weights; 2023–2024 was RAG and long-context engineering; 2025–2026, the real marginal value has shifted to the Harness layer — tools, protocols, workflow graphs, and agent infrastructure.",
+        "outro": "{productName} treats Harness engineering as a first-class concern. We don't train foundation models, and we don't just do prompting — we ship production-grade Harness: MCP/Skill-driven agents, A2A protocols, observable workflow graphs, and a secure tool ecosystem. This is the next architectural coordinate of AI-native SaaS.",
+        "battlefieldTag": "← {productName}'s battlefield",
+        "currentTag": "In progress"
+      },
+      "pillars": {
+        "ossSupplement": "Why open-source? Because we believe: in an accelerated era, proprietary edge evaporates in 6 months, while open-source compounds over a decade. It frees customers from vendor lock-in, lets the community harden our infrastructure, and subjects every commit to worldwide review. This is our most confident long-term bet."
+      },
+      "orgPrinciples": {
+        "eyebrow": "ORGANIZATIONAL PRINCIPLES",
+        "heading": "AI Leverage vs. Administrative Decay",
+        "intro": "Great organizations should not drift into mediocrity and bureaucracy as they scale. When the {brandName} ecosystem and its incubated companies face rapid growth, the following three are the only non-negotiable principles of organizational evolution — each directly constraining hiring, governance, and resource allocation decisions."
+      },
+      "timeline": {
+        "eyebrow": "Innovation Timeline",
+        "heading": "The road walked and stations ahead"
+      },
+      "cta": {
+        "eyebrow": "Join our R&D journey",
+        "heading": "Build the next generation of AI infrastructure with fellow geeks",
+        "button": "Explore careers"
+      }
+    },
+    "whitepaper": {
+      "meta": {
+        "title": "Business Whitepaper — {productName}",
+        "description": "{productName} governed AI platform whitepaper — a four-chapter engineering and business document"
+      },
+      "hero": {
+        "eyebrow": "{brandNameUpper} BUSINESS WHITEPAPER",
+        "title": "The Governed AI Platform & Engineering Principles",
+        "readTime": "Read 15 min",
+        "tocKicker": "Contents",
+        "updated": "Last updated: 2026-04-21",
+        "back": "Back to About"
+      },
+      "chapters": {
+        "chapter": "Chapter",
+        "iTitle": "Strategic Position: Platform Baseline & Engineering Leverage",
+        "iiTitle": "Upgrade Paths & Coordination Contracts",
+        "iiiTitle": "The AI-Native Platform Layer",
+        "ivTitle": "Organizational Principles: Governance & Automation"
+      },
+      "goalsKicker": "Core Objectives",
+      "sectionII": {
+        "heading": "Omni-Factor Routing Protocol",
+        "intro": "The main friction in modern software teams is not lack of tools, but repeated platform rebuilds, weak upgrade paths, and unclear coordination contracts. {brandName} focuses on stronger platform contracts and clearer evolution paths so systems keep shipping instead of constantly being rebuilt."
+      },
+      "sectionIII": {
+        "heading": "The AI-Native Convergence",
+        "intro": "{brandName} is not a collage of fragmented tools. It brings scaffolding, runtime integrations, governance, and delivery paths into one verifiable platform layer teams can evolve against a shared baseline.",
+        "builderEyebrow": "L0 · Engineering Foundation",
+        "sleptonsEyebrow": "L1 · Trust & Matching",
+        "highlightsKicker": "Core Capabilities"
+      },
+      "sectionIV": {
+        "heading": "Organizational Principles · AI Leverage over Human Corrosion",
+        "intro": "Great organizations should not drift toward mediocrity and bureaucracy as they scale. When {brandName}'s ecosystem and its portfolio companies face rapid growth, the following three principles are non-negotiable — they decide whether the organization continues to compound, or begins to erode from within."
+      }
+    }
+  },
+  "showcasePage": {
+    "meta": {
+      "title": "Showcase — {productName}",
+      "description": "Discover what developers and teams are building with {productName}."
+    },
+    "title": "Showcase",
+    "lead": "See what developers and teams are building with {productName}.",
+    "comingSoon": {
+      "title": "Coming soon",
+      "body": "Projects built with {productName} will be featured here."
+    },
+    "featured": "Featured",
+    "categories": {
+      "saas": "SaaS",
+      "ecommerce": "E-Commerce",
+      "ai": "AI / ML",
+      "devtools": "Developer Tools",
+      "marketing": "Marketing",
+      "other": "Other"
+    }
+  },
+  "securityPage": {
+    "meta": {
+      "title": "Security — {brandName}",
+      "description": "Tenant isolation, application-layer encryption, RBAC/ABAC, structured audit logging — built into the Sailor skeleton as installable packages."
+    },
+    "hero": {
+      "eyebrow": "Security",
+      "title": "Security as code, not as claims.",
+      "lead": "The Sailor skeleton ships with audit logging, tenant isolation, encryption, and permission primitives as installable packages — not slideware."
+    },
+    "capabilitiesSection": {
+      "title": "Built-in capabilities",
+      "lead": "Each item below is a package in this repository. Audit our source on GitHub."
+    },
+    "capabilities": {
+      "tenantIsolation": {
+        "title": "Tenant isolation",
+        "summary": "Request-scoped tenant context (AsyncLocalStorage) plus Postgres Row-Level Security policies for hard tenant isolation at the database layer."
+      },
+      "encryption": {
+        "title": "Application-layer encryption",
+        "summary": "Envelope encryption with AWS KMS for customer secrets. Plaintext never leaves the application boundary; rotation-aware data encryption keys."
+      },
+      "rbacAbac": {
+        "title": "RBAC & ABAC",
+        "summary": "CASL for in-process role/attribute checks."
+      },
+      "auditLogging": {
+        "title": "Structured audit logging",
+        "summary": "Consistent AuditEvent format with actor / action / resource / outcome attribution. Architecture in place; production integration in progress."
+      },
+      "auth": {
+        "title": "Better Auth on Postgres",
+        "summary": "Session/cookie auth backed by Better Auth, with organization membership and device-flow login wired in — no third-party identity vendor sits between your users and your database."
+      },
+      "secrets": {
+        "title": "Secrets at the boundary",
+        "summary": "Required env vars validated at process start (Zod schema). Application secrets are decrypted on demand, never persisted to logs."
+      }
+    },
+    "integrationWip": "Integration WIP",
+    "complianceSection": {
+      "title": "Compliance posture",
+      "lead": "We list current state plainly — what is in place today versus what is on the roadmap. No badges we have not earned."
+    },
+    "compliance": {
+      "gdpr": {
+        "label": "GDPR / UK GDPR data handling",
+        "state": "Aligned",
+        "detail": "DPA available on request. Data subject access and deletion workflows in app."
+      },
+      "soc2": {
+        "label": "SOC 2 Type II",
+        "state": "On roadmap",
+        "detail": "Not currently certified. Architecture designed to support SOC 2 controls; formal audit planned."
+      },
+      "iso27001": {
+        "label": "ISO 27001",
+        "state": "On roadmap",
+        "detail": "Not currently certified. Tracking ISMS scope alongside SOC 2."
+      },
+      "hipaa": {
+        "label": "HIPAA-ready architecture",
+        "state": "Subject to BAA",
+        "detail": "Audit logging, RBAC, and encryption primitives in place; a Business Associate Agreement is required for covered entities."
+      },
+      "pipl": {
+        "label": "PIPL (China)",
+        "state": "Supported",
+        "detail": "China-compatible providers (Bailian, Volcengine, SiliconFlow) supported for in-China data residency."
+      }
+    },
+    "cta": {
+      "title": "Need our DPA, a security questionnaire, or a chat?",
+      "lead": "We respond to security inquiries within one business day. For DPA requests, attach your draft or use ours.",
+      "readDpa": "Read our DPA stance",
+      "requestDpa": "Request DPA"
+    }
+  },
+  "opcPage": {
+    "meta": {
+      "title": "Platform — {brandName}",
+      "description": "{brandName} platform overview."
+    }
+  },
+  "studioPage": {
+    "meta": {
+      "description": "Choose how a Sailor project looks, preview it on real pages, and apply it with one command."
+    }
+  },
+  "statusPages": {
+    "index": {
+      "meta": {
+        "title": "{brandName} Status",
+        "description": "Live operational status for {brandName} public services."
+      }
+    },
+    "history": {
+      "meta": {
+        "title": "Incident history"
+      },
+      "backToStatus": "Back to status",
+      "calendar": "Calendar",
+      "previousMonth": "Previous month",
+      "nextMonth": "Next month",
+      "weekdays": {
+        "mon": "M",
+        "tue": "T",
+        "wed": "W",
+        "thu": "T",
+        "fri": "F",
+        "sat": "S",
+        "sun": "S"
+      },
+      "nothingToReport": "Nothing to report this month."
+    },
+    "incident": {
+      "seoTitle": "Incident",
+      "phase": {
+        "scheduled": "Scheduled",
+        "inProgress": "In progress",
+        "completed": "Completed"
+      },
+      "backToStatus": "Back to status",
+      "fields": {
+        "status": "Status",
+        "type": "Type",
+        "impact": "Impact",
+        "started": "Started",
+        "duration": "Duration"
+      },
+      "maintenance": "Maintenance",
+      "affected": "Affected: {services}",
+      "updates": "Updates"
+    },
+    "subscription": {
+      "meta": {
+        "title": "Subscription"
+      },
+      "invalid": {
+        "title": "This link is not valid",
+        "body": "It may have expired or already been used. Subscribe again from the status page."
+      },
+      "confirmed": {
+        "title": "You're subscribed",
+        "body": "{email} will get an email when there is an incident or scheduled maintenance."
+      },
+      "unsubscribed": {
+        "title": "You're unsubscribed",
+        "body": "You will not get any more status emails."
+      },
+      "backToStatus": "Back to status"
     }
   }
 }

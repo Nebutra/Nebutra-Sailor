@@ -10,6 +10,14 @@ expect.extend(matchers);
 
 vi.mock("next-intl/server", () => ({
   setRequestLocale: vi.fn(),
+  getTranslations: vi.fn(async () => {
+    return (key: string, values?: Record<string, unknown>) => {
+      if (key === "versionLabel" && values) {
+        return `Version ${values.version} · Effective ${values.date}`;
+      }
+      return key;
+    };
+  }),
 }));
 
 vi.mock("next/navigation", () => ({

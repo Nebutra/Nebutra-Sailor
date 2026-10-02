@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import type { VcOrg } from "@/lib/constants/vc";
-import { isZhUiLocale } from "@/lib/i18n/localized";
+import { siteLang } from "@/nebutra/i18n";
 import { VcLogo } from "./VcLogo";
 
 export interface VcProfileProps {
@@ -27,7 +27,7 @@ export async function VcProfile({
   hrefBase,
   variant,
 }: VcProfileProps) {
-  const zh = isZhUiLocale(locale) || locale.startsWith("zh-") || locale.startsWith("zh_");
+  const zh = siteLang(locale) === "zh";
   const t = await getTranslations({ locale, namespace: "solutionsCatalog.vcProfile" });
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
 

@@ -3,7 +3,7 @@ import { getIncident, maintenancePhase } from "@nebutra/status";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import {
   formatDuration,
@@ -28,10 +28,14 @@ type Params = Promise<{ lang: string; id: string }>;
  */
 export const instant = false;
 
-export const metadata: Metadata = {
-  title: "Incident",
-  robots: { index: false },
-};
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "statusPages.incident" });
+  return {
+    title: t("seoTitle"),
+    robots: { index: false },
+  };
+}
 
 export default async function IncidentPage({ params }: { params: Params }) {
   const { lang } = await params;
@@ -43,15 +47,18 @@ export default async function IncidentPage({ params }: { params: Params }) {
   );
 }
 
-const PHASE_LABEL = {
-  scheduled: "Scheduled",
-  in_progress: "In progress",
-  completed: "Completed",
-} as const;
-
 async function IncidentContent({ params }: { params: Params }) {
   await connection();
-  const { id } = await params;
+  const { lang, id } = await params;
+  const t = (await getTranslations({
+    locale: lang,
+    namespace: "statusPages.incident",
+  })) as unknown as (key: string, values?: Record<string, unknown>) => string;
+  const PHASE_LABEL = {
+    scheduled: t("phase.scheduled"),
+    in_progress: t("phase.inProgress"),
+    completed: t("phase.completed"),
+  } as const;
   const incident = await getIncident(id);
   if (!incident) notFound();
 
@@ -69,7 +76,7 @@ async function IncidentContent({ params }: { params: Params }) {
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ChevronLeft aria-hidden className="h-4 w-4" />
-        Back to status
+        {t("backToStatus")}
       </Link>
 
       <header className="mt-6">
@@ -77,25 +84,27 @@ async function IncidentContent({ params }: { params: Params }) {
           {incident.title}
         </h1>
         <dl className="mt-5 grid grid-cols-2 gap-4 rounded-xl border border-border px-5 py-4 text-sm sm:grid-cols-4">
-          <Meta term="Status" value={state} />
+          <Meta term={t("fields.status")} value={state} />
           <Meta
-            term={isMaintenance ? "Type" : "Impact"}
-            value={isMaintenance ? "Maintenance" : impactLabel[incident.impact]}
+            term={isMaintenance ? t("fields.type") : t("fields.impact")}
+            value={isMaintenance ? t("maintenance") : impactLabel[incident.impact]}
           />
           <Meta
-            term="Started"
+            term={t("fields.started")}
             value={formatUtcMedium(incident.scheduledStart ?? incident.createdAt)}
           />
-          <Meta term="Duration" value={formatDuration(incident)} />
+          <Meta term={t("fields.duration")} value={formatDuration(incident)} />
         </dl>
         {affected ? (
-          <p className="mt-3 text-sm text-muted-foreground">Affected: {affected}</p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {t("affected", { services: affected })}
+          </p>
         ) : null}
       </header>
 
       <section className="mt-10" aria-labelledby="incident-updates">
         <h2 id="incident-updates" className="text-lg font-medium tracking-tight">
-          Updates
+          {t("updates")}
         </h2>
         <ol className="relative mt-5 border-l border-border pl-6">
           {updates.map((update) => (

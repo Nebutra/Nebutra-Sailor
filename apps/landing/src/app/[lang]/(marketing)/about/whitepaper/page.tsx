@@ -9,170 +9,52 @@ import {
   Shield,
 } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   type Bilingual,
+  bi,
   CORE_QUOTE,
   META_UNICORN_THESIS,
   OMNI_FACTOR_GROUPS,
   ORGANIZATION_PRINCIPLES,
   PRODUCT_BUILDER_CORE,
   PRODUCT_SLEPTONS,
-  pick,
 } from "../_about-data";
 
-// ─── Page-level labels (bilingual, strictly engineering-tone) ────────────────
+// ─── Page-level data (bilingual list content — still dual-authored per item) ─
 
-const PAGE_META: Bilingual<{ title: string; description: string }> = {
-  zh: {
-    title: "商业白皮书 — Nebutra",
-    description: "Nebutra 受治理 AI 平台白皮书 · 四章工程与商业文档",
-  },
-  en: {
-    title: "Business Whitepaper — Nebutra",
-    description:
-      "Nebutra governed AI platform whitepaper — a four-chapter engineering and business document",
-  },
-};
-
-const HERO_LABELS: Bilingual<{
-  eyebrow: string;
-  title: string;
-  readTime: string;
-  tocKicker: string;
-  updated: string;
-  back: string;
-}> = {
-  zh: {
-    eyebrow: "NEBUTRA BUSINESS WHITEPAPER / 商业白皮书",
-    title: "Nebutra 平台白皮书与工程原则",
-    readTime: "全文约 15 分钟阅读",
-    tocKicker: "目录",
-    updated: "最后更新:2026-04-21",
-    back: "返回 About",
-  },
-  en: {
-    eyebrow: "NEBUTRA BUSINESS WHITEPAPER",
-    title: "The Governed AI Platform & Engineering Principles",
-    readTime: "Read 15 min",
-    tocKicker: "Contents",
-    updated: "Last updated: 2026-04-21",
-    back: "Back to About",
-  },
-};
-
-const CHAPTER_LABELS: Bilingual<{
-  chapter: string;
-  iTitle: string;
-  iiTitle: string;
-  iiiTitle: string;
-  ivTitle: string;
-}> = {
-  zh: {
-    chapter: "第",
-    iTitle: "战略定位:平台基线与工程杠杆",
-    iiTitle: "升级路径与协作契约",
-    iiiTitle: "全链路 AI 原生平台层",
-    ivTitle: "组织演进准则:治理与自动化",
-  },
-  en: {
-    chapter: "Chapter",
-    iTitle: "Strategic Position: Platform Baseline & Engineering Leverage",
-    iiTitle: "Upgrade Paths & Coordination Contracts",
-    iiiTitle: "The AI-Native Platform Layer",
-    ivTitle: "Organizational Principles: Governance & Automation",
-  },
-};
-
-const I_COPY: Bilingual<{
-  goalsKicker: string;
-  goals: ReadonlyArray<{ title: string; desc: string }>;
-}> = {
-  zh: {
-    goalsKicker: "核心目标",
-    goals: [
-      {
-        title: "让平台工作标准化",
-        desc: "用 AI 原生平台基线降低产品启动时的技术重复劳动，让团队不必每次都重搭平台层。",
-      },
-      {
-        title: "让交付更轻量",
-        desc: "让精干团队也能在可审计的平台基线之上交付多租户、计费、合规与 AI 能力。",
-      },
-      {
-        title: "让能力可验证",
-        desc: "用可验证的工程产出、升级纪律和运行时信号，替代身份标签与模糊叙事。",
-      },
-    ],
-  },
-  en: {
-    goalsKicker: "Core Objectives",
-    goals: [
-      {
-        title: "Standardize platform work",
-        desc: "Use an AI-native platform baseline to reduce repeated platform setup, so teams do not keep rebuilding the same layer for every product.",
-      },
-      {
-        title: "Make delivery lightweight",
-        desc: "Let lean teams ship multi-tenancy, billing, compliance, and AI capabilities on top of an auditable platform baseline.",
-      },
-      {
-        title: "Make capability verifiable",
-        desc: "Replace identity-driven narratives with verifiable engineering output, upgrade discipline, and observable runtime behavior.",
-      },
-    ],
-  },
-};
-
-const II_COPY: Bilingual<{ intro: string }> = {
-  zh: {
-    intro:
-      "现代软件团队的主要摩擦,不在于没有工具,而在于平台层反复重建、升级路径模糊和协作契约失真。Nebutra 关注的是如何用更稳定的平台契约和更清晰的演进路径,让系统持续产出而不是持续返工。",
-  },
-  en: {
-    intro:
-      "The main friction in modern software teams is not lack of tools, but repeated platform rebuilds, weak upgrade paths, and unclear coordination contracts. Nebutra focuses on stronger platform contracts and clearer evolution paths so systems keep shipping instead of constantly being rebuilt.",
-  },
-};
-
-const III_COPY: Bilingual<{
-  intro: string;
-  builderEyebrow: string;
-  sleptonsEyebrow: string;
-  overviewKicker: string;
-  highlightsKicker: string;
-}> = {
-  zh: {
-    intro:
-      "Nebutra 不是零散工具的拼贴。它把脚手架、运行时集成、治理机制和交付路径收敛进一套可验证的平台层,让团队能围绕同一基线持续演进。",
-    builderEyebrow: "L0 · 工程底座",
-    sleptonsEyebrow: "L1 · 信任与撮合",
-    overviewKicker: "产品概述",
-    highlightsKicker: "核心能力",
-  },
-  en: {
-    intro:
-      "Nebutra is not a collage of fragmented tools. It brings scaffolding, runtime integrations, governance, and delivery paths into one verifiable platform layer teams can evolve against a shared baseline.",
-    builderEyebrow: "L0 · Engineering Foundation",
-    sleptonsEyebrow: "L1 · Trust & Matching",
-    overviewKicker: "Overview",
-    highlightsKicker: "Core Capabilities",
-  },
-};
-
-const IV_COPY: Bilingual<{ intro: string }> = {
-  zh: {
-    intro:
-      "伟大的组织不应在扩张过程中走向平庸与官僚化。当 Nebutra 生态及其孵化公司面临规模激增时,以下三条准则不可妥协——它们决定组织是继续复利,还是走向内耗。",
-  },
-  en: {
-    intro:
-      "Great organizations should not drift toward mediocrity and bureaucracy as they scale. When Nebutra's ecosystem and its portfolio companies face rapid growth, the following three principles are non-negotiable — they decide whether the organization continues to compound, or begins to erode from within.",
-  },
+const GOALS: Bilingual<ReadonlyArray<{ title: string; desc: string }>> = {
+  zh: [
+    {
+      title: "让平台工作标准化",
+      desc: "用 AI 原生平台基线降低产品启动时的技术重复劳动，让团队不必每次都重搭平台层。",
+    },
+    {
+      title: "让交付更轻量",
+      desc: "让精干团队也能在可审计的平台基线之上交付多租户、计费、合规与 AI 能力。",
+    },
+    {
+      title: "让能力可验证",
+      desc: "用可验证的工程产出、升级纪律和运行时信号，替代身份标签与模糊叙事。",
+    },
+  ],
+  en: [
+    {
+      title: "Standardize platform work",
+      desc: "Use an AI-native platform baseline to reduce repeated platform setup, so teams do not keep rebuilding the same layer for every product.",
+    },
+    {
+      title: "Make delivery lightweight",
+      desc: "Let lean teams ship multi-tenancy, billing, compliance, and AI capabilities on top of an auditable platform baseline.",
+    },
+    {
+      title: "Make capability verifiable",
+      desc: "Replace identity-driven narratives with verifiable engineering output, upgrade discipline, and observable runtime behavior.",
+    },
+  ],
 };
 
 // TOC anchors (stable IDs)
@@ -197,11 +79,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
-  const meta = pick(lang, PAGE_META);
-
+  const t = await getTranslations({ locale: lang, namespace: "aboutPages.whitepaper" });
   return buildPageMetadata({
-    title: meta.title,
-    description: meta.description,
+    title: t("meta.title"),
+    description: t("meta.description"),
     path: "/about/whitepaper",
     locale: lang as Locale,
   });
@@ -213,17 +94,13 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
-  const hero = pick(lang, HERO_LABELS);
-  const chapters = pick(lang, CHAPTER_LABELS);
-  const thesis = pick(lang, META_UNICORN_THESIS);
-  const iCopy = pick(lang, I_COPY);
-  const iiCopy = pick(lang, II_COPY);
-  const iiiCopy = pick(lang, III_COPY);
-  const ivCopy = pick(lang, IV_COPY);
-  const quote = pick(lang, CORE_QUOTE);
-  const toc = pick(lang, TOC);
-  const builder = pick(lang, PRODUCT_BUILDER_CORE);
-  const sleptons = pick(lang, PRODUCT_SLEPTONS);
+  const t = await getTranslations({ locale: lang, namespace: "aboutPages.whitepaper" });
+  const thesis = bi(lang, META_UNICORN_THESIS);
+  const goals = bi(lang, GOALS);
+  const quote = bi(lang, CORE_QUOTE);
+  const toc = bi(lang, TOC);
+  const builder = bi(lang, PRODUCT_BUILDER_CORE);
+  const sleptons = bi(lang, PRODUCT_SLEPTONS);
 
   return (
     <main id="main-content" className="flex flex-col flex-1 bg-background">
@@ -232,12 +109,12 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-center gap-4 mb-10">
             <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-muted-foreground">
-              {hero.eyebrow}
+              {t("hero.eyebrow")}
             </span>
             <span className="h-px flex-1 bg-border/70" />
             <span className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
               <Clock className="h-3.5 w-3.5" aria-hidden />
-              {hero.readTime}
+              {t("hero.readTime")}
             </span>
           </div>
 
@@ -249,7 +126,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                 lineHeight: "var(--leading-display)",
               }}
             >
-              {hero.title}
+              {t("hero.title")}
             </h1>
           </AnimateIn>
 
@@ -264,13 +141,13 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
 
           {/* TOC */}
           <nav
-            aria-label={hero.tocKicker}
+            aria-label={t("hero.tocKicker")}
             className="rounded-[var(--radius-2xl)] border border-border/60 bg-muted/20 p-6 md:p-8"
           >
             <div className="flex items-center gap-3 mb-5">
               <BookOpen className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
               <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                {hero.tocKicker}
+                {t("hero.tocKicker")}
               </span>
             </div>
             <ol className="flex flex-col gap-3">
@@ -311,7 +188,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             <div className="flex items-center gap-3 mb-6">
               <Compass className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
               <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                {chapters.chapter} Ⅰ · {chapters.iTitle}
+                {t("chapters.chapter")} Ⅰ · {t("chapters.iTitle")}
               </span>
             </div>
             <AnimateIn preset="emerge">
@@ -335,10 +212,10 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           {/* Core objectives */}
           <div className="mt-16 md:mt-20">
             <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
-              {iCopy.goalsKicker}
+              {t("goalsKicker")}
             </span>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-              {iCopy.goals.map((goal, idx) => (
+              {goals.map((goal, idx) => (
                 <article
                   key={goal.title}
                   className="h-full rounded-[var(--radius-2xl)] border border-border/60 bg-background p-6 md:p-7"
@@ -376,7 +253,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             <div className="flex items-center gap-3 mb-6">
               <Network className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
               <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                {chapters.chapter} Ⅱ · {chapters.iiTitle}
+                {t("chapters.chapter")} Ⅱ · {t("chapters.iiTitle")}
               </span>
             </div>
             <AnimateIn preset="emerge">
@@ -387,11 +264,11 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {isZhUiLocale(lang) ? "超级要素路由协议" : "Omni-Factor Routing Protocol"}
+                {t("sectionII.heading")}
               </h2>
             </AnimateIn>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
-              {iiCopy.intro}
+              {t("sectionII.intro")}
             </p>
           </div>
         </div>
@@ -400,7 +277,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-wide">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             {OMNI_FACTOR_GROUPS.map((group, idx) => {
-              const content = pick(lang, group);
+              const content = bi(lang, group);
               return (
                 <article
                   key={content.subtitle}
@@ -442,7 +319,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             <div className="flex items-center gap-3 mb-6">
               <Layers className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
               <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                {chapters.chapter} Ⅲ · {chapters.iiiTitle}
+                {t("chapters.chapter")} Ⅲ · {t("chapters.iiiTitle")}
               </span>
             </div>
             <AnimateIn preset="emerge">
@@ -453,11 +330,11 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {isZhUiLocale(lang) ? "全链路 AI 原生基建" : "The AI-Native Convergence"}
+                {t("sectionIII.heading")}
               </h2>
             </AnimateIn>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
-              {iiiCopy.intro}
+              {t("sectionIII.intro")}
             </p>
           </div>
         </div>
@@ -470,7 +347,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               <div className="flex items-center gap-3 mb-6">
                 <Layers className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
                 <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                  {iiiCopy.builderEyebrow}
+                  {t("sectionIII.builderEyebrow")}
                 </span>
               </div>
               <h3
@@ -490,7 +367,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               </p>
 
               <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
-                {iiiCopy.highlightsKicker}
+                {t("sectionIII.highlightsKicker")}
               </span>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
                 {builder.highlights.map((h, idx) => (
@@ -519,7 +396,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               <div className="flex items-center gap-3 mb-6">
                 <Network className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
                 <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                  {iiiCopy.sleptonsEyebrow}
+                  {t("sectionIII.sleptonsEyebrow")}
                 </span>
               </div>
               <h3
@@ -539,7 +416,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               </p>
 
               <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
-                {iiiCopy.highlightsKicker}
+                {t("sectionIII.highlightsKicker")}
               </span>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
                 {sleptons.highlights.map((h, idx) => (
@@ -583,7 +460,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             <div className="flex items-center gap-3 mb-6">
               <Shield className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
               <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                {chapters.chapter} Ⅳ · {chapters.ivTitle}
+                {t("chapters.chapter")} Ⅳ · {t("chapters.ivTitle")}
               </span>
             </div>
             <AnimateIn preset="emerge">
@@ -594,13 +471,11 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   lineHeight: "var(--leading-heading)",
                 }}
               >
-                {isZhUiLocale(lang)
-                  ? "组织演进准则 · AI 杠杆对抗人治腐化"
-                  : "Organizational Principles · AI Leverage over Human Corrosion"}
+                {t("sectionIV.heading")}
               </h2>
             </AnimateIn>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
-              {ivCopy.intro}
+              {t("sectionIV.intro")}
             </p>
           </div>
         </div>
@@ -608,7 +483,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-wide">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {ORGANIZATION_PRINCIPLES.map((principle) => {
-              const content = pick(lang, principle);
+              const content = bi(lang, principle);
               return (
                 <article
                   key={content.number}
@@ -649,7 +524,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               />
               <div>
                 <p className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-2">
-                  {hero.updated}
+                  {t("hero.updated")}
                 </p>
                 <Link
                   href="/about"
@@ -657,7 +532,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                 >
                   <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
                   <span className="underline underline-offset-4 decoration-border">
-                    {hero.back}
+                    {t("hero.back")}
                   </span>
                 </Link>
               </div>
