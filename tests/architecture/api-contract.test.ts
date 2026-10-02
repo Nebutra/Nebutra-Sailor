@@ -27,6 +27,11 @@ const UNVERSIONED_ROUTE_PREFIXES = new Set([
   "/api/webhooks", // Webhook receivers (Stripe, Clerk)
   "/api/queue", // Queue delivery receiver (QStash)
   "/api/inngest", // Background job handler
+  // Router → gateway supply/* event relay (ADR 2026-09-30 "Event-driven
+  // execution") — process-to-process infrastructure (service-token
+  // authenticated, never reachable by a customer), same category as
+  // /api/inngest and /api/queue above; not a public business API to version.
+  "/api/internal/v1/supply",
   "/api", // Auth provider boundary (/api/auth/*), not a versioned business API
   "/api/rpc", // oRPC protocol mount (versioning handled by oRPC internally)
   "/api/trpc", // tRPC protocol mount (versioning handled by tRPC internally)

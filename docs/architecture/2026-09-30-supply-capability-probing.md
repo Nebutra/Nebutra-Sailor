@@ -395,5 +395,157 @@ process*, but it reaches Router over HTTP (§4), so it needs none of them; only 
 `runDiscovery` / `runActiveProbes` directly from a *different* process than Router's own would need
 them. A source added through the admin "add source" flow needs no such carve-out — its credential is
 vault-encrypted and stored on the row itself. First deploy: run `db:deploy` (as every deploy already
-does), then either wait for the next `03:00`/`03:30` UTC discovery+verification window or call
-`discovery.run` / `probe.idle` once by hand through the admin desk to seed the registry immediately.
+does); the registry then seeds itself on Router's first boot (§8's `supply/bootstrap`) rather than
+waiting for the `03:00`/`03:30` UTC backstop or an operator calling `discovery.run` / `probe.idle` by
+hand — though either still works as a manual nudge.
+
+## Addendum (2026-10-02) — Event-driven execution
+
+Both of the above (capability probing and the quota layer) scheduled their *maintenance* work —
+discovery, idle/suspended verification, quota pulls — on Inngest cron, which this ADR already singled
+out as the right mechanism (§4). What this addendum removes is the part that was never event-driven at
+all: **every admin action that touched more than one model did its upstream work synchronously, inside
+one HTTP request** — a design gap the owner identified (§8.0) as worth closing pre-emptively, which is
+why the sections below exist.
+
+### 8.0 The failure mode this closes (owner-identified, 2026-10-02 — not re-observed live)
+
+`cliproxyapi`'s New-API channel carries 86 models. Before this addendum, an operator's "probe now"
+(`source.probe`) ran `runDiscovery` (one call), then `probeRows` over **every** row for that source
+**sequentially, inside the same HTTP request** — each a real upstream call with its own latency. For a
+source that size, total wall time comfortably exceeds Cloudflare's ~100s origin timeout, which answers
+with its own `524` page before Router's own response ever leaves the origin — the same shape as the
+ADR's original §0 incident, one level up the stack (that one was a model nobody could reach; this one,
+had it fired, would have been a response nobody could receive). The owner flagged this as a design gap
+to close pre-emptively, not as a reproduced outage — stated here as "identified," not "verified live," to
+keep that distinction honest. Two more gaps the owner named alongside it: **no event exists when a
+source is added** — `addSource` persisted the row and ran one discovery call, but nothing then probed
+the fresh models until the next `03:30` sweep, so the only way a newly added source's capability got
+checked promptly was an operator manually triggering `source.probe` (the exact action that risks the 524
+above); and **a newly deployed environment's registry sits empty** until that same `03:00` cron first
+runs, so a fresh Fly Machine or a new preview deploy has zero supply visibility for hours.
+
+### 8.1 Events
+
+Five Inngest events, typed via Zod schemas in `@nebutra/event-bus` (`packages/integrations/event-bus/
+src/schemas/inngest.ts`, the same package `stripe/*` and `nebutra/gdpr.*` already use) and consumed with
+`eventType(name, { schema })` per trigger — the pattern `billingSync.ts` / `gdprDeletion.ts` already
+established, not a new one:
+
+| Event | Payload | Fired by |
+|---|---|---|
+| `supply/source.changed` | `{ sourceKey, reason: added\|credential_changed\|enabled\|scheduled }` | `addSource` (always); `triggerDiscoveryForAllSources` (per enabled source); `supplyBootstrap` (per built-in source) |
+| `supply/model.discovered` | `{ sourceKey, upstreamModels }` | `addSource` and `supplySourceChanged`, for models a discovery diff found added or reappeared |
+| `supply/model.signal` | `{ sourceKey, upstreamModel?, kind: error_spike\|rate_limited\|quota_threshold, reason? }` | `recordPassiveSignal` (error_spike, rate_limited) and `quota.ts`'s `fireAlerts` (quota_threshold) — see §8.4 |
+| `supply/probe.requested` | `{ sourceKey?, upstreamModels?, runId }` | `probeSourceNow` (admin "probe now", no `upstreamModels` — fan-out discovers then probes everything current); `runActiveProbes` / `runSuspendedRetry` (grouped by source, `upstreamModels` already known); `supplyModelSignal` (one model, after debounce) |
+| `supply/bootstrap` | `{ sourceKeys, triggeredAt }` | `maybeEmitBootstrap`, from Router's `instrumentation.ts`, at most once per process |
+
+### 8.2 Router emits; it does not call Inngest
+
+Router's own process has no `INNGEST_EVENT_KEY` / `INNGEST_SIGNING_KEY` — only the gateway's env schema
+names them (`backends/gateway/src/config/env.ts`), and Router's `.env.example` never has. Handing Router
+a second Inngest key purely so it could call Inngest's HTTP API directly would be a new owner-set secret
+for a capability the gateway already has. So `apps/router/src/lib/supply/events.ts`'s `emitSupplyEvent`
+posts to a small new gateway endpoint instead — `backends/gateway/src/routes/internal/
+supply-events.ts`'s `POST /api/internal/v1/supply/events` — which calls `inngest.send` on Router's
+behalf and answers `202` with the event's id.
+
+**Zero new secret, same primitive reused in both directions**: the request is authenticated with the
+exact zero-context service token `apps/router/src/lib/internal-service.ts`'s
+`verifyInternalServiceCaller` already mints/verifies for "Nebutra infrastructure calling itself"
+(`signServiceToken({}, SERVICE_SECRET)`, `verifyServiceToken(token)` with no expected userId / role /
+org / plan) — not the staff-ladder `x-user-id`/`x-role` shape `gateStaff` uses for admin actions, because
+this is not an admin acting, it is Router's own process telling the gateway's own process something
+happened. `backends/gateway/src/middlewares/rateLimitSkip.ts` and both architecture tests'
+(`tests/architecture/api-contract.test.ts`, `tests/architecture/permissions-ratchet.test.ts`) exemption
+lists treat this route the same way they already treat `/api/inngest` / `/api/queue`: process-to-process
+infrastructure, not a versioned public business API, not a route with a tenant identity to require.
+
+### 8.3 Router's admin actions: discover(source) and probe(source, model), not "probe everything"
+
+The fix for §8.0's incident is splitting every action that used to loop over models into two primitives
+that each do exactly one bounded unit of upstream work, plus orchestration that only ever lists + emits:
+
+| Action (unchanged id unless noted) | Before | After |
+|---|---|---|
+| `source.discover` (new) | — | `discoverSourceByKey(sourceKey)` — one source's enumeration call, returns the diff, probes nothing |
+| `probe.one` (new) | — | `probeOneModel(sourceKey, upstreamModel)` — exactly one upstream verification call |
+| `source.add` | discovered, then returned | still discovers (one call, to report a count), but hands fresh models to `supply/model.discovered` instead of probing them inline; emits `supply/source.changed`; responds `202` |
+| `source.probe` | discovery + probe every row, synchronously | emits `supply/probe.requested { sourceKey, runId }` and responds `202` immediately with `status: "queued"` |
+| `discovery.run` | looped `discoverSource` over every enabled source | lists enabled sources (bounded by source count) and emits one `supply/source.changed` each — zero upstream calls in this request |
+| `probe.idle` / `probe.suspended` | looped `probeRows` over up to 50/100 due rows | lists the due rows (one capped DB read), groups by source, emits one `supply/probe.requested` per source — zero upstream calls in this request |
+| `probe.status` (new, `platform_readonly`) | — | `probeRunStatus(sourceKey, since)` — queued / running / done, from `SupplySourceModel.lastProbeAt` already in the DB; no new schema |
+
+`backends/gateway/src/inngest/functions/supplyModelFanout.ts` is where the actual upstream calls now
+happen, one `step.run` per model (triggered by `supply/model.discovered` or `supply/probe.requested`;
+when the latter carries no `upstreamModels`, it first calls `source.discover` then
+`GET /api/admin/v1/supply/capabilities` — the existing read-only resource, no new endpoint — to list the
+current set). Each step is its own retryable unit with its own timeout, not a line in a loop sharing one
+HTTP request's clock; an 86-model "probe now" is 86 independent steps, however long that takes in wall
+time, not one request racing Cloudflare's 100s. Concurrency is capped per source
+(`concurrency: [{ limit: 5, key: "event.data.sourceKey" }, { limit: 20 }]`) so one large source cannot
+starve the fan-out worker pool, and consecutive image-modality probes get an extra `step.sleep` between
+them — a stated, coarse throttle (it does not consult that source's own quota headroom, which the
+existing `rate_limited`-is-neutral classification already protects against misreading as a failure), not
+a per-source rate model.
+
+`backends/gateway/src/inngest/functions/supplySourceChanged.ts` is the `supply/source.changed` handler:
+one `source.discover` step, then (if the diff has anything new) one `step.sendEvent` of
+`supply/model.discovered`. `backends/gateway/src/inngest/functions/supplyBootstrap.ts` turns one
+`supply/bootstrap` into a `step.sendEvent` batch of `supply/source.changed`, one per named key — "boot‑
+strap = source.changed for every built-in source," reusing the discovery pipeline rather than
+duplicating it.
+
+### 8.4 Targeted re-probes from passive signals, debounced
+
+`recordPassiveSignal` (capability.ts) already classified a failure's reason; it now also emits
+`supply/model.signal` when that classification is actionable: `kind: "rate_limited"` for a neutral 429
+(worth a retry once the burst passes, even though it never touches the state machine), `kind:
+"error_spike"` when a real failure's `recordProbe` transitions the row to `DEGRADED`/`SUSPENDED`. `quota.
+ts`'s `fireAlerts` emits `kind: "quota_threshold"` alongside its existing `notifyOpsAlert` page whenever
+a ratio-alert rung fires.
+
+`backends/gateway/src/inngest/functions/supplyModelSignal.ts` is the consumer:
+`debounce: { key: "event.data.sourceKey + '-' + (event.data.upstreamModel ?? 'source')", period: "2m",
+timeout: "10m" }` — a burst of failing requests against the same model collapses into exactly one
+re-probe, `period` after the *last* signal in the burst, with a hard `timeout` ceiling so a model that
+never stops erroring still gets probed rather than having its debounce extended forever. `error_spike`
+and `rate_limited` turn into a single-model `supply/probe.requested`; `quota_threshold` is deliberately a
+no-op here — a quota crossing is not a capability problem, and the existing alert path already pages the
+operator for it, so re-probing the model would waste a call against a source already known to be busy.
+
+### 8.5 Bootstrap
+
+`apps/router/src/lib/supply/capability.ts`'s `maybeEmitBootstrap`, called (not awaited) from `apps/
+router/src/instrumentation.ts` on process start: checks whether the registry was empty before
+`ensureDefaultSources()`, or whether any source (built-in or not) has never completed a discovery
+(`lastDiscoveredAt === null`); if either is true, emits `supply/bootstrap` naming every such source and
+remembers (module-scope flag) that this process already checked, so a long-lived Router instance does
+not re-query on every request that happens to import the module. Not awaited in `instrumentation.ts`, so
+a slow or unreachable gateway never delays Router's own boot — the same best-effort, fire-and-forget
+posture every other emission in this system already has.
+
+### 8.6 Admin run status
+
+`probe.status` (platform_readonly) answers "is a queued 'probe now' done yet" by comparing a source's
+current, non-vanished `SupplySourceModel` rows' `lastProbeAt` against the `since` timestamp the caller
+supplies (normally the moment `source.probe` returned its `runId`): `"queued"` (none yet), `"running"`
+(some), `"done"` (all, including the zero-models case). No new table — this reads exactly what the
+`capability` admin resource already lists; `runId` itself is Router's own correlation id, threaded
+through the event payload for operator-facing correlation, not Inngest's internal function-run id, which
+`inngest.send()` does not return.
+
+### What changed vs. gapped (event-driven execution)
+
+| Piece | State |
+|---|---|
+| Typed `supply/*` events (`@nebutra/event-bus`) | Real, Zod-validated at the trigger |
+| Router → gateway event relay (zero new secret) | Real, same zero-context token as the existing internal chat relay |
+| `discover(source)` / `probe(source, model)` primitives | Real, each exactly one upstream call |
+| Fan-out via Inngest steps, concurrency-capped per source | Real; image-probe spacing is a stated coarse throttle, not quota-aware |
+| `source.add` / `source.probe` return `202` + `runId`, probe asynchronously | Real |
+| `discovery.run` / `probe.idle` / `probe.suspended` narrowed to list + emit | Real; crons unchanged, now backstops in substance as well as name |
+| Debounced targeted re-probe from passive signals | Real (`error_spike`, `rate_limited`); `quota_threshold` is informational-only, stated |
+| Bootstrap on empty/unseeded registry | Real, fire-and-forget from Router's own `instrumentation.ts` |
+| Admin run status (`probe.status`) | Real, reads existing columns, no new schema |
+| New-API channel auto-*creation* via its admin API | Still **not implemented** — unchanged stated gap from §7 |

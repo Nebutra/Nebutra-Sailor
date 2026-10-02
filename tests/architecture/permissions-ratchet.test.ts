@@ -476,6 +476,23 @@ const STRUCTURAL_EXEMPTIONS: readonly Exemption[] = [
   // routes/ today (retention runs as a Cloudflare Cron Trigger in
   // worker-retention.ts). Add a rule here — with the verification it relies on
   // — if one appears; do not add it to KNOWN_UNGUARDED.
+  {
+    id: "service-token-internal-relay",
+    // internal/supply-events.ts: Router → gateway supply/* event relay (ADR
+    // 2026-09-30 "Event-driven execution") — Router has no Inngest event key
+    // of its own, so it posts here and the gateway sends on its behalf. The
+    // handler calls `verifyServiceToken(token)` inline (no expected userId /
+    // role / org / plan) — the exact zero-context "Nebutra infrastructure
+    // calling itself" shape `apps/router/src/lib/internal-service.ts`'s
+    // `verifyInternalServiceCaller` already verifies in the mirror direction.
+    // There is no user/tenant identity to require: this is process-to-process
+    // infrastructure, not a request on behalf of any caller.
+    applies: (r, f) =>
+      r.file === "internal/supply-events.ts" &&
+      r.path === "/events" &&
+      /\bverifyServiceToken\s*\(/.test(f.text),
+    why: "process-to-process event relay, authenticated by the shared SERVICE_SECRET service token — no user/tenant identity exists to require",
+  },
 ];
 
 // ── Source scanning ────────────────────────────────────────────────────────
