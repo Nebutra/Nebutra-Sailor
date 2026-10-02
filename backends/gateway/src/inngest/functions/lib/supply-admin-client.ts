@@ -90,3 +90,59 @@ export async function callSupplyAction(
     };
   }
 }
+
+export interface SupplyCapabilityItem {
+  readonly id: string;
+  readonly source: string;
+  readonly upstreamModel: string;
+  readonly publicModel: string | null;
+  readonly modality: string;
+  readonly state: string;
+  readonly vanishedAt: string | null;
+}
+
+/**
+ * GET Router's existing read-only `capabilities` admin resource
+ * (`apps/router/src/app/api/admin/v1/supply/capabilities/route.ts`) — no new
+ * Router endpoint needed. Used by the fan-out function (`supplyModelFanout`)
+ * to turn "probe everything for this source" (no `upstreamModels` given) into
+ * the bounded list of models to fan out over, one `step.run` each — never a
+ * loop that calls every upstream from inside this one HTTP round-trip.
+ */
+export async function listSupplyCapabilities(
+  sourceKey: string,
+  fetchImpl: typeof fetch = fetch,
+): Promise<SupplyCapabilityItem[]> {
+  const secret = process.env.SERVICE_SECRET;
+  if (!secret) {
+    logger.warn("[supply-scheduler] SERVICE_SECRET not set — skipping capability list", {
+      sourceKey,
+    });
+    return [];
+  }
+  try {
+    const token = await signServiceToken({ userId: STAFF_USER_ID, role: STAFF_ROLE }, secret);
+    const url = `${routerInternalUrl()}/api/admin/v1/supply/capabilities?source=${encodeURIComponent(sourceKey)}`;
+    const res = await fetchImpl(url, {
+      method: "GET",
+      headers: {
+        "x-service-token": token,
+        "x-user-id": STAFF_USER_ID,
+        "x-role": STAFF_ROLE,
+      },
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!res.ok) {
+      logger.error("[supply-scheduler] capability list failed", { sourceKey, status: res.status });
+      return [];
+    }
+    const body = (await res.json().catch(() => null)) as { items?: SupplyCapabilityItem[] } | null;
+    return body?.items ?? [];
+  } catch (error) {
+    logger.error("[supply-scheduler] capability list errored", {
+      sourceKey,
+      error: error instanceof Error ? error.message : "unknown",
+    });
+    return [];
+  }
+}

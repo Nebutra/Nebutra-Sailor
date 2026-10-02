@@ -9,8 +9,12 @@ import { paymentOrderReconcile } from "./functions/paymentOrderReconcile.js";
 import { pebbleDiagnosticsRetention } from "./functions/pebbleDiagnosticsRetention.js";
 import { requestLogRetention } from "./functions/requestLogRetention.js";
 import { routerReservationSweep } from "./functions/routerReservationSweep.js";
+import { supplyBootstrap } from "./functions/supplyBootstrap.js";
 import { supplyDiscovery } from "./functions/supplyDiscovery.js";
+import { supplyModelFanout } from "./functions/supplyModelFanout.js";
+import { supplyModelSignal } from "./functions/supplyModelSignal.js";
 import { supplyQuotaPull } from "./functions/supplyQuotaPull.js";
+import { supplySourceChanged } from "./functions/supplySourceChanged.js";
 import { supplySuspendedRetry } from "./functions/supplySuspendedRetry.js";
 import { supplyIdleVerification } from "./functions/supplyVerification.js";
 import { walletUpkeep } from "./functions/walletUpkeep.js";
@@ -27,10 +31,17 @@ export const inngestFunctions: InngestFunction.Any[] = [
   requestLogRetention,
   paymentOrderReconcile,
   walletUpkeep,
+  // Supply capability probing — cron backstops (narrowed to emit events, not
+  // to loop over every model themselves; see each function's doc comment).
   supplyDiscovery,
   supplyIdleVerification,
   supplySuspendedRetry,
   supplyQuotaPull,
+  // Supply capability probing — event-driven execution (ADR 2026-09-30).
+  supplySourceChanged,
+  supplyModelFanout,
+  supplyModelSignal,
+  supplyBootstrap,
 ];
 export { inngest };
 

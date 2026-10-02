@@ -77,6 +77,7 @@ import { usageLedgerRoutes } from "./routes/billing/usage.js";
 import { docsRoutes } from "./routes/docs/index.js";
 import { eventRoutes } from "./routes/events/index.js";
 import { integrationRoutes } from "./routes/integrations/index.js";
+import { supplyEventsRoutes } from "./routes/internal/supply-events.js";
 import { consentRoutes } from "./routes/legal/consent.js";
 import { healthRoutes } from "./routes/misc/health.js";
 import { notificationRoutes } from "./routes/notifications/index.js";
@@ -420,6 +421,12 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
 
   // Inngest background job handler (GET for SDK handshake, POST/PUT for execution)
   app.on(["GET", "POST", "PUT"], "/api/inngest", (c) => inngestHandler(c));
+
+  // Router → gateway event relay (ADR 2026-09-30 "Event-driven execution"):
+  // Router has no Inngest event key of its own, so it posts supply/* events
+  // here and the gateway sends them on. Service-token authenticated, not
+  // staff-gated — see routes/internal/supply-events.ts's doc comment.
+  app.route("/api/internal/v1/supply", supplyEventsRoutes);
 
   // Optional API protocols. REST/OpenAPI is always on; tRPC + oRPC are opt-in via
   // API_PROTOCOLS (or legacy ENABLE_TRPC/ENABLE_ORPC). See config/protocols.ts.
