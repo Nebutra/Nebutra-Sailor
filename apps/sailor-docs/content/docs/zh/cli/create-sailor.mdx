@@ -56,7 +56,7 @@ npx create-sailor .
 
 以前存在的每一个服务商标志——`--auth`、`--payment`、`--email`、`--storage`、`--queue`、`--search`、`--cache`、`--sms`、`--cms`、`--captcha`、`--monitoring`、`--analytics`、`--notifications`、`--webhooks`、`--feature-flags`、`--metering`、`--mcp`、`--region`,以及旧版 43 个标志中的其余部分——都已移除。克隆整个 monorepo 之后再做减法的裁剪流水线（`prune.ts`、`prune-schema.ts`、`prune-migrations.ts`）同样已移除：脚手架现在只写出收敛后的这一套栈，没有什么需要裁剪。
 
-需要 Node.js >= 22 和 pnpm 10+（脚手架生成的项目是 pnpm + Turborepo workspace）。除非传入 `--pm`，CLI 会检查 `PATH` 上是否有 `pnpm`。
+需要 Node.js >= 22 和 pnpm 11.28.5+（脚手架生成的项目是 pnpm + Turborepo workspace）。除非传入 `--pm`，CLI 会检查 `PATH` 上是否有 `pnpm`。
 
 ## 示例会话
 

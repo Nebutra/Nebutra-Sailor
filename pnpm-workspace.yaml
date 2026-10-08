@@ -8,7 +8,7 @@ packages:
 # - Wait 24h before resolving newly published package versions. This matches
 #   pnpm 11's hardened default while keeping security hotfixes usable.
 # - Fail installs when a dependency with a lifecycle script is not explicitly
-#   reviewed in `onlyBuiltDependencies` below.
+#   reviewed in `allowBuilds` below.
 # - Ignore pnpmfile hooks so dependency resolution cannot execute project-local
 #   JavaScript during install.
 minimumReleaseAge: 1440
@@ -44,8 +44,16 @@ trustPolicyExclude:
   # undici-types@6.21.0 (via @types/node) dropped provenance vs earlier 6.x — not a takeover.
   - "undici-types@6.21.0"
   - "undici-types"
+  # Sanity SDK 2.11.1 pins this experimental TypeGen build. Its reviewed JS
+  # only interpolates strings and adds a no-op defineProjection; no dependencies
+  # or install scripts. Stable 3.88.1 lacks the SDK's projection/schema types.
+  - "groq@3.88.1-typegen-experimental.0"
 strictDepBuilds: true
+dangerouslyAllowAllBuilds: false
 ignorePnpmfile: true
+verifyDepsBeforeRun: error
+publicHoistPattern:
+  - "*"
 
 # =============================================================================
 # pnpm Catalog — single source of truth for shared dependency versions.
@@ -134,6 +142,11 @@ catalog:
 
 # Settings that used to live in package.json#pnpm. Current pnpm reads them here.
 overrides:
+  # Same-major provenance-bearing releases replace the four trust downgrades
+  # in the pnpm 10 lockfile; preserve no-downgrade instead of exempting them.
+  "express-rate-limit@8.3.0": "8.3.2"
+  "react-redux@9.2.0": "9.3.0"
+  "reselect@5.1.1": "5.2.0"
   # GHSA (2026-09-02): browserslist <=4.28.6 unbounded memory growth / prototype
   # write via crafted queries; mysql2 <3.22.0 auth plugin downgrade. Both reach
   # us transitively (Babel targets; better-auth's optional MySQL driver).
@@ -249,7 +262,7 @@ overrides:
   "undici@^8": ">=8.9.0"
   "uuid@10.0.0": "11.1.1"
   "uuid@11.1.0": "11.1.1"
-  "uuid@13.0.0": "13.0.1"
+  "uuid@13.0.0": "13.0.2"
   "uuid@8.3.2": "11.1.1"
   "uuid@9.0.1": "11.1.1"
   "valibot": ">=1.2.0"
@@ -265,29 +278,29 @@ peerDependencyRules:
   "allowedVersions":
     "react": "19"
     "react-dom": "19"
-onlyBuiltDependencies:
-  - "@bundled-es-modules/glob"
-  - "@clerk/shared"
-  - "@cloudflare/workerd-darwin-arm64"
-  - "@cloudflare/workerd-darwin-x64"
-  - "@cloudflare/workerd-linux-arm64"
-  - "@cloudflare/workerd-linux-x64"
-  - "@dao-xyz/sqlite3-vec"
-  - "@parcel/watcher"
-  - "@prisma/engines"
-  - "@sentry/cli"
-  - "@swc/core"
-  - "better-sqlite3"
-  - "core-js"
-  - "esbuild"
-  - "lefthook"
-  - "msgpackr-extract"
-  - "onnxruntime-node"
-  - "prisma"
-  - "protobufjs"
-  - "sharp"
-  - "style-dictionary"
-  - "workerd"
+allowBuilds:
+  "@bundled-es-modules/glob": true
+  "@clerk/shared": true
+  "@cloudflare/workerd-darwin-arm64": true
+  "@cloudflare/workerd-darwin-x64": true
+  "@cloudflare/workerd-linux-arm64": true
+  "@cloudflare/workerd-linux-x64": true
+  "@dao-xyz/sqlite3-vec": true
+  "@parcel/watcher": true
+  "@prisma/engines": true
+  "@sentry/cli": true
+  "@swc/core": true
+  better-sqlite3: true
+  core-js: true
+  esbuild: true
+  lefthook: true
+  msgpackr-extract: true
+  onnxruntime-node: true
+  prisma: true
+  protobufjs: true
+  sharp: true
+  style-dictionary: true
+  workerd: true
 allowedDeprecatedVersions:
   "svg-dotted-map": "*"
 auditConfig:

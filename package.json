@@ -343,10 +343,10 @@
   ],
   "author": "Nebutra",
   "license": "SEE LICENSE IN LICENSE",
-  "packageManager": "pnpm@10.32.1",
+  "packageManager": "pnpm@11.28.5",
   "engines": {
     "node": ">=22.0.0",
-    "pnpm": ">=10.32.0"
+    "pnpm": ">=11.28.5"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
@@ -369,7 +369,8 @@
     "tsx": "catalog:",
     "turbo": "^2.9.14",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "yaml": "2.8.3"
   },
   "dependencies": {
     "@prisma/adapter-pg": "catalog:",

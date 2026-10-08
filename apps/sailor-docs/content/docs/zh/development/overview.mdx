@@ -96,7 +96,7 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
 
 ## 关键约定
 
-- **包管理器：** pnpm 10.32+，使用 workspaces。请始终在仓库根目录运行 `pnpm`。
+- **包管理器：** pnpm 11.28.5+，使用 workspaces。请始终在仓库根目录运行 `pnpm`。
 - **Linter + 格式化：** Biome（替代 ESLint + Prettier）。运行 `pnpm lint:fix` 自动修复。
 - **类型检查：** `pnpm typecheck` 通过 Turbo 在所有包中运行 `tsc --noEmit`。
 - **测试：** 单元测试使用 Vitest，E2E 测试使用 Playwright。运行 `pnpm test` 和 `pnpm e2e`。

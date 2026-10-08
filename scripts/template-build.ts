@@ -448,13 +448,13 @@ function stripNebutraOnlyWorkspaceConfig(targetDir: string): number {
       continue;
     }
     const lines = src.split("\n");
-    // Only the top-level `overrides:` / `onlyBuiltDependencies:` blocks: the
+    // Only the top-level `overrides:` / `allowBuilds:` blocks: the
     // lockfile also names @clerk packages under importers and packages, which
     // pnpm prunes itself on the first install.
     let block = "";
     const kept = lines.filter((line) => {
       if (/^\S/.test(line)) block = line.replace(/:.*$/, "");
-      const inBlock = block === "overrides" || block === "onlyBuiltDependencies";
+      const inBlock = block === "overrides" || block === "allowBuilds";
       if (inBlock && NEBUTRA_ONLY_PNPM_PACKAGE.test(line)) {
         removed++;
         return false;

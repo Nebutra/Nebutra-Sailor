@@ -179,7 +179,7 @@ run_snapshot_once() {
     bash -lc "
       set -euo pipefail
       corepack enable
-      corepack prepare pnpm@10.14.0 --activate
+      corepack prepare pnpm@11.28.5 --activate
       pnpm config set store-dir /pnpm-store
       export CI=1
       export SKIP_ENV_VALIDATION=true

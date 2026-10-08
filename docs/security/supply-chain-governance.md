@@ -12,12 +12,13 @@ or privileged GitHub Actions workflows.
 - `pnpm-workspace.yaml` sets `strictDepBuilds: true`; any dependency with an
   unreviewed lifecycle script fails installation.
 - `pnpm-workspace.yaml` owns the reviewed lifecycle-script allowlist in
-  `onlyBuiltDependencies`, plus `overrides` and audit exceptions. Current pnpm
-  does not read `package.json#pnpm`.
+  `allowBuilds`, plus `overrides` and audit exceptions. Current pnpm does not
+  read `package.json#pnpm` or project settings in `.npmrc`.
 - `pnpm-workspace.yaml` sets `ignorePnpmfile: true`, so dependency resolution
   cannot execute project-local pnpmfile JavaScript.
-- `.npmrc` pins package-manager strictness and fails `pnpm run` when
-  `node_modules` is stale.
+- `package.json#packageManager` pins pnpm 11.28.5; pnpm manages the matching
+  runtime automatically. `verifyDepsBeforeRun: error` in the workspace blocks
+  commands when `node_modules` is stale.
 - CI and nightly security scans run `pnpm supply-chain:verify`.
 
 ## Workflow policy
@@ -54,3 +55,20 @@ pnpm audit --prod --audit-level=high
 If `pnpm supply-chain:verify` reports stale dependencies after a policy change,
 run `pnpm install --frozen-lockfile` once so pnpm refreshes its local dependency
 state.
+
+## pnpm 11 migration review (2026-10-08)
+
+The install-script approvals move unchanged to `allowBuilds`, and public
+hoisting and stale-dependency checks move from `.npmrc` to the workspace.
+`trustPolicy: no-downgrade` stays enabled. Registry metadata for the locked
+express-rate-limit, react-redux, reselect and uuid releases lacks provenance;
+same-major attested versions replace them via exact overrides.
+
+One new exact trust exception remains: `groq@3.88.1-typegen-experimental.0`,
+pinned by `@sanity/sdk@2.11.1`. The npm dist-tag identifies Sanity's TypeGen
+experiment; the tarball JS was compared with attested `groq@3.88.1`: its only
+additional runtime operation is a no-op `defineProjection`. It has no
+dependencies or lifecycle scripts, but **no provenance attestation**. The
+experimental declaration file exposes projection/schema types used by the SDK,
+so replacing it with stable 3.88.1 would change the type contract. Remove the
+exception when Sanity ships a compatible attested dependency.

@@ -8,7 +8,7 @@ This document is always included in Kiro's context window. It provides the found
 
 | Property | Value |
 |----------|-------|
-| Runtime | Node.js 22+, pnpm 10.32+ |
+| Runtime | Node.js 22+, pnpm 11.28.5+ |
 | Frameworks | Next.js 16 (App Router), Hono (API) |
 | Language | TypeScript 5.9 (strict) |
 | Styling | Tailwind CSS v4 + `@nebutra/tokens` |

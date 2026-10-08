@@ -6,7 +6,7 @@ This file provides project-wide context for GitHub Copilot Chat and inline compl
 
 **Nebutra-Sailor** is an enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms built on Next.js 16, Hono, Prisma, and Clerk.
 
-- **Runtime**: Node.js 22+, pnpm 10.32+
+- **Runtime**: Node.js 22+, pnpm 11.28.5+
 - **Framework**: Next.js 16 (App Router, React 19, Turbopack)
 - **Styling**: Tailwind CSS v4 + CSS variables (`@nebutra/tokens`)
 - **Language**: TypeScript 5.9 (strict mode)

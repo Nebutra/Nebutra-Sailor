@@ -653,7 +653,7 @@ npm install -g nebutra
 
 <table>
 <tr><td><strong>Node.js</strong></td><td><code>v22+</code></td></tr>
-<tr><td><strong>pnpm</strong></td><td><code>v10.32+</code></td></tr>
+<tr><td><strong>pnpm</strong></td><td><code>v11.28.5+</code></td></tr>
 <tr><td><strong>Python</strong></td><td><code>3.11+</code> <sub>（微服务需要）</sub></td></tr>
 </table>
 

@@ -12,7 +12,7 @@ AI coding agent onboarding guide for Cursor, Claude Code, Codex, Windsurf, and G
 
 **Nebutra-Sailor** is an enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms.
 
-- **Runtime**: Node.js >= 22, pnpm 10.32+
+- **Runtime**: Node.js >= 22, pnpm 11.28.5+
 - **Framework**: Next.js 16 (App Router, React 19, Turbopack)
 - **Styling**: Tailwind CSS v4 + CSS variables from `@nebutra/tokens`
 - **Language**: TypeScript 5.9 (strict mode)

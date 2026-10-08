@@ -4,7 +4,7 @@
 
 **Nebutra-Sailor** is an enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms.
 
-Stack: Next.js 16 (App Router, Turbopack) · Hono · Prisma v7 · Clerk · Tailwind v4 · TypeScript 5.9 · Biome · Vitest · Playwright · Turborepo · pnpm 10.32+
+Stack: Next.js 16 (App Router, Turbopack) · Hono · Prisma v7 · Clerk · Tailwind v4 · TypeScript 5.9 · Biome · Vitest · Playwright · Turborepo · pnpm 11.28.5+
 
 ## Repository Map
 

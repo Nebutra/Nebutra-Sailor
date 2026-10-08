@@ -589,7 +589,7 @@ function normalizePackageJson(
 
   // Standalone clones need packageManager for pnpm/action-setup + Corepack.
   if (!manifest.packageManager) {
-    manifest.packageManager = "pnpm@10.32.1";
+    manifest.packageManager = "pnpm@11.28.5";
   }
 
   // Monorepo packages often rely on root-hoisted toolchain (tsup/vitest/tsx).
@@ -797,7 +797,7 @@ function writeMirrorWorkflow(targetDir) {
       "      - uses: actions/checkout@v4",
       "      - uses: pnpm/action-setup@v4",
       "        with:",
-      "          version: 10.32.1",
+      "          version: 11.28.5",
       "      - uses: actions/setup-node@v4",
       "        with:",
       "          node-version: 22",

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative } from "node:path";
+import { parse } from "yaml";
 
 const root = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
 const failures = [];
@@ -88,40 +89,19 @@ function listWorkflowFiles() {
 function assertRootPackagePolicy() {
   const pkg = readJson("package.json");
 
-  if (pkg.packageManager !== "pnpm@10.32.1") {
-    fail('package.json must pin "packageManager": "pnpm@10.32.1"');
+  if (pkg.packageManager !== "pnpm@11.28.5") {
+    fail('package.json must pin "packageManager": "pnpm@11.28.5"');
   }
 
-  if (pkg.engines?.pnpm !== ">=10.32.0") {
-    fail("package.json must require pnpm >=10.32.0 so supply-chain settings are available");
+  if (pkg.engines?.pnpm !== ">=11.28.5") {
+    fail("package.json must require pnpm >=11.28.5 so supply-chain settings are available");
   }
 
   if (pkg.pnpm) {
     fail(
-      "package.json#pnpm is no longer read by current pnpm; move overrides, onlyBuiltDependencies, and audit settings to pnpm-workspace.yaml",
+      "package.json#pnpm is no longer read by current pnpm; move overrides, allowBuilds, and audit settings to pnpm-workspace.yaml",
     );
   }
-}
-
-function parseYamlStringList(workspace, key) {
-  const header = new RegExp(`^(?:${key}|"${key}"):\\s*$`, "m");
-  const headerMatch = header.exec(workspace);
-  if (!headerMatch) return [];
-
-  const lines = workspace.slice(headerMatch.index + headerMatch[0].length).split(/\r?\n/);
-  const values = [];
-  for (const rawLine of lines) {
-    if (rawLine === "") {
-      if (values.length === 0) continue;
-      break;
-    }
-    if (/^\S/.test(rawLine)) break;
-    const item = rawLine.match(/^\s+-\s+(".*"|'.*'|\S+)\s*$/);
-    if (!item) continue;
-    const token = item[1];
-    values.push(token.startsWith('"') || token.startsWith("'") ? JSON.parse(token) : token);
-  }
-  return values;
 }
 
 function assertPnpmWorkspacePolicy() {
@@ -147,26 +127,33 @@ function assertPnpmWorkspacePolicy() {
     fail("pnpm-workspace.yaml must define overrides so security pins are actually applied");
   }
 
-  const allowedBuilds = parseYamlStringList(workspace, "onlyBuiltDependencies");
-  if (allowedBuilds.length === 0) {
+  const parsedWorkspace = parse(workspace, { uniqueKeys: true });
+  if (parsedWorkspace.dangerouslyAllowAllBuilds !== false) {
     fail(
-      "pnpm-workspace.yaml must define onlyBuiltDependencies as a reviewed install-script allowlist",
+      "pnpm-workspace.yaml must explicitly set dangerouslyAllowAllBuilds: false to override user config",
     );
+  }
+  const allowBuilds = new Map(Object.entries(parsedWorkspace.allowBuilds ?? {}));
+  if (parsedWorkspace.verifyDepsBeforeRun !== "error") {
+    fail("pnpm-workspace.yaml must set verifyDepsBeforeRun: error");
+  }
+  if (allowBuilds.size === 0) {
+    fail("pnpm-workspace.yaml must define allowBuilds as a reviewed install-script allowlist");
     return;
   }
 
-  for (const dependency of allowedBuilds) {
+  for (const [dependency, allowed] of allowBuilds) {
     if (dependency.includes("*")) {
-      fail(`onlyBuiltDependencies may not contain wildcard entry "${dependency}"`);
+      fail(`allowBuilds may not contain wildcard entry "${dependency}"`);
     }
-    if (!approvedBuildScripts.has(dependency)) {
-      fail(`onlyBuiltDependencies contains unreviewed install-script package "${dependency}"`);
+    if (allowed !== true || !approvedBuildScripts.has(dependency)) {
+      fail(`allowBuilds contains unreviewed install-script package "${dependency}"`);
     }
   }
 
   for (const dependency of approvedBuildScripts) {
-    if (!allowedBuilds.includes(dependency)) {
-      fail(`onlyBuiltDependencies is missing approved install-script package "${dependency}"`);
+    if (allowBuilds.get(dependency) !== true) {
+      fail(`allowBuilds is missing approved install-script package "${dependency}"`);
     }
   }
 }
@@ -174,14 +161,13 @@ function assertPnpmWorkspacePolicy() {
 function assertNpmrcPolicy() {
   const npmrc = parseNpmrc(readText(".npmrc"));
 
-  for (const [key, expected] of [
-    ["package-manager-strict", "true"],
-    ["package-manager-strict-version", "true"],
-    ["verify-deps-before-run", "error"],
+  for (const key of [
+    "package-manager-strict",
+    "package-manager-strict-version",
+    "verify-deps-before-run",
+    "public-hoist-pattern[]",
   ]) {
-    if (npmrc.get(key) !== expected) {
-      fail(`.npmrc must set ${key}=${expected}`);
-    }
+    if (npmrc.has(key)) fail(`.npmrc contains removed pnpm 11 setting ${key}`);
   }
 
   for (const forbidden of [

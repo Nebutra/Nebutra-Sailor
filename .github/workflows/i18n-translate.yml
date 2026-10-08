@@ -280,7 +280,7 @@ jobs:
       - name: Enable pnpm + install for i18n verify
         run: |
           corepack enable
-          corepack prepare pnpm@10.32.1 --activate
+          corepack prepare pnpm@11.28.5 --activate
           pnpm install --frozen-lockfile --filter @nebutra/landing...
 
       # Reports every catalog, blocks nothing: this PR is the thing that FIXES

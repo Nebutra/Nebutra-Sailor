@@ -119,7 +119,7 @@ async function run(): Promise<void> {
   emitJson(useJson, { event: "start", version: VERSION });
 
   // Pre-check: the scaffolded project uses pnpm workspaces + Turborepo and
-  // assumes pnpm 10+. Fail loud now so users don't get a half-installed
+  // assumes pnpm 11+. Fail loud now so users don't get a half-installed
   // project. Override with `--pm npm` only if you know the workspace deps
   // won't resolve.
   if (!opts.pm) {
@@ -130,7 +130,7 @@ async function run(): Promise<void> {
         process.stderr.write(
           `\n${pc.red("✘")} ${pc.bold("pnpm is required")} but was not found on PATH.\n` +
             `\nThe scaffold uses pnpm workspaces + Turborepo. Install pnpm first:\n` +
-            `  ${pc.cyan("npm i -g pnpm@10")}\n` +
+            `  ${pc.cyan("npm i -g pnpm@11")}\n` +
             `\nThen retry: ${pc.cyan("pnpm dlx create-sailor@latest")}\n` +
             `(or pass ${pc.dim("--pm=npm")} if you know workspace:* won't resolve in your setup)\n\n`,
         );

@@ -55,13 +55,13 @@ jobs:
           node-version: "24"
           install: "false"
 
-      # Carina builds under pnpm 11 while this repo pins 10.32.1, which is what
+      # Carina builds under pnpm 11 while this repo pins 11.28.5, which is what
       # the shared action installs from the root packageManager field. corepack
       # puts the carina version in front for the build that follows.
       - name: Pin the pnpm version carina builds with
         run: |
           corepack enable
-          corepack prepare pnpm@11.13.1 --activate
+          corepack prepare pnpm@11.28.5 --activate
 
       - name: Configure SSH
         env:
