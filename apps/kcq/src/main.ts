@@ -2,8 +2,9 @@
 
 import { configureBrowserPersistenceScope } from "@363045841yyt/klinechart-core/persistence-scope";
 import { createAuthCenterBrowserClient } from "@nebutra/auth/browser";
-import { createApp } from "vue";
+import { createApp, type App as VueApp } from "vue";
 import "./styles.css";
+import { getKcqRoute } from "./main-route";
 
 const auth = createAuthCenterBrowserClient("https://auth.nebutra.com");
 async function boot() {
@@ -18,8 +19,17 @@ async function boot() {
     workspace ?? "personal",
   ]);
   configureBrowserPersistenceScope(scope);
-  const { default: App } = await import("./workbench.vue");
-  const app = createApp(App, { context, auth, scope });
+  let app: VueApp;
+  if (getKcqRoute(window.location.pathname) === "profile") {
+    const { initializeProfileTheme } = await import("./profile-theme");
+    initializeProfileTheme();
+    const { default: Profile } = await import("./profile.vue");
+    document.title = "个人资料 · KCQ";
+    app = createApp(Profile, { context, auth });
+  } else {
+    const { default: Workbench } = await import("./workbench.vue");
+    app = createApp(Workbench, { context, auth, scope });
+  }
   app.mount("#app");
   let checking = false;
   async function revalidate() {

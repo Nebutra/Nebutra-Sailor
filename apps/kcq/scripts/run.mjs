@@ -40,6 +40,9 @@ if (mode === "typecheck") {
           paths: {
             "@363045841yyt/klinechart": [resolve(upstream, "packages/vue/dist/index.d.ts")],
             "@363045841yyt/klinechart-core": [resolve(upstream, "packages/core/dist/index.d.ts")],
+            "@363045841yyt/klinechart-core/config": [
+              resolve(upstream, "packages/core/dist/foundation/config/chartSettings.d.ts"),
+            ],
             "@363045841yyt/klinechart-core/persistence-scope": [
               resolve(upstream, "packages/core/dist/foundation/persistence/persistence-scope.d.ts"),
             ],

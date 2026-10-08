@@ -43,8 +43,8 @@ body,
   height: 100%;
 }
 body {
-  color: var(--klc-color-ui-text);
-  background: var(--klc-color-ui-background);
+  color: var(--klc-color-ui-text, var(--neutral-12));
+  background: var(--klc-color-ui-background, var(--neutral-1));
   font-size: 13px;
 }
 a {
@@ -233,4 +233,91 @@ button {
   justify-self: center;
   padding: 8px 16px;
   cursor: pointer;
+}
+
+.profile-page {
+  min-height: 100dvh;
+  color: var(--klc-color-ui-text);
+  background: var(--klc-color-ui-background);
+  font-family: var(--font-sans);
+}
+.profile-header {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--klc-color-ui-border);
+}
+.profile-header svg {
+  width: 16px;
+  height: 16px;
+}
+.profile-content {
+  width: min(100% - 32px, 560px);
+  margin: 0 auto;
+  padding: 48px 0;
+}
+.profile-content h1 {
+  margin: 0 0 24px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.profile-card {
+  padding: 24px;
+  border: 1px solid var(--klc-color-ui-border);
+  border-radius: var(--radius-lg);
+  background: var(--klc-color-ui-card);
+}
+.profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--klc-color-ui-border);
+}
+.profile-identity > div:last-child {
+  min-width: 0;
+}
+.profile-card h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+.profile-identity p {
+  margin: 4px 0 0;
+  color: var(--klc-color-ui-muted);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.profile-form {
+  padding-top: 24px;
+}
+.profile-form label {
+  display: block;
+  margin-bottom: 8px;
+}
+.profile-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+}
+.profile-form-footer p {
+  margin: 0;
+  font-size: 14px;
+}
+.profile-error {
+  color: var(--klc-color-ui-danger);
+}
+.profile-save {
+  color: var(--klc-color-ui-on-accent);
+  background: var(--klc-color-ui-accent);
+}
+.profile-save:hover {
+  background: var(--klc-color-ui-accent-strong);
+}
+.profile-signed-out h2 {
+  margin-bottom: 20px;
 }

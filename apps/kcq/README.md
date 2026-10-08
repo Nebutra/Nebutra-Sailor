@@ -19,3 +19,7 @@ team administration and billing remain in Nebutra. Live market connectors
 and managed AI credentials are not provisioned by this shell.
 
 Frontend layout and interaction requirements live in [DESIGN.md](./DESIGN.md).
+
+Account settings live at `/settings/profile` on the KCQ host. Route and profile
+regressions run from the repository root with
+`pnpm exec vitest run --config apps/kcq/vitest.config.ts`.

@@ -49,5 +49,11 @@ export function createAuthCenterBrowserClient(baseURL: string) {
       const result = await client.signOut();
       if (result.error) throw new Error(result.error.message ?? "Unable to sign out.");
     },
+    async updateProfile(name: string): Promise<void> {
+      const trimmed = name.trim();
+      if (!trimmed || trimmed.length > 64) throw new Error("名称须为 1–64 个字符。");
+      const result = await client.updateUser({ name: trimmed });
+      if (result.error) throw new Error(result.error.message ?? "Unable to update your profile.");
+    },
   };
 }

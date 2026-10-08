@@ -30,3 +30,8 @@ Validate production build, strict types, lint, the toolbar public contract,
 both themes, keyboard menu dismissal and Agent open/close in a real browser.
 Deployment builds workspace prerequisites and pins the canonical library
 revision in chart-source.json. Product and library remain separate repositories.
+
+`/settings/profile` mounts a separate account surface, without creating a chart
+or Agent runtime. It reads the same scoped settings and public KCQ theme resolver,
+uses shared Avatar/Input/Button primitives and keeps session revalidation active.
+Profile edits go through the public Nebutra auth adapter; email is read-only.
