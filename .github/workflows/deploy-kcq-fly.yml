@@ -1,0 +1,161 @@
+name: Deploy KCQ to Fly
+
+# KCQ lives in its own repository. This workflow builds the selected KCQ ref,
+# ships the static product surface to a dedicated Fly app, and optionally cuts
+# over kcq.nebutra.com after the Fly URL is healthy.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "KCQ git ref to deploy"
+        required: true
+        default: main
+      cutover:
+        description: "After a healthy Fly URL, point kcq.nebutra.com at it"
+        required: false
+        default: "false"
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-kcq-fly${{ github.event.inputs.cutover == 'true' && '-cutover' || '' }}
+  cancel-in-progress: ${{ github.event.inputs.cutover != 'true' }}
+
+jobs:
+  deploy:
+    name: Fly KCQ
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require deployment credentials
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "${FLY_API_TOKEN:-}" || {
+            echo "::error::Set repository secret FLY_API_TOKEN"
+            exit 1
+          }
+
+      - name: Checkout Nebutra deployment files
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Checkout KCQ
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: TsekaLuk/KLineChartQuant
+          ref: ${{ inputs.ref }}
+          path: kcq-source
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1
+        with:
+          version: 11
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.12
+          cache: pnpm
+          cache-dependency-path: kcq-source/pnpm-lock.yaml
+
+      - name: Build KCQ product surface
+        working-directory: kcq-source
+        run: |
+          set -euo pipefail
+          pnpm install --frozen-lockfile
+          pnpm exec vite build --config packages/vue/preview/vite.config.ts --base /
+          test -f packages/vue/preview/dist/index.html
+
+      - name: Stage static image
+        run: |
+          set -euo pipefail
+          stage="$RUNNER_TEMP/stage-kcq"
+          rm -rf "$stage"
+          mkdir -p "$stage/html"
+          cp -R kcq-source/packages/vue/preview/dist/. "$stage/html/"
+          cp infra/fly/Dockerfile.kcq "$stage/Dockerfile"
+          cp infra/fly/kcq.nginx.conf "$stage/nginx.conf"
+          echo "STAGE=$stage" >> "$GITHUB_ENV"
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Ensure Fly app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c 'import json,sys; names={a.get("Name") or a.get("name") for a in json.load(sys.stdin)}; sys.exit(0 if "nebutra-kcq" in names else 1)'; then
+            echo "app nebutra-kcq exists"
+          else
+            flyctl apps create nebutra-kcq --machines --org "$org" --yes
+          fi
+
+      - name: Deploy KCQ Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy "$STAGE" \
+            --config "$GITHUB_WORKSPACE/infra/fly/kcq.toml" \
+            --dockerfile "$STAGE/Dockerfile" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Add Fly certificate
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          flyctl certs add kcq.nebutra.com -a nebutra-kcq || true
+          flyctl certs setup kcq.nebutra.com -a nebutra-kcq || true
+          flyctl certs show kcq.nebutra.com -a nebutra-kcq || true
+
+      - name: Smoke Fly URL
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://nebutra-kcq.fly.dev/ || echo 000)
+            health=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://nebutra-kcq.fly.dev/health || echo 000)
+            echo "try $i home=$code health=$health"
+            if [ "$code" = "200" ] && [ "$health" = "200" ]; then
+              exit 0
+            fi
+            sleep 10
+          done
+          flyctl status -a nebutra-kcq || true
+          flyctl logs -a nebutra-kcq --no-tail || true
+          echo "::error::KCQ Fly URL is not healthy; DNS will not cut over"
+          exit 1
+
+      - name: Cut over Cloudflare DNS
+        if: inputs.cutover == true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          HOST: kcq
+          FLY_APP: nebutra-kcq
+        run: bash infra/ops/scripts/point-host-dns-fly.sh
+
+      - name: Smoke public KCQ domain
+        if: inputs.cutover == true
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6 7 8; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://kcq.nebutra.com/ || echo 000)
+            echo "try $i public=$code"
+            if [ "$code" = "200" ]; then
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::error::https://kcq.nebutra.com/ did not return 200"
+          exit 1
