@@ -14,6 +14,11 @@ on:
         required: false
         default: "false"
         type: boolean
+      diagnostics:
+        description: "Read KCQ database connectivity without deploying or exposing records"
+        required: false
+        default: "false"
+        type: boolean
   push:
     branches: [main]
     paths:
@@ -34,7 +39,37 @@ concurrency:
   cancel-in-progress: ${{ github.event.inputs.cutover != 'true' }}
 
 jobs:
+  diagnostics:
+    if: inputs.diagnostics == true
+    name: Inspect KCQ database boundary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+      - name: Read connection and schema availability
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import shlex, subprocess
+          code = '''
+          import { getSystemDb, getTenantDb } from "/app/node_modules/@nebutra/db/dist/index.js";
+          const system = getSystemDb();
+          for (const [name, query] of [
+            ["users", () => system.user.count()],
+            ["tenants", () => system.tenant.count()],
+            ["market-system", () => system.marketDataConnection.count()],
+            ["market-rls", () => getTenantDb("kcq-readonly-diagnostics").marketDataConnection.count()],
+          ]) {
+            try { await query(); console.info(name + ": available"); }
+            catch (error) { console.info(name + ": " + JSON.stringify({name:error.name, code:error.code, causeCode:error.cause?.code, databaseCode:error.meta?.driverAdapterError?.cause?.originalCode})); }
+          }
+          await system.$disconnect();
+          '''
+          subprocess.run(["flyctl", "ssh", "console", "-a", "nebutra-gateway", "-C", shlex.join(["node", "--input-type=module", "-e", code])], check=True)
+          PY
   database:
+    if: inputs.diagnostics != true
     # Schema first, apps second: the database is brought to this commit's
     # schema before anything that reads it ships. No pending migration → a
     # quick no-op. It fails closed — a drifted database stops the deploy.
@@ -45,6 +80,7 @@ jobs:
     secrets: inherit
 
   deploy:
+    if: inputs.diagnostics != true
     name: Fly Hono origin
     needs: database
     runs-on: ubuntu-latest
