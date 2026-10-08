@@ -44,18 +44,12 @@ jobs:
           - app: design
             fly_app: nebutra-design
             host: design
-          - app: kuanlan
-            fly_app: nebutra-kuanlan
-            host: kuanlan
           - app: idp
             fly_app: nebutra-idp
             host: sso
           - app: admin
             fly_app: nebutra-admin
             host: admin
-          - app: para
-            fly_app: nebutra-para
-            host: para
           - app: carina
             fly_app: nebutra-carina
             host: carina

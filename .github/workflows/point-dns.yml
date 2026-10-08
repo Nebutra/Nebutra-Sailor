@@ -7,9 +7,9 @@ name: Point DNS
 #
 # Support matrix (anything else fails fast in the resolve step):
 #   auth      cloudflare-worker (production) | ecs (China fallback)
-#   design, forge, kuanlan, router   ecs
+#   design, forge, router   ecs
 #   landing   fly            apex + www/status/open → nebutra-landing.fly.dev
-#   carina, open, para, pebble, status   fly   proxied CNAME → <app>.fly.dev
+#   carina, open, pebble, status   fly   proxied CNAME → <app>.fly.dev
 #                            (open/status are landing host aliases; fly certs add first)
 #   www       apex           CNAME www → nebutra.com
 #   leak      authoritative  NS delegation + glue → ECS authoritative forge-dns-leak (DNS-only,
@@ -30,11 +30,9 @@ on:
           - carina
           - design
           - forge
-          - kuanlan
           - landing
           - leak
           - open
-          - para
           - pebble
           - router
           - status
@@ -82,21 +80,19 @@ jobs:
             landing/fly)            script=point-landing-dns-fly.sh; fly_app=nebutra-landing ;;
             carina/fly)             script=point-fly-dns.sh; fly_app=nebutra-carina ;;
             open/fly)               script=point-fly-dns.sh; fly_app=nebutra-landing ;;
-            para/fly)               script=point-fly-dns.sh; fly_app=nebutra-para ;;
             pebble/fly)             script=point-fly-dns.sh; fly_app=nebutra-pebble ;;
             status/fly)             script=point-fly-dns.sh; fly_app=nebutra-landing ;;
             design/ecs)             script=point-design-dns-ecs.sh ;;
             forge/ecs)              script=point-forge-dns-ecs.sh ;;
-            kuanlan/ecs)            script=point-kuanlan-dns-ecs.sh ;;
             leak/authoritative)     script=point-leak-zone-dns.sh ;;
             router/ecs)             script=point-router-dns-ecs.sh ;;
             www/apex)               script=point-www-dns-apex.sh ;;
             *)
               case "$DNS_HOST" in
                 auth) supported="cloudflare-worker ecs" ;;
-                design|forge|kuanlan|router) supported="ecs" ;;
+                design|forge|router) supported="ecs" ;;
                 landing) supported="fly" ;;
-                carina|open|para|pebble|status) supported="fly" ;;
+                carina|open|pebble|status) supported="fly" ;;
                 www) supported="apex" ;;
                 leak) supported="authoritative" ;;
                 *) supported="(none)" ;;
@@ -186,7 +182,7 @@ jobs:
               echo "::warning::health ok but google probe not pair_ok yet"
               exit 0
               ;;
-            carina|para|pebble)
+            carina|pebble)
               # Best-effort until the origin is attached (Fly cert + Machine).
               for i in 1 2 3 4 5 6; do
                 code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://${DNS_HOST}.nebutra.com/" || echo 000)
@@ -225,7 +221,7 @@ jobs:
               curl -sSI --max-time 15 "https://${DNS_HOST}.nebutra.com/" || true
               exit 0
               ;;
-            forge|kuanlan|router)
+            forge|router)
               for i in 1 2 3 4 5 6 7 8; do
                 code=$(curl -sS -o /tmp/origin.html -w '%{http_code}' --max-time 25 "https://${DNS_HOST}.nebutra.com/" || echo 000)
                 echo "try $i -> $code"

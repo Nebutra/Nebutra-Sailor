@@ -26,7 +26,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: landing forge router web design auth kuanlan idp admin para gateway cache carina new-api). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api are the remaining ECS leftovers. sailor-docs deploys via deploy-sailor-docs.yml (Cloudflare) now."
+        description: "Apps to deploy (space-separated: landing forge router web design auth idp admin gateway cache carina new-api). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api are the remaining ECS leftovers. sailor-docs deploys via deploy-sailor-docs.yml (Cloudflare) now. Kuanlan and Para Fly apps are decommissioned."
         required: false
         default: ""
       cutover:
@@ -43,8 +43,6 @@ on:
       - "apps/web/**"
       - "apps/design/**"
       - "apps/auth/**"
-      - "apps/kuanlan/**"
-      - "apps/para/**"
       - "apps/idp/**"
       - "apps/admin/**"
       - "packages/ai/forge-dns-leak/**"
@@ -104,10 +102,8 @@ jobs:
             {"app":"web","package":"@nebutra/web","workspace":"apps/web","build_command":"build:next","fly_app":"nebutra-web","host":"app","site":"https://app.nebutra.com"},
             {"app":"design","package":"@nebutra/design","workspace":"apps/design","build_command":"build","fly_app":"nebutra-design","host":"design","site":"https://design.nebutra.com"},
             {"app":"auth","package":"@nebutra/auth-center","workspace":"apps/auth","build_command":"build","fly_app":"nebutra-auth","host":"","site":"https://auth.nebutra.com"},
-            {"app":"kuanlan","package":"@nebutra/kuanlan","workspace":"apps/kuanlan","build_command":"build","fly_app":"nebutra-kuanlan","host":"kuanlan","site":"https://kuanlan.nebutra.com"},
             {"app":"idp","package":"@nebutra/idp","workspace":"apps/idp","build_command":"build","fly_app":"nebutra-idp","host":"sso","site":"https://sso.nebutra.com"},
             {"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","build_command":"build","fly_app":"nebutra-admin","host":"admin","site":"https://admin.nebutra.com"},
-            {"app":"para","package":"@nebutra/para","workspace":"apps/para","build_command":"build","fly_app":"nebutra-para","host":"para","site":"https://para.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
           known = {row["app"] for row in all_apps} | {"gateway", "cache", "carina", "new-api"}
@@ -223,15 +219,13 @@ jobs:
           VM_HOST: ${{ vars.VM_HOST || vars.ECS_HOST }}
           VM_USER: ${{ vars.VM_USER || vars.ECS_USER }}
           VM_SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
-          # kuanlan Moments list nebutra-uploads. The VM .env still carries the
-          # assets-only seeder; importing it overwrites the uploads token.
           # router / admin: the VM .env predates Fly — its NEW_API_BASE_URL is the
           # ECS localhost port and it knows nothing of the admin contract secrets.
           # Those are Fly-native; importing over them broke supply after every deploy.
           # landing: ALLOWED_HOSTS is the proxy.ts host allowlist and lives in
           # infra/fly/landing.toml. A secret outranks [env], so a stale VM value
           # (nebutra.com-only) would 421 the *.fly.dev smoke before cutover.
-          SKIP_IMPORT_KEYS: ${{ matrix.app == 'kuanlan' && 'R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY' || matrix.app == 'router' && 'NEW_API_BASE_URL NEW_API_ACCESS_TOKEN SERVICE_SECRET CLIPROXY_API_KEY CLIPROXY_MANAGEMENT_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'admin' && 'SERVICE_SECRET CLIPROXY_MANAGEMENT_KEY CLIPROXY_API_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'landing' && 'ALLOWED_HOSTS' || '' }}
+          SKIP_IMPORT_KEYS: ${{ matrix.app == 'router' && 'NEW_API_BASE_URL NEW_API_ACCESS_TOKEN SERVICE_SECRET CLIPROXY_API_KEY CLIPROXY_MANAGEMENT_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'admin' && 'SERVICE_SECRET CLIPROXY_MANAGEMENT_KEY CLIPROXY_API_KEY NEW_API_ROOT_PASSWORD' || matrix.app == 'landing' && 'ALLOWED_HOSTS' || '' }}
         run: |
           set -euo pipefail
           if [ -z "${VM_HOST:-}" ] || [ -z "${VM_SSH_PRIVATE_KEY:-}" ]; then
@@ -271,69 +265,6 @@ jobs:
           flyctl secrets unset HOSTNAME PORT HOST -a "${{ matrix.fly_app }}" --stage \
             || echo "no leftover bind secrets"
           flyctl secrets set HOSTNAME=0.0.0.0 PORT=8080 -a "${{ matrix.fly_app }}" --stage
-
-      - name: Set kuanlan consume secrets
-        if: matrix.app == 'kuanlan'
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          # Deliberately NOT set from a repo secret. ops-issue-router-key.yml
-          # issues the key and installs it on the Machine; re-staging it here
-          # from KUANLAN_ROUTER_API_KEY overwrote a freshly issued key with a
-          # stale New-API token on the next deploy — it tested green, then was
-          # an invalid key hours later with nothing in the logs to say why.
-          # Fly keeps the installed value; reissue with that workflow.
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Moments List/Get/Put nebutra-uploads. Shared R2_* is the assets
-          # seeder and is AccessDenied on uploads — do not restage it here.
-          # Dedicated keys come from ops-kuanlan-r2-uploads.yml; if unset,
-          # Fly keeps the last working uploads token.
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_KUANLAN_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_KUANLAN_SECRET_ACCESS_KEY }}
-          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-          # PlanetScale via the PgBouncer pooler. kuanlan is on Fly, not
-          # Cloudflare, so there is no Hyperdrive binding to reach it through.
-          # DIRECT_URL is deliberately absent: the schema is owned by
-          # packages/platform/db and this app must never run a migration.
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          set -euo pipefail
-          args=()
-          [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] && args+=(CLOUDFLARE_ACCOUNT_ID="$CLOUDFLARE_ACCOUNT_ID")
-          [ -n "${R2_ACCESS_KEY_ID:-}" ] && args+=(R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID")
-          [ -n "${R2_SECRET_ACCESS_KEY:-}" ] && args+=(R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY")
-          [ -n "${BETTER_AUTH_SECRET:-}" ] && args+=(BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET")
-          [ -n "${DATABASE_URL:-}" ] && args+=(DATABASE_URL="$DATABASE_URL")
-          # A role name, not a secret. @nebutra/db issues SET LOCAL ROLE with it
-          # inside every tenant transaction; unset, the query runs as whatever
-          # the connection is, which is the one thing tenant isolation cannot
-          # afford to get wrong.
-          args+=(APP_DB_ROLE="app_user")
-          args+=(NEXT_PUBLIC_AUTH_URL="https://auth.nebutra.com")
-          args+=(BETTER_AUTH_URL="https://auth.nebutra.com")
-          args+=(NEXT_PUBLIC_AUTH_PROVIDER="better-auth")
-          args+=(NEXT_PUBLIC_SITE_URL="https://kuanlan.nebutra.com")
-          if [ "${#args[@]}" -eq 0 ]; then
-            echo "::warning::No GitHub kuanlan secrets — relying on VM .env import."
-            exit 0
-          fi
-          flyctl secrets set "${args[@]}" -a nebutra-kuanlan --stage
-
-      - name: Set para auth secrets
-        if: matrix.app == 'para'
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-        run: |
-          set -euo pipefail
-          args=()
-          [ -n "${BETTER_AUTH_SECRET:-}" ] && args+=(BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET")
-          args+=(NEXT_PUBLIC_AUTH_URL="https://auth.nebutra.com")
-          args+=(BETTER_AUTH_URL="https://auth.nebutra.com")
-          args+=(NEXT_PUBLIC_AUTH_PROVIDER="better-auth")
-          args+=(NEXT_PUBLIC_SITE_URL="https://para.nebutra.com")
-          # NEXT_PUBLIC_PARA_API_URL stays unset until the PARA migration is applied on the
-          # origin database; the shell falls back to mock data rather than 401-ing every call.
-          flyctl secrets set "${args[@]}" -a nebutra-para --stage
 
       # forge-dns-leak (leak.nebutra.com) used to be its own Fly app
       # (nebutra-dns-leak). It now runs inside the nebutra-forge Machine: the
@@ -938,4 +869,3 @@ jobs:
     if: success()
     uses: ./.github/workflows/ops-service-secret-parity.yml
     secrets: inherit
-

@@ -1,0 +1,56 @@
+name: Decommission Kuanlan and Para Fly apps
+
+# One-time, deliberately narrow teardown for the retired product edges. This
+# workflow is removed immediately after the two apps are deleted.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  destroy:
+    name: Destroy ${{ matrix.app }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app:
+          - nebutra-kuanlan
+          - nebutra-para
+    steps:
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      - name: Require Fly token
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "${FLY_API_TOKEN:-}" || {
+            echo "::error::FLY_API_TOKEN repository secret is missing"
+            exit 1
+          }
+
+      - name: Record and destroy app
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_APP: ${{ matrix.app }}
+        run: |
+          set -euo pipefail
+          echo "=== before: $FLY_APP ==="
+          if flyctl apps list --json | python3 -c 'import json,sys,os; names={a.get("Name") or a.get("name") for a in json.load(sys.stdin)}; sys.exit(0 if os.environ["FLY_APP"] in names else 1)'; then
+            flyctl status -a "$FLY_APP" || true
+            flyctl machines list -a "$FLY_APP" || true
+            flyctl certs list -a "$FLY_APP" || true
+            flyctl apps destroy "$FLY_APP" --yes
+            echo "destroyed $FLY_APP"
+          else
+            echo "$FLY_APP is already absent"
+          fi
+          echo "=== after: $FLY_APP ==="
+          if flyctl apps list --json | python3 -c 'import json,sys,os; names={a.get("Name") or a.get("name") for a in json.load(sys.stdin)}; sys.exit(0 if os.environ["FLY_APP"] in names else 1)'; then
+            echo "::error::$FLY_APP still exists after destroy"
+            exit 1
+          fi
+          echo "$FLY_APP absent"
