@@ -52,12 +52,12 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1
         with:
-          version: 10.32.1
+          version: 11
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 22.12
+          node-version: 22.19
           cache: pnpm
           cache-dependency-path: kcq-source/pnpm-lock.yaml
 
