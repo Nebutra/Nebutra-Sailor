@@ -3,7 +3,7 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { FinalCTA, PricingSection } from "@/components/landing";
+import { FinalCTA, PricingSection, ProductPlansSection } from "@/components/landing";
 import { PricingComparisonTable } from "@/components/landing/pricing-comparison-table";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Link } from "@/i18n/navigation";
@@ -103,6 +103,8 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
 
         {/* Comparison Table — license tier breakdown */}
         <PricingComparisonTable />
+
+        <ProductPlansSection />
 
         {/* FAQ section */}
         <div className="mt-24">

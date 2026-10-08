@@ -15,4 +15,5 @@ export { MonorepoFileTree } from "./MonorepoFileTree";
 export { Navbar } from "./Navbar";
 export { NewsletterForm } from "./NewsletterForm";
 export { PricingSection } from "./PricingSection";
+export { ProductPlansSection } from "./ProductPlansSection";
 export { UseCasesSection } from "./use-cases";
