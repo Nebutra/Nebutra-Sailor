@@ -1,0 +1,71 @@
+name: Remove retired Kuanlan and Para DNS
+
+# One-time cleanup after the corresponding Fly apps were destroyed. This
+# removes only A/AAAA/CNAME records for the two exact product hostnames; TXT,
+# MX and unrelated records remain untouched. The workflow is removed after it
+# runs successfully.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  remove:
+    name: Remove ${{ matrix.host }} DNS
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        host:
+          - kuanlan.nebutra.com
+          - para.nebutra.com
+    steps:
+      - name: Remove exact host records
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ZONE_ID: ${{ vars.CF_ZONE_ID }}
+          DNS_HOST: ${{ matrix.host }}
+        run: |
+          set -euo pipefail
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || {
+            echo "::error::CLOUDFLARE_API_TOKEN repository secret is missing"
+            exit 1
+          }
+          api='https://api.cloudflare.com/client/v4'
+          zone_id="${CF_ZONE_ID:-}"
+          if [ -z "$zone_id" ]; then
+            zone_id=$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              "$api/zones?name=nebutra.com&status=active" \
+              | python3 -c 'import json,sys; d=json.load(sys.stdin); print((d.get("result") or [{}])[0].get("id") or "")')
+          fi
+          test -n "$zone_id" || { echo "::error::Could not resolve nebutra.com zone"; exit 1; }
+          records=$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "$api/zones/$zone_id/dns_records?name=$DNS_HOST&per_page=100")
+          echo "$records" | python3 -c '
+          import json, sys
+          d=json.load(sys.stdin)
+          for r in d.get("result") or []:
+              print(f"{r.get(\"id\")}\t{r.get(\"type\")}\t{r.get(\"content\")}\tproxied={r.get(\"proxied\")}")
+          '
+          while IFS=$'\t' read -r rid rtype content proxied; do
+            [ -n "${rid:-}" ] || continue
+            case "$rtype" in
+              A|AAAA|CNAME)
+                echo "deleting $rtype $content (${proxied:-})"
+                curl -fsS -X DELETE -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+                  "$api/zones/$zone_id/dns_records/$rid" >/dev/null
+                ;;
+              *)
+                echo "preserving $rtype $content"
+                ;;
+            esac
+          done < <(echo "$records" | python3 -c '
+          import json, sys
+          for r in (json.load(sys.stdin).get("result") or []):
+              print("\t".join(str(r.get(k) or "") for k in ("id","type","content","proxied")))
+          ')
+          remaining=$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "$api/zones/$zone_id/dns_records?name=$DNS_HOST&per_page=100" \
+            | python3 -c 'import json,sys; print(len(json.load(sys.stdin).get("result") or []))')
+          echo "$DNS_HOST remaining records: $remaining (non-address records, if any, are preserved)"
