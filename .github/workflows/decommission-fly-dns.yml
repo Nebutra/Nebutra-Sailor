@@ -46,7 +46,7 @@ jobs:
           import json, sys
           d=json.load(sys.stdin)
           for r in d.get("result") or []:
-              print(f"{r.get(\"id\")}\t{r.get(\"type\")}\t{r.get(\"content\")}\tproxied={r.get(\"proxied\")}")
+              print("\t".join(str(r.get(k) or "") for k in ("id","type","content","proxied")))
           '
           while IFS=$'\t' read -r rid rtype content proxied; do
             [ -n "${rid:-}" ] || continue
