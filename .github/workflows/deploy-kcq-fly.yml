@@ -73,6 +73,7 @@ jobs:
         run: |
           set -euo pipefail
           export KCQ_SOURCE_DIR="$GITHUB_WORKSPACE/kcq-source"
+          pnpm exec vitest run --config apps/kcq/vitest.config.ts
           pnpm --filter @nebutra/kcq typecheck
           pnpm --filter @nebutra/kcq build
           test -f apps/kcq/dist/index.html
@@ -88,6 +89,9 @@ jobs:
           cp infra/fly/Dockerfile.kcq "$stage/Dockerfile"
           cp infra/fly/kcq.nginx.conf "$stage/nginx.conf"
           echo "STAGE=$stage" >> "$GITHUB_ENV"
+
+      - name: Validate market proxy configuration
+        run: docker run --rm -v "$STAGE/nginx.conf:/etc/nginx/conf.d/default.conf:ro" nginx:1.27-alpine nginx -t
 
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1

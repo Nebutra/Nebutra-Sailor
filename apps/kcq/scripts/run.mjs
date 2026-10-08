@@ -43,6 +43,12 @@ if (mode === "typecheck") {
             "@363045841yyt/klinechart-core/config": [
               resolve(upstream, "packages/core/dist/foundation/config/chartSettings.d.ts"),
             ],
+            "@363045841yyt/klinechart-core/market-data": [
+              resolve(upstream, "packages/core/dist/data/provider/index.d.ts"),
+            ],
+            "@363045841yyt/klinechart-core/market-data/sources": [
+              resolve(upstream, "packages/core/dist/data/provider/impl/sources/index.d.ts"),
+            ],
             "@363045841yyt/klinechart-core/persistence-scope": [
               resolve(upstream, "packages/core/dist/foundation/persistence/persistence-scope.d.ts"),
             ],

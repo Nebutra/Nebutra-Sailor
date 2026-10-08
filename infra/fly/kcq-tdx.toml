@@ -5,6 +5,7 @@ primary_region = "sin"
 [env]
   PORT = "8080"
   GIN_MODE = "release"
+  TZ = "Asia/Shanghai"
   CONNECTOR = "tdx"
   SYMBOL_DB_PATH = "/app/data/tdx-symbols.db"
 

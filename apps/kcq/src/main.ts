@@ -27,6 +27,8 @@ async function boot() {
     document.title = "个人资料 · KCQ";
     app = createApp(Profile, { context, auth });
   } else {
+    const { initializeMarketConnectors } = await import("./market-connectors");
+    initializeMarketConnectors(window.location.origin, window.localStorage);
     const { default: Workbench } = await import("./workbench.vue");
     app = createApp(Workbench, { context, auth, scope });
   }

@@ -11,4 +11,4 @@ USER connector
 ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8080
 # Bound socket connects; directory warm-up otherwise blocks the listening port.
-CMD ["python", "-c", "import socket,uvicorn; socket.setdefaulttimeout(8); uvicorn.run('server:app',host='::',port=8080,lifespan='off')"]
+CMD ["python", "nebutra-entrypoint.py"]

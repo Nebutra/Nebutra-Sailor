@@ -8,6 +8,10 @@ on:
         type: choice
         options: [tdx, python, binance]
         default: tdx
+      verify_only:
+        description: "Recheck an existing Machine without deploying"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -19,6 +23,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Resolve immutable connector source
@@ -43,12 +48,14 @@ jobs:
           cp infra/ops/scripts/smoke-kcq-connector.sh connector-source/nebutra-smoke.sh
           printf '.git\n.venv\n__pycache__\n' > connector-source/.dockerignore
           if [ "$CONNECTOR" = python ]; then
+            cp infra/fly/kcq-python-entrypoint.py connector-source/nebutra-entrypoint.py
             # Preserve locked versions, hashes and immutable tvdatafeed revision.
             # Replace only the package mirror origin for the remote builder.
             sed -i 's|https://mirrors.aliyun.com/pypi/simple/|https://pypi.org/simple|g; s|https://mirrors.aliyun.com/pypi/packages/|https://files.pythonhosted.org/packages/|g' connector-source/uv.lock
           fi
       - uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
       - name: Ensure private Fly app
+        if: inputs.verify_only != true
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           FLY_ORG: ${{ vars.FLY_ORG }}
@@ -62,6 +69,7 @@ jobs:
             flyctl apps create "$app" --machines --org "$org" --yes
           fi
       - name: Deploy private Machine
+        if: inputs.verify_only != true
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           CONNECTOR: ${{ inputs.connector }}
@@ -74,10 +82,20 @@ jobs:
         run: |
           set -euo pipefail
           app="nebutra-kcq-$CONNECTOR"
+          flyctl status -a "$app"
           for attempt in 1 2 3; do
-            if flyctl ssh console -a "$app" -C '/bin/sh /app/nebutra-smoke.sh'; then exit 0; fi
+            flyctl ssh sftp put infra/ops/scripts/smoke-kcq-connector.sh /tmp/nebutra-smoke.sh -a "$app"
+            if flyctl ssh console -a "$app" -C '/bin/sh /tmp/nebutra-smoke.sh'; then exit 0; fi
             sleep 15
           done
           flyctl logs -a "$app" --no-tail || true
           echo '::error::Connector has not passed real-data verification; do not enable it in KCQ'
           exit 1
+      - name: Diagnose failed deployment
+        if: failure()
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CONNECTOR: ${{ inputs.connector }}
+        run: |
+          flyctl status -a "nebutra-kcq-$CONNECTOR" || true
+          flyctl logs -a "nebutra-kcq-$CONNECTOR" --no-tail || true

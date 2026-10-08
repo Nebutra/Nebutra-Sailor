@@ -5,6 +5,10 @@ base=http://localhost:8080
 if [ "$CONNECTOR" = binance ]; then
   curl -fsS --max-time 20 "$base/api/binance/orderbook?symbol=btcusdt" |
     jq -e '(.bids | length) > 0 and (.asks | length) > 0'
+  stream=$(mktemp)
+  trap 'rm -f "$stream"' EXIT
+  curl -fsSN --max-time 8 "$base/api/binance/depth-events?symbol=btcusdt" > "$stream" || test "$?" = 28
+  sed -n 's/^data: //p' "$stream" | head -1 | jq -e 'select(.type == "snapshot")'
   exit
 fi
 if [ "$CONNECTOR" = tdx ]; then
