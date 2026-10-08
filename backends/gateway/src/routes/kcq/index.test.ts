@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createKcqRoutes } from "./index.js";
 
 const metadata = {
@@ -33,10 +33,13 @@ function setup(options: { signedIn?: boolean; canManage?: boolean } = {}) {
   return { app, store, adapter };
 }
 const mutationHeaders = {
-  Origin: "https://kcq.nebutra.com",
+  Origin: "https://chart.example.com",
   "Content-Type": "application/json",
   "X-KCQ-Workspace": "personal",
 };
+beforeEach(() => {
+  vi.stubEnv("KCQ_PUBLIC_ORIGIN", "https://chart.example.com");
+});
 describe("KCQ credential boundary", () => {
   it("rejects anonymous callers before accessing credentials", async () => {
     const { app, store } = setup({ signedIn: false });
@@ -76,6 +79,38 @@ describe("KCQ credential boundary", () => {
         .status,
     ).toBe(403);
     expect(store.remove).not.toHaveBeenCalled();
+    expect(
+      (
+        await app.request("/connections", {
+          method: "POST",
+          headers: mutationHeaders,
+          body: JSON.stringify({ label: "Test", apiKey: "12345678" }),
+        })
+      ).status,
+    ).toBe(403);
+    expect(store.save).not.toHaveBeenCalled();
+    expect(
+      (
+        await app.request("/connections/mine/api/v1/market-data/instruments/search", {
+          method: "POST",
+          headers: mutationHeaders,
+          body: JSON.stringify({ sourceId: "byok-mine", keyword: "AAPL", limit: 10 }),
+        })
+      ).status,
+    ).toBe(200);
+  });
+  it("accepts only the configured product origin and fails closed when missing", async () => {
+    const { app, store } = setup();
+    const init = {
+      method: "POST",
+      headers: mutationHeaders,
+      body: JSON.stringify({ label: "Test", apiKey: "12345678" }),
+    };
+    expect((await app.request("/connections", init)).status).toBe(200);
+    expect(store.save).toHaveBeenCalledOnce();
+    vi.stubEnv("KCQ_PUBLIC_ORIGIN", "");
+    expect((await app.request("/connections", init)).status).toBe(403);
+    expect(store.save).toHaveBeenCalledOnce();
   });
   it("returns sanitized operational failures without keys", async () => {
     const { app, adapter } = setup();

@@ -33,7 +33,7 @@ describe("market workspace authorization", () => {
     deps.session.mockResolvedValue(null);
     expect(
       await resolveMarketScope(
-        new Request("https://kcq.nebutra.com", {
+        new Request("https://chart.example.com", {
           headers: { "X-User-Id": "victim", "X-KCQ-Workspace": "victim-org" },
         }),
       ),
@@ -44,7 +44,7 @@ describe("market workspace authorization", () => {
     deps.member.mockResolvedValue(null);
     await expect(
       resolveMarketScope(
-        new Request("https://kcq.nebutra.com", { headers: { "X-KCQ-Workspace": "victim-org" } }),
+        new Request("https://chart.example.com", { headers: { "X-KCQ-Workspace": "victim-org" } }),
       ),
     ).rejects.toThrow("不可访问");
     expect(deps.member).toHaveBeenCalledWith({
@@ -62,7 +62,7 @@ describe("market workspace authorization", () => {
     deps.tenant.mockResolvedValue({ id: "canonical-tenant" });
     expect(
       await resolveMarketScope(
-        new Request("https://kcq.nebutra.com", {
+        new Request("https://chart.example.com", {
           headers: { "X-KCQ-Workspace": "team", "X-Role": "owner" },
         }),
       ),
@@ -72,7 +72,7 @@ describe("market workspace authorization", () => {
     deps.ensure.mockResolvedValue("personal-tenant");
     expect(
       await resolveMarketScope(
-        new Request("https://kcq.nebutra.com", {
+        new Request("https://chart.example.com", {
           headers: { "X-KCQ-Workspace": "personal", "X-User-Id": "victim" },
         }),
       ),

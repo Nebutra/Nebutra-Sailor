@@ -70,6 +70,8 @@ const baseSchema = z.object({
   STUDIO_URL: z.string().optional(),
   // Additional allowed CORS origins (comma-separated)
   CORS_ORIGINS: z.string().optional(),
+  // Exact product origin permitted to write customer-owned market credentials.
+  KCQ_PUBLIC_ORIGIN: z.string().url().optional(),
 
   // Domain overrides
   DOMAIN_LANDING: z.string().url().optional(),

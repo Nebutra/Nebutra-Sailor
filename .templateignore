@@ -456,6 +456,10 @@ CHANGELOG.md
 # KCQ is a first-party Nebutra product, not a Sailor scaffold surface.
 apps/kcq/
 infra/fly/kcq.toml
+infra/fly/kcq-binance.toml
+infra/fly/kcq-python.toml
+infra/fly/kcq-tdx.toml
 infra/fly/Dockerfile.kcq
 infra/fly/kcq.nginx.conf
 .github/workflows/deploy-kcq-fly.yml
+.github/workflows/deploy-kcq-connectors.yml

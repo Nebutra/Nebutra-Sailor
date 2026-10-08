@@ -1,6 +1,7 @@
 /** Authenticated BYOK APIs and KCQ V1 proxy. No shared-provider fallback. */
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { bodyLimit } from "hono/body-limit";
+import { mapTenantRoleToPermissionRoles } from "../../middlewares/tenantContext.js";
 import { type MarketScope, resolveMarketScope } from "./scope.js";
 import { type ConnectionStore, connectionStore } from "./store.js";
 import { barRequest, MarketSourceError, TwelveDataAdapter } from "./twelve-data.js";
@@ -52,10 +53,20 @@ export function createKcqRoutes(options: Options = {}) {
         401,
       );
     if (c.req.method !== "GET") {
-      const allowed = new Set(["https://kcq.nebutra.com"]);
+      const allowed = new Set<string>();
+      if (process.env.KCQ_PUBLIC_ORIGIN) allowed.add(process.env.KCQ_PUBLIC_ORIGIN);
       if (process.env.NODE_ENV !== "production") allowed.add("http://localhost:3130");
       if (!allowed.has(c.req.header("Origin") ?? ""))
         return c.json({ error: { code: "FETCH_FAILED", message: "请求来源无效。" } }, 403);
+    }
+    // Credential writes require the verified scope's administrative capability.
+    // Market-data POSTs only consume a connection owned by that same scope.
+    const writesCredentials =
+      c.req.method !== "GET" && !c.req.path.includes("/api/v1/market-data/");
+    if (writesCredentials) {
+      const roles = mapTenantRoleToPermissionRoles(scope.canManage ? "admin" : "viewer");
+      if (!roles.includes("admin"))
+        throw new MarketSourceError(403, "只有工作区管理员可以修改 Key。");
     }
     c.set("marketScope", scope);
     await next();
@@ -113,13 +124,11 @@ export function createKcqRoutes(options: Options = {}) {
     }),
     async (c) => {
       const scope = c.get("marketScope");
-      if (!scope.canManage) throw new MarketSourceError(403, "只有工作区管理员可以修改 Key。");
       return c.json(await store.save(scope.tenantId, c.req.valid("json")), 200);
     },
   );
   app.delete("/connections/:id", async (c) => {
     const scope = c.get("marketScope");
-    if (!scope.canManage) throw new MarketSourceError(403, "只有工作区管理员可以修改 Key。");
     if (!(await store.remove(scope.tenantId, c.req.param("id"))))
       throw new MarketSourceError(404, "连接不存在。");
     return c.body(null, 204);
