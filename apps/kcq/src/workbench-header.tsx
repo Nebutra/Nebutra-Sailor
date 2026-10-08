@@ -74,7 +74,7 @@ export function WorkbenchHeader({
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 render={
-                  <a href="https://app.nebutra.com/settings/profile">
+                  <a href="/settings/profile">
                     <User />
                     账户设置
                     <ArrowUpRight className="ml-auto" />
