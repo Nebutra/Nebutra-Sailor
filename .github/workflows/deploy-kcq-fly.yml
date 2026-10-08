@@ -12,6 +12,11 @@ on:
         required: false
         default: "false"
         type: boolean
+      diagnostics:
+        description: "Read existing KCQ proxy diagnostics without deploying"
+        required: false
+        default: "false"
+        type: boolean
 
 permissions:
   contents: read
@@ -21,7 +26,23 @@ concurrency:
   cancel-in-progress: ${{ github.event.inputs.cutover != 'true' }}
 
 jobs:
+  diagnostics:
+    if: inputs.diagnostics == true
+    name: Inspect market proxy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+      - name: Inspect existing proxy errors and upstream connectivity
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          curl -sS -o /dev/null -w 'KCQ anonymous BYOK HTTP %{http_code}\n' --max-time 25 https://nebutra-kcq.fly.dev/market/byok/connections
+          flyctl logs -a nebutra-kcq --no-tail --json | python3 -c 'import sys,json; rows=[json.loads(line) for line in sys.stdin if line.strip()]; print("\n".join(str(r.get("message", "")) for r in rows if "[error]" in str(r.get("message", ""))))'
+          flyctl ssh console -a nebutra-kcq -C "/bin/sh -c 'cat /etc/resolv.conf; nslookup nebutra-gateway.fly.dev; wget -S -O /dev/null https://nebutra-gateway.fly.dev/api/v1/kcq/connections'" || true
   deploy:
+    if: inputs.diagnostics != true
     name: Fly KCQ
     runs-on: ubuntu-latest
     steps:
@@ -157,6 +178,20 @@ jobs:
           HOST: kcq
           FLY_APP: nebutra-kcq
         run: bash infra/ops/scripts/point-host-dns-fly.sh
+
+      - name: Smoke authenticated market proxy boundary
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          code=$(curl -sS -o "$RUNNER_TEMP/byok-anonymous.json" -w '%{http_code}' --max-time 25 https://nebutra-kcq.fly.dev/market/byok/connections)
+          if [ "$code" = "401" ] && python3 -c 'import json,sys; assert json.load(open(sys.argv[1]))["error"]["code"] == "FETCH_FAILED"' "$RUNNER_TEMP/byok-anonymous.json"; then
+            echo "BYOK proxy reached the authenticated gateway."
+          else
+            flyctl logs -a nebutra-kcq --no-tail || true
+            echo "::error::Anonymous BYOK must return the gateway JSON 401; got $code"
+            exit 1
+          fi
 
       - name: Smoke public KCQ domain
         if: inputs.cutover == true
