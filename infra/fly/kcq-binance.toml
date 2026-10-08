@@ -1,0 +1,16 @@
+app = "nebutra-kcq-binance"
+primary_region = "sin"
+
+[build.args]
+  SERVICE = "binance"
+
+[env]
+  PORT = "8080"
+  CONNECTOR = "binance"
+  SYMBOLS = "btcusdt,ethusdt"
+  # Upstream defaults to a nonexistent localhost proxy. Use direct egress.
+  NO_PROXY = "api.binance.com,stream.binance.com"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

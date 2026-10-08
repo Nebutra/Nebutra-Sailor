@@ -1,0 +1,17 @@
+# Build the immutable upstream checkout selected by connector-sources.json.
+FROM golang:1.27-alpine AS build
+WORKDIR /src
+COPY . .
+ARG SERVICE=tdx
+RUN CGO_ENABLED=0 go build -trimpath -o /connector ./services/${SERVICE}-api
+
+FROM alpine:3.23
+RUN apk add --no-cache ca-certificates curl jq tzdata && adduser -D connector
+COPY --from=build /connector /usr/local/bin/connector
+COPY nebutra-smoke.sh /app/nebutra-smoke.sh
+RUN mkdir -p /app/data && chown -R connector:connector /app
+WORKDIR /app
+USER connector
+ENV PORT=8080
+EXPOSE 8080
+CMD ["connector"]

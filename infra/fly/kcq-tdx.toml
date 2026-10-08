@@ -1,0 +1,22 @@
+app = "nebutra-kcq-tdx"
+primary_region = "sin"
+
+# Private 6PN only; KCQ's nginx publishes the bounded read-only endpoints.
+[env]
+  PORT = "8080"
+  GIN_MODE = "release"
+  CONNECTOR = "tdx"
+  SYMBOL_DB_PATH = "/app/data/tdx-symbols.db"
+
+[checks.live]
+  type = "http"
+  port = 8080
+  method = "GET"
+  path = "/health/live"
+  interval = "30s"
+  timeout = "5s"
+  grace_period = "30s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"
