@@ -39,7 +39,7 @@ jobs:
         run: |
           set -euo pipefail
           curl -sS -o /dev/null -w 'KCQ anonymous BYOK HTTP %{http_code}\n' --max-time 25 https://nebutra-kcq.fly.dev/market/byok/connections
-          flyctl logs -a nebutra-kcq --no-tail --json | python3 -c 'import sys,json; rows=[json.loads(line) for line in sys.stdin if line.strip()]; print("\n".join(str(r.get("message", "")) for r in rows if "[error]" in str(r.get("message", ""))))'
+          flyctl logs -a nebutra-kcq --no-tail | python3 -c 'import sys; print("".join(line for line in sys.stdin if "[error]" in line))'
           flyctl ssh console -a nebutra-kcq -C "/bin/sh -c 'cat /etc/resolv.conf; nslookup nebutra-gateway.fly.dev; wget -S -O /dev/null https://nebutra-gateway.fly.dev/api/v1/kcq/connections'" || true
   deploy:
     if: inputs.diagnostics != true
