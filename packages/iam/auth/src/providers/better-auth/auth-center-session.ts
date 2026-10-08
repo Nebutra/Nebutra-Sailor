@@ -53,7 +53,7 @@ export async function fetchAuthCenterSession(
   const userAgent = request.headers.get("user-agent");
   if (userAgent) headers.set("user-agent", userAgent);
 
-  const res = await fetchImpl(`${origin}/api/auth/get-session`, {
+  const res = await fetchImpl(`${origin}/api/auth/get-session?disableCookieCache=true`, {
     method: "GET",
     headers,
     cache: "no-store",

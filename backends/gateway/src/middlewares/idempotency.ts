@@ -22,7 +22,8 @@ import type { Context, Next } from "hono";
 const IDEMPOTENT_METHODS = new Set(["POST", "PUT", "PATCH"]);
 
 // Paths that are explicitly exempt (webhooks must never be cached)
-const EXEMPT_PREFIX = ["/api/webhooks", "/api/health", "/api/system"];
+// KCQ resolves cookie identity/workspace inside its routes; replay must never bypass that guard.
+const EXEMPT_PREFIX = ["/api/webhooks", "/api/health", "/api/system", "/api/v1/kcq/"];
 
 const TTL_SECONDS = 86_400; // 24 hours
 const LOCK_TTL_SECONDS = 30; // max processing time before lock expires

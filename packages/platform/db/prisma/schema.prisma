@@ -353,6 +353,7 @@ model Tenant {
   customerUsageLimits      CustomerUsageLimit[]
   feedbackReports          FeedbackReport[]
   integrations             Integration[]
+  marketDataConnections    MarketDataConnection[]
   tenantProviderKeys       TenantProviderKey[]
   automations              Automation[]
   automationRuns           AutomationRun[]
@@ -695,6 +696,23 @@ model OrderItem {
   product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
 
   @@map("order_items")
+  @@schema("public")
+}
+
+/// Encrypted market credentials are tenant-scoped; public APIs expose metadata only.
+model MarketDataConnection {
+  id          String   @id @default(cuid())
+  tenantId    String   @map("tenant_id")
+  provider    String
+  label       String
+  credentials Json
+  maskedKey   String   @map("masked_key")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@map("market_data_connections")
   @@schema("public")
 }
 

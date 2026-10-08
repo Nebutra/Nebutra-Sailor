@@ -29,8 +29,11 @@ async function boot() {
   } else {
     const { initializeMarketConnectors } = await import("./market-connectors");
     initializeMarketConnectors(window.location.origin, window.localStorage);
+    const { createMarketConnections } = await import("./market-connections");
+    const marketConnections = createMarketConnections(context, window.location.origin);
+    await marketConnections.initialize();
     const { default: Workbench } = await import("./workbench.vue");
-    app = createApp(Workbench, { context, auth, scope });
+    app = createApp(Workbench, { context, auth, scope, marketConnections });
   }
   app.mount("#app");
   let checking = false;

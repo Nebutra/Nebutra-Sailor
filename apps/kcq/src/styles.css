@@ -321,3 +321,47 @@ button {
 .profile-signed-out h2 {
   margin-bottom: 20px;
 }
+
+.source-connections {
+  padding: 12px;
+  border-top: 1px solid var(--klc-color-ui-border);
+  font-size: 13px;
+}
+.source-connections-heading,
+.source-connection-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.source-connections h2,
+.source-connections h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+.source-connection-row {
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.source-connection-row strong {
+  display: block;
+  font-weight: 500;
+}
+.source-connection-row span {
+  color: var(--klc-color-ui-muted);
+}
+.source-connection-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+.source-connection-form {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+.source-connection-error {
+  color: var(--klc-color-ui-danger);
+  margin-top: 8px;
+}

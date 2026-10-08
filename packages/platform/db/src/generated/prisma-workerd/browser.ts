@@ -106,6 +106,11 @@ export type Order = Prisma.OrderModel
  */
 export type OrderItem = Prisma.OrderItemModel
 /**
+ * Model MarketDataConnection
+ * Encrypted market credentials are tenant-scoped; public APIs expose metadata only.
+ */
+export type MarketDataConnection = Prisma.MarketDataConnectionModel
+/**
  * Model Integration
  * @conditional(template=ecommerce)
  */

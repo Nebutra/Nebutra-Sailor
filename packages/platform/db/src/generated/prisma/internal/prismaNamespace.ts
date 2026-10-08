@@ -399,6 +399,7 @@ export const ModelName = {
   Product: 'Product',
   Order: 'Order',
   OrderItem: 'OrderItem',
+  MarketDataConnection: 'MarketDataConnection',
   Integration: 'Integration',
   TenantProviderKey: 'TenantProviderKey',
   Automation: 'Automation',
@@ -506,7 +507,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "supplySource" | "supplySourceModel" | "supplyProbeEvent" | "supplyQuotaWindow" | "supplyQuotaSample" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "studioPreset"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "marketDataConnection" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "supplySource" | "supplySourceModel" | "supplyProbeEvent" | "supplyQuotaWindow" | "supplyQuotaSample" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "studioPreset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1601,6 +1602,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.OrderItemCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.OrderItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    MarketDataConnection: {
+      payload: Prisma.$MarketDataConnectionPayload<ExtArgs>
+      fields: Prisma.MarketDataConnectionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MarketDataConnectionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MarketDataConnectionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>
+        }
+        findFirst: {
+          args: Prisma.MarketDataConnectionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MarketDataConnectionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>
+        }
+        findMany: {
+          args: Prisma.MarketDataConnectionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>[]
+        }
+        create: {
+          args: Prisma.MarketDataConnectionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>
+        }
+        createMany: {
+          args: Prisma.MarketDataConnectionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MarketDataConnectionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>[]
+        }
+        delete: {
+          args: Prisma.MarketDataConnectionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>
+        }
+        update: {
+          args: Prisma.MarketDataConnectionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>
+        }
+        deleteMany: {
+          args: Prisma.MarketDataConnectionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MarketDataConnectionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MarketDataConnectionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>[]
+        }
+        upsert: {
+          args: Prisma.MarketDataConnectionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MarketDataConnectionPayload>
+        }
+        aggregate: {
+          args: Prisma.MarketDataConnectionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMarketDataConnection>
+        }
+        groupBy: {
+          args: Prisma.MarketDataConnectionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MarketDataConnectionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MarketDataConnectionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MarketDataConnectionCountAggregateOutputType> | number
         }
       }
     }
@@ -8679,6 +8754,20 @@ export const OrderItemScalarFieldEnum = {
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
 
 
+export const MarketDataConnectionScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  provider: 'provider',
+  label: 'label',
+  credentials: 'credentials',
+  maskedKey: 'maskedKey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MarketDataConnectionScalarFieldEnum = (typeof MarketDataConnectionScalarFieldEnum)[keyof typeof MarketDataConnectionScalarFieldEnum]
+
+
 export const IntegrationScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
@@ -11421,6 +11510,7 @@ export type GlobalOmitConfig = {
   product?: Prisma.ProductOmit
   order?: Prisma.OrderOmit
   orderItem?: Prisma.OrderItemOmit
+  marketDataConnection?: Prisma.MarketDataConnectionOmit
   integration?: Prisma.IntegrationOmit
   tenantProviderKey?: Prisma.TenantProviderKeyOmit
   automation?: Prisma.AutomationOmit

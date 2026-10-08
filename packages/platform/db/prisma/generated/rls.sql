@@ -31,6 +31,7 @@ BEGIN
     ('public', 'products', 'products_rls'),
     ('public', 'orders', 'orders_rls'),
     ('public', 'order_items', 'order_items_rls'),
+    ('public', 'market_data_connections', 'market_data_connections_rls'),
     ('public', 'integrations', 'integrations_rls'),
     ('public', 'tenant_provider_keys', 'tenant_provider_keys_rls'),
     ('public', 'automations', 'automations_rls'),
@@ -187,6 +188,11 @@ CREATE POLICY "orders_rls" ON "public"."orders" FOR ALL USING ("tenant_id" = pub
 ALTER TABLE "public"."order_items" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "order_items_rls" ON "public"."order_items";
 CREATE POLICY "order_items_rls" ON "public"."order_items" FOR ALL USING ("order_id" IN (SELECT "id" FROM "public"."orders" WHERE "tenant_id" = public.current_tenant_id())) WITH CHECK ("order_id" IN (SELECT "id" FROM "public"."orders" WHERE "tenant_id" = public.current_tenant_id()));
+
+-- MarketDataConnection
+ALTER TABLE "public"."market_data_connections" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "market_data_connections_rls" ON "public"."market_data_connections";
+CREATE POLICY "market_data_connections_rls" ON "public"."market_data_connections" FOR ALL USING ("tenant_id" = public.current_tenant_id()) WITH CHECK ("tenant_id" = public.current_tenant_id());
 
 -- Integration
 ALTER TABLE "public"."integrations" ENABLE ROW LEVEL SECURITY;

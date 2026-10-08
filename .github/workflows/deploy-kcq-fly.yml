@@ -40,12 +40,12 @@ jobs:
 
       - name: Resolve canonical library revision
         id: chart
-        run: node -e 'const s=require("./apps/kcq/chart-source.json"); if(!/^[a-f0-9]{40}$/.test(s.commit)) throw new Error("Expected immutable KCQ SHA"); require("fs").appendFileSync(process.env.GITHUB_OUTPUT, "commit="+s.commit+"\n")'
+        run: node -e 'const s=require("./apps/kcq/chart-source.json"); if(!/^[a-f0-9]{40}$/.test(s.commit)) throw new Error("Expected immutable KCQ SHA"); require("fs").appendFileSync(process.env.GITHUB_OUTPUT, "commit="+s.commit+"\nrepository="+new URL(s.repository).pathname.replace(/^\//, "").replace(/\.git$/, "")+"\n")'
 
       - name: Checkout KCQ
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          repository: 363045841/KLineChartQuant
+          repository: ${{ steps.chart.outputs.repository }}
           ref: ${{ steps.chart.outputs.commit }}
           path: kcq-source
 

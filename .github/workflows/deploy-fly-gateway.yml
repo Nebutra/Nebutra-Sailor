@@ -149,6 +149,22 @@ jobs:
           bash infra/ops/scripts/materialize-pnpm-deploy-bundle.sh "$STAGE"
           echo "STAGE=$STAGE" >> "$GITHUB_ENV"
 
+      - name: Ensure existing shared vault configuration
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          VAULT_LOCAL_MASTER_KEY: ${{ secrets.VAULT_LOCAL_MASTER_KEY }}
+        run: |
+          set -euo pipefail
+          # Preserve configured encryption keys: this is bootstrap, never rotation.
+          flyctl secrets list -a nebutra-gateway --json > "$RUNNER_TEMP/gateway-secret-names.json"
+          configured=$(python3 -c 'import json,sys; names={s.get("Name") or s.get("name") for s in json.load(open(sys.argv[1]))}; print("yes" if names & {"VAULT_LOCAL_MASTER_KEY", "VAULT_MASTER_KEY", "AWS_KMS_KEY_ID", "AWS_KMS_KEY_ARN"} else "no")' "$RUNNER_TEMP/gateway-secret-names.json")
+          if [ "$configured" = "yes" ]; then
+            echo "Gateway vault already configured; preserving it."
+          else
+            test -n "${VAULT_LOCAL_MASTER_KEY:-}" || { echo "::error::Shared vault key is missing"; exit 1; }
+            flyctl secrets set -a nebutra-gateway --stage "VAULT_LOCAL_MASTER_KEY=$VAULT_LOCAL_MASTER_KEY"
+          fi
+
       - name: Deploy Machine
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

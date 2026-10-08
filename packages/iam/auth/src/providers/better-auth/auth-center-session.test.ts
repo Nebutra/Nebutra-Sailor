@@ -50,7 +50,9 @@ describe("parseAuthCenterSessionPayload", () => {
 describe("fetchAuthCenterSession", () => {
   it("forwards cookies to the auth center and returns the session", async () => {
     const fetchImpl = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
-      expect(String(input)).toBe("https://auth.nebutra.com/api/auth/get-session");
+      expect(String(input)).toBe(
+        "https://auth.nebutra.com/api/auth/get-session?disableCookieCache=true",
+      );
       expect(new Headers(init?.headers).get("cookie")).toContain("session_token=tok");
       return Response.json({
         session: { userId: "user_1", expiresAt: "2026-09-01T00:00:00.000Z" },

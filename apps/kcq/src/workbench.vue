@@ -1,6 +1,7 @@
 <!-- Host navigation shares the canonical toolbar; the chart owns the viewport. -->
 <script setup lang="ts">
 import HeaderSurface from "./header-surface.vue";
+import SourceConnectionsSurface from "./source-connections-surface.vue";
 import {
   AgentWorkbenchShell,
   KlineChart,
@@ -9,6 +10,16 @@ import {
 } from "./use-workbench";
 
 const props = defineProps<WorkbenchProps>();
+const {
+  connections,
+  canManage,
+  busy: connectionBusy,
+  error: connectionError,
+  save: saveConnection,
+  remove: removeConnection,
+  test: testConnection,
+  initialize: refreshConnections,
+} = props.marketConnections;
 const {
   busy,
   error,
@@ -32,6 +43,9 @@ const {
         <template #chart>
           <div class="chart-stage">
             <KlineChart @controller-ready="onControllerReady" @theme-change="onThemeChange">
+              <template #source-management>
+                <SourceConnectionsSurface :signed-in="Boolean(context)" :sign-in-url="signInUrl" :connections="connections" :can-manage="canManage" :busy="connectionBusy" :error="connectionError" :on-save="saveConnection" :on-remove="removeConnection" :on-test="testConnection" :on-retry="refreshConnections" />
+              </template>
               <template #toolbar-start>
                 <HeaderSurface :context="context" :busy="busy" :sign-in-url="signInUrl" :on-switch="switchWorkspace" :on-sign-out="signOut" />
               </template>

@@ -66,6 +66,7 @@ export const ModelName = {
   Product: 'Product',
   Order: 'Order',
   OrderItem: 'OrderItem',
+  MarketDataConnection: 'MarketDataConnection',
   Integration: 'Integration',
   TenantProviderKey: 'TenantProviderKey',
   Automation: 'Automation',
@@ -402,6 +403,20 @@ export const OrderItemScalarFieldEnum = {
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const MarketDataConnectionScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  provider: 'provider',
+  label: 'label',
+  credentials: 'credentials',
+  maskedKey: 'maskedKey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MarketDataConnectionScalarFieldEnum = (typeof MarketDataConnectionScalarFieldEnum)[keyof typeof MarketDataConnectionScalarFieldEnum]
 
 
 export const IntegrationScalarFieldEnum = {

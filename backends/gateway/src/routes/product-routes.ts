@@ -8,10 +8,12 @@
  */
 import type { OpenAPIHono } from "@hono/zod-openapi";
 import { agentRuntimeRoutes } from "./agent-runtime/index.js";
+import { kcqRoutes } from "./kcq/index.js";
 import { pebbleRoutes } from "./pebble/index.js";
 import { startupOsRoutes } from "./startup-os/index.js";
 
 export function mountProductRoutes(app: OpenAPIHono): void {
+  app.route("/api/v1/kcq", kcqRoutes);
   app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
   app.route("/api/v1/startup-os", startupOsRoutes);
 

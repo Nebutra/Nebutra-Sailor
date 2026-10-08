@@ -213,6 +213,7 @@ export type TenantWhereInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitListRelationFilter
   feedbackReports?: Prisma.FeedbackReportListRelationFilter
   integrations?: Prisma.IntegrationListRelationFilter
+  marketDataConnections?: Prisma.MarketDataConnectionListRelationFilter
   tenantProviderKeys?: Prisma.TenantProviderKeyListRelationFilter
   automations?: Prisma.AutomationListRelationFilter
   automationRuns?: Prisma.AutomationRunListRelationFilter
@@ -268,6 +269,7 @@ export type TenantOrderByWithRelationInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitOrderByRelationAggregateInput
   feedbackReports?: Prisma.FeedbackReportOrderByRelationAggregateInput
   integrations?: Prisma.IntegrationOrderByRelationAggregateInput
+  marketDataConnections?: Prisma.MarketDataConnectionOrderByRelationAggregateInput
   tenantProviderKeys?: Prisma.TenantProviderKeyOrderByRelationAggregateInput
   automations?: Prisma.AutomationOrderByRelationAggregateInput
   automationRuns?: Prisma.AutomationRunOrderByRelationAggregateInput
@@ -326,6 +328,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   customerUsageLimits?: Prisma.CustomerUsageLimitListRelationFilter
   feedbackReports?: Prisma.FeedbackReportListRelationFilter
   integrations?: Prisma.IntegrationListRelationFilter
+  marketDataConnections?: Prisma.MarketDataConnectionListRelationFilter
   tenantProviderKeys?: Prisma.TenantProviderKeyListRelationFilter
   automations?: Prisma.AutomationListRelationFilter
   automationRuns?: Prisma.AutomationRunListRelationFilter
@@ -403,6 +406,7 @@ export type TenantCreateInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -456,6 +460,7 @@ export type TenantUncheckedCreateInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -509,6 +514,7 @@ export type TenantUpdateInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -562,6 +568,7 @@ export type TenantUncheckedUpdateInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -811,6 +818,20 @@ export type TenantUpdateOneRequiredWithoutOrdersNestedInput = {
   upsert?: Prisma.TenantUpsertWithoutOrdersInput
   connect?: Prisma.TenantWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutOrdersInput, Prisma.TenantUpdateWithoutOrdersInput>, Prisma.TenantUncheckedUpdateWithoutOrdersInput>
+}
+
+export type TenantCreateNestedOneWithoutMarketDataConnectionsInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutMarketDataConnectionsInput, Prisma.TenantUncheckedCreateWithoutMarketDataConnectionsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutMarketDataConnectionsInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutMarketDataConnectionsNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutMarketDataConnectionsInput, Prisma.TenantUncheckedCreateWithoutMarketDataConnectionsInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutMarketDataConnectionsInput
+  upsert?: Prisma.TenantUpsertWithoutMarketDataConnectionsInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutMarketDataConnectionsInput, Prisma.TenantUpdateWithoutMarketDataConnectionsInput>, Prisma.TenantUncheckedUpdateWithoutMarketDataConnectionsInput>
 }
 
 export type TenantCreateNestedOneWithoutIntegrationsInput = {
@@ -1380,6 +1401,7 @@ export type TenantCreateWithoutOrganizationInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -1432,6 +1454,7 @@ export type TenantUncheckedCreateWithoutOrganizationInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -1500,6 +1523,7 @@ export type TenantUpdateWithoutOrganizationInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -1552,6 +1576,7 @@ export type TenantUncheckedUpdateWithoutOrganizationInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -1605,6 +1630,7 @@ export type TenantCreateWithoutTransferJournalsOutInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -1657,6 +1683,7 @@ export type TenantUncheckedCreateWithoutTransferJournalsOutInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -1714,6 +1741,7 @@ export type TenantCreateWithoutTransferJournalsInInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -1766,6 +1794,7 @@ export type TenantUncheckedCreateWithoutTransferJournalsInInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -1834,6 +1863,7 @@ export type TenantUpdateWithoutTransferJournalsOutInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -1886,6 +1916,7 @@ export type TenantUncheckedUpdateWithoutTransferJournalsOutInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -1949,6 +1980,7 @@ export type TenantUpdateWithoutTransferJournalsInInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -2001,6 +2033,7 @@ export type TenantUncheckedUpdateWithoutTransferJournalsInInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -2052,6 +2085,7 @@ export type TenantCreateWithoutApiKeysInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -2104,6 +2138,7 @@ export type TenantUncheckedCreateWithoutApiKeysInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -2172,6 +2207,7 @@ export type TenantUpdateWithoutApiKeysInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -2224,6 +2260,7 @@ export type TenantUncheckedUpdateWithoutApiKeysInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -2276,6 +2313,7 @@ export type TenantCreateWithoutUserInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -2328,6 +2366,7 @@ export type TenantUncheckedCreateWithoutUserInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -2396,6 +2435,7 @@ export type TenantUpdateWithoutUserInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -2448,6 +2488,7 @@ export type TenantUncheckedUpdateWithoutUserInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -2500,6 +2541,7 @@ export type TenantCreateWithoutContentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -2552,6 +2594,7 @@ export type TenantUncheckedCreateWithoutContentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -2620,6 +2663,7 @@ export type TenantUpdateWithoutContentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -2672,6 +2716,7 @@ export type TenantUncheckedUpdateWithoutContentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -2725,6 +2770,7 @@ export type TenantCreateWithoutProductsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -2777,6 +2823,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -2845,6 +2892,7 @@ export type TenantUpdateWithoutProductsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -2897,6 +2945,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -2949,6 +2998,7 @@ export type TenantCreateWithoutOrdersInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -3001,6 +3051,7 @@ export type TenantUncheckedCreateWithoutOrdersInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -3069,6 +3120,7 @@ export type TenantUpdateWithoutOrdersInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -3121,6 +3173,7 @@ export type TenantUncheckedUpdateWithoutOrdersInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -3134,6 +3187,234 @@ export type TenantUncheckedUpdateWithoutOrdersInput = {
   paraApprovals?: Prisma.ParaApprovalUncheckedUpdateManyWithoutTenantNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  routerReservations?: Prisma.RouterReservationUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantCreateWithoutMarketDataConnectionsInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetCreateNestedManyWithoutTenantInput
+  paraThreads?: Prisma.ParaThreadCreateNestedManyWithoutTenantInput
+  paraRuns?: Prisma.ParaRunCreateNestedManyWithoutTenantInput
+  paraApprovals?: Prisma.ParaApprovalCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  routerReservations?: Prisma.RouterReservationCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantUncheckedCreateWithoutMarketDataConnectionsInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  memberships?: Prisma.MembershipUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  paraProjects?: Prisma.ParaProjectUncheckedCreateNestedManyWithoutTenantInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedCreateNestedManyWithoutTenantInput
+  paraAssets?: Prisma.ParaAssetUncheckedCreateNestedManyWithoutTenantInput
+  paraThreads?: Prisma.ParaThreadUncheckedCreateNestedManyWithoutTenantInput
+  paraRuns?: Prisma.ParaRunUncheckedCreateNestedManyWithoutTenantInput
+  paraApprovals?: Prisma.ParaApprovalUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  routerReservations?: Prisma.RouterReservationUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantCreateOrConnectWithoutMarketDataConnectionsInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutMarketDataConnectionsInput, Prisma.TenantUncheckedCreateWithoutMarketDataConnectionsInput>
+}
+
+export type TenantUpsertWithoutMarketDataConnectionsInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutMarketDataConnectionsInput, Prisma.TenantUncheckedUpdateWithoutMarketDataConnectionsInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutMarketDataConnectionsInput, Prisma.TenantUncheckedCreateWithoutMarketDataConnectionsInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutMarketDataConnectionsInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutMarketDataConnectionsInput, Prisma.TenantUncheckedUpdateWithoutMarketDataConnectionsInput>
+}
+
+export type TenantUpdateWithoutMarketDataConnectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUpdateManyWithoutTenantNestedInput
+  paraThreads?: Prisma.ParaThreadUpdateManyWithoutTenantNestedInput
+  paraRuns?: Prisma.ParaRunUpdateManyWithoutTenantNestedInput
+  paraApprovals?: Prisma.ParaApprovalUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  routerReservations?: Prisma.RouterReservationUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutMarketDataConnectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  memberships?: Prisma.MembershipUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraProjects?: Prisma.ParaProjectUncheckedUpdateManyWithoutTenantNestedInput
+  paraWorkspaces?: Prisma.ParaWorkspaceUncheckedUpdateManyWithoutTenantNestedInput
+  paraAssets?: Prisma.ParaAssetUncheckedUpdateManyWithoutTenantNestedInput
+  paraThreads?: Prisma.ParaThreadUncheckedUpdateManyWithoutTenantNestedInput
+  paraRuns?: Prisma.ParaRunUncheckedUpdateManyWithoutTenantNestedInput
+  paraApprovals?: Prisma.ParaApprovalUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
@@ -3172,6 +3453,7 @@ export type TenantCreateWithoutIntegrationsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -3224,6 +3506,7 @@ export type TenantUncheckedCreateWithoutIntegrationsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -3292,6 +3575,7 @@ export type TenantUpdateWithoutIntegrationsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -3344,6 +3628,7 @@ export type TenantUncheckedUpdateWithoutIntegrationsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -3397,6 +3682,7 @@ export type TenantCreateWithoutTenantProviderKeysInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
@@ -3449,6 +3735,7 @@ export type TenantUncheckedCreateWithoutTenantProviderKeysInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
@@ -3517,6 +3804,7 @@ export type TenantUpdateWithoutTenantProviderKeysInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
@@ -3569,6 +3857,7 @@ export type TenantUncheckedUpdateWithoutTenantProviderKeysInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
@@ -3621,6 +3910,7 @@ export type TenantCreateWithoutAutomationsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
@@ -3673,6 +3963,7 @@ export type TenantUncheckedCreateWithoutAutomationsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
@@ -3741,6 +4032,7 @@ export type TenantUpdateWithoutAutomationsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
@@ -3793,6 +4085,7 @@ export type TenantUncheckedUpdateWithoutAutomationsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
@@ -3845,6 +4138,7 @@ export type TenantCreateWithoutAutomationRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
@@ -3897,6 +4191,7 @@ export type TenantUncheckedCreateWithoutAutomationRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
@@ -3965,6 +4260,7 @@ export type TenantUpdateWithoutAutomationRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
@@ -4017,6 +4313,7 @@ export type TenantUncheckedUpdateWithoutAutomationRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
@@ -4069,6 +4366,7 @@ export type TenantCreateWithoutParaProjectsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -4121,6 +4419,7 @@ export type TenantUncheckedCreateWithoutParaProjectsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -4189,6 +4488,7 @@ export type TenantUpdateWithoutParaProjectsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -4241,6 +4541,7 @@ export type TenantUncheckedUpdateWithoutParaProjectsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -4293,6 +4594,7 @@ export type TenantCreateWithoutParaWorkspacesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -4345,6 +4647,7 @@ export type TenantUncheckedCreateWithoutParaWorkspacesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -4413,6 +4716,7 @@ export type TenantUpdateWithoutParaWorkspacesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -4465,6 +4769,7 @@ export type TenantUncheckedUpdateWithoutParaWorkspacesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -4517,6 +4822,7 @@ export type TenantCreateWithoutParaAssetsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -4569,6 +4875,7 @@ export type TenantUncheckedCreateWithoutParaAssetsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -4637,6 +4944,7 @@ export type TenantUpdateWithoutParaAssetsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -4689,6 +4997,7 @@ export type TenantUncheckedUpdateWithoutParaAssetsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -4741,6 +5050,7 @@ export type TenantCreateWithoutParaThreadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -4793,6 +5103,7 @@ export type TenantUncheckedCreateWithoutParaThreadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -4861,6 +5172,7 @@ export type TenantUpdateWithoutParaThreadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -4913,6 +5225,7 @@ export type TenantUncheckedUpdateWithoutParaThreadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -4965,6 +5278,7 @@ export type TenantCreateWithoutParaRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -5017,6 +5331,7 @@ export type TenantUncheckedCreateWithoutParaRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -5085,6 +5400,7 @@ export type TenantUpdateWithoutParaRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -5137,6 +5453,7 @@ export type TenantUncheckedUpdateWithoutParaRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -5189,6 +5506,7 @@ export type TenantCreateWithoutParaApprovalsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -5241,6 +5559,7 @@ export type TenantUncheckedCreateWithoutParaApprovalsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -5309,6 +5628,7 @@ export type TenantUpdateWithoutParaApprovalsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -5361,6 +5681,7 @@ export type TenantUncheckedUpdateWithoutParaApprovalsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -5413,6 +5734,7 @@ export type TenantCreateWithoutWorkflowDefinitionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -5465,6 +5787,7 @@ export type TenantUncheckedCreateWithoutWorkflowDefinitionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -5533,6 +5856,7 @@ export type TenantUpdateWithoutWorkflowDefinitionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -5585,6 +5909,7 @@ export type TenantUncheckedUpdateWithoutWorkflowDefinitionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -5637,6 +5962,7 @@ export type TenantCreateWithoutWorkflowRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -5689,6 +6015,7 @@ export type TenantUncheckedCreateWithoutWorkflowRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -5757,6 +6084,7 @@ export type TenantUpdateWithoutWorkflowRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -5809,6 +6137,7 @@ export type TenantUncheckedUpdateWithoutWorkflowRunsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -5861,6 +6190,7 @@ export type TenantCreateWithoutRequestLogsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -5913,6 +6243,7 @@ export type TenantUncheckedCreateWithoutRequestLogsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -5981,6 +6312,7 @@ export type TenantUpdateWithoutRequestLogsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -6033,6 +6365,7 @@ export type TenantUncheckedUpdateWithoutRequestLogsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -6084,6 +6417,7 @@ export type TenantCreateWithoutCustomerPlanVersionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -6136,6 +6470,7 @@ export type TenantUncheckedCreateWithoutCustomerPlanVersionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -6204,6 +6539,7 @@ export type TenantUpdateWithoutCustomerPlanVersionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -6256,6 +6592,7 @@ export type TenantUncheckedUpdateWithoutCustomerPlanVersionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -6308,6 +6645,7 @@ export type TenantCreateWithoutCustomerFeatureOverridesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -6360,6 +6698,7 @@ export type TenantUncheckedCreateWithoutCustomerFeatureOverridesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -6428,6 +6767,7 @@ export type TenantUpdateWithoutCustomerFeatureOverridesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -6480,6 +6820,7 @@ export type TenantUncheckedUpdateWithoutCustomerFeatureOverridesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -6532,6 +6873,7 @@ export type TenantCreateWithoutCustomerUsageLimitsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -6584,6 +6926,7 @@ export type TenantUncheckedCreateWithoutCustomerUsageLimitsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -6652,6 +6995,7 @@ export type TenantUpdateWithoutCustomerUsageLimitsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -6704,6 +7048,7 @@ export type TenantUncheckedUpdateWithoutCustomerUsageLimitsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -6757,6 +7102,7 @@ export type TenantCreateWithoutSubscriptionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -6809,6 +7155,7 @@ export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -6877,6 +7224,7 @@ export type TenantUpdateWithoutSubscriptionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -6929,6 +7277,7 @@ export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -6981,6 +7330,7 @@ export type TenantCreateWithoutInvoicesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -7033,6 +7383,7 @@ export type TenantUncheckedCreateWithoutInvoicesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -7101,6 +7452,7 @@ export type TenantUpdateWithoutInvoicesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -7153,6 +7505,7 @@ export type TenantUncheckedUpdateWithoutInvoicesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -7205,6 +7558,7 @@ export type TenantCreateWithoutPaymentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -7257,6 +7611,7 @@ export type TenantUncheckedCreateWithoutPaymentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -7325,6 +7680,7 @@ export type TenantUpdateWithoutPaymentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -7377,6 +7733,7 @@ export type TenantUncheckedUpdateWithoutPaymentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -7429,6 +7786,7 @@ export type TenantCreateWithoutPaymentMethodsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -7481,6 +7839,7 @@ export type TenantUncheckedCreateWithoutPaymentMethodsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -7549,6 +7908,7 @@ export type TenantUpdateWithoutPaymentMethodsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -7601,6 +7961,7 @@ export type TenantUncheckedUpdateWithoutPaymentMethodsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -7653,6 +8014,7 @@ export type TenantCreateWithoutUsageLedgerEntriesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -7705,6 +8067,7 @@ export type TenantUncheckedCreateWithoutUsageLedgerEntriesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -7773,6 +8136,7 @@ export type TenantUpdateWithoutUsageLedgerEntriesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -7825,6 +8189,7 @@ export type TenantUncheckedUpdateWithoutUsageLedgerEntriesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -7876,6 +8241,7 @@ export type TenantCreateWithoutCreditBalancesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -7928,6 +8294,7 @@ export type TenantUncheckedCreateWithoutCreditBalancesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -7996,6 +8363,7 @@ export type TenantUpdateWithoutCreditBalancesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -8048,6 +8416,7 @@ export type TenantUncheckedUpdateWithoutCreditBalancesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -8100,6 +8469,7 @@ export type TenantCreateWithoutMembershipsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -8152,6 +8522,7 @@ export type TenantUncheckedCreateWithoutMembershipsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -8220,6 +8591,7 @@ export type TenantUpdateWithoutMembershipsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -8272,6 +8644,7 @@ export type TenantUncheckedUpdateWithoutMembershipsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -8325,6 +8698,7 @@ export type TenantCreateWithoutRouterReservationsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -8377,6 +8751,7 @@ export type TenantUncheckedCreateWithoutRouterReservationsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -8445,6 +8820,7 @@ export type TenantUpdateWithoutRouterReservationsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -8497,6 +8873,7 @@ export type TenantUncheckedUpdateWithoutRouterReservationsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -8549,6 +8926,7 @@ export type TenantCreateWithoutStripeCustomersInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -8601,6 +8979,7 @@ export type TenantUncheckedCreateWithoutStripeCustomersInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -8669,6 +9048,7 @@ export type TenantUpdateWithoutStripeCustomersInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -8721,6 +9101,7 @@ export type TenantUncheckedUpdateWithoutStripeCustomersInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -8772,6 +9153,7 @@ export type TenantCreateWithoutAuditLogsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -8824,6 +9206,7 @@ export type TenantUncheckedCreateWithoutAuditLogsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -8892,6 +9275,7 @@ export type TenantUpdateWithoutAuditLogsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -8944,6 +9328,7 @@ export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -8997,6 +9382,7 @@ export type TenantCreateWithoutUserConsentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -9049,6 +9435,7 @@ export type TenantUncheckedCreateWithoutUserConsentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -9117,6 +9504,7 @@ export type TenantUpdateWithoutUserConsentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -9169,6 +9557,7 @@ export type TenantUncheckedUpdateWithoutUserConsentsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -9221,6 +9610,7 @@ export type TenantCreateWithoutTasksInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -9273,6 +9663,7 @@ export type TenantUncheckedCreateWithoutTasksInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -9341,6 +9732,7 @@ export type TenantUpdateWithoutTasksInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -9393,6 +9785,7 @@ export type TenantUncheckedUpdateWithoutTasksInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -9445,6 +9838,7 @@ export type TenantCreateWithoutUploadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -9497,6 +9891,7 @@ export type TenantUncheckedCreateWithoutUploadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -9565,6 +9960,7 @@ export type TenantUpdateWithoutUploadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -9617,6 +10013,7 @@ export type TenantUncheckedUpdateWithoutUploadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -9669,6 +10066,7 @@ export type TenantCreateWithoutOauthClientsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -9721,6 +10119,7 @@ export type TenantUncheckedCreateWithoutOauthClientsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -9789,6 +10188,7 @@ export type TenantUpdateWithoutOauthClientsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -9841,6 +10241,7 @@ export type TenantUncheckedUpdateWithoutOauthClientsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -9892,6 +10293,7 @@ export type TenantCreateWithoutChatSessionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -9944,6 +10346,7 @@ export type TenantUncheckedCreateWithoutChatSessionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -10012,6 +10415,7 @@ export type TenantUpdateWithoutChatSessionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -10064,6 +10468,7 @@ export type TenantUncheckedUpdateWithoutChatSessionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -10117,6 +10522,7 @@ export type TenantCreateWithoutThreadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -10169,6 +10575,7 @@ export type TenantUncheckedCreateWithoutThreadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -10237,6 +10644,7 @@ export type TenantUpdateWithoutThreadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -10289,6 +10697,7 @@ export type TenantUncheckedUpdateWithoutThreadsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -10341,6 +10750,7 @@ export type TenantCreateWithoutUserSkillsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -10393,6 +10803,7 @@ export type TenantUncheckedCreateWithoutUserSkillsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -10461,6 +10872,7 @@ export type TenantUpdateWithoutUserSkillsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -10513,6 +10925,7 @@ export type TenantUncheckedUpdateWithoutUserSkillsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -10564,6 +10977,7 @@ export type TenantCreateWithoutConnectorsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -10616,6 +11030,7 @@ export type TenantUncheckedCreateWithoutConnectorsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -10684,6 +11099,7 @@ export type TenantUpdateWithoutConnectorsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -10736,6 +11152,7 @@ export type TenantUncheckedUpdateWithoutConnectorsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -10788,6 +11205,7 @@ export type TenantCreateWithoutCofounderProfileInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -10840,6 +11258,7 @@ export type TenantUncheckedCreateWithoutCofounderProfileInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -10908,6 +11327,7 @@ export type TenantUpdateWithoutCofounderProfileInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -10960,6 +11380,7 @@ export type TenantUncheckedUpdateWithoutCofounderProfileInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -11012,6 +11433,7 @@ export type TenantCreateWithoutCodeRedemptionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -11064,6 +11486,7 @@ export type TenantUncheckedCreateWithoutCodeRedemptionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -11132,6 +11555,7 @@ export type TenantUpdateWithoutCodeRedemptionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -11184,6 +11608,7 @@ export type TenantUncheckedUpdateWithoutCodeRedemptionsInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -11236,6 +11661,7 @@ export type TenantCreateWithoutFeedbackReportsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -11288,6 +11714,7 @@ export type TenantUncheckedCreateWithoutFeedbackReportsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -11356,6 +11783,7 @@ export type TenantUpdateWithoutFeedbackReportsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -11408,6 +11836,7 @@ export type TenantUncheckedUpdateWithoutFeedbackReportsInput = {
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -11460,6 +11889,7 @@ export type TenantCreateWithoutAtelierCanvasesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
@@ -11512,6 +11942,7 @@ export type TenantUncheckedCreateWithoutAtelierCanvasesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
   feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
   integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedCreateNestedManyWithoutTenantInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
   automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
   automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
@@ -11580,6 +12011,7 @@ export type TenantUpdateWithoutAtelierCanvasesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
@@ -11632,6 +12064,7 @@ export type TenantUncheckedUpdateWithoutAtelierCanvasesInput = {
   customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
   feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
   integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  marketDataConnections?: Prisma.MarketDataConnectionUncheckedUpdateManyWithoutTenantNestedInput
   tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
   automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
   automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
@@ -11683,6 +12116,7 @@ export type TenantCountOutputType = {
   customerUsageLimits: number
   feedbackReports: number
   integrations: number
+  marketDataConnections: number
   tenantProviderKeys: number
   automations: number
   automationRuns: number
@@ -11729,6 +12163,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   customerUsageLimits?: boolean | TenantCountOutputTypeCountCustomerUsageLimitsArgs
   feedbackReports?: boolean | TenantCountOutputTypeCountFeedbackReportsArgs
   integrations?: boolean | TenantCountOutputTypeCountIntegrationsArgs
+  marketDataConnections?: boolean | TenantCountOutputTypeCountMarketDataConnectionsArgs
   tenantProviderKeys?: boolean | TenantCountOutputTypeCountTenantProviderKeysArgs
   automations?: boolean | TenantCountOutputTypeCountAutomationsArgs
   automationRuns?: boolean | TenantCountOutputTypeCountAutomationRunsArgs
@@ -11866,6 +12301,13 @@ export type TenantCountOutputTypeCountFeedbackReportsArgs<ExtArgs extends runtim
  */
 export type TenantCountOutputTypeCountIntegrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.IntegrationWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountMarketDataConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MarketDataConnectionWhereInput
 }
 
 /**
@@ -12096,6 +12538,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   customerUsageLimits?: boolean | Prisma.Tenant$customerUsageLimitsArgs<ExtArgs>
   feedbackReports?: boolean | Prisma.Tenant$feedbackReportsArgs<ExtArgs>
   integrations?: boolean | Prisma.Tenant$integrationsArgs<ExtArgs>
+  marketDataConnections?: boolean | Prisma.Tenant$marketDataConnectionsArgs<ExtArgs>
   tenantProviderKeys?: boolean | Prisma.Tenant$tenantProviderKeysArgs<ExtArgs>
   automations?: boolean | Prisma.Tenant$automationsArgs<ExtArgs>
   automationRuns?: boolean | Prisma.Tenant$automationRunsArgs<ExtArgs>
@@ -12178,6 +12621,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   customerUsageLimits?: boolean | Prisma.Tenant$customerUsageLimitsArgs<ExtArgs>
   feedbackReports?: boolean | Prisma.Tenant$feedbackReportsArgs<ExtArgs>
   integrations?: boolean | Prisma.Tenant$integrationsArgs<ExtArgs>
+  marketDataConnections?: boolean | Prisma.Tenant$marketDataConnectionsArgs<ExtArgs>
   tenantProviderKeys?: boolean | Prisma.Tenant$tenantProviderKeysArgs<ExtArgs>
   automations?: boolean | Prisma.Tenant$automationsArgs<ExtArgs>
   automationRuns?: boolean | Prisma.Tenant$automationRunsArgs<ExtArgs>
@@ -12238,6 +12682,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     customerUsageLimits: Prisma.$CustomerUsageLimitPayload<ExtArgs>[]
     feedbackReports: Prisma.$FeedbackReportPayload<ExtArgs>[]
     integrations: Prisma.$IntegrationPayload<ExtArgs>[]
+    marketDataConnections: Prisma.$MarketDataConnectionPayload<ExtArgs>[]
     tenantProviderKeys: Prisma.$TenantProviderKeyPayload<ExtArgs>[]
     automations: Prisma.$AutomationPayload<ExtArgs>[]
     automationRuns: Prisma.$AutomationRunPayload<ExtArgs>[]
@@ -12686,6 +13131,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   customerUsageLimits<T extends Prisma.Tenant$customerUsageLimitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$customerUsageLimitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerUsageLimitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   feedbackReports<T extends Prisma.Tenant$feedbackReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$feedbackReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeedbackReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   integrations<T extends Prisma.Tenant$integrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  marketDataConnections<T extends Prisma.Tenant$marketDataConnectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$marketDataConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MarketDataConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tenantProviderKeys<T extends Prisma.Tenant$tenantProviderKeysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$tenantProviderKeysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TenantProviderKeyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   automations<T extends Prisma.Tenant$automationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$automationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   automationRuns<T extends Prisma.Tenant$automationRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$automationRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -13536,6 +13982,30 @@ export type Tenant$integrationsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.IntegrationScalarFieldEnum | Prisma.IntegrationScalarFieldEnum[]
+}
+
+/**
+ * Tenant.marketDataConnections
+ */
+export type Tenant$marketDataConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MarketDataConnection
+   */
+  select?: Prisma.MarketDataConnectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MarketDataConnection
+   */
+  omit?: Prisma.MarketDataConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MarketDataConnectionInclude<ExtArgs> | null
+  where?: Prisma.MarketDataConnectionWhereInput
+  orderBy?: Prisma.MarketDataConnectionOrderByWithRelationInput | Prisma.MarketDataConnectionOrderByWithRelationInput[]
+  cursor?: Prisma.MarketDataConnectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MarketDataConnectionScalarFieldEnum | Prisma.MarketDataConnectionScalarFieldEnum[]
 }
 
 /**

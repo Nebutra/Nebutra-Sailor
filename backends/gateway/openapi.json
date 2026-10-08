@@ -6324,6 +6324,117 @@
         }
       }
     },
+    "/api/v1/kcq/connections": {
+      "get": {
+        "tags": ["KCQ"],
+        "summary": "List masked workspace market connections",
+        "responses": {
+          "200": {
+            "description": "Masked connections",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connections": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "provider": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "maskedKey": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["id", "provider", "label", "maskedKey", "updatedAt"]
+                      }
+                    },
+                    "canManage": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["connections", "canManage"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["KCQ"],
+        "summary": "Store or replace an encrypted customer market key",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                  },
+                  "apiKey": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  }
+                },
+                "required": ["label", "apiKey"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Masked connection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "provider": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "maskedKey": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["id", "provider", "label", "maskedKey", "updatedAt"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/agent-runtime/carina/status": {
       "get": {
         "tags": ["Agent Runtime"],
@@ -10819,7 +10930,7 @@
       "post": {
         "tags": ["Docs"],
         "summary": "Ask the docs assistant a question",
-        "description": "Public, rate-limited (20/min/IP), unauthenticated. Answers from the live docs corpus (llms-full.txt). Returns { configured: false } when no LLM provider key is set.",
+        "description": "Public, rate-limited (20/min/IP), unauthenticated. Answers from the live docs corpus (llms-full.txt) via the configured Router upstream. Returns { configured: false } when no Router upstream is configured.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -10894,7 +11005,7 @@
             "description": "Rate limit exceeded"
           },
           "502": {
-            "description": "Every configured LLM provider failed"
+            "description": "Every configured Router upstream failed"
           }
         }
       }
@@ -10902,8 +11013,8 @@
     "/api/v1/docs/feedback": {
       "post": {
         "tags": ["Docs"],
-        "summary": "Submit page or block feedback as a GitHub Discussion",
-        "description": "Public, rate-limited (10/min/IP), unauthenticated.",
+        "summary": "Submit page or block feedback",
+        "description": "Public, rate-limited (10/min/IP), unauthenticated. Always stores the submission (Postgres, no configuration required) and best-effort AI-triages it asynchronously. Also posts to GitHub Discussions when GITHUB_APP_ID/GITHUB_APP_PRIVATE_KEY are set.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -10960,7 +11071,7 @@
         },
         "responses": {
           "200": {
-            "description": "Feedback posted",
+            "description": "Feedback stored",
             "content": {
               "application/json": {
                 "schema": {
@@ -10975,27 +11086,7 @@
             }
           },
           "502": {
-            "description": "GitHub API call failed"
-          },
-          "503": {
-            "description": "GitHub App not configured on this deployment",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "enum": ["not_configured"]
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["error", "message"]
-                }
-              }
-            }
+            "description": "Failed to store the submission"
           }
         }
       }

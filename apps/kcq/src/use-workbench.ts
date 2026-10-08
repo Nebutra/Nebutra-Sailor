@@ -16,11 +16,14 @@ import {
 } from "@nebutra/auth/browser";
 import { onBeforeUnmount, shallowRef } from "vue";
 
+import type { MarketConnections } from "./market-connections";
+
 export { AgentWorkbenchShell, KlineChart };
 export interface WorkbenchProps {
   context: BrowserAuthContext | null;
   auth: ReturnType<typeof createAuthCenterBrowserClient>;
   scope: string;
+  marketConnections: MarketConnections;
 }
 export function useWorkbench(props: WorkbenchProps) {
   const busy = shallowRef(false);
