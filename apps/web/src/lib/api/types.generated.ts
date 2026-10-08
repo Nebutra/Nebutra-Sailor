@@ -2439,6 +2439,85 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/kcq/connections": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List masked workspace market connections */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Masked connections */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              connections: {
+                id: string;
+                provider: string;
+                label: string;
+                maskedKey: string;
+                updatedAt: string;
+              }[];
+              canManage: boolean;
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    /** Store or replace an encrypted customer market key */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            id?: string;
+            label: string;
+            apiKey: string;
+          };
+        };
+      };
+      responses: {
+        /** @description Masked connection */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              id: string;
+              provider: string;
+              label: string;
+              maskedKey: string;
+              updatedAt: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/agent-runtime/carina/status": {
     parameters: {
       query?: never;
@@ -5543,6 +5622,147 @@ export interface paths {
         };
         /** @description Forbidden */
         403: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content?: never;
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/docs/chat": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Ask the docs assistant a question
+     * @description Public, rate-limited (20/min/IP), unauthenticated. Answers from the live docs corpus (llms-full.txt) via the configured Router upstream. Returns { configured: false } when no Router upstream is configured.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": {
+            messages: {
+              /** @enum {string} */
+              role: "user" | "assistant";
+              content: string;
+            }[];
+          };
+        };
+      };
+      responses: {
+        /** @description Assistant reply, or a not-configured notice */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json":
+              | {
+                  /** @enum {boolean} */
+                  configured: true;
+                  reply: string;
+                }
+              | {
+                  /** @enum {boolean} */
+                  configured: false;
+                  message: string;
+                };
+          };
+        };
+        /** @description Rate limit exceeded */
+        429: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content?: never;
+        };
+        /** @description Every configured Router upstream failed */
+        502: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content?: never;
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/docs/feedback": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Submit page or block feedback
+     * @description Public, rate-limited (10/min/IP), unauthenticated. Always stores the submission (Postgres, no configuration required) and best-effort AI-triages it asynchronously. Also posts to GitHub Discussions when GITHUB_APP_ID/GITHUB_APP_PRIVATE_KEY are set.
+     */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json":
+            | {
+                /** @enum {string} */
+                kind: "page";
+                url: string;
+                /** @enum {string} */
+                opinion: "good" | "bad";
+                message: string;
+              }
+            | {
+                /** @enum {string} */
+                kind: "block";
+                url: string;
+                blockId: string;
+                blockBody?: string;
+                message: string;
+              };
+        };
+      };
+      responses: {
+        /** @description Feedback stored */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              githubUrl?: string;
+            };
+          };
+        };
+        /** @description Failed to store the submission */
+        502: {
           headers: {
             [name: string]: unknown;
           };

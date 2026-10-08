@@ -73,8 +73,8 @@ describe("createBetterAuthProvider env validation", () => {
     );
 
     expect(fetchSpy).toHaveBeenCalledWith(
-      "https://auth.nebutra.com/api/auth/get-session",
-      expect.anything(),
+      "https://auth.nebutra.com/api/auth/get-session?disableCookieCache=true",
+      expect.objectContaining({ cache: "no-store" }),
     );
     expect(session?.userId).toBe("user_1");
     fetchSpy.mockRestore();
