@@ -83,9 +83,10 @@ jobs:
           set -euo pipefail
           app="nebutra-kcq-$CONNECTOR"
           flyctl status -a "$app"
-          for attempt in 1 2 3; do
-            flyctl ssh sftp put infra/ops/scripts/smoke-kcq-connector.sh /tmp/nebutra-smoke.sh -a "$app"
-            if flyctl ssh console -a "$app" -C '/bin/sh /tmp/nebutra-smoke.sh'; then exit 0; fi
+          smoke_path="/tmp/nebutra-smoke-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.sh"
+          flyctl ssh sftp put infra/ops/scripts/smoke-kcq-connector.sh "$smoke_path" -a "$app"
+          for attempt in 1 2 3 4 5 6; do
+            if flyctl ssh console -a "$app" -C "/bin/sh $smoke_path"; then exit 0; fi
             sleep 15
           done
           flyctl logs -a "$app" --no-tail || true
