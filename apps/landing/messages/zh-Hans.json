@@ -1,6 +1,6 @@
 {
   "productPricing": {
-    "title": "Nebutra 套餐与积分",
+    "title": "{brandName} 套餐与积分",
     "description": "查看 Router、观澜和 Para 的价格与权益，按所用产品选择会员期限、积分包或余额充值。",
     "loading": "正在加载当前价格…",
     "unavailable": "价格暂时无法加载，请稍后重试，或在购买前联系我们。",

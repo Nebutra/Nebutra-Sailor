@@ -16,6 +16,8 @@ import {
 import { formatUtcMedium } from "@/components/status/status-vocabulary";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { unpublishedSet } from "@/lib/seo/site-routes";
 import { getServiceTargets } from "@/lib/status-checks";
 
 type Params = Promise<{ lang: string; id: string }>;
@@ -29,12 +31,16 @@ type Params = Promise<{ lang: string; id: string }>;
 export const instant = false;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const { lang } = await params;
+  const { lang, id } = await params;
   const t = await getTranslations({ locale: lang, namespace: "statusPages.incident" });
-  return {
+  const path = `/status/incidents/${encodeURIComponent(id)}`;
+  return buildPageMetadata({
     title: t("seoTitle"),
-    robots: { index: false },
-  };
+    description: t("seoTitle"),
+    path,
+    locale: lang,
+    publishedIn: unpublishedSet(path),
+  });
 }
 
 export default async function IncidentPage({ params }: { params: Params }) {

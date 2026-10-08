@@ -193,6 +193,7 @@ describe("per-app robots posture", () => {
     "auth",
     "design",
     "idp",
+    "kcq",
     "kuanlan",
     "mail-preview",
     "para",

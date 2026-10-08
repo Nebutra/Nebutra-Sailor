@@ -6,6 +6,8 @@ import { Suspense } from "react";
 import { StatusPageSkeleton, StatusShell } from "@/components/status/status-page-view";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { unpublishedSet } from "@/lib/seo/site-routes";
 
 export async function generateMetadata({
   params,
@@ -14,10 +16,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const t = await getTranslations({ locale: lang, namespace: "statusPages.subscription" });
-  return {
+  const path = "/status/subscription";
+  return buildPageMetadata({
     title: t("meta.title"),
-    robots: { index: false },
-  };
+    description: t("meta.title"),
+    path,
+    locale: lang,
+    publishedIn: unpublishedSet(path),
+  });
 }
 
 type Search = Promise<{ action?: string; token?: string }>;

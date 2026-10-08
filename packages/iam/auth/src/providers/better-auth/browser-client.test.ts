@@ -7,7 +7,7 @@ it("keeps signed-out sessions empty and never requests their memberships", async
     .fn()
     .mockResolvedValue(new Response("null", { headers: { "Content-Type": "application/json" } }));
   vi.stubGlobal("fetch", fetch);
-  const client = createAuthCenterBrowserClient("https://auth.nebutra.com");
+  const client = createAuthCenterBrowserClient("https://auth.example.test");
   expect(await client.getContext()).toBeNull();
   expect(fetch).toHaveBeenCalledTimes(1);
 });
@@ -24,6 +24,6 @@ it("surfaces rejected organization activation instead of pretending the switch s
       ),
     ),
   );
-  const client = createAuthCenterBrowserClient("https://auth.nebutra.com");
+  const client = createAuthCenterBrowserClient("https://auth.example.test");
   await expect(client.selectWorkspace("foreign")).rejects.toThrow("Not a member");
 });

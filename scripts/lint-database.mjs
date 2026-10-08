@@ -108,6 +108,8 @@ const SKIP_DIRS = new Set([
   "__tests__",
   "docs",
   "research",
+  ".claude",
+  ".codex",
 ]);
 const RLS_HOME = join(prismaDir, "generated", "rls.sql");
 function walk(dir) {

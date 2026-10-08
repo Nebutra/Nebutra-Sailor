@@ -100,7 +100,13 @@ describe("auth provider boundary", () => {
      * afford it. That is a size constraint rather than a decision anyone is
      * putting off, so it belongs here and not in PENDING_DECISION.
      */
-    const STANDALONE_APP_PATH_SNIPPETS = ["/sleptons/", "/apps/auth/src/worker-edge.ts"];
+    const STANDALONE_APP_PATH_SNIPPETS = [
+      "/sleptons/",
+      "/apps/auth/src/worker-edge.ts",
+      // Regression harness for the standalone Worker: uses the provider's
+      // memory adapter to prove real organization membership enforcement.
+      "/apps/auth/src/lib/edge-organization.test.ts",
+    ];
 
     /**
      * SHRINK-ONLY product debt, kept separate from the permanent list above

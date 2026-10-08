@@ -121,6 +121,7 @@ const NEBUTRA_ONLY_WORKFLOWS = [
   "deploy-fly-gateway.yml",
   "deploy-fly.yml",
   "deploy-gateway.yml",
+  "deploy-kcq-fly.yml",
   "deploy-kuanlan-nginx.yml",
   "deploy-kuanlan-vercel.yml",
   "issue-fly-certs.yml",
@@ -145,7 +146,7 @@ const NEBUTRA_ONLY_WORKFLOWS = [
  * .templateignore. A generic kit gets a generic name; instance work says so.
  */
 const INSTANCE_WORKFLOW_NAME_PATTERN =
-  /^(ops-|point-|bootstrap-|deploy-kuanlan|deploy-carina)|kuanlan|carina|forge|pebble|typelens|new-api|dns-leak/;
+  /^(ops-|point-|bootstrap-|deploy-kuanlan|deploy-carina)|kcq|kuanlan|carina|forge|pebble|typelens|new-api|dns-leak/;
 
 /** Secret-free workflows a scaffolded project should keep. */
 const GENERIC_WORKFLOWS = [

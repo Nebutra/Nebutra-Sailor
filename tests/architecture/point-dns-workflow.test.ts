@@ -19,11 +19,9 @@ const HOSTS = [
   "carina",
   "design",
   "forge",
-  "kuanlan",
   "landing",
   "leak",
   "open",
-  "para",
   "pebble",
   "router",
   "status",
@@ -32,6 +30,7 @@ const HOSTS = [
 // The Vercel target was retired on 2026-09-22; every product host is Fly or ECS.
 const TARGETS = ["cloudflare-worker", "ecs", "fly", "apex", "authoritative"];
 
+// Kuanlan and Para were retired; the contract follows the active DNS surface.
 // Every (host, target) pair the workflow supports, and the script each runs.
 const SUPPORTED: Record<string, string> = {
   "auth/cloudflare-worker": "point-auth-dns-cloudflare-worker.sh",
@@ -41,11 +40,9 @@ const SUPPORTED: Record<string, string> = {
   "carina/fly": "point-fly-dns.sh",
   "design/ecs": "point-design-dns-ecs.sh",
   "forge/ecs": "point-forge-dns-ecs.sh",
-  "kuanlan/ecs": "point-kuanlan-dns-ecs.sh",
   "leak/authoritative": "point-leak-zone-dns.sh",
   "open/fly": "point-fly-dns.sh",
   // The one generic script: every Fly product edge takes the same proxied-CNAME shape.
-  "para/fly": "point-fly-dns.sh",
   "pebble/fly": "point-fly-dns.sh",
   "router/ecs": "point-router-dns-ecs.sh",
   "status/fly": "point-fly-dns.sh",
