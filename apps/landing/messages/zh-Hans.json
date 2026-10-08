@@ -1,4 +1,26 @@
 {
+  "productPricing": {
+    "title": "Nebutra 套餐与积分",
+    "description": "查看 Router、观澜和 Para 的价格与权益，按所用产品选择会员期限、积分包或余额充值。",
+    "loading": "正在加载当前价格…",
+    "unavailable": "价格暂时无法加载，请稍后重试，或在购买前联系我们。",
+    "empty": "目前没有可购买的付费商品。",
+    "viewProduct": "打开 {product}",
+    "amountRange": "{min} – {max}",
+    "oneTime": "一次性付款，不自动续费。",
+    "personal": "适用于个人账户。",
+    "organization": "适用于组织账户。",
+    "workspace": "适用于当前工作区或个人账户。",
+    "termDays": "会员有效期为 {days} 天。",
+    "monthlyCredits": "会员有效期内每月获得 {credits} 积分。",
+    "creditPack": "此产品的 {credits} 积分。",
+    "expiryDays": "购买的积分在 {days} 天后到期。",
+    "usageBalance": "可在上述范围内自选充值金额，余额用于按量计费的 API 调用，模型费率请查看 Router。",
+    "paymentNote": "美元银行卡付款由 Creem 处理；人民币付款在可用时使用支付宝或微信支付。适用税费及最终总额在结账时显示。积分与余额归属于所购产品。",
+    "refund": "退款政策",
+    "terms": "服务条款",
+    "contact": "账单咨询"
+  },
   "nav": {
     "features": "特性",
     "solutions": "解决方案",

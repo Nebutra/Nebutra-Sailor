@@ -1,4 +1,26 @@
 {
+  "productPricing": {
+    "title": "Nebutra plans & credits",
+    "description": "Prices and benefits for Router, Kuanlan and Para. Choose a membership term, a credit pack or a balance top-up for the product you use.",
+    "loading": "Loading current prices…",
+    "unavailable": "Prices are temporarily unavailable. Please try again shortly or contact us before purchasing.",
+    "empty": "No paid offers are available at the moment.",
+    "viewProduct": "Open {product}",
+    "amountRange": "{min} – {max}",
+    "oneTime": "One-time payment. No automatic renewal.",
+    "personal": "For your personal account.",
+    "organization": "For your organization.",
+    "workspace": "For your active workspace or personal account.",
+    "termDays": "Membership access for {days} days.",
+    "monthlyCredits": "{credits} credits per month during the membership term.",
+    "creditPack": "{credits} credits for this product.",
+    "expiryDays": "Purchased credits expire after {days} days.",
+    "usageBalance": "Choose a top-up amount in the range above. Balance pays for metered API usage; model rates are shown in Router.",
+    "paymentNote": "USD card payments are processed by Creem. CNY payments use Alipay or WeChat Pay when available. Applicable taxes and the final total are shown at checkout. Credits and balances belong to the product purchased.",
+    "refund": "Refund policy",
+    "terms": "Terms of service",
+    "contact": "Billing questions"
+  },
   "nav": {
     "features": "Vipengele",
     "solutions": "Suluhisho",

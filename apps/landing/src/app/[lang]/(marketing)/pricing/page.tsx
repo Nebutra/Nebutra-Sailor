@@ -1,16 +1,23 @@
 import { brand } from "@nebutra/brand/metadata";
+import { logger } from "@nebutra/logger";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import type { Metadata } from "next";
+import { unstable_rethrow } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { FinalCTA, PricingSection } from "@/components/landing";
 import { PricingComparisonTable } from "@/components/landing/pricing-comparison-table";
+import { ProductOfferList } from "@/components/landing/product-offer-list";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
+import { env } from "@/lib/env";
+import { loadPublicOffers } from "@/lib/public-offers";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { canonicalUrlForLocale, getSiteUrl } from "@/lib/seo/site-routes";
 import { buildFaqPageSchema, buildProductSchema } from "@/lib/seo/structured-data";
+import { PRODUCTS } from "@/nebutra/data/products";
 
 export async function generateMetadata({
   params,
@@ -21,7 +28,7 @@ export async function generateMetadata({
   if (!hasLocale(routing.locales, lang)) return {};
 
   const t = await getTranslations({ locale: lang as Locale, namespace: "metadata" });
-  const tp = await getTranslations({ locale: lang as Locale, namespace: "microLanding.pricing" });
+  const tp = await getTranslations({ locale: lang as Locale, namespace: "productPricing" });
   return buildPageMetadata({
     title: `${tp("title")} — ${t("title")}`,
     description: tp("description"),
@@ -34,9 +41,24 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
 }
 
+async function PaidProductPricing({ lang }: { lang: string }) {
+  const t = await getTranslations({ locale: lang, namespace: "productPricing" });
+  try {
+    const offers = await loadPublicOffers(env.NEXT_PUBLIC_API_URL);
+    if (offers.length === 0) return <p className="mt-8 text-muted-foreground">{t("empty")}</p>;
+    return <ProductOfferList offers={offers} products={PRODUCTS} locale={lang} t={t} />;
+  } catch (error) {
+    unstable_rethrow(error);
+    logger.error("Public pricing catalog unavailable", error);
+    return <p className="mt-8 text-muted-foreground">{t("unavailable")}</p>;
+  }
+}
+
 export default async function PricingPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang as Locale);
+
+  const paid = await getTranslations({ locale: lang, namespace: "productPricing" });
 
   const pricing = await getTranslations({
     locale: lang as Locale,
@@ -76,13 +98,44 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
       <StructuredData data={productLd} id="pricing-product-jsonld" />
       <StructuredData data={faqLd} id="pricing-faq-jsonld" />
 
+      <section
+        id="product-pricing"
+        aria-labelledby="product-pricing-title"
+        className="mx-auto max-w-6xl scroll-mt-20 px-4 pt-20 pb-12 sm:px-6 lg:px-8"
+      >
+        <h1
+          id="product-pricing-title"
+          className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl"
+        >
+          {paid("title")}
+        </h1>
+        <p className="mt-4 max-w-3xl text-lg text-muted-foreground">{paid("description")}</p>
+        <Suspense fallback={<p className="mt-8 text-muted-foreground">{paid("loading")}</p>}>
+          <PaidProductPricing lang={lang} />
+        </Suspense>
+        <p className="mt-10 max-w-4xl text-sm leading-relaxed text-muted-foreground">
+          {paid("paymentNote")}
+        </p>
+        <div className="mt-4 flex flex-wrap gap-6 text-sm text-primary">
+          <Link href="/refund" className="hover:underline">
+            {paid("refund")}
+          </Link>
+          <Link href="/terms" className="hover:underline">
+            {paid("terms")}
+          </Link>
+          <Link href="/contact" className="hover:underline">
+            {paid("contact")}
+          </Link>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-8">
         {/* Header */}
         <AnimateIn preset="emerge" inView>
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              {pricing("title")}
-            </h1>
+            <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              {brand.name} Sailor · {pricing("title")}
+            </h2>
             <p className="mt-4 text-lg text-muted-foreground">{pricing("description")}</p>
 
             {/* The licence line — what is true of every tier, not a rating. */}

@@ -19,6 +19,7 @@ export async function SiteFooter({ lang }: { lang?: string }) {
   // An explicit locale: this renders in a layout that never sets the request
   // locale, and reading it from the request is runtime data in a prerender.
   const t = await getTranslations({ locale: lang ?? "en", namespace: "siteShell.footer" });
+  const pricing = await getTranslations({ locale: lang ?? "en", namespace: "nav" });
   const cols = [
     {
       k: t("read"),
@@ -31,6 +32,7 @@ export async function SiteFooter({ lang }: { lang?: string }) {
       k: t("build"),
       links: [
         { label: "Sailor", href: ROUTES.sailor },
+        { label: pricing("pricing"), href: "/pricing#product-pricing" },
         { label: "GitHub", href: REPO_URL },
         { label: t("whatWeAreBuilding"), href: ROUTES.building },
         { label: t("status"), href: `https://status.${brand.domains.landing}` },
