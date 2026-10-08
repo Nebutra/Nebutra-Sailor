@@ -20,10 +20,20 @@ import {
   buildDeviceAuthorizationOptions,
   DEVICE_AUTH_RATE_LIMIT_RULES,
 } from "@nebutra/auth/device-authorization-config";
+import {
+  EDGE_ORGANIZATION_OPTIONS,
+  isEdgeOrganizationSelectionPath,
+} from "@nebutra/auth/edge-organization-config";
 import { brand } from "@nebutra/brand/metadata";
 import { createTwilioVerifyProvider } from "@nebutra/sms/twilio-verify";
 import { betterAuth } from "better-auth";
-import { bearer, captcha, deviceAuthorization, phoneNumber } from "better-auth/plugins";
+import {
+  bearer,
+  captcha,
+  deviceAuthorization,
+  organization,
+  phoneNumber,
+} from "better-auth/plugins";
 import { Pool } from "pg";
 import { applyEdgeAuthCors } from "./lib/auth-edge-cors";
 import {
@@ -100,6 +110,8 @@ const DEFAULT_TRUSTED = [
   `https://${brand.domains.forge}`,
   `https://${brand.domains.router}`,
   `https://${brand.domains.kuanlan}`,
+  `https://kcq.${brand.domains.landing}`,
+  "http://localhost:3130",
 ] as const;
 
 function json(body: unknown, status = 200, extra?: HeadersInit): Response {
@@ -243,6 +255,7 @@ function createAuth(env: AuthEdgeEnv, database: PgDatabase, secret: string): Aut
   // `bearer` lets `nebutra whoami` authenticate with `Authorization: Bearer
   // <token>` instead of a cookie jar.
   plugins.push(
+    organization(EDGE_ORGANIZATION_OPTIONS),
     bearer(),
     deviceAuthorization(buildDeviceAuthorizationOptions({ verificationUri: `${baseURL}/device` })),
   );
@@ -451,6 +464,8 @@ async function handleHealth(request: Request, env: AuthEdgeEnv): Promise<Respons
     edgeBuild: "2026-09-01-global-phone-auth",
     features: {
       authApi: true,
+      workspaceSelection: true,
+      workspaceProvisioning: false,
       uiPassThrough: Boolean(env.ORIGIN_URL?.trim()),
       hyperdrive: Boolean(env.HYPERDRIVE?.connectionString),
       phoneLogin: {
@@ -594,6 +609,14 @@ async function handleAuthApi(request: Request, env: AuthEdgeEnv): Promise<Respon
   }
 
   const url = new URL(request.url);
+  // Expose existing membership-backed selection, not a second provisioning
+  // service that bypasses the Node product's tenant and audit hooks.
+  if (
+    url.pathname.startsWith("/api/auth/organization/") &&
+    !isEdgeOrganizationSelectionPath(url.pathname)
+  ) {
+    return json({ code: "NOT_FOUND" }, 404);
+  }
   // Link previews / crawlers HEAD the callback URL. Better Auth 404s HEAD and
   // must not consume the one-time state + code.
   if (request.method.toUpperCase() === "HEAD" && isOAuthCallbackPath(url.pathname)) {

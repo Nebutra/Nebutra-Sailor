@@ -1,0 +1,48 @@
+<!-- Host navigation shares the canonical toolbar; the chart owns the viewport. -->
+<script setup lang="ts">
+import HeaderSurface from "./header-surface.vue";
+import {
+  AgentWorkbenchShell,
+  KlineChart,
+  useWorkbench,
+  type WorkbenchProps,
+} from "./use-workbench";
+
+const props = defineProps<WorkbenchProps>();
+const {
+  busy,
+  error,
+  hasData,
+  dataLoading,
+  dataError,
+  bridge,
+  panelWidthStorage,
+  signInUrl,
+  switchWorkspace,
+  signOut,
+  onControllerReady,
+  onThemeChange,
+} = useWorkbench(props);
+</script>
+<template>
+  <div class="workbench" :aria-busy="busy">
+    <div v-if="error" role="alert" class="notice">{{ error }}</div>
+    <main class="chart-area" :inert="busy || undefined" aria-label="图表与 Agent 工作台">
+      <AgentWorkbenchShell :bridge="bridge" :panel-width-storage="panelWidthStorage" :initial-panel-open="false">
+        <template #chart>
+          <div class="chart-stage">
+            <KlineChart @controller-ready="onControllerReady" @theme-change="onThemeChange">
+              <template #toolbar-start>
+                <HeaderSurface :context="context" :busy="busy" :sign-in-url="signInUrl" :on-switch="switchWorkspace" :on-sign-out="signOut" />
+              </template>
+            </KlineChart>
+            <div v-if="!hasData" class="chart-empty" role="status">
+              <h1>{{ dataLoading ? '正在加载行情' : dataError ? '行情暂时不可用' : '从工具栏选择商品' }}</h1>
+              <p v-if="dataError">{{ dataError }}</p>
+            </div>
+          </div>
+        </template>
+      </AgentWorkbenchShell>
+    </main>
+  </div>
+</template>

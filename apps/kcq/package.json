@@ -1,0 +1,35 @@
+{
+  "name": "@nebutra/kcq",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "nebutra": {
+    "status": "labs",
+    "graph": "product",
+    "productionReady": false
+  },
+  "scripts": {
+    "dev": "node scripts/run.mjs dev",
+    "build": "node scripts/run.mjs build",
+    "typecheck": "node scripts/run.mjs typecheck"
+  },
+  "dependencies": {
+    "@nebutra/auth": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "vue": "3.5.32",
+    "@nebutra/ui": "workspace:*",
+    "@nebutra/icons": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "geist": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:",
+    "typescript": "catalog:",
+    "vue-tsc": "3.2.6",
+    "@tailwindcss/vite": "catalog:",
+    "tailwindcss": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:"
+  }
+}

@@ -13,7 +13,8 @@
   // rather than building @nebutra/auth and its 15-package graph (Prisma
   // included) just to resolve its dist/.
   "alias": {
-    "@nebutra/auth/device-authorization-config": "../../packages/iam/auth/src/providers/better-auth/device-authorization-config.ts"
+    "@nebutra/auth/device-authorization-config": "../../packages/iam/auth/src/providers/better-auth/device-authorization-config.ts",
+    "@nebutra/auth/edge-organization-config": "../../packages/iam/auth/src/providers/better-auth/edge-organization-config.ts"
   },
   "observability": {
     "enabled": true
@@ -40,7 +41,7 @@
     // happened to router.nebutra.com: the list lived in apps/auth/vercel.json,
     // and auth has not run on Vercel since it moved behind this Worker, so it
     // was never in effect. Adding a product host here is part of shipping it.
-    "AUTH_RETURN_ALLOWED_HOSTS": "router.nebutra.com,forge.nebutra.com,admin.nebutra.com,kuanlan.nebutra.com,www.nebutra.com",
+    "AUTH_RETURN_ALLOWED_HOSTS": "router.nebutra.com,forge.nebutra.com,admin.nebutra.com,kuanlan.nebutra.com,kcq.nebutra.com,www.nebutra.com",
     // Dedicated Next UI origin. Do not reuse origin.nebutra.com: that hostname
     // belongs to the Hono gateway and does not serve /sign-in.
     "ORIGIN_URL": "https://nebutra-auth.fly.dev",

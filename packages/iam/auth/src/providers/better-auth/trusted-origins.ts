@@ -35,6 +35,8 @@ export const MULTI_APP_SSO_DEFAULT_ORIGINS = [
   "https://forge.nebutra.com",
   "https://router.nebutra.com",
   "https://kuanlan.nebutra.com",
+  "https://kcq.nebutra.com",
+  "http://localhost:3130",
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:3100",

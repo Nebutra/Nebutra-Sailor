@@ -138,6 +138,8 @@ export function getAuthReturnAllowedHosts(
   hosts.add("router.nebutra.com");
   hosts.add("forge.nebutra.com");
   hosts.add("kuanlan.nebutra.com");
+  hosts.add("kcq.nebutra.com");
+  hosts.add("localhost:3130");
   hosts.add("nebutra.com");
 
   return Array.from(hosts);
