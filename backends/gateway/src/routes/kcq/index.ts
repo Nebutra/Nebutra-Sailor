@@ -1,5 +1,6 @@
 /** Authenticated BYOK APIs and KCQ V1 proxy. No shared-provider fallback. */
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { logger } from "@nebutra/logger";
 import { bodyLimit } from "hono/body-limit";
 import { mapTenantRoleToPermissionRoles } from "../../middlewares/tenantContext.js";
 import { type MarketScope, resolveMarketScope } from "./scope.js";
@@ -72,12 +73,26 @@ export function createKcqRoutes(options: Options = {}) {
     await next();
   });
   app.onError((error, c) => {
+    const requestId = crypto.randomUUID();
+    if (!(error instanceof MarketSourceError)) {
+      const code = Object.getOwnPropertyDescriptor(error, "code")?.value;
+      logger.error("KCQ market request failed", {
+        requestId,
+        category: error instanceof TypeError ? "TypeError" : "Error",
+        databaseCode: typeof code === "string" && /^P\d{4}$/.test(code) ? code : undefined,
+        frame: error.stack
+          ?.split("\n")
+          .slice(1)
+          .join("\n")
+          .match(/\/app\/[A-Za-z0-9_./@+-]+:\d+:\d+/)?.[0],
+      });
+    }
     const source =
       error instanceof MarketSourceError
         ? error
         : new MarketSourceError(503, "数据源服务暂不可用，请稍后重试。");
     return c.json(
-      { error: { code: source.code, message: source.message }, requestId: crypto.randomUUID() },
+      { error: { code: source.code, message: source.message }, requestId },
       source.status,
     );
   });

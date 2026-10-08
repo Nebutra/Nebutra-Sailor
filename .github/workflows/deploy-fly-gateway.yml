@@ -51,7 +51,7 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           python3 - <<'PY'
-          import shlex, subprocess
+          import re, shlex, subprocess
           code = '''
           import { getSystemDb, getTenantDb } from "/app/node_modules/@nebutra/db/dist/index.js";
           const system = getSystemDb();
@@ -71,6 +71,9 @@ jobs:
           logs = subprocess.run(["flyctl", "logs", "-a", "nebutra-gateway", "--no-tail"], capture_output=True, text=True, check=True).stdout
           for marker in ["Unique constraint failed", "Foreign key constraint violated", "does not exist", "permission denied", "Tenant ID mismatch", "KCQ market request failed"]:
               print("runtime category " + marker + ": " + str(logs.count(marker)))
+          for line in logs.splitlines():
+              if "KCQ market request failed" in line:
+                  print("KCQ failure fingerprint: " + str(re.findall(r'TypeError|P[0-9]{4}|/app/[A-Za-z0-9_./@+-]+:[0-9]+:[0-9]+', line)))
           PY
   database:
     if: inputs.diagnostics != true

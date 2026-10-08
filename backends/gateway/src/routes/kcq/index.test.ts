@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createKcqRoutes } from "./index.js";
 
+const { logError } = vi.hoisted(() => ({ logError: vi.fn() }));
+vi.mock("@nebutra/logger", () => ({ logger: { error: logError } }));
+
 const metadata = {
   id: "mine",
   provider: "twelvedata",
@@ -120,5 +123,24 @@ describe("KCQ credential boundary", () => {
     );
     expect(response.status).toBe(503);
     expect(await response.text()).not.toContain("private-key");
+  });
+  it("correlates unexpected failures without logging credentials or exception text", async () => {
+    logError.mockClear();
+    const { app, store } = setup();
+    store.list.mockRejectedValue(
+      Object.assign(new TypeError("private-key in error text"), { code: "P2002" }),
+    );
+    const response = await app.request("/connections");
+    const body = await response.json();
+    expect(response.status).toBe(503);
+    expect(logError).toHaveBeenCalledWith(
+      "KCQ market request failed",
+      expect.objectContaining({
+        requestId: body.requestId,
+        category: "TypeError",
+        databaseCode: "P2002",
+      }),
+    );
+    expect(JSON.stringify(logError.mock.calls)).not.toContain("private-key");
   });
 });
