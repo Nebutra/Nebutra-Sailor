@@ -1,0 +1,88 @@
+name: Security regressions
+
+# Cheap security evidence must not queue behind full application builds.
+# The complete CI workflow still runs its existing security and test gates.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/ci/**"
+      - "scripts/*supply-chain*"
+      - "packages/platform/db/**"
+      - "patches/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "turbo.json"
+      - ".github/actions/setup-node-pnpm/**"
+      - ".github/workflows/security-regressions.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/ci/**"
+      - "scripts/*supply-chain*"
+      - "packages/platform/db/**"
+      - "patches/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "turbo.json"
+      - ".github/actions/setup-node-pnpm/**"
+      - ".github/workflows/security-regressions.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-regressions-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  security:
+    name: Audit and PostgreSQL isolation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: rls_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d rls_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: ./.github/actions/setup-node-pnpm
+        with:
+          verify-supply-chain: "true"
+
+      - name: Regression tests for audit and test environment gates
+        run: node --test scripts/ci/*.test.mjs
+
+      - name: Audit production dependencies
+        run: node scripts/ci/dependency-audit.mjs
+
+      - name: Replay tenant isolation attacks on PostgreSQL and PGlite
+        run: >-
+          pnpm --config.verify-deps-before-run=false --filter @nebutra/db exec vitest run
+          __tests__/rls-dual-tenant-attack.test.ts __tests__/rls-migration-coverage.test.ts
+          --reporter verbose
+        env:
+          CI: true
+          RLS_ATTACK_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/rls_test
+
+      - name: Upload dependency audit evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: security-regression-audit
+          path: artifacts/security/pnpm-audit.json*
+          if-no-files-found: warn
+          retention-days: 30

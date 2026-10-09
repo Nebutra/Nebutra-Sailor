@@ -161,6 +161,7 @@ const GENERIC_WORKFLOWS = [
   "scorecard.yml",
   "secrets-scan.yml",
   "security-scan.yml",
+  "security-regressions.yml",
   "stale.yml",
 ];
 

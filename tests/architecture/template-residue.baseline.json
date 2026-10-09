@@ -18,7 +18,6 @@
     "apps/landing/README.md",
     "apps/landing/next.config.test.ts",
     "apps/landing/public/capabilities.json",
-    "apps/landing/src/app/__tests__/llms-txt.test.ts",
     "apps/landing/src/app/api/og/__tests__/route.test.ts",
     "apps/landing/src/app/api/waitlist/__tests__/route.test.ts",
     "apps/landing/src/components/auth/__tests__/google-one-tap.test.tsx",

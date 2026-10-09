@@ -7,7 +7,7 @@
  * This test does not retype policy SQL: it reads the generated file off disk
  * and extracts each table's `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` +
  * `CREATE POLICY` statements verbatim (see extractTablePolicySql below), then
- * applies those exact statements to a throwaway table of the same name carrying
+ * applies those statements (mapped only to the throwaway schema) to a table of the same name carrying
  * only the columns the policy predicate touches. A wrong `/// @rls` directive,
  * or a generator that drops a WITH CHECK, breaks this test; a hand-retyped copy
  * of the policy text would not.
@@ -24,6 +24,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
   availableBackends,
   becomeTenant,
+  createPgliteClient,
   randomRoleName,
   type SqlClient,
 } from "./support/rls-sql-client";
@@ -158,18 +159,43 @@ function throwawayTableDdl(t: TableCase): string {
   }
 }
 
-describe.each(availableBackends("rls_coverage"))("RLS migration coverage ($name)", ({ open }) => {
+// Exercise the PostgreSQL harness's non-public search_path even without a
+// local server. This catches generated SQL accidentally targeting public.
+const coverageBackends = [
+  ...availableBackends("rls_coverage"),
+  {
+    name: "pglite isolated schema",
+    async open() {
+      const db = await createPgliteClient();
+      await db.exec(
+        "CREATE SCHEMA coverage_isolated; GRANT USAGE ON SCHEMA coverage_isolated TO PUBLIC; SET search_path TO coverage_isolated, public;",
+      );
+      return db;
+    },
+  },
+];
+
+describe.each(coverageBackends)("RLS migration coverage ($name)", ({ open }) => {
   let db: SqlClient;
   let role: string;
 
   beforeAll(async () => {
     role = randomRoleName("app_coverage");
     db = await open();
+    const [{ schema }] = await db.query<{ schema: string }>("SELECT current_schema() AS schema");
+    const namespace = `"${schema.replaceAll('"', '""')}".`;
+    // PostgreSQL opens in an isolated schema. Preserve every generated policy
+    // predicate while moving tables AND the tenant function into that schema;
+    // otherwise policies target public and functions leak across test suites.
+    const inTestSchema = (sql: string) =>
+      sql
+        .replaceAll('"public".', namespace)
+        .replaceAll("public.current_tenant_id", `${namespace}current_tenant_id`);
     await db.exec(`CREATE ROLE ${role} NOSUPERUSER NOBYPASSRLS LOGIN;`);
-    await db.exec(currentTenantFunctionSql);
+    await db.exec(inTestSchema(currentTenantFunctionSql));
     for (const t of TABLE_CASES) {
       await db.exec(throwawayTableDdl(t));
-      await db.exec(extractTablePolicySql(t.table));
+      await db.exec(inTestSchema(extractTablePolicySql(t.table)));
       await db.exec(`GRANT ALL ON TABLE "${t.table}" TO ${role};`);
     }
   });
