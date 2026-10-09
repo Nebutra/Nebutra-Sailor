@@ -13,7 +13,7 @@ type ProxyAwareHttp = { setGlobalProxyFromEnv?: (env?: NodeJS.ProcessEnv) => unk
  * is respected by Node's own implementation. Node versions without the API are
  * left untouched.
  */
-export function useProxyFromEnv(
+export function applyProxyFromEnv(
   env: NodeJS.ProcessEnv = process.env,
   api: ProxyAwareHttp = http as ProxyAwareHttp,
 ): boolean {
