@@ -1,5 +1,6 @@
 /** Register managed V1 providers before the chart consumes its source catalog. */
 import {
+  BarsLiveSource,
   createHttpMarketDataTransport,
   createMarketDataProvider,
   dataSourceRegistry,
@@ -48,13 +49,25 @@ export function initializeMarketConnectors(
   registry.clear();
   for (const { id, path } of managedSources) {
     const baseUrl = origin + path;
+    const currentBaseUrl = () => registry.getConfig(id).baseUrl ?? baseUrl;
     registry.register(
       createMarketDataProvider({
         source: { ...dataSourceRegistry[id], defaultBaseUrl: baseUrl },
-        transport: createHttpMarketDataTransport({
-          baseUrl: () => registry.getConfig(id).baseUrl ?? baseUrl,
-          sourceLabel: id,
-        }),
+        transport: createHttpMarketDataTransport({ baseUrl: currentBaseUrl, sourceLabel: id }),
+        // Streams open only when the connector's probe declares liveBars, and only for
+        // instruments that do not opt out (core BarsLiveSubscription).
+        liveBars: {
+          createStream: ({ symbol, period, barAggregation, instrumentId }) =>
+            new BarsLiveSource(
+              id,
+              symbol,
+              period,
+              barAggregation,
+              currentBaseUrl(),
+              undefined,
+              instrumentId,
+            ),
+        },
       }),
     );
   }
