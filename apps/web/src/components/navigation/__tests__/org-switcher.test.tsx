@@ -4,6 +4,7 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createQueryWrapper } from "@/test/query-wrapper";
 
 const messages: Record<string, string> = {
   "navigation.orgSwitcher.ariaLabel": "Switch organization",
@@ -96,7 +97,7 @@ afterEach(() => {
 
 describe("OrgSwitcher", () => {
   it("renders the current organization name on the trigger", () => {
-    render(<OrgSwitcher />);
+    render(<OrgSwitcher />, { wrapper: createQueryWrapper() });
     const trigger = screen.getByRole("button", { name: /Switch organization/i });
     expect(trigger).toHaveAttribute("aria-haspopup", "menu");
     expect(trigger).toHaveAttribute("aria-expanded", "false");
@@ -105,7 +106,7 @@ describe("OrgSwitcher", () => {
 
   it("opens a dropdown listing the user's organizations on click", async () => {
     const user = userEvent.setup();
-    render(<OrgSwitcher />);
+    render(<OrgSwitcher />, { wrapper: createQueryWrapper() });
 
     await user.click(screen.getByRole("button", { name: /Switch organization/i }));
 
@@ -121,7 +122,7 @@ describe("OrgSwitcher", () => {
 
   it("posts to /api/organizations/active and refreshes on row click", async () => {
     const user = userEvent.setup();
-    render(<OrgSwitcher />);
+    render(<OrgSwitcher />, { wrapper: createQueryWrapper() });
 
     await user.click(screen.getByRole("button", { name: /Switch organization/i }));
     await screen.findByRole("menuitem", { name: /Beta Co/i });
@@ -146,7 +147,7 @@ describe("OrgSwitcher", () => {
     orgRef.current = null;
 
     const user = userEvent.setup();
-    render(<OrgSwitcher />);
+    render(<OrgSwitcher />, { wrapper: createQueryWrapper() });
     await user.click(screen.getByRole("button", { name: /Switch organization/i }));
 
     expect(await screen.findByText("No organizations")).toBeInTheDocument();
@@ -171,7 +172,7 @@ describe("OrgSwitcher", () => {
     });
 
     const user = userEvent.setup();
-    render(<OrgSwitcher />);
+    render(<OrgSwitcher />, { wrapper: createQueryWrapper() });
     await user.click(screen.getByRole("button", { name: /Switch organization/i }));
     await screen.findByRole("menuitem", { name: /Beta Co/i });
     await user.click(screen.getByRole("menuitem", { name: /Beta Co/i }));
@@ -185,7 +186,7 @@ describe("OrgSwitcher", () => {
   it("renders nothing while the auth context is still loading", () => {
     isLoadedRef.current = false;
     orgRef.current = null;
-    const { container } = render(<OrgSwitcher />);
+    const { container } = render(<OrgSwitcher />, { wrapper: createQueryWrapper() });
     expect(container).toBeEmptyDOMElement();
   });
 });

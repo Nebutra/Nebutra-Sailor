@@ -18,6 +18,16 @@
  */
 
 export const queryKeys = {
+  /**
+   * The signed-in session (user, active organization, membership). Kept out
+   * of tenant resets by `useRevalidate("tenant")` so the shell never drops
+   * back to its loading state mid-switch.
+   */
+  session: {
+    all: ["session"] as const,
+    current: () => ["session", "current"] as const,
+  },
+
   billingUsage: {
     all: ["billing-usage"] as const,
     summary: () => ["billing-usage", "summary"] as const,

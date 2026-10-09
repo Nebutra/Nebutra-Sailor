@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRevalidate } from "@/lib/navigation/use-revalidate";
 
 interface ImpersonateButtonProps {
   userId: string;
@@ -18,7 +18,7 @@ interface ImpersonateButtonProps {
  * rather than faking a session swap.
  */
 export function ImpersonateButton({ userId, userLabel, className }: ImpersonateButtonProps) {
-  const router = useRouter();
+  const revalidate = useRevalidate();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,7 +43,8 @@ export function ImpersonateButton({ userId, userLabel, className }: ImpersonateB
         return;
       }
 
-      router.refresh();
+      // Signed in as someone else now: drop the previous identity's cached reads.
+      await revalidate("identity");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to start impersonation.");
     } finally {

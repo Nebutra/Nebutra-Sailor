@@ -3,17 +3,11 @@ import {
   type AuthContextValue,
   createUnauthenticatedAuthContext,
 } from "@nebutra/auth/react/context";
-import {
-  createContext,
-  type ReactNode,
-  use,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
+import { type ReactNode, useCallback, useMemo } from "react";
 import { resolveApiUrl } from "@/lib/api/browser-client";
+import { revalidateQueryCache } from "@/lib/navigation/use-revalidate";
+import { queryKeys } from "@/lib/query-keys";
 import { getViteAuthProvider } from "@/vite-app/app-env";
 
 type SessionPayload = {
@@ -67,9 +61,10 @@ function normalizeSession(payload: SessionPayload | null): Partial<AuthContextVa
   };
 }
 
-async function loadSession(): Promise<SessionPayload | null> {
+async function loadSession({ signal }: { signal?: AbortSignal }): Promise<SessionPayload | null> {
   const response = await fetch(resolveApiUrl("/api/auth/session"), {
     credentials: "include",
+    signal,
     headers: { accept: "application/json" },
   });
 
@@ -84,71 +79,84 @@ async function loadSession(): Promise<SessionPayload | null> {
  * say — so the header and every other reader of the auth context catch up
  * without a page load. Resolves once the new session is in place.
  */
-const SessionReloadContext = createContext<() => Promise<void>>(async () => undefined);
-
 export function useReloadSession(): () => Promise<void> {
-  return use(SessionReloadContext);
+  const queryClient = useQueryClient();
+  return useCallback(
+    () => queryClient.invalidateQueries({ queryKey: queryKeys.session.all }),
+    [queryClient],
+  );
+}
+
+/**
+ * After the server changed who is signed in: drops every cached read of the
+ * previous identity and waits for the new session. The session entry is
+ * refetched rather than cleared, so the shell never falls back to loading.
+ */
+export function useSessionScopeChanged(): () => Promise<void> {
+  const queryClient = useQueryClient();
+  return useCallback(() => revalidateQueryCache(queryClient, "identity"), [queryClient]);
+}
+
+/**
+ * The session is server state, so it lives in the query cache under
+ * `queryKeys.session` rather than in component state: `useRevalidate()` and
+ * any `invalidateQueries` refresh it in place, and concurrent readers share
+ * one request.
+ */
+export function sessionQueryOptions() {
+  return queryOptions({
+    queryKey: queryKeys.session.current(),
+    queryFn: loadSession,
+    // A failed first load reads as signed out; retrying only delays that.
+    retry: false,
+  });
 }
 
 export function BrowserAuthProvider({ children }: { children: ReactNode }) {
   const provider = getViteAuthProvider();
-  const [authState, setAuthState] = useState<AuthContextValue>(() =>
-    createUnauthenticatedAuthContext(provider, false),
-  );
-  // Bumped on every load, so a slow response never overwrites a newer one.
-  const generation = useRef(0);
+  const queryClient = useQueryClient();
+  // A failed reload keeps the last session (TanStack Query keeps `data` on
+  // error) rather than signing the user out.
+  const { data: sessionPayload, isPending } = useQuery(sessionQueryOptions());
 
-  const reloadSession = useCallback(async () => {
-    const current = ++generation.current;
-    try {
-      const sessionPayload = await loadSession();
-      if (current !== generation.current) return;
-      setAuthState({
-        ...createUnauthenticatedAuthContext(provider, true),
-        ...normalizeSession(sessionPayload),
-        provider,
-        isLoaded: true,
-        getToken: async () => null,
-        signOut: async () => {
-          await fetch(resolveApiUrl("/api/auth/sign-out"), {
-            method: "POST",
-            credentials: "include",
-          }).catch(() => undefined);
-          setAuthState(createUnauthenticatedAuthContext(provider, true));
-        },
-        setActiveOrganization: async (orgId: string) => {
-          await fetch(resolveApiUrl("/api/organizations/active"), {
-            method: "POST",
-            credentials: "include",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({ organizationId: orgId }),
-          });
-        },
+  const signOut = useCallback(async () => {
+    await fetch(resolveApiUrl("/api/auth/sign-out"), {
+      method: "POST",
+      credentials: "include",
+    }).catch(() => undefined);
+    // A different identity may sign in next on this device: drop every cached
+    // read of the old one, then record the signed-out session.
+    queryClient.removeQueries({
+      predicate: (query) => query.queryKey[0] !== queryKeys.session.all[0],
+    });
+    queryClient.setQueryData(queryKeys.session.current(), null);
+  }, [queryClient]);
+
+  const setActiveOrganization = useCallback(
+    async (orgId: string) => {
+      await fetch(resolveApiUrl("/api/organizations/active"), {
+        method: "POST",
+        credentials: "include",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ organizationId: orgId }),
       });
-    } catch {
-      // A failed first load reads as signed out; a failed reload keeps what
-      // the page already shows rather than signing the user out.
-      if (current === generation.current) {
-        setAuthState((previous) =>
-          previous.isLoaded ? previous : createUnauthenticatedAuthContext(provider, true),
-        );
-      }
-    }
-  }, [provider]);
-
-  useEffect(() => {
-    void reloadSession();
-    return () => {
-      // Unmounted: whatever is in flight is stale.
-      generation.current += 1;
-    };
-  }, [reloadSession]);
-
-  const value = useMemo(() => authState, [authState]);
-
-  return (
-    <SessionReloadContext value={reloadSession}>
-      <AuthContextProvider value={value}>{children}</AuthContextProvider>
-    </SessionReloadContext>
+      await revalidateQueryCache(queryClient, "tenant");
+    },
+    [queryClient],
   );
+
+  const value = useMemo<AuthContextValue>(() => {
+    if (isPending) return createUnauthenticatedAuthContext(provider, false);
+    return {
+      ...createUnauthenticatedAuthContext(provider, true),
+      ...normalizeSession(sessionPayload ?? null),
+      provider,
+      isLoaded: true,
+      getToken: async () => null,
+      signOut,
+      setActiveOrganization,
+    };
+  }, [isPending, provider, sessionPayload, setActiveOrganization, signOut]);
+
+  return <AuthContextProvider value={value}>{children}</AuthContextProvider>;
 }

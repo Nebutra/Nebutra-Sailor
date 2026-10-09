@@ -6,6 +6,7 @@ import { useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
 import { dicebearAvatarUrl } from "@/lib/avatar";
+import { useRevalidate } from "@/lib/navigation/use-revalidate";
 
 interface OrganizationInvitationModalProps {
   invitationId: string;
@@ -43,6 +44,7 @@ export function OrganizationInvitationModal({
   const t = useTranslations("organizations.invitation");
   const tErrors = useTranslations("auth.errors");
   const router = useRouter();
+  const revalidate = useRevalidate();
   const [submitting, setSubmitting] = useState<SubmittingState>(false);
   const [errorKey, setErrorKey] = useState<AuthErrorKey | null>(null);
   const [declined, setDeclined] = useState(false);
@@ -58,8 +60,9 @@ export function OrganizationInvitationModal({
     setErrorKey(null);
     try {
       await postJson(`/api/invitations/${invitationId}/accept`);
+      // Accepting joins (and activates) the inviting workspace.
       router.push("/");
-      router.refresh();
+      void revalidate("tenant");
     } catch (error) {
       setErrorKey(resolveAuthErrorKey(error));
     } finally {

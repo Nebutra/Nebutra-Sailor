@@ -2,6 +2,7 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createQueryWrapper } from "@/test/query-wrapper";
 
 const refreshMock = vi.fn();
 
@@ -28,13 +29,13 @@ import { ImpersonateButton } from "../impersonate-button";
 
 describe("ImpersonateButton", () => {
   it("renders an impersonate trigger button", () => {
-    render(<ImpersonateButton userId="u_1" userLabel="Alice" />);
+    render(<ImpersonateButton userId="u_1" userLabel="Alice" />, { wrapper: createQueryWrapper() });
     expect(screen.getByRole("button", { name: /impersonate/i })).toBeTruthy();
   });
 
   it("does nothing when the user cancels confirm()", () => {
     confirmMock.mockReturnValue(false);
-    render(<ImpersonateButton userId="u_1" userLabel="Alice" />);
+    render(<ImpersonateButton userId="u_1" userLabel="Alice" />, { wrapper: createQueryWrapper() });
 
     fireEvent.click(screen.getByRole("button", { name: /impersonate/i }));
 
@@ -50,7 +51,9 @@ describe("ImpersonateButton", () => {
       json: () => Promise.resolve({ ok: true }),
     } as Response);
 
-    render(<ImpersonateButton userId="u_target" userLabel="Bob" />);
+    render(<ImpersonateButton userId="u_target" userLabel="Bob" />, {
+      wrapper: createQueryWrapper(),
+    });
     fireEvent.click(screen.getByRole("button", { name: /impersonate/i }));
 
     await waitFor(() => {
@@ -74,7 +77,9 @@ describe("ImpersonateButton", () => {
       json: () => Promise.resolve({ error: "Forbidden" }),
     } as Response);
 
-    render(<ImpersonateButton userId="u_target" userLabel="Bob" />);
+    render(<ImpersonateButton userId="u_target" userLabel="Bob" />, {
+      wrapper: createQueryWrapper(),
+    });
     fireEvent.click(screen.getByRole("button", { name: /impersonate/i }));
 
     await waitFor(() => {
@@ -92,7 +97,9 @@ describe("ImpersonateButton", () => {
       }),
     );
 
-    render(<ImpersonateButton userId="u_target" userLabel="Bob" />);
+    render(<ImpersonateButton userId="u_target" userLabel="Bob" />, {
+      wrapper: createQueryWrapper(),
+    });
     const trigger = screen.getByRole("button", { name: /impersonate/i });
     fireEvent.click(trigger);
 

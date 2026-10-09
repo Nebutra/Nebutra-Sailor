@@ -50,32 +50,17 @@ import { ViewTransitionLink } from "@/components/navigation/view-transition-link
 import { NotificationsDialog } from "@/components/notifications/notifications-dialog";
 import { useStartupChromeMode } from "@/components/startup-os/startup-chrome-store";
 import { usePermission } from "@/hooks/usePermission";
+import { useRevalidate } from "@/lib/navigation/use-revalidate";
 import type { WebProductCapabilities } from "@/lib/product-capabilities";
+import { organizationListQueryOptions } from "@/lib/queries/organizations";
 import { queryKeys } from "@/lib/query-keys";
 import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
 import { buildBreadcrumbs, getDashboardNavGroups, isActiveRoute } from "./dashboard-nav";
-
-interface OrganizationSummary {
-  id: string;
-  name: string;
-  slug?: string | null;
-}
 
 // ─── Server reads (replaces manual useEffect + AbortController/`cancelled`) ───
 // The queryFn `signal` cancels the fetch on unmount / key change, exactly as
 // the old `let cancelled` flag did. JSON parse failures and non-ok responses
 // surface as thrown errors so React Query exposes them via `query.error`.
-async function fetchOrganizations(signal?: AbortSignal): Promise<OrganizationSummary[]> {
-  const response = await fetch("/api/organizations", { credentials: "include", signal });
-  if (!response.ok) {
-    throw new Error(`Failed to load organizations (${response.status})`);
-  }
-  const payload = (await response.json().catch(() => null)) as {
-    organizations?: OrganizationSummary[];
-  } | null;
-  return Array.isArray(payload?.organizations) ? payload.organizations : [];
-}
-
 async function fetchActiveOrgLogo(orgId: string, signal?: AbortSignal): Promise<string | null> {
   const response = await fetch(`/api/organizations/${orgId}/logo-url`, {
     credentials: "include",
@@ -173,6 +158,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const isWorkspaceHomeRoute = /^\/[a-z]{2}\/workspace\/?$/.test(pathname);
   const supportsWorkspaceSwitching = workspaceMode === "organization";
   const queryClient = useQueryClient();
+  const revalidate = useRevalidate();
   // Active-workspace selection is PURE CLIENT STATE (driven by localStorage /
   // session preference) — kept local, never in React Query cache.
   const [workspace, setWorkspace] = useState<string>("");
@@ -180,8 +166,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
 
   // ─── Server read: organization list (replaces loadWorkspaces useEffect) ────
   const organizationsQuery = useQuery({
-    queryKey: queryKeys.organizations.list(),
-    queryFn: ({ signal }) => fetchOrganizations(signal),
+    ...organizationListQueryOptions(),
     enabled: isSignedIn && supportsWorkspaceSwitching,
   });
 
@@ -272,7 +257,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       });
 
       if (response.ok) {
-        window.location.reload();
+        // Tenant changed: refetch in place, keeping scroll, focus and the open sidebar.
+        await revalidate("tenant");
       }
     } catch {
       // Keep optimistic state locally; the settings/select-org flows remain the fallback.

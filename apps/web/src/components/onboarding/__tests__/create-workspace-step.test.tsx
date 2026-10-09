@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import type { InputHTMLAttributes, ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { createQueryWrapper } from "@/test/query-wrapper";
 
 vi.mock("next-intl", () => ({
   useTranslations:
@@ -69,7 +70,7 @@ describe("CreateWorkspaceStep", () => {
   });
 
   it("renders copy from the onboarding.workspace catalog, not hardcoded English", () => {
-    render(<CreateWorkspaceStep onComplete={vi.fn()} />);
+    render(<CreateWorkspaceStep onComplete={vi.fn()} />, { wrapper: createQueryWrapper() });
 
     expect(screen.getByRole("heading", { name: "onboarding.workspace.title" })).toBeInTheDocument();
     expect(screen.getByText("onboarding.workspace.description")).toBeInTheDocument();

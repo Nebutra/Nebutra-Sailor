@@ -2,6 +2,7 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createQueryWrapper } from "@/test/query-wrapper";
 
 const messages: Record<string, string> = {
   "organizations.invitation.title": "You've been invited",
@@ -67,6 +68,7 @@ describe("OrganizationInvitationModal", () => {
         organizationName="Acme Labs"
         roleLabel="member"
       />,
+      { wrapper: createQueryWrapper() },
     );
 
     expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(/Acme Labs/);
@@ -87,6 +89,7 @@ describe("OrganizationInvitationModal", () => {
         organizationName="Acme Labs"
         roleLabel="member"
       />,
+      { wrapper: createQueryWrapper() },
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Accept" }));
@@ -114,6 +117,7 @@ describe("OrganizationInvitationModal", () => {
         organizationName="Acme Labs"
         roleLabel="member"
       />,
+      { wrapper: createQueryWrapper() },
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Decline" }));
@@ -143,6 +147,7 @@ describe("OrganizationInvitationModal", () => {
         organizationName="Acme Labs"
         roleLabel="member"
       />,
+      { wrapper: createQueryWrapper() },
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Accept" }));
@@ -164,6 +169,7 @@ describe("OrganizationInvitationModal", () => {
         organizationName="Acme Labs"
         roleLabel="member"
       />,
+      { wrapper: createQueryWrapper() },
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Decline" }));
@@ -188,6 +194,7 @@ describe("OrganizationInvitationModal", () => {
         organizationName="Acme Labs"
         roleLabel="member"
       />,
+      { wrapper: createQueryWrapper() },
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Accept" }));

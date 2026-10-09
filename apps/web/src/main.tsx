@@ -44,10 +44,10 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <BrowserAuthProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <BrowserAuthProvider>
         <RouterProvider router={router} />
-      </QueryClientProvider>
-    </BrowserAuthProvider>
+      </BrowserAuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
 );

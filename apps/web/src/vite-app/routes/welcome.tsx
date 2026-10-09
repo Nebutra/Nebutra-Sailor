@@ -6,6 +6,7 @@ import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { createRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useSessionScopeChanged } from "@/vite-app/auth-provider";
 import { DEMO_ACCOUNT, hasDemoAccount, signInWithDemoAccount } from "@/vite-app/preview-auth";
 import { rootRoute } from "./__root";
 
@@ -144,6 +145,7 @@ function Hero({ keysNeeded }: { keysNeeded: number }) {
   const { isSignedIn, user } = useAuthContext();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const sessionScopeChanged = useSessionScopeChanged();
   const demo = hasDemoAccount();
   const host = typeof window === "undefined" ? "localhost" : window.location.host;
 
@@ -152,9 +154,9 @@ function Hero({ keysNeeded }: { keysNeeded: number }) {
     setError(null);
     const failure = await signInWithDemoAccount();
     setPending(false);
-    // A full load lets the session provider read the new cookie.
+    // The session is read in place: the hero re-renders signed in.
     if (failure) setError(failure);
-    else window.location.assign("/welcome");
+    else await sessionScopeChanged();
   };
 
   const siteUrl = import.meta.env.VITE_SAILOR_SITE_URL;
