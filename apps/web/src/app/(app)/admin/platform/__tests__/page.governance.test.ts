@@ -9,7 +9,10 @@ import { describe, expect, it } from "vitest";
 // pattern for the sibling /admin page — see ../../__tests__/page.governance.test.ts)
 // rather than a rendered/auth-mocked test, so they run without a database.
 const LAYOUT = join(process.cwd(), "src/app/(app)/admin/platform/layout.tsx");
-const PAGE = join(process.cwd(), "src/app/(app)/admin/platform/page.tsx");
+const INBOX_PAGE = join(process.cwd(), "src/app/(app)/admin/platform/page.tsx");
+const FLEET_PAGE = join(process.cwd(), "src/app/(app)/admin/platform/fleet/page.tsx");
+const SUPPLY_PAGE = join(process.cwd(), "src/app/(app)/admin/platform/supply/page.tsx");
+const SERVER_ACTIONS = join(process.cwd(), "src/lib/admin-platform/server-actions.ts");
 const STAFF = join(process.cwd(), "src/lib/admin-platform/staff.ts");
 const ACCESS = join(process.cwd(), "src/lib/admin-platform/access-assertion.ts");
 
@@ -33,9 +36,19 @@ describe("platform control-plane guard", () => {
     expect(access).toContain("jwtVerify");
   });
 
-  it("renders the Fleet domain read-only, from configuration, not a live probe", () => {
-    const page = readFileSync(PAGE, "utf8");
-    expect(page).toContain("FLEET");
-    expect(page).toContain('import "server-only"');
+  it("renders every console page server-side only", () => {
+    for (const page of [INBOX_PAGE, FLEET_PAGE, SUPPLY_PAGE]) {
+      expect(readFileSync(page, "utf8")).toContain('import "server-only"');
+    }
+  });
+
+  it("re-checks PlatformStaff inside every Server Action, not only in the layout", () => {
+    const actions = readFileSync(SERVER_ACTIONS, "utf8");
+    expect(actions.startsWith('"use server"')).toBe(true);
+    const exported = actions.match(/export async function \w+\([\s\S]*?\n}\n/g) ?? [];
+    expect(exported.length).toBeGreaterThan(0);
+    for (const fn of exported) {
+      expect(fn).toContain("requireStaff()");
+    }
   });
 });
