@@ -35,10 +35,13 @@ import { registerUnlinkCommand } from "./commands/unlink";
 import { registerUpgradeCommand } from "./commands/upgrade";
 import { registerWhoamiCommand } from "./commands/whoami";
 import { CommandError, reportCommandError, runCommand } from "./utils/command-error";
+import { useProxyFromEnv } from "./utils/env-proxy";
 import { ExitCode } from "./utils/exit-codes";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
 import { readCliVersion } from "./utils/resolve-cli-package";
 import { maybeNotifyUpdate } from "./utils/update-notifier";
+
+useProxyFromEnv();
 
 // Error-handling convention: new commands MUST wrap their `.action(...)` body
 // with `runCommand(...)` from "./utils/command-error" and throw `CommandError`
