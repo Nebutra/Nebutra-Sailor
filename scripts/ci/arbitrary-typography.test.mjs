@@ -28,7 +28,7 @@ function lint(allowed) {
     );
     return spawnSync(
       process.execPath,
-      [new URL("./lint-arbitrary-typography.mjs", import.meta.url).pathname],
+      [new URL("../lint-arbitrary-typography.mjs", import.meta.url).pathname],
       {
         cwd: fixture,
         encoding: "utf8",

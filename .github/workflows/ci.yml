@@ -447,7 +447,7 @@ jobs:
       # brand-literals, microcopy). All are shrink-only ratchets — new
       # violations fail immediately; allowlisted entries migrate on-touch.
       - name: Test lint source discovery
-        run: node --test scripts/lint-arbitrary-typography.test.mjs
+        run: node --test scripts/ci/arbitrary-typography.test.mjs
 
       - name: Governance lint guards
         run: pnpm lint
