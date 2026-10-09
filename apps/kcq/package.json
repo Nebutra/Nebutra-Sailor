@@ -29,7 +29,7 @@
     "vue-i18n": "11.4.13",
     "vue-router": "4.6.4",
     "@fontsource/outfit": "5.3.0",
-    "vgpu": "0.5.0"
+    "@vgpu/core": "0.5.0"
   },
   "devDependencies": {
     "vite": "catalog:",

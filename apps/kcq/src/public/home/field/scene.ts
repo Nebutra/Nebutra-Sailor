@@ -1,9 +1,11 @@
 /**
- * The light-field pass chain, independent of where it runs: the browser passes `vgpu`, the poster
- * script (scripts/render-poster.ts) passes `vgpu/node`, so the prerendered poster is this exact
- * scene. Pass order and target recycling follow vgpu's radiance-cascades example; see shaders.ts.
+ * The light-field pass chain on `@vgpu/core` (exact 0.5.0): its `Device`, textures, buffers and
+ * bind helpers, with one fullscreen-triangle pipeline per pass. It runs wherever a GPUDevice
+ * exists: the browser (renderer.ts) and Dawn in Node for the poster (scripts/render-poster.ts),
+ * so the prerendered poster is this exact scene. Pass order and target recycling follow vgpu's
+ * radiance-cascades example; see shaders.ts.
  */
-import type { Effect, Gpu, Surface, Target } from "vgpu";
+import { type Buffer, createBindGroup, createSampler, type Device, type Texture } from "@vgpu/core";
 import {
   CASCADE_WGSL,
   JFA_INIT_WGSL,
@@ -15,15 +17,6 @@ import {
   SHAPE_STRIDE,
 } from "./shaders";
 
-/** The vgpu entry points the scene uses; `vgpu` and `vgpu/node` both provide them. */
-export interface FieldApi {
-  effect: typeof import("vgpu").effect;
-  frame: typeof import("vgpu").frame;
-  sampler: typeof import("vgpu").sampler;
-  storage: typeof import("vgpu").storage;
-  target: typeof import("vgpu").target;
-}
-
 export type FieldTier = "high" | "low";
 
 /** What each tier costs: trace steps per ray and the cap on cascade levels. */
@@ -34,6 +27,57 @@ const TIER_BUDGET: Record<FieldTier, { steps: number; maxCascades: number }> = {
 
 const HDR: GPUTextureFormat = "rgba16float";
 const SEED: GPUTextureFormat = "rgba32float";
+/** GPUShaderStage.FRAGMENT; the global is absent in Node until Dawn installs it. */
+const FRAGMENT = 2;
+
+/** Fullscreen triangle; `uv` grows right and down, as the fragment shaders expect. */
+const VERTEX_WGSL = /* wgsl */ `
+struct VsOut {
+  @builtin(position) position: vec4f,
+  @location(0) uv: vec2f,
+};
+
+@vertex
+fn vs_main(@builtin(vertex_index) index: u32) -> VsOut {
+  var corners = array<vec2f, 3>(vec2f(-1.0, -1.0), vec2f(3.0, -1.0), vec2f(-1.0, 3.0));
+  let p = corners[index];
+  var out: VsOut;
+  out.position = vec4f(p, 0.0, 1.0);
+  out.uv = vec2f(p.x * 0.5 + 0.5, 0.5 - p.y * 0.5);
+  return out;
+}
+`;
+
+/** Binding kinds in WGSL binding order. Seeds are rgba32float, which is unfilterable. */
+type Slot = "uniform" | "storage" | "texture" | "seeds" | "sampler";
+
+function entryFor(slot: Slot, binding: number): GPUBindGroupLayoutEntry {
+  if (slot === "uniform") return { binding, visibility: FRAGMENT, buffer: { type: "uniform" } };
+  if (slot === "storage") return { binding, visibility: FRAGMENT, buffer: { type: "read-only-storage" } };
+  if (slot === "sampler") return { binding, visibility: FRAGMENT, sampler: { type: "filtering" } };
+  return {
+    binding,
+    visibility: FRAGMENT,
+    texture: { sampleType: slot === "seeds" ? "unfilterable-float" : "float" },
+  };
+}
+
+interface Pass {
+  readonly pipeline: Promise<GPURenderPipeline>;
+  readonly layout: GPUBindGroupLayout;
+}
+
+function pass(device: Device, wgsl: string, slots: readonly Slot[], format: GPUTextureFormat): Pass {
+  const layout = device.gpu.createBindGroupLayout({ entries: slots.map(entryFor) });
+  const module = device.gpu.createShaderModule({ code: `${VERTEX_WGSL}\n${wgsl}` });
+  const pipeline = device.gpu.createRenderPipelineAsync({
+    layout: device.gpu.createPipelineLayout({ bindGroupLayouts: [layout] }),
+    vertex: { module, entryPoint: "vs_main" },
+    fragment: { module, entryPoint: "fs_main", targets: [{ format }] },
+    primitive: { topology: "triangle-list" },
+  });
+  return { pipeline, layout };
+}
 
 export interface PresentOptions {
   /** Linear RGB of the preset surface under the field. */
@@ -44,7 +88,14 @@ export interface PresentOptions {
   readonly emitterVisibility: number;
 }
 
-export function createFieldScene(api: FieldApi, gpu: Gpu, requested: readonly [number, number], tier: FieldTier) {
+type Bindable = Texture | Buffer | GPUSampler;
+
+export function createFieldScene(
+  device: Device,
+  requested: readonly [number, number],
+  tier: FieldTier,
+  outputFormat: GPUTextureFormat,
+) {
   const width = Math.max(8, Math.floor(requested[0]));
   const height = Math.max(8, Math.floor(requested[1]));
   const size: [number, number] = [width, height];
@@ -61,101 +112,144 @@ export function createFieldScene(api: FieldApi, gpu: Gpu, requested: readonly [n
   const jumpCount = Math.ceil(Math.log2(Math.max(width, height, 2)));
   const jumps = [...Array.from({ length: jumpCount }, (_, i) => 2 ** (jumpCount - i - 1)), 1];
 
-  const owned: Target[] = [];
-  const own = (resource: Target) => {
-    owned.push(resource);
-    return resource;
+  const textures: Texture[] = [];
+  const buffers: Buffer[] = [];
+  const texture = (dims: [number, number], format: GPUTextureFormat) => {
+    const created = device.createTexture({
+      kind: "2d",
+      size: dims,
+      format,
+      usage: ["render_attachment", "texture_binding"],
+    });
+    textures.push(created);
+    return created;
   };
-  const emitter = own(api.target(gpu, { size, format: HDR }));
-  let seeds: [Target, Target] = [own(api.target(gpu, { size, format: SEED })), own(api.target(gpu, { size, format: SEED }))];
-  const sdf = own(api.target(gpu, { size, format: HDR }));
-  let cascades: [Target, Target] = [own(api.target(gpu, { size: atlas, format: HDR })), own(api.target(gpu, { size: atlas, format: HDR }))];
-  const shapes = api.storage(gpu, MAX_SHAPES * SHAPE_STRIDE * 16, "read");
-  const linear = api.sampler(gpu, {
-    minFilter: "linear",
-    magFilter: "linear",
-    addressModeU: "clamp-to-edge",
-    addressModeV: "clamp-to-edge",
+  const uniform = (bytes: number) => {
+    const created = device.createBuffer({ size: bytes, usage: ["uniform", "copy_dst"] });
+    buffers.push(created);
+    return created;
+  };
+
+  const emitter = texture(size, HDR);
+  let seeds: [Texture, Texture] = [texture(size, SEED), texture(size, SEED)];
+  const sdf = texture(size, HDR);
+  let cascades: [Texture, Texture] = [texture(atlas, HDR), texture(atlas, HDR)];
+  const shapes = device.createBuffer({
+    size: MAX_SHAPES * SHAPE_STRIDE * 16,
+    usage: ["storage", "copy_dst"],
   });
-  const effects = {
-    paint: api.effect(gpu, PAINT_WGSL),
-    jfaInit: api.effect(gpu, JFA_INIT_WGSL),
-    // set() writes immediately, so every encoded pass gets its own effect (vgpu example note).
-    jfaSteps: jumps.map(() => api.effect(gpu, JFA_STEP_WGSL)),
-    sdf: api.effect(gpu, SDF_WGSL),
-    cascade: Array.from({ length: cascadeCount }, () => api.effect(gpu, CASCADE_WGSL)),
-    present: api.effect(gpu, PRESENT_WGSL),
+  buffers.push(shapes);
+  const linear = createSampler(device, { filter: "linear", wrap: "clamp" });
+
+  // Uniforms are written before the frame is submitted, so every pass owns its buffer.
+  const paintUniform = uniform(16);
+  const jumpUniforms = jumps.map(() => uniform(16));
+  const cascadeUniforms = Array.from({ length: cascadeCount }, () => uniform(16));
+  const presentUniform = uniform(32);
+
+  const passes = {
+    paint: pass(device, PAINT_WGSL, ["uniform", "storage"], HDR),
+    jfaInit: pass(device, JFA_INIT_WGSL, ["texture"], SEED),
+    jfaStep: pass(device, JFA_STEP_WGSL, ["uniform", "seeds"], SEED),
+    sdf: pass(device, SDF_WGSL, ["seeds"], HDR),
+    cascade: pass(
+      device,
+      CASCADE_WGSL,
+      ["uniform", "texture", "sampler", "texture", "sampler", "texture"],
+      HDR,
+    ),
+    present: pass(device, PRESENT_WGSL, ["uniform", "texture", "texture"], outputFormat),
   };
+  type PassName = keyof typeof passes;
+  let pipelines: Record<PassName, GPURenderPipeline> | undefined;
   let shapeCount = 0;
 
-  async function prepare(outputFormat: GPUTextureFormat) {
-    await Promise.all([
-      effects.paint.compile({ colors: [HDR] }),
-      effects.jfaInit.compile({ colors: [SEED] }),
-      ...effects.jfaSteps.map((effect) => effect.compile({ colors: [SEED] })),
-      effects.sdf.compile({ colors: [HDR] }),
-      ...effects.cascade.map((effect) => effect.compile({ colors: [HDR] })),
-      effects.present.compile({ colors: [outputFormat] }),
-    ]);
+  async function prepare() {
+    const names = Object.keys(passes) as PassName[];
+    const built = await Promise.all(names.map((name) => passes[name].pipeline));
+    pipelines = Object.fromEntries(names.map((name, index) => [name, built[index]!])) as Record<
+      PassName,
+      GPURenderPipeline
+    >;
   }
 
   /** `data` holds `count` shapes, SHAPE_STRIDE vec4f each (see field-shapes.ts). */
   function setShapes(data: Float32Array<ArrayBuffer>, count: number) {
     shapeCount = Math.min(count, MAX_SHAPES);
-    shapes.write(data.subarray(0, shapeCount * SHAPE_STRIDE * 4));
+    shapes.write(data.subarray(0, Math.max(1, shapeCount) * SHAPE_STRIDE * 4));
   }
 
-  /** Paint → seed → flood → distance → cascades (top down) → present. One frame. */
-  function render(output: Surface | Target, options: PresentOptions) {
-    const passes: { target: Target | Surface; effect: Effect }[] = [];
-    effects.paint.set({ paint: { count: [shapeCount, width, height, 0] }, shapes });
-    passes.push({ target: emitter, effect: effects.paint });
-    effects.jfaInit.set({ emitter });
-    passes.push({ target: seeds[0], effect: effects.jfaInit });
+  const resource = (value: Bindable): GPUBindingResource => {
+    if ("view" in value) return value.view;
+    if ("write" in value) return { buffer: value.gpu };
+    return value;
+  };
+
+  /** Paint → seed → flood → distance → cascades (top down) → present. One submission. */
+  function render(output: GPUTextureView, options: PresentOptions) {
+    const ready = pipelines;
+    if (!ready) return;
+    const encoder = device.gpu.createCommandEncoder();
+    const draw = (target: GPUTextureView, name: PassName, bindings: readonly Bindable[]) => {
+      const group = createBindGroup(device, {
+        layout: passes[name].layout,
+        entries: bindings.map((value, binding) => ({ binding, resource: resource(value) })),
+      });
+      const renderPass = encoder.beginRenderPass({
+        colorAttachments: [
+          { view: target, loadOp: "clear", clearValue: [0, 0, 0, 0], storeOp: "store" },
+        ],
+      });
+      renderPass.setPipeline(ready[name]);
+      renderPass.setBindGroup(0, group);
+      renderPass.draw(3);
+      renderPass.end();
+    };
+
+    paintUniform.write(new Float32Array([shapeCount, width, height, 0]));
+    draw(emitter.view, "paint", [paintUniform, shapes]);
+    draw(seeds[0].view, "jfaInit", [emitter]);
     let [read, write] = seeds;
     jumps.forEach((jump, index) => {
-      const step = effects.jfaSteps[index]!;
-      step.set({ jfa: { jump: [jump, 0, 0, 0] }, seeds: read });
-      passes.push({ target: write, effect: step });
+      jumpUniforms[index]!.write(new Float32Array([jump, 0, 0, 0]));
+      draw(write.view, "jfaStep", [jumpUniforms[index]!, read]);
       [read, write] = [write, read];
     });
     seeds = [read, write];
-    effects.sdf.set({ seeds: read });
-    passes.push({ target: sdf, effect: effects.sdf });
+    draw(sdf.view, "sdf", [read]);
     let [atlasWrite, atlasRead] = cascades;
     for (let level = cascadeCount - 1; level >= 0; level--) {
-      const cascade = effects.cascade[level]!;
-      cascade.set({
-        rc: { state: [level, level < cascadeCount - 1 ? 1 : 0, budget.steps, 0] },
-        sdf_tex: sdf,
-        sdf_samp: linear,
-        emitter_tex: emitter,
-        emitter_samp: linear,
-        upper_tex: atlasRead,
-      });
-      passes.push({ target: atlasWrite, effect: cascade });
+      cascadeUniforms[level]!.write(
+        new Float32Array([level, level < cascadeCount - 1 ? 1 : 0, budget.steps, 0]),
+      );
+      draw(atlasWrite.view, "cascade", [
+        cascadeUniforms[level]!,
+        sdf,
+        linear,
+        emitter,
+        linear,
+        atlasRead,
+      ]);
       [atlasRead, atlasWrite] = [atlasWrite, atlasRead];
     }
     cascades = [atlasRead, atlasWrite];
-    effects.present.set({
-      present: {
-        ground: [...options.ground, options.mode === "light" ? 1 : 0],
-        tone: [options.exposure, options.emitterVisibility, 0, 0],
-      },
-      cascade_tex: atlasRead,
-      emitter_tex: emitter,
-    });
-    passes.push({ target: output, effect: effects.present });
-    api.frame(gpu, (frame) => {
-      for (const pass of passes) {
-        frame.pass({ target: pass.target, clear: [0, 0, 0, 0] }, (encoder) => encoder.draw(pass.effect));
-      }
-    });
+    presentUniform.write(
+      new Float32Array([
+        ...options.ground,
+        options.mode === "light" ? 1 : 0,
+        options.exposure,
+        options.emitterVisibility,
+        0,
+        0,
+      ]),
+    );
+    draw(output, "present", [presentUniform, atlasRead, emitter]);
+    device.gpu.queue.submit([encoder.finish()]);
   }
 
   function destroy() {
-    for (const resource of owned) (resource as Target & { destroy?: () => void }).destroy?.();
-    (shapes as { destroy?: () => void }).destroy?.();
+    for (const item of textures) item.destroy();
+    for (const item of buffers) item.destroy();
   }
 
   return { size, tier, cascadeCount, prepare, setShapes, render, destroy };

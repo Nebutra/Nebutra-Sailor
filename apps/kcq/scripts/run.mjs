@@ -43,7 +43,7 @@ if (mode === "typecheck") {
             "@363045841yyt/klinechart-core/controllers": [
               resolve(upstream, "packages/core/dist/controllers/index.d.ts"),
             ],
-            vgpu: [resolve(root, "node_modules/vgpu/dist/index.d.ts")],
+            "@vgpu/core": [resolve(root, "node_modules/@vgpu/core/dist/index.d.ts")],
             "@363045841yyt/klinechart-core/config": [
               resolve(upstream, "packages/core/dist/foundation/config/chartSettings.d.ts"),
             ],

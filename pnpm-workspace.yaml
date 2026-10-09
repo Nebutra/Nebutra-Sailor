@@ -313,9 +313,6 @@ peerDependencyRules:
     "react-dom": "19"
 allowBuilds:
   "@bundled-es-modules/glob": true
-  # vgpu (apps/kcq hero) ships prebuilt Dawn binaries; its Node/Dawn postinstall
-  # checks are not needed for the browser bundle, so they stay disabled.
-  "@vgpu/adapter-node": false
   "@clerk/shared": true
   "@cloudflare/workerd-darwin-arm64": true
   "@cloudflare/workerd-darwin-x64": true
@@ -336,7 +333,6 @@ allowBuilds:
   protobufjs: true
   sharp: true
   style-dictionary: true
-  webgpu: false
   workerd: true
 allowedDeprecatedVersions:
   "svg-dotted-map": "*"

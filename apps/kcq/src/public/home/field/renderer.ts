@@ -3,7 +3,6 @@
  * allowed, see hero-chart.vue). It renders only when something changed: the opening unfold, a new
  * bar, the crosshair. A static field costs no GPU time; hidden or off-screen it renders nothing.
  */
-import type { Gpu, Surface } from "vgpu";
 import type { ChartGeometry } from "../hero/live-chart";
 import { crosshair, EXPOSURE, type FieldPalette, glyphOnly, packShapes, type Rgb, unfold } from "./field-shapes";
 import { createFrameHealth, createQualityController, watchQualitySignals } from "./quality";
@@ -32,16 +31,22 @@ export interface HeroField {
 
 /** Resolves null when WebGPU cannot start; the poster stays. */
 export async function createHeroField(canvas: HTMLCanvasElement, initial: FieldLook): Promise<HeroField | null> {
-  const vgpu = await import("vgpu");
+  const { Device } = await import("@vgpu/core");
   const adapter = await navigator.gpu?.requestAdapter({ powerPreference: "low-power" });
   if (!adapter) return null;
-  let gpu: Gpu;
+  let device: InstanceType<typeof Device>;
   try {
-    gpu = await vgpu.init();
+    device = new Device(await adapter.requestDevice(), adapter.info ?? null);
   } catch {
     return null;
   }
-  const output: Surface = vgpu.surface(gpu, canvas, { autoResize: false, dpr: [1, 1] });
+  const context = canvas.getContext("webgpu");
+  if (!context) {
+    device.dispose();
+    return null;
+  }
+  const format = navigator.gpu.getPreferredCanvasFormat();
+  context.configure({ device: device.gpu, format, alphaMode: "opaque" });
 
   let look = initial;
   let geometry: ChartGeometry | null = null;
@@ -66,15 +71,15 @@ export async function createHeroField(canvas: HTMLCanvasElement, initial: FieldL
   const quality = createQualityController<TierBuild>({
     createTier(tier) {
       const scene = createFieldScene(
-        vgpu,
-        gpu,
+        device,
         [cssSize[0] * TIER_SCALE[tier], cssSize[1] * TIER_SCALE[tier]],
         tier,
+        format,
       );
-      return { scene, prepare: () => scene.prepare(output.format), destroy: () => scene.destroy() };
+      return { scene, prepare: () => scene.prepare(), destroy: () => scene.destroy() };
     },
     onActivate(_tier, { scene }) {
-      output.resize(scene.size);
+      [canvas.width, canvas.height] = scene.size;
       health.reset();
       dirty = true;
     },
@@ -104,7 +109,7 @@ export async function createHeroField(canvas: HTMLCanvasElement, initial: FieldL
     if (scene && !paused && visible && !document.hidden && (dirty || animating)) {
       const { data, count } = packShapes(shapes(), TIER_SCALE[scene.tier]);
       scene.setShapes(data, count);
-      scene.render(output, {
+      scene.render(context.getCurrentTexture().createView(), {
         ground: look.ground,
         mode: look.mode,
         exposure: EXPOSURE[look.mode],
@@ -151,7 +156,7 @@ export async function createHeroField(canvas: HTMLCanvasElement, initial: FieldL
     resize.disconnect();
     intersection.disconnect();
     document.removeEventListener("visibilitychange", onVisibility);
-    gpu.dispose();
+    device.dispose();
     return null;
   }
   invalidate();
@@ -200,7 +205,7 @@ export async function createHeroField(canvas: HTMLCanvasElement, initial: FieldL
       intersection.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       quality.destroy();
-      gpu.dispose();
+      device.dispose();
     },
   };
 }
