@@ -89,25 +89,27 @@
     "test": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "vitest.config*"],
-      "outputs": ["coverage/**", "test-results/**"]
+      "outputs": ["coverage/**", "test-results/**"],
+      "env": ["CI", "NETWORK_TESTS", "RLS_ATTACK_DATABASE_URL"]
     },
     "test:ci": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "vitest.config*"],
       "outputs": ["coverage/**", "test-results/**"],
-      "env": ["CI"]
+      "env": ["CI", "NETWORK_TESTS", "RLS_ATTACK_DATABASE_URL"]
     },
     "test:coverage": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "vitest.config*"],
       "outputs": ["coverage/**"],
-      "env": ["CI"]
+      "env": ["CI", "NETWORK_TESTS", "RLS_ATTACK_DATABASE_URL"]
     },
     "test:watch": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "vitest.config*"],
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["CI", "NETWORK_TESTS", "RLS_ATTACK_DATABASE_URL"]
     },
     "size": {
       "dependsOn": ["build"],

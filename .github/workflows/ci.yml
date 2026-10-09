@@ -346,6 +346,9 @@ jobs:
       - name: Verify Turbo build contract
         run: pnpm --config.verify-deps-before-run=false ci:verify-turbo-contract
 
+      - name: Verify Turbo security test environment
+        run: node --test scripts/ci/test-environment.test.mjs
+
       - name: Verify cloud portability contract
         run: pnpm --config.verify-deps-before-run=false cloud:verify
 
