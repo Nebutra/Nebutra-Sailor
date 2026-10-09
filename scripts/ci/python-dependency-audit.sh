@@ -19,7 +19,9 @@ for service in backends/python/*/; do
   uv pip compile "$service/pyproject.toml" -o "$requirements" --quiet
   rm -f "$report"
   status=0
-  pip-audit -r "$requirements" --strict --format=json --output "$report" || status=$?
+  # uv has already resolved the complete transitive graph to exact versions.
+  # Audit that graph directly instead of creating a second pip environment.
+  pip-audit -r "$requirements" --no-deps --disable-pip --strict --format=json --output "$report" || status=$?
   if [ "$status" -gt 1 ]; then
     echo "::error::pip-audit failed for $name (exit $status)" >&2
     exit 1
