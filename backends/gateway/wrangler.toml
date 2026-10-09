@@ -57,6 +57,6 @@ STATUS_PROBE_URL = "https://status.nebutra.com/api/status/probe"
 APP_DB_ROLE = "app_user"
 
 # PARA reference URLs (first-frame video, image edit) are accepted only on PARA's own
-# asset host — where nebutra-ai writes generated outputs (its UPLOAD_PUBLIC_BASE_URL, the same
-# value as Kuanlan's R2_PUBLIC_URL: cdn.nebutra.com). Not a secret. Unset fails closed.
+# asset host — where nebutra-ai writes generated outputs (its UPLOAD_PUBLIC_BASE_URL — the
+# public R2 asset domain, cdn.nebutra.com). Not a secret. Unset fails closed.
 PARA_ASSET_BASE_URLS = "https://cdn.nebutra.com"
