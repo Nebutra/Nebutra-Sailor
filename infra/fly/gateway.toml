@@ -13,6 +13,10 @@ primary_region = "sin"
   # register API. The server binds `::`, so the 6PN name works from here.
   # INNGEST_EVENT_KEY / INNGEST_SIGNING_KEY are secrets, identical to the server's.
   INNGEST_BASE_URL = "http://nebutra-inngest.internal:8288"
+  # The URL Inngest calls back on. Without it the SDK registers the scheme it
+  # sees behind Fly's proxy (http), force_https 301s the call, and Go's client
+  # turns the POST into a bodiless GET that the SDK rejects as 401.
+  INNGEST_SERVE_ORIGIN = "https://nebutra-gateway.fly.dev"
 
 [http_service]
   internal_port = 8080

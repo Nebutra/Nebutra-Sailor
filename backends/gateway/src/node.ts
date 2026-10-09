@@ -1,27 +1,17 @@
-import { createServer } from "node:http";
-import { getRequestListener } from "@hono/node-server";
+import { serve } from "@hono/node-server";
 import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import { closeQueue } from "@nebutra/queue";
 import { enabledOptionalProtocols } from "./config/protocols.js";
 import app, { areGatewayDepsInitialized } from "./index.js";
-import { rewriteInngestStepGet } from "./lib/inngest-get-workaround.js";
 
 const port = parseInt(process.env.PORT || "3002", 10);
 const hostname = process.env.HOST || "0.0.0.0";
 
 logger.info("API Gateway started", { port, hostname, optionalProtocols: enabledOptionalProtocols });
 
-// A plain Node server rather than @hono/node-server's serve(): the Inngest
-// step workaround (lib/inngest-get-workaround.ts) must relabel the request
-// before the listener turns it into a Fetch Request and drops a GET body.
-const listener = getRequestListener(app.fetch);
-const server = createServer((req, res) => {
-  rewriteInngestStepGet(req);
-  void listener(req, res);
-});
-server.listen(port, hostname, () => {
-  logger.info(`API Gateway listening on ${hostname}:${port}`);
+const server = serve({ fetch: app.fetch, port, hostname }, (info) => {
+  logger.info(`API Gateway listening on ${info.address}:${info.port}`);
 });
 
 const shutdown = async (signal: string) => {
