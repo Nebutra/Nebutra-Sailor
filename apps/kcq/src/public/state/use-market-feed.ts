@@ -7,7 +7,7 @@
  */
 import { createSharedComposable, tryOnScopeDispose } from "@vueuse/core";
 import { computed, ref, shallowRef } from "vue";
-import { type Bar, CACHED_BARS, HERO_QUERY, mergeBars, quoteOf } from "../home/hero/bars";
+import { type Bar, CACHED_BARS, HERO_QUERY, mergeBars, quoteOf, sameBars } from "../home/hero/bars";
 
 /** `idle` until the hero starts the feed (it never starts on pages without the hero). */
 export type FeedStatus = "idle" | "connecting" | "live" | "delayed";
@@ -32,7 +32,9 @@ function useMarketFeedState() {
       const { fetchLiveBars } = await import("../home/hero/live-chart");
       const live = await fetchLiveBars(window.location.origin, controller.signal);
       // Live bars extend the cached ones; never a hole between the two (bars.ts mergeBars).
-      bars.value = mergeBars(CACHED_BARS, live).slice(-HERO_QUERY.limit);
+      const next = mergeBars(CACHED_BARS, live).slice(-HERO_QUERY.limit);
+      // Same bars (a closed market): keep the reference, so nothing downstream redraws.
+      if (!sameBars(bars.value, next)) bars.value = next;
       status.value = "live";
       return true;
     } catch {
