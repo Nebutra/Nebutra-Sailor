@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
 import { createRoute } from "@tanstack/react-router";
 import { ProfilePanel } from "@/vite-app/settings/profile-panel";
-import { SecurityPanel } from "@/vite-app/settings/security-panel";
+import { SecurityPanel, signedInSessionsQueryOptions } from "@/vite-app/settings/security-panel";
 import { WorkspacePanel } from "@/vite-app/settings/workspace-panel";
 import { rootRoute } from "./__root";
 
@@ -63,5 +63,14 @@ export const settingsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/settings",
   validateSearch: (search): { tab: SettingsTab } => ({ tab: toSettingsTab(search.tab) }),
+  loaderDeps: ({ search }) => ({ tab: search.tab }),
+  // Starts the security tab's read with the navigation (and on hover, via
+  // intent preload) instead of after the panel mounts. Not awaited: the tabs
+  // render at once and the panel shows its own loading row.
+  loader: ({ context, deps }) => {
+    if (deps.tab === "security") {
+      void context.queryClient.prefetchQuery(signedInSessionsQueryOptions());
+    }
+  },
   component: SettingsRoute,
 });

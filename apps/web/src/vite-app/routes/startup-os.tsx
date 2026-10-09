@@ -1,6 +1,7 @@
 import { isStartupOSPrototypeEnabled } from "@nebutra/startup-os/feature-flag";
 import { createRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
+import { integrationsQueryOptions } from "@/lib/queries/integrations";
 import { getVitePublicEnv } from "@/vite-app/app-env";
 import { rootRoute } from "./__root";
 
@@ -38,5 +39,12 @@ function StartupOSRoute() {
 export const startupOsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/startup-os",
+  // Fetch the connectors' live state alongside the lazy workspace chunk rather
+  // than after it mounts (no request waterfall). Not awaited: best-effort data.
+  loader: ({ context }) => {
+    if (isStartupOSPrototypeEnabled(getVitePublicEnv())) {
+      void context.queryClient.prefetchQuery(integrationsQueryOptions());
+    }
+  },
   component: StartupOSRoute,
 });

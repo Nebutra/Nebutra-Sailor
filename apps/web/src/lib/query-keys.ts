@@ -28,6 +28,11 @@ export const queryKeys = {
     current: () => ["session", "current"] as const,
   },
 
+  integrations: {
+    all: ["integrations"] as const,
+    list: () => ["integrations", "list"] as const,
+  },
+
   billingUsage: {
     all: ["billing-usage"] as const,
     summary: () => ["billing-usage", "summary"] as const,
