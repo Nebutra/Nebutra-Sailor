@@ -76,6 +76,8 @@ export interface NumberFieldProps
   /** Accessible name when there is no visible label. */
   "aria-label"?: string;
   "aria-describedby"?: string;
+  /** Set by `FormControl`; equivalent to `error={true}`. */
+  "aria-invalid"?: boolean | "true" | "false";
   /** Accessible names for the steppers. Pass translated strings. */
   incrementLabel?: string;
   decrementLabel?: string;
@@ -128,6 +130,7 @@ export function NumberField({
   decrementLabel = "Decrease",
   "aria-label": ariaLabel,
   "aria-describedby": ariaDescribedBy,
+  "aria-invalid": ariaInvalid,
   onBlur,
   disabled,
   ...rootProps
@@ -136,7 +139,8 @@ export function NumberField({
   const inputId = id ?? generatedId;
   const descriptionId = description ? `${inputId}-description` : undefined;
   const errorId = typeof error === "string" ? `${inputId}-error` : undefined;
-  const invalid = error === true || typeof error === "string";
+  const invalid =
+    error === true || typeof error === "string" || ariaInvalid === true || ariaInvalid === "true";
   const describedBy =
     [ariaDescribedBy, descriptionId, errorId].filter(Boolean).join(" ") || undefined;
   const token = inputTokens.sizes[size];

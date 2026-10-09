@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@nebutra/ui/primitives";
+import { Button, NumberField } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { BatchQueue, imageFileToBatchInput } from "@/components/batch-queue";
@@ -245,21 +245,19 @@ export function ImageToolRunner({
                 className="mt-2 w-full accent-primary"
               />
             </label>
-            <Input
+            <NumberField
               label={t("imageTool.maxW")}
               id="image-width"
-              type="number"
               placeholder={mode === "resize" ? t("imageTool.resizeEg") : t("imageTool.optional")}
               value={width}
-              onChange={(e) => setWidth(e.target.value)}
+              onValueChange={(value) => setWidth(value == null ? "" : String(value))}
             />
-            <Input
+            <NumberField
               label={t("imageTool.maxH")}
               id="image-height"
-              type="number"
               placeholder={t("imageTool.optional")}
               value={height}
-              onChange={(e) => setHeight(e.target.value)}
+              onValueChange={(value) => setHeight(value == null ? "" : String(value))}
             />
           </div>
 

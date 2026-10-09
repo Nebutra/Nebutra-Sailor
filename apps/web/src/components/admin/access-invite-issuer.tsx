@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  NumberField,
   Select,
   SelectContent,
   SelectItem,
@@ -168,12 +169,15 @@ export function AccessInviteIssuer() {
               <FormItem className="space-y-1">
                 <FormLabel className="text-xs font-medium text-muted-foreground">Count</FormLabel>
                 <FormControl>
-                  <Input
-                    {...field}
-                    type="number"
+                  <NumberField
+                    name={field.name}
+                    inputRef={field.ref}
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value == null ? "" : String(value))}
+                    onBlur={field.onBlur}
                     min={1}
                     max={25}
-                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
+                    className="mt-1"
                   />
                 </FormControl>
                 <FormMessage />

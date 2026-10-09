@@ -288,7 +288,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     id: "number-field",
     title: "Number Field",
     category: "forms",
-    status: "experimental",
+    status: "stable",
     import: "@nebutra/ui/primitives",
     files: ["primitives/number-field.tsx"],
     demos: ["number-field-demo"],

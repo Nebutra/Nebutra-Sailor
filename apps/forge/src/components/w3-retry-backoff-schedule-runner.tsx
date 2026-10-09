@@ -20,7 +20,7 @@
  *    the configuration survives a typo (§9.1 step 6).
  */
 import { Stopwatch, Warning } from "@nebutra/icons";
-import { Button, Checkbox, Input } from "@nebutra/ui/primitives";
+import { Button, Checkbox, NumberField } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useId, useMemo, useState } from "react";
 import {
@@ -405,77 +405,62 @@ export function W3RetryBackoffScheduleRunner({ toolId }: { toolId: string }) {
       </fieldset>
 
       <div className="flex flex-wrap gap-3">
-        <Input
+        <NumberField
           id={`${uid}-initial`}
           label={t("retryBackoff.initialDelay")}
-          type="number"
-          inputMode="numeric"
           min={1}
           value={initialDelay}
-          onChange={(e) => setInitialDelay(e.target.value)}
+          onValueChange={(value) => setInitialDelay(value == null ? "" : String(value))}
           {...errorProp(parsed.errors.initialDelay)}
           className="font-mono"
-          autoComplete="off"
         />
         {strategy === "exponential" ? (
-          <Input
+          <NumberField
             id={`${uid}-factor`}
             label={t("retryBackoff.factor")}
             description={t("retryBackoff.factorHint")}
-            type="number"
-            inputMode="decimal"
-            step="0.1"
+            step={0.1}
             value={factor}
-            onChange={(e) => setFactor(e.target.value)}
+            onValueChange={(value) => setFactor(value == null ? "" : String(value))}
             {...errorProp(parsed.errors.factor)}
             className="font-mono"
-            autoComplete="off"
           />
         ) : null}
         {strategy === "linear" ? (
-          <Input
+          <NumberField
             id={`${uid}-increment`}
             label={t("retryBackoff.increment")}
             description={t("retryBackoff.incrementHint")}
-            type="number"
-            inputMode="numeric"
             min={0}
             value={increment}
-            onChange={(e) => setIncrement(e.target.value)}
+            onValueChange={(value) => setIncrement(value == null ? "" : String(value))}
             {...errorProp(parsed.errors.increment)}
             className="font-mono"
-            autoComplete="off"
           />
         ) : null}
-        <Input
+        <NumberField
           id={`${uid}-cap`}
           label={t("retryBackoff.maxDelay")}
           description={t("retryBackoff.maxDelayHint")}
-          type="number"
-          inputMode="numeric"
           min={1}
           value={maxDelay}
-          onChange={(e) => setMaxDelay(e.target.value)}
+          onValueChange={(value) => setMaxDelay(value == null ? "" : String(value))}
           {...errorProp(parsed.errors.maxDelay)}
           className="font-mono"
-          autoComplete="off"
         />
       </div>
 
       <div className="flex flex-wrap items-end gap-3">
-        <Input
+        <NumberField
           id={`${uid}-attempts`}
           label={t("retryBackoff.maxAttempts")}
           description={t("retryBackoff.maxAttemptsHint")}
-          type="number"
-          inputMode="numeric"
           min={1}
           max={MAX_ATTEMPTS}
           value={maxAttempts}
-          onChange={(e) => setMaxAttempts(e.target.value)}
+          onValueChange={(value) => setMaxAttempts(value == null ? "" : String(value))}
           {...errorProp(parsed.errors.maxAttempts)}
           className="font-mono"
-          autoComplete="off"
         />
         <RunnerSelect
           id={`${uid}-jitter`}
@@ -484,18 +469,15 @@ export function W3RetryBackoffScheduleRunner({ toolId }: { toolId: string }) {
           onChange={(value) => setJitter(value as Jitter)}
           options={JITTERS.map((id) => ({ value: id, label: t(`retryBackoff.jitter.${id}`) }))}
         />
-        <Input
+        <NumberField
           id={`${uid}-timeout`}
           label={t("retryBackoff.callerTimeout")}
           description={t("retryBackoff.callerTimeoutHint")}
-          type="number"
-          inputMode="numeric"
           min={1}
           value={callerTimeout}
-          onChange={(e) => setCallerTimeout(e.target.value)}
+          onValueChange={(value) => setCallerTimeout(value == null ? "" : String(value))}
           {...errorProp(parsed.errors.callerTimeout)}
           className="font-mono"
-          autoComplete="off"
         />
       </div>
 

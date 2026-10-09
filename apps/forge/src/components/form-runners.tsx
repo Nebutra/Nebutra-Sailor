@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, DatePicker, Input } from "@nebutra/ui/primitives";
+import { Button, DatePicker, NumberField } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerPanel, RunnerSelect } from "@/components/runner-ui";
@@ -66,26 +66,24 @@ export function BmiRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <NumberField
           label={t("bmi.height")}
           id="bmi-height"
-          type="number"
           min={50}
           max={250}
-          step="0.1"
+          step={0.1}
           value={heightCm}
-          onChange={(e) => setHeightCm(e.target.value)}
+          onValueChange={(value) => setHeightCm(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
-        <Input
+        <NumberField
           label={t("bmi.weight")}
           id="bmi-weight"
-          type="number"
           min={10}
           max={500}
-          step="0.1"
+          step={0.1}
           value={weightKg}
-          onChange={(e) => setWeightKg(e.target.value)}
+          onValueChange={(value) => setWeightKg(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
       </div>
@@ -144,20 +142,18 @@ export function PercentageRunner({ toolId }: { toolId: string }) {
         <option value="is_what_percent">{t("percentage.isWhat")}</option>
       </RunnerSelect>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <NumberField
           label={mode === "percent_of" ? t("percentage.percentA") : t("percentage.valueA")}
           id="pct-a"
-          type="number"
           value={a}
-          onChange={(e) => setA(e.target.value)}
+          onValueChange={(value) => setA(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
-        <Input
+        <NumberField
           label={t("percentage.baseB")}
           id="pct-b"
-          type="number"
           value={b}
-          onChange={(e) => setB(e.target.value)}
+          onValueChange={(value) => setB(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
       </div>
@@ -209,12 +205,11 @@ export function DataSizeRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <Input
+      <NumberField
         label={t("dataSize.value")}
         id="data-size-value"
-        type="number"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onValueChange={(value) => setValue(value == null ? "" : String(value))}
         className="font-mono tabular-nums"
       />
       <div className="grid gap-3 sm:grid-cols-2">
@@ -287,14 +282,13 @@ export function RmbUppercaseRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <Input
+      <NumberField
         label={t("rmb.amount")}
         id="rmb-amount"
-        type="number"
         min={0}
-        step="0.01"
+        step={0.01}
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        onValueChange={(value) => setAmount(value == null ? "" : String(value))}
         className="font-mono tabular-nums"
         placeholder="1234.56"
       />

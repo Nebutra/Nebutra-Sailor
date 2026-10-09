@@ -9,7 +9,7 @@
  * SOTA-oriented specialized runners: regex highlight, QR live preview, multi-hash.
  */
 import { ArrowDown, Check, Copy } from "@nebutra/icons";
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fileToBase64, PdfResultPanel, TextResultActions } from "@/components/result-panels";
@@ -1005,33 +1005,29 @@ export function ImageCropRunner({ toolId }: { toolId: string }) {
         </p>
       ) : null}
       <div className="grid gap-2 sm:grid-cols-4">
-        <Input
+        <NumberField
           label={t("imageCrop.left")}
           id="c-l"
-          type="number"
           value={String(left)}
-          onChange={(e) => setLeft(Number(e.target.value) || 0)}
+          onValueChange={(value) => setLeft(value || 0)}
         />
-        <Input
+        <NumberField
           label={t("imageCrop.top")}
           id="c-t"
-          type="number"
           value={String(top)}
-          onChange={(e) => setTop(Number(e.target.value) || 0)}
+          onValueChange={(value) => setTop(value || 0)}
         />
-        <Input
+        <NumberField
           label={t("imageCrop.width")}
           id="c-w"
-          type="number"
           value={String(width)}
-          onChange={(e) => setWidth(Math.max(1, Number(e.target.value) || 1))}
+          onValueChange={(value) => setWidth(Math.max(1, value || 1))}
         />
-        <Input
+        <NumberField
           label={t("imageCrop.height")}
           id="c-h"
-          type="number"
           value={String(height)}
-          onChange={(e) => setHeight(Math.max(1, Number(e.target.value) || 1))}
+          onValueChange={(value) => setHeight(Math.max(1, value || 1))}
         />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading || !base64}>

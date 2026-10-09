@@ -1,7 +1,7 @@
 "use client";
 
 import { DEFAULT_RESUME_MARGINS } from "@nebutra/contracts/sleptons";
-import { Field, Input, Select, Switch } from "@nebutra/ui/primitives";
+import { Field, Input, NumberField, Select, Switch } from "@nebutra/ui/primitives";
 import type { Dispatch } from "react";
 import type { EditorAction, EditorContent } from "./state";
 
@@ -44,18 +44,15 @@ export function PreferencesForm({ content, dispatch }: PreferencesFormProps) {
           onValueChange={(v) => set("length", v ?? "1page")}
         />
       </Field>
-      <Input
+      <NumberField
         id="pref-max-bullets"
         label="Bullets per entry"
-        type="number"
-        inputMode="numeric"
         min={1}
         max={8}
-        value={String(p.max_bullets_per_entry ?? 3)}
+        value={p.max_bullets_per_entry ?? 3}
         description="1–8. Longer entries are trimmed in print and exports."
-        onValueChange={(v) => {
-          const n = Number(v);
-          if (Number.isInteger(n) && n >= 1 && n <= 8) set("max_bullets_per_entry", n);
+        onValueChange={(n) => {
+          if (n != null && Number.isInteger(n) && n >= 1 && n <= 8) set("max_bullets_per_entry", n);
         }}
       />
       <div className="grid gap-3">

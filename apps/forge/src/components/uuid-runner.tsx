@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@nebutra/ui/primitives";
+import { Button, NumberField } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote } from "@/components/runner-ui";
@@ -44,14 +44,13 @@ export function UuidRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <Input
+      <NumberField
         label={t("uuid.count")}
         id="uuid-count"
-        type="number"
         min={1}
         max={100}
         value={count}
-        onChange={(e) => setCount(Number(e.target.value))}
+        onValueChange={(value) => setCount(value ?? 0)}
         className="w-28"
       />
       <div className="flex flex-wrap gap-2">

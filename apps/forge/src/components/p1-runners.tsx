@@ -8,7 +8,7 @@
  */
 import { DEFAULT_PUBLIC_MODEL, frontierSelectOptions } from "@nebutra/ai-providers/frontier";
 import { Check, Copy } from "@nebutra/icons";
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { type ChangeEvent, type DragEvent, useMemo, useRef, useState } from "react";
 import {
@@ -299,26 +299,20 @@ export function PdfSplitRunner({ toolId }: { toolId: string }) {
         }}
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <NumberField
           label={t("pdfSplit.fromPage")}
           id="pdf-from"
-          type="number"
           min={1}
           value={fromPage}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setFromPage(e.target.value)
-          }
+          onValueChange={(value) => setFromPage(value == null ? "" : String(value))}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label={t("pdfSplit.toPage")}
           id="pdf-to"
-          type="number"
           min={1}
           value={toPage}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setToPage(e.target.value)
-          }
+          onValueChange={(value) => setToPage(value == null ? "" : String(value))}
           className="font-mono"
           placeholder={t("pdfSplit.toPlaceholder")}
         />
@@ -769,15 +763,12 @@ export function CostEstimateRunner({ toolId }: { toolId: string }) {
             </option>
           ))}
         </RunnerSelect>
-        <Input
+        <NumberField
           label={t("costEstimate.outputTokens")}
           id="cost-out"
-          type="number"
           min={0}
           value={outputTokens}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setOutputTokens(e.target.value)
-          }
+          onValueChange={(value) => setOutputTokens(value == null ? "" : String(value))}
           className="font-mono"
         />
       </div>

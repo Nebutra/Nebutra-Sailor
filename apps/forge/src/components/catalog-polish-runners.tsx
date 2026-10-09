@@ -6,7 +6,7 @@
  * JSON via GenericInvokeRunner: validators (verdict), live calculators,
  * generators (copy + download), and hash-compare.
  */
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -362,20 +362,18 @@ export function ReadingTimeRunner({ toolId }: { toolId: string }) {
         className="font-mono text-sm"
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <NumberField
           label="WPM (Latin)"
           id="rt-wpm"
-          type="number"
           value={wpm}
-          onChange={(e) => setWpm(e.target.value)}
+          onValueChange={(value) => setWpm(value == null ? "" : String(value))}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label="CPM (CJK)"
           id="rt-cpm"
-          type="number"
           value={cpm}
-          onChange={(e) => setCpm(e.target.value)}
+          onValueChange={(value) => setCpm(value == null ? "" : String(value))}
           className="font-mono"
         />
       </div>
@@ -638,19 +636,17 @@ export function RandomStringRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
+        <NumberField
           label={t("randomString.length")}
           id="rs-len"
-          type="number"
           value={length}
-          onChange={(e) => setLength(e.target.value)}
+          onValueChange={(value) => setLength(value == null ? "" : String(value))}
         />
-        <Input
+        <NumberField
           label={t("randomString.count")}
           id="rs-count"
-          type="number"
           value={count}
-          onChange={(e) => setCount(e.target.value)}
+          onValueChange={(value) => setCount(value == null ? "" : String(value))}
         />
         <RunnerSelect
           id="rs-charset"
@@ -714,19 +710,17 @@ export function LoremIpsumRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
+        <NumberField
           label={t("lorem.paragraphs")}
           id="lorem-p"
-          type="number"
           value={paragraphs}
-          onChange={(e) => setParagraphs(e.target.value)}
+          onValueChange={(value) => setParagraphs(value == null ? "" : String(value))}
         />
-        <Input
+        <NumberField
           label={t("lorem.wordsPerParagraph")}
           id="lorem-w"
-          type="number"
           value={words}
-          onChange={(e) => setWords(e.target.value)}
+          onValueChange={(value) => setWords(value == null ? "" : String(value))}
         />
         <RunnerSelect
           id="lorem-start"
@@ -805,12 +799,11 @@ export function MarkdownTocRunner({ toolId }: { toolId: string }) {
         rows={12}
         className="font-mono text-sm"
       />
-      <Input
+      <NumberField
         label={t("markdownToc.maxLevel")}
         id="md-toc-level"
-        type="number"
         value={maxLevel}
-        onChange={(e) => setMaxLevel(e.target.value)}
+        onValueChange={(value) => setMaxLevel(value == null ? "" : String(value))}
         className="max-w-xs font-mono"
       />
       <p className="text-xs text-neutral-10">
