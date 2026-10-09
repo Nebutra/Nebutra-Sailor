@@ -29,13 +29,13 @@ import { pageAt, SECTIONS, SITE_MAP } from "@/site-map";
  * which is also how touch screens and keyboards reach it.
  *
  * One bar, one logo position. The bar sits above the drawer, so the mark never
- * moves or disappears; opening the drawer glides the wordmark from the centre
- * of the bar to rest beside the mark — the drawer's own top row. The page
+ * moves or disappears; opening the drawer crossfades the centred wordmark into a
+ * second one beside the mark, after a fixed gap — the drawer's own top row. The page
  * behind is dimmed by a scrim that fades with the drawer, never cut off. All of
  * it is transform/opacity on the brand duration and easing tokens, and reduced
  * motion drops the glide (`motion-safe`).
  */
-const GLIDE =
+const FADE =
   "motion-safe:transition-[transform,opacity] motion-safe:[transition-duration:var(--duration-reveal)] motion-safe:ease-brand";
 /** Hover intent: a pointer crossing the mark on its way elsewhere opens nothing. */
 const OPEN_DELAY_MS = 120;
@@ -48,8 +48,6 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
   const compact = pageAt(pathname)?.chrome === "tool";
   // "hover" closes when the pointer leaves; "pinned" stays until dismissed.
   const wordmark = compact ? 88 : 112;
-  // The wordmark's centre travels from the bar's centre to 56px right of the mark's edge.
-  const restX = `calc(-50vw + ${wordmark / 2 + (compact ? 58 : 66)}px)`;
   const [open, setOpen] = useState<false | "hover" | "pinned">(false);
   const [searching, setSearching] = useState(false);
   const asideRef = useRef<HTMLElement>(null);
@@ -111,7 +109,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         )}
       >
         <div
-          className="flex items-center"
+          className="relative flex items-center justify-self-start"
           onMouseEnter={hoverOpen}
           onMouseLeave={() => !open && clear()}
         >
@@ -130,15 +128,35 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
           >
             <ThemedLogomark size={compact ? 20 : 24} />
           </Button>
+          {/* Open: the wordmark beside the mark, out of flow so the bar never reflows, one gap (ml-2) after it, fading in with an 8px slide. */}
+          <Link
+            href={ROUTES.home}
+            aria-label={brandName}
+            onClick={close}
+            tabIndex={open ? 0 : -1}
+            aria-hidden={!open}
+            className={cn(
+              "absolute inset-y-0 left-full ml-2 flex w-max items-center",
+              FADE,
+              open ? "translate-x-0 opacity-100" : "pointer-events-none -translate-x-2 opacity-0",
+            )}
+          >
+            <ThemedLogo size={wordmark} />
+          </Link>
         </div>
 
-        {/* Closed: centred. Open: rests beside the mark — the same slot in both states. */}
+        {/* Closed: centred. Open: fades out in place (no travel) as the one beside the mark fades in. */}
         <Link
           href={ROUTES.home}
           aria-label={brandName}
           onClick={close}
-          style={{ transform: `translateX(${open ? restX : "0px"})` }}
-          className={cn("flex items-center justify-center will-change-transform", GLIDE)}
+          tabIndex={open ? -1 : 0}
+          aria-hidden={Boolean(open)}
+          className={cn(
+            "flex items-center justify-center",
+            FADE,
+            open ? "pointer-events-none scale-[0.98] opacity-0" : "scale-100 opacity-100",
+          )}
         >
           {/* The official wordmark, reversed for the void — never the name typed in a font. */}
           <ThemedLogo size={wordmark} />
