@@ -28,6 +28,8 @@ const baseSchema = z.object({
   // Inngest
   INNGEST_EVENT_KEY: z.string().optional(),
   INNGEST_SIGNING_KEY: z.string().optional(),
+  // Self-hosted server (ADR 2026-10-02). Read by the SDK itself; unset = Inngest Cloud.
+  INNGEST_BASE_URL: z.string().url().optional(),
 
   // Sentry (optional — disabled when absent)
   SENTRY_DSN: z.string().url().optional(),

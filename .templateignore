@@ -343,6 +343,7 @@ infra/fly/dns-leak.toml
 infra/fly/forge.toml
 infra/fly/gateway.toml
 infra/fly/idp.toml
+infra/fly/inngest.toml
 infra/fly/kuanlan.toml
 infra/fly/landing.toml
 infra/fly/new-api.toml
@@ -364,6 +365,8 @@ infra/iac/railway/
 # Nebutra DNS-pointing and product-host scripts, consumed only by the
 # workflows stripped above (they carry the ECS IP and nebutra.com records).
 infra/ops/scripts/point-*
+infra/ops/scripts/bootstrap-inngest.sh
+infra/ops/scripts/verify-inngest-sync.sh
 infra/ops/scripts/install-kuanlan-nginx-vhost.sh
 infra/ops/scripts/install-router-v1-nginx.sh
 infra/ops/scripts/seed-kuanlan-router-key.sh

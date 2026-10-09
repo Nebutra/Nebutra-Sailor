@@ -9,6 +9,10 @@ primary_region = "sin"
   # nebutra-router.internal resolves to IPv6, so the private address refuses the
   # connection. Reach it over its public host; every call carries a service token.
   NEBUTRA_ROUTER_INTERNAL_URL = "https://router.nebutra.com"
+  # Self-hosted Inngest (ADR 2026-10-02): one URL for both the event API and the
+  # register API. The server binds `::`, so the 6PN name works from here.
+  # INNGEST_EVENT_KEY / INNGEST_SIGNING_KEY are secrets, identical to the server's.
+  INNGEST_BASE_URL = "http://nebutra-inngest.internal:8288"
 
 [http_service]
   internal_port = 8080

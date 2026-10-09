@@ -26,7 +26,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated: landing forge router web design auth idp admin gateway cache carina new-api). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api are the remaining ECS leftovers. sailor-docs deploys via deploy-sailor-docs.yml (Cloudflare) now. Kuanlan and Para Fly apps are decommissioned."
+        description: "Apps to deploy (space-separated: landing forge router web design auth idp admin gateway cache carina new-api). Empty = Next edges. gateway is the Hono origin. cache only sets Upstash on the origin. carina / new-api are the remaining ECS leftovers. inngest is the self-hosted Inngest server (infra/fly/inngest.toml; first-time setup: infra/ops/scripts/bootstrap-inngest.sh). sailor-docs deploys via deploy-sailor-docs.yml (Cloudflare) now. Kuanlan and Para Fly apps are decommissioned."
         required: false
         default: ""
       cutover:
@@ -83,6 +83,7 @@ jobs:
       want_cache: ${{ steps.resolve.outputs.want_cache }}
       want_carina: ${{ steps.resolve.outputs.want_carina }}
       want_new_api: ${{ steps.resolve.outputs.want_new_api }}
+      want_inngest: ${{ steps.resolve.outputs.want_inngest }}
     steps:
       - id: resolve
         env:
@@ -106,7 +107,7 @@ jobs:
             {"app":"admin","package":"@nebutra/admin","workspace":"apps/admin","build_command":"build","fly_app":"nebutra-admin","host":"admin","site":"https://admin.nebutra.com"},
           ]
           wanted = [w for w in os.environ.get("INPUT_APPS", "").split() if w]
-          known = {row["app"] for row in all_apps} | {"gateway", "cache", "carina", "new-api"}
+          known = {row["app"] for row in all_apps} | {"gateway", "cache", "carina", "new-api", "inngest"}
           missing = set(wanted) - known
           if missing:
               raise SystemExit(f"unknown apps: {sorted(missing)}")
@@ -120,6 +121,7 @@ jobs:
               fh.write(f"want_cache={'true' if ('cache' in wanted or 'gateway' in wanted) else 'false'}\n")
               fh.write(f"want_carina={'true' if 'carina' in wanted else 'false'}\n")
               fh.write(f"want_new_api={'true' if 'new-api' in wanted else 'false'}\n")
+              fh.write(f"want_inngest={'true' if 'inngest' in wanted else 'false'}\n")
           PY
 
   deploy:
@@ -564,6 +566,12 @@ jobs:
           echo "::error::$url is not healthy ($code). DNS will not cut over."
           exit 1
 
+      # Health 200 says the process is up, not that its background jobs exist.
+      # 2026-10-02: GET /api/inngest was a 500 (no signing key) behind a green
+      # health check, and no Inngest function had ever run. Fail the deploy.
+      - name: Register with Inngest and require functions
+        run: bash infra/ops/scripts/verify-inngest-sync.sh https://nebutra-gateway.fly.dev
+
       - name: Cut over grey-cloud origin DNS
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
         env:
@@ -856,6 +864,82 @@ jobs:
             NEW_API_BASE_URL=http://nebutra-new-api.internal:3000/v1 \
             -a nebutra-router
           echo "router now consumes New-API over 6PN"
+
+  deploy-inngest:
+    name: Fly inngest private
+    needs: matrix
+    if: needs.matrix.outputs.want_inngest == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require FLY_API_TOKEN
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret FLY_API_TOKEN (deploy token)."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+
+      # Secrets (INNGEST_EVENT_KEY, INNGEST_SIGNING_KEY, INNGEST_REDIS_URI) are
+      # set once by infra/ops/scripts/bootstrap-inngest.sh and stay on the app.
+      - name: Ensure Fly app and volume
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_ORG: ${{ vars.FLY_ORG }}
+        run: |
+          set -euo pipefail
+          org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
+          echo "using Fly org $org"
+          if flyctl apps list --json | python3 -c "import json,sys; names={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if 'nebutra-inngest' in names else 1)"; then
+            echo "app nebutra-inngest exists"
+          else
+            flyctl apps create nebutra-inngest --machines --org "$org" --yes
+          fi
+          if flyctl volumes list -a nebutra-inngest --json | python3 -c 'import json,sys; vols=json.load(sys.stdin); sys.exit(0 if any((v.get("Name") or v.get("name"))=="inngest_data" for v in vols) else 1)'; then
+            echo "volume inngest_data exists"
+          else
+            flyctl volumes create inngest_data -a nebutra-inngest --region sin --size 1 --yes
+          fi
+          for k in INNGEST_EVENT_KEY INNGEST_SIGNING_KEY INNGEST_REDIS_URI; do
+            flyctl secrets list -a nebutra-inngest | grep -q "^ *$k " || { echo "::error::secret $k missing on nebutra-inngest; run infra/ops/scripts/bootstrap-inngest.sh"; exit 1; }
+          done
+
+      - name: Deploy Machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          image="$(sed -n 's/^ *image = "\(.*\)"/\1/p' infra/fly/inngest.toml | head -1)"
+          flyctl deploy \
+            --config "$GITHUB_WORKSPACE/infra/fly/inngest.toml" \
+            --image "$image" \
+            --ha=false \
+            --remote-only \
+            --yes
+
+      - name: Smoke 6PN from this org
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            if flyctl ssh console -a nebutra-inngest --pty=false -C \
+              "sh -c 'wget -qO- --timeout=5 http://127.0.0.1:8288/health'" \
+              | tee "$RUNNER_TEMP/inngest-smoke.txt" | grep -q .; then
+              echo "inngest answered on try $i"
+              exit 0
+            fi
+            sleep 8
+          done
+          flyctl status -a nebutra-inngest || true
+          flyctl logs -a nebutra-inngest --no-tail || true
+          echo "::error::nebutra-inngest did not answer on :8288"
+          exit 1
 
   service-secret-parity:
     # gateway <-> router/admin/web all speak SERVICE_SECRET to each other

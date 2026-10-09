@@ -1,0 +1,56 @@
+# Self-hosted Inngest server (ADR 2026-10-02). Private: 6PN / .internal only.
+#   Gateway + Router reach it at http://nebutra-inngest.internal:8288
+#   (INNGEST_BASE_URL in infra/fly/gateway.toml). No public port is published.
+#
+# Every setting is an INNGEST_* env var (the CLI maps --flag to INNGEST_FLAG), so
+# nothing secret ever appears in the process arguments.
+# Secrets (flyctl secrets set, see infra/ops/scripts/bootstrap-inngest.sh):
+#   INNGEST_EVENT_KEY    random hex, same value as on the gateway
+#   INNGEST_SIGNING_KEY  random hex, same value as on the gateway. Bare hex with
+#                        NO `signkey-prod-` prefix: `inngest start` checks the
+#                        length of the whole string is even, and that prefix is
+#                        13 characters, so a prefixed key never boots.
+#   INNGEST_REDIS_URI    redis://default:<REDIS_PASSWORD>@nebutra-redis.internal:6379/1
+# Deploy: .github/workflows/deploy-fly.yml (apps=inngest) or bootstrap-inngest.sh.
+app = "nebutra-inngest"
+primary_region = "sin"
+
+[build]
+  image = "inngest/inngest:v1.45.1@sha256:b251da91bd014d56816c3159c606f470d6e423be9a12fbed45808636160aa92c"
+
+# The image's CMD is bare `inngest`; this makes it `inngest start`.
+[processes]
+  app = "inngest start"
+
+[env]
+  # `::` is dual-stack on Linux. Fly .internal names resolve to IPv6 only, so a
+  # server bound to localhost or 0.0.0.0 would refuse every private connection.
+  INNGEST_HOST = "::"
+  INNGEST_PORT = "8288"
+  # Where the server finds the app. The gateway listens on IPv4 only, so its
+  # .internal address refuses connections; use its public host (same reason as
+  # NEBUTRA_ROUTER_INTERNAL_URL in infra/fly/gateway.toml).
+  INNGEST_SDK_URL = "https://api.nebutra.com/api/inngest"
+  # Re-sync the function list every 15s, so a deploy that changes functions is
+  # picked up even if the post-deploy PUT is missed.
+  INNGEST_POLL_INTERVAL = "15"
+  # Config and run history: SQLite on the volume. Queue and run state: the
+  # external nebutra-redis (INNGEST_REDIS_URI secret, logical db 1).
+  INNGEST_SQLITE_DIR = "/data/sqlite"
+
+# TCP without published ports = 6PN / .internal only.
+[[services]]
+  protocol = "tcp"
+  internal_port = 8288
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[mounts]
+  source = "inngest_data"
+  destination = "/data"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

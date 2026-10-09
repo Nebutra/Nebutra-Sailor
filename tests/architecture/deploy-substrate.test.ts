@@ -411,4 +411,51 @@ describe("Deploy substrate governance", () => {
       expect(yml).toContain(`"fly_app":"${row.flyApp}"`);
     }
   });
+
+  it("self-hosted Inngest: server is private and pinned, gateway keeps its URL, deploys guard registration", () => {
+    // ADR 2026-10-02. In production GET /api/inngest was a 500 (no signing key)
+    // behind a green health check, so no Inngest function ever ran.
+    const gateway = readFileSync(resolve(process.cwd(), "infra/fly/gateway.toml"), "utf-8");
+    expect(gateway).toContain('INNGEST_BASE_URL = "http://nebutra-inngest.internal:8288"');
+
+    const server = readFileSync(resolve(process.cwd(), "infra/fly/inngest.toml"), "utf-8");
+    expect(server).toContain('app = "nebutra-inngest"');
+    expect(server).toContain('primary_region = "sin"');
+    // pinned by tag AND digest, never :latest
+    expect(server).toMatch(/image = "inngest\/inngest:v\d+\.\d+\.\d+@sha256:[0-9a-f]{64}"/);
+    expect(server).toContain('app = "inngest start"');
+    // dual-stack bind: .internal resolves to IPv6 only
+    expect(server).toContain('INNGEST_HOST = "::"');
+    expect(server).toContain('INNGEST_SQLITE_DIR = "/data/sqlite"');
+    expect(server).toContain('source = "inngest_data"');
+    // private: no published port, no public http service
+    expect(server).not.toMatch(/^\s*\[http_service\]/m);
+    expect(server).not.toContain("[[services.ports]]");
+    // secrets are Fly secrets, never literals in the manifest
+    expect(server).not.toMatch(/^\s*INNGEST_(EVENT_KEY|SIGNING_KEY|REDIS_URI)\s*=/m);
+
+    const nextYml = read("deploy-fly.yml");
+    expect(nextYml).toContain("want_inngest");
+    expect(nextYml).toContain("deploy-inngest:");
+    expect(nextYml).toContain("infra/fly/inngest.toml");
+    // both gateway deploys register and require functions
+    for (const yml of [nextYml, read("deploy-fly-gateway.yml")]) {
+      expect(yml).toContain("verify-inngest-sync.sh https://nebutra-gateway.fly.dev");
+    }
+    const guard = readFileSync(
+      resolve(process.cwd(), "infra/ops/scripts/verify-inngest-sync.sh"),
+      "utf-8",
+    );
+    expect(guard).toContain("function_count");
+    expect(guard).toContain("-X PUT");
+
+    const ignore = readFileSync(resolve(process.cwd(), ".templateignore"), "utf-8");
+    for (const f of [
+      "infra/fly/inngest.toml",
+      "infra/ops/scripts/bootstrap-inngest.sh",
+      "infra/ops/scripts/verify-inngest-sync.sh",
+    ]) {
+      expect(ignore, f).toContain(f);
+    }
+  });
 });

@@ -24,6 +24,7 @@ on:
     paths:
       - "backends/gateway/**"
       - "infra/fly/gateway.toml"
+      - "infra/ops/scripts/verify-inngest-sync.sh"
       - "ops/nebutra/offers.json"
       - "infra/runtime/docker/Dockerfile.gateway"
       - ".github/workflows/deploy-fly-gateway.yml"
@@ -241,6 +242,12 @@ jobs:
           flyctl logs -a nebutra-gateway --no-tail || true
           echo "::error::$url is not healthy ($code). DNS will not cut over."
           exit 1
+
+      # Health 200 says the process is up, not that its background jobs exist.
+      # 2026-10-02: GET /api/inngest was a 500 (no signing key) behind a green
+      # health check, and no Inngest function had ever run. Fail the deploy.
+      - name: Register with Inngest and require functions
+        run: bash infra/ops/scripts/verify-inngest-sync.sh https://nebutra-gateway.fly.dev
 
       - name: Cut over grey-cloud origin DNS
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'
