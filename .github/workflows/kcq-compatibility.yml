@@ -1,0 +1,61 @@
+name: KCQ compatibility
+
+on:
+  pull_request:
+    paths:
+      - "apps/kcq/**"
+      - "packages/iam/auth/**"
+      - "packages/design/**"
+      - "pnpm-lock.yaml"
+      - ".github/actions/setup-node-pnpm/**"
+      - ".github/workflows/kcq-compatibility.yml"
+      - ".github/workflows/deploy-kcq-fly.yml"
+  push:
+    branches: [main]
+    paths:
+      - "apps/kcq/**"
+      - "packages/iam/auth/**"
+      - "packages/design/**"
+      - "pnpm-lock.yaml"
+      - ".github/actions/setup-node-pnpm/**"
+      - ".github/workflows/kcq-compatibility.yml"
+      - ".github/workflows/deploy-kcq-fly.yml"
+  workflow_dispatch:
+    inputs:
+      candidate_ref:
+        description: "Optional upstream branch/tag/SHA to check without changing the production pin"
+        type: string
+        default: ""
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kcq-compatibility-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Setup product toolchain
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: "22.23.2"
+          install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq...
+      - name: Test upgrade safety
+        run: node --test apps/kcq/scripts/upstream.test.mjs
+      - name: Verify pinned product
+        if: inputs.candidate_ref == ''
+        run: node apps/kcq/scripts/verify.mjs
+      - name: Check candidate without changing production
+        if: inputs.candidate_ref != ''
+        env:
+          KCQ_CANDIDATE_REF: ${{ inputs.candidate_ref }}
+        run: node apps/kcq/scripts/upstream.mjs

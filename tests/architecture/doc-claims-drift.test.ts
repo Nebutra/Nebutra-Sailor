@@ -977,7 +977,11 @@ describe("README — package category counts", () => {
         rowsSeen += 1;
         const actual = readdirSync(dir, { withFileTypes: true })
           .filter(
-            (e) => e.isDirectory() && !BUILD_ARTIFACT_DIRS.has(e.name) && !e.name.startsWith("."),
+            (e) =>
+              e.isDirectory() &&
+              !BUILD_ARTIFACT_DIRS.has(e.name) &&
+              !e.name.startsWith(".") &&
+              existsSync(join(dir, e.name, "package.json")),
           )
           .map((e) => e.name);
         if (actual.length !== claimed) {

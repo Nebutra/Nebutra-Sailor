@@ -2,6 +2,7 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { validatePin } from "./upstream.mjs";
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, { cwd, stdio: "inherit" });
@@ -10,7 +11,7 @@ function run(command, args, cwd) {
 export function resolveChartSource(root) {
   const explicit = process.env.KCQ_SOURCE_DIR;
   if (explicit) return resolve(explicit);
-  const pin = JSON.parse(readFileSync(resolve(root, "chart-source.json"), "utf8"));
+  const pin = validatePin(JSON.parse(readFileSync(resolve(root, "chart-source.json"), "utf8")));
   const target = resolve(root, "../../.nebutra/kcq-source", pin.commit);
   if (!existsSync(resolve(target, ".git"))) {
     mkdirSync(target, { recursive: true });

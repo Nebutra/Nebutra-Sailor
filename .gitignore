@@ -116,6 +116,7 @@ apps/*/.source/
 # Local preview database (PGlite data, bootstrap stamp, server log) — per checkout
 **/.nebutra/pglite/
 /.nebutra/kcq-source/
+/.nebutra/kcq-candidates/
 apps/kcq/.kcq-typecheck.json
 
 # tsup temp bundled configs — auto-generated next to tsup.config.ts on build,

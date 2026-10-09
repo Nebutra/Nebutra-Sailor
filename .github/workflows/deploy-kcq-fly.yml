@@ -78,26 +78,12 @@ jobs:
           node-version: "22.23.2"
           install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq...
 
-      - name: Validate chart library
-        working-directory: kcq-source
-        run: |
-          set -euo pipefail
-          pnpm install --frozen-lockfile
-          pnpm --dir packages/core exec vitest run src/foundation/persistence/__tests__
-          pnpm --dir packages/vue exec vitest run src/components/TopToolbar.slots.test.ts
-          pnpm build:packages
-
-      - name: Build shared frontend prerequisites
-        run: pnpm turbo run build --filter=@nebutra/ui --filter=@nebutra/icons
-
-      - name: Build KCQ product surface
+      - name: Validate library and product compatibility
         run: |
           set -euo pipefail
           export KCQ_SOURCE_DIR="$GITHUB_WORKSPACE/kcq-source"
-          pnpm exec vitest run --config apps/kcq/vitest.config.ts
-          pnpm --filter @nebutra/kcq typecheck
-          pnpm --filter @nebutra/kcq build
-          test -f apps/kcq/dist/index.html
+          node --test apps/kcq/scripts/upstream.test.mjs
+          node apps/kcq/scripts/verify.mjs
           grep -q 'KCQ · Nebutra' apps/kcq/dist/index.html
 
       - name: Stage static image

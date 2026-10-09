@@ -46,3 +46,34 @@ Frontend layout and interaction requirements live in [DESIGN.md](./DESIGN.md).
 Account settings live at `/settings/profile` on the KCQ host. Route and profile
 regressions run from the repository root with
 `pnpm exec vitest run --config apps/kcq/vitest.config.ts`.
+
+## Upstream maintenance
+
+`chart-source.json` records the deployed immutable commit separately from the
+canonical `upstreamRepository`. The integration pin includes the public
+workspace/navigation and BYOK contracts pending in upstream PRs #297 and #298.
+Never replace it with upstream main until the product compatibility gate passes.
+
+From the repository root, run `node apps/kcq/scripts/verify.mjs` for the same
+library tests, product tests, typecheck and production build used by CI and Fly
+releases. `kcq-compatibility.yml` runs this gate on relevant PRs/main pushes.
+
+Check an upstream release with
+`node apps/kcq/scripts/upstream.mjs --ref main` (or an immutable SHA/tag).
+The script uses a new isolated checkout under ignored `.nebutra/kcq-candidates`,
+fetches the canonical upstream, resolves its SHA, and runs the full gate.
+It does not change the production pin or deploy. A missing product contract is
+an upgrade blocker, even when the upstream demo builds successfully.
+
+After a successful check, `node apps/kcq/scripts/upstream.mjs --ref <SHA> --apply`
+prepares a pin change only if validation passes and the pin was not concurrently
+edited. Review/commit the change on Nebutra main, wait for compatibility CI, then
+dispatch `deploy-kcq-fly.yml`. The workflow uses this same gate before deploying.
+For a remote check, dispatch `kcq-compatibility.yml` with `candidate_ref`; no
+deployment secrets or production changes are involved.
+
+Chart/public API changes belong in a KCQ PR. Product auth, tenant access,
+credential vault, billing and hosting belong in Nebutra. Connector revisions
+remain independently pinned; a chart upgrade does not implicitly upgrade them.
+Rollback by restoring the previous chart pin and product source in Git, passing
+the same gate, then redeploying. This does not roll back database migrations.
