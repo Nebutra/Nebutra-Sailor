@@ -1,8 +1,9 @@
 # 2026-09-29 — Folding the platform control plane into @nebutra/web
 
 - **Date**: 2026-09-29
-- **Status**: In progress — Phase 1 slice landed (Fleet), rest of the surface not yet ported
-- **Related**: [Admin of Admins model](../plans/2026-09-08-admin-of-admins-model.md),
+- **Status**: Proposed — the `apps/web` port is landed; the cutover below has not run and `apps/admin` stays the deployed control plane
+- **Owner**: Tseka Luk
+- **Related**: [Fly machine shrink](../ops/nebutra/2026-09-29-fly-machine-shrink.md), [Admin of Admins model](../plans/2026-09-08-admin-of-admins-model.md),
   [Admin control-plane design](../plans/2026-07-28-nebutra-admin-control-plane-design.md),
   Fly org's 20-machine cap (`fly-machine-limit-2026-09-28`)
 
@@ -57,7 +58,7 @@ policy at `app.nebutra.com` (or the real production host) path
 `/admin/platform*` with the same audience tag `ACCESS_AUD`, and drop it (or
 narrow it) on `admin.nebutra.com`, per the cutover commands below.
 
-## What moved (this pass)
+## What moved in the first pass
 
 | From (`apps/admin/src/lib`) | To (`apps/web/src/lib/admin-platform`) | Change |
 |---|---|---|
@@ -75,21 +76,40 @@ Guard test: `apps/web/src/app/(app)/admin/platform/__tests__/page.governance.tes
 this repo does not mock a `PlatformStaff` DB row for these, it checks the
 guard calls the right function and nothing lower-privilege).
 
-## What has NOT moved yet
+## What moved in the second pass
 
-`console-tabs.tsx`, `command-palette.tsx`, `supply-sync-button.tsx`,
-`add-account-dialog.tsx`, `resource-table.tsx`, `signal-strip.tsx`,
-`fleet-strip.tsx` (the live-probe strip, as opposed to the Fleet table itself)
-and their backing libs (`supply.ts`, `supply-route.ts`, `contract-client.ts`,
-`contract-action.ts`, `contract-resource.ts`, `console-data.ts`, `inbox.ts`,
-`probe.ts`, `format.ts`, `login-flow.ts`) — i.e. everything except the
-read-only Fleet table. `apps/admin` therefore **stays deployed** until this is
-done; see "Cutover" below for why.
+The rest of the console followed under the same `PlatformStaff` guard:
 
-## Cutover (do not run any of this yet — full parity is not landed)
+- Routes: `apps/web/src/app/(app)/admin/platform/{page,fleet/page,supply/page}.tsx`
+  (Inbox, Fleet, Supply). The layout renders apps/admin's console shell, tabs
+  and command palette.
+- Components: `apps/web/src/components/admin-platform/*`, ported from
+  `apps/admin/src/components`.
+- Libs: `console-data.ts`, `contract-client.ts`, `format.ts`, `inbox.ts`,
+  `login-flow.ts` and `probe.ts` in `apps/web/src/lib/admin-platform/`.
+- apps/admin's `app/api/contract/{action,resource}` route handlers and
+  `contract-action.ts` / `contract-resource.ts` / `supply.ts` / `supply-route.ts`
+  became Next Server Actions (`server-actions.ts`), which re-check
+  `PlatformStaff` on every call. No new `app/api/**/route.ts` files.
+- The CLIProxyAPI console proxy (`/management.html`, `/v0/management/*`,
+  `/oauth-callback`) streams HTML, so a Server Action cannot carry it. It moved
+  to the gateway as `backends/gateway/src/routes/admin/platform-{guard,supply}.ts`,
+  mounted at `/api/v1/admin/platform/supply`. It is gated by a framework-agnostic
+  port of the same Cloudflare Access and `PlatformStaff` check, not by
+  `X-Admin-Key`. It is mounted through the product-routes seam
+  (`routes/product-routes.ts`), which app.ts calls **before** it mounts
+  `adminRoutes`. That router's `"*"` X-Admin-Key guard would otherwise also
+  apply under `/api/v1/admin/platform/supply`.
+- `.templateignore` strips all of the above, and this ADR, from the template.
 
-Ordered, once the rest of the surface above has moved and been verified in
-`apps/web` in production:
+The Customers, Staff and Trust tabs are still placeholders, as they were in
+apps/admin. `apps/admin`, `infra/fly/admin.toml` and the `admin` entry in
+`.github/workflows/deploy-fly.yml` are unchanged. The owner chose to land the
+port first and run the cutover separately.
+
+## Cutover (not run yet — owner action)
+
+Ordered. Run it only after the `apps/web` surface has been verified in production:
 
 ```bash
 # 1. Deploy web with the new /admin/platform route live
@@ -110,7 +130,7 @@ Ordered, once the rest of the surface above has moved and been verified in
 # 5. Only after 1-4 are verified in production, stop deploying the standalone app:
 #    - remove "apps/admin/**" from the push-trigger paths in
 #      .github/workflows/deploy-fly.yml (left untouched in this pass — apps/admin
-#      is still the live surface for everything in "What has NOT moved yet")
+#      is still the live surface until steps 1-4 are verified)
 #    - remove the {"app":"admin",...} entry from that workflow's matrix
 #    - delete infra/fly/admin.toml
 

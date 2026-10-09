@@ -73,6 +73,7 @@ apps/web/src/components/admin-platform/
 backends/gateway/src/routes/admin/platform-guard.ts
 backends/gateway/src/routes/admin/platform-supply.ts
 backends/gateway/src/routes/admin/platform-supply.test.ts
+docs/architecture/2026-09-29-admin-into-web.md
 # The product app's Startup OS route (Nebutra's product); product-routes.for-template.ts
 # mounts none, so the route file would only be dead code in a scaffold.
 apps/web/src/vite-app/routes/startup-os.tsx
