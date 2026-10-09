@@ -16,9 +16,11 @@ import posterDark800 from "./poster/poster-dark-800.webp";
 import posterDark1600 from "./poster/poster-dark-1600.webp";
 import posterLight800 from "./poster/poster-light-800.webp";
 import posterLight1600 from "./poster/poster-light-1600.webp";
-import { type Bar, CACHED_BARS, quoteOf } from "./bars";
+import { type Bar, CACHED_BARS, HERO_QUERY, mergeBars, quoteOf, tradingDate } from "./bars";
+import HeroTimeAxis from "./hero-time-axis.vue";
+import cachedSeries from "./cached-bars.json";
 import KcqIcon from "../../components/kcq-icon.vue";
-import type { HeroChart } from "./live-chart";
+import type { ChartGeometry, HeroChart } from "./live-chart";
 import type { HeroField } from "../field/renderer";
 
 const { t, locale } = useI18n();
@@ -31,6 +33,8 @@ const quote = computed(() => quoteOf(bars.value));
 const chartShown = ref(false);
 const fieldState = ref<"off" | "on">("off");
 const paused = ref(false);
+const geometry = shallowRef<ChartGeometry | null>(null);
+const hover = shallowRef<Bar | null>(null);
 
 const panel = ref<HTMLElement>();
 const chartHost = ref<HTMLDivElement>();
@@ -41,7 +45,7 @@ const posters = {
   dark: `${posterDark800} 800w, ${posterDark1600} 1600w`,
   light: `${posterLight800} 800w, ${posterLight1600} 1600w`,
 };
-const posterSizes = "(min-width: 1344px) 1280px, calc(100vw - 32px)";
+const posterSizes = "(min-width: 1344px) 760px, (min-width: 1280px) 58vw, calc(100vw - 32px)";
 /** After hydration the explicit theme wins over the system one the <picture> media follows. */
 const posterSrcset = computed(() => posters[mode.value]);
 const hydrated = ref(false);
@@ -52,6 +56,11 @@ const price = (value: number) =>
     maximumFractionDigits: 2,
   }).format(value);
 const signed = (value: number, digits = 2) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(digits)}`;
+const compact = (value: number) =>
+  new Intl.NumberFormat(locale.value === "zh" ? "zh-CN" : "en-US", {
+    notation: "compact",
+    maximumFractionDigits: 2,
+  }).format(value);
 const direction = computed(() => (quote.value && quote.value.change < 0 ? "down" : "up"));
 const statusNote = computed(() =>
   status.value === "live"
@@ -97,7 +106,7 @@ async function loadLive(liveChart: typeof import("./live-chart")): Promise<boole
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 15_000);
   try {
-    bars.value = await liveChart.fetchLiveBars(window.location.origin, controller.signal);
+    bars.value = withCache(await liveChart.fetchLiveBars(window.location.origin, controller.signal));
     status.value = "live";
     chart?.setBars(bars.value);
     return true;
@@ -108,6 +117,9 @@ async function loadLive(liveChart: typeof import("./live-chart")): Promise<boole
     window.clearTimeout(timeout);
   }
 }
+
+/** Live bars extend the cached ones; never a hole between the two (bars.ts mergeBars). */
+const withCache = (live: readonly Bar[]) => mergeBars(CACHED_BARS, live).slice(-HERO_QUERY.limit);
 
 const wait = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
@@ -125,6 +137,8 @@ async function start() {
   const live = loadLive(liveChart);
   // The cached bars are real; the chart mounts on them at once and the live bars replace them.
   chart = await liveChart.mountHeroChart(chartMount.value, { bars: bars.value, mode: mode.value });
+  cleanups.push(chart.onGeometry((next) => (geometry.value = next)));
+  geometry.value = chart.geometry();
   // Let a fast feed land before the unfold, so the light opens onto today's bars.
   await Promise.race([live, wait(2500)]);
   field = await fieldReady;
@@ -144,7 +158,7 @@ function scheduleRefresh(liveChart: typeof import("./live-chart")) {
   refreshTimer = window.setInterval(async () => {
     if (document.hidden || !chart) return;
     try {
-      const next = await liveChart.fetchLiveBars(window.location.origin);
+      const next = withCache(await liveChart.fetchLiveBars(window.location.origin));
       bars.value = next;
       status.value = "live";
       chart.setBars(next);
@@ -155,11 +169,14 @@ function scheduleRefresh(liveChart: typeof import("./live-chart")) {
 }
 
 function onPointer(event: PointerEvent) {
-  if (!field || !chartHost.value) return;
+  if (!chartHost.value) return;
   const rect = chartHost.value.getBoundingClientRect();
-  field.setPointer([event.clientX - rect.left, event.clientY - rect.top]);
+  const x = event.clientX - rect.left;
+  hover.value = chart && x < (geometry.value?.width ?? 0) ? chart.barAt(x) : null;
+  field?.setPointer([x, event.clientY - rect.top]);
 }
 function onPointerLeave() {
+  hover.value = null;
   field?.setPointer(null);
 }
 function togglePause() {
@@ -251,6 +268,15 @@ defineExpose({
       >
         <!-- The engine takes over this element's position and overflow (mountChartDom). -->
         <div ref="chartMount" class="hero-chart-mount" />
+        <HeroTimeAxis :geometry="geometry" :locale="locale" :time-zone="cachedSeries.timezone" />
+        <p v-if="hover" class="hero-legend t-num">
+          <span>{{ tradingDate(hover.timestamp) }}</span>
+          <span><abbr :title="t('home.chart.legend.open')">{{ t("home.chart.legend.o") }}</abbr> {{ price(hover.open) }}</span>
+          <span><abbr :title="t('home.chart.legend.high')">{{ t("home.chart.legend.h") }}</abbr> {{ price(hover.high) }}</span>
+          <span><abbr :title="t('home.chart.legend.low')">{{ t("home.chart.legend.l") }}</abbr> {{ price(hover.low) }}</span>
+          <span><abbr :title="t('home.chart.legend.close')">{{ t("home.chart.legend.c") }}</abbr> {{ price(hover.close) }}</span>
+          <span><abbr :title="t('home.chart.legend.volume')">{{ t("home.chart.legend.v") }}</abbr> {{ compact(hover.volume) }}</span>
+        </p>
       </div>
     </div>
     <figcaption class="hero-chart-foot">
@@ -372,7 +398,7 @@ defineExpose({
 }
 .hero-chart-mount :deep(.hero-engine-scroller) {
   position: absolute;
-  inset: 0;
+  inset: 0 0 var(--klc-space-24);
   overflow: hidden;
   scrollbar-width: none;
 }
@@ -387,13 +413,34 @@ defineExpose({
   position: absolute;
   top: 0;
   right: 0;
-  bottom: 0;
+  bottom: var(--klc-space-24);
   width: var(--klc-space-64);
   z-index: 2;
 }
-/* The canvas legend's units are not localised yet; the panel header carries the quote. */
+/* The engine's DOM legend uses fixed Chinese units; the localised hover legend replaces it. */
 .hero-chart-mount :deep(.klc-legend-root) {
   display: none;
+}
+.hero-legend {
+  position: absolute;
+  top: var(--klc-space-8);
+  left: var(--klc-space-12);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--klc-space-4) var(--klc-space-12);
+  max-width: calc(100% - var(--klc-space-64) - var(--klc-space-24));
+  margin: 0;
+  padding: var(--klc-space-4) var(--klc-space-8);
+  border-radius: var(--klc-radius-xs);
+  background: color-mix(in oklab, var(--klc-color-chart-background) 88%, transparent);
+  font-size: var(--klc-text-12-font-size);
+  line-height: var(--klc-text-12-line-height);
+  color: var(--kcq-ink);
+  pointer-events: none;
+}
+.hero-legend abbr {
+  color: var(--kcq-ink-2);
+  text-decoration: none;
 }
 /* Field on: it replaces the poster (same opening frame), then dims under the chart. */
 .hero-chart[data-field="on"] .hero-field {

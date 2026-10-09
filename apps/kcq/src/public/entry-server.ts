@@ -13,22 +13,16 @@ export const APP_OUTLET = "<!--kcq-public-app-->";
 export type SsrManifest = Record<string, string[]>;
 
 /**
- * Stylesheets and module preloads for the lazy route chunks this page rendered, so the
- * prerendered HTML is styled at first paint instead of when the route chunk arrives.
+ * Stylesheets for the lazy route chunks this page rendered, so the prerendered HTML is styled at
+ * first paint instead of when the route chunk arrives.
  */
 export function routeAssetLinks(modules: Iterable<string>, manifest: SsrManifest, template: string): string {
   const files = new Set<string>();
   for (const id of modules) for (const file of manifest[id] ?? []) files.add(file);
   return [...files]
     .filter((file) => !template.includes(file))
-    .map((file) =>
-      file.endsWith(".css")
-        ? `<link rel="stylesheet" crossorigin href="${file}">`
-        : file.endsWith(".js")
-          ? `<link rel="modulepreload" crossorigin href="${file}">`
-          : "",
-    )
-    .filter(Boolean)
+    .filter((file) => file.endsWith(".css"))
+    .map((file) => `<link rel="stylesheet" crossorigin href="${file}">`)
     .join("");
 }
 

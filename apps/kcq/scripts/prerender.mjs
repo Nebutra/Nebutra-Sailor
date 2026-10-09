@@ -21,12 +21,15 @@ const template = readFileSync(templatePath, "utf8");
  * still knows the files, so a later client navigation loads them normally.
  */
 function inlineStyles(html) {
-  return html.replace(
-    /<link rel="stylesheet" crossorigin href="\/([^"]+\.css)">/g,
-    (_tag, file) => {
-      const css = readFileSync(resolve(distDir, file), "utf8");
-      return `<style data-href="/${file}">${css}</style>`;
-    },
+  return (
+    html
+      // Module preloads would compete with the first paint on slow links (measured on /home: LCP
+      // 2.6 s with them, 2.1 s without). The entry script still loads every chunk it imports.
+      .replace(/<link rel="modulepreload"[^>]*>/g, "")
+      .replace(/<link rel="stylesheet" crossorigin href="\/([^"]+\.css)">/g, (_tag, file) => {
+        const css = readFileSync(resolve(distDir, file), "utf8");
+        return `<style data-href="/${file}">${css}</style>`;
+      })
   );
 }
 

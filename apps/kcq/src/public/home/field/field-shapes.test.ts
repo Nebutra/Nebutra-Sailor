@@ -10,8 +10,8 @@ const geometry: ChartGeometry = {
   height: 400,
   lastPriceY: 180,
   candles: [
-    { x: 100, width: 8, open: 200, close: 150, high: 120, low: 220, up: true },
-    { x: 700, width: 8, open: 150, close: 190, high: 140, low: 210, up: false },
+    { timestamp: 1, x: 100, width: 8, open: 200, close: 150, high: 120, low: 220, up: true },
+    { timestamp: 2, x: 700, width: 8, open: 150, close: 190, high: 140, low: 210, up: false },
   ],
 };
 

@@ -35,6 +35,7 @@ export async function fetchLiveBars(origin: string, signal?: AbortSignal): Promi
 
 /** One candle in chart-local CSS pixels: what the light field turns into emitters. */
 export interface CandleGeometry {
+  readonly timestamp: number;
   readonly x: number;
   readonly width: number;
   readonly open: number;
@@ -56,6 +57,8 @@ export interface HeroChart {
   setBars(bars: readonly Bar[]): void;
   setMode(mode: "light" | "dark"): void;
   geometry(): ChartGeometry;
+  /** The bar under a chart-local x, for the hover legend. */
+  barAt(x: number): Bar | null;
   /** Called after any viewport or data change, with fresh geometry. */
   onGeometry(listener: (geometry: ChartGeometry) => void): () => void;
   dispose(): Promise<void>;
@@ -82,7 +85,8 @@ export async function mountHeroChart(
   content.className = "scroll-content";
   const canvasLayer = doc.createElement("div");
   canvasLayer.className = "hero-engine-canvas";
-  // The time axis is not shown: its labels are not localised yet, and the header states the period.
+  // The engine's time-axis labels are fixed to Chinese month names; the hero draws a localised
+  // axis from the same bar positions instead (hero-time-axis.vue), so this canvas stays hidden.
   const xAxisCanvas = doc.createElement("canvas");
   xAxisCanvas.hidden = true;
   const rightAxisLayer = doc.createElement("div");
@@ -103,6 +107,8 @@ export async function mountHeroChart(
     minKWidth: MIN_K_WIDTH,
     maxKWidth: MAX_K_WIDTH,
     priceLabelWidth: 64,
+    // The engine draws its own (Chinese-only) time labels when given an axis band; the host keeps
+    // the band outside the engine instead (hero-chart.vue insets the scroller by the 24px axis band).
     bottomAxisHeight: 0,
     initialZoomLevel: 1,
     settings: {
@@ -145,6 +151,7 @@ export async function mountHeroChart(
       const x = controller.getXAtLogicalIndex(index);
       if (x === null) continue;
       candles.push({
+        timestamp: bar.timestamp,
         x,
         width: viewport.kWidth,
         open: controller.priceToY("main", bar.open),
@@ -186,6 +193,13 @@ export async function mountHeroChart(
       controller.setTheme(mode);
     },
     geometry,
+    barAt(x) {
+      const index = controller.getLogicalIndexAtX(x);
+      const bar = index === null ? undefined : controller.data.peek()[index];
+      return bar
+        ? { timestamp: bar.timestamp, open: bar.open, high: bar.high, low: bar.low, close: bar.close, volume: bar.volume ?? 0 }
+        : null;
+    },
     onGeometry(listener) {
       listeners.add(listener);
       return () => listeners.delete(listener);

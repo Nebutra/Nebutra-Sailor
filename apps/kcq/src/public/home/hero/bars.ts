@@ -76,3 +76,26 @@ export function movingAverage(bars: readonly Bar[], window: number): (number | n
     return index >= window - 1 ? sum / window : null;
   });
 }
+
+/**
+ * The series the hero shows: cached bars extended by the live ones. Live bars win on equal
+ * timestamps. When the live window does not reach back to the cache (a stale cache), the live bars
+ * stand alone, so the merge can never leave a hole between the two sets.
+ */
+export function mergeBars(base: readonly Bar[], incoming: readonly Bar[]): Bar[] {
+  if (incoming.length === 0) return [...base];
+  const lastBase = base.at(-1)?.timestamp ?? Number.NEGATIVE_INFINITY;
+  if (incoming[0]!.timestamp > lastBase) return [...incoming];
+  const byTime = new Map(base.map((bar) => [bar.timestamp, bar]));
+  for (const bar of incoming) byTime.set(bar.timestamp, bar);
+  return [...byTime.values()].sort((a, b) => a.timestamp - b.timestamp);
+}
+
+/** Longest calendar gap between consecutive bars, in days. */
+export function largestGapDays(bars: readonly Bar[]): number {
+  let largest = 0;
+  for (let index = 1; index < bars.length; index++) {
+    largest = Math.max(largest, (bars[index]!.timestamp - bars[index - 1]!.timestamp) / 86_400_000);
+  }
+  return largest;
+}

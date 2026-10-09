@@ -51,6 +51,29 @@ defineExpose({ applyMode: () => chart.value?.applyMode() });
   grid-template-columns: minmax(0, 1fr);
   gap: var(--klc-space-48);
 }
+/* From xl the instrument rises beside the copy (landing-benchmark §3.1: the running product in
+   the first view); below that it sits under the copy at full width. */
+@media (min-width: 1280px) {
+  .hero {
+    padding-block: var(--klc-space-64) 0;
+  }
+  .hero-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--kcq-column-gap);
+    align-items: center;
+  }
+  .hero-copy {
+    grid-column: 1 / span 5;
+    padding-right: var(--klc-space-24);
+  }
+  .hero-instrument {
+    grid-column: 6 / span 7;
+  }
+  /* Han display at 72px breaks inside words in a five-column measure; 48 keeps them whole. */
+  :lang(zh-Hans) .hero-heading {
+    font-size: var(--klc-text-48-font-size);
+  }
+}
 .hero-copy {
   display: grid;
   gap: var(--klc-space-24);
@@ -61,6 +84,9 @@ defineExpose({ applyMode: () => chart.value?.applyMode() });
 }
 :lang(zh-Hans) .hero-heading {
   max-width: 12em;
+  /* Break at the spaces around "Agent" and "K", never inside a Han word. */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 .hero-lede {
   max-width: 38rem;
