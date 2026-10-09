@@ -1984,9 +1984,15 @@ body {
   min-width: 0;
 }
 
+/*
+ * (2) skips prose elements that are themselves flex or grid containers. Stretching a text run
+ * is what stops the one-glyph strip; a `p.flex` lays out its own items instead, so full width
+ * only pushed its content to the left edge of a centred column — PARA's canvas hint
+ * "双击画布 自由生成节点" rendered flush left on zh-CN and centred in English (2026-09-28).
+ */
 :is(html:lang(zh), html:lang(ja), html:lang(ko))
   :is(.flex.flex-col.items-center, .inline-flex.flex-col.items-center)
-  :is(p, h1, h2, h3, h4, h5, h6, blockquote) {
+  :is(p, h1, h2, h3, h4, h5, h6, blockquote):not(.flex, .inline-flex, .grid, .inline-grid) {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;

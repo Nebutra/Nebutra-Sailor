@@ -1,8 +1,25 @@
 import { create } from "zustand";
-import type { GeneratorState, Job } from "@/domain/types";
-import { gatewayApi, isGatewayMode } from "@/lib/gateway-api";
+import { generatorOf, resolveReferences, upstreamNodes } from "@/domain/nodes";
+import type { Asset, GeneratorState, Job } from "@/domain/types";
+import { GatewayError, gatewayApi, isGatewayMode } from "@/lib/gateway-api";
+import { getQueryClient } from "@/lib/query-client";
 import { assets } from "@/mock/data";
 import { useEditorStore } from "./editor-store";
+import { mockOutputAsset, mockText } from "./mock-outputs";
+
+/** An asset's URL from the one cache the canvas and the gallery read. */
+function assetUrl(id: string): string | undefined {
+  const cached = getQueryClient().getQueryData<Asset[]>(["assets"]);
+  return (cached ?? assets).find((a) => a.id === id)?.url;
+}
+
+/** Put an asset where every reader finds it: the mock table and the query cache. */
+function publishMockAsset(asset: Asset): void {
+  assets.unshift(asset);
+  const client = getQueryClient();
+  const cached = client.getQueryData<Asset[]>(["assets"]);
+  if (cached) client.setQueryData<Asset[]>(["assets"], [asset, ...cached]);
+}
 
 /**
  * Job = node (A). This store mirrors the node's task state for the top-bar indicator and popover;
@@ -47,9 +64,16 @@ export const useJobsStore = create<JobsState>((set, get) => ({
     const editor = useEditorStore.getState();
     // Snapshot before anything can await: from here the node's draft may change under us.
     const node = editor.document?.nodes[nodeId];
-    const config: GeneratorState = node?.generator ?? {
-      mode: node?.type === "text" ? "text" : (node?.type ?? "image"),
-    };
+    const draft: GeneratorState = node
+      ? generatorOf(node)
+      : { mode: "image", model: "Auto", count: 1 };
+    // Wires become references here, with the upstream output's URL: an image wired into a video
+    // node reaches the origin as its first frame. Resolved now, not stored on the draft, so a
+    // regenerated upstream is what the next run reads.
+    const references =
+      editor.document && node ? resolveReferences(editor.document, nodeId, assetUrl) : [];
+    const { references: _draftRefs, ...rest } = draft;
+    const config: GeneratorState = references.length ? { ...rest, references } : rest;
     const job: Job = {
       id,
       nodeId,
@@ -61,7 +85,11 @@ export const useJobsStore = create<JobsState>((set, get) => ({
       ...(estimated !== undefined ? { cost: { estimated, currency: "credits" } } : {}),
     };
     set({ jobs: [...get().jobs, job] });
-    editor.setNodeStatus(nodeId, "queued", { queuePosition: queued + 1, jobId: id });
+    editor.setNodeStatus(nodeId, "queued", {
+      queuePosition: queued + 1,
+      jobId: id,
+      ...(estimated !== undefined ? { cost: { estimated, currency: "credits" as const } } : {}),
+    });
 
     if (isGatewayMode) {
       const workspaceId = editor.documentId;
@@ -80,8 +108,15 @@ export const useJobsStore = create<JobsState>((set, get) => ({
           })
           .catch((e: unknown) => {
             // Pre-admission rejection (credits, quota, origin down): terminal on the node, shown inline.
-            const message = e instanceof Error ? e.message : "Generation was rejected";
-            const error = { type: "rejected", message, retryable: true };
+            // A short wallet gets its own type so the node can offer the way to top up.
+            const error =
+              e instanceof GatewayError && e.status === 402
+                ? { type: "insufficient_credits", message: "积分不足", retryable: true }
+                : {
+                    type: "rejected",
+                    message: e instanceof Error ? e.message : "生成请求未被受理",
+                    retryable: true,
+                  };
             set({
               jobs: get().jobs.map((j) => (j.id === id ? { ...j, status: "failed", error } : j)),
             });
@@ -106,7 +141,7 @@ export const useJobsStore = create<JobsState>((set, get) => ({
       for (const n of orphaned) {
         useEditorStore.getState().failNode(n.id, {
           type: "interrupted",
-          message: "Generation was interrupted",
+          message: "生成已中断",
           retryable: true,
         });
       }
@@ -129,7 +164,7 @@ export const useJobsStore = create<JobsState>((set, get) => ({
           // spinning: an unrecoverable state the user can retry beats one they can only reload.
           useEditorStore.getState().failNode(n.id, {
             type: "lost",
-            message: "This generation could not be recovered",
+            message: "这次生成无法恢复",
             retryable: true,
           });
         }
@@ -146,7 +181,7 @@ export const useJobsStore = create<JobsState>((set, get) => ({
     }
     const error = {
       type: "cancelled",
-      message: job.status === "queued" ? "Cancelled" : "Stopped",
+      message: job.status === "queued" ? "已取消" : "已停止",
       retryable: true,
     };
     set({ jobs: get().jobs.map((j) => (j.id === jobId ? { ...j, status: "failed", error } : j)) });
@@ -171,11 +206,33 @@ export const useJobsStore = create<JobsState>((set, get) => ({
         running.status = "completed";
         running.finishedAt = new Date().toISOString();
         const node = editor.document?.nodes[running.nodeId];
-        const pool = assets.filter((a) => a.type === (node?.type === "video" ? "video" : "image"));
-        const pick = pool[(jobs.length + running.nodeId.length) % Math.max(1, pool.length)];
         if (running.cost?.estimated !== undefined) running.cost.actual = running.cost.estimated;
-        if (pick) editor.completeNode(running.nodeId, pick.id, running.id);
-        else editor.failNode(running.nodeId, { type: "no_output", message: "No output produced" });
+        if (!node) {
+          // The node was deleted mid-run; the job still finished, it just has nowhere to land.
+        } else if (node.type === "text") {
+          editor.setNodeStatus(node.id, "completed", {
+            text: mockText(running.config?.prompt),
+            jobId: running.id,
+            finishedAt: new Date().toISOString(),
+          });
+        } else {
+          const doc = editor.document;
+          const upstream = doc
+            ? upstreamNodes(doc, node.id).find((n) => n.type !== "text" && n.assetId)
+            : undefined;
+          const upstreamUrl =
+            upstream && upstream.type !== "text" && upstream.assetId
+              ? assetUrl(upstream.assetId)
+              : undefined;
+          const asset = mockOutputAsset(
+            node,
+            running.id,
+            { projectId: editor.projectId, workspaceId: editor.documentId },
+            upstreamUrl,
+          );
+          publishMockAsset(asset);
+          editor.completeNode(node.id, asset.id, running.id);
+        }
       }
     }
     let pos = 1;

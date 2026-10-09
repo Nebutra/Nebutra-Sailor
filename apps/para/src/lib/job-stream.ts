@@ -1,6 +1,7 @@
 "use client";
 
 import type { Job } from "@/domain/types";
+import { rememberAsset } from "@/mock/queries";
 import { useEditorStore } from "@/stores/editor-store";
 import { useJobsStore } from "@/stores/jobs-store";
 import { gatewayApi } from "./gateway-api";
@@ -27,10 +28,7 @@ export function followJob(job: Job): () => void {
         next.startedAt ? { startedAt: next.startedAt } : {},
       );
     else if (next.status === "failed")
-      editor.failNode(
-        next.nodeId,
-        next.error ?? { type: "task_failed", message: "Generation failed" },
-      );
+      editor.failNode(next.nodeId, next.error ?? { type: "task_failed", message: "生成失败" });
     else if (next.status === "completed") {
       es.close();
       void recordOutput(next);
@@ -78,7 +76,7 @@ async function recordOutput(job: Job): Promise<void> {
     if (!first) {
       editor.failNode(job.nodeId, {
         type: "no_output",
-        message: "Completed without an output asset",
+        message: "生成完成，但没有产出",
       });
       return;
     }
@@ -86,17 +84,31 @@ async function recordOutput(job: Job): Promise<void> {
     const asset = await gatewayApi.createAsset({
       type: node?.type === "video" ? "video" : "image",
       url: first.url,
-      label: job.nodeId,
-      aspect: aspect === "1:1" || aspect === "9:16" || aspect === "4:3" ? aspect : "16:9",
+      // The prompt, not the node id: it is what the gallery shows under the card and searches.
+      label: assetLabel(node?.generator?.prompt, job.nodeId),
+      aspect:
+        aspect === "1:1" || aspect === "9:16" || aspect === "4:3" || aspect === "3:4"
+          ? aspect
+          : "16:9",
       origin: "generated",
       jobId: job.id,
       ...(editor.documentId ? { workspaceId: editor.documentId } : {}),
+      // Without the project the asset cannot open its workspace from the gallery on Home.
+      ...(editor.projectId ? { projectId: editor.projectId } : {}),
     });
+    rememberAsset(asset);
     useEditorStore.getState().completeNode(job.nodeId, asset.id, job.id);
   } catch (e) {
     useEditorStore.getState().failNode(job.nodeId, {
       type: "asset_record_failed",
-      message: e instanceof Error ? e.message : "Could not record the output",
+      message: e instanceof Error ? e.message : "产出没能保存",
     });
   }
+}
+
+/** A gallery label from the prompt: first line, trimmed to what a card caption can hold. */
+export function assetLabel(prompt: string | undefined, fallback: string): string {
+  const line = prompt?.split("\n")[0]?.trim() ?? "";
+  if (!line) return fallback;
+  return line.length > 80 ? `${line.slice(0, 79).trimEnd()}…` : line;
 }

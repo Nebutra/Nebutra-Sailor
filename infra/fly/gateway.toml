@@ -18,6 +18,11 @@ primary_region = "sin"
   # turns the POST into a bodiless GET that the SDK rejects as 401.
   INNGEST_SERVE_ORIGIN = "https://nebutra-gateway.fly.dev"
 
+  # PARA reference URLs (first-frame video, image edit) are accepted only on PARA's own
+  # asset host — where nebutra-ai writes generated outputs (its UPLOAD_PUBLIC_BASE_URL — the
+  # public R2 asset domain, cdn.nebutra.com). Not a secret. Unset fails closed.
+  PARA_ASSET_BASE_URLS = "https://cdn.nebutra.com"
+
 [http_service]
   internal_port = 8080
   force_https = true

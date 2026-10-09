@@ -1,44 +1,41 @@
-import Link from "next/link";
-import type { Project } from "@/domain/types";
-import { findAsset } from "@/mock/queries";
+"use client";
 
-const fmt = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+// @async-surface-exempt: looks up one cover asset by id for a thumbnail; a miss (loading, error or absent) is the placeholder tile, not a surface state.
+
+import Link from "next/link";
+import { projectThumbnail } from "@/domain/gallery";
+import type { Project } from "@/domain/types";
+import { useAssets } from "@/mock/queries";
+import { AssetThumb } from "./asset-thumb";
+import { formatDay } from "./format";
 
 /**
- * A project, shown as the work it contains.
- *
- * The card used to render a bordered box with a name and a date and nothing else, which on a dark
- * ground read as a broken thumbnail rather than as a project — the domain had no cover to show.
- * The media now fills the card and the label sits on it, so a grid of these scans as work.
+ * A project on 项目, LibTV's way: the newest work as a wide cover, the name and the day under it.
+ * An empty project shows the canvas's dot texture and says 空项目 — a real state, not a missing
+ * image.
  */
 export function ProjectCard({ project }: { project: Project }) {
-  const cover = project.coverAssetId ? findAsset(project.coverAssetId) : undefined;
+  // Read through the selected adapter, not the mock fixtures, so gateway projects get real covers:
+  // the explicit cover, else the newest asset made in the project.
+  const { data: assets } = useAssets();
+  const cover = projectThumbnail(project, assets ?? []);
   return (
-    <Link
-      href={`/p/${project.id}`}
-      className="group relative flex aspect-para-card flex-col justify-end overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-neutral-8"
-    >
-      {cover ? (
-        <img
-          src={cover.url}
-          alt=""
-          loading="lazy"
-          className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-        />
-      ) : (
-        /* An empty project is a real state, not a missing image: say so rather than show a void. */
-        <div className="absolute inset-0 flex items-center justify-center bg-neutral-3">
-          <span className="text-label text-muted-foreground">Empty project</span>
-        </div>
-      )}
-      {/* A scrim exists to hold the label legible over artwork. With no artwork there is nothing to
-          scrim, and the gradient just makes an empty card look like a failed image. */}
-      <div
-        className={`relative p-4 ${cover ? "bg-gradient-to-t from-neutral-1/90 to-transparent pt-10" : ""}`}
-      >
-        <div className="truncate font-medium text-body text-foreground">{project.name}</div>
-        <div className="text-label text-muted-foreground">{fmt(project.updatedAt)}</div>
+    <Link href={`/p/${project.id}`} className="group block min-w-0">
+      <div className="aspect-video overflow-hidden rounded-xl border border-border bg-card transition-colors group-hover:border-neutral-8">
+        {cover ? (
+          <AssetThumb
+            asset={cover}
+            className="transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none"
+          />
+        ) : (
+          <div className="para-dots flex size-full items-center justify-center">
+            <span className="text-label text-muted-foreground">空项目</span>
+          </div>
+        )}
+      </div>
+      <div className="mt-2.5 truncate text-body text-foreground">{project.name}</div>
+      <div className="mt-0.5 text-label text-muted-foreground tabular-nums">
+        {formatDay(project.updatedAt)}
       </div>
     </Link>
   );
@@ -46,5 +43,10 @@ export function ProjectCard({ project }: { project: Project }) {
 
 /** Mirrors the card's shape so the grid does not reflow when the data arrives. */
 export function ProjectCardSkeleton() {
-  return <div className="aspect-para-card animate-pulse rounded-xl bg-card" />;
+  return (
+    <div>
+      <div className="aspect-video animate-pulse rounded-xl bg-card" />
+      <div className="mt-2.5 h-4 w-32 animate-pulse rounded bg-card" />
+    </div>
+  );
 }
