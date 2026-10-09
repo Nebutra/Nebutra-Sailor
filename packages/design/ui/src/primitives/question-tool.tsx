@@ -571,7 +571,6 @@ function QuestionPromptForm({
           aria-labelledby={titleId}
           aria-describedby={activeQuestion.description ? descriptionId : undefined}
           rows={3}
-          className="resize-y"
           onKeyDown={(event: KeyboardEvent<HTMLTextAreaElement>) => {
             if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
               event.preventDefault();
