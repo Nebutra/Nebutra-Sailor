@@ -5,7 +5,7 @@
  * P2 specialized runners — unit convert, codec/text leftovers, CN/life, image helpers.
  * @see https://github.com/Nebutra/Nebutra-Sailor/issues/256
  */
-import { Button, Dropzone, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
+import { Button, CopyButton, Dropzone, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { type ChangeEvent, useCallback, useMemo, useState } from "react";
 import {
   RunnerError,
@@ -272,14 +272,16 @@ export function UnicodeRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "转换中…" : "转换"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制
-        </Button>
+          size="default"
+          value={result}
+          label="复制"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[120px] whitespace-pre-wrap break-all">{result}</RunnerOutput>
@@ -332,14 +334,16 @@ export function QueryStringRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "处理中…" : mode === "parse" ? "解析" : "序列化"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制
-        </Button>
+          size="default"
+          value={result}
+          label="复制"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[100px] whitespace-pre-wrap break-all">{result}</RunnerOutput>
@@ -598,14 +602,16 @@ export function TextReplaceRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "替换中…" : "替换"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制结果
-        </Button>
+          size="default"
+          value={result}
+          label="复制结果"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[100px] whitespace-pre-wrap">{result}</RunnerOutput>
@@ -684,14 +690,16 @@ export function LinePrefixSuffixRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "处理中…" : "应用"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制
-        </Button>
+          size="default"
+          value={result}
+          label="复制"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[100px] whitespace-pre-wrap">{result}</RunnerOutput>
@@ -742,14 +750,16 @@ export function FullwidthHalfwidthRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "转换中…" : "转换"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制
-        </Button>
+          size="default"
+          value={result}
+          label="复制"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[80px] whitespace-pre-wrap">{result}</RunnerOutput>
@@ -828,14 +838,16 @@ export function NanoidRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "生成中…" : "生成"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={ids.length === 0}
-          onClick={() => void navigator.clipboard.writeText(ids.join("\n"))}
-        >
-          复制全部
-        </Button>
+          size="default"
+          value={ids.join("\n")}
+          label="复制全部"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       {ids.length > 0 ? (

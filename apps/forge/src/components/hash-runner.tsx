@@ -1,7 +1,7 @@
 "use client";
 
 import { brand } from "@nebutra/brand/metadata";
-import { Button, Textarea } from "@nebutra/ui/primitives";
+import { Button, CopyButton, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
@@ -94,14 +94,16 @@ export function HashRunner({
         <Button type="button" variant="outline" onClick={() => void runServer()}>
           {t("common.serverRun")}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="ghost"
-          onClick={() => void navigator.clipboard.writeText(hex)}
           disabled={!hex}
-        >
-          {t("common.copy")}
-        </Button>
+          size="default"
+          value={hex}
+          label={t("common.copy")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="break-all">{hex}</RunnerOutput>

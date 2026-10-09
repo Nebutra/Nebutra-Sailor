@@ -8,8 +8,8 @@
 /**
  * SOTA-oriented specialized runners: regex highlight, QR live preview, multi-hash.
  */
-import { ArrowDown, Check, Copy } from "@nebutra/icons";
-import { Button, Dropzone, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
+import { ArrowDown } from "@nebutra/icons";
+import { Button, CopyButton, Dropzone, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fileToBase64, PdfResultPanel, TextResultActions } from "@/components/result-panels";
@@ -366,7 +366,6 @@ export function MultiHashSotaRunner({ toolId }: { toolId: string }) {
   const [digests, setDigests] = useState<Record<string, string>>({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState<string | null>(null);
 
   const run = async () => {
     setLoading(true);
@@ -423,22 +422,13 @@ export function MultiHashSotaRunner({ toolId }: { toolId: string }) {
               <code className="min-w-0 flex-1 truncate font-mono text-xs text-neutral-12">
                 {value}
               </code>
-              <Button
-                type="button"
-                variant="ghost"
+              <CopyButton
+                value={value}
                 className="h-8 px-2"
-                onClick={() => {
-                  void navigator.clipboard.writeText(value);
-                  setCopied(algo);
-                  setTimeout(() => setCopied(null), 1000);
-                }}
-              >
-                {copied === algo ? (
-                  <Check className="h-3.5 w-3.5" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
-                )}
-              </Button>
+                tooltipText={`${t("common.copy")} ${algo}`}
+                successMessage={t("common.copied")}
+                showToast={false}
+              />
             </div>
           ))}
         </div>
@@ -748,13 +738,15 @@ export function SvgOptimizeRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("common.running") : t("svg.optimize")}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="ghost"
-          onClick={() => void navigator.clipboard.writeText(text)}
-        >
-          {t("common.copy")}
-        </Button>
+          size="default"
+          value={text}
+          label={t("common.copy")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       {meta ? <RunnerNote>{meta}</RunnerNote> : null}

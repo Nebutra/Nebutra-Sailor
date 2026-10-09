@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, DatePicker, NumberField } from "@nebutra/ui/primitives";
+import { Button, CopyButton, DatePicker, NumberField } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerPanel, RunnerSelect } from "@/components/runner-ui";
@@ -296,14 +296,16 @@ export function RmbUppercaseRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("rmb.converting") : t("rmb.convert")}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
-          onClick={() => void navigator.clipboard.writeText(result)}
           disabled={!result}
-        >
-          {t("common.copy")}
-        </Button>
+          size="default"
+          value={result}
+          label={t("common.copy")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       {result ? (

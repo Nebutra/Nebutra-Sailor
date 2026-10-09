@@ -7,8 +7,7 @@
  * @see https://github.com/Nebutra/Nebutra-Sailor/issues/255
  */
 import { DEFAULT_PUBLIC_MODEL, frontierSelectOptions } from "@nebutra/ai-providers/frontier";
-import { Check, Copy } from "@nebutra/icons";
-import { Button, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
+import { Button, CopyButton, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { type ChangeEvent, type DragEvent, useMemo, useRef, useState } from "react";
 import {
@@ -146,13 +145,15 @@ export function MarkdownPreviewRunner({
               : t("markdown.preview")}
         </Button>
         {html ? (
-          <Button
-            type="button"
+          <CopyButton
             variant="outline"
-            onClick={() => void navigator.clipboard.writeText(html)}
-          >
-            {t("markdown.copyHtml")}
-          </Button>
+            size="default"
+            value={html}
+            label={t("markdown.copyHtml")}
+            copiedLabel={t("common.copied")}
+            successMessage={t("common.copied")}
+            showToast={false}
+          />
         ) : null}
       </div>
       <RunnerError>{error}</RunnerError>
@@ -494,14 +495,16 @@ export function HmacRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? t("hmacSign.computing") : t("hmacSign.compute")}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!digest}
-          onClick={() => void navigator.clipboard.writeText(digest)}
-        >
-          {t("common.copy")}
-        </Button>
+          size="default"
+          value={digest}
+          label={t("common.copy")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="break-all">{digest}</RunnerOutput>
@@ -529,7 +532,6 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
   const [bytes, setBytes] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState<string | null>(null);
 
   const selected = useMemo(
     () =>
@@ -582,12 +584,6 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
     } finally {
       setLoading(false);
     }
-  };
-
-  const copyOne = (algo: string, value: string) => {
-    void navigator.clipboard.writeText(value);
-    setCopied(algo);
-    setTimeout(() => setCopied(null), 1000);
   };
 
   return (
@@ -685,19 +681,13 @@ export function FileChecksumRunner({ toolId }: { toolId: string }) {
               <code className="min-w-0 flex-1 break-all font-mono text-xs text-neutral-12">
                 {value}
               </code>
-              <Button
-                type="button"
-                variant="ghost"
+              <CopyButton
+                value={value}
                 className="h-8 px-2"
-                aria-label={t("common.copy")}
-                onClick={() => copyOne(algo, value)}
-              >
-                {copied === algo ? (
-                  <Check className="h-3.5 w-3.5" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
-                )}
-              </Button>
+                tooltipText={`${t("common.copy")} ${algo}`}
+                successMessage={t("common.copied")}
+                showToast={false}
+              />
             </div>
           ))}
         </div>
@@ -920,15 +910,16 @@ export function ZhCnTwRunner({ toolId }: { toolId: string }) {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-neutral-11">{t("common.output")}</span>
-            <Button
-              type="button"
+            <CopyButton
               variant="ghost"
               size="sm"
               disabled={!result}
-              onClick={() => void navigator.clipboard.writeText(result)}
-            >
-              {t("common.copy")}
-            </Button>
+              value={result}
+              label={t("common.copy")}
+              copiedLabel={t("common.copied")}
+              successMessage={t("common.copied")}
+              showToast={false}
+            />
           </div>
           <RunnerOutput className="min-h-[220px] whitespace-pre-wrap">{result}</RunnerOutput>
         </div>
@@ -983,14 +974,16 @@ export function PinyinRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? t("pinyin.converting") : t("pinyin.convert")}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          {t("common.copy")}
-        </Button>
+          size="default"
+          value={result}
+          label={t("common.copy")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="whitespace-pre-wrap text-lg tracking-wide">{result}</RunnerOutput>

@@ -205,3 +205,38 @@ describe("CopyMenuItem — the menu keyboard contract a raw button forfeits", ()
     });
   });
 });
+
+describe("CopyButton — refused clipboard writes", () => {
+  it("shows a failed state and announces the error instead of failing silently", async () => {
+    const user = setupUser();
+    writeText.mockImplementationOnce(() => Promise.reject(new Error("NotAllowedError")));
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    render(
+      <CopyButton
+        value="secret"
+        label="Copy"
+        showToast={false}
+        errorMessage="Copy failed. Select the text instead."
+      />,
+    );
+
+    const button = screen.getByRole("button", { name: "Copy" });
+    await user.click(button);
+
+    await waitFor(() => expect(button).toHaveAttribute("data-copy-status", "failed"));
+    expect(screen.getByText("Copy failed. Select the text instead.")).toHaveAttribute(
+      "aria-live",
+      "polite",
+    );
+    consoleError.mockRestore();
+  });
+
+  it("returns to idle after the hold timeout", async () => {
+    const user = setupUser();
+    render(<CopyButton value="v" label="Copy" showToast={false} timeout={50} />);
+    const button = screen.getByRole("button", { name: /Cop/ });
+    await user.click(button);
+    await waitFor(() => expect(button).toHaveAttribute("data-copy-status", "copied"));
+    await waitFor(() => expect(button).toHaveAttribute("data-copy-status", "idle"));
+  });
+});

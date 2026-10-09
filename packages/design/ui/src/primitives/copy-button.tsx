@@ -39,7 +39,7 @@
  * All four reset together after `timeout` (default 2000ms).
  */
 
-import { Check, Code, Copy, Hash, Link } from "@nebutra/icons";
+import { Check, Code, Copy, Hash, Link, Warning } from "@nebutra/icons";
 import * as React from "react";
 // Toast feedback handled by consumer
 import { toast } from "sonner";
@@ -54,6 +54,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
  * dark-theme value, so no `dark:` clause is needed or wanted here.
  */
 const COPIED_TINT = "text-[hsl(var(--success-strong))]";
+const FAILED_TINT = "text-destructive-strong";
+const DEFAULT_COPY_ERROR = "Couldn't copy. Select the text and copy it manually.";
 
 /**
  * Polite live region for the copied confirmation. The check mark is `aria-hidden`
@@ -62,10 +64,18 @@ const COPIED_TINT = "text-[hsl(var(--success-strong))]";
  * and of all seven hand-rolled ones. Empty while idle so it never contributes to
  * the button's accessible name.
  */
-function CopiedAnnouncement({ copied, message }: { copied: boolean; message: string }) {
+function CopiedAnnouncement({
+  status,
+  message,
+  errorMessage,
+}: {
+  status: CopyStatus;
+  message: string;
+  errorMessage: string;
+}) {
   return (
     <span aria-live="polite" className="sr-only">
-      {copied ? message : ""}
+      {status === "copied" ? message : status === "failed" ? errorMessage : ""}
     </span>
   );
 }
@@ -91,6 +101,8 @@ export interface CopyButtonProps
   copiedLabel?: string | false;
   /** Success message for toast, and the text announced to screen readers */
   successMessage?: string;
+  /** Failure message for toast, and the text announced when the write is refused */
+  errorMessage?: string;
   /** Tooltip text — also the accessible name of an icon-only button */
   tooltipText?: string;
   /** Icon type */
@@ -117,6 +129,7 @@ export function CopyButton({
   label,
   copiedLabel = "Copied",
   successMessage = "Copied to clipboard",
+  errorMessage = DEFAULT_COPY_ERROR,
   tooltipText = "Copy",
   iconType = "copy",
   iconPosition = "leading",
@@ -130,7 +143,12 @@ export function CopyButton({
 }: CopyButtonProps) {
   // Single clipboard implementation for the whole file — the hook owns the
   // timeout, the toast, and the failure path.
-  const { copied, copy } = useCopyToClipboard({ successMessage, showToast, timeout });
+  const { copied, failed, status, copy } = useCopyToClipboard({
+    successMessage,
+    errorMessage,
+    showToast,
+    timeout,
+  });
 
   const IconComponent = {
     copy: Copy,
@@ -151,7 +169,13 @@ export function CopyButton({
   // wins the merge and deletes the confirmation — two of the seven call sites
   // migrated here do pass one. A class on the svg beats a colour inherited from
   // the parent, so this holds regardless of what the consumer sets.
-  const icon = copied ? <Check className={COPIED_TINT} /> : <IconComponent />;
+  const icon = copied ? (
+    <Check className={COPIED_TINT} />
+  ) : failed ? (
+    <Warning className={FAILED_TINT} />
+  ) : (
+    <IconComponent />
+  );
   const iconSlot = iconPosition === "trailing" ? { suffix: icon } : { prefix: icon };
 
   const button = (
@@ -159,6 +183,7 @@ export function CopyButton({
       variant={variant}
       size={size}
       onClick={handleCopy}
+      data-copy-status={status}
       className={cn("transition-colors", className)}
       {...iconSlot}
       {...props}
@@ -172,7 +197,7 @@ export function CopyButton({
       {/* Icon-only: the tooltip text is the accessible name. With a visible
           label the name is the label, so don't emit a second one. */}
       {!label && <span className="sr-only">{tooltipText}</span>}
-      <CopiedAnnouncement copied={copied} message={successMessage} />
+      <CopiedAnnouncement status={status} message={successMessage} errorMessage={errorMessage} />
     </Button>
   );
 
@@ -278,6 +303,8 @@ export interface CopyMenuItemProps
   children: React.ReactNode;
   /** Success message for toast, and the text announced to screen readers */
   successMessage?: string;
+  /** Failure message, announced when the write is refused */
+  errorMessage?: string;
   /** Show toast on copy */
   showToast?: boolean;
   /** How long the copied state is held, in ms */
@@ -305,6 +332,7 @@ export function CopyMenuItem({
   value,
   children,
   successMessage = "Copied to clipboard",
+  errorMessage = DEFAULT_COPY_ERROR,
   showToast = false,
   timeout = 2000,
   closeOnCopy = false,
@@ -312,7 +340,12 @@ export function CopyMenuItem({
   className,
   ...props
 }: CopyMenuItemProps) {
-  const { copied, copy } = useCopyToClipboard({ successMessage, showToast, timeout });
+  const { copied, failed, status, copy } = useCopyToClipboard({
+    successMessage,
+    errorMessage,
+    showToast,
+    timeout,
+  });
 
   const handleCopy = async () => {
     if (await copy(value)) onCopied?.(value);
@@ -328,10 +361,12 @@ export function CopyMenuItem({
       <span className="flex-1">{children}</span>
       {copied ? (
         <Check aria-hidden="true" className={cn("size-4", COPIED_TINT)} />
+      ) : failed ? (
+        <Warning aria-hidden="true" className={cn("size-4", FAILED_TINT)} />
       ) : (
         <Copy aria-hidden="true" className="size-4 text-muted-foreground" />
       )}
-      <CopiedAnnouncement copied={copied} message={successMessage} />
+      <CopiedAnnouncement status={status} message={successMessage} errorMessage={errorMessage} />
     </DropdownMenuItem>
   );
 }
@@ -371,42 +406,75 @@ export function CopyableField({ value, label, truncate = true, className }: Copy
 
 export interface UseCopyToClipboardOptions {
   successMessage?: string;
+  /** Shown (toast) and announced when the clipboard write is refused. */
+  errorMessage?: string;
   showToast?: boolean;
   timeout?: number;
 }
 
+export type CopyStatus = "idle" | "copied" | "failed";
+
 export interface UseCopyToClipboardReturn {
   copied: boolean;
+  /** True while a refused write is being reported. */
+  failed: boolean;
+  status: CopyStatus;
   copy: (value: string) => Promise<boolean>;
 }
 
+/**
+ * The one clipboard implementation. Owns the held "copied" / "failed" state,
+ * its reset timer (cleared on unmount), the optional toast, and the failure
+ * path — clipboard writes are refused without a user gesture, in insecure
+ * contexts, and by some permission policies, and a copy control that fails
+ * silently is worse than none.
+ */
 export function useCopyToClipboard(
   options: UseCopyToClipboardOptions = {},
 ): UseCopyToClipboardReturn {
-  const { successMessage = "Copied to clipboard", showToast = true, timeout = 2000 } = options;
+  const {
+    successMessage = "Copied to clipboard",
+    errorMessage = DEFAULT_COPY_ERROR,
+    showToast = true,
+    timeout = 2000,
+  } = options;
 
-  const [copied, setCopied] = React.useState(false);
+  const [status, setStatus] = React.useState<CopyStatus>("idle");
+  const timer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  React.useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
+
+  const hold = React.useCallback(
+    (next: CopyStatus) => {
+      if (timer.current) clearTimeout(timer.current);
+      setStatus(next);
+      timer.current = setTimeout(() => setStatus("idle"), timeout);
+    },
+    [timeout],
+  );
 
   const copy = React.useCallback(
     async (value: string): Promise<boolean> => {
       try {
+        if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
         await navigator.clipboard.writeText(value);
-        setCopied(true);
-
-        if (showToast) {
-          toast.success(successMessage);
-        }
-
-        setTimeout(() => setCopied(false), timeout);
+        hold("copied");
+        if (showToast) toast.success(successMessage);
         return true;
       } catch (error) {
         console.error("Failed to copy:", error);
-        toast.error("Failed to copy to clipboard");
+        hold("failed");
+        if (showToast) toast.error(errorMessage);
         return false;
       }
     },
-    [successMessage, showToast, timeout],
+    [hold, successMessage, errorMessage, showToast],
   );
 
-  return { copied, copy };
+  return { copied: status === "copied", failed: status === "failed", status, copy };
 }
