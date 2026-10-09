@@ -60,8 +60,19 @@ describe("site map", () => {
     }
     // These were unreachable from the site's navigation once the rail replaced
     // the top nav (2026-09-28).
-    for (const path of ["/features", "/pricing", "/changelog", "/sailor/studio"]) {
+    for (const path of ["/features", "/changelog", "/sailor/studio"]) {
       expect(listed.get(path)?.rail, path).toBe(true);
+    }
+  });
+
+  it("keeps Pricing out of the top bar and rail, and in the footer (Creem: easy to find)", async () => {
+    const { readFileSync } = await import("node:fs");
+    expect(listed.get("/pricing")?.rail).toBeUndefined();
+    const nav = readFileSync("src/nebutra/shell/site-nav.tsx", "utf8");
+    expect(nav).not.toContain("/pricing");
+    const footer = readFileSync("src/nebutra/shell/site-footer.tsx", "utf8");
+    for (const needle of ["/pricing", "/privacy", "/terms", "mailto:"]) {
+      expect(footer, needle).toContain(needle);
     }
   });
 

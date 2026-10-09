@@ -1,7 +1,7 @@
 {
   "productPricing": {
     "title": "{brandName} 套餐与积分",
-    "description": "查看 Router、观澜和 Para 的价格与权益，按所用产品选择会员期限、积分包或余额充值。",
+    "description": "查看 Router 与 Para 的价格，支持美元与人民币。余额充值、会员或积分包，均为一次性付款，不自动续费。",
     "loading": "正在加载当前价格…",
     "unavailable": "价格暂时无法加载，请稍后重试，或在购买前联系我们。",
     "empty": "目前没有可购买的付费商品。",
@@ -19,7 +19,74 @@
     "paymentNote": "美元银行卡付款由 Creem 处理；人民币付款在可用时使用支付宝或微信支付。适用税费及最终总额在结账时显示。积分与余额归属于所购产品。",
     "refund": "退款政策",
     "terms": "服务条款",
-    "contact": "账单咨询"
+    "contact": "账单咨询",
+    "eyebrow": "价格",
+    "heroTitle": "按<signature>用量</signature>付费。",
+    "jumpSailor": "Sailor 授权",
+    "jumpFaq": "常见问题",
+    "trustCards": "银行卡由 Creem（商户代理）收款",
+    "trustCn": "人民币支持支付宝与微信支付",
+    "trustCurrency": "美元与人民币标价",
+    "trustOneTime": "一次性付款，不自动续费",
+    "usageBased": "按用量计费",
+    "membershipsAndCredits": "会员与积分",
+    "payAsYouGo": "按量付费",
+    "topUpRange": "任意金额充值",
+    "colCurrency": "币种",
+    "colMinimum": "最低",
+    "colMaximum": "最高",
+    "termMonth": "1 个月",
+    "termYear": "1 年",
+    "termOther": "{days} 天",
+    "perMonth": "/ 月",
+    "perYear": "/ 年",
+    "yearAsMonthly": "折合每月 {amount}，一次付清",
+    "monthlyCreditsShort": "每月 {credits} 积分",
+    "creditPacks": "积分包",
+    "colPack": "套餐",
+    "colPrice": "价格",
+    "colExpires": "有效期",
+    "packCredits": "{credits} 积分",
+    "expiresShort": "{days} 天",
+    "neverExpires": "长期有效",
+    "choosePlan": "选择 {name}",
+    "buyPack": "购买",
+    "billingTitle": "付款说明",
+    "billCardsTitle": "银行卡（美元）",
+    "billCardsBody": "银行卡付款由 Creem 作为商户代理处理。",
+    "billCnTitle": "支付宝与微信支付（人民币）",
+    "billCnBody": "人民币付款在可用时使用支付宝或微信支付。",
+    "billTaxTitle": "税费与总额",
+    "billTaxBody": "适用税费与最终总额在结账时显示。",
+    "billWalletTitle": "余额归属于所购产品",
+    "billWalletBody": "积分与余额属于购买它们的产品。",
+    "privacy": "隐私政策",
+    "billingEmail": "账单支持",
+    "sailorTitle": "{brandName} Sailor 授权",
+    "faqTitle": "常见问题",
+    "faqLead": "购买前，大家通常会问的。",
+    "faq": {
+      "f1": {
+        "q": "套餐会自动续费吗？",
+        "a": "不会。这里所有商品都是一次性付款。会员在所购期限内有效，积分包与充值按需购买。"
+      },
+      "f2": {
+        "q": "支持哪些币种和支付方式？",
+        "a": "美元通过 Creem 刷卡，人民币在可用时通过支付宝或微信支付。含税的最终总额在结账时显示。"
+      },
+      "f3": {
+        "q": "余额充值用来做什么？",
+        "a": "用于 Router 的计量 API 调用。模型费率在 Router 中列出，充值金额在所示范围内任意。"
+      },
+      "f4": {
+        "q": "积分会过期吗？",
+        "a": "已购积分在各积分包所示天数后过期。积分与余额属于购买它们的产品。"
+      },
+      "f5": {
+        "q": "账单问题找谁？",
+        "a": "退款政策说明了可退款的范围。与付款有关的任何问题，请写信到本页的账单邮箱。"
+      }
+    }
   },
   "nav": {
     "features": "特性",

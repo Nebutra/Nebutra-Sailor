@@ -14,5 +14,4 @@ export { InteractiveChangelog } from "./InteractiveChangelog";
 export { MonorepoFileTree } from "./MonorepoFileTree";
 export { Navbar } from "./Navbar";
 export { NewsletterForm } from "./NewsletterForm";
-export { PricingSection } from "./PricingSection";
 export { UseCasesSection } from "./use-cases";

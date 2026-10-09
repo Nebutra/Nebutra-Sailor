@@ -34,29 +34,22 @@ export function PricingComparisonTable() {
   const t = useTranslations("landing.comparison") as unknown as DynamicTranslate;
 
   return (
-    <section
-      className="relative w-full bg-background py-24 md:py-32"
-      aria-labelledby="landing-comparison-title"
-    >
-      <div className="mx-auto max-w-wide px-4 md:px-6">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-primary">
+    <section className="relative mt-20 w-full" aria-labelledby="landing-comparison-title">
+      <div>
+        <div className="max-w-3xl">
+          <p className="mb-3 text-xs uppercase tracking-wider text-muted-foreground">
             {t("badge")}
           </p>
           <h2
             id="landing-comparison-title"
-            className="text-balance text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground"
-            style={{
-              letterSpacing: "var(--tracking-heading)",
-              lineHeight: "var(--leading-heading)",
-            }}
+            className="text-balance font-heading text-3xl tracking-tight text-foreground"
           >
             {t("title")}
           </h2>
           <p className="mt-4 text-base text-muted-foreground">{t("subtitle")}</p>
         </div>
 
-        <div className="mt-16 overflow-x-auto rounded-[var(--radius-2xl)] border border-border bg-background">
+        <div className="mt-8 overflow-x-auto rounded-xl border border-border bg-background">
           <Table
             bare
             aria-label={t("ariaTable")}

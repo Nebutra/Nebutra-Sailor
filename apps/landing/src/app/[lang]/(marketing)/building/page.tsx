@@ -5,7 +5,7 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { PRODUCTS } from "@/nebutra/data/products";
 import { siteLang } from "@/nebutra/i18n";
 import { sitePageMeta } from "@/nebutra/seo";
-import { Band, Intro } from "@/nebutra/ui/page";
+import { Band, Intro, More } from "@/nebutra/ui/page";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -56,6 +56,9 @@ export default async function BuildingPage({ params }: { params: Promise<{ lang:
             </li>
           ))}
         </ul>
+        <More href="/pricing">
+          {(await getTranslations({ locale: lang, namespace: "nav" }))("pricing")}
+        </More>
       </Band>
     </main>
   );

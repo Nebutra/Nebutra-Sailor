@@ -1480,10 +1480,6 @@
         "count": 1
       },
       {
-        "file": "apps/landing/src/components/landing/pricing-comparison-table.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/landing/src/components/landing/use-cases/UseCasesSection.tsx",
         "count": 1
       },

@@ -34,7 +34,6 @@ const CLOSE_DELAY_MS = 240;
 export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: string }) {
   const pathname = usePathname() ?? "";
   const t = useTranslations("siteShell");
-  const pricing = useTranslations("nav");
   // A full-viewport tool keeps the bar but gives the screen back to the tool.
   const compact = pageAt(pathname)?.chrome === "tool";
   // "hover" closes when the pointer leaves; "pinned" stays until dismissed.
@@ -115,12 +114,6 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         </Link>
 
         <div className="flex items-center justify-end gap-2 sm:gap-4">
-          <Link
-            href="/pricing#product-pricing"
-            className="text-sm font-medium text-foreground hover:underline"
-          >
-            {pricing("pricing")}
-          </Link>
           <Button
             type="button"
             variant="ghost"

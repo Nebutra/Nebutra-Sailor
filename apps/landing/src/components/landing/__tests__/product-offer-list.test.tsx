@@ -34,7 +34,14 @@ const offers: PublicOffer[] = [
     grants: {},
   },
 ];
-const products = [{ id: "kuanlan", name: "Kuanlan", href: "https://kuanlan.example.com" }];
+const products = [
+  {
+    id: "kuanlan",
+    name: "Kuanlan",
+    href: "https://kuanlan.example.com",
+    domain: "kuanlan.example.com",
+  },
+];
 const t = createTranslator({ locale: "en", messages: en, namespace: "productPricing" });
 
 describe("public product pricing", () => {
@@ -48,11 +55,10 @@ describe("public product pricing", () => {
       "49.99",
       "5.00",
       "10,000.00",
-      "30 days",
-      "3,200 credits per month",
+      "/ month",
+      "3,200 credits / month",
       "5,000 credits",
       "730 days",
-      "No automatic renewal",
     ])
       expect(html).toContain(text);
     expect(html).not.toContain("29.00");

@@ -198,8 +198,9 @@ export const SITE_MAP: readonly SitePage[] = [
     template: false,
   },
   {
+    // Not in the rail or the top bar (owner, 2026-10-09): Pricing is reached from the footer
+    // and from product calls to action. Creem's review only asks that it be easy to find.
     path: "/pricing",
-    rail: true,
     section: "sailor",
     key: "pricing",
     status: "live",
