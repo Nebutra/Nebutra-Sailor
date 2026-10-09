@@ -2,7 +2,7 @@
  * Render each public route into dist/<path>.html (nginx serves `/home` from `/home.html`), then
  * drop the bare template. Usage: node prerender.mjs <ssr-out-dir> <dist-dir>
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -15,7 +15,6 @@ const template = readFileSync(templatePath, "utf8");
 
 for (const { path } of server.PUBLIC_ROUTES) {
   const target = resolve(distDir, `.${path}.html`);
-  if (existsSync(target)) throw new Error(`Prerender would overwrite ${target}`);
   mkdirSync(dirname(target), { recursive: true });
   const html = await server.render(path, template);
   const canonical = `<link rel="canonical" href="${server.KCQ_ORIGIN}${path}">`;
@@ -28,7 +27,13 @@ for (const { path } of server.PUBLIC_ROUTES) {
   };
   const failed = Object.keys(checks).filter((name) => !checks[name]);
   if (failed.length) throw new Error(`Prerendered ${path} lacks: ${failed.join(", ")}`);
-  writeFileSync(target, html);
+  try {
+    // "wx" creates the file or fails if it exists: no check-then-write race.
+    writeFileSync(target, html, { flag: "wx" });
+  } catch (error) {
+    if (error?.code === "EEXIST") throw new Error(`Prerender would overwrite ${target}`);
+    throw error;
+  }
   console.log(`prerendered ${path} -> ${target.slice(distDir.length + 1)}`);
 }
 rmSync(templatePath);

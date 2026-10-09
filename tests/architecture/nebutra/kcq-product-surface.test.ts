@@ -83,8 +83,7 @@ describe("kcq session trust follows brand.domains", () => {
 
   it("the auth Worker derives the kcq origin from brand.domains", () => {
     const worker = read("apps/auth/src/worker-edge.ts");
-    // biome-ignore lint/suspicious/noTemplateCurlyInString: matches the template literal in source
-    expect(worker).toContain("https://${brand.domains.kcq}");
+    expect(worker).toMatch(/https:\/\/\$\{brand\.domains\.kcq\}/);
     expect(worker).not.toMatch(/https:\/\/kcq\./);
   });
 
