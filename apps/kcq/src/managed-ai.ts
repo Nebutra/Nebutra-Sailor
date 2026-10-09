@@ -13,6 +13,13 @@ export const MANAGED_AI_BASE_PATH = "/market/ai/v1";
 /** Placeholder bearer value for providers that require a non-empty API key. */
 export const MANAGED_AI_CREDENTIAL = "nebutra-session";
 
+/** Name of the managed provider in the Agent settings. */
+export const MANAGED_AI_NAME = "Nebutra";
+/** Placeholder model id sent in requests; the gateway ignores it and serves the account's default. */
+export const MANAGED_AI_MODEL = "auto";
+/** Matches the gateway's default output cap (`KCQ_AI_MAX_OUTPUT_TOKENS`). */
+export const MANAGED_AI_OUTPUT_TOKENS = 8192;
+
 export interface ManagedAiModel {
   id: string;
 }

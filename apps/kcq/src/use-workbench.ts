@@ -7,6 +7,7 @@ import {
   createAgentPanelWidthStorage,
   KlineChart,
 } from "@363045841yyt/klinechart";
+import { ReadOnlyProviderCredentialStore } from "@363045841yyt/klinechart-agent-runtime";
 import { createBrowserRuntimeSessions } from "@363045841yyt/klinechart-agent-runtime/browser";
 import type { ChartController } from "@363045841yyt/klinechart-core";
 import { scopedPersistenceName } from "@363045841yyt/klinechart-core/persistence-scope";
@@ -17,6 +18,14 @@ import {
 } from "@nebutra/auth/browser";
 import { onBeforeUnmount, shallowRef } from "vue";
 
+import {
+  createManagedAiClient,
+  MANAGED_AI_CREDENTIAL,
+  MANAGED_AI_MODEL,
+  MANAGED_AI_NAME,
+  MANAGED_AI_OUTPUT_TOKENS,
+  managedAiFetch,
+} from "./managed-ai";
 import type { MarketConnections } from "./market-connections";
 
 export { AgentWorkbenchShell, KlineChart };
@@ -34,7 +43,16 @@ export function useWorkbench(props: WorkbenchProps) {
   const dataLoading = shallowRef(false);
   const dataError = shallowRef<string | null>(null);
   let unsubscribeData: (() => void)[] = [];
+  // The gateway picks the model and tier from the session; the placeholder id is never routed.
+  const managedAi = createManagedAiClient(window.location.origin);
   const bridge = new BrowserAgentBridge({
+    managedProvider: {
+      name: MANAGED_AI_NAME,
+      baseUrl: managedAi.baseUrl,
+      model: { id: MANAGED_AI_MODEL, maxOutputTokens: MANAGED_AI_OUTPUT_TOKENS },
+      credentials: new ReadOnlyProviderCredentialStore(MANAGED_AI_CREDENTIAL),
+      fetch: managedAiFetch(),
+    },
     getChartAgent: () => controller.value?.agent,
     createSessions: (redaction) =>
       createBrowserRuntimeSessions({

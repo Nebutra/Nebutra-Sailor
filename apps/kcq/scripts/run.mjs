@@ -52,6 +52,9 @@ if (mode === "typecheck") {
             "@363045841yyt/klinechart-core/persistence-scope": [
               resolve(upstream, "packages/core/dist/foundation/persistence/persistence-scope.d.ts"),
             ],
+            "@363045841yyt/klinechart-agent-runtime": [
+              resolve(upstream, "packages/agent-runtime/dist/index.d.ts"),
+            ],
             "@363045841yyt/klinechart-agent-runtime/browser": [
               resolve(upstream, "packages/agent-runtime/dist/browser.d.ts"),
             ],
