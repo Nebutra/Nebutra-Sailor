@@ -113,9 +113,10 @@ const feedLabel = computed(() =>
         />
       </nav>
       <div class="site-tools">
+        <!-- Always in the layout, so the dot appearing never shifts the controls. -->
         <span
-          v-if="feed.status.value !== 'idle'"
           class="site-feed t-meta"
+          :data-idle="feed.status.value === 'idle' || undefined"
           :data-status="feed.status.value"
           :title="feedLabel"
         >
@@ -228,6 +229,9 @@ const feedLabel = computed(() =>
   align-items: center;
   gap: var(--klc-space-4);
   margin-left: auto;
+}
+.site-feed[data-idle] {
+  visibility: hidden;
 }
 .site-feed {
   display: inline-grid;

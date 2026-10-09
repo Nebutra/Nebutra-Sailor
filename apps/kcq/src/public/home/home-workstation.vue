@@ -205,7 +205,7 @@ function onPointer(event: PointerEvent) {
   translate: -50% -50%;
   padding: var(--klc-space-4) var(--klc-space-8);
   border-radius: var(--klc-radius-xs);
-  background: var(--kcq-accent);
+  background: var(--kcq-accent-strong);
   color: #fff;
   text-transform: none;
   letter-spacing: 0;

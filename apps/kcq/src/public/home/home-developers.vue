@@ -119,15 +119,15 @@ function onKey(event: KeyboardEvent) {
 .code-window {
   --shiki-foreground: var(--kcq-ink);
   --shiki-background: transparent;
-  --shiki-token-keyword: var(--kcq-accent-text);
-  --shiki-token-constant: var(--kcq-accent-text);
+  --shiki-token-keyword: var(--kcq-accent-ink);
+  --shiki-token-constant: var(--kcq-accent-ink);
   --shiki-token-string: color-mix(in oklab, var(--kcq-up) 45%, var(--kcq-ink));
   --shiki-token-string-expression: color-mix(in oklab, var(--kcq-up) 45%, var(--kcq-ink));
   --shiki-token-comment: var(--kcq-ink-2);
   --shiki-token-function: var(--kcq-ink);
   --shiki-token-parameter: var(--kcq-ink);
   --shiki-token-punctuation: var(--kcq-ink-2);
-  --shiki-token-link: var(--kcq-accent-text);
+  --shiki-token-link: var(--kcq-accent-ink);
   min-width: 0;
   border: 1px solid var(--kcq-rule);
   border-radius: var(--klc-radius-lg);

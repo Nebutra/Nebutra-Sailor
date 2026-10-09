@@ -198,7 +198,7 @@ const price = computed(() =>
   translate: 0 -50%;
   padding: var(--klc-space-2) var(--klc-space-4);
   border-radius: var(--klc-radius-xs);
-  background: var(--kcq-accent);
+  background: var(--kcq-accent-strong);
   color: #fff;
   font-size: var(--klc-text-11-mono-font-size);
   line-height: var(--klc-text-11-mono-line-height);

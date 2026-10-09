@@ -12,7 +12,8 @@
   src: url("kcq-outfit-600.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
-  font-display: swap;
+  /* Preloaded (head.ts); never swapped in late, so the headline never reflows. */
+  font-display: optional;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -74,6 +75,10 @@
   --kcq-accent: var(--klc-brand-accent);
   --kcq-accent-text: var(--klc-brand-accent-text);
   --kcq-accent-wash: color-mix(in oklab, var(--klc-brand-accent) 14%, transparent);
+  /* Cobalt deep enough for white 11–12px label text (≥ 4.5:1): chart price-label chips. */
+  --kcq-accent-strong: color-mix(in oklab, var(--klc-brand-accent) 84%, #000);
+  /* Accent as small text on raised surfaces (code), pulled toward ink to keep ≥ 4.5:1. */
+  --kcq-accent-ink: color-mix(in oklab, var(--klc-brand-accent-text) 72%, var(--kcq-ink));
   --kcq-up: var(--klc-color-candle-up-body);
   --kcq-down: var(--klc-color-candle-down-body);
   --kcq-warning: var(--klc-color-ui-warning-strong);
@@ -296,16 +301,19 @@ a {
   line-height: var(--klc-text-20-line-height);
   letter-spacing: var(--klc-text-20-letter-spacing);
 }
-/* Han glyphs need air the Latin display tracking takes away; keep phrases whole. */
-:lang(zh-Hans) :is(.t-display, .t-heading, .t-statement) {
+/* Han glyphs need air the Latin display tracking takes away; keep phrases whole. (`:root` for the
+   same order-independence as below.) */
+:root:lang(zh-Hans) :is(.t-display, .t-heading, .t-statement) {
   letter-spacing: 0;
   line-height: 1.15;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
-/* Han display on phones: sized so a nine-character phrase fits one line without breaking inside it. */
+/* Han display on phones: sized so a nine-character phrase fits one line without breaking inside it.
+   `:root` lifts specificity above the sections' scoped sizes, so the result never depends on
+   stylesheet order (prerender inlines styles; the client re-links them after hydration). */
 @media (max-width: 767px) {
-  :lang(zh-Hans) :is(.t-display, .t-statement) {
+  :root:lang(zh-Hans) :is(.t-display, .t-statement) {
     font-size: min(var(--klc-text-48-font-size), 9.2vw);
   }
 }

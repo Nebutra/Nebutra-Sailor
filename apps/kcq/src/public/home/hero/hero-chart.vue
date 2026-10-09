@@ -275,8 +275,22 @@ onBeforeUnmount(() => {
   gap: var(--klc-space-8) var(--klc-space-16);
   padding: var(--klc-space-12) var(--klc-space-16);
 }
+/* One line always: the status word changes length ("Connecting…" → "Live"), the bar never
+   re-wraps (that re-wrap was a measured layout shift). The instrument name truncates instead. */
 .hero-chart-bar {
+  flex-wrap: nowrap;
   border-bottom: 1px solid var(--kcq-rule);
+}
+.hero-chart-bar .hero-chart-instrument {
+  flex-wrap: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.hero-chart-bar .hero-status {
+  flex: none;
+  white-space: nowrap;
 }
 .hero-chart-foot {
   border-top: 1px solid var(--kcq-rule);
