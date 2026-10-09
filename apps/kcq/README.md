@@ -15,8 +15,9 @@ layouts, watchlists, chart preferences and Agent sessions are partitioned by
 account and workspace. Workspace changes reload the page to discard singleton
 caches. These are browser-local preferences, not cloud synchronization or a
 permission boundary against same-origin scripts. Organization provisioning,
-team administration and billing remain in Nebutra. Managed AI credentials
-are not provisioned by this shell.
+team administration and billing remain in Nebutra. Managed AI is served by the
+gateway through Nebutra Router (see BYOK.md, "Managed AI"); no model credential is
+provisioned in or exposed to the browser.
 
 Market data connectors run inside the same Singapore Fly Machine as the static host (one Machine, supervised processes; see `docs/ops/nebutra/2026-10-09-kcq-consolidation.md`) and are proxied by nginx over loopback:
 GOTDX at `/market/tdx` (A shares, indices and extended markets), TradingView

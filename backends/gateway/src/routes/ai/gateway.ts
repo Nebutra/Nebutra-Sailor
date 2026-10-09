@@ -278,7 +278,7 @@ function parseConfiguredUpstreams(): readonly AiGatewayUpstream[] {
  */
 const DEFAULT_ROUTER_INTERNAL_URL = "http://nebutra-router.internal:8080";
 
-function routerInternalUrl(): string {
+export function routerInternalUrl(): string {
   return (process.env.NEBUTRA_ROUTER_INTERNAL_URL ?? DEFAULT_ROUTER_INTERNAL_URL).replace(
     /\/+$/,
     "",

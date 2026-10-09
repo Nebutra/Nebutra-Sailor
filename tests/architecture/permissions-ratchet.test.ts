@@ -458,6 +458,19 @@ const STRUCTURAL_EXEMPTIONS: readonly Exemption[] = [
     why: "a person's own rows — every write is scoped to the caller's user id",
   },
   {
+    id: "kcq-managed-ai-session",
+    // kcq/ai.ts: every route sits behind a middleware that resolves the Better
+    // Auth session (401 without one), checks the request Origin, and then each
+    // completion is rate-limited per verified user id before Router is called.
+    // Authorization is "any signed-in user"; WHICH source tier serves them is
+    // derived server-side from PlatformStaff and enforced again by Router.
+    applies: (r, f) =>
+      r.file === "kcq/ai.ts" &&
+      /\bawait\s+resolveIdentity\s*\(/.test(f.text) &&
+      /\brateLimited\s*\(\s*identity\.userId\s*\)/.test(f.text),
+    why: "signed-in KCQ user; session-verified, origin-checked, per-user rate-limited",
+  },
+  {
     id: "docs-public-intake",
     // routes/docs/{chat,feedback}.ts: public docs-support endpoints reached
     // cross-origin from the statically-exported docs bundle, which has no

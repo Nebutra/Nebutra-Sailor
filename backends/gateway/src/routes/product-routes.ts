@@ -8,12 +8,15 @@
  */
 import type { OpenAPIHono } from "@hono/zod-openapi";
 import { agentRuntimeRoutes } from "./agent-runtime/index.js";
+import { kcqAiRoutes } from "./kcq/ai.js";
 import { kcqRoutes } from "./kcq/index.js";
 import { pebbleRoutes } from "./pebble/index.js";
 import { startupOsRoutes } from "./startup-os/index.js";
 
 export function mountProductRoutes(app: OpenAPIHono): void {
   app.route("/api/v1/kcq", kcqRoutes);
+  // Separate prefix: kcqRoutes' workspace middleware must not run on the AI surface.
+  app.route("/api/v1/kcq-ai", kcqAiRoutes);
   app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
   app.route("/api/v1/startup-os", startupOsRoutes);
 
