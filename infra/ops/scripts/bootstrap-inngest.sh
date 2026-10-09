@@ -28,12 +28,31 @@ for c in flyctl openssl python3 curl; do command -v "$c" >/dev/null || { echo "n
 has_secret() { flyctl secrets list -a "$1" 2>/dev/null | grep -q "^ *$2 "; }
 app_exists() { flyctl apps list --json | python3 -c "import json,sys; n={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if '$1' in n else 1)"; }
 
-echo "== app and volume"
+flyctl auth whoami >/dev/null 2>&1 || { echo "flyctl is not logged in — run: fly auth login" >&2; exit 1; }
+
+# The server must share the gateway's org: Fly's private network (.internal)
+# does not cross orgs. Take the org from the gateway itself, never a guess —
+# a "personal" fallback once created the app where the gateway cannot reach it.
+app_org() { flyctl apps list --json | python3 -c "
+import json,sys
+for a in json.load(sys.stdin):
+    if (a.get('Name') or a.get('name'))=='$1':
+        o=a.get('Organization') or a.get('organization') or {}
+        print(o.get('Slug') or o.get('slug') or ''); break"; }
+GATEWAY_ORG="$(app_org "$GATEWAY_APP")"
+[ -n "$GATEWAY_ORG" ] || { echo "could not read $GATEWAY_APP's org" >&2; exit 1; }
+
+echo "== app and volume (org $GATEWAY_ORG)"
 if app_exists "$INNGEST_APP"; then
+  have_org="$(app_org "$INNGEST_APP")"
+  if [ "$have_org" != "$GATEWAY_ORG" ]; then
+    echo "$INNGEST_APP exists in org '$have_org', not '$GATEWAY_ORG' — it cannot reach $GATEWAY_APP." >&2
+    echo "Destroy it (fly apps destroy $INNGEST_APP -y) and re-run this script." >&2
+    exit 1
+  fi
   echo "app $INNGEST_APP exists"
 else
-  org="$(bash infra/ops/scripts/resolve-fly-org.sh)"
-  flyctl apps create "$INNGEST_APP" --machines --org "$org" --yes
+  flyctl apps create "$INNGEST_APP" --machines --org "$GATEWAY_ORG" --yes
 fi
 if flyctl volumes list -a "$INNGEST_APP" --json | python3 -c 'import json,sys; sys.exit(0 if any((v.get("Name") or v.get("name"))=="inngest_data" for v in json.load(sys.stdin)) else 1)'; then
   echo "volume inngest_data exists"
