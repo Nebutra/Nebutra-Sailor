@@ -408,7 +408,10 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
   app.route("/api/v1/docs", docsRoutes);
   app.route("/api/v1/integrations", integrationRoutes);
 
-  // Admin routes — protected by X-Admin-Key, not exposed through public ingress
+  // Admin routes — protected by X-Admin-Key, not exposed through public ingress.
+  // Its "*" guard covers every router mounted under /api/v1/admin AFTER this
+  // line, so the browser-facing platform supply proxy (Cloudflare Access +
+  // PlatformStaff, no X-Admin-Key) is mounted earlier, by mountProductRoutes.
   app.route("/api/v1/admin", adminRoutes);
 
   // Webhook routes (raw body — bypass rate limiting)

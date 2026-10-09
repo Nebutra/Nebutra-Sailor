@@ -573,6 +573,12 @@ jobs:
           AUTH_PROVIDER: "better-auth"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_TELEMETRY_DISABLED: "1"
+          # Public URLs a production build bakes in. SKIP_ENV_VALIDATION lets
+          # the env schemas fall back to their localhost dev defaults, which the
+          # "Landing readable without JavaScript" step below rejects — so the
+          # build gets a non-local origin, as every deploy workflow passes one.
+          NEXT_PUBLIC_APP_URL: "https://app.example.com"
+          NEXT_PUBLIC_API_URL: "https://api.example.com"
           # Dummy DATABASE_URL so Next.js collect-page-data doesn't fail env
           # validation when SKIP_ENV_VALIDATION isn't honored inside the build
           # worker (t3-env reads process.env at module load, build workers may
@@ -600,6 +606,8 @@ jobs:
           AUTH_PROVIDER: "better-auth"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_PUBLIC_APP_URL: "https://app.example.com"
+          NEXT_PUBLIC_API_URL: "https://api.example.com"
           DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
       # The css-var-types job below audits BUILT stylesheets — Tailwind

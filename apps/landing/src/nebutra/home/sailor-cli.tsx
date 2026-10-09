@@ -52,6 +52,8 @@ export function SailorCli() {
                   target="_blank"
                   rel="noreferrer"
                   title="Open acme — this template, deployed"
+                  // The CLI's verbatim output, shown — the link itself goes to ACME_SITE.
+                  data-localhost-sample=""
                   className="text-foreground underline decoration-dotted underline-offset-4 hover:decoration-solid"
                 >
                   {LOCAL_URL}
