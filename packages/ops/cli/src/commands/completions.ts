@@ -31,6 +31,7 @@ const COMMAND_DESCRIPTIONS: Record<string, string> = {
   theme: "Theme registry and governance metadata",
   apply: "Put a Sailor Studio preset on this project",
   studio: "Sailor Studio for agents: preset schema, review link, pull",
+  admin: "Platform staff administration: list, grant, revoke",
   ai: "AI provider and gateway routing configuration",
   services: "Microservice management",
   secrets: "Encrypted secrets management",

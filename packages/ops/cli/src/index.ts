@@ -4,6 +4,7 @@ import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
+import { registerAdminCommand } from "./commands/admin";
 import { registerAiCommand } from "./commands/ai";
 import { registerApplyCommand } from "./commands/apply";
 import { registerBrandCommand } from "./commands/brand";
@@ -117,6 +118,7 @@ export function buildProgram(options: BuildProgramOptions): Command {
   registerThemeCommand(program);
   registerApplyCommand(program);
   registerStudioCommand(program);
+  registerAdminCommand(program);
   registerUiCommand(program);
 
   // ─── Platform commands ───────────────────────────────────

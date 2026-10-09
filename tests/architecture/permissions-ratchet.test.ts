@@ -24,6 +24,8 @@
  *   - mapTenantRoleToPermissionRoles(…)   role check built on the tenantContext
  *                                         mapping (billing `requireBillingManage`)
  *   - x-admin-key + ADMIN_API_KEY         platform-operator key (routes/admin)
+ *   - requirePlatformRole(…)              middlewares/platformStaff.ts (PlatformStaff
+ *                                         row + CASL platform ladder, 401/403)
  *
  * NOT guards (see IDENTITY_MARKERS) — they gate on *something*, but not on who
  * the caller is; any org member, including `org:viewer`, passes them:
@@ -315,6 +317,11 @@ const AUTHZ_MARKERS: readonly Marker[] = [
     id: "role-check",
     test: (t) => /\bmapTenantRoleToPermissionRoles\s*\(/.test(t),
     why: "hand-rolled role check on the tenantContext role mapping (billing requireBillingManage)",
+  },
+  {
+    id: "requirePlatformRole",
+    test: (t) => /\brequirePlatformRole\b/.test(t),
+    why: "middlewares/platformStaff.ts — active PlatformStaff grant + platform ladder (canPlatform), 401/403",
   },
   {
     id: "admin-key",

@@ -88,7 +88,12 @@ export interface AuditLoggerLogInput {
 }
 
 export interface BoundAuditLogger {
-  log(input: AuditLoggerLogInput): Promise<void>;
+  /**
+   * Resolves to the id of the stored event, or null when it was dropped or the
+   * provider failed (audit failures never throw). Callers that must hand the
+   * id back to a person or agent (staff grants) read it; the rest ignore it.
+   */
+  log(input: AuditLoggerLogInput): Promise<string | null>;
 }
 
 /**
@@ -103,7 +108,7 @@ export function auditLogger(
   const context = extractRequestContext(req);
 
   return {
-    async log(input: AuditLoggerLogInput): Promise<void> {
+    async log(input: AuditLoggerLogInput): Promise<string | null> {
       const resource = input.resource ?? defaults.resource;
       if (!resource) {
         // Defensive: a missing resource means the call site forgot to specify
@@ -112,7 +117,7 @@ export function auditLogger(
         logger.warn("[audit] auditLogger.log called without resource — event dropped", {
           action: input.action,
         });
-        return;
+        return null;
       }
 
       const eventInput = {
@@ -127,7 +132,7 @@ export function auditLogger(
         ...(input.metadata ? { metadata: input.metadata } : {}),
       };
 
-      await emitAuditEvent(eventInput);
+      return emitAuditEvent(eventInput);
     },
   };
 }
@@ -248,7 +253,7 @@ export function withAudit(
 // Internal: validate + dispatch
 // -----------------------------------------------------------------------------
 
-async function emitAuditEvent(input: unknown): Promise<void> {
+async function emitAuditEvent(input: unknown): Promise<string | null> {
   try {
     const parsed = AuditEventInputSchema.parse(input);
     const event: AuditEvent = {
@@ -267,10 +272,12 @@ async function emitAuditEvent(input: unknown): Promise<void> {
 
     const provider = await getAuditProvider();
     await provider.log(event);
+    return event.id;
   } catch (error) {
     // Audit failures must NEVER break the calling code path — log and swallow.
     logger.error("[audit] Failed to emit audit event", {
       error: error instanceof Error ? error.message : String(error),
     });
+    return null;
   }
 }

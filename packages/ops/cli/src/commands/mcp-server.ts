@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
+import { resolveAccessToken } from "../utils/credentials-store";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
 
@@ -56,10 +57,16 @@ export function registerMcpCommand(program: Command) {
         const server = resolveMcpServer();
         process.stderr.write(pc.dim("nebutra mcp: stdio server running — Ctrl+C to stop\n"));
 
-        const child = spawn(server.command, server.args, {
-          stdio: "inherit",
-          env: { ...process.env },
-        });
+        // The staff_* tools act as the person who ran `nebutra login`. Hand the
+        // session to the server through its environment (never argv, never
+        // stdout); an explicit NEBUTRA_TOKEN wins.
+        const env: NodeJS.ProcessEnv = { ...process.env };
+        if (!env.NEBUTRA_TOKEN) {
+          const session = await resolveAccessToken();
+          if (session && !session.expired) env.NEBUTRA_TOKEN = session.token;
+        }
+
+        const child = spawn(server.command, server.args, { stdio: "inherit", env });
 
         child.on("close", (code) => {
           if (code === 0) {

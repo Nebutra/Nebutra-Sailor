@@ -320,6 +320,13 @@ export const nebultraCommand: CommandMeta = {
       usage: "nebutra studio <schema|preview|list|pull> [preset] [--latest] [--json]",
     },
     {
+      name: "admin",
+      description:
+        "Platform administration for platform staff: list, grant and revoke staff access (confirmation required)",
+      usage:
+        "nebutra admin staff <list|whoami|grant <email> --role <role> --note <why>|revoke <email> --note <why>> [--yes] [--json]",
+    },
+    {
       name: "ui",
       description: "Search, inspect, validate, and plan migrations for @nebutra/ui components",
       usage: "nebutra ui [subcommand]",

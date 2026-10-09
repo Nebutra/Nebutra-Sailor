@@ -1,10 +1,7 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { fetchAuthCenterSession } from "@nebutra/auth/auth-center-session";
 import { getSystemDb } from "@nebutra/db";
-import { logger } from "@nebutra/logger";
 import { PresetCodeError, parsePreset } from "@nebutra/tokens/preset";
-import type { Context } from "hono";
-import { DOMAINS } from "../../config/env.js";
+import { resolveCallerUserId as callerId } from "../../lib/caller-identity.js";
 
 /**
  * Sailor Studio presets saved to a person's account — the sync half of the
@@ -16,45 +13,10 @@ import { DOMAINS } from "../../config/env.js";
  * here filters on the caller's user id.
  */
 
-const log = logger.child({ service: "studio-presets" });
 const LIST_LIMIT = 30;
 
 type StudioEnv = { Variables: { tenant?: { userId?: string } } };
 export const studioPresetRoutes = new OpenAPIHono<StudioEnv>();
-
-/**
- * The caller: a Bearer token (the CLI's device login, resolved by the tenant
- * middleware) or, from a browser, the auth session cookie on the parent domain.
- */
-async function callerId(c: Context<StudioEnv>): Promise<string | null> {
-  const fromBearer = c.get("tenant")?.userId;
-  if (fromBearer) return fromBearer;
-  try {
-    const authorization = c.req.header("authorization");
-    if (authorization?.startsWith("Bearer ")) return await bearerUserId(authorization);
-    const center = await fetchAuthCenterSession(c.req.raw, DOMAINS.auth);
-    const id = center?.user.id;
-    return typeof id === "string" ? id : null;
-  } catch (error) {
-    log.warn("auth center unavailable for studio presets", { error: String(error) });
-    return null;
-  }
-}
-
-/**
- * A CLI device-login token is a session on the auth center, which the gateway's
- * own session lookup does not hold: ask the auth center, as `nebutra whoami` does.
- */
-async function bearerUserId(authorization: string): Promise<string | null> {
-  const res = await fetch(`${DOMAINS.auth.replace(/\/$/, "")}/api/auth/get-session`, {
-    headers: { authorization },
-    cache: "no-store",
-    signal: AbortSignal.timeout(8_000),
-  });
-  if (!res.ok) return null;
-  const body = (await res.json().catch(() => null)) as { user?: { id?: unknown } } | null;
-  return typeof body?.user?.id === "string" ? body.user.id : null;
-}
 
 const presetSchema = z
   .object({

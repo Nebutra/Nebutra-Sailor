@@ -50,6 +50,8 @@ export type {
   PebbleFeedback,
   PebbleFeedbackKind,
   Plan,
+  PlatformStaff,
+  PlatformStaffRole,
   // E-Commerce
   Product,
   ReasoningEffort,

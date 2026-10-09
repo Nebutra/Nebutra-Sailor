@@ -17,6 +17,7 @@ import {
   readPresetInput,
   studioReviewUrl,
 } from "@nebutra/tokens/preset";
+import { callStaffTool, isStaffTool, STAFF_TOOLS } from "./staffTools";
 
 /**
  * Nebutra MCP Context Server
@@ -140,6 +141,7 @@ export function createContextServerHandlers(projectRoot: string) {
             },
           },
           ...STUDIO_TOOLS,
+          ...STAFF_TOOLS,
         ],
       };
     },
@@ -152,6 +154,7 @@ export function createContextServerHandlers(projectRoot: string) {
       arguments?: Record<string, unknown> | undefined;
     }) {
       if (name.startsWith("studio_")) return callStudioTool(projectRoot, name, args ?? {});
+      if (isStaffTool(name)) return callStaffTool(name, args ?? {});
       if (name !== "get_project_structure") {
         throw new Error(`Unknown tool: ${name}`);
       }

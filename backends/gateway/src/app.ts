@@ -83,6 +83,7 @@ import { healthRoutes } from "./routes/misc/health.js";
 import { notificationRoutes } from "./routes/notifications/index.js";
 import { paraAgentRoutes } from "./routes/para/agent.js";
 import { paraRoutes } from "./routes/para/index.js";
+import { platformStaffRoutes } from "./routes/platform/staff.js";
 import { mountProductRoutes } from "./routes/product-routes.js";
 import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
@@ -314,6 +315,7 @@ export async function createGatewayApp(options: CreateGatewayAppOptions = {}): P
   // the skip list so they receive full rate limiting.
   app.route("/api/v1/legal", consentRoutes);
   app.route("/api/v1/studio", studioPresetRoutes);
+  app.route("/api/v1/platform/staff", platformStaffRoutes);
   app.route("/api/v1/events", eventRoutes);
   app.route("/api/v1/agents", agentRoutes);
   app.route("/api/v1/workflows", workflowRoutes);

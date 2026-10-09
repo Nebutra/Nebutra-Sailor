@@ -77,6 +77,16 @@ export {
 } from "./pebble-support.repository";
 // User
 export { PersonalTenantRepository } from "./personal-tenant.repository";
+// Platform staff
+export type {
+  GrantInput as PlatformStaffGrantInput,
+  RevokeInput as PlatformStaffRevokeInput,
+  StaffGrantResult,
+  StaffGuardReason,
+  StaffRow,
+} from "./platform-staff.repository";
+export { PlatformStaffRepository, StaffGuardError } from "./platform-staff.repository";
+export { createInMemoryPlatformStaffDb } from "./platform-staff.testing";
 export type {
   ListRequestLogsInput,
   ListRequestLogsResult,
