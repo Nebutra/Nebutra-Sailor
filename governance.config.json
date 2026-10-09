@@ -2358,5 +2358,116 @@
         "count": 8
       }
     ]
+  },
+  "noHardReload": {
+    "$description": "scripts/lint-no-hard-reload.mjs — refresh server data in place (useRevalidate / invalidateQueries / router.invalidate), not with location.reload(). Each reload entry states why a full load is required. Shrink-only.",
+    "reloadAllowlist": [
+      {
+        "file": "apps/kcq/src/main.ts",
+        "count": 2,
+        "reason": "Identity/workspace changed in another tab (boot configures the chart persistence scope once, before importing persistence modules), and the boot-failure retry button."
+      },
+      {
+        "file": "apps/kcq/src/preload-recovery.ts",
+        "count": 1,
+        "reason": "vite:preloadError chunk-load recovery after a deploy; guarded to once per window by sessionStorage."
+      },
+      {
+        "file": "apps/kcq/src/profile-page.tsx",
+        "count": 2,
+        "reason": "The signed-in user changed under the form; persistence scope is bound to the boot identity."
+      },
+      {
+        "file": "apps/kcq/src/use-workbench.ts",
+        "count": 2,
+        "reason": "Workspace switch and sign-out: IndexedDB/agent-session stores are named by the boot-time persistence scope (scopedPersistenceName) and the agent bridge is closed first."
+      },
+      {
+        "file": "apps/landing/src/components/cookie-consent-banner.tsx",
+        "count": 1,
+        "reason": "Migrate: analytics consent should mount the gated providers from a consent store instead of reloading."
+      }
+    ],
+    "refreshAllowlist": [
+      {
+        "file": "apps/web/src/components/navigation/user-menu.tsx",
+        "count": 1,
+        "reason": "Locale cookie change: Next re-runs getRequestConfig on the RSC refresh; no server data changed."
+      },
+      {
+        "file": "apps/web/src/lib/navigation/use-revalidate.ts",
+        "count": 1,
+        "reason": "The revalidation hook itself."
+      }
+    ]
+  },
+  "noEffectFetch": {
+    "$description": "scripts/lint-no-effect-fetch.mjs — server reads go through TanStack Query (useQuery + route-loader prefetch) or RSC, not useEffect. This allowlist is the tracked P1-1 migration list; shrink-only.",
+    "allowlist": [
+      {
+        "file": "apps/forge/src/components/wallet-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/kuanlan/src/components/IdPhotoStudio.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/footer-status.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/preset-preview.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/lib/use-public-me.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/nebutra/studio/studio-account.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/nebutra/studio/studio-frame.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/mail-preview/src/components/preview-pane.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/shell/credits-chip.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/shell/workspace-page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/cofounder/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/startup-os/company/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/admin/access-invite-issuer.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/cofounder-match/discover-deck.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/settings/security/security-settings-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-command-center.tsx",
+        "count": 1
+      }
+    ]
   }
 }
