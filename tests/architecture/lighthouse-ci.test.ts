@@ -29,9 +29,10 @@ describe("lighthouse dashboard ci harness", () => {
     expect(workflow).toContain("  workflow_dispatch:");
     expect(workflow).not.toContain("  pull_request:");
     expect(workflow).toContain('default: "/tenants"');
-    expect(workflow).toContain(`BEFORE_REF="${beforeRefInput}"`);
-    expect(workflow).toContain(`AFTER_REF="${afterRefInput}"`);
-    expect(workflow).toContain(`TARGET_PATH="${targetPathInput}"`);
+    expect(workflow).toContain(`BEFORE_REF: ${beforeRefInput}`);
+    expect(workflow).toContain(`AFTER_REF: ${afterRefInput}`);
+    expect(workflow).toContain(`TARGET_PATH: ${targetPathInput}`);
+    expect(workflow).not.toContain(`BEFORE_REF="${beforeRefInput}"`);
     expect(workflow).not.toContain("github.event.pull_request");
   });
 

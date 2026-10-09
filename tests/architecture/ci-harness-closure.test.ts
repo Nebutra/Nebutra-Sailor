@@ -291,8 +291,9 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("  workflow_dispatch:");
     expect(workflow).not.toContain("  pull_request:");
     expect(workflow).toContain("    timeout-minutes: 60");
-    expect(workflow).toContain(`BEFORE_REF="${beforeRefInput}"`);
-    expect(workflow).toContain(`AFTER_REF="${afterRefInput}"`);
+    expect(workflow).toContain(`BEFORE_REF: ${beforeRefInput}`);
+    expect(workflow).toContain(`AFTER_REF: ${afterRefInput}`);
+    expect(workflow).not.toContain(`BEFORE_REF="${beforeRefInput}"`);
     expect(workflow).not.toContain("github.event.pull_request.head.sha");
   });
 
