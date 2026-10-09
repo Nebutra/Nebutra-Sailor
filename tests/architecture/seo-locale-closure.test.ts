@@ -187,13 +187,21 @@ describe("per-app robots posture", () => {
    */
   const ZONE_ON_ANOTHER_ORIGIN = ["sailor-docs"];
 
+  /**
+   * One origin, split per path: a few prerendered public pages are indexed and
+   * everything else (the authenticated app) is disallowed. kcq moved here from
+   * DISALLOWED on 2026-10-09 (docs/architecture/2026-10-09-kcq-product-surface.md).
+   * A mixed origin names its own hosts and paths, so its posture is pinned per
+   * instance: tests/architecture/nebutra/kcq-product-surface.test.ts.
+   */
+  const MIXED = ["kcq"];
+
   /** Everything else: internal tooling or authenticated product surfaces. */
   const DISALLOWED = [
     "admin",
     "auth",
     "design",
     "idp",
-    "kcq",
     "kuanlan",
     "mail-preview",
     "para",
@@ -214,6 +222,7 @@ describe("per-app robots posture", () => {
     const classified = [
       ...INDEXABLE,
       ...ZONE_ON_ANOTHER_ORIGIN,
+      ...MIXED,
       ...DISALLOWED,
       ...NO_ROBOTS_SURFACE,
     ];
@@ -223,7 +232,7 @@ describe("per-app robots posture", () => {
     expect(
       appNames().filter((app) => !classified.includes(app)),
       "New app with no declared robots posture — add it to INDEXABLE, " +
-        "ZONE_ON_ANOTHER_ORIGIN or DISALLOWED here and ship the matching robots file.",
+        "ZONE_ON_ANOTHER_ORIGIN, MIXED or DISALLOWED here and ship the matching robots file.",
     ).toEqual([]);
     expect(classified.filter((app) => !appNames().includes(app))).toEqual([]);
   });
@@ -251,6 +260,28 @@ describe("per-app robots posture", () => {
     expect(
       notDisallowed,
       "Non-public apps must ship public/robots.txt with `User-agent: *` + `Disallow: /`",
+    ).toEqual([]);
+  });
+
+  it("gives every mixed origin a default-deny robots.txt with explicit allows and a sitemap", () => {
+    const wrong = MIXED.filter((app) => {
+      const robots = join(APPS_DIR, app, "public/robots.txt");
+      if (!existsSync(robots) || !existsSync(join(APPS_DIR, app, "public/sitemap.xml")))
+        return true;
+      const body = readFileSync(robots, "utf8");
+      const group = body.slice(body.indexOf("User-agent: *"));
+      return (
+        !body.includes("User-agent: *") ||
+        !/^Disallow:\s*\/\s*$/m.test(group) ||
+        !/^Allow:\s*\/\S+/m.test(group) ||
+        !/^Sitemap:\s*https:\/\/\S+\/sitemap\.xml$/m.test(body)
+      );
+    });
+
+    expect(
+      wrong,
+      "Mixed origins ship public/robots.txt (`Disallow: /` plus an `Allow:` per public " +
+        "page and a `Sitemap:`) and public/sitemap.xml",
     ).toEqual([]);
   });
 

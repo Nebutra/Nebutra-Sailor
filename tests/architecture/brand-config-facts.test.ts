@@ -48,6 +48,8 @@ describe("brand config facts (contract lock for app helpers + i18n)", () => {
       "analytics",
       "pebble",
       "carina",
+      "kuanlan",
+      "kcq",
     ] as const) {
       expect(typeof brand.domains[key], `brand.domains.${key}`).toBe("string");
       expect(brand.domains[key].length).toBeGreaterThan(0);

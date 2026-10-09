@@ -46,6 +46,29 @@ sources are not advertised as provisioned.
 
 Frontend layout and interaction requirements live in [DESIGN.md](./DESIGN.md).
 
+## Routes
+
+| Path | Surface | Rendering |
+|---|---|---|
+| `/` | 302 to `/app` | nginx |
+| `/app`, `/app/*` | Workbench (auth boot, chart persistence, Agent) | SPA, `index.html`, `noindex` |
+| `/settings/profile` | Account settings | SPA, `index.html` |
+| `/home` (en, `x-default`), `/zh/home`, `/benchmark`, `/zh/benchmark` | Public pages | Prerendered static HTML, `public.html` entry |
+
+Everything else is a real 404. The public table lives in `src/public/routes.ts`; robots,
+sitemap, prerender and the dev server derive from it, and nginx plus
+`tests/architecture/seo-locale-closure.test.ts` pin the same paths. Public pages never run the
+auth or persistence boot; the build fails if anything reachable from `public.html` pulls in auth,
+the chart, the workbench, Agent providers or React (`publicBoundary` in `vite.config.mjs`).
+`build` runs the client build, an SSR build of `src/public/entry-server.ts`, then
+`scripts/prerender.mjs`, which writes `dist/<path>.html` with @unhead/vue head tags (title,
+description, canonical, hreflang en/zh-Hans/x-default, OG/Twitter, theme-color, color-scheme).
+
+Locale: English is the default URL. Without a stored choice, a browser that prefers Chinese is
+sent from the default URL to `/zh/...`; a `/zh/...` URL is never detected away from, so crawlers
+see both variants. Choosing a language in the page header stores it (`kcq:locale`) and it wins
+on later visits. `<html lang>` follows the route.
+
 Account settings live at `/settings/profile` on the KCQ host. Route and profile
 regressions run from the repository root with
 `pnpm exec vitest run --config apps/kcq/vitest.config.ts`.

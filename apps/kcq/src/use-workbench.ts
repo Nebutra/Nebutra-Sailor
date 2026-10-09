@@ -17,6 +17,7 @@ import {
   type createAuthCenterBrowserClient,
 } from "@nebutra/auth/browser";
 import { onBeforeUnmount, shallowRef } from "vue";
+import { APP_PATH } from "./main-route";
 
 import {
   createManagedAiClient,
@@ -61,7 +62,7 @@ export function useWorkbench(props: WorkbenchProps) {
       }),
   });
   const panelWidthStorage = createAgentPanelWidthStorage();
-  const signInUrl = buildAuthCenterSignInUrl(window.location.origin + "/", {
+  const signInUrl = buildAuthCenterSignInUrl(window.location.origin + APP_PATH, {
     NEXT_PUBLIC_AUTH_URL: `https://${brand.domains.auth}`,
   });
   async function switchWorkspace(id: string | null) {

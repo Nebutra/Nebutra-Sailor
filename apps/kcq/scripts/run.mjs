@@ -75,13 +75,41 @@ if (mode === "typecheck") {
 } else {
   args = ["exec", "vite", ...(mode === "build" ? ["build"] : []), "--config", config];
 }
-try {
-  const result = spawnSync("pnpm", args, {
+const prerenderDir = resolve(root, ".kcq-prerender");
+function pnpm(stepArgs) {
+  const result = spawnSync("pnpm", stepArgs, {
     cwd: upstream,
     stdio: "inherit",
     env: { ...process.env, KCQ_SOURCE_DIR: upstream },
   });
-  process.exitCode = result.status ?? 1;
+  return result.status ?? 1;
+}
+try {
+  let status = pnpm(args);
+  if (mode === "build" && status === 0) {
+    // Public pages become static HTML; the app stays a SPA (scripts/prerender.mjs).
+    status = pnpm([
+      "exec",
+      "vite",
+      "build",
+      "--config",
+      config,
+      "--ssr",
+      resolve(root, "src/public/entry-server.ts"),
+      "--outDir",
+      prerenderDir,
+    ]);
+    if (status === 0) {
+      const result = spawnSync(
+        process.execPath,
+        [resolve(root, "scripts/prerender.mjs"), prerenderDir, resolve(root, "dist")],
+        { stdio: "inherit" },
+      );
+      status = result.status ?? 1;
+    }
+  }
+  process.exitCode = status;
 } finally {
   if (typeConfig) rmSync(typeConfig);
+  rmSync(prerenderDir, { recursive: true, force: true });
 }

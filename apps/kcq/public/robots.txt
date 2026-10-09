@@ -1,2 +1,11 @@
+# Public KCQ pages are indexed; the workbench, account settings and everything else are not.
+# Hashed assets stay crawlable so search engines can render the public pages.
 User-agent: *
+Allow: /home$
+Allow: /zh/home$
+Allow: /benchmark$
+Allow: /zh/benchmark$
+Allow: /assets/
 Disallow: /
+
+Sitemap: https://kcq.nebutra.com/sitemap.xml

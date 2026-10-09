@@ -22,17 +22,98 @@ const { createCoreSourceAliases } = await import(
 const { indicatorEntrypointsPlugin } = await import(
   pathToFileURL(resolve(source, "scripts/indicator-entrypoints-plugin.mjs")).href
 );
-export default {
+const vueRuntime = upstream.resolve("vue/dist/vue.runtime.esm-bundler.js");
+
+/** Dev only: mirror nginx (`/` → `/app`, public paths → public.html; see infra/fly/kcq.nginx.conf). */
+function devRoutes() {
+  return {
+    name: "kcq-dev-routes",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        try {
+          const [path, query] = (req.url ?? "/").split("?");
+          const { APP_PATH, matchPublicRoute } =
+            await server.ssrLoadModule("/src/public/routes.ts");
+          if (path === "/") {
+            res.statusCode = 302;
+            res.setHeader("Location", APP_PATH + (query ? `?${query}` : ""));
+            res.end();
+            return;
+          }
+          if (matchPublicRoute(path)) req.url = "/public.html";
+          next();
+        } catch (error) {
+          next(error);
+        }
+      });
+    },
+  };
+}
+
+/** Modules the public pages must never load: auth, chart persistence, workbench, Agent, React islands. */
+const PUBLIC_FORBIDDEN =
+  /\/(?:src\/(?:main|use-workbench|workbench[^/]*|profile[^/]*|header-surface|source-connections[^/]*|market-connect[^/]*)\.|node_modules\/(?:react|react-dom|@nebutra\/(?:auth|ui|icons))\/|packages\/(?:iam\/auth|design\/ui|core|vue|agent-runtime)\/)/;
+
+/** Fail the client build when anything reachable from public.html (static or lazy) crosses that line. */
+function publicBoundary() {
+  return {
+    name: "kcq-public-boundary",
+    apply: "build",
+    generateBundle(_options, bundle) {
+      const chunks = Object.values(bundle).filter((output) => output.type === "chunk");
+      const entry = chunks.find(
+        (chunk) => chunk.isEntry && chunk.facadeModuleId?.endsWith("/public.html"),
+      );
+      if (!entry) return;
+      const byName = new Map(chunks.map((chunk) => [chunk.fileName, chunk]));
+      const pending = [entry];
+      const seen = new Set();
+      while (pending.length) {
+        const chunk = pending.pop();
+        if (seen.has(chunk.fileName)) continue;
+        seen.add(chunk.fileName);
+        const leaked = chunk.moduleIds.filter((id) => PUBLIC_FORBIDDEN.test(id));
+        if (leaked.length) {
+          this.error(
+            `Public chunk ${chunk.fileName} includes app-only modules:\n${leaked.join("\n")}`,
+          );
+        }
+        for (const next of [...chunk.imports, ...chunk.dynamicImports]) {
+          if (byName.has(next)) pending.push(byName.get(next));
+        }
+      }
+    },
+  };
+}
+
+/**
+ * Two entries: index.html is the authenticated app (SPA), public.html the prerendered public
+ * pages. The SSR build (`--ssr src/public/entry-server.ts`) only feeds scripts/prerender.mjs.
+ */
+export default ({ isSsrBuild }) => ({
   root,
   build: {
     rollupOptions: {
+      ...(isSsrBuild
+        ? {}
+        : { input: { index: resolve(root, "index.html"), public: resolve(root, "public.html") } }),
       onwarn(warning, handler) {
         if (warning.code !== "MODULE_LEVEL_DIRECTIVE") handler(warning);
       },
     },
   },
+  // Bundle everything for prerender so Vue, the router and unhead share one runtime instance.
+  ssr: { noExternal: true },
+  define: {
+    __VUE_I18N_FULL_INSTALL__: "true",
+    __VUE_I18N_LEGACY_API__: "false",
+    __INTLIFY_PROD_DEVTOOLS__: "false",
+  },
   server: { host: "127.0.0.1", port: 3130, fs: { allow: [resolve(root, "../.."), source] } },
   plugins: [
+    devRoutes(),
+    ...(isSsrBuild ? [] : [publicBoundary()]),
     tailwindcss(),
     indicatorEntrypointsPlugin(),
     babel({
@@ -81,7 +162,11 @@ export default {
         find: /^@nebutra\/tokens\/styles.css$/,
         replacement: resolve(root, "../../packages/design/tokens/styles.css"),
       },
-      { find: /^vue$/, replacement: upstream.resolve("vue/dist/vue.runtime.esm-bundler.js") },
+      { find: /^vue$/, replacement: vueRuntime },
+      {
+        find: /^vue\/server-renderer$/,
+        replacement: resolve(dirname(vueRuntime), "../server-renderer/index.mjs"),
+      },
       {
         find: /^@363045841yyt\/klinechart$/,
         replacement: resolve(source, "packages/vue/src/index.ts"),
@@ -101,4 +186,4 @@ export default {
       },
     ],
   },
-};
+});

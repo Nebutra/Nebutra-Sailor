@@ -280,6 +280,11 @@ export interface BrandConfig {
      * through `router`. Production is Fly Singapore, not the app workspace.
      */
     kuanlan: string;
+    /**
+     * KCQ (KLineChartQuant) product origin: `/app` workbench plus the indexed
+     * `/home` and `/benchmark` pages. Auth RP; one Fly Singapore Machine.
+     */
+    kcq: string;
   };
 
   social: {
@@ -383,6 +388,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     pebble: "pebble.nebutra.com",
     carina: "carina.nebutra.com",
     kuanlan: "kuanlan.nebutra.com",
+    kcq: "kcq.nebutra.com",
     origin: "origin.nebutra.com",
   },
   social: {

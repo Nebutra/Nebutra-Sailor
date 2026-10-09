@@ -5,10 +5,14 @@ import { configureBrowserPersistenceScope } from "@363045841yyt/klinechart-core/
 import { createAuthCenterBrowserClient } from "@nebutra/auth/browser";
 import { createApp, type App as VueApp } from "vue";
 import "./styles.css";
-import { getKcqRoute } from "./main-route";
+import { APP_PATH, getKcqRoute } from "./main-route";
 import { installPreloadRecovery } from "./preload-recovery";
 
 installPreloadRecovery();
+// nginx answers `/` with a redirect; this covers the dev server and stale cached shells.
+if (getKcqRoute(window.location.pathname) === "root") {
+  window.history.replaceState(null, "", APP_PATH + window.location.search + window.location.hash);
+}
 
 const auth = createAuthCenterBrowserClient(`https://${brand.domains.auth}`);
 async function boot() {
