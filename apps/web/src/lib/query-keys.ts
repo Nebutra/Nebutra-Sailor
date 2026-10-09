@@ -33,6 +33,12 @@ export const queryKeys = {
     list: () => ["integrations", "list"] as const,
   },
 
+  cofounder: {
+    all: ["cofounder"] as const,
+    matches: () => ["cofounder", "matches"] as const,
+    room: (profileId: string) => ["cofounder", "room", profileId] as const,
+  },
+
   billingUsage: {
     all: ["billing-usage"] as const,
     summary: () => ["billing-usage", "summary"] as const,
