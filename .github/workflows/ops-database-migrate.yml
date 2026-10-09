@@ -10,6 +10,12 @@ name: Database — bring it to the schema
 #   adopt   once per database that predates the baseline: verifies the tables
 #           already are the baseline, then swaps the legacy history for it.
 #           Changes no table. `deploy` refuses until this has run.
+#   identity-backfill
+#           links Better Auth subjects to their Clerk-era `users` rows
+#           (`scripts/backfill-identity-links.mjs --include-orphans`). A DRY
+#           RUN unless `apply` is true; the plan lands in the job summary
+#           (emails masked). Dry-run first, read the summary, then re-run with
+#           apply. Idempotent; one transaction. Touches no schema.
 #
 # ADR 2026-09-25 database convergence. There is no `db push` path any more:
 # a database built by push is adopted, not pushed again.
@@ -24,13 +30,20 @@ on:
       action:
         description: "deploy = apply and verify; check = read-only report; adopt = one-time switch to the baseline"
         type: choice
-        options: [check, deploy, adopt]
+        options: [check, deploy, adopt, identity-backfill]
         default: check
+      apply:
+        description: "identity-backfill only: write the links (default false = dry run, prints the plan)"
+        type: boolean
+        default: false
   workflow_call:
     inputs:
       action:
         type: string
         default: deploy
+      apply:
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -53,6 +66,7 @@ jobs:
       DIRECT_URL: ${{ secrets.DIRECT_URL || secrets.DATABASE_URL }}
       APP_DB_ROLE: ${{ vars.APP_DB_ROLE || 'app_user' }}
       ACTION: ${{ inputs.action }}
+      APPLY: ${{ inputs.apply && 'true' || 'false' }}
     steps:
       - name: Require a database URL
         run: |
@@ -70,11 +84,32 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Generate the client and row-level security
+        if: ${{ inputs.action != 'identity-backfill' }}
         run: pnpm --filter @nebutra/db db:generate
 
       - name: db.mjs ${{ inputs.action }}
+        if: ${{ inputs.action != 'identity-backfill' }}
         working-directory: packages/platform/db
         run: node scripts/db.mjs "$ACTION"
+
+      - name: Identity backfill (${{ inputs.apply && 'APPLY' || 'dry run' }})
+        # Dry run unless `apply` is true. Output masks emails; ids are fine.
+        # The plan is also written to the job summary.
+        if: ${{ inputs.action == 'identity-backfill' }}
+        working-directory: packages/platform/db
+        run: |
+          set -euo pipefail
+          ARGS="--include-orphans"
+          if [ "$APPLY" = "true" ]; then ARGS="$ARGS --apply"; fi
+          node scripts/backfill-identity-links.mjs $ARGS 2>&1 | tee "$RUNNER_TEMP/identity-backfill.txt"
+          {
+            if [ "$APPLY" = "true" ]; then echo "### Identity backfill — APPLIED"; else echo "### Identity backfill — dry run (nothing written)"; fi
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/identity-backfill.txt"
+            echo '```'
+            if [ "$APPLY" != "true" ]; then echo; echo "Happy with the plan? Re-run this workflow with action identity-backfill and apply checked."; fi
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Export the live schema
         # Structure only: tables, indexes, RLS policies, functions, grants. No

@@ -75,6 +75,15 @@ uses. Use `public.current_tenant_id()` in custom SQL.
 | `db:check` | read-only drift report; exit 1 on any drift |
 | `db:adopt` | once, for a database that predates the baseline (checks, then records it) |
 
+**Identity backfill from CI (no local production URL).** Run the workflow
+`Database — bring it to the schema` (`ops-database-migrate.yml`) with action
+`identity-backfill`. It runs `scripts/backfill-identity-links.mjs --include-orphans`
+against the repository's `DIRECT_URL`/`DATABASE_URL` secret as a **dry run** and
+prints the plan (emails masked) to the job summary. Re-run with `apply` checked
+to write the links; the script is idempotent and writes in one transaction.
+`gh workflow run ops-database-migrate.yml -f action=identity-backfill` (dry run),
+add `-f apply=true` to write.
+
 ## Local preview — no database to set up
 
 With **no `DATABASE_URL`** (outside production), or `DATABASE_URL=pglite:[dir]`,
