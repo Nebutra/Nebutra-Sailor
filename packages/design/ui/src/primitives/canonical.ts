@@ -75,6 +75,7 @@ export {
 } from "./dialog";
 export * from "./drawer";
 export * from "./dropdown-menu";
+export * from "./dropzone";
 export * from "./empty-state";
 export * from "./error-message";
 export * from "./field";
@@ -89,6 +90,7 @@ export * from "./loading-dots";
 export * from "./menubar";
 export * from "./navigation-menu";
 export { navigationMenuTriggerStyle } from "./navigation-menu-variants";
+export * from "./number-field";
 export * from "./pagination";
 export * from "./popover";
 export * from "./progress";
