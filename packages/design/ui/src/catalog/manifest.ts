@@ -380,6 +380,20 @@ export const CATALOG: readonly CatalogEntry[] = [
     demos: ["select-demo", "select-disabled-demo", "select-groups-demo"],
   },
   {
+    id: "color-picker",
+    title: "Color Picker",
+    category: "forms",
+    status: "stable",
+    import: "@nebutra/ui/primitives",
+    files: ["primitives/color-math.ts", "primitives/color-picker.tsx"],
+    demos: [
+      "color-picker-demo",
+      "color-picker-alpha-demo",
+      "color-picker-popover-demo",
+      "color-picker-swatches-demo",
+    ],
+  },
+  {
     id: "slider",
     title: "Slider",
     category: "forms",

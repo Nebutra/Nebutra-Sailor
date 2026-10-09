@@ -4,7 +4,7 @@
 /**
  * Wave-6 hard-correct product runners: network, mermaid, ΔE, DBML.
  */
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, ColorPickerPopover, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import {
@@ -297,14 +297,12 @@ export function ColorDeltaERunner({ toolId }: { toolId: string }) {
             onChange={(e) => setA(e.target.value)}
             className="font-mono min-w-[8rem]"
           />
-          <input
-            data-allow-native
-            type="color"
-            aria-label="color A"
+          <ColorPickerPopover
+            labels={{ trigger: "color A" }}
             // @allow-brand-hex: fallback for the seeded input while the typed hex is incomplete
             value={/^#[0-9a-fA-F]{6}$/.test(hexA) ? hexA : "#0033FE"}
-            onChange={(e) => setA(e.target.value)}
-            className="h-10 w-12 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
+            onChange={(picked) => setA(picked)}
+            triggerClassName="h-10 w-12 rounded-[var(--radius-md)]"
           />
         </div>
         <div className="flex flex-wrap items-end gap-2">
@@ -316,14 +314,12 @@ export function ColorDeltaERunner({ toolId }: { toolId: string }) {
             onChange={(e) => setB(e.target.value)}
             className="font-mono min-w-[8rem]"
           />
-          <input
-            data-allow-native
-            type="color"
-            aria-label="color B"
+          <ColorPickerPopover
+            labels={{ trigger: "color B" }}
             // @allow-brand-hex: fallback for the other seeded input
             value={/^#[0-9a-fA-F]{6}$/.test(hexB) ? hexB : "#0BF1C3"}
-            onChange={(e) => setB(e.target.value)}
-            className="h-10 w-12 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
+            onChange={(picked) => setB(picked)}
+            triggerClassName="h-10 w-12 rounded-[var(--radius-md)]"
           />
         </div>
       </div>

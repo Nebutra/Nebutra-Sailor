@@ -117,6 +117,7 @@ export * from "./code-block-language-icon";
  */
 export * from "./collapsible";
 export * from "./color-badge";
+export * from "./color-picker";
 export {
   Combobox,
   ComboboxEmpty,

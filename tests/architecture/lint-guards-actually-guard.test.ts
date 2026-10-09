@@ -86,6 +86,11 @@ const CASES: Case[] = [
     violation: 'export const C = () => <input type="text" />;\n',
   },
   {
+    // The OS colour dialog is banned outright: data-allow-native does not excuse it.
+    guard: "lint-no-raw-inputs",
+    violation: 'export const C = () => <input data-allow-native type="color" />;\n',
+  },
+  {
     // The bracket form is the one Tailwind silently drops; `p-4/50` is not a
     // violation and testing it would have reported this guard as broken.
     guard: "lint-no-spacing-opacity",

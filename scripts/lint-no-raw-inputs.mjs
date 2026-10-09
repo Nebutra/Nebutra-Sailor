@@ -9,6 +9,9 @@
 //   • Native elements are allowed only with `data-allow-native` attribute,
 //     reserved for: type="hidden" form data, type="file" with custom button
 //     trigger, etc.
+//   • type="color" is NEVER allowed — not even with data-allow-native. The OS
+//     colour dialog cannot be themed and ignores dark mode; use ColorPicker /
+//     ColorPickerPopover from @nebutra/ui/primitives.
 //   • <select> is NEVER allowed in product apps — even with data-allow-native.
 //     OS chrome cannot be themed; use compound / options Select (listbox).
 //     Escape hatch only with same-line or previous-line: // allow-os-select: <reason>
@@ -95,6 +98,14 @@ for (const file of files) {
       continue;
     }
 
+    if (
+      tag === "input" &&
+      /\btype\s*=\s*(?:"color"|'color'|\{\s*["'`]color["'`]\s*\})/.test(attrs)
+    ) {
+      violations.push({ file, line: lineCounter, tag, reason: "native-color" });
+      continue;
+    }
+
     if (/\bdata-allow-native\b/.test(attrs)) continue;
     violations.push({ file, line: lineCounter, tag, reason: "raw" });
   }
@@ -112,7 +123,12 @@ const raw = violations.filter((v) => v.reason === "raw");
 
 process.stderr.write(`\n❌ ${violations.length} form-control violation(s):\n\n`);
 for (const v of violations) {
-  const note = v.reason === "select-banned" ? "  [native <select> banned]" : "";
+  const note =
+    v.reason === "select-banned"
+      ? "  [native <select> banned]"
+      : v.reason === "native-color"
+        ? '  [native type="color" banned]'
+        : "";
   process.stderr.write(`  ${v.file}:${v.line}  <${v.tag}>${note}\n`);
 }
 process.stderr.write(`\nFix:\n`);
@@ -125,6 +141,9 @@ process.stderr.write(
 );
 process.stderr.write(
   `    (options={…} API is a styled listbox by default; do NOT use raw <select>)\n`,
+);
+process.stderr.write(
+  `  • Colours             → import { ColorPicker, ColorPickerPopover } from "@nebutra/ui/primitives" (native type="color" is never allowed)\n`,
 );
 process.stderr.write(`  • Native input opt-out → data-allow-native (hidden/file only)\n`);
 if (selectBanned.length) {

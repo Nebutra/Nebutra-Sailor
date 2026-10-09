@@ -4,7 +4,7 @@
  * P0 specialized runners for high-traffic tools that previously showed
  *「未配置工作台」— JSON/YAML family, regex, SQL, color, QR, cron, timezone.
  */
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, ColorPickerPopover, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useDebouncedCallback } from "@/components/result-panels";
@@ -331,13 +331,11 @@ export function ColorConvertRunner({ toolId }: { toolId: string }) {
           className="font-mono min-w-[12rem]"
           placeholder="#0033FE / rgb() / hsl()"
         />
-        <input
-          data-allow-native
-          type="color"
-          aria-label={t("colorConvert.pick")}
+        <ColorPickerPopover
+          labels={{ trigger: t("colorConvert.pick") }}
           value={hex && /^#[0-9a-fA-F]{6}$/.test(hex) ? hex : "#0033FE"}
-          onChange={(e) => setColor(e.target.value)}
-          className="h-10 w-14 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
+          onChange={(picked) => setColor(picked)}
+          triggerClassName="h-10 w-12 rounded-[var(--radius-md)]"
         />
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("colorConvert.converting") : t("colorConvert.convert")}

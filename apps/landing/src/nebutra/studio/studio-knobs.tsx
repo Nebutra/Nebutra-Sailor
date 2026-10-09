@@ -17,6 +17,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  ColorPickerPopover,
   Input,
   Select,
   SelectContent,
@@ -240,27 +241,21 @@ export function StudioKnobs({
               />
             ))}
           </ToggleGroup>
-          {/* Any colour: the swatch opens the system picker. */}
-          <label
-            className={cn(
-              "relative grid size-7 cursor-pointer place-items-center rounded-full border-2",
-              custom ? "border-foreground" : "border-transparent",
-            )}
-            style={{
-              background: custom
-                ? color
-                : "conic-gradient(in oklch longer hue, oklch(0.72 0.19 0), oklch(0.72 0.19 0))",
-            }}
-          >
-            <span className="sr-only">Pick any accent colour</span>
-            <input
-              data-allow-native
-              type="color"
-              value={color ?? "#2e65ee"}
-              onChange={(event) => set("brandColor", event.target.value.toLowerCase())}
-              className="absolute inset-0 size-full cursor-pointer opacity-0"
-            />
-          </label>
+          {/* Any colour: the swatch opens the themed picker. */}
+          <ColorPickerPopover
+            value={color ?? "#2e65ee"}
+            onChange={(hex) => set("brandColor", hex.toLowerCase())}
+            side="bottom"
+            align="start"
+            labels={{ trigger: "Pick any accent colour" }}
+            triggerClassName="size-7"
+            triggerSelected={custom}
+            triggerFill={
+              custom
+                ? undefined
+                : "conic-gradient(in oklch longer hue, oklch(0.72 0.19 0), oklch(0.72 0.19 0))"
+            }
+          />
         </div>
       </Row>
 

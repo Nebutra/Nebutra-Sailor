@@ -6,7 +6,7 @@
  * Patterns: live calculators, WCAG/verdict banners, structured tables,
  * generators with copy+download — no raw JSON walls.
  */
-import { Button, DatePicker, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, ColorPickerPopover, DatePicker, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import {
@@ -103,14 +103,12 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
             onChange={(e) => setFg(e.target.value)}
             className="font-mono min-w-[8rem]"
           />
-          <input
-            data-allow-native
-            type="color"
-            aria-label={t("contrast.fg")}
+          <ColorPickerPopover
+            labels={{ trigger: t("contrast.fg") }}
             // @allow-brand-hex: fallback for the same seeded input when the typed hex is incomplete
             value={/^#[0-9a-fA-F]{6}$/.test(fg) ? fg : "#0033FE"}
-            onChange={(e) => setFg(e.target.value)}
-            className="h-10 w-12 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
+            onChange={(picked) => setFg(picked)}
+            triggerClassName="h-10 w-12 rounded-[var(--radius-md)]"
           />
         </div>
         <div className="flex flex-wrap items-end gap-2">
@@ -122,13 +120,11 @@ export function ColorContrastRunner({ toolId }: { toolId: string }) {
             onChange={(e) => setBg(e.target.value)}
             className="font-mono min-w-[8rem]"
           />
-          <input
-            data-allow-native
-            type="color"
-            aria-label={t("contrast.bg")}
+          <ColorPickerPopover
+            labels={{ trigger: t("contrast.bg") }}
             value={/^#[0-9a-fA-F]{6}$/.test(bg) ? bg : "#ffffff"}
-            onChange={(e) => setBg(e.target.value)}
-            className="h-10 w-12 cursor-pointer rounded border border-neutral-7 bg-transparent p-1"
+            onChange={(picked) => setBg(picked)}
+            triggerClassName="h-10 w-12 rounded-[var(--radius-md)]"
           />
         </div>
       </div>
