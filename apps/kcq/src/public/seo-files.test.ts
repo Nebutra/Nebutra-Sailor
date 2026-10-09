@@ -12,8 +12,8 @@ describe("static SEO files", () => {
   it("public/sitemap.xml matches the route table", () => {
     const sitemap = read("sitemap.xml");
     expect(sitemap).toBe(renderSitemapXml());
-    expect(sitemap.match(/<url>/g)).toHaveLength(4);
-    expect(sitemap.match(/<xhtml:link /g)).toHaveLength(12);
+    expect(sitemap.match(/<url>/g)).toHaveLength(6);
+    expect(sitemap.match(/<xhtml:link /g)).toHaveLength(18);
     expect(sitemap).not.toContain("<lastmod>");
   });
 });

@@ -5,7 +5,7 @@
  */
 import { brand } from "@nebutra/brand/metadata";
 
-export const PUBLIC_PAGES = ["home", "benchmark"] as const;
+export const PUBLIC_PAGES = ["home", "benchmark", "investors"] as const;
 export type PublicPage = (typeof PUBLIC_PAGES)[number];
 
 /** `prefix` is the URL segment; `hreflang` and `htmlLang` use the script subtag Google documents. */

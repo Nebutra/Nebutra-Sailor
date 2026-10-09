@@ -13,7 +13,14 @@ import { brand } from "../../../packages/design/brand/src/metadata";
 const read = (path: string) => readFileSync(join(process.cwd(), path), "utf8");
 
 const ORIGIN = "https://kcq.nebutra.com";
-const PUBLIC_PATHS = ["/home", "/zh/home", "/benchmark", "/zh/benchmark"];
+const PUBLIC_PATHS = [
+  "/home",
+  "/zh/home",
+  "/benchmark",
+  "/zh/benchmark",
+  "/investors",
+  "/zh/investors",
+];
 const HREFLANGS = ["en", "zh-Hans", "x-default"];
 
 describe("kcq public surface", () => {
@@ -51,7 +58,7 @@ describe("kcq public surface", () => {
   it("nginx serves prerendered pages and never answers an unknown path with the app", () => {
     const nginx = read("infra/fly/kcq.nginx.conf");
 
-    expect(nginx).toContain("location ~ ^/(zh/)?(home|benchmark)$");
+    expect(nginx).toContain("location ~ ^/(zh/)?(home|benchmark|investors)$");
     expect(nginx).toMatch(/location = \/ \{\s*return 302 \/app\$is_args\$args;/);
     // A bare SPA fallback turns every typo, probe and stale .map/.xml/.webmanifest URL
     // into a 200 soft 404; the shell is only for app paths.

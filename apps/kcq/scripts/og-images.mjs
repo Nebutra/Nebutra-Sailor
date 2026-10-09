@@ -1,8 +1,8 @@
 /**
  * Build-time OG images (1200 × 630, one per locale) and the apple-touch icon, drawn from the
  * prerendered pages themselves: the og:image URL, the h1 and the description are read from
- * dist/home.html and dist/zh/home.html, so the card can never drift from the page. Text becomes
- * vector outlines (opentype.js) from the self-hosted fonts, so the render needs no system fonts:
+ * dist/home.html, dist/investors.html and their zh twins, so the card can never drift from the
+ * page. Text becomes vector outlines (opentype.js) from the self-hosted fonts, so the render needs no system fonts:
  * Outfit 600 (Latin display), Noto Sans SC 700 (Han), Geist Mono (meta). The light behind the mark
  * is the hero poster, the field's own opening frame.
  *
@@ -110,15 +110,20 @@ const background = await sharp(poster)
   .png()
   .toBuffer();
 
-for (const page of ["home.html", "zh/home.html"]) {
+for (const page of ["home.html", "zh/home.html", "investors.html", "zh/investors.html"]) {
   const html = readFileSync(resolve(distDir, page), "utf8");
   const image = readMeta(html, "og:image");
   if (!image) throw new Error(`${page} has no og:image`);
   const target = resolve(distDir, new URL(image).pathname.slice(1));
   const heading = decode(html.match(/<h1[^>]*>([^<]+)<\/h1>/)?.[1] ?? "");
   const han = /[　-鿿]/.test(heading);
-  const size = han ? 60 : 68;
-  const lines = wrap(heading, size, fonts.display, 640);
+  // Longer headlines step down in size until they fit three lines above the rule.
+  let size = han ? 60 : 68;
+  let lines = wrap(heading, size, fonts.display, 640);
+  while (lines.length > 3 && size > 44) {
+    size -= 4;
+    lines = wrap(heading, size, fonts.display, 640);
+  }
   const lineHeight = size * (han ? 1.2 : 1.0);
   const top = 250;
   const headingPaths = lines

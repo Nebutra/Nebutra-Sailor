@@ -25,6 +25,7 @@ declare module "vue-router" {
 const pages = {
   home: () => import("./home-page.vue"),
   benchmark: () => import("./benchmark-page.vue"),
+  investors: () => import("./investors-page.vue"),
   notFound: () => import("./not-found-page.vue"),
 } satisfies Record<PublicPage | "notFound", unknown>;
 

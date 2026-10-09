@@ -45,7 +45,7 @@ for (const { path } of server.PUBLIC_ROUTES) {
     description: html.includes('<meta name="description"'),
     "one h1": html.match(/<h1[\s>]/g)?.length === 1,
     "route stylesheet": html.match(/<style data-href=/g)?.length >= 2,
-    "og:image": /<meta property="og:image" content="[^"]+\/og\/home-(en|zh)\.png\?v=/.test(html),
+    "og:image": /<meta property="og:image" content="[^"]+\/og\/[a-z]+-(en|zh)\.png\?v=/.test(html),
   };
   const failed = Object.keys(checks).filter((name) => !checks[name]);
   if (failed.length) throw new Error(`Prerendered ${path} lacks: ${failed.join(", ")}`);

@@ -35,9 +35,16 @@ function contentHash(text: string): string {
   return (hash >>> 0).toString(36);
 }
 
-export function ogImageUrl(locale: PublicLocale): string {
-  const home = PUBLIC_MESSAGES[locale].home;
-  return `${KCQ_ORIGIN}/og/home-${locale}.png?v=${contentHash(home.heading + home.description)}`;
+/** Pages with their own card (scripts/og-images.mjs); the rest share the home card. */
+const OG_PAGES = ["home", "investors"] as const satisfies readonly PublicPage[];
+type OgPage = (typeof OG_PAGES)[number];
+const ogPage = (page: PublicPage): OgPage =>
+  (OG_PAGES as readonly PublicPage[]).includes(page) ? (page as OgPage) : "home";
+
+export function ogImageUrl(locale: PublicLocale, page: PublicPage = "home"): string {
+  const card = ogPage(page);
+  const copy = PUBLIC_MESSAGES[locale][card];
+  return `${KCQ_ORIGIN}/og/${card}-${locale}.png?v=${contentHash(copy.heading + copy.description)}`;
 }
 
 const ICONS = [
@@ -63,8 +70,8 @@ export function publicHead(page: PublicPage, locale: PublicLocale) {
   const copy = PUBLIC_MESSAGES[locale][page];
   const url = KCQ_ORIGIN + publicPath(page, locale);
   const { htmlLang, ogLocale } = PUBLIC_LOCALES[locale];
-  const image = ogImageUrl(locale);
-  const imageAlt = PUBLIC_MESSAGES[locale].home.ogAlt;
+  const image = ogImageUrl(locale, page);
+  const imageAlt = PUBLIC_MESSAGES[locale][ogPage(page)].ogAlt;
   return {
     title: copy.title,
     htmlAttrs: { lang: htmlLang },
