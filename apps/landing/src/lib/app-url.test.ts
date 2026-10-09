@@ -21,3 +21,17 @@ describe("app URL helpers", () => {
     );
   });
 });
+
+describe("demo CTA override", () => {
+  it("sends Sign in and Get started to the demo destination as given", () => {
+    const demo = "https://nebutra.com/sailor";
+    expect(createAppSignInUrl("/choose-plan", "https://acme.example", demo)).toBe(demo);
+    expect(createAppSignUpUrl(undefined, "https://acme.example", demo)).toBe(demo);
+  });
+
+  it("is inert when unset", () => {
+    expect(createAppSignInUrl(undefined, "https://app.example.com", undefined)).toBe(
+      "https://app.example.com/sign-in",
+    );
+  });
+});

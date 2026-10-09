@@ -518,6 +518,7 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ matrix.site_url }}
           NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
+          NEXT_PUBLIC_STUDIO_URL: "https://studio.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           VITE_API_GATEWAY_URL: ${{ vars.VITE_API_GATEWAY_URL || vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}

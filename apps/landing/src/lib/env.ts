@@ -1,6 +1,21 @@
-import { getBrandEmail, getBrandOrigin, getDocsUrl } from "@nebutra/brand/metadata-helpers";
+import {
+  getBrandEmail,
+  getDocsUrl,
+  localhostFallback,
+  missingPublicUrlMessage,
+} from "@nebutra/brand/metadata-helpers";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
+
+/**
+ * A public URL whose localhost default exists for `pnpm dev` only. In a
+ * production build it is required and its absence fails by name.
+ */
+function publicUrl(name: string, devDefault: string) {
+  const schema = z.string({ error: missingPublicUrlMessage(name) }).url();
+  const fallback = localhostFallback(devDefault);
+  return fallback === undefined ? schema : schema.default(fallback);
+}
 
 export const env = createEnv({
   server: {
@@ -25,8 +40,11 @@ export const env = createEnv({
     NEXT_PUBLIC_SANITY_API_VERSION: z.string().default("2024-01-01"),
 
     // URLs
-    NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3001"),
-    NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3002"),
+    NEXT_PUBLIC_APP_URL: publicUrl("NEXT_PUBLIC_APP_URL", "http://localhost:3001"),
+    NEXT_PUBLIC_API_URL: publicUrl("NEXT_PUBLIC_API_URL", "http://localhost:3002"),
+    // Demo-site override: where "Sign in" / "Get started" lead when no product app is
+    // deployed behind this site. Unset everywhere except an instance that says so.
+    NEXT_PUBLIC_DEMO_CTA_URL: z.string().url().optional(),
     NEXT_PUBLIC_DOCS_URL: z.string().url().default(getDocsUrl()),
     NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["better-auth", "dev"]).default("better-auth"),
     NEXT_PUBLIC_GOOGLE_CLIENT_ID: z.string().optional(),
@@ -39,6 +57,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_DEMO_CTA_URL: process.env.NEXT_PUBLIC_DEMO_CTA_URL,
     NEXT_PUBLIC_DOCS_URL: process.env.NEXT_PUBLIC_DOCS_URL,
     NEXT_PUBLIC_AUTH_PROVIDER: process.env.NEXT_PUBLIC_AUTH_PROVIDER,
     NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,

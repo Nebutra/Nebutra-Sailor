@@ -19,18 +19,25 @@ export function createAppUrl(
   return url.toString();
 }
 
+/**
+ * A demo site has no product app behind it. When NEXT_PUBLIC_DEMO_CTA_URL is set,
+ * Sign in / Get started lead there as-is (no /sign-in path, no returnUrl: the
+ * target is a destination, not an app to log into). Unset on every real instance.
+ */
 export function createAppSignInUrl(
   returnUrl?: string,
   appUrl: string = env.NEXT_PUBLIC_APP_URL,
+  demoCtaUrl: string | undefined = env.NEXT_PUBLIC_DEMO_CTA_URL,
 ): string {
-  return createAppUrl("/sign-in", { returnUrl }, appUrl);
+  return demoCtaUrl || createAppUrl("/sign-in", { returnUrl }, appUrl);
 }
 
 export function createAppSignUpUrl(
   returnUrl?: string,
   appUrl: string = env.NEXT_PUBLIC_APP_URL,
+  demoCtaUrl: string | undefined = env.NEXT_PUBLIC_DEMO_CTA_URL,
 ): string {
-  return createAppUrl("/sign-up", { returnUrl }, appUrl);
+  return demoCtaUrl || createAppUrl("/sign-up", { returnUrl }, appUrl);
 }
 
 /**

@@ -35,6 +35,39 @@ export function getBrandOrigin(service: BrandService): string {
 }
 
 /**
+ * Dev-only fallback for a public URL env var (NEXT_PUBLIC_APP_URL and friends).
+ *
+ * A `http://localhost:*` default is right for `pnpm dev` and wrong everywhere
+ * else: a production build that forgets the variable bakes the localhost
+ * origin into every link it renders (acme.nebutra.com shipped "Sign in" ->
+ * http://localhost:3001/sign-in that way). So the fallback exists only when
+ *   - NODE_ENV is not "production" (dev server, tests), or
+ *   - NEBUTRA_ALLOW_LOCALHOST_URLS=1 (an explicit opt-in for a CI build that
+ *     renders nothing it deploys), or
+ *   - SKIP_ENV_VALIDATION is set (the validator is off; there is nothing to fail).
+ * Otherwise it returns undefined and the schema reports the variable as
+ * missing, by name, at build time.
+ */
+export function localhostFallback(
+  fallback: string,
+  env: Record<string, string | undefined> = process.env,
+): string | undefined {
+  if (env.NODE_ENV !== "production") return fallback;
+  if (env.NEBUTRA_ALLOW_LOCALHOST_URLS === "1") return fallback;
+  if (env.SKIP_ENV_VALIDATION && env.SKIP_ENV_VALIDATION !== "false") return fallback;
+  return undefined;
+}
+
+/** The message a missing public URL reports in a production build. */
+export function missingPublicUrlMessage(name: string): string {
+  return (
+    `${name} is not set. A production build must be given the real public URL: ` +
+    "a localhost default would be baked into every rendered link. " +
+    "Set it for the build, or NEBUTRA_ALLOW_LOCALHOST_URLS=1 for a build that is never deployed."
+  );
+}
+
+/**
  * Public object on `nebutra-assets` via `cdn.nebutra.com`.
  * R2_PUBLIC_URL / NEXT_PUBLIC_R2_PUBLIC_URL may override the origin for dogfood.
  */

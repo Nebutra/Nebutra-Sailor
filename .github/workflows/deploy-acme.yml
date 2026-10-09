@@ -43,6 +43,8 @@ jobs:
     env:
       FLY_APP: nebutra-acme
       SITE: https://acme.nebutra.com
+      # Where the demo's Sign in / Get started lead: the "build your own" page.
+      DEMO_CTA_URL: https://nebutra.com/sailor
     steps:
       - name: Require FLY_API_TOKEN
         env:
@@ -100,6 +102,15 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
           NEXT_OUTPUT: standalone
           NEXT_PUBLIC_SITE_URL: ${{ env.SITE }}
+          # The demo has no product app, API or sign-in behind it, and the
+          # landing refuses to build for production without these (a missing one
+          # used to fall back to http://localhost:3001 and ship it). The origins
+          # are the site itself so nothing points anywhere that does not exist;
+          # Sign in / Get started are redirected by NEXT_PUBLIC_DEMO_CTA_URL to
+          # the real next step, building your own with Sailor.
+          NEXT_PUBLIC_APP_URL: ${{ env.SITE }}
+          NEXT_PUBLIC_API_URL: ${{ env.SITE }}
+          NEXT_PUBLIC_DEMO_CTA_URL: ${{ env.DEMO_CTA_URL }}
           NEXT_PUBLIC_PRESET_PREVIEW: "1"
           DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
           REDIS_URL: "redis://localhost:6379"
@@ -150,6 +161,14 @@ jobs:
           css=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "https://${FLY_APP}.fly.dev/preset-preview.css")
           echo "GET /preset-preview.css -> $css"
           [ "$css" = "200" ] || { echo "::error::the preset preview stylesheet is not served ($css)"; exit 1; }
+
+      - name: No local URLs, and the demo CTAs lead to the Sailor page
+        run: |
+          set -euo pipefail
+          node scripts/verify-no-localhost-urls.mjs "https://${FLY_APP}.fly.dev" / /pricing /zh-Hans
+          html=$(curl -sS --max-time 30 "https://${FLY_APP}.fly.dev/")
+          printf '%s' "$html" | grep -q "href=\"${DEMO_CTA_URL}\"" \
+            || { echo "::error::Sign in / Get started do not lead to ${DEMO_CTA_URL}"; exit 1; }
 
       - name: Issue the Fly certificate
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'

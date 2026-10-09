@@ -189,6 +189,9 @@ jobs:
           NEXT_PUBLIC_APP_URL: "https://app.nebutra.com"
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
+          # apps/web requires every public URL in a production build (no
+          # localhost default); harmless for the other apps in this matrix.
+          NEXT_PUBLIC_STUDIO_URL: "https://studio.nebutra.com"
           # Nebutra's own production keeps the gateway standalone (Cloudflare
           # Workers + Fly origin, deploy-gateway job below) — apps/web's
           # optional catch-all (app/api/[[...route]]/route.ts) must not embed
@@ -374,6 +377,18 @@ jobs:
           flyctl logs -a "${{ matrix.fly_app }}" --no-tail || true
           echo "::error::$url is not healthy ($code). DNS will not cut over."
           exit 1
+
+      - name: No local URLs in the rendered pages
+        # A build that missed a public URL variable bakes http://localhost:* into
+        # every link (acme did). The env schemas now refuse that at build time;
+        # this checks what was actually served.
+        if: matrix.app == 'landing' || matrix.app == 'web'
+        run: |
+          set -euo pipefail
+          paths="/"
+          if [ "${{ matrix.app }}" = "landing" ]; then paths="/ /pricing /zh-Hans"; fi
+          if [ "${{ matrix.app }}" = "web" ]; then paths="/sign-in"; fi
+          node scripts/verify-no-localhost-urls.mjs "https://${{ matrix.fly_app }}.fly.dev" $paths
 
       # A 200 on the home page says the process is up, not that the station can
       # take money. router.nebutra.com is the paid surface: cutting its DNS to a

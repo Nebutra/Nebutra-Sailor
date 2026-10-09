@@ -1,6 +1,17 @@
+import { localhostFallback, missingPublicUrlMessage } from "@nebutra/brand/metadata-helpers";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 import { isValidSsoProviderConfig } from "./auth/sso-discovery";
+
+/**
+ * A public URL whose localhost default exists for `pnpm dev` only. In a
+ * production build it is required and its absence fails by name.
+ */
+function publicUrl(name: string, devDefault: string) {
+  const schema = z.string({ error: missingPublicUrlMessage(name) }).url();
+  const fallback = localhostFallback(devDefault);
+  return fallback === undefined ? schema : schema.default(fallback);
+}
 
 export const env = createEnv({
   server: {
@@ -65,10 +76,10 @@ export const env = createEnv({
 
   client: {
     // Public URLs
-    NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
-    NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3001"),
-    NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3002"),
-    NEXT_PUBLIC_STUDIO_URL: z.string().url().default("http://localhost:3003"),
+    NEXT_PUBLIC_SITE_URL: publicUrl("NEXT_PUBLIC_SITE_URL", "http://localhost:3000"),
+    NEXT_PUBLIC_APP_URL: publicUrl("NEXT_PUBLIC_APP_URL", "http://localhost:3001"),
+    NEXT_PUBLIC_API_URL: publicUrl("NEXT_PUBLIC_API_URL", "http://localhost:3002"),
+    NEXT_PUBLIC_STUDIO_URL: publicUrl("NEXT_PUBLIC_STUDIO_URL", "http://localhost:3003"),
 
     // Auth provider selection
     NEXT_PUBLIC_AUTH_PROVIDER: z.enum(["better-auth", "dev"]).default("better-auth"),

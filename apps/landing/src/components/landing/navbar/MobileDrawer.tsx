@@ -5,15 +5,13 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
+import { createAppSignInUrl, createAppSignUpUrl } from "@/lib/app-url";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
-import { env } from "@/lib/env";
 import { usePublicMe } from "@/lib/use-public-me";
 import { hereOnly } from "@/site-map";
 import { Presence } from "../Presence";
 import type { MenuId } from "./menu-types";
 import { MENUS } from "./menus";
-
-const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
 /** Reads a dynamic dotted path out of a namespace — the group/item ids are data, not literal keys. */
 type DynamicTranslator = (key: string) => string;
@@ -147,14 +145,14 @@ export function MobileDrawer() {
             {me ? null : (
               <div className="mt-auto flex flex-col gap-3 border-t border-neutral-6/60 pt-4 dark:border-border/60">
                 <a
-                  href={`${APP_URL}/sign-in`}
+                  href={createAppSignInUrl()}
                   onClick={() => setOpen(false)}
                   className="w-full rounded-[var(--radius-lg)] border border-neutral-6/60 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border/60"
                 >
                   {t("signIn")}
                 </a>
                 <a
-                  href={`${APP_URL}/sign-up`}
+                  href={createAppSignUpUrl()}
                   onClick={() => setOpen(false)}
                   className="w-full rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-4 py-3 text-center text-sm font-medium text-[color:hsl(var(--background))]"
                 >

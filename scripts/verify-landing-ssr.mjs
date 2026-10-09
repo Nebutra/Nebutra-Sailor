@@ -30,9 +30,13 @@ import { createServer } from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { JSDOM } from "jsdom";
+import { findLocalhostUrls } from "./lib/localhost-urls.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const APP_DIR = path.join(ROOT, "apps/landing");
+/** NEBUTRA_ALLOW_LOCALHOST_URLS=1 or --allow-localhost: this build is a local preview. */
+const ALLOW_LOCALHOST =
+  process.env.NEBUTRA_ALLOW_LOCALHOST_URLS === "1" || process.argv.includes("--allow-localhost");
 const UA = "Mozilla/5.0 (compatible; GPTBot/1.2; +https://openai.com/gptbot)";
 
 /**
@@ -239,6 +243,11 @@ async function checkRoute(baseUrl, route, print) {
     return { route, failures: [`HTTP ${res.status}`], excerpt: "" };
   }
   const html = await res.text();
+  // A build that missed a public URL env var bakes the localhost default into
+  // every link. A preview build that sets them on purpose opts out.
+  if (!ALLOW_LOCALHOST) {
+    for (const hit of findLocalhostUrls(html)) failures.push(`renders a local URL: ${hit}`);
+  }
   const head = new JSDOM(html).window.document;
   const doc = visibleDocument(html);
   const bodyText = normalize(doc.body?.textContent ?? "");
