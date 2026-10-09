@@ -27,7 +27,9 @@
     "@fontsource/noto-sans-sc": "5.3.0",
     "@unhead/vue": "3.4.2",
     "vue-i18n": "11.4.13",
-    "vue-router": "4.6.4"
+    "vue-router": "4.6.4",
+    "@fontsource/outfit": "5.3.0",
+    "vgpu": "0.5.0"
   },
   "devDependencies": {
     "vite": "catalog:",
@@ -36,6 +38,8 @@
     "@tailwindcss/vite": "catalog:",
     "tailwindcss": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:"
+    "@types/react-dom": "catalog:",
+    "opentype.js": "2.0.0",
+    "sharp": "^0.35.5"
   }
 }

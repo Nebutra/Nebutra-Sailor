@@ -19,6 +19,12 @@ const { default: Icons } = await load("unplugin-icons/vite");
 const { createCoreSourceAliases } = await import(
   pathToFileURL(resolve(source, "scripts/core-source-aliases.mjs")).href
 );
+const { kcqLandingPlugin } = await import(
+  pathToFileURL(resolve(root, "scripts/landing-plugin.mjs")).href
+);
+const { publicBoundary } = await import(
+  pathToFileURL(resolve(root, "scripts/public-boundary.mjs")).href
+);
 const { indicatorEntrypointsPlugin } = await import(
   pathToFileURL(resolve(source, "scripts/indicator-entrypoints-plugin.mjs")).href
 );
@@ -51,42 +57,6 @@ function devRoutes() {
   };
 }
 
-/** Modules the public pages must never load: auth, chart persistence, workbench, Agent, React islands. */
-const PUBLIC_FORBIDDEN =
-  /\/(?:src\/(?:main|use-workbench|workbench[^/]*|profile[^/]*|header-surface|source-connections[^/]*|market-connect[^/]*)\.|node_modules\/(?:react|react-dom|@nebutra\/(?:auth|ui|icons))\/|packages\/(?:iam\/auth|design\/ui|core|vue|agent-runtime)\/)/;
-
-/** Fail the client build when anything reachable from public.html (static or lazy) crosses that line. */
-function publicBoundary() {
-  return {
-    name: "kcq-public-boundary",
-    apply: "build",
-    generateBundle(_options, bundle) {
-      const chunks = Object.values(bundle).filter((output) => output.type === "chunk");
-      const entry = chunks.find(
-        (chunk) => chunk.isEntry && chunk.facadeModuleId?.endsWith("/public.html"),
-      );
-      if (!entry) return;
-      const byName = new Map(chunks.map((chunk) => [chunk.fileName, chunk]));
-      const pending = [entry];
-      const seen = new Set();
-      while (pending.length) {
-        const chunk = pending.pop();
-        if (seen.has(chunk.fileName)) continue;
-        seen.add(chunk.fileName);
-        const leaked = chunk.moduleIds.filter((id) => PUBLIC_FORBIDDEN.test(id));
-        if (leaked.length) {
-          this.error(
-            `Public chunk ${chunk.fileName} includes app-only modules:\n${leaked.join("\n")}`,
-          );
-        }
-        for (const next of [...chunk.imports, ...chunk.dynamicImports]) {
-          if (byName.has(next)) pending.push(byName.get(next));
-        }
-      }
-    },
-  };
-}
-
 /**
  * Two entries: index.html is the authenticated app (SPA), public.html the prerendered public
  * pages. The SSR build (`--ssr src/public/entry-server.ts`) only feeds scripts/prerender.mjs.
@@ -94,6 +64,8 @@ function publicBoundary() {
 export default ({ isSsrBuild }) => ({
   root,
   build: {
+    // The prerender links each page's lazy route CSS and chunks (src/public/entry-server.ts).
+    ssrManifest: !isSsrBuild,
     rollupOptions: {
       ...(isSsrBuild
         ? {}
@@ -113,6 +85,7 @@ export default ({ isSsrBuild }) => ({
   server: { host: "127.0.0.1", port: 3130, fs: { allow: [resolve(root, "../.."), source] } },
   plugins: [
     devRoutes(),
+    kcqLandingPlugin({ root, source }),
     ...(isSsrBuild ? [] : [publicBoundary()]),
     tailwindcss(),
     indicatorEntrypointsPlugin(),
@@ -142,6 +115,17 @@ export default ({ isSsrBuild }) => ({
         replacement: resolve(
           dirname(local.resolve("geist/font/sans")),
           "fonts/geist-sans/Geist-Variable.woff2",
+        ),
+      },
+      {
+        find: "kcq-outfit-600.woff2",
+        replacement: local.resolve("@fontsource/outfit/files/outfit-latin-600-normal.woff2"),
+      },
+      {
+        find: "kcq-geist-mono-font.woff2",
+        replacement: resolve(
+          dirname(local.resolve("geist/font/sans")),
+          "fonts/geist-mono/GeistMono-Regular.woff2",
         ),
       },
       {

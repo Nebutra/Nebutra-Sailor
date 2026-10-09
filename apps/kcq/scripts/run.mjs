@@ -35,11 +35,15 @@ if (mode === "typecheck") {
           skipLibCheck: true,
           noEmit: true,
           lib: ["DOM", "ESNext"],
-          types: [],
+          types: ["@webgpu/types"],
           allowImportingTsExtensions: true,
           paths: {
             "@363045841yyt/klinechart": [resolve(upstream, "packages/vue/dist/index.d.ts")],
             "@363045841yyt/klinechart-core": [resolve(upstream, "packages/core/dist/index.d.ts")],
+            "@363045841yyt/klinechart-core/controllers": [
+              resolve(upstream, "packages/core/dist/controllers/index.d.ts"),
+            ],
+            vgpu: [resolve(root, "node_modules/vgpu/dist/index.d.ts")],
             "@363045841yyt/klinechart-core/config": [
               resolve(upstream, "packages/core/dist/foundation/config/chartSettings.d.ts"),
             ],
@@ -103,6 +107,15 @@ try {
       const result = spawnSync(
         process.execPath,
         [resolve(root, "scripts/prerender.mjs"), prerenderDir, resolve(root, "dist")],
+        { stdio: "inherit" },
+      );
+      status = result.status ?? 1;
+    }
+    if (status === 0) {
+      // OG cards and the touch icon are drawn from the prerendered pages (scripts/og-images.mjs).
+      const result = spawnSync(
+        process.execPath,
+        [resolve(root, "scripts/og-images.mjs"), resolve(root, "dist"), upstream],
         { stdio: "inherit" },
       );
       status = result.status ?? 1;

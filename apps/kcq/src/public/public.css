@@ -1,67 +1,382 @@
-/* Public skeleton only; the landing task replaces this with the KCQ token pipeline (fork ADR 0004).
-   Values mirror the KCQ light/dark interface themes so the skeleton never flashes another palette. */
-:root {
-  color-scheme: light dark;
-  --kcq-public-background: #f5f5f7;
-  --kcq-public-text: #242426;
-  --kcq-public-muted: #606066;
-  --kcq-public-border: #d8d8de;
-  --kcq-public-focus: #52617b;
+/*
+ * Public pages (/home, /benchmark, 404). Every value is a KCQ design token (`--klc-*`, generated
+ * from the pinned chart source by scripts/landing-source.mjs) or derived from one here. Sources:
+ * fork design.md §2–3, research craft-principles.md (CP n) and landing-benchmark.md (LB n).
+ */
+
+/* Fonts, self-hosted (design §2.4). Fallback faces carry metric overrides measured from the real
+   files (Outfit 600 vs Arial Bold, Geist vs Arial, Geist Mono vs Courier New) so the swap does
+   not move text. */
+@font-face {
+  font-family: "Outfit";
+  src: url("kcq-outfit-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@media (prefers-color-scheme: dark) {
+@font-face {
+  font-family: "Outfit Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial");
+  font-weight: 600;
+  size-adjust: 94.76%;
+  ascent-override: 105.53%;
+  descent-override: 27.44%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Geist";
+  src: url("kcq-geist-font.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Fallback";
+  src: local("Arial"), local("ArialMT");
+  size-adjust: 105.15%;
+  ascent-override: 95.57%;
+  descent-override: 28.05%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("kcq-geist-mono-font.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono Fallback";
+  src: local("Courier New"), local("CourierNewPSMT");
+  size-adjust: 99.98%;
+  ascent-override: 100.52%;
+  descent-override: 29.5%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Page roles, each one KCQ interface token (Radix-style fixed jobs, CP 1). */
+  --kcq-page: var(--klc-color-ui-background);
+  --kcq-surface: var(--klc-color-ui-surface);
+  --kcq-raised: var(--klc-color-ui-card);
+  --kcq-control: var(--klc-color-ui-control-background);
+  --kcq-hover: var(--klc-color-ui-hover);
+  --kcq-ink: var(--klc-color-ui-text);
+  --kcq-ink-2: var(--klc-color-ui-muted);
+  --kcq-rule: var(--klc-color-ui-border);
+  --kcq-rule-strong: var(--klc-color-ui-border-strong);
+  --kcq-accent: var(--klc-brand-accent);
+  --kcq-accent-text: var(--klc-brand-accent-text);
+  --kcq-up: var(--klc-color-candle-up-body);
+  --kcq-down: var(--klc-color-candle-down-body);
+  --kcq-font-display: "Outfit", "Outfit Fallback", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --kcq-font-ui: "Geist", "Geist Fallback", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --kcq-font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* Basement page grid: 4 columns with 16px gutters, 12 from lg (CP 26). */
+  --kcq-gutter: var(--klc-space-16);
+  --kcq-column-gap: var(--klc-space-12);
+  --kcq-section-space: var(--klc-space-64);
+  --kcq-header-height: var(--klc-space-64);
+}
+@media (min-width: 768px) {
   :root {
-    --kcq-public-background: #151619;
-    --kcq-public-text: #dce0e8;
-    --kcq-public-muted: #acb2be;
-    --kcq-public-border: #2d3036;
-    --kcq-public-focus: #94a3bc;
+    --kcq-gutter: var(--klc-space-32);
+    --kcq-section-space: var(--klc-space-96);
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    --kcq-section-space: var(--klc-space-160);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  background: var(--kcq-page);
+  color: var(--kcq-ink);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--kcq-header-height) + var(--klc-space-16));
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 body {
   margin: 0;
-  background: var(--kcq-public-background);
-  color: var(--kcq-public-text);
-  font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
-  line-height: 1.5;
+  min-height: 100vh;
+  background: var(--kcq-page);
+  color: var(--kcq-ink);
+  font-family: var(--kcq-font-ui);
+  font-size: var(--klc-text-copy-16-font-size);
+  line-height: var(--klc-text-copy-16-line-height);
+  letter-spacing: var(--klc-text-copy-16-letter-spacing);
+  font-variant-numeric: var(--klc-text-numeric);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-a {
-  color: inherit;
-}
-a:focus-visible {
-  outline: 2px solid var(--kcq-public-focus);
-  outline-offset: 2px;
-}
-.public-header {
-  border-bottom: 1px solid var(--kcq-public-border);
-}
-.public-nav,
-.public-main {
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-.public-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  min-height: 3rem;
-}
-.public-locales {
-  display: flex;
-  gap: 1rem;
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+blockquote,
+pre {
   margin: 0;
+}
+ul,
+ol {
   padding: 0;
   list-style: none;
 }
-.public-locales a {
-  color: var(--kcq-public-muted);
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
-.public-locales a[aria-current="page"] {
-  color: var(--kcq-public-text);
+p,
+li,
+dd {
+  text-wrap: pretty;
 }
-.public-main h1 {
-  margin: 3rem 0 1rem;
-  font-size: 2rem;
-  font-weight: 600;
+img,
+svg,
+canvas {
+  display: block;
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+code,
+kbd,
+pre {
+  font-family: var(--kcq-font-mono);
+}
+::selection {
+  background: color-mix(in oklab, var(--kcq-accent) 28%, transparent);
+}
+
+a {
+  color: var(--kcq-accent-text);
+  text-decoration-line: underline;
+  text-decoration-thickness: max(0.06em, 1px);
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+}
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* One focus treatment: Cobalt, ≥3:1 on every preset surface (ADR 0007). */
+:focus-visible {
+  outline: 2px solid var(--kcq-accent);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--klc-space-8);
+  left: var(--klc-space-8);
+  z-index: var(--klc-z-index-tooltip);
+  padding: var(--klc-space-8) var(--klc-space-12);
+  background: var(--kcq-ink);
+  color: var(--kcq-page);
+  border-radius: var(--klc-radius-sm);
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.container {
+  width: 100%;
+  max-width: calc(var(--klc-breakpoint-xl) + 2 * var(--kcq-gutter));
+  margin-inline: auto;
+  padding-inline: var(--kcq-gutter);
+}
+
+/* Type roles (design §3.3 type scale; display per CP 17/45). */
+.t-display {
+  font-family: var(--kcq-font-display);
+  font-weight: var(--klc-text-48-font-weight);
+  font-size: var(--klc-text-48-font-size);
+  line-height: var(--klc-text-48-line-height);
+  letter-spacing: var(--klc-text-48-letter-spacing);
+}
+@media (min-width: 1024px) {
+  .t-display {
+    font-size: var(--klc-text-72-font-size);
+    line-height: var(--klc-text-72-line-height);
+    letter-spacing: var(--klc-text-72-letter-spacing);
+  }
+}
+.t-heading {
+  font-family: var(--kcq-font-display);
+  font-weight: var(--klc-text-32-font-weight);
+  font-size: var(--klc-text-32-font-size);
+  line-height: var(--klc-text-32-line-height);
+  letter-spacing: var(--klc-text-32-letter-spacing);
+}
+@media (min-width: 1024px) {
+  .t-heading {
+    font-size: var(--klc-text-48-font-size);
+    line-height: var(--klc-text-48-line-height);
+    letter-spacing: var(--klc-text-48-letter-spacing);
+  }
+}
+.t-title {
+  font-family: var(--kcq-font-ui);
+  font-weight: var(--klc-text-20-font-weight);
+  font-size: var(--klc-text-20-font-size);
+  line-height: var(--klc-text-20-line-height);
+  letter-spacing: var(--klc-text-20-letter-spacing);
+}
+/* Han glyphs need air the Latin display tracking takes away. */
+:lang(zh-Hans) :is(.t-display, .t-heading) {
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+.t-lede {
+  font-size: var(--klc-text-copy-16-font-size);
+  line-height: var(--klc-text-copy-16-line-height);
+  letter-spacing: var(--klc-text-copy-16-letter-spacing);
+  color: var(--kcq-ink-2);
+}
+.t-copy {
+  font-size: var(--klc-text-copy-14-font-size);
+  line-height: var(--klc-text-copy-14-line-height);
+  letter-spacing: var(--klc-text-copy-14-letter-spacing);
+  color: var(--kcq-ink-2);
+}
+.t-label {
+  font-size: var(--klc-text-label-14-font-size);
+  line-height: var(--klc-text-label-14-line-height);
+  letter-spacing: var(--klc-text-label-14-letter-spacing);
+  font-weight: var(--klc-text-label-14-font-weight);
+}
+/* Uppercase mono micro-labels as the page's voice (CP 23). */
+.t-meta {
+  font-family: var(--kcq-font-mono);
+  font-size: var(--klc-text-12-font-size);
+  line-height: var(--klc-text-12-line-height);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kcq-ink-2);
+}
+.t-num {
+  font-family: var(--kcq-font-mono);
+  font-synthesis-weight: none;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* Section frame: a numbered mono eyebrow on a hairline, then the heading (LB 3.4: numbered
+   sections, ordered by argument). */
+.section {
+  padding-block: var(--kcq-section-space) 0;
+}
+.section-head {
+  display: grid;
+  align-content: start;
+  gap: var(--klc-space-16);
+  max-width: 44rem;
+}
+/* The eyebrow rule spans the whole container in every section, so all section rules align. */
+.eyebrow {
+  grid-column: 1 / -1;
+  /* Same 24px to the heading whether the section is a grid (minus its row gap) or a block. */
+  margin-bottom: calc(var(--klc-space-24) - var(--row-gap, 0px));
+  display: flex;
+  gap: var(--klc-space-12);
+  align-items: baseline;
+  padding-top: var(--klc-space-12);
+  border-top: 1px solid var(--kcq-rule);
+}
+.eyebrow-index {
+  color: var(--kcq-accent-text);
+}
+
+/* Buttons. Primary is ink on page: the strongest pair on every preset, and it keeps Cobalt for
+   focus, links and the mark (ADR 0007 "sparingly"). Heights follow the density tokens. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--klc-space-8);
+  min-height: var(--klc-density-comfortable);
+  padding-inline: var(--klc-space-16);
+  border: 1px solid transparent;
+  border-radius: var(--klc-radius-sm);
+  font-size: var(--klc-text-label-14-font-size);
+  line-height: var(--klc-text-label-14-line-height);
+  letter-spacing: var(--klc-text-label-14-letter-spacing);
+  font-weight: var(--klc-text-label-14-font-weight);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition-property: transform, background-color, border-color, color;
+  transition-duration: var(--klc-motion-dur-press);
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+@media (pointer: coarse) {
+  .button {
+    min-height: var(--klc-density-hit-target-touch);
+  }
+}
+.button:active {
+  transform: scale(0.97);
+}
+.button-primary {
+  background: var(--kcq-ink);
+  color: var(--kcq-page);
+}
+.button-primary .button-arrow {
+  transition: transform var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .button-primary:hover .button-arrow {
+    transform: translateX(2px);
+  }
+}
+.button-quiet {
+  background: var(--kcq-surface);
+  color: var(--kcq-ink);
+  border-color: var(--kcq-rule);
+}
+@media (hover: hover) and (pointer: fine) {
+  .button-quiet:hover {
+    border-color: var(--kcq-rule-strong);
+    background: var(--kcq-raised);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity, color, background-color, border-color !important;
+  }
 }

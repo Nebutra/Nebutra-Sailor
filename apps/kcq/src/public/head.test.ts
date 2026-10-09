@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { publicHead } from "./head";
+import { notFoundHead, ogImageUrl, publicHead } from "./head";
 
 describe("publicHead", () => {
   it("emits canonical, hreflang, OG and theme metadata for the zh benchmark", () => {
@@ -26,5 +26,23 @@ describe("publicHead", () => {
       (["en", "zh"] as const).map((locale) => publicHead(page, locale).title),
     );
     expect(new Set(titles).size).toBe(4);
+  });
+
+  it("points OG and Twitter at the 1200 × 630 card of the page's locale", () => {
+    const head = publicHead("home", "zh");
+    const meta = (key: string) =>
+      head.meta.find((tag) => ("name" in tag ? tag.name : tag.property) === key)?.content;
+    expect(meta("og:image")).toBe(ogImageUrl("zh"));
+    expect(meta("og:image")).toMatch(/^https:\/\/kcq\.nebutra\.com\/og\/home-zh\.png\?v=[a-z0-9]+$/);
+    expect([meta("og:image:width"), meta("og:image:height")]).toEqual(["1200", "630"]);
+    expect(meta("og:image:alt")).toBeTruthy();
+    expect(meta("twitter:card")).toBe("summary_large_image");
+    expect(ogImageUrl("en")).not.toBe(ogImageUrl("zh"));
+  });
+
+  it("keeps 404 pages out of the index with no canonical", () => {
+    const head = notFoundHead("en");
+    expect(head.meta).toContainEqual({ name: "robots", content: "noindex" });
+    expect((head.link as { rel: string }[]).some((link) => link.rel === "canonical")).toBe(false);
   });
 });
