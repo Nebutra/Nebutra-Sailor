@@ -9380,6 +9380,7 @@ export type CreditTransactionScalarFieldEnum = (typeof CreditTransactionScalarFi
 export const RouterReservationScalarFieldEnum = {
   id: 'id',
   tenantId: 'tenantId',
+  product: 'product',
   apiKeyId: 'apiKeyId',
   amount: 'amount',
   createdAt: 'createdAt',

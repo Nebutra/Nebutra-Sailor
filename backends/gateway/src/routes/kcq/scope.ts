@@ -14,19 +14,38 @@ export async function resolveMarketScope(request: Request): Promise<MarketScope 
   if (!session?.userId || session.expiresAt.getTime() <= Date.now()) return null;
   const workspace = request.headers.get("X-KCQ-Workspace");
   if (!workspace || workspace.length > 160) throw new MarketSourceError(400, "请指定当前工作区。");
+  return resolveWorkspaceTenant({
+    userId: session.userId,
+    email: session.email ?? null,
+    workspace,
+  });
+}
+
+/**
+ * The tenant a workspace id stands for, for a verified user: `personal` is the
+ * user's own tenant, anything else needs live membership of that organization.
+ * Shared by the market/BYOK routes and the managed-AI wallet so both resolve
+ * "this workspace" identically.
+ */
+export async function resolveWorkspaceTenant(input: {
+  userId: string;
+  email: string | null;
+  workspace: string;
+}): Promise<MarketScope> {
+  const { workspace } = input;
   // AUDIT(no-tenant): identity and membership bootstrap determine the tenant; market rows never use this client.
   const system = getSystemDb();
   if (workspace === "personal") {
     return {
       tenantId: await new PersonalTenantRepository(system).ensure({
-        userId: session.userId,
-        email: session.email ?? null,
+        userId: input.userId,
+        email: input.email,
       }),
       canManage: true,
     };
   }
   const member = await system.bAMember.findUnique({
-    where: { userId_organizationId: { userId: session.userId, organizationId: workspace } },
+    where: { userId_organizationId: { userId: input.userId, organizationId: workspace } },
     include: { organization: true },
   });
   if (!member) throw new MarketSourceError(403, "当前工作区已不可访问。");

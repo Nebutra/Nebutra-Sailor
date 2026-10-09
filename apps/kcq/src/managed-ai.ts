@@ -39,10 +39,15 @@ export class ManagedAiError extends Error {
 }
 
 /** A `fetch` that authenticates with the session cookie and never sends the placeholder key. */
-export function managedAiFetch(fetchImpl: typeof fetch = fetch): typeof fetch {
+export function managedAiFetch(
+  fetchImpl: typeof fetch = fetch,
+  /** The active workspace; its KCQ wallet pays for the call. Defaults to the personal workspace. */
+  workspace = "personal",
+): typeof fetch {
   return (input, init = {}) => {
     const headers = new Headers(init.headers);
     headers.delete("Authorization");
+    headers.set("X-KCQ-Workspace", workspace);
     return fetchImpl(input, { ...init, headers, credentials: "same-origin", cache: "no-store" });
   };
 }
@@ -64,8 +69,12 @@ async function failure(response: Response): Promise<ManagedAiError> {
   );
 }
 
-export function createManagedAiClient(origin: string, fetchImpl: typeof fetch = fetch) {
-  const send = managedAiFetch(fetchImpl);
+export function createManagedAiClient(
+  origin: string,
+  fetchImpl: typeof fetch = fetch,
+  workspace = "personal",
+) {
+  const send = managedAiFetch(fetchImpl, workspace);
   const base = origin.replace(/\/+$/, "") + MANAGED_AI_BASE_PATH;
   return {
     baseUrl: base,

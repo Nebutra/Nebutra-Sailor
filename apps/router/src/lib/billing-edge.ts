@@ -9,14 +9,13 @@ import {
   ROUTER_WALLET_PRODUCT,
   RouterBillingRepository,
   type RouterKeySpend,
-  type RouterPriceRow,
 } from "@nebutra/repositories";
 import {
-  type ModelPriceRow,
+  MIN_REQUEST_CHARGE_USD,
   type PriceResult,
-  type PriceUnit,
   priceUsage,
   reserveWorstCase,
+  toModelPriceRow,
 } from "@nebutra/router-supply";
 import type {
   EdgeAdmitDecision,
@@ -83,22 +82,8 @@ import { getBalanceFresh } from "./wallet";
  * least what settlement will charge, or a request is admitted against a balance
  * check it then exceeds.
  */
-const MIN_CHARGE = 0.0002;
+const MIN_CHARGE = MIN_REQUEST_CHARGE_USD;
 const MIN_RESERVATION = MIN_CHARGE;
-
-function toPriceRow(row: RouterPriceRow): ModelPriceRow {
-  return {
-    modelName: row.modelName,
-    unit: row.unit as PriceUnit,
-    currency: row.currency,
-    published: row.published,
-    inputPerMTok: row.inputPerMTok,
-    outputPerMTok: row.outputPerMTok,
-    cacheReadPerMTok: row.cacheReadPerMTok,
-    cacheWritePerMTok: row.cacheWritePerMTok,
-    unitPrice: row.unitPrice,
-  };
-}
 
 /**
  * The slice of the seam this file uses. Named so the guard can be tested
@@ -174,7 +159,7 @@ async function sweepTenant(billing: RouterBilling, tenantId: string): Promise<vo
   try {
     const result = await billing.sweepExpired({ tenantId, limit: 8 });
     if (result.swept > 0) {
-      invalidateCreditCache(tenantId, ROUTER_WALLET_PRODUCT);
+      for (const wallet of result.wallets) invalidateCreditCache(wallet.tenantId, wallet.product);
       logger.warn("[router] returned expired reservations", {
         tenantId,
         swept: result.swept,
@@ -259,7 +244,7 @@ export function createRouterGuard(
         const price = reserveWorstCase(
           model,
           { promptTokens: input.promptTokens, maxOutputTokens: input.maxOutputTokens },
-          toPriceRow(row),
+          toModelPriceRow(row),
         );
         if (price.ok) priced.push({ model, price });
       }
@@ -644,7 +629,7 @@ async function priceSettled(
       seconds: usage.seconds,
       minutes: usage.seconds > 0 ? usage.seconds / 60 : 0,
     },
-    row ? toPriceRow(row) : null,
+    row ? toModelPriceRow(row) : null,
   );
   if (!result.ok) {
     // Admission priced this model; if settlement cannot, the customer is not

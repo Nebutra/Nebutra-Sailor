@@ -41,4 +41,23 @@ describe("managed AI client", () => {
     });
     await expect(client.listModels()).rejects.toBeInstanceOf(ManagedAiError);
   });
+
+  it("names the active workspace so its KCQ wallet pays, and surfaces a 402", async () => {
+    const upstream = vi.fn(async (..._args: Parameters<typeof fetch>) =>
+      Response.json(
+        { error: { message: "KCQ 余额不足，请充值后继续使用 AI。", code: "insufficient_balance" } },
+        { status: 402 },
+      ),
+    );
+    const client = createManagedAiClient(
+      "https://kcq.nebutra.com",
+      upstream as typeof fetch,
+      "org_1",
+    );
+    await expect(client.complete([{ role: "user", content: "x" }])).rejects.toMatchObject({
+      status: 402,
+      code: "insufficient_balance",
+    });
+    expect(new Headers(upstream.mock.calls[0]?.[1]?.headers).get("X-KCQ-Workspace")).toBe("org_1");
+  });
 });

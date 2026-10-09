@@ -36,12 +36,15 @@ export {
   type SupplyInventory,
 } from "./inventory";
 export {
+  MIN_REQUEST_CHARGE_USD,
   type ModelPriceRow,
   type PriceComponent,
   type PriceResult,
+  type PriceRowSource,
   type PriceUnit,
   priceUsage,
   reserveWorstCase,
+  toModelPriceRow,
   type UnpricedReason,
   type UsageCounts,
 } from "./pricing";

@@ -1898,6 +1898,9 @@ model CreditTransaction {
 model RouterReservation {
   id        String   @id
   tenantId  String   @map("tenant_id")
+  /// Whose wallet the hold was taken from: "router" for the API edge, "kcq" for
+  /// KCQ managed AI. The sweep refunds to this product, never another.
+  product   String   @default("router") @db.VarChar(32)
   apiKeyId  String?  @map("api_key_id")
   amount    Decimal  @db.Decimal(12, 6)
   createdAt DateTime @default(now()) @map("created_at")

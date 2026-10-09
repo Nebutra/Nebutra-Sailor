@@ -51,6 +51,7 @@ export type RouterReservationSumAggregateOutputType = {
 export type RouterReservationMinAggregateOutputType = {
   id: string | null
   tenantId: string | null
+  product: string | null
   apiKeyId: string | null
   amount: runtime.Decimal | null
   createdAt: Date | null
@@ -60,6 +61,7 @@ export type RouterReservationMinAggregateOutputType = {
 export type RouterReservationMaxAggregateOutputType = {
   id: string | null
   tenantId: string | null
+  product: string | null
   apiKeyId: string | null
   amount: runtime.Decimal | null
   createdAt: Date | null
@@ -69,6 +71,7 @@ export type RouterReservationMaxAggregateOutputType = {
 export type RouterReservationCountAggregateOutputType = {
   id: number
   tenantId: number
+  product: number
   apiKeyId: number
   amount: number
   createdAt: number
@@ -88,6 +91,7 @@ export type RouterReservationSumAggregateInputType = {
 export type RouterReservationMinAggregateInputType = {
   id?: true
   tenantId?: true
+  product?: true
   apiKeyId?: true
   amount?: true
   createdAt?: true
@@ -97,6 +101,7 @@ export type RouterReservationMinAggregateInputType = {
 export type RouterReservationMaxAggregateInputType = {
   id?: true
   tenantId?: true
+  product?: true
   apiKeyId?: true
   amount?: true
   createdAt?: true
@@ -106,6 +111,7 @@ export type RouterReservationMaxAggregateInputType = {
 export type RouterReservationCountAggregateInputType = {
   id?: true
   tenantId?: true
+  product?: true
   apiKeyId?: true
   amount?: true
   createdAt?: true
@@ -202,6 +208,7 @@ export type RouterReservationGroupByArgs<ExtArgs extends runtime.Types.Extension
 export type RouterReservationGroupByOutputType = {
   id: string
   tenantId: string
+  product: string
   apiKeyId: string | null
   amount: runtime.Decimal
   createdAt: Date
@@ -234,6 +241,7 @@ export type RouterReservationWhereInput = {
   NOT?: Prisma.RouterReservationWhereInput | Prisma.RouterReservationWhereInput[]
   id?: Prisma.StringFilter<"RouterReservation"> | string
   tenantId?: Prisma.StringFilter<"RouterReservation"> | string
+  product?: Prisma.StringFilter<"RouterReservation"> | string
   apiKeyId?: Prisma.StringNullableFilter<"RouterReservation"> | string | null
   amount?: Prisma.DecimalFilter<"RouterReservation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"RouterReservation"> | Date | string
@@ -244,6 +252,7 @@ export type RouterReservationWhereInput = {
 export type RouterReservationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -257,6 +266,7 @@ export type RouterReservationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.RouterReservationWhereInput[]
   NOT?: Prisma.RouterReservationWhereInput | Prisma.RouterReservationWhereInput[]
   tenantId?: Prisma.StringFilter<"RouterReservation"> | string
+  product?: Prisma.StringFilter<"RouterReservation"> | string
   apiKeyId?: Prisma.StringNullableFilter<"RouterReservation"> | string | null
   amount?: Prisma.DecimalFilter<"RouterReservation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"RouterReservation"> | Date | string
@@ -267,6 +277,7 @@ export type RouterReservationWhereUniqueInput = Prisma.AtLeast<{
 export type RouterReservationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -284,6 +295,7 @@ export type RouterReservationScalarWhereWithAggregatesInput = {
   NOT?: Prisma.RouterReservationScalarWhereWithAggregatesInput | Prisma.RouterReservationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"RouterReservation"> | string
   tenantId?: Prisma.StringWithAggregatesFilter<"RouterReservation"> | string
+  product?: Prisma.StringWithAggregatesFilter<"RouterReservation"> | string
   apiKeyId?: Prisma.StringNullableWithAggregatesFilter<"RouterReservation"> | string | null
   amount?: Prisma.DecimalWithAggregatesFilter<"RouterReservation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RouterReservation"> | Date | string
@@ -292,6 +304,7 @@ export type RouterReservationScalarWhereWithAggregatesInput = {
 
 export type RouterReservationCreateInput = {
   id: string
+  product?: string
   apiKeyId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -302,6 +315,7 @@ export type RouterReservationCreateInput = {
 export type RouterReservationUncheckedCreateInput = {
   id: string
   tenantId: string
+  product?: string
   apiKeyId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -310,6 +324,7 @@ export type RouterReservationUncheckedCreateInput = {
 
 export type RouterReservationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -320,6 +335,7 @@ export type RouterReservationUpdateInput = {
 export type RouterReservationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -329,6 +345,7 @@ export type RouterReservationUncheckedUpdateInput = {
 export type RouterReservationCreateManyInput = {
   id: string
   tenantId: string
+  product?: string
   apiKeyId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -337,6 +354,7 @@ export type RouterReservationCreateManyInput = {
 
 export type RouterReservationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -346,6 +364,7 @@ export type RouterReservationUpdateManyMutationInput = {
 export type RouterReservationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -365,6 +384,7 @@ export type RouterReservationOrderByRelationAggregateInput = {
 export type RouterReservationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -378,6 +398,7 @@ export type RouterReservationAvgOrderByAggregateInput = {
 export type RouterReservationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -387,6 +408,7 @@ export type RouterReservationMaxOrderByAggregateInput = {
 export type RouterReservationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  product?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -441,6 +463,7 @@ export type RouterReservationUncheckedUpdateManyWithoutTenantNestedInput = {
 
 export type RouterReservationCreateWithoutTenantInput = {
   id: string
+  product?: string
   apiKeyId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -449,6 +472,7 @@ export type RouterReservationCreateWithoutTenantInput = {
 
 export type RouterReservationUncheckedCreateWithoutTenantInput = {
   id: string
+  product?: string
   apiKeyId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -487,6 +511,7 @@ export type RouterReservationScalarWhereInput = {
   NOT?: Prisma.RouterReservationScalarWhereInput | Prisma.RouterReservationScalarWhereInput[]
   id?: Prisma.StringFilter<"RouterReservation"> | string
   tenantId?: Prisma.StringFilter<"RouterReservation"> | string
+  product?: Prisma.StringFilter<"RouterReservation"> | string
   apiKeyId?: Prisma.StringNullableFilter<"RouterReservation"> | string | null
   amount?: Prisma.DecimalFilter<"RouterReservation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"RouterReservation"> | Date | string
@@ -495,6 +520,7 @@ export type RouterReservationScalarWhereInput = {
 
 export type RouterReservationCreateManyTenantInput = {
   id: string
+  product?: string
   apiKeyId?: string | null
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -503,6 +529,7 @@ export type RouterReservationCreateManyTenantInput = {
 
 export type RouterReservationUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -511,6 +538,7 @@ export type RouterReservationUpdateWithoutTenantInput = {
 
 export type RouterReservationUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -519,6 +547,7 @@ export type RouterReservationUncheckedUpdateWithoutTenantInput = {
 
 export type RouterReservationUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  product?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -530,6 +559,7 @@ export type RouterReservationUncheckedUpdateManyWithoutTenantInput = {
 export type RouterReservationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   tenantId?: boolean
+  product?: boolean
   apiKeyId?: boolean
   amount?: boolean
   createdAt?: boolean
@@ -540,6 +570,7 @@ export type RouterReservationSelect<ExtArgs extends runtime.Types.Extensions.Int
 export type RouterReservationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   tenantId?: boolean
+  product?: boolean
   apiKeyId?: boolean
   amount?: boolean
   createdAt?: boolean
@@ -550,6 +581,7 @@ export type RouterReservationSelectCreateManyAndReturn<ExtArgs extends runtime.T
 export type RouterReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   tenantId?: boolean
+  product?: boolean
   apiKeyId?: boolean
   amount?: boolean
   createdAt?: boolean
@@ -560,13 +592,14 @@ export type RouterReservationSelectUpdateManyAndReturn<ExtArgs extends runtime.T
 export type RouterReservationSelectScalar = {
   id?: boolean
   tenantId?: boolean
+  product?: boolean
   apiKeyId?: boolean
   amount?: boolean
   createdAt?: boolean
   expiresAt?: boolean
 }
 
-export type RouterReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "apiKeyId" | "amount" | "createdAt" | "expiresAt", ExtArgs["result"]["routerReservation"]>
+export type RouterReservationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "product" | "apiKeyId" | "amount" | "createdAt" | "expiresAt", ExtArgs["result"]["routerReservation"]>
 export type RouterReservationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
@@ -585,6 +618,11 @@ export type $RouterReservationPayload<ExtArgs extends runtime.Types.Extensions.I
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     tenantId: string
+    /**
+     * Whose wallet the hold was taken from: "router" for the API edge, "kcq" for
+     * KCQ managed AI. The sweep refunds to this product, never another.
+     */
+    product: string
     apiKeyId: string | null
     amount: runtime.Decimal
     createdAt: Date
@@ -1015,6 +1053,7 @@ export interface Prisma__RouterReservationClient<T, Null = never, ExtArgs extend
 export interface RouterReservationFieldRefs {
   readonly id: Prisma.FieldRef<"RouterReservation", 'String'>
   readonly tenantId: Prisma.FieldRef<"RouterReservation", 'String'>
+  readonly product: Prisma.FieldRef<"RouterReservation", 'String'>
   readonly apiKeyId: Prisma.FieldRef<"RouterReservation", 'String'>
   readonly amount: Prisma.FieldRef<"RouterReservation", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"RouterReservation", 'DateTime'>

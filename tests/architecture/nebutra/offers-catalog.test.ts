@@ -90,8 +90,10 @@ describe("Nebutra offer catalog", () => {
 
   it("bills each product to the account its benchmark does", () => {
     // Kuanlan is a consumer app like 剪映: what a person buys is theirs. Para is
-    // a team workspace. A Router key belongs to whichever account is active.
+    // a team workspace. A Router key and KCQ's managed AI belong to whichever
+    // account is active (the workspace the caller names).
     const expected: Record<string, string> = {
+      kcq: "workspace",
       kuanlan: "personal",
       para: "organization",
       router: "workspace",

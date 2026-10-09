@@ -341,4 +341,93 @@ describe("RouterBillingRepository (real Prisma over PGlite)", () => {
       expect(await balance(OTHER)).toBeCloseTo(48, 4);
     });
   });
+
+  describe("a second product wallet (kcq) on the same spine", () => {
+    const kcqBalance = async (tenantId = TENANT) =>
+      Number(
+        (
+          await database.prisma.creditBalance.findUnique({
+            where: { tenantId_product: { tenantId, product: "kcq" } },
+          })
+        )?.balance ?? 0,
+      );
+    const seedKcq = (amount: number) =>
+      database.prisma.$executeRawUnsafe(
+        `INSERT INTO credit_balances (id, tenant_id, product, balance)
+         VALUES ('cb_kcq', '${TENANT}', 'kcq', ${amount})`,
+      );
+
+    it("holds from the kcq balance only, leaving Router's untouched", async () => {
+      await seedKcq(2);
+      await expect(
+        repository.reserve({ tenantId: TENANT, requestId: "kcq_1", amount: 1.5, product: "kcq" }),
+      ).resolves.toBe(true);
+      expect(await kcqBalance()).toBeCloseTo(0.5, 4);
+      expect(await balance()).toBeCloseTo(1, 4);
+      // Router's $1 cannot cover a kcq hold of $5 either way round.
+      await expect(
+        repository.reserve({ tenantId: TENANT, requestId: "kcq_2", amount: 5, product: "kcq" }),
+      ).resolves.toBe(false);
+    });
+
+    it("settles with no API key, refunds the unspent hold, and is idempotent", async () => {
+      await seedKcq(2);
+      await repository.reserve({ tenantId: TENANT, requestId: "kcq_3", amount: 1, product: "kcq" });
+      const input = {
+        tenantId: TENANT,
+        userId: null,
+        keyId: null,
+        product: "kcq",
+        requestId: "kcq_3",
+        idempotencyKey: "kcq:abc",
+        model: "gpt-x",
+        quantity: 10,
+        unit: "token",
+        unitCost: 0.01,
+        totalCost: 0.1,
+        currency: "USD",
+        reserved: 1,
+        metadata: { product: "kcq" },
+      };
+      await expect(repository.settle(input)).resolves.toMatchObject({ settled: true });
+      expect(await kcqBalance()).toBeCloseTo(1.9, 4);
+      expect(await repository.isSettled(TENANT, "kcq:abc")).toBe(true);
+      await expect(repository.settle(input)).resolves.toEqual({
+        settled: false,
+        reason: "duplicate",
+      });
+      expect(await kcqBalance()).toBeCloseTo(1.9, 4);
+      expect(await balance()).toBeCloseTo(1, 4);
+    });
+
+    it("release and the expiry sweep refund the kcq wallet, not Router", async () => {
+      await seedKcq(2);
+      const now = new Date("2026-09-08T10:00:00Z");
+      await repository.reserve({
+        tenantId: TENANT,
+        requestId: "kcq_4",
+        amount: 1,
+        product: "kcq",
+        now,
+        ttlMs: 1,
+      });
+      await repository.reserve({
+        tenantId: TENANT,
+        requestId: "kcq_5",
+        amount: 0.5,
+        product: "kcq",
+      });
+      await repository.release({
+        tenantId: TENANT,
+        requestId: "kcq_5",
+        amount: 0.5,
+        product: "kcq",
+      });
+      expect(await kcqBalance()).toBeCloseTo(1, 4);
+      const swept = await repository.sweepExpired({ now: new Date(now.getTime() + 60_000) });
+      expect(swept.wallets).toEqual([{ tenantId: TENANT, product: "kcq" }]);
+      expect(await kcqBalance()).toBeCloseTo(2, 4);
+      expect(await balance()).toBeCloseTo(1, 4);
+    });
+  });
 });

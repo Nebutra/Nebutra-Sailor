@@ -103,7 +103,12 @@ describe("router money guard — admit", () => {
     const db = billing({
       sweepExpired: vi.fn(async () => {
         order.push("sweep");
-        return { swept: 1, refunded: 0.02, tenantIds: ["tenant_1"] };
+        return {
+          swept: 1,
+          refunded: 0.02,
+          tenantIds: ["tenant_1"],
+          wallets: [{ tenantId: "tenant_1", product: "router" }],
+        };
       }),
       reserve: vi.fn(async () => {
         order.push("reserve");

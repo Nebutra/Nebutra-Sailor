@@ -16,12 +16,14 @@
  * deployment and Router can sign, and Router independently refuses INTERNAL
  * sources to any token without it (apps/router internalRouteFor).
  *
- * Billing gap (stated, not hidden): Router's money edge (reserve/settle against
- * a product wallet) is keyed to API-key identities on the public relay, not to
- * this service-token relay, which is deliberately unbilled infrastructure. Usage
- * is recorded as a structured `kcq.ai.usage` log line per request (user, tier,
- * model, tokens) so it can be reconciled, but customer calls are not yet
- * debited from a KCQ product wallet.
+ * Billing (owner decision 2026-10-09): customer calls are paid from the KCQ
+ * product wallet (`product = "kcq"`, ADR 2026-09-27) of the workspace the client
+ * names in `X-KCQ-Workspace` (default `personal`; an organization needs live
+ * membership), resolved exactly as the BYOK/market routes resolve it. The price
+ * is the served model's published shelf rate, reserved before forwarding and
+ * settled from the upstream's usage after; see `ai-billing.ts`. Staff calls
+ * ride Router's INTERNAL source and are never billed. Every request still
+ * writes a structured `kcq.ai.usage` log line (`billed: true | false`).
  */
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { signServiceToken } from "@nebutra/auth";
@@ -37,6 +39,17 @@ import { normalizePlatformStaffRole, type PlatformStaffRole } from "@nebutra/per
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
 import { bodyLimit } from "hono/body-limit";
 import { routerInternalUrl } from "../ai/gateway.js";
+import {
+  defaultKcqAiBilling,
+  estimatePromptTokens,
+  KCQ_WALLET_PRODUCT,
+  type KcqAiBilling,
+  type KcqUsage,
+  quoteKcqRequest,
+  settleKcqRequest,
+} from "./ai-billing.js";
+import { resolveWorkspaceTenant } from "./scope.js";
+import { MarketSourceError } from "./twelve-data.js";
 
 const log = logger.child({ service: "kcq-ai" });
 
@@ -46,6 +59,7 @@ export interface KcqAiIdentity {
   userId: string;
   /** Present only for an unrevoked PlatformStaff grant. */
   staffRole: PlatformStaffRole | null;
+  email?: string | null;
 }
 
 export interface KcqAiOptions {
@@ -54,6 +68,25 @@ export interface KcqAiOptions {
   rateLimited?: (userId: string) => boolean;
   fetchImpl?: typeof fetch;
   signToken?: (claims: { userId: string; role?: string }) => Promise<string>;
+  /** The money seam (reserve / settle / release). Defaults to the Router's repository. */
+  billing?: KcqAiBilling;
+  /** The tenant whose KCQ wallet pays for this customer call. */
+  resolveWalletTenant?: (request: Request, identity: KcqAiIdentity) => Promise<string>;
+}
+
+/** Same workspace rule as the market routes; the AI surface defaults to the personal workspace. */
+export async function resolveKcqWalletTenant(
+  request: Request,
+  identity: KcqAiIdentity,
+): Promise<string> {
+  const workspace = request.headers.get("X-KCQ-Workspace") || "personal";
+  if (workspace.length > 160) throw new MarketSourceError(400, "请指定当前工作区。");
+  const scope = await resolveWorkspaceTenant({
+    userId: identity.userId,
+    email: identity.email ?? null,
+    workspace,
+  });
+  return scope.tenantId;
 }
 
 function staffModel(): string {
@@ -83,7 +116,7 @@ export async function resolveKcqAiIdentity(request: Request): Promise<KcqAiIdent
   });
   const staffRole =
     grant && grant.revokedAt === null ? normalizePlatformStaffRole(grant.role) : null;
-  return { userId: session.userId, staffRole };
+  return { userId: session.userId, staffRole, ...(session.email ? { email: session.email } : {}) };
 }
 
 /** Fixed-window per-user limiter; one process is enough for a per-user cost guard. */
@@ -122,6 +155,8 @@ export function createKcqAiRoutes(options: KcqAiOptions = {}) {
   const rateLimited =
     options.rateLimited ?? createUserRateLimiter(intFromEnv("KCQ_AI_RATE_PER_MINUTE", 20));
   const doFetch = options.fetchImpl ?? fetch;
+  const billing = () => options.billing ?? defaultKcqAiBilling();
+  const resolveWalletTenant = options.resolveWalletTenant ?? resolveKcqWalletTenant;
   const signToken =
     options.signToken ?? ((claims: { userId: string; role?: string }) => signServiceToken(claims));
 
@@ -194,9 +229,22 @@ export function createKcqAiRoutes(options: KcqAiOptions = {}) {
         return c.json(openAiError("AI 服务暂未配置。", "not_configured", 503).body, 503);
       }
 
+      // Customers pay from their KCQ wallet; staff ride the internal source unbilled.
+      const customer = !identity.staffRole;
+      const clientKey = c.req.header("Idempotency-Key") ?? c.req.header("X-Request-Id") ?? null;
+      const validKey = clientKey && /^[A-Za-z0-9_-]{8,100}$/.test(clientKey) ? clientKey : null;
+      const requestKey = validKey ?? crypto.randomUUID();
+      let hold: {
+        tenantId: string;
+        requestId: string;
+        idempotencyKey: string;
+        reserved: number;
+        priceRow: Parameters<typeof settleKcqRequest>[1]["priceRow"];
+      } | null = null;
+
       const started = Date.now();
       const tier = identity.staffRole ? "staff" : "public";
-      const record = (usage: UsageResult | null, status: string) =>
+      const record = (usage: UsageResult | null, status: string, costUsd: number | null = null) =>
         log.info("kcq.ai.usage", {
           userId: identity.userId,
           tier,
@@ -206,8 +254,107 @@ export function createKcqAiRoutes(options: KcqAiOptions = {}) {
           completionTokens: usage?.completionTokens ?? null,
           totalTokens: usage?.totalTokens ?? null,
           latencyMs: Date.now() - started,
-          billed: false,
+          billed: costUsd !== null,
+          ...(hold ? { tenantId: hold.tenantId, costUsd, reserved: hold.reserved } : {}),
         });
+
+      if (customer) {
+        let tenantId: string;
+        try {
+          tenantId = await resolveWalletTenant(c.req.raw, identity);
+        } catch (error) {
+          if (error instanceof MarketSourceError) {
+            const status = error.status === 403 ? 403 : 400;
+            return c.json(openAiError(error.message, "workspace_unavailable", status).body, status);
+          }
+          throw error;
+        }
+        const money = billing();
+        const quote = await quoteKcqRequest(money, model, {
+          promptTokens: estimatePromptTokens(upstreamBody),
+          maxOutputTokens: clamped,
+        });
+        if (!quote.ok) {
+          log.error("kcq.ai.unpriced_model", { model });
+          return c.json(openAiError("当前模型暂未开放计费。", "model_unpriced", 503).body, 503);
+        }
+        const idempotencyKey = `kcq:${requestKey}`;
+        if (validKey && (await money.isSettled(tenantId, idempotencyKey))) {
+          return c.json(
+            openAiError("该请求已处理，未重复扣费。", "duplicate_request", 409).body,
+            409,
+          );
+        }
+        const requestId = `kcq_${tenantId}_${requestKey}`;
+        const held = await money.reserve({
+          tenantId,
+          requestId,
+          amount: quote.reserve,
+          product: KCQ_WALLET_PRODUCT,
+        });
+        if (!held) {
+          record(null, "insufficient_balance");
+          return c.json(
+            openAiError("KCQ 余额不足，请充值后继续使用 AI。", "insufficient_balance", 402).body,
+            402,
+          );
+        }
+        hold = {
+          tenantId,
+          requestId,
+          idempotencyKey,
+          reserved: quote.reserve,
+          priceRow: quote.priceRow,
+        };
+      }
+
+      /** Hand the whole hold back; the customer is never charged for a failure. */
+      const release = async () => {
+        if (!hold) return;
+        const h = hold;
+        await billing()
+          .release({
+            tenantId: h.tenantId,
+            requestId: h.requestId,
+            amount: h.reserved,
+            product: KCQ_WALLET_PRODUCT,
+          })
+          .catch((error: unknown) =>
+            log.error("kcq.ai.release_failed", {
+              requestId: h.requestId,
+              category: error instanceof Error ? error.name : "unknown",
+            }),
+          );
+      };
+      /** Charge the actual cost. A settle failure is logged, never shown: the sweep returns the hold. */
+      const settle = async (usage: UsageResult | null): Promise<number | null> => {
+        if (!hold) return null;
+        const h = hold;
+        const counts: KcqUsage | null = usage
+          ? { promptTokens: usage.promptTokens, completionTokens: usage.completionTokens }
+          : null;
+        try {
+          const done = await settleKcqRequest(billing(), {
+            tenantId: h.tenantId,
+            userId: identity.userId,
+            requestId: h.requestId,
+            idempotencyKey: h.idempotencyKey,
+            model,
+            reserved: h.reserved,
+            priceRow: h.priceRow,
+            usage: counts,
+            latencyMs: Date.now() - started,
+            clientRequestId: validKey,
+          });
+          return done.charged;
+        } catch (error) {
+          log.error("kcq.ai.settle_failed", {
+            requestId: h.requestId,
+            category: error instanceof Error ? error.name : "unknown",
+          });
+          return null;
+        }
+      };
 
       let upstream: Response;
       try {
@@ -218,11 +365,13 @@ export function createKcqAiRoutes(options: KcqAiOptions = {}) {
           signal: AbortSignal.timeout(180_000),
         });
       } catch {
+        await release();
         record(null, "unreachable");
         return c.json(openAiError("AI 服务暂时不可用。", "upstream_unreachable", 502).body, 502);
       }
 
       if (!upstream.ok) {
+        await release();
         record(null, `upstream_${upstream.status}`);
         // Router's body can name sources and models; the browser gets a generic envelope.
         const status = upstream.status === 429 ? 429 : upstream.status === 404 ? 404 : 502;
@@ -232,28 +381,55 @@ export function createKcqAiRoutes(options: KcqAiOptions = {}) {
 
       if (!rest.stream) {
         const json: unknown = await upstream.json().catch(() => null);
-        record(extractUsageFromJson(json, model), "success");
+        if (json === null) {
+          await release();
+          record(null, "invalid_body");
+          return c.json(openAiError("AI 服务暂时不可用。", "upstream_error", 502).body, 502);
+        }
+        const usage = extractUsageFromJson(json, model);
+        record(usage, "success", await settle(usage));
         return c.json((json ?? {}) as Record<string, unknown>);
       }
 
       const body = upstream.body;
       if (!body) {
+        await release();
         record(null, "empty_stream");
         return c.json(openAiError("AI 服务暂时不可用。", "upstream_error", 502).body, 502);
       }
       const extractor = createStreamingUsageExtractor(model);
       const decoder = new TextDecoder();
-      const tapped = body.pipeThrough(
-        new TransformStream<Uint8Array, Uint8Array>({
-          transform(chunk, controller) {
-            controller.enqueue(chunk);
-            extractor.processChunk(decoder.decode(chunk, { stream: true }));
-          },
-          flush() {
-            record(extractor.getUsage(), "success");
-          },
-        }),
-      );
+      const reader = body.getReader();
+      let closed = false;
+      // Settle exactly once, however the stream ends: normal end, upstream error,
+      // or the client walking away mid-stream (the upstream billed us regardless).
+      const finish = async (status: string) => {
+        if (closed) return;
+        closed = true;
+        const usage = extractor.getUsage();
+        record(usage, status, await settle(usage));
+      };
+      const tapped = new ReadableStream<Uint8Array>({
+        async pull(controller) {
+          try {
+            const { done, value } = await reader.read();
+            if (done) {
+              await finish("success");
+              controller.close();
+              return;
+            }
+            controller.enqueue(value);
+            extractor.processChunk(decoder.decode(value, { stream: true }));
+          } catch (error) {
+            await finish("stream_error");
+            controller.error(error);
+          }
+        },
+        async cancel(reason) {
+          await reader.cancel(reason).catch(() => undefined);
+          await finish("client_cancelled");
+        },
+      });
       return new Response(tapped, {
         status: 200,
         headers: {

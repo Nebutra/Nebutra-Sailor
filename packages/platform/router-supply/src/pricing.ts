@@ -40,6 +40,44 @@ export interface ModelPriceRow {
   readonly unitPrice?: number | null;
 }
 
+/**
+ * The floor under a billable request, in USD (Router and KCQ share it).
+ *
+ * Serving a request costs about seven Postgres writes plus the relay compute
+ * regardless of how few tokens it carried, so nothing billable settles below
+ * this. The reservation floor is the same number on purpose: admission must
+ * hold at least what settlement will charge.
+ */
+export const MIN_REQUEST_CHARGE_USD = 0.0002;
+
+/** The columns of a `model_configs` read that the resolver prices from (structural, Prisma-free). */
+export interface PriceRowSource {
+  readonly modelName: string;
+  readonly unit: string;
+  readonly currency: string;
+  readonly published: boolean;
+  readonly inputPerMTok: number | null;
+  readonly outputPerMTok: number | null;
+  readonly cacheReadPerMTok: number | null;
+  readonly cacheWritePerMTok: number | null;
+  readonly unitPrice: number | null;
+}
+
+/** The one mapping from a stored price row to the resolver's row. */
+export function toModelPriceRow(row: PriceRowSource): ModelPriceRow {
+  return {
+    modelName: row.modelName,
+    unit: row.unit as PriceUnit,
+    currency: row.currency,
+    published: row.published,
+    inputPerMTok: row.inputPerMTok,
+    outputPerMTok: row.outputPerMTok,
+    cacheReadPerMTok: row.cacheReadPerMTok,
+    cacheWritePerMTok: row.cacheWritePerMTok,
+    unitPrice: row.unitPrice,
+  };
+}
+
 /** What the request actually consumed. Every field is optional; absent means zero. */
 export interface UsageCounts {
   readonly promptTokens?: number;

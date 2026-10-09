@@ -80,8 +80,13 @@ export interface RouterKeySpend {
  */
 export const ROUTER_WALLET_PRODUCT = "router";
 
-const routerBalance = (tenantId: string) => ({
-  tenantId_product: { tenantId, product: ROUTER_WALLET_PRODUCT },
+/**
+ * The reserve / settle / release / sweep spine is not Router-specific: any
+ * product that meters usage against its own prepaid balance (KCQ's managed AI)
+ * runs the same money path, naming its product. Omitted means Router.
+ */
+const balanceOf = (tenantId: string, product: string) => ({
+  tenantId_product: { tenantId, product },
 });
 
 export const RESERVATION_TTL_MS = 15 * 60 * 1000;
@@ -92,6 +97,8 @@ export interface RouterReserveInput {
   requestId: string;
   keyId?: string | null;
   amount: number;
+  /** Whose balance is held. Defaults to {@link ROUTER_WALLET_PRODUCT}. */
+  product?: string;
   now?: Date;
   /** Defaults to {@link RESERVATION_TTL_MS}. */
   ttlMs?: number;
@@ -101,6 +108,8 @@ export interface RouterReleaseInput {
   tenantId: string;
   requestId: string;
   amount: number;
+  /** Defaults to {@link ROUTER_WALLET_PRODUCT}. */
+  product?: string;
 }
 
 export interface RouterSweepOptions {
@@ -116,12 +125,17 @@ export interface RouterSweepResult {
   refunded: number;
   /** Tenants whose balance moved — their credit cache must be invalidated. */
   tenantIds: string[];
+  /** The same, per product wallet: the cache is keyed by (tenant, product). */
+  wallets: Array<{ tenantId: string; product: string }>;
 }
 
 export interface RouterSettleInput {
   tenantId: string;
   userId?: string | null;
-  keyId: string;
+  /** The API key whose counters move. Omit for a product with no per-key limits (KCQ). */
+  keyId?: string | null;
+  /** Whose balance is settled. Defaults to {@link ROUTER_WALLET_PRODUCT}. */
+  product?: string;
   /** The edge request id — the `router_reservations` row this settle closes. */
   requestId: string;
   /** `router:<requestId>` — the idempotency key on the ledger row. */
@@ -253,9 +267,10 @@ export class RouterBillingRepository {
    */
   async reserve(input: RouterReserveInput): Promise<boolean> {
     const amount = input.amount;
+    const product = input.product ?? ROUTER_WALLET_PRODUCT;
     if (!(amount > 0)) {
       const exists = await this.prisma.creditBalance.findUnique({
-        where: routerBalance(input.tenantId),
+        where: balanceOf(input.tenantId, product),
         select: { id: true },
       });
       if (!exists) {
@@ -263,7 +278,7 @@ export class RouterBillingRepository {
           .create({
             data: {
               tenantId: input.tenantId,
-              product: ROUTER_WALLET_PRODUCT,
+              product,
               balance: 0,
               currency: "USD",
             },
@@ -281,7 +296,7 @@ export class RouterBillingRepository {
         const held = await tx.creditBalance.updateMany({
           where: {
             tenantId: input.tenantId,
-            product: ROUTER_WALLET_PRODUCT,
+            product,
             balance: { gte: new Prisma.Decimal(amount) },
           },
           data: { balance: { decrement: new Prisma.Decimal(amount) } },
@@ -291,6 +306,7 @@ export class RouterBillingRepository {
           data: {
             id: input.requestId,
             tenantId: input.tenantId,
+            product,
             apiKeyId: input.keyId ?? null,
             amount: new Prisma.Decimal(amount),
             createdAt: now,
@@ -323,7 +339,7 @@ export class RouterBillingRepository {
       // it. Either way, incrementing here would be inventing money.
       if (claimed.count !== 1) return;
       await tx.creditBalance.updateMany({
-        where: { tenantId: input.tenantId, product: ROUTER_WALLET_PRODUCT },
+        where: { tenantId: input.tenantId, product: input.product ?? ROUTER_WALLET_PRODUCT },
         data: { balance: { increment: new Prisma.Decimal(input.amount) } },
       });
     });
@@ -353,6 +369,7 @@ export class RouterBillingRepository {
     });
 
     const tenantIds = new Set<string>();
+    const wallets = new Map<string, { tenantId: string; product: string }>();
     let swept = 0;
     let refunded = 0;
 
@@ -365,10 +382,10 @@ export class RouterBillingRepository {
         if (!(amount > 0)) return true;
 
         const balance = await tx.creditBalance.upsert({
-          where: routerBalance(row.tenantId),
+          where: balanceOf(row.tenantId, row.product),
           create: {
             tenantId: row.tenantId,
-            product: ROUTER_WALLET_PRODUCT,
+            product: row.product,
             balance: new Prisma.Decimal(amount),
             currency: "USD",
           },
@@ -380,10 +397,10 @@ export class RouterBillingRepository {
             type: "REFUND",
             amount: new Prisma.Decimal(amount),
             balanceAfter: balance.balance,
-            description: "Router hold returned: the request never completed.",
+            description: `${row.product === ROUTER_WALLET_PRODUCT ? "Router" : row.product} hold returned: the request never completed.`,
             relatedId: `router:reservation:${row.id}`,
             metadata: {
-              product: "router",
+              product: row.product,
               reason: "reservation_expired",
               requestId: row.id,
               keyId: row.apiKeyId,
@@ -399,9 +416,25 @@ export class RouterBillingRepository {
       swept += 1;
       refunded += Math.max(0, amount);
       tenantIds.add(row.tenantId);
+      wallets.set(`${row.tenantId}:${row.product}`, {
+        tenantId: row.tenantId,
+        product: row.product,
+      });
     }
 
-    return { swept, refunded, tenantIds: [...tenantIds] };
+    return { swept, refunded, tenantIds: [...tenantIds], wallets: [...wallets.values()] };
+  }
+
+  /**
+   * Whether this idempotency key already has a ledger row — a retried request
+   * that was settled once must not be served (and metered) a second time.
+   */
+  async isSettled(tenantId: string, idempotencyKey: string): Promise<boolean> {
+    const row = await this.prisma.usageLedgerEntry.findUnique({
+      where: { tenantId_idempotencyKey: { tenantId, idempotencyKey } },
+      select: { id: true },
+    });
+    return row !== null;
   }
 
   /**
@@ -411,6 +444,7 @@ export class RouterBillingRepository {
   async settle(input: RouterSettleInput): Promise<RouterSettleResult> {
     const now = input.now ?? new Date();
     const charged = Math.max(0, input.totalCost);
+    const product = input.product ?? ROUTER_WALLET_PRODUCT;
     const today = startOfUtcDay(now);
     let refunded = input.reserved - charged;
 
@@ -449,10 +483,10 @@ export class RouterBillingRepository {
         // Net effect on the balance: the held amount comes back, the real cost
         // goes out. Expressed as one signed increment so the row is touched once.
         const balance = await tx.creditBalance.upsert({
-          where: routerBalance(input.tenantId),
+          where: balanceOf(input.tenantId, product),
           create: {
             tenantId: input.tenantId,
-            product: ROUTER_WALLET_PRODUCT,
+            product,
             balance: new Prisma.Decimal(refunded),
             currency: input.currency,
           },
@@ -466,18 +500,23 @@ export class RouterBillingRepository {
               type: "USAGE",
               amount: new Prisma.Decimal(-charged),
               balanceAfter: balance.balance,
-              description: `router usage ${input.model}`,
+              description: `${product} usage ${input.model}`,
               relatedId: input.idempotencyKey,
               metadata: input.metadata as Prisma.InputJsonValue,
             },
           });
         }
 
+        // A product without API keys (KCQ's session-authenticated AI) has no
+        // per-key counters to move.
+        if (!input.keyId) return { settled: true as const, charged, refunded };
+        const keyId = input.keyId;
+
         // Daily counter: a compare-and-set on the reset stamp. Exactly one
         // concurrent settle can win the reset; the losers increment.
         const reset = await tx.aPIKey.updateMany({
           where: {
-            id: input.keyId,
+            id: keyId,
             OR: [{ costDailyResetAt: null }, { costDailyResetAt: { lt: today } }],
           },
           data: {
@@ -488,7 +527,7 @@ export class RouterBillingRepository {
         });
         if (reset.count === 0) {
           await tx.aPIKey.updateMany({
-            where: { id: input.keyId },
+            where: { id: keyId },
             data: {
               costDaily: { increment: new Prisma.Decimal(charged) },
               costTotal: { increment: new Prisma.Decimal(charged) },

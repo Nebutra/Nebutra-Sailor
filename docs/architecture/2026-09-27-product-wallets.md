@@ -146,6 +146,16 @@ refund path of ADR 2026-09-25 carries it out. Customers have no self-serve refun
 Credits granted before step 3 have no lot and never expire, which is more generous than the rule
 above, never less.
 
+## Addendum 2026-10-09: KCQ managed AI
+
+KCQ (`kcq`) is a fourth product wallet, in USD like Router's, topped up through `kcq_topup`
+(`account: workspace`, $5 / ¥50 floor, same rates as Router). Customer calls to the managed-AI
+surface (`/api/v1/kcq-ai`) are paid from the wallet of the workspace named in `X-KCQ-Workspace`
+(`personal`, or an organization the caller belongs to), priced at the served model's published shelf
+rate, reserved before forwarding and settled from the upstream's usage. Platform staff ride the
+internal source and are not billed. The money path is Router's (`RouterBillingRepository` with
+`product: "kcq"`); reservations record their product so the expiry sweep refunds the right wallet.
+
 ## Sources
 
 - 剪映会员服务协议 — lf9-cdn-tos.draftstatic.com/obj/ies-hotsoon-draft/vco/f445affd-403f-4ddd-8f86-b7e29f5c6523.html

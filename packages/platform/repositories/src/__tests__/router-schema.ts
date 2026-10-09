@@ -75,6 +75,7 @@ export const ROUTER_TABLES = `
   CREATE TABLE router_reservations (
     id         text PRIMARY KEY,
     tenant_id  text NOT NULL,
+    product    varchar(32) NOT NULL DEFAULT 'router',
     api_key_id text,
     amount     numeric(12,6) NOT NULL,
     created_at timestamp(3) NOT NULL DEFAULT now(),

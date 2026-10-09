@@ -25,6 +25,31 @@
     }
   },
   {
+    "id": "kcq_topup",
+    "product": "kcq",
+    "account": "workspace",
+    "name": "KCQ AI balance",
+    "customAmount": {
+      "USD": {
+        "min": 5,
+        "max": 1000
+      },
+      "CNY": {
+        "min": 50,
+        "max": 7000
+      }
+    },
+    "fulfillment": {
+      "type": "balance",
+      "params": {
+        "unitsPerMajor": {
+          "USD": 1,
+          "CNY": 0.1389
+        }
+      }
+    }
+  },
+  {
     "id": "kuanlan_pro_month",
     "product": "kuanlan",
     "account": "personal",
