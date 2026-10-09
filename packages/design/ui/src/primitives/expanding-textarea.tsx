@@ -7,6 +7,11 @@ import { Textarea, type TextareaProps } from "./textarea";
 
 export type ExpandingTextareaProps = TextareaProps;
 
+const supportsFieldSizing = () =>
+  typeof CSS !== "undefined" &&
+  typeof CSS.supports === "function" &&
+  CSS.supports("field-sizing", "content");
+
 export const ExpandingTextarea = ({
   className,
   onChange,
@@ -31,9 +36,10 @@ export const ExpandingTextarea = ({
     [ref],
   );
 
+  // Textarea already grows natively via `field-sizing: content`; measure in JS only where unsupported.
   const resize = React.useCallback(() => {
     const target = textareaRef.current;
-    if (!target) return;
+    if (!target || supportsFieldSizing()) return;
 
     target.style.height = "auto";
     target.style.height = `${target.scrollHeight}px`;
@@ -45,9 +51,11 @@ export const ExpandingTextarea = ({
 
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const target = event.currentTarget;
-      target.style.height = "auto";
-      target.style.height = `${target.scrollHeight}px`;
+      if (!supportsFieldSizing()) {
+        const target = event.currentTarget;
+        target.style.height = "auto";
+        target.style.height = `${target.scrollHeight}px`;
+      }
       onChange?.(event);
     },
     [onChange],
