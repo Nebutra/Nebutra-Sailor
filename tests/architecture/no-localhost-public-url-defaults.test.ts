@@ -63,5 +63,16 @@ describe("rendered-HTML localhost detector", () => {
     expect(
       findLocalhostUrls('<a href="https://example.com/sailor">Sign in</a> localhost is a word'),
     ).toEqual([]);
+    // A marked sample of CLI output is text, not a link — unless its href is local.
+    expect(
+      findLocalhostUrls(
+        '<a href="https://example.com" data-localhost-sample="">http://localhost:3000</a>',
+      ),
+    ).toEqual([]);
+    expect(
+      findLocalhostUrls(
+        '<a href="http://localhost:3000" data-localhost-sample="">http://localhost:3000</a>',
+      ),
+    ).toHaveLength(1);
   });
 });

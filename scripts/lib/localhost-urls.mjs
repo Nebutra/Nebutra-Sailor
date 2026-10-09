@@ -11,12 +11,23 @@
 const LOCAL_ORIGIN =
   /\bhttps?:(?:\/\/|\\u002F\\u002F|\\\/\\\/)(?:localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])(?::\d+)?/gi;
 
+/**
+ * Text that *shows* a local URL on purpose — a recorded terminal printing
+ * `npm dev → http://localhost:3000` — is not a link to the visitor's machine.
+ * Such an element opts out with `data-localhost-sample`; only its text is
+ * skipped. Its attributes are still scanned, so an href pointing at
+ * localhost on that same element is still caught.
+ */
+const LOCALHOST_SAMPLE =
+  /(<([a-z][\w-]*)\b[^>]*\sdata-localhost-sample(?:=""|="true")?[^>]*>)[^<]*(<\/\2>)/gi;
+
 /** @returns {string[]} the distinct local origins found in `html`, with a little context. */
 export function findLocalhostUrls(html) {
   const found = new Set();
-  for (const match of html.matchAll(LOCAL_ORIGIN)) {
+  const scanned = html.replace(LOCALHOST_SAMPLE, "$1$3");
+  for (const match of scanned.matchAll(LOCAL_ORIGIN)) {
     const start = Math.max(0, match.index - 40);
-    found.add(html.slice(start, match.index + match[0].length + 30).replace(/\s+/g, " "));
+    found.add(scanned.slice(start, match.index + match[0].length + 30).replace(/\s+/g, " "));
     if (found.size >= 5) break;
   }
   return [...found];
