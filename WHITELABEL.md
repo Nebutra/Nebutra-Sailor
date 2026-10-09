@@ -94,16 +94,6 @@ const config: BrandConfig = {
     neutral: { 900: "#18181b", ... },
   },
 
-  // Feature Toggles
-  features: {
-    web3: false,        // Disable blockchain features
-    ecommerce: false,   // Disable Shopify integration
-    recsys: false,      // Disable recommendation system
-    content: true,      // Keep content/feed system
-    stripe: true,       // Keep Stripe payments
-    resend: true,       // Keep email service
-  },
-
   // NPM Scope
   packageScope: "@mybrand",
 
@@ -154,29 +144,6 @@ brand.config/
 | `apple-touch-icon.png`       | 180×180    | PNG    |
 | `android-chrome-192x192.png` | 192×192    | PNG    |
 | `android-chrome-512x512.png` | 512×512    | PNG    |
-
-## Feature Toggles
-
-Disable features you don't need in your deployment:
-
-```typescript
-features: {
-  // Disable blockchain features
-  web3: false,
-
-  // Disable e-commerce integration
-  ecommerce: false,
-
-  // Disable recommendation system
-  recsys: false,
-}
-```
-
-When a feature is disabled:
-
-- Related services won't be built
-- Documentation references are adjusted
-- Environment variables are commented out
 
 ## Color Customization
 

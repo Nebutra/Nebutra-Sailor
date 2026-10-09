@@ -13,7 +13,7 @@ nebutra-sailor/
 ├── backends/            Non-UI backends — split by language (gateway/, go/, python/, rust/)
 ├── packages/            Shared TypeScript libraries — categorized by domain
 ├── infra/               iac/ + runtime/ + data/ + ops/  (Wave 2.2)
-├── workflows/           inngest/ + n8n/ + pusher/        (Wave 2.3)
+├── workflows/           inngest/ + pusher/        (Wave 2.3)
 ├── e2e/                 smoke/ + golden/ + sleptons/     (Wave 2.1)
 ├── tests/               architecture/ + load/            (vitest + k6)
 ├── docs/                Internal architecture ADRs (source repo only)
@@ -104,7 +104,6 @@ infra/
 
 workflows/
 ├── inngest/             Durable workflow functions
-├── n8n/                 Self-hosted n8n workflow JSON exports
 └── pusher/              Realtime channels
 
 e2e/

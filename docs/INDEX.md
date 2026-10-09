@@ -78,7 +78,6 @@ Complete navigation to all project documentation.
 | ----------------------------------------- | ------------------------------------ |
 | [workflows](../workflows/README.md)       | Event-driven workflow overview       |
 | [inngest](../workflows/inngest/README.md) | Background job workflows (Inngest)   |
-| [n8n](../workflows/n8n/README.md)         | No-code workflow automation          |
 | [pusher](../workflows/pusher/README.md)   | Realtime fan-out                     |
 
 ## Design System

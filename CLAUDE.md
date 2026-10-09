@@ -106,7 +106,7 @@ packages/              # Shared TypeScript libraries — categorized layout: <ca
 
 ops/                   # nebutra/ — Nebutra-instance-only config; stripped from the template (TEMPLATE.md)
 infra/                 # iac/ + runtime/ + data/ + ops/  (W2.2)
-workflows/             # inngest/ + n8n/ + pusher/  (W2.3)
+workflows/             # inngest/ + pusher/  (W2.3)
 e2e/                   # smoke/ + golden/ + sleptons/ + 4 playwright configs  (W2.1)
 tests/                 # architecture/ + load/  (vitest + k6)
 ```

@@ -461,7 +461,6 @@ Nebula • Nurture • Ultra • Future
 <td><strong>工作流</strong></td>
 <td>
   <a href="https://www.inngest.com/"><img src="https://img.shields.io/badge/Inngest-6366F1?style=flat-square" alt="Inngest" /></a>
-  <a href="https://n8n.io/"><img src="https://img.shields.io/badge/n8n-EA4B71?style=flat-square&logo=n8n&logoColor=white&v=1" alt="n8n" /></a>
   <img src="https://img.shields.io/badge/Saga_编排-gray?style=flat-square" alt="Saga" />
 </td>
 </tr>
@@ -561,7 +560,6 @@ Sailor 是**与 Provider 无关**的：以下每个平台包都会从环境变�
 ├── ops/                       # 各品牌声明的平台状态，platform-reconcile 每日核对
 ├── workflows/                 # 事件驱动业务流（W2.3 抽离）
 │   ├── inngest/           # Serverless 后台任务 + 定时
-│   ├── n8n/               # 可视化工作流自动化
 │   └── pusher/            # 实时消息粘合层
 ├── e2e/                       # Playwright E2E 测试 (smoke / golden / sleptons)
 ├── tests/                     # 架构不变量 + 压测 + UI 治理
@@ -607,7 +605,6 @@ Sailor 是**与 Provider 无关**的：以下每个平台包都会从环境变�
   <a href="infra/runtime/docker/">Docker</a> · 
   <a href="infra/iac/terraform/">Terraform</a> · 
   <a href="workflows/inngest/">Inngest</a> · 
-  <a href="workflows/n8n/">n8n</a> · 
   <a href="workflows/pusher/">Pusher</a> · 
   <a href="infra/ops/observability/">可观测性</a>
 </td>
